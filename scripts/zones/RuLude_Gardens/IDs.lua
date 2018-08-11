@@ -63,8 +63,12 @@ zones[tpz.zone.RULUDE_GARDENS] =
         ITEM_NOT_WEAPON_MAGIAN           = 14495, -- As I advised you previously, my sole specialty is weapons. I have not the moogle magic at my disposal to augment items of this variety, kupo...
         RETURN_MAGIAN_ITEM               = 14515, -- The Magian Moogle returns your <item>.
         COMMON_SENSE_SURVIVAL            = 15682, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        LS_CONCIERGE_LISTING_CANCEL      = 15683, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_REGISTERED1         = 15735, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2         = 15736, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED      = 15737, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         TEAR_IN_FABRIC_OF_SPACE          = 15942, -- There appears to be a tear in the fabric of space...
-    },
+     },
     mob =
     {
     },

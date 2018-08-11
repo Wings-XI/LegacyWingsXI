@@ -20,7 +20,11 @@ zones[tpz.zone.EASTERN_ADOULIN] =
         YOU_CAN_NOW_BECOME      = 7009, -- You can now become a <geomancer/rune fencer>!
         MOG_LOCKER_OFFSET       = 7569, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         HOMEPOINT_SET           = 8285, -- Home point set!
-        COMMON_SENSE_SURVIVAL   = 13845, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        LS_CONCIERGE_LISTING_CANCEL = 13656, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_REGISTERED1    = 13708, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2    = 13709, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED = 13710, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
+        COMMON_SENSE_SURVIVAL       = 13845, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {

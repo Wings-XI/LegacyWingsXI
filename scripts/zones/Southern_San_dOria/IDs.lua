@@ -104,6 +104,10 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
         TUTORIAL_NPC                   = 13517, -- Greetings and well met! Guardian of the Kingdom, Alaune, at your most humble service.
         YOU_WISH_TO_EXCHANGE_SPARKS    = 15362, -- You wish to exchange your sparks?
         NOT_ENOUGH_SPARKS              = 15392, -- You do not possess enough sparks of eminence to complete the transaction.
+        LS_CONCIERGE_LISTING_CANCEL    = 15649, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_REGISTERED1       = 15701, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2       = 15702, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED    = 15703, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         TEAR_IN_FABRIC_OF_SPACE        = 16547, -- There appears to be a tear in the fabric of space...
     },
     mob =

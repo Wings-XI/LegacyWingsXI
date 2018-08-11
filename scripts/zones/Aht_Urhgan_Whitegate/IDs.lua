@@ -68,8 +68,12 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         SANCTION                      = 9801, -- You have received the Empire's Sanction.
         ZASSHAL_DIALOG                = 10995, -- 'ang about. Looks like the permit you got was the last one I 'ad, so it might take me a bit o' time to scrounge up some more. 'ere, don't gimme that look. I'll be restocked before you know it.
         RETRIEVE_DIALOG_ID            = 13514, -- You retrieve <item> from the porter moogle's care.
+        LS_CONCIERGE_LISTING_CANCEL   = 14305, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_REGISTERED1      = 14357, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2      = 14358, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED   = 14359, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         COMMON_SENSE_SURVIVAL         = 14380, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
-    },
+        },
     mob =
     {
     },

@@ -34,6 +34,10 @@ zones[tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
         PLAYER_OBTAINS_TEMP_ITEM = 10586, -- <name> obtains the temporary item: <item>!
         ALREADY_POSSESS_TEMP     = 10587, -- You already possess that temporary item.
         NO_COMBINATION           = 10592, -- You were unable to enter a combination.
+        LS_CONCIERGE_LISTING_CANCEL = 10650, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_REGISTERED1    = 10702, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2    = 10703, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED = 10704, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
     },
     mob =
     {
