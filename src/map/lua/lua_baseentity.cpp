@@ -16876,7 +16876,7 @@ inline int32 CLuaBaseEntity::getPixieHate(lua_State *L)
 }
 
 /************************************************************************
-*  Function: setFomorHate()
+*  Function: setPixieHate()
 *  Purpose : Updates PC's fomor hate (both DB and local)
 *  Example : player:setFomorHate(4)
 ************************************************************************/
@@ -16965,13 +16965,14 @@ inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
         uint16 optionLSID = option >> 16;
         uint16 optionMode = option & 0x0000FFFF;
 
-        CLinkshell* newlinkShell = nullptr;
+        int8 EncodedString[16] = { 0 };
+        char* extra = nullptr;
+        size_t extra_length = 0;
         CItem* PItem = nullptr;
         uint8 SlotID = ERROR_SLOTID;
         std::string qStr;
+        std::string LSName;
         int32 ret = SQL_ERROR;
-
-        int8 DecodedName[21];
 
         switch (optionMode)
         {
@@ -17002,9 +17003,36 @@ inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
 
                 // ToDo: add safety check if we still have stock at this point
 
-            newlinkShell = linkshell::LoadLinkshell(optionLSID);
+            if (charutils::GetCharVar(PChar->id, "LSCON_LAST_PURCHASE") == CVanaTime::getInstance()->getTimeAbsolute()) {
+                ShowWarning(CL_YELLOW"lsConciergeUpdate: %s cannot purchase second linkshell on the same day\n" CL_RESET, PChar->GetName());
+                lua_pushinteger(L, 97);
+                return 1;
+            }
 
-            if ((PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0) && (optionLSID != 0) && (newlinkShell) && (newlinkShell->getID() != 0))
+            qStr = ("SELECT name, extra FROM linkshell_concierge, linkshells ");
+            qStr += "WHERE linkshell_concierge.linkshellid = ";
+            qStr += std::to_string(optionLSID);
+            qStr += " AND linkshells.linkshellid = ";
+            qStr += std::to_string(optionLSID);
+            if (conciergeShareSettings == 0)
+            {
+                qStr += " AND npcid = ";
+                qStr += std::to_string(conciergeID);
+                qStr += " ";
+            }
+            qStr += "LIMIT 1";
+
+            if ((Sql_Query(SqlHandle, qStr.c_str(), optionLSID) != SQL_SUCCESS) || (Sql_NumRows(SqlHandle) == 0) || (Sql_NextRow(SqlHandle) != SQL_SUCCESS))
+            {
+                ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": error querying details for LSID !\n", optionLSID);
+
+                lua_pushinteger(L, 99);
+                return 1;
+            }
+            Sql_GetData(SqlHandle, 1, &extra, &extra_length);
+            LSName = (char*)Sql_GetData(SqlHandle, 0);
+
+            if ((PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0) && (optionLSID != 0) && (extra) && (extra_length != 0))
             {
                 PItem = itemutils::GetItem(0x0203); // <-- linkpearl
 
@@ -17014,17 +17042,18 @@ inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
 
                     CItemLinkshell* linkPearl = (CItemLinkshell*)PItem;
 
-                    linkPearl->SetLSID(newlinkShell->getID());
-                    linkPearl->SetLSColor(newlinkShell->getColor());
-                    linkPearl->setSignature((int8*)newlinkShell->getName()); // <-- this is probably wrong
+                    EncodeStringLinkshell((int8*)LSName.c_str(), EncodedString);
+                    linkPearl->setSignature(EncodedString);
+                    memcpy(PItem->m_extra, extra, (extra_length > sizeof(PItem->m_extra) ? sizeof(PItem->m_extra) : extra_length));
 
                     SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, false);
 
                     if (SlotID != ERROR_SLOTID)
                     {
-                        DecodeStringLinkshell((int8*)newlinkShell->getName(), DecodedName);
-                        ShowNotice(CL_CYAN"lsConciergeUpdate: %s aquired Linkpearl for %s \n" CL_RESET, PChar->GetName(), DecodedName);
-                        // update SQL to lower pearl count by 1
+                        charutils::SetCharVar(PChar->id, "LSCON_LAST_PURCHASE", CVanaTime::getInstance()->getTimeAbsolute());
+
+                        ShowNotice(CL_CYAN"lsConciergeUpdate: %s aquired Linkpearl for %s \n" CL_RESET, PChar->GetName(), LSName.c_str());
+                        // Update SQL to lower pearl count by 1
                         // UPDATE linkshell_concierge SET lspearlcount = lspearlcount - 1 WHERE linkshellid = 6 and npcid = 17764609 LIMIT 1
 
                         qStr = ("UPDATE linkshell_concierge SET lspearlcount = lspearlcount - 1  ");
@@ -17042,7 +17071,7 @@ inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
                         ret = Sql_Query(SqlHandle, qStr.c_str());
                         if (ret != SQL_SUCCESS)
                         {
-                            ShowNotice(CL_YELLOW"lsConciergeUpdate: Failed to update pearlcount for %s \n" CL_RESET, newlinkShell->getName());
+                            ShowNotice(CL_YELLOW"lsConciergeUpdate: Failed to update pearlcount for %s \n" CL_RESET, LSName.c_str());
                         }
 
                         qStr = ("DELETE FROM linkshell_concierge WHERE lspearlcount < 1 ");
@@ -17070,7 +17099,7 @@ inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
             break;
         default:
             // Unknown option ?
-            DSP_DEBUG_BREAK_IF(true);
+            TPZ_DEBUG_BREAK_IF(true);
             lua_pushinteger(L, 0);
             return 1;
         }
@@ -17105,6 +17134,9 @@ inline int32 CLuaBaseEntity::lsConciergeRegister(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 8) || !lua_isnumber(L, 8));
 
     std::string qStr;
+    uint32 i = 0;
+    uint8 extra[0x18] = { 0 };
+    bool ls_found = false;
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
@@ -17132,8 +17164,30 @@ inline int32 CLuaBaseEntity::lsConciergeRegister(lua_State *L)
             return 1;
         }
 
-        qStr = "INSERT INTO linkshell_concierge(npcid, linkshellid, lslanguage, lspearlcount, lsactivedays, lstimezone, lstimeofday, madebyplayerid) VALUES(%u,%u,%u,%u,%u,%u,%u,%u);";
-        if (Sql_Query(SqlHandle, qStr.c_str(), npcid, myLinkshellID, vLang, vCount, vDays, vTimeZone, vTimeOfDay, m_PBaseEntity->id) == SQL_ERROR)
+        for (i = 0; i < 2; i++) {
+            CItem* PItem = ((CCharEntity*)m_PBaseEntity)->getEquip((SLOTTYPE)(i + SLOT_LINK1));
+
+            if ((PItem != nullptr) && PItem->isType(ITEM_LINKSHELL))
+            {
+                CItemLinkshell* PLinkShell = (CItemLinkshell*)PItem;
+                if (PLinkShell->GetLSID() == myLinkshellID) {
+                    ls_found = true;
+                    memcpy(extra, PLinkShell->m_extra, sizeof(extra));
+                    ref<LSTYPE>(extra, 0x08) = LSTYPE_LINKPEARL;
+                }
+            }
+        }
+        if (!ls_found) {
+            ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": Linkshell item with Linkshell ID %u not found in inventory of player: %u\n", myLinkshellID, m_PBaseEntity->id);
+
+            lua_pushinteger(L, 99);
+            return 1;
+        }
+
+        char extra_encoded[sizeof(extra) * 2 + 1];
+        Sql_EscapeStringLen(SqlHandle, extra_encoded, (const char*)extra, sizeof(extra));
+        qStr = "INSERT INTO linkshell_concierge(npcid, linkshellid, extra, lslanguage, lspearlcount, lsactivedays, lstimezone, lstimeofday, madebyplayerid) VALUES(%u,%u,'%s',%u,%u,%u,%u,%u,%u);";
+        if (Sql_Query(SqlHandle, qStr.c_str(), npcid, myLinkshellID, extra_encoded, vLang, vCount, vDays, vTimeZone, vTimeOfDay, m_PBaseEntity->id) == SQL_ERROR)
         {
             ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": error adding Linkshell %u by player: %u\n", myLinkshellID, m_PBaseEntity->id);
 

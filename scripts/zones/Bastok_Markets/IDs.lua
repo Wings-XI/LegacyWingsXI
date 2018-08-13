@@ -68,10 +68,11 @@ zones[tpz.zone.BASTOK_MARKETS] =
         RETRIEVE_DIALOG_ID          = 12879, -- You retrieve <item> from the porter moogle's care.
         TURNING_IN_SPARKS           = 14205, -- Ohohoho... Turning in sparks, I see.
         NOT_ENOUGH_SPARKS           = 14230, -- You do not possess enough sparks of eminence to complete the transaction.
-        LS_CONCIERGE_LISTING_CANCEL = 14319, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
-        LS_CONCIERGE_REGISTERED1    = 14371, -- Your registration is officially complete.
-        LS_CONCIERGE_REGISTERED2    = 14372, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
-        LS_CONCIERGE_ALREADY_LISTED = 14373, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
+        LS_CONCIERGE_LISTING_CANCEL = 14349, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_SAME_DAY       = 14353, -- In the interest of fairness, I am unable to distribute multiple linkpearls to someone on the same day. Please come back tomorrow.
+        LS_CONCIERGE_REGISTERED1    = 14401, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2    = 14402, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED = 14403, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         },
     mob =
     {

@@ -26,6 +26,7 @@ CREATE TABLE `linkshell_concierge` (
   `listingid` int(10) NOT NULL AUTO_INCREMENT,
   `npcid` int(10) unsigned NOT NULL DEFAULT '0',
   `linkshellid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `extra` tinyblob DEFAULT NULL,
   `lslanguage` tinyint(3) unsigned NOT NULL DEFAULT '2',
   `lspearlcount` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `lsactivedays` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -34,7 +35,7 @@ CREATE TABLE `linkshell_concierge` (
   `madebyplayerid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`listingid`),
   UNIQUE KEY `listingid_UNIQUE` (`listingid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Contains information about what linkshell the linkshell concierges have';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Contains information about what linkshell the linkshell concierges have';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
