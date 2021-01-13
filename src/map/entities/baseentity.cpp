@@ -29,24 +29,24 @@
 
 CBaseEntity::CBaseEntity()
 {
-    id = 0;
-    targid = 0;
-    objtype = ENTITYTYPE::TYPE_NONE;
+    id       = 0;
+    targid   = 0;
+    objtype  = ENTITYTYPE::TYPE_NONE;
     status = STATUS_DISAPPEAR;
     m_TargID = 0;
     memset(&look, 0, sizeof(look));
     memset(&mainlook, 0, sizeof(mainlook));
     memset(&loc, 0, sizeof(loc));
-    animation = ANIMATION_NONE;
+    animation    = ANIMATION_NONE;
     animationsub = 0;
-    speed = 50 + map_config.speed_mod;
-    speedsub = 50 + map_config.speed_mod;
-    namevis = 1;
+    speed        = 50 + map_config.speed_mod;
+    speedsub     = 50 + map_config.speed_mod;
+    namevis = 0;
     allegiance = 0;
-    updatemask = 0;
-    PAI = nullptr;
+    updatemask   = 0;
+    PAI          = nullptr;
     PBattlefield = nullptr;
-    PInstance = nullptr;
+    PInstance    = nullptr;
     animStart = false;
     animPath = 0;
     animBegin = 0;
@@ -56,7 +56,7 @@ CBaseEntity::~CBaseEntity()
 {
     if (PBattlefield)
         PBattlefield->RemoveEntity(this, BATTLEFIELD_LEAVE_CODE_WARPDC);
-}
+    }
 
 void CBaseEntity::Spawn()
 {
@@ -75,7 +75,7 @@ void CBaseEntity::FadeOut()
 
 const int8* CBaseEntity::GetName()
 {
-	return (const int8*)name.c_str();
+    return (const int8*)name.c_str();
 }
 
 uint16 CBaseEntity::getZone()
@@ -85,41 +85,41 @@ uint16 CBaseEntity::getZone()
 
 float CBaseEntity::GetXPos()
 {
-	return loc.p.x;
+    return loc.p.x;
 }
 
 float CBaseEntity::GetYPos()
 {
-	return loc.p.y;
+    return loc.p.y;
 }
 
 float CBaseEntity::GetZPos()
 {
-	return loc.p.z;
+    return loc.p.z;
 }
 
 uint8 CBaseEntity::GetRotPos()
 {
-	return loc.p.rotation;
+    return loc.p.rotation;
 }
 
 void CBaseEntity::HideName(bool hide)
 {
-	if(hide)
-	{
-		// I totally guessed this number
-		namevis |= FLAG_HIDE_NAME;
-	}
-	else
-	{
-		namevis &= ~FLAG_HIDE_NAME;
-	}
+    if (hide)
+    {
+        // I totally guessed this number
+        namevis |= FLAG_HIDE_NAME;
+    }
+    else
+    {
+        namevis &= ~FLAG_HIDE_NAME;
+    }
     updatemask |= UPDATE_HP;
 }
 
 bool CBaseEntity::IsNameHidden()
 {
-	return namevis & FLAG_HIDE_NAME;
+    return namevis & FLAG_HIDE_NAME;
 }
 
 bool CBaseEntity::IsTargetable()
@@ -140,7 +140,7 @@ CBaseEntity* CBaseEntity::GetEntity(uint16 targid, uint8 filter)
         return PInstance->GetEntity(targid, filter);
     else
         return loc.zone->GetEntity(targid, filter);
-}
+    }
 
 void CBaseEntity::ResetLocalVars()
 {
