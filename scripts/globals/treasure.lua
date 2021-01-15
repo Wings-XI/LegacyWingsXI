@@ -860,7 +860,7 @@ local treasureInfo =
                 },
                 gil = {0.652, 7320, 18000},
                 gem = {0.044, 791, 801, 810, 784, 802, 797, 803, 805},
-                item = {0.304, 14670},
+                item = {0.304, 14670, 13548},
             },
             [tpz.zone.THE_BOYAHDA_TREE] = -- 153
             {
@@ -1332,7 +1332,8 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
     local mJob = player:getMainJob()
     local mLvl = player:getMainLvl()
     local activeHands = player:getCharVar("BorghertzAlreadyActiveWithJob")
-    local illusionCooldown  = npc:getLocalVar("illusionCooldown")
+    --local illusionCooldown  = npc:getLocalVar("illusionCooldown")
+    local illusionCooldown  = player:getCharVar("illusionCooldown")
 
     -- determine type of key traded
     local keyTraded = nil
@@ -1500,9 +1501,11 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
 
     player:confirmTrade()
     if chestType == tpz.treasure.type.CHEST then
-        npc:setLocalVar("illusionCooldown", os.time() + math.random(CHEST_MIN_ILLUSION_TIME, CHEST_MAX_ILLUSION_TIME))
+        --npc:setLocalVar("illusionCooldown", os.time() + math.random(CHEST_MIN_ILLUSION_TIME, CHEST_MAX_ILLUSION_TIME))
+        player:setCharVar("illusionCooldown", os.time() + math.random(CHEST_MIN_ILLUSION_TIME, CHEST_MAX_ILLUSION_TIME))
     else
-        npc:setLocalVar("illusionCooldown", os.time() + math.random(COFFER_MIN_ILLUSION_TIME, COFFER_MAX_ILLUSION_TIME))
+        --npc:setLocalVar("illusionCooldown", os.time() + math.random(COFFER_MIN_ILLUSION_TIME, COFFER_MAX_ILLUSION_TIME))
+        player:setCharVar("illusionCooldown", os.time() + math.random(COFFER_MIN_ILLUSION_TIME, COFFER_MAX_ILLUSION_TIME))
     end
     moveChest(npc, zoneId, chestType)
 end

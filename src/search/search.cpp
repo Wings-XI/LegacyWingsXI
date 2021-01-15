@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -181,6 +181,7 @@ int32 main(int32 argc, char **argv)
     if (iResult != 0)
     {
         ShowError("WSAStartup failed with error: %d\n", iResult);
+        CloseLog();
         return 1;
     }
 
@@ -202,6 +203,7 @@ int32 main(int32 argc, char **argv)
 #ifdef WIN32
         WSACleanup();
 #endif
+        CloseLog();
         return 1;
     }
 
@@ -217,6 +219,7 @@ int32 main(int32 argc, char **argv)
         ShowError("socket failed with error: %ld\n", errno);
         freeaddrinfo(result);
 #endif
+        CloseLog();
         return 1;
     }
 
@@ -234,6 +237,7 @@ int32 main(int32 argc, char **argv)
         freeaddrinfo(result);
         close(ListenSocket);
 #endif
+        CloseLog();
         return 1;
     }
 
@@ -250,6 +254,7 @@ int32 main(int32 argc, char **argv)
         ShowError("listen failed with error: %d\n", errno);
         close(ListenSocket);
 #endif
+        CloseLog();
         return 1;
     }
 
@@ -298,6 +303,7 @@ int32 main(int32 argc, char **argv)
         ShowError("shutdown failed with error: %d\n", errno);
         close(ClientSocket);
 #endif
+        CloseLog();
         return 1;
     }
 
@@ -308,6 +314,7 @@ int32 main(int32 argc, char **argv)
 #else
     close(ClientSocket);
 #endif
+    CloseLog();
     return 0;
 }
 
@@ -979,4 +986,9 @@ int32 ah_cleanup(time_point tick, CTaskMgr::CTask* PTask)
     data.ExpireAHItems();
 
     return 0;
+}
+
+void do_final(int code)
+{
+    exit(code);
 }

@@ -34,7 +34,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.VIT, -1)
     target:addMod(tpz.mod.INT, -1)
     target:addMod(tpz.mod.MND, -1)
-    target:addMod(tpz.mod.SLEEPRES, 5)
+    target:addMod(tpz.mod.SLEEPRESTRAIT, 5)
 end
 
 function onEffectLose(target, effect)
@@ -44,5 +44,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.VIT, -1)
     target:delMod(tpz.mod.INT, -1)
     target:delMod(tpz.mod.MND, -1)
-    target:delMod(tpz.mod.SLEEPRES, 5)
+    target:delMod(tpz.mod.SLEEPRESTRAIT, 5)
 end

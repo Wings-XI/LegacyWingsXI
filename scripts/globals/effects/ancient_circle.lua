@@ -8,6 +8,7 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
    target:addMod(tpz.mod.DRAGON_KILLER, effect:getPower())
+   target:addMod(tpz.mod.DRAGON_KILLER+1000, 15)
 end
 
 function onEffectTick(target, effect)
@@ -15,4 +16,5 @@ end
 
 function onEffectLose(target, effect)
    target:delMod(tpz.mod.DRAGON_KILLER, effect:getPower())
+   target:delMod(tpz.mod.DRAGON_KILLER+1000, 15)
 end

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _COMMON_SQL_H
@@ -8,6 +8,8 @@
 	#include "../common/cbasetypes.h"
 #endif
 	//#include <stdarg.h>// va_list
+
+#include <string>
 
 #ifdef WIN32
 	#include <winsock2.h>
@@ -75,6 +77,12 @@ struct Sql_t
 	MYSQL_ROW row;
 	unsigned long* lengths;
 	int keepalive;
+    // The connection details (in case we want to reconnect)
+    std::string host;
+    uint16 port;
+    std::string username;
+    std::string password;
+    std::string database;
 };
 
 /// Allocates and initializes a new Sql handle.

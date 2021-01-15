@@ -23,10 +23,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local guildSkillId = tpz.skill.LEATHERCRAFT
-    local stock = tpz.shop.generalGuildStock[guildSkillId]
-    tpz.shop.generalGuild(player, stock, guildSkillId)
-    player:showText(npc, ID.text.CLETAE_DIALOG)
+    if (player:sendGuild(529,3,18,4)) then
+        player:showText(npc, ID.text.CLETAE_DIALOG)
+    end
 end
 
 function onEventUpdate(player, csid, option)

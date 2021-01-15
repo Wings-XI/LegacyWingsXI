@@ -24,9 +24,9 @@ function onTrigger(player, npc)
         local stock =
         {
             4503,   184,  -- Buburimu Grape
-            1120,  1620,  -- Casablanca
+            1120,  1656,  -- Casablanca
             4359,   220,  -- Dhalmel Meat
-            614,     72,  -- Mhaura Garlic
+            614,     73,  -- Mhaura Garlic
             4445,    40   -- Yagudo Cherry
         }
         tpz.shop.general(player, stock, WINDURST)

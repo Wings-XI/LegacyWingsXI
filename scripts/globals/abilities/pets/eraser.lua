@@ -40,9 +40,47 @@ function onPetAbility(target, automaton, skill, master, action)
         removed = removed + 1
     until (toremove <= 0)
 
-    for i = 1, maneuvers do
+    --for i = 1, maneuvers do
         master:delStatusEffectSilent(tpz.effect.LIGHT_MANEUVER)
-    end
+        master:delStatusEffectSilent(tpz.effect.LIGHT_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.LIGHT_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.LIGHT_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.DARK_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.DARK_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.DARK_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.DARK_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.FIRE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.FIRE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.FIRE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.FIRE_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.ICE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.ICE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.ICE_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.ICE_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.THUNDER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.THUNDER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.THUNDER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.THUNDER_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.EARTH_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.EARTH_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.EARTH_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.EARTH_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.WATER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WATER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WATER_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WATER_MANEUVER)
+        
+        master:delStatusEffectSilent(tpz.effect.WIND_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WIND_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WIND_MANEUVER)
+        master:delStatusEffectSilent(tpz.effect.WIND_MANEUVER)
+    --end
 
     return removed
 end

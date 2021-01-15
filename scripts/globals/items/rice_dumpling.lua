@@ -42,7 +42,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.HPHEAL, 2)
     target:addMod(tpz.mod.MPHEAL, 2)
     target:addMod(tpz.mod.ACC, 5)
-    target:addMod(tpz.mod.PARALYZERES, 4)
+    target:addMod(tpz.mod.PARALYZERESTRAIT, 4)
 end
 
 function onEffectLose(target, effect)
@@ -57,5 +57,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.HPHEAL, 2)
     target:delMod(tpz.mod.MPHEAL, 2)
     target:delMod(tpz.mod.ACC, 5)
-    target:delMod(tpz.mod.PARALYZERES, 4)
+    target:delMod(tpz.mod.PARALYZERESTRAIT, 4)
 end

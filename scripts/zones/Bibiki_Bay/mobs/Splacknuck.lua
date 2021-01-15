@@ -11,7 +11,9 @@ function onMobInitialize(mob)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENWATER)
+    local params = {}
+	params.power = 30
+	return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENWATER, params)
 end
 
 function onMobDeath(mob, player, isKiller)

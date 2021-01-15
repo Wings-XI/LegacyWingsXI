@@ -32,8 +32,8 @@ function onTrigger(player, arg1, arg2)
     end
 
     -- validate power
-    if (power == nil or power > 3) then
-        power = 3
+    if (power == nil or power > 5) then
+        power = 5
     elseif (power < 1) then
         power = 1
     end

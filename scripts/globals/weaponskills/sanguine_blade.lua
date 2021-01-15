@@ -52,6 +52,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     if (target:isUndead() == false) then
         player:addHP((damage/100) * drain)
     end
-
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SWORD, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

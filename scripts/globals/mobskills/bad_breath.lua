@@ -23,8 +23,13 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
     MobStatusEffectMove(mob, target, tpz.effect.BLINDNESS, 15, 0, 60)
     MobStatusEffectMove(mob, target, tpz.effect.WEIGHT, 50, 0, 60)
+    
+    local cap = 500
+    if mob:getID() == 17613130 then -- cap. cassie
+        cap = 250
+    end
 
-    local dmgmod = MobBreathMove(mob, target, 0.15, 3, tpz.magic.ele.EARTH, 500)
+    local dmgmod = MobBreathMove(mob, target, 0.15, 3, tpz.magic.ele.EARTH, cap)
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.EARTH)
 

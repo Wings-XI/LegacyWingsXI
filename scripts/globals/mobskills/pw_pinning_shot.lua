@@ -32,6 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 30)
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
 
     return dmg
 end

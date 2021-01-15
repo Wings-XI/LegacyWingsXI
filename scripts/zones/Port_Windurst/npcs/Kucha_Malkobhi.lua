@@ -23,7 +23,7 @@ function onTrigger(player, npc)
     }
 
     player:showText(npc, ID.text.KUCHAMALKOBHI_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, WINDURST)
 end
 
 function onEventUpdate(player, csid, option)

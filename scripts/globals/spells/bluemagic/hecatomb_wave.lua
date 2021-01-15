@@ -51,10 +51,10 @@ function onSpellCast(caster, target, spell)
     damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    if (damage > 0 and resist > 0.125) then
+    if (damage > 0 and resist > 0.25) then
         local typeEffect = tpz.effect.BLINDNESS
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 5, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 5, 0, math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.BLIND, target)))
     end
 
     return damage

@@ -17,10 +17,10 @@ function onEffectTick(target, effect)
     else
         level = target:getSubLvl()
     end
-    local basemp = math.floor((level - 15)/10)
+    local basemp = 2
     local bonus = target:getMod(tpz.mod.SUBLIMATION_BONUS)
 
-    local dmg = 2 + bonus
+    local dmg = 2
 
     local store = effect:getPower() + basemp + bonus
 

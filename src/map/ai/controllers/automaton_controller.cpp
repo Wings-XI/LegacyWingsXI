@@ -91,50 +91,51 @@ void CAutomatonController::setMagicCooldowns()
     {
     case HEAD_HARLEQUIN:
     {
-        m_magicCooldown = 10s;
-        m_enfeebleCooldown = 10s;
-        m_healCooldown = 15s;
+        m_magicCooldown = 37s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 31s;
     }
     break;
     case HEAD_VALOREDGE:
     {
-        m_magicCooldown = 20s;
-        m_healCooldown = 20s;
+        m_magicCooldown = 57s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 46s;
     }
     break;
     case HEAD_SHARPSHOT:
     {
-        m_magicCooldown = 12s;
-        m_enfeebleCooldown = 12s;
-        m_healCooldown = 18s; // Guess
+        m_magicCooldown = 55s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 47s;
     }
     break;
     case HEAD_STORMWAKER:
     {
-        m_magicCooldown = 10s;
-        m_enfeebleCooldown = 12s;
-        m_healCooldown = 15s; // Guess
-        m_elementalCooldown = 33s; // Guess
-        m_enhanceCooldown = 10s; // Guess
+        m_magicCooldown = 32s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 27s;
     }
     break;
     case HEAD_SOULSOOTHER:
     {
-        m_magicCooldown = 4s;
-        m_enfeebleCooldown = 4s;
-        m_healCooldown = 15s;
-        m_enhanceCooldown = 15s;
-        m_statusCooldown = 15s;
+        m_magicCooldown = 31s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 25s;
     }
     break;
     case HEAD_SPIRITREAVER:
     {
-        m_magicCooldown = 10s;
-        m_enfeebleCooldown = 10s;
-        m_elementalCooldown = 33s;
-        m_enhanceCooldown = 135s;
+        m_magicCooldown = 33s;
+        if (PAutomaton->getFrame() == FRAME_STORMWAKER)
+            m_magicCooldown = 27s;
     }
     }
+
+    m_enfeebleCooldown = m_magicCooldown;
+    m_healCooldown = m_magicCooldown;
+    m_elementalCooldown = m_magicCooldown;
+    m_enhanceCooldown = m_magicCooldown;
 }
 
 bool CAutomatonController::isRanged()
@@ -225,7 +226,7 @@ void CAutomatonController::Move()
 
 bool CAutomatonController::TryAction()
 {
-    if (m_Tick > m_LastActionTime + (m_actionCooldown - std::chrono::milliseconds(PAutomaton->getMod(Mod::AUTO_DECISION_DELAY) * 10)))
+    if (m_Tick > m_LastActionTime + (m_actionCooldown - std::chrono::milliseconds(PAutomaton->getMod(Mod::AUTO_DECISION_DELAY))))
     {
         m_LastActionTime = m_Tick;
         PAutomaton->PAI->EventHandler.triggerListener("AUTOMATON_AI_TICK", PAutomaton, PTarget);
@@ -236,6 +237,9 @@ bool CAutomatonController::TryAction()
 
 bool CAutomatonController::TryShieldBash()
 {
+    if (PAutomaton->getFrame() != FRAME_VALOREDGE)
+        return false;
+
     CState* PState = PTarget->PAI->GetCurrentState();
     if (m_shieldbashCooldown > 0s && PState && PState->CanInterrupt() &&
         m_Tick > m_LastShieldBashTime + (m_shieldbashCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_SHIELD_BASH_DELAY))))
@@ -251,6 +255,8 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         m_Tick <= m_LastMagicTime + (m_magicCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY))) || !CanCastSpells())
         return false;
 
+    bool improvedHealingAI = PAutomaton->getMod(Mod::AUTO_HEALING_THRESHOLD);
+
     switch (PAutomaton->getHead())
     {
     case HEAD_VALOREDGE:
@@ -258,143 +264,250 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         if (TryHeal(maneuvers))
         {
             m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
     }
     break;
     case HEAD_SHARPSHOT:
-    {
-        if (maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
-        {
-            m_LastHealTime = m_Tick;
-            return true;
-        }
-
-        if (TryEnfeeble(maneuvers))
-        {
-            m_LastEnfeebleTime = m_Tick;
-            return true;
-        }
-        else if (!maneuvers.light && TryHeal(maneuvers))
-        {
-            m_LastHealTime = m_Tick;
-            return true;
-        }
-    }
-    break;
     case HEAD_HARLEQUIN:
     {
-        if (maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
+        uint8 HPP = 0;
+        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive())
+            HPP = PAutomaton->GetBattleTarget()->GetHPP();
+
+        if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers))
         {
             m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
 
-        if (TryEnfeeble(maneuvers))
-        {
-            m_LastEnfeebleTime = m_Tick;
-            return true;
-        }
-        else if (!maneuvers.light && TryHeal(maneuvers))
+        if (HPP > 75 && TryHeal(maneuvers)) // 100%-75% try heal first
         {
             m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (HPP > 50 && TryEnfeeble(maneuvers)) // 100%-50% do enfeebles
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (TryHeal(maneuvers)) // below 50% do healing mode. also fallback
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
     }
     break;
     case HEAD_STORMWAKER:
     {
+        bool under75 = false;
+        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() < 75)
+            under75 = true;
+
         bool lowHP = PTarget->GetHPP() <= 30 && PTarget->health.hp <= 300;
+
+        int maxNonIceManeuver = maneuvers.dark;
+        maxNonIceManeuver = maneuvers.earth > maxNonIceManeuver ? maneuvers.earth : maxNonIceManeuver;
+        maxNonIceManeuver = maneuvers.water > maxNonIceManeuver ? maneuvers.water : maxNonIceManeuver;
+        maxNonIceManeuver = maneuvers.wind > maxNonIceManeuver ? maneuvers.wind : maxNonIceManeuver;
+        maxNonIceManeuver = maneuvers.fire > maxNonIceManeuver ? maneuvers.fire : maxNonIceManeuver;
+        maxNonIceManeuver = maneuvers.thunder > maxNonIceManeuver ? maneuvers.thunder : maxNonIceManeuver;
+        maxNonIceManeuver = maneuvers.light > maxNonIceManeuver ? maneuvers.light : maxNonIceManeuver;
+
         if (lowHP && TryElemental(maneuvers))  // Mob low HP -> Nuke
         {
-            m_LastElementalTime = m_Tick;
-            return true;
-        }
-
-        if (maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
-        {
             m_LastHealTime = m_Tick;
-            return true;
-        }
-        else if (!lowHP && maneuvers.ice && TryElemental(maneuvers))  // Ice -> Nuke
-        {
             m_LastElementalTime = m_Tick;
-            return true;
-        }
-
-        if (TryEnfeeble(maneuvers))
-        {
             m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
-        else if (!maneuvers.light && TryHeal(maneuvers))
+
+        if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
         {
             m_LastHealTime = m_Tick;
-            return true;
-        }
-        else if (!lowHP && !maneuvers.ice && TryElemental(maneuvers))
-        {
             m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
-        else if (TryEnhance())
+
+        if (maxNonIceManeuver > 1 && TryEnfeeble(maneuvers)) // next prio enfeebling if 2 or more of associated maneuver
         {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
             m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (!under75 && TryEnfeeble(maneuvers)) // next prio enfeebling if over 75% hp
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (!maneuvers.ice && maneuvers.light && TryHeal(maneuvers)) // no ice, has light, do heal
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (TryElemental(maneuvers)) // elemental magic by default
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (TryEnfeeble(maneuvers)) // fallback
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+
+        if (TryHeal(maneuvers)) // fallback
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
     }
     break;
     case HEAD_SOULSOOTHER:
     {
-        if (maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
+        bool under75 = false;
+        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() < 75)
+            under75 = true;
+
+        if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
         {
             m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
 
         if (TryStatusRemoval(maneuvers))
         {
-            m_LastStatusTime = m_Tick;
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
-        else if (!maneuvers.light && TryHeal(maneuvers))
+        else if (under75 && TryHeal(maneuvers))
         {
             m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
         else if (TryEnhance())
         {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
             m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
         else if (TryEnfeeble(maneuvers))
         {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+        else if (TryHeal(maneuvers))
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
     }
     break;
     case HEAD_SPIRITREAVER:
     {
-        if (maneuvers.ice && TryElemental(maneuvers))  // Ice -> Nuke
+        if (maneuvers.ice >= maneuvers.dark && TryElemental(maneuvers))  // Ice -> Nuke
         {
+            m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
-            return true;
-        }
-        else if (maneuvers.dark && TryEnhance())
-        {
-            m_LastEnhanceTime = m_Tick;
-            return true;
-        }
-        else if ((maneuvers.dark || PAutomaton->GetHPP() <= 75 || PAutomaton->GetMPP() <= 75) && TryEnfeeble(maneuvers)) // Dark or self HPP/MPP <= 75 -> Enfeeble
-        {
             m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
+            return true;
+        }
+        else if ((maneuvers.dark || PAutomaton->GetHPP() <= 75 || PAutomaton->GetMPP() <= 75) && TryEnfeeble(maneuvers)) // Dark + logic for aspir/drain
+        {
+            m_LastHealTime = m_Tick;
+            m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
 
-        if (!maneuvers.ice && TryElemental(maneuvers))
+        if (TryElemental(maneuvers))
         {
+            m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
+            m_LastEnfeebleTime = m_Tick;
+            m_LastEnhanceTime = m_Tick;
+            m_LastMagicTime = m_Tick;
             return true;
         }
     }
@@ -404,7 +517,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_healCooldown == 0s || m_Tick <= m_LastHealTime + (m_healCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_HEALING_DELAY))))
+    if (!PAutomaton->PMaster || m_healCooldown == 0s || m_Tick <= m_LastHealTime + (m_healCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY))))
         return false;
 
     float threshold = 0;
@@ -523,7 +636,7 @@ inline bool resistanceComparator(const std::pair<SpellID, int16>& firstElem, con
 
 bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown)
+    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
         return false;
 
     std::vector<SpellID> castPriority;
@@ -546,12 +659,12 @@ bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
     if (PAutomaton->getMod(Mod::AUTO_SCAN_RESISTS))
     {
         std::vector<std::pair<SpellID, int16>> reslist{
-            std::make_pair(SpellID::Fire, PTarget->getMod(Mod::FIRERES)),
-            std::make_pair(SpellID::Blizzard, PTarget->getMod(Mod::ICERES)),
-            std::make_pair(SpellID::Aero, PTarget->getMod(Mod::WINDRES)),
-            std::make_pair(SpellID::Stone, PTarget->getMod(Mod::EARTHRES)),
-            std::make_pair(SpellID::Thunder, PTarget->getMod(Mod::THUNDERRES)),
-            std::make_pair(SpellID::Water, PTarget->getMod(Mod::WATERRES))
+            std::make_pair(SpellID::Fire, 1000 / PTarget->getMod(Mod::SDT_FIRE)),
+            std::make_pair(SpellID::Blizzard, 1000 / PTarget->getMod(Mod::SDT_ICE)),
+            std::make_pair(SpellID::Aero, 1000 / PTarget->getMod(Mod::SDT_WIND)),
+            std::make_pair(SpellID::Stone, 1000 / PTarget->getMod(Mod::SDT_EARTH)),
+            std::make_pair(SpellID::Thunder, 1000 / PTarget->getMod(Mod::SDT_THUNDER)),
+            std::make_pair(SpellID::Water, 1000 / PTarget->getMod(Mod::SDT_WATER)),
         };
         std::stable_sort(reslist.begin(), reslist.end(), resistanceComparator);
         for (std::pair<SpellID, int16>& res : reslist)
@@ -610,7 +723,7 @@ bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown)
+    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
         return false;
 
     std::vector<SpellID> castPriority;
@@ -639,62 +752,40 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
         if (!PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA))
         {
             if (maneuvers.dark) // Dark -> Bio
-            {
                 castPriority.push_back(SpellID::Bio_II);
-            }
             else
-            {
                 defaultPriority.push_back(SpellID::Bio_II);
-            }
         }
 
         if (!PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO))
         {
             if (maneuvers.light)
-            {
                 castPriority.push_back(SpellID::Dia_II);
-            }
             else
-            {
                 defaultPriority.push_back(SpellID::Dia_II);
-            }
         }
 
         if (!PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DIA))
         {
             if (maneuvers.dark) // Dark -> Bio
-            {
                 castPriority.push_back(SpellID::Bio);
-            }
             else
-            {
                 defaultPriority.push_back(SpellID::Bio);
-            }
         }
 
         if (!PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BIO))
         {
             if (maneuvers.light)
-            {
                 castPriority.push_back(SpellID::Dia);
-            }
             else
-            {
                 defaultPriority.push_back(SpellID::Dia);
-            }
         }
 
 
         if (maneuvers.water) // Water -> Poison
-        {
-            castPriority.push_back(SpellID::Poison_II);
             castPriority.push_back(SpellID::Poison);
-        }
         else
-        {
-            defaultPriority.push_back(SpellID::Poison_II);
             defaultPriority.push_back(SpellID::Poison);
-        }
 
         if (maneuvers.wind) // Wind -> Silence
             castPriority.push_back(SpellID::Silence);
@@ -715,11 +806,6 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
             castPriority.push_back(SpellID::Paralyze);
         else
             defaultPriority.push_back(SpellID::Paralyze);
-
-        if (maneuvers.fire) // Fire -> Addle
-            castPriority.push_back(SpellID::Addle);
-        else
-            defaultPriority.push_back(SpellID::Addle);
     }
     break;
     case HEAD_SPIRITREAVER:
@@ -775,15 +861,9 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
 
 
             if (maneuvers.water >= 2) // 2 Water -> Poison
-            {
-                castPriority.push_back(SpellID::Poison_II);
                 castPriority.push_back(SpellID::Poison);
-            }
             else
-            {
-                defaultPriority.push_back(SpellID::Poison_II);
                 defaultPriority.push_back(SpellID::Poison);
-            }
 
             if (maneuvers.wind >= 2) // 2 Wind -> Silence
                 castPriority.push_back(SpellID::Silence);
@@ -799,11 +879,6 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
                 castPriority.push_back(SpellID::Paralyze);
             else
                 defaultPriority.push_back(SpellID::Paralyze);
-
-            if (maneuvers.fire >= 2) // 2 Fire -> Addle
-                castPriority.push_back(SpellID::Addle);
-            else
-                defaultPriority.push_back(SpellID::Addle);
         }
     }
     break;
@@ -887,11 +962,6 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
             castPriority.push_back(SpellID::Paralyze);
         else
             defaultPriority.push_back(SpellID::Paralyze);
-
-        if (maneuvers.fire) // Fire -> Addle
-            castPriority.push_back(SpellID::Addle);
-        else
-            defaultPriority.push_back(SpellID::Addle);
     }
     }
 
@@ -981,7 +1051,7 @@ bool CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryEnhance()
 {
-    if (!PAutomaton->PMaster || m_enhanceCooldown == 0s || m_Tick <= m_LastEnhanceTime + m_enhanceCooldown)
+    if (!PAutomaton->PMaster || m_enhanceCooldown == 0s || m_Tick <= m_LastEnhanceTime + m_enhanceCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
         return false;
 
     if (PAutomaton->getHead() == HEAD_SPIRITREAVER)

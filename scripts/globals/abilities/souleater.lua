@@ -14,5 +14,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-   player:addStatusEffect(tpz.effect.SOULEATER, 1, 0, 60)
+   local enmityPower = player:getMerit(tpz.merit.MUTED_SOUL)
+   player:addStatusEffect(tpz.effect.SOULEATER, enmityPower, 0, 60)
 end

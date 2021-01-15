@@ -30,9 +30,11 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.PARALYSIS
     local resist = applyResistanceEffect(caster, target, spell, params)
+    duration = duration * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
 
     if resist >= 0.5 then -- There are no quarter or less hits, if target resists more than .5 spell is resisted completely
-        if target:addStatusEffect(params.effect, potency, 0, duration * resist) then
+        if target:addStatusEffect(params.effect, potency, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             -- no effect

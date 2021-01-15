@@ -10,8 +10,8 @@ function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
-function onSpellCast(caster, target, spell)
-    local power = 15
+function onSpellCast(caster,target,spell)
+    local power = 10
     local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
     duration = calculateDurationForLvl(duration, 7, target:getMainLvl())
 

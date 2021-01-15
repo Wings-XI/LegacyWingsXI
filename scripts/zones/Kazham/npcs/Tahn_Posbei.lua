@@ -19,7 +19,7 @@ function onTrigger(player, npc)
         12583, 10833,    -- Beetle Harness
         12711,  5707,    -- Beetle Mittens
         12835,  8666,    -- Beetle Subligar
-        12967,  5332,    -- Beetre Leggins
+        12967,  5332,    -- Beetre Leggings
         12440,   404,    -- Leather Bandana
         12568,   618,    -- Leather Vest
         12696,   331,    -- Leather Gloves
@@ -28,7 +28,7 @@ function onTrigger(player, npc)
     }
 
     player:showText(npc, ID.text.TAHNPOSBEI_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, KAZHAM)
 end
 
 function onEventUpdate(player, csid, option)

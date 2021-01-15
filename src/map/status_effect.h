@@ -69,6 +69,7 @@ enum EFFECTFLAG
     EFFECTFLAG_INFLUENCE        = 0x1000000, // Influence effects - e.g. Signet, Sanction, Sigil, Ionis
     EFFECTFLAG_OFFLINE_TICK     = 0x2000000, // Duration elapses while offline
     EFFECTFLAG_AURA             = 0x4000000, // Is an aura type effect
+    EFFECTFLAG_ON_SYNC          = 0x8000000, // lose this effect on sync
 };
 
 enum EFFECT
@@ -722,12 +723,12 @@ enum EFFECT
     EFFECT_MEDITATE                 = 801, // Dummy effect for SAM Meditate JA
     EFFECT_ELEMENTALRES_DOWN        = 802, // Elemental resistance down
     EFFECT_FULL_SPEED_AHEAD         = 803, // Used to track Full Speed Ahead quest minigame
-    // EFFECT_PLACEHOLDER           = 804  // Description
+    EFFECT_SUPER_JUMP               = 804
     // 804-1022
-    // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
+    // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    804  // 768 real + 32 custom
+#define MAX_EFFECTID    900  // 768 real + 32 custom
 
 /************************************************************************
 *                                                                       *

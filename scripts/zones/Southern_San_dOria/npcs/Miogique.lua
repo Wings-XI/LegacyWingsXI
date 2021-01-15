@@ -24,7 +24,7 @@ function onTrigger(player, npc)
         12577,  2286, 3,    -- Brass Harness
         12705,  1255, 3,    -- Brass Mittens
         12448,   154, 3,    -- Bronze Cap
-        12576,   576, 3,    -- Bronze Harness
+        12576,   235, 3,    -- Bronze Harness
         12704,   128, 3,    -- Bronze Mittens
         12440,   396, 3,    -- Leather Bandana
         12696,   331, 3,    -- Leather Gloves

@@ -16,3 +16,8 @@ function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(math.random(7200, 9000)) -- 2 to 2.5 hours
 end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 9500)
+end

@@ -155,6 +155,7 @@ namespace luautils
     int32 VanadielHour(lua_State*);                                             // текущие Vanadiel часы
     int32 VanadielMinute(lua_State*);                                           // текущие Vanadiel минуты
     int32 VanadielDayOfTheYear(lua_State*);                                     // Gets Integer Value for Day of the Year (Jan 01 = Day 1)
+    int32 VanadielDayAbsolute(lua_State*);                                      // Gets Integer Value for Day since Vandiel epoch, used for training regimes
     int32 VanadielDayOfTheMonth(lua_State*);                                    // Gets day of the month (Feb 6 = Day 6)
     int32 VanadielDayOfTheWeek(lua_State*);                                     // Gets day of the week (Fire Earth Water Wind Ice Lightning Light Dark)
     int32 VanadielYear(lua_State*);                                             // Gets the current Vanadiel Year
@@ -185,6 +186,7 @@ namespace luautils
     int32 OnGameIn(CCharEntity* PChar, bool zoning);                            //
     int32 OnZoneIn(CCharEntity* PChar);                                         // triggers when a player zones into a zone
     void AfterZoneIn(CBaseEntity* PChar);                                      // triggers after a player has finished zoning in
+    void AfterZoneInLong(CBaseEntity* PChar);                                      // triggers after a player has finished zoning in (longer wait time)
     int32 OnZoneInitialise(uint16 ZoneID);                                      // triggers when zone is loaded
     int32 OnRegionEnter(CCharEntity* PChar, CRegion* PRegion);                  // when player enters a region of a zone
     int32 OnRegionLeave(CCharEntity* PChar, CRegion* Pregion);                  // when player leaves a region of a zone
@@ -250,6 +252,7 @@ namespace luautils
     int32 OnBattlefieldDestroy(CBattlefield* PBattlefield);							// triggers when BCNM is destroyed
 
     int32 OnMobWeaponSkill(CBaseEntity* PChar, CBaseEntity* PMob, CMobSkill* PMobSkill, action_t* action);                            // triggers when mob weapon skill is used
+    uint16 OnMobWeaponSkillPrepare(CBaseEntity* PMob, CBaseEntity* PTarget); // triggers before mob weapon skill is used, scripts can pick a WS for us
     int32 OnMobSkillCheck(CBaseEntity* PChar, CBaseEntity* PMob, CMobSkill* PMobSkill);                             // triggers before mob weapon skill is used, returns 0 if the move is valid
     int32 OnMobAutomatonSkillCheck(CBaseEntity* PChar, CAutomatonEntity* PAutomaton, CMobSkill* PMobSkill);
 
@@ -279,6 +282,7 @@ namespace luautils
     int32 OnSpikesDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, actionTarget_t* Action, uint32 damage);                         // for mobs with spikes
 
     int32 nearLocation(lua_State*);
+    int32 GetItemIDByName(lua_State*);
 
     int32 OnPlayerLevelUp(CCharEntity* PChar);
     int32 OnPlayerLevelDown(CCharEntity* PChar);
@@ -294,6 +298,17 @@ namespace luautils
     int32 SelectDailyItem(lua_State* L);
 
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
+
+    int32 OnFishingStart(CCharEntity* PChar, int32 RodID, int32 BaitID, int32 AreaID);      // triggers when player starts fishing in a zone
+
+    fishresponse_t* OnFishingCheck(CCharEntity* PChar, fishingrod_t* Rod, std::vector<fish_t>* FishList,
+        std::vector<fishmob_t>* MobList, uint8 AreaID, string_t AreaName, fishinglure_t* Lure, uint8 Difficulty); // fishing process hook check
+
+    catchresponse_t* OnFishingReelIn(CCharEntity* PChar, fishresponse_t* response, fishingrod_t* rod);     // triggers when player reels in the fish
+
+    int32 OnFishingAction(CCharEntity* PChar, int32 Action, int32 Stamina, int32 Special);  // triggers when fishing action happens to player
+    int32 OnFishingCatch(CCharEntity* PChar, uint8 CatchType, int32 CatchID);               // triggers when player catches fish
+    int32 OnFishingEnd(CCharEntity* PChar);                                                 // triggers when player stops fishing
 };
 
 #endif //- _LUAUTILS_H -

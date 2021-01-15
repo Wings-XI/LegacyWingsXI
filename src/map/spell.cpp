@@ -29,6 +29,7 @@
 #include "blue_spell.h"
 #include "status_effect_container.h"
 #include "utils/blueutils.h"
+#include "utils/petutils.h"
 #include "items/item_weapon.h"
 
 
@@ -181,7 +182,7 @@ bool CSpell::isSevere()
 
 bool CSpell::canHitShadow()
 {
-    return m_ID != SpellID::Meteor_II && canTargetEnemy();
+    return m_ID != SpellID::Meteor_II && m_ID != SpellID::Atomos && m_ID != SpellID::Odin && canTargetEnemy();
 }
 
 bool CSpell::dealsDamage()
@@ -603,7 +604,8 @@ namespace spell
             uint8 JobSLVL = spell->getJob(PCaster->GetSJob());
             uint8 requirements = spell->getRequirements();
 
-            if (PCaster->objtype == TYPE_MOB || (PCaster->objtype == TYPE_PET && static_cast<CPetEntity*>(PCaster)->getPetType() == PETTYPE_AUTOMATON) || PCaster->objtype == TYPE_TRUST)
+            if (PCaster->objtype == TYPE_MOB || (PCaster->objtype == TYPE_PET && static_cast<CPetEntity*>(PCaster)->getPetType() == PETTYPE_AUTOMATON) || PCaster->objtype == TYPE_TRUST ||
+                (PCaster->objtype == TYPE_PET && (CPetEntity*)PCaster && ((CPetEntity*)PCaster)->m_PetID <= PETID_DARKSPIRIT))
             {
                 // cant cast cause im hidden or untargetable
                 if (PCaster->IsNameHidden() || static_cast<CMobEntity*>(PCaster)->IsUntargetable())
@@ -636,14 +638,14 @@ namespace spell
                         usable = false;
                     }
                 }
-                if (requirements & SPELLREQ_ADDENDUM_BLACK && PCaster->GetMJob() == JOB_SCH)
+                if ((requirements & SPELLREQ_ADDENDUM_BLACK) && PCaster->GetMJob() == JOB_SCH)
                 {
                     if (!PCaster->StatusEffectContainer->HasStatusEffect({EFFECT_ADDENDUM_BLACK, EFFECT_ENLIGHTENMENT}))
                     {
                         usable = false;
                     }
                 }
-                else if (requirements & SPELLREQ_ADDENDUM_WHITE && PCaster->GetMJob() == JOB_SCH)
+                else if ((requirements & SPELLREQ_ADDENDUM_WHITE) && PCaster->GetMJob() == JOB_SCH)
                 {
                     if (!PCaster->StatusEffectContainer->HasStatusEffect({EFFECT_ADDENDUM_WHITE, EFFECT_ENLIGHTENMENT}))
                     {
@@ -679,14 +681,14 @@ namespace spell
                         usable = false;
                     }
                 }
-                if (requirements & SPELLREQ_ADDENDUM_BLACK && PCaster->GetSJob() == JOB_SCH)
+                if ((requirements & SPELLREQ_ADDENDUM_BLACK) && PCaster->GetSJob() == JOB_SCH)
                 {
                     if (!PCaster->StatusEffectContainer->HasStatusEffect({EFFECT_ADDENDUM_BLACK, EFFECT_ENLIGHTENMENT}))
                     {
                         usable = false;
                     }
                 }
-                else if (requirements & SPELLREQ_ADDENDUM_WHITE && PCaster->GetSJob() == JOB_SCH)
+                else if ((requirements & SPELLREQ_ADDENDUM_WHITE) && PCaster->GetSJob() == JOB_SCH)
                 {
                     if (!PCaster->StatusEffectContainer->HasStatusEffect({EFFECT_ADDENDUM_WHITE, EFFECT_ENLIGHTENMENT}))
                     {

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -41,6 +41,8 @@ protected:
     virtual bool CanInterrupt() override { return true; }
     virtual bool Update(time_point tick) override;
     virtual void Cleanup(time_point tick) override;
+    virtual bool WasBloodPactRage(uint16 wsid);
+    virtual bool WasBloodPactWard(uint16 wsid);
     void SpendCost();
 
 private:
@@ -49,6 +51,8 @@ private:
     time_point m_finishTime;
     duration m_castTime;
     int16 m_spentTP;
+    bool m_wasInterrupted;
+    uint8 m_speedRemoved;
 };
 
 #endif

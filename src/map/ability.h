@@ -110,6 +110,7 @@ enum ABILITY
     ABILITY_REWARD             = 78,
     ABILITY_COVER              = 79,
     ABILITY_SPIRIT_LINK        = 80,
+    ABILITY_ENRAGE             = 81,
     ABILITY_CHI_BLAST          = 82,
     ABILITY_CONVERT            = 83,
     ABILITY_ACCOMPLICE         = 84,

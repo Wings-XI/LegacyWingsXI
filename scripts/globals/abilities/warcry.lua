@@ -25,6 +25,10 @@ function onUseAbility(player, target, ability)
 
     power = power * 100
     duration = duration + player:getMod(tpz.mod.WARCRY_DURATION)
+    
+    if player:getID() ~= target:getID() then
+        merit = merit/2 -- half effect for party members
+    end
 
 
     target:addStatusEffect(tpz.effect.WARCRY, power, 0, duration, 0, merit)

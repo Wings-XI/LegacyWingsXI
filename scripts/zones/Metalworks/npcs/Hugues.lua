@@ -33,7 +33,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 104 and option == 1 then
-        target:delStatusEffectsByFlag(tpz.effectFlag.SYNTH_SUPPORT, true)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.SMITHING_IMAGERY, 1, 0, 120)
         player:messageSpecial(ID.text.SMITHING_SUPPORT, 0, 2, 1)
     end

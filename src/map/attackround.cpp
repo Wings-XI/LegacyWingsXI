@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,6 +39,8 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
     m_sataOccured = false;
     m_subWeaponType = 0;
 
+    bool isFootwork = IsH2H() && attacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS));
+
     if (auto weapon = dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_SUB]))
     {
         m_subWeaponType = weapon->getDmgType();
@@ -58,13 +60,17 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
     }
 
     // Build main weapon attacks.
-    CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), RIGHTATTACK);
+    if (!isFootwork)
+        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), RIGHTATTACK);
+    else
+        AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, (PHYSICAL_ATTACK_DIRECTION)tpzrand::GetRandomNumber(2), 1);
 
     // Build dual wield off hand weapon attacks.
     if (IsH2H())
     {
-        // Build left hand H2H attacks.
-        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), LEFTATTACK);
+        // Build left hand H2H attacks if no Footwork
+        if (!isFootwork)
+            CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), LEFTATTACK);
 
         // Build kick attacks.
         CreateKickAttacks();
@@ -398,6 +404,9 @@ void CAttackRound::CreateKickAttacks()
 {
     if (m_attacker->objtype == TYPE_PC)
     {
+        if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
+            return;
+
         // kick attack mod (All jobs)
         uint16 kickAttack = m_attacker->getMod(Mod::KICK_ATTACK_RATE);
 

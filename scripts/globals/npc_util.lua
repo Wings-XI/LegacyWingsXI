@@ -414,8 +414,9 @@ end
         { {640, 2}, 641 }        -- copper ore x2, tin ore x1
         { 640, {"gil", 200} }   -- copper ore x1, gil x200
 ******************************************************************************* --]]
-function npcUtil.tradeHas(trade, items, exact)
+function npcUtil.tradeHas(trade, items, exact, confirm)
     if type(exact) ~= "boolean" then exact = false end
+    if type(confirm) ~= "boolean" then confirm = true end
 
     -- create table of traded items, with key/val of itemId/itemQty
     local tradedItems = {}
@@ -475,11 +476,14 @@ function npcUtil.tradeHas(trade, items, exact)
             end
         end
     end
-
-    -- confirm items
-    for k, v in pairs(neededItems) do
-        trade:confirmItem(k, v)
+    
+    if confirm == true then
+        -- confirm items
+        for k, v in pairs(neededItems) do
+            trade:confirmItem(k, v)
+        end
     end
+    
     return true
 end
 

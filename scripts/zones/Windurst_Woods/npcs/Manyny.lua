@@ -22,7 +22,7 @@ function onTrigger(player, npc)
         5038,   990        --Enchanting Etude
     }
     player:showText(npc, ID.text.MANYNY_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, WINDURST)
 end
 
 function onEventUpdate(player, csid, option)

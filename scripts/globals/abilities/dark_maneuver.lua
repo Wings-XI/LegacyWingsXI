@@ -43,8 +43,8 @@ function onUseAbility(player, target, ability)
             target:removeOldestManeuver()
         end
 
-        local dur = player:getPet():getLocalVar("MANEUVER_DURATION")
-        target:addStatusEffect(tpz.effect.DARK_MANEUVER, 0, 0, utils.clamp(dur, 60, 300))
+        --local dur = player:getPet():getLocalVar("MANEUVER_DURATION")
+        target:addStatusEffect(tpz.effect.DARK_MANEUVER, 0, 0, 60)
 
     end
 

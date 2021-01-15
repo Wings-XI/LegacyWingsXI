@@ -90,28 +90,26 @@ function onUseAbility(player, target, ability)
         toremove = toremove - 1
     end
 
-    local bonus = 1 + player:getMerit(tpz.merit.REPAIR_EFFECT)/100
-
-    totalHealing = totalHealing * bonus
-
-    bonus = bonus + player:getMod(tpz.mod.REPAIR_POTENCY)/100
-
-    regenAmount = regenAmount * bonus
+    regenAmount = math.ceil(regenAmount * (1 + player:getMod(tpz.mod.REPAIR_POTENCY)/100))
 
     local diff = petMaxHP - petCurrentHP
 
     if (diff < totalHealing) then
         totalHealing = diff
     end
-
-    pet:addHP(totalHealing)
-    pet:wakeUp()
+    
+    local totalHealing = 0
+    
+    --pet:addHP(totalHealing)
+    --pet:wakeUp()
 
     -- Apply regen tpz.effect.
 
     pet:delStatusEffect(tpz.effect.REGEN)
     pet:addStatusEffect(tpz.effect.REGEN, regenAmount, 3, regenTime) -- 3 = tick, each 3 seconds.
     player:removeAmmo()
+    
+    ability:setMsg(tpz.msg.basic.USES_JA)
 
     return totalHealing
 end

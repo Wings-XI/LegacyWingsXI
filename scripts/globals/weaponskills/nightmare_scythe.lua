@@ -37,6 +37,8 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         local duration = (tp/1000 * 60) * applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0)
         target:addStatusEffect(tpz.effect.BLINDNESS, 15, 0, duration)
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SCYTHE, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 
 end

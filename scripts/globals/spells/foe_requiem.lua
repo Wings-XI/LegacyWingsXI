@@ -24,6 +24,15 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.SINGING
     params.bonus = 0
     params.effect = nil
+    params.skillBonus = 0
+    if caster:isPC() then
+        local instrument = caster:getSkillLevel(caster:getWeaponSkillType(tpz.slot.RANGED))
+        local skillcap = caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BRD, tpz.skill.STRING_INSTRUMENT) -- will return the same whether string or wind, both are C for bard
+    
+        if instrument > skillcap then
+            params.skillBonus = instrument - skillcap -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
+        end
+    end
     resm = applyResistance(caster, target, spell, params)
     if (resm < 0.5) then
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST) -- resist message

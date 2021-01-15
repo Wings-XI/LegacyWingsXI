@@ -47,6 +47,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             target:addStatusEffect(tpz.effect.SLOW, 1500, 0, duration)
         end
     end
-
+	if damage > 0 then player:trySkillUp(target, tpz.skill.GREAT_AXE, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

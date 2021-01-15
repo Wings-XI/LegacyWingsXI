@@ -27,11 +27,11 @@ function onTrigger(player, npc)
         5051,  5000,    -- Scroll of Water Carol
         5052,  4200,    -- Scroll of Light Carol
         5053,  8400,    -- Scroll of Dark Carol
-        5078, 60000,    -- Scroll of Sentinel's Scherzo
+        --5078, 60000,    -- Scroll of Sentinel's Scherzo
     }
 
     player:showText(npc, ID.text.YOSKOLO_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

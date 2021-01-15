@@ -21,9 +21,15 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.SLEEP_I
     local resist = applyResistanceEffect(caster, target, spell, params)
+    duration = duration * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
+    
+    if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
+        resist = 1/16
+    end
 
     if resist >= 0.5 then
-        if target:addStatusEffect(params.effect, 1, 0, duration * resist) then
+        if target:addStatusEffect(params.effect, 1, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

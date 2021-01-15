@@ -13,7 +13,9 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-
+    local eco = target:getSystem()
+    local ele = tpz.damageType.EARTH
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local tp = skill:getTP() / 10
     local master = pet:getMaster()
@@ -28,17 +30,26 @@ function onPetAbility(target, pet, skill)
     end
 
     --note: this formula is only accurate for level 75 - 76+ may have a different intercept and/or slope
-    local damage = math.floor(512 + 1.72*(tp+1))
+    local damage = math.floor((512 + 1.65*(tp+1))*coe)
     damage = damage + (dINT * 1.5)
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.EARTH, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.EARTH)
     damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, 1)
+    
+    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.EARTH - 5, target)
+    if (skillchainTier > 0) then
+        skill:setMsg(747)
+    end
 
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.EARTH)
     target:updateEnmityFromDamage(pet, damage)
-
-    if (target:hasStatusEffect(tpz.effect.STUN) == false) then
-        target:addStatusEffect(tpz.effect.STUN, 3, 3, 3)
+    
+    local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,tpz.skill.ENFEEBLING_MAGIC,bonus)
+    local duration = 5 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
+    
+    if resist >= 0.5 and target:hasStatusEffect(tpz.effect.STUN) == false then --Do it!
+        target:addStatusEffect(tpz.effect.STUN, 3, 3, duration)
     end
 
     return damage

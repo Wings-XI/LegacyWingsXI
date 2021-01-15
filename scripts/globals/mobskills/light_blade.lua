@@ -30,5 +30,6 @@ function onMobWeaponSkill(target, mob, skill)
     dmg = dmg * ((50 - distance) / 50)
 
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.SLASHING)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     return dmg
 end

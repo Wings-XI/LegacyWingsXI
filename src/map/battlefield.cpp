@@ -257,7 +257,7 @@ void CBattlefield::ApplyLevelRestrictions(CCharEntity* PChar) const
             cap = PChar->GetMLevel(); // Cap to current level to strip buffs - this is the retail diff between uncapped and capped to max lv.
         }
 
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
+        PChar->StatusEffectContainer->DelStatusEffectsForInstance();
         PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, cap, 0, 0));
     }
 
@@ -337,8 +337,8 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                     m_AdditionalEnemyList.push_back(mob);
 
                 // todo: this can be greatly improved
-                if (mob.PMob->isAlive())
-                    mob.PMob->Die();
+                //if (mob.PMob->isAlive())
+                    //mob.PMob->Die();
                 if (mob.condition & CONDITION_SPAWNED_AT_START)
                     mob.PMob->Spawn();
             }

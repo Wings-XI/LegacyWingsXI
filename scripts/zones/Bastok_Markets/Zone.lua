@@ -67,6 +67,8 @@ end
 function onEventFinish(player, csid, option)
 
     if csid == 0 then
+		player:startEvent(7)
+	elseif csid == 7 then
         player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
     elseif csid == 22 then
         player:setCharVar("SOA_1_CS2",  1)

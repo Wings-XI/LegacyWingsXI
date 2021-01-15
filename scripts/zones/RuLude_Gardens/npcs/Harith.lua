@@ -53,15 +53,14 @@ end
 
 function onTrigger(player, npc)
 
-    if (player:getCurrentMission(COP) == tpz.mission.id.cop.BELOW_THE_ARKS and player:getCharVar("PromathiaStatus") == 1) then
-        player:startEvent(113)
-    elseif (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES) == QUEST_AVAILABLE and player:getCurrentMission(COP) >= tpz.mission.id.cop.THE_MOTHERCRYSTALS) then
+    if ( player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.EMPTY_MEMORIES) == QUEST_AVAILABLE and player:getCurrentMission(COP) >= tpz.mission.id.cop.BELOW_THE_ARKS and
+			(player:isZoneVisited(16) == true or player:isZoneVisited(18) == true or player:isZoneVisited(20) == true) ) then
         player:addQuest(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES)
         player:startEvent(114)
     elseif (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES) >= QUEST_ACCEPTED) then
         player:startEvent(114)
     else
-        player:startEvent(111)
+        player:startEvent(113)
     end
 
 end

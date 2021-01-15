@@ -18,7 +18,7 @@ function onTrigger(player, npc)
         {
             4571,    90,    -- Beaugreens
             4363,    39,    -- Faerie Apple
-            691,     54,     -- Maple Log
+            691,     55,     -- Maple Log
         }
 
         player:showText(npc, ID.text.RODELLIEUX_OPEN_DIALOG)

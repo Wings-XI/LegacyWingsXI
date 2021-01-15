@@ -27,7 +27,13 @@ function onUseAbility(player, target, ability)
     -- Prevent the player from performing actions while in the air
     player:queue(0, function(player)
         player:stun(5000)
+        player:setSuperJump(1)
     end)
+    player:queue(5000, function(player)
+        player:setSuperJump(0)
+    end)
+    
+    -- player:addStatusEffect(tpz.effect.SUPER_JUMP,1,0,5)
 
     -- If the Dragoon's wyvern is out and alive, tell it to use Super Climb
     local wyvern = player:getPet()

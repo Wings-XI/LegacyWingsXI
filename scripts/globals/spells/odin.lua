@@ -1,6 +1,6 @@
 -----------------------------------------
--- Spell: Alexander
--- Summons Alexander to fight by your side
+-- Spell: Odin
+-- Summons Odin to fight by your side
 -----------------------------------------
 require("scripts/globals/summon")
 require("scripts/globals/bcnm")
@@ -14,6 +14,8 @@ function onMagicCastingCheck(caster, target, spell)
         return tpz.msg.basic.CANT_BE_USED_IN_AREA
     elseif (not caster:hasStatusEffect(tpz.effect.ASTRAL_FLOW)) then
         return 581
+    elseif target:isPC() then
+        return 155 -- cannot use on that terget
     elseif (caster:hasPet()) then
         return tpz.msg.basic.ALREADY_HAS_A_PET
     elseif (caster:getObjType() == tpz.objType.PC) then
@@ -23,7 +25,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    caster:spawnPet(tpz.pet.id.ODIN)
+    caster:spawnPet(tpz.pet.id.ODIN, target)
     caster:petAttack(target)
 
     return 0

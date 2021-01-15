@@ -21,6 +21,9 @@ function onZoneIn(player, prevZone)
     if (prevZone == tpz.zone.ROLANBERRY_FIELDS_S and player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX) == QUEST_ACCEPTED and player:getCharVar("DownwardHelix") == 2) then
         cs = 3
     end
+	if player:getCharVar("WOTG_PlayCrashLandCS") == 1 then
+		cs = 700
+	end
     return cs
 end
 
@@ -34,4 +37,8 @@ function onEventFinish(player, csid, option)
     if (csid == 3) then
         player:setCharVar("DownwardHelix", 3)
     end
+	if csid == 700 then
+		player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PURE_WHITE_FEATHER)
+		player:setCharVar("WOTG_PlayCrashLandCS",0)
+	end
 end

@@ -23,7 +23,10 @@ function onMobWeaponSkill(target, mob, skill)
     for babyID = momma + 1, momma + mob:getLocalVar("maxBabies") do
         local baby = GetMobByID(babyID)
         if not baby:isSpawned() then
-            SpawnMob(babyID):updateEnmity(mob:getTarget())
+            SpawnMob(babyID)
+			if mob:getTarget() ~= nil then
+				baby:updateEnmity(mob:getTarget())
+			end
             baby:setPos(pos.x, pos.y, pos.z)
             break
         end

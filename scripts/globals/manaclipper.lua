@@ -141,7 +141,10 @@ tpz.manaclipper.onTransportEvent = function(player, transport)
 
     -- leaving Sunset Docks. must be standing in region 1. must have a ticket.
     if aboard == 1 then
-        if player:hasKeyItem(tpz.ki.MANACLIPPER_TICKET) then
+        if player:hasKeyItem(tpz.ki.ALLYOUCANRIDEPASS) then
+            -- GM only KI
+            player:startEvent(14)
+        elseif player:hasKeyItem(tpz.ki.MANACLIPPER_TICKET) then
             player:delKeyItem(tpz.ki.MANACLIPPER_TICKET)
             player:startEvent(14)
         elseif player:hasKeyItem(tpz.ki.MANACLIPPER_MULTITICKET) then

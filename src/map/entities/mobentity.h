@@ -121,7 +121,7 @@ public:
     bool      IsFarFromHome();                         // check if mob is too far from spawn
     bool      CanBeNeutral();                          // check if mob can have killing pause
 
-    uint16    TPUseChance();                           // return % chance to use TP move per 400ms tick
+    uint16     TPUseChance();                           // return % chance to use TP move
 
     bool      CanDeaggro();
     time_point GetDespawnTime();
@@ -252,17 +252,19 @@ public:
     static constexpr float sound_range {8.f};
     static constexpr float sight_range {15.f};
 
+    void DropItems(CCharEntity* PChar);
+
 protected:
 
     void DistributeRewards();
-    void DropItems(CCharEntity* PChar);
+    
 
 private:
 
     time_point    m_DespawnTimer {time_point::min()};  // Despawn Timer to despawn mob after set duration
     std::unordered_map<int, int16>     m_mobModStat;
     std::unordered_map<int, int16>     m_mobModStatSave;
-    static constexpr float roam_home_distance {60.f};
+    static constexpr float roam_home_distance {120.f};
 };
 
 #endif

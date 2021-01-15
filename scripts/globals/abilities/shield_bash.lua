@@ -22,7 +22,7 @@ function onUseAbility(player, target, ability)
 
     local shieldSize = player:getShieldSize()
     local damage = 0
-    local chance = 90
+    local chance = 112
     damage = player:getMod(tpz.mod.SHIELD_BASH)
 
     if shieldSize == 1 or shieldSize == 5 then
@@ -37,31 +37,37 @@ function onUseAbility(player, target, ability)
 
     -- Main job factors
     if player:getMainJob() ~= tpz.job.PLD then
-        damage = math.floor(damage / 2.5)
-        chance = 60
+        damage = math.floor(damage / 2.2)
+        chance = 80
     else
         damage = math.floor(damage)
     end
 
     -- Calculate stun proc chance
-    chance = chance + (player:getMainLvl() - target:getMainLvl()) * 5
-
+    chance = chance + player:getMainLvl()*2 - target:getMainLvl()*2
+    if chance < 33 then
+        chance = 33
+    elseif chance > 99 then
+        chance = 99
+    end
+    --print(string.format("chance = %u",chance))
+    tryBuildResistance(tpz.magic.buildcat.STUN, target)
     if math.random()*100 < chance then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 6)
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
     end
 
     -- Randomize damage
     local ratio = player:getStat(tpz.mod.ATT)/target:getStat(tpz.mod.DEF)
 
-    if ratio > 1.3 then
-        ratio = 1.3
+    if ratio > 1.9 then
+        ratio = 1.9
     end
 
     if ratio < 0.2 then
         ratio = 0.2
     end
 
-    local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
+    local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.25 * 1000)
 
     -- printf("damge %d, ratio: %f, pdif: %d\n", damage, ratio, pdif)
 

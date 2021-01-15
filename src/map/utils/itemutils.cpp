@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -320,14 +320,15 @@ namespace itemutils
                 "w.dmgType,"        // 30
                 "w.hit,"            // 31
                 "w.unlock_points,"  // 32
+                "w.category,"       // 33
 
-                "f.storage,"        // 33
-                "f.moghancement,"   // 34
-                "f.element,"        // 35
-                "f.aura,"           // 36
+                "f.storage,"        // 34
+                "f.moghancement,"   // 35
+                "f.element,"        // 36
+                "f.aura,"           // 37
 
-                "p.slot,"           // 37
-                "p.element "        // 38
+                "p.slot,"           // 38
+                "p.element "        // 39
             "FROM item_basic AS b "
             "LEFT JOIN item_usable AS u USING (itemId) "
             "LEFT JOIN item_equipment  AS a USING (itemId) "
@@ -371,8 +372,8 @@ namespace itemutils
                     }
                     if (PItem->isType(ITEM_PUPPET))
                     {
-                        ((CItemPuppet*)PItem)->setEquipSlot(Sql_GetUIntData(SqlHandle,37));
-                        ((CItemPuppet*)PItem)->setElementSlots(Sql_GetUIntData(SqlHandle,38));
+                        ((CItemPuppet*)PItem)->setEquipSlot(Sql_GetUIntData(SqlHandle,38));
+                        ((CItemPuppet*)PItem)->setElementSlots(Sql_GetUIntData(SqlHandle,39));
                     }
                     if (PItem->isType(ITEM_EQUIPMENT))
                     {
@@ -402,13 +403,14 @@ namespace itemutils
                         ((CItemWeapon*)PItem)->setDmgType(Sql_GetUIntData(SqlHandle,30));
                         ((CItemWeapon*)PItem)->setMaxHit(Sql_GetUIntData(SqlHandle,31));
                         ((CItemWeapon*)PItem)->setUnlockablePoints(Sql_GetUIntData(SqlHandle,32));
+                        ((CItemWeapon*)PItem)->setCategory(Sql_GetUIntData(SqlHandle,33));
                     }
                     if (PItem->isType(ITEM_FURNISHING))
                     {
-                        ((CItemFurnishing*)PItem)->setStorage(Sql_GetUIntData(SqlHandle,33));
-                        ((CItemFurnishing*)PItem)->setMoghancement(Sql_GetUIntData(SqlHandle,34));
-                        ((CItemFurnishing*)PItem)->setElement(Sql_GetUIntData(SqlHandle,35));
-                        ((CItemFurnishing*)PItem)->setAura(Sql_GetUIntData(SqlHandle,36));
+                        ((CItemFurnishing*)PItem)->setStorage(Sql_GetUIntData(SqlHandle,34));
+                        ((CItemFurnishing*)PItem)->setMoghancement(Sql_GetUIntData(SqlHandle,35));
+                        ((CItemFurnishing*)PItem)->setElement(Sql_GetUIntData(SqlHandle,36));
+                        ((CItemFurnishing*)PItem)->setAura(Sql_GetUIntData(SqlHandle,37));
                     }
                     g_pItemList[PItem->getID()] = PItem;
                 }

@@ -2,7 +2,7 @@
 -- Area: Metalworks
 --  NPC: Ayame
 -- Involved in Missions
--- Starts and Finishes Quest: True Strength
+-- Starts and Finishes Quest: True Strength, Faded Promises
 -- !pos 133 -19 34 237
 -----------------------------------
 local ID = require("scripts/zones/Metalworks/IDs")

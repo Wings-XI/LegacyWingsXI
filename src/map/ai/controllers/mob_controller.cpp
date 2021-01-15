@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -18,6 +18,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
+
+// REVERTED NAVMESH CHANGES FROM TOPAZ AFTER ISSUES
 
 #include "mob_controller.h"
 #include "../ai_container.h"
@@ -192,7 +194,15 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
+    uint16 zone = ((CCharEntity*)PTarget)->loc.zone->GetID();
+    //ShowWarning(CL_YELLOW"zone = %u\n" CL_RESET, (zone));
+
     if (verticalDistance > 8)
+    {
+        return false;
+    }
+    if ((zone == ZONE_KING_RANPERRES_TOMB && verticalDistance > 3.5f) ||
+        (zone == ZONE_GUSGEN_MINES && verticalDistance > 3.5f))
     {
         return false;
     }
@@ -280,6 +290,12 @@ bool CMobController::MobSkill(int wsList)
 
     std::shuffle(skillList.begin(), skillList.end(), tpzrand::mt());
     CBattleEntity* PActionTarget {nullptr};
+
+    uint16 scriptChoice = luautils::OnMobWeaponSkillPrepare((CBaseEntity*)PMob, (CBaseEntity*)PTarget);
+    if (scriptChoice != 0)
+    {
+        skillList.insert(skillList.begin(), scriptChoice);
+    }
 
     for (auto skillid : skillList)
     {
@@ -789,18 +805,22 @@ void CMobController::DoRoamTick(time_point tick)
             {
                 // No longer including conditional for ROAMFLAG_AMBUSH now that using mixin to handle mob hiding
                 if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 &&
-                    m_Tick >= m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL)) &&
+                    m_Tick > m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL)) &&
                     TrySpecialSkill())
                 {
                     // I spawned a pet
                 }
                 else if (PMob->GetMJob() == JOB_SMN && CanCastSpells() && PMob->SpellContainer->HasBuffSpells() &&
+                    m_Tick > m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL)) &&
                     m_Tick >= m_LastMagicTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL)))
                 {
                     // summon pet
                     auto spellID = PMob->SpellContainer->GetBuffSpell();
                     if(spellID)
+                    {
                         CastSpell(spellID.value());
+                        m_LastSpecialTime = m_Tick;
+                    }
                 }
                 else if (CanCastSpells() && tpzrand::GetRandomNumber(10) < 3 && PMob->SpellContainer->HasBuffSpells())
                 {
@@ -1019,6 +1039,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->isDead() || PTarget->isMounted())
+    {
+        return false;
+    }
+
+    if (PTarget->objtype == TYPE_PC && server_clock::now() < ((CCharEntity*)PTarget)->m_ZoneAggroImmunity)
     {
         return false;
     }

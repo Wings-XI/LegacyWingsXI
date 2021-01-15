@@ -25,12 +25,12 @@ end
 
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.AQUAN_KILLER, 10)
-    target:addMod(tpz.mod.SILENCERES, 10)
+    target:addMod(tpz.mod.SILENCERESTRAIT, 10)
     target:addMod(tpz.mod.MPHEAL, 3)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.AQUAN_KILLER, 10)
-    target:delMod(tpz.mod.SILENCERES, 10)
+    target:delMod(tpz.mod.SILENCERESTRAIT, 10)
     target:delMod(tpz.mod.MPHEAL, 3)
 end

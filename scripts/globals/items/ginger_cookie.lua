@@ -26,11 +26,11 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.MPHEAL, 5)
     target:addMod(tpz.mod.PLANTOID_KILLER, 10)
-    target:addMod(tpz.mod.SLOWRES, 10)
+    target:addMod(tpz.mod.SLOWRESTRAIT, 10)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.MPHEAL, 5)
     target:delMod(tpz.mod.PLANTOID_KILLER, 10)
-    target:delMod(tpz.mod.SLOWRES, 10)
+    target:delMod(tpz.mod.SLOWRESTRAIT, 10)
 end

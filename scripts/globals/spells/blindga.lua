@@ -36,6 +36,7 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.BLINDNESS
     duration = duration * applyResistanceEffect(caster, target, spell, params)
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
 
     if (duration >= 60) then --Do it!
 

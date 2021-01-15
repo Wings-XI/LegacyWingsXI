@@ -31,6 +31,8 @@ function onUseAbility(player, target, ability, action)
     params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
     params.targetTPMult = 0
     params.hitsHigh = true
+    params.useOAXTimes = true
+    params.useAutoTPFormula = true
 
     if (target:isMob()) then
         local enmityShed = 50

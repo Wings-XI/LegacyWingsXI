@@ -14,6 +14,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    local bio = target:getStatusEffect(tpz.effect.BIO)
+    if bio ~= nil then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return 0
+    end
+
     local basedmg = caster:getSkillLevel(tpz.skill.ENFEEBLING_MAGIC) / 4
     local params = {}
     params.dmg = basedmg
@@ -45,19 +51,9 @@ function onSpellCast(caster, target, spell)
     local duration = calculateDuration(60, spell:getSkillType(), spell:getSpellGroup(), caster, target)
     local dotBonus = caster:getMod(tpz.mod.DIA_DOT) -- Dia Wand
 
-    -- Check for Bio
-    local bio = target:getStatusEffect(tpz.effect.BIO)
-
     -- Do it!
-    target:addStatusEffect(tpz.effect.DIA, 1 + dotBonus, 3, duration, 0, 10, 1)
+    target:addStatusEffect(tpz.effect.DIA, 1 + dotBonus, 3, duration, 0, 5, 1)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
-
-    -- Try to kill same tier Bio (non-default behavior)
-    if BIO_OVERWRITE == 1 and bio ~= nil then
-        if bio:getPower() == 1 then
-            target:delStatusEffect(tpz.effect.BIO)
-        end
-    end
 
     return final
 end

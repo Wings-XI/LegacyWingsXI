@@ -12,9 +12,12 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local eco = target:getSystem()
+    local ele = tpz.damageType.LIGHT
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
     local numhits = 1
-    local accmod = 1
-    local dmgmod = 2.5
+    local accmod = 1 + math.floor(7*skill:getTP()/3000)
+    local dmgmod = 2.8 * coe
 
     local totaldamage = 0
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)

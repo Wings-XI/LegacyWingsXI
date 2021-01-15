@@ -68,6 +68,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/char_update.h"
 #include "message.h"
 
+#include "utils/flistutils.h"
+#include "pruned_session.h"
+
 #ifdef TRACY_ENABLE
 void* operator new(std::size_t count)
 {
@@ -102,6 +105,10 @@ CCommandHandler CmdHandler;
 
 std::thread messageThread;
 
+bool inCrashRecoveryLoop;
+bool isForceCreateSessionEnabled;
+std::vector<pruned_session> prunedSessionsList;
+
 /************************************************************************
 *                                                                       *
 *  mapsession_getbyipp                                                  *
@@ -126,7 +133,7 @@ map_session_data_t* mapsession_getbyipp(uint64 ipp)
 *                                                                       *
 ************************************************************************/
 
-map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
+map_session_data_t* mapsession_createsession(uint32 ip, uint16 port, bool force)
 {
     TracyZoneScoped;
     map_session_data_t* map_session_data = new map_session_data_t;
@@ -143,6 +150,43 @@ map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
     ipp |= port64 << 32;
     map_session_list[ipp] = map_session_data;
 
+    if (force)
+    {
+        //ShowDebug("mapsession_createsession force detected\n");
+        int32 it = 0;
+        int32 at = -1;
+        bool doReturn = false;
+        std::for_each(std::begin(prunedSessionsList), std::end(prunedSessionsList), [&ip, &doReturn, &it, &at](pruned_session const session)
+        {
+            if (ip == session.m_5_client_addr && session.m_recoveryQueued == true)
+            {
+                at = it;
+                doReturn = true;
+                //ShowDebug("mapsession_createsession force detected AND doReturn is true\n");
+            }
+            it++;
+        });
+        if (doReturn)
+        {
+            prunedSessionsList.at(at).m_recoveryQueued = false;
+
+            const char* fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr, version_mismatch, client_version) VALUES(%u,%u,x'%s',%u,%u,%u,%u,'%s')";
+
+            char client_ver_esc[32] = { 0 };
+            Sql_EscapeString(SqlHandle, client_ver_esc, prunedSessionsList.at(at).m_7_client_version);
+            
+            uint8 temp[20];
+            memcpy(temp, prunedSessionsList.at(at).m_2_session_key, 20);
+            char session_key[20 * 2 + 1];
+            bin2hex(session_key, temp, sizeof(temp));
+            Sql_Query(SqlHandle, fmtQuery, prunedSessionsList.at(at).m_0_accid, prunedSessionsList.at(at).m_1_charid, session_key, prunedSessionsList.at(at).m_3_ZoneIP,
+                prunedSessionsList.at(at).m_4_ZonePort, prunedSessionsList.at(at).m_5_client_addr, prunedSessionsList.at(at).m_6_version_mismatch, client_ver_esc);
+            return map_session_data;
+        }
+    }
+
+    bool showError = true;
+
     const char* fmtQuery = "SELECT charid FROM accounts_sessions WHERE inet_ntoa(client_addr) = '%s' LIMIT 1;";
 
     int32 ret = Sql_Query(SqlHandle, fmtQuery, ip2str(map_session_data->client_addr));
@@ -150,7 +194,25 @@ map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
     if (ret == SQL_ERROR ||
         Sql_NumRows(SqlHandle) == 0)
     {
-        ShowError(CL_RED"recv_parse: Invalid login attempt from %s\n" CL_RESET, ip2str(map_session_data->client_addr));
+        if (inCrashRecoveryLoop)
+        {
+            int32 it = 0;
+            int32 at = -1;
+            std::for_each(std::begin(prunedSessionsList), std::end(prunedSessionsList), [&ip, &showError, &it, &at](pruned_session const session)
+            {
+                    //ShowDebug("Input IP %u checked against pruned IP %u\n",ip, session.m_5_client_addr);
+                if (ip == session.m_5_client_addr)
+                {
+                    at = it;
+                    showError = false;
+                }
+                it++;
+            });
+            if (at != -1)
+                prunedSessionsList.at(at).m_recoveryQueued = true;
+        }
+        if (showError)
+            ShowError(CL_RED"recv_parse: Invalid login attempt from %s\n" CL_RESET, ip2str(map_session_data->client_addr));
         return nullptr;
     }
     return map_session_data;
@@ -167,6 +229,7 @@ int32 do_init(int32 argc, char** argv)
     TracyZoneScoped;
     ShowStatus("do_init: begin server initialization...");
     map_ip.s_addr = 0;
+    uint32 debug_ip = 0;
 
     for (int i = 1; i < argc; i++)
     {
@@ -178,6 +241,8 @@ int32 do_init(int32 argc, char** argv)
         }
         else if (strcmp(argv[i], "--port") == 0)
             map_port = std::stoi(argv[i + 1]);
+        else if (strcmp(argv[i], "--debugip") == 0)
+            inet_pton(AF_INET, argv[i + 1], &debug_ip);
     }
 
     MAP_CONF_FILENAME = "./conf/map.conf";
@@ -188,6 +253,9 @@ int32 do_init(int32 argc, char** argv)
     map_config_default();
     map_config_read((const int8*)MAP_CONF_FILENAME);
     map_config_from_env();
+    if (debug_ip) {
+        map_config.debug_client_ip = debug_ip;
+    }
     ShowMessage("\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
     ShowStatus("do_init: map_config is reading");
     ShowMessage("\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
@@ -208,9 +276,38 @@ int32 do_init(int32 argc, char** argv)
     }
     Sql_Keepalive(SqlHandle);
 
+    // crash recovery, save pruned sessions to RAM before clearing SQL
+    inCrashRecoveryLoop = false;
+    isForceCreateSessionEnabled = false;
+    prunedSessionsList.clear();
+    Sql_Query(SqlHandle, "SELECT accid,charid,session_key,server_addr,server_port,client_addr,version_mismatch,client_version FROM accounts_sessions WHERE IF(%u = 0 AND %u = 0, true, server_addr = %u AND server_port = %u);", map_ip.s_addr, map_port, map_ip.s_addr, map_port);
+    while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        uint32 v0 = Sql_GetUIntData(SqlHandle, 0);
+        uint32 v1 = Sql_GetUIntData(SqlHandle, 1);
+        uint32 v2[5];
+        char* c_str = nullptr;
+        Sql_GetData(SqlHandle, 2, &c_str, nullptr);
+        memcpy(v2, c_str, 20);
+        uint32 v3 = Sql_GetUIntData(SqlHandle, 3);
+        uint16 v4 = Sql_GetUIntData(SqlHandle, 4);
+        uint32 v5 = Sql_GetUIntData(SqlHandle, 5);
+        uint8  v6 = Sql_GetUIntData(SqlHandle, 6);
+        char   v7[32];
+        char* c_str2 = nullptr;
+        Sql_GetData(SqlHandle, 7, &c_str2, nullptr);
+        memcpy(v7, c_str2, 32);
+        
+        prunedSessionsList.push_back(pruned_session(v0, v1, &(v2[0]), v3, v4, v5, v6, v7));
+    }
+
     // отчищаем таблицу сессий при старте сервера (временное решение, т.к. в кластере это не будет работать)
-    Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE IF(%u = 0 AND %u = 0, true, server_addr = %u AND server_port = %u);",
-        map_ip.s_addr, map_port, map_ip.s_addr, map_port);
+    Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE IF(%u = 0 AND %u = 0, true, server_addr = %u AND server_port = %u);", map_ip.s_addr, map_port, map_ip.s_addr, map_port);
+
+    // suspending this operation until more work can be done on this
+    // definitely need to get more info on the storage of P and S on client blowkey
+    // may need to add these into accounts_sessions in order for this recovery system to work
+    prunedSessionsList.clear();
 
     ShowMessage("\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
     ShowStatus("do_init: zlib is reading");
@@ -271,6 +368,12 @@ int32 do_init(int32 argc, char** argv)
     CTaskMgr::getInstance()->AddTask("time_server", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, time_server, 2400ms);
     CTaskMgr::getInstance()->AddTask("map_cleanup", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, map_cleanup, 5s);
     CTaskMgr::getInstance()->AddTask("garbage_collect", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, map_garbage_collect, 15min);
+    CTaskMgr::getInstance()->AddTask("crash_recovery_end", server_clock::now() + 2s, nullptr, CTaskMgr::TASK_ONCE, crash_recovery_end);
+    CTaskMgr::getInstance()->AddTask("disableForceCreateSession", server_clock::now() + 4s, nullptr, CTaskMgr::TASK_ONCE, disableForceCreateSession);
+
+    //ShowDebug("prunedSessionsList size is %u\n", (uint32)prunedSessionsList.size());
+    if (prunedSessionsList.size() >= map_config.zone_crash_recovery_min_players)
+        inCrashRecoveryLoop = true;
 
     g_PBuff = new int8[map_config.buffer_size + 20];
     PTempBuff = new int8[map_config.buffer_size + 20];
@@ -279,6 +382,7 @@ int32 do_init(int32 argc, char** argv)
 
     ShowStatus("The map-server is " CL_GREEN"ready" CL_RESET" to work...\n");
     ShowMessage("=======================================================================\n");
+    //ShowInfo("Crash recovery running, checking for pruned connections...\n");
     return 0;
 }
 
@@ -373,6 +477,21 @@ int32 do_sockets(fd_set* rfd, duration next)
 
     last_tick = time(nullptr);
 
+    // Check that we still have a DB connection, attempt to recover if needed
+    if (!SqlHandle) {
+        SqlHandle = Sql_Malloc();
+
+        if (Sql_Connect(SqlHandle, map_config.mysql_login.c_str(),
+            map_config.mysql_password.c_str(),
+            map_config.mysql_host.c_str(),
+            map_config.mysql_port,
+            map_config.mysql_database.c_str()) == SQL_ERROR)
+        {
+            exit(EXIT_FAILURE);
+        }
+        Sql_Keepalive(SqlHandle);
+    }
+
     if (sFD_ISSET(map_fd, rfd))
     {
         struct sockaddr_in from;
@@ -381,6 +500,9 @@ int32 do_sockets(fd_set* rfd, duration next)
         int32 ret = recvudp(map_fd, g_PBuff, map_config.buffer_size, 0, (struct sockaddr*)&from, &fromlen);
         if (ret != -1)
         {
+            if (from.sin_addr.s_addr == map_config.debug_client_ip) {
+                ShowDebug(CL_CYAN"do_sockets: Packet from debug IP.\n");
+            }
             // find player char
 #   ifdef WIN32
             uint32 ip = ntohl(from.sin_addr.S_un.S_addr);
@@ -395,12 +517,13 @@ int32 do_sockets(fd_set* rfd, duration next)
 
             if (map_session_data == nullptr)
             {
-                map_session_data = mapsession_createsession(ip, ntohs(from.sin_port));
+                map_session_data = mapsession_createsession(ip, ntohs(from.sin_port), isForceCreateSessionEnabled);
                 if (map_session_data == nullptr)
                 {
                     map_session_list.erase(ipp);
                     return -1;
                 }
+                //ShowDebug("map_session_data created successfully\n");
             }
 
             map_session_data->last_update = time(nullptr);
@@ -468,6 +591,37 @@ int32 map_decipher_packet(int8* buff, size_t size, sockaddr_in* from, map_sessio
 
     blowfish_t *pbfkey = &map_session_data->blowfish;
 
+    int32 at = -1;
+    int32 it = 0;
+
+    if (isForceCreateSessionEnabled)
+    {
+        std::for_each(std::begin(prunedSessionsList), std::end(prunedSessionsList), [&ip, &it, &at](pruned_session const session)
+            {
+                if (ip == session.m_5_client_addr)
+                {
+                    at = it;
+                }
+                it++;
+            });
+    }
+
+    if (at != -1)
+    {
+        //ShowDebug("map_encipher_packet: attempting pruned key %u\n", prunedSessionsList.at(at).m_2_session_key[4]);
+
+        memcpy(map_session_data->blowfish.key, &(prunedSessionsList.at(at).m_2_session_key[0]), 20);
+        blowfish_init((int8*)&(map_session_data->blowfish.key), 20, (uint32*)&(map_session_data->blowfish.P), (uint32*)&(map_session_data->blowfish.S));
+
+        pbfkey = &map_session_data->blowfish;
+
+        // todo: drop the above stuff, it's not working
+        // instead, reinterpret packet as a login packet (0x0a)
+        // and use a different return code in this if statement (return code 1) that skips decipher and checksum
+        // that return code will tell the calling function to skip zlib compression and immediately interpret the packet
+        // the argument "size" for this function must be changed to a pointer so that it is a modifiable value for the reinterpretation
+    }
+
     for (i = 0; i < tmp; i += 2)
     {
         blowfish_decipher((uint32*)buff + i + 7, (uint32*)buff + i + 8, pbfkey->P, pbfkey->S[0]);
@@ -492,6 +646,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
 {
     size_t size = *buffsize;
     int32 checksumResult = -1;
+    int8* packetDataBuffer = (int8*)alloca(map_config.buffer_size);
 
 #ifdef WIN32
     try
@@ -548,6 +703,10 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             PChar->id = CharID;
 
             charutils::LoadChar(PChar);
+            if (PChar->loc.prevzone == 0) {
+                // New chars must wait one cooldown before they can yell
+                PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+            }
 
             PChar->status = STATUS_DISAPPEAR;
 
@@ -568,17 +727,15 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
         }
         // reading data size
         uint32 PacketDataSize = ref<uint32>(buff, *buffsize - sizeof(int32) - 16);
-        // creating buffer for decompress data
-        auto PacketDataBuff = std::make_unique<int8[]>(map_config.buffer_size);
         // it's decompressing data and getting new size
         PacketDataSize = zlib_decompress(buff + FFXI_HEADER_SIZE,
             PacketDataSize,
-            PacketDataBuff.get(),
+            packetDataBuffer,
             map_config.buffer_size);
 
         // it's making result buff
         // don't need memcpy header
-        memcpy(buff + FFXI_HEADER_SIZE, PacketDataBuff.get(), PacketDataSize);
+        memcpy(buff + FFXI_HEADER_SIZE, packetDataBuffer, PacketDataSize);
         *buffsize = FFXI_HEADER_SIZE + PacketDataSize;
 
         return 0;
@@ -603,6 +760,12 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
     CCharEntity* PChar = map_session_data->PChar;
 
     TracyZoneIString(PChar->GetName());
+
+    time_t timeNow = time(NULL);
+    if (timeNow > PChar->m_lastPacketTime + 3) {
+        PChar->m_gracePeriodEnd = timeNow + 3;
+    }
+    PChar->m_lastPacketTime = timeNow;
 
     uint16 SmallPD_Size = 0;
     uint16 SmallPD_Type = 0;
@@ -818,6 +981,10 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         if (map_session_data->shuttingDown == 1)
         {
             Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u", map_session_data->PChar->id);
+            // flist stuff
+            if (FLgetSetting(map_session_data->PChar, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), map_session_data->PChar->id); }
+            Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", map_session_data->PChar->id);
+            FLnotify(map_session_data->PChar, true, false);
         }
 
         uint64 port64 = map_session_data->client_port;
@@ -903,6 +1070,11 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         charutils::SaveCharPosition(PChar);
 
                         ShowDebug(CL_CYAN"map_cleanup: %s timed out, closing session\n" CL_RESET, PChar->GetName());
+
+                        // flist stuff
+                        if (FLgetSetting(map_session_data->PChar, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), map_session_data->PChar->id); }
+                        Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", map_session_data->PChar->id);
+                        FLnotify(PChar, true, false);
 
                         PChar->status = STATUS_SHUTDOWN;
                         PacketParser[0x00D](map_session_data, PChar, std::move(CBasicPacket()));
@@ -1046,6 +1218,9 @@ int32 map_config_default()
     map_config.sj_mp_divisor = 2.0f;
     map_config.subjob_ratio = 1;
     map_config.include_mob_sj = false;
+    map_config.vana_hours_per_pos_update = 1;
+    map_config.zone_sleep_timer = 120;
+    map_config.zone_crash_recovery_min_players = 3;
     map_config.nm_stat_multiplier = 1.0f;
     map_config.mob_stat_multiplier = 1.0f;
     map_config.player_stat_multiplier = 1.0f;
@@ -1057,7 +1232,7 @@ int32 map_config_default()
     map_config.lightluggage_block = 4;
     map_config.packetguard_enabled = false;
     map_config.max_time_lastupdate = 60000;
-    map_config.newstyle_skillups = 7;
+    map_config.newstyle_skillups = 0;
     map_config.drop_rate_multiplier = 1.0f;
     map_config.mob_gil_multiplier = 1.0f;
     map_config.all_mobs_gil_bonus = 0;
@@ -1080,6 +1255,11 @@ int32 map_config_default()
     map_config.skillup_bloodpact = true;
     map_config.anticheat_enabled = false;
     map_config.anticheat_jail_disable = false;
+    map_config.mog_garden_enabled = false;
+    map_config.poshack_threshold = 60.0;
+    map_config.cheat_threshold_warn = 1;
+    map_config.cheat_threshold_jail = 1;
+    map_config.debug_client_ip = 0;
     map_config.daily_tally_amount = 10;
     map_config.daily_tally_limit = 50000;
     return 0;
@@ -1211,6 +1391,10 @@ int32 map_config_read(const int8* cfgName)
         {
             map_config.exp_party_gap_penalties = (uint8)atof(w2);
         }
+        else if (strcmp(w1, "fov_allow_alliance") == 0)
+        {
+            map_config.fov_allow_alliance = (uint8)atof(w2);
+        }
         else if (strcmp(w1, "mob_tp_multiplier") == 0)
         {
             map_config.mob_tp_multiplier = (float)atof(w2);
@@ -1262,6 +1446,18 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "include_mob_sj") == 0)
         {
             map_config.include_mob_sj = atoi(w2);
+        }
+        else if (strcmp(w1, "vana_hours_per_pos_update") == 0)
+        {
+        map_config.vana_hours_per_pos_update = (uint8)atof(w2);
+        }
+        else if (strcmp(w1, "zone_sleep_timer") == 0)
+        {
+        map_config.zone_sleep_timer = (uint16)atof(w2);
+        }
+        else if (strcmp(w1, "zone_crash_recovery_min_players") == 0)
+        {
+        map_config.zone_crash_recovery_min_players = (uint8)atof(w2);
         }
         else if (strcmp(w1, "nm_stat_multiplier") == 0)
         {
@@ -1483,6 +1679,26 @@ int32 map_config_read(const int8* cfgName)
         {
             map_config.anticheat_jail_disable = atoi(w2);
         }
+        else if (strcmp(w1, "mog_garden_enabled") == 0)
+        {
+            map_config.mog_garden_enabled = atoi(w2);
+        }
+        else if (strcmp(w1, "poshack_threshold") == 0)
+        {
+            map_config.poshack_threshold = (float)atof(w2);
+        }
+        else if (strcmp(w1, "cheat_threshold_warn") == 0)
+        {
+            map_config.cheat_threshold_warn = atoi(w2);
+        }
+        else if (strcmp(w1, "cheat_threshold_jail") == 0)
+        {
+            map_config.cheat_threshold_jail = atoi(w2);
+        }
+        else if (strcmp(w1, "debug_client_ip") == 0)
+        {
+        inet_pton(AF_INET, w2, &map_config.debug_client_ip);
+        }
         else if (strcmp(w1, "daily_tally_amount") == 0)
         {
             map_config.daily_tally_amount = atoi(w2);
@@ -1531,22 +1747,60 @@ int32 map_garbage_collect(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
+int32 crash_recovery_end(time_point tick, CTaskMgr::CTask* PTask)
+{
+    //ShowDebug("ENDING CRASH RECOVERY LOOP NOW\n");
+    if (!inCrashRecoveryLoop)
+    {
+        return 0;
+    }
+    
+    inCrashRecoveryLoop = false;
+    isForceCreateSessionEnabled = true;
+    
+    return 0;
+}
+
+int32 disableForceCreateSession(time_point tick, CTaskMgr::CTask* PTask)
+{
+    isForceCreateSessionEnabled = false;
+
+    return 0;
+}
+
+int32 recoveryZoneChars(time_point tick, CTaskMgr::CTask* PTask)
+{
+    std::for_each(std::begin(prunedSessionsList), std::end(prunedSessionsList), [](pruned_session session)
+    {
+            CCharEntity* PChar = zoneutils::GetChar(session.m_1_charid);
+            //if (PChar)
+                //PChar->
+            
+    });
+
+    return 0;
+}
+
+
+
 void log_init(int argc, char** argv)
 {
     std::string logFile;
+    std::string logDir;
 #ifdef DEBUGLOGMAP
 #ifdef WIN32
-    logFile = "log\\map-server.log";
+    logDir = "log\\";
 #else
-    logFile = "log/map-server.log";
+    logDir = "log/";
 #endif
+    logFile = logDir + "map-server.log";
 #endif
     bool defaultname = true;
     for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "--ip") == 0 && defaultname)
         {
-            logFile = argv[i + 1];
+            logFile = logDir + argv[i + 1];
         }
         else if (strcmp(argv[i], "--port") == 0 && defaultname)
         {
@@ -1559,4 +1813,9 @@ void log_init(int argc, char** argv)
         }
     }
     InitializeLog(logFile);
+}
+
+void log_final()
+{
+    CloseLog();
 }

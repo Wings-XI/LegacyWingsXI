@@ -8,7 +8,8 @@ require("scripts/globals/mobs")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20) -- "Double Attack: Frequent and accurate"
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 45) -- "Double Attack: Frequent and accurate"
+    mob:addMod(tpz.mod.ACC, 50)
 end
 
 function onAdditionalEffect(mob, target, damage)

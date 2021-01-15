@@ -82,6 +82,7 @@ function onUseAbility(player, target, ability, action)
 
         if resist > 0.25 then
             target:addStatusEffect(tpz.effect.STUN, 1, 0, 2)
+            tryBuildResistance(tpz.magic.buildcat.STUN, target)
         else
             ability:setMsg(tpz.msg.basic.JA_DAMAGE)
         end

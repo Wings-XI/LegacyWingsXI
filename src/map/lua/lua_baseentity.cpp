@@ -155,6 +155,7 @@
 #include "../utils/puppetutils.h"
 #include "../utils/trustutils.h"
 #include "../utils/zoneutils.h"
+#include "../utils/flistutils.h"
 
 CLuaBaseEntity::CLuaBaseEntity(lua_State* L)
 {
@@ -292,7 +293,8 @@ inline int32 CLuaBaseEntity::messageText(lua_State* L)
 inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    if (m_PBaseEntity->objtype != TYPE_PC)
+        return 0;
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
 
@@ -2304,18 +2306,15 @@ inline int32 CLuaBaseEntity::sendGuild(lua_State* L)
     TPZ_DEBUG_BREAK_IF(open > close);
 
     uint8 VanadielHour = (uint8)CVanaTime::getInstance()->getHour();
-    // uint8 VanadielDay = (uint8)CVanaTime::getInstance()->getWeekday();
+    uint8 VanadielDay = (uint8)CVanaTime::getInstance()->getWeekday();
 
     GUILDSTATUS status = GUILD_OPEN;
 
-    /*
-     * No more guild holidays since 2014
     if (VanadielDay == holiday)
     {
         status = GUILD_HOLYDAY;
     }
-    */
-    if ((VanadielHour < open) || (VanadielHour >= close))
+    else if ((VanadielHour < open) || (VanadielHour >= close))
     {
         status = GUILD_CLOSE;
     }
@@ -2873,6 +2872,7 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
             // do not modify zone/position if the character is already zoning
             return 0;
         }
+        ((CCharEntity*)m_PBaseEntity)->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
     }
 
     if (lua_isnumber(L, 1))
@@ -2984,6 +2984,10 @@ inline int32 CLuaBaseEntity::teleport(lua_State *L)
         m_PBaseEntity->loc.p.rotation = worldAngle(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p);
     }
 
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+    }
     m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CPositionPacket(m_PBaseEntity));
     m_PBaseEntity->updatemask |= UPDATE_POS;
     return 0;
@@ -3282,7 +3286,9 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     Query = "DELETE FROM accounts_sessions WHERE charid = %u;";
     Sql_Query(SqlHandle, Query, id);
 
-
+    // flist stuff
+    if (FLgetSettingByID(id, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), id); }
+    Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", id);
 
     // send the player to lower jeuno
     Query =
@@ -6572,12 +6578,11 @@ inline int32 CLuaBaseEntity::addMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint16 MissionID = (uint16)lua_tointeger(L, 2);
+    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
     {
-        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-
         if (PChar->m_missionLog[missionLogID].current != (missionLogID > 2 ? 0 : -1))
         {
             ShowWarning(CL_YELLOW"Lua::addMission: player has a current mission\n" CL_RESET, missionLogID);
@@ -6591,6 +6596,8 @@ inline int32 CLuaBaseEntity::addMission(lua_State *L)
     {
         ShowError(CL_RED"Lua::delMission: missionLogID %i or Mission %i is invalid\n" CL_RESET, missionLogID, MissionID);
     }
+
+    charutils::UpdateMissionStorage(PChar);
     return 0;
 }
 
@@ -6615,13 +6622,13 @@ inline int32 CLuaBaseEntity::delMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint16 MissionID = (uint16)lua_tointeger(L, 2);
+    uint8 MissionID = (uint8)lua_tointeger(L, 2);
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
     {
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
-        auto current = (uint16)PChar->m_missionLog[missionLogID].current;
+        auto current = (uint8)PChar->m_missionLog[missionLogID].current;
         bool complete = (missionLogID == MISSION_COP || MissionID >= 64) ? false : PChar->m_missionLog[missionLogID].complete[MissionID];
 
         if (current == MissionID)
@@ -6663,11 +6670,11 @@ inline int32 CLuaBaseEntity::getCurrentMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, -1);
-    uint16 MissionID = 0;
+    uint8 MissionID = 0;
 
     if (missionLogID < MAX_MISSIONAREA)
     {
-        MissionID = (uint16)((CCharEntity*)m_PBaseEntity)->m_missionLog[missionLogID].current;
+        MissionID = (uint8)((CCharEntity*)m_PBaseEntity)->m_missionLog[missionLogID].current;
     }
     else
     {
@@ -6698,7 +6705,7 @@ inline int32 CLuaBaseEntity::hasCompletedMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint16 MissionID = (uint16)lua_tointeger(L, 2);
+    uint8 MissionID = (uint8)lua_tointeger(L, 2);
 
     bool complete = false;
 
@@ -6736,11 +6743,11 @@ inline int32 CLuaBaseEntity::completeMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint16 MissionID = (uint16)lua_tointeger(L, 2);
+    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
     {
-        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
         if (PChar->m_missionLog[missionLogID].current != MissionID)
         {
@@ -6763,6 +6770,7 @@ inline int32 CLuaBaseEntity::completeMission(lua_State *L)
     {
         ShowError(CL_RED"Lua::completeMission: missionLogID %i or Mission %i is invalid\n" CL_RESET, missionLogID, MissionID);
     }
+    charutils::UpdateMissionStorage(PChar);
     return 0;
 }
 
@@ -9462,13 +9470,13 @@ inline int32 CLuaBaseEntity::getLeaderID(lua_State* L)
         {
             if (PChar->PParty->m_PAlliance != nullptr)
             {
-                lua_pushnumber(L, PChar->PParty->m_PAlliance->m_AllianceID);
+                lua_pushnumber(L, PChar->PParty->m_PAlliance->m_AllianceID); // send alliance leader's ID
                 return 1;
             }
-            lua_pushnumber(L, PChar->PParty->GetPartyID());
+            lua_pushnumber(L, PChar->PParty->GetPartyID()); // send party leader's ID
             return 1;
         }
-        lua_pushnumber(L, PChar->id);
+        lua_pushnumber(L, PChar->id); // send my ID
         return 1;
     }
     lua_pushnil(L);
@@ -9582,6 +9590,24 @@ inline int32 CLuaBaseEntity::checkSoloPartyAlliance(lua_State *L)
     }
 
     lua_pushinteger(L, SoloPartyAlliance);
+    return 1;
+}
+
+/************************************************************************
+*  Function: checkFovAllianceAllowed()
+*  Purpose : Returns true if server owner has enabled FoV alliances
+*  Example : if (player:checkFovAllianceAllowed() == 1) then
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::checkFovAllianceAllowed(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    uint8 FovAlliance = map_config.fov_allow_alliance;
+
+    lua_pushinteger(L, FovAlliance);
     return 1;
 }
 
@@ -9973,9 +9999,9 @@ inline int32 CLuaBaseEntity::sendRaise(lua_State *L)
 
     uint8 RaiseLevel = (uint8)lua_tonumber(L, 1);
 
-    if (RaiseLevel == 0 || RaiseLevel > 3)
+    if (RaiseLevel == 0 || RaiseLevel > 5)
     {
-        ShowDebug(CL_CYAN"lua::sendRaise raise value is not valide!\n" CL_RESET);
+        ShowDebug(CL_CYAN"lua::sendRaise raise value is not valid!\n" CL_RESET);
     }
     else if (PChar->m_hasTractor == 0 && PChar->m_hasRaise == 0)
     {
@@ -10741,7 +10767,7 @@ inline int32 CLuaBaseEntity::addEnmity(lua_State *L)
     }
     else if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        if (PEntity != nullptr && (CE > 0 || VE > 0) && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
+        if (PEntity != nullptr && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
         {
             PMob->PEnmityContainer->UpdateEnmity(static_cast<CBattleEntity*>(PEntity->GetBaseEntity()), CE, VE);
         }
@@ -11463,6 +11489,25 @@ inline int32 CLuaBaseEntity::dispelStatusEffect(lua_State *L)
 
     lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->DispelStatusEffect((EFFECTFLAG)flag));
     return 1;
+
+
+}
+
+/************************************************************************
+*  Function: getBattleTargetID()
+*  Purpose : 
+*  Example : mob:getBattleTargetID()
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getBattleTargetID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->GetBattleTargetID());
+
+    return 1;
 }
 
 /************************************************************************
@@ -11494,7 +11539,7 @@ inline int32 CLuaBaseEntity::dispelAllStatusEffect(lua_State *L)
 /************************************************************************
 *  Function: stealStatusEffect()
 *  Purpose : Removes a dispellable status effect from one Entity and transfers it to the other
-*  Example : target:stealStatusEffect()
+*  Example : pet:stealStatusEffect(target)
 *  Notes   : Returns a Lua table with the information on the Status Effect stolen
 ************************************************************************/
 
@@ -12023,18 +12068,31 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-
+    
     auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_RANGED]);
-
+    auto ammo = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_AMMO]);
+    if ((weapon && weapon->getSkillType() == SKILL_FISHING) || (ammo && ammo->getSkillType() == SKILL_FISHING))
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+    
     if (weapon == nullptr)
     {
         ShowDebug(CL_CYAN"lua::getRACC weapon in ranged slot is NULL!\n" CL_RESET);
         return 0;
     }
     CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
-
-    int skill = PEntity->GetSkill(weapon->getSkillType());
-    int acc = skill;
+    
+    uint8 skilltype = weapon->getSkillType();
+    if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
+        skilltype = SKILL_AUTOMATON_RANGED;
+    
+    uint16 skill = PEntity->GetSkill(skilltype);
+    if (skilltype == SKILL_AUTOMATON_RANGED)
+        skill = PEntity->PMaster->GetSkill(skilltype);
+    uint16 acc = skill;
+    
     if (skill > 200) {
         acc = (int)(200 + (skill - 200) * 0.9);
     }
@@ -12049,7 +12107,7 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
 /************************************************************************
 *  Function: getRATT()
 *  Purpose : Returns the Ranged Attack value of an equipped Ranged weapon
-*  Example : player:getRATT()
+*  Example : player:getRATT() or player:getRATT(15) for distance of 15
 *  Notes   : Calls the RATT member function of CBattleEntity for calculation
 ************************************************************************/
 
@@ -12057,6 +12115,11 @@ inline int32 CLuaBaseEntity::getRATT(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    float range = 1.0f;
+
+    if (lua_isnumber(L, 1))
+        range = (float)(lua_tonumber(L, 1));
 
     auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_RANGED]);
 
@@ -12066,7 +12129,12 @@ inline int32 CLuaBaseEntity::getRATT(lua_State *L)
         return 0;
     }
 
-    lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->RATT(weapon->getSkillType(), weapon->getILvlSkill()));
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+    uint8 skilltype = weapon->getSkillType();
+    if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
+        skilltype = SKILL_AUTOMATON_RANGED;
+
+    lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->RATT(skilltype, range, weapon->getILvlSkill()));
     return 1;
 }
 
@@ -12608,6 +12676,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 7) || !lua_isnumber(L, 7));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 8) || !lua_isnumber(L, 8));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 9) || !lua_isnumber(L, 9));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 10) || !lua_isboolean(L, 10));
 
     auto PChar = static_cast<CCharEntity*>(Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity);
     auto damage = (int32)lua_tointeger(L, 2);
@@ -12618,8 +12687,9 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     auto tpMultiplier = (float)lua_tonumber(L, 7);
     auto bonusTP = (uint16)lua_tointeger(L, 8);
     auto targetTPMultiplier = (float)lua_tonumber(L, 9);
+    bool useAutoTPFormula = (bool)lua_toboolean(L, 10);
 
-    lua_pushinteger(L, (lua_Integer)battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier));
+    lua_pushinteger(L, (lua_Integer)battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier, useAutoTPFormula));
     return 1;
 }
 
@@ -12653,14 +12723,19 @@ int32 CLuaBaseEntity::takeSpellDamage(lua_State* L)
 /************************************************************************
 *  Function: spawnPet()
 *  Purpose : Spawns a pet if a few correct conditions are met
-*  Example : caster:spawnPet(PET_CARBUNCLE)
-*  Notes   :
+*  Example : caster:spawnPet(PET_CARBUNCLE, target)
+*  Notes   : target is only used for targeted summon spells (Odin and Atomos) and is allowed to be nil
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    
+    CBattleEntity* PCastTarget = nullptr;
+    
+    if (!lua_isnil(L, 2) && lua_isuserdata(L,2))
+        PCastTarget = static_cast<CBattleEntity*>((Lunar<CLuaBaseEntity>::check(L, 2))->GetBaseEntity());
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
@@ -12679,7 +12754,9 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
                     return 0;
                 }
             }
-            petutils::SpawnPet((CBattleEntity*)m_PBaseEntity, (uint32)lua_tointeger(L, 1), false);
+            
+            petutils::SpawnPet((CBattleEntity*)m_PBaseEntity, (uint32)lua_tointeger(L, 1), false, PCastTarget);
+            
         }
         else
         {
@@ -15045,6 +15122,839 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
     return 1;
 }
 
+/************************************************************************
+*  Function: friendListMain()
+*  Purpose : where it begins
+*  Example : !flist ... player:friendListMain(arg1,arg2,arg3)
+*  Notes   : requires flistutils.h
+************************************************************************/
+
+inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    FLinitialize(PChar);
+
+    TPZ_DEBUG_BREAK_IF(!lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(!lua_isstring(L, 2));
+    TPZ_DEBUG_BREAK_IF(!lua_isstring(L, 3));
+    std::string arg1 = lua_tostring(L, 1);
+    std::string arg2 = lua_tostring(L, 2);
+    std::string arg3 = lua_tostring(L, 3);
+    std::string arg3new = arg3;
+
+    std::string line;
+
+    // 1:callingchar,2:visible,3:notifs,4:channel,5:size,6:lastcall,7:lastonline
+    uint8 sVisible = (uint8)FLgetSetting(PChar, 2);
+    uint8 sNotifs = (uint8)FLgetSetting(PChar, 3);
+    uint8 sChannel = (uint8)FLgetSetting(PChar, 4);
+    uint8 sSize = (uint8)FLgetSetting(PChar, 5);
+    uint32 sLastCall = (uint32)FLgetSetting(PChar, 6);
+    uint32 sLastOnline = (uint32)FLgetSetting(PChar, 7);
+    uint32 sinceLastCall = (uint32)CVanaTime::getInstance()->getVanaTime() - sLastCall;
+
+    if (arg1 != FLNULL) // lowercase
+    {
+        std::transform(arg1.begin(), arg1.end(), arg1.begin(), ::tolower);
+    }
+
+    if (arg2 != FLNULL) // lowercase
+    {
+        std::transform(arg2.begin(), arg2.end(), arg2.begin(), ::tolower);
+    }
+
+    uint8 c;
+
+    c = 0;
+    while (arg1[c] != '\0' && c != 16) { c++; } // count string length
+    if (c == 16) { arg1[c] = '\0'; } // if 17 or more, truncate
+
+    c = 0;
+    while (arg2[c] != '\0' && c != 16) { c++; } // count string length
+    if (c == 16) { arg2[c] = '\0'; } // if 17 or more, truncate
+
+    if (arg3new != FLNULL) // lowercase if not a note
+    {
+        std::transform(arg3new.begin(), arg3new.end(), arg3new.begin(), ::tolower);
+        if (arg3new == "remove" || arg3new == "delete")
+        {
+            arg3 = arg3new;
+        }
+    } // count length for arg3 is done in FLsetNote()
+
+
+
+
+
+
+    if (arg1 == FLNULL)
+    {
+        if (sinceLastCall > 4)
+        {
+            FLprintList(PChar, sChannel, sSize);
+            return 1;
+        }
+
+        return 1;
+    }
+
+
+
+    if (arg1 == "add")
+    {
+        if (arg2 != FLNULL)
+        {
+            FLadd(PChar, arg2, sChannel, sVisible);
+            return 1;
+        }
+
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help add' for more info.", ""));
+            return 2;
+        }
+    }
+
+
+
+    if (arg1 == "remove" || arg1 == "delete")
+    {
+        if (arg2 != FLNULL)
+        {
+            FLremove(PChar, arg2, sChannel);
+            return 1;
+        }
+
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help remove' for more info.", ""));
+            return 1;
+        }
+    }
+
+
+
+    if (arg1 == "hide" || arg1 == "invisible")
+    {
+        bool silent = false;
+
+        if (arg2 == "silent" || arg2 == "quiet")
+        {
+            silent = true;
+        }
+
+        FLhide(PChar, sChannel, true, silent);
+        return 1;
+    }
+
+
+
+    if (arg1 == "unhide" || arg1 == "visible")
+    {
+        bool silent = false;
+
+        if (arg2 == "silent")
+        {
+            silent = true;
+        }
+
+        FLhide(PChar, sChannel, false, silent);
+        return 1;
+    }
+
+
+
+    if (arg1 == "channel")
+    {
+        uint8 channel = 29;
+        if (arg2 == "say")
+        {
+            channel = 13;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == "shout")
+        {
+            channel = 14;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == "party" || arg2 == "alliance")
+        {
+            channel = 15;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == "linkshell" || arg2 == "linkshell1" || arg2 == "ls" || arg2 == "ls1")
+        {
+            channel = 16;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == "linkshell2" || arg2 == "ls2")
+        {
+            channel = 28;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == "default" || arg2 == "system" || arg2 == "sys")
+        {
+            channel = 29;
+            FLsetChannel(PChar, channel);
+            return 1;
+        }
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a channel identifier!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help channel' for more info.", ""));
+            return 2;
+        }
+
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        line = "Unrecognized channel: " + arg2;
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+
+        return 2;
+    }
+
+
+
+    if (arg1 == "size" || arg1 == "window")
+    {
+        uint8 size = 3;
+
+        if (arg2 == "full" || arg2 == "default")
+        {
+            size = 3;
+            FLsetSize(PChar, sChannel, size);
+            return 1;
+        }
+        if (arg2 == "compact" || arg2 == "small" || arg2 == "mini")
+        {
+            size = 2;
+            FLsetSize(PChar, sChannel, size);
+            return 1;
+        }
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a size!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help size' for more info.", ""));
+            return 2;
+        }
+
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        line = "Unrecognized size: " + arg2;
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+
+        return 2;
+    }
+
+
+
+    if (arg1 == "notification" || arg1 == "notifications" || arg1 == "notifs" || arg1 == "notif") // todo:
+    {
+        uint8 notifs = 3;
+
+        if (arg2 == "on" || arg2 == "all") // 3
+        {
+            notifs = 3;
+            FLsetNotifs(PChar, sChannel, notifs);
+            return 1;
+        }
+        if (arg2 == "login" || arg2 == "logins" || arg2 == "loginonly" || arg2 == "loginsonly") // 2
+        {
+            notifs = 2;
+            FLsetNotifs(PChar, sChannel, notifs);
+            return 1;
+        }
+        if (arg2 == "logoff" || arg2 == "logoffs" || arg2 == "logoffonly" || arg2 == "logoffsonly" || arg2 == "logout" || arg2 == "logouts" || arg2 == "logoutonly" || arg2 == "logoutsonly") // 1
+        {
+            notifs = 1;
+            FLsetNotifs(PChar, sChannel, notifs);
+            return 1;
+        }
+        if (arg2 == "off" || arg2 == "none") // 0
+        {
+            notifs = 0;
+            FLsetNotifs(PChar, sChannel, notifs);
+            return 1;
+        }
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            line = "Current notification status: ";
+            if (sNotifs == 0) { line += "OFF"; }
+            if (sNotifs == 1) { line += "LOGOUTS ONLY"; }
+            if (sNotifs == 2) { line += "LOGINS ONLY"; }
+            if (sNotifs == 3) { line += "ON"; }
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+            return 1;
+        }
+
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        line = "Unrecognized notification setting: " + arg2;
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+
+        return 2;
+    }
+
+
+
+    if (arg1 == "note")
+    {
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a friend name!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""));
+            return 2;
+        }
+
+        if (arg3 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a note!", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""));
+            return 2;
+        }
+
+        if (arg3 == "remove" || arg3 == "delete")
+        {
+            arg3 = "actualempty";
+        }
+
+        FLsetNote(PChar, sChannel, arg2, arg3);
+
+        return 1;
+    }
+
+
+
+    if (arg1 == "help")
+    {
+        if (arg2 == FLNULL)
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command List }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Use '!flist help [command]' for more info }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist add", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist remove", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist hide", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist unhide", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist channel", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist size", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist notifs", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist note", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist help", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "add")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist add [playername] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds the specified player to your friend list.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player must have added you to their list in order", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  for you to see their status on your list.", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "remove" || arg2 == "delete")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist remove [playername] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Removes the specified player from your friend list.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player will no longer see your status on their list", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you add them again with '!flist add'.", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "hide" || arg2 == "invisible")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist hide [silent] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'hidden' so that you show up as", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'offline' to your friends. On triggering this command,", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged out. If you do not want this notification be sent,", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist hide silent'. You can enable hide upon login", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  by entering a '?' character before your username in the", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Ashita bootloader.", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "unhide" || arg2 == "visible")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist unhide [silent] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'visible' so that you show up as", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'online' to your friends. On triggering this command,", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged in. If you do not want this notification be sent,", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist unhide silent'.", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "channel")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist channel [param] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the chat channel for all FLIST MESSAGES. Valid channels:", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SAY", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SHOUT", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    PARTY", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS1", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS2", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SYSTEM", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "size" || arg2 == "window")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist size [param] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the size of the friend list when it is printed in your log.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Valid size paramaters:", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    FULL", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    COMPACT", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "notifs" || arg2 == "notif" || arg2 == "notifications" || arg2 == "notification")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist notifs [param] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Login and logout notifications are sent to all of your friends", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you are in the 'hidden' status and sent to you as long as", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friend is not in the 'hidden' status. You can customize", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  what notifications you receive with the following paramters:", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    ON", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGINS", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGOUTS", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    OFF", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "note")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist note [friend] [text] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds a custom note to the specified friend which is displayed", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  when you load your friend list.", ""));
+
+            return 1;
+        }
+
+        if (arg2 == "help")
+        {
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist help [command] }", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Yo dawg, I heard you needed a help menu for your help menu...", ""));
+
+            return 1;
+        }
+
+
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        line = "Help section not recognized: " + arg2;
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+
+        return 1;
+    }
+
+
+
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+    line = "Unrecognized argument: " + arg1;
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help' for a list of commands.", ""));
+    return 2;
+
+}
+
+/************************************************************************
+*  Function: setMobLevelRange(minlv,maxlv)
+*  Purpose : Used by developer GMs to set a mob's level range
+*  Example : target:setMobLevelRange(1,3)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setMobLevelRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    uint8 minlv = 1;
+    uint8 maxlv = 1;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        minlv = (uint8)lua_tointeger(L, 1);
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        maxlv = (uint8)lua_tointeger(L, 2);
+
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+    if (PMob)
+    {
+        // volatile memory first
+        PMob->m_minLevel = minlv;
+        PMob->m_maxLevel = maxlv;
+
+        // now the DB
+        if (Sql_Query(SqlHandle, "SELECT minLevel,maxLevel FROM mob_level_exceptions WHERE mobid = %u LIMIT 1;", PMob->id) == SQL_SUCCESS && Sql_NumRows(SqlHandle) == 1 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            Sql_Query(SqlHandle, "DELETE FROM mob_level_exceptions WHERE mobid = %u LIMIT 1;", PMob->id);
+
+        if (Sql_Query(SqlHandle, "INSERT INTO mob_level_exceptions VALUES (%u,%u,%u);", PMob->id, minlv, maxlv) != SQL_SUCCESS)
+            ShowWarning("setMobLevelRange developer command failed! could not insert into database...\n");
+    }
+
+    return 2;
+}
+
+/************************************************************************
+*  Function: setSuperJump(1)
+*  Purpose : sets super jump flag to evade spells and abilities
+*  Example : setSuperJump(1), setSuperJump(0)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setSuperJump(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    bool superJump = false;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        superJump = lua_tointeger(L, 1);
+
+    CBattleEntity* PEntity = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PEntity)
+        PEntity->isSuperJumped = superJump;
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getOAXTimes()
+*  Purpose : used in Jump calculations in Lua
+*  Example : getOAXTimes(0) for main hand, getOAXTimes(1) for off hand
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getOAXTimes(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    uint8 count = 1;
+    SLOTTYPE slot = SLOT_MAIN;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1) && lua_tointeger(L, 1) == 1)
+        slot = SLOT_SUB;
+
+    CCharEntity* PEntity = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    if (PEntity->getEquip(slot) != nullptr && (static_cast<CItemWeapon*>(PEntity->getEquip(slot)))->getSkillType() != SKILL_NONE)
+    {
+        CItemWeapon* weapon = static_cast<CItemWeapon*>(PEntity->getEquip(slot));
+        count = weapon->getHitCount();
+    }
+    else
+    {
+        count = 0; // grips
+    }
+
+    lua_pushinteger(L, count);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: 
+*  Purpose : 
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getOpenMH(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    CCharEntity* PEntity = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    if (PEntity->m_moghouseID == 0 || PEntity->m_moghouseID != PEntity->id) // not in a mog house or in someone else's mog house
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    if (PEntity->m_openMH == true)
+    {
+        lua_pushboolean(L, true);
+        return 1;
+    }
+    
+    lua_pushboolean(L, false);
+    return 1;
+}
+
+/************************************************************************
+*  Function:
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::zoneMazurka(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    uint8 zoneID = m_PBaseEntity->loc.zone->GetID();
+    bool newSetting = lua_toboolean(L, 1);
+
+    if (newSetting == true)
+    {
+        Sql_Query(SqlHandle, "SELECT * FROM topdb.zone_settings WHERE NOT misc & 8 AND zoneid = %u LIMIT 1;",zoneID);
+        if (Sql_NumRows(SqlHandle) == 0)
+        {
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        Sql_Query(SqlHandle, "UPDATE topdb.zone_settings SET misc = misc + 8 WHERE zoneid = %u LIMIT 1;", zoneID);
+        m_PBaseEntity->loc.zone->m_miscMask ^= MISC_MAZURKA;
+    }
+
+    if (newSetting == false)
+    {
+        Sql_Query(SqlHandle, "SELECT * FROM topdb.zone_settings WHERE misc & 8 AND zoneid = %u LIMIT 1;", zoneID);
+        if (Sql_NumRows(SqlHandle) == 0)
+        {
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        Sql_Query(SqlHandle, "UPDATE topdb.zone_settings SET misc = misc - 8 WHERE zoneid = %u LIMIT 1;", zoneID);
+        m_PBaseEntity->loc.zone->m_miscMask ^= MISC_MAZURKA;
+    }
+
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+*  Function:
+*  Purpose : causes the target mob entity to drop its items
+*  Example :
+*  Notes   : this does not kill the mob.
+************************************************************************/
+
+inline int32 CLuaBaseEntity::forceDropItems(lua_State* L)
+{
+    if (m_PBaseEntity == nullptr || m_PBaseEntity->objtype != TYPE_PC)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    auto PTarget = PChar->GetEntity(PChar->m_TargID);
+
+    if (PTarget == nullptr || PTarget->objtype != TYPE_MOB)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    CMobEntity* PMob = (CMobEntity*)PTarget;
+
+    PMob->DropItems(PChar);
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+*  Function:
+*  Purpose : take a guess
+*  Example : pet:addCharmTime(100)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addCharmTime(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_MOB);
+
+    CBattleEntity* PPet = (CBattleEntity*)m_PBaseEntity;
+
+    uint16 seconds = 0;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        seconds = (uint16)lua_tointeger(L, 1);
+
+    if (PPet->objtype == TYPE_MOB && PPet->isCharmed)
+    {
+        PPet->charmTime += std::chrono::seconds(seconds);
+        lua_pushboolean(L, true);
+        return 1;
+    }
+
+    lua_pushboolean(L, false);
+    return 1;
+}
+
+/************************************************************************
+*  Function: 
+*  Purpose :
+*  Example : target:tryIntteruptSpell(attacker, 3)
+*  Notes   : second argument is amount of hits landed
+************************************************************************/
+
+inline int32 CLuaBaseEntity::tryInterruptSpell(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PCaster = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    uint8 tries = 1;
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        tries = (uint8)lua_tointeger(L, 2);
+
+    while (tries != 0 && PAttacker && PCaster)
+    {
+        PCaster->TryHitInterrupt(PAttacker);
+        tries--;
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function:
+*  Purpose :
+*  Example : target:getGuardRate(attacker)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PDefender->objtype != TYPE_PC)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    if (PDefender && PAttacker)
+        lua_pushinteger(L, battleutils::GetGuardRate(PAttacker, PDefender));
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function:
+*  Purpose :
+*  Example : player:trySkillUp(mob, tpz.skill.SWORD, 2)
+*  Notes   : third argument is amount of hits landed
+************************************************************************/
+
+inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PChar = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PMob = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PChar->objtype != TYPE_PC)
+        return 0;
+
+    uint8 skill = 1;
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        skill = (uint8)lua_tointeger(L, 2);
+
+    uint8 tries = 1;
+    if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
+        tries = (uint8)lua_tointeger(L, 3);
+
+    while (tries != 0 && PChar && PMob)
+    {
+        charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
+        tries--;
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: 
+*  Purpose : 
+*  Example : 
+*  Notes   : 
+************************************************************************/
+
+int32 CLuaBaseEntity::addRoamFlag(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CMobEntity* PEntity = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+
+    PEntity->m_roamFlags |= lua_tointeger(L, 1);
+
+    return 0;
+
+}
+
+/************************************************************************
+*  Function:
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CMobEntity* PEntity = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PEntity->m_roamFlags & ((uint16)lua_tointeger(L, 1)))
+        PEntity->m_roamFlags -= ((uint16)lua_tointeger(L, 1));
+
+    return 0;
+
+}
+
 //=======================================================//
 
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -15052,7 +15962,7 @@ const char CLuaBaseEntity::className[] = "CBaseEntity";
 Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 {
 
-        // Messaging System
+    // Messaging System
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,showText),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageText),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
@@ -15445,6 +16355,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkSoloPartyAlliance),
 
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkFovAllianceAllowed),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkKillCredit),
 
     // Instances
@@ -15536,6 +16447,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,eraseStatusEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,eraseAllStatusEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,dispelStatusEffect),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBattleTargetID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,dispelAllStatusEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,stealStatusEffect),
 
@@ -15722,6 +16634,21 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTHlevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayerRegionInZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateToEntireZone),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,friendListMain),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobLevelRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSuperJump),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getOAXTimes),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getOpenMH),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,zoneMazurka),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,forceDropItems),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCharmTime),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,tryInterruptSpell),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGuardRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,trySkillUp),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
 
     {nullptr,nullptr}
 };

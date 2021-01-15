@@ -39,5 +39,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         local duration = (45 + (tp/1000 * 45)) * applyResistanceAddEffect(player, target, tpz.magic.ele.EARTH, 0)
         target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 20, 0, duration)
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.DAGGER, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

@@ -2,8 +2,8 @@
 -- Ability: Drachen Roll
 -- Enhances pet accuracy for party members within area of effect
 -- Optimal Job: Dragoon
--- Lucky Number: 4
--- Unlucky Number: 8
+-- Lucky Number: 4 now 3
+-- Unlucky Number: 8 now 7
 -- Level: 23
 -- Phantom Roll +1 Value: 5
 --
@@ -21,6 +21,20 @@
 -- 10          |+30     |+45
 -- 11          |+50     |+65
 -- Bust        |-15     |-15
+
+-- NEW: MACC/MATT for pet
+-- Die Roll 	Without DRG 	With DRG
+-- 1	+2	+6
+-- 2	+2	+6
+-- 3	+9	+13
+-- 4	+3	+7
+-- 5	+4	+8
+-- 6	+4	+8
+-- 7	+1	+5
+-- 8	+5	+9
+-- 9	+5	+9
+-- 10	+6	+10
+-- 11	+12	+16
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/ability")
@@ -50,10 +64,10 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {10, 13, 15, 40, 18, 20, 25, 5, 28, 30, 50, 15}
+    local effectpowers = {2, 2, 9, 3, 4, 4, 1, 5, 5, 6, 12, 2}
     local effectpower = effectpowers[total]
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
-        effectpower = effectpower + 15
+        effectpower = effectpower + 4
     end
 -- Apply Additional Phantom Roll+ Buff
     local phantomBase = 5 -- Base increment buff
@@ -64,7 +78,7 @@ function applyRoll(caster, target, ability, action, total)
     elseif (caster:getSubJob() == tpz.job.COR and caster:getSubLvl() < target:getMainLvl()) then
         effectpower = effectpower * (caster:getSubLvl() / target:getMainLvl())
     end
-    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.DRACHEN_ROLL, effectpower, 0, duration, caster:getID(), total, MOD_PET_ACC) == false) then
+    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.DRACHEN_ROLL, effectpower, 0, duration, caster:getID(), total, tpz.mod.MACC) == false) then
         ability:setMsg(tpz.msg.basic.ROLL_MAIN_FAIL)
     elseif total > 11 then
         ability:setMsg(tpz.msg.basic.DOUBLEUP_BUST)

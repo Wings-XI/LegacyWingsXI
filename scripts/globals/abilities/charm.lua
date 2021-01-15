@@ -30,20 +30,20 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    if target:isPC() then
+    if target:isPC() or target:getID() == 17649730 then
         ability:setMsg(tpz.msg.basic.NO_EFFECT)
     else
         local Tamed = false
 
         if player:getLocalVar("Tamed_Mob") == target:getID() then
-            player:addMod(tpz.mod.CHARM_CHANCE, 10)
+            player:addMod(tpz.mod.CHARM_CHANCE, 20)
             Tamed = true
         end
 
         player:charmPet(target)
 
         if Tamed then
-            player:delMod(tpz.mod.CHARM_CHANCE, 10)
+            player:delMod(tpz.mod.CHARM_CHANCE, 20)
             player:setLocalVar("Tamed_Mob", 0)
         end
     end

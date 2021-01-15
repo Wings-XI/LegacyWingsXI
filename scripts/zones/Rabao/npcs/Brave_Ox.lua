@@ -20,18 +20,18 @@ function onTrigger(player, npc)
         4750, 546000,    -- Reraise III
         4638,  78260,    -- Banish III
         4701,  20092,    -- Cura
-        5082,  88389,    -- Cura II
+        --5082,  88389,    -- Cura II
         4702,  62192,    -- Sacrifice
         4703,  64584,    -- Esuna
         4704,  30967,    -- Auspice
-        4614, 141137,    -- Cure VI
-        4655, 103882,    -- Protect V
-        4660, 125069,    -- Shell V
-        5103, 140332,    -- Crusade
+        --4614, 141137,    -- Cure VI
+        --4655, 103882,    -- Protect V
+        --4660, 125069,    -- Shell V
+        --5103, 140332,    -- Crusade
     }
 
     player:showText(npc, ID.text.BRAVEOX_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, SELBINA)
 end
 
 function onEventUpdate(player, csid, option)

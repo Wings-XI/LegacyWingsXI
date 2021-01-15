@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -89,6 +89,7 @@ enum MSGSERVTYPE : uint8
     // gm commands
     MSG_SEND_TO_ZONE,
     MSG_SEND_TO_ENTITY,
+    MSG_SEND_FL_NOTIF
 };
 
 typedef std::string string_t;
@@ -159,6 +160,7 @@ struct position_t
     float y;                // Entity height, relative to "sea level"
     float z;
     uint16 moving;          // Somehing like the travel distance, the number of steps required for correct rendering in the client.
+    uint16 movingsnapshot;
 
     // The angle of rotation of the entity relative to its position. A maximum rotation value of
     // 255 is used as the rotation is stored in `uint8`. Use `rotationToRadian()` and

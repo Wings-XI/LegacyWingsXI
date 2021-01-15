@@ -33,6 +33,7 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 5 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
 
     if (resist > 0.0625) then -- Do it!
         if (target:addStatusEffect(typeEffect, 2, 0, duration)) then

@@ -76,11 +76,20 @@ enum ANIMATIONTYPE
     ANIMATION_FISHING_LINE_BREAK = 41,
     ANIMATION_FISHING_MONSTER    = 42,
     ANIMATION_FISHING_STOP       = 43,
+
     ANIMATION_SYNTH              = 44,
     ANIMATION_SIT                = 47,
     ANIMATION_RANGED             = 48,
-    ANIMATION_FISHING_START_OLD  = 50,
-    ANIMATION_FISHING_START      = 56,
+    ANIMATION_FISHING_START_OLD  = 50, // various old-style fishing animations are in the 40s and 50s
+
+    ANIMATION_NEW_FISHING_START         = 56, // 57 is start new minigame
+    ANIMATION_NEW_FISHING_FISH          = 57,
+    ANIMATION_NEW_FISHING_CAUGHT        = 58,
+    ANIMATION_NEW_FISHING_ROD_BREAK     = 59, // requires fish state
+    ANIMATION_NEW_FISHING_LINE_BREAK    = 60,
+    ANIMATION_NEW_FISHING_MONSTER       = 61,
+    ANIMATION_NEW_FISHING_STOP          = 62, // requires fish state
+
     // 63 through 72 are used with /sitchair
     ANIMATION_SITCHAIR_0 = 63,
     ANIMATION_SITCHAIR_1 = 64,

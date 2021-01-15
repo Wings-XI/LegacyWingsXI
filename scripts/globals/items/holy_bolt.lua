@@ -15,12 +15,15 @@ function onAdditionalEffect(player, target, damage)
         chance = chance - 5 * (target:getMainLvl() - player:getMainLvl())
         chance = utils.clamp(chance, 5, 95)
     end
-    if (math.random(0, 99) >= chance) then
+    if (math.random(0, 99) > chance) then
         return 0, 0, 0
     else
         local dmg = player:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
         if (dmg > 40) then
             dmg = dmg+(dmg-40)/2
+        end
+        if (dmg < 1) then
+            dmg = 1
         end
         local params = {}
         params.bonusmab = 0

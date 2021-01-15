@@ -5,26 +5,10 @@
 
 cmdprops =
 {
-    permission = 1,
-    parameters = "s"
+    permission = 0,
+    parameters = ""
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!release {name}")
-end
-
-function onTrigger(player, name)
-    local target
-    if name == nil then
-        target = player
-    else
-        target = GetPlayerByName(name)
-        if target == nil then
-            error(player, string.format("Player named '%s' not found!", name))
-            return
-        end
-    end
-
-    target:release()
+function onTrigger(player)
+    player:release()
 end

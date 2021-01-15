@@ -26,13 +26,11 @@ function onUseAbility(player, target, ability, action)
     params.includemab = true
     local dmg = (2 * (player:getRangedDmg() + player:getAmmoDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
     dmg  = addBonusesAbility(player, tpz.magic.ele.ICE, target, dmg, params)
-    local bonusAcc = player:getStat(tpz.mod.AGI) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC)
-    dmg = dmg * applyResistanceAbility(player, target, tpz.magic.ele.ICE, tpz.skill.NONE, bonusAcc)
+    local bonusAcc = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI)) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC)
+    dmg = dmg * applyResistanceAbility(player, target, tpz.magic.ele.ICE, tpz.skill.MARKSMANSHIP, bonusAcc)
     dmg = adjustForTarget(target, dmg, tpz.magic.ele.ICE)
-
     params.targetTPMult = 0 -- Quick Draw does not feed TP
     dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.ICE, tpz.slot.RANGED, 1, 0, 0, 0, action, nil)
-
     if dmg > 0 then
         local effects = {}
         local frost = target:getStatusEffect(tpz.effect.FROST)
@@ -60,7 +58,7 @@ function onUseAbility(player, target, ability, action)
             local tier = effect:getTier()
             local effectId = effect:getType()
             local subId = effect:getSubType()
-            power = power * 1.2
+            power = math.ceil(power * 1.2)
             target:delStatusEffectSilent(effectId)
             target:addStatusEffect(effectId, power, tick, duration, subId, subpower, tier)
             local newEffect = target:getStatusEffect(effectId)
@@ -69,7 +67,6 @@ function onUseAbility(player, target, ability, action)
     end
 
     local del = player:delItem(2177, 1) or player:delItem(2974, 1)
-
     target:updateClaim(player)
     return dmg
 end

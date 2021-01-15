@@ -32,7 +32,7 @@ function onUseAbility(player, target, ability, action)
     end
 
      -- TODO: Acc penalty for /RNG, acc vs. mob level?
-    if (math.random(0, 99) >= target:getMod(tpz.mod.BINDRES) and target:hasStatusEffect(tpz.effect.BIND) == false) then
+    if (math.random(0, 99) >= target:getMod(tpz.mod.BINDRESTRAIT) and target:hasStatusEffect(tpz.effect.BIND) == false) then
         target:addStatusEffect(tpz.effect.BIND, 0, 0, duration)
         ability:setMsg(tpz.msg.basic.IS_EFFECT) -- Target is bound.
     else

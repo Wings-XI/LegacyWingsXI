@@ -8,11 +8,14 @@
 require("scripts/globals/common")
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/pets")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
     if player:getPet() ~= nil then
         return tpz.msg.basic.ALREADY_HAS_A_PET, 0
+    elseif player:getMainLvl() <= 24 then
+        return tpz.msg.basic.UNABLE_TO_USE_JA,0		
     elseif not player:hasValidJugPetItem() then
         return tpz.msg.basic.NO_JUG_PET_ITEM, 0
     elseif not player:canUseMisc(tpz.zoneMisc.PET) then

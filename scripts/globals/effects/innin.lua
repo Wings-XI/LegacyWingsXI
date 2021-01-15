@@ -9,6 +9,7 @@ require("scripts/globals/status")
 function onEffectGain(target, effect) --power=30 initially, subpower=20 for enmity
     target:addMod(tpz.mod.EVA, -effect:getPower())
     target:addMod(tpz.mod.ENMITY, -effect:getSubPower())
+    --target:addMod(tpz.mod.CRITHITRATE, 30) this is in cpp
 end
 
 function onEffectTick(target, effect)
@@ -25,4 +26,5 @@ function onEffectLose(target, effect)
     --remove the remaining power
     target:delMod(tpz.mod.EVA, -effect:getPower())
     target:delMod(tpz.mod.ENMITY, -effect:getSubPower())
+    --target:delMod(tpz.mod.CRITHITRATE, 30)
 end

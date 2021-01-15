@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -64,6 +64,7 @@ public:
     virtual bool CanInterrupt() = 0;
     bool IsCompleted() const;
     void ResetEntryTime();
+    uint8 m_id = 0; // 1 = in ability state , 2 = in casting state , 3 = in ranged state
 
 protected:
     //state logic done per tick - returns whether to exit the state or not

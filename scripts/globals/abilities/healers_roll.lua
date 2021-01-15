@@ -21,6 +21,21 @@
 -- 10          |+10%    |+14%
 -- 11          |+16%    |+20%
 -- Bust        |-4%     |-4%
+
+-- NEW, MPHEAL:
+-- Die Roll 	No WHM 	With WHM
+-- 1	+2	+5
+-- 2	+3	+6
+-- 3	+10	+13
+-- 4	+4	+7
+-- 5	+4	+7
+-- 6	+5	+8
+-- 7	+1	+4
+-- 8	+6	+9
+-- 9	+7	+10
+-- 10	+7	+10
+-- 11	+12	+15
+-- Bust	-3	-3 
 --
 -- Note that this roll will increase potency of cures received, not the potency of the caster's spells
 -----------------------------------
@@ -52,10 +67,10 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {3, 4, 12, 5, 6, 7, 1, 8, 9, 10, 16, 4}
+    local effectpowers = {2, 3, 10, 4, 4, 5, 1, 6, 7, 7, 12, 3}
     local effectpower = effectpowers[total]
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
-        effectpower = effectpower + 4
+        effectpower = effectpower + 3
     end
 -- Apply Additional Phantom Roll+ Buff
     local phantomBase = 3 -- Base increment buff

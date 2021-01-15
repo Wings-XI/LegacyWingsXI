@@ -130,6 +130,9 @@ function onEventFinish(player, csid, option)
     elseif ((csid == 41 or csid == 40) and option == 1) then
         player:addQuest(SANDORIA, tpz.quest.id.sandoria.A_BOY_S_DREAM)
         player:setCharVar("aBoysDreamCS", 2)
+		npcUtil.giveItem(player,4562)
+		player:PrintToPlayer("Ailbeche: Ya know, since I know fishing up monsters is exceptionally difficult right now until the Goddess fixes fishing...", 0xD)
+		player:PrintToPlayer("Ailbeche: Just bring me this fish back once you have the Giant Shell Bug!", 0xD)
     elseif (csid == 41 and option == 0) then
         player:setCharVar("aBoysDreamCS", 1)
     elseif (csid == 15 and player:getCharVar("aBoysDreamCS") == 3) then

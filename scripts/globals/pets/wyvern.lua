@@ -77,10 +77,10 @@ end
 
 function onMobSpawn(mob)
     local master = mob:getMaster()
-    mob:addMod(tpz.mod.DMG, -40)
     if master:getMod(tpz.mod.WYVERN_SUBJOB_TRAITS) > 0 then
         mob:addJobTraits(master:getSubJob(), master:getSubLvl())
     end
+    mob:addMod(tpz.mod.DMG, -40)
     local wyvernType = wyvernTypes[master:getSubJob()]
     local healingbreath = tpz.jobAbility.HEALING_BREATH
     if mob:getMainLvl() >= 80 then healingbreath = tpz.jobAbility.HEALING_BREATH_IV
@@ -196,9 +196,9 @@ function onMobSpawn(mob)
                 pet:addMod(tpz.mod.ATTP, 5 * diff)
                 pet:setHP(pet:getMaxHP())
                 player:messageBasic(tpz.msg.basic.STATUS_INCREASED, 0, 0, pet)
-                master:addMod(tpz.mod.ATTP, 4 * diff)
-                master:addMod(tpz.mod.DEFP, 4 * diff)
-                master:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
+                --master:addMod(tpz.mod.ATTP, 4 * diff)
+                --master:addMod(tpz.mod.DEFP, 4 * diff)
+                --master:addMod(tpz.mod.HASTE_ABILITY, 200 * diff)
             end
             pet:setLocalVar("wyvern_exp", prev_exp + exp)
             pet:setLocalVar("level_Ups", pet:getLocalVar("level_Ups") + diff)
@@ -210,9 +210,9 @@ function onMobDeath(mob, player)
     local master = mob:getMaster()
     local numLvls = mob:getLocalVar("level_Ups")
     if numLvls ~= 0 then
-        master:delMod(tpz.mod.ATTP, 4 * numLvls)
-        master:delMod(tpz.mod.DEFP, 4 * numLvls)
-        master:delMod(tpz.mod.HASTE_ABILITY, 200 * numLvls)
+        --master:delMod(tpz.mod.ATTP, 4 * numLvls)
+        --master:delMod(tpz.mod.DEFP, 4 * numLvls)
+        --master:delMod(tpz.mod.HASTE_ABILITY, 200 * numLvls)
     end
     master:removeListener("PET_WYVERN_WS")
     master:removeListener("PET_WYVERN_MAGIC")

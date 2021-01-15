@@ -18,11 +18,11 @@ function onTrigger(player, npc)
         17320,    7,    -- Iron Arrow
         17336,    5,    -- Crossbow Bolt
         17313, 1107,    -- Grenade
-        2865, 10000,    -- Dutchy Waystone
+        --2865, 10000,    -- Dutchy Waystone
     }
 
     player:showText(npc, ID.text.STINKNIX_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

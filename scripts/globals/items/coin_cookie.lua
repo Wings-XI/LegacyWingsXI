@@ -26,11 +26,11 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.MPHEAL, 6)
     target:addMod(tpz.mod.VERMIN_KILLER, 12)
-    target:addMod(tpz.mod.POISONRES, 12)
+    target:addMod(tpz.mod.POISONRESTRAIT, 12)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.MPHEAL, 6)
     target:delMod(tpz.mod.VERMIN_KILLER, 12)
-    target:delMod(tpz.mod.POISONRES, 12)
+    target:delMod(tpz.mod.POISONRESTRAIT, 12)
 end

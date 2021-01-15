@@ -32,32 +32,32 @@ local keyitems = {
 }
 
 local items = {
-    [0] = {
+    [-1] = {
         id = 17002, -- Robber's Rig
         rank = 3,
         cost = 1500
     },
-    [1] = {
+    [0] = {
         id = 15452, -- Fisherman's Belt
         rank = 4,
         cost = 10000
     },
-    [2] = {
+    [1] = {
         id = 14195, -- Pair of Waders
         rank = 5,
         cost = 70000
     },
-    [3] = {
+    [2] = {
         id = 14400, -- Fisherman's Apron
         rank = 7,
         cost = 100000
     },
-    [4] = {
+    [3] = {
         id = 191, -- Fishing hole map
         rank = 9,
         cost = 150000
     },
-    [5] = {
+    [4] = {
         id = 340, -- Fisherman's Signboard
         rank = 9,
         cost = 200000

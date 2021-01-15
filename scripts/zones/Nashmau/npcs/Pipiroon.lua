@@ -15,11 +15,11 @@ function onTrigger(player, npc)
         17313, 1204,    -- Grenade
         17315, 6000,    -- Riot Grenade
         928,    515,    -- Bomb Ash
-        2873, 10000,     -- Nashmau Waystone
+        --2873, 10000,     -- Nashmau Waystone
     }
 
     player:showText(npc, ID.text.PIPIROON_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

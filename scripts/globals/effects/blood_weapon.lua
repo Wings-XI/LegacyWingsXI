@@ -15,6 +15,6 @@ function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-    target:setMod(tpz.mod.ENSPELL_DMG, 0)
-    target:setMod(tpz.mod.ENSPELL, 0)
+    target:setMod(tpz.mod.ENSPELL_DMG,0)
+    target:setMod(tpz.mod.ENSPELL,0)
 end

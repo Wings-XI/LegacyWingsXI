@@ -34,6 +34,7 @@ function onEventFinish(player, csid, option)
 
     if (csid == 124 and option == 1) then
         player:messageSpecial(ID.text.ALCHEMY_SUPPORT, 0, 7, 2)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.ALCHEMY_IMAGERY, 1, 0, 120)
     end
 end

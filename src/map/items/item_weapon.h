@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,6 +39,7 @@ public:
     uint16  getILvlSkill();
     uint16  getILvlParry();
     uint16  getILvlMacc();
+    uint8   getCategory();
 	int16	getDelay();
 	int16	getBaseDelay();
 	uint16	getDamage();
@@ -70,6 +71,7 @@ public:
     void    setAdditionalEffect(uint8 effect);
     void    setMaxHit(uint8 hit);
 	void    setUnlockablePoints(uint16 points);
+    void    setCategory(uint8 category);
     void    setCurrentUnlockPoints(uint16 points);
 
 private:
@@ -85,6 +87,7 @@ private:
 	uint16	m_dmgType;
     uint8   m_effect;
     uint8   m_maxHit;
+    uint8   m_category;
 
     uint16  m_wsunlockpoints;
 

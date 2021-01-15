@@ -6,6 +6,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
+require("scripts/globals/summon")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -13,11 +14,13 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 180 + bonusTime
+    local bonus = getSummoningSkillOverCap(pet) * 3
+    if bonus > 90 then
+        bonus = 90
+    end
 
     target:delStatusEffect(tpz.effect.SHOCK_SPIKES)
-    target:addStatusEffect(tpz.effect.SHOCK_SPIKES, 15, 0, duration)
+    target:addStatusEffect(tpz.effect.SHOCK_SPIKES, 15, 0, 90+bonus)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
     return tpz.effect.SHOCK_SPIKES
 end

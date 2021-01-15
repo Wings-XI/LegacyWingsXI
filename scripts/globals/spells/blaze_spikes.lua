@@ -16,7 +16,7 @@ function onSpellCast(caster, target, spell)
 
     local int = caster:getStat(tpz.mod.INT)
     local magicAtk = caster:getMod(tpz.mod.MATT)
-    local power = ((int + 2) / 12 + 4) * (1 + magicAtk / 100)
+    local power = math.floor( ((int + 2) / 12 + 4) * (1 + magicAtk / 100) )
 
     if target:addStatusEffect(typeEffect, power, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

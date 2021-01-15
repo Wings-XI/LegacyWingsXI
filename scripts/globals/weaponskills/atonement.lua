@@ -101,5 +101,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
     end
 
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SWORD, tpHits+extraHits) end
     return calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.criticalHit, damage
 end

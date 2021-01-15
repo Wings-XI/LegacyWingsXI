@@ -40,6 +40,16 @@ end
 
 function onRegionEnter(player, region)
     local p = ID.npc.PORTALS[region:GetRegionID()]
+	
+	local suzakuMob = GetMobByID(17309983)
+	local genbuMob = GetMobByID(17309980)
+	local seiryuMob = GetMobByID(17309981)
+	local byakkoMob = GetMobByID(17309982)
+	
+	if p["suzaku"] ~= nil and suzakuMob:isAlive() and suzakuMob:isEngaged() then return end
+	if p["genbu"] ~= nil and genbuMob:isAlive() and genbuMob:isEngaged() then return end
+	if p["seiryu"] ~= nil and seiryuMob:isAlive() and seiryuMob:isEngaged() then return end
+	if p["byakko"] ~= nil and byakkoMob:isAlive() and byakkoMob:isEngaged() then return end
 
     if (p["green"] ~= nil) then -- green portal
         if (player:getCharVar("skyShortcut") == 1) then

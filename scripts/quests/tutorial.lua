@@ -5,6 +5,7 @@ require("scripts/globals/status")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 -----------------------------------
 
 tpz = tpz or {}
@@ -12,7 +13,11 @@ tpz.tutorial = tpz.tutorial or {}
 
 tpz.tutorial.onTrigger = function(player, npc, npc_event_offset, nation_offset)
     local stage = player:getCharVar("TutorialProgress")
-    if stage == 0 then
+
+    if player:hasKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER) and player:hasItem(15761) == false and player:hasItem(15762) == false and player:hasItem(15763) == false and (player:getFreeSlotsCount() > 1) then
+        npcUtil.giveItem(player, 15761)
+        player:delKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
+    elseif stage == 0 then
         player:startEvent(npc_event_offset + 17)
     else
         local mLevel = player:getMainLvl()
@@ -105,6 +110,7 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
     elseif csid == (npc_event_offset + 8) then
         npcUtil.giveKeyItem(player, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
         player:setCharVar("TutorialProgress", 7)
+        player:PrintToPlayer("NOTICE: Talk to this SAME NPC again with a free inventory slot to get a Chariot Band.",29)
     elseif csid == (npc_event_offset + 10) then
         if npcUtil.giveItem(player, 16003) then
             player:setCharVar("TutorialProgress", 8)

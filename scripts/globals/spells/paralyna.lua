@@ -17,5 +17,8 @@ function onSpellCast(caster, target, spell)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
+    if caster:hasTrait(69) then
+        caster:delStatusEffect(tpz.effect.DIVINE_SEAL)
+    end
     return tpz.effect.PARALYSIS
 end

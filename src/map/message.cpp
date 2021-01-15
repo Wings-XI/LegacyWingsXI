@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,6 +39,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
 #include "utils/jailutils.h"
+#include "utils/flistutils.h"
+#include "utils/flistutils.h"
 #include "items/item_linkshell.h"
 
 namespace message
@@ -70,7 +72,7 @@ namespace message
 
     void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
     {
-        ShowDebug("Message: Received message %d from message server\n", static_cast<uint8>(type));
+        ShowDebug("Message: Received message %u from message server\n", static_cast<uint8>(type));
         switch (type)
         {
         case MSG_LOGIN:
@@ -80,6 +82,10 @@ namespace message
             if (!PChar)
             {
                 Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %d;", ref<uint32>((uint8*)extra->data(), 0));
+                // flist stuff
+                if (FLgetSettingByID(ref<uint32>((uint8*)extra->data(), 0), 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), ref<uint32>((uint8*)extra->data(), 0)); }
+                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", ref<uint32>((uint8*)extra->data(), 0));
+                //FLnotify()
             }
             else
             {
@@ -527,9 +533,30 @@ namespace message
             }
             break;
         }
+        case MSG_SEND_FL_NOTIF:
+        {
+            bool logoff = ref<bool>((uint8*)extra->data(), 0);
+            uint32 charid = ref<uint32>((uint8*)extra->data(), 1);
+            CCharEntity* PChar = zoneutils::GetChar(charid);
+            if (PChar)
+            {
+                char listedname[17] = {};
+                uint8 i = 0;
+                while (i < 16 && ref<bool>((uint8*)extra->data(), i + 5) != '\0')
+                {
+                    listedname[i] = ref<bool>((uint8*)extra->data(), i + 5);
+                    i++;
+                }
+                listedname[i] = '\0';
+                std::string str(listedname);
+                uint32 channel = ref<uint32>((uint8*)extra->data(), 21);
+                FLnotifyCrossCluster(PChar, logoff, str, channel);
+            }
+            break;
+        }
         default:
         {
-            ShowWarning("Message: unhandled message type %d\n", type);
+            ShowWarning("Message: unhandled message type %d\n", (int)type);
         }
         }
     }

@@ -23,11 +23,11 @@ function onTrigger(player, npc)
         4378,   54,    -- Selbina Milk
         4490,  432,    -- Pickled Herring
         4559, 4485,    -- Herb Quus
-        2866, 9200,    -- Selbina Waystone
+        --2866, 9200,    -- Selbina Waystone
     }
 
     player:showText(npc, ID.text.DOHDJUMA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, SELBINA)
 end
 
 function onEventUpdate(player, csid, option)

@@ -506,7 +506,7 @@ tpz.effect =
     COMPANIONS_ROLL          = 337,
     AVENGERS_ROLL            = 338,
     NATURALISTS_ROLL         = 339,
-    WARRIOR_S_CHARGE         = 340,
+    WARRIORS_CHARGE         = 340,
     FORMLESS_STRIKES         = 341,
     ASSASSINS_CHARGE         = 342,
     FEINT                    = 343,
@@ -820,7 +820,7 @@ tpz.effect =
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
     FULL_SPEED_AHEAD         = 803, -- Helper for quest: Full Speed Ahead!
-    -- PLACEHOLDER           = 804, -- Description
+    SUPER_JUMP              = 804, -- Description
     -- 804-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
@@ -871,6 +871,7 @@ tpz.effectFlag =
     INFLUENCE       = 0x1000000,
     OFFLINE_TICK    = 0x2000000,
     AURA            = 0x4000000,
+    ON_SYNC         = 0x8000000,
 }
 
 ------------------------------------
@@ -1119,6 +1120,24 @@ tpz.mod =
     LULLABYRES                      = 254,
     DEATHRES                        = 255,
     STATUSRES                       = 958, -- "Resistance to All Status Ailments"
+    
+    SLEEPRESTRAIT                   = 1240,
+    POISONRESTRAIT                  = 1241,
+    PARALYZERESTRAIT                = 1242,
+    BLINDRESTRAIT                   = 1243,
+    SILENCERESTRAIT                 = 1244,
+    VIRUSRESTRAIT                   = 1245,
+    PETRIFYRESTRAIT                 = 1246,
+    BINDRESTRAIT                    = 1247,
+    CURSERESTRAIT                   = 1248,
+    GRAVITYRESTRAIT                 = 1249,
+    SLOWRESTRAIT                    = 1250,
+    STUNRESTRAIT                    = 1251,
+    CHARMRESTRAIT                   = 1252,
+    AMNESIARESTRAIT                 = 1253,
+    LULLABYRESTRAIT                 = 1254,
+    DEATHRESTRAIT                   = 1255,
+    
     AFTERMATH                       = 256,
     PARALYZE                        = 257,
     MIJIN_RERAISE                   = 258,
@@ -1580,11 +1599,70 @@ tpz.mod =
     WYVERN_SUBJOB_TRAITS            = 974, -- Adds subjob traits to wyvern
     GARDENING_WILT_BONUS            = 975, -- Increases the number of Vanadays a plant can survive before it wilts
 
+    
+    SUPER_JUMP                      = 988,
+    
+    SPDEF_DOWN                      = 958, -- Specific Damage Taken (or Special Damage Taken) reduction as a percent
+    
+    RESBUILD_SLEEP      = 959,
+    RESBUILD_GRAVITY    = 960,
+    RESBUILD_BIND       = 961,
+    RESBUILD_SLOW       = 962,
+    RESBUILD_PARALYZE   = 963,
+    RESBUILD_BLIND      = 964,
+    RESBUILD_SILENCE    = 965,
+    RESBUILD_STUN       = 966,
+    RESBUILD_LULLABY    = 967, -- any light based sleep
+    
+    SDT_FIRE = 968,
+    SDT_EARTH = 969,
+    SDT_WATER = 970,
+    SDT_WIND = 971,
+    SDT_ICE = 972,
+    SDT_THUNDER = 973,
+    SDT_LIGHT = 974,
+    SDT_DARK = 975,
+    
+    SUSC_TO_WS_STUN = 976,
+    COVER_DURATION = 977,
+    ENHANCES_COVER = 978,
+    AUGMENTS_COVER = 979,
+    COVERED_MP_FLAG = 980,
+    RAMPART_STONESKIN = 981,
+    TAME_SUCCESS_RATE = 982,
+    MAGIC_STACKING_MDT = 983,
+    FIRE_BURDEN_DECAY = 984,
+    BURDEN_DECAY_IGNORE_CHANCE = 985,
+    FIRE_BURDEN_PERC_EXTRA = 986,
+	SUPER_INTIMIDATION = 987,
+	
+	WYVERN_SUBJOB_TRAITS = 990,
+    
+    PENGUIN_RING_EFFECT = 1000,   
+    ALBATROSS_RING_EFFECT = 1001,   
+    PELICAN_RING_EFFECT = 1002,
+    
+    VERMIN_CIRCLE           = 1224,
+    BIRD_CIRCLE             = 1225,
+    AMORPH_CIRCLE           = 1226,
+    LIZARD_CIRCLE           = 1227,
+    AQUAN_CIRCLE            = 1228,
+    PLANTOID_CIRCLE         = 1229,
+    BEAST_CIRCLE            = 1230,
+    UNDEAD_CIRCLE           = 1231,
+    ARCANA_CIRCLE           = 1232,
+    DRAGON_CIRCLE           = 1233,
+    DEMON_CIRCLE            = 1234,
+    EMPTY_CIRCLE            = 1235,
+    HUMANOID_CIRCLE         = 1236,
+    LUMORIAN_CIRCLE         = 1237,
+    LUMINION_CIRCLE         = 1238
+    
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.
     -- SPARE = 986, -- stuff
     -- SPARE = 987, -- stuff
-    -- SPARE = 988, -- stuff
+    -- super jump taking up 988
 }
 
 tpz.latent =
@@ -1861,7 +1939,7 @@ tpz.merit =
     WARDING_CIRCLE_RECAST       = MCATEGORY_SAM_1 + 0x02,
     STORE_TP_EFFECT             = MCATEGORY_SAM_1 + 0x04,
     MEDITATE_RECAST             = MCATEGORY_SAM_1 + 0x06,
-    ZASHIN_ATTACK_RATE          = MCATEGORY_SAM_1 + 0x08,
+    ZANSHIN_ATTACK_RATE          = MCATEGORY_SAM_1 + 0x08,
 
     -- NIN 1
     SUBTLE_BLOW_EFFECT          = MCATEGORY_NIN_1 + 0x00,
@@ -1901,17 +1979,17 @@ tpz.merit =
     BUST_DURATION               = MCATEGORY_COR_1 + 0x08,
 
     -- PUP 1
-    AUTOMATON_SKILLS            = MCATEGORY_PUP_1 + 0x00,
-    MAINTENACE_RECAST           = MCATEGORY_PUP_1 + 0x02,
-    REPAIR_EFFECT               = MCATEGORY_PUP_1 + 0x04,
+    AUTOMATON_MELEE             = MCATEGORY_PUP_1 + 0x00,
+    AUTOMATON_RANGED            = MCATEGORY_PUP_1 + 0x02,
+    AUTOMATON_MAGIC             = MCATEGORY_PUP_1 + 0x04,
     ACTIVATE_RECAST             = MCATEGORY_PUP_1 + 0x06,
     REPAIR_RECAST               = MCATEGORY_PUP_1 + 0x08,
 
     -- DNC 1
-    STEP_ACCURACY               = MCATEGORY_DNC_1 + 0x00,
-    HASTE_SAMBA_EFFECT          = MCATEGORY_DNC_1 + 0x02,
-    REVERSE_FLOURISH_EFFECT     = MCATEGORY_DNC_1 + 0x04,
-    BUILDING_FLOURISH_EFFECT    = MCATEGORY_DNC_1 + 0x06,
+    STEP_ACCURACY               = MCATEGORY_DNC_1 + 0x00, -- 3200
+    HASTE_SAMBA_EFFECT          = MCATEGORY_DNC_1 + 0x02, -- 3202
+    REVERSE_FLOURISH_EFFECT     = MCATEGORY_DNC_1 + 0x04, -- 3204
+    BUILDING_FLOURISH_EFFECT    = MCATEGORY_DNC_1 + 0x06, -- 3206
 
     -- SCH 1
     GRIMOIRE_RECAST             = MCATEGORY_SCH_1 + 0x00,
@@ -2310,6 +2388,9 @@ tpz.mobMod =
     ALLI_HATE           = 68, -- Range around target to add alliance member to enmity list.
     NO_LINK             = 69, -- If set, mob cannot link until unset.
     NO_REST             = 70, -- Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
+    BCNM_LINK           = 71, -- all BCNM mobs sound link each other
+    CLAIM_SHIELD        = 72, -- lottery pick to everyone who performed an action
+    CLAIM_SHIELD_ACTIVE = 73  -- volatile var
 }
 
 ------------------------------------

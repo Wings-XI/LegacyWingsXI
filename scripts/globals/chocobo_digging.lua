@@ -824,6 +824,14 @@ end
 local function canDig(player)
     local digCount = player:getCharVar('[DIG]DigCount')
     local lastDigTime = player:getLocalVar('[DIG]LastDigTime')
+	local lastDigX = player:getLocalVar('[DIG]LastDigX')
+	local lastDigY = player:getLocalVar('[DIG]LastDigY')
+	local lastDigZ = player:getLocalVar('[DIG]LastDigZ')
+	local posTable = player:getPos()
+	local currX = math.floor(posTable.x)
+	local currY = math.floor(posTable.y)
+	local currZ = math.floor(posTable.z)
+	local distanceSquared = (lastDigX - currX)*(lastDigX - currX) + (lastDigY - currY)*(lastDigY - currY) + (lastDigZ - currZ)*(lastDigZ - currZ)
     local zoneItemsDug = GetServerVariable('[DIG]ZONE'..player:getZoneID()..'_ITEMS')
     local zoneInTime = player:getLocalVar('ZoneInTime')
     local currentTime = os.time()
@@ -832,6 +840,8 @@ local function canDig(player)
     -- base delay -5 for each rank
     local digDelay = 16 - (skillRank * 5)
     local areaDigDelay = 60 - (skillRank * 5)
+	
+	if digDelay < 4 then digDelay = 4 end -- minimum delay to cover the animation time
 
     local prevMidnight = getMidnight() - 86400
 
@@ -840,12 +850,15 @@ local function canDig(player)
         updatePlayerDigCount(player, 0)
         digCount = 0
     end
-
+	-- player:PrintToPlayer(distanceSquared)
     -- neither player nor zone have reached their dig limit
 
     if (digCount < 100 and zoneItemsDug < 20) or DIG_FATIGUE == 0 then
         -- pesky delays
-        if (zoneInTime + areaDigDelay) <= currentTime and (lastDigTime + digDelay) <= currentTime then
+        if (zoneInTime + areaDigDelay) <= currentTime and (lastDigTime + digDelay) <= currentTime and distanceSquared > 45 then
+			player:setLocalVar('[DIG]LastDigX', currX)
+			player:setLocalVar('[DIG]LastDigY', currY)
+			player:setLocalVar('[DIG]LastDigZ', currZ)
             return true
         end
     end
@@ -853,33 +866,49 @@ local function canDig(player)
     return false
 end
 
+--[[
+per wiki, avg. digs needed per rank
+taken from wiki, took the average of top/bottom
+and then x12 to convert from "stacks" to singles
+
+Amateur 	1650 (chopped the 50 so we dont have to math.floor later)
+Recruit 	3600
+Initiate 	6000
+Novice 		9000
+Apprentice 	12600
+Journeyman  16200
+Craftsman 	21000
+Artisan 	27000
+Adept 		33000
+Veteran 	39000
+Expert 		---- 
+]]
 
 local function calculateSkillUp(player)
     local skillRank = player:getSkillRank(tpz.skill.DIG)
-    local maxSkill = utils.clamp((skillRank + 1) * 100, 0, 1000)
+    local maxSkill = utils.clamp((skillRank + 1) * 100, 0, 1000) -- if im at 0 i max at 100, if im at 1 i max at 200
     local realSkill = player:getCharSkillLevel(tpz.skill.DIG)
-    local increment = 1
+	local digsNeeded = 40000
+	
+	if skillRank == 0 then digsNeeded = 1600
+	elseif skillRank == 1 then digsNeeded = 3600
+	elseif skillRank == 2 then digsNeeded = 6000
+	elseif skillRank == 3 then digsNeeded = 9000
+	elseif skillRank == 4 then digsNeeded = 12600
+	elseif skillRank == 5 then digsNeeded = 16200
+	elseif skillRank == 6 then digsNeeded = 21000
+	elseif skillRank == 7 then digsNeeded = 27000
+	elseif skillRank == 8 then digsNeeded = 33000
+	elseif skillRank == 9 then digsNeeded = 39000
+	else return end
+	
+    if math.random(1, digsNeeded/100) == 1 then
+		player:setSkillLevel(tpz.skill.DIG, realSkill + 1)
 
-    -- this probably needs correcting
-    local roll = math.random(0, 100)
-
-    -- make sure our skill isn't capped
-    if realSkill < maxSkill then
-        -- can we skill up?
-        if roll <= 15 then
-            if (increment + realSkill) > maxSkill then
-                increment = maxSkill - realSkill
-            end
-
-            -- skill up!
-            player:setSkillLevel(tpz.skill.DIG, realSkill + increment)
-
-            -- update the skill rank
-            -- Digging does not have test items, so increment rank once player hits 10.0, 20.0, .. 100.0
-            if (realSkill + increment) >= (skillRank * 100) + 100 then
-                player:setSkillRank(tpz.skill.DIG, skillRank + 1)
-            end
-        end
+		-- Digging does not have test items, so increment rank once player hits 10.0, 20.0, .. 100.0
+		if (realSkill + 1) >= (skillRank * 100) + 100 then
+			player:setSkillRank(tpz.skill.DIG, skillRank + 1)
+		end
     end
 end
 
@@ -933,8 +962,8 @@ local function getChocoboDiggingItem(player)
             itemId = 0
         end
     elseif itemId == 1255 then
-        if weather >= tpz.weather.CLOUDS and moon >= 10 and moon <= 40 and player:getSkillRank(tpz.skill.DIG) >= 7 then
-            itemId = oreMap[VanadielDayOfTheWeek()]
+        if weather >= tpz.weather.CLOUDS and ( (moon >= 10 and moon <= 18) or (moon > 18 and moon <= 21 and math.random() < 0.7) or (moon > 21 and moon <= 24 and math.random() < 0.3) ) and player:getSkillRank(tpz.skill.DIG) >= 7 then
+            itemId = oreMap[VanadielDayElement()]
         else
             itemId = 0
         end
@@ -946,6 +975,7 @@ end
 tpz.chocoboDig.start = function(player, precheck)
     local zoneId = player:getZoneID()
     local text = zones[zoneId].text
+    local skillRank = player:getSkillRank(tpz.skill.DIG)
 
     -- make sure the player can dig before going any further
     -- (and also cause i need a return before core can go any further with this)
@@ -955,16 +985,20 @@ tpz.chocoboDig.start = function(player, precheck)
     else
         local roll = math.random(0, 100)
         local moon = VanadielMoonPhase()
+        
+        local moonmodifier = 1
+        local skillmodifier = 0.5 + (skillRank / 20) -- 50% at amateur, 55% at recruit, 60% at initiate, and so on, to 100% at exper
 
-        -- 45-60% moon phase results in a much lower dig chance than the rest of the phases
-        if moon >= 45 and moon <= 60 then
-            roll = roll * .5
+        if moon < 50 then
+            moon = 100 - moon -- this converts moon phase percent to a number that represents how FAR the moon phase is from 50
         end
+        
+        moonmodifier = 1 - (100 - moon)/100 -- the more the moon phase is from 50, the closer we get to 100% on this modifier.
 
         -- dig chance failure
-        if roll > DIGGING_RATE then
+        if roll > (DIGGING_RATE * moonmodifier * skillmodifier) then -- base digging rate is 85% and it is multiplied by the moon and skill modifiers
             player:messageText(player, text.FIND_NOTHING)
-
+            player:setLocalVar('[DIG]LastDigTime',os.time())
         -- dig chance success
         else
             local itemId = getChocoboDiggingItem(player)

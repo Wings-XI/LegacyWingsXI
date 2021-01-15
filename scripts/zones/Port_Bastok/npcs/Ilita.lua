@@ -14,8 +14,8 @@ end
 function onTrigger(player, npc)
     local stock =
     {
-        512,  6000,    -- Linkshell
-        16285, 375,    -- Pendant Compass
+        512,  8000,    -- Linkshell
+        --16285, 375,    -- Pendant Compass
     }
 
     player:showText(npc, ID.text.ILITA_SHOP_DIALOG, 513)

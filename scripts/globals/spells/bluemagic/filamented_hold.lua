@@ -25,7 +25,9 @@ end
 
 function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.SLOW
-    local dINT = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+    local cMND = caster:getStat(tpz.mod.MND)
+    local tMND = target:getStat(tpz.mod.MND)
+    local dINT = cMND - tMND
     local params = {}
     params.diff = nil
     params.attribute = tpz.mod.INT
@@ -34,8 +36,17 @@ function onSpellCast(caster, target, spell)
     params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 90 * resist
-    local power = 2500
-
+    local power = 2000
+    
+    if cMND < tMND then
+        power = power - (tMND - cMND)*50
+        if power < 300 then
+            power = 300
+        end
+    end
+    
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
+    
     if resist > 0.5 then -- Do it!
         if target:addStatusEffect(typeEffect, power, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)

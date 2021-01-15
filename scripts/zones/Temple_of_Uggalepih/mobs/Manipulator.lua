@@ -4,6 +4,7 @@
 -- Note: Paths around the 2 staircases
 -----------------------------------
 require("scripts/globals/hunts")
+require("scripts/globals/status")
 
 local path =
 {
@@ -64,6 +65,8 @@ local path =
 
 function onMobSpawn(mob)
     onMobRoam(mob) -- what?
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 6000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 9500)
 end
 
 function onPath(mob)

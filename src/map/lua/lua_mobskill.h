@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -50,9 +50,11 @@ public:
     int32 isConal(lua_State*);
     int32 isSingle(lua_State*);
     int32 hasMissMsg(lua_State*);
+    int32 setAnim(lua_State*);
     int32 setMsg(lua_State*);
     int32 getMsg(lua_State*);
     int32 getTotalTargets(lua_State*);
+    int32 setGuardReaction(lua_State*);
 };
 
 #endif

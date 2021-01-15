@@ -57,6 +57,27 @@ CLuaMobSkill::CLuaMobSkill(CMobSkill* PSkill)
 
 /************************************************************************
 *                                                                       *
+*  Set the tp anim                                                      *
+*                                                                       *
+************************************************************************/
+
+inline int32 CLuaMobSkill::setAnim(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+
+    uint16 animid = 1;
+
+    //if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
+        animid = (uint16)lua_tointeger(L, 1);
+
+    ShowDebug("setting skillid %i to animation %i, old animation was %i\n", m_PLuaMobSkill->getID(), animid, m_PLuaMobSkill->getAnimationID());
+    m_PLuaMobSkill->setAnimationID(animid);
+
+    return 0;
+}
+
+/************************************************************************
+*                                                                       *
 *  Set the tp skill message to be displayed (cure/damage/enfeeb)        *
 *                                                                       *
 ************************************************************************/
@@ -157,6 +178,14 @@ inline int32 CLuaMobSkill::getMobHPP(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaMobSkill::setGuardReaction(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+
+    m_PLuaMobSkill->m_GuardReaction = true;
+    return 0;
+}
+
 /************************************************************************
 *                                                                       *
 *  declare lua function                                                 *
@@ -166,6 +195,7 @@ inline int32 CLuaMobSkill::getMobHPP(lua_State* L)
 const char CLuaMobSkill::className[] = "CMobSkill";
 Lunar<CLuaMobSkill>::Register_t CLuaMobSkill::methods[] =
 {
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,setAnim),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,setMsg),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getMsg),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,hasMissMsg),
@@ -177,5 +207,6 @@ Lunar<CLuaMobSkill>::Register_t CLuaMobSkill::methods[] =
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTotalTargets),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getMobHPP),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,setGuardReaction),
     {nullptr,nullptr}
 };

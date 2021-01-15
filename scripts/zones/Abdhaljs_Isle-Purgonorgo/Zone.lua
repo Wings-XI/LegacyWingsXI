@@ -20,6 +20,11 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function afterZoneIn(player)
+    -- Apply level cap in case of active tournaments
+    -- player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION,40,0,0); -- LV40 cap
+end
+
 function onRegionEnter(player, region)
 end
 

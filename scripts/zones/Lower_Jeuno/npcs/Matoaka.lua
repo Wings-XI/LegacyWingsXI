@@ -12,13 +12,13 @@ end
 function onTrigger(player, npc)
     local stock =
     {
-        13327, 1250,    -- Silver Earring
-        13456, 1250,    -- Silver Ring
+        13327, 1150,    -- Silver Earring
+        13456, 1150,    -- Silver Ring
         13328, 4140,    -- Mythril Earring
     }
 
     player:showText(npc, ID.text.MATOAKA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

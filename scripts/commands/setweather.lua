@@ -3,11 +3,11 @@
 -- desc: Sets the current weather for the current zone.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/world")
+require("scripts/globals/weather")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 3,
     parameters = "s"
 }
 
@@ -17,6 +17,31 @@ function error(player, msg)
 end
 
 function onTrigger(player, weather)
+
+    local weatherList =
+    {
+        ["none"]            = 0,
+        ["sunshine"]        = 1,
+        ["clouds"]          = 2,
+        ["fog"]             = 3,
+        ["hot spell"]       = 4,
+        ["heat wave"]       = 5,
+        ["rain"]            = 6,
+        ["squall"]          = 7,
+        ["dust storm"]      = 8,
+        ["sand storm"]      = 9,
+        ["wind"]            = 10,
+        ["gales"]           = 11,
+        ["snow"]            = 12,
+        ["blizzards"]       = 13,
+        ["thunder"]         = 14,
+        ["thunderstorms"]   = 15,
+        ["auroras"]         = 16,
+        ["stellar glare"]   = 17,
+        ["gloom"]           = 18,
+        ["darkness"]        = 19
+    }
+
     -- validate weather
     if (weather == nil) then
         error(player, "You must supply a weather ID.")
@@ -30,7 +55,7 @@ function onTrigger(player, weather)
 
     -- invert weather table
     local weatherByNum={}
-    for k, v in pairs(tpz.weather) do
+    for k, v in pairs(weatherList) do
         weatherByNum[v]=k
     end
 

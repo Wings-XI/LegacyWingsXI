@@ -29,7 +29,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.VIT, 1)
     target:addMod(tpz.mod.DEF, 10)
     target:addMod(tpz.mod.AMORPH_KILLER, 10)
-    target:addMod(tpz.mod.VIRUSRES, 10)
+    target:addMod(tpz.mod.VIRUSRESTRAIT, 10)
     target:addMod(tpz.mod.HPHEAL, 8)
 end
 
@@ -37,6 +37,6 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.VIT, 1)
     target:delMod(tpz.mod.DEF, 10)
     target:delMod(tpz.mod.AMORPH_KILLER, 10)
-    target:delMod(tpz.mod.VIRUSRES, 10)
+    target:delMod(tpz.mod.VIRUSRESTRAIT, 10)
     target:delMod(tpz.mod.HPHEAL, 8)
 end

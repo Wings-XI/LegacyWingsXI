@@ -23,7 +23,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
     local params = {}
     params.numHits = 1
-    params.ftp100 = 1.56 params.ftp200 = 1.88 params.ftp300 = 2.5
+    params.ftp100 = 1.7 params.ftp200 = 2.08 params.ftp300 = 2.75
     params.str_wsc = 0.75 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
@@ -40,8 +40,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
     if (damage > 0 and target:hasStatusEffect(tpz.effect.PARALYSIS) == false) then
         local duration = 60 * applyResistanceAddEffect(player, target, tpz.magic.ele.ICE, 0)
-        target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration)
+        if duration >= 15 then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration)
+        end
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.GREAT_KATANA, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 
 end

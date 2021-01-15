@@ -235,6 +235,7 @@ enum SPELLFLAG
 
 enum class SpellID : uint16
 {
+    NULLSPELL               = 0,
     Cure                    = 1,
     Cure_II                 = 2,
     Cure_III                = 3,
@@ -909,7 +910,8 @@ enum class SpellID : uint16
     Frazzle                 = 843,
     Frazzle_II              = 844,
     Flurry                  = 845,
-    Flurry_II               = 846
+    Flurry_II               = 846,
+    Atomos                  = 847
 };
 
 #define MAX_SPELL_ID 1024U

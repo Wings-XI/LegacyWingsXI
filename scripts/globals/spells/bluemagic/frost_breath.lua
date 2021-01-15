@@ -45,15 +45,18 @@ function onSpellCast(caster, target, spell)
     params.chr_wsc = 0.0
     damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    local duration = getBlueEffectDuration(caster,resist,tpz.effect.PARALYSIS)
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
 
     if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
-      multi = multi + 0.50
+        multi = multi + 0.50
     end
 
     if (damage > 0 and resist > 0.3) then
         local typeEffect = tpz.effect.PARALYSIS
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 16, 0, duration)
     end
 
     return damage

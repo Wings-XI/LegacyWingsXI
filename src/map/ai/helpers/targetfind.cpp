@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -166,12 +166,13 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
     }
 }
 
-void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 flags)
+void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 flags, uint8 extraRotation)
 {
     m_findFlags = flags;
     m_conal = true;
 
     m_APoint = &m_PBattleEntity->loc.p;
+    m_APoint->rotation += extraRotation; // typically used for "aoe behind me" instead of "aoe in front of me" (an addition of 128) example: Behe's Kick Out
 
     uint8 halfAngle = static_cast<uint8>((angle * (256.0f / 360.0f)) / 2.0f);
 

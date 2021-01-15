@@ -38,6 +38,8 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             target:addStatusEffect(tpz.effect.PLAGUE, 5, 0, duration)
         end
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.HAND_TO_HAND, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 
 end

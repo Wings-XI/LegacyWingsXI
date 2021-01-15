@@ -18,7 +18,7 @@ function onTrigger(player, npc)
         {
             640,    11,    -- Copper Ore
             4450,  694,    -- Coral Fungus
-            4375, 4032,    -- Danceshroom
+            4375, 4121,    -- Danceshroom
             1650, 6500,    -- Kopparnickel Ore
             5165,  736,    -- Movalpolos Water
         }

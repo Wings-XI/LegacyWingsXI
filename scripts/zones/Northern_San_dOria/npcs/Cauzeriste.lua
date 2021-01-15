@@ -4,20 +4,19 @@
 -- Guild Merchant NPC: Woodworking Guild
 -- !pos -175.946 3.999 280.301 231
 -----------------------------------
-local ID = require("scripts/zones/Northern_San_dOria/IDs")
-require("scripts/globals/shop")
 require("scripts/globals/settings")
-require("scripts/globals/status")
+require("scripts/globals/shop")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Northern_San_dOria/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local guildSkillId = tpz.skill.WOODWORKING
-    local stock = tpz.shop.generalGuildStock[guildSkillId]
-    tpz.shop.generalGuild(player, stock, guildSkillId)
-    player:showText(npc, ID.text.CAUZERISTE_SHOP_DIALOG)
+    if (player:sendGuild(5132,6,21,0)) then
+        player:showText(npc, ID.text.CAUZERISTE_SHOP_DIALOG)
+    end
 end
 
 function onEventUpdate(player, csid, option)

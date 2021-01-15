@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -30,6 +30,9 @@
 
 #include "login.h"
 #include "lobby.h"
+
+//#include "../map/utils/flistutils.h"
+#include <chrono>
 
 
 int32 login_lobbydata_fd;
@@ -154,7 +157,7 @@ int32 lobbydata_parse(int32 fd)
                 memcpy(ReservePacket + 60, login_config.servername.c_str(), std::clamp<size_t>(login_config.servername.length(), 0, 15));
 
                 // Prepare the character list data..
-                for (int j = 0; j < 16; ++j)
+                for (size_t j = 0; j < 16; ++j)
                 {
                     memcpy(CharList + 32 + 140 * j, ReservePacket + 32, 140);
                     memset(CharList + 32 + 140 * j, 0x00, 4);
@@ -172,7 +175,7 @@ int32 lobbydata_parse(int32 fd)
 
                     Sql_GetData(SqlHandle, 1, &strCharName, nullptr);
 
-                    auto gmlevel = Sql_GetIntData(SqlHandle, 36);
+                    int32 gmlevel = Sql_GetIntData(SqlHandle, 36);
                     if (maint_config.maint_mode == 0 || gmlevel > 0)
                     {
                         uint32 CharID = Sql_GetIntData(SqlHandle, 0);
@@ -330,9 +333,11 @@ int32 lobbydata_parse(int32 fd)
                         char session_key[sizeof(key3) * 2 + 1];
                         bin2hex(session_key, key3, sizeof(key3));
 
-                        fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr, version_mismatch) VALUES(%u,%u,x'%s',%u,%u,%u,%u)";
+                        fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr, version_mismatch, client_version) VALUES(%u,%u,x'%s',%u,%u,%u,%u,'%s')";
 
-                        if (Sql_Query(SqlHandle, fmtQuery, sd->accid, charid, session_key, ZoneIP, ZonePort, sd->client_addr, (uint8)session[sd->login_lobbyview_fd]->ver_mismatch) == SQL_ERROR)
+                        char client_ver_esc[32] = { 0 };
+                        Sql_EscapeString(SqlHandle, client_ver_esc, session[sd->login_lobbyview_fd]->client_ver.c_str());
+                        if (Sql_Query(SqlHandle, fmtQuery, sd->accid, charid, session_key, ZoneIP, ZonePort, sd->client_addr, (uint8)session[sd->login_lobbyview_fd]->ver_mismatch, client_ver_esc) == SQL_ERROR)
                         {
                             // Send error message to the client.
                             LOBBBY_ERROR_MESSAGE(ReservePacket);
@@ -341,6 +346,27 @@ int32 lobbydata_parse(int32 fd)
                             ref<uint16>(ReservePacket, 32) = 305;
                             memcpy(MainReservePacket, ReservePacket, ref<uint8>(ReservePacket, 0));
                         }
+
+
+                        // flist stuff
+
+                        int32 ret = Sql_Query(SqlHandle, "SELECT * FROM flist_settings WHERE callingchar = %u;", charid);
+
+                        if (ret == SQL_ERROR || Sql_NextRow(SqlHandle) != SQL_SUCCESS)
+                        {
+                            //ShowWarning(CL_WHITE"lobby (lobbydata_parse) SQL ERROR...\n");
+                        }
+                        else
+                        {
+                            int32 visible = (int32)Sql_GetIntData(SqlHandle, 1);
+                            //int32 visible = FLgetSettingByID(charid, 2);
+                            if (visible == 1)
+                            {
+                                Sql_Query(SqlHandle, "UPDATE flist SET status = 1 WHERE listedchar = %u", charid);
+                                // TODO: SENT FLIST NOTIFICATIONS
+                            }
+                        }
+
 
                         fmtQuery = "UPDATE char_stats SET zoning = 2 WHERE charid = %u";
                         Sql_Query(SqlHandle, fmtQuery, charid);
@@ -556,6 +582,7 @@ int32 lobbyview_parse(int32 fd)
                 memcpy(MainReservePacket + 12, Hash, 16);
                 // Finalize the packet.
                 session[fd]->wdata.assign((const char*)MainReservePacket, sendsize);
+                session[fd]->client_ver = client_ver_data;
                 session[fd]->ver_mismatch = ver_mismatch;
                 RFIFOSKIP(fd, session[fd]->rdata.size());
                 RFIFOFLUSH(fd);
@@ -583,9 +610,68 @@ int32 lobbyview_parse(int32 fd)
                 // Perform character deletion from the database. It is sufficient to remove the
                 // value from the `chars` table. The mysql server will handle the rest.
 
-                const char *pfmtQuery = "DELETE FROM chars WHERE charid = %i AND accid = %i";
-                Sql_Query(SqlHandle, pfmtQuery, CharID, sd->accid);
+                //const char *pfmtQuery = "DELETE FROM chars WHERE charid = %i AND accid = %i";
 
+                //Sql_Query(SqlHandle, pfmtQuery, CharID, sd->accid);
+
+
+                // commented out below, char deletion is disabled for now, RIP Lilith
+                /*
+                const char* pfmtQuery01 = "DELETE FROM chars WHERE charid = %i AND accid = %i";
+                const char* pfmtQuery02 = "DELETE FROM char_blacklist WHERE charid_target = %i";
+                const char* pfmtQuery03 = "DELETE FROM char_blacklist WHERE charid_owner = %i";
+                const char* pfmtQuery04 = "DELETE FROM char_effects WHERE charid = %i";
+                const char* pfmtQuery05 = "DELETE FROM char_vars WHERE charid = %i";
+                const char* pfmtQuery06 = "DELETE FROM char_unlocks WHERE charid = %i";
+                const char* pfmtQuery07 = "DELETE FROM char_style WHERE charid = %i";
+                const char* pfmtQuery08 = "DELETE FROM char_storage WHERE charid = %i";
+                const char* pfmtQuery09 = "DELETE FROM char_stats WHERE charid = %i";
+                const char* pfmtQuery10 = "DELETE FROM char_spells WHERE charid = %i";
+                const char* pfmtQuery11 = "DELETE FROM char_skills WHERE charid = %i";
+                const char* pfmtQuery12 = "DELETE FROM char_recast WHERE charid = %i";
+                const char* pfmtQuery13 = "DELETE FROM char_vars WHERE charid = %i";
+                const char* pfmtQuery14 = "DELETE FROM char_profile WHERE charid = %i";
+                const char* pfmtQuery15 = "DELETE FROM char_points WHERE charid = %i";
+                const char* pfmtQuery16 = "DELETE FROM char_pet WHERE charid = %i";
+                const char* pfmtQuery17 = "DELETE FROM char_merit WHERE charid = %i";
+                const char* pfmtQuery18 = "DELETE FROM char_look WHERE charid = %i";
+                const char* pfmtQuery19 = "DELETE FROM char_jobs WHERE charid = %i";
+                const char* pfmtQuery20 = "DELETE FROM char_vars WHERE charid = %i";
+                const char* pfmtQuery21 = "DELETE FROM char_inventory WHERE charid = %i";
+                const char* pfmtQuery22 = "DELETE FROM char_exp WHERE charid = %i";
+                const char* pfmtQuery23 = "DELETE FROM char_equip WHERE charid = %i";
+                const char* pfmtQuery24 = "DELETE FROM flist WHERE callingchar = %i";
+                const char* pfmtQuery25 = "DELETE FROM flist WHERE listedchar = %i";
+                const char* pfmtQuery26 = "DELETE FROM flist_settings WHERE callingchar = %i";
+                const char* pfmtQuery27 = "DELETE FROM delivery_box WHERE charid = %i";
+                Sql_Query(SqlHandle, pfmtQuery01, CharID, sd->accid);
+                Sql_Query(SqlHandle, pfmtQuery02, CharID);
+                Sql_Query(SqlHandle, pfmtQuery03, CharID);
+                Sql_Query(SqlHandle, pfmtQuery04, CharID);
+                Sql_Query(SqlHandle, pfmtQuery05, CharID);
+                Sql_Query(SqlHandle, pfmtQuery06, CharID);
+                Sql_Query(SqlHandle, pfmtQuery07, CharID);
+                Sql_Query(SqlHandle, pfmtQuery08, CharID);
+                Sql_Query(SqlHandle, pfmtQuery09, CharID);
+                Sql_Query(SqlHandle, pfmtQuery10, CharID);
+                Sql_Query(SqlHandle, pfmtQuery11, CharID);
+                Sql_Query(SqlHandle, pfmtQuery12, CharID);
+                Sql_Query(SqlHandle, pfmtQuery13, CharID);
+                Sql_Query(SqlHandle, pfmtQuery14, CharID);
+                Sql_Query(SqlHandle, pfmtQuery15, CharID);
+                Sql_Query(SqlHandle, pfmtQuery16, CharID);
+                Sql_Query(SqlHandle, pfmtQuery17, CharID);
+                Sql_Query(SqlHandle, pfmtQuery18, CharID);
+                Sql_Query(SqlHandle, pfmtQuery19, CharID);
+                Sql_Query(SqlHandle, pfmtQuery20, CharID);
+                Sql_Query(SqlHandle, pfmtQuery21, CharID);
+                Sql_Query(SqlHandle, pfmtQuery22, CharID);
+                Sql_Query(SqlHandle, pfmtQuery23, CharID);
+                Sql_Query(SqlHandle, pfmtQuery24, CharID);
+                Sql_Query(SqlHandle, pfmtQuery25, CharID);
+                Sql_Query(SqlHandle, pfmtQuery26, CharID);
+                Sql_Query(SqlHandle, pfmtQuery27, CharID);
+                */
                 break;
             }
             case 0x1F:
@@ -888,6 +974,15 @@ int32 lobby_createchar_save(uint32 accid, uint32 charid, char_mini* createchar)
     //hot fix
     Query = "DELETE FROM char_inventory WHERE charid = %u";
     if (Sql_Query(SqlHandle, Query, charid) == SQL_ERROR) return -1;
+
+    // Old server LS, not needed anymore
+    // Query = "INSERT INTO char_inventory VALUES(%u,0,1,515,1,0,'Wings',0x01000000000097fe03c493874ff000000000000000000000);"; // server linkpearl
+    // if (Sql_Query(SqlHandle, Query, charid) == SQL_ERROR) return -1;
+    // Query = "INSERT INTO char_equip VALUES(%u,1,16,0);"; // server linkpearl
+    // if (Sql_Query(SqlHandle, Query, charid) == SQL_ERROR) return -1;
+
+    time_t now = time(NULL);
+    Sql_Query(SqlHandle, "INSERT INTO flist_settings VALUES (%u,1,3,29,3,0,%u);", charid, now); // default settings
 
     Query = "INSERT INTO char_inventory(charid) VALUES(%u);";
     if (Sql_Query(SqlHandle, Query, charid, createchar->m_mjob) == SQL_ERROR) return -1;

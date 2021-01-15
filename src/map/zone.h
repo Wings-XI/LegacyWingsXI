@@ -603,6 +603,11 @@ public:
     CBattlefieldHandler* m_BattlefieldHandler;  // BCNM Instances in this zone
 
     CNavMesh*       m_navMesh;              // zones navmesh for finding paths
+    uint16          m_miscMask;             // битовое поле, описывающее возможности использования в зоне определенных умений
+    uint8           m_fameType;             // the fame type applied the the entire area, used for item appraisal when selling items to an NPC in this zone
+
+    CTaskMgr::CTask* ZoneTimer;             // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки
+    CZoneEntities* m_zoneEntities;
 
 private:
 
@@ -617,10 +622,9 @@ private:
 
     WEATHER         m_Weather;              // текущая погода
     uint32          m_WeatherChangeTime;    // время начала текущей погоды
-    CZoneEntities*  m_zoneEntities;
 
     uint16          m_tax;                  // налог в bazaar
-    uint16          m_miscMask;             // битовое поле, описывающее возможности использования в зоне определенных умений
+    
 
     zoneMusic_t     m_zoneMusic;            // информация о мелодиях, используемых в зоне
 
@@ -632,13 +636,13 @@ private:
     void    LoadZoneSettings();             // настройки зоны
     void    LoadNavMesh();                  // Load the zones navmesh. Must exist in scripts/zones/:zone/NavMesh.nav
 
-
     CTreasurePool*  m_TreasurePool;         // глобальный TreasuerPool
 
 protected:
 
-    CTaskMgr::CTask* ZoneTimer;             // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки
+    
     void createZoneTimer();
+    void scheduleDeleteZoneTimer();
     void CharZoneIn(CCharEntity* PChar);
     void CharZoneOut(CCharEntity* PChar);
 };

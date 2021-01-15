@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -99,6 +99,9 @@ enum MOBMODIFIER : int
     MOBMOD_ALLI_HATE           = 68, // Range around target to add alliance member to enmity list.
     MOBMOD_NO_LINK             = 69, // If set, mob cannot link until unset.
     MOBMOD_NO_REST             = 70, // Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
+    MOBMOD_BCNM_LINK           = 71,  // all BCNM mobs sound link each other
+    MOBMOD_CLAIM_SHIELD        = 72, // lottery pick to everyone who performed an action
+    MOBMOD_CLAIM_SHIELD_ACTIVE = 73  // volatile variable
 };
 
 #endif

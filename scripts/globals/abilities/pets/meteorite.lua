@@ -12,8 +12,36 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local eco = target:getSystem()
+    local ele = tpz.damageType.LIGHT
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
     local dint = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    local dmg = 500 + dint*1.5 + skill:getTP()/20
+    local dmg = (500 + dint*1.5 + skill:getTP()/20)*coe
+    
+    local burst = 1.0
+    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.LIGHT - 5, target)
+    if (skillchainTier > 0) then
+        skill:setMsg(747)
+
+        if (skillchainCount == 1) then -- two weaponskills
+            burst = 1.35
+        elseif (skillchainCount == 2) then -- three weaponskills
+            burst = 1.45
+        elseif (skillchainCount == 3) then -- four weaponskills
+            burst = 1.55
+        elseif (skillchainCount == 4) then -- five weaponskills
+            burst = 1.65
+        elseif (skillchainCount == 5) then -- six weaponskills
+            burst = 1.75
+        else
+            -- Something strange is going on if this occurs.
+            burst = 1.0
+        end
+    end
+    if burst > 1.0 then
+        dmg = dmg * (burst + 0.05)
+    end
+    
     target:updateEnmityFromDamage(pet, dmg)
     target:takeDamage(dmg, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     return dmg

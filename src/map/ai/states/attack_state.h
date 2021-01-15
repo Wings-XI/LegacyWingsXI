@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -47,7 +47,7 @@ protected:
     bool AttackReady();
 private:
     CBattleEntity* const m_PEntity;
-    duration m_attackTime {2s};
+    duration m_attackTime {1600ms};
 };
 
 #endif

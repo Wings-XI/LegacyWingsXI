@@ -23,7 +23,7 @@ function onTrigger(player, npc)
     }
 
     player:showText(npc, ID.text.PAHYALOLOHOIV_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, KAZHAM)
 end
 
 function onEventUpdate(player, csid, option)

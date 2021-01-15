@@ -44,11 +44,13 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 1.0
     local resist = applyResistance(caster, target, spell, params)
+    local duration = getBlueEffectDuration(caster,resist,typeEffect)
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BIND, target))
 
-    if (damage > 0 and resist > 0.125) then
+    if (damage > 0 and resist > 0.25) then
         local typeEffect = tpz.effect.BIND
         target:delStatusEffect(typeEffect) -- Wiki says it can overwrite itself or other binds
-        target:addStatusEffect(typeEffect, 1, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 1, 0, duration)
     end
 
     return damage

@@ -21,6 +21,8 @@
 -- 10          |18%     |23%
 -- 11          |30%     |35%
 -- Bust        |-5%     |-5%
+
+-- NEW: damage reflection
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/ability")
@@ -50,7 +52,7 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {6, 8, 24, 9, 11, 12, 3, 15, 17, 18, 30, 5}
+    local effectpowers = {5, 8, 24, 9, 11, 12, 3, 15, 17, 18, 30, 0}
     local effectpower = effectpowers[total]
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
         effectpower = effectpower + 5
@@ -64,7 +66,7 @@ function applyRoll(caster, target, ability, action, total)
     elseif (caster:getSubJob() == tpz.job.COR and caster:getSubLvl() < target:getMainLvl()) then
         effectpower = effectpower * (caster:getSubLvl() / target:getMainLvl())
     end
-    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.GALLANTS_ROLL, effectpower, 0, duration, caster:getID(), total, tpz.mod.DMG) == false) then
+    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.GALLANTS_ROLL, effectpower, 0, duration, caster:getID(), total, tpz.mod.DEF) == false) then
         ability:setMsg(tpz.msg.basic.ROLL_MAIN_FAIL)
     elseif total > 11 then
         ability:setMsg(tpz.msg.basic.DOUBLEUP_BUST)

@@ -10,6 +10,250 @@ tpz = tpz or {}
 tpz.magic = tpz.magic or {}
 
 ------------------------------------
+-- Elements
+------------------------------------
+
+tpz.magic.element =
+{
+    NONE      = 0,
+    FIRE      = 1,
+    EARTH     = 2,
+    WATER     = 3,
+    WIND      = 4,
+    ICE       = 5,
+    LIGHTNING = 6,
+    THUNDER   = 6,
+    LIGHT     = 7,
+    DARK      = 8,
+}
+tpz.magic.ele = tpz.magic.element
+
+------------------------------------
+-- Spell Groups
+------------------------------------
+
+tpz.magic.spellGroup =
+{
+    NONE      = 0,
+    SONG      = 1,
+    BLACK     = 2,
+    BLUE      = 3,
+    NINJUTSU  = 4,
+    SUMMONING = 5,
+    WHITE     = 6,
+}
+
+------------------------------------
+-- Spell Families
+------------------------------------
+
+tpz.magic.spellFamily =
+{
+    NONE               = 0,
+    CURE               = 1,
+    CURAGA             = 2,
+    RAISE              = 3,
+    NA                 = 4,
+    HOLY               = 5,
+    DIA                = 6,
+    BANISH             = 7,
+    DIAGA              = 8,
+    BANISHGA           = 9,
+    PROTECT            = 10,
+    SHELL              = 11,
+    SLOW               = 12,
+    HASTE              = 13,
+    PARALYZE           = 14,
+    ELE_BAR            = 15,
+    ELE_BAR_RA         = 16,
+    STATUS_BAR         = 17,
+    STATUS_BAR_RA      = 18,
+    RECALL             = 19,
+    CURA               = 20,
+    ENFIRE             = 21,
+    ENBLIZZARD         = 22,
+    ENAERO             = 23,
+    ENSTONE            = 24,
+    ENTHUNDER          = 25,
+    ENWATER            = 26,
+    PHALANX            = 27,
+    REGEN              = 28,
+    REFRESH            = 29,
+    SANDSTORM          = 30,
+    RAINSTORM          = 31,
+    WINDSTORM          = 32,
+    FIRESTORM          = 33,
+    HAILSTORM          = 34,
+    THUNDERSTORM       = 35,
+    VOIDSTORM          = 36,
+    AURORASTORM        = 37,
+    TELEPORT           = 38,
+    PROTECTRA          = 39,
+    SHELLRA            = 40,
+    RERAISE            = 41,
+    FIRE               = 42,
+    BLIZZARD           = 43,
+    AERO               = 44,
+    STONE              = 45,
+    THUNDER            = 46,
+    WATER              = 47,
+    FIRAGA             = 48,
+    BLIZZAGA           = 49,
+    AEROGA             = 50,
+    STONEGA            = 51,
+    THUNDAGA           = 52,
+    WATERGA            = 53,
+    FLARE              = 54,
+    FREEZE             = 55,
+    TORNADO            = 56,
+    QUAKE              = 57,
+    BURST              = 58,
+    FLOOD              = 59,
+    GRAVITY            = 60,
+    METEOR             = 61,
+    POISON             = 62,
+    POISONGA           = 63,
+    BIO                = 64,
+    ELE_DOT            = 65,
+    ABSORB             = 66,
+    DRAIN              = 67,
+    ASPIR              = 68,
+    SPIKES             = 69,
+    STATUS             = 70,
+    SLEEP              = 71,
+    BLIND              = 72,
+    WARP               = 73,
+    TRACTOR            = 74,
+    SLEEPGA            = 75,
+    GEOHELIX           = 76,
+    HYDROHELIX         = 77,
+    ANEMOHELIX         = 78,
+    PYROHELIX          = 79,
+    CRYOHELIX          = 80,
+    IONOHELIX          = 81,
+    NOCTOHELIX         = 82,
+    LUMINOHELIX        = 83,
+    ADDLE              = 84,
+    SPIRIT             = 85,
+    AVATAR             = 86,
+    ANIMUS             = 87,
+    ENLIGHT            = 88,
+    ENDARK             = 89,
+    KATON              = 90,
+    HYOTON             = 91,
+    HUTON              = 92,
+    DOTON              = 93,
+    RAITON             = 94,
+    SUITON             = 95,
+    UTSUSEMI           = 96,
+    JUBAKU             = 97,
+    HOJO               = 98,
+    KURAYAMI           = 99,
+    DOKUMORI           = 100,
+    TONKO              = 101,
+    STATUS_GA          = 102,
+    FOE_REQUIEM        = 103,
+    HORDE_LULLABY      = 104,
+    ARMYS_PAEON        = 105,
+    MAGES_BALLAD       = 106,
+    KNIGHTS_MINNE      = 107,
+    VALOR_MINUET       = 108,
+    MADRIGAL           = 109,
+    PRELUDE            = 110,
+    MAMBO              = 111,
+    OPERETTA           = 112,
+    MARCH              = 113,
+    ELEGY              = 114,
+    STR_ETUDE          = 115,
+    DEX_ETUDE          = 116,
+    VIT_ETUDE          = 117,
+    AGI_ETUDE          = 118,
+    INT_ETUDE          = 119,
+    MND_ETUDE          = 120,
+    CHR_ETUDE          = 121,
+    FIRE_CAROL         = 122,
+    ICE_CAROL          = 123,
+    WIND_CAROL         = 124,
+    EARTH_CAROL        = 125,
+    LIGHTNING_CAROL    = 126,
+    WATER_CAROL        = 127,
+    LIGHT_CAROL        = 128,
+    DARK_CAROL         = 129,
+    FIRE_THRENODY      = 130,
+    ICE_THRENODY       = 131,
+    WIND_THRENODY      = 132,
+    EARTH_THRENODY     = 133,
+    LIGHTNING_THRENODY = 134,
+    WATER_THRENODY     = 135,
+    LIGHT_THRENODY     = 136,
+    DARK_THRENODY      = 137,
+    FOE_LULLABY        = 138,
+    MAZURKA            = 139,
+    BOOST              = 140,
+    GAIN               = 141,
+    TEMPER             = 142,
+    JA                 = 143,
+    INDI_BUFF          = 144,
+    INDI_DEBUFF        = 145,
+    GEO_BUFF           = 146,
+    GEO_DEBUFF         = 147,
+    FIRA               = 148,
+    LIZZARA            = 149,
+    AERORA             = 150,
+    STONERA            = 151,
+    THUNDARA           = 152,
+    WATERA             = 153,
+    DISTRACT           = 154,
+    FRAZZLE            = 155,
+    FLURRY             = 156,
+}
+
+------------------------------------
+-- Resistance Building Categories
+------------------------------------
+
+tpz.magic.buildcat =
+{
+    SLEEP = 0,
+    GRAVITY = 1,
+    BIND = 2,
+    SLOW = 3,
+    PARALYZE = 4,
+    BLIND = 5,
+    SILENCE = 6,
+    STUN = 7,
+    LULLABY = 8,
+    OFFSET = 959, -- subtract mod by 959 to get to cat
+}
+
+------------------------------------
+-- Spell AOE IDs
+------------------------------------
+
+tpz.magic.aoe =
+{
+    NONE        = 0,
+    RADIAL      = 1,
+    CONAL       = 2,
+    RADIAL_MANI = 3, -- AOE when under SCH stratagem Manifestation
+    RADIAL_ACCE = 4, -- AOE when under SCH stratagem Accession
+    PIANISSIMO  = 5, -- Single target when under BRD JA Pianissimo
+    DIFFUSION   = 6, -- AOE when under Diffusion
+}
+
+------------------------------------
+-- Spell flag bits
+------------------------------------
+
+tpz.magic.spellFlag =
+{
+    NONE           = 0x00,
+    HIT_ALL        = 0x01, -- Hit all targets in range regardless of party
+    WIPE_SHADOWS   = 0x02, -- Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
+    IGNORE_SHADOWS = 0x04  -- Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+}
+
+------------------------------------
 -- Tables by element
 ------------------------------------
 
@@ -46,6 +290,209 @@ tpz.magic.doubleWeatherWeak   = {tpz.weather.SQUALL,            tpz.weather.HEAT
 -- The total damage, before resistance and before equipment (so no HQ staff bonus worked out here).
 local SOFT_CAP = 60 --guesstimated
 local HARD_CAP = 120 --guesstimated
+
+function tryBuildResistance(category, target)
+    if target:isPC() then
+        return 1
+    end
+    
+    local ret = 0
+    local current = 1
+    local lastcast = 0
+    local delta = target:getMod(category + tpz.magic.buildcat.OFFSET)
+    
+    -- one point falls off per 20 seconds
+    
+    if target:isNM() and (delta == 0 or delta == nil) then
+        if category == tpz.magic.buildcat.SLEEP or category == tpz.magic.buildcat.GRAVITY or category == tpz.magic.buildcat.LULLABY or category == tpz.magic.buildcat.BIND or category == tpz.magic.buildcat.SILENCE then
+            delta = 6 -- all NMs have a default delta of 6 for Sleep and Gravity resistance building
+        elseif category == tpz.magic.buildcat.STUN then
+            delta = 1
+        else
+            delta = 2 -- default 2 delta for others (40 seconds for full falloff)
+        end
+    end
+    
+    if delta == 0 or delta == nil then
+        return 1
+    end
+    
+    if category == tpz.magic.buildcat.SLEEP then
+        current = target:getLocalVar("BuildSleep")
+        lastcast = target:getLocalVar("BuildSleepLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildSleepLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildSleep",current)
+        --print(string.format("current sleep built res is %u",current))
+    elseif category == tpz.magic.buildcat.GRAVITY then
+        current = target:getLocalVar("BuildGravity")
+        lastcast = target:getLocalVar("BuildGravityLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildGravityLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildGravity",current)
+    elseif category == tpz.magic.buildcat.BIND then
+        current = target:getLocalVar("BuildBind")
+        lastcast = target:getLocalVar("BuildBindLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildBindLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildBind",current)
+    elseif category == tpz.magic.buildcat.SLOW then
+        current = target:getLocalVar("BuildSlow")
+        lastcast = target:getLocalVar("BuildSlowLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildSlowLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildSlow",current)
+    elseif category == tpz.magic.buildcat.PARALYZE then
+        current = target:getLocalVar("BuildParalyze")
+        lastcast = target:getLocalVar("BuildParalyzeLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildParalyzeLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildParalyze",current)
+    elseif category == tpz.magic.buildcat.BLIND then
+        current = target:getLocalVar("BuildBlind")
+        lastcast = target:getLocalVar("BuildBlindLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildBlindLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildBlind",current)
+    elseif category == tpz.magic.buildcat.SILENCE then
+        current = target:getLocalVar("BuildSilence")
+        lastcast = target:getLocalVar("BuildSilenceLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildSilenceLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildSilence",current)
+    elseif category == tpz.magic.buildcat.STUN then
+        current = target:getLocalVar("BuildStun")
+        lastcast = target:getLocalVar("BuildStunLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildStunLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildStun",current)
+    elseif category == tpz.magic.buildcat.LULLABY then
+        current = target:getLocalVar("BuildLullaby")
+        lastcast = target:getLocalVar("BuildLullabyLast")
+        if lastcast ~= 0 and lastcast ~= nil then
+            current = current - math.floor((os.time() - lastcast)/20)
+        else
+            current = 0
+        end
+        target:setLocalVar("BuildLullabyLast",os.time())
+        if current < 0 then
+            current = 0
+        end
+        ret = current
+        -- this is what we return as current resistance. now add on this spellcast to the build.
+        current = current + delta
+        if current > 99 then
+            current = 99
+        end
+        target:setLocalVar("BuildLullaby",current)
+    end
+    
+    return 1 - ret/100
+end
 
 function calculateMagicDamage(caster, target, spell, params)
 
@@ -293,45 +740,60 @@ params.skillType = $3
 params.bonus = $4
 params.effect = $5
 ]]
-function applyResistanceEffect(caster, target, spell, params)
+function applyResistanceEffect(caster, target, spell, params) -- says "effect" but this is the global resistance fetching formula, even for damage spells
     local diff = params.diff or (caster:getStat(params.attribute) - target:getStat(params.attribute))
     local skill = params.skillType
     local bonus = params.bonus
     local effect = params.effect
 
-    -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
-    if (effect ~= nil) then -- Dispel's script doesn't have an "effect" to send here, nor should it.
-        if (skill == tpz.skill.ENFEEBLING_MAGIC and caster:hasStatusEffect(tpz.effect.STYMIE) and target:canGainStatusEffect(effect)) then
-            caster:delStatusEffect(tpz.effect.STYMIE)
-            return 1
-        end
-    end
-
-    if (skill == tpz.skill.SINGING and caster:hasStatusEffect(tpz.effect.TROUBADOUR)) then
-        if (math.random(0, 99) < caster:getMerit(tpz.merit.TROUBADOUR)-25) then
-            return 1.0
-        end
-    end
-
     local element = spell:getElement()
     local percentBonus = 0
     local magicaccbonus = getSpellBonusAcc(caster, target, spell, params)
+    
+    local softcap = params.dStatAccSoftCap -- 10 is set on all nukes. everything else is nil
+    if softcap == nil then
+        softcap = 15
+    end
 
-    if (diff > 10) then
-        magicaccbonus = magicaccbonus + 10 + (diff - 10)/2
+    if (diff > softcap) then -- past the soft cap (10 or 15) each dstat is half as effective
+        magicaccbonus = magicaccbonus + softcap + math.floor((diff - softcap)/2)
     else
         magicaccbonus = magicaccbonus + diff
     end
 
-    if (bonus ~= nil) then
-        magicaccbonus = magicaccbonus + bonus
+    if (bonus ~= nil) then -- seems like this only exists if the spell is threnody. bonus macc when using right ele staff.
+        magicaccbonus = magicaccbonus + bonus -- this now also exists for tier 3 "San" Ninjutsu with the appropriate merits
     end
 
     if (effect ~= nil) then
-        percentBonus = percentBonus - getEffectResistance(target, effect)
+        percentBonus = percentBonus - getEffectResistance(target, effect) -- this is a HITRATE penalty not a MEVA BOOST (but they are the same thing if macc > meva)
+    end -- traits are handled later
+    
+    if params.skillBonus ~= nil then -- bard only it seems like. takes into account signing+instrument skill. i'll need to verify those formulas later
+        magicaccbonus = magicaccbonus + params.skillBonus
     end
 
     local p = getMagicHitRate(caster, target, skill, element, percentBonus, magicaccbonus)
+    local res = getMagicResist(p)
+    
+    if getElementalSDT(element, target) == 5 then -- jimmayus: SDT tier .05 makes you lose ALL coin flips
+        res = 1/8
+    end
+    
+    if getElementalSDT(element, target) <= 50 then -- .5 or below SDT drops a resist tier
+        res = res / 2
+    end
+    
+    if effect ~= nil and math.random() < getEffectResistanceTraitChance(caster, target, effect) then
+        res = 1/16 -- this will make any status effect fail. this takes into account trait+food+gear
+        --print("restrait proc!")
+        --if spell ~= nil then
+            --spell:setMsg(MAGIC_COMPLETELY_RESIST)
+            --if spell:isAoe() == 1 then
+                --spell:setMsg(MAGIC_COMPLETELY_RESIST_AOE)
+            --end
+        --end
+    end
 
     return getMagicResist(p)
 end
@@ -389,6 +851,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     magicacc = magicacc + caster:getMerit(tpz.merit.NIN_MAGIC_ACCURACY)
 
     -- Base magic evasion (base magic evasion plus resistances(players), plus elemental defense(mobs)
+    -- target:getMod(MEVA) is set to a capped skill of rank C when the mob spawns
     local magiceva = target:getMod(tpz.mod.MEVA) + resMod
 
     magicacc = magicacc + bonusAcc
@@ -396,17 +859,37 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     -- Add macc% from food
     local maccFood = magicacc * (caster:getMod(tpz.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(tpz.mod.FOOD_MACC_CAP))
+    
+    local SDT = getElementalSDT(element, target)
 
-    return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl())
+    return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl(), SDT)
 end
 
-function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targetLvl)
+function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targetLvl, SDT)
     local p = 0
-    --add a scaling bonus or penalty based on difference of targets level from caster
-    local levelDiff = utils.clamp(casterLvl - targetLvl, -5, 5)
-
-    p = 70 - 0.5 * (magiceva - magicacc) + levelDiff * 3 + percentBonus
-
+    
+    -- percentBonus is a bit deceiving of a name. it's either 0 or a negative number. its only application is specific effect resistance (i.e. +5 resist to paralyze = -5% hitrate on incoming paras)
+    -- note that this has nothing to do with the resist TRAIT which is handled BEFORE rate calculations. gear bonuses (i.e. "Enhances Resist Paralyze Effect") count as traits.
+    -- If dMAcc < 0, Magic Hit Rate = 55% + floor( dMAcc÷2 ) = magic hit rate
+    -- If dMAcc ≥ 0, Magic Hit Rate = 55% + dMAcc = magic hit rate
+    
+    magicacc = magicacc + (casterLvl - targetLvl)*4
+    local dMAcc = magicacc - magiceva
+    --print(string.format("magicacc = %u, magiceva = %u",magicacc,magiceva))
+    if dMAcc < 0 then -- when penalty, half effective
+        p = 55 + math.floor(dMAcc/2)
+    else
+        p = 55 + dMAcc
+    end
+    p = utils.clamp(p, 5, 95)
+    
+    p = p + percentBonus
+    p = utils.clamp(p, 5, 95)
+    --print(string.format("step1: %u",p))
+	--GetPlayerByID(90):PrintToPlayer(string.format("pre SDT: %u",p))
+    p = p * SDT/100
+	--print(string.format("step2: %u",p))
+	--GetPlayerByID(90):PrintToPlayer(string.format("post SDT: %u",p))
     return utils.clamp(p, 5, 95)
 end
 
@@ -420,7 +903,7 @@ function getMagicResist(magicHitRate)
     local half = (1 - p)
     local quart = ((1 - p)^2)
     local eighth = ((1 - p)^3)
-    local sixteenth = ((1 - p)^4)
+    -- local sixteenth = ((1 - p)^4)
     -- print("HALF: "..half)
     -- print("QUART: "..quart)
     -- print("EIGHTH: "..eighth)
@@ -428,25 +911,66 @@ function getMagicResist(magicHitRate)
 
     local resvar = math.random()
 
-    -- Determine final resist based on which thresholds have been crossed.
-    if (resvar <= sixteenth) then
-        resist = 0.0625
-        --printf("Spell resisted to 1/16!!!  Threshold = %u", sixteenth)
-    elseif (resvar <= eighth) then
+    -- sixteenth section removed as it is not obtainable under normal circumstances... requires getting a 1/8th roll reduced by half via a 50% or lower SDT tier
+    if (resvar <= eighth) then
         resist = 0.125
-        --printf("Spell resisted to 1/8!  Threshold = %u", eighth)
+        --printf("Spell resisted to 1/8!  Threshold = %u",eighth)
     elseif (resvar <= quart) then
         resist = 0.25
-        --printf("Spell resisted to 1/4.  Threshold = %u", quart)
+        --printf("Spell resisted to 1/4.  Threshold = %u",quart)
     elseif (resvar <= half) then
         resist = 0.5
-        --printf("Spell resisted to 1/2.  Threshold = %u", half)
+        --printf("Spell resisted to 1/2.  Threshold = %u",half)
     else
         resist = 1.0
         --printf("1.0")
     end
 
     return resist
+end
+
+function getEffectResistanceTraitChance(caster, target, effect)
+    local effectres = 0
+    if (effect == tpz.effect.SLEEP_I or effect == tpz.effect.SLEEP_II or effect == tpz.effect.LULLABY) then
+        effectres = tpz.mod.SLEEPRESTRAIT
+    elseif (effect == tpz.effect.POISON) then
+        effectres = tpz.mod.POISONRESTRAIT
+    elseif (effect == tpz.effect.PARALYSIS) then
+        effectres = tpz.mod.PARALYZERESTRAIT
+    elseif (effect == tpz.effect.BLINDNESS) then
+        effectres = tpz.mod.BLINDRESTRAIT
+    elseif (effect == tpz.effect.SILENCE) then
+        effectres = tpz.mod.SILENCERESTRAIT
+    elseif (effect == tpz.effect.PLAGUE or effect == tpz.effect.DISEASE) then
+        effectres = tpz.mod.VIRUSRESTRAIT
+    elseif (effect == tpz.effect.PETRIFICATION) then
+        effectres = tpz.mod.PETRIFYRESTRAIT
+    elseif (effect == tpz.effect.BIND) then
+        effectres = tpz.mod.BINDRESTRAIT
+    elseif (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
+        effectres = tpz.mod.CURSERESTRAIT
+    elseif (effect == tpz.effect.WEIGHT) then
+        effectres = tpz.mod.GRAVITYRESTRAIT
+    elseif (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
+        effectres = tpz.mod.SLOWRESTRAIT
+    elseif (effect == tpz.effect.STUN) then
+        effectres = tpz.mod.STUNRESTRAIT
+    elseif (effect == tpz.effect.CHARM) then
+        effectres = tpz.mod.CHARMRESTRAIT
+    elseif (effect == tpz.effect.AMNESIA) then
+        effectres = tpz.mod.AMNESIARESTRAIT
+    end
+    
+    if (effectres ~= 0) then
+        local ret = target:getMod(effectres)
+        if (not caster:isPC()) and caster:isNM() then
+            ret = math.floor(ret/2)
+        end
+        return ret/100
+    end
+
+    return 0
+    
 end
 
 -- Returns the amount of resistance the
@@ -513,7 +1037,7 @@ function getSpellBonusAcc(caster, target, spell, params)
 
     --add acc for skillchains
     if (skillchainTier > 0) then
-        magicAccBonus = magicAccBonus + 25
+        magicAccBonus = magicAccBonus + 30 -- jimmayus said this is 30 not 25
     end
 
     --Add acc for klimaform
@@ -524,9 +1048,9 @@ function getSpellBonusAcc(caster, target, spell, params)
     end
 
     --add for blm elemental magic merits
-    if skill == tpz.skill.ELEMENTAL_MAGIC then
-        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.ELEMENTAL_MAGIC_ACCURACY)
-    end
+    --if skill == tpz.skill.ELEMENTAL_MAGIC then
+        --magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.ELEMENTAL_MAGIC_ACCURACY)
+    --end
 
     --Add acc for dark seal
     if (skill == tpz.skill.DARK_MAGIC and caster:hasStatusEffect(tpz.effect.DARK_SEAL)) then
@@ -552,7 +1076,7 @@ function handleAfflatusMisery(caster, spell, dmg)
         -- According to BGWiki Caps at 300 magic damage.
         local miseryMax = 300
 
-        miseryMax = miseryMax * (1 - caster:getMerit(tpz.merit.ANIMUS_MISERY)/100)
+        --miseryMax = miseryMax * (1 - caster:getMerit(tpz.merit.ANIMUS_MISERY)/100)
 
         -- BGwiki puts the boost capping at 200% bonus at 1/4th max HP.
         if (misery > miseryMax) then
@@ -605,10 +1129,42 @@ end
         dmg = dmg * ELEMENTAL_POWER
     elseif (skill == tpz.skill.DARK_MAGIC) then
         dmg = dmg * DARK_POWER
+        local id = spell:getID()
+        if id == 245 or id == 246 or id == 247 or id == 248 then
+            dmg = math.floor(dmg * (math.random()/2 + 0.5)) -- aspir1/2, drain1/2, someone noted somewhere this is how it is randomized but now i can't find the source atm
+        end
     elseif (skill == tpz.skill.NINJUTSU) then
         dmg = dmg * NINJUTSU_POWER
     elseif (skill == tpz.skill.DIVINE_MAGIC) then
         dmg = dmg * DIVINE_POWER
+    end
+    
+    -- Circle Effects
+    if target:isMob() and dmg > 0 then
+        local eco = target:getSystem()
+        local circlemult = 100
+        local mod = 0
+        
+        if     eco == 1  then mod = 1226
+        elseif eco == 2  then mod = 1228
+        elseif eco == 3  then mod = 1232
+        elseif eco == 6  then mod = 1230
+        elseif eco == 8  then mod = 1225
+        elseif eco == 9  then mod = 1234
+        elseif eco == 10 then mod = 1233
+        elseif eco == 14 then mod = 1227
+        elseif eco == 16 then mod = 1238
+        elseif eco == 15 then mod = 1237
+        elseif eco == 17 then mod = 1229
+        elseif eco == 19 then mod = 1231
+        elseif eco == 20 then mod = 1224
+        end
+        
+        if mod > 0 then
+            circlemult = circlemult + caster:getMod(mod)
+        end
+        
+        dmg = math.floor(dmg * circlemult / 100)
     end
 
     dmg = target:magicDmgTaken(dmg)
@@ -617,7 +1173,19 @@ end
         dmg = dmg - target:getMod(tpz.mod.PHALANX)
         dmg = utils.clamp(dmg, 0, 99999)
     end
-
+    
+    --handling rampart stoneskin
+    local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
+    if ramSS > 0 then
+        if dmg >= ramSS then
+            target:setMod(tpz.mod.RAMPART_STONESKIN, 0)
+            dmg = dmg - ramSS
+        else
+            target:setMod(tpz.mod.RAMPART_STONESKIN, ramSS - dmg)
+            dmg = 0
+        end
+    end
+    
     --handling stoneskin
     dmg = utils.stoneskin(target, dmg)
     dmg = utils.clamp(dmg, -99999, 99999)
@@ -739,7 +1307,7 @@ function addBonuses(caster, spell, target, dmg, params)
     params.bonusmab = params.bonusmab or 0
     params.AMIIburstBonus = params.AMIIburstBonus or 0
 
-    local magicDefense = getElementalDamageReduction(target, ele)
+    local magicDefense = getElementalDamageReduction(target, ele) -- special defense
     dmg = math.floor(dmg * magicDefense)
 
     local dayWeatherBonus = 1.00
@@ -803,9 +1371,9 @@ function addBonuses(caster, spell, target, dmg, params)
 
     if (spellId >= 245 and spellId <= 248) then -- Drain/Aspir (II)
         mabbonus = 1 + caster:getMod(tpz.mod.ENH_DRAIN_ASPIR)/100
-        if spellId == 247 or spellId == 248 then
-            mabbonus = mabbonus + caster:getMerit(tpz.merit.ASPIR_ABSORPTION_AMOUNT)/100
-        end
+        --if spellId == 247 or spellId == 248 then
+            --mabbonus = mabbonus + caster:getMerit(tpz.merit.ASPIR_ABSORPTION_AMOUNT)/100
+        --end
     else
         local mab = caster:getMod(tpz.mod.MATT) + params.bonusmab
 
@@ -1013,6 +1581,15 @@ function handleThrenody(caster, target, spell, basePower, baseDuration, modifier
     params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.SINGING
     params.bonus = staff
+    params.skillBonus = 0
+    if caster:isPC() then
+        local instrument = caster:getSkillLevel(caster:getWeaponSkillType(tpz.slot.RANGED))
+        local skillcap = caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BRD, tpz.skill.STRING_INSTRUMENT) -- will return the same whether string or wind, both are C for bard
+    
+        if instrument > skillcap then
+            params.skillBonus = instrument - skillcap -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
+        end
+    end
 
     local resm = applyResistance(caster, target, spell, params)
     -- print("rsem=" .. resm)
@@ -1072,11 +1649,85 @@ function canOverwrite(target, effect, power, mod)
     return true
 end
 
+function getElementalSDT(element, target) -- takes into account if magic burst window is open -> increase tier by 1
+    if target:isPC() then
+        return 100
+    end
+
+    local SDT = target:getMod(element + 967)
+    
+    if SDT == 0 or SDT == nil then -- invalid SDT, it was never set on this target... just default it.
+        SDT = 100
+		--print("invalid SDT detected")
+    end
+    
+    local MB1 = 0
+    local MB2 = 0
+    MB1, MB2 = FormMagicBurst(element, target)
+    
+    if MB1 > 0 then -- window is open for this element
+        if SDT == 5 then
+            SDT = 10
+        elseif SDT == 10 then
+            SDT = 15
+        elseif SDT == 15 then
+            SDT = 20
+        elseif SDT == 20 then
+            SDT = 25
+        elseif SDT == 25 then
+            SDT = 30
+        elseif SDT == 30 then
+            SDT = 40
+        elseif SDT == 40 then
+            SDT = 50
+        elseif SDT == 50 then
+            SDT = 60
+        elseif SDT == 60 then
+            SDT = 70
+        elseif SDT == 70 then
+            SDT = 85
+        elseif SDT == 85 then
+            SDT = 100
+        elseif SDT == 100 then
+            SDT = 115
+        elseif SDT == 115 then
+            SDT = 130
+        elseif SDT == 130 then
+            SDT = 150
+        elseif SDT == 150 then
+            SDT = 150
+        else
+            print(string.format("non-standard SDT tier on target %u valve pls fix",target:getID()))
+            SDT = SDT + 10
+        end
+    end
+    
+    local SDTcoe = (1 - target:getMod(tpz.mod.SPDEF_DOWN)/100) -- warrior's tomahawk, or whm's banish against undead
+    if SDTcoe < 0.03 then
+        SDTcoe = 0.03
+    elseif SDTcoe > 1 then
+        SDTcoe = 1
+    end
+    
+    if SDT < 100 then -- these SPDEF_DOWN effects don't mean anything if it's the mob's weakness already
+        SDT = 100 - ((100 - SDT) * SDTcoe)
+    end
+    
+    if SDT < 5 then
+        SDT = 5
+    elseif SDT > 150 then
+        SDT = 150
+    end
+    --print(string.format(SDT))
+    return SDT
+end
+
 function doElementalNuke(caster, spell, target, spellParams)
     local DMG = 0
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local V = 0
     local M = 0
+    local hasMultipleTargetReduction = spellParams.hasMultipleTargetReduction
 
     if USE_OLD_MAGIC_DAMAGE and spellParams.V ~= nil and spellParams.M ~= nil then
         V = spellParams.V -- Base value
@@ -1108,7 +1759,6 @@ function doElementalNuke(caster, spell, target, spellParams)
         end
 
     else
-        local hasMultipleTargetReduction = spellParams.hasMultipleTargetReduction --still unused!!!
         local resistBonus = spellParams.resistBonus
         local mDMG = caster:getMod(tpz.mod.MAGIC_DAMAGE)
 
@@ -1150,18 +1800,41 @@ function doElementalNuke(caster, spell, target, spellParams)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.ELEMENTAL_MAGIC
     params.resistBonus = resistBonus
+    params.dStatAccSoftCap = 10
 
     local resist = applyResistance(caster, target, spell, params)
-
+    
+    local element = spell:getElement()
+    
+    local MTDR = 1.0
+    
+    if hasMultipleTargetReduction == true then
+        MTDR = 0.90 - spell:getTotalTargets() * 0.05
+        if MTDR == 0.85 then -- 1 target, stay at 1.0
+            MTDR = 1.0
+        elseif MTDR < 0.4 then
+            MTDR = 0.4
+        end
+        --print(string.format("MTDR was %.2f for numtargets %u",MTDR,spell:getTotalTargets()))
+    end
+    
+    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
+        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
+        target:queue(1100, function(target)
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
+        end) 
+    else
+        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
+    end
+    
     --get the resisted damage
-    DMG = DMG * resist
+    DMG = DMG * resist * MTDR
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     DMG = addBonuses(caster, spell, target, DMG, spellParams)
 
     --add in target adjustment
-    local ele = spell:getElement()
-    DMG = adjustForTarget(target, DMG, ele)
+    DMG = adjustForTarget(target, DMG, element)
 
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
@@ -1172,6 +1845,7 @@ end
 function doDivineNuke(caster, target, spell, params)
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.attribute = tpz.mod.MND
+    params.dStatAccSoftCap = 10
 
     return doNuke(caster, target, spell, params)
 end
@@ -1183,17 +1857,19 @@ function doNinjutsuNuke(caster, target, spell, params)
 
     mabBonus = mabBonus + caster:getMod(tpz.mod.NIN_NUKE_BONUS) -- "enhances ninjutsu damage" bonus
     if (caster:hasStatusEffect(tpz.effect.INNIN) and caster:isBehind(target, 23)) then -- Innin mag atk bonus from behind, guesstimating angle at 23 degrees
-        mabBonus = mabBonus + caster:getStatusEffect(tpz.effect.INNIN):getPower()
+        mabBonus = mabBonus + 30
     end
     params.skillType = tpz.skill.NINJUTSU
     params.attribute = tpz.mod.INT
     params.mabBonus = mabBonus
+    params.dStatAccSoftCap = 10
 
     return doNuke(caster, target, spell, params)
 end
 
 function doNuke(caster, target, spell, params)
     --calculate raw damage
+    params.dStatAccSoftCap = 10
     local dmg = calculateMagicDamage(caster, target, spell, params)
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
@@ -1218,6 +1894,15 @@ function doNuke(caster, target, spell, params)
             caster:delStatusEffect(tpz.effect.FUTAE)
         end
     end
+    
+    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
+        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
+        target:queue(1100, function(target)
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
+        end) 
+    else
+        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
+    end
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
@@ -1231,6 +1916,11 @@ end
 function doDivineBanishNuke(caster, target, spell, params)
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.attribute = tpz.mod.MND
+    params.dStatAccSoftCap = 10
+    
+    if caster:isPC() then
+        params.dmg = params.dmg + caster:getMerit(tpz.merit.BANISH_EFFECT)
+    end
 
     --calculate raw damage
     local dmg = calculateMagicDamage(caster, target, spell, params)
@@ -1238,6 +1928,15 @@ function doDivineBanishNuke(caster, target, spell, params)
     local resist = applyResistance(caster, target, spell, params)
     --get the resisted damage
     dmg = dmg*resist
+    
+    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
+        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
+        target:queue(1100, function(target)
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
+        end) 
+    else
+        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
+    end
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
@@ -1267,7 +1966,7 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
         duration = duration + caster:getMerit(tpz.merit.ENHANCING_MAGIC_DURATION)
 
         -- Default is true
-        useComposure = useComposure or (useComposure == nill and true)
+        useComposure = useComposure or (useComposure == nil and true)
 
         -- Composure
         if useComposure and caster:hasStatusEffect(tpz.effect.COMPOSURE) and caster:getID() == target:getID() then
@@ -1324,7 +2023,7 @@ function outputMagicHitRateInfo()
             if (targetLvl >= 0) then
                 -- assume BLM spell, A+
                 local magicAcc = utils.getSkillLvl(6, casterLvl)
-                -- assume default monster magic eva, D
+                -- assume default monster magic eva, C
                 local magicEvaRank = 3
                 local rate = 0
 
@@ -1338,7 +2037,7 @@ function outputMagicHitRateInfo()
                     magicAcc = magicAcc + dINT
                 end
 
-                local magicHitRate = calculateMagicHitRate(magicAcc, magicEva, 0, casterLvl, targetLvl)
+                local magicHitRate = calculateMagicHitRate(magicAcc, magicEva, 0, casterLvl, targetLvl, 100)
 
                 printf("Lvl: %d vs %d, %d%%, MA: %d, ME: %d", casterLvl, targetLvl, magicHitRate, magicAcc, magicEva)
             end

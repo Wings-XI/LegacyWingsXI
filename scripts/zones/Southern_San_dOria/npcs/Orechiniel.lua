@@ -36,6 +36,7 @@ function onEventFinish(player, csid, option)
     if (csid == 650 and option == 1) then
         player:delGil(Cost)
         player:messageSpecial(ID.text.LEATHER_SUPPORT, 0, 5, 0)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.LEATHERCRAFT_IMAGERY, 3, 0, 480)
     end
 end

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -103,7 +103,7 @@ std::vector<ahItem*> CDataLoader::GetAHItemsToCategory(uint8 AHCategoryID, int8*
         "LEFT JOIN auction_house ON item_basic.itemId = auction_house.itemid AND auction_house.buyer_name IS NULL "
         "LEFT JOIN item_equipment ON item_basic.itemid = item_equipment.itemid "
         "LEFT JOIN item_weapon ON item_basic.itemid = item_weapon.itemid "
-        "WHERE aH = %u "
+        "WHERE aH = %u AND (item_equipment.level < 76 OR item_equipment.level IS NULL)"
         "GROUP BY item_basic.itemid "
         "%s";
 
@@ -246,6 +246,10 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             PPlayer->flags2 = PPlayer->flags1;
 
             // TODO: search comments
+
+            // skip anons if we searched by something that's being hidden from us
+            if (nameflag & FLAG_ANON && (sr.jobid > 0 || sr.nation != 255 || sr.race != 255 || sr.minlvl > 0 || sr.maxlvl > 0 || sr.minRank > 0 || sr.maxRank > 0))
+                continue;
 
             // filter by job
             if (sr.jobid > 0 && sr.jobid != PPlayer->mjob)

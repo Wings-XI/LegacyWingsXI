@@ -20,5 +20,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local ftphp = fTP(tp, 0.22, 0.33, 0.52)
     local ftpmp = fTP(tp, 0.15, 0.22, 0.35)
     player:addHP(ftphp * player:getMaxHP())
+	player:trySkillUp(target, tpz.skill.CLUB, 1)
     return 0, 0, false, ftpmp * player:getMaxMP()
 end

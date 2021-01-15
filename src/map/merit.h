@@ -253,7 +253,7 @@ enum MERIT_TYPE
     MERIT_WARDING_CIRCLE_RECAST     = MCATEGORY_SAM_1 + 0x02,
     MERIT_STORE_TP_EFFECT           = MCATEGORY_SAM_1 + 0x04,
     MERIT_MEDITATE_RECAST           = MCATEGORY_SAM_1 + 0x06,
-    MERIT_ZASHIN_ATTACK_RATE        = MCATEGORY_SAM_1 + 0x08,
+    MERIT_ZANSHIN_ATTACK_RATE        = MCATEGORY_SAM_1 + 0x08,
 
     //NIN 1
     MERIT_SUBTLE_BLOW_EFFECT        = MCATEGORY_NIN_1 + 0x00,
@@ -293,9 +293,9 @@ enum MERIT_TYPE
     MERIT_BUST_DURATION             = MCATEGORY_COR_1 + 0x08,
 
     //PUP 1
-    MERIT_AUTOMATON_SKILLS          = MCATEGORY_PUP_1 + 0x00,
-    MERIT_MAINTENACE_RECAST         = MCATEGORY_PUP_1 + 0x02,
-    MERIT_REPAIR_EFFECT             = MCATEGORY_PUP_1 + 0x04,
+    MERIT_AUTOMATON_MELEE           = MCATEGORY_PUP_1 + 0x00,
+    MERIT_AUTOMATON_RANGED          = MCATEGORY_PUP_1 + 0x02,
+    MERIT_AUTOMATON_MAGIC           = MCATEGORY_PUP_1 + 0x04,
     MERIT_ACTIVATE_RECAST           = MCATEGORY_PUP_1 + 0x06,
     MERIT_REPAIR_RECAST             = MCATEGORY_PUP_1 + 0x08,
 
@@ -566,8 +566,12 @@ class CMeritPoints
         bool        AddLimitPoints(uint16 points);                  // automatically adds merit points > 10000
         bool        IsMeritExist(MERIT_TYPE merit);                 // проверяем существование merit
 
-        void        RaiseMerit(MERIT_TYPE merit); // add upgrade
-        void        LowerMerit(MERIT_TYPE merit); // del upgrade
+        uint8       GetMeritMaxUpgrades(uint8 catid);
+        uint8       GetMeritCategoryMaxUpgrades(uint8 catid);
+        uint8       GetCategoryUpgrades(CCharEntity* PChar, uint8 catid);
+
+        bool        RaiseMerit(CCharEntity* PChar, MERIT_TYPE merit); // add upgrade
+        bool        LowerMerit(MERIT_TYPE merit); // del upgrade
 
         void        SetLimitPoints(uint16 points);                  // used for loading player limit points on login
         void        SetMeritPoints(uint16 points);                  // used for loading player merit points on login

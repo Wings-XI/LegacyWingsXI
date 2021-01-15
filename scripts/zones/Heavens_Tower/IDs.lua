@@ -25,7 +25,7 @@ zones[tpz.zone.HEAVENS_TOWER] =
         YOU_LEARNED_TRUST       = 7192, -- You learned Trust: <name>!
         CALL_MULTIPLE_ALTER_EGO = 7193, -- You are now able to call multiple alter egos.
         FISHING_MESSAGE_OFFSET  = 7366, -- You can't fish here.
-        CELEBRATORY_GOODS       = 9099, -- An assortment of celebratory goods is available for purchase.
+        CELEBRATORY_GOODS       = 9097, -- An assortment of celebratory goods is available for purchase.
     },
     mob =
     {

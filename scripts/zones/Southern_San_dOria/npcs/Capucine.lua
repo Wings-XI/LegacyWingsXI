@@ -24,7 +24,7 @@ function onTrigger(player, npc)
     }
 
     player:showText(npc, ID.text.CAPUCINE_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, SANDORIA)
 end
 
 function onEventUpdate(player, csid, option)

@@ -95,8 +95,9 @@ function moogleTrigger(player, npc)
             player:startEvent(30000)
 
         -- A Moogle Kupo d'Etat
-        elseif ENABLE_AMK and isInMogHouseInHomeNation(player) and player:getMainLvl() >= 10 and player:getCurrentMission(AMK) == tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT then
-            player:startEvent(30023)
+		-- Bugged and for some reason starts even if disabled in settings. Removing for now.
+        -- elseif ENABLE_AMK and isInMogHouseInHomeNation(player) and player:getMainLvl() >= 10 and player:getCurrentMission(AMK) == tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT then
+        --    player:startEvent(30023)
 
         elseif player:getLocalVar("QuestSeen") == 0 and giveMoogleABreak == QUEST_AVAILABLE and homeNationFameLevel >= 3 and
                player:getCharVar("[MS1]BedPlaced") == 1 then

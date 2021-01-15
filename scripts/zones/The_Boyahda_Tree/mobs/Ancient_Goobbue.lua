@@ -17,6 +17,8 @@ function onMobSpawn(mob)
         },
     })
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 18000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 22000)
 end
 
 function onMobDeath(mob, player, isKiller)

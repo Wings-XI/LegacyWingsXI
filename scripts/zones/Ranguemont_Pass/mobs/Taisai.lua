@@ -3,6 +3,7 @@
 --  Mob: Taisai
 -----------------------------------
 local ID = require("scripts/zones/Ranguemont_Pass/IDs")
+require("scripts/globals/status");
 
 function disturbMob(mob)
     local phIndex = mob:getLocalVar("phIndex")
@@ -34,6 +35,7 @@ function onMobRoam(mob)
         DisallowRespawn(nm:getID(), false)
         SpawnMob(nm:getID())
         nm:setLocalVar("phIndex", phIndex)
+		SetServerVariable("TaisaijinAlive",phIndex)
     end
 end
 

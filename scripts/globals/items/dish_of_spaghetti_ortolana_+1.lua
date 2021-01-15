@@ -31,7 +31,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.FOOD_HPP, 30)
     target:addMod(tpz.mod.FOOD_HP_CAP, 75)
     target:addMod(tpz.mod.STORETP, 6)
-    target:addMod(tpz.mod.BLINDRES, 10)
+    target:addMod(tpz.mod.BLINDRESTRAIT, 10)
 end
 
 function onEffectLose(target, effect)
@@ -40,5 +40,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.FOOD_HPP, 30)
     target:delMod(tpz.mod.FOOD_HP_CAP, 75)
     target:delMod(tpz.mod.STORETP, 6)
-    target:delMod(tpz.mod.BLINDRES, 10)
+    target:delMod(tpz.mod.BLINDRESTRAIT, 10)
 end

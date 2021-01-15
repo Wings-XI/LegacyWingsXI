@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -26,6 +26,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../utils/battleutils.h"
 #include "../../weapon_skill.h"
 #include "../../status_effect_container.h"
+#include "../../packets/char_health.h"
 
 CWeaponSkillState::CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsid) :
     CState(PEntity, targid),
@@ -84,7 +85,8 @@ void CWeaponSkillState::SpendCost()
     else if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI))
     {
         tp = m_PEntity->addTP(-1000);
-        m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
+        //m_PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_SEKKANOKI);
+        //moved to later on so we can check to disable TP bonus effects
     }
     else
     {
@@ -101,6 +103,12 @@ void CWeaponSkillState::SpendCost()
         m_PEntity->addTP(tpzrand::GetRandomNumber(10, 200));
     }
 
+    if (m_PEntity->objtype == TYPE_PC)
+    {
+        m_PEntity->updatemask |= UPDATE_HP;
+        ((CCharEntity*)m_PEntity)->pushPacket(new CCharHealthPacket((CCharEntity*)m_PEntity));
+    }
+
     m_spent = tp;
 }
 
@@ -108,11 +116,20 @@ bool CWeaponSkillState::Update(time_point tick)
 {
     if (!IsCompleted())
     {
-        SpendCost();
         action_t action;
+        auto PTarget{ GetTarget() };
+        /*
+        if (distance(m_PEntity->loc.p, PTarget->loc.p) > (float)(m_PSkill->getRange()))
+        {
+            if (m_PEntity->objtype == TYPE_PC)
+                ((CCharEntity*)m_PEntity)->pushPacket(new CMessageBasicPacket(m_PEntity, m_PEntity, (int32)(PTarget->id), 0, 4)); // the [target] is too far away.
+            Complete();
+            return true;
+        }
+        */
+        SpendCost();
         m_PEntity->OnWeaponSkillFinished(*this, action);
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
-        auto PTarget {GetTarget()};
         m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", m_PEntity, PTarget, m_PSkill->getID(), m_spent, &action);
         PTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", PTarget, m_PEntity, m_PSkill->getID(), m_spent, &action);
         auto delay = m_PSkill->getAnimationTime();

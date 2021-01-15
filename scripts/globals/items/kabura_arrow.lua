@@ -9,9 +9,12 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAdditionalEffect(player, target, damage)
-    local chance = 95
-    if (target:getMainLvl() > player:getMainLvl()) then
-        chance = chance - 5 * (target:getMainLvl() - player:getMainLvl())
+    local chance = 50
+    if target:isNM() then
+        chance = 35
+    end
+    if target:getMainLvl() > player:getMainLvl() then
+        chance = chance - 4 * (target:getMainLvl() - player:getMainLvl())
         chance = utils.clamp(chance, 5, 95)
     end
     if (math.random(0, 99) >= chance or applyResistanceAddEffect(player, target, tpz.magic.ele.WIND, 0) <= 0.5) then

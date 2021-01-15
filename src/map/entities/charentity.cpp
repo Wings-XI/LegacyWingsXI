@@ -87,6 +87,7 @@ CCharEntity::CCharEntity()
 
     m_GMlevel = 0;
     m_isGMHidden = false;
+    m_autoTargetOverride = nullptr;
 
     allegiance = ALLEGIANCE_PLAYER;
 
@@ -147,14 +148,8 @@ CCharEntity::CCharEntity()
         m_missionLog[i].current = 0xFFFF;
     }
 
-    m_missionLog[4].current = 0;   // MISSION_TOAU
-    m_missionLog[5].current = 0;   // MISSION_WOTG
-    m_missionLog[6].current = 101; // MISSION_COP
-    for (uint8 i = 0; i < MAX_MISSIONAREA; ++i)
-    {
-        m_missionLog[i].logExUpper = 0;
-        m_missionLog[i].logExLower = 0;
-    }
+    m_missionLog[4].current = 0; // MISSION_TOAU
+    m_missionLog[5].current = 0; // MISSION_WOTG
 
     m_copCurrent = 0;
     m_acpCurrent = 0;
@@ -214,6 +209,22 @@ CCharEntity::CCharEntity()
 
     m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
 
+    m_accountFeatures = 0;
+    m_needChatFix = 0;
+    m_needTellFix = 0;
+    m_lastPacketTime = time(NULL);
+
+    m_distanceLastCheckTime = m_lastPacketTime;
+    m_distanceFromLastCheck = 0.0;
+    m_gracePeriodEnd = m_lastPacketTime;
+
+    hookedFish = nullptr;
+    lastCastTime = 0;
+    nextFishTime = 0;
+    fishingToken = 0;
+
+    m_ZoneAggroImmunity = server_clock::now() + 12s;
+
     PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
         std::make_unique<CTargetFind>(this));
 }
@@ -260,6 +271,16 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     TracyZoneHex16(packet->id());
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
+    if ((packet->getType() == 0x17) && (m_needChatFix)) {
+        // Hack to word around the chat message format change of Sep. 2020
+        uint8* packetbytes = packet->getData();
+        uint32 pktsize = packet->getSize();
+        if (pktsize > PACKET_SIZE) {
+            pktsize = PACKET_SIZE;
+        }
+        pktsize -= 0x18;
+        memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
+    }
     PacketList.push_back(packet);
 }
 
@@ -688,8 +709,20 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_UNABLE_TO_SEE_TARG);
         return false;
     }
+    else if (PTarget->IsNameHidden())
+    {
+        return false;
+    }
     else if ((dist - PTarget->m_ModelSize) > GetMeleeRange())
     {
+        if (PTarget->objtype != TYPE_PC && (dist - PTarget->m_ModelSize) < GetMeleeRange() + 5 && (PTarget->PAI->PathFind->IsFollowingPath() || PTarget->PAI->PathFind->IsFollowingScriptedPath()) && abs(PTarget->loc.p.rotation - this->loc.p.rotation) < 30)
+        { // we are chasing a moving monster, add 5 to our melee range
+            return true;
+        }
+        if (PTarget->objtype == TYPE_PC && (dist - PTarget->m_ModelSize) < GetMeleeRange() + 6 && (uint16)(PTarget->loc.p.moving - PTarget->loc.p.movingsnapshot) && abs(PTarget->loc.p.rotation - this->loc.p.rotation) < 75)
+        { // we are chasing a moving player in PVP, add 6 to our melee range
+            return true;
+        }
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_TARG_OUT_OF_RANGE);
         return false;
     }
@@ -704,20 +737,33 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
-    if (PTarget->isDead())
+    if (PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
     {
-        if (this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
+        if (this->m_autoTargetOverride && distance(this->loc.p, m_autoTargetOverride->loc.p) <= 20)
         {
+            ShowDebug("Have autotarget override target within range...\n");
+            controller->ChangeTarget(m_autoTargetOverride->targid);
+            this->m_autoTargetOverride = nullptr;
+        }
+        else
+        {
+            this->m_autoTargetOverride = nullptr;
             for (auto&& PPotentialTarget : this->SpawnMOBList)
             {
                 if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                    facing(this->loc.p, PPotentialTarget.second->loc.p, 64) &&
-                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 10)
+                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 14)
                 {
+                    ShowDebug("Potential target within range...\n");
                     std::unique_ptr<CBasicPacket> errMsg;
                     if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
                     {
                         controller->ChangeTarget(PPotentialTarget.second->targid);
+                        // now tell my party members to autotarget this as well
+                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
+                            {
+                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distance(PMember->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
+                            });
                     }
                 }
             }
@@ -784,6 +830,40 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
             }
         }
     }
+
+    auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
+    if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
+    {
+        if (this->m_autoTargetOverride && distance(this->loc.p, m_autoTargetOverride->loc.p) <= 20)
+        {
+            ShowDebug("Have autotarget override target within range...\n");
+            controller->ChangeTarget(m_autoTargetOverride->targid);
+            this->m_autoTargetOverride = nullptr;
+        }
+        else
+        {
+            this->m_autoTargetOverride = nullptr;
+            for (auto&& PPotentialTarget : this->SpawnMOBList)
+            {
+                if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                {
+                    ShowDebug("Potential target within range...\n");
+                    std::unique_ptr<CBasicPacket> errMsg;
+                    if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                    {
+                        controller->ChangeTarget(PPotentialTarget.second->targid);
+                        // now tell my party members to autotarget this as well
+                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
+                            {
+                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distance(PMember->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
+                            });
+                    }
+                }
+            }
+        }
+    }
 }
 
 void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg)
@@ -806,6 +886,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
     auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     int16 tp = state.GetSpentTP();
+    int16 refundedtp = tp; // in case we are out of range
     tp = battleutils::CalculateWeaponSkillTP(this, PWeaponSkill, tp);
 
     PLatentEffectContainer->CheckLatentsTP();
@@ -886,7 +967,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                         actionTarget_t dummy;
                         luautils::OnAdditionalEffect(this, PTarget, static_cast<CItemWeapon*>(m_Weapons[damslot]), &dummy, damage);
                     }
-                    else if (damslot == SLOT_RANGED && m_Weapons[SLOT_AMMO] && battleutils::GetScaledItemModifier(this, m_Weapons[damslot], Mod::ADDITIONAL_EFFECT))
+                    else if (damslot == SLOT_RANGED && m_Weapons[SLOT_AMMO] && battleutils::GetScaledItemModifier(this, m_Weapons[SLOT_AMMO], Mod::ADDITIONAL_EFFECT))
                     {
                         actionTarget_t dummy;
                         luautils::OnAdditionalEffect(this, PTarget, static_cast<CItemWeapon*>(getEquip(SLOT_AMMO)), &dummy, damage);
@@ -926,10 +1007,45 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             }
         }
         battleutils::ClaimMob(PBattleTarget, this);
+
+        auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
+        if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PBattleTarget->targid && PBattleTarget->isDead() && this->m_hasAutoTarget && PBattleTarget->objtype == TYPE_MOB) // Auto-Target
+        {
+            if (this->m_autoTargetOverride && distance(this->loc.p, m_autoTargetOverride->loc.p) <= 20)
+            {
+                ShowDebug("Have autotarget override target within range...\n");
+                controller->ChangeTarget(m_autoTargetOverride->targid);
+                this->m_autoTargetOverride = nullptr;
+            }
+            else
+            {
+                this->m_autoTargetOverride = nullptr;
+                for (auto&& PPotentialTarget : this->SpawnMOBList)
+                {
+                    if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                        distance(this->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                    {
+                        ShowDebug("Potential target within range...\n");
+                        std::unique_ptr<CBasicPacket> errMsg;
+                        if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                        {
+                            controller->ChangeTarget(PPotentialTarget.second->targid);
+                            // now tell my party members to autotarget this as well
+                            this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
+                                {
+                                    if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distance(PMember->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                                        ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
+                                });
+                        }
+                    }
+                }
+            }
+        }
     }
     else
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_TOO_FAR_AWAY));
+        this->addTP(refundedtp);
     }
 }
 
@@ -964,18 +1080,43 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        if (battleutils::IsParalyzed(this)) {
+        if (battleutils::IsParalyzed(this))
+        {
+            if (!(PAbility->getRecastId())) // is two-hour
+            {
+                PRecastContainer->Add(RECAST_ABILITY, 0, 4);
+            }
+            else
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+
+                // innin and yonin share recasts
+                if (PAbility->getRecastId() == 146)
+                    PRecastContainer->Add(RECAST_ABILITY, 147, action.recast);
+                else if (PAbility->getRecastId() == 147)
+                    PRecastContainer->Add(RECAST_ABILITY, 146, action.recast);
+
+                uint16 recastID = PAbility->getRecastId();
+                if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
+                {
+                    PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
+                }
+            }
+            
             // display paralyzed
             loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
             return;
         }
 
         // get any available merit recast reduction
-        uint8 meritRecastReduction = 0;
+        uint16 meritRecastReduction = 0;
+        uint16 id = PAbility->getID();
 
-        if (PAbility->getMeritModID() > 0 && !(PAbility->getAddType() & ADDTYPE_MERIT))
+        if (PAbility->getMeritModID() > 0 && (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
+            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164)) // merit adds that also get CDR from add. merits. todo: generalize this
         {
-            meritRecastReduction = PMeritPoints->GetMeritValue((MERIT_TYPE)PAbility->getMeritModID(), this);
+            MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
+            meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
         }
 
         auto charge = ability::GetCharge(this, PAbility->getRecastId());
@@ -987,6 +1128,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             action.recast = PAbility->getRecastTime() - meritRecastReduction;
         }
+        //656 to 750 are the ability ids for all bst pets
+        if (id > 655 && id < 751)
+            action.recast = charge->chargeTime * PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this) / 4;
 
         if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
         {
@@ -1064,7 +1208,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_BLOODPACT);
                     }
 
-                    // Blood Boon (does not affect Astra Flow BPs)
+                    // Blood Boon (does not affect Astral Flow BPs)
                     if ((PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW) == 0)
                     {
                         int16 bloodBoonRate = getMod(Mod::BLOOD_BOON);
@@ -1096,7 +1240,16 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         }
                     }
                 }
-                PPet->PAI->MobSkill(PPetTarget, PAbility->getMobSkillID());
+                if (PAbility->getID() == ABILITY_LEVEL_QUESTION_HOLY)
+                {
+                    //ShowDebug("doing qm holy...\n");
+                    PPet->PAI->MobSkill(PPetTarget, tpzrand::GetRandomNumber((uint16)2452, (uint16)2458));
+                }
+                else
+                {
+                    //ShowDebug("doing pet ability %i...\n", PAbility->getMobSkillID());
+                    PPet->PAI->MobSkill(PPetTarget, PAbility->getMobSkillID());
+                }
             }
         }
         //#TODO: make this generic enough to not require an if
@@ -1118,6 +1271,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 actionTarget.animation = PAbility->getAnimationID();
                 actionTarget.messageID = PAbility->getMessage();
+
+                if (PTarget->isSuperJumped)
+                {
+                    actionTarget.messageID = 0;
+                    continue;
+                }
 
                 if (msg == 0) {
                     msg = PAbility->getMessage();
@@ -1147,63 +1306,35 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             actionTarget.param = 0;
             auto prevMsg = actionTarget.messageID;
 
-            int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
-            if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
-            if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
-            actionTarget.param = value;
-
-            if (value < 0)
+            if (PTarget->isSuperJumped)
             {
-                actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
-                actionTarget.param = -value;
+                actionTarget.animation = ANIMATION_NONE;
+                actionTarget.messageID = 0;
             }
+            else
+            {
+                int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+                if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
+                if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
+                actionTarget.param = value;
 
+                if (value < 0)
+                {
+                    actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
+                    actionTarget.param = -value;
+                }
 
-            //#TODO: move all of these to script!
-
-            //// Super Jump
-            //else if (PAbility->getID() == ABILITY_SUPER_JUMP)
-            //{
-            //    battleutils::jumpAbility(this, PTarget, 3);
-            //    action.messageID = 0;
-            //    this->loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, PAbility->getID(), 0, MSGBASIC_USES_JA));
-            //}
-
-            //#TODO: move these 3 BST abilities to scripts
-            //if (PAbility->getID() == ABILITY_GAUGE) {
-            //    if (PTarget != nullptr && PTarget->objtype == TYPE_MOB) {
-            //        if (((CMobEntity*)PTarget)->m_Type & MOBTYPE_NOTORIOUS ||
-            //            PTarget->m_EcoSystem == SYSTEM_BEASTMEN ||
-            //            PTarget->m_EcoSystem == SYSTEM_ARCANA)
-            //        {
-            //            //NM, Beastman or Arcana, cannot charm at all !
-            //            this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_CANNOT_CHARM));
-            //        }
-            //        else {
-            //            uint16 baseExp = charutils::GetRealExp(this->GetMLevel(), PTarget->GetMLevel());
-
-            //            if (baseExp >= 400) {//IT
-            //                this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_VERY_DIFFICULT_CHARM));
-            //            }
-            //            else if (baseExp >= 240) {//VT
-            //                this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_DIFFICULT_TO_CHARM));
-            //            }
-            //            else if (baseExp >= 120) {//T
-            //                this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_MIGHT_BE_ABLE_CHARM));
-            //            }
-            //            else if (baseExp >= 100) {//EM
-            //                this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_SHOULD_BE_ABLE_CHARM));
-            //            }
-            //            else {
-            //                this->pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_SHOULD_BE_ABLE_CHARM));
-            //            }
-            //        }
-            //    }
-            //}
-
-            state.ApplyEnmity();
+                state.ApplyEnmity();
+            }
+        
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+
+        // innin and yonin share recasts
+        if (PAbility->getRecastId() == 146)
+            PRecastContainer->Add(RECAST_ABILITY, 147, action.recast);
+        else if (PAbility->getRecastId() == 147)
+            PRecastContainer->Add(RECAST_ABILITY, 146, action.recast);
 
         uint16 recastID = PAbility->getRecastId();
         if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
@@ -1212,6 +1343,40 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         pushPacket(new CCharRecastPacket(this));
+
+        auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
+        if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
+        {
+            if (this->m_autoTargetOverride && distance(this->loc.p, m_autoTargetOverride->loc.p) <= 20)
+            {
+                ShowDebug("Have autotarget override target within range...\n");
+                controller->ChangeTarget(m_autoTargetOverride->targid);
+                this->m_autoTargetOverride = nullptr;
+            }
+            else
+            {
+                this->m_autoTargetOverride = nullptr;
+                for (auto&& PPotentialTarget : this->SpawnMOBList)
+                {
+                    if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                        distance(this->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                    {
+                        ShowDebug("Potential target within range...\n");
+                        std::unique_ptr<CBasicPacket> errMsg;
+                        if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                        {
+                            controller->ChangeTarget(PPotentialTarget.second->targid);
+                            // now tell my party members to autotarget this as well
+                            this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
+                                {
+                                    if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distance(PMember->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                                        ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
+                                });
+                        }
+                    }
+                }
+            }
+        }
 
         //#TODO: refactor
         //if (this->getMijinGakure())
@@ -1242,7 +1407,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
     actionTarget.reaction = REACTION_HIT;		//0x10
     actionTarget.speceffect = SPECEFFECT_HIT;		//0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
-    actionTarget.messageID = 352;
+    actionTarget.messageID = charutils::GetRangedAttackMessage(this, distance(this->loc.p, PTarget->loc.p));
+    // 352 = normal ... 576 = squarely ... 577 = strikes true ... 353 = critical ... 354 = miss
 
     CItemWeapon* PItem = (CItemWeapon*)this->getEquip(SLOT_RANGED);
     CItemWeapon* PAmmo = (CItemWeapon*)this->getEquip(SLOT_AMMO);
@@ -1274,7 +1440,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     {
         hitCount += battleutils::getBarrageShotCount(this);
     }
-    else if (ammoThrowing && this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
+    else if (ammoThrowing && this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE) && getMod(Mod::UTSUSEMI) > 0)
     {
         isSange = true;
         hitCount += getMod(Mod::UTSUSEMI);
@@ -1293,7 +1459,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         else if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
-            if (battleutils::IsAbsorbByShadow(PTarget))
+            if (battleutils::IsAbsorbByShadow(PTarget, this))
             {
                 shadowsTaken++;
             }
@@ -1426,10 +1592,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     }
     else if (isSange)
     {
-        uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
 
         // remove shadows
-        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
+        while (realHits-- && battleutils::IsAbsorbByShadow(this, PTarget));
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
@@ -1438,6 +1603,40 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 
+    auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
+    if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
+    {
+        if (this->m_autoTargetOverride && distance(this->loc.p, m_autoTargetOverride->loc.p) <= 20)
+        {
+            ShowDebug("Have autotarget override target within range...\n");
+            controller->ChangeTarget(m_autoTargetOverride->targid);
+            this->m_autoTargetOverride = nullptr;
+        }
+        else
+        {
+            this->m_autoTargetOverride = nullptr;
+            for (auto&& PPotentialTarget : this->SpawnMOBList)
+            {
+                if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
+                    distance(this->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                {
+                    ShowDebug("Potential target within range...\n");
+                    std::unique_ptr<CBasicPacket> errMsg;
+                    if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
+                    {
+                        controller->ChangeTarget(PPotentialTarget.second->targid);
+                        // now tell my party members to autotarget this as well
+                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
+                            {
+                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distance(PMember->loc.p, PPotentialTarget.second->loc.p) <= 14)
+                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
+                            });
+                    }
+                }
+            }
+        }
+    }
+    
     // Try to double shot
     //#TODO: figure out the packet structure of double/triple shot
     //if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT, 0) && !this->secondDoubleShotTaken &&	!isBarrage && !isSange)
@@ -1498,13 +1697,18 @@ void CCharEntity::OnRaise()
         }
 
         //add weakness effect (75% reduction in HP/MP)
-        if (GetLocalVar("MijinGakure") == 0)
+        if (GetLocalVar("MijinGakure") == 0 && m_hasRaise <= 5)
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 300);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
         }
+        else if (GetLocalVar("MijinGakure") == 0 && m_hasRaise == 4) // arise, 3min
+        {
+            CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 180);
+            StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
+        }
 
-        double ratioReturned = 0.0f;
+        float ratioReturned = 0.0f;
         uint16 hpReturned = 1;
 
         action_t action;
@@ -1523,20 +1727,34 @@ void CCharEntity::OnRaise()
         else if (m_hasRaise == 1)
         {
             actionTarget.animation = 511;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.1);
-            ratioReturned = 0.50f * (1 - map_config.exp_retain);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.1f);
+            ratioReturned = 0.50f * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 2)
         {
             actionTarget.animation = 512;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.25);
-            ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1 - map_config.exp_retain);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.25f);
+            ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 3)
         {
             actionTarget.animation = 496;
-            hpReturned = (uint16)(GetMaxHP() * 0.5);
-            ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1 - map_config.exp_retain);
+            hpReturned = (uint16)(GetMaxHP() * 0.5f);
+            ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1.0f - (map_config.exp_retain));
+        }
+        else if (m_hasRaise == 4) // arise
+        {
+            actionTarget.animation = 496;
+            hpReturned = GetMaxHP();
+            ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1.0f - (map_config.exp_retain));
+            CStatusEffect* PEffect = new CStatusEffect(EFFECT_RERAISE,EFFECT_RERAISE,3,3,3600,0,0,0);
+            this->StatusEffectContainer->AddStatusEffect(PEffect, true);
+        }
+        else if (m_hasRaise == 5) // pixie raise
+        {
+            actionTarget.animation = 496;
+            hpReturned = GetMaxHP();
+            ratioReturned = 1.0f - (map_config.exp_retain);
         }
         addHP(((hpReturned < 1) ? 1 : hpReturned));
         updatemask |= UPDATE_HP;
@@ -1678,6 +1896,11 @@ void CCharEntity::Die()
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(PLastAttacker, this, 0, 0, MSGBASIC_PLAYER_DEFEATED_BY));
     else
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_FALLS_TO_GROUND));
+
+    if (this->PAutomaton && this->PAutomaton->isAlive())
+        this->PAutomaton->Die();
+    else if (this->PPet && this->PPet->isAlive())
+        this->PPet->Die();
 
     battleutils::RelinquishClaim(this);
     Die(death_duration);

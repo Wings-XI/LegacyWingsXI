@@ -23,12 +23,12 @@ end
 
 function onUpdate(pet, maneuvers)
     if maneuvers == 0 then
-        updateModPerformance(pet, tpz.mod.DMGPHYS, 'armor_plate_mod', -5)
+        updateModPerformance(pet, tpz.mod.DEFP, 'armor_plate_mod', 5)
     elseif maneuvers == 1 then
-        updateModPerformance(pet, tpz.mod.DMGPHYS, 'armor_plate_mod', -7)
+        updateModPerformance(pet, tpz.mod.DEFP, 'armor_plate_mod', 10)
     elseif maneuvers == 2 then
-        updateModPerformance(pet, tpz.mod.DMGPHYS, 'armor_plate_mod', -10)
+        updateModPerformance(pet, tpz.mod.DEFP, 'armor_plate_mod', 15)
     elseif maneuvers == 3 then
-        updateModPerformance(pet, tpz.mod.DMGPHYS, 'armor_plate_mod', -15)
+        updateModPerformance(pet, tpz.mod.DEFP, 'armor_plate_mod', 20)
     end
 end

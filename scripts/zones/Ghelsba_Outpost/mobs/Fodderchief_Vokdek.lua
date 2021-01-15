@@ -12,3 +12,14 @@ end
 
 function onMobDeath(mob, player, isKiller)
 end
+
+
+function onMobEngaged(mob, target)
+	local vokdek = GetMobByID(17350662)
+	local zodvad = GetMobByID(17350664)
+	local snatgat = GetMobByID(17350663)
+	
+	zodvad:updateEnmity(target)
+	snatgat:updateEnmity(target)
+
+end

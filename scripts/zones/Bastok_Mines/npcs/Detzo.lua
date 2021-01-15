@@ -26,7 +26,7 @@ function onTrade(player, npc, trade)
                 player:startEvent(94)
             end
         else
-            player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE, 13571)
+            player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE, 13089)
         end
     end
 
@@ -60,11 +60,11 @@ function onEventFinish(player, csid, option)
         player:addQuest(BASTOK, tpz.quest.id.bastok.RIVALS)
     elseif (csid == 94) then
         if (player:getFreeSlotsCount() == 0) then
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 13571)
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,13089)
         else
             player:addTitle(tpz.title.CONTEST_RIGGER)
-            player:addItem(13571)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 13571)
+            player:addItem(13089)
+            player:messageSpecial(ID.text.ITEM_OBTAINED,13089)
             player:addFame(BASTOK, 30)
             player:completeQuest(BASTOK, tpz.quest.id.bastok.RIVALS)
         end

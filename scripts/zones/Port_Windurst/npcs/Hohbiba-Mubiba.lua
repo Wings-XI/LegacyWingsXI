@@ -25,6 +25,7 @@ function onTrigger(player, npc)
         17088,    58, 3,    -- Ash Staff
         17089,   584, 3,    -- Holly Staff
         17095,   386, 3,    -- Ash Pole
+        16448,   143, 3,    -- bronze dagger
     }
 
     player:showText(npc, ID.text.HOHBIBAMUBIBA_SHOP_DIALOG)

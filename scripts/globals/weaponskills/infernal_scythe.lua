@@ -35,6 +35,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         local duration = (tp/1000 * 180) * applyResistanceAddEffect(player, target, tpz.magic.ele.WATER, 0)
         target:addStatusEffect(tpz.effect.ATTACK_DOWN, 25, 0, duration)
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SCYTHE, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 
 end

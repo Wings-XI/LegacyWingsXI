@@ -19,23 +19,52 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    -- Applying Weapon Bash stun. Rate is said to be near 100%, so let's say 99%.
-    if (math.random()*100 < 99) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 6)
-    end
-
+    
+    local chance = 110
+    
     -- Weapon Bash deals damage dependant of Dark Knight level
-    local darkKnightLvl = 0
+    local darkKnightLvl = 1
     if player:getMainJob() == tpz.job.DRK then
         darkKnightLvl = player:getMainLvl()    -- Use Mainjob Lvl
     elseif player:getSubJob() == tpz.job.DRK then
         darkKnightLvl = player:getSubLvl()    -- Use Subjob Lvl
+        chance = 80
     end
+    
+    chance = chance + player:getMainLvl()*2 - target:getMainLvl()*2
+    if chance < 33 then
+        chance = 33
+    elseif chance > 99 then
+        chance = 99
+    end
+    
+    if (math.random()*100 < chance) then
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
+    end
+    tryBuildResistance(tpz.magic.buildcat.STUN, target)
 
     -- Calculating and applying Weapon Bash damage
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
+    
+    -- Randomize damage
+    local ratio = player:getStat(tpz.mod.ATT)/target:getStat(tpz.mod.DEF)
+
+    if ratio > 2.25 then
+        ratio = 2.25
+    end
+
+    if ratio < 0.2 then
+        ratio = 0.2
+    end
+
+    local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.25 * 1000)
+    
+    damage = damage * (pdif / 1000)
+    
     target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
+	
+	ability:setMsg(tpz.msg.basic.JA_DAMAGE)
 
     return damage
 end

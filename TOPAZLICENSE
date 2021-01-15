@@ -1,0 +1,256 @@
+                          PROJECT TOPAZ LICENSE
+                       Version 1, 20 December 2019
+
+ Copyright (C) 2019 Project Topaz.
+
+                                Preamble
+
+  The Project Topaz License governs your usage or distribution
+of Project Topaz, a code base that attempts to emulate an online server
+for the online video game Final Fantasy XI (Copyright Square Enix, Co.)
+
+  Another project which also aims to be such an emulator, Darkstar Project,
+is licensed under the GNU General Public License Version 3. However, under
+the terms of the GPLv3, network usage does not count as distribution.
+If it did, people who operate servers running the Program would be required 
+to offer their personal modifications to users interacting with it.
+
+  We feel that lacking this requirement ultimately harms the broader community 
+of developers who work on server emulators. Some server operators choose to 
+"compete" with other operators by taking the code base we all share, making 
+proprietary modifications to emulate additional features of the "retail 
+servers" which currently do not exist in the shared code base, and then 
+not share those features back with the community of developers.
+
+  This behavior leads to the community constantly "re-inventing the wheel",
+wasting time that could have otherwise been spent developing entirely new
+features for the project in advance of our common goals. It also disheartens
+developers who would share their modifications with the community, but 
+feel discouraged when their code is taken by a server operator, modified
+with additional improvements, but kept privately as an "edge" over others,
+including the original developer of the feature.
+
+  For these reasons, Project Topaz instead intends to be licensed primarily 
+under the terms of the GNU Affero General Public License Version 3, which 
+stipulates that use of a Program over a network qualifies as distribution, 
+and that the source code of the modified Program needs to be offered to
+users interacting with the Program.
+
+  However, due to the nature of running a private server, there are times
+which a server operator may reasonably wish to not share their entire 
+source code. As examples, the server operator may wish to include custom 
+easter eggs, or run a community event based on players discovering hidden 
+things. These things would be trivial for players to discover if the
+entire server source code were available to public view.
+
+  To both provide special exemptions in those cases, and to account for 
+source code that we have have combined from Darkstar Project which is 
+licensed under GPLv3 (that we can not relicense as AGPLv3), Project 
+Topaz releases its source code under this special license. This license 
+states which of the two GNU licenses, GPLv3 or AGPLv3, pertain to
+which parts of this combined source code. The license also grants, for 
+source code which is the work of Project Topaz, select Additional 
+Permissions to give server operators additional freedoms, and to 
+encourage adoption of the project.
+
+  The precise terms and conditions for using, copying, distribution and
+modification of Project Topaz follow.
+
+                       TERMS AND CONDITIONS
+
+  0. Definitions.
+
+  "This License" refers to version 1 of the Project Topaz License Agreement.
+
+  "GNU GPLv3", "GPLv3", and "GPL" refer to version 3 of the GNU General
+Public License. A copy should have been included in the source code you  
+have received in a file named "GPL3". If not, you may find a copy online 
+at <http://www.gnu.org/licenses/>.
+
+  "GNU AGPLv3", "AGPLv3", and "AGPL" refer to version 3 of the GNU Affero 
+General Public License. A copy should have been included in the source code 
+you have received in a file named "AGPL3". If not, you may find a copy 
+online at <http://www.gnu.org/licenses/>.
+
+  The terms "Copyright", "Program", "modify", and "convey" are as defined 
+in version 3 of the GNU General Public License.
+
+  "Source code" is as defined in version 3 of the GNU General Public License.
+
+  "Commit" refers to modifications to the Program which are packaged, 
+transmitted, and patched into the source code as "Git Commits" utilizing 
+the Git distributed version control system. A commit being governed by 
+a license means all source code and modifications within that commit 
+package are subject to that license.
+
+  "Private server" refers to a computer or network system running any instance 
+of Project Topaz, in whole or in part, which accepts connections or commands 
+from users other than one physically present at the computer system. 
+Computer or network systems which pass or forward commands to any instance
+of Project Topaz are considered part of the same private server, regardless 
+of how Project Topaz instances or computer systems are physically distributed.
+
+  "Retail" and "Retail server" refer to the online servers for the 
+video game Final Fantasy XI, owned and copyright by Square Enix, Co. which 
+their subscribers can connect to. If these servers are no longer online 
+at the time this license is granted, it refers to their servers as they 
+were immediately prior to being taken offline, or otherwise barred from 
+access by the general public.
+
+  "Retail behavior" means the features of, interaction with, output of, 
+or delayed effects resulting from user interaction which would occur 
+on a retail server.
+
+  "Non-retail" and "Non-retail modification" refer to modifications of
+the Program which do not seek to emulate retail behavior. 
+
+  Modifications seeking to emulate, or give the appearance of emulating,  
+a behavior of a retail server are not non-retail modifications, even if 
+the modification is inaccurate to retail behavior, unless the modified 
+behavior is distinguishable from the retail behavior to a person 
+person who only has a cursory knowledge of the retail behavior.
+
+  As examples, a modification changing the game characters which a 
+player can interact with in the equivalent game area on retail, or 
+making a game character say things they never would on retail, would be
+considered a non-retail modification. A difference in combat statistics 
+of a game monster between how they are on retail and how they are on 
+a private server is not considered a non-retail modification, unless 
+the difference in statistics would be immediately apparent to a player 
+fighting that game monster on both servers.
+
+  "Player interface" means an interface that a user connecting to a 
+private server visibly sees on a computer screen, which can relay text, 
+that a user is capable of reading or viewing the text history of from 
+within the same interface.
+
+  1. Project Repository.
+
+  Project Topaz is a distributively developed project, which takes 
+contributions from many developers all over the world. It utilizes 
+Git, a distributed version control system, for its development. 
+The current source code for the project is available online at: 
+<https://github.com/project-topaz/topaz>
+
+  As part of using Git, code contributions by developers can be 
+be tracked and attributed on an individual level. If you 
+obtained this source code by cloning it from GitHub, you can use 
+any number of Git clients found online to parse this information.
+
+  If instead you obtained this source code by downloading it 
+without cloning, or were given it by a third party, and the archive 
+you received lacks this Git information, you can and are encouraged 
+to view this information on our GitHub repository.
+
+  2. Basic License Terms.
+
+  Project Topaz is a combined work of source code licensed under
+both the GPLv3, and the AGPLv3 with Additional Terms we are adding 
+through Section 7 Additional Terms of both licenses. These Additional 
+Terms are defined later in this license document.
+
+  All Git commits which originate from Darkstar Project, either 
+before or after Project Topaz's initial repository commit on 
+GitHub, are governed by the GPLv3. 
+
+  Source code files which are marked as being licensed under 
+the GPLv3 are as marked. There may be additional terms which apply 
+to these files. These will be declared in the license header at 
+the top of the file.
+
+  Additionally, any source code files which are not clearly marked 
+as being governed by the AGPLv3 may be assumed to be governed 
+by the GPLv3.
+
+  Portions of Project Topaz which are governed by the AGPLv3 will 
+be clearly marked at the top of all relevant source code files. 
+When such declared, there are additional terms applied to these 
+source files which supplement the AGPLv3. These additional terms 
+are defined later in this license document.
+
+  Your rights to use, modify, and distribute source code are governed 
+by the license which the original work was licensed under. However, 
+per Section 13 of both the GPLv3 and the AGPLv3, all modifications 
+you make to this Program, or works you combine with this Program, 
+are subject to the requirements of the AGPLv3 concerning interaction 
+through a network.
+
+  3. Additional Terms.
+
+  Through Section 7, Additional Terms of the AGPLv3, we are adding
+the following additional terms to our material:
+
+    a) ADDITIONAL PERMISSIONS.
+    For all of our material which is governed by the AGPLv3, 
+    Project Topaz grants you an additional permission exempting 
+    you from being bound by Section 13 Remote Network Interaction 
+    of the AGPLv3, for modifications you make to the Program, if 
+    the modification is:
+
+      i. Necessary for the basic operation of a private server. 
+      Examples include basic server configuration, network 
+      connection configuration, and database access information; or
+
+      ii. A non-retail modification, which can not reasonably be
+      considered a modification with the purpose of improving server 
+      stability, performance, or security; or
+
+      iii. A modification to the database import files included
+      with the source code, if the modification can be reasonably 
+      considered to necessitate secrecy for the purpose of player 
+      surprise or discovery
+
+    b) ATTRIBUTION.
+    If you convey this Program to a recipient, you must preserve 
+    and also convey to the recipient any existing lists of 
+    Program authors and contributors, such as those displayed by 
+    the Program, or those found in an AUTHORS file. All existing 
+    dates, and all existing copyright notices must also be retained.
+    
+    As an exception to the above, you may alter any attributions 
+    or notices added by Project Topaz to the extent required to 
+    remedy known factual inaccuracies.
+
+    If you modify and convey this Program, you are permitted to 
+    to add yourself to such lists. You are also permitted to
+    rename any attribution files, so long as the filename still 
+    clearly indicates that the authors listed in the file 
+    contributed to the modified Program. If this is done, you must 
+    include a notice in any new author attribution files you 
+    create stating the following:
+    "Contributors to Project Topaz, upon which this Program is based, 
+     can be found: " followed by the path to original file.
+
+    c) MISREPRESENTATION.
+    The origin of this Program must not be misrepresented. You
+    shall not claim, suggest, nor imply you wrote this Program, 
+    in whole or in part, unless you are the original author for 
+    the distinct part for which you claim to be the author.
+
+    If you convey modified versions of this Program, you may not 
+    misrepresent that modified Program as being "Project Topaz", 
+    unless that modified Program is being conveyed back to 
+    Project Topaz with the intention of the modification's inclusion 
+    into the project.
+    
+    If you convey modified versions to recipients other than Project 
+    Topaz, you shall mark the material such that any users interacting 
+    with the Program are given notice - through an applicable player 
+    interface of your choosing - that the Program has been modified 
+    from its original version, unless that modification was necessary 
+    for the basic operation of the server.
+
+  4. Revised Versions.
+
+  Project Topaz may publish new or revised versions of this license. 
+These new versions will be similar in spirit, but may differ to address 
+new problems or concerns with the project by modifying the additional
+permissions we grant to you, or modify the restrictions imposed on you,  
+to the extent allowed under AGPLv3 Section 7, Additional Terms.
+
+  The license for which you may use the Program is the one you 
+received along with a copy of this source code, or at your option, 
+any later version of the Project Topaz License Agreement that has 
+been published by Project Topaz. However, no additional obligations 
+are imposed upon authors or copyright holders due to your choice 
+in following a later version of this license.

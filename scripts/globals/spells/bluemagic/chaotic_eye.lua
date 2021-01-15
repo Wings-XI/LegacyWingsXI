@@ -31,7 +31,8 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 180 * resist
+    local duration = 90 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SILENCE, target))
 
     if (resist > 0.5) then -- Do it!
         if (target:isFacing(caster)) then

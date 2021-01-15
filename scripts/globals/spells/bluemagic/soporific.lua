@@ -34,6 +34,11 @@ function onSpellCast(caster, target, spell)
     params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 90 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
+    
+    if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
+        resist = 1/16
+    end
 
     if (resist > 0.5) then -- Do it!
         if (target:addStatusEffect(typeEffect, 2, 0, duration)) then

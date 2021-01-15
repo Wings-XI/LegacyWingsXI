@@ -19,7 +19,17 @@ function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.SERKET_BREAKER)
 end
 
+function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:addMod(tpz.mod.DEF, -20)
+    mob:addMod(tpz.mod.ACC, 20)
+    mob:addMod(tpz.mod.ATT, 20)
+    mob:setMod(tpz.mod.REGEN, 0)
+end
+
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
-end
+	local respawn = math.random(75600, 86400)  -- 21 to 24 hours
+    mob:setRespawnTime(respawn)
+	SetServerVariable("SerketRespawn",(os.time() + respawn))
+end;

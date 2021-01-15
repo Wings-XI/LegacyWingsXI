@@ -37,6 +37,7 @@ function onEventFinish(player, csid, option)
     if (csid == 628 and option == 1) then
         player:delGil(Cost)
         player:messageSpecial(ID.text.IMAGE_SUPPORT, 0, 2, 0)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.SMITHING_IMAGERY, 3, 0, 480)
     end
 end

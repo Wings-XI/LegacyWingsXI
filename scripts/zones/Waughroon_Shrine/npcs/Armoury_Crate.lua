@@ -471,7 +471,6 @@ local loot =
         },
         {
             {itemid =     0, droprate =  932}, -- Nothing
-            {itemid = 17440, droprate =   13}, -- Kraken Club
             {itemid = 15185, droprate =   55}, -- Walkure Mask
         },
     },

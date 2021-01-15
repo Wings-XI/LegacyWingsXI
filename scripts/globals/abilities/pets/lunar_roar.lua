@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Aerial Armor
+-- lunar roar
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -12,8 +12,12 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    target:dispelStatusEffect()
-    target:dispelStatusEffect()
+    if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) > 0.25 then
+        target:dispelStatusEffect()
+    end
+    if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) > 0.25 then
+        target:dispelStatusEffect()
+    end
     skill:setMsg(tpz.msg.basic.NONE)
     return 0
 end

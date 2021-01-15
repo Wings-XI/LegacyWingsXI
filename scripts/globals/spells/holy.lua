@@ -17,6 +17,13 @@ function onSpellCast(caster, target, spell)
     params.multiplier = 1
     params.hasMultipleTargetReduction = false
     params.resistBonus = 0
+    if caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) then
+        local solace = caster:getLocalVar("SolaceCureRecording")
+        local dmgmult = 1 + solace / 589
+        params.dmg = params.dmg * dmgmult
+        caster:setLocalVar("SolaceCureRecording",0)
+        print(string.format("player holy dmg mult was %.2f",dmgmult))
+    end
     dmg = doDivineNuke(caster, target, spell, params)
     return dmg
 end

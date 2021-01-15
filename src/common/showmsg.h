@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 Copyright (c) Athena Dev Teams - Licensed under GNU G
 ===========================================================================
@@ -111,6 +111,7 @@ enum MSGTYPE
 void ClearScreen(void);
 
 void InitializeLog(std::string logFile);
+void CloseLog();
 int32 _vShowMessage(MSGTYPE, const std::string&);
 
 template<typename... Args>

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -34,6 +34,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "states/weaponskill_state.h"
 #include "states/range_state.h"
 #include "states/respawn_state.h"
+#include "states/fishing_state.h"
+#include "states/claimshield_state.h"
 #include "controllers/player_controller.h"
 #include "controllers/mob_controller.h"
 #include "../entities/baseentity.h"
@@ -45,6 +47,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 CAIContainer::CAIContainer(CBaseEntity* _PEntity) :
     CAIContainer(_PEntity, nullptr, nullptr, nullptr)
 {
+    m_queuedRangedAttack = 0;
+    m_queuedSpell = (SpellID)0;
+    m_queuedSpellTargId = 0;
 }
 
 CAIContainer::CAIContainer(CBaseEntity* _PEntity, std::unique_ptr<CPathFind>&& _pathfind,
@@ -57,6 +62,9 @@ CAIContainer::CAIContainer(CBaseEntity* _PEntity, std::unique_ptr<CPathFind>&& _
     PEntity(_PEntity),
     ActionQueue(_PEntity)
 {
+    m_queuedRangedAttack = 0;
+    m_queuedSpell = (SpellID)0;
+    m_queuedSpellTargId = 0;
 }
 
 bool CAIContainer::Cast(uint16 targid, SpellID spellid)
@@ -285,6 +293,22 @@ bool CAIContainer::Internal_UseItem(uint16 targetid, uint8 loc, uint8 slotid)
     return false;
 }
 
+bool CAIContainer::Internal_FishState()
+{
+    auto entity{ dynamic_cast<CCharEntity*>(PEntity) };
+    if (entity)
+        return ChangeState<CFishingState>(entity);
+    return false;
+}
+
+bool CAIContainer::Internal_ClaimShieldState()
+{
+    auto entity{ dynamic_cast<CBattleEntity*>(PEntity) };
+    if (entity)
+        return ForceChangeState<CClaimShieldState>(entity);
+    return false;
+}
+
 CState* CAIContainer::GetCurrentState()
 {
     if (!m_stateStack.empty())
@@ -361,11 +385,25 @@ void CAIContainer::Tick(time_point _tick)
     CState* top = nullptr;
     while (!m_stateStack.empty() && (top = m_stateStack.top().get())->DoUpdate(_tick))
     {
+        CBattleEntity* PTarget = (CBattleEntity*)(top->GetTarget());
         if (top == GetCurrentState())
         {
             auto state = std::move(m_stateStack.top());
             m_stateStack.pop();
             state->Cleanup(_tick);
+        }
+        if (m_queuedRangedAttack)
+        {
+            //ShowDebug("Doing queued ranged attack...\n");
+            RangedAttack(m_queuedRangedAttack);
+            m_queuedRangedAttack = 0;
+        }
+        else if (m_queuedSpellTargId)
+        {
+            //ShowDebug("Doing queued spell...\n");
+            Cast(m_queuedSpellTargId, m_queuedSpell);
+            m_queuedSpell = (SpellID)0;
+            m_queuedSpellTargId = 0;
         }
     }
 

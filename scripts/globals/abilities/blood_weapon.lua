@@ -5,7 +5,9 @@
 -- Recast Time: 1:00:00
 -- Duration: 0:00:30
 -----------------------------------
+require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/magic")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)

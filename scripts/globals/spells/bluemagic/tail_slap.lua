@@ -51,9 +51,12 @@ function onSpellCast(caster, target, spell)
     params.chr_wsc = 0.0
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    local duration = 5 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
 
-    if (resist > 0.5) then -- This line may need adjusting for retail accuracy.
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 5 * resist) -- pre-resist duration needs confirmed/adjusted
+    if (damage > 0 and resist >= 0.5) then -- This line may need adjusting for retail accuracy.
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration) -- pre-resist duration needs confirmed/adjusted
     end
 
     return damage

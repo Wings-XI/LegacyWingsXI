@@ -86,6 +86,7 @@ uint16 CItemShop::getInitialQuantity()
     return m_InitialQuantity;
 }
 
+/*
 uint16 CItemShop::getSellPrice()
 {
 	if (getID() >= 0x2800 && getID() <= 0x6FFF)
@@ -96,4 +97,27 @@ uint16 CItemShop::getSellPrice()
 	{
 		return getBasePrice() / 3;
 	}
+}
+*/
+
+uint16 CItemShop::getSellPrice()
+{
+    int32 temp_price = 0;
+    int32 max_sale_price = (int32)getMinPrice() / 2;
+
+    if (getID() >= 0x2800 && getID() <= 0x6FFF)
+    {
+        temp_price = (int32)(((getQuantity() / getStackSize()) * (getMinPrice() * 0.10f)) / 12);
+    }
+    else
+    {
+        temp_price =  (int32)getBasePrice() / 3;
+    }
+    if (temp_price > max_sale_price) {
+        temp_price = max_sale_price;
+    }
+    if (temp_price < 1) {
+        temp_price = 1;
+    }
+    return (uint16)temp_price;
 }

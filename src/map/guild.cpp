@@ -95,7 +95,7 @@ uint8 CGuild::addGuildPoints(CCharEntity* PChar, CItem* PItem, int16& pointsAdde
                     // if a player ranks up to a new pattern whose maxpoints are fewer than the player's current daily points
                     // then we'd be trying to push a negative number into quantity. our edit to CGuild::getDailyGPItem should
                     // prevent this, but let's be doubly sure.
-                    auto quantity = std::max<uint8>(0, std::min<uint32>((((GPItem.maxpoints - curPoints) / GPItem.points) + 1), PItem->getReserve()));
+                    uint8 quantity = std::max<uint8>(0, std::min<int32>(((((int32)(GPItem.maxpoints) - (int32)curPoints) / (int32)(GPItem.points)) + 1), (int32)(PItem->getReserve())));
                     uint16 points = GPItem.points * quantity;
                     if (points > GPItem.maxpoints - curPoints)
                     {
@@ -119,7 +119,7 @@ std::pair<uint16, uint16> CGuild::getDailyGPItem(CCharEntity* PChar)
     rank = std::clamp<uint8>(rank, 3, 9);
 
     auto GPItem = m_GPItems[rank - 3];
-    auto curPoints = (uint16)charutils::GetCharVar(PChar, "[GUILD]daily_points");
+    uint16 curPoints = (uint16)charutils::GetCharVar(PChar, "[GUILD]daily_points");
     if (curPoints == 0)
     {
         return std::make_pair(GPItem[0].item->getID(), 0);
@@ -129,6 +129,6 @@ std::pair<uint16, uint16> CGuild::getDailyGPItem(CCharEntity* PChar)
         // a rank-up can land player in a new pattern that rewards fewer max points than they
         // have traded in today. we prevent remainingPoints from going negative here so that
         // we don't later calculate a negative quantity in CGuild::addGuildPoints
-        return std::make_pair(GPItem[0].item->getID(), std::max<uint16>(0, (GPItem[0].maxpoints - curPoints)));
+        return std::make_pair(GPItem[0].item->getID(), (uint16)(std::max<int16>(0, (((int16)(GPItem[0].maxpoints)) - ((int16)curPoints)))));
     }
 }

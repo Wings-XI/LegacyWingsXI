@@ -1,7 +1,7 @@
 ---------------------------------------------
 -- Stasis
 --
--- Description: Paralyzes targets in an area of effect.
+-- Description: Single target damage paralysis
 -- Type: Enfeebling
 -- Utsusemi/Blink absorb: Ignores shadows
 -- Range: 10' radial
@@ -17,17 +17,27 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local shadows = MOBPARAM_1_SHADOW
-    local dmg = MobFinalAdjustments(10, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, shadows)
+    local numhits = 1
+    local accmod = 1
+    local dmgmod = 2.6
+	if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
+		return 0
+	end
+    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 
+    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+    
     local typeEffect = tpz.effect.PARALYSIS
 
-        mob:resetEnmity(target)
+    mob:resetEnmity(target)
 
     if (MobPhysicalHit(skill)) then
-        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 40, 0, 60))
-        return typeEffect
+        MobStatusEffectMove(mob, target, typeEffect, 40, 0, 60)
     end
 
-    return shadows
+    return dmg
 end

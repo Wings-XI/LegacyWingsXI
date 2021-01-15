@@ -51,6 +51,7 @@ public:
     bool DelStatusEffectSilent(EFFECT StatusID);
     bool DelStatusEffect(EFFECT StatusID, uint16 SubID);
     void DelStatusEffectsByFlag(uint32 flag, bool silent = false);                   // удаляем все эффекты с указанным типом
+    void DelStatusEffectsForInstance();
     void DelStatusEffectsByIcon(uint16 IconID);                 // удаляем все эффекты с указанной иконкой
     void DelStatusEffectsByType(uint16 Type);
     bool DelStatusEffectByTier(EFFECT StatusID, uint16 power);
@@ -77,10 +78,11 @@ public:
     void TickRegen(time_point tick);
 
     void LoadStatusEffects();                                   // загружаем эффекты персонажа
-    void SaveStatusEffects(bool logout = false);                // сохраняем эффекты персонажа
+    void SaveStatusEffects(bool logout = false, bool del = true);                // сохраняем эффекты персонажа
 
     uint8 GetEffectsCount(EFFECT ID);                        // получаем количество эффектов с указанным id
     uint8 GetLowestFreeSlot(); // returns the lowest free slot for songs/rolls
+    uint16 GetTotalMinneBonus();
 
     bool ApplyCorsairEffect(CStatusEffect* PStatusEffect, uint8 maxRolls, uint8 bustDuration);
     bool CheckForElevenRoll();

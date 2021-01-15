@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -105,7 +105,7 @@ void CAttack::SetCritical(bool value)
         {
             if (CStatusEffect* footworkEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_FOOTWORK))
             {
-                attBonus = footworkEffect->GetSubPower() / 256.f; // Mod is out of 256
+                attBonus = 0.1f; // Mod is out of 256
             }
         }
 
@@ -379,7 +379,8 @@ bool CAttack::CheckAnticipated()
             if (tpzrand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
             {
 
-                if (m_victim->PAI->IsEngaged())
+                if (m_victim->PAI->IsEngaged() && facing(m_victim->loc.p, m_attacker->loc.p, 40) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) &&
+                    !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR))
                 {
                     m_isCountered = true;
                     m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
@@ -402,6 +403,11 @@ bool CAttack::IsCountered()
 
 bool CAttack::CheckCounter()
 {
+    if (m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) || m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) || m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
+    {
+        return false;
+    }
+
     if (m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
     {
         return false;
@@ -423,16 +429,9 @@ bool CAttack::CheckCounter()
     }
 
     //counter check (rate AND your hit rate makes it land, else its just a regular hit)
-    //having seigan active gives chance to counter at 25% of the zanshin proc rate
-    uint16 seiganChance = 0;
-    if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN))
-    {
-        seiganChance = m_victim->getMod(Mod::ZANSHIN) + ((CCharEntity*)m_victim)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)m_victim);
-        seiganChance = std::clamp<uint16>(seiganChance, 0, 100);
-        seiganChance /= 4;
-    }
-    if ((tpzrand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) || tpzrand::GetRandomNumber(100) < seiganChance) &&
-        facing(m_victim->loc.p, m_attacker->loc.p, 64) && tpzrand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
+    
+    if ((tpzrand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 92)) &&
+        facing(m_victim->loc.p, m_attacker->loc.p, 40) && tpzrand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
     {
         m_isCountered = true;
         m_isCritical = (tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
@@ -493,18 +492,24 @@ void CAttack::ProcessDamage()
         m_trickAttackDamage += m_attacker->AGI() * (1 + m_attacker->getMod(Mod::TRICK_ATK_AGI) / 100);
     }
 
+    bool isFootwork = m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK);
     SLOTTYPE slot = (SLOTTYPE)GetWeaponSlot();
     if (m_attackRound->IsH2H())
     {
         // FFXIclopedia H2H: Remove 3 dmg from weapon, DB has an extra 3 for weapon rank. h2hSkill*0.11+3
-        m_naturalH2hDamage = (int32)(m_attacker->GetSkill(SKILL_HAND_TO_HAND) * 0.11f);
+        m_naturalH2hDamage = (int32)(m_attacker->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) * (m_attacker->objtype == TYPE_PC);
         m_baseDamage = std::max<uint16>(m_attacker->GetMainWeaponDmg(), 3);
         if (m_attackType == PHYSICAL_ATTACK_TYPE::KICK)
         {
             m_baseDamage = m_attacker->getMod(Mod::KICK_DMG) + 3;
+            if (isFootwork)
+                m_baseDamage += 18;
         }
-        m_damage = (uint32)(((m_baseDamage + m_naturalH2hDamage + m_trickAttackDamage +
-            battleutils::GetFSTR(m_attacker, m_victim, slot)) * m_damageRatio));
+        m_damage = (uint32)(m_baseDamage + m_naturalH2hDamage + m_trickAttackDamage +
+            battleutils::GetFSTR(m_attacker, m_victim, slot));
+        if (m_attacker->objtype == TYPE_PC)
+            m_damage = (int32)((float)m_damage * 1.23f);
+        m_damage = (int32)((float)m_damage * m_damageRatio);
     }
     else if (slot == SLOT_MAIN)
     {
@@ -552,6 +557,31 @@ void CAttack::ProcessDamage()
     if (m_attacker->getMod(Mod::AUGMENTS_TA) > 0 && m_trickAttackDamage > 0 && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
     {
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
+    }
+
+    // Circle Effects
+    if (m_victim->objtype == TYPE_MOB && m_damage > 0)
+    {
+        uint16 circlemult = 100;
+
+        switch (m_victim->m_EcoSystem)
+        {
+        case SYSTEM_AMORPH:   circlemult += m_attacker->getMod(Mod::AMORPH_CIRCLE); break;
+        case SYSTEM_AQUAN:    circlemult += m_attacker->getMod(Mod::AQUAN_CIRCLE); break;
+        case SYSTEM_ARCANA:   circlemult += m_attacker->getMod(Mod::ARCANA_CIRCLE); break;
+        case SYSTEM_BEAST:    circlemult += m_attacker->getMod(Mod::BEAST_CIRCLE); break;
+        case SYSTEM_BIRD:     circlemult += m_attacker->getMod(Mod::BIRD_CIRCLE); break;
+        case SYSTEM_DEMON:    circlemult += m_attacker->getMod(Mod::DEMON_CIRCLE); break;
+        case SYSTEM_DRAGON:   circlemult += m_attacker->getMod(Mod::DRAGON_CIRCLE); break;
+        case SYSTEM_LIZARD:   circlemult += m_attacker->getMod(Mod::LIZARD_CIRCLE); break;
+        case SYSTEM_LUMINION: circlemult += m_attacker->getMod(Mod::LUMINION_CIRCLE); break;
+        case SYSTEM_LUMORIAN: circlemult += m_attacker->getMod(Mod::LUMORIAN_CIRCLE); break;
+        case SYSTEM_PLANTOID: circlemult += m_attacker->getMod(Mod::PLANTOID_CIRCLE); break;
+        case SYSTEM_UNDEAD:   circlemult += m_attacker->getMod(Mod::UNDEAD_CIRCLE); break;
+        case SYSTEM_VERMIN:   circlemult += m_attacker->getMod(Mod::VERMIN_CIRCLE); break;
+        default: break;
+        }
+        m_damage = m_damage * circlemult / 100;
     }
 
     // Try skill up.

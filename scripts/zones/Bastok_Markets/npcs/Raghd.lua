@@ -10,9 +10,9 @@ require("scripts/globals/shop")
 function onTrigger(player, npc)
     local stock =
     {
-        13456, 1150, 1,    -- Silver Ring
-        13327, 1150, 1,    -- Silver Earring
-        13465,  184, 2,    -- Brass Ring
+        13456, 1125, 1,    -- Silver Ring
+        13327, 1125, 1,    -- Silver Earring
+        13465,  180, 2,    -- Brass Ring
         13454,   69, 3,    -- Copper Ring
     }
 

@@ -72,6 +72,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("sayItWithAHandbagCS", 2)
     elseif csid == 651 and option == 1 then
         player:messageSpecial(ID.text.LEATHER_SUPPORT, 0, 5, 1)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.LEATHERCRAFT_IMAGERY, 1, 0, 120)
     end
 end

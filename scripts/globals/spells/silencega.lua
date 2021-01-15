@@ -11,6 +11,10 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    if getElementalSDT(4,target) == 50 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SILENCE
+    end
     local effectType = tpz.effect.SILENCE
 
     if (target:hasStatusEffect(effectType)) then

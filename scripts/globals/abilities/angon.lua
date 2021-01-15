@@ -14,6 +14,10 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
+    if not player:isFacing(target) then
+		return 5, target:getID()
+	end
+
     local id = player:getEquipID(tpz.slot.AMMO)
     if (id == 18259) then
         return 0, 0

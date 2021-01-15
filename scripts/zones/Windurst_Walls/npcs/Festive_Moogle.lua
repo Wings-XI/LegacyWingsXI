@@ -44,13 +44,18 @@ end
 
 function onEventFinish(player, csid, option)
     local festiveItems = getFestiveItems(player)
+    local given = 0
     if csid == 503 then
         if npcUtil.giveItem(player, festiveItems[option]) then
             for i = 1, #stock do
                 if stock[i] == festiveItems[option] then
                     player:setCharVar(festiveItemVars[i], 0)
+                    given = 1
                     break
                 end
+            end
+            if given == 0 then
+                removeCustomItem(player, festiveItems[option])
             end
         end
     end
@@ -63,5 +68,36 @@ function getFestiveItems(player)
             table.insert(festiveItemsAvailable, stock[i])
         end
     end
+    local j = 0
+    local currentItem = player:getCharVar("festiveMoogle" .. tostring(j))
+    while currentItem ~= 0 and j < 10 do
+        table.insert(festiveItemsAvailable, currentItem)
+        j = j + 1
+        currentItem = player:getCharVar("festiveMoogle" .. tostring(j))
+    end
     return festiveItemsAvailable
+end
+
+function customItemShiftLeft(player, position)
+    i = position
+    local currentItem = player:getCharVar("festiveMoogle" .. tostring(i))
+    while currentItem ~= 0 and i < 10 do
+        player:setCharVar("festiveMoogle" .. tostring(i), player:getCharVar("festiveMoogle" .. tostring(i + 1)))
+        i = i + 1
+        currentItem = player:getCharVar("festiveMoogle" .. tostring(i))
+    end
+end
+
+function removeCustomItem(player, itemid)
+    local i = 0
+    local currentItem = player:getCharVar("festiveMoogle" .. tostring(i))
+    while currentItem ~= 0 and i < 10 do
+        if currentItem == itemid then
+            customItemShiftLeft(player, i)
+            break
+        else
+            i = i + 1
+        end
+        currentItem = player:getCharVar("festiveMoogle" .. tostring(i))
+    end
 end

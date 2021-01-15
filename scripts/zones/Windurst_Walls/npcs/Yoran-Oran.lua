@@ -36,6 +36,7 @@ function onTrigger(player, npc)
     local MEMORIES_OF_A_MAIDEN = player:getCharVar("MEMORIES_OF_A_MAIDEN_Status")
     local LouverancePath = player:getCharVar("COP_Louverance_s_Path")
     local MissionStatus = player:getCharVar("MissionStatus")
+    local blastPastProg = player:getCharVar("BlastFromThePast_Prog")
 
     --optional windy 9-1
     if player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.DOLL_OF_THE_DEAD and MissionStatus == 4 then
@@ -52,14 +53,11 @@ function onTrigger(player, npc)
         player:startEvent(481)
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 4 then
         player:startEvent(473)
-    elseif blastFromPast == QUEST_ACCEPTED then
-        local blastPastProg = player:getCharVar("BlastFromThePast_Prog")
-        if (blastPastProg == 1) then
-            player:startEvent(221)
-            player:setCharVar("BlastFromThePast_Prog", 2)
-        elseif (blastPastProg == 2) then
-            player:startEvent(222)
-        end
+    elseif blastFromPast == QUEST_ACCEPTED and blastPastProg == 1 then
+        player:startEvent(221)
+        player:setCharVar("BlastFromThePast_Prog", 2)
+    elseif blastFromPast == QUEST_ACCEPTED and blastPastProg == 2 then
+        player:startEvent(222)
     elseif blastFromPast == QUEST_COMPLETED and player:needToZone() == true then
         player:startEvent(223)
     elseif MandragoraMad == QUEST_AVAILABLE then

@@ -17,7 +17,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = 50
+    local power = 7
     local duration = 180
     local typeEffect = tpz.effect.BLAZE_SPIKES
 

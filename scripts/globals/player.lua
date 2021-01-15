@@ -64,7 +64,20 @@ local function CharCreate(player)
     end
 
     -- add nation-specific map
-    player:addKeyItem(nationInfo.map)
+    --player:addKeyItem(nationInfo.map)
+	-- add all maps instead
+	local mapID = 383
+	while mapID < 448 do
+		if mapID ~= 384 then
+			player:addKeyItem(mapID)
+		end
+		mapID = mapID + 1
+	end
+	mapID = 1856
+	while mapID < 1919 do
+		player:addKeyItem(mapID)
+		mapID = mapID + 1
+	end
 
     -- add nation- and race-specific ring
     if nation == raceInfo.homeNation and not player:hasItem(nationInfo.ring) then
@@ -124,7 +137,7 @@ local function CharCreate(player)
 
     player:addItem(536) -- adventurer coupon
     player:addTitle(tpz.title.NEW_ADVENTURER)
-    player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
+    -- player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
     player:setCharVar("spokeKindlix", 1) -- Kindlix introduction
     player:setCharVar("spokePyropox", 1) -- Pyropox introduction
     player:setCharVar("TutorialProgress", 1) -- Has not started tutorial

@@ -26,11 +26,11 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.AGI, 4)
     target:addMod(tpz.mod.VIT, 1)
-    target:addMod(tpz.mod.AMNESIARES, 20)
+    target:addMod(tpz.mod.AMNESIARESTRAIT, 20)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.AGI, 4)
     target:delMod(tpz.mod.VIT, 1)
-    target:delMod(tpz.mod.AMNESIARES, 20)
+    target:delMod(tpz.mod.AMNESIARESTRAIT, 20)
 end

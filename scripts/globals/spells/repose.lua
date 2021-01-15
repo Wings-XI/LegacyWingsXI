@@ -19,12 +19,21 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.SLEEP_II
     local resist = applyResistanceEffect(caster, target, spell, params)
+    local duration = 90 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.LULLABY, target))
+    
+    -- Lii Jixa the Somnolist
+    if caster:isMob() and caster:getID() == 17395896 and resist > 0.0625 and math.random() < 0.98 then
+        resist = 1
+        duration = 90
+    end
+    
     if (resist < 0.5) then
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST) -- Resist
         return tpz.effect.SLEEP_II
     end
 
-    if (target:addStatusEffect(tpz.effect.SLEEP_II, 2, 0, 90*resist)) then
+    if (target:addStatusEffect(tpz.effect.SLEEP_II, 2, 0, duration)) then
         spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- No effect

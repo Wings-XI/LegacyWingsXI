@@ -15,10 +15,15 @@ end
 function onTrigger(player, npc)
     local BeautyAndTheGalka = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
 
-    if player:hasKeyItem(tpz.ki.PALBOROUGH_MINES_LOGS) then
+local BeautyAndTheGalka       = player:getQuestStatus(BASTOK,tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
+local PalboroughMinesLogs     = player:hasKeyItem(tpz.ki.PALBOROUGH_MINES_LOGS)
+
+    if (PalboroughMinesLogs == true) then
         player:startEvent(10)
-    elseif BeautyAndTheGalka == QUEST_ACCEPTED then
-        if math.random(2) == 1 then
+    elseif (BeautyAndTheGalka == QUEST_ACCEPTED) then
+        Message = math.random(0,1)
+
+        if (Message == 1) then
             player:startEvent(8)
         else
             player:startEvent(9)
@@ -33,14 +38,19 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+    -- printf("CSID2: %u",csid);
+    -- printf("RESULT2: %u",option);
 end
 
-function onEventFinish(player, csid, option)
+function onEventFinish(player,csid,option)
+
     if csid == 7 and option == 0 then
-        player:addQuest(BASTOK, tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
+        player:addQuest(BASTOK,tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
     elseif csid == 10 then
-        if player:getFreeSlotsCount() >= 1 then
-            player:completeQuest(BASTOK, tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
+        FreeSlots = player:getFreeSlotsCount()
+
+        if FreeSlots >= 1 then
+            player:completeQuest(BASTOK,tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA)
             player:setCharVar("BeautyAndTheGalkaDenied", 0)
             player:delKeyItem(tpz.ki.PALBOROUGH_MINES_LOGS)
             player:addFame(BASTOK, 75)

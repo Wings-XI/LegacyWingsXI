@@ -46,7 +46,7 @@ function onUseAbility(player, target, ability)
             level = target:getSubLvl()
         end
 
-        local bonus = 1 + (level/15) + target:getMod(tpz.mod.MANEUVER_BONUS)
+        local bonus = 1 + target:getMod(tpz.mod.MANEUVER_BONUS)
 
         if (target:getActiveManeuvers() == 3) then
             target:removeOldestManeuver()

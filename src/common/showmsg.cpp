@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 Copyright (c) Athena Dev Teams - Licensed under GNU G
 ===========================================================================
@@ -31,6 +31,8 @@ int stdout_with_ansisequence = 0;
 int msg_silent = 0; // Specifies how silent the console is.
 
 std::string log_file;
+
+FILE* log_file_hnd = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// static/dynamic buffer for the messages
@@ -586,7 +588,6 @@ char timestamp_format[20] = ""; // For displaying Timestamps
 int _vShowMessage(MSGTYPE flag, const std::string& string)
 {
     char prefix[100];
-    FILE *fp;
 
     if (string.empty())
     {
@@ -673,17 +674,16 @@ int _vShowMessage(MSGTYPE flag, const std::string& string)
     }
 
     if (log_file.size() > 0) {
-        fp = fopen(log_file.c_str(), "a");
-        if (fp == NULL) {
-            std::string str_v = fmt::sprintf(CL_RED"[ERROR]" CL_RESET": Could not open '" CL_WHITE"%s" CL_RESET"', access denied.\n", log_file.c_str());
+        if (log_file_hnd == NULL) {
+            std::string str_v = fmt::sprintf(CL_RED"[ERROR]" CL_RESET": Log file not initialized.\n", log_file.c_str());
             FPRINTF(STDERR, str_v);
             FFLUSH(STDERR);
         }
         else
         {
-            fprintf(fp, "%s ", prefix);
-            fputs(string.c_str(), fp);
-            fclose(fp);
+            fprintf(log_file_hnd, "%s ", prefix);
+            fputs(string.c_str(), log_file_hnd);
+            fflush(log_file_hnd);
         }
     }
 
@@ -703,4 +703,20 @@ void ClearScreen(void)
 void InitializeLog(std::string logFile)
 {
     log_file = logFile;
+    log_file_hnd = fopen(log_file.c_str(), "a");
+    if (log_file_hnd == NULL) {
+        std::string str_v = fmt::sprintf(CL_RED"[ERROR]" CL_RESET": Could not open '" CL_WHITE"%s" CL_RESET"', access denied.\n", log_file.c_str());
+        FPRINTF(STDERR, str_v);
+        FFLUSH(STDERR);
+    }
+
+}
+
+void CloseLog()
+{
+    if (log_file_hnd) {
+        fflush(log_file_hnd);
+        fclose(log_file_hnd);
+        log_file_hnd = NULL;
+    }
 }

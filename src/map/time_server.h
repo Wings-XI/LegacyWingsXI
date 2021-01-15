@@ -24,6 +24,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/taskmgr.h"
+#include "utils/charutils.h"
 
 
 int32 time_server(time_point tick,CTaskMgr::CTask*);

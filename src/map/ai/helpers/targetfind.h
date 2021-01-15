@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -97,7 +97,7 @@ public:
     // Main methods for finding targets
     void findSingleTarget(CBattleEntity* PTarget, uint8 flags = FINDFLAGS_NONE);
     void findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, float radius, uint8 flags = FINDFLAGS_NONE);
-    void findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 flags = FINDFLAGS_NONE);
+    void findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 flags = FINDFLAGS_NONE, uint8 extraRotation = 0);
 
     // add all targets in contexts
 	void addAllInZone(CBattleEntity* PTarget, bool withPet);

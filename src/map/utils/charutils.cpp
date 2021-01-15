@@ -100,6 +100,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "puppetutils.h"
 #include "petutils.h"
 #include "zoneutils.h"
+#include "../instance.h"
+
+#include "flistutils.h"
+
+// Square-Enix changeg the chat message packet format in this version
+const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
+const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
+
 
 /************************************************************************
 *                                                                       *
@@ -150,6 +158,16 @@ namespace charutils
         JOBTYPE mjob = PChar->GetMJob();
         JOBTYPE sjob = PChar->GetSJob();
         MERIT_TYPE statMerit[] = {MERIT_STR, MERIT_DEX, MERIT_VIT, MERIT_AGI, MERIT_INT, MERIT_MND, MERIT_CHR};
+
+        uint8 cap = 0;
+
+        if (PChar->PInstance && PChar->PInstance->GetLevelCap() > 0)
+        {
+            cap = PChar->PInstance->GetLevelCap() + map_config.Battle_cap_tweak;
+            mlvl = cap;
+            if (slvl > cap / 2)
+                slvl = cap / 2;
+        }
 
         uint8 race = 0;                 //Human
 
@@ -331,6 +349,7 @@ namespace charutils
         uint16 limitPoints = 0;
         int32 HP = 0;
         int32 MP = 0;
+        PChar->m_openMH = false;
 
         const char* fmtQuery =
             "SELECT "
@@ -363,7 +382,8 @@ namespace charutils
             "campaign_allegiance,"  // 26
             "isstylelocked,"        // 27
             "moghancement,"         // 28
-            "UNIX_TIMESTAMP(`lastupdate`) " // 29
+            "UNIX_TIMESTAMP(`lastupdate`)," // 29
+            "accid "                // 30
             "FROM chars "
             "WHERE charid = %u";
 
@@ -448,6 +468,25 @@ namespace charutils
             PChar->setStyleLocked(Sql_GetIntData(SqlHandle, 27) == 1 ? true : false);
             PChar->SetMoghancement(Sql_GetUIntData(SqlHandle, 28));
             PChar->lastOnline = Sql_GetUIntData(SqlHandle, 29);
+
+            // This determines whether the character has access to Mog Satchel, Mog Wardrobe #3 and Mog Wardrobe #4
+            // Interpret account features as the following bitmask -
+            // 0x01 - Has access to Mog Satchel (secure connection icon displayed on startup)
+            // 0x04 - Has access to Mog Wardrobe #3
+            // 0x08 - Has access to Mog Wardrobe #4
+            uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
+            const char* pFeaturesSqlQuery = "SELECT features FROM accounts WHERE id = %u";
+            ret = Sql_Query(SqlHandle, pFeaturesSqlQuery, acctid);
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+                PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 0));
+            }
+            const char* pClientVerQuery = "SELECT client_version FROM accounts_sessions WHERE charid = %u";
+            ret = Sql_Query(SqlHandle, pClientVerQuery, PChar->id);
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+                PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
+            }
+            PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
+            PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);
@@ -786,6 +825,8 @@ namespace charutils
             Sql_GetData(SqlHandle, 9, &buf, &length);
             memcpy(&PChar->teleport.survival, buf, (length > sizeof(PChar->teleport.survival) ? sizeof(PChar->teleport.survival) : length));
         }
+
+        PChar->m_hitCounter = 0;
 
         PChar->PMeritPoints = new CMeritPoints(PChar);
         PChar->PMeritPoints->SetMeritPoints(meritPoints);
@@ -1676,7 +1717,7 @@ namespace charutils
                         PChar->look.ranged = 0;
                     }
                     PChar->m_Weapons[SLOT_RANGED] = nullptr;
-                    if (((CItemWeapon*)PItem)->getSkillType() != SKILL_STRING_INSTRUMENT && ((CItemWeapon*)PItem)->getSkillType() != SKILL_WIND_INSTRUMENT)
+                    if (PItem && ((CItemWeapon*)PItem)->getSkillType() != SKILL_STRING_INSTRUMENT && ((CItemWeapon*)PItem)->getSkillType() != SKILL_WIND_INSTRUMENT)
                     {
                         PChar->health.tp = 0;
                     }
@@ -2318,6 +2359,101 @@ namespace charutils
         SaveCharLook(PChar);
     }
 
+    void SaveItemsToJobSet(CCharEntity* PChar, JOBTYPE job)
+    {
+        Sql_Query(SqlHandle, "DELETE FROM char_job_sets WHERE charid = %u AND job = %u LIMIT 1;", PChar->id, (uint8)job);
+
+        Sql_Query(SqlHandle, "INSERT INTO char_job_sets VALUES (%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u);", PChar->id, (uint8)job,
+            PChar->getEquip((SLOTTYPE)(0)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(0))->getID(),
+            PChar->getEquip((SLOTTYPE)(1)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(1))->getID(),
+            PChar->getEquip((SLOTTYPE)(2)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(2))->getID(),
+            PChar->getEquip((SLOTTYPE)(3)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(3))->getID(),
+            PChar->getEquip((SLOTTYPE)(4)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(4))->getID(),
+            PChar->getEquip((SLOTTYPE)(5)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(5))->getID(),
+            PChar->getEquip((SLOTTYPE)(6)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(6))->getID(),
+            PChar->getEquip((SLOTTYPE)(7)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(7))->getID(),
+            PChar->getEquip((SLOTTYPE)(8)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(8))->getID(),
+            PChar->getEquip((SLOTTYPE)(9)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(9))->getID(),
+            PChar->getEquip((SLOTTYPE)(10)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(10))->getID(),
+            PChar->getEquip((SLOTTYPE)(11)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(11))->getID(),
+            PChar->getEquip((SLOTTYPE)(12)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(12))->getID(),
+            PChar->getEquip((SLOTTYPE)(13)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(13))->getID(),
+            PChar->getEquip((SLOTTYPE)(14)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(14))->getID(),
+            PChar->getEquip((SLOTTYPE)(15)) == nullptr ? 0 : PChar->getEquip((SLOTTYPE)(15))->getID());
+
+
+    }
+
+    void EquipItemsFromJobSet(CCharEntity* PChar, JOBTYPE job)
+    {
+        int32 ret = Sql_Query(SqlHandle, "SELECT s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15 FROM char_job_sets WHERE charid = %u AND job = %u LIMIT 1;", PChar->id, (uint8)job);
+
+        if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0)
+            return;
+
+        Sql_NextRow(SqlHandle);
+
+        SLOTTYPE slot = (SLOTTYPE)0;
+        uint16 itemid = 0;
+        CONTAINER_ID loc = LOC_INVENTORY;
+        uint8 slotid = 0;
+
+        for (slot = (SLOTTYPE)0; slot < 16; slot = (SLOTTYPE)((uint8)slot + 1))
+        {
+            itemid = Sql_GetUIntData(SqlHandle, slot);
+            if (itemid == 0)
+                continue;
+
+            loc = LOC_INVENTORY;
+            slotid = ERROR_SLOTID;
+
+            if (slotid == ERROR_SLOTID)
+            {
+                slotid = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemid);
+                loc = LOC_INVENTORY;
+            }
+
+            if (slotid == ERROR_SLOTID)
+            {
+                slotid = PChar->getStorage(LOC_WARDROBE)->SearchItem(itemid);
+                loc = LOC_WARDROBE;
+            }
+
+            if (slotid == ERROR_SLOTID)
+            {
+                slotid = PChar->getStorage(LOC_WARDROBE2)->SearchItem(itemid);
+                loc = LOC_WARDROBE2;
+            }
+
+            if (slotid == ERROR_SLOTID)
+            {
+                slotid = PChar->getStorage(LOC_WARDROBE3)->SearchItem(itemid);
+                loc = LOC_WARDROBE3;
+            }
+
+            if (slotid == ERROR_SLOTID)
+            {
+                slotid = PChar->getStorage(LOC_WARDROBE4)->SearchItem(itemid);
+                loc = LOC_WARDROBE4;
+            }
+
+            if (slotid == ERROR_SLOTID)
+            {
+                continue;
+            }
+
+            EquipItem(PChar, slotid, slot, loc);
+
+        }
+
+        CheckUnarmedWeapon(PChar);
+
+        BuildingCharWeaponSkills(PChar);
+        SaveCharEquip(PChar);
+        SaveCharLook(PChar);
+
+    }
+
     /************************************************************************
     *                                                                       *
     *  Проверяем логику всей экипировки персонажа                           *
@@ -2429,28 +2565,28 @@ namespace charutils
 
                 if (PPet->GetMLevel() >= PAbility->getLevel() && PetID >= 8 && PetID <= 20 && CheckAbilityAddtype(PChar, PAbility))
                 {
-                    if (PetID == 8)
+                    if (PetID == 8) // carby!
                     {
                         if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID >= 9 && PetID <= 15)
+                    else if (PetID >= 9 && PetID <= 15) // fenrir = 9, elemental avatars are 10~15
                     {
                         if (PAbility->getID() >= (ABILITY_HEALING_RUBY + ((PetID - 8) * 16)) && PAbility->getID() < (ABILITY_HEALING_RUBY + ((PetID - 7) * 16)))
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID == 16)
+                    else if (PetID == 16) // diabolos
                     {
                         if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID == 20)
+                    else if (PetID == 20) // cait sith
                     {
                         if (PAbility->getID() > ABILITY_SOOTHING_RUBY && PAbility->getID() <= ABILITY_MOONLIT_CHARGE)
                         {
@@ -2462,10 +2598,262 @@ namespace charutils
         }
         if (PPet->getPetType() == PETTYPE_JUG_PET)
         {
+            /*
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
+            
             for (auto&& abilityid : skillList)
             {
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
+            }
+            */
+            //656 to 750 are the ability ids for all bst pets
+            //751 to 762 are out of bit range and aren't used by any pets anyway
+
+            uint16 abilityidindex = 656;
+            uint16 ab1 = 0;
+            uint16 ab2 = 0;
+            uint16 ab3 = 0;
+            uint16 ab4 = 0;
+            uint16 ab5 = 0;
+            uint16 ab6 = 0;
+            uint16 ab7 = 0;
+            uint16 ab8 = 0;
+
+            if (PetID == 21) // SHEEP FAMILIAR
+            {
+                ab1 = 676;
+                ab2 = 675;
+                ab3 = 674;
+                ab4 = 673;
+            }
+
+            if (PetID == 22) // HARE FAMILIAR
+            {
+                ab1 = 658;
+                ab2 = 657;
+                ab3 = 656;
+            }
+
+            if (PetID == 23) // CRAB FAMILIAR
+            {
+                ab1 = 681;
+                ab2 = 680;
+                ab3 = 679;
+                ab4 = 678;
+                ab5 = 677;
+            }
+
+            if (PetID == 24) // COURIER CARRIE
+            {
+                ab1 = 681;
+                ab2 = 680;
+                ab3 = 679;
+                ab4 = 678;
+                ab5 = 677;
+            }
+
+            if (PetID == 25) // HOMUNCULUS
+            {
+                ab1 = 663;
+                ab2 = 662;
+                ab3 = 661;
+                ab4 = 660;
+                ab5 = 659;
+            }
+
+            if (PetID == 26) // FLYTRAP FAMILIAR
+            {
+                ab1 = 704;
+                ab2 = 703;
+                ab3 = 702;
+            }
+
+            if (PetID == 27) // TIGER FAMILIAR
+            {
+                ab1 = 666;
+                ab2 = 665;
+                ab3 = 664;
+            }
+
+            if (PetID == 28) // FLOWERPOT BILL
+            {
+                ab1 = 663;
+                ab2 = 662;
+                ab3 = 661;
+                ab4 = 660;
+                ab5 = 659;
+            }
+
+            if (PetID == 29) // EFT FAMILIAR
+            {
+                ab1 = 709;
+                ab2 = 708;
+                ab3 = 707;
+                ab4 = 706;
+                ab5 = 705;
+            }
+
+            if (PetID == 30) // LIZARD FAMILIAR
+            {
+                ab1 = 672;
+                ab2 = 671;
+                ab3 = 670;
+                ab4 = 669;
+                ab5 = 668;
+                ab6 = 667;
+            }
+
+            if (PetID == 31) // MAYFLY FAMILIAR
+            {
+                ab1 = 697;
+                ab2 = 696;
+            }
+
+            if (PetID == 32) // FUNGUAR FAMILIAR
+            {
+                ab1 = 690;
+                ab2 = 689;
+                ab3 = 688;
+                ab4 = 687;
+                ab5 = 686;
+                ab6 = 685;
+                ab7 = 684;
+            }
+
+            if (PetID == 33) // BEETLE FAMILIAR
+            {
+                ab1 = 695;
+                ab2 = 694;
+                ab3 = 693;
+                ab4 = 692;
+                ab5 = 691;
+            }
+
+            if (PetID == 34) // ANTLION FAMILIAR
+            {
+                ab1 = 701;
+                ab2 = 700;
+                ab3 = 699;
+                ab4 = 698;
+            }
+
+            if (PetID == 35) // MITE FAMILIAR
+            {
+                ab1 = 713;
+                ab2 = 712;
+                ab3 = 711;
+                ab4 = 710;
+            }
+
+            if (PetID == 36) // LULLABY MELODIA
+            {
+                ab1 = 676;
+                ab2 = 675;
+                ab3 = 674;
+                ab4 = 673;
+            }
+
+            if (PetID == 37) // KEENEARED STEFFI
+            {
+                ab1 = 658;
+                ab2 = 657;
+                ab3 = 656;
+            }
+
+            if (PetID == 38) // FLOWERPOT BEN
+            {
+                ab1 = 663;
+                ab2 = 662;
+                ab3 = 661;
+                ab4 = 660;
+                ab5 = 659;
+            }
+
+            if (PetID == 39) // SABER SIRAVARDE
+            {
+                ab1 = 666;
+                ab2 = 665;
+                ab3 = 664;
+            }
+
+            if (PetID == 40) // COLDBLOOD COMO
+            {
+                ab1 = 672;
+                ab2 = 671;
+                ab3 = 670;
+                ab4 = 669;
+                ab5 = 668;
+                ab6 = 667;
+            }
+
+            if (PetID == 41) // SHELLBUSTER OROB
+            {
+                ab1 = 697;
+                ab2 = 696;
+            }
+
+            if (PetID == 42) // VORACIOUS AUDREY
+            {
+                ab1 = 704;
+                ab2 = 703;
+                ab3 = 702;
+            }
+
+            if (PetID == 43) // AMBUSHER ALLIE
+            {
+                ab1 = 709;
+                ab2 = 708;
+                ab3 = 707;
+                ab4 = 706;
+                ab5 = 705;
+            }
+
+            if (PetID == 44) // LIFEDRINKER LARS
+            {
+                ab1 = 713;
+                ab2 = 712;
+                ab3 = 711;
+                ab4 = 710;
+            }
+
+            if (PetID == 45) // PANZER GALAHAD
+            {
+                ab1 = 695;
+                ab2 = 694;
+                ab3 = 693;
+                ab4 = 692;
+                ab5 = 691;
+            }
+
+            if (PetID == 46) // CHOPSUEY CHUCKY
+            {
+                ab1 = 701;
+                ab2 = 700;
+                ab3 = 699;
+                ab4 = 698;
+            }
+
+            if (PetID == 47) // AMIGO SABOTENDER
+            {
+                ab1 = 682;
+            }
+
+            if (ab1 != 0) { abilityidindex = ab1; }
+            if (ab2 != 0) { abilityidindex = ab2; }
+            if (ab3 != 0) { abilityidindex = ab3; }
+            if (ab4 != 0) { abilityidindex = ab4; }
+            if (ab5 != 0) { abilityidindex = ab5; }
+            if (ab6 != 0) { abilityidindex = ab6; }
+            if (ab7 != 0) { abilityidindex = ab7; }
+            if (ab8 != 0) { abilityidindex = ab8; }
+
+            while (abilityidindex <= ab1)
+            {
+                if (abilityidindex == ab1 || abilityidindex == ab2 || abilityidindex == ab3 || abilityidindex == ab4 || abilityidindex == ab5 || abilityidindex == ab6 || abilityidindex == ab7 || abilityidindex == ab8)
+                {
+                    addPetAbility(PChar, abilityidindex - 496);
+                }
+                abilityidindex++;
             }
         }
         PChar->pushPacket(new CCharAbilitiesPacket(PChar));
@@ -2546,6 +2934,8 @@ namespace charutils
                         if (charge)
                         {
                             chargeTime = charge->chargeTime - PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
+                            if (PAbility->getID() > 655 && PAbility->getID() < 751)
+                                chargeTime -= PChar->PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, PChar) / 4;
                             maxCharges = charge->maxCharges;
                         }
                         if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
@@ -2571,7 +2961,7 @@ namespace charutils
     void BuildingCharSkillsTable(CCharEntity* PChar)
     {
         MERIT_TYPE skillMerit[] = {MERIT_H2H, MERIT_DAGGER, MERIT_SWORD, MERIT_GSWORD, MERIT_AXE, MERIT_GAXE, MERIT_SCYTHE, MERIT_POLEARM, MERIT_KATANA, MERIT_GKATANA, MERIT_CLUB,
-            MERIT_STAFF, MERIT_AUTOMATON_SKILLS, MERIT_AUTOMATON_SKILLS, MERIT_AUTOMATON_SKILLS, MERIT_ARCHERY, MERIT_MARKSMANSHIP, MERIT_THROWING, MERIT_GUARDING, MERIT_EVASION,
+            MERIT_STAFF, MERIT_AUTOMATON_MELEE, MERIT_AUTOMATON_RANGED, MERIT_AUTOMATON_MAGIC, MERIT_ARCHERY, MERIT_MARKSMANSHIP, MERIT_THROWING, MERIT_GUARDING, MERIT_EVASION,
             MERIT_SHIELD, MERIT_PARRYING, MERIT_DIVINE, MERIT_HEALING, MERIT_ENHANCING, MERIT_ENFEEBLING, MERIT_ELEMENTAL, MERIT_DARK, MERIT_SUMMONING, MERIT_NINJITSU, MERIT_SINGING,
             MERIT_STRING, MERIT_WIND, MERIT_BLUE, MERIT_GEO, MERIT_HANDBELL};
 
@@ -2745,6 +3135,7 @@ namespace charutils
             uint16 CapSkill = battleutils::GetMaxSkill(SkillID, PChar->GetMJob(), PChar->GetMLevel());
             // Max skill this victim level will allow.
             // Note this is no longer retail accurate, since now 'decent challenge' mobs allow to cap any skill.
+            bool usingMonsterLevel = PChar->GetMLevel() > lvl;
             uint16 MaxSkill = battleutils::GetMaxSkill(SkillID, PChar->GetMJob(), std::min(PChar->GetMLevel(), lvl));
 
             int16  Diff = MaxSkill - CurSkill / 10;
@@ -2807,7 +3198,7 @@ namespace charutils
                     }
                 }
 
-                if (SkillAmount + CurSkill >= CapSkill)
+                if (SkillAmount + CurSkill >= CapSkill && !usingMonsterLevel)
                 {
                     // skill is capped. set blue flag
                     SkillAmount = CapSkill - CurSkill;
@@ -3150,13 +3541,13 @@ namespace charutils
     {
         uint32 baseExp = GetRealExp(charlvl, moblvl);
 
-        if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;
-        if (baseExp >= 350) return EMobDifficulty::VeryTough;
-        if (baseExp >= 220) return EMobDifficulty::Tough;
-        if (baseExp >= 200) return EMobDifficulty::EvenMatch;
-        if (baseExp >= 160) return EMobDifficulty::DecentChallenge;
-        if (baseExp >= 60) return EMobDifficulty::EasyPrey;
-        if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
+        if (baseExp >= 400) return EMobDifficulty::IncrediblyTough;   // 400+
+        if (baseExp >= 200) return EMobDifficulty::VeryTough;         // 200 - 399
+        if (baseExp > 100) return EMobDifficulty::Tough;              // 101 - 199
+        if (baseExp == 100) return EMobDifficulty::EvenMatch;         // 100
+        if (baseExp >= 80) return EMobDifficulty::DecentChallenge;    //  80 -  99
+        if (baseExp >= 1) return EMobDifficulty::EasyPrey;            //   1 -  79
+        //if (baseExp >= 14) return EMobDifficulty::IncrediblyEasyPrey;
 
         return EMobDifficulty::TooWeak;
     }
@@ -3205,11 +3596,6 @@ namespace charutils
         //work out the amount of gil to give (guessed; replace with testing)
         uint32 gil = PMob->GetRandomGil();
         uint32 gBonus = 0;
-
-        if (gil && map_config.mob_gil_multiplier >= 0)
-        {
-            gil = static_cast<uint32>(gil * map_config.mob_gil_multiplier);
-        }
 
         if (map_config.all_mobs_gil_bonus > 0)
         {
@@ -3349,6 +3735,21 @@ namespace charutils
             {
                 if (PMember->getZone() == PMob->getZone())
                 {
+                    if (PMob->PMaster)
+                    {
+                        // pet EXP nerf
+                        switch (pcinzone)
+                        {
+                        case 1:                break;
+                        case 2:                break;
+                        case 3:  exp *= 0.70f; break;
+                        case 4:  exp *= 0.40f; break;
+                        case 5:  exp *= 0.10f; break;
+                        default: exp *= 0.05f; break;
+                        }
+                        const uint8 test = '1';
+                    }
+
                     if (map_config.exp_party_gap_penalties == 1)
                     {
                         if (maxlevel > 50 || maxlevel > (memberlevel + 7))
@@ -3411,18 +3812,18 @@ namespace charutils
                     // Per monster caps pulled from: https://ffxiclopedia.fandom.com/wiki/Experience_Points
                     if (PMember->GetMLevel() <= 50)
                     {
-                        exp = std::fmin(exp, 400.f);
+                        exp = std::fmin(exp, 200.f);
                     }
                     else if (PMember->GetMLevel() <= 60)
                     {
-                        exp = std::fmin(exp, 500.f);
+                        exp = std::fmin(exp, 250.f);
                     }
                     else
                     {
-                        exp = std::fmin(exp, 600.f);
+                        exp = std::fmin(exp, 300.f);
                     }
 
-                    if (mobCheck > EMobDifficulty::DecentChallenge)
+                    if (PMember->GetMLevel() <= PMob->GetMLevel()) // chain stuff requires EM or greater
                     {
 
                         if (PMember->expChain.chainTime > gettick() || PMember->expChain.chainTime == 0)
@@ -3656,6 +4057,17 @@ namespace charutils
         PChar->pushPacket(new CCharStatsPacket(PChar));
     }
 
+    void tryCompleteGK75(CCharEntity* PChar)
+    {
+        if (PChar->jobs.genkai != 75 && (PChar->jobs.job[JOB_PUP] >= 70 || PChar->jobs.job[JOB_BLU] >= 70 || PChar->jobs.job[JOB_COR] >= 70 || PChar->jobs.job[JOB_DNC] >= 70 || PChar->jobs.job[JOB_SCH] >= 70))
+        {
+            PChar->jobs.genkai = 75;
+
+            Sql_Query(SqlHandle, "UPDATE char_jobs SET genkai = %u WHERE charid = %u LIMIT 1", PChar->jobs.genkai, PChar->id);
+        }
+        return;
+    }
+
     /************************************************************************
     *                                                                       *
     *  Добавляем очки опытка указанному персонажу                           *
@@ -3664,6 +4076,9 @@ namespace charutils
 
     void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck, bool isexpchain)
     {
+        // flist stuff (on EXP gain)
+        if (FLgetSetting(PChar, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), PChar->id); }
+
         if (PChar->isDead())
             return;
 
@@ -3819,6 +4234,8 @@ namespace charutils
                     }
                     PChar->PParty->ReloadParty();
                 }
+
+                tryCompleteGK75(PChar);
 
                 PChar->UpdateHealth();
 
@@ -4009,6 +4426,290 @@ namespace charutils
             PChar->profile.rank[1],
             PChar->profile.rank[2],
             PChar->id);
+    }
+
+    void UpdateMissionStorage(CCharEntity* PChar)
+    {
+        uint8 currentMW1 = PChar->getStorage(8)->GetSize();
+        uint8 currentMW2 = PChar->getStorage(10)->GetSize();;
+        uint8 currentMW3 = PChar->getStorage(11)->GetSize();;
+        uint8 currentMW4 = PChar->getStorage(12)->GetSize();;
+        uint8 currentSack = PChar->getStorage(6)->GetSize();;
+
+        uint8 afterMW1 = 0;
+        uint8 afterMW2 = 0;
+        uint8 afterMW3 = 0;
+        uint8 afterMW4 = 0;
+        uint8 afterSack = 0;
+
+        uint8 rank = PChar->profile.rank[PChar->profile.nation];
+
+        switch (rank)
+        {
+        case 1:
+            afterMW1 = 0;
+            break;
+        case 2:
+            afterMW1 = 10;
+            break;
+        case 3:
+            afterMW1 = 20;
+            break;
+        case 4:
+            afterMW1 = 30;
+            break;
+        case 5:
+            afterMW1 = 40;
+            break;
+        case 6:
+            afterMW1 = 50;
+            break;
+        case 7:
+            afterMW1 = 60;
+            break;
+        case 8:
+            afterMW1 = 65;
+            break;
+        case 9:
+            afterMW1 = 70;
+            break;
+        case 10:
+            afterMW1 = 80;
+            break;
+        default:
+            afterMW1 = 0;
+            break;
+        }
+
+        if (HasCompletedMission(PChar, 3, 0))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 4))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 6))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 8))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 10))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 12))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 14))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 16))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 18))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 20))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 22))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 23))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 24))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 26))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 27))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 28))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 30))
+            afterMW2 += 4;
+        if (HasCompletedMission(PChar, 3, 31))
+            afterMW2 += 12;
+
+
+
+        if (HasCompletedMission(PChar, 6, 0))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 1))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 2))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 3))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 5))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 15))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 16))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 17))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 18))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 19))
+            afterMW3 += 1;
+        if (HasCompletedMission(PChar, 6, 20))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 27))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 29))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 30))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 31))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 32))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 33))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 40))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 41))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 42))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 43))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 52))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 54))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 55))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 56))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 57))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 58))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 60))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 65))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 66))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 67))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 68))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 77))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 78))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 80))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 81))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 82))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 87))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 90))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 91))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 92))
+            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 94))
+            afterMW3 += 2;
+
+        uint8 AU = 0;
+        while (AU < 48)
+        {
+            if (!HasCompletedMission(PChar, 4, AU))
+                break;
+            AU++;
+        }
+        afterMW4 = AU * 80 / 48;
+
+        uint8 WG = 0;
+        while (WG < 54)
+        {
+            if (!HasCompletedMission(PChar, 5, WG))
+                break;
+            WG++;
+        }
+        if (WG == 54)
+            WG = 60;
+        afterSack = WG;
+
+        if (afterMW1 > 80)
+            afterMW1 = 80;
+        if (afterMW2 > 80)
+            afterMW2 = 80;
+        if (afterMW3 > 80)
+            afterMW3 = 80;
+        if (afterMW4 > 80)
+            afterMW4 = 80;
+        if (afterSack > 60)
+            afterSack = 60;
+
+        uint8 increase = 0;
+        std::string line;
+
+        if (afterMW1 > currentMW1)
+        {
+            increase = afterMW1 - currentMW1;
+            line = "The capacity of your Mog Wardrobe 1 has increased by "; line += std::to_string(increase);
+            if (increase > 1)
+                line += " slots!";
+            else
+                line += " slot!";
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            PChar->getStorage(8)->AddBuff(increase);
+            PChar->pushPacket(new CInventorySizePacket(PChar));
+            charutils::SaveCharInventoryCapacity(PChar);
+        }
+        if (afterMW2 > currentMW2)
+        {
+            increase = afterMW2 - currentMW2;
+            line = "The capacity of your Mog Wardrobe 2 has increased by "; line += std::to_string(increase);
+            if (increase > 1)
+                line += " slots!";
+            else
+                line += " slot!";
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            PChar->getStorage(10)->AddBuff(increase);
+            PChar->pushPacket(new CInventorySizePacket(PChar));
+            charutils::SaveCharInventoryCapacity(PChar);
+        }
+        if (afterMW3 > currentMW3)
+        {
+            increase = afterMW3 - currentMW3;
+            line = "The capacity of your Mog Wardrobe 3 has increased by "; line += std::to_string(increase);
+            if (increase > 1)
+                line += " slots!";
+            else
+                line += " slot!";
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            PChar->getStorage(11)->AddBuff(increase);
+            PChar->pushPacket(new CInventorySizePacket(PChar));
+            charutils::SaveCharInventoryCapacity(PChar);
+        }
+        if (afterMW4 > currentMW4)
+        {
+            increase = afterMW4 - currentMW4;
+            line = "The capacity of your Mog Wardrobe 4 has increased by "; line += std::to_string(increase);
+            if (increase > 1)
+                line += " slots!";
+            else
+                line += " slot!";
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            PChar->getStorage(12)->AddBuff(increase);
+            PChar->pushPacket(new CInventorySizePacket(PChar));
+            charutils::SaveCharInventoryCapacity(PChar);
+        }
+        if (afterSack > currentSack)
+        {
+            increase = afterSack - currentSack;
+            line = "The capacity of your Mog Sack has increased by "; line += std::to_string(increase);
+            if (increase > 1)
+                line += " slots!";
+            else
+                line += " slot!";
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            PChar->getStorage(6)->AddBuff(increase);
+            PChar->pushPacket(new CInventorySizePacket(PChar));
+            charutils::SaveCharInventoryCapacity(PChar);
+        }
+
+    }
+
+    bool HasCompletedMission(CCharEntity* PChar, uint8 log, uint8 mission)
+    {
+        return (log == MISSION_COP || mission >= 64) ? mission < PChar->m_missionLog[log].current : PChar->m_missionLog[log].complete[mission];
     }
 
     /************************************************************************
@@ -4694,6 +5395,14 @@ namespace charutils
         }
     }
 
+    void SavePositionToDatabase(CCharEntity* PChar)
+    {
+        if (PChar->status == STATUS_SHUTDOWN || PChar->status == STATUS_DISAPPEAR)
+            return;
+        Sql_Query(SqlHandle, "UPDATE chars SET pos_rot=%u,pos_x=%f,pos_y=%f,pos_z=%f WHERE charid=%u LIMIT 1;", PChar->loc.p.rotation, PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->id);
+        PChar->StatusEffectContainer->SaveStatusEffects(false, false);
+    }
+
     /************************************************************************
     *                                                                       *
     *  Checks which UnarmedItem to grant when SLOT_MAIN is empty.           *
@@ -5119,6 +5828,7 @@ namespace charutils
         PChar->health.hp = PChar->GetMaxHP();
         PChar->health.mp = PChar->GetMaxMP();
 
+        PChar->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
         PChar->loc.boundary = 0;
         PChar->loc.p = PChar->profile.home_point.p;
         PChar->loc.destination = PChar->profile.home_point.destination;
@@ -5166,6 +5876,156 @@ namespace charutils
             return Sql_GetIntData(SqlHandle, 0);
         }
         return 0;
+    }
+
+    bool AddCharVar(CCharEntity* PChar, const char* var, int32 increment)
+    {
+        uint16 id = PChar->id;
+
+        const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
+
+        if (ret != SQL_ERROR)
+        {
+            if (Sql_NumRows(SqlHandle) != 0)
+            {
+                const char* fmtQuery2 = "UPDATE char_vars SET value = value + %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                ret = Sql_Query(SqlHandle, fmtQuery2, increment, var, id);
+                if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                ret = Sql_Query(SqlHandle, fmtQuery3, id, var, increment);
+                if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        return false;
+    }
+
+    bool SetCharVar(CCharEntity* PChar, const char* var, int32 value)
+    {
+        uint16 id = PChar->id;
+
+        const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
+
+        if (ret != SQL_ERROR)
+        {
+            if (Sql_NumRows(SqlHandle) != 0)
+            {
+                const char* fmtQuery2 = "UPDATE char_vars SET value = %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                ret = Sql_Query(SqlHandle, fmtQuery2, value, var, id);
+                if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                ret = Sql_Query(SqlHandle, fmtQuery3, id, var, value);
+                if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        return false;
+    }
+
+    uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance)
+    {
+        // 352 = normal ... 576 = squarely ... 577 = strikes true ... 353 = critical ... 354 = miss
+
+        // 25,0 and 25,1 are bows
+        // 26,0 are crossbows
+        // 26,1 are guns
+        // 27,0 is throwing
+        // 27,3 is shuriken
+
+        CItemEquipment* RangedMain = PChar->getEquip(SLOT_RANGED);
+        CItemEquipment* RangedAmmo = PChar->getEquip(SLOT_AMMO);
+
+        uint8 RangedMainType = 0;
+        uint8 RangedMainSubType = 0;
+        uint8 RangedMainCategory = 0;
+        uint8 RangedAmmoType = 0;
+        uint8 RangedAmmoSubType = 0;
+
+        if (RangedMain)
+        {
+            RangedMainType = ((CItemWeapon*)RangedMain)->getSkillType();
+            RangedMainSubType = ((CItemWeapon*)RangedMain)->getSubSkillType();
+            RangedMainCategory = ((CItemWeapon*)RangedMain)->getCategory();
+        }
+        if (RangedAmmo)
+        {
+            RangedAmmoType = ((CItemWeapon*)RangedAmmo)->getSkillType();
+            RangedAmmoSubType = ((CItemWeapon*)RangedAmmo)->getSubSkillType();
+        }
+
+        ShowDebug("RangedMainType = %u, RangedMainSubtype = %u, RangedMainCategory = %u\n",RangedMainType,RangedMainSubType,RangedMainCategory);
+
+
+
+        if ((RangedMainType == 27 && RangedMainSubType == 0) || (RangedAmmoType == 27 && RangedAmmoSubType == 0)) // non-shuriken throwing
+        {
+            if (distance < 6.0f)
+                return 577;
+            if (distance < 12.0f)
+                return 576;
+            return 352;
+        }
+        else if (RangedMainType == 25 && RangedMainSubType == 0 && RangedMainCategory == 0) // shortbow
+        {
+            if (distance > 6.5f && distance < 12.5f)
+                return 577;
+            if (distance > 5.5f && distance < 19.0f)
+                return 576;
+            return 352;
+        }
+        else if (RangedMainType == 25 && RangedMainSubType == 0 && RangedMainCategory == 1) // longbow
+        {
+            //ShowDebug("Longbow Detected for RA msg... distance was %f...\n",distance);
+            if (distance > 8.0f && distance < 21.0f)
+                return 577;
+            if (distance > 5.5f && distance < 24.0f)
+                return 576;
+            return 352;
+        }
+        else if (RangedMainType == 26 && RangedMainSubType == 0) // crossbow
+        {
+            if (distance > 5.5f && distance < 10.5f)
+                return 577;
+            if (distance > 4.0f && distance < 18.0f)
+                return 576;
+            return 352;
+        }
+        else if (RangedMainType == 26 && RangedMainSubType == 1) // gun
+        {
+            if (distance > 3.7f && distance < 10.0f)
+                return 577;
+            if (distance > 3.0f && distance < 19.0f)
+                return 576;
+            return 352;
+        }
+
+        // below--default to shuriken throwing
+
+        if (distance < 6.0f)
+            return 577;
+        if (distance < 12.0f)
+            return 576;
+        return 352;
     }
 
     uint16 getWideScanRange(JOBTYPE job, uint8 level)

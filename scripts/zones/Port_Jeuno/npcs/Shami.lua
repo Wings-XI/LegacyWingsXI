@@ -192,18 +192,18 @@ function onTrigger(player, npc)
     end
 end
 
--- 50 : 30 sceau conférie : choix entre clotho et lachésis
--- 24 : Après achat d'un orb (qu'bia, yughott, palborough, giddeus)
--- 8 : Après achat d'un orb (yughott, palborough, giddeus, qu'bia, ghelsba)
--- 4 : Après achat d'un orb (yughott, palborough, giddeus, ghelsba)
--- 10 : Après achat d'un orb (yughott, palborough, giddeus)
+-- 50 : 30 sceau confï¿½rie : choix entre clotho et lachï¿½sis
+-- 24 : Aprï¿½s achat d'un orb (qu'bia, yughott, palborough, giddeus)
+-- 8 : Aprï¿½s achat d'un orb (yughott, palborough, giddeus, qu'bia, ghelsba)
+-- 4 : Aprï¿½s achat d'un orb (yughott, palborough, giddeus, ghelsba)
+-- 10 : Aprï¿½s achat d'un orb (yughott, palborough, giddeus)
 -- 9 : Trade d'un orb ? (yughott, palborough, giddeus, ghelsba)
 -- 5 : Trade d'un orb ? (yughott, palborough, giddeus, ghelsba)
 -- 11 : Trade d'un orb ? (yughott, palborough, giddeus)
 -- 26 : Trade d'un orb ? (qu'bia, yughott, palborough, giddeus)
 -- 27 : Trade d'un orb ? (qu'bia, chambre des oracles)
--- 22 : Trade d'un orb utilisé (il le recup)
--- 25 : Un seul échange autorisé par semaine
+-- 22 : Trade d'un orb utilisï¿½ (il le recup)
+-- 25 : Un seul ï¿½change autorisï¿½ par semaine
 -- 321 : trade sceau + nombre player:startEvent(321, 0, 15)
 --          0 shbete, 1 s-confrerie, 2 s-demons, 3 s-seigneurdes hombre
 function onEventUpdate(player, csid, option)

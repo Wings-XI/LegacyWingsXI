@@ -39,7 +39,7 @@ local pastMaws =
 
 local function meetsMission2Reqs(player)
 
-    if not player:getCurrentMission(WOTG) == tpz.mission.id.wotg.BACK_TO_THE_BEGINNING then
+    if player:getCurrentMission(WOTG) ~= tpz.mission.id.wotg.BACK_TO_THE_BEGINNING then
         return false
     end
 
@@ -65,7 +65,7 @@ tpz.maws.onTrigger = function(player, npc)
     local event = nil
     local event_params = nil
 
-    if maw.cs.msn and meetsMission2Reqs(player) then
+    if maw.cs.msn and meetsMission2Reqs(player) == true then
         event = maw.cs.msn
     elseif hasMaw then
         event = maw.cs.warp
@@ -120,8 +120,8 @@ tpz.maws.onEventFinish = function(player, csid, option)
         player:completeMission(WOTG, tpz.mission.id.wotg.CAVERNOUS_MAWS)
         player:addMission(WOTG, tpz.mission.id.wotg.BACK_TO_THE_BEGINNING)
         player:addKeyItem(tpz.ki.PURE_WHITE_FEATHER)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PURE_WHITE_FEATHER)
-        local x = math.random(1, 3)
+        --player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PURE_WHITE_FEATHER)
+        local x = 1 -- math.random(1, 3) -- only batallia works since onzonein doesnt take params
         if x == 1 then
             maw = pastMaws[ZN.BATALLIA_DOWNS]
         elseif x == 2 then
@@ -129,6 +129,7 @@ tpz.maws.onEventFinish = function(player, csid, option)
         else
             maw = pastMaws[ZN.SAUROMUGUE_CHAMPAIGN]
         end
+		player:setCharVar("WOTG_PlayCrashLandCS",1)
         addMaw()
     end
 

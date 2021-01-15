@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2016 Darkstar Dev Teams
@@ -691,6 +691,11 @@ void log_init(int argc, char** argv)
         }
     }
     InitializeLog(logFile);
+}
+
+void log_final()
+{
+    CloseLog();
 }
 
 ///////////////////////////////////////////////////////

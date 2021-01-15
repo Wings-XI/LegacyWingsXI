@@ -73,3 +73,10 @@ end
 function onMobDeath(mob, player, isKiller)
     tpz.regime.checkRegime(player, mob, 119, 2, tpz.regime.type.FIELDS)
 end
+
+function onMobDespawn(mob)
+    UpdateNMSpawnPoint(mob:getID())
+    local respawn = math.random(75600, 75600+900) -- 21h to 21h15m
+    mob:setRespawnTime(respawn)
+	SetServerVariable("ShikigamiWeaponRespawn",(os.time() + respawn))
+end

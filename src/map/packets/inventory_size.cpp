@@ -38,6 +38,38 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     this->type = 0x1C;
     this->size = 0x1A;
 
+    GetSizeAndBuff(PChar, LOC_INVENTORY, 0x04, 0x14);
+    GetSizeAndBuff(PChar, LOC_MOGSAFE, 0x05, 0x16);
+    GetSizeAndBuff(PChar, LOC_STORAGE, 0x06, 0x18);
+    GetSizeAndBuff(PChar, LOC_TEMPITEMS, 0x07, 0x1A);
+    GetSizeAndBuff(PChar, LOC_MOGLOCKER, 0x08, 0x1C);
+    if (!charutils::hasMogLockerAccess(PChar)) {
+        // Mog locker lease expired
+        ref<uint16>(0x1C) = 0x00;
+    }
+    GetSizeAndBuff(PChar, LOC_MOGSATCHEL, 0x09, 0x1E);
+    if (!(PChar->m_accountFeatures & 0x01)) {
+        // Has no mog satchel access (greyed out)
+        ref<uint8>(0x09) = 0x00;
+        ref<uint16>(0x1E) = 0x00;
+    }
+    GetSizeAndBuff(PChar, LOC_MOGSACK, 0x0A, 0x20);
+    GetSizeAndBuff(PChar, LOC_MOGCASE, 0x0B, 0x22);
+    GetSizeAndBuff(PChar, LOC_WARDROBE, 0x0C, 0x24);
+    GetSizeAndBuff(PChar, LOC_MOGSAFE2, 0x0D, 0x26);
+    GetSizeAndBuff(PChar, LOC_WARDROBE2, 0x0E, 0x28);
+    GetSizeAndBuff(PChar, LOC_WARDROBE3, 0x0F, 0x2A);
+    if (!(PChar->m_accountFeatures & 0x04)) {
+        // Has no wardrobe 3 access (can still view)
+        ref<uint16>(0x2A) = 0x00;
+    }
+    GetSizeAndBuff(PChar, LOC_WARDROBE4, 0x10, 0x2C);
+    if (!(PChar->m_accountFeatures & 0x08)) {
+        // Has no wardrobe 4 access (can still view)
+        ref<uint16>(0x2C) = 0x00;
+    }
+
+    /*
     ref<uint8>(0x04) = 1 + PChar->getStorage(LOC_INVENTORY)->GetSize();
     ref<uint8>(0x05) = 1 + PChar->getStorage(LOC_MOGSAFE)->GetSize();
     ref<uint8>(0x06) = 1 + PChar->getStorage(LOC_STORAGE)->GetSize();
@@ -69,4 +101,19 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     ref<uint16>(0x28) = 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
     ref<uint16>(0x2A) = 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
     ref<uint16>(0x2C) = 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
+    */
+}
+
+void CInventorySizePacket::GetSizeAndBuff(CCharEntity* PChar, uint8 location, uint8 sizeOffset, uint8 buffOffset)
+{
+    uint8 storageSize = PChar->getStorage(location)->GetSize();
+    uint16* outBuff = reinterpret_cast<uint16*>(data + buffOffset);
+    if (storageSize > 0) {
+        *outBuff = 1 + PChar->getStorage(location)->GetBuff();
+        *(data + sizeOffset) = 1 + storageSize;
+    }
+    else {
+        *outBuff = 0x00;
+        *(data + sizeOffset) = 0x00;
+    }
 }

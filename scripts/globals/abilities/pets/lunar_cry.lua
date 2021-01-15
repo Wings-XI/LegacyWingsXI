@@ -12,6 +12,9 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) < 0.25 then
+        return 0
+    end
     local moon = VanadielMoonPhase()
     local buffvalue = 0
     if moon > 90 then

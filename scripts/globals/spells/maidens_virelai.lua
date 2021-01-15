@@ -23,6 +23,10 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    if target:isMob() and target:getID() == 17649730 then
+        ability:setMsg(tpz.msg.basic.NO_EFFECT)
+        return
+    end
     local dCHR = (caster:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR))
     local bonus = 0 -- No idea what value, but seems likely to need this edited later to get retail resist rates.
     local params = {}
@@ -31,6 +35,15 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.SINGING
     params.bonus = bonus
     params.effect = tpz.effect.CHARM_I
+    params.skillBonus = 0
+    if caster:isPC() then
+        local instrument = caster:getSkillLevel(caster:getWeaponSkillType(tpz.slot.RANGED))
+        local skillcap = caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BRD, tpz.skill.STRING_INSTRUMENT) -- will return the same whether string or wind, both are C for bard
+    
+        if instrument > skillcap then
+            params.skillBonus = instrument - skillcap -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
+        end
+    end
     local resist = applyResistanceEffect(caster, target, spell, params)
     -- print(resist)
     if (resist >= 0.25 and caster:getCharmChance(target, false) > 0) then

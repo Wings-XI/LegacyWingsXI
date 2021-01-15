@@ -29,7 +29,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.DEF, 10)
     target:addMod(tpz.mod.FOOD_ACCP, 13)
     target:addMod(tpz.mod.FOOD_ACC_CAP, 64)
-    target:addMod(tpz.mod.SLEEPRES, 1)
+    target:addMod(tpz.mod.SLEEPRESTRAIT, 1)
 end
 
 function onEffectLose(target, effect)
@@ -37,5 +37,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.DEF, 10)
     target:delMod(tpz.mod.FOOD_ACCP, 13)
     target:delMod(tpz.mod.FOOD_ACC_CAP, 64)
-    target:delMod(tpz.mod.SLEEPRES, 1)
+    target:delMod(tpz.mod.SLEEPRESTRAIT, 1)
 end

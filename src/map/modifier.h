@@ -292,6 +292,23 @@ enum class Mod
     DEATHRES                  = 255, // Used by gear and ATMA that give resistance to instance KO
     STATUSRES                 = 958, // "Resistance to All Status Ailments"
 
+    SLEEPRESTRAIT = 1240,
+    POISONRESTRAIT = 1241,
+    PARALYZERESTRAIT = 1242,
+    BLINDRESTRAIT = 1243,
+    SILENCERESTRAIT = 1244,
+    VIRUSRESTRAIT = 1245,
+    PETRIFYRESTRAIT = 1246,
+    BINDRESTRAIT = 1247,
+    CURSERESTRAIT = 1248,
+    GRAVITYRESTRAIT = 1249,
+    SLOWRESTRAIT = 1250,
+    STUNRESTRAIT = 1251,
+    CHARMRESTRAIT = 1252,
+    AMNESIARESTRAIT = 1253,
+    LULLABYRESTRAIT = 1254,
+    DEATHRESTRAIT = 1255,
+
     PARALYZE                  = 257, // Paralyze -- percent chance to proc
     MIJIN_RERAISE             = 258, // Augments Mijin Gakure
     DUAL_WIELD                = 259, // Percent reduction in dual wield delay.
@@ -449,6 +466,7 @@ enum class Mod
     BP_DELAY_II               = 541, // Blood Pact Delay Reduction II
     BP_DAMAGE                 = 126, // Blood Pact: Rage Damage increase percentage
     BLOOD_BOON                = 913, // Occasionally cuts down MP cost of Blood Pact abilities. Does not affect abilities that require Astral Flow.
+    SPIRIT_RECAST_REDUCTION   = 960, // Reduction time in seconds for "spirits" spellcasting cooldown
 
     // Blue Mage
     BLUE_POINTS               = 309, // Tracks extra blue points
@@ -816,14 +834,70 @@ enum class Mod
     CONQUEST_REGION_BONUS     = 934, // Increases the influence points awarded to the player's nation when receiving conquest points
     CAMPAIGN_BONUS            = 935, // Increases the evaluation for allied forces by percentage
 
-    SUBTLE_BLOW_II            = 973, // Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
-    GARDENING_WILT_BONUS      = 975, // Increases the number of Vanadays a plant can survive before it wilts
+    SUBTLE_BLOW_II            = 993, // Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
+    GARDENING_WILT_BONUS      = 995, // Increases the number of Vanadays a plant can survive before it wilts
+
+    SUPER_JUMP = 988,
+
+    SPDEF_DOWN = 958,
+
+    RESBUILD_SLEEP = 959,
+    RESBUILD_GRAVITY = 960,
+    RESBUILD_BIND = 961,
+    RESBUILD_SLOW = 962,
+    RESBUILD_PARALYZE = 963,
+    RESBUILD_BLIND = 964,
+    RESBUILD_SILENCE = 965,
+    RESBUILD_STUN = 966,
+    RESBUILD_POISON = 967,
+
+    SDT_FIRE = 968,
+    SDT_EARTH = 969,
+    SDT_WATER = 970,
+    SDT_WIND = 971,
+    SDT_ICE = 972,
+    SDT_THUNDER = 973,
+    SDT_LIGHT = 974,
+    SDT_DARK = 975,
+
+    SUSC_TO_WS_STUN = 1176,
+    ENHANCES_COVER = 1178,
+    AUGMENTS_COVER = 1179,
+    COVERED_MP_FLAG = 1180,
+    RAMPART_STONESKIN = 1181,
+    TAME_SUCCESS_RATE = 1182,
+    MAGIC_STACKING_MDT = 1183,
+    FIRE_BURDEN_DECAY = 1184,
+    BURDEN_DECAY_IGNORE_CHANCE = 1185,
+    FIRE_BURDEN_PERC_EXTRA = 1186,
+    SUPER_INTIMIDATION = 1187,
+
+    PENGUIN_RING_EFFECT = 1000,     // +2 on fishing arrow delay / fish movement for mini - game
+    ALBATROSS_RING_EFFECT = 1001,   // adds 30 seconds to mini - game time
+    PELICAN_RING_EFFECT = 1002,      // adds extra skillup roll for fishing
+
+    VERMIN_CIRCLE = 1224,
+    BIRD_CIRCLE = 1225,
+    AMORPH_CIRCLE = 1226,
+    LIZARD_CIRCLE = 1227,
+    AQUAN_CIRCLE = 1228,
+    PLANTOID_CIRCLE = 1229,
+    BEAST_CIRCLE = 1230,
+    UNDEAD_CIRCLE = 1231,
+    ARCANA_CIRCLE = 1232,
+    DRAGON_CIRCLE = 1233,
+    DEMON_CIRCLE = 1234,
+    EMPTY_CIRCLE = 1235,
+    HUMANOID_CIRCLE = 1236,
+    LUMORIAN_CIRCLE = 1237,
+    LUMINION_CIRCLE = 1238
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
-    // SPARE = 986, // stuff
-    // SPARE = 987, // stuff
-    // SPARE = 988, // stuff
+    
+    // SPARE = 959, // stuff
+    // SPARE = 960, // stuff
+    // super jump taking up 988
 };
 
 //temporary workaround for using enum class as unordered_map key until compilers support it

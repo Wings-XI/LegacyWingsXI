@@ -41,10 +41,13 @@ function onPetAbility(target, automaton, skill, master, action)
 
     local damage = doAutoRangedWeaponskill(automaton, target, 0, params, skill:getTP(), true, skill, action)
 
+    local duration = 4
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
+    
     if damage > 0 then
         local chance = 0.033 * skill:getTP()
         if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
         end
     end
 

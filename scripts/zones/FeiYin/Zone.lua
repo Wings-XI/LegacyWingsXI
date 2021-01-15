@@ -14,8 +14,12 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.CAPRICIOUS_CASSIE)
-    GetMobByID(ID.mob.CAPRICIOUS_CASSIE):setRespawnTime(math.random(900, 10800))
-
+	local capre = GetServerVariable("CapriciousCassieRespawn")
+	if os.time() < capre then
+		GetMobByID(ID.mob.CAPRICIOUS_CASSIE):setRespawnTime(capre - os.time())
+	else
+		SpawnMob(ID.mob.CAPRICIOUS_CASSIE)
+	end
     tpz.treasure.initZone(zone)
 end
 

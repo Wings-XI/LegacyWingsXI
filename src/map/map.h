@@ -84,6 +84,7 @@ struct map_config_t
     float  exp_rate;                  // множитель получаемого опыта
     float  exp_loss_rate;             // same as exp rate but applies when player dies
     uint8  exp_party_gap_penalties;   // if 1 Party Gap Penalties will apply
+    uint8  fov_allow_alliance;        // if 1 allow alliance to farm fov pages
     float  exp_retain;                // percentage of normally lost experience to retain upon death
     int8   exp_loss_level;            // Minimum main job level at which a character may lose experience points.
     bool   level_sync_enable;         // Enable/disable Level Sync
@@ -114,6 +115,9 @@ struct map_config_t
     float  player_mp_multiplier;      // Multiplier for max MP pool of player
     float  alter_ego_mp_multiplier;   // 
     float  sj_mp_divisor;             // Divisor to use on subjob max MP
+    uint8  vana_hours_per_pos_update; // How frequently to update the player's position to the SQL server in case of crash
+    uint16 zone_sleep_timer;          // Timer in seconds until a zone goes to "sleep" after the last character has left the zone.
+    uint8  zone_crash_recovery_min_players; // Minimum number of players that needed to have been in a crashed zone to initiate crash recovery
     int8   subjob_ratio;              // Modify ratio of subjob-to-mainjob
     bool   include_mob_sj;            // Include mobs in effects of SJ ratio setting
     float  nm_stat_multiplier;        // Multiplier for str/vit/etc of NMs
@@ -147,6 +151,11 @@ struct map_config_t
     bool   skillup_bloodpact;         // Enable/disable skillups for bloodpacts
     bool   anticheat_enabled;         // Is the anti-cheating system enabled
     bool   anticheat_jail_disable;    // Globally disable auto-jailing by the anti-cheat system
+    bool   mog_garden_enabled;        // Player can zone from the mog-house to mog-garden after completing exit quest
+    float  poshack_threshold;         // If the distance between two pos packet is bigger than this it's cheating
+    uint8  cheat_threshold_warn;      // Number of cheating attempts that triggers a warning
+    uint8  cheat_threshold_jail;      // Number of cheating attempts that triggers autojail
+    uint32 debug_client_ip;           // Print when a packet from this IP is received (used for debug breaks)
     uint16  daily_tally_amount;       // Amount of daily tally points given at midnight for Gobbie Mystery Box
     uint16  daily_tally_limit;        // Upper limit of daily tally points for Gobbie Mystery Box
 };
@@ -193,7 +202,7 @@ extern in_addr map_ip;
 extern uint16 map_port;
 
 extern inline map_session_data_t* mapsession_getbyipp(uint64 ipp);
-extern inline map_session_data_t* mapsession_createsession(uint32 ip,uint16 port);
+extern inline map_session_data_t* mapsession_createsession(uint32 ip,uint16 port,bool force);
 
 //=======================================================================
 
@@ -212,5 +221,7 @@ int32 map_cleanup(time_point tick,CTaskMgr::CTask *PTask);                      
 int32 map_close_session(time_point tick, map_session_data_t* map_session_data);
 
 int32 map_garbage_collect(time_point tick, CTaskMgr::CTask* PTask);
+int32 crash_recovery_end(time_point tick, CTaskMgr::CTask* PTask);
+int32 disableForceCreateSession(time_point tick, CTaskMgr::CTask* PTask);
 
 #endif //_MAP_H

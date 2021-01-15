@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -38,13 +38,15 @@ protected:
     virtual bool CanInterrupt() override { return true; }
     virtual bool Update(time_point tick) override;
     virtual void Cleanup(time_point tick) override;
-    bool CanUseRangedAttack(CBattleEntity* PTarget);
+    bool CanUseRangedAttack(CBattleEntity* PTarget, uint8 range);
 
 private:
     CBattleEntity* const m_PEntity;
     duration m_aimTime;
     bool m_rapidShot {false};
     position_t m_startPos;
+    time_point m_lastCancelCheck;
+    bool m_cancelEarly;
 };
 
 #endif

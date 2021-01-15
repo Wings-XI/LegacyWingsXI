@@ -26,11 +26,11 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.HPHEAL, 5)
     target:addMod(tpz.mod.LIZARD_KILLER, 5)
-    target:addMod(tpz.mod.PETRIFYRES, 5)
+    target:addMod(tpz.mod.PETRIFYRESTRAIT, 5)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.HPHEAL, 5)
     target:delMod(tpz.mod.LIZARD_KILLER, 5)
-    target:delMod(tpz.mod.PETRIFYRES, 5)
+    target:delMod(tpz.mod.PETRIFYRESTRAIT, 5)
 end

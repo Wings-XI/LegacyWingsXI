@@ -25,7 +25,7 @@ function onTrigger(player, npc)
         4150,  2335, 3,    --Eye Drops
         1774,  1984, 3,    --Red Gravel
         17318,    3, 3,    --Wooden Arrow
-        2862,  9200, 3,    --Kingdom Waystone
+        --2862,  9200, 3,    --Kingdom Waystone
     }
 
     player:showText(npc, ID.text.PIRVIDIAUCE_SHOP_DIALOG)

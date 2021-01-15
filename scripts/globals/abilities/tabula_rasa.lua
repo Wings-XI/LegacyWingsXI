@@ -27,7 +27,7 @@ function onUseAbility(player, target, ability)
     player:resetRecast(tpz.recast.ABILITY, 228)
     player:resetRecast(tpz.recast.ABILITY, 231)
     player:resetRecast(tpz.recast.ABILITY, 232)
-    player:addStatusEffect(tpz.effect.TABULA_RASA, math.floor(helixbonus*1.5), 0, 180, 0, math.floor(regenbonus*1.5))
+    player:addStatusEffect(tpz.effect.TABULA_RASA, math.floor(helixbonus*1.5), 0, 60, 0, math.floor(regenbonus*1.5))
 
     return tpz.effect.TABULA_RASA
 end

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -18,6 +18,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
+
+// REVERTED NAVMESH CHANGES FROM TOPAZ AFTER ISSUES
 
 #include "pathfind.h"
 #include "../../zone.h"

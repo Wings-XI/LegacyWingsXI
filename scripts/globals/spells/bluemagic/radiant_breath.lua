@@ -49,16 +49,31 @@ function onSpellCast(caster, target, spell)
     local resist = applyResistance(caster, target, spell, params)
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    local cMND = caster:getStat(tpz.mod.MND)
+    local tMND = target:getStat(tpz.mod.MND)
+    local power = 1800
+    
+    if cMND < tMND then
+        power = power - (tMND - cMND)*50
+        if power < 300 then
+            power = 300
+        end
+    end
+    
+    local duration1 = getBlueEffectDuration(caster,resist,tpz.effect.SLOW)
+    duration1 = math.ceil(duration1 * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
+    local duration2 = getBlueEffectDuration(caster,resist,tpz.effect.SILENCE)
+    duration1 = math.ceil(duration1 * tryBuildResistance(tpz.magic.buildcat.SILENCE, target))
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.SLOW
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 3500, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:delStatusEffect(tpz.effect.SLOW)
+        target:addStatusEffect(tpz.effect.SLOW, power, 0, duration1)
     end
 
     if (damage > 0 and resist > 0.3) then
         target:delStatusEffect(tpz.effect.SILENCE)
-        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, getBlueEffectDuration(caster, resist, tpz.effect.SILENCE))
+        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, duration2)
     end
 
     return damage

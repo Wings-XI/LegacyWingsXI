@@ -10,17 +10,32 @@ require("scripts/globals/helm")
 -----------------------------------
 
 function onInitialize(zone)
-    if math.random(2) == 1 then
-        DisallowRespawn(ID.mob.LEECH_KING, true)
-        DisallowRespawn(ID.mob.ARGUS, false)
-        UpdateNMSpawnPoint(ID.mob.ARGUS)
-        GetMobByID(ID.mob.ARGUS):setRespawnTime(math.random(900, 43200))
-    else
-        DisallowRespawn(ID.mob.ARGUS, true)
-        DisallowRespawn(ID.mob.LEECH_KING, false)
-        UpdateNMSpawnPoint(ID.mob.LEECH_KING)
-        GetMobByID(ID.mob.LEECH_KING):setRespawnTime(math.random(900, 43200))
-    end
+	local re = GetServerVariable("ArgusRespawn")
+	if os.time() < re then
+		if math.random(2) == 1 then
+			DisallowRespawn(ID.mob.LEECH_KING, true)
+			DisallowRespawn(ID.mob.ARGUS, false)
+			UpdateNMSpawnPoint(ID.mob.ARGUS)
+			GetMobByID(ID.mob.ARGUS):setRespawnTime(re - os.time())
+		else
+			DisallowRespawn(ID.mob.ARGUS, true)
+			DisallowRespawn(ID.mob.LEECH_KING, false)
+			UpdateNMSpawnPoint(ID.mob.LEECH_KING)
+			GetMobByID(ID.mob.LEECH_KING):setRespawnTime(re - os.time())
+		end
+	else
+		if math.random(2) == 1 then
+			DisallowRespawn(ID.mob.LEECH_KING, true)
+			DisallowRespawn(ID.mob.ARGUS, false)
+			UpdateNMSpawnPoint(ID.mob.ARGUS)
+			SpawnMob(ID.mob.ARGUS)
+		else
+			DisallowRespawn(ID.mob.ARGUS, true)
+			DisallowRespawn(ID.mob.LEECH_KING, false)
+			UpdateNMSpawnPoint(ID.mob.LEECH_KING)
+			SpawnMob(ID.mob.LEECH_KING)
+		end
+	end
 
     tpz.treasure.initZone(zone)
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)

@@ -23,10 +23,11 @@ end
 
 function onUseAbility(player, target, ability)
     -- Plus 5 percent hp recovers per extra martyr merit
-    local meritBonus = player:getMerit(tpz.merit.MARTYR) - 5
+    -- local meritBonus = player:getMerit(tpz.merit.MARTYR) - 5
     -- printf("Martyr Merit Bonus: %d", meritBonus)
 
-    local hpPercent = (200 + meritBonus) / 100
+    -- local hpPercent = (200 + meritBonus) / 100
+    local hpPercent = 2
     -- printf("Martyr HP Bonus Percent: %f", hpPercent)
 
     local damageHP = math.floor(player:getHP() * 0.25)
@@ -46,6 +47,17 @@ function onUseAbility(player, target, ability)
     damageHP = utils.stoneskin(player, damageHP)
     player:delHP(damageHP)
     target:addHP(healHP)
+    
+    if player:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) then
+        local level = player:getMainLvl()
+        local solace = player:getLocalVar("SolaceCureRecording")
+        local newsolace = healHP+solace
+        if newsolace > 22*level then
+            newsolace = 22*level
+        end
+        player:setLocalVar("SolaceCureRecording",newsolace)
+        --print(string.format("player solace was %u new solace is %u",solace,newsolace))
+    end
 
     return healHP
 end

@@ -620,14 +620,14 @@ end
 
 local overseerInvCommon =
 {
-    [32928] = {cp =     7, lvl =  1, item =  4182},             -- scroll_of_instant_reraise
-    [32929] = {cp =    10, lvl =  1, item =  4181},             -- scroll_of_instant_warp
+    [32928] = {cp =   500, lvl =  1, item =  4182},             -- scroll_of_instant_reraise
+    [32929] = {cp =   750, lvl =  1, item =  4181},             -- scroll_of_instant_warp
     [32930] = {cp =  2500, lvl =  1, item = 15542},             -- return_ring
     [32931] = {cp =  9000, lvl =  1, item = 15541},             -- homing_ring
     [32933] = {cp =   500, lvl =  1, item = 15761},             -- chariot_band
     [32934] = {cp =  1000, lvl =  1, item = 15762},             -- empress_band
     [32935] = {cp =  2000, lvl =  1, item = 15763},             -- emperor_band
-    [32936] = {cp =  5000, lvl =  1, item = 28540},             -- warp_ring
+    --[32936] = {cp =  5000, lvl =  1, item = 28540},             -- warp_ring
     [32941] = {cp = 20000, lvl =  1, item =  6380, rank = 10},  -- refined_chair_set
 }
 
@@ -1056,6 +1056,12 @@ tpz.conquest.overseerOnEventUpdate = function(player, csid, option, guardNation)
         if stock.cp > player:getCP() then
             u2 = 1
         end
+        
+        if stock.item == 4181 then
+            player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Warp is 750 CP.",29)
+        elseif stock.item == 4182 then
+            player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Reraise is 500 CP.",29)
+        end
 
         local rankCheck = true
         if guardNation ~= tpz.nation.OTHER and guardNation ~= pNation and getNationRank(guardNation) <= pRank then -- buy from other nation, must be higher ranked
@@ -1083,7 +1089,7 @@ tpz.conquest.overseerOnEventFinish = function(player, csid, option, guardNation,
 
     -- SIGNET
     if option == 1 then
-        local duration = (pRank + getNationRank(pNation) + 3) * 3600
+        local duration = (pRank + getNationRank(pNation)) * 3600
         player:delStatusEffectsByFlag(tpz.effectFlag.INFLUENCE, true)
         player:addStatusEffect(tpz.effect.SIGNET, 0, 0, duration)
         player:messageSpecial(mOffset + 1) -- "You've received your nation's Signet!"
@@ -1195,12 +1201,12 @@ tpz.conquest.vendorOnTrigger = function(player, vendorRegion, vendorEvent)
     end
 
     local fee = tpz.conquest.outpostFee(player, vendorRegion)
-    player:startEvent(vendorEvent, nation, fee, 0, fee, player:getCP(), 0, 0, 0)
+    player:startEvent(vendorEvent,nation,fee,0,fee,player:getCP(),0,0,0)
 end
 
 tpz.conquest.vendorOnEventUpdate = function(player, vendorRegion)
     local fee = tpz.conquest.outpostFee(player, vendorRegion)
-    player:updateEvent(player:getGil(), fee, 0, fee, player:getCP())
+    player:updateEvent(player:getGil(),fee,0,fee,player:getCP())
 end
 
 tpz.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
@@ -1213,8 +1219,12 @@ tpz.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
             player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
         end
     elseif option == 6 then
-        player:delCP(fee)
-        player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
+        --player:delCP(fee)
+		--player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
+		if player:delGil(fee) then
+            player:PrintToPlayer("Conquest point fees for teleports are out-of-WotG-era. The gil fee option has been used instead.",29)
+			player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
+        end
     end
 end
 
@@ -1236,33 +1246,40 @@ tpz.conquest.teleporterOnEventUpdate = function(player, csid, option, teleporter
     if csid == teleporterEvent then
         local region = option - 1073741829
         local fee = tpz.conquest.outpostFee(player, region)
-        local cpFee = fee/10
-
-        player:updateEvent(player:getGil(), fee, 0, cpFee, player:getCP())
+        player:updateEvent(player:getGil(), fee, 0, fee, player:getCP())
     end
 end
 
 tpz.conquest.teleporterOnEventFinish = function(player, csid, option, teleporterEvent)
     if csid == teleporterEvent then
         -- TELEPORT WITH GIL
-        if option >= 5 and option <= 23 then
-            local region = option - 5
+        -- if option >= 5 and option <= 23 then
+			local region = option - 5
+			
+			if option >= 1029 and option <= 1047 then
+				player:PrintToPlayer("Conquest point fees for teleports are out-of-WotG-era. The gil fee option has been used instead.",29)
+				region = option - 1029
+			end
+            
             local fee = tpz.conquest.outpostFee(player, region)
 
             if tpz.conquest.canTeleportToOutpost(player, region) and player:delGil(fee) then
                 player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.OUTPOST, 0, 1, 0, region)
             end
 
-        -- TELEPORT WITH CP
-        elseif option >= 1029 and option <= 1047 then
+        -- TELEPORT WITH CP, not 75 cap, disabled
+        
+            
+            --[[
             local region = option - 1029
-            local cpFee = tpz.conquest.outpostFee(player, region)/10
+            local fee = tpz.conquest.outpostFee(player, region)
 
-            if tpz.conquest.canTeleportToOutpost(player, region) and player:getCP() >= cpFee then
-                player:delCP(cpFee)
+            if tpz.conquest.canTeleportToOutpost(player, region) and player:getCP() >= fee then
+                player:delCP(fee)
                 player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.OUTPOST, 0, 1, 0, region)
             end
-        end
+            ]]
+        --end
     end
 end
 
@@ -1357,8 +1374,8 @@ tpz.conquest.onConquestUpdate = function(zone, updatetype)
                 player:messageText(player, messageBase + 36, 5) -- All three nations are at a deadlock.
             else
                 local sandoria = bit.band(influence, 0x03)
-                local bastok = bit.rshift(bit.band(influence, 0x0C), 2)
-                local windurst = bit.rshift(bit.band(influence, 0x30), 4)
+                local bastok = bit.rshift(bit.band(influence, 0x0C),2)
+                local windurst = bit.rshift(bit.band(influence, 0x30),4)
 
                 player:messageText(player, messageBase + 41 - sandoria, 5) -- Regional influence: San d'Oria
                 player:messageText(player, messageBase + 45 - bastok, 5)   -- Regional influence: Bastok

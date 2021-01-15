@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -21,6 +21,7 @@
 
 #include <string.h>
 #include "mobskill.h"
+#include "map.h"
 
 CMobSkill::CMobSkill(uint16 id)
 {
@@ -41,6 +42,7 @@ CMobSkill::CMobSkill(uint16 id)
     m_TP = 0;
     m_HPP = 0;
     m_knockback = 0;
+    m_GuardReaction = false;
 }
 
 bool CMobSkill::hasMissMsg() const
@@ -55,7 +57,7 @@ bool CMobSkill::isAoE() const
 
 bool CMobSkill::isConal() const
 {
-    return m_Aoe == 4;
+    return m_Aoe == 4 || m_Aoe == 5;
 }
 
 bool CMobSkill::isSingle() const
@@ -172,56 +174,99 @@ uint16 CMobSkill::getPetAnimationID() const
     // levi
     if (m_AnimID >= 552 && m_AnimID <= 560)
     {
-        return m_AnimID - 488;
+        return m_AnimID - 488; // 64,65,66,67,68,69,70,71,72
     }
 
     // garuda
     if (m_AnimID >= 565 && m_AnimID <= 573)
     {
-        return m_AnimID - 485;
+        return m_AnimID - 485; // 80,81,82,83,84,85,86,87,88
     }
 
     // titan
     if (m_AnimID >= 539 && m_AnimID <= 547)
     {
-        return m_AnimID - 491;
+        return m_AnimID - 491; // 48,49,50,51,52,53,54,55,56
     }
 
     // ifrit
     if (m_AnimID >= 526 && m_AnimID <= 534)
     {
-        return m_AnimID - 494;
+        return m_AnimID - 494; // 32,33,34,35,36,37,38,39,40
     }
 
     // fenrir
     if (m_AnimID >= 513 && m_AnimID <= 521)
     {
-        return m_AnimID - 497;
+        return m_AnimID - 497; // 16,17,18,19,20,21,22,23,24
     }
 
     // shiva
     if (m_AnimID >= 578 && m_AnimID <= 586)
     {
-        return m_AnimID - 482;
+        return m_AnimID - 482; // 96,97,98,99,100,101,102,103,104
     }
 
     // rumah
     if (m_AnimID >= 591 && m_AnimID <= 599)
     {
-        return m_AnimID - 479;
+        return m_AnimID - 479; // 112,113,114,115,116,117,118,119,120,121
     }
 
     // carbuncle
     if (m_AnimID >= 605 && m_AnimID <= 611)
     {
-        return m_AnimID - 605;
+        return m_AnimID - 605; // 0,1,2,3,4,5,6
     }
 
     // wyvern
     if (m_AnimID >= 621 && m_AnimID <= 632)
     {
-        return m_AnimID - 493;
+        return m_AnimID - 493; // 128,129,130,131,132,133,134,135,136,137,138,139
     }
+
+    // 144 is diabolos ruinous omen it seems
+    // 151 Odin's Zantetsuken
+    // 152 Alexander's Perfect Defense
+    // 153 dark noodles coming out of the ground. looks like it might be for odin.
+    // 154 holy shit a space laser!
+    // 155 dark based debuff
+    // 156 very very radiant light based attack/buff
+    // 157 slightly more radiant light based attack/buff
+    // 158 light based attack/buff
+
+    // cait sith
+    if (m_AnimID >= 1681 && m_AnimID <= 1695)
+    {
+        return m_AnimID - 1686 + 161; // 158,159,160,161
+    }
+
+    // 169 cait sith level 6 holy
+    // 170 seems like cait sith divine favor??
+    // 171 atomos deconstruction
+    // 172 atomos chronoshift i think, is chronoshift conal??
+    // 173 dark based melee attack
+    // 174 cait sith regal gash
+    // 175 empty
+
+    // 176 empty
+    // 192 empty
+    // 208 empty
+    // 224 empty
+    // 240 empty
+    // 254 empty
+    // 255 empty
+
+    Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name LIKE 'PetAnimID' LIMIT 1;"); Sql_NextRow(SqlHandle); uint16 PetAnimID = (uint16)Sql_GetUIntData(SqlHandle, 0);
+
+    if (m_AnimID == 1467) // Alexander Perfect Defense
+        return 152;
+    if (m_AnimID == 1447) // Odin Zantetsuken
+        return 151;
+    if (m_AnimID == 3326) // Atomos Deconstruction
+        return 171;
+    if (m_AnimID == 3325) // Atomos Chronoshift
+        return 172;
 
     return m_AnimID;
 }

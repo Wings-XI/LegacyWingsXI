@@ -52,6 +52,8 @@ function onSpellCast(caster, target, spell)
         final = tpz.effect.BANE
         spell:setMsg(tpz.msg.basic.MAGIC_REMOVE_EFFECT)
     end
-
+    if caster:hasTrait(69) then
+        caster:delStatusEffect(tpz.effect.DIVINE_SEAL)
+    end
     return final
 end

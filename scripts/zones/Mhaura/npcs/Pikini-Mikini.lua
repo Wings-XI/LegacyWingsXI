@@ -18,16 +18,19 @@ function onTrigger(player, npc)
         4151,  720,    -- Echo Drops
         4112,  819,    -- Potion
         4509,   10,    -- Distilled Water
-        917,  1821,    -- Parchment
+        --917,  1821,    -- Parchment
         17395,   9,    -- Lugworm
         1021,  450,    -- Hatchet
         4376,  108,    -- Meat Jerky
         5299,  133,    -- Salsa
-        2867, 9000,    -- Mhaura Waystone
+        4716, 3888,    -- scroll of regen
+        4718, 7047,    -- scroll of regen ii
+        4881,10080,    -- scroll of sleepga
+        --2867, 9000,    -- Mhaura Waystone
     }
 
     player:showText(npc, ID.text.PIKINIMIKINI_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, MHAURA)
 end
 
 function onEventUpdate(player, csid, option)

@@ -28,12 +28,12 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.AGI, 3)
     target:addMod(tpz.mod.INT, 5)
     target:addMod(tpz.mod.CHR, -5)
-    target:addMod(tpz.mod.VIRUSRES, 20)
+    target:addMod(tpz.mod.VIRUSRESTRAIT, 20)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.AGI, 3)
     target:delMod(tpz.mod.INT, 5)
     target:delMod(tpz.mod.CHR, -5)
-    target:delMod(tpz.mod.VIRUSRES, 20)
+    target:delMod(tpz.mod.VIRUSRESTRAIT, 20)
 end

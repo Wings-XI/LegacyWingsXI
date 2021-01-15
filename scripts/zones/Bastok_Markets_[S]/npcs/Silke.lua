@@ -17,9 +17,9 @@ function onTrigger(player, npc)
         6060, 29925,    -- Animus Minuo Schema
         6061, 36300     -- Adloquim Schema
     }
-
-    player:showText(npc, ID.text.SILKE_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    --seems like OOE NPC, remove me?
+    --player:showText(npc, ID.text.SILKE_SHOP_DIALOG)
+    --tpz.shop.general(player, stock)
 end
 
 function onEventUpdate(player, csid, option)

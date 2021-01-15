@@ -72,12 +72,10 @@ local loot =
             {itemid = 17429, droprate =  250}, -- dominion_mace
         },
         {
-            {itemid =     0, droprate =  250}, -- nothing
-            {itemid = 13054, droprate =  100}, -- fuma_kyahan
+            {itemid =     0, droprate =  450}, -- nothing
             {itemid = 13555, droprate =  200}, -- peace_ring
             {itemid = 13624, droprate =  200}, -- enhancing_mantle
             {itemid = 13236, droprate =  150}, -- master_belt
-            {itemid = 13952, droprate =  100}, -- ochiudos_kote
         },
         {
             {itemid =     0, droprate =  850}, -- nothing
@@ -136,7 +134,6 @@ local loot =
             {itemid = 13447, droprate =   32}, -- Platinum Ring
         },
         {
-            {itemid = 13548, droprate =  376}, -- Astral Ring
             {itemid = 13447, droprate =   22}, -- Platinum Ring
             {itemid =  4818, droprate =   65}, -- Scroll Of Quake
             {itemid =   859, droprate =   10}, -- Ram Skin

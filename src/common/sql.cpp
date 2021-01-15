@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -22,6 +22,7 @@
 #include "../common/showmsg.h"
 #include "../common/timer.h"
 #include "../common/taskmgr.h"
+#include "../common/kernel.h"
 
 #include "sql.h"
 
@@ -29,6 +30,10 @@
 #include <stdlib.h>
 #include <cstdio>
 #include <any>
+#include <thread>
+#include <chrono>
+
+#define SQL_RECONNECT_TRIES 5
 
 /************************************************************************
 *																		*
@@ -59,6 +64,7 @@ Sql_t* Sql_Malloc(void)
 	self->lengths = NULL;
 	self->result  = NULL;
 	self->keepalive = CTaskMgr::TASK_INVALID;
+    self->port = 0;
 	return self;
 }
 
@@ -79,6 +85,11 @@ int32 Sql_Connect(Sql_t* self, const char* user, const char* passwd, const char*
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
 	}
+    self->host = host;
+    self->port = port;
+    self->username = user;
+    self->password = passwd;
+    self->database = db;
 
 	return SQL_SUCCESS;
 }
@@ -247,7 +258,7 @@ size_t Sql_EscapeString(Sql_t* self, char *out_to, const char *from)
 *																		*
 ************************************************************************/
 
-int32 Sql_QueryStr(Sql_t* self, const char* query)
+int32 Sql_QueryStrInternal(Sql_t* self, const char* query, unsigned int* result_errno = nullptr)
 {
 	if( self == NULL )
 		return SQL_ERROR;
@@ -257,16 +268,50 @@ int32 Sql_QueryStr(Sql_t* self, const char* query)
 	self->buf += query;
 	if( mysql_real_query(&self->handle, self->buf.c_str(), (unsigned int)self->buf.length()) )
 	{
+        if (result_errno) {
+            *result_errno = mysql_errno(&self->handle);
+        }
         ShowSQL("DB error - %s\nSQL: %s\n", mysql_error(&self->handle), query);
 		return SQL_ERROR;
 	}
 	self->result = mysql_store_result(&self->handle);
 	if( mysql_errno(&self->handle) != 0 )
 	{
+        if (result_errno) {
+            *result_errno = mysql_errno(&self->handle);
+        }
         ShowSQL("DB error - %s\nSQL: %s\n", mysql_error(&self->handle), query);
 		return SQL_ERROR;
 	}
 	return SQL_SUCCESS;
+}
+
+int32 Sql_QueryStr(Sql_t* self, const char* query)
+{
+    uint32 reconnect_try = 0;
+    int32 rv = SQL_ERROR;
+    unsigned int last_error = 0;
+
+    while (reconnect_try < SQL_RECONNECT_TRIES) {
+        rv = Sql_QueryStrInternal(self, query, &last_error);
+        if (rv == SQL_SUCCESS) {
+            return SQL_SUCCESS;
+        }
+        else if (last_error != 2006) {
+            // 2006 = Disconnected from server
+            // in any other case we just want to return the error
+            return rv;
+        }
+        // If we got here it means we got disconnected. Let's try to reconnect
+        if (reconnect_try > 0) {
+            std::this_thread::sleep_for(reconnect_try * 1000ms);
+        }
+        Sql_Connect(self, self->username.c_str(), self->password.c_str(), self->host.c_str(), self->port, self->database.c_str());
+        reconnect_try++;
+    }
+    // Critical failure so just exit
+    do_final(EXIT_FAILURE);
+    return SQL_ERROR;
 }
 
 /************************************************************************

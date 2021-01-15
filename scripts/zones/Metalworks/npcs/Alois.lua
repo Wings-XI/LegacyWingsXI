@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Metalworks
 --  NPC: Alois
--- Involved in Missions: Wading Beasts
+-- Involved in Missions: Wading Beasts, Faded Promises
 -- !pos 96 -20 14 237
 -----------------------------------
 require("scripts/globals/settings")
@@ -20,8 +20,6 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local FadedPromises = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.FADED_PROMISES)
-
     if (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_SALT_OF_THE_EARTH and player:getCharVar("BASTOK91") == 0) then
         player:startEvent(773)
     elseif (player:getCharVar("BASTOK91") == 1) then
@@ -56,9 +54,9 @@ function onEventFinish(player, csid, option)
             player,
             BASTOK,
             tpz.quest.id.bastok.FADED_PROMISES,
-            {item = 17775, tpz.title.ASSASSIN_REJECT, var = {"FadedPromises"}, fame=10})
+            {item = 17775,  tpz.title.ASSASSIN_REJECT,  var = {"FadedPromises"},  fame=10})
         then
             player:delKeyItem(tpz.ki.DIARY_OF_MUKUNDA)
-        end
+		end
     end
 end

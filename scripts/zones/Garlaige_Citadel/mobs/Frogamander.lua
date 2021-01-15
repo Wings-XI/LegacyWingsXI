@@ -10,6 +10,10 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.REGAIN,170)
+end
+
 function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PARALYZE)
 end

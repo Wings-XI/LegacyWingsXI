@@ -25,12 +25,20 @@ end
 
 function calculateBarspellDuration(caster, enhanceSkill)
     -- Function call to allow configuration conditional for old duration formulas.
-    return 480
+    local ret = 150
+    if enhanceSkill > 180 then
+        ret = ret + math.floor((enhanceSkill-180)*0.8)
+    end
+    return ret
 end
 
 function applyBarspell(effectType, caster, target, spell)
     local enhanceSkill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
     local mdefBonus = caster:getMerit(tpz.merit.BAR_SPELL_EFFECT) + caster:getMod(tpz.mod.BARSPELL_MDEF_BONUS)
+    
+    if caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) then
+        mdefBonus = mdefBonus + 5
+    end
 
     local power = calculateBarspellPower(caster, enhanceSkill)
     local duration = calculateBarspellDuration(caster, enhanceSkill)

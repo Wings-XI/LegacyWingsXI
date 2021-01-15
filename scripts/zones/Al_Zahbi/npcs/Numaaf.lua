@@ -45,9 +45,11 @@ end
 function onEventFinish(player, csid, option)
     if csid == 222 and option == 1 then
         player:messageSpecial(ID.text.IMAGE_SUPPORT, 0, 8, 1)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.COOKING_IMAGERY, 1, 0, 120)
     elseif csid == 223 then
         player:messageSpecial(ID.text.IMAGE_SUPPORT, 0, 8, 0)
+        for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
         player:addStatusEffect(tpz.effect.COOKING_IMAGERY, 3, 0, 480)
     end
 end

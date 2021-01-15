@@ -52,6 +52,12 @@ function onUseAbility(player, target, ability, action)
     local stealMod = player:getMod(tpz.mod.STEAL)
 
     local stealChance = 50 + stealMod * 2 + thfLevel - target:getMainLvl()
+    
+    if player:isBehind(target, 35) then
+        stealChance = stealChance + 5
+    end
+    
+    stealChance = stealChance + math.floor(20 - target:getHPP()/5) -- +0% ~ +19% to stealChance for every 5% HP the mob is missing
 
     stolen = target:getStealItem()
     if (target:isMob() and math.random(100) < stealChance and stolen ~= 0) then
@@ -74,7 +80,7 @@ function onUseAbility(player, target, ability, action)
         local resist = applyResistanceAbility(player, target, tpz.magic.ele.NONE, 0, 0)
         local effectStealSuccess = false
         if (resist > 0.0625) then
-            local auraStealChance = math.min(player:getMerit(tpz.merit.AURA_STEAL), 95)
+            local auraStealChance = math.min(player:getMerit(tpz.merit.AURA_STEAL), 99)
             if (math.random(100) < auraStealChance) then
                 stolen = player:stealStatusEffect(target)
                 if (stolen ~= 0) then
@@ -85,6 +91,7 @@ function onUseAbility(player, target, ability, action)
             end
 
             -- Try for a second effect if we have the augment
+            --[[
             if ((effect ~= tpz.effect.NONE or stolen ~= 0) and player:getMod(tpz.mod.AUGMENTS_AURA_STEAL) > 0) then
                 if (math.random(100) < auraStealChance) then
                     if (stolenEffect2 ~= nil and math.random(100) < auraStealChance) then
@@ -94,6 +101,8 @@ function onUseAbility(player, target, ability, action)
                     end
                 end
             end
+            ]]
+            -- lv 90 item onry
         end
     end
 

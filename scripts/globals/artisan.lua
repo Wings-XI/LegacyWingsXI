@@ -5,6 +5,7 @@
 -----------------------------------
 require('scripts/globals/zone')
 require('scripts/globals/status')
+require('scripts/globals/settings')
 -----------------------------------
 
 tpz = tpz or {}
@@ -58,13 +59,19 @@ tpz.artisan.moogleOnUpdate = function(player, csid, option)
         end
 
     elseif option == 3 then -- Client requests sack + scroll status
-        local scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+        local scrollAvail = 0
+        if ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then
+            scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+        end
         local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
         if sackSize > 0 then sackSize = sackSize + 1 end
         player:updateEvent(0, 0, 0, sackSize, 0, 0, 0, scrollAvail)
 
     elseif option == 4 then -- Main dialogue
-        local scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+        local scrollAvail = 0
+        if ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then
+            scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+        end
         local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
         if sackSize > 0 then sackSize = sackSize + 1 end
         player:updateEvent(0, 0, player:getGil(), sackSize, 0, 0, 0, scrollAvail)
@@ -74,7 +81,7 @@ end
 tpz.artisan.moogleOnFinish = function(player, csid, option)
     local zone = zones[player:getZoneID()]
 
-    if option == 99 then -- Get Scroll
+    if option == 99 and ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then -- Get Scroll
         if player:getCharVar("[artisan]nextScroll") < getMidnight() then
             if player:addItem(4181) then
                 player:messageSpecial(zone.text.ITEM_OBTAINED, 4181)

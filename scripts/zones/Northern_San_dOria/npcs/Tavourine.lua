@@ -23,7 +23,7 @@ function onTrigger(player, npc)
         17035,  4363, 2,    -- Mace
         17059,    90, 3,    -- Bronze Rod
         17034,   169, 3,    -- Bronze Mace
-        16845, 16578, 3,    -- Lance
+        --16845, 16578, 3,    -- Lance
     }
 
     player:showText(npc, ID.text.TAVOURINE_SHOP_DIALOG)

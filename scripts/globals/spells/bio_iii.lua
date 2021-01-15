@@ -45,9 +45,6 @@ function onSpellCast(caster, target, spell)
     -- Calculate duration
     local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
-    -- Check for Dia
-    local dia = target:getStatusEffect(tpz.effect.DIA)
-
     -- Calculate DoT effect
     -- http://wiki.ffo.jp/html/1954.html
     -- this is a tiered calculation that has at least three tiers,
@@ -69,15 +66,9 @@ function onSpellCast(caster, target, spell)
     end
 
     -- Do it!
+    target:delStatusEffect(tpz.effect.DIA)
     target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 20, 3)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
-
-    -- Try to kill same tier Dia (default behavior)
-    if DIA_OVERWRITE == 1 and dia ~= nil then
-        if dia:getPower() <= 3 then
-            target:delStatusEffect(tpz.effect.DIA)
-        end
-    end
 
     return final
 end

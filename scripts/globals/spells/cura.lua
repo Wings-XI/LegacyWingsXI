@@ -10,6 +10,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
+require("scripts/globals/utils")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
@@ -98,7 +99,7 @@ function onSpellCast(caster, target, spell)
         basecure = basecure + misery
 
         if (basecure > 175) then
-            basecure = 175
+            basecure = 175 + (basecure - 175)*0.2
         end
 
         --printf("AFTER AFFLATUS MISERY BONUS: %d", basecure)
@@ -112,6 +113,8 @@ function onSpellCast(caster, target, spell)
 
     --Applying server mods....
     final = final * CURE_POWER
+    
+    final = utils.clamp(final, 0,target:getMaxHP() - target:getHP())
 
     target:addHP(final)
 

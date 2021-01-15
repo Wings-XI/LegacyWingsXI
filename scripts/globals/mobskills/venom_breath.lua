@@ -6,6 +6,10 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
+require("scripts/globals/magicburst")
+require("scripts/globals/magic")
+require("scripts/globals/utils")
+require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -14,10 +18,26 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.POISON
-    MobStatusEffectMove(mob, target, typeEffect, math.random(20, 40), 3, 60)
+    
+    skill:setMsg(tpz.msg.basic.SKILL_MISS)
+    
+    local statmod = tpz.mod.INT
+    local element = mob:getStatusEffectElement(typeEffect)
+    local resist = applyPlayerResistance(mob,typeEffect,target,mob:getStat(statmod)-target:getStat(statmod),0,element)
 
-    local dmgmod = MobBreathMove(mob, target, 0.3, 1.875, tpz.magic.ele.WATER, 500)
-    local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
-    target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.ICE)
-    return dmg
+    if (resist >= 0.25) then
+        
+        if target:hasStatusEffect(typeEffect) == true then
+            target:delStatusEffect(typeEffect)
+        end
+
+        if target:addStatusEffect(typeEffect, 50, 3, 60*resist) == true then
+            skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
+        else
+            skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        end
+        
+    end
+    
+    return typeEffect
 end

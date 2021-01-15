@@ -708,6 +708,23 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
 
 /************************************************************************
 *                                                                       *
+*                                                                       *
+*                                                                       *
+************************************************************************/
+
+void CStatusEffectContainer::DelStatusEffectsForInstance()
+{
+    for (auto&& PEffect : m_StatusEffectSet)
+    {
+        if ((PEffect->GetFlag() & EFFECTFLAG_DEATH) && PEffect->GetStatusID() != EFFECT_FOOD)
+        {
+            RemoveStatusEffect(PEffect, true);
+        }
+    }
+}
+
+/************************************************************************
+*                                                                       *
 *  Удаляем первый добавленный отрицательный эффект с флагом erase.      *
 *  Возвращаем результат выполнения операции.                            *
 *                                                                       *
@@ -886,7 +903,7 @@ bool CStatusEffectContainer::ApplyBardEffect(CStatusEffect* PStatusEffect, uint8
                 PStatusEffect->SetSlot(ExistingStatusEffect->GetSlot()); // use same slot as the one it replaces
                 DelStatusEffectByTier(PStatusEffect->GetStatusID(), PStatusEffect->GetTier());
             }
-            if (ExistingStatusEffect->GetSubID() == PStatusEffect->GetSubID()) {//YOUR BRD effect
+            else if (ExistingStatusEffect->GetSubID() == PStatusEffect->GetSubID()) {//YOUR BRD effect
                 numOfEffects++;
                 if (!oldestSong) {
                     oldestSong = ExistingStatusEffect;
@@ -1144,6 +1161,22 @@ bool CStatusEffectContainer::HasStatusEffect(std::initializer_list<EFFECT> effec
         }
     }
     return false;
+}
+
+uint16 CStatusEffectContainer::GetTotalMinneBonus()
+{
+    uint16 ret = 0;
+
+    for (auto&& PEffect : m_StatusEffectSet)
+    {
+        if (PEffect->GetStatusID() == EFFECT_MINNE &&
+            !PEffect->deleted)
+        {
+            ret += PEffect->GetPower();
+        }
+    }
+
+    return ret;
 }
 
 CStatusEffect* CStatusEffectContainer::GetStatusEffect(EFFECT StatusID)
@@ -1417,7 +1450,7 @@ void CStatusEffectContainer::LoadStatusEffects()
 *                                                                       *
 ************************************************************************/
 
-void CStatusEffectContainer::SaveStatusEffects(bool logout)
+void CStatusEffectContainer::SaveStatusEffects(bool logout, bool del)
 {
     TPZ_DEBUG_BREAK_IF(m_POwner->objtype != TYPE_PC);
 
@@ -1425,9 +1458,15 @@ void CStatusEffectContainer::SaveStatusEffects(bool logout)
 
     for (CStatusEffect* PStatusEffect : m_StatusEffectSet)
     {
+        if (!del && PStatusEffect->GetStatusID() == EFFECT_LEVEL_SYNC)
+            continue; // fixes issue of post-crash people being stuck on lv sync
+
         if ((logout && PStatusEffect->GetFlag() & EFFECTFLAG_LOGOUT) || (!logout && PStatusEffect->GetFlag() & EFFECTFLAG_ON_ZONE))
         {
-            RemoveStatusEffect(PStatusEffect, true);
+            if (del)
+            {
+                RemoveStatusEffect(PStatusEffect, true);
+            }
             continue;
         }
 
@@ -1633,7 +1672,8 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             {
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
-                WakeUp();
+                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == 25)) // dots dont wake up from nightmare
+                    WakeUp();
             }
         }
 

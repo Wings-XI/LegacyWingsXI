@@ -19,6 +19,7 @@ set(SOURCES
     timer.cpp
     timer.h
     tpzrand.h
+    tracy.h
     utils.cpp
     utils.h
     version.h

@@ -55,6 +55,7 @@
 #include "packets/char.h"
 #include "packets/char_sync.h"
 #include "packets/char_update.h"
+#include "packets/char_stats.h"
 #include "packets/entity_update.h"
 #include "packets/inventory_assign.h"
 #include "packets/inventory_finish.h"
@@ -121,6 +122,20 @@ int32 zone_update_weather(time_point tick, CTaskMgr::CTask* PTask)
     if (!PZone->IsWeatherStatic())
     {
         PZone->UpdateWeather();
+    }
+
+    return 0;
+}
+
+int32 deleteZoneTimer(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
+
+    if (PZone->ZoneTimer && PZone->m_zoneEntities->CharListEmpty())
+    {
+        PZone->ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
+        PZone->ZoneTimer = nullptr;
+        PZone->m_zoneEntities->HealAllMobs();
     }
 
     return 0;
@@ -342,17 +357,18 @@ void CZone::LoadZoneSettings()
 {
     static const char* Query =
         "SELECT "
-        "zone.name,"
-        "zone.zoneip,"
-        "zone.zoneport,"
-        "zone.music_day,"
-        "zone.music_night,"
-        "zone.battlesolo,"
-        "zone.battlemulti,"
-        "zone.tax,"
-        "zone.misc,"
-        "zone.zonetype,"
-        "bcnm.name "
+        "zone.name," // 0
+        "zone.zoneip," // 1
+        "zone.zoneport," // 2
+        "zone.music_day," // 3
+        "zone.music_night," // 4
+        "zone.battlesolo," // 5
+        "zone.battlemulti," // 6
+        "zone.tax," // 7
+        "zone.misc," // 8
+        "zone.zonetype," // 9
+        "zone.fame_type," // 10
+        "bcnm.name " // 11
         "FROM zone_settings AS zone "
         "LEFT JOIN bcnm_info AS bcnm "
         "USING (zoneid) "
@@ -376,7 +392,9 @@ void CZone::LoadZoneSettings()
 
         m_zoneType = (ZONETYPE)Sql_GetUIntData(SqlHandle, 9);
 
-        if (Sql_GetData(SqlHandle, 10) != nullptr) // сейчас нельзя использовать bcnmid, т.к. они начинаются с нуля
+        m_fameType = (uint8)Sql_GetUIntData(SqlHandle, 10);
+
+        if (Sql_GetData(SqlHandle, 11) != nullptr) // сейчас нельзя использовать bcnmid, т.к. они начинаются с нуля
         {
             m_BattlefieldHandler = new CBattlefieldHandler(this);
         }
@@ -605,10 +623,7 @@ void CZone::DecreaseZoneCounter(CCharEntity* PChar)
 
     if (ZoneTimer && m_zoneEntities->CharListEmpty())
     {
-        ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
-        ZoneTimer = nullptr;
-
-        m_zoneEntities->HealAllMobs();
+        scheduleDeleteZoneTimer();
     }
     else
     {
@@ -880,6 +895,13 @@ void CZone::createZoneTimer()
         std::chrono::milliseconds((int)(1000 / server_tick_rate)));
 }
 
+void CZone::scheduleDeleteZoneTimer()
+{
+    CTaskMgr::getInstance()->RemoveTask("deleteZoneTimer");
+    CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask("deleteZoneTimer",
+        server_clock::now() + std::chrono::seconds(map_config.zone_sleep_timer), this, CTaskMgr::TASK_ONCE, deleteZoneTimer));
+}
+
 void CZone::CharZoneIn(CCharEntity* PChar)
 {
     TracyZoneScoped;
@@ -929,8 +951,22 @@ void CZone::CharZoneIn(CCharEntity* PChar)
     }
 
     if (m_BattlefieldHandler)
+    {
         if (auto PBattlefield = m_BattlefieldHandler->GetBattlefield(PChar, true))
+        {
             PBattlefield->InsertEntity(PChar, true);
+
+            auto cap = PBattlefield->GetLevelCap();
+            if (cap && cap > 0)
+            {
+                cap += map_config.Battle_cap_tweak;
+                PChar->SetMLevel(cap);
+                PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
+            }
+            charutils::CalculateStats(PChar);
+            PChar->pushPacket(new CCharStatsPacket(PChar));
+        }
+    }
 
     PChar->PLatentEffectContainer->CheckLatentsZone();
 }

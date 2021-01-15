@@ -9,6 +9,15 @@ require("scripts/globals/status")
 function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
+    --mob:addMod(tpz.mod.FIREDEF,128)
+    --mob:addMod(tpz.mod.ICEDEF,128)
+    --mob:addMod(tpz.mod.WINDDEF,128)
+    --mob:addMod(tpz.mod.EARTHDEF,128)
+    --mob:addMod(tpz.mod.THUNDERDEF,128)
+    --mob:addMod(tpz.mod.WATERDEF,128)
+    --mob:addMod(tpz.mod.LIGHTDEF,128)
+    --mob:addMod(tpz.mod.DARKDEF,128)
+    mob:addMod(tpz.mod.DMGMAGIC,-50)
 end
 
 function onMobFight(mob, target)

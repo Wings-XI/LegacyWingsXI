@@ -36,9 +36,11 @@ zones[tpz.zone.ZERUHN_MINES] =
     },
     npc =
     {
-        CASKET_BASE = 17481791,
+        CASKET_BASE = 17481790,
         MINING      =
         {
+            17481838,
+            17481839,
             17481840,
             17481841,
             17481842,

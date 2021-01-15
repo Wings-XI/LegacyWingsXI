@@ -7,17 +7,15 @@
 local ID = require("scripts/zones/Bastok_Mines/IDs")
 require("scripts/globals/shop")
 require("scripts/globals/settings")
-require("scripts/globals/status")
 -----------------------------------
 
 function onTrade(player, npc, trade)
 end
 
-function onTrigger(player, npc)
-    local guildSkillId = tpz.skill.ALCHEMY
-    local stock = tpz.shop.generalGuildStock[guildSkillId]
-    tpz.shop.generalGuild(player, stock, guildSkillId)
-    player:showText(npc, ID.text.ODOBA_SHOP_DIALOG)
+function onTrigger(player,npc)
+    if (player:sendGuild(5262,8,23,6)) then
+        player:showText(npc, ID.text.ODOBA_SHOP_DIALOG)
+    end
 end
 
 function onEventUpdate(player, csid, option)

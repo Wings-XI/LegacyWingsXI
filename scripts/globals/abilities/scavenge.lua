@@ -24,7 +24,7 @@ function onUseAbility(player, target, ability, action)
         player:getYPos() > -43 and player:getYPos() < -38 and -- Y match
         player:getXPos() > -85 and player:getXPos() < -73 and -- X match
         player:getZPos() > -85 and player:getZPos() < -75 and -- Z match
-        math.random(100) < 50) then
+        math.random(100) < 60) then
 
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, oldEarring)

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2019 Darkstar Dev Teams
@@ -91,7 +91,7 @@ namespace anticheat
     }
 
     // Log and possibly jail
-    bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg, const char* description)
+    bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg, const char* description, uint8 add_strikes)
     {
         if (PChar == NULL) {
             return false;
@@ -99,6 +99,22 @@ namespace anticheat
         if (map_config.anticheat_enabled == false) {
             return false;
         }
+        uint32 num_strikes = (uint32)charutils::GetCharVar(PChar, "CheatPoints");
+        time_t last_cheat = (time_t)charutils::GetCharVar(PChar, "LastCheat");
+        time_t timeNow = time(NULL);
+        // Reset if has not cheated for an hour
+        if (timeNow < last_cheat + 5) {
+            // Probably same incident as last tie
+            return true;
+        }
+        if (timeNow > last_cheat + 1800) {
+            num_strikes = 1;
+        }
+        else {
+            num_strikes += add_strikes;
+        }
+        charutils::SetCharVar(PChar, "CheatPoints", (int32)num_strikes);
+        charutils::SetCharVar(PChar, "LastCheat", (int32)timeNow);
         // Check what we should do
         char warningmsg[256] = { 0 };
         CheatAction action = GetCheatPunitiveAction(cheatid, warningmsg, sizeof(warningmsg));
@@ -108,12 +124,12 @@ namespace anticheat
             const char* fmtQuery = "INSERT INTO cheat_incidents SET charid = %u, cheatid = %u, cheatarg = %u, description= '%s';";
             Sql_Query(SqlHandle, fmtQuery, PChar->id, static_cast<uint32>(cheatid), cheatarg, description != NULL ? description : "");
         }
-        if (action & CHEAT_ACTION_WARN)
+        if ((action & CHEAT_ACTION_WARN) && (num_strikes >= map_config.cheat_threshold_warn))
         {
             // The message in the warning column in DB is sent as a system message to the offender
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, warningmsg));
         }
-        if ((action & CHEAT_ACTION_JAIL) && (!map_config.anticheat_jail_disable))
+        if ((action & CHEAT_ACTION_JAIL) && (num_strikes >= map_config.cheat_threshold_jail) && (!map_config.anticheat_jail_disable))
         {
             // Send to jail only if both the cheat type requires it *and* the admin
             // has not disabled auto-jailing globally.

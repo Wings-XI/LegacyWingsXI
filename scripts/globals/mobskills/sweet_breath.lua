@@ -16,11 +16,16 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.SLEEP_I
-    MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
+    local cap = 500
+    if mob:getID() == 17613130 then -- Cap. Cassie
+        cap = 250
+    end
 
-    local dmgmod = MobBreathMove(mob, target, 0.125, 3, tpz.magic.ele.WATER, 500)
+    local dmgmod = MobBreathMove(mob, target, 0.125, 3, tpz.magic.ele.WATER, cap)
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.WATER)
-
+    
+    MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
+    
     return dmg
 end

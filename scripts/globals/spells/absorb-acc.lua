@@ -25,12 +25,13 @@ function onSpellCast(caster, target, spell)
         params.bonus = 0
         params.effect = nil
         local resist = applyResistance(caster, target, spell, params)
+        -- the 3x on power and /3 on ticks cause the max unresisted acc amount to be 24 instead of 8
         if (resist <= 0.125) then
             spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_ABSORB_ACC)
-            caster:addStatusEffect(tpz.effect.ACCURACY_BOOST, ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(tpz.mod.AUGMENTS_ABSORB)))/100), ABSORB_SPELL_TICK, ABSORB_SPELL_AMOUNT*ABSORB_SPELL_TICK) -- caster gains ACC
-            target:addStatusEffect(tpz.effect.ACCURACY_DOWN, ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(tpz.mod.AUGMENTS_ABSORB)))/100), ABSORB_SPELL_TICK, ABSORB_SPELL_AMOUNT*ABSORB_SPELL_TICK)    -- target loses ACC
+            caster:addStatusEffect(tpz.effect.ACCURACY_BOOST, 3*ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(tpz.mod.AUGMENTS_ABSORB)))/100), ABSORB_SPELL_TICK/3, ABSORB_SPELL_AMOUNT*ABSORB_SPELL_TICK*resist) -- caster gains ACC
+            target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 3*ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(tpz.mod.AUGMENTS_ABSORB)))/100), ABSORB_SPELL_TICK/3, ABSORB_SPELL_AMOUNT*ABSORB_SPELL_TICK*resist)    -- target loses ACC
         end
     end
     return tpz.effect.ACCURACY_BOOST

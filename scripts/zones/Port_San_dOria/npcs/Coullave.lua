@@ -21,7 +21,7 @@ function onTrigger(player, npc)
         12456,  552, 2,    -- Hachimaki
         12584,  833, 2,    -- Kenpogi
         12968,  424, 2,    -- Kyahan
-        13327, 1125, 2,    -- Silver Earring
+        --13327, 1125, 2,    -- Silver Earring
         12840,  666, 2,    -- Sitabaki
         12712,  458, 2,    -- Tekko
         4148,   290, 3,    -- Antidote

@@ -51,55 +51,55 @@ function onUseAbility(player, target, ability, action)
     switch (rangeObj) : caseof {
         [17016] = function (x) -- pet food alpha biscuit
             -- printf("Food: pet food alpha biscuit.")
-            minimumHealing = 50
+            minimumHealing = 20
             regenAmount = 1
             totalHealing = math.floor(minimumHealing + 2*(playerMnd-10))
             end,
         [17017] = function (x) -- pet food beta biscuit
             -- printf("Food: pet food beta biscuit.")
-            minimumHealing = 180
+            minimumHealing = 50
             regenAmount = 3
             totalHealing = math.floor(minimumHealing + 1*(playerMnd-33))
             end,
         [17018] = function (x) -- pet food gamma biscuit
             -- printf("Food: pet food gamma biscuit.")
-            minimumHealing = 300
+            minimumHealing = 100
             regenAmount = 5
             totalHealing = math.floor(minimumHealing + 1*(playerMnd-35)) -- TO BE VERIFIED.
             end,
         [17019] = function (x) -- pet food delta biscuit
             -- printf("Food: pet food delta biscuit.")
-            minimumHealing = 530
+            minimumHealing = 150
             regenAmount = 8
             totalHealing = math.floor(minimumHealing + 2*(playerMnd-40)) -- TO BE VERIFIED.
             end,
         [17020] = function (x) -- pet food epsilon biscuit
             -- printf("Food: pet food epsilon biscuit.")
-            minimumHealing = 750
+            minimumHealing = 300
             regenAmount = 11
             totalHealing = math.floor(minimumHealing + 2*(playerMnd-45))
             end,
         [17021] = function (x) -- pet food zeta biscuit
             -- printf("Food: pet food zeta biscuit.")
-            minimumHealing = 900
+            minimumHealing = 350
             regenAmount = 14
             totalHealing = math.floor(minimumHealing + 3*(playerMnd-45))
             end,
         [17022] = function (x) -- pet food eta biscuit
             -- printf("Food: pet food eta biscuit.")
-            minimumHealing = 1200
+            minimumHealing = 400
             regenAmount = 17
             totalHealing = math.floor(minimumHealing + 4*(playerMnd-50))
             end,
         [17023] = function (x) -- pet food theta biscuit
             -- printf("Food: pet food theta biscuit.")
-            minimumHealing = 1600
+            minimumHealing = 450
             regenAmount = 20
             totalHealing = math.floor(minimumHealing + 4*(playerMnd-55))
             end,
     }
 
-
+    regenAmount = regenAmount + player:getMerit(tpz.merit.BEAST_HEALER)
 
     -- Now calculating the bonus based on gear.
     local body = player:getEquipID(tpz.slot.BODY)

@@ -40,5 +40,6 @@ function onMobWeaponSkill(target, mob, skill)
     target:addStatusEffect(tpz.effect.STUN, 0, 0, 20)
 
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     return dmg
 end

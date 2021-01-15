@@ -275,15 +275,33 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     local avatarAccBonus = 0
     if (mob:isPet() and mob:getMaster() ~= nil) then
         local master = mob:getMaster()
-        if (master:getPetID() >= 0 and master:getPetID() <= 20) then -- check to ensure pet is avatar
-            avatarAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200)
+        if (master:getPetID() >= 0 and master:getPetID() <= 20 and master:isPC()) then -- check to ensure pet is avatar
+            avatarAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200) + master:getMerit(1284) -- avatar magic acc merit
         end
     end
-    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), avatarAccBonus, element)
+    
+    if bonusacc == nil then
+        bonusacc = 0
+    end
+    bonusacc = bonusacc + avatarAccBonus
+    --print(string.format("bonusacc was %u",bonusacc))
+    
+    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), bonusacc, element)
 
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
+    
+    local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
+    if ramSS > 0 then
+        if finaldmg >= ramSS then
+            target:setMod(tpz.mod.RAMPART_STONESKIN, 0)
+            finaldmg = finaldmg - ramSS
+        else
+            target:setMod(tpz.mod.RAMPART_STONESKIN, ramSS - finaldmg)
+            finaldmg = 0
+        end
+    end
 
     returninfo.dmg = finaldmg
 
@@ -360,11 +378,15 @@ function mobAddBonuses(caster, spell, target, dmg, ele)
     dmg = math.floor(dmg * dayWeatherBonus)
 
     burst = calculateMobMagicBurst(caster, ele, target)
+    
+    -- todo: damage compensation until +magic acc can be added instead further up the stack
+    if burst > 1.0 then
+        burst = burst + 0.1
+    end
 
-    -- not sure what to do for this yet
-    -- if (burst > 1.0) then
-        -- spell:setMsg(spell:getMagicBurstMessage()) -- "Magic Burst!"
-    -- end
+    --if (burst > 1.0 and skill ~= nil) then -- not a spell, is a mobskill
+        --skill:setMsg(747) -- magic burst!
+    --end
 
     dmg = math.floor(dmg * burst)
 
@@ -426,7 +448,7 @@ end
 -- base is calculated from main level to create a minimum
 -- Equation: (HP * percent) + (LVL / base)
 -- cap is optional, defines a maximum damage
-function MobBreathMove(mob, target, percent, base, element, cap)
+function MobBreathMove(mob, target, percent, base, element, cap, bonus)
     local damage = (mob:getHP() * percent) + (mob:getMainLvl() / base)
 
     if (cap == nil) then
@@ -434,27 +456,44 @@ function MobBreathMove(mob, target, percent, base, element, cap)
         cap = math.floor(mob:getHP()/5)
     end
 
+    if bonus == nil then
+        bonus = 0
+    end
+    
     -- Deal bonus damage vs mob ecosystem
     local systemBonus = utils.getSystemStrengthBonus(mob, target)
     damage = damage + (damage * (systemBonus * 0.25))
 
+    damage = utils.clamp(damage, 1, cap)
+
     -- elemental resistence
     if (element ~= nil and element > 0) then
         -- no skill available, pass nil
-        local resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), 0, element)
+        local resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), bonus, element)
 
         -- get elemental damage reduction
         local defense = getElementalDamageReduction(target, element)
 
         damage = damage * resist * defense
     end
+    
+    damage = math.floor(damage * (math.random()/4 + 0.75))
 
-    damage = utils.clamp(damage, 1, cap)
+    local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
+    if ramSS > 0 then
+        if damage >= ramSS then
+            target:setMod(tpz.mod.RAMPART_STONESKIN, 0)
+            damage = damage - ramSS
+        else
+            target:setMod(tpz.mod.RAMPART_STONESKIN, ramSS - damage)
+            damage = 0
+        end
+    end
 
     return damage
 end
 
-function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav)
+function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav) -- shadowbehav encodes the HITS LANDED if the shadowbehav is not WIPE or IGNORE
 
     -- physical attack missed, skip rest
     if (skill:hasMissMsg()) then
@@ -462,8 +501,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
     end
 
     --handle pd
-    if ((target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) )
-            and attackType==tpz.attackType.PHYSICAL) then
+    if ( target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) ) and attackType==tpz.attackType.PHYSICAL then
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return 0
     end
@@ -479,7 +517,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
             shadowbehav = MobTakeAoEShadow(mob, target, shadowbehav)
         end
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        dmg = utils.takeShadows(target, dmg, shadowbehav, mob)
 
         -- dealt zero damage, so shadows took hit
         if (dmg == 0) then
@@ -493,34 +531,70 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         target:delStatusEffect(tpz.effect.THIRD_EYE)
     end
 
-    if (attackType == tpz.attackType.PHYSICAL and skill:isSingle() == false) then
-        target:delStatusEffect(tpz.effect.THIRD_EYE)
-    end
-
     --handle Third Eye using shadowbehav as a guide
-    if (attackType == tpz.attackType.PHYSICAL and utils.thirdeye(target)) then
+    if (attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED) and utils.thirdeye(target) == true then
         skill:setMsg(tpz.msg.basic.ANTICIPATE)
         return 0
+    end
+	
+	if attackType == tpz.attackType.PHYSICAL and skill:isSingle() == false and math.random() < 0.7 then -- per wiki, multiattacks have a very high chance to remove TE
+        target:delStatusEffect(tpz.effect.THIRD_EYE)
     end
 
     -- Handle Automaton Analyzer which decreases damage from successive special attacks
     if target:getMod(tpz.mod.AUTO_ANALYZER) > 0 then
         local analyzerSkill = target:getLocalVar("analyzer_skill")
         local analyzerHits = target:getLocalVar("analyzer_hits")
-        if analyzerSkill == skill:getID() and target:getMod(tpz.mod.AUTO_ANALYZER) > analyzerHits then
-            -- Successfully mitigating damage at a fixed 40%
-            dmg = dmg * 0.6
+        if analyzerSkill == skill:getID() then
             analyzerHits = analyzerHits + 1
+            local cappedNum = analyzerHits
+            if analyzerHits > target:getMod(tpz.mod.AUTO_ANALYZER) then
+                cappedNum = target:getMod(tpz.mod.AUTO_ANALYZER)
+            end
+            dmg = dmg * (1.1 - cappedNum/10)
         else
             target:setLocalVar("analyzer_skill", skill:getID())
-            analyzerHits = 0
+            analyzerHits = 1
         end
         target:setLocalVar("analyzer_hits", analyzerHits)
     end
 
-    if (attackType == tpz.attackType.PHYSICAL) then
+    if attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED then
 
         dmg = target:physicalDmgTaken(dmg, damageType)
+        if not target:isPC() then
+                local hthres = target:getMod(tpz.mod.HTHRES)
+                local pierceres = target:getMod(tpz.mod.PIERCERES)
+                local impactres = target:getMod(tpz.mod.IMPACTRES)
+                local slashres = target:getMod(tpz.mod.SLASHRES)
+                local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
+                
+                if damageType == tpz.damageType.HTH then
+                    if hthres < 1000 then
+                        dmg = dmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+                    else
+                        dmg = dmg * hthres / 1000
+                    end
+                elseif damageType == tpz.damageType.PIERCING then
+                    if pierceres < 1000 then
+                        dmg = dmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
+                    else
+                        dmg = dmg * pierceres / 1000
+                    end
+                elseif damageType == tpz.damageType.BLUNT then
+                    if impactres < 1000 then
+                        dmg = dmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
+                    else
+                        dmg = dmg * impactres / 1000
+                    end
+                else
+                    if slashres < 1000 then
+                        dmg = dmg * (1 - ((1 - slashres / 1000) * (1 - spdefdown/100)))
+                    else
+                        dmg = dmg * slashres / 1000
+                    end
+                end
+        end
 
     elseif (attackType == tpz.attackType.MAGICAL) then
 
@@ -736,18 +810,23 @@ function MobHealMove(target, heal)
     return heal
 end
 
-function MobTakeAoEShadow(mob, target, max)
-
-    -- this should be using actual nin skill
-    -- TODO fix this
-    if (target:getMainJob() == tpz.job.NIN and math.random() < 0.6) then
-        max = max - 1
-        if (max < 1) then
-            max = 1
+function MobTakeAoEShadow(mob, target, maxs)
+    local skillmax = math.floor(269 * 75 / target:getMainLvl()) -- yeah i know this is a linear approximation, usually you'd want getskillcap for said level, but this is close enough for this application
+    if skillmax < 40 then
+        skillmax = 40
+    end
+    local currskill = target:getSkillLevel(tpz.skill.NINJUTSU)
+    
+    local chance = 0.65 * currskill / skillmax
+    
+    if math.random() < chance then
+        maxs = maxs - 1
+        if (maxs < 1) then
+            maxs = 1
         end
     end
 
-    return math.random(1, max)
+    return maxs
 end
 
 function MobTPMod(tp)

@@ -13,7 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    local kickDmg = 20 + player:getWeaponDmg()
-    local kickAttPercent = 25 + player:getMod(tpz.mod.FOOTWORK_ATT_BONUS)
-    player:addStatusEffect(tpz.effect.FOOTWORK, kickDmg, 0, 60, 0, kickAttPercent)
+    local kickAttPercent = 15
+    --local kickAttPercent = 10
+    player:addStatusEffect(tpz.effect.FOOTWORK, kickAttPercent, 0, 60*5)
 end

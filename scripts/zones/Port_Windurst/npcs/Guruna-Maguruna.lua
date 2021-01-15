@@ -19,12 +19,13 @@ function onTrigger(player, npc)
         12600,   216, 3,    -- Robe
         12568,   604, 3,    -- Leather Vest
         12608,  1260, 3,    -- Tunic
-        12601,  2776, 3,    -- Linen Robe
+        12601,  2776, 1,    -- Linen Robe
         12720,  1363, 3,    -- Gloves
         12728,   118, 3,    -- Cuffs
         12696,   324, 3,    -- Leather Gloves
         12736,   589, 3,    -- Mitts
-        12729,  1570, 3,    -- Linen Cuffs
+        12729,  1570, 1,    -- Linen Cuffs
+        13090,  4201, 1,    -- beetle gorget
     }
 
     player:showText(npc, ID.text.GURUNAMAGURUNA_SHOP_DIALOG)

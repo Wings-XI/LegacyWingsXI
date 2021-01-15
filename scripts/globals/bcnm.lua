@@ -232,8 +232,8 @@ local battlefields = {
     [tpz.zone.HORLAIS_PEAK] =
     {
         { 0,    0,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-        { 1,    1, 1131},   -- Tails of Woe (BS40)
-        { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
+     -- { 1,    1, 1131},   -- Tails of Woe (BS40)
+     -- { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
         { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
      -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
         { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
@@ -241,17 +241,17 @@ local battlefields = {
         { 7,    7, 1436},   -- Shattering Stars (RNG LB5)
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
      -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
-        {10,   10, 1552},   -- Dropping Like Flies (BS30)
+     -- {10,   10, 1552},   -- Dropping Like Flies (BS30)
      -- {11,   11, 1553},   -- Horns of War (KS99) -- TODO: Chlevnik is unscripted
         {12,   12, 1131},   -- Under Observation (BS40)
-        {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
+     -- {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
         {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
      -- {16,   16, 1178},   -- Today's Horoscope (KS30)
      -- {17,   17, 1180},   -- Contaminated Colosseum (KS30) -- TODO: Extremely Bad Breath mobskill
      -- {18,   18, 3351},   -- Kindergarten Cap (KC30)
      -- {19,   19, 3352},   -- Last Orc-Shunned Hero (KC50)
-        {20,   20,    0},   -- Beyond Infinity (Quest)
+     -- {20,   20,    0},   -- Beyond Infinity (Quest)
      -- {21,    ?, 4062},   -- *Tails of Woe (SKC10)
      -- {22,    ?, 4063},   -- *Dismemberment Brigade (SKC20)
      -- {23,    ?,    0},   -- A Feast Most Dire (Quest)
@@ -265,36 +265,36 @@ local battlefields = {
     {
         { 0,   32,    0},   -- Save the Children (Sandy 1-3)
         { 1,   33,    0},   -- The Holy Crest (Quest)
-        { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
-        { 3,   35, 1552},   -- Petrifying Pair (BS30)
-        { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
+     -- { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
+     -- { 3,   35, 1552},   -- Petrifying Pair (BS30)
+     -- { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
      -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
 
     [tpz.zone.WAUGHROON_SHRINE] =
     {
         { 0,   64,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-        { 1,   65, 1131},   -- The Worm's Turn (BS40)
-        { 2,   66, 1130},   -- Grimshell Shocktroopers (BS60)
+     -- { 1,   65, 1131},   -- The Worm's Turn (BS40)
+     -- { 2,   66, 1130},   -- Grimshell Shocktroopers (BS60)
         { 3,   67,    0},   -- On My Way (Basty 7-2)
         { 4,   68, 1166},   -- A Thief in Norg!? (Quest)
-        { 5,   69, 1177},   -- 3, 2, 1... (BS50) -- TODO: Self Destruct does not display correct message in chat log
+     -- { 5,   69, 1177},   -- 3, 2, 1... (BS50) -- TODO: Self Destruct does not display correct message in chat log
         { 6,   70, 1430},   -- Shattering Stars (RDM LB5)
         { 7,   71, 1431},   -- Shattering Stars (THF LB5)
         { 8,   72, 1434},   -- Shattering Stars (BST LB5)
-        { 9,   73, 1552},   -- Birds of a Feather (BS30)
+     -- { 9,   73, 1552},   -- Birds of a Feather (BS30)
      -- {10,   74, 1551},   -- Crustacean Conundrum (BS20) -- TODO: You can only do 0-2 damage no matter what your attack is
-        {11,   75, 1552},   -- Grove Guardians (BS30)
+     -- {11,   75, 1552},   -- Grove Guardians (BS30)
      -- {12,   76, 1553},   -- The Hills are Alive (KS99) -- TODO: Tartaruga Gigante is not coded
      -- {13,   77, 1131},   -- Royal Jelly (BS40) -- TODO: all combat mechanics, loot
      -- {14,   78, 1177},   -- The Final Bout (BS50) -- TODO: mobskills Big Blow and Counterstance
-        {15,   79, 1130},   -- Up in Arms (BS60)
+     -- {15,   79, 1130},   -- Up in Arms (BS60)
      -- {16,   80, 1175},   -- Copycat (KS30)
-     -- {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die. Build sleep resistance. Testing.
+     -- {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die.  Sync TP moves.  Self-bind/stun.  Build sleep resistance.
      -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
      -- {19,   83, 3351},   -- The Palborough Project (KC30)
      -- {20,   84, 3352},   -- Shell Shocked (KC50)
-        {21,   85,    0},   -- Beyond Infinity (Quest)
+     -- {21,   85,    0},   -- Beyond Infinity (Quest)
      -- {22,    ?, 4062},   -- *The Worm's Tail (SKC10)
      -- {23,    ?, 4063},   -- *Grimshell Shocktroopers (SKC20)
      -- {24,    ?,    0},   -- A Feast Most Dire (Quest)
@@ -307,19 +307,19 @@ local battlefields = {
     [tpz.zone.BALGAS_DAIS] =
     {
         { 0,   96,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-        { 1,   97, 1131},   -- Steamed Sprouts (BS40)
-        { 2,   98, 1130},   -- Divine Punishers (BS60)
+     -- { 1,   97, 1131},   -- Steamed Sprouts (BS40)
+     -- { 2,   98, 1130},   -- Divine Punishers (BS60)
         { 3,   99,    0},   -- Saintly Invitation (Windy 6-2)
-        { 4,  100, 1177},   -- Treasure and Tribulations (BS50)
+     -- { 4,  100, 1177},   -- Treasure and Tribulations (BS50)
         { 5,  101, 1427},   -- Shattering Stars (MNK LB5)
         { 6,  102, 1428},   -- Shattering Stars (WHM LB5)
         { 7,  103, 1440},   -- Shattering Stars (SMN LB5)
         { 8,  104, 1552},   -- Creeping Doom (BS30)
-        { 9,  105, 1551},   -- Charming Trio (BS20)
-        {10,  106, 1552},   -- Harem Scarem (BS30)
-     -- {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99)
-        {12,  108, 1131},   -- Royal Succession (BS40)
-        {13,  109, 1177},   -- Rapid Raptors (BS50)
+     -- { 9,  105, 1551},   -- Charming Trio (BS20)
+     -- {10,  106, 1552},   -- Harem Scarem (BS30)
+     -- {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99) -- TODO: Wyrm is not coded at all
+     -- {12,  108, 1131},   -- Royal Succession (BS40)
+     -- {13,  109, 1177},   -- Rapid Raptors (BS50)
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
      -- {15,  111, 1175},   -- Seasons Greetings (KS30)
      -- {16,  112, 1178},   -- Royale Ramble (KS30)
@@ -371,12 +371,12 @@ local battlefields = {
     [tpz.zone.CHAMBER_OF_ORACLES] =
     {
         { 0,  192,    0},   -- Through the Quicksand Caves (ZM6)
-        { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
+     -- { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
         { 2,  194, 1437},   -- Shattering Stars (SAM LB5)
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
      -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
-        { 6,  198, 1178},   -- Eye of the Storm (KS30)
+     -- { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
@@ -477,14 +477,14 @@ local battlefields = {
         { 5,  517, 1432},   -- Shattering Stars (PLD LB5)
         { 6,  518, 1433},   -- Shattering Stars (DRK LB5)
         { 7,  519, 1435},   -- Shattering Stars (BRD LB5)
-        { 8,  520, 1130},   -- Demolition Squad (BS60)
+     -- { 8,  520, 1130},   -- Demolition Squad (BS60)
      -- { 9,  521, 1552},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
-        {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
-        {11,  523, 1130},   -- Brothers D'Aurphe (BS60)
+     -- {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
+     -- {11,  523, 1130},   -- Brothers D'Aurphe (BS60)
         {12,  524, 1131},   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
-        {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
-        {14,  526, 1177},   -- Idol Thoughts (BS50)
-        {15,  527, 1177},   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
+     -- {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
+     -- {14,  526, 1177},   -- Idol Thoughts (BS50)
+     -- {15,  527, 1177},   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
      -- {16,  528, 1130},   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
@@ -647,12 +647,16 @@ function checkReqs(player, npc, bfid, registrant)
         [ 739] = function() return ( player:hasKeyItem(tpz.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Pulling Your Strings
         [ 740] = function() return ( player:hasKeyItem(tpz.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Automaton Assault
         [ 768] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_HOLLA))   ) end, -- PM1-3: The Mothercrystals
+		--[ 768] = function() return ( true   ) end, -- PM1-3: The Mothercrystals
         [ 769] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ABANDONMENT)                                                                                        ) end, -- ENM: Simulant
         [ 800] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_DEM))     ) end, -- PM1-3: The Mothercrystals
+		--[ 800] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
         [ 801] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ANTIPATHY)                                                                                          ) end, -- ENM: You Are What You Eat
         [ 832] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_MEA))     ) end, -- PM1-3: The Mothercrystals
+		--[ 832] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
         [ 833] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ANIMUS)                                                                                             ) end, -- ENM: Playing Host
         [ 864] = function() return ( cop == mi.cop.DESIRES_OF_EMPTINESS and copStat == 8                                                                                    ) end, -- PM5-2: Desires of Emptiness
+		--[ 864] = function() return ( true                                                                                    ) end, -- PM5-2: Desires of Emptiness
         [ 865] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ACRIMONY)                                                                                           ) end, -- ENM: Pulling the Plug
         [ 896] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and player:getCharVar('StormsOfFate') == 2           ) end, -- Quest: Storms of Fate
         [ 960] = function() return ( cop == mi.cop.ANCIENT_VOWS and copStat == 2                                                                                            ) end, -- PM2-5: Ancient Vows

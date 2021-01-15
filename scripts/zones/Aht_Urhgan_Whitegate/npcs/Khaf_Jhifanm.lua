@@ -16,12 +16,12 @@ function onTrigger(player, npc)
         5576,   800,    -- Ayran
         5590,  3750,    -- Balik Sandvici
         2235,   320,    -- Wildgrass Seeds
-        5075,  4400,    -- Scroll of Raptor Mazurka
-        2872, 10000     -- Empire Waystone
+        5075,  4400    -- Scroll of Raptor Mazurka
+        --2872, 10000     -- Empire Waystone
     }
 
     player:showText(npc, ID.text.KHAFJHIFANM_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

@@ -24,7 +24,7 @@ function onTrigger(player, skillName, target)
     local skillID = tonumber(skillName) or tpz.skill[string.upper(skillName)]
     local targ = nil
 
-    if skillID == nil or skillID == 0 or (skillID > 12 and skillID < 25)
+    if skillID == nil or skillID == 0
     or skillID == 46 or skillID == 47 or skillID > 57 then
         error(player, "You must specify a valid skill.")
         return
@@ -34,7 +34,7 @@ function onTrigger(player, skillName, target)
         if player:getCursorTarget() == nil then
             targ = player
         else
-            if player:getCursorTarget():isPC() then
+            if player:getCursorTarget():isPC() or player:getCursorTarget():isPet() then
                 targ = player:getCursorTarget()
             else
                 error(player, "You must target a player or specify a name.")

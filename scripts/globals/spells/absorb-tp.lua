@@ -13,8 +13,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local cap = 1200
-    local dmg = math.random(100, 1200)
+    local dmg = 300 + math.random(0, 150) + caster:getMainLvl()*10 - target:getMainLvl()*10
 
     --get resist multiplier (1x if no resist)
     local params = {}
@@ -40,12 +39,8 @@ function onSpellCast(caster, target, spell)
 
         dmg = dmg * ((100 + caster:getMod(tpz.mod.AUGMENTS_ABSORB)) / 100)
 
-        if ((target:getTP()) < dmg) then
-            dmg = target:getTP()
-        end
-
-        if (dmg > cap) then
-            dmg = cap
+        if dmg > target:getTP()*0.4 then
+            dmg = target:getTP()*0.4
         end
 
         -- drain

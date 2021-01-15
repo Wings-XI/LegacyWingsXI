@@ -14,10 +14,15 @@ end
 
 -- only Feint uses tick, which restores 10 evasion per tick
 function onEffectTick(target, effect)
+    local subpower = effect:getSubPower()
     local power = effect:getPower()
-    local adj = math.min(power, 10)
-    effect:setPower(power - adj)
-    target:addMod(tpz.mod.EVA, adj)
+    
+    if subpower > power then
+        subpower = power
+    end
+    
+    effect:setPower(power - subpower)
+    target:addMod(tpz.mod.EVA, subpower)
 end
 
 function onEffectLose(target, effect)

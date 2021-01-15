@@ -1,3 +1,4 @@
+
 require("scripts/globals/common")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -6,281 +7,346 @@ function getSummoningSkillOverCap(avatar)
     local summoner = avatar:getMaster()
     local summoningSkill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
     local maxSkill = summoner:getMaxSkillLevel(avatar:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC)
-
     return math.max(summoningSkill - maxSkill, 0)
 end
 
-function getDexCritRate(source, target)
-    -- https://www.bg-wiki.com/bg/Critical_Hit_Rate
-    local dDex = source:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
-    local dDexAbs = math.abs(dDex)
-
-    local sign = 1
-    if dDex < 0 then
-        -- target has higher AGI so this will be a decrease to crit rate
-        sign = -1
+function getAvatarEcosystemCoefficient(eco, ele)
+    if eco == tpz.ecosystem.ERROR then
+        return 1.0
     end
-
-    -- default to +0 crit rate for a delta of 0-6
-    local critRate = 0
-    if dDexAbs > 39 then
-        -- 40-50: (dDEX-35)
-        critRate = dDexAbs - 35
-    elseif dDexAbs > 29 then
-        -- 30-39: +4
-        critRate = 4
-    elseif dDexAbs > 19 then
-        -- 20-29: +3
-        critRate = 3
-    elseif dDexAbs > 13 then
-        -- 14-19: +2
-        critRate = 2
-    elseif dDexAbs > 6 then
-        -- 7-13: +1
-        critRate = 1
-    end
-
-    -- Crit rate from stats caps at +-15
-    return math.min(critRate, 15) * sign
-end
-
-function getRandRatio(wRatio)
-    local qRatio = wRatio
-    local upperLimit = 0
-    local lowerLimit = 0
-    -- 4.25 for Avatars, they count as 1H but same as mobs don't have a non-crit cap
-    local maxRatio = 4.25
-
-    if wRatio < 0.5 then
-        upperLimit = math.max(wRatio + 0.5, 0.5)
-    elseif wRatio < 0.7 then
-        upperLimit = 1
-    elseif wRatio < 1.2 then
-        upperLimit = wRatio + 0.3
-    elseif wRatio < 1.5 then
-        upperLimit = wRatio * 1.25
-    else
-        upperLimit = math.min(wRatio + 0.375, maxRatio)
-    end
-
-    if wRatio < 0.38 then
-        lowerLimit = math.max(wRatio, 0.5)
-    elseif wRatio < 1.25 then
-        lowerLimit = (wRatio * (1176/1024)) - (448/1024)
-    elseif wRatio < 1.51 then
-        lowerLimit = 1
-    elseif wRatio < 2.44 then
-        lowerLimit = (wRatio * (1176/1024)) - (755/1024)
-    else
-        lowerLimit = math.min(wRatio - 0.375, maxRatio)
-    end
-    -- Randomly pick a value between lower and upper limits for qRatio
-    qRatio = lowerLimit + (math.random() * (upperLimit - lowerLimit))
-
-    return qRatio
-end
-
-function getAvatarFSTR(weaponDmg, avatarStr, targetVit)
-    -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
-    -- fSTR for avatars has no cap and a lower bound of floor(weaponDmg/9)
-    local dSTR = avatarStr - targetVit
-    local fSTR = dSTR
-    if dSTR >= 12 then
-        fSTR = (dSTR + 4) / 4
-    elseif dSTR >= 6 then
-        fSTR = (dSTR + 6) / 4
-    elseif dSTR >= 1 then
-        fSTR = (dSTR + 7) / 4
-    elseif dSTR >= -2 then
-        fSTR = (dSTR + 8) / 4
-    elseif dSTR >= -7 then
-        fSTR = (dSTR + 9) / 4
-    elseif dSTR >= -15 then
-        fSTR = (dSTR + 10) / 4
-    elseif dSTR >= -21 then
-        fSTR = (dif + 12) / 4
-    else
-        fSTR = (dif + 13) / 4
-    end
-
-    local min = math.floor(weaponDmg/9)
-    return math.max(-min, fSTR)
-end
-
-function avatarHitDmg(weaponDmg, fSTR, pDif)
-    -- https://www.bg-wiki.com/bg/Physical_Damage
-    -- Physical Damage = Base Damage * pDIF
-    -- where Base Damange is defined as Weapon Damage + fSTR
-    return (weaponDmg + fSTR) * pDif
-end
-
-function AvatarPhysicalMove(avatar, target, skill, numberofhits, accmod, dmgmod, dmgmodsubsequent, tpeffect, mtp100,
-    mtp200, mtp300)
-    local returninfo = {}
-
-    -- I have never read a limit on accuracy bonus from summoning skill which can currently go far past 200 over cap
-    -- current retail is over +250 skill so I am removing the cap, my SMN is at 695 total skill
-    local acc = avatar:getACC() + getSummoningSkillOverCap(avatar)
-    local eva = target:getEVA()
-
-    -- Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
-    -- https://www.bg-wiki.com/bg/PDIF#Level_Correction_Function_.28cRatio.29
-    local zoneId = avatar:getZone():getID()
-
-    local shouldApplyLevelCorrection = (zoneId < 256) and not (zoneId == 183)
     
-    -- https://forum.square-enix.com/ffxi/threads/45365?p=534537#post534537
-    -- https://www.bg-wiki.com/bg/Hit_Rate
-    -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
-    -- As of December 10th 2015 pet hit rate caps at 99% (familiars, wyverns, avatars and automatons)
-    -- increased from 95%
-    local maxHitRate = 0.99
-    local minHitRate = 0.2
-
-    -- Hit Rate (%) = 75 + floor( (Accuracy - Evasion)/2 ) + 2*(dLVL)
-    -- For Avatars negative penalties for level correction seem to be ignored for attack and likely for accuracy,
-    -- bonuses cap at level diff of 38 based on this testing: 
-    -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
-    -- If there are penalties they seem to be applied differently similarly to monsters.
-    local baseHitRate = 75
-    -- First hit gets a +100 ACC bonus which translates to +50 hit
-    local firstHitAccBonus = 50
-    local hitrateFirst = 0
-    local hitrateSubsequent = 0
-    -- Max level diff is 38
-    local levelDiff = math.min(avatar:getMainLvl() - target:getMainLvl(), 38)
-    -- Only bonuses are applied for avatar level correction
-    local levelCorrection = 0
-    if shouldApplyLevelCorrection then
-        if levelDiff > 0 then
-            levelCorrection = math.max((levelDiff*2), 0)
+    if eco == tpz.ecosystem.AMORPH then
+        if ele == tpz.damageType.LIGHT then
+            return 1.06
         end
+        if ele == tpz.damageType.DARK then
+            return 1.04
+        end
+        if ele == tpz.damageType.WIND then
+            return 1.03
+        end
+        if ele == tpz.damageType.EARTH then
+            return 0.96
+        end
+        return 1.0
     end
-    -- Delta acc / 2 for hit rate
-    local dAcc = math.floor((acc - eva)/2)
     
-    -- Normal hits computed first
-    hitrateSubsequent = baseHitRate + dAcc + levelCorrection
-    -- First hit gets bonus hit rate
-    hitrateFirst = hitrateSubsequent + firstHitAccBonus
+    if eco == tpz.ecosystem.AQUAN then
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.09
+        end
+        if ele == tpz.damageType.ICE then
+            return 1.06
+        end
+        if ele == tpz.damageType.WATER then
+            return 0.96
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.ARCANA then
+        if ele == tpz.damageType.FIRE then
+            return 1.07
+        end
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.04
+        end
+        if ele == tpz.damageType.LIGHT then
+            return 1.03
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.ARCHAICMACHINE then
+        if ele == tpz.damageType.ICE then
+            return 1.05
+        end
+        if ele == tpz.damageType.EARTH then
+            return 1.04
+        end
+        if ele == tpz.damgaeType.LIGHTNING then
+            return 0.97
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.AVATAR then
+        return 0.97
+    end
+    
+    if eco == tpz.ecosystem.BEAST then
+        if ele == tpz.damageType.WATER then
+            return 1.04
+        end
+        if ele == tpz.damageType.FIRE then
+            return 1.04
+        end
+        if ele == tpz.damageType.ICE then
+            return 1.03
+        end
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.02
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.BEASTMEN then
+        -- wind light ice
+        if ele == tpz.damageType.WIND then
+            return 1.04
+        end
+        if ele == tpz.damageType.LIGHT then
+            return 1.03
+        end
+        if ele == tpz.damageType.ICE then
+            return 1.02
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.BIRD then
+        if ele == tpz.damageType.ICE then
+            return 1.08
+        end
+        if ele == tpz.damageType.LIGHT then
+            return 1.04
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.DEMON then
+        if ele == tpz.damageType.LIGHT then
+            return 1.07
+        end
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.04
+        end
+        if ele == tpz.damageType.DARK then
+            return 0.95
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.DRAGON then
+        if ele == tpz.damageType.WATER then
+            return 1.04
+        end
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.03
+        end
+        if ele == tpz.damageType.FIRE then
+            return 1.02
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.ELEMENTAL then
+        return 0.94
+    end
+    
+    if eco == tpz.ecosystem.EMPTY then
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.HUMANOID then
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.LIZARD then
+        if ele == tpz.damageType.ICE then
+            return 1.07
+        end
+        if ele == tpz.damageType.WIND then
+            return 1.05
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.LUMORIAN then
+        if ele == tpz.damageType.DARK then
+            return 1.03
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.LUMINION then
+        return 1.03
+    end
+    
+    if eco == tpz.ecosystem.PLANTOID then
+        if ele == tpz.damageType.FIRE then
+            return 1.08
+        end
+        if ele == tpz.damageType.ICE then
+            return 1.07
+        end
+        if ele == tpz.damageType.LIGHTNING then
+            return 1.06
+        end
+        if ele == tpz.damageType.DARK then
+            return 1.05
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.UNCLASSIFIED then
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.UNDEAD then
+        -- light fire and a bit of ice
+        if ele == tpz.damageType.LIGHT then
+            return 1.08
+        end
+        if ele == tpz.damageType.FIRE then
+            return 1.07
+        end
+        if ele == tpz.damageType.ICE then
+            return 1.03
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.VERMIN then
+        -- ice light fire
+        if ele == tpz.damageType.ICE then
+            return 1.07
+        end
+        if ele == tpz.damageType.LIGHT then
+            return 1.07
+        end
+        if ele == tpz.damageType.FIRE then
+            return 1.04
+        end
+        return 1.0
+    end
+    
+    if eco == tpz.ecosystem.VORAGEAN then
+        return 1.0
+    end
+    
+    
+    return 1.0
+end
 
-    hitrateSubsequent = hitrateSubsequent / 100
-    hitrateFirst = hitrateFirst / 100
+function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmodsubsequent,tpeffect,mtp100,mtp200,mtp300,critmod)
+    
+    local master = avatar:getMaster()
+    
+    local returninfo = {}
+    
+    if critmod == nil then
+        critmod = 0
+    end
+    
+    local acc = avatar:getACC()
+    local eva = target:getEVA()
+    local dmg = avatar:getWeaponDmg()
+    local minFstr, maxFstr = avatarFSTR(avatar:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT))
+    local ratio = avatar:getStat(tpz.mod.ATT) / target:getStat(tpz.mod.DEF)
 
-    hitrateSubsequent = utils.clamp(hitrateSubsequent, minHitRate, maxHitRate)
-    hitrateFirst = utils.clamp(hitrateFirst, minHitRate, maxHitRate)
+    -- Note: Avatars do not have any level correction. This is why they are so good on Wyrms! // https://kegsay.livejournal.com/tag/smn!
+    -- merit 1280 is avatar phys accuracy merit
+    local hitrate = utils.clamp(75 + accmod + getSummoningSkillOverCap(avatar)/2 + master:getMerit(1280)/2.2 + ((acc - eva)/5), 20, 97)    
+    --master:PrintToPlayer(string.format("hitrate = 75 + %i + %.1f + %.1f + %.1f = %.1f",accmod,getSummoningSkillOverCap(avatar)/2,master:getMerit(1280)/2.2,(acc - eva)/5,hitrate))
 
-    -- Compute hits first so we can exit early
-    local firstHitLanded = false
-    local numHitsLanded = 0
-    local numHitsProcessed = 1
+    -- add on native crit hit rate (guesstimated, it actually follows an exponential curve)
+    local critrate = (avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)) * 0.005 -- assumes +0.5% crit rate per 1 dDEX
+    critrate = critrate + avatar:getMod(tpz.mod.CRITHITRATE) / 100 + critmod / 100
+    critrate = utils.clamp(critrate, 0.05, 0.2)
+
+    -- Applying pDIF
+    --old
+    --[[
+    if ratio <= 1 then
+        maxRatio = 1
+        minRatio = 1/3
+    elseif ratio < 1.6 then
+        maxRatio = (2 * ratio + 1) / 3
+        minRatio = (7 * ratio - 4) / 9
+    elseif ratio <= 1.8 then
+        maxRatio = 1.8
+        minRatio = 1
+    elseif ratio < 3.6 then
+        maxRatio = 2.4 * ratio - 2.52
+        minRatio = 5 * ratio / 3 - 2
+    else
+        maxRatio = 4.2
+        minRatio = 4
+    end
+    ]]
+    maxRatio = ratio * 0.5 + 1
+    minRatio = maxRatio * 0.78 + 1/6
+    if maxRatio > 2.75 then
+        maxRatio = 2.75
+    end
+    if minRatio > maxRatio - 0.1 then
+        minRatio = maxRatio - 0.1
+    end
+    
+    
+    -- start the hits
+    local hitsdone = 1
+    local hitslanded = 0
+    local hitdmg = 0
     local finaldmg = 0
 
-    if math.random() < hitrateFirst then
-        firstHitLanded = true
-        numHitsLanded = numHitsLanded + 1
+    if math.random()*100 < hitrate then
+        hitdmg = avatarHitDmg(dmg, minRatio, maxRatio, minFstr, maxFstr, critrate)
+        finaldmg = finaldmg + hitdmg * dmgmod
+        hitslanded = hitslanded + 1
     end
 
-    while numHitsProcessed < numberofhits do
-        if math.random() < hitrateSubsequent then
-            numHitsLanded = numHitsLanded + 1
+    while hitsdone < numberofhits do
+        if math.random()*100 < hitrate then
+            hitdmg = avatarHitDmg(dmg, minRatio, maxRatio, minFstr, maxFstr, critrate)
+            finaldmg = finaldmg + hitdmg * dmgmodsubsequent
+            hitslanded = hitslanded + 1
         end
-        numHitsProcessed = numHitsProcessed + 1
+        hitsdone = hitsdone + 1
     end
 
-    if numHitsLanded == 0 then
-        -- Missed everything we can exit early
+    -- all hits missed
+    if hitslanded == 0 or finaldmg == 0 then
         finaldmg = 0
+        hitslanded = 0
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
+
+    -- some hits hit
     else
-        -- https://www.bg-wiki.com/bg/Critical_Hit_Rate
-        -- Crit rate has a base of 5% and no cap, 0-100% are valid
-        -- Dex contribution to crit rate is capped and works in tiers
-        local baseCritRate = 5
-        local maxCritRate = 1 -- 100%
-        local minCritRate = 0 -- 0%
-
-        local critRate = baseCritRate + getDexCritRate(avatar, target) + avatar:getMod(tpz.mod.CRITHITRATE)
-        critRate = critRate / 100
-        critRate = utils.clamp(critRate, minCritRate, maxCritRate)
-        
-        local weaponDmg = avatar:getWeaponDmg()
-
-        local fSTR = getAvatarFSTR(weaponDmg, avatar:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT))
-
-        -- https://www.bg-wiki.com/bg/PDIF
-        -- https://www.bluegartr.com/threads/127523-pDIF-Changes-(Feb.-10th-2016)
-        local ratio = avatar:getStat(tpz.mod.ATT) / target:getStat(tpz.mod.DEF)
-        local cRatio = ratio
-
-        if shouldApplyLevelCorrection then
-            -- Mobs, Avatars and pets only get bonuses, no penalties (or they are calculated differently)
-            if levelDiff > 0 then
-                local correction = levelDiff * 0.05;
-                local cappedCorrection = math.min(correction, 1.9)
-                cRatio = cRatio + cappedCorrection
-            end
-        end
-
-        --Everything past this point is randomly computed per hit
-
-        numHitsProcessed = 0
-
-        local critAttackBonus = 1 + ((avatar:getMod(tpz.mod.CRIT_DMG_INCREASE) - target:getMod(tpz.mod.CRIT_DEF_BONUS)) / 100)
-
-        if firstHitLanded then
-            local wRatio = cRatio
-            local isCrit = math.random() < critRate
-            if isCrit then
-                wRatio = wRatio + 1
-            end
-            -- get a random ratio from min and max
-            local qRatio = getRandRatio(wRatio)
-
-            --Final pDif is qRatio randomized with a 1-1.05 multiplier
-            local pDif = qRatio * (1 + (math.random() * 0.05))
-
-            if isCrit then
-                pDif = pDif * critAttackBonus
-            end
-            
-            finaldmg = avatarHitDmg(weaponDmg, fSTR, pDif) * dmgmod
-            numHitsProcessed = 1
-        end
-
-        while numHitsProcessed < numHitsLanded do
-            local wRatio = cRatio
-            local isCrit = math.random() < critRate
-            if isCrit then
-                wRatio = wRatio + 1
-            end
-            -- get a random ratio from min and max
-            local qRatio = getRandRatio(wRatio)
-
-            --Final pDif is qRatio randomized with a 1-1.05 multiplier
-            local pDif = qRatio * (1 + (math.random() * 0.05))
-            
-            if isCrit then
-                pDif = pDif * critAttackBonus
-            end
-
-            finaldmg = finaldmg + (avatarHitDmg(weaponDmg, fSTR, pDif) * dmgmodsubsequent)
-            numHitsProcessed = numHitsProcessed + 1
-        end
-
-        -- apply ftp bonus
-        if tpeffect == TP_DMG_BONUS then
-            finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
-        end
+        target:wakeUp()
+    end
+    
+    --master:PrintToPlayer(string.format("blood pact hit %i of %i times for pdif %.2f to %.2f at an accuracy of %.2f",hitslanded,numberofhits,minRatio,maxRatio,hitrate))
+    
+    -- apply ftp bonus
+    if tpeffect == TP_DMG_BONUS then
+        finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
     end
 
     returninfo.dmg = finaldmg
-    returninfo.hitslanded = numHitsLanded
+    returninfo.hitslanded = hitslanded
 
     return returninfo
 end
 
-function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, shadowbehav)
+-- minFstr = dSTR/4 + 0.5
+-- maxFstr = dSTR/4 + 0.25
+function avatarFSTR(att_str, def_vit)
+    local dSTR = att_str - def_vit
+    return math.floor(dSTR / 4 + 0.5), math.floor(dSTR / 4 + 0.25)
+end
+
+function avatarHitDmg(dmg, pdifMin, pdifMax, fstrMin, fstrMax, critrate)
+    local fstr = math.random(fstrMin, fstrMax)
+    local pdif = math.random(pdifMin * 1000, pdifMax * 1000) / 1000
+    if math.random() < critrate then
+        pdif = math.min(pdif + 0.5, 4.2)
+    end
+    return (dmg + fstr) * pdif
+end
+
+function AvatarFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadowbehav)
 
     -- physical attack missed, skip rest
     if skilltype == tpz.attackType.PHYSICAL and dmg == 0 then
@@ -291,21 +357,21 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
     -- this is for AoE because its only set once
     skill:setMsg(tpz.msg.basic.DAMAGE)
 
-    -- Handle shadows depending on shadow behaviour / skilltype
-    if shadowbehav < 5 and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then -- remove 'shadowbehav' shadows.
-        local targShadows = target:getMod(tpz.mod.UTSUSEMI)
-        local shadowType = tpz.mod.UTSUSEMI
-        if targShadows == 0 then -- try blink, as utsusemi always overwrites blink this is okay
+    --Handle shadows depending on shadow behaviour / skilltype
+    if shadowbehav < 5 and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then --remove 'shadowbehav' shadows.
+        targShadows = target:getMod(tpz.mod.UTSUSEMI)
+        shadowType = tpz.mod.UTSUSEMI
+        if targShadows == 0 then --try blink, as utsusemi always overwrites blink this is okay
             targShadows = target:getMod(tpz.mod.BLINK)
             shadowType = tpz.mod.BLINK
         end
 
         if targShadows > 0 then
-            -- Blink has a VERY high chance of blocking tp moves, so im assuming its 100% because its easier!
-            if targShadows >= shadowbehav then -- no damage, just suck the shadows
+        -- Blink has a VERY high chance of blocking tp moves, so im assuming its 100% because its easier!
+            if targShadows >= shadowbehav then --no damage, just suck the shadows
                 skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
                 target:setMod(shadowType, targShadows - shadowbehav)
-                if shadowType == tpz.mod.UTSUSEMI then -- update icon
+                if shadowType == tpz.mod.UTSUSEMI then --update icon
                     effect = target:getStatusEffect(tpz.effect.COPY_IMAGE)
                     if effect ~= nil then
                         if targShadows - shadowbehav == 0 then
@@ -329,7 +395,7 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
                 target:delStatusEffect(tpz.effect.BLINK)
             end
         end
-    elseif shadowbehav == MOBPARAM_WIPE_SHADOWS then -- take em all!
+    elseif shadowbehav == MOBPARAM_WIPE_SHADOWS then --take em all!
         target:setMod(tpz.mod.UTSUSEMI, 0)
         target:setMod(tpz.mod.BLINK, 0)
         target:delStatusEffect(tpz.effect.COPY_IMAGE)
@@ -337,23 +403,23 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
     end
 
     -- handle Third Eye using shadowbehav as a guide
-    local teye = target:getStatusEffect(tpz.effect.THIRD_EYE)
-    if teye ~= nil and skilltype == tpz.attackType.PHYSICAL then -- T.Eye only procs when active with PHYSICAL stuff
-        if shadowbehav == MOBPARAM_WIPE_SHADOWS then -- e.g. aoe moves
+    teye = target:getStatusEffect(tpz.effect.THIRD_EYE)
+    if teye ~= nil and skilltype == tpz.attackType.PHYSICAL then --T.Eye only procs when active with PHYSICAL stuff
+        if shadowbehav == MOBPARAM_WIPE_SHADOWS then --e.g. aoe moves
             target:delStatusEffect(tpz.effect.THIRD_EYE)
-        elseif shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then -- it can be absorbed by shadows
-            -- third eye doesnt care how many shadows, so attempt to anticipate, but reduce
-            -- chance of anticipate based on previous successful anticipates.
+        elseif shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then --it can be absorbed by shadows
+            --third eye doesnt care how many shadows, so attempt to anticipate, but reduce
+            --chance of anticipate based on previous successful anticipates.
             prevAnt = teye:getPower()
             if prevAnt == 0 then
-                -- 100% proc
+                --100% proc
                 teye:setPower(1)
                 skill:setMsg(tpz.msg.basic.ANTICIPATE)
                 return 0
             end
             if math.random() * 10 < 8 - prevAnt then
-                -- anticipated!
-                teye:setPower(prevAnt + 1)
+                --anticipated!
+                teye:setPower(prevAnt+1)
                 skill:setMsg(tpz.msg.basic.ANTICIPATE)
                 return 0
             end
@@ -361,7 +427,7 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
         end
     end
 
-    -- TODO: Handle anything else (e.g. if you have Magic Shield and its a Magic skill, then do 0 damage.
+    --TODO: Handle anything else (e.g. if you have Magic Shield and its a Magic skill, then do 0 damage.
     if skilltype == tpz.attackType.PHYSICAL and target:hasStatusEffect(tpz.effect.PHYSICAL_SHIELD) then
         return 0
     end
@@ -381,18 +447,27 @@ function AvatarFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, 
         return 0
     end
 
-    -- handle invincible
+    --handle invincible
     if target:hasStatusEffect(tpz.effect.INVINCIBLE) and skilltype == tpz.attackType.PHYSICAL then
         return 0
     end
     -- handle pd
-    if target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) and skilltype ==
-        tpz.attackType.PHYSICAL then
+    if target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) and skilltype == tpz.attackType.PHYSICAL then
         return 0
     end
 
     -- Calculate Blood Pact Damage before stoneskin
     dmg = dmg + dmg * mob:getMod(tpz.mod.BP_DAMAGE) / 100
+    
+    if (skillparam == tpz.damageType.HTH) then
+        dmg = dmg * target:getMod(tpz.mod.HTHRES) / 1000
+    elseif (skillparam == tpz.damageType.PIERCING) then
+        dmg = dmg * target:getMod(tpz.mod.PIERCERES) / 1000
+    elseif (skillparam == tpz.damageType.BLUNT) then
+        dmg = dmg * target:getMod(tpz.mod.IMPACTRES) / 1000
+    elseif (skillparam == tpz.damageType.SLASHING) then
+        dmg = dmg * target:getMod(tpz.mod.SLASHRES) / 1000
+    end
 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
@@ -407,7 +482,7 @@ function AvatarPhysicalHit(skill, dmg)
     return skill:getMsg() == tpz.msg.basic.DAMAGE
 end
 
-function avatarFTP(tp, ftp1, ftp2, ftp3)
+function avatarFTP(tp,ftp1,ftp2,ftp3)
     if tp < 1000 then
         tp = 1000
     end
@@ -430,5 +505,5 @@ function avatarMiniFightCheck(caster)
             result = 40 -- Cannot use <spell> in this area.
         end
     end
-    return result
+      return result
 end

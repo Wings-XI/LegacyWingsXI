@@ -20,6 +20,7 @@ function onPetAbility(target, pet, skill, master)
             summoningSkill = 600
         end
         duration = 30 + summoningSkill / 20
+        master:delStatusEffect(tpz.effect.ASTRAL_FLOW)
     end
     target:delStatusEffect(tpz.effect.PERFECT_DEFENSE)
     target:addStatusEffect(tpz.effect.PERFECT_DEFENSE, power, 3, duration)

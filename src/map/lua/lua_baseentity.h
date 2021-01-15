@@ -314,7 +314,6 @@ public:
     int32 completeMission(lua_State*);      // Complete Mission
     int32 setMissionLogEx(lua_State*);      // Sets mission log extra data to correctly track progress in branching missions.
     int32 getMissionLogEx(lua_State*);      // Gets mission log extra data.
-
     int32 setEminenceCompleted(lua_State *L);  // Sets the complete flag for a record of eminence
     int32 getEminenceCompleted(lua_State *L);  // Gets the record completed flag
     int32 setEminenceProgress(lua_State *L);   // Sets progress on a record of eminence
@@ -444,6 +443,7 @@ public:
 
     int32 checkSoloPartyAlliance(lua_State*);        // Check if Player is in Party or Alliance 0=Solo 1=Party 2=Alliance
 
+    int32 checkFovAllianceAllowed(lua_State*);       // checks the map config, 1 if alliance is allowed to farm Fov pages
     int32 checkKillCredit(lua_State*);
 
     // Instances
@@ -535,6 +535,7 @@ public:
     int32 eraseStatusEffect(lua_State*);       // Used with "Erase" spell
     int32 eraseAllStatusEffect(lua_State*);    // Erases all effects and returns number erased
     int32 dispelStatusEffect(lua_State*);      // Used with "Dispel" spell
+    int32 getBattleTargetID(lua_State*);   // returns an obj instead of an integer... needed for atomos
     int32 dispelAllStatusEffect(lua_State*);   // Dispels all effects and returns number erased
     int32 stealStatusEffect(lua_State*);       // Used in mob skills to steal effects
 
@@ -716,6 +717,20 @@ public:
     int32 getDespoilDebuff(lua_State*);     // gets the status effect id to apply to the mob on successful despoil
     int32 itemStolen(lua_State*);           // sets mob's ItemStolen var = true
     int32 getTHlevel(lua_State*);           // Returns the Monster's current Treasure Hunter Tier
+
+    int32 friendListMain(lua_State*);
+    int32 setMobLevelRange(lua_State*);
+    int32 setSuperJump(lua_State*);
+    int32 getOAXTimes(lua_State*);
+    int32 getOpenMH(lua_State*);
+    int32 zoneMazurka(lua_State* L);
+    int32 forceDropItems(lua_State* L);
+    int32 addCharmTime(lua_State* L);
+    int32 tryInterruptSpell(lua_State* L);
+    int32 getGuardRate(lua_State* L);
+    int32 trySkillUp(lua_State* L);
+    int32 addRoamFlag(lua_State* L);
+    int32 delRoamFlag(lua_State* L);
 };
 
 #endif

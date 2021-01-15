@@ -1,5 +1,3 @@
-**NOTICE: AS OF NOVEMBER 16TH, 2020, PROJECT TOPAZ IS ONLY ACCEPTING COMMUNITY PULL REQUESTS FOR CRITICAL CRASH FIXES, EXPLOIT FIXES, AND VERSION UPDATES. ANY PULL REQUEST FOR ANOTHER PURPOSE -- SUCH AS NEW CONTENT, REFACTORING, OR NON-VITAL FIXES -- WILL BE CLOSED WITHOUT COMMENT OR REVIEW.**
-
 ----
 
 # Issue Report Contributions:
@@ -11,17 +9,17 @@
 
 # Pull Request Contributions:
 
-**By submitting a pull request to Project Topaz, you agree to our [Limited Contributor License Agreement](http://project-topaz.com/blob/release/CONTRIBUTOR_AGREEMENT.md)**
+**By submitting a pull request to the Wings project, you agree to our [Limited Contributor License Agreement](CONTRIBUTOR_AGREEMENT.md)**
 
-All contributions must be done through pull requests to the Topaz repository.  We don't take fixes from Discord to apply ourselves.  If you need help with making a pull request, there is a GitHub guide on how to do so. If you still need help after consulting the guide, you can ask for help in Discord and we will be happy to help you.
+All contributions must be done through pull requests to the Wings repository.  We don't take fixes from Discord to apply ourselves.  If you need help with making a pull request, there is a GitLab guide on how to do so. If you still need help after consulting the guide, you can ask for help in Discord and we will be happy to help you.
 
-We prefer submitting early and often, over monolithic and once. If you're implementing a complex feature, please try to submit PRs as you get each smaller functional aspect working (use your best judgment on what counts as a useful PR). This way we can help make sure you're on the right track before you sink a lot of time into implementations we might want done in a different way.
+We prefer submitting early and often, over monolithic and once. If you're implementing a complex feature, please try to submit PRs as you get each smaller functional aspect working (use your best judgement on what counts as a useful PR). This way we can help make sure you're on the right track before you sink a lot of time into implementations we might want done in a different way.
 
 Please try to leave your PR alone after submission, unless it's to fix bugs you've noticed, or if we've requested changes. If you're still pushing commits after opening the PR, it makes it hard for reviewers to know when you're "finished" and if it's "safe" to begin their reviews. If you do want to push early for reviews of your in-progress work, you can open your PR as a "draft".
 
 After a pull request is made, if a staff member leaves feedback for you to change, you must either fix or address it for your pull request to be merged.
 
-If you do not fill the checkboxes confirming that you agree to Project Topaz's Limited Contributor License Agreement and that you've tested your code - your PR will not be reviewed.
+If you do not confirm that you agree to the Wings project's Limited Contributor License Agreement and that you've tested your code - your PR will not be reviewed.
 
 # Workflow Guide
 
@@ -31,6 +29,8 @@ If you do not fill the checkboxes confirming that you agree to Project Topaz's L
 * Make your commit messages meaningful, or amend/rebase once you're ready to push.
 
 # Style Guide
+
+The following guide is currently copy-pasted from Project Topaz, however we reserve the right to change it at will.
 
 ## Code Editor Configuration
 
@@ -52,12 +52,12 @@ Clang-Format is also an option for C++
 ## General code guidlines (all languages):
 
 * Your code should strive to be obvious and readable by the casual observer. You aren't going to be the only person who reads/debugs your code.
-* Unix (LF) line ends at the end of every file. GitHub will tell you if you don't have one by putting a ⛔ symbol at the end of your file.
+* Unix (LF) line ends at the end of every file.
 * Try not to exceed 120 chars width. Exceptions will occur, but try.
 * 4 space indent, do not use tabs for alignment.
-* Trim trailing whitespace.
+* Trim trailing whitespaces.
 * Space after starting comments (`-- Comment` and `// Comment`)
-* If you agree with staff and/or your  reviewers that some work in your pull request can be left as "to-do", make new issues on GitHub for your new `TODO` items and put the ID alongside the comment. The comment should also be sufficiently descriptive of what the missing work is, and why it was left out. eg. `// TODO: A Boy's Dream - PLD AF Quest 2 - Cannot be completed until fishing is implemented (GitHub Issue #12345)`
+* If you agree with staff and/or your  reviewers that some work in your pull request can be left as "to-do", make new issues on GitLab for your new `TODO` items and put the ID alongside the comment. The comment should also be sufficiently descriptive of what the missing work is, and why it was left out. eg. `// TODO: A Boy's Dream - PLD AF Quest 2 - Cannot be completed until fishing monsters is implemented (GitLab Issue #12345)`
 
 ## C++
 We keep a `.clang-format` file in the root of the repo, but accept it can be difficult to set up for use on _just your changes_, as opposed to entire files that you're working with that might have legacy styling you don't want to mess with.

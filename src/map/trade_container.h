@@ -81,6 +81,8 @@ public:
 
     void    Clean();                                        // отчищаем контейнер
 
+    uint8   m_failType;
+
 private:
 
     uint8   m_type;                                         // тип контейнера (тип кристалла, нация магазина и т.д.)

@@ -1,20 +1,24 @@
 -----------------------------------
 -- Area:  Bibiki Bay
--- NPC:   ???
+-- NPC:   ??? (qm1)
 -- Notes: Used to spawn Shen
 -- !pos -115.108 0.300 -724.664 4
 -----------------------------------
 local ID = require("scripts/zones/Bibiki_Bay/IDs")
 
 function onTrade(player, npc, trade)
-    if (not GetMobByID(ID.mob.SHEN):isSpawned() and trade:hasItemQty(1823, 1) and trade:getItemCount() == 1) then
+	local shen = 16793859
+	local fil1 = 16793860
+	local fil2 = 16793861
+    if ((not GetMobByID(shen):isSpawned()) and trade:hasItemQty(1823, 1) and trade:getItemCount() == 1) then
         player:tradeComplete()
-        SpawnMob(ID.mob.SHEN):updateClaim(player)
-        for i = 1, 2 do
-            if (not GetMobByID(ID.mob.SHEN+i):isSpawned()) then
-                SpawnMob(ID.mob.SHEN+i):updateEnmity(player)
-            end
-        end
+        SpawnMob(shen):updateClaim(player)
+		if not GetMobByID(fil1):isSpawned() then
+			SpawnMob(fil1):updateClaim(player)
+		end
+		if not GetMobByID(fil2):isSpawned() then
+			SpawnMob(fil2):updateClaim(player)
+		end
     end
 end
 

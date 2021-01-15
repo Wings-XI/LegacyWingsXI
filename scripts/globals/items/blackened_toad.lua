@@ -28,12 +28,12 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.DEX, 2)
     target:addMod(tpz.mod.AGI, 2)
     target:addMod(tpz.mod.MND, -1)
-    target:addMod(tpz.mod.POISONRES, 4)
+    target:addMod(tpz.mod.POISONRESTRAIT, 4)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.DEX, 2)
     target:delMod(tpz.mod.AGI, 2)
     target:delMod(tpz.mod.MND, -1)
-    target:delMod(tpz.mod.POISONRES, 4)
+    target:delMod(tpz.mod.POISONRESTRAIT, 4)
 end

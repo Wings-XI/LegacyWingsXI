@@ -19,7 +19,7 @@ function onSpellCast(caster, target, spell)
 
     params.diff = nil
 
-    params.attribute = tpz.mod.INT
+    params.attribute = tpz.mod.MND
 
     params.skillType = tpz.skill.DIVINE_MAGIC
 
@@ -29,6 +29,7 @@ function onSpellCast(caster, target, spell)
 
     local resist = applyResistance(caster, target, spell, params)
     local duration = 12 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
 
     if (resist > 0.0625) then
         if (target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration)) then

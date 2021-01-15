@@ -34,5 +34,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
+	if damage > 0 then player:trySkillUp(target, tpz.skill.AXE, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

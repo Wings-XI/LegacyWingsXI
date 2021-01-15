@@ -21,6 +21,11 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.3
+	if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
+		return 0
+	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local shadows = info.hitslanded
 
@@ -29,10 +34,37 @@ function onMobWeaponSkill(target, mob, skill)
         typeEffect = tpz.effect.POISON
         mob:resetEnmity(target)
     end
-
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, shadows)
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 20, 0, 120)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
-
+    
+    local dmg = 0
+    
+    if mob:getID() == 17613130 then -- cap. cassie
+        local eff1 = MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 60)
+        local eff2 = MobStatusEffectMove(mob, target, tpz.effect.WEIGHT, 50, 0, 60)
+        local eff3 = MobStatusEffectMove(mob, target, tpz.effect.POISON, 50, 3, 60)
+        
+        if target:hasStatusEffect(tpz.effect.POISON) and (target:getStatusEffect(tpz.effect.POISON)):getPower() < 50 then
+            target:addStatusEffect(tpz.effect.POISON, 50, 3, 60)
+            eff3 = tpz.msg.basic.SKILL_ENFEEB_IS
+        end
+        
+        skill:setMsg(tpz.msg.basic.SKILL_ENFEEB)
+        if eff1 == tpz.msg.basic.SKILL_ENFEEB_IS then
+            return tpz.effect.BIND
+        elseif eff2 == tpz.msg.basic.SKILL_ENFEEB_IS then
+            return tpz.effect.WEIGHT
+        elseif eff3 == tpz.msg.basic.SKILL_ENFEEB_IS then
+            return tpz.effect.POISON
+        end
+        
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
+        return 0
+    else
+        dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, shadows)
+        MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 20, 0, 120)
+        target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
+		if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+        return dmg
+    end
+    
     return dmg
 end

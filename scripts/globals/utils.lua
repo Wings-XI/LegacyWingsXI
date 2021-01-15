@@ -64,10 +64,16 @@ function utils.stoneskin(target, dmg)
     return dmg
 end
 
-function utils.takeShadows(target, dmg, shadowbehav)
+function utils.takeShadows(target, dmg, shadowbehav, mob)
     if (shadowbehav == nil) then
         shadowbehav = 1
     end
+    
+    local enmityLoss = 0 - math.floor(target:getMainLvl() / 2)
+    if mob == nil then
+        enmityLoss = 0
+    end
+    --print(string.format("enmityLoss is %i",enmityLoss))
 
     local targShadows = target:getMod(tpz.mod.UTSUSEMI)
     local shadowType = tpz.mod.UTSUSEMI
@@ -103,11 +109,22 @@ function utils.takeShadows(target, dmg, shadowbehav)
                 target:delStatusEffect(tpz.effect.COPY_IMAGE)
                 target:delStatusEffect(tpz.effect.BLINK)
             end
+            
+            if enmityLoss < 0 then
+                mob:addEnmity(target, enmityLoss*(targShadows-shadowsLeft), enmityLoss*(targShadows-shadowsLeft))
+                --print(string.format("taking away enmity of value %i",enmityLoss*(targShadows-shadowsLeft)))
+            end
 
             return 0
         else --less shadows than this move will take, remove all and factor damage down
             target:delStatusEffect(tpz.effect.COPY_IMAGE)
             target:delStatusEffect(tpz.effect.BLINK)
+            
+            if enmityLoss < 0 then
+                mob:addEnmity(target, enmityLoss*targShadows, enmityLoss*targShadows)
+                --print(string.format("taking away enmity of value %i",enmityLoss*targShadows))
+            end
+            
             return dmg * ((shadowbehav-targShadows)/shadowbehav)
         end
     end
@@ -152,18 +169,25 @@ function utils.thirdeye(target)
     --third eye doesnt care how many shadows, so attempt to anticipate, but reduce
     --chance of anticipate based on previous successful anticipates.
     local teye = target:getStatusEffect(tpz.effect.THIRD_EYE)
+	local seigan = target:getStatusEffect(tpz.effect.SEIGAN)
 
-    if (teye == nil) then
+    if teye == nil then
         return false
     end
 
     local prevAnt = teye:getPower()
 
-    if ( prevAnt == 0 or (math.random()*100) < (80-(prevAnt*10)) ) then
+    if prevAnt < 7 then
         --anticipated!
-        target:delStatusEffect(tpz.effect.THIRD_EYE)
+        if seigan == nil or prevAnt == 6 or math.random()*100 > 100-prevAnt*15 then
+			target:delStatusEffect(tpz.effect.THIRD_EYE)
+		else
+			teye:setPower(prevAnt + 1)
+		end
         return true
-    end
+    else
+		target:delStatusEffect(tpz.effect.THIRD_EYE)
+	end
 
     return false
 end

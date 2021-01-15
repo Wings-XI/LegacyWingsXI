@@ -497,10 +497,12 @@ public:
     uint16          ATT();
     uint16			ACC(uint8 attackNumber, uint8 offsetAccuracy);
     uint16          EVA();
-    uint16          RATT(uint8 skill, uint16 bonusSkill = 0);
+    uint16          RATT(uint8 skill, float distance = 999.9f, uint16 bonusSkill = 0);
     uint16          RACC(uint8 skill, uint16 bonusSkill = 0);
 
     uint8           GetSpeed();
+
+    DAMAGETYPE      m_dmgType;
 
     bool            isDead();					// проверяем, мертва ли сущность
     bool            isAlive();
@@ -656,6 +658,7 @@ public:
 
     time_point  	charmTime;					// to hold the time entity is charmed
     bool			isCharmed;					// is the battle entity charmed?
+    bool            isSuperJumped;
 
     uint8			m_ModelSize;			    // размер модели сущности, для расчета дальности физической атаки
     ECOSYSTEM		m_EcoSystem;			    // эко-система сущности

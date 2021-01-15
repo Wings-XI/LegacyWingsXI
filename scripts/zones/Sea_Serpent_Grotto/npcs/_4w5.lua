@@ -8,7 +8,7 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 750) then
+    if npcUtil.tradeHas(trade, 750, false, false) then
         if player:getCharVar("SSG_SilverDoor") == 7 then
             npc:openDoor(5) -- Open the door if a silver beastcoin has been traded after checking the door the required number of times
         end

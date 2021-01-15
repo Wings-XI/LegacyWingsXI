@@ -11,6 +11,10 @@ set(SOURCES
     player_charm_controller.h
     player_controller.cpp
     player_controller.h
+	spirit_controller.cpp
+	spirit_controller.h
+	targeted_avatar_controller.cpp
+	targeted_avatar_controller.h
     trust_controller.cpp
     trust_controller.h)
 

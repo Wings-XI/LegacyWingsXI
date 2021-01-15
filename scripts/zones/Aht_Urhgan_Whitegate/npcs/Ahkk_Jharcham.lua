@@ -11,10 +11,10 @@ require("scripts/globals/quests")
 function onTrade(player, npc, trade)
     local keepingNotes = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.KEEPING_NOTES)
 
-    if keepingNotes == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {917, 929}) then -- parchment + black ink
-        player:startEvent(11)
-    elseif keepingNotes == QUEST_COMPLETED and npcUtil.tradeHas(trade, 917) then -- parchment
+    if keepingNotes == QUEST_COMPLETED and npcUtil.tradeHas(trade, 917, false, false) then -- parchment
         player:startEvent(13) -- Doesn't need any more parchment.
+    elseif keepingNotes == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {917, 929}) then -- parchment + black ink
+        player:startEvent(11)
     end
 end
 

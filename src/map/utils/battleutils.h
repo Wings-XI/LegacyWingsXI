@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -60,10 +60,11 @@ enum ENSPELL
     ENSPELL_II_LIGHT = 15,
     ENSPELL_II_DARK = 16,
     ENSPELL_BLOOD_WEAPON = 17,
-    ENSPELL_AUSPICE = 18,
-    ENSPELL_DRAIN_SAMBA = 19,
-    ENSPELL_ASPIR_SAMBA = 20,
-    ENSPELL_HASTE_SAMBA = 21
+    ENSPELL_ROLLING_THUNDER = 18,
+    ENSPELL_AUSPICE = 19,
+    ENSPELL_DRAIN_SAMBA = 20,
+    ENSPELL_ASPIR_SAMBA = 21,
+    ENSPELL_HASTE_SAMBA = 22
 };
 
 enum SPIKES
@@ -114,6 +115,7 @@ namespace battleutils
     uint8           GetSkillRank(SKILLTYPE SkillID, JOBTYPE JobID);
     uint16          GetMaxSkill(SKILLTYPE SkillID, JOBTYPE JobID, uint8 level);
     uint16          GetMaxSkill(uint8 rank, uint8 level);
+    uint8           getElementalSDTDivisor(CBattleEntity* PTarget, uint8 element);
 
     CWeaponSkill*   GetWeaponSkill(uint16 WSkillID);
     CMobSkill*      GetMobSkill(uint16 SkillID);
@@ -132,7 +134,7 @@ namespace battleutils
     std::vector<ELEMENT> GetSkillchainMagicElement(SKILLCHAIN_ELEMENT skillchain);
 
     bool            IsParalyzed(CBattleEntity* PAttacker);
-    bool            IsAbsorbByShadow(CBattleEntity* PDefender);
+    bool            IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PEnmityHolder);
     bool            IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender);
 
     int32               GetFSTR(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 SlotID);
@@ -148,7 +150,7 @@ namespace battleutils
     float               GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent);
 
     int32               TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter = false,  bool isCovered = false, CBattleEntity* POriginalTarget = nullptr);
-    int32               TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier);
+    int32               TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool useAutoTPFormula = false);
     int32               TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 lastSkillDamage, CBattleEntity* taChar);
     int32               TakeSpellDamage(CBattleEntity* PDefender, CCharEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType);
 
@@ -177,6 +179,7 @@ namespace battleutils
 
     void                MakeEntityStandUp(CBattleEntity* PEntity);
     CBattleEntity*      getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob);
+    CBattleEntity*      getCoverTarget(CBattleEntity* PTarget, CBattleEntity* PMob);
 
     bool                HasNinjaTool(CBattleEntity* PEntity, CSpell* PSpell, bool ConsumeTool);
 
@@ -195,6 +198,7 @@ namespace battleutils
     uint8               getBarrageShotCount(CCharEntity* PChar);
     uint8               getStoreTPbonusFromMerit(CBattleEntity* PEntity);
 
+    void                DoClaimShieldLottery(CMobEntity* PMob);
     void                ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing = false);
     void                DirtyExp(CBattleEntity* PDefender, CBattleEntity* PAttacker);
     void                RelinquishClaim(CCharEntity* PDefender);
@@ -253,6 +257,7 @@ namespace battleutils
     CBattleEntity*      GetCoverAbilityUser(CBattleEntity* PCoverAbilityTarget, CBattleEntity* PMob);
     bool                IsMagicCovered(CCharEntity* PCoverAbilityUser);
     void                ConvertDmgToMP(CBattleEntity* PDefender, int32 damage, bool IsCovered);
+    float               GetRangedAttackDistanceCorrection(CBattleEntity* PChar, float distance);
 };
 
 #endif

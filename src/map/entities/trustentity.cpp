@@ -215,7 +215,7 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
         else if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
-            if (battleutils::IsAbsorbByShadow(PTarget))
+            if (battleutils::IsAbsorbByShadow(PTarget, nullptr))
             {
                 shadowsTaken++;
             }
@@ -357,7 +357,7 @@ void CTrustEntity::OnRangedAttack(CRangeState& state, action_t& action)
         uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
 
         // remove shadows
-        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
+        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this, nullptr));
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }

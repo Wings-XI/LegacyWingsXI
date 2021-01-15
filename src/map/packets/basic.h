@@ -92,6 +92,21 @@ public:
 
     /* Getters for the header */
 
+    uint8 getType() const
+    {
+        return type;
+    }
+
+    uint8 getSize() const
+    {
+        return size;
+    }
+
+    uint8* getData()
+    {
+        return data;
+    }
+
     uint16 id()
     {
         return ref<uint16>(0) & 0x1FF;

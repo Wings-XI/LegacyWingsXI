@@ -17,3 +17,8 @@ end
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 419)
 end
+
+function onMobSpawn(mob)
+    mob:setMobMod(1, 12000)
+    mob:setMobMod(2, 19000)
+end

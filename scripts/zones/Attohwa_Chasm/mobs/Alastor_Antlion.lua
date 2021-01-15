@@ -13,6 +13,11 @@ function onMobInitialize(mob)
     mob:addMod(tpz.mod.FASTCAST, 10)
     mob:addMod(tpz.mod.BINDRES, 40)
     mob:addMod(tpz.mod.SILENCERES, 40)
+    
+    mob:setMod(tpz.mod.STUNRESTRAIT,200)
+    mob:setMod(tpz.mod.SLOWRESTRAIT,200)
+    mob:setMod(tpz.mod.BLINDRESTRAIT,200)
+    mob:setMod(tpz.mod.SUSC_TO_WS_STUN,1)
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -20,4 +25,12 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
+end
+
+function onMobDespawn(mob)
+    --local qm = GetNPCByID(16806296)
+
+    --qm:queue(900000, function(qm)
+        --qm:setStatus(0)
+    --end)
 end

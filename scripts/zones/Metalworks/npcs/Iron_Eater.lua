@@ -71,6 +71,8 @@ function onTrigger(player, npc)
 
     if player:hasSpell(897) and player:hasSpell(900) and player:hasSpell(903) and not player:hasSpell(917) then
         player:startEvent(988, 0, 0, 0, TrustMemory(player))
+    elseif player:getQuestStatus(CRYSTAL_WAR,tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_ACCEPTED and player:getCharVar("FiresOfDiscProg") == 1 then
+        player:startEvent(956)
     elseif wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
     elseif (currentMission == tpz.mission.id.bastok.THE_FOUR_MUSKETEERS and missionStatus == 0) then -- Four Musketeers

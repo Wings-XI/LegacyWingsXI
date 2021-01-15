@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 4,
     parameters = "si"
 }
 
@@ -48,8 +48,9 @@ function onTrigger(player, target, level)
         return
     end
 
-    -- change target gm level
+    -- change target gm level and give them some petty starting gil for random ships/fare/chocobos
     targ:setGMLevel(level)
+    GetPlayerByName(target):setGil(10000)
 
     -- if target is being set to non-GM, remove active GM priveleges, which they will no longer be able to remove themselves
     if level == 0 then

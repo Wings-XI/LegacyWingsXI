@@ -16,7 +16,7 @@ end
 function onSpellCast(caster, target, spell)
     if not target:hasStatusEffect(tpz.effect.INVISIBLE) then
 
-        local duration = calculateDuration(math.random(420, 540), spell:getSkillType(), spell:getSpellGroup(), caster, target)
+        local duration = calculateDuration(math.random(130, 310), spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
         duration = duration + target:getMod(tpz.mod.INVISIBLE_DURATION)
 

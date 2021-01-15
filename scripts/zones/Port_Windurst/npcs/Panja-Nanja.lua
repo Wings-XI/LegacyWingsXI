@@ -13,7 +13,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local guildMember = isGuildMember(player, 8)
+    local guildMember = isGuildMember(player, 5)
     local SkillLevel = player:getSkillLevel(tpz.skill.FISHING)
     local Cost = getAdvImageSupportCost(player, tpz.skill.FISHING)
 

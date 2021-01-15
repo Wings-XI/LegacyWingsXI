@@ -24,14 +24,14 @@ function onTrigger(player, npc)
         4626, 19200,    -- Scroll of Stona
         4627, 13300,    -- Scroll of Viruna
         4628,  8586,    -- Scroll of Cursna
-        4868, 77600,    -- Scroll of Dispell
+        4868, 77600,    -- Scroll of Dispel
         4720, 27000,    -- Scroll of Flash
         4750, 99375,    -- Scroll of Reraise III
         4715, 28500     -- Scroll of Reprisal
     }
 
     player:showText(npc, ID.text.ZAFIF_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

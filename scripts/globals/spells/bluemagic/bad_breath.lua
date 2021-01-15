@@ -48,48 +48,72 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = 1
+    local duration = 1
+
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
 
     if (damage > 0 and resist > 0.3) then
         local typeEffect = tpz.effect.PARALYSIS
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 25, 0, duration)
     end
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.WEIGHT
+        local typeEffect = tpz.effect.WEIGHT
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 25, 0, duration)
     end
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = getBlueEffectDuration(caster,resist,typeEffect)
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.POISON
+        local typeEffect = tpz.effect.POISON
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 4, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 4, 0, duration)
     end
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.SLOW
+        local typeEffect = tpz.effect.SLOW
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 2000, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 2000, 0, duration)
     end
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.SILENCE, target))
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.SILENCE
+        local typeEffect = tpz.effect.SILENCE
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 25, 0, duration)
     end
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.BIND, target))
 
     if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.BIND
+        local typeEffect = tpz.effect.BIND
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 1, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 1, 0, duration)
     end
-        if (damage > 0 and resist > 0.3) then
-    local typeEffect = tpz.effect.BLINDNESS
+    
+    resist = applyResistance(caster, target, spell, params)
+    duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
+    
+    if (damage > 0 and resist > 0.3) then
+        local typeEffect = tpz.effect.BLINDNESS
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 25, 0, duration)
     end
+    
 
     return damage
 

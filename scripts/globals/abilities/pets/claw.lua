@@ -12,14 +12,18 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local eco = target:getSystem()
+    local ele = tpz.damageType.WIND
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
     local numhits = 1
     local accmod = 1
-    local dmgmod = 3.5
+    local dmgmod = 3.5 * coe
+    local critmod = 1 + math.floor(10*skill:getTP()/3000)
 
     local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
-    totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, numhits)
-    target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
+    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3, critmod)
+    totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, numhits)
+    target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     target:updateEnmityFromDamage(pet, totaldamage)
 
     return totaldamage

@@ -35,6 +35,38 @@ g_mixins.rage = function(mob)
             end
 
             -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all increase
+            mob:addMod(tpz.mod.DELAY, 2600)
+            mob:addMod(tpz.mod.ATTP, 60)
+            mob:addMod(tpz.mod.ACC, 500)
+            mob:addMod(tpz.mod.MAIN_DMG_RATING, 75)
+            mob:addMod(tpz.mod.CRITHITRATE, 30)
+            mob:addMod(tpz.mod.MEVA, 500)
+            mob:addMod(tpz.mod.LULLABYRESTRAIT, 100)
+            mob:addMod(tpz.mod.SLEEPRESTRAIT, 100)
+            mob:addMod(tpz.mod.BINDRESTRAIT, 100)
+            mob:addMod(tpz.mod.GRAVITYRESTRAIT, 100)
+            mob:addMod(tpz.mod.MOVE, 200)
+            
+            mob:delStatusEffect(tpz.effect.SLEEP_I)
+            mob:delStatusEffect(tpz.effect.PARALYSIS)
+            mob:delStatusEffect(tpz.effect.BLINDNESS)
+            mob:delStatusEffect(tpz.effect.SILENCE)
+            mob:delStatusEffect(tpz.effect.PETRIFICATION)
+            mob:delStatusEffect(tpz.effect.CURSE_I)
+            mob:delStatusEffect(tpz.effect.BIND)
+            mob:delStatusEffect(tpz.effect.WEIGHT)
+            mob:delStatusEffect(tpz.effect.SLOW)
+            mob:delStatusEffect(tpz.effect.CHARM_I)
+            mob:delStatusEffect(tpz.effect.AMNESIA)
+            mob:delStatusEffect(tpz.effect.CHARM_II)
+            mob:delStatusEffect(tpz.effect.SLEEP_II)
+            mob:delStatusEffect(tpz.effect.CURSE_II)
+            mob:delStatusEffect(tpz.effect.GRADUAL_PETRIFICATION)
+            mob:delStatusEffect(tpz.effect.TERROR)
+            mob:delStatusEffect(tpz.effect.MUTE)
+            mob:delStatusEffect(tpz.effect.LULLABY)
+            mob:delStatusEffect(tpz.effect.ELEGY)
+            mob:delStatusEffect(tpz.effect.THRENODY)
         end
     end)
 
@@ -50,6 +82,17 @@ g_mixins.rage = function(mob)
             end
 
             -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all decrease
+            mob:delMod(tpz.mod.DELAY, 2600)
+            mob:delMod(tpz.mod.ATTP, 60)
+            mob:delMod(tpz.mod.ACC, 500)
+            mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
+            mob:delMod(tpz.mod.CRITHITRATE, 30)
+            mob:delMod(tpz.mod.MEVA, 500)
+            mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
+            mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
+            mob:delMod(tpz.mod.BINDRESTRAIT, 100)
+            mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
+            mob:delMod(tpz.mod.MOVE, 200)
         end
     end)
 

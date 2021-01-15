@@ -87,6 +87,37 @@ int32 login_parse(int32 fd)
         char escaped_name[16*2 +1];
         char escaped_pass[32*2 +1];
 
+        bool forcehide = false;
+        //ShowWarning("2\n");
+        if (name[0] == '?')
+        {
+            //ShowWarning(CL_WHITE"login_parse QM detected.\n", ip2str(sd->client_addr, nullptr));
+
+            uint8 c = 0;
+
+            while (name[c + 1] != '\0' && c < 17)
+            {
+                name[c] = name[c + 1];
+                //ShowWarning(CL_WHITE"login_parse QM loop...\n", ip2str(sd->client_addr, nullptr));
+                if (name[c + 2] == '\0')
+                {
+                    name[c + 1] = '\0';
+                }
+                c++;
+            }
+
+            forcehide = true;
+            // SQL QUERY FOR HIDDEN / HIDE FRIEND LIST has been moved lower
+
+        }
+
+        bool isIllegal = false;
+
+        if (name[0] == '?')
+        {
+            isIllegal = true;
+        }
+        //ShowWarning("3\n");
         std::fill_n(sd->login, sizeof sd->login, '\0');
         std::copy(name.cbegin(), name.cend(), sd->login);
 
@@ -102,12 +133,16 @@ int32 login_parse(int32 fd)
 
         Sql_EscapeString(SqlHandle, escaped_name, name.c_str());
         Sql_EscapeString(SqlHandle, escaped_pass, password.c_str());
-
+        //ShowWarning("4\n");
+        int32 ret;
+        const char* fmtQuery;
+        bool hasAccount = false;
+        //ShowWarning("5\n");
         switch (code)
         {
         case LOGIN_ATTEMPT:
         {
-            const char* fmtQuery = "SELECT accounts.id,accounts.status \
+            fmtQuery = "SELECT accounts.id,accounts.status \
                                     FROM accounts \
                                     WHERE accounts.login = '%s' AND accounts.password = PASSWORD('%s')";
             int32 ret = Sql_Query(SqlHandle, fmtQuery, escaped_name, escaped_pass);
@@ -118,7 +153,30 @@ int32 login_parse(int32 fd)
                 sd->accid = (uint32)Sql_GetUIntData(SqlHandle, 0);
                 uint8 status = (uint8)Sql_GetUIntData(SqlHandle, 1);
 
-                if (status & ACCST_NORMAL)
+
+
+                bool isSoleAccount = true;
+
+                fmtQuery = "SELECT account_ip_record.accid,account_ip_record.client_ip \
+							FROM account_ip_record \
+							WHERE account_ip_record.client_ip = '%s' AND account_ip_record.accid != %u AND \
+							account_ip_record.accid NOT IN (SELECT account_exceptions.accide FROM account_exceptions);";
+
+                ret = Sql_Query(SqlHandle, fmtQuery, ip2str(sd->client_addr).c_str(), sd->accid);
+
+                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0) { isSoleAccount = false; } // we have our ip attached to another account so we fail this check
+
+
+
+                fmtQuery = "SELECT account_exceptions.accide FROM account_exceptions WHERE accide = %u;"; // this acc is listed as an exception
+
+                ret = Sql_Query(SqlHandle, fmtQuery, sd->accid);
+
+                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0) { isSoleAccount = true; } // pass this check
+
+
+
+                if (status & ACCST_NORMAL && isSoleAccount)
                 {
                     //fmtQuery = "SELECT * FROM accounts_sessions WHERE accid = %d AND client_port <> 0";
 
@@ -131,6 +189,30 @@ int32 login_parse(int32 fd)
                     //  do_close_login(sd,fd);
                     //  return 0;
                     //}
+
+                    if (forcehide)
+                    {
+                        uint16 charids[8] = {0,0,0,0,0,0,0,0};
+                        uint8 index = 0;
+                        ret = Sql_Query(SqlHandle, "SELECT charid FROM chars WHERE accid = %u LIMIT 8;", sd->accid);
+                        if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"login_auth SQL ERROR...\n"); }
+                        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+                        {
+                            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                            {
+                                charids[index] = Sql_GetUIntData(SqlHandle, 0);
+                                index++;
+                            }
+                            index = 0;
+                            while (charids[index] != 0 && index < 8)
+                            {
+                                ret = Sql_Query(SqlHandle, "UPDATE flist_settings SET visible = 0 WHERE callingchar = %u;", charids[index]);
+                                if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"login_auth (2) SQL ERROR...\n"); }
+                                index++;
+                            }
+                        }
+                    }
+
                     fmtQuery = "UPDATE accounts SET accounts.timelastmodify = NULL WHERE accounts.id = %d";
                     Sql_Query(SqlHandle, fmtQuery, sd->accid);
                     fmtQuery = "SELECT charid, server_addr, server_port \
@@ -162,8 +244,10 @@ int32 login_parse(int32 fd)
                     flush_fifo(fd);
                     do_close_tcp(fd);
                 }
-                else if (status & ACCST_BANNED)
+                else if (status & ACCST_BANNED || !isSoleAccount)
                 {
+                    if (!isSoleAccount) { ShowWarning(CL_WHITE"login_parse case LOGIN_ATTEMPT (%u)" CL_RESET": user<" CL_WHITE"%s" CL_RESET"> already has an account!\n", sd->accid, ip2str(sd->client_addr).c_str()); }
+                    if (status & ACCST_BANNED) { ShowWarning(CL_WHITE"login_parse case LOGIN_ATTEMPT" CL_RESET": user<" CL_WHITE"%u" CL_RESET"> is banned!\n", sd->accid); }
                     memset(&session[fd]->wdata[0], 0, 33);
                     session[fd]->wdata.resize(33);
                     //  ref<uint8>(session[fd]->wdata,0) = LOGIN_SUCCESS;
@@ -228,10 +312,23 @@ int32 login_parse(int32 fd)
                 return -1;
             }
 
-            if (Sql_NumRows(SqlHandle) == 0)
+
+
+            fmtQuery = "SELECT account_ip_record.accid,account_ip_record.client_ip \
+									FROM account_ip_record \
+									WHERE account_ip_record.client_ip = '%s' AND \
+									account_ip_record.accid NOT IN (SELECT account_exceptions.accide FROM account_exceptions);";
+
+            ret = Sql_Query(SqlHandle, fmtQuery, ip2str(sd->client_addr).c_str());
+
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0) { hasAccount = true; }
+
+
+
+            if (Sql_NumRows(SqlHandle) == 0 && !hasAccount && !isIllegal)
             {
                 //creating new account_id
-                const char *fmtQuery = "SELECT max(accounts.id) FROM accounts;";
+                fmtQuery = "SELECT max(accounts.id) FROM accounts;";
 
                 uint32 accid = 0;
 
@@ -277,7 +374,9 @@ int32 login_parse(int32 fd)
                 do_close_login(sd, fd);
             }
             else {
-                ShowWarning(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> already exists\n", escaped_name);
+                if (isIllegal) { ShowWarning(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> includes illegal characters!\n", escaped_name); }
+                else if (hasAccount) { ShowWarning(CL_WHITE"login_parse" CL_RESET": user<" CL_WHITE"%s" CL_RESET"> already has an account!\n", ip2str(sd->client_addr).c_str()); }
+                else { ShowWarning(CL_WHITE"login_parse" CL_RESET": account<" CL_WHITE"%s" CL_RESET"> already exists\n", escaped_name); }
                 session[fd]->wdata.resize(1);
                 ref<uint8>(session[fd]->wdata.data(), 0) = LOGIN_ERROR_CREATE_TAKEN;
                 do_close_login(sd, fd);
@@ -285,11 +384,11 @@ int32 login_parse(int32 fd)
             break;
         case LOGIN_CHANGE_PASSWORD:
         {
-            const char* fmtQuery = "SELECT accounts.id,accounts.status \
+            const char* fmtQuery2 = "SELECT accounts.id,accounts.status \
                                     FROM accounts \
                                     WHERE accounts.login = '%s' AND accounts.password = PASSWORD('%s')";
-            int32 ret = Sql_Query(SqlHandle, fmtQuery, escaped_name, escaped_pass);
-            if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0)
+            int32 ret2 = Sql_Query(SqlHandle, fmtQuery2, escaped_name, escaped_pass);
+            if (ret2 == SQL_ERROR || Sql_NumRows(SqlHandle) == 0)
             {
                 session[fd]->wdata.resize(1);
                 ref<uint8>(session[fd]->wdata.data(), 0) = LOGIN_ERROR;
@@ -298,7 +397,7 @@ int32 login_parse(int32 fd)
                 return 0;
             }
 
-            ret = Sql_NextRow(SqlHandle);
+            ret2 = Sql_NextRow(SqlHandle);
 
             sd->accid = (uint32)Sql_GetUIntData(SqlHandle, 0);
             uint8 status = (uint8)Sql_GetUIntData(SqlHandle, 1);
@@ -338,12 +437,12 @@ int32 login_parse(int32 fd)
                 char escaped_updated_password[16 * 2 + 1];
                 Sql_EscapeString(SqlHandle, escaped_updated_password, updated_password.c_str());
 
-                fmtQuery = "UPDATE accounts SET accounts.timelastmodify = NULL WHERE accounts.id = %d";
-                Sql_Query(SqlHandle, fmtQuery, sd->accid);
+                fmtQuery2 = "UPDATE accounts SET accounts.timelastmodify = NULL WHERE accounts.id = %d";
+                Sql_Query(SqlHandle, fmtQuery2, sd->accid);
 
-                fmtQuery = "UPDATE accounts SET accounts.password = PASSWORD('%s') WHERE accounts.id = %d";
-                ret = Sql_Query(SqlHandle, fmtQuery, escaped_updated_password, sd->accid);
-                if (ret == SQL_ERROR)
+                fmtQuery2 = "UPDATE accounts SET accounts.password = PASSWORD('%s') WHERE accounts.id = %d";
+                ret2 = Sql_Query(SqlHandle, fmtQuery2, escaped_updated_password, sd->accid);
+                if (ret2 == SQL_ERROR)
                 {
                     session[fd]->wdata.resize(1);
                     ref<uint8>(session[fd]->wdata.data(), 0) = LOGIN_ERROR_CHANGE_PASSWORD;

@@ -22,7 +22,7 @@ function onTrigger(player, npc)
         4150,  2387,       --Eye Drops
         4112,   837,       --Potion
         5014,    98,       --Scroll of Herb Pastoral
-        2864,  9200        --Federation Waystone
+        --2864,  9200        --Federation Waystone
     }
     tpz.shop.general(player, stock, WINDURST)
 end

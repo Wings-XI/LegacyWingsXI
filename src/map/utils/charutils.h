@@ -27,6 +27,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../trait.h"
 #include "../entities/charentity.h"
 #include "../items/item_equipment.h"
+#include "../packets/chat_message.h"
+#include "../packets/inventory_size.h"
 
 class CPetEntity;
 class CMobEntity;
@@ -76,6 +78,7 @@ namespace charutils
     void	DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob);
     void	DistributeGil(CCharEntity* PChar, CMobEntity* PMob);
     void	DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 droprate);
+    void    tryCompleteGK75(CCharEntity* PChar);
     void	AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck = EMobDifficulty::TooWeak, bool isexpchain = false);
 
     void	TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl);
@@ -151,6 +154,8 @@ namespace charutils
     void	SaveCharPosition(CCharEntity* PChar);				        // сохраняем позицию персонажа
     void	SaveMissionsList(CCharEntity* PChar);                       // Save the missions list
     void    SaveEminenceData(CCharEntity* PChar);                       // Save Eminence Record (RoE) data
+    void    UpdateMissionStorage(CCharEntity* PChar);                   // calculate the rewards for MW1/MW2/MW3/MW4/Satchel and send player a msg if went up
+    bool    HasCompletedMission(CCharEntity* PChar, uint8 log, uint8 mission); // used with UpdateMissionStorage
     void	SaveQuestsList(CCharEntity* PChar);					        // сохраняем список ксевтов
     void    SaveFame(CCharEntity* PChar);                               // Save area fame / reputation
     void	SaveZonesVisited(CCharEntity* PChar);				        // сохраняем посещенные зоны
@@ -171,11 +176,14 @@ namespace charutils
     void    SaveTeleport(CCharEntity* PChar, uint8 type);               // Homepoints, outposts, etc
     void	SaveDeathTime(CCharEntity* PChar);							// Saves when this character last died.
     void	SavePlayTime(CCharEntity* PChar);							// Saves this characters total play time.
+    void    SavePositionToDatabase(CCharEntity* PChar);                 // Periodically save position and player effects to the database for crashes
     bool	hasMogLockerAccess(CCharEntity* PChar);						// true if have access, false otherwise.
 
-    float  AddExpBonus(CCharEntity* PChar, float exp);
+    float   AddExpBonus(CCharEntity* PChar, float exp);
 
     void    RemoveAllEquipment(CCharEntity* PChar);
+    void    SaveItemsToJobSet(CCharEntity* PChar, JOBTYPE job);
+    void    EquipItemsFromJobSet(CCharEntity* PChar, JOBTYPE job);
 
     uint16	AvatarPerpetuationReduction(CCharEntity* PChar);
 
@@ -202,6 +210,10 @@ namespace charutils
     bool    AddWeaponSkillPoints(CCharEntity*, SLOTTYPE, int);
 
     int32   GetCharVar(CCharEntity* PChar, const char* var);
+    bool    AddCharVar(CCharEntity* PChar, const char* var, int32 increment);
+    bool    SetCharVar(CCharEntity* PChar, const char* var, int32 value);
+
+    uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance);
 
     uint16 getWideScanRange(JOBTYPE job, uint8 level);
     uint16 getWideScanRange(CCharEntity* PChar);

@@ -13,6 +13,14 @@ require("scripts/globals/status")
 function onInitialize(zone)
     local newPosition = npcUtil.pickNewPosition(ID.npc.BASTOK_7_1_QM, ID.npc.BASTOK_7_1_QM_POS, true)
     GetNPCByID(ID.npc.BASTOK_7_1_QM):setPos(newPosition.x, newPosition.y, newPosition.z)
+	
+	UpdateNMSpawnPoint(ID.mob.SHIKIGAMI_WEAPON)
+	local shire = GetServerVariable("ShikigamiWeaponRespawn")
+	if os.time() < shire then
+		GetMobByID(ID.mob.SHIKIGAMI_WEAPON):setRespawnTime(shire - os.time())
+	else
+		SpawnMob(ID.mob.SHIKIGAMI_WEAPON)
+	end
 end
 
 function onConquestUpdate(zone, updatetype)

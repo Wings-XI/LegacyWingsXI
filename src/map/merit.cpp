@@ -385,17 +385,461 @@ Merit_t* CMeritPoints::GetMeritPointer(MERIT_TYPE merit)
     return nullptr;
 }
 
+uint8 CMeritPoints::GetMeritMaxUpgrades(uint8 catid)
+{
+    if (catid == 0) // hp/mp
+        return 8;
+    if (catid == 1) // attributes
+        return 5;
+    if (catid == 2) // combat skills
+        return 8;
+    if (catid == 3) // magic skills
+        return 8;
+    if (catid == 4) // others (crit rate, enmity, spell interruption)
+        return 4;
+    if (catid >= 5 && catid <= 24) // job-specific group1
+        return 5;
+    if (catid == 25) // weapon skills (OOE)
+        return 0;
+    if (catid >= 31 && catid <= 50) // job-specific group2
+        return 5;
+
+    return 0;
+}
+
+uint8 CMeritPoints::GetMeritCategoryMaxUpgrades(uint8 catid)
+{
+    if (catid == 0) // hp/mp
+        return 8;
+    if (catid == 1) // attributes
+        return 5;
+    if (catid == 2) // combat skills
+        return 20;
+    if (catid == 3) // magic skills
+        return 16;
+    if (catid == 4) // others (crit rate, enmity, spell interruption)
+        return 8;
+    if (catid >= 5 && catid <= 24) // job-specific group1
+        return 10;
+    if (catid == 25) // weapon skills (OOE)
+        return 0;
+    if (catid >= 31 && catid <= 50) // job-specific group2
+        return 10;
+
+    return 0;
+}
+
+uint8 CMeritPoints::GetCategoryUpgrades(CCharEntity* PChar, uint8 catid)
+{
+    uint8 ret = 0;
+    switch (catid)
+    {
+    case 0:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAX_HP, PChar) / GetMeritPointer(MERIT_MAX_HP)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MP, PChar) / GetMeritPointer(MERIT_MAX_MP)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar) / GetMeritPointer(MERIT_MAX_MERIT)->value;
+        break;
+    case 1:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STR, PChar) / GetMeritPointer(MERIT_STR)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DEX, PChar) / GetMeritPointer(MERIT_DEX)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_VIT, PChar) / GetMeritPointer(MERIT_VIT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AGI, PChar) / GetMeritPointer(MERIT_AGI)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_INT, PChar) / GetMeritPointer(MERIT_INT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MND, PChar) / GetMeritPointer(MERIT_MND)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CHR, PChar) / GetMeritPointer(MERIT_CHR)->value;
+        break;
+    case 2:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_H2H, PChar) / GetMeritPointer(MERIT_H2H)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DAGGER, PChar) / GetMeritPointer(MERIT_DAGGER)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SWORD, PChar) / GetMeritPointer(MERIT_SWORD)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GSWORD, PChar) / GetMeritPointer(MERIT_GSWORD)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AXE, PChar) / GetMeritPointer(MERIT_AXE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GAXE, PChar) / GetMeritPointer(MERIT_GAXE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SCYTHE, PChar) / GetMeritPointer(MERIT_SCYTHE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_POLEARM, PChar) / GetMeritPointer(MERIT_POLEARM)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KATANA, PChar) / GetMeritPointer(MERIT_KATANA)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GKATANA, PChar) / GetMeritPointer(MERIT_GKATANA)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CLUB, PChar) / GetMeritPointer(MERIT_CLUB)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STAFF, PChar) / GetMeritPointer(MERIT_STAFF)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ARCHERY, PChar) / GetMeritPointer(MERIT_ARCHERY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MARKSMANSHIP, PChar) / GetMeritPointer(MERIT_MARKSMANSHIP)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_THROWING, PChar) / GetMeritPointer(MERIT_THROWING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GUARDING, PChar) / GetMeritPointer(MERIT_GUARDING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EVASION, PChar) / GetMeritPointer(MERIT_EVASION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHIELD, PChar) / GetMeritPointer(MERIT_SHIELD)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PARRYING, PChar) / GetMeritPointer(MERIT_PARRYING)->value;
+        break;
+    case 3:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DIVINE, PChar) / GetMeritPointer(MERIT_DIVINE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HEALING, PChar) / GetMeritPointer(MERIT_HEALING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENHANCING, PChar) / GetMeritPointer(MERIT_ENHANCING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENFEEBLING, PChar) / GetMeritPointer(MERIT_ENFEEBLING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ELEMENTAL, PChar) / GetMeritPointer(MERIT_ELEMENTAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DARK, PChar) / GetMeritPointer(MERIT_DARK)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUMMONING, PChar) / GetMeritPointer(MERIT_SUMMONING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NINJITSU, PChar) / GetMeritPointer(MERIT_NINJITSU)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SINGING, PChar) / GetMeritPointer(MERIT_SINGING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STRING, PChar) / GetMeritPointer(MERIT_STRING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WIND, PChar) / GetMeritPointer(MERIT_WIND)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BLUE, PChar) / GetMeritPointer(MERIT_BLUE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GEO, PChar) / GetMeritPointer(MERIT_GEO)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HANDBELL, PChar) / GetMeritPointer(MERIT_HANDBELL)->value;
+        break;
+    case 4:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_INCREASE, PChar) / GetMeritPointer(MERIT_ENMITY_INCREASE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_DECREASE, PChar) / GetMeritPointer(MERIT_ENMITY_DECREASE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CRIT_HIT_RATE, PChar) / GetMeritPointer(MERIT_CRIT_HIT_RATE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, PChar) / GetMeritPointer(MERIT_ENEMY_CRIT_RATE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SPELL_INTERUPTION_RATE, PChar) / GetMeritPointer(MERIT_SPELL_INTERUPTION_RATE)->value;
+        break;
+    case 5:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BERSERK_RECAST, PChar) / GetMeritPointer(MERIT_BERSERK_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DEFENDER_RECAST, PChar) / GetMeritPointer(MERIT_DEFENDER_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WARCRY_RECAST, PChar) / GetMeritPointer(MERIT_WARCRY_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AGGRESSOR_RECAST, PChar) / GetMeritPointer(MERIT_AGGRESSOR_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DOUBLE_ATTACK_RATE, PChar) / GetMeritPointer(MERIT_DOUBLE_ATTACK_RATE)->value;
+        break;
+    case 6:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FOCUS_RECAST, PChar) / GetMeritPointer(MERIT_FOCUS_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DODGE_RECAST, PChar) / GetMeritPointer(MERIT_DODGE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CHAKRA_RECAST, PChar) / GetMeritPointer(MERIT_CHAKRA_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_COUNTER_RATE, PChar) / GetMeritPointer(MERIT_COUNTER_RATE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KICK_ATTACK_RATE, PChar) / GetMeritPointer(MERIT_KICK_ATTACK_RATE)->value;
+        break;
+    case 7:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DIVINE_SEAL_RECAST, PChar) / GetMeritPointer(MERIT_DIVINE_SEAL_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CURE_CAST_TIME, PChar) / GetMeritPointer(MERIT_CURE_CAST_TIME)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BAR_SPELL_EFFECT, PChar) / GetMeritPointer(MERIT_BAR_SPELL_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BANISH_EFFECT, PChar) / GetMeritPointer(MERIT_BANISH_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REGEN_EFFECT, PChar) / GetMeritPointer(MERIT_REGEN_EFFECT)->value;
+        break;
+    case 8:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ELEMENTAL_SEAL_RECAST, PChar) / GetMeritPointer(MERIT_ELEMENTAL_SEAL_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FIRE_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_FIRE_MAGIC_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ICE_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_ICE_MAGIC_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WIND_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_WIND_MAGIC_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EARTH_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_EARTH_MAGIC_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LIGHTNING_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_LIGHTNING_MAGIC_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WATER_MAGIC_POTENCY, PChar) / GetMeritPointer(MERIT_WATER_MAGIC_POTENCY)->value;
+        break;
+    case 9:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CONVERT_RECAST, PChar) / GetMeritPointer(MERIT_CONVERT_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FIRE_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_FIRE_MAGIC_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ICE_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_ICE_MAGIC_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WIND_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_WIND_MAGIC_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EARTH_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_EARTH_MAGIC_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LIGHTNING_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_LIGHTNING_MAGIC_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WATER_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_WATER_MAGIC_ACCURACY)->value;
+        break;
+    case 10:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FLEE_RECAST, PChar) / GetMeritPointer(MERIT_FLEE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HIDE_RECAST, PChar) / GetMeritPointer(MERIT_HIDE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SNEAK_ATTACK_RECAST, PChar) / GetMeritPointer(MERIT_SNEAK_ATTACK_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TRICK_ATTACK_RECAST, PChar) / GetMeritPointer(MERIT_TRICK_ATTACK_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TRIPLE_ATTACK_RATE, PChar) / GetMeritPointer(MERIT_TRIPLE_ATTACK_RATE)->value;
+        break;
+    case 11:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHIELD_BASH_RECAST, PChar) / GetMeritPointer(MERIT_SHIELD_BASH_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HOLY_CIRCLE_RECAST, PChar) / GetMeritPointer(MERIT_HOLY_CIRCLE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SENTINEL_RECAST, PChar) / GetMeritPointer(MERIT_SENTINEL_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_COVER_EFFECT_LENGTH, PChar) / GetMeritPointer(MERIT_COVER_EFFECT_LENGTH)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RAMPART_RECAST, PChar) / GetMeritPointer(MERIT_RAMPART_RECAST)->value;
+        break;
+    case 12:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SOULEATER_RECAST, PChar) / GetMeritPointer(MERIT_SOULEATER_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ARCANE_CIRCLE_RECAST, PChar) / GetMeritPointer(MERIT_ARCANE_CIRCLE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LAST_RESORT_RECAST, PChar) / GetMeritPointer(MERIT_LAST_RESORT_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LAST_RESORT_EFFECT, PChar) / GetMeritPointer(MERIT_LAST_RESORT_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WEAPON_BASH_EFFECT, PChar) / GetMeritPointer(MERIT_WEAPON_BASH_EFFECT)->value;
+        break;
+    case 13:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KILLER_EFFECTS, PChar) / GetMeritPointer(MERIT_KILLER_EFFECTS)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REWARD_RECAST, PChar) / GetMeritPointer(MERIT_REWARD_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CALL_BEAST_RECAST, PChar) / GetMeritPointer(MERIT_CALL_BEAST_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, PChar) / GetMeritPointer(MERIT_SIC_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TAME_RECAST, PChar) / GetMeritPointer(MERIT_TAME_RECAST)->value;
+        break;
+    case 14:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LULLABY_RECAST, PChar) / GetMeritPointer(MERIT_LULLABY_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FINALE_RECAST, PChar) / GetMeritPointer(MERIT_FINALE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MINNE_EFFECT, PChar) / GetMeritPointer(MERIT_MINNE_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MINUET_EFFECT, PChar) / GetMeritPointer(MERIT_MINUET_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MADRIGAL_EFFECT, PChar) / GetMeritPointer(MERIT_MADRIGAL_EFFECT)->value;
+        break;
+    case 15:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SCAVENGE_EFFECT, PChar) / GetMeritPointer(MERIT_SCAVENGE_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CAMOUFLAGE_RECAST, PChar) / GetMeritPointer(MERIT_CAMOUFLAGE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHARPSHOT_RECAST, PChar) / GetMeritPointer(MERIT_SHARPSHOT_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_UNLIMITED_SHOT_RECAST, PChar) / GetMeritPointer(MERIT_UNLIMITED_SHOT_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RAPID_SHOT_RATE, PChar) / GetMeritPointer(MERIT_RAPID_SHOT_RATE)->value;
+        break;
+    case 16:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_THIRD_EYE_RECAST, PChar) / GetMeritPointer(MERIT_THIRD_EYE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WARDING_CIRCLE_RECAST, PChar) / GetMeritPointer(MERIT_WARDING_CIRCLE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, PChar) / GetMeritPointer(MERIT_STORE_TP_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MEDITATE_RECAST, PChar) / GetMeritPointer(MERIT_MEDITATE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ZANSHIN_ATTACK_RATE, PChar) / GetMeritPointer(MERIT_ZANSHIN_ATTACK_RATE)->value;
+        break;
+    case 17:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, PChar) / GetMeritPointer(MERIT_SUBTLE_BLOW_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KATON_EFFECT, PChar) / GetMeritPointer(MERIT_KATON_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HYOTON_EFFECT, PChar) / GetMeritPointer(MERIT_HYOTON_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HUTON_EFFECT, PChar) / GetMeritPointer(MERIT_HUTON_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DOTON_EFFECT, PChar) / GetMeritPointer(MERIT_DOTON_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RAITON_EFFECT, PChar) / GetMeritPointer(MERIT_RAITON_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUITON_EFFECT, PChar) / GetMeritPointer(MERIT_SUITON_EFFECT)->value;
+        break;
+    case 18:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANCIENT_CIRCLE_RECAST, PChar) / GetMeritPointer(MERIT_ANCIENT_CIRCLE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_JUMP_RECAST, PChar) / GetMeritPointer(MERIT_JUMP_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HIGH_JUMP_RECAST, PChar) / GetMeritPointer(MERIT_HIGH_JUMP_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUPER_JUMP_RECAST, PChar) / GetMeritPointer(MERIT_SUPER_JUMP_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SPIRIT_LINK_RECAST, PChar) / GetMeritPointer(MERIT_SPIRIT_LINK_RECAST)->value;
+        break;
+    case 19:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar) / GetMeritPointer(MERIT_AVATAR_PHYSICAL_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar) / GetMeritPointer(MERIT_AVATAR_PHYSICAL_ATTACK)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar) / GetMeritPointer(MERIT_AVATAR_MAGICAL_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ATTACK, PChar) / GetMeritPointer(MERIT_AVATAR_MAGICAL_ATTACK)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUMMONING_MAGIC_CAST_TIME, PChar) / GetMeritPointer(MERIT_SUMMONING_MAGIC_CAST_TIME)->value;
+        break;
+    case 20:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CHAIN_AFFINITY_RECAST, PChar) / GetMeritPointer(MERIT_CHAIN_AFFINITY_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BURST_AFFINITY_RECAST, PChar) / GetMeritPointer(MERIT_BURST_AFFINITY_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MONSTER_CORRELATION, PChar) / GetMeritPointer(MERIT_MONSTER_CORRELATION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PHYSICAL_POTENCY, PChar) / GetMeritPointer(MERIT_PHYSICAL_POTENCY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAGICAL_ACCURACY, PChar) / GetMeritPointer(MERIT_MAGICAL_ACCURACY)->value;
+        break;
+    case 21:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PHANTOM_ROLL_RECAST, PChar) / GetMeritPointer(MERIT_PHANTOM_ROLL_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_QUICK_DRAW_RECAST, PChar) / GetMeritPointer(MERIT_QUICK_DRAW_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_QUICK_DRAW_ACCURACY, PChar) / GetMeritPointer(MERIT_QUICK_DRAW_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RANDOM_DEAL_RECAST, PChar) / GetMeritPointer(MERIT_RANDOM_DEAL_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BUST_DURATION, PChar) / GetMeritPointer(MERIT_BUST_DURATION)->value;
+        break;
+    case 22:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_MELEE, PChar) / GetMeritPointer(MERIT_AUTOMATON_MELEE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_RANGED, PChar) / GetMeritPointer(MERIT_AUTOMATON_RANGED)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_MAGIC, PChar) / GetMeritPointer(MERIT_AUTOMATON_MAGIC)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ACTIVATE_RECAST, PChar) / GetMeritPointer(MERIT_ACTIVATE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REPAIR_RECAST, PChar) / GetMeritPointer(MERIT_REPAIR_RECAST)->value;
+        break;
+    case 23:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STEP_ACCURACY, PChar) / GetMeritPointer(MERIT_STEP_ACCURACY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HASTE_SAMBA_EFFECT, PChar) / GetMeritPointer(MERIT_HASTE_SAMBA_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REVERSE_FLOURISH_EFFECT, PChar) / GetMeritPointer(MERIT_REVERSE_FLOURISH_EFFECT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BUILDING_FLOURISH_EFFECT, PChar) / GetMeritPointer(MERIT_BUILDING_FLOURISH_EFFECT)->value;
+        break;
+    case 24:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GRIMOIRE_RECAST, PChar) / GetMeritPointer(MERIT_GRIMOIRE_RECAST)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MODUS_VERITAS_DURATION, PChar) / GetMeritPointer(MERIT_MODUS_VERITAS_DURATION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HELIX_MAGIC_ACC_ATT, PChar) / GetMeritPointer(MERIT_HELIX_MAGIC_ACC_ATT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAX_SUBLIMATION, PChar) / GetMeritPointer(MERIT_MAX_SUBLIMATION)->value;
+        break;
+    case 25:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHIJIN_SPIRAL, PChar) / GetMeritPointer(MERIT_SHIJIN_SPIRAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EXENTERATOR, PChar) / GetMeritPointer(MERIT_EXENTERATOR)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REQUIESCAT, PChar) / GetMeritPointer(MERIT_REQUIESCAT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RESOLUTION, PChar) / GetMeritPointer(MERIT_RESOLUTION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RUINATOR, PChar) / GetMeritPointer(MERIT_RUINATOR)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_UPHEAVAL, PChar) / GetMeritPointer(MERIT_UPHEAVAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENTROPY, PChar) / GetMeritPointer(MERIT_ENTROPY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STARDIVER, PChar) / GetMeritPointer(MERIT_STARDIVER)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BLADE_SHUN, PChar) / GetMeritPointer(MERIT_BLADE_SHUN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TACHI_SHOHA, PChar) / GetMeritPointer(MERIT_TACHI_SHOHA)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_REALMRAZER, PChar) / GetMeritPointer(MERIT_REALMRAZER)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHATTERSOUL, PChar) / GetMeritPointer(MERIT_SHATTERSOUL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_APEX_ARROW, PChar) / GetMeritPointer(MERIT_APEX_ARROW)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LAST_STAND, PChar) / GetMeritPointer(MERIT_LAST_STAND)->value;
+        break;
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+        break;
+    case 31:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WARRIORS_CHARGE, PChar) / GetMeritPointer(MERIT_WARRIORS_CHARGE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TOMAHAWK, PChar) / GetMeritPointer(MERIT_TOMAHAWK)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SAVAGERY, PChar) / GetMeritPointer(MERIT_SAVAGERY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AGGRESSIVE_AIM, PChar) / GetMeritPointer(MERIT_AGGRESSIVE_AIM)->value;
+        break;
+    case 32:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MANTRA, PChar) / GetMeritPointer(MERIT_MANTRA)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FORMLESS_STRIKES, PChar) / GetMeritPointer(MERIT_FORMLESS_STRIKES)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_INVIGORATE, PChar) / GetMeritPointer(MERIT_INVIGORATE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PENANCE, PChar) / GetMeritPointer(MERIT_PENANCE)->value;
+        break;
+    case 33:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MARTYR, PChar) / GetMeritPointer(MERIT_MARTYR)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DEVOTION, PChar) / GetMeritPointer(MERIT_DEVOTION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PROTECTRA_V, PChar) / GetMeritPointer(MERIT_PROTECTRA_V)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHELLRA_V, PChar) / GetMeritPointer(MERIT_SHELLRA_V)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANIMUS_SOLACE, PChar) / GetMeritPointer(MERIT_ANIMUS_SOLACE)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANIMUS_MISERY, PChar) / GetMeritPointer(MERIT_ANIMUS_MISERY)->value; // not in Kupo client
+        break;
+    case 34:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FLARE_II, PChar) / GetMeritPointer(MERIT_FLARE_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FREEZE_II, PChar) / GetMeritPointer(MERIT_FREEZE_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TORNADO_II, PChar) / GetMeritPointer(MERIT_TORNADO_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_QUAKE_II, PChar) / GetMeritPointer(MERIT_QUAKE_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BURST_II, PChar) / GetMeritPointer(MERIT_BURST_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FLOOD_II, PChar) / GetMeritPointer(MERIT_FLOOD_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANCIENT_MAGIC_ATK_BONUS, PChar) / GetMeritPointer(MERIT_ANCIENT_MAGIC_ATK_BONUS)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANCIENT_MAGIC_BURST_DMG, PChar) / GetMeritPointer(MERIT_ANCIENT_MAGIC_BURST_DMG)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ELEMENTAL_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_ELEMENTAL_MAGIC_ACCURACY)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ELEMENTAL_DEBUFF_DURATION, PChar) / GetMeritPointer(MERIT_ELEMENTAL_DEBUFF_DURATION)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ELEMENTAL_DEBUFF_EFFECT, PChar) / GetMeritPointer(MERIT_ELEMENTAL_DEBUFF_EFFECT)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ASPIR_ABSORPTION_AMOUNT, PChar) / GetMeritPointer(MERIT_ASPIR_ABSORPTION_AMOUNT)->value; // not in Kupo client
+        break;
+    case 35:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DIA_III, PChar) / GetMeritPointer(MERIT_DIA_III)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SLOW_II, PChar) / GetMeritPointer(MERIT_SLOW_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PARALYZE_II, PChar) / GetMeritPointer(MERIT_PARALYZE_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_PHALANX_II, PChar) / GetMeritPointer(MERIT_PHALANX_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BIO_III, PChar) / GetMeritPointer(MERIT_BIO_III)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BLIND_II, PChar) / GetMeritPointer(MERIT_BLIND_II)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENFEEBLING_MAGIC_DURATION, PChar) / GetMeritPointer(MERIT_ENFEEBLING_MAGIC_DURATION)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_MAGIC_ACCURACY)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENHANCING_MAGIC_DURATION, PChar) / GetMeritPointer(MERIT_ENHANCING_MAGIC_DURATION)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_IMMUNOBREAK_CHANCE, PChar) / GetMeritPointer(MERIT_IMMUNOBREAK_CHANCE)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar) / GetMeritPointer(MERIT_ENSPELL_DAMAGE)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ACCURACY, PChar) / GetMeritPointer(MERIT_ACCURACY)->value; // not in Kupo client
+        break;
+    case 36:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ASSASSINS_CHARGE, PChar) / GetMeritPointer(MERIT_ASSASSINS_CHARGE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FEINT, PChar) / GetMeritPointer(MERIT_FEINT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AURA_STEAL, PChar) / GetMeritPointer(MERIT_AURA_STEAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_AMBUSH, PChar) / GetMeritPointer(MERIT_AMBUSH)->value;
+        break;
+    case 37:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FEALTY, PChar) / GetMeritPointer(MERIT_FEALTY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CHIVALRY, PChar) / GetMeritPointer(MERIT_CHIVALRY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_IRON_WILL, PChar) / GetMeritPointer(MERIT_IRON_WILL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GUARDIAN, PChar) / GetMeritPointer(MERIT_GUARDIAN)->value;
+        break;
+    case 38:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DARK_SEAL, PChar) / GetMeritPointer(MERIT_DARK_SEAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DIABOLIC_EYE, PChar) / GetMeritPointer(MERIT_DIABOLIC_EYE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_MUTED_SOUL, PChar) / GetMeritPointer(MERIT_MUTED_SOUL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DESPERATE_BLOWS, PChar) / GetMeritPointer(MERIT_DESPERATE_BLOWS)->value;
+        break;
+    case 39:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FERAL_HOWL, PChar) / GetMeritPointer(MERIT_FERAL_HOWL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KILLER_INSTINCT, PChar) / GetMeritPointer(MERIT_KILLER_INSTINCT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BEAST_AFFINITY, PChar) / GetMeritPointer(MERIT_BEAST_AFFINITY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BEAST_HEALER, PChar) / GetMeritPointer(MERIT_BEAST_HEALER)->value;
+        break;
+    case 40:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NIGHTINGALE, PChar) / GetMeritPointer(MERIT_NIGHTINGALE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TROUBADOUR, PChar) / GetMeritPointer(MERIT_TROUBADOUR)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FOE_SIRVENTE, PChar) / GetMeritPointer(MERIT_FOE_SIRVENTE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ADVENTURERS_DIRGE, PChar) / GetMeritPointer(MERIT_ADVENTURERS_DIRGE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CON_ANIMA, PChar) / GetMeritPointer(MERIT_CON_ANIMA)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CON_BRIO, PChar) / GetMeritPointer(MERIT_CON_BRIO)->value; // not in Kupo client
+        break;
+    case 41:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STEALTH_SHOT, PChar) / GetMeritPointer(MERIT_STEALTH_SHOT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FLASHY_SHOT, PChar) / GetMeritPointer(MERIT_FLASHY_SHOT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SNAPSHOT, PChar) / GetMeritPointer(MERIT_SNAPSHOT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RECYCLE, PChar) / GetMeritPointer(MERIT_RECYCLE)->value;
+        break;
+    case 42:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SHIKIKOYO, PChar) / GetMeritPointer(MERIT_SHIKIKOYO)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_BLADE_BASH, PChar) / GetMeritPointer(MERIT_BLADE_BASH)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, PChar) / GetMeritPointer(MERIT_IKISHOTEN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_OVERWHELM, PChar) / GetMeritPointer(MERIT_OVERWHELM)->value;
+        break;
+    case 43:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SANGE, PChar) / GetMeritPointer(MERIT_SANGE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NINJA_TOOL_EXPERTISE, PChar) / GetMeritPointer(MERIT_NINJA_TOOL_EXPERTISE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_KATON_SAN, PChar) / GetMeritPointer(MERIT_KATON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HYOTON_SAN, PChar) / GetMeritPointer(MERIT_HYOTON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HUTON_SAN, PChar) / GetMeritPointer(MERIT_HUTON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DOTON_SAN, PChar) / GetMeritPointer(MERIT_DOTON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_RAITON_SAN, PChar) / GetMeritPointer(MERIT_RAITON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SUITON_SAN, PChar) / GetMeritPointer(MERIT_SUITON_SAN)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_YONIN_EFFECT, PChar) / GetMeritPointer(MERIT_YONIN_EFFECT)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar) / GetMeritPointer(MERIT_INNIN_EFFECT)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NIN_MAGIC_ACCURACY, PChar) / GetMeritPointer(MERIT_NIN_MAGIC_ACCURACY)->value; // not in Kupo client
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NIN_MAGIC_BONUS, PChar) / GetMeritPointer(MERIT_NIN_MAGIC_BONUS)->value; // not in Kupo client
+        break;
+    case 44:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DEEP_BREATHING, PChar) / GetMeritPointer(MERIT_DEEP_BREATHING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ANGON, PChar) / GetMeritPointer(MERIT_ANGON)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EMPATHY, PChar) / GetMeritPointer(MERIT_EMPATHY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STRAFE, PChar) / GetMeritPointer(MERIT_STRAFE)->value;
+        break;
+    case 45:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_METEOR_STRIKE, PChar) / GetMeritPointer(MERIT_METEOR_STRIKE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_HEAVENLY_STRIKE, PChar) / GetMeritPointer(MERIT_HEAVENLY_STRIKE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WIND_BLADE, PChar) / GetMeritPointer(MERIT_WIND_BLADE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GEOCRUSH, PChar) / GetMeritPointer(MERIT_GEOCRUSH)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_THUNDERSTORM, PChar) / GetMeritPointer(MERIT_THUNDERSTORM)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_GRANDFALL, PChar) / GetMeritPointer(MERIT_GRANDFALL)->value;
+        break;
+    case 46:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CONVERGENCE, PChar) / GetMeritPointer(MERIT_CONVERGENCE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_DIFFUSION, PChar) / GetMeritPointer(MERIT_DIFFUSION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENCHAINMENT, PChar) / GetMeritPointer(MERIT_ENCHAINMENT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ASSIMILATION, PChar) / GetMeritPointer(MERIT_ASSIMILATION)->value;
+        break;
+    case 47:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SNAKE_EYE, PChar) / GetMeritPointer(MERIT_SNAKE_EYE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FOLD, PChar) / GetMeritPointer(MERIT_FOLD)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_WINNING_STREAK, PChar) / GetMeritPointer(MERIT_WINNING_STREAK)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_LOADED_DECK, PChar) / GetMeritPointer(MERIT_LOADED_DECK)->value;
+        break;
+    case 48:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ROLE_REVERSAL, PChar) / GetMeritPointer(MERIT_ROLE_REVERSAL)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_VENTRILOQUY, PChar) / GetMeritPointer(MERIT_VENTRILOQUY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar) / GetMeritPointer(MERIT_FINE_TUNING)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar) / GetMeritPointer(MERIT_OPTIMIZATION)->value;
+        break;
+    case 49:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_SABER_DANCE, PChar) / GetMeritPointer(MERIT_SABER_DANCE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FAN_DANCE, PChar) / GetMeritPointer(MERIT_FAN_DANCE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_NO_FOOT_RISE, PChar) / GetMeritPointer(MERIT_NO_FOOT_RISE)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_CLOSED_POSITION, PChar) / GetMeritPointer(MERIT_CLOSED_POSITION)->value;
+        break;
+    case 50:
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ALTRUISM, PChar) / GetMeritPointer(MERIT_ALTRUISM)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_FOCALIZATION, PChar) / GetMeritPointer(MERIT_FOCALIZATION)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_TRANQUILITY, PChar) / GetMeritPointer(MERIT_TRANQUILITY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_EQUANIMITY, PChar) / GetMeritPointer(MERIT_EQUANIMITY)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_ENLIGHTENMENT, PChar) / GetMeritPointer(MERIT_ENLIGHTENMENT)->value;
+        ret += PChar->PMeritPoints->GetMeritValue(MERIT_STORMSURGE, PChar) / GetMeritPointer(MERIT_STORMSURGE)->value; // i realized a bit laet that PMerit->count is a thing. woops.
+        break;
+    }
+    //ShowDebug("ret is %u\n",ret);
+    return ret;
+}
+
 /************************************************************************
 *                                                                       *
 *  Add upgrade, also removes merit point                                *
 *                                                                       *
 ************************************************************************/
 
-void CMeritPoints::RaiseMerit(MERIT_TYPE merit)
+bool CMeritPoints::RaiseMerit(CCharEntity* PChar, MERIT_TYPE merit)
 {
-    Merit_t* PMerit = GetMeritPointer(merit);
+    if (merit == (MERIT_TYPE)2184 || merit == (MERIT_TYPE)2186 || merit == (MERIT_TYPE)2252 || merit == (MERIT_TYPE)2254 || merit == (MERIT_TYPE)2256 || merit == (MERIT_TYPE)2258 ||
+        merit == (MERIT_TYPE)2260 || merit == (MERIT_TYPE)2262 || merit == (MERIT_TYPE)2316 || merit == (MERIT_TYPE)2318 || merit == (MERIT_TYPE)2320 || merit == (MERIT_TYPE)2322 ||
+        merit == (MERIT_TYPE)2324 || merit == (MERIT_TYPE)2326 || merit == (MERIT_TYPE)2632 || merit == (MERIT_TYPE)2634 || merit == (MERIT_TYPE)2832 || merit == (MERIT_TYPE)2834 ||
+        merit == (MERIT_TYPE)2836 || merit == (MERIT_TYPE)2338) // out of era merits that were added in 2018/2019/2020. dont spend the players merits and waste them.
+        return false;
 
-    if (m_MeritPoints >= PMerit->next)
+    Merit_t* PMerit = GetMeritPointer(merit);
+    uint32 jobbit = 1 << (uint8)(PChar->GetMJob());
+
+    uint8 currentUpgrades = PChar->PMeritPoints->GetMeritValue(merit, PChar) / PMerit->value;
+    uint8 maxUpgrades = GetMeritMaxUpgrades(PMerit->catid);
+    uint8 catCurrentUpgrades = GetCategoryUpgrades(PChar, PMerit->catid);
+    uint8 maxCatUpgrades = GetMeritCategoryMaxUpgrades(PMerit->catid);
+
+    //ShowDebug("merit upgrade, pre-check on category is is %u upgrades of %u max\n", catCurrentUpgrades, maxCatUpgrades);
+    
+    if ((jobbit |= PMerit->jobs) && (m_MeritPoints >= PMerit->next) && (currentUpgrades < maxUpgrades) && (catCurrentUpgrades < maxCatUpgrades))
     {
         m_MeritPoints -= PMerit->next;
 
@@ -412,7 +856,9 @@ void CMeritPoints::RaiseMerit(MERIT_TYPE merit)
 
         // Reset traits
         charutils::BuildingCharTraitsTable(m_PChar);
+        return true;
     }
+    return false;
 }
 
 /************************************************************************
@@ -421,14 +867,14 @@ void CMeritPoints::RaiseMerit(MERIT_TYPE merit)
 *                                                                       *
 ************************************************************************/
 
-void CMeritPoints::LowerMerit(MERIT_TYPE merit)
+bool CMeritPoints::LowerMerit(MERIT_TYPE merit)
 {
     Merit_t* PMerit = GetMeritPointer(merit);
 
-    if (PMerit->count > 0)
-    {
-        PMerit->next = upgrade[meritCatInfo[GetMeritCategory(merit)].UpgradeID][--PMerit->count];
-    }
+    if (PMerit->count == 0)
+        return false;
+
+    PMerit->next = upgrade[meritCatInfo[GetMeritCategory(merit)].UpgradeID][--PMerit->count];
     if (PMerit->spellid != 0 && PMerit->count == 0)
     {
         if (charutils::delSpell(m_PChar, PMerit->spellid))
@@ -440,6 +886,7 @@ void CMeritPoints::LowerMerit(MERIT_TYPE merit)
             charutils::BuildingCharTraitsTable(m_PChar);
         }
     }
+    return true;
 }
 
 /************************************************************************

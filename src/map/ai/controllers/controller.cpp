@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -23,6 +23,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "../ai_container.h"
 #include "../../entities/battleentity.h"
+#include "../../utils/battleutils.h"
+#include "../../weapon_skill.h"
 
 CController::CController(CBattleEntity* _POwner) :
     m_Tick(server_clock::now()),
@@ -45,7 +47,22 @@ bool CController::Cast(uint16 targid, SpellID spellid)
 {
     if (POwner)
     {
-        return POwner->PAI->Internal_Cast(targid, spellid);
+        if (POwner->objtype == TYPE_PC && POwner->PAI->GetCurrentState() && POwner->PAI->GetCurrentState()->m_id == 2) // is a PC in casting state
+        {
+            //ShowDebug("Got spellcast request while already spellcasting...\n");
+            if (POwner->PAI->GetCurrentState()->IsCompleted())
+            {
+                //ShowDebug("Queueing another spellcast...\n");
+                POwner->PAI->m_queuedSpellTargId = targid;
+                POwner->PAI->m_queuedSpell = spellid;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+		return POwner->PAI->Internal_Cast(targid, spellid);
     }
     return false;
 }
@@ -79,9 +96,20 @@ bool CController::Disengage()
 
 bool CController::WeaponSkill(uint16 targid, uint16 wsid)
 {
-    if (POwner)
+    if (POwner && POwner->GetEntity(targid))
     {
-        return POwner->PAI->Internal_WeaponSkill(targid, wsid);
+        CBattleEntity* PTarget = (CBattleEntity*)(POwner->GetEntity(targid));
+        CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(wsid);
+        if (distance(POwner->loc.p, PTarget->loc.p) > (float)(PWeaponSkill->getRange()))
+        {
+            if (POwner->objtype == TYPE_PC)
+                ((CCharEntity*)POwner)->pushPacket(new CMessageBasicPacket(POwner, POwner, (int32)(PTarget->id), 0, 4)); // the [target] is too far away.
+            return false;
+        }
+        else
+        {
+            return POwner->PAI->Internal_WeaponSkill(targid, wsid);
+        }
     }
     return false;
 }

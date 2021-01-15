@@ -25,9 +25,9 @@ function onTrigger(player, npc)
         12968,  584, 2,    -- Kyahan
         704,    132, 2,    -- Bamboo Stick
         605,    180, 3,    -- Pickaxe
-        5867, 13500, 3,    -- Toolbag (Ino)
-        5868, 18000, 3,    -- Toolbag (Shika)
-        5869, 18000, 3,    -- Toolbag (Cho)
+        --5867, 13500, 3,    -- Toolbag (Ino)
+        --5868, 18000, 3,    -- Toolbag (Shika)
+        --5869, 18000, 3,    -- Toolbag (Cho)
     }
 
     player:showText(npc, ID.text.NUMA_SHOP_DIALOG)

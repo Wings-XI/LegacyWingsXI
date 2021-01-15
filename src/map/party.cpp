@@ -454,6 +454,10 @@ void CParty::RemovePartyLeader(CBattleEntity* PEntity)
 std::vector<CParty::partyInfo_t> CParty::GetPartyInfo()
 {
     std::vector<CParty::partyInfo_t> memberinfo;
+    // Fixing random crash
+    if (m_PAlliance == (CAlliance*)(-1)) {
+        m_PAlliance = nullptr;
+    }
     int ret = Sql_Query(SqlHandle, "SELECT chars.charid, partyid, allianceid, charname, partyflag, pos_zone, pos_prevzone FROM accounts_parties \
                                     LEFT JOIN chars ON accounts_parties.charid = chars.charid WHERE \
                                     (allianceid <> 0 AND allianceid = %d) OR partyid = %d ORDER BY partyflag & %u, timestamp;",
@@ -1012,7 +1016,7 @@ void CParty::SetSyncTarget(int8* MemberName, uint16 message)
                             PChar->GetMLevel(),
                             0,
                             0), true);
-                        member->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE | EFFECTFLAG_ON_ZONE);
+                        member->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE | EFFECTFLAG_ON_ZONE | EFFECTFLAG_ON_SYNC);
                         member->loc.zone->PushPacket(member, CHAR_INRANGE, new CCharSyncPacket(member));
                     }
                 }

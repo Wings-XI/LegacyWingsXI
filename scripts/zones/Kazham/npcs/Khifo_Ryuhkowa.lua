@@ -25,11 +25,11 @@ function onTrigger(player, npc)
         17163,  39744,    -- Battle Bow
         17308,     55,    -- Hawkeye
         17280,   1610,    -- Boomerang
-        17318,      3,    -- Woden Arrow
+        17318,      3,    -- Wooden Arrow
     }
 
     player:showText(npc, ID.text.KHIFORYUHKOWA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, KAZHAM)
 end
 
 function onEventUpdate(player, csid, option)

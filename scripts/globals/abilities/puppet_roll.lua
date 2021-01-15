@@ -2,8 +2,8 @@
 -- Ability: Puppet Roll
 -- Enhances pet magic attack and magic accuracy for party members within area of effect
 -- Optimal Job: Puppetmaster
--- Lucky Number: 3
--- Unlucky Number: 7
+-- Lucky Number: 3 now 4
+-- Unlucky Number: 7 now 8
 -- Level: 52
 -- Phantom Roll +1 Value: 3
 --
@@ -21,6 +21,9 @@
 -- 10          |+15     |+23
 -- 11          |+22     |+30
 -- Bust        |-8      |-8
+
+-- NEW: ACC and RACC, but values are unknown! just using some made up values that makes sense i guess
+
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/ability")
@@ -40,7 +43,7 @@ function onAbilityCheck(player, target, ability)
     end
 end
 
-function onUseAbility(caster, target, ability, action)
+function onUseAbility(caster,target,ability,action)
     if (caster:getID() == target:getID()) then
         corsairSetup(caster, ability, action, tpz.effect.PUPPET_ROLL, tpz.job.PUP)
     end
@@ -50,10 +53,10 @@ end
 
 function applyRoll(caster, target, ability, action, total)
     local duration = 300 + caster:getMerit(tpz.merit.WINNING_STREAK) + caster:getMod(tpz.mod.PHANTOM_DURATION)
-    local effectpowers = {4, 5, 18, 7, 9, 10, 2, 11, 13, 15, 22, 8}
+    local effectpowers = {20, 23, 25, 50, 28, 31, 35, 9, 37, 39, 62, 5}
     local effectpower = effectpowers[total]
     if (caster:getLocalVar("corsairRollBonus") == 1 and total < 12) then
-        effectpower = effectpower + 8
+        effectpower = effectpower + 10
     end
 -- Apply Additional Phantom Roll+ Buff
     local phantomBase = 3 -- Base increment buff
@@ -64,7 +67,7 @@ function applyRoll(caster, target, ability, action, total)
     elseif (caster:getSubJob() == tpz.job.COR and caster:getSubLvl() < target:getMainLvl()) then
         effectpower = effectpower * (caster:getSubLvl() / target:getMainLvl())
     end
-    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.PUPPET_ROLL, effectpower, 0, duration, caster:getID(), total, MOD_PET_MACC) == false) then
+    if (target:addCorsairRoll(caster:getMainJob(), caster:getMerit(tpz.merit.BUST_DURATION), tpz.effect.PUPPET_ROLL, effectpower, 0, duration, caster:getID(), total, tpz.mod.ACC) == false) then
         ability:setMsg(tpz.msg.basic.ROLL_MAIN_FAIL)
     elseif total > 11 then
         ability:setMsg(tpz.msg.basic.DOUBLEUP_BUST)

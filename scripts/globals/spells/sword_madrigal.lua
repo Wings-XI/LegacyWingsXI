@@ -4,6 +4,7 @@
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/utils")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
@@ -16,14 +17,11 @@ function onSpellCast(caster, target, spell)
 
     local power = 5
 
-    if (sLvl+iLvl > 85) then
-        power = power + math.floor((sLvl+iLvl-85) / 18)
-    end
+	power = math.floor((sLvl+iLvl) / 6.31)
 
-    if (power >= 45) then
-        power = 45
-    end
-
+	--print("combined " ..sLvl+iLvl)
+    power = utils.clamp(power, 5, 15)
+	--print("power " ..power)
     local iBoost = caster:getMod(tpz.mod.MADRIGAL_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     if (iBoost > 0) then
         power = power + iBoost*4.5

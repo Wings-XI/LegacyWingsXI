@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 3,
     parameters = "s"
 }
 
@@ -43,5 +43,5 @@ function onTrigger(player, target)
     for _, v in ipairs( keyIds ) do
         targ:addKeyItem( v )
     end
-    player:PrintToPlayer(string.format("%s now has all maps.", targ:getName()))
+    player:PrintToPlayer(string.format("%s now has all maps.",targ:getName()))
 end

@@ -26,11 +26,11 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.HPHEAL, 8)
     target:addMod(tpz.mod.UNDEAD_KILLER, 12)
-    target:addMod(tpz.mod.BLINDRES, 12)
+    target:addMod(tpz.mod.BLINDRESTRAIT, 12)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.HPHEAL, 8)
     target:delMod(tpz.mod.UNDEAD_KILLER, 12)
-    target:delMod(tpz.mod.BLINDRES, 12)
+    target:delMod(tpz.mod.BLINDRESTRAIT, 12)
 end

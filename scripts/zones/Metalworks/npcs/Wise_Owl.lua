@@ -37,7 +37,7 @@ function onEventFinish(player, csid, option)
     if csid == 103 and option == 1 then
         if player:getGil() >= Cost then
             player:delGil(Cost)
-            player:delStatusEffectsByFlag(tpz.effectFlag.SYNTH_SUPPORT, true)
+            for i=236,243 do player:delStatusEffect(i) end -- remove all imageries
             player:addStatusEffect(tpz.effect.SMITHING_IMAGERY, 3, 0, 480)
             player:messageSpecial(ID.text.SMITHING_SUPPORT, 0, 2, 0)
         else

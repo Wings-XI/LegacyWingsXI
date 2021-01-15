@@ -36,16 +36,13 @@ CMenuMeritPacket::CMenuMeritPacket(CCharEntity* PChar)
 	ref<uint8>(0x06) = 0x0C;
 
     ref<uint16>(0x08) = PChar->PMeritPoints->GetLimitPoints();
-
     uint16 bits = 0;
     bits += PChar->PMeritPoints->GetMeritPoints() & 0b0000000001111111; // first seven bits are merit points
     if (PChar->GetMJob() == JOB_BLU && PChar->GetMLevel() > 74)
         bits += (PChar->PMeritPoints->GetMeritValue(MERIT_ASSIMILATION, PChar) << 7) & 0b0001111110000000; // next six bits are assimilation points. the last three bits are the three flags below:
-    bits += (PChar->jobs.job[PChar->GetMJob()] >= 75 && charutils::hasKeyItem(PChar, 606)) << 13;          // is 75 and has limit breaker KI
-    bits += ((PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai &&
-              PChar->jobs.exp[PChar->GetMJob()] == charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1) || PChar->MeritMode) << 14; // my exp is capped
+    bits += (PChar->jobs.job[PChar->GetMJob()] >= 75 && charutils::hasKeyItem(PChar, 606)) << 13;      // is 75 and has limit breaker KI
+    bits += ((PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai && PChar->jobs.exp[PChar->GetMJob()] == charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1) || PChar->MeritMode) << 14; // my exp is capped
     bits += (bits & (1 << 13) && PChar->MeritMode) << 15; // flag 13 is set and merit mode is on
-
     ref<uint16>(0x0A) = bits;
 
     ref<uint8>(0x0C) = map_config.max_merit_points + PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar);

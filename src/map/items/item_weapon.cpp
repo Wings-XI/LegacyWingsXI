@@ -212,6 +212,11 @@ uint16 CItemWeapon::getILvlMacc()
     return m_iLvlMacc;
 }
 
+uint8 CItemWeapon::getCategory()
+{
+    return m_category;
+}
+
 /************************************************************************
 *																		*
 *  Устанавливаем время задержки оружия. Сразу переводим значение в млс.	*
@@ -320,6 +325,11 @@ uint8 CItemWeapon::getAdditionalEffect()
 void CItemWeapon::setUnlockablePoints(uint16 points)
 {
     m_wsunlockpoints = points;
+}
+
+void CItemWeapon::setCategory(uint8 category)
+{
+    m_category = category;
 }
 
 void CItemWeapon::setCurrentUnlockPoints(uint16 points)

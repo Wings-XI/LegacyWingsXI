@@ -13,6 +13,8 @@ set(SOURCES
     charutils.h
     fishingutils.cpp
     fishingutils.h
+	flistutils.cpp
+	flistutils.h
     gardenutils.cpp
     gardenutils.h
     guildutils.cpp

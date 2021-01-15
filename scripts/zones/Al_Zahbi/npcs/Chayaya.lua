@@ -32,7 +32,7 @@ function onTrigger(player, npc)
     }
 
     player:showText(npc, ID.text.CHAYAYA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

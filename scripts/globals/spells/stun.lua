@@ -21,6 +21,7 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
+    duration = math.ceil(duration * resist * tryBuildResistance(tpz.magic.buildcat.STUN, target))
     if (resist <= (1/16)) then
         -- resisted!
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
@@ -31,7 +32,7 @@ function onSpellCast(caster, target, spell)
         -- no effect
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     else
-        if (target:addStatusEffect(tpz.effect.STUN, 1, 0, duration*resist)) then
+        if (target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

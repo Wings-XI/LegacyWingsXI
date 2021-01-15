@@ -32,24 +32,6 @@ local casketInfo =
         SPAWNED_CLOSED = 1,
         SPAWNED_OPEN   = 2,
     },
-    messageOffset =
-    {
-        NO_COMBINATION           = 6,  -- You were unable to enter a combination.
-        HUNCH_GREATER_LESS       = 7,  -- You have a hunch that the lock's combination is ≺0 = GREATER, 1 = LESS≻[greater/less] than ≺INPUT NUMBER≻.
-        UNABLE_TO_OPEN_LOCK      = 8,  -- Player failed to open the lock.
-        CORRECT_NUMBER_WAS       = 9,  -- It appears that the correct combination was ≺NUMBER≻.
-        OPENED_LOCK              = 10, -- Player succeeded in opening the lock!
-        HUNCH_SECOND_EVEN_ODD    = 11, -- You have a hunch that the second digit is ≺0 = EVEN, 1 = ODD≻[even/odd].
-        HUNCH_FIRST_EVEN_ODD     = 12, -- You have a hunch that the first digit is ≺0 = EVEN, 1 = ODD≻[even/odd].
-        COMBINATION_GREATER_LESS = 13, -- You have a hunch that the combination is greater than ≺NUMBER≻ and less than ≺NUMBER≻.
-        COMBINATION_LESS_THAN    = 14, -- You have a hunch that the combination is less than ≺NUMBER≻.
-        COMBINATION_GREATER_THAN = 15, -- You have a hunch that the combination is greater than ≺NUMBER≻.
-        ONE_OF_TWO_DIGITS_IS     = 16, -- You have a hunch that one of the two digits is ≺NUMBER≻.
-        SECOND_DIGIT_IS          = 17, -- You have a hunch that the second digit is ≺NUMBER≻, ≺NUMBER≻, or ≺NUMBER≻.
-        FIRST_DIGIT_IS           = 18, -- You have a hunch that the first digit is ≺NUMBER≻, ≺NUMBER≻, or ≺NUMBER≻.
-        UNABLE_TO_GET_HINT       = 19, -- You were unable to glean anything from your examination of the lock.
-        MONSTER_CONCEALED_CHEST  = 21, -- The monster was concealing a treasure chest!
-    },
     casketZones =
     {
         100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
@@ -186,15 +168,9 @@ end
 -- Desc: Sends the message: "The monster was concealing a treasure chest!" to all in party/alliance
 ---------------------------------------------------------------------------------------------------
 local function sendChestDropMessage(player)
-    local ID          = zones[player:getZoneID()]
-    local dropMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM + casketInfo.messageOffset.MONSTER_CONCEALED_CHEST
-    local party       = {}
-
-    party = player:getAlliance()
-
-    for _, member in ipairs(party) do
+    for _, member in pairs(player:getAlliance()) do
         if member:getZoneID() == player:getZoneID() then
-            member:messageSpecial(dropMessage , 0)
+            member:PrintToPlayer("The monster was concealing a treasure chest!", 21)
         end
     end
 end
@@ -312,11 +288,7 @@ local function messageChest(player, messageString, param1, param2, param3, param
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
     local msg         = 0
 
-    if messageString == "UNABLE_TO_OPEN_LOCK" then
-        msg = baseMessage + casketInfo.messageOffset.UNABLE_TO_OPEN_LOCK
-    elseif messageString == "OPENED_LOCK" then
-        msg = baseMessage + casketInfo.messageOffset.OPENED_LOCK
-    elseif messageString == "PLAYER_OBTAINS_ITEM" then
+    if messageString == "PLAYER_OBTAINS_ITEM" then
         msg = ID.text.PLAYER_OBTAINS_ITEM
     elseif messageString == "PLAYER_OBTAINS_TEMP_ITEM" then
         msg = ID.text.PLAYER_OBTAINS_TEMP_ITEM
@@ -329,6 +301,79 @@ local function messageChest(player, messageString, param1, param2, param3, param
     end
 end
 
+local function messageParty(player, msg)
+    local text = ""
+    local name = ""
+    local errormsg = 0
+
+   if msg ~= "" then
+        if msg == "OPENED_LOCK" then
+            text = " succeeded in opening the lock!"
+        elseif msg == "UNABLE_TO_OPEN_LOCK" then
+            text = " failed to open the lock."
+        else
+            player:PrintToPlayer("caskets message error, please report the issue to the server owner!", 13)
+            errormsg = 1
+        end
+    end
+
+    if errormsg == 0 then
+        for _, member in pairs(player:getAlliance()) do
+            if member:getZoneID() == player:getZoneID() then
+                if member:getName() == player:getName() then
+                    player:PrintToPlayer("You" .. text, 13)
+                else
+                    member:PrintToPlayer(player:getName() .. text, 13)
+                end
+            end
+        end
+    end
+end
+
+local function messagePlayer(player, msg, param1, param2, param3, param4)
+    local chatChannel = 13
+    local text = ""
+
+    if msg ~= "" then
+        if msg == "HUNCH_MORE_THAN" then
+            text = "You have a hunch that the lock's combination is greater than " .. param1 .. "."
+        elseif msg == "HUNCH_LESS_THAN" then
+            text = "You have a hunch that the lock's combination is less than " .. param1 .. "."
+
+        elseif msg == "CORRECT_NUMBER_WAS" then
+            text = "It appears that the correct combination was " .. param1 .. "."
+        elseif msg == "HUNCH_SECOND_EVEN_ODD" then
+            if param1 == 0 then
+                text = "You have a hunch that the second digit is even."
+            else
+                text = "You have a hunch that the second digit is odd."
+            end
+        elseif msg == "HUNCH_FIRST_EVEN_ODD" then
+            if param1 == 0 then
+                text = "You have a hunch that the first digit is even."
+            else
+                text = "You have a hunch that the first digit is odd."
+            end
+        elseif msg == "COMBINATION_GREATER_LESS" then
+            text = "You have a hunch that the combination is greater than " .. param1 .. " and less than " .. param2 .. "."
+        elseif msg == "COMBINATION_LESS_THAN" then
+            text = "You have a hunch that the combination is less than " .. param1 .. "."
+        elseif msg == "COMBINATION_GREATER_THAN" then
+            text = "You have a hunch that the combination is greater than " .. param1 .. "."
+        elseif msg == "ONE_OF_TWO_DIGITS_IS" then
+            text = "You have a hunch that one of the two digits is " .. param1 .. "."
+        elseif msg == "SECOND_DIGIT_IS" then
+            text = "You have a hunch that the second digit is " .. param1 .. ", " .. param2 .. ", or " .. param3 .. "."
+        elseif msg == "FIRST_DIGIT_IS" then
+            text = "You have a hunch that the first digit is " .. param1 .. ", " .. param2 .. ", or " .. param3 .. "."
+        elseif msg == "NO_COMBINATION" then
+            text = "You were unable to enter a combination."
+        end
+
+        player:PrintToPlayer(text, chatChannel)
+    end
+end
+
 ----------------------------------------------------------------------------------
 -- Desc: Checks attempts and despawns the chest if all attempts have been used up.
 ----------------------------------------------------------------------------------
@@ -338,8 +383,8 @@ local function checkRemainingAttempts(player, npc, remaining, correctNumber)
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
 
     if remaining == 1 then
-        player:messageSpecial(baseMessage + casketInfo.messageOffset.CORRECT_NUMBER_WAS, correctNumber, 0, 0, 0, 0)
-        messageChest(player, "UNABLE_TO_OPEN_LOCK", 0, 0, 0, 0, npc)
+        messagePlayer(player, "CORRECT_NUMBER_WAS", correctNumber, 0, 0, 0, 0)
+        messageParty(player, "UNABLE_TO_OPEN_LOCK")
         removeChest(npc)
     end
 end
@@ -756,15 +801,15 @@ tpz.caskets.onTrade = function(player, npc, trade)
                     lowNum  = 10
                     highNum = 20 + math.random(1, 9)
                 elseif tonumber(splitNumbers[1]) > 1 and tonumber(splitNumbers[1]) < 9 then
-                    lowNum  = tonumber(splitNumbers[1]) * 10 - 10 + math.random(1, 9)
-                    highNum = tonumber(splitNumbers[1]) * 10 + 10 + math.random(1, 9)
+                    lowNum  = tonumber(splitNumbers[1]) * 10 - 10 + math.random(1,9)
+                    highNum = tonumber(splitNumbers[1]) * 10 + 10 + math.random(1,9)
                 elseif tonumber(splitNumbers[1]) == 9 then
                     lowNum  = 80 + math.random(1, 9)
                     highNum = 99
                 end
-                player:messageSpecial(baseMessage + casketInfo.messageOffset.COMBINATION_GREATER_LESS, lowNum, highNum, 0, 0)
+                messagePlayer(player, "COMBINATION_GREATER_LESS", lowNum, highNum, 0, 0)
             else
-                player:messageSpecial(baseMessage + casketInfo.messageOffset.UNABLE_TO_GET_HINT, 0, 0, 0, 0)
+                messagePlayer(player, "UNABLE_TO_GET_HINT", 0, 0, 0, 0)
             end
             player:confirmTrade()
         end
@@ -828,39 +873,39 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
                 local randText = tonumber(availableHints[math.random(#availableHints)])
 
                 if randText == 0 or randText == nil then
-                    player:messageSpecial(baseMessage + casketInfo.messageOffset.UNABLE_TO_GET_HINT, 0, 0, 0, 0)
+                    messagePlayer(player, "UNABLE_TO_GET_HINT", 0, 0, 0, 0)
                     return
                 end
 
                 if randText == 1 then
                     if isEven(splitNumbers[1]) then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_FIRST_EVEN_ODD, 0, 0, 0, 0)
+                        messagePlayer(player, "HUNCH_FIRST_EVEN_ODD", 0, 0, 0, 0)
                         npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                     else
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_FIRST_EVEN_ODD, 1, 0, 0, 0)
+                        messagePlayer(player, "HUNCH_FIRST_EVEN_ODD", 1, 0, 0, 0)
                         npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                     end
                 elseif randText == 2 then
                     if isEven(splitNumbers[2]) then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_SECOND_EVEN_ODD, 0, 0, 0, 0)
+                        messagePlayer(player, "HUNCH_SECOND_EVEN_ODD", 0, 0, 0, 0)
                         npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                     else
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_SECOND_EVEN_ODD, 1, 0, 0, 0)
+                        messagePlayer(player, "HUNCH_SECOND_EVEN_ODD", 1, 0, 0, 0)
                         npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                     end
                 elseif randText == 3 then
                     if tonumber(splitNumbers[1]) <= 6 then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.FIRST_DIGIT_IS,
+                        messagePlayer(player, "FIRST_DIGIT_IS",
                             splitNumbers[1],
                             splitNumbers[1] +1,
                             splitNumbers[1] +2, 0)
                     elseif tonumber(splitNumbers[1]) == 9 then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.FIRST_DIGIT_IS,
+                        messagePlayer(player, "FIRST_DIGIT_IS",
                             splitNumbers[1] -2,
                             splitNumbers[1] -1,
                             splitNumbers[1], 0)
                     else
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.FIRST_DIGIT_IS,
+                        messagePlayer(player, "FIRST_DIGIT_IS",
                             splitNumbers[1] -1,
                             splitNumbers[1],
                             splitNumbers[1] +1, 0)
@@ -868,28 +913,28 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
                     npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                 elseif randText == 4 then
                     if tonumber(splitNumbers[2]) <= 6 then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.SECOND_DIGIT_IS,
+                        messagePlayer(player, "SECOND_DIGIT_IS",
                             splitNumbers[2],
                             splitNumbers[2] +1,
                             splitNumbers[2] +2, 0)
                     elseif tonumber(splitNumbers[2]) == 9 then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.SECOND_DIGIT_IS,
+                        messagePlayer(player, "SECOND_DIGIT_IS",
                             splitNumbers[2] -2,
                             splitNumbers[2] -1,
                             splitNumbers[2], 0)
                     else
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.SECOND_DIGIT_IS,
+                        messagePlayer(player, "SECOND_DIGIT_IS",
                             splitNumbers[2] -1,
                             splitNumbers[2],
                             splitNumbers[2] +1, 0)
                     end
                     npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                 elseif randText == 5 then
-                    player:messageSpecial(baseMessage + casketInfo.messageOffset.ONE_OF_TWO_DIGITS_IS,
+                    messagePlayer(player, "ONE_OF_TWO_DIGITS_IS",
                         splitNumbers[1], 0, 0, 0)
                     npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                 elseif randText == 6 then
-                    player:messageSpecial(baseMessage + casketInfo.messageOffset.ONE_OF_TWO_DIGITS_IS,
+                    messagePlayer(player, "ONE_OF_TWO_DIGITS_IS",
                         splitNumbers[2], 0, 0, 0)
                     npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                 elseif randText == 7 then
@@ -907,10 +952,10 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
                         highNum = 99
                     end
 
-                    player:messageSpecial(baseMessage + casketInfo.messageOffset.COMBINATION_GREATER_LESS, lowNum, highNum, 0, 0)
+                    messagePlayer(player, "COMBINATION_GREATER_LESS", lowNum, highNum, 0, 0)
                     npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                 else
-                    player:messageSpecial(baseMessage + casketInfo.messageOffset.UNABLE_TO_GET_HINT, 0, 0, 0, 0)
+                    messagePlayer(player, "UNABLE_TO_GET_HINT", 0, 0, 0, 0)
                 end
                 checkRemainingAttempts(player, npc, remainingAttempts, correctNumber)
                 removeHint(npc, randText)
@@ -928,34 +973,30 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
 
                 if inputNumber == correctNumber then
                     if locked == 0 then
-                        player:messageSpecial(baseMessage + casketInfo.messageOffset.NO_COMBINATION, 0, 0, 0, 0)
+                        messagePlayer(player, "NO_COMBINATION", 0, 0, 0, 0)
                     else
-                        messageChest(player, "OPENED_LOCK", 0 , 0, 0, 0, npc)
+                        messageParty(player, "OPENED_LOCK")
                         npc:setLocalVar("[caskets]LOCKED", 0)
 
                         if npc:getLocalVar("[caskets]SPAWNSTATUS") == casketInfo.spawnStatus.SPAWNED_CLOSED then  -- is the chest shut?, then open it.
                            npc:AnimationSub(1)
                            npc:setLocalVar("[caskets]SPAWNSTATUS", casketInfo.spawnStatus.SPAWNED_OPEN)
-                           -- RoE Timed Record #4019 - Crack Tresure Caskets
-                           if player:getEminenceProgress(4019) then
-                               tpz.roe.onRecordTrigger(player, 4019)
-                           end
                         end
                     end
                 else
                     if inputNumber < correctNumber then
                         if locked == 0 then
-                            player:messageSpecial(baseMessage + casketInfo.messageOffset.NO_COMBINATION, 0, 0, 0, 0)
+                            messagePlayer(player, "NO_COMBINATION", 0, 0, 0, 0)
                         else
-                            player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_GREATER_LESS, inputNumber, 0, 0, 0, 0)
+                            messagePlayer(player, "HUNCH_MORE_THAN", inputNumber, 0, 0, 0, 0)
                             npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                             checkRemainingAttempts(player, npc, remainingAttempts, correctNumber)
                         end
                     elseif inputNumber > correctNumber then
                         if locked == 0 then
-                            player:messageSpecial(baseMessage + casketInfo.messageOffset.NO_COMBINATION, 0, 0, 0, 0)
+                            messagePlayer(player, "NO_COMBINATION", 0, 0, 0, 0)
                         else
-                            player:messageSpecial(baseMessage + casketInfo.messageOffset.HUNCH_GREATER_LESS, inputNumber, 1, 0, 0, 0)
+                            messagePlayer(player, "HUNCH_LESS_THAN", inputNumber, 1, 0, 0, 0)
                             npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                             checkRemainingAttempts(player, npc, remainingAttempts, correctNumber)
                         end

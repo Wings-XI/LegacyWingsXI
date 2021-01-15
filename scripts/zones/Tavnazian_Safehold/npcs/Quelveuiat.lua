@@ -11,6 +11,7 @@ local ID = require("scripts/zones/Tavnazian_Safehold/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    --[[
     local SealionCrestKey = trade:hasItemQty(1658, 1)
     local CoralCrestKey = trade:hasItemQty(1659, 1)
     local Count = trade:getItemCount()
@@ -23,7 +24,7 @@ function onTrade(player, npc, trade)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TEMPLE_KNIGHT_KEY)
         end
     end
-
+	]]
 end
 
 function onTrigger(player, npc)

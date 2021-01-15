@@ -1,7 +1,7 @@
 -----------------------------------
 -- Ability: Sekkanoki
 -- Limits TP cost of next weapon skill to 100.
--- Obtained: Samurai Level 40
+-- Obtained: Samurai Level 60
 -- Recast Time: 0:05:00
 -- Duration: 01:00, or until a weapon skill is used
 -----------------------------------

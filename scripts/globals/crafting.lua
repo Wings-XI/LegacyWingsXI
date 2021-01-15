@@ -272,6 +272,28 @@ function unionRepresentativeTriggerFinish(player, option, target, guildID, curre
                player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
             end
         end
+    elseif (category == 0 and currency == "guild_Fishing" and (option - 515) % 512 == 0) then
+        --robber rig fix i guess
+        local i = items[-1]
+        local quantity = (option - 3) / 512
+        local cost = quantity * i.cost
+        if (i and rank >= i.rank) then
+            if (player:getCurrency(currency) >= cost) then
+                local delivered = 0
+                for count = 1, quantity do -- addItem does not appear to honor quantity if the item doesn't stack.
+                    if (player:addItem(i.id, true)) then
+                        player:delCurrency(currency, i.cost)
+                        player:messageSpecial(text.ITEM_OBTAINED, i.id)
+                        delivered = delivered + 1
+                    end
+                end
+                if (delivered == 0) then
+                    player:messageSpecial(text.ITEM_CANNOT_BE_OBTAINED, i.id)
+                end
+            else
+               player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
+            end
+        end
     elseif (category == 0 and option ~= 1073741824) then -- HQ crystal
         local i = HQCrystals[bit.band(bit.rshift(option, 5), 15)]
         local quantity = bit.rshift(option, 9)

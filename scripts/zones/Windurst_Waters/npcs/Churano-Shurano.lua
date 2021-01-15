@@ -13,7 +13,8 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if not player:hasKeyItem(tpz.ki.MAGICKED_ASTROLABE) then
+    --[[
+	if not player:hasKeyItem(tpz.ki.MAGICKED_ASTROLABE) then
         local cost = 10000
         if player:getLocalVar("Astrolabe") == 0 then
             player:startEvent(1080, cost)
@@ -21,8 +22,9 @@ function onTrigger(player, npc)
             player:startEvent(1081, cost)
         end
     else
+	]]
         player:startEvent(280)
-    end
+    --end
 end
 
 function onEventUpdate(player, csid, option)

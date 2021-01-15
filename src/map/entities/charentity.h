@@ -34,10 +34,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "battleentity.h"
 #include "petentity.h"
 
+#include "../utils/fishingutils.h"
+
 #define MAX_QUESTAREA	 11
 #define MAX_QUESTID     256
 #define MAX_MISSIONAREA	 15
-#define MAX_MISSIONID    851
+#define MAX_MISSIONID    226
 
 class CItemWeapon;
 class CTrustEntity;
@@ -187,6 +189,7 @@ public:
     nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
+    bool                    m_openMH;                       // mog house is open for alliance members or not
 
     profile_t				profile;						// профиль персонажа (все, что связывает города и персонажа)
     expChain_t				expChain;						// Exp Chains
@@ -222,6 +225,11 @@ public:
 
     UnlockedAttachments_t	m_unlockedAttachments;			// Unlocked Automaton Attachments (1 bit per attachment)
     CAutomatonEntity*       PAutomaton;                     // Automaton statistics
+
+    fishresponse_t* hookedFish;         // Currently hooked fish/item/monster
+    uint32          nextFishTime;       // When char is allowed to fish again     
+    uint32          lastCastTime;       // When char last cast their rod
+    uint32          fishingToken;       // To track fishing process
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
     template        <typename F, typename... Args>
@@ -318,6 +326,7 @@ public:
     uint32			  m_SaveTime;
 
     uint32            m_LastYell;
+    CBattleEntity*    m_autoTargetOverride;         // When a party member auto-targets, this gets set to all of alliance to ensure everyone autotargets same mob (QoL)
 
     uint8			  m_GMlevel;                    // Level of the GM flag assigned to this character
     bool              m_isGMHidden;                 // GM Hidden flag to prevent player updates from being processed.
@@ -325,6 +334,9 @@ public:
     bool              m_mentorUnlocked;
     uint32            m_moghouseID;
     uint16            m_moghancementID;
+
+    uint8             m_hitCounter;                 // auto-attack it counter for Tredecim Scythe
+    time_point        m_ZoneAggroImmunity;
 
     int8			  getShieldSize();
 
@@ -339,8 +351,19 @@ public:
     bool              m_EquipSwap;					// true if equipment was recently changed
     bool              m_EffectsChanged;
     time_point        m_LastSynthTime;
+    time_point        m_LastAttackTime;
 
     CHAR_SUBSTATE     m_Substate;
+
+    uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
+    std::string       m_clientVersion;
+    bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets
+    bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
+    time_t            m_distanceLastCheckTime;
+    float             m_distanceFromLastCheck;
+    time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
+
+    time_t            m_lastPacketTime;             // Last time a packet was received from the player
 
     int16 addTP(int16 tp) override;
     int32 addHP(int32 hp) override;

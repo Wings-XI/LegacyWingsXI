@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2010-2015 Darkstar Dev Teams
+// Copyright (c) 2010-2015 Darkstar Dev Teams
 
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
@@ -236,6 +236,7 @@ struct socket_data
 	ParseFunc func_parse;
 
     bool ver_mismatch;
+    std::string client_ver;
 	void* session_data; // stores application-specific data related to the session
 };
 

@@ -31,6 +31,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     target:addStatusEffect(tpz.effect.FLASH, 200, 0, 15)
     end
 
-
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SWORD, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

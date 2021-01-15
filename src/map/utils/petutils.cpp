@@ -47,6 +47,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../ai/controllers/mob_controller.h"
 #include "../ai/controllers/pet_controller.h"
 #include "../ai/controllers/automaton_controller.h"
+#include "../ai/controllers/spirit_controller.h"
+#include "../ai/controllers/targeted_avatar_controller.h"
 #include "../ai/states/ability_state.h"
 
 #include "../packets/char_abilities.h"
@@ -112,14 +114,14 @@ struct Pet_t
     int16 lightdef;
     int16 darkdef;
 
-    int16 fireres;
-    int16 iceres;
-    int16 windres;
-    int16 earthres;
-    int16 thunderres;
-    int16 waterres;
-    int16 lightres;
-    int16 darkres;
+    int16 fireresSDT;
+    int16 iceresSDT;
+    int16 windresSDT;
+    int16 earthresSDT;
+    int16 thunderresSDT;
+    int16 waterresSDT;
+    int16 lightresSDT;
+    int16 darkresSDT;
 
 };
 
@@ -227,14 +229,14 @@ namespace petutils
                 Pet->lightdef = 0;
                 Pet->darkdef = 0;
 
-                Pet->fireres = (uint16)((Sql_GetFloatData(SqlHandle, 31) - 1) * -100);
-                Pet->iceres = (uint16)((Sql_GetFloatData(SqlHandle, 32) - 1) * -100);
-                Pet->windres = (uint16)((Sql_GetFloatData(SqlHandle, 33) - 1) * -100);
-                Pet->earthres = (uint16)((Sql_GetFloatData(SqlHandle, 34) - 1) * -100);
-                Pet->thunderres = (uint16)((Sql_GetFloatData(SqlHandle, 35) - 1) * -100);
-                Pet->waterres = (uint16)((Sql_GetFloatData(SqlHandle, 36) - 1) * -100);
-                Pet->lightres = (uint16)((Sql_GetFloatData(SqlHandle, 37) - 1) * -100);
-                Pet->darkres = (uint16)((Sql_GetFloatData(SqlHandle, 38) - 1) * -100);
+                Pet->fireresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 31) - 1) * -100);
+                Pet->iceresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 32) - 1) * -100);
+                Pet->windresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 33) - 1) * -100);
+                Pet->earthresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 34) - 1) * -100);
+                Pet->thunderresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 35) - 1) * -100);
+                Pet->waterresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 36) - 1) * -100);
+                Pet->lightresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 37) - 1) * -100);
+                Pet->darkresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 38) - 1) * -100);
 
                 Pet->cmbDelay = (uint16)Sql_GetIntData(SqlHandle, 39);
                 Pet->name_prefix = (uint8)Sql_GetUIntData(SqlHandle, 40);
@@ -388,7 +390,7 @@ namespace petutils
             growth = 1.07f;
         }
 
-        PMob->health.maxhp = (int16)(17.0 * pow(lvl, growth) * petStats->HPscale);
+        PMob->health.maxhp = (int16)(1.077f * 17.0f * pow(lvl, growth) * petStats->HPscale);
 
         switch (PMob->GetMJob())
         {
@@ -399,7 +401,7 @@ namespace petutils
         case JOB_DRK:
         case JOB_BLU:
         case JOB_SCH:
-            PMob->health.maxmp = (int16)(15.2 * pow(lvl, 1.1075) * petStats->MPscale);
+            PMob->health.maxmp = (int16)(15.2f * pow(lvl, 1.1075) * petStats->MPscale);
             break;
         default:
             break;
@@ -423,7 +425,10 @@ namespace petutils
         //reduce weapon delay of MNK
         if (PMob->GetMJob() == JOB_MNK)
         {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
+            //((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(480 * 1500 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(480 * 1500 / 60);
         }
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
@@ -450,6 +455,74 @@ namespace petutils
         PMob->stats.MND = (uint16)((fMND + mMND) * 0.9f);
         PMob->stats.CHR = (uint16)((fCHR + mCHR) * 0.9f);
 
+        uint32 id = PMob->m_PetID;
+        PMob->m_dmgType = DAMAGE_SLASHING;
+        if (id == 32 || id == 25 || id == 38 || id == 28 || id == 21 || id == 36) // funguar familiar and the 3 mandragora pets and the 2 sheep pets
+            PMob->m_dmgType = DAMAGE_IMPACT;
+
+        /*
+        if (PetID == 21) // SHEEP FAMILIAR
+        if (PetID == 22) // HARE FAMILIAR
+        if (PetID == 23) // CRAB FAMILIAR
+        if (PetID == 24) // COURIER CARRIE
+        if (PetID == 25) // HOMUNCULUS
+        if (PetID == 26) // FLYTRAP FAMILIAR
+        if (PetID == 27) // TIGER FAMILIAR
+        if (PetID == 28) // FLOWERPOT BILL
+        if (PetID == 29) // EFT FAMILIAR
+        if (PetID == 30) // LIZARD FAMILIAR
+        if (PetID == 31) // MAYFLY FAMILIAR
+        if (PetID == 32) // FUNGUAR FAMILIAR
+        if (PetID == 33) // BEETLE FAMILIAR
+        if (PetID == 34) // ANTLION FAMILIAR
+        if (PetID == 35) // MITE FAMILIAR
+        if (PetID == 36) // LULLABY MELODIA
+        if (PetID == 37) // KEENEARED STEFFI
+        if (PetID == 38) // FLOWERPOT BEN
+        if (PetID == 39) // SABER SIRAVARDE
+        if (PetID == 40) // COLDBLOOD COMO
+        if (PetID == 41) // SHELLBUSTER OROB
+        if (PetID == 42) // VORACIOUS AUDREY
+        if (PetID == 43) // AMBUSHER ALLIE
+        if (PetID == 44) // LIFEDRINKER LARS
+        if (PetID == 45) // PANZER GALAHAD
+        if (PetID == 46) // CHOPSUEY CHUCKY
+        if (PetID == 47) // AMIGO SABOTENDER
+        */
+
+        // Killer Effect, documentation above
+        switch (id)
+        {
+        case 21:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 22:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 23:    PMob->addModifier(Mod::AMORPH_KILLER, 10); break;
+        case 24:    PMob->addModifier(Mod::AMORPH_KILLER, 10); break;
+        case 25:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 26:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 27:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 28:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 29:    PMob->addModifier(Mod::VERMIN_KILLER, 10); break;
+        case 30:    PMob->addModifier(Mod::VERMIN_KILLER, 10); break;
+        case 31:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 32:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 33:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 34:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 35:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 36:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 37:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 38:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 39:    PMob->addModifier(Mod::LIZARD_KILLER, 10); break;
+        case 40:    PMob->addModifier(Mod::VERMIN_KILLER, 10); break;
+        case 41:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 42:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        case 43:    PMob->addModifier(Mod::VERMIN_KILLER, 10); break;
+        case 44:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 45:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 46:    PMob->addModifier(Mod::PLANTOID_KILLER, 10); break;
+        case 47:    PMob->addModifier(Mod::BEAST_KILLER, 10); break;
+        default: break;
+        }
+
     }
 
     void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats)
@@ -464,11 +537,10 @@ namespace petutils
                 PPet->WorkingSkills.skill[i] |= 0x8000;
 
         // Add mods/merits
-        int32 meritbonus = PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PMaster);
-        PPet->WorkingSkills.automaton_melee += PMaster->getMod(Mod::AUTO_MELEE_SKILL) + meritbonus;
-        PPet->WorkingSkills.automaton_ranged += PMaster->getMod(Mod::AUTO_RANGED_SKILL) + meritbonus;
+        PPet->WorkingSkills.automaton_melee += PMaster->getMod(Mod::AUTO_MELEE_SKILL) + PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_MELEE, PMaster);
+        PPet->WorkingSkills.automaton_ranged += PMaster->getMod(Mod::AUTO_RANGED_SKILL) + PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_RANGED, PMaster);
         // Share its magic skills to prevent needing separate spells or checks to see which skill to use
-        uint16 amaSkill = PPet->WorkingSkills.automaton_magic + PMaster->getMod(Mod::AUTO_MAGIC_SKILL) + meritbonus;
+        uint16 amaSkill = PPet->WorkingSkills.automaton_magic + PMaster->getMod(Mod::AUTO_MAGIC_SKILL) + PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_MAGIC, PMaster);
         PPet->WorkingSkills.automaton_magic = amaSkill;
         PPet->WorkingSkills.healing = amaSkill;
         PPet->WorkingSkills.enhancing = amaSkill;
@@ -774,6 +846,10 @@ namespace petutils
             ref<uint16>(&PPet->stats, counter) = (uint16)(raceStat + jobStat);
             counter += 2;
         }
+        if (PPet->m_PetID == PETID_CAIT_SITH || PPet->m_PetID == PETID_FENRIR)
+            PPet->m_dmgType = DAMAGE_SLASHING;
+        else
+            PPet->m_dmgType = DAMAGE_IMPACT;
     }
 
     /************************************************************************
@@ -782,7 +858,7 @@ namespace petutils
     *																		*
     ************************************************************************/
 
-    void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
+    void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone, CBattleEntity* PCastTarget)
     {
         TPZ_DEBUG_BREAK_IF(PMaster->PPet != nullptr);
         if (PMaster->objtype == TYPE_PC && (PetID == PETID_HARLEQUINFRAME || PetID == PETID_VALOREDGEFRAME || PetID == PETID_SHARPSHOTFRAME || PetID == PETID_STORMWAKERFRAME))
@@ -792,7 +868,8 @@ namespace petutils
         }
         else
         {
-            LoadPet(PMaster, PetID, spawningFromZone);
+            LoadPet(PMaster, PetID, spawningFromZone, PCastTarget);
+            //ShowDebug("LoadPet finish.\n");
         }
 
         CPetEntity* PPet = (CPetEntity*)PMaster->PPet;
@@ -842,6 +919,7 @@ namespace petutils
         {
             static_cast<CCharEntity*>(PMaster)->resetPetZoningInfo();
         }
+        //ShowDebug("SpawnPet finish.\n");
     }
 
     void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID)
@@ -892,14 +970,14 @@ namespace petutils
         PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
         PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
 
-        PPet->setModifier(Mod::FIRERES, petData->fireres); // These are stored as floating percentages
-        PPet->setModifier(Mod::ICERES, petData->iceres); // and need to be adjusted into modifier units.
-        PPet->setModifier(Mod::WINDRES, petData->windres); // Higher RES = lower damage.
-        PPet->setModifier(Mod::EARTHRES, petData->earthres); // Negatives signify lower resist chance.
-        PPet->setModifier(Mod::THUNDERRES, petData->thunderres); // Positives signify increased resist chance.
-        PPet->setModifier(Mod::WATERRES, petData->waterres);
-        PPet->setModifier(Mod::LIGHTRES, petData->lightres);
-        PPet->setModifier(Mod::DARKRES, petData->darkres);
+        PPet->setModifier(Mod::SDT_FIRE, petData->fireresSDT);
+        PPet->setModifier(Mod::SDT_ICE, petData->iceresSDT);
+        PPet->setModifier(Mod::SDT_WIND, petData->windresSDT);
+        PPet->setModifier(Mod::SDT_EARTH, petData->earthresSDT);
+        PPet->setModifier(Mod::SDT_THUNDER, petData->thunderresSDT);
+        PPet->setModifier(Mod::SDT_WATER, petData->waterresSDT);
+        PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
+        PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
     }
 
     void DetachPet(CBattleEntity* PMaster)
@@ -1003,29 +1081,52 @@ namespace petutils
         petutils::DetachPet(PMaster);
     }
 
-    int16 PerpetuationCost(uint32 id, uint8 level)
+    int16 PerpetuationCost(uint32 id, uint8 level, uint8 merit)
     {
         int16 cost = 0;
-        if (id >= 0 && id <= 7)
+        if (id >= 0 && id <= 7) // spirits
         {
-            if (level < 19)
-                cost = 1;
-            else if (level < 38)
+            if (level < 5)
                 cost = 2;
-            else if (level < 57)
+            else if (level < 9)
                 cost = 3;
-            else if (level < 75)
+            else if (level < 14)
                 cost = 4;
-            else if (level < 81)
+            else if (level < 18)
                 cost = 5;
-            else if (level < 91)
+            else if (level < 23)
                 cost = 6;
-            else
+            else if (level < 27)
                 cost = 7;
+            else if (level < 32)
+                cost = 8;
+            else if (level < 36)
+                cost = 9;
+            else if (level < 40)
+                cost = 10;
+            else if (level < 45)
+                cost = 11;
+            else if (level < 49)
+                cost = 12;
+            else if (level < 54)
+                cost = 13;
+            else if (level < 58)
+                cost = 14;
+            else if (level < 63)
+                cost = 15;
+            else if (level < 67)
+                cost = 16;
+            else if (level < 72)
+                cost = 17;
+            else
+                cost = 18;
+            if (merit > level / 10)
+                merit = level / 10;
+            cost = cost - merit;
         }
-        else if (id == 8)
+        else if (id == 8 || id == 20) // carbuncle, cait sith
         {
-            if (level < 10)
+            if (level < 9)
                 cost = 1;
             else if (level < 18)
                 cost = 2;
@@ -1048,7 +1149,7 @@ namespace petutils
             else
                 cost = 11;
         }
-        else if (id == 9)
+        else if (id == 9) // fenrir
         {
             if (level < 8)
                 cost = 1;
@@ -1077,7 +1178,7 @@ namespace petutils
             else
                 cost = 13;
         }
-        else if (id <= 16)
+        else if (id <= 16) // all others
         {
             if (level < 10)
                 cost = 3;
@@ -1105,7 +1206,7 @@ namespace petutils
                 cost = 14;
             else
                 cost = 15;
-        }
+        } // odin, atomos and alexander are zero so they default to zero on the return.
 
         return cost;
     }
@@ -1147,7 +1248,7 @@ namespace petutils
 
     }
 
-    void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
+    void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone, CBattleEntity* PCastTarget)
     {
         TPZ_DEBUG_BREAK_IF(PMaster == nullptr);
         TPZ_DEBUG_BREAK_IF(PetID >= MAX_PETID);
@@ -1199,33 +1300,6 @@ namespace petutils
                 }
             }
         }
-        /*
-        else if (PetID==PETID_ADVENTURING_FELLOW)
-        {
-            petType = PETTYPE_ADVENTURING_FELLOW;
-
-            const char* Query =
-            "SELECT\
-            pet_name.name,\
-            char_pet.adventuringfellowid\
-            FROM pet_name, char_pet\
-            WHERE pet_name.id = char_pet.adventuringfellowid";
-
-            if ( Sql_Query(SqlHandle, Query) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
-            {
-                while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-                {
-                    uint16 adventuringfellowid = (uint16)Sql_GetIntData(SqlHandle, 1);
-
-                    if (adventuringfellowid != 0)
-                    {
-                        PPetData->name.clear();
-                        PPetData->name.insert(0, Sql_GetData(SqlHandle, 0));
-                    }
-                }
-            }
-        }
-        */
         else if (PetID == PETID_CHOCOBO)
         {
             petType = PETTYPE_CHOCOBO;
@@ -1287,6 +1361,22 @@ namespace petutils
         else
         {
             PPet = new CPetEntity(petType);
+            
+            if (PetID <= PETID_DARKSPIRIT)
+            {
+                PPet->PMaster = PMaster;
+                //PPet->m_MobSkillList = g_PPetList.at(PetID)->m_MobSkillList;
+                PPet->m_PetID = PetID;
+                PPet->PAI->SetController(std::make_unique<CSpiritController>(PPet));;
+            }
+            if (PetID == PETID_ATOMOS || PetID == PETID_ODIN || PetID == PETID_ALEXANDER)
+            {
+                PPet->PMaster = PMaster;
+                PPet->m_MobSkillList = g_PPetList.at(PetID)->m_MobSkillList;
+                PPet->m_PetID = PetID;
+                PPet->PAI->SetController(std::make_unique<CTargetedAvatarController>(PPet,PCastTarget));
+            }
+            
         }
 
         PPet->loc = PMaster->loc;
@@ -1357,16 +1447,12 @@ namespace petutils
             {
                 ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0 * (280.0f / 60.0f))));
             }
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.74f)));
 
-            // In a 2014 update SE updated Avatar base damage
-            // Based on testing this value appears to be Level now instead of Level * 0.74f
-            uint16 weaponDamage = 1 + PPet->GetMLevel();
-            if (PetID == PETID_CARBUNCLE || PetID == PETID_CAIT_SITH)
+            if (PetID == PETID_CARBUNCLE)
             {
-                weaponDamage = static_cast<uint16>(floor(PPet->GetMLevel() * 0.9f));
+                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.67f)));
             }
-
-            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage(weaponDamage);
 
             //Set B+ weapon skill (assumed capped for level derp)
             //attack is madly high for avatars (roughly x2)
@@ -1405,7 +1491,12 @@ namespace petutils
                 PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
             }
 
-            PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, PPet->GetMLevel()));
+            uint8 eleMerit = ((CCharEntity*)PMaster)->PMeritPoints->GetMerit(MERIT_SUMMONING_MAGIC_CAST_TIME)->value; // TODO -- RENAME THIS SUMMONING MAGIC CAST TIME MERIT TO ELE COST REDUCTION
+            PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, PPet->GetMLevel(), eleMerit));
+            
+            if (PetID <= PETID_DARKSPIRIT) // spirits have a ton of MP, almost exactly 5x
+                PPet->setModifier(Mod::MPP, 500);
+
         }
         else if (PPet->getPetType() == PETTYPE_JUG_PET)
         {

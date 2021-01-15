@@ -14,28 +14,50 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    local numhits = 1
-    local accmod = 1
-    local dmgmod = 2
-    local dmgmodsubsequent = 1 -- ??
-
-    local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsubsequent, TP_NO_EFFECT, 1, 2, 3)
-    --get resist multiplier (1x if no resist)
-    local resist = applyPlayerResistance(pet, -1, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), tpz.skill.ELEMENTAL_MAGIC, tpz.magic.ele.THUNDER)
-    --get the resisted damage
-    damage.dmg = damage.dmg*resist
-    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
-    damage.dmg = mobAddBonuses(pet, spell, target, damage.dmg, 1)
-    local tp = skill:getTP()
-    if tp < 1000 then
-        tp = 1000
+    local eco = target:getSystem()
+    local ele = tpz.damageType.LIGHTNING
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
+    local tp = skill:getTP() / 10
+    local master = pet:getMaster()
+    local merits = 0
+    if (master ~= nil and master:isPC()) then
+        merits = master:getMerit(tpz.merit.THUNDERSTORM)
     end
-    damage.dmg = damage.dmg * tp / 1000
-    totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, numhits)
-    target:addStatusEffect(tpz.effect.PARALYSIS, 15, 0, 60)
-    target:takeDamage(totaldamage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)
-    target:updateEnmityFromDamage(pet, totaldamage)
+
+    tp = tp + (merits - 40)
+    if (tp > 300) then
+        tp = 300
+    end
+
+    local damage = math.floor(39 * (1 + 0.211*tp/3000) * coe)
+    damage = damage + (dINT * 1.5)
+    damage = MobMagicalMove(pet,target,skill,damage,tpz.magic.ele.LIGHTNING,1,TP_NO_EFFECT,0)
+    damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.LIGHTNING)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, 1)
+    
+    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.LIGHTNING - 5, target)
+    if (skillchainTier > 0) then
+        skill:setMsg(747)
+    end
+    
+    local dDEX = pet:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.DEX)
+    local bonus = dDEX
+    if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
+        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet) + 1
+    end
+    local resist = applyResistanceAbility(pet,target,tpz.magic.element.LIGHTNING,tpz.skill.ENFEEBLING_MAGIC,bonus)
+    local duration = 90 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
+    if resist >= 0.25 then
+        target:delStatusEffect(tpz.effect.PARALYSIS)
+        target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration)
+    end
+
+    target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)
+    target:updateEnmityFromDamage(pet,damage)
+
+    return damage
 
     return totaldamage
 end

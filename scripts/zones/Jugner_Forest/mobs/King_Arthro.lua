@@ -8,6 +8,7 @@ mixins =
     require("scripts/mixins/rage")
 }
 require("scripts/globals/mobs")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -15,15 +16,23 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(71, 1)
+    
     local KingArthroID = mob:getID()
 
     -- Use King Arthro ID to determine Knight Crab Id's, then set their respawn to 0 so they don't spawn while KA is up
     for offset = 1, 10 do
         GetMobByID(KingArthroID - offset):setRespawnTime(0)
     end
+    
+    mob:addMod(tpz.mod.ATT, 25)
+    mob:addMod(tpz.mod.DEF, 25)
+    mob:addMod(tpz.mod.MACC, 15)
 end
 
 function onAdditionalEffect(mob, target, damage)
+    local params = {}
+    params.chance = 100
     if mob:hasStatusEffect(tpz.effect.ENWATER) then
         return 0, 0, 0
     else
@@ -55,8 +64,10 @@ function onMobDespawn(mob)
     GetMobByID(KingArthroID):setLocalVar("[POP]King_Arthro", 0)
 
     -- Set respawn of 21:05 to 24:05
-    local respawnTime = 75900 + math.random(0, 6) * 1800 -- 21:05 to 24:05 respawn timer in 30 minute intervals
+    local respawnTime = 75900 + math.random(0,6) * 1800 -- 21:05 to 24:05 respawn timer in 30 minute intervals
     for offset = 1, 10 do
         GetMobByID(KingArthroID - offset):setRespawnTime(respawnTime)
     end
+	
+	SetServerVariable("KnightCrabRespawn",(os.time() + respawnTime))
 end

@@ -566,6 +566,13 @@ void CMobEntity::Spawn()
 
     m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
+
+    // claim shield, happens after onmobspawn so that this can be added on the fly to individual mobs without any cluster restarts
+    if (getMobMod(MOBMOD_CLAIM_SHIELD))
+    {
+        setMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE, 1);
+        PAI->Internal_ClaimShieldState();
+    }
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
@@ -580,6 +587,16 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 {
     auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    bool cover = false;
+
+    auto PCoverTarget = battleutils::getCoverTarget(PTarget, this);
+    if (PCoverTarget)
+    {
+        PTarget = PCoverTarget;
+        if (PCoverTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PCoverTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 2)
+            PCoverTarget->setModifier(Mod::COVERED_MP_FLAG, 1);
+        cover = true;
+    }
 
     static_cast<CMobController*>(PAI->GetController())->TapDeaggroTime();
 
@@ -601,6 +618,11 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         findFlags |= FINDFLAGS_PET;
     }
 
+    if (PSkill->getValidTargets() & TARGET_PLAYER_DEAD)
+    {
+        findFlags |= FINDFLAGS_DEAD; // cait sith's Altana's Favor uses this
+    }
+
     action.id = id;
     if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR)
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
@@ -619,7 +641,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
             float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags);
+            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
         }
         else
         {
@@ -675,6 +697,14 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         // reset the skill's message back to default
         PSkill->setMsg(defaultMessage);
 
+        if (PTarget->isSuperJumped)
+        {
+            target.reaction = REACTION_EVADE;
+            target.speceffect = SPECEFFECT_NONE;
+            target.messageID = 188; // skill miss
+            continue;
+        }
+
         if (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() != PETTYPE_JUG_PET)
         {
             if(static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_WYVERN)
@@ -710,6 +740,11 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else
         {
             target.reaction = REACTION_HIT;
+            if (PSkill->m_GuardReaction)
+            {
+                target.reaction = REACTION_GUARD;
+                PSkill->m_GuardReaction = false;
+            }
         }
 
         if (target.speceffect & SPECEFFECT_HIT)
@@ -741,7 +776,9 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                 first = false;
             }
         }
-        PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+        if (this->objtype != TYPE_PET && this->PMaster != nullptr && this->PMaster->objtype != TYPE_PC)
+            PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+
         if (PTarget->isDead())
         {
             battleutils::ClaimMob(PTarget, this);
@@ -754,6 +791,9 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         battleutils::ClaimMob(PTarget, this);
     }
     battleutils::DirtyExp(PTarget, this);
+
+    if (cover)
+        PCoverTarget->setModifier(Mod::COVERED_MP_FLAG, 0);
 }
 
 void CMobEntity::DistributeRewards()
@@ -779,7 +819,7 @@ void CMobEntity::DistributeRewards()
             }
 
             // check for gil (beastmen drop gil, some NMs drop gil)
-            if ((map_config.mob_gil_multiplier > 0 && CanDropGil()) || (map_config.all_mobs_gil_bonus > 0 && getMobMod(MOBMOD_GIL_MAX) >= 0)) // Negative value of MOBMOD_GIL_MAX is used to prevent gil drops in Dynamis/Limbus.
+            if (CanDropGil() || (map_config.all_mobs_gil_bonus > 0 && getMobMod(MOBMOD_GIL_MAX) >= 0)) // Negative value of MOBMOD_GIL_MAX is used to prevent gil drops in Dynamis/Limbus.
             {
                 charutils::DistributeGil(PChar, this); // TODO: REALISATION MUST BE IN TREASUREPOOL
             }
@@ -821,44 +861,139 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     if (DropList != nullptr && !getMobMod(MOBMOD_NO_DROPS) && (DropList->Items.size() || DropList->Groups.size()))
     {
         //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
-        int16 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
-        int16 bonus = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
+        //uint8 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
+        //only roll once now, always
+        uint8 maxRolls = 1;
+        //uint8 bonus = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
+        //no flat bonus anymore
+        uint8 bonus = 0;
+        float mult = 0.00f;
+        if (m_THLvl == 1)
+        {
+            mult = 0.80f;
+        }
+        else if (m_THLvl == 2)
+        {
+            mult = 0.41f;
+            maxRolls = 2;
+        }
+        else if (m_THLvl == 3)
+        {
+            mult = 0.03f;
+            maxRolls = 3;
+        }
+        else if (m_THLvl == 4)
+        {
+            mult = 0.43f;
+            maxRolls = 3;
+        }
+        else if (m_THLvl >= 5)
+        {
+            mult = 0.91f;
+            maxRolls = 3;
+        }
+
+        //ShowDebug("m_THLvl was %u, mult was %.2f, maxRolls was %u\n",m_THLvl,mult,maxRolls);
 
         for (const DropGroup_t& group : DropList->Groups)
         {
-            for (int16 roll = 0; roll < maxRolls; ++roll)
+            for (uint8 roll = 0; roll < maxRolls; ++roll)
             {
                 //Determine if this group should drop an item
-                if (group.GroupRate > 0 && tpzrand::GetRandomNumber(1000) < group.GroupRate * map_config.drop_rate_multiplier + bonus)
+
+                // 0.8 is the TH level:
+
+                // 1 % +(1 % * 99 % * 0.8) = 1.792 %
+
+                // 50 % +(50 % * 50 % * 0.8) = 70 %
+
+                // 80 % +(80 % * 20 % * 0.8) = 92.8 %
+
+                uint16 rate = group.GroupRate;
+
+                if (roll + 1 < maxRolls) // not our last roll
                 {
-                    //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
-                    //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
-                    uint16 previousRateValue = 0;
-                    uint16 itemRoll = tpzrand::GetRandomNumber(1000);
-                    for (const DropItem_t& item : group.Items)
+                    //ShowDebug("doing NON-last roll\n");
+                    if (rate > 0 && ((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
                     {
-                        if (previousRateValue + item.DropRate > itemRoll)
+                        //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
+                        //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
+                        uint16 previousRateValue = 0;
+                        uint16 itemRoll = tpzrand::GetRandomNumber(1000);
+                        for (const DropItem_t& item : group.Items)
                         {
-                            if (AddItemToPool(item.ItemID, ++dropCount))
-                                return;
-                            break;
+                            if (previousRateValue + item.DropRate > itemRoll)
+                            {
+                                if (AddItemToPool(item.ItemID, ++dropCount))
+                                    return;
+                                break;
+                            }
+                            previousRateValue += item.DropRate;
                         }
-                        previousRateValue += item.DropRate;
+                        break;
                     }
-                    break;
                 }
+                else // is our last roll, apply the mult
+                {
+                    //ShowDebug("doing last roll\n");
+                    if (rate > 0 && (tpzrand::GetRandomNumber(1000) < (rate + (rate * (1000 - rate)/1000 * mult)) || m_THLvl > 68))
+                    {
+                        //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
+                        //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
+                        uint16 previousRateValue = 0;
+                        uint16 itemRoll = tpzrand::GetRandomNumber(1000);
+                        for (const DropItem_t& item : group.Items)
+                        {
+                            if (previousRateValue + item.DropRate > itemRoll)
+                            {
+                                if (AddItemToPool(item.ItemID, ++dropCount))
+                                    return;
+                                break;
+                            }
+                            previousRateValue += item.DropRate;
+                        }
+                        break;
+                    }
+                }
+
             }
         }
 
         for (const DropItem_t& item : DropList->Items)
         {
-            for (int16 roll = 0; roll < maxRolls; ++roll)
+            for (uint8 roll = 0; roll < maxRolls; ++roll)
             {
-                if (item.DropRate > 0 && tpzrand::GetRandomNumber(1000) < item.DropRate * map_config.drop_rate_multiplier + bonus)
+                //Determine if this group should drop an item
+
+                // 0.8 is the TH level:
+
+                // 1 % +(1 % * 99 % * 0.8) = 1.792 %
+
+                // 50 % +(50 % * 50 % * 0.8) = 70 %
+
+                // 80 % +(80 % * 20 % * 0.8) = 92.8 %
+
+                uint16 rate = item.DropRate;
+
+                if (roll + 1 < maxRolls) // not our last roll
                 {
-                    if (AddItemToPool(item.ItemID, ++dropCount))
-                        return;
-                    break;
+                    //ShowDebug("doing NON-last roll\n");
+                    if (rate > 0 && ((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
+                    {
+                        if (AddItemToPool(item.ItemID, ++dropCount))
+                            return;
+                        break;
+                    }
+                }
+                else // is our last roll, apply the mult
+                {
+                    //ShowDebug("doing last roll\n");
+                    if (rate > 0 && (tpzrand::GetRandomNumber(1000) < (rate + (rate * (1000 - rate)/1000 * mult)) || m_THLvl > 68))
+                    {
+                        if (AddItemToPool(item.ItemID, ++dropCount))
+                            return;
+                        break;
+                    }
                 }
             }
         }
@@ -870,7 +1005,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
 
-    if (validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
+    if (validZone && charutils::GetRealExp(PChar->GetMLevel(), GetMLevel()) > 0)
     {
 
         //check for seal drops
@@ -881,49 +1016,8 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         */
         if (tpzrand::GetRandomNumber(100) < 20 && PChar->PTreasurePool->CanAddSeal() && !getMobMod(MOBMOD_NO_DROPS))
         {
-            //RULES: Only 1 kind may drop per mob
-            if (GetMLevel() >= 75 && luautils::IsContentEnabled("ABYSSEA")) //all 4 types
-            {
-                switch (tpzrand::GetRandomNumber(4))
-                {
-                case 0:
 
-                    if (AddItemToPool(1126, ++dropCount))
-                        return;
-                    break;
-                case 1:
-                    if (AddItemToPool(1127, ++dropCount))
-                        return;
-                    break;
-                case 2:
-                    if (AddItemToPool(2955, ++dropCount))
-                        return;
-                    break;
-                case 3:
-                    if (AddItemToPool(2956, ++dropCount))
-                        return;
-                    break;
-                }
-            }
-            else if (GetMLevel() >= 70 && luautils::IsContentEnabled("ABYSSEA")) //b.seal & k.seal & k.crest
-            {
-                switch (tpzrand::GetRandomNumber(3))
-                {
-                case 0:
-                    if (AddItemToPool(1126, ++dropCount))
-                        return;
-                    break;
-                case 1:
-                    if (AddItemToPool(1127, ++dropCount))
-                        return;
-                    break;
-                case 2:
-                    if (AddItemToPool(2955, ++dropCount))
-                        return;
-                    break;
-                }
-            }
-            else if (GetMLevel() >= 50) //b.seal & k.seal only
+            if (GetMLevel() >= 50) //b.seal & k.seal only
             {
                 if (tpzrand::GetRandomNumber(2) == 0)
                 {
@@ -942,6 +1036,47 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 if (AddItemToPool(1126, ++dropCount))
                     return;
             }
+        }
+
+        if (!m_Element)
+            return;
+
+        if (PChar->PParty == nullptr)
+        {
+            if (((PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && conquest::GetInfluenceGraphics(PChar->loc.zone->GetRegionID()) < 64) ||
+                (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && PChar->loc.zone->GetRegionID() >= 28 && PChar->loc.zone->GetRegionID() <= 32) ||
+                (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && PChar->loc.zone->GetRegionID() >= 33 && PChar->loc.zone->GetRegionID() <= 40)) &&
+                tpzrand::GetRandomNumber(100) < 37)
+            {
+                if (AddItemToPool(4095 + m_Element, ++dropCount))
+                    return;
+            }
+        }
+        else
+        {
+            uint8 count = 0;
+            CMobEntity* mob = this;
+            PChar->ForParty([&count, &mob](CBattleEntity* member)
+            {
+                if ((member->objtype == TYPE_PC && member->getZone() == mob->getZone() && distanceSquared(member->loc.p, mob->loc.p) < 10000.0f) &&
+                    (
+                    ((member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && conquest::GetInfluenceGraphics(member->loc.zone->GetRegionID()) < 64) ||
+                        (member->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && member->loc.zone->GetRegionID() >= 28 && member->loc.zone->GetRegionID() <= 32) ||
+                        (member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && member->loc.zone->GetRegionID() >= 33 && member->loc.zone->GetRegionID() <= 40)) &&
+                    tpzrand::GetRandomNumber(100) < 30)
+                    )
+                {
+                    count++;
+                }
+            });
+
+            while (count)
+            {
+                if (AddItemToPool(4095 + m_Element, ++dropCount))
+                    return;
+                count--;
+            }
+
         }
         // Todo: Avatarite and Geode drops during day/weather. Much higher chance during weather than day.
         // Item element matches day/weather element, not mob crystal. Lv80+ xp mobs can drop Avatarite.

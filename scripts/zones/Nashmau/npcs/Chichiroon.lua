@@ -24,9 +24,9 @@ function onTrigger(player, npc)
         6368,  69288,    -- Geomancer Die
         6369,  73920,    -- Rune Fencer Die
     }
-
+    -- status 2
     player:showText(npc, ID.text.CHICHIROON_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

@@ -86,7 +86,9 @@ CBattleEntity::CBattleEntity()
 
     m_Immunity = 0;
     isCharmed = false;
+    isSuperJumped = false;
     m_unkillable = false;
+    m_dmgType = (DAMAGETYPE)0;
 }
 
 CBattleEntity::~CBattleEntity()
@@ -256,10 +258,6 @@ bool CBattleEntity::Rest(float rate)
 
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
-    if (StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS) && !tp)
-    {
-        return 1700;
-    }
     uint16 WeaponDelay = 9999;
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
@@ -277,7 +275,8 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             //apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
-
+        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(this->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS)))
+            WeaponDelay = 480 * 1000 / 60;
         //apply haste and delay reductions that don't affect tp
         if (!tp)
         {
@@ -286,9 +285,17 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             int16 hasteAbility = std::clamp<int16>(getMod(Mod::HASTE_ABILITY), -2500, 2500); // 25% cap
             int16 hasteGear = std::clamp<int16>(getMod(Mod::HASTE_GEAR), -2500, 2500); // 25%
 
+            if (StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
+            {
+                hasteMagic = 8000;
+                hasteAbility = 0;
+                hasteGear = 0;
+            }
+
             // Divide by float to get a more accurate reduction, then use int16 cast to truncate
             WeaponDelay -= (int16)(WeaponDelay * (hasteMagic + hasteAbility + hasteGear) / 10000.f);
         }
+        
         WeaponDelay = (uint16)(WeaponDelay * ((100.0f + getMod(Mod::DELAYP)) / 100.0f));
 
         // Global delay reduction cap of "about 80%" being enforced.
@@ -323,8 +330,10 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
     if (!tp)
     {
         delay = (int16)(delay * ((100.0f + getMod(Mod::RANGED_DELAYP)) / 100.0f));
+        if (delay == 0)
+            delay = 900;
     }
-    else if (PAmmo)
+    else if (PRange && PAmmo && PRange->getSkillType() != SKILL_THROWING && PAmmo->getSkillType() != SKILL_THROWING)
     {
         delay += PAmmo->getDelay() / 2;
     }
@@ -415,7 +424,10 @@ uint16 CBattleEntity::GetMainWeaponRank()
 {
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
-        return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK)) / 9;
+        if (weapon->getSkillType() == SKILL_HAND_TO_HAND)
+            return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK) + 3) / 9;
+        else
+            return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK)) / 9;
     }
     return 0;
 }
@@ -534,6 +546,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 {
     PLastAttacker = attacker;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
+    
+    if (this->getMod(Mod::COVERED_MP_FLAG) && amount > 4)
+        this->addMP(amount / 5);
+
 
     //RoE Damage Taken Trigger
     if (this->objtype == TYPE_PC)
@@ -627,14 +643,34 @@ uint16 CBattleEntity::ATT()
         std::min<int16>((ATT * m_modStat[Mod::FOOD_ATTP] / 100), m_modStat[Mod::FOOD_ATT_CAP]);
 }
 
-uint16 CBattleEntity::RATT(uint8 skill, uint16 bonusSkill)
+uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
 {
     auto PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
     if (PWeakness && PWeakness->GetPower() >= 2)
     {
         return 0;
     }
-    int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
+    if (this->objtype == TYPE_PC)
+    {
+        CItemEquipment* Rwep = ((CCharEntity*)this)->getEquip(SLOT_RANGED);
+        CItemEquipment* Rammo = ((CCharEntity*)this)->getEquip(SLOT_AMMO);
+        if (Rwep && ((CItemWeapon*)Rwep)->getSkillType() == SKILL_FISHING)
+            return 0; // fishing rods dont offer RATT
+        if (Rammo && ((CItemWeapon*)Rammo)->getSkillType() == SKILL_FISHING)
+            return 0; // fishing baits dont offer RATT
+    }
+
+    uint16 skill_level = GetSkill(skill);
+    if (skill == SKILL_AUTOMATON_RANGED)
+        skill_level = PMaster->GetSkill(skill) + bonusSkill;
+    int32 ATT = 8 + skill_level + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
+
+    // apply ranged distance variation
+    if ((this->objtype == TYPE_PC || // im a PC
+        (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON && this->PMaster->objtype == TYPE_PC)) // im an automaton and my master is a PC
+        && distance < 999.0f)
+        ATT = (int32)((float)ATT * battleutils::GetRangedAttackDistanceCorrection(this, distance));
+
     return ATT + (ATT * m_modStat[Mod::RATTP] / 100) +
         std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]);
 }
@@ -646,7 +682,19 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     {
         return 0;
     }
+    if (this->objtype == TYPE_PC)
+    {
+        CItemEquipment* Rwep = ((CCharEntity*)this)->getEquip(SLOT_RANGED);
+        CItemEquipment* Rammo = ((CCharEntity*)this)->getEquip(SLOT_AMMO);
+        if (Rwep && ((CItemWeapon*)Rwep)->getSkillType() == SKILL_FISHING)
+            return 0; // fishing rods dont offer RACC
+        if (Rammo && ((CItemWeapon*)Rammo)->getSkillType() == SKILL_FISHING)
+            return 0; // fishing baits dont offer RACC
+    }
+
     int skill_level = GetSkill(skill) + bonusSkill;
+    if (skill == SKILL_AUTOMATON_RANGED)
+        skill_level = PMaster->GetSkill(skill) + bonusSkill;
     uint16 acc = skill_level;
     if (skill_level > 200)
     {
@@ -734,11 +782,16 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 
 uint16 CBattleEntity::DEF()
 {
-    int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
-    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0)) {
-	return DEF / 2;
+    int32 DEF = 1;
+    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
+    {
+        DEF = 8 + this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
+        if (m_modStat[Mod::DEFP] < 0)
+            DEF = DEF + (DEF * m_modStat[Mod::DEFP]) / 100;
+        return DEF;
     }
 
+    DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
     return DEF + (DEF * m_modStat[Mod::DEFP] / 100) +
         std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]);
 }
@@ -748,7 +801,7 @@ uint16 CBattleEntity::EVA()
     int16 evasion = GetSkill(SKILL_EVASION);
 
     if (evasion > 200) { //Evasion skill is 0.9 evasion post-200
-        evasion = (int16)(200 + (evasion - 200) * 0.9);
+        evasion = (int16)(200 + (evasion - (int16)200) * 0.9);
     }
     return std::max(0, (m_modStat[Mod::EVA] + evasion + AGI() / 2));
 }
@@ -806,38 +859,10 @@ void CBattleEntity::SetMLevel(uint8 mlvl)
 
 void CBattleEntity::SetSLevel(uint8 slvl)
 {
-    if (!map_config.include_mob_sj && (this->objtype == TYPE_MOB && this->objtype != TYPE_PET))
-    {
-        // Technically, we shouldn't be assuming mobs even have a ratio they must adhere to.
-        // But there is no place in the DB to set subLV right now.
-        m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
-    }
-    else
-    {
-        switch (map_config.subjob_ratio)
-        {
-            case 0: //no SJ...Where is your Altana now?
-                m_slvl = 0;
-                break;
-            case 1: // 1/2 (75/37, 99/49)
-                m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
-                break;
-            case 2: // 2/3 (75/50, 99/66)
-                m_slvl = (slvl > (m_mlvl * 2) / 3 ? (m_mlvl == 1 ? 1 : (m_mlvl * 2) / 3) : slvl);
-                break;
-            case 3: // equal (75/75, 99/99)
-                m_slvl = (slvl > m_mlvl ? (m_mlvl == 1 ? 1 : m_mlvl) : slvl);
-                break;
-            default: // Error
-                ShowError("Error setting subjob level: Invalid ratio '%s' check your map.conf file!\n", map_config.subjob_ratio);
-                break;
-        }
-    }
+    m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
 
     if (this->objtype & TYPE_PC)
-    {
         Sql_Query(SqlHandle, "UPDATE char_stats SET slvl = %u WHERE charid = %u LIMIT 1;", m_slvl, this->id);
-    }
 }
 
 /************************************************************************
@@ -1285,10 +1310,25 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     auto PActionTarget = static_cast<CBattleEntity*>(state.GetTarget());
     CBattleEntity* POriginalTarget = PActionTarget;
     bool IsMagicCovered= false;
+    bool cover = false;
+
+    if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
+    {
+        auto PCoverTarget = battleutils::getCoverTarget(PActionTarget, this);
+        if (PCoverTarget)
+        {
+            PActionTarget = PCoverTarget;
+            if (PCoverTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PCoverTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 2)
+                PCoverTarget->setModifier(Mod::COVERED_MP_FLAG, 1);
+            cover = true;
+        }
+    }
 
     luautils::OnSpellPrecast(this, PSpell);
 
     state.SpendCost();
+
+    bool doEnmityAndClaim = true;
 
     // remove effects based on spell cast first
     int16 effectFlags = EFFECTFLAG_INVISIBLE | EFFECTFLAG_MAGIC_BEGIN;
@@ -1373,6 +1413,14 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         auto ce = PSpell->getCE();
         auto ve = PSpell->getVE();
 
+        // Super Jump and Super Climb
+        if (PTarget->isSuperJumped)
+        {
+            actionTarget.messageID = MSGBASIC_MAGIC_NO_EFFECT;
+            //actionTarget.animation = ANIMATION_NONE; a really weird effect
+            continue;
+        }
+
         // Take all shadows
         if (PSpell->canTargetEnemy() && (aoeType > SPELLAOE_NONE || (PSpell->getFlag() & SPELLFLAG_WIPE_SHADOWS)))
         {
@@ -1382,7 +1430,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 
         // TODO: this is really hacky and should eventually be moved into lua, and spellFlags should probably be in the spells table..
         if (PSpell->canHitShadow() && aoeType == SPELLAOE_NONE
-            && battleutils::IsAbsorbByShadow(PTarget)
+            && battleutils::IsAbsorbByShadow(PTarget, this)
             && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
         {
             // take shadow
@@ -1438,7 +1486,11 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         }
         else
         {
-            state.ApplyEnmity(PTarget, ce, ve);
+            if (ce == 0 && ve == 0 && PSpell->getSpellGroup() == 5) // summoning magic... odin and atomos
+                doEnmityAndClaim = false;
+
+            if (doEnmityAndClaim)
+                state.ApplyEnmity(PTarget, ce, ve);
         }
 
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
@@ -1448,7 +1500,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     }
     if ((!(PSpell->isHeal()) || PSpell->tookEffect()) && PActionTarget->isAlive())
     {
-        if (objtype != TYPE_PET)
+        if (objtype != TYPE_PET && doEnmityAndClaim)
         {
             battleutils::ClaimMob(PActionTarget, this);
         }
@@ -1462,7 +1514,12 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         PActionTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
     }
 
+    if (cover)
+        PActionTarget->setModifier(Mod::COVERED_MP_FLAG, 0);
+
     this->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_MAGIC_END);
+    if (PSpell->isCure())
+        this->StatusEffectContainer->DelStatusEffect(EFFECT_DIVINE_SEAL);
 }
 
 void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg)
@@ -1528,6 +1585,19 @@ CBattleEntity* CBattleEntity::GetBattleTarget()
 bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    bool cover = false;
+
+    if (this->objtype == TYPE_MOB)
+    {
+        auto PCoverTarget = battleutils::getCoverTarget(PTarget, this);
+        if (PCoverTarget)
+        {
+            PTarget = PCoverTarget;
+            if (PCoverTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PCoverTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 2)
+                PCoverTarget->setModifier(Mod::COVERED_MP_FLAG, 1);
+            cover = true;
+        }
+    }
 
     if (PTarget->objtype == TYPE_PC)
     {
@@ -1538,11 +1608,15 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     if (battleutils::IsParalyzed(this))
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        if (cover)
+            PTarget->setModifier(Mod::COVERED_MP_FLAG, 0);
         return false;
     }
     if (battleutils::IsIntimidated(this, PTarget))
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_INTIMIDATED));
+        if (cover)
+            PTarget->setModifier(Mod::COVERED_MP_FLAG, 0);
         return false;
     }
 
@@ -1557,6 +1631,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
     CBattleEntity* POriginalTarget = PTarget;
 
+    
+    bool tredecim = false;
+    if (this->objtype == TYPE_PC && ((CCharEntity*)this)->getEquip(SLOT_MAIN) != nullptr && (((CCharEntity*)this)->getEquip(SLOT_MAIN))->getID() == 18052)
+        tredecim = true;
+    
     /////////////////////////////////////////////////////////////////////////
     //	Start of the attack loop.
     /////////////////////////////////////////////////////////////////////////
@@ -1565,6 +1644,9 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
         actionTarget_t& actionTarget = list.getNewActionTarget();
         // Reference to the current swing.
         CAttack& attack = attackRound.GetCurrentAttack();
+
+        if (tredecim)
+            (((CCharEntity*)this)->m_hitCounter)++;
 
         // Set the swing animation.
         actionTarget.animation = attack.GetAnimationID();
@@ -1575,7 +1657,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             list.ActionTargetID = PTarget->id;
         }
 
-        if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0))
+        if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0) || PTarget->isSuperJumped)
         {
             actionTarget.messageID = 32;
             actionTarget.reaction = REACTION_EVADE;
@@ -1585,20 +1667,21 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                  !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ALL_MISS))
         {
             // attack hit, try to be absorbed by shadow unless it is a SATA attack round
-            if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget))
-            {
-                actionTarget.messageID = 0;
-                actionTarget.reaction = REACTION_EVADE;
-                attack.SetEvaded(true);
-                PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE_SELF, new CMessageBasicPacket(PTarget, PTarget, 0, 1, 31));
-            }
-            else if (attack.IsParried())
+            
+            if (!(attackRound.GetSATAOccured()) && attack.IsParried())
             {
                 actionTarget.messageID = 70;
                 actionTarget.reaction = REACTION_PARRY;
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 battleutils::HandleTacticalParry(PTarget);
                 battleutils::HandleIssekiganEnmityBonus(PTarget, this);
+            }
+            else if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget, this))
+            {
+                actionTarget.messageID = 0;
+                actionTarget.reaction = REACTION_EVADE;
+                attack.SetEvaded(true);
+                PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE_SELF, new CMessageBasicPacket(PTarget, PTarget, 0, 1, 31));
             }
             else if (attack.CheckAnticipated() || attack.CheckCounter())
             {
@@ -1615,7 +1698,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.param = 0;
                     actionTarget.messageID = 0;
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
-                    if (battleutils::IsAbsorbByShadow(this))
+                    if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
                         actionTarget.spikesParam = 0;
                         actionTarget.spikesMessage = 14;
@@ -1623,14 +1706,19 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     else
                     {
                         int16 naturalh2hDMG = 0;
+                        bool h2h = false;
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
                            (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
                         {
                             naturalh2hDMG = (int16)((PTarget->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) + 3);
+                            bool h2h = true;
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
-                        auto damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
+                        auto damage = (int32)(PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN));
+                        if (h2h && PTarget->objtype == TYPE_PC)
+                            damage = (int32)((float)damage * 1.23f);
+                        damage = (int32)((float)damage * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;
                         if (PTarget->objtype == TYPE_PC)
@@ -1651,6 +1739,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             {
                 // Set this attack's critical flag.
                 attack.SetCritical(tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing()));
+                if (tredecim && ((CCharEntity*)this)->m_hitCounter > 12)
+                {
+                    ((CCharEntity*)this)->m_hitCounter = 0;
+                    attack.SetCritical(true);
+                }
 
                 // Critical hit.
                 if (attack.IsCritical())
@@ -1686,7 +1779,9 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Apply Feint
                 if (CStatusEffect* PFeintEffect = StatusEffectContainer->GetStatusEffect(EFFECT_FEINT))
                 {
-                    PTarget->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_EVASION_DOWN, EFFECT_EVASION_DOWN, PFeintEffect->GetPower(), 3, 30));
+                    uint16 power = (PTarget->EVA() / 20) * 10; // ensures power is a multiple of 10 to evenly die out over the 10 ticks
+                    if (power > 0)
+                        PTarget->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_EVASION_DOWN, EFFECT_EVASION_DOWN, power, 3, 30, 0, power/10));
                     StatusEffectContainer->DelStatusEffect(EFFECT_FEINT);
                 }
 
@@ -1709,7 +1804,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             if (PTarget->objtype == TYPE_PC)
             {
-                if (attack.IsGuarded() || ((map_config.newstyle_skillups & NEWSTYLE_GUARD) > 0))
+                if (actionTarget.reaction == REACTION_GUARD || ((map_config.newstyle_skillups & NEWSTYLE_GUARD) > 0))
                 {
                     if (battleutils::GetGuardRate(this, PTarget) > 0)
                     {
@@ -1717,7 +1812,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     }
                 }
 
-                if (attack.IsBlocked() || ((map_config.newstyle_skillups & NEWSTYLE_BLOCK) > 0))
+                if (actionTarget.reaction == REACTION_BLOCK || ((map_config.newstyle_skillups & NEWSTYLE_BLOCK) > 0))
                 {
                     if (battleutils::GetBlockRate(this, PTarget) > 0)
                     {
@@ -1725,14 +1820,14 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     }
                 }
 
-                if (attack.IsParried() || ((map_config.newstyle_skillups & NEWSTYLE_PARRY) > 0))
+                if (actionTarget.reaction == REACTION_PARRY || ((map_config.newstyle_skillups & NEWSTYLE_PARRY) > 0))
                 {
                     if (battleutils::GetParryRate(this, PTarget) > 0)
                     {
                         charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_PARRY, GetMLevel());
                     }
                 }
-                if (!attack.IsCountered() && !attack.IsParried())
+                if (actionTarget.reaction != REACTION_EVADE && actionTarget.reaction != REACTION_PARRY)
                 {
                     charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
                 }
@@ -1770,12 +1865,10 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
         //if zanshin procs, the attack is repeated
         if (attack.IsFirstSwing() && attackRound.GetAttackSwingCount() == 1)
         {
-            uint16 zanshinChance = this->getMod(Mod::ZANSHIN) + battleutils::GetMeritValue(this, MERIT_ZASHIN_ATTACK_RATE);
+            uint16 zanshinChance = this->getMod(Mod::ZANSHIN) + battleutils::GetMeritValue(this, MERIT_ZANSHIN_ATTACK_RATE);
             zanshinChance = std::clamp<uint16>(zanshinChance, 0, 100);
             //zanshin may only proc on a missed/guarded/countered swing or as SAM main with hasso up (at 25% of the base zanshin rate)
-            if (((actionTarget.reaction == REACTION_EVADE || actionTarget.reaction == REACTION_GUARD ||
-                  actionTarget.spikesEffect == SUBEFFECT_COUNTER) && tpzrand::GetRandomNumber(100) < zanshinChance) ||
-                (GetMJob() == JOB_SAM && this->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO) && tpzrand::GetRandomNumber(100) < (zanshinChance / 4)))
+            if ((actionTarget.reaction == REACTION_EVADE || actionTarget.reaction == REACTION_GUARD || actionTarget.spikesEffect == SUBEFFECT_COUNTER) && tpzrand::GetRandomNumber(100) < zanshinChance)
             {
                 attack.SetAttackType(PHYSICAL_ATTACK_TYPE::ZANSHIN);
                 attack.SetAsFirstSwing(false);
@@ -1801,6 +1894,9 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     /////////////////////////////////////////////////////////////////////////////////////////////
 
     this->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK | EFFECTFLAG_DETECTABLE);
+
+    if (cover)
+        PTarget->setModifier(Mod::COVERED_MP_FLAG, 0);
 
     return true;
 }

@@ -35,6 +35,12 @@ function onTrigger(player, npc)
             4366,    22,  -- La Theine Cabbage
             4378,    55   -- Selbina Milk
         }
+        
+        local rank = getNationRank(tpz.nation.WINDURST)
+        if rank ~= 3 then
+            table.insert(stock, 1840) --Semolina
+            table.insert(stock, 1840)
+        end
 
         tpz.shop.general(player, stock, WINDURST)
     end

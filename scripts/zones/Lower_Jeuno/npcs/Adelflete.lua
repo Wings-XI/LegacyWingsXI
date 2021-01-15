@@ -12,20 +12,20 @@ end
 function onTrigger(player, npc)
     local stock =
     {
-        806,   1863,    -- Tourmaline
-        807,   1863,    -- Sardonyx
-        800,   1863,    -- Amethyst
-        814,   1863,    -- Amber
-        795,   1863,    -- Lapis Lazuli
-        809,   1863,    -- Clear Topaz
-        799,   1863,    -- Onyx
-        796,   1863,    -- Light Opal
+        806,   1552,    -- Tourmaline
+        807,   1552,    -- Sardonyx
+        800,   1552,    -- Amethyst
+        814,   1552,    -- Amber
+        795,   1552,    -- Lapis Lazuli
+        809,   1552,    -- Clear Topaz
+        799,   1552,    -- Onyx
+        796,   1552,    -- Light Opal
         13327, 1250,    -- Silver Earring
         13456, 1250,    -- Silver Ring
     }
 
     player:showText(npc, ID.text.ADELFLETE_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

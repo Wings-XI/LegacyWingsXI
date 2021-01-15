@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -33,6 +33,7 @@ extern char  SERVER_TYPE;
 
 extern int parse_console(char* buf);
 extern void log_init(int,char**);
+extern void log_final();
 extern int32 do_init(int32,char**);
 extern void set_server_type(void);
 extern void do_abort(void);

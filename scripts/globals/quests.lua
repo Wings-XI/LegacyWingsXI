@@ -698,7 +698,7 @@ tpz.quest.id =
     [tpz.quest.area[tpz.quest.log_id.CRYSTAL_WAR]] =
     {
         LOST_IN_TRANSLOCATION            = 0, -- + --
-        MESSAGE_ON_THE_WINDS             = 1,
+        MESSAGE_ON_THE_WINDS             = 1, -- + --
         THE_WEEKLY_ADVENTURER            = 2,
         HEALING_HERBS                    = 3,
         REDEEMING_ROCKS                  = 4,

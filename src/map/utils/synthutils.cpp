@@ -95,9 +95,7 @@ bool isRightRecipe(CCharEntity* PChar)
         PChar->CraftContainer->getItemID(7),
         PChar->CraftContainer->getItemID(8));
 
-    if (ret != SQL_ERROR &&
-        Sql_NumRows(SqlHandle) != 0 &&
-        Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
     {
         uint16 KeyItemID = (uint16)Sql_GetUIntData(SqlHandle,1); // Check if recipe needs KI
 
@@ -228,21 +226,42 @@ bool canSynthesizeHQ(CCharEntity* PChar, uint8 skillID)
 uint8 calcSynthResult(CCharEntity* PChar)
 {
     uint8 result = SYNTHESIS_SUCCESS;
-    uint8 hqtier = 0;
-    uint8 finalhqtier = 4;
+    int8 hqtier = 3;
     bool canHQ = true;
 
     double success = 0;
     double chance  = 0;
     double random = tpzrand::GetRandomNumber(1.);
 
-    for (uint8 skillID = SKILL_WOODWORKING; skillID <= SKILL_COOKING; ++skillID)
+    for (uint8 skillID = 49; skillID < 57; ++skillID)
+    {
+        uint8 checkSkill = PChar->CraftContainer->getQuantity(skillID - 40);
+        if (checkSkill != 0)
+        {
+            double synthDiff = getSynthDifficulty(PChar, skillID);
+
+            if (synthDiff >= 0)
+            {
+                hqtier = -1;
+                break;
+            }
+
+            if (synthDiff > -11 && hqtier > 0) //0-10 levels over recipe
+                hqtier = 0;
+            else if (synthDiff > -31 && hqtier > 1) //11-30 levels over recipe
+                hqtier = 1;
+            else if (synthDiff > -51 && hqtier > 2) //31-50 levels over recipe
+                hqtier = 2;
+        }
+    }
+
+
+    for (uint8 skillID = 49; skillID < 57; ++skillID)
     {
         uint8 checkSkill = PChar->CraftContainer->getQuantity(skillID-40);
         if(checkSkill != 0)
         {
             double synthDiff = getSynthDifficulty(PChar, skillID);
-            hqtier = 0;
 
             if(synthDiff <= 0)
             {
@@ -250,18 +269,6 @@ uint8 calcSynthResult(CCharEntity* PChar)
                     success = 0.45;
                 else
                     success = 0.95;
-
-                if(synthDiff > -11)       //0-10 levels over recipe
-                    hqtier = 1;
-                else if(synthDiff > -31)  //11-30 levels over recipe
-                    hqtier = 2;
-                else if(synthDiff > -51)  //31-50 levels over recipe
-                    hqtier = 3;
-                else                      //51+ levels over recipe
-                    hqtier = 4;
-
-                if(hqtier < finalhqtier)
-                    finalhqtier = hqtier; //set var to limit possible hq if needed
             }
             else
             {
@@ -270,13 +277,27 @@ uint8 calcSynthResult(CCharEntity* PChar)
                 else
                     success = 0.95 - (synthDiff / 10);
 
-                canHQ = false;
-                if(success < 0.05)
+
+                if (success < 0.05)
+                {
                     success = 0.05;
+                }
 
                 #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
                 ShowDebug(CL_CYAN"SkillID %u: difficulty > 0\n" CL_RESET, skillID);
                 #endif
+            }
+
+            if (PChar->CraftContainer->getCraftType() == 1)
+            {
+                if (synthDiff > 0)
+                {
+                    success = 0.45 - (synthDiff / 10);
+                }
+                else
+                {
+                    success = 0.45;
+                }
             }
 
             // Apply synthesis success rate modifier
@@ -317,17 +338,18 @@ uint8 calcSynthResult(CCharEntity* PChar)
 
     if(result != SYNTHESIS_FAIL) // It has gone through the cycle without breaking
     {
-        switch(finalhqtier)
+        switch(hqtier) // https://www.bluegartr.com/threads/120352-CraftyMath
         {
-            case 4:  chance = 0.5;      break; // 1 in 2
-            case 3:  chance = 0.25;     break; // 1 in 4
-            case 2:  chance = 0.0625;   break; // 1 in 16
-            case 1:  chance = 0.015625; break; // 1 in 64
+            case 3:  chance = 0.506;    break;
+            case 2:  chance = 0.285;    break;
+            case 1:  chance = 0.066;    break;
+            case 0:  chance = 0.018;    break;
+            case -1: chance = 0.0006;   break;
             default: chance = 0.000;    break;
         }
 
-        if (PChar->CraftContainer->getCraftType() ==  1) //if it's a desynth raise HQ chance
-            chance *= 1.5;
+        if (PChar->CraftContainer->getCraftType() == 1) //if it's a desynth raise HQ chance
+            chance = 0.4 + hqtier * 0.03;
 
         int16 modSynthHqRate = PChar->getMod(Mod::SYNTH_HQ_RATE);
 
@@ -348,17 +370,33 @@ uint8 calcSynthResult(CCharEntity* PChar)
         ShowDebug(CL_CYAN"HQ Tier: %i HQ Chance: %g Random: %g SkillID: %u\n" CL_RESET, hqtier, chance, random, skillID);
         #endif
 
+        random = tpzrand::GetRandomNumber(1.);
+
         if(random < chance && canHQ) // we try for HQ
         {
-            random = tpzrand::GetRandomNumber(0, 16);
+            if (PChar->CraftContainer->getCraftType() != 1)
+            {
+                random = tpzrand::GetRandomNumber(0, 16);
 
-            if (random == 0)
-                result = SYNTHESIS_HQ3;
-            else if (random < 4)
-                result = SYNTHESIS_HQ2;
+                if (random == 0)
+                    result = SYNTHESIS_HQ3;
+                else if (random < 4)
+                    result = SYNTHESIS_HQ2;
+                else
+                    result = SYNTHESIS_HQ;
+            }
             else
-                result = SYNTHESIS_HQ;
+            {
+                random = tpzrand::GetRandomNumber(1.);
 
+                if (random < 0.375)
+                    result = SYNTHESIS_HQ;
+                else if (random < 0.75)
+                    result = SYNTHESIS_HQ2;
+                else
+                    result = SYNTHESIS_HQ3;
+            }
+        
         }
         else
             result = SYNTHESIS_SUCCESS;
@@ -366,6 +404,8 @@ uint8 calcSynthResult(CCharEntity* PChar)
 
     // the result of the synthesis is written in the quantity field of the crystal cell.
     PChar->CraftContainer->setQuantity(0, result);
+
+    PChar->CraftContainer->m_failType = PChar->CraftContainer->getCraftType();
 
     switch(result)
     {
@@ -431,65 +471,132 @@ int32 doSynthSkillUp(CCharEntity* PChar)
 
         if (charSkill < maxSkill) // Check if a character can skill up
         {
-            double skillUpChance = (double)baseDiff * map_config.craft_chance_multiplier * (3 - (log(1.2 + charSkill/100))) / 10;
+            //double skillUpChance = double skillUpChance = (double)baseDiff * map_config.craft_chance_multiplier * (3 - (log(1.2 + charSkill/100))) / 10;
+            // skill 0   = 8.2%  chance per base diff
+            // skill 50  = 7.7% chance per base diff
+            // skill 99  = 1.8% chance per base diff
+            double skillUpChance = 0.6 - charSkill/5000; // 60% scaling down to 40% at approx 4 skill diff from skill levels 0 to 100
+            double coeff = 1.0;
+
+            switch (baseDiff)
+            {
+            case 1:
+                coeff = 0.78;
+                break;
+            case 2:
+                coeff = 0.87;
+                break;
+            case 3:
+                coeff = 0.97;
+                break;
+            case 4:
+                coeff = 1.05;
+                break;
+            case 5:
+                coeff = 1.10;
+                break;
+            case 6:
+                coeff = 1.18;
+                break;
+            case 7:
+                coeff = 1.20;
+                break;
+            case 8:
+                coeff = 1.22;
+                break;
+            case 9:
+                coeff = 1.24;
+                break;
+            case 10:
+                coeff = 1.26;
+                break;
+            default:
+                coeff = 0.78;
+                break;
+            }
+
+            skillUpChance *= coeff;
 
             // Apply synthesis skill gain rate modifier before synthesis fail modifier
             int16 modSynthSkillGain = PChar->getMod(Mod::SYNTH_SKILL_GAIN);
             skillUpChance += (double)modSynthSkillGain * 0.01;
 
-            skillUpChance = skillUpChance / (1 + (PChar->CraftContainer->getQuantity(0) == SYNTHESIS_FAIL)); // Lower skill up chance if synth breaks
+            //skillUpChance = skillUpChance / (1 + (PChar->CraftContainer->getQuantity(0) == SYNTHESIS_FAIL)); // Lower skill up chance if synth breaks
 
             if (PChar->CraftContainer->getCraftType() == 1)  // If it's a desynth lower skill up rate
                 skillUpChance = skillUpChance / 2;
 
             double random = tpzrand::GetRandomNumber(1.);
-            #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
-            ShowDebug(CL_CYAN"Skill up chance: %g  Random: %g\n" CL_RESET, skillUpChance, random);
-            #endif
+            //#ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
+            //ShowDebug(CL_CYAN"Skill up chance: %g  Random: %g\n" CL_RESET, skillUpChance, random);
+            //#endif
 
             if (random < skillUpChance) // If character skills up
             {
-                int32  skillUpAmount = 1;
+                int32 skillUpAmount = 1;
+                int32 maxSkillUp = 5;
 
-                if (charSkill < 600) // no skill ups over 0.1 happen over level 60
+                if (charSkill >= 600)
+                    maxSkillUp = 1;
+                else if (charSkill >= 500)
+                    maxSkillUp = 2;
+                else if (charSkill >= 400)
+                    maxSkillUp = 3;
+                else if (charSkill >= 300)
+                    maxSkillUp = 4;
+
+                int32  satier = 0;
+                double chance = 0;
+
+                if ((baseDiff >= 1) && (baseDiff < 3))
+                    satier = 1;
+                else if ((baseDiff >= 3) && (baseDiff < 5))
+                    satier = 2;
+                else if ((baseDiff >= 5) && (baseDiff < 8))
+                    satier = 3;
+                else if ((baseDiff >= 8) && (baseDiff < 10))
+                    satier = 4;
+                else if (baseDiff >= 10)
+                    satier = 5;
+
+                // rare chances to get higher tiers
+                uint8 maxUpgradeRoll = tpzrand::GetRandomNumber(0, 255);
+
+                if (maxUpgradeRoll < 4)
+                    maxSkillUp = maxSkillUp + 2;
+                else if (maxUpgradeRoll < 19)
+                    maxSkillUp = maxSkillUp + 1;
+
+                if (maxSkillUp > 5)
+                    maxSkillUp = 5;
+
+                for (uint8 i = 0; i < 4; i++)
                 {
-                    int32  satier = 0;
-                    double chance = 0;
+                    random = tpzrand::GetRandomNumber(1.);
+                    #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
+                    ShowDebug(CL_CYAN"SkillUpAmount Tier: %i  Random: %g\n" CL_RESET, satier, random);
+                    #endif
 
-                    // Set satier initial rank
-                    if((baseDiff >= 1) && (baseDiff < 3))
-                        satier = 1;
-                    else if((baseDiff >= 3) && (baseDiff < 5))
-                        satier = 2;
-                    else if((baseDiff >= 5) && (baseDiff < 8))
-                        satier = 3;
-                    else if((baseDiff >= 8) && (baseDiff < 10))
-                        satier = 4;
-                    else if (baseDiff >= 10)
-                        satier = 5;
-
-                    for(uint8 i = 0; i < 4; i ++) // cicle up to 4 times until cap (0.5) or break. The lower the satier, the more likely it will break
+                    switch (satier)
                     {
-                        #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
-                        ShowDebug(CL_CYAN"SkillUpAmount Tier: %i  Random: %g\n" CL_RESET, satier, random);
-                        #endif
-
-                        switch(satier)
-                        {
-                            case 5:  chance = 0.900; break;
-                            case 4:  chance = 0.700; break;
-                            case 3:  chance = 0.500; break;
-                            case 2:  chance = 0.300; break;
-                            case 1:  chance = 0.200; break;
-                            default: chance = 0.000; break;
-                        }
-
-                        if(chance < random)
-                            break;
-
-                        skillUpAmount++;
-                        satier--;
+                    case 5:  chance = 0.900; break;
+                    case 4:  chance = 0.700; break;
+                    case 3:  chance = 0.500; break;
+                    case 2:  chance = 0.300; break;
+                    case 1:  chance = 0.200; break;
+                    default: chance = 0.000; break;
                     }
+
+                    if (chance < random)
+                        break;
+
+                    skillUpAmount++;
+                    satier--;
+                }
+
+                if (skillUpAmount > maxSkillUp)
+                {
+                    skillUpAmount = maxSkillUp;
                 }
 
                 // Do craft amount multiplier
@@ -590,6 +697,19 @@ int32 doSynthFail(CCharEntity* PChar)
 
     double random = 0;
     double lostItem = std::clamp(0.15 - reduction + (synthDiff > 0 ? synthDiff/20 : 0), 0.0, 1.0);
+    
+    if (PChar->CraftContainer->m_failType == 1) // desynth failures break the items much more frequently
+    {
+        lostItem += 0.35;
+    }
+    else if (PChar->CraftContainer->m_failType == 2) // special item that cannot break, i.e. Lu Shang's Broken Rod
+    {
+        lostItem = 0.0;
+    }
+    else if (PChar->CraftContainer->m_failType == 3) // special item that always breaks, i.e. Hakutaku Eye Cluster
+    {
+        lostItem = 1.0;
+    }
 
     // Translation of JP wiki for the "Synthesis failure rate" modifier is "Synthetic material loss rate"
     // see: http://wiki.ffo.jp/html/18416.html
@@ -727,6 +847,10 @@ int32 startSynth(CCharEntity* PChar)
         if (slotid != 0xFF)
         {
             CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotid);
+            if (!PItem) {
+                ShowError(CL_CYAN"Got nullptr as synth item.\n");
+                return 0;
+            }
             PItem->setReserve(PItem->getReserve() + 1);
         }
     }

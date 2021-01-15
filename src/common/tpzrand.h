@@ -1,4 +1,4 @@
-﻿#include <random>
+#include <random>
 
 class tpzrand
 {
@@ -41,6 +41,12 @@ public:
         if (min == max)
         {
             return min;
+        }
+        if (max < min) {
+            ShowError("tpzrand::GetRandomNumber - max < min, attempting to recover by switching.\n");
+            T temp = min;
+            min = max;
+            max = temp;
         }
         std::uniform_real_distribution<T> dist(min, max);
         return dist(mt());

@@ -368,6 +368,13 @@ void LoadMOBList()
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
     int32 ret = Sql_Query(SqlHandle, Query, map_ip.s_addr, address, map_port);
 
+    Sql_t* sqlH2 = Sql_Malloc();
+    Sql_Connect(sqlH2, map_config.mysql_login.c_str(),
+        map_config.mysql_password.c_str(),
+        map_config.mysql_host.c_str(),
+        map_config.mysql_port,
+        map_config.mysql_database.c_str());
+
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
     {
         while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -396,8 +403,16 @@ void LoadMOBList()
                 PMob->HPmodifier = (uint32)Sql_GetIntData(SqlHandle, 10);
                 PMob->MPmodifier = (uint32)Sql_GetIntData(SqlHandle, 11);
 
-                PMob->m_minLevel = (uint8)Sql_GetIntData(SqlHandle, 12);
-                PMob->m_maxLevel = (uint8)Sql_GetIntData(SqlHandle, 13);
+                if (Sql_Query(sqlH2, "SELECT minLevel,maxLevel FROM mob_level_exceptions WHERE mobid = %u LIMIT 1;",PMob->id) == SQL_SUCCESS && Sql_NumRows(sqlH2) == 1 && Sql_NextRow(sqlH2) == SQL_SUCCESS)
+                {
+                    PMob->m_minLevel = (uint8)Sql_GetIntData(sqlH2, 0);
+                    PMob->m_maxLevel = (uint8)Sql_GetIntData(sqlH2, 1);
+                }
+                else
+                {
+                    PMob->m_minLevel = (uint8)Sql_GetIntData(SqlHandle, 12);
+                    PMob->m_maxLevel = (uint8)Sql_GetIntData(SqlHandle, 13);
+                }
 
                 memcpy(&PMob->look, Sql_GetData(SqlHandle, 14), 23);
 
@@ -409,6 +424,12 @@ void LoadMOBList()
                 PMob->m_dmgMult = Sql_GetUIntData(SqlHandle, 18);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
+
+                if (Sql_GetIntData(SqlHandle, 19) == SKILL_HAND_TO_HAND)
+                {
+                    ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlHandle, 14) * 1500) / 60);
+                    ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlHandle, 14) * 1500) / 60);
+                }
 
                 PMob->m_Behaviour = (uint16)Sql_GetIntData(SqlHandle, 20);
                 PMob->m_Link = (uint8)Sql_GetIntData(SqlHandle, 21);
@@ -443,7 +464,7 @@ void LoadMOBList()
                 PMob->setModifier(Mod::PIERCERES, (uint16)(Sql_GetFloatData(SqlHandle, 37) * 1000));
                 PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlHandle, 38) * 1000));
                 PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlHandle, 39) * 1000));
-
+                /*
                 PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlHandle, 40) - 1) * -100)); // These are stored as floating percentages
                 PMob->setModifier(Mod::ICERES, (int16)((Sql_GetFloatData(SqlHandle, 41) - 1) * -100)); // and need to be adjusted into modifier units.
                 PMob->setModifier(Mod::WINDRES, (int16)((Sql_GetFloatData(SqlHandle, 42) - 1) * -100)); // Higher RES = lower damage.
@@ -452,6 +473,15 @@ void LoadMOBList()
                 PMob->setModifier(Mod::WATERRES, (int16)((Sql_GetFloatData(SqlHandle, 45) - 1) * -100));
                 PMob->setModifier(Mod::LIGHTRES, (int16)((Sql_GetFloatData(SqlHandle, 46) - 1) * -100));
                 PMob->setModifier(Mod::DARKRES, (int16)((Sql_GetFloatData(SqlHandle, 47) - 1) * -100));
+                */
+                PMob->setModifier(Mod::SDT_FIRE, (int16)(Sql_GetFloatData(SqlHandle, 40) * 100)); // These are stored as floating percentages
+                PMob->setModifier(Mod::SDT_ICE, (int16)(Sql_GetFloatData(SqlHandle, 41) * 100));
+                PMob->setModifier(Mod::SDT_WIND, (int16)(Sql_GetFloatData(SqlHandle, 42) * 100));
+                PMob->setModifier(Mod::SDT_EARTH, (int16)(Sql_GetFloatData(SqlHandle, 43) * 100));
+                PMob->setModifier(Mod::SDT_THUNDER, (int16)(Sql_GetFloatData(SqlHandle, 44) * 100));
+                PMob->setModifier(Mod::SDT_WATER, (int16)(Sql_GetFloatData(SqlHandle, 45) * 100));
+                PMob->setModifier(Mod::SDT_LIGHT, (int16)(Sql_GetFloatData(SqlHandle, 46) * 100));
+                PMob->setModifier(Mod::SDT_DARK, (int16)(Sql_GetFloatData(SqlHandle, 47) * 100));
 
                 PMob->m_Element = (uint8)Sql_GetIntData(SqlHandle, 48);
                 PMob->m_Family = (uint16)Sql_GetIntData(SqlHandle, 49);
@@ -515,6 +545,8 @@ void LoadMOBList()
             }
         }
     }
+
+    Sql_Free(sqlH2);
 
     // handle mob initialise functions after they're all loaded
     ForEachZone([](CZone* PZone)
@@ -596,9 +628,16 @@ void LoadMOBList()
 
 CZone* CreateZone(uint16 ZoneID)
 {
+    CZone* newZone = nullptr;
+
     static const char* Query =
         "SELECT zonetype FROM zone_settings "
         "WHERE zoneid = %u LIMIT 1";
+
+    static const char* clearSessionQuery =
+        "DELETE FROM accounts_sessions "
+        "WHERE charid IN "
+        "(SELECT charid FROM chars WHERE pos_zone = %u)";
 
     if (Sql_Query(SqlHandle, Query, ZoneID) != SQL_ERROR &&
         Sql_NumRows(SqlHandle) != 0 &&
@@ -606,12 +645,16 @@ CZone* CreateZone(uint16 ZoneID)
     {
         if ((ZONETYPE)Sql_GetUIntData(SqlHandle, 0) == ZONETYPE_DUNGEON_INSTANCED)
         {
-            return new CZoneInstance((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
+            newZone = new CZoneInstance((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
         }
         else
         {
-            return new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
+            newZone = new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
         }
+        // WingsXI: Clear any sessions that were in here when the zone went down (e.g. crashed or shut down)
+        Sql_Query(SqlHandle, clearSessionQuery, ZoneID);
+
+        return newZone;
     }
     else
     {

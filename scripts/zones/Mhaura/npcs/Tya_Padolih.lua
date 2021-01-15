@@ -24,9 +24,9 @@ function onTrigger(player, npc)
         4912, 18032,    -- Scroll of Distract
         4914, 25038,    -- Scroll of Frazzle
     }
-
-    player:showText(npc, ID.text.TYAPADOLIH_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    -- status 2
+    --player:showText(npc, ID.text.TYAPADOLIH_SHOP_DIALOG)
+    --tpz.shop.general(player, stock)
 end
 
 function onEventUpdate(player, csid, option)

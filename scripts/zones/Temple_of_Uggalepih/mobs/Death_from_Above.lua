@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/mobs")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -16,4 +17,9 @@ end
 
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 385)
+end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 1800)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 2400)
 end

@@ -68,13 +68,24 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
     {
         if (tick > (lastVHourlyUpdate + 4800ms))
         {
-			zoneutils::ForEachZone([](CZone* PZone)
+            
+            uint8 interval = map_config.vana_hours_per_pos_update;
+
+            zoneutils::ForEachZone([interval](CZone* PZone)
             {
+                bool updateSQL = false;
                 luautils::OnGameHour(PZone);
-				PZone->ForEachChar([](CCharEntity* PChar)
+                if (interval == 1)
+                    updateSQL = true;
+                else if (PZone->GetID() % interval == CVanaTime::getInstance()->getHour() % interval)
+                    updateSQL = true;
+
+				PZone->ForEachChar([updateSQL](CCharEntity* PChar)
 				{
 					PChar->PLatentEffectContainer->CheckLatentsHours();
 					PChar->PLatentEffectContainer->CheckLatentsMoonPhase();
+                    if (updateSQL)
+                        charutils::SavePositionToDatabase(PChar);
 				});
 			});
 

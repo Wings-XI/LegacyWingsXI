@@ -7,6 +7,8 @@
 -- Auto-Script: Requires Verification. Validated standard dialog - thrydwolf 12/8/2011
 -----------------------------------
 
+require("scripts/globals/room_rental")
+
 function onTrade(player, npc, trade)
 end
 
@@ -18,4 +20,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    tryMoveToLeaderMH(player)
 end

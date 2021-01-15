@@ -22,13 +22,15 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
-    duration = duration * applyResistance(caster, target, spell, params)
-    --Paralyze base power is 19.5 and is not affected by resistaces.
+    local res = applyResistance(caster, target, spell, params)
+    duration = duration * res
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
+    
     local power = 30
 
     --Calculates resist chanve from Reist Blind
     if (math.random(0, 100) >= target:getMod(tpz.mod.PARALYZERES)) then
-        if (duration >= 150) then
+        if (res >= 0.5) then
             -- Erases a weaker blind and applies the stronger one
             local paralysis = target:getStatusEffect(effect)
             if (paralysis ~= nil) then

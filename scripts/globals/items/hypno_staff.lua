@@ -9,12 +9,14 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAdditionalEffect(player, target, damage)
-    local chance = 10
+    local chance = 15
+    local resist = applyResistanceAddEffect(player,target,tpz.magic.ele.DARK,0)
 
-    if (math.random(0, 99) >= chance or applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0) <= 0.5) then
-        return 0, 0, 0
+    if (math.random(0,99) >= chance or resist < 0.5) then
+        return 0,0,0
     else
-        local duration = 25
+        local duration = 25 * resist
+        duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
         if (target:getMainLvl() > player:getMainLvl()) then
             duration = duration - (target:getMainLvl() - player:getMainLvl())
         end

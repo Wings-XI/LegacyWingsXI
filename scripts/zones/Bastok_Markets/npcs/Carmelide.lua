@@ -7,17 +7,17 @@
 local ID = require("scripts/zones/Bastok_Markets/IDs")
 require("scripts/globals/shop")
 
-function onTrigger(player, npc)
+function onTrigger(player,npc)
     local stock =
     {
-        806, 1713, 2,    -- Tourmaline
-        807, 1713, 2,    -- Sardonyx
-        800, 1713, 2,    -- Amethyst
-        814, 1713, 2,    -- Amber
-        795, 1713, 2,    -- Lapis Lazuli
-        809, 1713, 2,    -- Clear Topaz
-        799, 1713, 2,    -- Onyx
-        796, 1713, 2,    -- Light Opal
+        806, 1676, 2,    -- Tourmaline
+        807, 1676, 2,    -- Sardonyx
+        800, 1676, 2,    -- Amethyst
+        814, 1676, 2,    -- Amber
+        795, 1676, 2,    -- Lapis Lazuli
+        809, 1676, 2,    -- Clear Topaz
+        799, 1676, 2,    -- Onyx
+        796, 1676, 2,    -- Light Opal
         13454, 69, 3,    -- Copper Ring
     }
 

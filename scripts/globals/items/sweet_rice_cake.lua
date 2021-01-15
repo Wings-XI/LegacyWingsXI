@@ -36,7 +36,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.HPHEAL, 2)
     target:addMod(tpz.mod.MPHEAL, 2)
     target:addMod(tpz.mod.EVA, 5)
-    target:addMod(tpz.mod.SILENCERES, 4)
+    target:addMod(tpz.mod.SILENCERESTRAIT, 4)
 end
 
 function onEffectLose(target, effect)
@@ -47,5 +47,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.HPHEAL, 2)
     target:delMod(tpz.mod.MPHEAL, 2)
     target:delMod(tpz.mod.EVA, 5)
-    target:delMod(tpz.mod.SILENCERES, 4)
+    target:delMod(tpz.mod.SILENCERESTRAIT, 4)
 end

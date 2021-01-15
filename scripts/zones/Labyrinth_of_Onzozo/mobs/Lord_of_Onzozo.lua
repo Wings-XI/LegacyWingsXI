@@ -2,12 +2,18 @@
 -- Area: Labyrinth of Onzozo
 --   NM: Lord of Onzozo
 -----------------------------------
-mixins = {require("scripts/mixins/rage")}
+-- mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/regimes")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+end
+
+function onMobSpawn(mob)
+    mob:addMod(tpz.mod.DEF, -30)
+    mob:addMod(tpz.mod.ATT, 15)
 end
 
 function onMonsterMagicPrepare(mob, target)

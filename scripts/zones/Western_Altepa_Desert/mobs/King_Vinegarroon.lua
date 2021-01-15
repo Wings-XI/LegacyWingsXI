@@ -5,6 +5,7 @@
 require("scripts/globals/titles")
 require("scripts/globals/world")
 require("scripts/globals/mobs")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -33,4 +34,31 @@ end
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
+end
+
+function updateRegen(mob)
+    local hour = VanadielHour()
+    local regen = mob:getMod(tpz.mod.REGEN)
+    
+    if hour > 3 and hour < 20 -- daytime between 4:00 and 20:00
+        if regen ~= 125 then
+            mob:setMod(tpz.mod.REGEN, 125)
+        end
+    else
+        if regen ~= 250 then
+            mob:setMod(tpz.mod.REGEN, 250)
+        end
+    end
+end
+
+function onMobSpawn(mob)
+    updateRegen(mob)
+end
+
+function onMobFight(mob)
+    updateRegen(mob)
+end
+
+function onMobRoam(mob)
+    updateRegen(mob)
 end

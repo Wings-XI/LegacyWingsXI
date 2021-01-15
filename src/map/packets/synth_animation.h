@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -31,6 +31,7 @@
 #define RESULT_HQ		0x02
 #define RESULT_HQ2		0x03
 #define RESULT_HQ3		0x04
+#define RESULT_DESYNTH_FAIL 0x05
 
 #define EFFECT_WATERSYNTH		0x0010
 #define EFFECT_WINDSYNTH		0x0011

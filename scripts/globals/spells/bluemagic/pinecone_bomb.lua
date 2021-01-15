@@ -17,17 +17,6 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 -----------------------------------------
 
-function inverseBellRand(min, max, weight)
-    if not weight then weight = 0.5 end
-    local mid = math.floor((max - min) / 2)
-    local rand = math.floor(mid * math.pow(math.random(), weight))
-    if math.random() < 0.5 then
-        return min + mid - rand
-    else
-        return min + mid + rand
-    end
-end
-
 function onMagicCastingCheck(caster,target,spell)
     return 0
 end
@@ -52,15 +41,23 @@ function onSpellCast(caster,target,spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+	
+	local resparams = {}
+    resparams.diff = dINT
+    resparams.skillType = tpz.skill.BLUE_MAGIC
+    resparams.bonus = 0
+    resparams.effect = tpz.effect.SLEEP_I
+    local resist = applyResistanceEffect(caster, target, spell, resparams)
 
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     -- After damage is applied (which would have woken the target up from a
     -- preexisting sleep, if necesesary), apply the sleep effect for this spell.
-    if (damage > 0) then
-        local duration = inverseBellRand(15, 60, 0.3)
-        target:addStatusEffect(tpz.effect.SLEEP_II, 2, 0, duration)
+    if damage > 0 and resist >= 0.5 then
+        local duration = math.random(15,30)
+		duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
+        target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration)
     end
 
     return damage

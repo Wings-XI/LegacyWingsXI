@@ -20,19 +20,19 @@ function onTrigger(player, npc)
         16589, 13962,    -- Two-Handed Sword
         16412, 29760,    -- Mythril Claws
         16567, 85250,    -- Knight's Sword
-        16644, 48600,    -- Mythril Axe
-        17061,  6256,    -- Mythril Rod
-        17027, 11232,    -- Oak Cudgel
-        17036, 18048,    -- Mythril Mace
-        17044,  6558,    -- Warhammer
-        17098, 37440,    -- Oak Pole
-        16836, 44550,    -- Halberd
-        16774, 10596,    -- Scythe
-        17320,     8,    -- Iron Arrow
+        --16644, 48600,    -- Mythril Axe
+        --17061,  6256,    -- Mythril Rod
+        --17027, 11232,    -- Oak Cudgel
+        --17036, 18048,    -- Mythril Mace
+        --17044,  6558,    -- Warhammer
+        --17098, 37440,    -- Oak Pole
+        --16836, 44550,    -- Halberd
+        --16774, 10596,    -- Scythe
+        --17320,     8,    -- Iron Arrow
     }
 
     player:showText(npc, ID.text.COUMUNA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, JEUNO)
 end
 
 function onEventUpdate(player, csid, option)

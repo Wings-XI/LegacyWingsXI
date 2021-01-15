@@ -17,7 +17,7 @@ function onTrigger(player, npc)
         local stock =
         {
             688, 18,    -- Arrowwood Log
-            698, 87,    -- Ash Log
+            698, 88,    -- Ash Log
             618, 25,    -- Blue Peas
             621, 25,    -- Crying Mustard
         }

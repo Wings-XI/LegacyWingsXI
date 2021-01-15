@@ -18,9 +18,9 @@ function onTrigger(player, npc)
         4746,  1204,    -- Scroll of Deodorize
         5104, 30360,    -- Scroll of Flurry
     }
-
+    -- status 2
     player:showText(npc, ID.text.FALGIMA_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, SELBINA)
 end
 
 function onEventUpdate(player, csid, option)

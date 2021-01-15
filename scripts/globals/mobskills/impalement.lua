@@ -17,7 +17,12 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, 120)
+    if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, 1)
+		return 0
+	end
+	MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 0, 120)
 
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 128, 0, 120)
     local currentHP = target:getHP()
@@ -27,6 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(stab, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
 
     mob:resetEnmity(target)
     return dmg

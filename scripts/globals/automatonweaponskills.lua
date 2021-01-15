@@ -160,14 +160,15 @@ end
 
 function getAutoHitRate(attacker, defender, capHitRate, bonus, melee)
     local acc = (melee and attacker:getACC() or attacker:getRACC()) + (bonus or 0)
+    --attacker:getMaster():PrintToPlayer(attacker:getRACC())
     local eva = defender:getEVA()
 
     local levelbonus = 0
-    if (attacker:getMainLvl() > defender:getMainLvl()) then
+    if attacker:getMainLvl() < defender:getMainLvl() then
         levelbonus = 2 * (attacker:getMainLvl() - defender:getMainLvl())
     end
 
-    local hitrate = acc - eva + levelbonus + 75
+    local hitrate = (acc - eva)/2 + levelbonus + 75
     hitrate = hitrate/100
 
     -- Applying hitrate caps
@@ -181,18 +182,25 @@ end
 function getAutocRatio(attacker, defender, params, ignoredDef, melee)
     local cratio = (melee and attacker:getStat(tpz.mod.ATT) or attacker:getRATT()) * params.atkmulti / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
-    local levelbonus = 0
-    if attacker:getMainLvl() > defender:getMainLvl() then
-        levelbonus = 0.05 * (attacker:getMainLvl() - defender:getMainLvl())
+    local levelcorr = 1.0
+    if attacker:getMainLvl() < defender:getMainLvl() then
+        if melee then
+            levelcorr = 1.0 + (attacker:getMainLvl() - defender:getMainLvl())*0.02
+        else
+            levelcorr = 1.0 + (attacker:getMainLvl() - defender:getMainLvl())*0.01
+        end
     end
+    if levelcorr > 1 then levelcorr = 1
+    elseif levelcorr < 0.2 then levelcorr = 0.2 end
 
-    cratio = cratio + levelbonus
+    cratio = cratio * levelcorr
     cratio = utils.clamp(cratio, 0, melee and 4.0 or 3.0)
 
     local pdif = {}
     local pdifcrit = {}
 
     if melee then
+    --[[
         local pdifmin = 0
         local pdifmax = 1
 
@@ -264,7 +272,28 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = pdifmin * (100 + critbonus) / 100
         pdifcrit[2] = pdifmax * (100 + critbonus) / 100
+        ]]
+        
+        pdifmax = cratio * 1.25
+        pdifmin = pdifmax * 0.675 + 1/6
+        if pdifmax > 2.75 then
+            pdifmax = 2.75
+        end
+        if pdifmin > pdifmax - 0.1 then
+            pdifmin = pdifmax - 0.1
+        end
+        
+        pdif[1] = pdifmin
+        pdif[2] = pdifmax
+        
+        local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
+        critbonus = utils.clamp(critbonus, 0, 100)
+        pdifcrit[1] = (pdifmin + 1) * (100 + critbonus) / 100
+        pdifcrit[2] = (pdifmax + 1) * (100 + critbonus) / 100
+        
+        
     else
+        --[[
         -- max
         local pdifmax = 0
         if cratio < 0.9 then
@@ -296,6 +325,21 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = pdifmin * (100 + critbonus) / 100
         pdifcrit[2] = pdifmax * (100 + critbonus) / 100
+        ]]
+        
+        pdifmax = cratio * 1.25
+        pdifmin = pdifmax * 0.675 + 1/6
+        if pdifmin > pdifmax - 0.1 then
+            pdifmin = pdifmax - 0.1
+        end
+        
+        pdif[1] = pdifmin
+        pdif[2] = pdifmax
+        
+        local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
+        critbonus = utils.clamp(critbonus, 0, 100)
+        pdifcrit[1] = (pdifmin + 1) * (100 + critbonus) / 100
+        pdifcrit[2] = (pdifmax + 1) * (100 + critbonus) / 100
     end
 
     return pdif, pdifcrit

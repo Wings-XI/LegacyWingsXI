@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -153,6 +153,12 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
             ipstring = true;
             break;
         }
+        case MSG_SEND_FL_NOTIF:
+        {
+            const char* query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d LIMIT 1;";
+            ret = Sql_Query(ChatSqlHandle, query, ref<uint32>((int8*)extra->data(), 1));
+            break;
+        }
         case MSG_LOGIN:
         {
             // no op
@@ -160,14 +166,14 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
         }
         default:
         {
-            ShowDebug("Message: unknown type received: %d from %s:%hu\n", static_cast<uint8>(type), from_address, from_port);
+            ShowDebug("Message: unknown type received: %u from %s:%hu\n", static_cast<uint8>(type), from_address, from_port);
             break;
         }
     }
 
     if (ret != SQL_ERROR)
     {
-        ShowDebug("Message: Received message %d from %s:%hu\n", static_cast<uint8>(type), from_address, from_port);
+        ShowDebug("Message: Received message %u from %s:%hu\n", static_cast<uint8>(type), from_address, from_port);
 
         while (Sql_NextRow(ChatSqlHandle) == SQL_SUCCESS)
         {

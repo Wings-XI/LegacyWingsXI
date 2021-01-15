@@ -13,5 +13,8 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:petAttack(target)
+    local petid = player:getPetID()
+    if petid ~= tpz.pet.id.ODIN and petid ~= tpz.pet.id.ALEXANDER and petid ~= tpz.pet.id.ATOMOS then
+        player:petAttack(target)
+    end
 end

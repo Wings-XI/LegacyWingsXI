@@ -18,10 +18,10 @@ function onTrigger(player, npc)
     else
         local stock =
         {
-            636,   119,    -- Chamomile
-            864,    88,    -- Fish Scales
+            636,   117,    -- Chamomile
+            864,    86,    -- Fish Scales
             936,    14,    -- Rock Salt
-            1410, 1656,     -- Sweet William
+            1410, 1620,     -- Sweet William
         }
 
         player:showText(npc, ID.text.AULAVIA_OPEN_DIALOG)

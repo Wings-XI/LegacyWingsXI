@@ -24,10 +24,9 @@ end
 function onUseAbility(player, target, ability)
     local pet = player:getPet()
     if pet then
-        local bonus = 1 + (player:getMerit(tpz.merit.ROLE_REVERSAL)-5)/100
         local playerHP = player:getHP()
         local petHP = pet:getHP()
-        pet:setHP(math.max(playerHP * bonus, 1))
-        player:setHP(math.max(petHP * bonus, 1))
+        pet:setHP(math.max(playerHP, 1))
+        player:setHP(math.max(petHP, 1))
     end
 end

@@ -20,27 +20,41 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     local criticalHit = false
     local pdif = 0
     local finaldmg = 0
+    
+    local testEntity = attacker
+    if not attacker:isPC() and attacker:isPet() and (attacker:getMaster()):isPC() then
+        testEntity = attacker:getMaster()
+    end
+    
+    local hitrate = calcParams.hitRate
+    if calcParams.firstHitRateBonus and calcParams.melee == true and (calcParams.useOAXTimes == nil or calcParams.useOAXTimes == false) then -- jumps do not get this acc bonus
+        hitrate = hitrate + calcParams.firstHitRateBonus/100
+    end
+    if hitrate > 0.99 then
+        hitrate = 0.99
+    elseif hitrate < 0.20 then
+        hitrate = 0.20
+    end
 
     local missChance = math.random()
-
-    if ((missChance <= calcParams.hitRate) -- See if we hit the target
+    --testEntity:PrintToPlayer(string.format("acc was %i",hitrate*100))
+    if ((missChance <= hitrate) -- See if we hit the target
     or calcParams.guaranteedHit
     or (calcParams.melee and math.random() < attacker:getMod(tpz.mod.ZANSHIN)/100))
     and not calcParams.mustMiss then
         if not shadowAbsorb(target) then
             critChance = math.random() -- See if we land a critical hit
-            criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or
-                          calcParams.forcedFirstCrit or calcParams.mightyStrikesApplicable
-            if criticalHit then
+            criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or calcParams.forcedFirstCrit or calcParams.mightyStrikesApplicable
+            if criticalHit == true then
                 calcParams.criticalHit = true
-                calcParams.pdif = generatePdif (calcParams.ccritratio[1], calcParams.ccritratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], true)
             else
-                calcParams.pdif = generatePdif (calcParams.cratio[1], calcParams.cratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], true)
             end
             finaldmg = dmg * calcParams.pdif
 
             -- Duplicate the first hit with an added magical component for hybrid WSes
-            if calcParams.hybridHit then
+            if calcParams.hybridHit == true then
                 -- Calculate magical bonuses and reductions
                 local magicdmg = addBonusesAbility(attacker, wsParams.ele, target, finaldmg, wsParams)
                 magicdmg = magicdmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams.skill, bonusacc)
@@ -49,6 +63,13 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
 
                 finaldmg = finaldmg + magicdmg
             end
+            
+            
+            -- if criticalHit == false then
+                --testEntity:PrintToPlayer(string.format("non-critical WS hit for %i",finaldmg))
+            -- else
+                --testEntity:PrintToPlayer(string.format("CRITICAL WS hit for %i !!",finaldmg))
+            -- end
 
             calcParams.hitsLanded = calcParams.hitsLanded + 1
         else
@@ -188,6 +209,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- We've now accounted for any crit from SA/TA, or damage bonus for a Hybrid WS, so nullify them
     calcParams.forcedFirstCrit = false
     calcParams.hybridHit = false
+    calcParams.firstHitRateBonus = 0
 
     -- For items that apply bonus damage to the first hit of a weaponskill (but not later hits),
     -- store bonus damage for first hit, for use after other calculations are done
@@ -197,7 +219,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     if not wsParams.multiHitfTP then ftp = 1 end -- We'll recalculate our mainhand damage after doing offhand
 
     -- Do the extra hit for our offhand if applicable
-    if calcParams.extraOffhandHit then
+    if calcParams.melee == true and calcParams.extraOffhandHit == true then
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
         hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
         finaldmg = finaldmg + hitdmg
@@ -210,13 +232,25 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     dmg = mainBase * ftp
     local hitsDone = 1
-    local numHits = getMultiAttacks(attacker, target, wsParams.numHits)
+    local offHitsDone = 0
+    local numHits, numOffhandHits = getMultiAttacks(attacker, target, wsParams.numHits, wsParams.useOAXTimes, calcParams.melee)
+    calcParams.useOAXTimes = wsParams.useOAXTimes
+	
     while (hitsDone < numHits) do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
         finaldmg = finaldmg + hitdmg
         hitsDone = hitsDone + 1
     end
     calcParams.extraHitsLanded = calcParams.hitsLanded
+    calcParams.hitsLanded = 0
+    while (offHitsDone < numOffhandHits) do
+        local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
+        finaldmg = finaldmg + hitdmg
+        offHitsDone = offHitsDone + 1
+        --print("offhand while loop")
+    end
+    calcParams.extraHitsLanded = calcParams.extraHitsLanded + calcParams.hitsLanded
 
     -- Apply Souleater bonus
     if calcParams.melee then -- souleaterBonus() checks for the effect inside itself
@@ -243,7 +277,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     -- Determine cratio and ccritratio
     local ignoredDef = 0
-    if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
+    if wsParams.ignoresDef ~= nil and wsParams.ignoresDef == true then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(tpz.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
     end
     local cratio, ccritratio = cMeleeRatio(attacker, target, wsParams, ignoredDef, tp)
@@ -283,6 +317,8 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
+    
+    calcParams.firstHitRateBonus = 50
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -293,19 +329,100 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
     attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
-
+    
+    local hthres = target:getMod(tpz.mod.HTHRES)
+    local pierceres = target:getMod(tpz.mod.PIERCERES)
+    local impactres = target:getMod(tpz.mod.IMPACTRES)
+    local slashres = target:getMod(tpz.mod.SLASHRES)
+    local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
+    
     -- Calculate reductions
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
         if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.HTHRES) / 1000
+            if hthres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+            else
+                finaldmg = finaldmg * hthres / 1000
+            end
         elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
+            if pierceres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
+            else
+                finaldmg = finaldmg * pierceres / 1000
+            end
         elseif (attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.IMPACTRES) / 1000
+            if impactres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
+            else
+                finaldmg = finaldmg * impactres / 1000
+            end
         else
-            finaldmg = finaldmg * target:getMod(tpz.mod.SLASHRES) / 1000
+            if slashres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - slashres / 1000) * (1 - spdefdown/100)))
+            else
+                finaldmg = finaldmg * slashres / 1000
+            end
         end
+    end
+    
+    --[[
+    // Circle Effects
+    if (m_victim->objtype == TYPE_MOB && m_damage > 0)
+    {
+        uint16 circlemult = 0;
+        switch (m_victim->m_EcoSystem)
+        {
+        case SYSTEM_AMORPH:   circlemult = m_attacker->getMod(Mod::AMORPH_CIRCLE); break;
+        case SYSTEM_AQUAN:    circlemult = m_attacker->getMod(Mod::AQUAN_CIRCLE); break;
+        case SYSTEM_ARCANA:   circlemult = m_attacker->getMod(Mod::ARCANA_CIRCLE); break;
+        case SYSTEM_BEAST:    circlemult = m_attacker->getMod(Mod::BEAST_CIRCLE); break;
+        case SYSTEM_BIRD:     circlemult = m_attacker->getMod(Mod::BIRD_CIRCLE); break;
+        case SYSTEM_DEMON:    circlemult = m_attacker->getMod(Mod::DEMON_CIRCLE); break;
+        case SYSTEM_DRAGON:   circlemult = m_attacker->getMod(Mod::DRAGON_CIRCLE); break;
+        case SYSTEM_LIZARD:   circlemult = m_attacker->getMod(Mod::LIZARD_CIRCLE); break;
+        case SYSTEM_LUMINION: circlemult = m_attacker->getMod(Mod::LUMINION_CIRCLE); break;
+        case SYSTEM_LUMORIAN: circlemult = m_attacker->getMod(Mod::LUMORIAN_CIRCLE); break;
+        case SYSTEM_PLANTOID: circlemult = m_attacker->getMod(Mod::PLANTOID_CIRCLE); break;
+        case SYSTEM_UNDEAD:   circlemult = m_attacker->getMod(Mod::UNDEAD_CIRCLE); break;
+        case SYSTEM_VERMIN:   circlemult = m_attacker->getMod(Mod::VERMIN_CIRCLE); break;
+        default: break;
+        }
+        circlemult += 100;
+        m_damage = m_damage * circlemult / 100;
+    }
+    ]]
+    
+    -- Circle Effects
+    if target:isMob() and finaldmg > 0 then
+        local eco = target:getSystem()
+        local circlemult = 100
+        local mod = 0
+        
+        if     eco == 1  then mod = 1226
+        elseif eco == 2  then mod = 1228
+        elseif eco == 3  then mod = 1232
+        elseif eco == 6  then mod = 1230
+        elseif eco == 8  then mod = 1225
+        elseif eco == 9  then mod = 1234
+        elseif eco == 10 then mod = 1233
+        elseif eco == 14 then mod = 1227
+        elseif eco == 16 then mod = 1238
+        elseif eco == 15 then mod = 1237
+        elseif eco == 17 then mod = 1229
+        elseif eco == 19 then mod = 1231
+        elseif eco == 20 then mod = 1224
+        end
+        
+        if mod > 0 then
+            circlemult = 100 + attacker:getMod(mod)
+        end
+        
+        finaldmg = math.floor(finaldmg * circlemult / 100)
+    end
+    
+    if wsParams.useAutoTPFormula == nil or wsParams.useAutoTPFormula == false then
+        finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.0 -- Add server bonus
     end
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
@@ -357,6 +474,12 @@ end
         bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC),
         bonusWSmods = wsParams.bonusWSmods or 0
     }
+	
+    if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) == true then
+        calcParams.accStat = calcParams.accStat + 20
+    end
+    
+    calcParams.firstHitRateBonus = 0
     calcParams.hitRate = getRangedHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -365,11 +488,20 @@ end
 
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(finaldmg)
-    finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
-
-    finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
+    local pierceres = target:getMod(tpz.mod.PIERCERES)
+    local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
+    if pierceres < 1000 then
+        finaldmg = finaldmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
+    else
+        finaldmg = finaldmg * pierceres / 1000
+    end
+	
+    finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.05 -- Add server bonus
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+    attacker:delStatusEffect(tpz.effect.FLASHY_SHOT)
+    attacker:delStatusEffect(tpz.effect.STEALTH_SHOT)
+	
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -507,12 +639,22 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         action:reaction(defender:getID(), tpz.reaction.EVADE)
     end
     local targetTPMult = wsParams.targetTPMult or 1
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
+    local useAutoTPFormula = wsParams.useAutoTPFormula or false
+    local passedBonusTP = wsResults.extraHitsLanded * 10 + wsResults.bonusTP
+    if useAutoTPFormula ~= nil and useAutoTPFormula == true then
+        passedBonusTP = wsResults.extraHitsLanded
+    end
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, passedBonusTP, targetTPMult, useAutoTPFormula)
     local enmityEntity = wsResults.taChar or attacker
     if (wsParams.overrideCE and wsParams.overrideVE) then
         defender:addEnmity(enmityEntity, wsParams.overrideCE, wsParams.overrideVE)
     else
         local enmityMult = wsParams.enmityMult or 1
+        if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) and not wsResults.melee then
+            enmityMult = enmityMult * 1.4
+        elseif attacker:hasStatusEffect(tpz.effect.STEALTH_SHOT) and not wsResults.melee then
+            enmityMult = enmityMult * (1 - attacker:getMerit(tpz.merit.STEALTH_SHOT)/100)
+        end
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
@@ -564,8 +706,8 @@ function accVariesWithTP(hitrate, acc, tp, a1, a2, a3)
     acclost = acc - (acc*accpct)
     hrate = hitrate - (0.005*acclost)
     -- cap it
-    if (hrate>0.95) then
-        hrate = 0.95
+    if (hrate>0.99) then
+        hrate = 0.99
     end
     if (hrate<0.2) then
         hrate = 0.2
@@ -581,11 +723,12 @@ function getMeleeDmg(attacker, weaponType, kick)
     if weaponType == tpz.skill.HAND_TO_HAND or weaponType == tpz.skill.NONE then
         local h2hSkill = attacker:getSkillLevel(1) * 0.11 + 3
 
-        if kick and attacker:hasStatusEffect(tpz.effect.FOOTWORK) then
-            mainhandDamage = attacker:getMod(tpz.mod.KICK_DMG) -- Use Kick damage if footwork is on
+        if kick == true and attacker:hasStatusEffect(tpz.effect.FOOTWORK) then
+            mainhandDamage = 18 + attacker:getMod(tpz.mod.KICK_DMG) -- Use Kick damage if footwork is on
         end
 
         mainhandDamage = mainhandDamage + h2hSkill
+        mainhandDamage = math.floor(mainhandDamage * 1.23)
         offhandDamage = mainhandDamage
     end
 
@@ -617,11 +760,21 @@ function getHitRate(attacker, target, capHitRate, bonus)
 
     acc = acc + bonus
 
-    if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
-    elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
+    local lvldiff = attacker:getMainLvl() - target:getMainLvl()
+    if lvldiff > 8 then
+        lvldiff = 8 + (lvldiff - 8)/3
     end
+    if lvldiff < -8 then
+        lvldiff = -8 + (lvldiff + 8)/3
+    end
+    
+    acc = acc + lvldiff*4
+    
+    --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
+        --acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
+    --elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
+        --acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
+    --end
 
     local hitdiff = 0
     local hitrate = 75
@@ -633,9 +786,23 @@ function getHitRate(attacker, target, capHitRate, bonus)
     end
 
     hitrate = hitrate+hitdiff
+    
+    --[[
+    local firstBonus = 0
+    if hitrate < 95 then -- 35% bonus at 75% below this threshhold
+        firstBonus = (95 - hitrate)*30/75
+    end
+    if hitrate < 20 then
+        firstBonus = firstBonus + hitrate - 20
+    end
+    if firstBonus < 0 then
+        firstBonus = 0
+    end
+    ]]
+    
     hitrate = hitrate/100
-
-
+    --firstBonus = firstBonus/100
+    
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
         if (hitrate>0.95) then
@@ -663,12 +830,22 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
     end
 
     acc = acc + bonus
-
-    if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
-    elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
+    
+    local lvldiff = attacker:getMainLvl() - target:getMainLvl()
+    if lvldiff > 6 then
+        lvldiff = 6 + (lvldiff - 8)/3
     end
+    if lvldiff < -6 then
+        lvldiff = -6 + (lvldiff + 8)/3
+    end
+    
+    acc = acc + lvldiff*4
+
+    --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
+        --acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
+    --elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
+        --acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
+    --end
 
     local hitdiff = 0
     local hitrate = 75
@@ -680,7 +857,20 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
     end
 
     hitrate = hitrate+hitdiff
+    --[[
+    local firstBonus = 0
+    if hitrate < 95 then -- 35% bonus at 75% below this threshhold
+        firstBonus = (95 - hitrate)*30/75
+    end
+    if hitrate < 20 then
+        firstBonus = firstBonus + hitrate - 20
+    end
+    if firstBonus < 0 then
+        firstBonus = 0
+    end
+    ]]
     hitrate = hitrate/100
+    --firstBonus = firstBonus/100
 
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
@@ -695,6 +885,9 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
 end
 
 function fTP(tp, ftp1, ftp2, ftp3)
+    if (tp < 1000) then
+        tp = 1000
+    end
     if (tp >= 1000 and tp < 2000) then
         return ftp1 + ( ((ftp2-ftp1)/1000) * (tp-1000))
     elseif (tp >= 2000 and tp <= 3000) then
@@ -724,11 +917,20 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     end
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
-    cratio = utils.clamp(cratio, 0, 2.25)
+    --attacker:PrintToPlayer(string.format("att post wsmod: %i ... def post ignoreddef: %i",attacker:getStat(tpz.mod.ATT) * atkmulti,defender:getStat(tpz.mod.DEF) - ignoredDef))
+    local levelcor = 1 + (attacker:getMainLvl() - defender:getMainLvl())*0.02
+    if levelcor > 1 then levelcor = 1
+    elseif levelcor < 0.2 then levelcor = 0.2 end
+    cratio = cratio * levelcor
+    --cratio = utils.clamp(cratio, 0, 2.25)
+    cratio = utils.clamp(cratio, 0, 4.0)
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:delMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
-    local levelcor = 0
+    --local levelcor = 0
+    local pdifmin = 0
+    local pdifmax = 0
+    --[[
     if attacker:getMainLvl() < defender:getMainLvl() then
         levelcor = 0.05 * (defender:getMainLvl() - attacker:getMainLvl())
     end
@@ -738,8 +940,6 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     if cratio < 0 then
         cratio = 0
     end
-    local pdifmin = 0
-    local pdifmax = 0
 
     -- max
 
@@ -758,8 +958,8 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     end
     -- min
 
-    if cratio < 0.38 then
-        pdifmin = 0
+    if cratio < 0.5 then
+        pdifmin = 0.1367
     elseif (cratio < 1.25) then
         pdifmin = cratio * 1176 / 1024 - 448 / 1024
     elseif cratio < 1.51 then
@@ -769,17 +969,35 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     else
         pdifmin = cratio - 0.375
     end
-
+    ]]
+    
+    
+    pdifmax = cratio * 1.25
+	if pdifmax < 0.15 then
+		pdifmax = 0.15
+	end
+	
+    pdifmin = pdifmax * 0.675 + 1/6
+    if pdifmax > 2.75 then
+        pdifmax = 2.75
+    end
+    if pdifmin > pdifmax - 0.1 then
+        pdifmin = pdifmax - 0.1
+    end
+    
+    
+    
     local pdif = {}
     pdif[1] = pdifmin
     pdif[2] = pdifmax
+    
+    --attacker:PrintToPlayer(string.format("ratio: %f min: %f max %f and level correction was %f", cratio, pdifmin, pdifmax, levelcor))
 
     local pdifcrit = {}
     cratio = cratio + 1
-    cratio = utils.clamp(cratio, 0, 3)
-
-    -- printf("ratio: %f min: %f max %f\n", cratio, pdifmin, pdifmax)
-
+    --cratio = utils.clamp(cratio, 0, 3)
+    cratio = utils.clamp(cratio, 0, 4)
+    --[[
     if cratio < 0.5 then
         pdifmax = cratio + 0.5
     elseif cratio < 0.7 then
@@ -806,6 +1024,21 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     else
         pdifmin = cratio - 0.375
     end
+    ]]
+    
+    pdifmax = cratio * 1.25
+	if pdifmax < 0.15 then
+		pdifmax = 0.15
+	end
+	
+    pdifmin = pdifmax * 0.675 + 1/6
+    if pdifmax > 2.75 then
+        pdifmax = 2.75
+    end
+    if pdifmin > pdifmax - 0.1 then
+        pdifmin = pdifmax - 0.1
+    end
+    
 
     local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
     critbonus = utils.clamp(critbonus, 0, 100)
@@ -816,27 +1049,34 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
 end
 
 function cRangedRatio(attacker, defender, params, ignoredDef, tp)
-
+    
+    local range = attacker:checkDistance(defender)
+    
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local cratio = attacker:getRATT() / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local cratio = attacker:getRATT(range) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
-    local levelcor = 0
-    if (attacker:getMainLvl() < defender:getMainLvl()) then
-        levelcor = 0.025 * (defender:getMainLvl() - attacker:getMainLvl())
+    local levelcor = 1 + (attacker:getMainLvl() - defender:getMainLvl())*0.01
+    if levelcor > 1 then levelcor = 1
+    elseif levelcor < 0.2 then levelcor = 0.2 end
+    if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
+        levelcor = 1.03
     end
-
-    cratio = cratio - levelcor
+    cratio = cratio * levelcor
 
     cratio = cratio * atkmulti
 
-    if (cratio > 3 - levelcor) then
-        cratio = 3 - levelcor
+    if (cratio > 3) then
+        cratio = 3
     end
 
     if (cratio < 0) then
         cratio = 0
     end
-
+    
+    local pdifmin = 0
+    local pdifmax = 0
+    
+    --[[
     -- max
     local pdifmax = 0
     if (cratio < 0.9) then
@@ -856,7 +1096,18 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp)
     else
         pdifmin = (cratio * (20/19))-(3/19)
     end
-
+    ]]
+    
+    pdifmax = cratio * 1.25
+	if pdifmax < 0.15 then
+		pdifmax = 0.15
+	end
+	
+    pdifmin = pdifmax * 0.675 + 1/6
+    if pdifmin > pdifmax - 0.1 then
+        pdifmin = pdifmax - 0.1
+    end
+    
     pdif = {}
     pdif[1] = pdifmin
     pdif[2] = pdifmax
@@ -987,7 +1238,7 @@ function getAlpha(level)
     return alpha
 end
 
-function getMultiAttacks(attacker, target, numHits)
+function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
     local bonusHits = 0
     local multiChances = 1
     local doubleRate = (attacker:getMod(tpz.mod.DOUBLE_ATTACK) + attacker:getMerit(tpz.merit.DOUBLE_ATTACK_RATE))/100
@@ -995,15 +1246,30 @@ function getMultiAttacks(attacker, target, numHits)
     local quadRate = attacker:getMod(tpz.mod.QUAD_ATTACK)/100
     local oaThriceRate = attacker:getMod(tpz.mod.MYTHIC_OCC_ATT_THRICE)/100
     local oaTwiceRate = attacker:getMod(tpz.mod.MYTHIC_OCC_ATT_TWICE)/100
+    local offHandHits = 0
+    
+    --doubleRate = 1
 
     -- Add Ambush Augments to Triple Attack
-    if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then -- TRAIT_AMBUSH
-        tripleRate = tripleRate + attacker:getMerit(tpz.merit.AMBUSH) / 3 -- Value of Ambush is 3 per mert, augment gives +1 Triple Attack per merit
-    end
-
+    --if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then -- TRAIT_AMBUSH
+        --tripleRate = tripleRate + attacker:getMerit(tpz.merit.AMBUSH) / 3 -- Value of Ambush is 3 per mert, augment gives +1 Triple Attack per merit
+    --end
+    -- this is lv90 item onry
+    
     -- QA/TA/DA can only proc on the first hit of each weapon or each fist
     if (attacker:getOffhandDmg() > 0 or attacker:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.HAND_TO_HAND) then
         multiChances = 2
+    end
+    
+    if melee == false then
+        bonusHits = 0
+        multiChances = 0
+        doubleRate = 0
+        tripleRate = 0
+        quadRate = 0
+        oaThriceRate = 0
+        oaTwiceRate = 0
+        offHandHits = 0
     end
 
     for i = 1, multiChances, 1 do
@@ -1028,11 +1294,27 @@ function getMultiAttacks(attacker, target, numHits)
             quadRate = attacker:getMod(tpz.mod.QUAD_ATTACK)/100
         end
     end
-
-    if ((numHits + bonusHits ) > 8) then
-        return 8
+    
+    -- for Jump, now check multihit weapons if we have no bonushits
+    if attacker:isPC() and useOAXTimes ~= nil and useOAXTimes == true and bonusHits == 0 then
+        local mhandOAX = attacker:getOAXTimes(0)
+        local offhandOAX = attacker:getOAXTimes(1)
+        
+        if mhandOAX > 0 then
+            bonusHits = bonusHits + mhandOAX - 1
+        end
+        if offhandOAX > 0 then
+            offHandHits = offhandOAX - 1
+        end
     end
-    return numHits + bonusHits
+    
+    local ret1 = numHits + bonusHits
+    
+    if (ret1 > 8) then
+        ret1 = 8
+    end
+    
+    return ret1, offHandHits
 end
 
 function generatePdif (cratiomin, cratiomax, melee)
@@ -1108,7 +1390,7 @@ function handleWSGorgetBelt(attacker)
         local belt = attacker:getEquipID(tpz.slot.WAIST)
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
 
-        for i, v in ipairs(elementalGorget) do
+        for i,v in ipairs(elementalGorget) do
             if (neck == v) then
                 if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
                     accBonus = accBonus + 10

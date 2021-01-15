@@ -17,7 +17,12 @@ end
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.SIMURGH)
-    GetMobByID(ID.mob.SIMURGH):setRespawnTime(math.random(900, 7200))
+	local simre = GetServerVariable("SimurghRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.SIMURGH):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.SIMURGH)
+	end
 end
 
 function onZoneIn(player, prevZone)

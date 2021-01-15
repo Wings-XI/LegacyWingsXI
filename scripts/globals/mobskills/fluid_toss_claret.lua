@@ -28,6 +28,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     -- Apply poison if it hits
     MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.POISON, 100, 3, math.random(3, 6) * 3)  -- 3-6 ticks
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
 
     return dmg
 end

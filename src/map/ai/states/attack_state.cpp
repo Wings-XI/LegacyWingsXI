@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -43,6 +43,12 @@ CAttackState::CAttackState(CBattleEntity* PEntity, uint16 targid) :
     {
         PEntity->PAI->PathFind->Clear();
     }
+    if (PEntity->objtype == TYPE_PC && m_PEntity->PAI->getTick() - ((CCharEntity*)PEntity)->m_LastAttackTime < std::chrono::milliseconds(PEntity->GetWeaponDelay(false)))
+    {
+        m_attackTime = std::chrono::milliseconds(PEntity->GetWeaponDelay(false)) - (m_PEntity->PAI->getTick() - ((CCharEntity*)PEntity)->m_LastAttackTime);
+        if (m_attackTime < 1600ms)
+            m_attackTime = 1600ms;
+    }
 }
 
 bool CAttackState::Update(time_point tick)
@@ -50,7 +56,18 @@ bool CAttackState::Update(time_point tick)
     auto PTarget = static_cast<CBattleEntity*>(GetTarget());
     if (!PTarget || PTarget->isDead())
     {
+        if (m_PEntity->objtype == TYPE_PC)
+        {
+            m_attackTime -= (m_PEntity->PAI->getTick() - m_PEntity->PAI->getPrevTick());
+            ((CCharEntity*)m_PEntity)->m_LastAttackTime = m_PEntity->PAI->getTick() - std::chrono::milliseconds(m_PEntity->GetWeaponDelay(false)) + m_attackTime;
+        }
         return true;
+    }
+    if (m_PEntity->GetBattleTargetID() == 0 && m_PEntity->objtype == TYPE_PC)
+    {
+        m_attackTime -= (m_PEntity->PAI->getTick() - m_PEntity->PAI->getPrevTick());
+        ((CCharEntity*)m_PEntity)->m_LastAttackTime = m_PEntity->PAI->getTick() - std::chrono::milliseconds(m_PEntity->GetWeaponDelay(false)) + m_attackTime; // save our attack timer so we can re-engage immediately
+        return true; // exit state
     }
     if (AttackReady())
     {

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -270,6 +270,7 @@ int main (int argc, char **argv)
 	}
 
     do_final(EXIT_SUCCESS);
+    log_final();
 	return 0;
 }
 #endif

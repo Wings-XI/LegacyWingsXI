@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -108,12 +108,19 @@ uint8 CAutomatonEntity::getElementCapacity(uint8 element)
 
 void CAutomatonEntity::burdenTick()
 {
+    if (this->getMod(Mod::BURDEN_DECAY_IGNORE_CHANCE) && tpzrand::GetRandomNumber(0, 100) < this->getMod(Mod::BURDEN_DECAY_IGNORE_CHANCE))
+        return;
+    bool fire = true;
     for (auto&& burden : m_Burden)
     {
         if (burden > 0)
         {
-            burden -= std::clamp<uint8>(1 + PMaster->getMod(Mod::BURDEN_DECAY) + this->getMod(Mod::BURDEN_DECAY), 1, burden);
+            int16 firebonus = 0;
+            if (fire)
+                firebonus = this->getMod(Mod::FIRE_BURDEN_DECAY);
+            burden -= std::clamp<uint8>(1 + firebonus + PMaster->getMod(Mod::BURDEN_DECAY) + this->getMod(Mod::BURDEN_DECAY), 1, burden);
         }
+        fire = false;
     }
 }
 
@@ -124,6 +131,9 @@ void CAutomatonEntity::setInitialBurden()
 
 uint8 CAutomatonEntity::addBurden(uint8 element, int8 burden)
 {
+    if (!element) // fire
+        burden = (int8)((int16)burden * (100 + this->getMod(Mod::FIRE_BURDEN_PERC_EXTRA)) / 100);
+
     // Handle Kenkonken Suppress Overload
     if (PMaster->getMod(Mod::SUPPRESS_OVERLOAD) > 0)
     {

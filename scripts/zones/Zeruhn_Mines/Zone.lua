@@ -33,6 +33,12 @@ function onZoneIn(player, prevZone)
     elseif player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-270.707, 14.159, -20.268, 0)
     end
+	
+	-- temporary until zeruhn NPCids are fixed
+	if cs == 150 then
+		cs = -1
+		player:setPos(-74.453,0.042,60.180,0)
+	end
 
     return cs
 end

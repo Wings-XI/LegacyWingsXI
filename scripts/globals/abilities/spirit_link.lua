@@ -68,8 +68,8 @@ function onUseAbility(player, target, ability)
 
     local pet = player:getPet()
     local healPet = drainamount * 2
-    local petTP = pet:getTP()
-    local regenAmount = player:getMainLvl()/3 -- level/3 tic regen
+    --local petTP = pet:getTP()
+    --local regenAmount = player:getMainLvl()/3
 
     if (player:getEquipID(tpz.slot.HEAD)==15238) then
         healPet = healPet + 15
@@ -120,7 +120,7 @@ function onUseAbility(player, target, ability)
     end
 
     pet:addHP(healPet) --add the hp to pet
-    pet:addStatusEffect(tpz.effect.REGEN, regenAmount, 3, 90, 0, 0, 0) -- 90 seconds of regen
-    player:addTP(petTP/2) --add half pet tp to you
-    pet:delTP(petTP/2) -- remove half tp from pet
+    --pet:addStatusEffect(tpz.effect.REGEN,regenAmount,3,90,0,0,0) -- 90 seconds of regen
+    -- player:addTP(petTP/2) --add half pet tp to you
+    -- pet:delTP(petTP/2) -- remove half tp from pet
 end

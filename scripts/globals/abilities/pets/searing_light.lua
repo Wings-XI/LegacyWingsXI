@@ -19,15 +19,23 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, master)
+    local eco = target:getSystem()
+    local ele = tpz.damageType.LIGHT
+    local coe = getAvatarEcosystemCoefficient(eco, ele)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
 
     local level = pet:getMainLvl()
-    local damage = 26 + (level * 6)
+    local damage = (26 + (level * 6))*coe
     damage = damage + (dINT * 1.5)
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.LIGHT, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.LIGHT)
     damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHT, 1)
 
+    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.LIGHT - 5, target)
+    if (skillchainTier > 0) then
+        skill:setMsg(747)
+    end
+    
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     target:updateEnmityFromDamage(pet, damage)
     master:setMP(0)

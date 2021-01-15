@@ -149,7 +149,8 @@ bool CItemState::Update(time_point tick)
 
         if (!m_interrupted)
         {
-            FinishItem(action);
+            m_PEntity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
+			FinishItem(action);
         }
         m_PEntity->PAI->EventHandler.triggerListener("ITEM_USE", m_PEntity, m_PItem, &action);
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));

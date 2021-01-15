@@ -69,6 +69,8 @@ set(SOURCES
     packet_system.h
     party.cpp
     party.h
+	pruned_session.cpp
+	pruned_session.h
     recast_container.cpp
     recast_container.h
     region.cpp

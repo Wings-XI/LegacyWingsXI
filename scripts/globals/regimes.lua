@@ -1116,7 +1116,9 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     local zoneId = player:getZoneID()
     local msgOffset = zones[zoneId].text.REGIME_REGISTERED
     local tabs = player:getCurrency("valor_point")
-    local regimeRepeat = bit.band(option, 0x80000000)
+    -- repeating regimes OOE for 2010
+    -- local regimeRepeat = bit.band(option, 0x80000000)
+    local regimeRepeat = 0
     local hasKI  = player:hasKeyItem(tpz.ki.RHAPSODY_IN_WHITE)
 
     option = bit.band(option, 0x7FFFFFFF)
@@ -1255,6 +1257,11 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     -- select a training regime
     elseif opt.page then
         local page = getPageByNum(regimeType, zoneId, opt.page)
+		
+		if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+			player:messageBasic(tpz.msg.basic.WAIT_LONGER)
+			return
+		end
 
         if page then
             if regimeRepeat ~= 0 then
@@ -1265,6 +1272,7 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
             player:setCharVar("[regime]zone", zoneId)
             player:setCharVar("[regime]id", page[8])
             player:setCharVar("[regime]repeat", regimeRepeat)
+			player:setCharVar("[regime]day", VanadielDayAbsolute())
 
             for i = 1, 4 do
                 player:setCharVar("[regime]killed" .. i, 0)

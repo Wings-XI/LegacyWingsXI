@@ -6,6 +6,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
+require("scripts/globals/summon")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -13,8 +14,9 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, master)
-    local power = master:getMP() / master:getMaxMP()
+    local power = (master:getMP() / master:getMaxMP())*.8 + getSummoningSkillOverCap(pet)*.004 -- cap at 80% but increase 0.4% per summoning skill over cap
     master:setMP(0)
+    master:delStatusEffect(tpz.effect.ASTRAL_FLOW)
 
     if (target:isNM()) then
         local dmg = 0.1 * target:getHP() + 0.1 * target:getHP() * power
@@ -28,8 +30,19 @@ function onPetAbility(target, pet, skill, master)
         target:updateEnmityFromDamage(pet, dmg)
         return dmg
     else
-        local chance = (100 * power) / skill:getTotalTargets()
-        if math.random(0, 99) < chance and target:getAnimation() ~= 33 then
+        local chance = power / skill:getTotalTargets()
+        if target:getHP() / target:getMaxHP() < 0.5 then
+            chance = chance + 0.2
+        end
+        local leveldiff = pet:getMainLvl() - target:getMainLvl()
+        if leveldiff < -3 then
+            leveldiff = -3
+        end
+        if leveldiff > 20 then
+            leveldiff = 20
+        end
+        chance = chance + leveldiff/100
+        if math.random() < chance and target:getAnimation() ~= 33 then
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
             target:takeDamage(target:getHP(), pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
             return tpz.effect.KO

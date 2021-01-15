@@ -37,6 +37,17 @@ function onUseAbility(player, target, ability)
     player:updateEnmityFromCure(target, heal)
     target:addHP(heal)
     target:wakeUp()
+    
+    if player:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) then
+        local level = player:getMainLvl()
+        local solace = player:getLocalVar("SolaceCureRecording")
+        local newsolace = heal+solace
+        if newsolace > level*22 then
+            newsolace = level*22
+        end
+        player:setLocalVar("SolaceCureRecording",newsolace)
+        --print(string.format("player solace was %u new solace is %u",solace,newsolace))
+    end
 
     return heal
 end

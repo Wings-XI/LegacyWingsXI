@@ -33,6 +33,8 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
+    m_id = 3;
+
     auto PTarget = m_PEntity->IsValidTarget(m_targid, TARGET_ENEMY, m_errorMsg);
 
     if (!PTarget || m_errorMsg)
@@ -40,7 +42,7 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
         throw CStateInitException(std::move(m_errorMsg));
     }
 
-    if (!CanUseRangedAttack(PTarget))
+    if (!CanUseRangedAttack(PTarget,25))
     {
         throw CStateInitException(std::move(m_errorMsg));
     }
@@ -56,8 +58,8 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
             auto chance {PChar->getMod(Mod::RAPID_SHOT) + PChar->PMeritPoints->GetMeritValue(MERIT_RAPID_SHOT_RATE, PChar)};
             if (tpzrand::GetRandomNumber(100) < chance)
             {
-                // reduce delay by 10%-50%
-                delay = (int16)(delay * (10 - tpzrand::GetRandomNumber(1, 6)) / 10.f);
+                //reduce delay by 2%-50%
+                delay = (int16)((float)delay * tpzrand::GetRandomNumber(0.50f, 0.98f));
                 m_rapidShot = true;
             }
         }
@@ -79,6 +81,9 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
     m_PEntity->PAI->EventHandler.triggerListener("RANGE_START", m_PEntity, &action);
 
     m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
+
+    m_lastCancelCheck = server_clock::now();
+    m_cancelEarly = false;
 }
 
 void CRangeState::SpendCost()
@@ -96,7 +101,14 @@ bool CRangeState::Update(time_point tick)
     {
         auto PTarget = m_PEntity->IsValidTarget(m_targid, TARGET_ENEMY, m_errorMsg);
 
-        CanUseRangedAttack(PTarget);
+        uint8 range = 25;
+
+        if (tick > GetEntryTime()) // after checking for the initial time, the mob can move further away and not cancel our RA
+        {
+            range = 40;
+        }
+
+        CanUseRangedAttack(PTarget, range);
         if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.y != m_PEntity->loc.p.y)
         {
             m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_MOVE_AND_INTERRUPT);
@@ -130,10 +142,47 @@ bool CRangeState::Update(time_point tick)
         }
         Complete();
     }
-
-    if (IsCompleted() && tick > GetEntryTime() + m_aimTime + 1.5s)
+    else if (!IsCompleted() && tick > m_lastCancelCheck + 200ms)
     {
-        return true;
+        auto PTarget = m_PEntity->IsValidTarget(m_targid, TARGET_ENEMY, m_errorMsg);
+        uint8 range = 40;
+        m_lastCancelCheck = tick;
+
+        CanUseRangedAttack(PTarget, range);
+        if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.y != m_PEntity->loc.p.y)
+        {
+            m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_MOVE_AND_INTERRUPT);
+        }
+        auto cast_errorMsg = dynamic_cast<CMessageBasicPacket*>(m_errorMsg.get());
+        if (m_errorMsg && (!cast_errorMsg || cast_errorMsg->getMessageID() != MSGBASIC_CANNOT_SEE))
+        {
+            m_cancelEarly = true;
+            action_t action;
+            action.id = m_PEntity->id;
+            action.actiontype = ACTION_RANGED_INTERRUPT;
+
+            actionList_t& actionList = action.getNewActionList();
+            actionList.ActionTargetID = PTarget ? PTarget->id : m_PEntity->id;
+
+            actionTarget_t& actionTarget = actionList.getNewActionTarget();
+            actionTarget.animation = ANIMATION_RANGED;
+            if (auto PChar = dynamic_cast<CCharEntity*>(m_PEntity))
+            {
+                PChar->pushPacket(m_errorMsg.release());
+            }
+            m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
+
+            Complete();
+        }
+    }
+
+    if (IsCompleted())
+    {
+        //auto cast_errorMsg = dynamic_cast<CMessageBasicPacket*>(m_errorMsg.get());
+        if (m_cancelEarly)
+            return true;
+        else if (tick > GetEntryTime() + m_aimTime + 1.5s)
+            return true;
     }
     return false;
 }
@@ -143,9 +192,14 @@ void CRangeState::Cleanup(time_point tick)
 
 }
 
-bool CRangeState::CanUseRangedAttack(CBattleEntity* PTarget)
+bool CRangeState::CanUseRangedAttack(CBattleEntity* PTarget, uint8 range)
 {
     if (!PTarget)
+    {
+        m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_CANNOT_ATTACK_TARGET);
+        return false;
+    }
+    if (PTarget->IsNameHidden())
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_CANNOT_ATTACK_TARGET);
         return false;
@@ -189,13 +243,19 @@ bool CRangeState::CanUseRangedAttack(CBattleEntity* PTarget)
             }
         }
     }
+    uint8 anim = m_PEntity->animation;
+    if (anim != ANIMATION_NONE && anim != ANIMATION_ATTACK)
+    {
+        m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, 0, 0, MSGBASIC_CANNOT_PERFORM_ACTION);
+        return false;
+    }
 
     if (!facing(m_PEntity->loc.p, PTarget->loc.p, 64))
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, 0, 0, MSGBASIC_CANNOT_SEE);
         return false;
     }
-    if (distance(m_PEntity->loc.p, PTarget->loc.p) > 25)
+    if (distance(m_PEntity->loc.p, PTarget->loc.p) > range)
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, 0, 0, MSGBASIC_TOO_FAR_AWAY);
         return false;

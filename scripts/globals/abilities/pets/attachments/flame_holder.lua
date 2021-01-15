@@ -20,6 +20,7 @@ local validskills = {
 }
 
 function onEquip(pet)
+    pet:addMod(tpz.mod.FIRE_BURDEN_PERC_EXTRA, 50)
     pet:addListener("WEAPONSKILL_STATE_ENTER", "AUTO_FLAME_HOLDER_START", function(pet, skill)
         if not validskills[skill] then return end
         local master = pet:getMaster()
@@ -54,6 +55,7 @@ function onEquip(pet)
 end
 
 function onUnequip(pet)
+    pet:delMod(tpz.mod.FIRE_BURDEN_PERC_EXTRA, 50)
     pet:removeListener("AUTO_FLAME_HOLDER_START")
     pet:removeListener("AUTO_FLAME_HOLDER_END")
 end

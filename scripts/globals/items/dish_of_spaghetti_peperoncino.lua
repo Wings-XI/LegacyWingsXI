@@ -30,7 +30,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.FOOD_HP_CAP, 70)
     target:addMod(tpz.mod.VIT, 2)
     target:addMod(tpz.mod.STORETP, 6)
-    target:addMod(tpz.mod.VIRUSRES, 10)
+    target:addMod(tpz.mod.VIRUSRESTRAIT, 10)
 end
 
 function onEffectLose(target, effect)
@@ -38,5 +38,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.FOOD_HP_CAP, 70)
     target:delMod(tpz.mod.VIT, 2)
     target:delMod(tpz.mod.STORETP, 6)
-    target:delMod(tpz.mod.VIRUSRES, 10)
+    target:delMod(tpz.mod.VIRUSRESTRAIT, 10)
 end

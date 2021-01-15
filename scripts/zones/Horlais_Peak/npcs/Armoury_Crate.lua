@@ -334,10 +334,6 @@ local loot =
             {itemid = 1601, droprate = 1000}, -- Mannequin Head
         },
         {
-            {itemid = 0, droprate = 636},    -- Nothing
-            {itemid = 12486, droprate = 364}, -- Emperor Hairpin
-        },
-        {
             {itemid = 12400, droprate = 175}, -- Ashigaru Targe
             {itemid = 12399, droprate = 175}, -- Beaters Aspis
             {itemid = 12395, droprate = 175}, -- Varlets Targe
@@ -482,7 +478,6 @@ local loot =
     {
         {
             {itemid = 0, droprate = 910},    -- Nothing
-            {itemid = 13056, droprate = 90}, -- Peacock Charm
         },
         {
             {itemid = 0, droprate = 467},    -- Nothing

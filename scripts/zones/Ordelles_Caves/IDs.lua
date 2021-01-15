@@ -60,7 +60,6 @@ zones[tpz.zone.ORDELLES_CAVES] =
         DARK_PUPPET_OFFSET  = 17568135,
         NECROPLASM          = 17568138,
         APPARATUS_ELEMENTAL = 17568139,
-        AROMA_LEECH         = 17568140,
     },
     npc =
     {

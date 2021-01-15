@@ -27,13 +27,13 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.MND, 10)
     target:addMod(tpz.mod.CHR, -5)
-    target:addMod(tpz.mod.POISONRES, 4)
-    target:addMod(tpz.mod.BLINDRES, 4)
+    target:addMod(tpz.mod.POISONRESTRAIT, 4)
+    target:addMod(tpz.mod.BLINDRESTRAIT, 4)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.MND, 10)
     target:delMod(tpz.mod.CHR, -5)
-    target:delMod(tpz.mod.POISONRES, 4)
-    target:delMod(tpz.mod.BLINDRES, 4)
+    target:delMod(tpz.mod.POISONRESTRAIT, 4)
+    target:delMod(tpz.mod.BLINDRESTRAIT, 4)
 end

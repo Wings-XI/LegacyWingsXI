@@ -5,11 +5,11 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onEquip(pet)
-    pet:addMod(tpz.mod.SNAP_SHOT, 3)
+    pet:addMod(tpz.mod.RACC, -60)
 end
 
 function onUnequip(pet)
-    pet:delMod(tpz.mod.SNAP_SHOT, 3)
+    pet:delMod(tpz.mod.RACC, -60)
 end
 
 function onManeuverGain(pet, maneuvers)
@@ -18,7 +18,7 @@ function onManeuverGain(pet, maneuvers)
     elseif maneuvers == 2 then
         pet:addMod(tpz.mod.SNAP_SHOT, 3)
     elseif maneuvers == 3 then
-        pet:addMod(tpz.mod.SNAP_SHOT, 6)
+        pet:addMod(tpz.mod.SNAP_SHOT, 2)
     end
 end
 
@@ -28,6 +28,6 @@ function onManeuverLose(pet, maneuvers)
     elseif maneuvers == 2 then
         pet:delMod(tpz.mod.SNAP_SHOT, 3)
     elseif maneuvers == 3 then
-        pet:delMod(tpz.mod.SNAP_SHOT, 6)
+        pet:delMod(tpz.mod.SNAP_SHOT, 2)
     end
 end

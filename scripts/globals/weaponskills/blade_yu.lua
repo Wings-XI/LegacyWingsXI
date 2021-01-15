@@ -36,6 +36,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, tpz.magic.ele.WATER, 0)
         target:addStatusEffect(tpz.effect.POISON, 10, 0, duration)
     end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.KATANA, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 
 end

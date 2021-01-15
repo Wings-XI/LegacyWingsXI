@@ -42,7 +42,7 @@ function onEffectGain(target, effect)
     target:addMod(tpz.mod.FOOD_RATTP, 23)
     target:addMod(tpz.mod.FOOD_RATT_CAP, 150)
     target:addMod(tpz.mod.DEMON_KILLER, 4)
-    target:addMod(tpz.mod.SLEEPRES, 3)
+    target:addMod(tpz.mod.SLEEPRESTRAIT, 3)
 end
 
 function onEffectLose(target, effect)
@@ -57,5 +57,5 @@ function onEffectLose(target, effect)
     target:delMod(tpz.mod.FOOD_RATTP, 23)
     target:delMod(tpz.mod.FOOD_RATT_CAP, 150)
     target:delMod(tpz.mod.DEMON_KILLER, 4)
-    target:delMod(tpz.mod.SLEEPRES, 3)
+    target:delMod(tpz.mod.SLEEPRESTRAIT, 3)
 end

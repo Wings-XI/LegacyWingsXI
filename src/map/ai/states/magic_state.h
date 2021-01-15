@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -64,6 +64,7 @@ protected:
     std::unique_ptr<CSpell> m_PSpell;
     duration m_castTime;
     position_t m_startPos;
+    time_point m_lastCancelCheck;
     bool m_interrupted {false};
     bool m_instantCast {false};
     uint8 m_flags {0};

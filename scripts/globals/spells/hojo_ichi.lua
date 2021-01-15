@@ -22,11 +22,13 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
-    duration = duration * applyResistance(caster, target, spell, params)
+    local res = applyResistance(caster, target, spell, params)
+    duration = duration * res
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
     --Calculates the resist chance from Resist Blind trait
     if math.random(0, 100) >= target:getMod(tpz.mod.SLOWRES) then
         -- Spell succeeds if a 1 or 1/2 resist check is achieved
-        if duration >= 150 then
+        if res >= 0.5 then
             if target:addStatusEffect(tpz.effect.SLOW, power, 0, duration) then
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             else

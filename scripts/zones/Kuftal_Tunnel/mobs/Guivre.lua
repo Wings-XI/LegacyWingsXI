@@ -3,6 +3,7 @@
 --   NM: Guivre
 -----------------------------------
 require("scripts/globals/pathfind")
+--require("scripts/globals/status")
 
 local pathNodes =
 {
@@ -297,6 +298,9 @@ end
 
 function onMobSpawn(mob)
     onPath(mob)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT,80)
+    mob:setMobMod(1, 12000) -- gil min
+    mob:setMobMod(2, 18000) -- gil max
 end
 
 function onMobRoam(mob)

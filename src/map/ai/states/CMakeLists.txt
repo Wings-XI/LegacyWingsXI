@@ -3,10 +3,14 @@ set(SOURCES
     ability_state.h
     attack_state.cpp
     attack_state.h
+	claimshield_state.cpp
+	claimshield_state.h
     death_state.cpp
     death_state.h
     despawn_state.cpp
     despawn_state.h
+	fishing_state.cpp
+	fishing_state.h
     inactive_state.cpp
     inactive_state.h
     item_state.cpp

@@ -24,11 +24,11 @@ function onTrigger(player, npc)
         4163,  1080,    -- Blinding Potion
         13328, 4050,    -- Mythril Earring
         107,    180,    -- Water Jug
-        2868,  9000,    -- Rabao Waystone
+        --2868,  9000,    -- Rabao Waystone
     }
 
     player:showText(npc, ID.text.SCAMPLIX_SHOP_DIALOG)
-    tpz.shop.general(player, stock)
+    tpz.shop.general(player, stock, SELBINA)
 end
 
 function onEventUpdate(player, csid, option)

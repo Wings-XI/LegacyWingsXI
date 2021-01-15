@@ -25,6 +25,11 @@ function onSpellCast(caster, target, spell)
     spellParams.M100 = 2
     spellParams.M200 = 2
     spellParams.I = 684
+    
+    --Hazmat
+    if caster:isMob() and caster:getID() == 17596520 then
+        spellParams.V = 1445
+    end
 
     -- no point in making a separate function for this if the only thing they won't have in common is the name
     handleNinjutsuDebuff(caster, target, spell, 30, 10, tpz.mod.WATERRES)

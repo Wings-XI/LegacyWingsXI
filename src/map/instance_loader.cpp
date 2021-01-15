@@ -181,7 +181,7 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
             PMob->setModifier(Mod::PIERCERES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 36) * 1000));
             PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 37) * 1000));
             PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 38) * 1000));
-
+            /*
             PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 39) - 1) * -100)); // These are stored as floating percentages
             PMob->setModifier(Mod::ICERES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 40) - 1) * -100)); // and need to be adjusted into modifier units.
             PMob->setModifier(Mod::WINDRES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 41) - 1) * -100)); // Higher RES = lower damage.
@@ -190,6 +190,15 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
             PMob->setModifier(Mod::WATERRES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 44) - 1) * -100));
             PMob->setModifier(Mod::LIGHTRES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 45) - 1) * -100));
             PMob->setModifier(Mod::DARKRES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 46) - 1) * -100));
+            */
+            PMob->setModifier(Mod::SDT_FIRE, (int16)(Sql_GetFloatData(SqlInstanceHandle, 39) * 100)); // These are stored as floating percentages
+            PMob->setModifier(Mod::SDT_ICE, (int16)(Sql_GetFloatData(SqlInstanceHandle, 40) * 100));
+            PMob->setModifier(Mod::SDT_WIND, (int16)(Sql_GetFloatData(SqlInstanceHandle, 41) * 100));
+            PMob->setModifier(Mod::SDT_EARTH, (int16)(Sql_GetFloatData(SqlInstanceHandle, 42) * 100));
+            PMob->setModifier(Mod::SDT_THUNDER, (int16)(Sql_GetFloatData(SqlInstanceHandle, 43) * 100));
+            PMob->setModifier(Mod::SDT_WATER, (int16)(Sql_GetFloatData(SqlInstanceHandle, 44) * 100));
+            PMob->setModifier(Mod::SDT_LIGHT, (int16)(Sql_GetFloatData(SqlInstanceHandle, 45) * 100));
+            PMob->setModifier(Mod::SDT_DARK, (int16)(Sql_GetFloatData(SqlInstanceHandle, 46) * 100));
 
             PMob->m_Element = (uint8)Sql_GetIntData(SqlInstanceHandle, 47);
             PMob->m_Family = (uint16)Sql_GetIntData(SqlInstanceHandle, 48);

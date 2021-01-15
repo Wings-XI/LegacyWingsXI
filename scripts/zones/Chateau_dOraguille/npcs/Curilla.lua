@@ -122,7 +122,7 @@ function onTrigger(player, npc)
 
     -- "Old Wounds" (Savage Blade WS)
     -- [Prioritize RDM Artifact; otherwise RDM AF will be blocked during the possibly extensive duration of this]
-    elseif wsQuestEvent ~= nil then
+    elseif wsQuestEvent ~= nil and wsQuestEvent ~= 46 then
         player:startEvent(wsQuestEvent)
 
     -- San d'Oria Missions (optional dialogues)
@@ -185,6 +185,9 @@ function onTrigger(player, npc)
     -- Default dialogue after "Peace for the Spirit"
     elseif peaceForTheSpirit == QUEST_COMPLETED then
         player:startEvent(52)
+
+    wsQuestEvent == 46 then
+        player:startEvent(46)
 
     -- Default dialogue after "Enveloped in Darkness"
     elseif envelopedInDarkness == QUEST_COMPLETED and peaceForTheSpirit == QUEST_AVAILABLE then

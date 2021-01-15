@@ -33,6 +33,9 @@ function onSpellCast(caster, target, spell)
         dmg = ((100+caster:getMod(tpz.mod.MATT))/(100+target:getMod(tpz.mod.MDEF))) * (caster:getStat(tpz.mod.INT) + caster:getSkillLevel(tpz.skill.ELEMENTAL_MAGIC)/6) * 3.5
     else
         dmg = ((100+caster:getMod(tpz.mod.MATT))/(100+target:getMod(tpz.mod.MDEF))) * (caster:getStat(tpz.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BLM, tpz.skill.ELEMENTAL_MAGIC))/6) * 9.4
+        if caster:getID() == 17297441 then -- behemoth
+            dmg = dmg * 1.5
+        end
     end
 
     --add in target adjustment

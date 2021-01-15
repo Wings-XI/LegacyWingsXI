@@ -17,6 +17,11 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 5
 
     local totaldamage = 0
+	if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
+		return 0
+	end
     local damage = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
     totaldamage = MobFinalAdjustments(damage.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, numhits)
 
@@ -25,6 +30,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     target:takeDamage(totaldamage, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
+	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
 
     return totaldamage
 

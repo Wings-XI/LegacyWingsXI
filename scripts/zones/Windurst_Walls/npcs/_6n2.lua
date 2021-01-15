@@ -99,15 +99,13 @@ function onEventFinish(player, csid, option)
     -- KNOW ONE'S ONIONS
     elseif csid == 288 then
         player:setCharVar("KnowOnesOnions", 2)
-
-    -- ONION RINGS
-    elseif csid == 289 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.ONION_RINGS, {
-        item = 17029,
-        title = tpz.title.STAR_ONION_BRIGADIER,
-        fame = 10,
-        var = {"OnionRingsTime", "OnionRings"}
-    }) then
-        player:delKeyItem(tpz.ki.OLD_RING)
+    elseif (csid == 289) then
+        player:completeQuest(WINDURST,tpz.quest.id.windurst.ONION_RINGS);
+        player:addFame(WINDURST,100);
+        player:addTitle(tpz.title.STAR_ONION_BRIGADIER);
+        player:delKeyItem(tpz.ki.OLD_RING);
+        player:setCharVar("OnionRingsTime",0);
+        player:setCharVar("OnionRings",2);
 
     -- WILD CARD
     elseif csid == 386 then

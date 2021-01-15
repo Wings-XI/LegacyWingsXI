@@ -17,7 +17,13 @@ end
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.ROC)
-    GetMobByID(ID.mob.ROC):setRespawnTime(math.random(900, 10800))
+    --GetMobByID(ID.mob.ROC):setRespawnTime(math.random(900, 10800))
+	local rocre = GetServerVariable("RocRespawn")
+	if os.time() < rocre then
+		GetMobByID(ID.mob.ROC):setRespawnTime(rocre - os.time())
+	else
+		SpawnMob(ID.mob.ROC)
+	end
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar("[QM]Select", 1) -- Determine which QM is active today for THF AF2
 end
 

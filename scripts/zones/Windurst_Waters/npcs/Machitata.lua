@@ -9,6 +9,7 @@ require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
+require("scripts/globals/room_rental")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -23,6 +24,8 @@ function onTrigger(player, npc)
         player:messageSpecial(ID.text.YOU_SHOW_OFF_THE, tpz.ki.NEW_MODEL_HAT)
         player:addCharVar("QuestHatInHand_var", 1)
         player:addCharVar("QuestHatInHand_count", 1)
+    else
+        player:startEvent(984)
     end
 end
 
@@ -30,4 +33,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    tryMoveToLeaderMH(player)
 end

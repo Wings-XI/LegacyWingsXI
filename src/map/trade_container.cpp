@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -298,6 +298,7 @@ void CTradeContainer::Clean()
     m_craftType = 0;
     m_ItemsCount = 0;
     m_exSize = 0;
+    m_failType = 0;
 
     m_PItem.clear();
     m_PItem.resize(CONTAINER_SIZE, nullptr);

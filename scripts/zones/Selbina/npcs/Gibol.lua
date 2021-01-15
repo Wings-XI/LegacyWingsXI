@@ -14,10 +14,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local guildSkillId = tpz.skill.CLOTHCRAFT
-    local stock = tpz.shop.generalGuildStock[guildSkillId]
-    tpz.shop.generalGuild(player, stock, guildSkillId)
-    player:showText(npc, ID.text.CLOTHCRAFT_SHOP_DIALOG)
+    if player:sendGuild(516, 6, 21, 0) then
+        player:showText(npc, ID.text.CLOTHCRAFT_SHOP_DIALOG)
+    end
 end
 
 function onEventUpdate(player, csid, option)

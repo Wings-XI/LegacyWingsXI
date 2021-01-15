@@ -169,7 +169,6 @@ local loot =
             {itemid = 14204, droprate =  125}, -- river_gaiters
         },
         {
-            {itemid = 17472, droprate =   43}, -- cross-counters
             {itemid =   801, droprate =   10}, -- chrysoberyl
             {itemid =   784, droprate =   94}, -- jadeite
             {itemid =   803, droprate =  113}, -- sunstone
@@ -200,10 +199,6 @@ local loot =
             {itemid =  4812, droprate =  283}, -- scroll_of_flare
             {itemid =  5005, droprate =  358}, -- scroll_of_valor_minuet_iv
             {itemid =  4749, droprate =  264}, -- scroll_of_reraise_ii
-        },
-        {
-            {itemid =     0, droprate =  957}, -- nothing
-            {itemid = 17187, droprate =   43}, -- eurytos_bow
         },
         {
             {itemid =     0, droprate =  582}, -- nothing

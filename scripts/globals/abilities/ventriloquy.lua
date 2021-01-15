@@ -35,27 +35,15 @@ function onUseAbility(player, target, ability)
         end
 
         if playerfound and petfound then
-            local bonus = (player:getMerit(tpz.merit.VENTRILOQUY)-5)/100
-
             local playerCE = target:getCE(player)
             local playerVE = target:getVE(player)
             local petCE = target:getCE(pet)
             local petVE = target:getVE(pet)
 
-            local playerEnmityBonus = 1
-            local petEnmityBonus = 1
-            if target:getTarget():getShortID() == player:getShortID() or ((playerCE + playerVE) >= (petCE + petVE) and target:getTarget():getShortID() ~= pet:getShortID()) then
-                playerEnmityBonus = playerEnmityBonus + bonus
-                petEnmityBonus = petEnmityBonus - bonus
-            else
-                playerEnmityBonus = playerEnmityBonus - bonus
-                petEnmityBonus = petEnmityBonus + bonus
-            end
-
-            target:setCE(player, petCE * petEnmityBonus)
-            target:setVE(player, petVE * petEnmityBonus)
-            target:setCE(pet, playerCE * playerEnmityBonus)
-            target:setVE(pet, playerVE * playerEnmityBonus)
+            target:setCE(player, petCE)
+            target:setVE(player, petVE)
+            target:setCE(pet, playerCE)
+            target:setVE(pet, playerVE)
         end
     end
 end

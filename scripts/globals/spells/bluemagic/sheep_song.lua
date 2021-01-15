@@ -33,6 +33,7 @@ function onSpellCast(caster, target, spell)
     params.effect = typeEffect
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = 60 * resist
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.LULLABY, target))
 
     if (resist > 0.5) then -- Do it!
         if (target:addStatusEffect(typeEffect, 1, 0, duration)) then

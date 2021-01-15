@@ -145,6 +145,17 @@ function onSpellCast(caster, target, spell)
     if (mpBonusPercent > 0) then
         caster:addMP(mpBonusPercent)
     end
+    
+    if caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) then
+        local level = caster:getMainLvl()
+        local solace = caster:getLocalVar("SolaceCureRecording")
+        local newsolace = final+solace
+        if newsolace > 22*level then
+            newsolace = 22*level
+        end
+        caster:setLocalVar("SolaceCureRecording",newsolace)
+        --print(string.format("player solace was %u new solace is %u",solace,newsolace))
+    end
 
     return final
 end

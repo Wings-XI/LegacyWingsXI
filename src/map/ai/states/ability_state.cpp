@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -37,6 +37,8 @@ CAbilityState::CAbilityState(CBattleEntity* PEntity, uint16 targid, uint16 abili
     m_PEntity(PEntity)
 {
     CAbility* PAbility = ability::GetAbility(abilityid);
+
+    m_id = 1;
 
     if (!PAbility)
     {

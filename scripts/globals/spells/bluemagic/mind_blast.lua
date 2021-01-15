@@ -45,13 +45,16 @@ function onSpellCast(caster, target, spell)
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
+    local duration = getBlueEffectDuration(caster,resist,tpz.effect.PARALYSIS)
+    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
+    
     if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
         params.multiplier = params.multiplier + 0.50
     end
 
     if (damage > 0 and resist > 0.3) then
         local typeEffect = tpz.effect.PARALYSIS
-        target:addStatusEffect(typeEffect, 20, 0, getBlueEffectDuration(caster, resist, typeEffect)) -- https://www.bg-wiki.com/bg/Mind_Blast says 20%
+        target:addStatusEffect(typeEffect, 20, 0, duration) -- https://www.bg-wiki.com/bg/Mind_Blast says 20%
     end
 
     return damage

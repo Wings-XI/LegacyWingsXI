@@ -14,6 +14,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    local dia = target:getStatusEffect(tpz.effect.DIA)
+    if dia ~= nil and dia:getTier() >= 2 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return 0
+    end
+
     local skillLvl = caster:getSkillLevel(tpz.skill.DARK_MAGIC)
     local basedmg = skillLvl / 4
     local params = {}
@@ -45,9 +51,6 @@ function onSpellCast(caster, target, spell)
     -- Calculate duration
     local duration = 60
 
-    -- Check for Dia
-    local dia = target:getStatusEffect(tpz.effect.DIA)
-
     -- Calculate DoT effect
     -- http://wiki.ffo.jp/html/1954.html
     local dotdmg = 0
@@ -57,15 +60,9 @@ function onSpellCast(caster, target, spell)
     end
 
     -- Do it!
+    target:delStatusEffect(tpz.effect.DIA)
     target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 10, 1)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
-
-    -- Try to kill same tier Dia (default behavior)
-    if DIA_OVERWRITE == 1 and dia ~= nil then
-        if dia:getPower() == 1 then
-            target:delStatusEffect(tpz.effect.DIA)
-        end
-    end
 
     return final
 end

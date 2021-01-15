@@ -47,6 +47,7 @@ zones[tpz.zone.ROMAEVE] =
         MOKKURKALFI_I     = 17276929,
         MOKKURKALFI_II    = 17276930,
         ELDHRIMNIR        = 17277126,
+		SHIKIGAMI_WEAPON  = 17277127,
     },
     npc =
     {

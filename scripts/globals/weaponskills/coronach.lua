@@ -41,6 +41,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     if damage > 0 then
         tpz.aftermath.addStatusEffect(player, tp, tpz.slot.RANGED, tpz.aftermath.type.RELIC)
     end
-
+	if damage > 0 then player:trySkillUp(target, tpz.skill.MARKSMANSHIP, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

@@ -76,23 +76,28 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
     if nmId ~= nil then
         local nm = GetMobByID(nmId)
         if nm ~= nil then
-            local pop = nm:getLocalVar("pop")
+            local pop = GetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId))
 
             chance = math.ceil(chance * 10) -- chance / 1000.
-            if os.time() > pop and not lotteryPrimed(phList) and math.random(1000) <= chance then
+            if os.time() > pop and not lotteryPrimed(phList) and (math.random(1000) <= chance or pop == 1) then
 
+				if pop == 1 then immediate = true end
                 -- on PH death, replace PH repop with NM repop
                 DisallowRespawn(phId, true)
                 DisallowRespawn(nmId, false)
                 UpdateNMSpawnPoint(nmId)
                 nm:setRespawnTime(immediate and 1 or GetMobRespawnTime(phId)) -- if immediate is true, spawn the nm immediately (1ms) else use placeholder's timer
+				
+				nm:addListener("SPAWN", "SPAWN_" .. nmId, function(m)
+                    SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1) -- 1 means pop immediately on next PH kill if server crashes while alive
+                end)
 
                 nm:addListener("DESPAWN", "DESPAWN_" .. nmId, function(m)
                     -- on NM death, replace NM repop with PH repop
                     DisallowRespawn(nmId, true)
                     DisallowRespawn(phId, false)
                     GetMobByID(phId):setRespawnTime(GetMobRespawnTime(phId))
-                    m:setLocalVar("pop", os.time() + cooldown)
+                    SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), os.time() + cooldown)
                     m:removeListener("DESPAWN_" .. nmId)
                 end)
 
@@ -356,6 +361,8 @@ local additionalEffects =
         applyEffect = true,
         eff = tpz.effect.STUN,
         duration = 5,
+        minDuration = 1,
+        maxDuration = 6,
     },
     [tpz.mob.ae.TERROR] =
     {

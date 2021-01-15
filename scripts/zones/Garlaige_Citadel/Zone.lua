@@ -33,7 +33,12 @@ function onInitialize(zone)
     GetMobByID(ID.mob.SKEWER_SAM):setRespawnTime(math.random(900, 10800))
 
     UpdateNMSpawnPoint(ID.mob.SERKET)
-    GetMobByID(ID.mob.SERKET):setRespawnTime(math.random(900, 10800))
+    local serre = GetServerVariable("SerketRespawn")
+	if os.time() < serre then
+		GetMobByID(ID.mob.SERKET):setRespawnTime(serre - os.time())
+	else
+		SpawnMob(ID.mob.SERKET)
+	end
 
     tpz.treasure.initZone(zone)
 end
@@ -66,7 +71,7 @@ function onRegionEnter(player, region)
         GetNPCByID(gateId + 4):getAnimation() == tpz.anim.OPEN_DOOR
     ) then
         player:messageSpecial(ID.text.BANISHING_GATES + leverSet)
-        GetNPCByID(gateId):openDoor(30)
+        GetNPCByID(gateId):openDoor(60)
     end
 
 end

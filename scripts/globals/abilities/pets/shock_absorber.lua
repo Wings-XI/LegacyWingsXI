@@ -16,6 +16,7 @@ function onPetAbility(target, automaton, skill, master, action)
     local maneuvers = master:countEffect(tpz.effect.EARTH_MANEUVER)
     local pMod = math.max(automaton:getSkillLevel(tpz.skill.AUTOMATON_MELEE), automaton:getSkillLevel(tpz.skill.AUTOMATON_RANGED), automaton:getSkillLevel(tpz.skill.AUTOMATON_MAGIC))
     local duration = 180
+    --[[
     local amount = 200
     local bonus = 0
 
@@ -45,7 +46,10 @@ function onPetAbility(target, automaton, skill, master, action)
         end
     end
     amount = amount + math.floor(bonus)
-
+    ]]
+    
+    local amount = 100
+    
     if target:addStatusEffect(tpz.effect.STONESKIN, amount, 0, duration, 0, 0, 4) then
         skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
     else

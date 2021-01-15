@@ -15,3 +15,11 @@ end
 
 function onMobDeath(mob, player, isKiller)
 end
+
+function onMobDespawn(mob)
+    local qm = GetNPCByID(16806296)
+
+    qm:queue(900000, function(qm)
+        qm:setStatus(0)
+    end)
+end

@@ -7,6 +7,7 @@ require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/status")
 require("scripts/globals/teleports")
+require("scripts/globals/missions")
 -----------------------------------
 
 tpz = tpz or {}
@@ -24,6 +25,14 @@ end
 
 tpz.besieged.onEventUpdate = function(player, csid, option)
     local itemId = getISPItem(option)
+    
+    if itemId == 4181 then
+        player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Warp is 750 IS.",29)
+    elseif itemId == 4182 then
+        player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Reraise is 500 IS.",29)
+    end
+
+    
     if itemId and option < 0x40000000 then
         local maps = getMapBitmask(player)
         player:updateEvent(player:getCurrency("imperial_standing"), maps, tpz.besieged.getMercenaryRank(player), player:canEquipItem(itemId) and 2 or 1, unpack(getImperialDefenseStats()))
@@ -32,7 +41,7 @@ end
 
 tpz.besieged.onEventFinish = function(player, csid, option)
     local ID = zones[player:getZoneID()]
-    if option == 0 or option == 16 or option == 32 or option == 48 then
+    if (option == 0 or option == 16 or option == 32 or option == 48) and player:hasCompletedMission(TOAU,1) then -- immortal sentries
         -- Sanction
         if option ~= 0 then
             player:delCurrency("imperial_standing", 100)
@@ -179,8 +188,8 @@ function getISPItem(i)
     local IS_item =
     {
         -- Common Items
-        [1] = {id = 4182, price = 7}, -- scroll of Instant Reraise
-        [4097] = {id = 4181, price = 10}, -- scroll of Instant Warp
+        [1] = {id = 4182, price = 500}, -- scroll of Instant Reraise
+        [4097] = {id = 4181, price = 750}, -- scroll of Instant Warp
         [8193] = {id = 2230, price = 100}, -- lambent fire cell
         [12289] = {id = 2231, price = 100}, -- lambent water cell
         [16385] = {id = 2232, price = 100}, -- lambent earth cell
@@ -188,10 +197,10 @@ function getISPItem(i)
         [24577] = {id = 19021, price = 20000}, -- katana strap
         [28673] = {id = 19022, price = 20000}, -- axe grip
         [32769] = {id = 19023, price = 20000}, -- staff strap
-        [36865] = {id = 3307, price = 5000}, -- heat capacitor
-        [40961] = {id = 3308, price = 5000}, -- power cooler
-        [45057] = {id = 3309, price = 5000}, -- barrage turbine
-        [53249] = {id = 3311, price = 5000}, -- galvanizer
+        --[36865] = {id = 3307, price = 5000}, -- heat capacitor
+        --[40961] = {id = 3308, price = 5000}, -- power cooler
+        --[45057] = {id = 3309, price = 5000}, -- barrage turbine
+        --[53249] = {id = 3311, price = 5000}, -- galvanizer
         [57345] = {id = 6409, price = 50000},
         -- Private Second Class
         -- Map Key Items (handled separately)

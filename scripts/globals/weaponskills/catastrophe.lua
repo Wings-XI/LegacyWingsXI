@@ -42,5 +42,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         player:addHP(drain)
     end
 
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SCYTHE, tpHits+extraHits) end
+	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage
 end

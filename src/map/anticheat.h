@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2019 Darkstar Dev Teams
@@ -35,6 +35,10 @@ namespace anticheat
         // crafts to fail.
         // Argument is the time spent on synth animation.
         CHEAT_ID_FASTSYNTH = 1,
+        // Player forged a position packet, attempting to move faster than allowwed
+        CHEAT_ID_POSHACK = 2,
+        // Player using an automated fishing tool
+        CHEAT_ID_FISHBOT = 3,
         // For boundary checks
         CHEAT_ID_LAST
     };
@@ -76,8 +80,9 @@ namespace anticheat
     // cheatid - ID of the cheat caught
     // cheatarg - Optional argument (varies by cheat ID)
     // description - Optional text description to be logged
+    // add_strikes - Number of strikes to beadded
     // returns true on success, false on failure
-    bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg = 0, const char* description = NULL);
+    bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg = 0, const char* description = NULL, uint8 add_strikes = 1);
 
 };
 

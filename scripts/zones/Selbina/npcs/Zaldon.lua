@@ -544,7 +544,7 @@ function onTrigger(player, npc)
 
     local theRealGift    = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_REAL_GIFT)
     local insideTheBelly = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY)
-    local mLvl           = player:getMainLvl()
+    local mLvl           = math.floor(player:getCharSkillLevel(dsp.skill.FISHING)/10) + player:getMod(dsp.mod.FISH)
 
     -- UNDER THE SEA
     if player:getCharVar("underTheSeaVar") == 3 then

@@ -849,7 +849,7 @@ function takeAbilityDamage(defender, attacker, params, primary, finaldmg, attack
         -- no abilities that use ability message can miss (the rest use ws messages)
     end
     local targetTPMult = params.targetTPMult or 1
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attackType, damageType, slot, primary, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, targetTPMult)
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attackType, damageType, slot, primary, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, targetTPMult, false)
     local enmityEntity = taChar or attacker
     if (params.overrideCE and params.overrideVE) then
         defender:addEnmity(enmityEntity, params.overrideCE, params.overrideVE)

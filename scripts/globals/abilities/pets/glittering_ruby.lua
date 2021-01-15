@@ -5,6 +5,7 @@ require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/summon")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -30,8 +31,11 @@ function onPetAbility(target, pet, skill)
     else --CHR
         effectid = tpz.effect.CHR_BOOST
     end
-
-    target:addStatusEffect(effectid, math.random(12, 14), 0, 90)
+    local bonus = getSummoningSkillOverCap(pet) * 3
+    if bonus > 90 then
+        bonus = 90
+    end
+    target:addStatusEffect(effectid, math.random(12, 14), 0, 90+bonus)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
     return effectid
 end

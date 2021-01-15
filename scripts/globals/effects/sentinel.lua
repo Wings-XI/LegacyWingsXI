@@ -18,8 +18,8 @@ function onEffectTick(target, effect)
    -- Damage reduction decays until 50% then stops
    if (power > 50) then
       -- final tick with feet just has to be odd.
-      if (power == 55) then
-         decayby = 5
+      if (power == 52) then
+         decayby = 2
       -- decay by 8% per tick
       else
          decayby = 8

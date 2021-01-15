@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -55,9 +55,34 @@ CTaskMgr::CTask *CTaskMgr::AddTask(CTask *PTask)
 	return PTask;
 }
 
-void CTaskMgr::RemoveTask(std::string TaskName)
+void CTaskMgr::RemoveTask(std::string TaskName) // this is very resource intensive, but it deletes all instances of the same-named tasks
 {
-	//empty method
+    TaskList_t carbonCopy = m_TaskList;
+    std::vector<CTask*> vectorCopy;
+
+    while (!carbonCopy.empty())
+    {
+        if (carbonCopy.top()->m_name != TaskName)
+        {
+            vectorCopy.push_back(carbonCopy.top());
+            //ShowDebug("Task passed through filter: %s\n", carbonCopy.top()->m_name);
+        }
+        else
+        {
+            //ShowDebug("Task blocked by filter: %s\n", carbonCopy.top()->m_name);
+        }
+        carbonCopy.pop();
+    }
+
+    while (!m_TaskList.empty())
+        m_TaskList.pop();
+
+    while (!vectorCopy.empty())
+    {
+        m_TaskList.push(vectorCopy.at(vectorCopy.size() - 1));
+        //ShowDebug("Building new tasklist with task: %s\n", vectorCopy.at(vectorCopy.size() - 1)->m_name);
+        vectorCopy.pop_back();
+    }
 }
 
 duration CTaskMgr::DoTimer(time_point tick)
