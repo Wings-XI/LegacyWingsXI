@@ -919,8 +919,12 @@ local function getChocoboDiggingItem(player)
     local boreAbility = (DIG_GRANT_BORE == 1) and 1 or 0
     local modifier = player:getMod(tpz.mod.EGGHELM)
     local totd = VanadielTOTD()
-    local weather = player:getWeather()
+    -- Zone Weather
+    local zone = player:getZone()
+    local weather = zone:getWeather()
+    -- Waxing 7% - 24%
     local moon = VanadielMoonPhase()
+    local moonDirection = VanadielMoonDirection()
 
     -- filter allItems to possibleItems and sum weights
     local possibleItems = {}
@@ -962,7 +966,7 @@ local function getChocoboDiggingItem(player)
             itemId = 0
         end
     elseif itemId == 1255 then
-        if weather >= tpz.weather.CLOUDS and ( (moon >= 10 and moon <= 18) or (moon > 18 and moon <= 21 and math.random() < 0.7) or (moon > 21 and moon <= 24 and math.random() < 0.3) ) and player:getSkillRank(tpz.skill.DIG) >= 7 then
+        if (weather > tpz.weather.FOG and moonDirection == 2) and ( (moon >= 7 and moon <= 9 and math.random() < 0.5) or (moon >= 10 and moon <= 14) or (moon > 14 and moon <= 21 and math.random() < 0.7) or (moon > 21 and moon <= 24 and math.random() < 0.3) ) and player:getSkillRank(tpz.skill.DIG) >= 7 then
             itemId = oreMap[VanadielDayElement()]
         else
             itemId = 0
