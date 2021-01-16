@@ -13,7 +13,7 @@ end
 function onSpellCast(caster, target, spell)
     local duration = calculateDuration(1800, spell:getSkillType(), spell:getSpellGroup(), caster, target, false)
     duration = calculateDurationForLvl(duration, 75, target:getMainLvl())
-    local power = 58 + player:getMerit(tpz.merit.PROTECTRA_V)
+    local power = 58 + caster:getMerit(tpz.merit.PROTECTRA_V)
 
     local typeEffect = tpz.effect.PROTECT
     if target:addStatusEffect(typeEffect, power, 0, duration) then
