@@ -1,7 +1,7 @@
 # Wings Project
 
 ### License Notice
-**Original contributions to the Wings project (i.e. not originating from the Darkstar project or Project Topaz) are governed by the GNU AGPLv3 (rather than GPL), which requires modified versions to be shared back. See the [LICENSE](LICENSE) file for more details.**
+**Original contributions to the Wings project (i.e. not originating from the Darkstar project or Project Topaz) are governed by the GNU AGPLv3 (rather than GPL), which requires modified versions to be shared back, unless marked as dual-licensed by their respective authors. See the [LICENSE](LICENSE) file for more details.**
 
 ## Welcome to the Wings Project
 The Wing project is a server emulator for FFXI, aiming to reproduce the game experience as it was in March 2010.
@@ -19,7 +19,8 @@ https://discord.gg/wNpVm35wbz
 https://discord.gg/VJpdJm7C4j
 
 ### Bug Reports and Unimplemented Features
-You can find the tracker here: https://gitlab.com/Gweivyth/wingsxi-bugs/-/issues
+Bugs and issues pertaining to this code base should go to this project's bug tracker, which you can find here: https://gitlab.com/ffxiwings/wings/-/issues
+Bugs pertaining to the current Wings server (until it gets migrated to this code base) should go here: https://gitlab.com/Gweivyth/wingsxi-bugs/-/issues
 
 Before reporting issues please make sure that:
 1. Your local tree is fully updated and that all server processes have been rebuilt form the latest code.

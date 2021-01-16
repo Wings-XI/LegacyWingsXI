@@ -10,6 +10,12 @@ base that attempts to emulate an online server for the online video game
 Final Fantasy XI (Copyright Square Enix, Co.) as it was in the beginning
 of 2010, after the Wings of the Goddess expansion pack has been released.
 
+  This license is a modified version of the Project Topaz license, which
+is itself (c) Project Topaz, used under the assumption that the Project
+Topaz license is subject to itself. Should we be notified otherwise by
+the copyright author of the Topaz License we will reword the license as
+needed but the meaning will remain the same.
+
   The Wings project is based on project Topaz, which is itself based on the
 earlier, now-defunct Darkstar Project, which is licensed under the GNU
 GPL version 2 or greater (at the user's choice). While under the terms of
