@@ -20,6 +20,7 @@ https://discord.gg/VJpdJm7C4j
 
 ### Bug Reports and Unimplemented Features
 Bugs and issues pertaining to this code base should go to this project's bug tracker, which you can find here: https://gitlab.com/ffxiwings/wings/-/issues
+
 Bugs pertaining to the current Wings server (until it gets migrated to this code base) should go here: https://gitlab.com/Gweivyth/wingsxi-bugs/-/issues
 
 Before reporting issues please make sure that:
