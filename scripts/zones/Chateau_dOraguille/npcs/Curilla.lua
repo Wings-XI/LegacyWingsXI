@@ -186,7 +186,7 @@ function onTrigger(player, npc)
     elseif peaceForTheSpirit == QUEST_COMPLETED then
         player:startEvent(52)
 
-    wsQuestEvent == 46 then
+    elseif wsQuestEvent == 46 then
         player:startEvent(46)
 
     -- Default dialogue after "Enveloped in Darkness"

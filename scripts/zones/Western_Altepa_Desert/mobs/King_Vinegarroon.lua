@@ -40,7 +40,7 @@ function updateRegen(mob)
     local hour = VanadielHour()
     local regen = mob:getMod(tpz.mod.REGEN)
     
-    if hour > 3 and hour < 20 -- daytime between 4:00 and 20:00
+    if hour > 3 and hour < 20 then -- daytime between 4:00 and 20:00
         if regen ~= 125 then
             mob:setMod(tpz.mod.REGEN, 125)
         end
