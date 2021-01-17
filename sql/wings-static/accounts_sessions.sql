@@ -44,32 +44,7 @@ CREATE TABLE `accounts_sessions` (
   `client_port` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `version_mismatch` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `FLsentnotif` tinyint(2) UNSIGNED DEFAULT 0,
-  `client_version` varchar(16) DEFAULT NULL
+  `client_version` varchar(16) DEFAULT NULL,
+  PRIMARY KEY (`charid`),
+  UNIQUE KEY `accid` (`accid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Triggers `accounts_sessions`
---
-DROP TRIGGER IF EXISTS `session_delete`;
-DELIMITER $$
-CREATE TRIGGER `session_delete` BEFORE DELETE ON `accounts_sessions` FOR EACH ROW BEGIN
-    UPDATE `char_stats` SET zoning = 0 WHERE `charid` = OLD.charid;
-END
-$$
-DELIMITER ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `accounts_sessions`
---
-ALTER TABLE `accounts_sessions`
-  ADD PRIMARY KEY (`charid`),
-  ADD UNIQUE KEY `accid` (`accid`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
