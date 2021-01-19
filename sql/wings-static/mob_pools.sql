@@ -6215,6 +6215,7 @@ INSERT INTO `mob_pools` VALUES(6180, 'Flesh_Eater', 'Flesh_Eater', 258, 0x0000a8
 INSERT INTO `mob_pools` VALUES(6179, 'Soldier_Crawler', 'Soldier_Crawler', 79, 0x00008c0100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 1, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 79);
 INSERT INTO `mob_pools` VALUES(6178, 'Undead_Bats', 'Undead_Bats', 47, 0x0000040100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 64, 34, 1667, 0, 0, 0, 1, 0, 47);
 INSERT INTO `mob_pools` VALUES(6181, 'Tonberrys_Elemental', 'Tonberrys_Elemental', 106, 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 1, 16, 256, 0, 0, 0, 0, 0, 15, 1, 0, 106);
+UPDATE mob_pools SET immunity = '1023' WHERE mob_pools.poolid = 2439
 
 --
 -- Indexes for dumped tables
