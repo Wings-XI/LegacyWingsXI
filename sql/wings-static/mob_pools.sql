@@ -2499,7 +2499,7 @@ INSERT INTO `mob_pools` VALUES(2435, 'Long-Horned_Chariot', 'Long-Horned_Chariot
 INSERT INTO `mob_pools` VALUES(2436, 'Longarmed_Gottditt', 'Longarmed_Gottditt', 334, 0x0000700200000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 16, 0, 0, 0, 3, 0, 0, 0, 1, 0, 334);
 INSERT INTO `mob_pools` VALUES(2437, 'Loo_Hepe_the_Eyepiercer', 'Loo_Hepe_the_Eyepiercer', 360, 0x00003d0400000000000000000000000000000000, 5, 5, 4, 240, 100, 0, 1, 0, 1, 2, 0, 32, 661, 159, 0, 0, 3, 1, 0, 710);
 INSERT INTO `mob_pools` VALUES(2438, 'Loo_Kutto_the_Pensive', 'Loo_Kutto_the_Pensive', 360, 0x00001e0800000000000000000000000000000000, 12, 12, 10, 240, 100, 0, 1, 1, 1, 2, 7, 32, 151, 669, 8, 0, 0, 1, 0, 360);
-INSERT INTO `mob_pools` VALUES(2439, 'Lord_of_Onzozo', 'Lord_of_Onzozo', 218, 0x0000600100000000000000000000000000000000, 2, 4, 7, 360, 100, 0, 1, 0, 0, 2, 0, 0, 1089, 135, 0, 1, 152, 1, 0, 218);
+INSERT INTO `mob_pools` VALUES(2439, 'Lord_of_Onzozo', 'Lord_of_Onzozo', 218, 0x0000600100000000000000000000000000000000, 2, 4, 7, 360, 100, 0, 1, 0, 0, 2, 1023, 0, 1089, 135, 0, 1, 152, 1, 0, 218);
 INSERT INTO `mob_pools` VALUES(2440, 'Lord_Varney', 'Lord_Varney', 309, 0x0000350700000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 253, 1, 0, 923);
 INSERT INTO `mob_pools` VALUES(2441, 'Lorelei', 'Lorelei', 195, 0x0000ee0700000000000000000000000000000000, 5, 3, 2, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 287, 1, 0, 988);
 INSERT INTO `mob_pools` VALUES(2442, 'Lost_Soul', 'Lost_Soul', 227, 0x0000340200000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 503, 131, 0, 0, 28, 1, 0, 227);
