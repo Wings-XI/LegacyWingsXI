@@ -822,8 +822,8 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x09: // jobability
         {
             uint16 JobAbilityID = data.ref<uint16>(0x0C);
-            if ((JobAbilityID < 496 && !charutils::hasAbility(PChar, JobAbilityID - 16)) ||
-                JobAbilityID >= 496 && !charutils::hasPetAbility(PChar, JobAbilityID - 512))
+            if ((JobAbilityID < 512 && !charutils::hasAbility(PChar, JobAbilityID)) ||
+                JobAbilityID >= 512 && !charutils::hasPetAbility(PChar, JobAbilityID - 496))
                 return;
             PChar->PAI->Ability(TargID, JobAbilityID);
         }
