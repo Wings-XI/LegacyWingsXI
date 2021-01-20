@@ -39,6 +39,8 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local aClockMostdelicate = player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.A_CLOCK_MOST_DELICATE)
+
     if (player:getFameLevel(JEUNO) >= 5 and aClockMostdelicate == QUEST_AVAILABLE and player:getCharVar("aClockMostdelicateVar") == 0) then
         player:startEvent(112)
     elseif (player:getCharVar("saveTheClockTowerVar") >= 1) then
