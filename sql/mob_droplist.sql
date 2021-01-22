@@ -11687,7 +11687,7 @@ INSERT INTO `mob_droplist` VALUES (2235,0,0,1000,14885,100);
 INSERT INTO `mob_droplist` VALUES (2236,0,0,1000,858,710);
 INSERT INTO `mob_droplist` VALUES (2236,0,0,1000,940,280);
 INSERT INTO `mob_droplist` VALUES (2236,0,0,1000,16980,900);
-INSERT INTO `mob_droplist` VALUES (2237,0,0,1000,14468,385); -- (Shikigami Weapon) Yinyang Robe
+INSERT INTO `mob_droplist` VALUES (2237,0,0,1000,14468,208); -- (Shikigami Weapon) Yinyang Robe
 INSERT INTO `mob_droplist` VALUES (2238,0,0,1000,646,980);
 INSERT INTO `mob_droplist` VALUES (2238,0,0,1000,654,100);
 INSERT INTO `mob_droplist` VALUES (2238,0,0,1000,679,100);
