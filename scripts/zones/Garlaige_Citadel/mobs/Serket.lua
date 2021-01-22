@@ -12,7 +12,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -20,7 +20,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
     mob:addMod(tpz.mod.DEF, -20)
     mob:addMod(tpz.mod.ACC, 20)
     mob:addMod(tpz.mod.ATT, 20)
