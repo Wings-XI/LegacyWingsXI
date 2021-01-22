@@ -539,12 +539,12 @@ enum class Mod
     SAMBA_DURATION            = 490, // Samba duration bonus
     WALTZ_POTENTCY            = 491, // Waltz Potentcy Bonus
     CHOCOBO_JIG_DURATION      = 492, // Chocobo Jig duration bonus in percents
-    SPECTRAL_JIG_DURATION     = 502, // Spectral Jig duration bonus in percents
     VFLOURISH_MACC            = 493, // Violent Flourish accuracy bonus
     STEP_FINISH               = 494, // Bonus finishing moves from steps
     STEP_ACCURACY             = 403, // Bonus accuracy for Dancer's steps
     WALTZ_DELAY               = 497, // Waltz Ability Delay modifier (-1 mod is -1 second)
     SAMBA_PDURATION           = 498, // Samba percent duration bonus
+    SPECTRAL_JIG_DURATION     = 502, // Spectral Jig duration bonus in percents
     REVERSE_FLOURISH_EFFECT   = 836, // Reverse Flourish effect in tenths of squared term multiplier
 
     // Scholar
