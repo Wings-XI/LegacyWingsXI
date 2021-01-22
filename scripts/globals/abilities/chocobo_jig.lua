@@ -17,7 +17,7 @@ end
 
 function onUseAbility(player, target, ability)
     local baseDuration = 120
-    local durationMultiplier = 1.0 + utils.clamp(player:getMod(tpz.mod.JIG_DURATION), 0, 50) / 100
+    local durationMultiplier = 1.0 + utils.clamp(player:getMod(tpz.mod.CHOCOBO_JIG_DURATION), 0, 50) / 100
     local finalDuration = math.floor(baseDuration * durationMultiplier)
 
     player:addStatusEffect(tpz.effect.QUICKENING,25, 0, finalDuration)

@@ -538,7 +538,8 @@ enum class Mod
     FINISHING_MOVES           = 333, // Tracks # of finishing moves
     SAMBA_DURATION            = 490, // Samba duration bonus
     WALTZ_POTENTCY            = 491, // Waltz Potentcy Bonus
-    JIG_DURATION              = 492, // Jig duration bonus in percents
+    CHOCOBO_JIG_DURATION      = 492, // Chocobo Jig duration bonus in percents
+    SPECTRAL_JIG_DURATION     = 502, // Spectral Jig duration bonus in percents
     VFLOURISH_MACC            = 493, // Violent Flourish accuracy bonus
     STEP_FINISH               = 494, // Bonus finishing moves from steps
     STEP_ACCURACY             = 403, // Bonus accuracy for Dancer's steps
