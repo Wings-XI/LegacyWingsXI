@@ -59,7 +59,7 @@ INSERT INTO `instance_list` VALUES(43, 'extermination', 54, 30, 298.099, -3.943,
 INSERT INTO `instance_list` VALUES(53, 'the_black_coffin', 54, 30, 0.000, -22.000, 24.000, 64, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES(54, 'against_all_odds', 54, 30, -9.000, -22.000, 17.000, 252, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES(58, 'path_of_darkness', 72, 30, 500.000, 0.000, -572.000, 192, 143, 143, 143, 143);
-INSERT INTO `instance_list` VALUES(59, 'nashmeira\'s_plea', 72, 45, -444.000, -4.000, 420.000, 127, 143, 143, 143, 143);
+INSERT INTO `instance_list` VALUES(59, 'nashmeiras_plea', 72, 45, -444.000, -4.000, 420.000, 127, 143, 143, 143, 143);
 INSERT INTO `instance_list` VALUES(65, 'arrapago_remnants', 72, 100, 340.000, 0.000, -246.000, 63, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES(79, 'shades_of_vengeance', 79, 30, 127.000, -15.000, -303.000, 0, -1, -1, -1, -1);
 
