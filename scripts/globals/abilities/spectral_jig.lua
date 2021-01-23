@@ -18,7 +18,7 @@ end
 
 function onUseAbility(player, target, ability)
     local baseDuration = 32
-    local durationMultiplier = 1.0 + utils.clamp(player:getMod(tpz.mod.SPECTRAL_JIG_DURATION), 0, 100) / 100
+    local durationMultiplier = 1.0 + utils.clamp(player:getMod(tpz.mod.SPECTRAL_JIG_DURATION), 0, 200) / 100
     local finalDuration = math.floor(baseDuration * durationMultiplier * SNEAK_INVIS_DURATION_MULTIPLIER)
 
     if (player:hasStatusEffect(tpz.effect.SNEAK) == false) then
