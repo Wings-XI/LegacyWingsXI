@@ -1203,7 +1203,7 @@ namespace fishingutils
                 }
 
             }
-            if (response != nullptr && response->fishingToken == 0 || response->fishingToken != PChar->fishingToken)
+            if ((response != nullptr) && (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken))
             {
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch.");
                 if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK) {
