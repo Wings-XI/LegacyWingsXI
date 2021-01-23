@@ -1391,7 +1391,14 @@ namespace luautils
 
     int32 OnZoneIn(CCharEntity* PChar)
     {
-        lua_prepscript("scripts/zones/%s/Zone.lua", PChar->m_moghouseID ? "Residential_Area" : (const char*)zoneutils::GetZone(PChar->loc.destination)->GetName());
+        auto destZone = zoneutils::GetZone(PChar->loc.destination);
+        if (!destZone)
+        {
+            ShowError("luautils::onZoneIn: GetZone returned NULL.");
+            return -1;
+        }
+
+        lua_prepscript("scripts/zones/%s/Zone.lua", PChar->m_moghouseID ? "Residential_Area" : (const char*)destZone->GetName());
 
         if (prepFile(File, "onZoneIn"))
         {
