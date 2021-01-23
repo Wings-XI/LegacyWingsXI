@@ -23,6 +23,7 @@
 #define _CENTITYUPDATEPACKET_H
 
 #include "../../common/cbasetypes.h"
+#include "../entities/baseentity.h"
 
 #include "basic.h"
 
@@ -51,6 +52,43 @@ class CEntityUpdatePacket: public CBasicPacket
 public:
 
 	CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
+
+    void merge(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
+
+    void merge(CEntityUpdatePacket* other);
+
+    uint32 getEntityId() const
+    {
+        return m_entityId;
+    }
+
+    uint16 getTargId() const
+    {
+        return m_targId;
+    }
+
+    ENTITYUPDATE getUpdateType() const
+    {
+        return m_updateType;
+    }
+
+    uint8 getUpdateMask() const
+    {
+        return m_updateMask;
+    }
+
+protected:
+    uint32 m_entityId;
+    uint16 m_targId;
+    ENTITYUPDATE m_updateType;
+    uint8 m_updateMask;
+    ENTITYTYPE m_objType;
+    uint16 m_lookSize;
+    uint8 m_animation;
+    uint8 m_animationSub;
+    uint8 m_allegiance;
+    uint8 m_nameSize;
+    STATUSTYPE m_status;
 };
 
 #endif

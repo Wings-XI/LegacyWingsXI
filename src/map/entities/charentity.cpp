@@ -31,6 +31,7 @@
 #include "../packets/char_sync.h"
 #include "../packets/char_update.h"
 #include "../packets/char_recast.h"
+#include "../packets/entity_update.h"
 #include "../packets/lock_on.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/key_items.h"
@@ -280,6 +281,36 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
         }
         pktsize -= 0x18;
         memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
+    }
+    if (packet->getType() == 0x0E)
+    {
+        // Entity update. To prevent spamming we will check whether the vector
+        // already has a packet updating the same entity, in which case we will
+        // merge them into a single packet.
+        CEntityUpdatePacket* thisPacket = dynamic_cast<CEntityUpdatePacket*>(packet);
+        if (thisPacket)
+        {
+            int num_packets = PacketList.size();
+            for (int i = 0; i < num_packets; i++)
+            {
+                auto currentPacket = PacketList[i];
+                if (currentPacket->getType() == 0x0E)
+                {
+                    auto currentPacket = PacketList[i];
+                    CEntityUpdatePacket* currentEntityPacket = dynamic_cast<CEntityUpdatePacket*>(currentPacket);
+                    if ((currentEntityPacket) &&
+                        (currentEntityPacket->getEntityId() == thisPacket->getEntityId()) &&
+                        (currentEntityPacket->getTargId() == thisPacket->getTargId()))
+                    {
+                        // PEntity stored in the current packet is assumed to still be valid.
+                        ShowDebug("Merging two entity update packets into a single packet.\n");
+                        currentEntityPacket->merge(thisPacket);
+                        delete packet;
+                        return;
+                    }
+                }
+            }
+        }
     }
     PacketList.push_back(packet);
 }
