@@ -122,7 +122,17 @@ Recast_t* CRecastContainer::Load(RECASTTYPE type, uint16 id, uint32 duration, ui
             else if (recast->RecastTime + duration > recast->chargeTime * recast->maxCharges)
             {
                 auto diff = (recast->RecastTime + duration) - (recast->chargeTime * recast->maxCharges);
-                recast->TimeStamp += diff;
+
+                // do not set charged recast beyond the maximum
+                if (difftime(time(nullptr), recast->TimeStamp + diff) > 0.0)
+                {
+                    recast->TimeStamp += diff;
+                }
+                else
+                {
+                    recast->TimeStamp = time(nullptr);
+                }
+
                 duration -= diff;
             }
             recast->RecastTime += duration;
@@ -239,7 +249,15 @@ bool CRecastContainer::HasRecast(RECASTTYPE type, uint16 id, uint32 recast)
                 {
                     return true;
                 }
-                auto charges = PRecastList->at(i).maxCharges - ((PRecastList->at(i).RecastTime - (uint32)(time(nullptr) - PRecastList->at(i).TimeStamp)) / (PRecastList->at(i).chargeTime)) - 1;
+
+                uint32 charges = 0;
+                uint32 recastCalc = (uint32)((PRecastList->at(i).RecastTime - (uint32)(time(nullptr) - PRecastList->at(i).TimeStamp)) / (PRecastList->at(i).chargeTime));
+
+                // make sure charges do not go negative
+                if ( recastCalc < PRecastList->at(i).maxCharges - 1)
+                {
+                    charges = PRecastList->at(i).maxCharges - recastCalc - 1;
+                }
 
                 if (charges < recast)
                 {
