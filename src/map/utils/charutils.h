@@ -221,6 +221,31 @@ namespace charutils
     void   SendTimerPacket(CCharEntity* PChar, uint32 seconds);
     void   SendTimerPacket(CCharEntity* PChar, duration dur);
     void   SendClearTimerPacket(CCharEntity* PChar);
+
+    // Helpdesk routines
+    // Coutesy of Setzor (from Eden)
+
+    /**
+     *  Player opens a helpdesk ticket (request)
+     *  @param PChar Player opening the ticket
+     *  @param data Ticket data
+     */
+    void ReceiveHelpDeskMessage(CCharEntity* PChar, CBasicPacket data);
+
+    /**
+     *  Send a response from helpdesk back to the player.
+     *  @param PChar Player to send the response to
+     *  @param message Message to send
+     */
+    void SendHelpDeskMessage(CCharEntity* PChar, const std::string& message);
+
+    /**
+     *  Load a pending helpdesk response from the DB and send
+     *  to the corresponding player (if such exists)
+     *  @param PChar Player to send the response to
+     */
+    void LoadHelpDeskMessage(CCharEntity* PChar);
+
 };
 
 #endif // _CHARUTILS_H

@@ -210,6 +210,7 @@ CCharEntity::CCharEntity()
 
     m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
 
+    m_accountId = 0;
     m_accountFeatures = 0;
     m_needChatFix = 0;
     m_needTellFix = 0;

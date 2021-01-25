@@ -131,6 +131,7 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
             break;
         }
         case MSG_CHAT_SERVMES:
+        case MSG_NEW_TICKET:
         {
             const char* query = "SELECT zoneip, zoneport FROM zone_settings GROUP BY zoneip, zoneport;";
             ret = Sql_Query(ChatSqlHandle, query);

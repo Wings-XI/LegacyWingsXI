@@ -169,6 +169,7 @@ namespace luautils
         lua_register(LuaHandle, "getAbility", luautils::getAbility);
         lua_register(LuaHandle, "getSpell", luautils::getSpell);
         lua_register(LuaHandle, "SelectDailyItem", luautils::SelectDailyItem);
+        lua_register(LuaHandle, "GetTickets", luautils::GetTickets);
 
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
@@ -1424,6 +1425,7 @@ namespace luautils
 
     void AfterZoneIn(CBaseEntity* PChar)
     {
+        charutils::LoadHelpDeskMessage((CCharEntity*)PChar);
         lua_prepscript("scripts/zones/%s/Zone.lua", PChar->loc.zone->GetName());
 
         if (prepFile(File, "afterZoneIn"))
@@ -5262,6 +5264,76 @@ namespace luautils
         }
 
         return 0;
+    }
+
+    int32 GetTickets(lua_State* L)
+    {
+        bool queryResult = false;
+
+        if (lua_isnil(L, 1))
+        {
+            const char* Query =
+                "SELECT server_gmcalls.callid, server_gmcalls.charname, HOUR(TIMEDIFF(now(), server_gmcalls.timesubmit)) AS age, server_gmcalls.message FROM server_gmcalls \
+                LEFT JOIN accounts_sessions ON accounts_sessions.charid = server_gmcalls.charid \
+                WHERE accounts_sessions.charid IN (SELECT server_gmcalls.charid FROM server_gmcalls WHERE status < 3) \
+                AND server_gmcalls.status < 3 ORDER BY server_gmcalls.timesubmit ASC;";
+            queryResult = Sql_Query(SqlHandle, Query) != SQL_ERROR;
+        }
+        else if (lua_isstring(L, 1))
+        {
+            char charname[64];
+            Sql_EscapeString(SqlHandle, charname, (const char*)lua_tostring(L, 1));
+            string_t all = string_t((const char*)lua_tostring(L, 1));
+
+            if (all == "all")
+            {
+                const char* Query =
+                    "SELECT callid, charname, TIMESTAMPDIFF(HOUR, timesubmit, now()) AS age, message FROM server_gmcalls WHERE status < 3 ORDER BY timesubmit ASC;";
+                queryResult = Sql_Query(SqlHandle, Query) != SQL_ERROR;
+            }
+            else
+            {
+                const char* Query = "SELECT callid, charname, TIMESTAMPDIFF(HOUR, timesubmit, now()) AS age, message FROM server_gmcalls WHERE status < 3 AND "
+                                    "charname = '%s' ORDER BY timesubmit ASC;";
+                queryResult = Sql_Query(SqlHandle, Query, charname) != SQL_ERROR;
+            }
+        }
+
+        lua_newtable(L);
+
+        if (queryResult)
+        {
+            int counter = 0;
+            int hours;
+            char _Buffer[5] = { 0 };
+
+            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                std::string ticket("#");
+                ticket.append((const char*)Sql_GetData(SqlHandle, 0));
+                ticket.append(" [");
+                ticket.append((const char*)Sql_GetData(SqlHandle, 1));
+                ticket.append(" ");
+                hours = atoi((const char*)Sql_GetData(SqlHandle, 2));
+                if (hours > 24)
+                {
+                    hours = hours / 24;
+                    ticket.append(itoa(hours, _Buffer, 10));
+                    ticket.append("d] ");
+                }
+                else
+                {
+                    ticket.append(itoa(hours, _Buffer, 10));
+                    ticket.append("h] ");
+                }
+                ticket.append((const char*)Sql_GetData(SqlHandle, 3));
+                lua_pushnumber(L, ++counter);
+                lua_pushstring(L, ticket.c_str());
+                lua_settable(L, -3);
+            }
+        }
+
+        return 1;
     }
 
 }; // namespace luautils

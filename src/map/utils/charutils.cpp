@@ -64,6 +64,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/message_standard.h"
 #include "../packets/quest_mission_log.h"
 
+#include "../packets/gm_message.h"
 #include "../packets/roe_sparkupdate.h"
 #include "../packets/server_ip.h"
 #include "../packets/timer_bar_util.h"
@@ -101,6 +102,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "petutils.h"
 #include "zoneutils.h"
 #include "../instance.h"
+#include "../message.h"
 
 #include "flistutils.h"
 
@@ -475,6 +477,7 @@ namespace charutils
             // 0x04 - Has access to Mog Wardrobe #3
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
+            PChar->m_accountId = acctid;
             const char* pFeaturesSqlQuery = "SELECT features FROM accounts WHERE id = %u";
             ret = Sql_Query(SqlHandle, pFeaturesSqlQuery, acctid);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
@@ -6119,4 +6122,146 @@ namespace charutils
         auto timerPacket = new CTimerBarUtilPacket();
         PChar->pushPacket(timerPacket);
     }
+
+void ReceiveHelpDeskMessage(CCharEntity* PChar, CBasicPacket data)
+{
+    bool lastPacket = false;
+    uint8 packetNum = data.ref<uint8>(0x06);
+    if (packetNum & 0x80)
+    {
+        lastPacket = true;
+        packetNum ^= 0x80;
+    }
+    uint8 subCount = data.ref<uint8>(0x07);
+    uint16 pos = 0x08;
+    if (packetNum == 0)
+    {
+        PChar->m_GMCall.isCall = false;
+        PChar->m_GMCall.callid = 0;
+        PChar->m_GMCall.harassment = false;
+        PChar->m_GMCall.stuck = false;
+        PChar->m_GMCall.blocked = false;
+        PChar->m_GMCall.message = "";
+        PChar->m_GMCall.version = "";
+        PChar->m_GMCall.loc_x = 0;
+        PChar->m_GMCall.loc_y = 0;
+        PChar->m_GMCall.loc_z = 0;
+        PChar->m_GMCall.timestamp = 0;
+    }
+    for (uint8 i = 0; i < subCount; i++)
+    {
+        uint8 subId = data.ref<uint8>(pos);
+        uint8 subSize = data.ref<uint8>(pos + 1);
+        switch (subId)
+        {
+            case 0x00: // location data
+                PChar->m_GMCall.loc_x = data.ref<float>(pos + 4);
+                PChar->m_GMCall.loc_y = data.ref<float>(pos + 8);
+                PChar->m_GMCall.loc_z = data.ref<float>(pos + 12);
+                break;
+            case 0x01: // appears to be some sort of level data
+                break;
+            case 0x02: // timestamp
+                PChar->m_GMCall.timestamp = data.ref<uint32>(pos + 8);
+                break;
+            case 0x03: // report data
+            {
+                string_t fieldData = string_t((const char*)data[pos + 4], subSize - 4);
+                string_t field = fieldData.substr(0, fieldData.find_first_of(":"));
+                string_t value = fieldData.substr(fieldData.find_first_of(":") + 1);
+                if (field == "GENERIC.VERSION")
+                {
+                    PChar->m_GMCall.version = value;
+                }
+                else if (field == "GMCALL.INPUT")
+                {
+                    PChar->m_GMCall.message = value;
+                }
+                else if (field == "GMREPORT.GMCALL")
+                {
+                    PChar->m_GMCall.isCall = (value.substr(0, 2) == "on");
+                }
+                else if (field == "GMREPORT.HARASSMENT")
+                {
+                    PChar->m_GMCall.harassment = (value.substr(0, 2) == "on");
+                }
+                else if (field == "GMREPORT.STUCK")
+                {
+                    PChar->m_GMCall.stuck = (value.substr(0, 2) == "on");
+                }
+                else if (field == "GMREPORT.BLOCK")
+                {
+                    PChar->m_GMCall.blocked = (value.substr(0, 2) == "on");
+                }
+                else
+                {
+                    ShowDebug("ReceiveHelpDeskMessage: Player <%s> sent unrecognized field: %s\n", PChar->name.c_str(), field.c_str());
+                }
+            }
+            break;
+            case 0x04: // name list of previously signed in characters
+                break;
+            default:
+                ShowDebug("ReceiveHelpDeskMessage: Player <%s> sent unrecognized subId: %u\n", PChar->name.c_str(), subId);
+        }
+        pos = pos + subSize;
+    }
+    if (lastPacket)
+    {
+        if (PChar->m_GMCall.isCall)
+        {
+            const char* fmtQuery = "INSERT INTO server_gmcalls (charid,charname,accid,zoneid,pos_x,pos_y,pos_z,version,message,harassment,stuck,blocked) "
+                                   "VALUES(%u,'%s',%u,%u,%.3f,%.3f,%.3f,'%s','%s',%u,%u,%u)";
+
+            std::string message;
+            message.reserve(strlen(PChar->m_GMCall.message.c_str()) * 2 + 1);
+            Sql_EscapeString(SqlHandle, message.data(), PChar->m_GMCall.message.c_str());
+
+            // Send the ticket to all online GMs
+            std::string broadcast((const char*)PChar->GetName());
+            broadcast.append(" placed a GM ticket: ");
+            broadcast.append(PChar->m_GMCall.message);
+            message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)broadcast.c_str()));
+
+            if (Sql_Query(SqlHandle, fmtQuery, PChar->id, PChar->name.c_str(), PChar->m_accountId, PChar->getZone(), PChar->GetXPos(), PChar->GetYPos(), PChar->GetZPos(),
+                          PChar->m_GMCall.version.c_str(), message.data(), PChar->m_GMCall.harassment ? 1 : 0, PChar->m_GMCall.stuck ? 1 : 0,
+                          PChar->m_GMCall.blocked ? 1 : 0) == SQL_ERROR)
+            {
+                ShowError("cmdhandler::call: Failed to log GM call.\n");
+            }
+        }
+    }
+}
+
+void SendHelpDeskMessage(CCharEntity* PChar, const std::string& message)
+{
+    uint16 messageSize;
+    uint8 numSends;
+
+    uint32 pktTime = CVanaTime::getInstance()->getVanaTime() + VTIME_BASEDATE;
+
+    messageSize = (uint16)message.size();
+
+    if (messageSize > 0)
+    {
+        numSends = 1 + (uint8)std::floor(messageSize / 244);
+        for (int i = 1; i <= numSends; i++)
+        {
+            uint8 maxCount = (i == numSends) ? 0 : i;
+            PChar->pushPacket(new CGMMessagePacket(PChar, pktTime, i, maxCount, &message[(i - 1) * 244]));
+        }
+    }
+}
+
+void LoadHelpDeskMessage(CCharEntity* PChar)
+{
+    const char* fmtQuery = "SELECT messageid, message FROM char_gmmessage WHERE charid = %u AND `read` = 0 ORDER BY `datetime` ASC LIMIT 1;";
+    if (Sql_Query(SqlHandle, fmtQuery, PChar->id) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        PChar->m_HelpDeskMessageID = (uint32)Sql_GetUIntData(SqlHandle, 0);
+        std::string message((const char*)Sql_GetData(SqlHandle, 1));
+        SendHelpDeskMessage(PChar, message);
+    }
+}
+
 }; // namespace charutils

@@ -15952,7 +15952,89 @@ int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
         PEntity->m_roamFlags -= ((uint16)lua_tointeger(L, 1));
 
     return 0;
+}
 
+/************************************************************************
+ *  Function: sendHelpDeskMsg()
+ *  Purpose : Sends player a Help Desk/GM message
+ *  Example : player:sendHelpDeskMsg("please logout");
+ *  Notes   :
+ ************************************************************************/
+inline int32 CLuaBaseEntity::sendHelpDeskMsg(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isstring(L, -1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -2) || !lua_isstring(L, -2));
+
+    // If running in release mode, we still don't want to crash
+    if ((m_PBaseEntity == nullptr) || (m_PBaseEntity->objtype != TYPE_PC))
+    {
+        return 0;
+    }
+    if (lua_isnil(L, -1) || !lua_isstring(L, -1))
+    {
+        return 0;
+    }
+    if (lua_isnil(L, -2) || !lua_isstring(L, -2))
+    {
+        return 0;
+    }
+
+    char charname[64];
+    char message[256];
+    Sql_EscapeString(SqlHandle, charname, (const char*)lua_tostring(L, -2));
+    Sql_EscapeString(SqlHandle, message, (const char*)lua_tostring(L, -1));
+
+    const char* fmtQuery = "INSERT INTO char_gmmessage (callid, charid, accid, message, gmid) "
+        "SELECT MIN(callid), charid, accid, '%s', %u FROM server_gmcalls "
+        "WHERE charid = (SELECT charid FROM chars WHERE charname = '%s' LIMIT 1);";
+    if (Sql_Query(SqlHandle, fmtQuery, message, m_PBaseEntity->id, charname) == SQL_SUCCESS)
+    {
+        // Send the message if the player is online
+        CCharEntity* PTargetChar = zoneutils::GetCharByName((int8*)lua_tolstring(L, -2, nullptr));
+        if (PTargetChar != nullptr)
+        {
+            PTargetChar->m_HelpDeskMessageID = (uint32)Sql_LastInsertId(SqlHandle);
+            charutils::SendHelpDeskMessage(PTargetChar, (const char*)lua_tostring(L, -1));
+        }
+    }
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: closeTicket()
+ *  Purpose : Closes a particular GM ticket
+ *  Example : player:closeTicket(49);
+ *  Notes   :
+ ************************************************************************/
+inline int32 CLuaBaseEntity::closeTicket(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    // If running in release mode, we still don't want to crash
+    if ((m_PBaseEntity == nullptr) || (m_PBaseEntity->objtype != TYPE_PC))
+    {
+        return 0;
+    }
+    if (lua_isnil(L, -1) || !lua_isstring(L, -1))
+    {
+        return 0;
+    }
+
+    char charname[64];
+    Sql_EscapeString(SqlHandle, charname, (const char*)m_PBaseEntity->GetName());
+
+    const char* fmtQuery = "UPDATE server_gmcalls SET assignee = '%s', `status` = 3 WHERE callid = %u;";
+    if (Sql_Query(SqlHandle, fmtQuery, charname, (uint32)lua_tointeger(L, -1)) != SQL_SUCCESS)
+        ShowError(CL_RED "CLuaBaseEntity::closeTicket: unable to close ticket %u\n", (uint32)lua_tointeger(L, -1));
+
+    return 0;
 }
 
 //=======================================================//
@@ -16649,6 +16731,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, sendHelpDeskMsg),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, closeTicket),
 
     {nullptr,nullptr}
 };

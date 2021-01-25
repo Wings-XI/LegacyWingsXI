@@ -115,6 +115,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/guild_menu_buy_update.h"
 #include "packets/guild_menu_sell.h"
 #include "packets/guild_menu_sell_update.h"
+#include "packets/help_desk.h"
 #include "packets/inventory_assign.h"
 #include "packets/inventory_finish.h"
 #include "packets/inventory_item.h"
@@ -5051,6 +5052,8 @@ void SmallPacket0x0D2(map_session_data_t* const PSession, CCharEntity* const PCh
     return;
 }
 
+// Helpdesk function courtesy of Setzor from Eden
+
 /************************************************************************
  *                                                                       *
  *  Help Desk Report                                                     *
@@ -5058,10 +5061,44 @@ void SmallPacket0x0D2(map_session_data_t* const PSession, CCharEntity* const PCh
  *                                                                       *
  ************************************************************************/
 
-void SmallPacket0x0D3(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
+void SmallPacket0x0D3(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    TracyZoneScoped;
-    return;
+    if (PChar != nullptr)
+        charutils::ReceiveHelpDeskMessage(PChar, data);
+}
+
+/************************************************************************
+ *                                                                       *
+ *  Help Desk                                                            *
+ *  help desk -> help desk                                               *
+ *                                                                       *
+ ************************************************************************/
+
+void SmallPacket0x0D4(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+{
+    PChar->pushPacket(new CHelpDeskPacket(PChar, data.ref<uint32>(0x04)));
+}
+
+/************************************************************************
+ *                                                                       *
+ *  Help Desk                                                            *
+ *  Help desk -> help desk (GM Message) Delete                           *
+ *                                                                       *
+ ************************************************************************/
+
+void SmallPacket0x0D5(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+{
+    if (PChar->m_HelpDeskMessageID > 0)
+    {
+        const char* fmtQuery = "UPDATE char_gmmessage SET `read` = 1 WHERE messageid = %u AND charid = %u;";
+        if (Sql_Query(SqlHandle, fmtQuery, PChar->m_HelpDeskMessageID, PChar->id) == SQL_SUCCESS)
+        {
+            PChar->m_HelpDeskMessageID = 0;
+            charutils::LoadHelpDeskMessage(PChar);
+        }
+        else
+            ShowError("Error deleting Help Desk message for charid %u\n", PChar->id);
+    }
 }
 
 /************************************************************************
@@ -6950,7 +6987,8 @@ void PacketParserInitialize()
     PacketSize[0x0CB] = 0x04; PacketParser[0x0CB] = &SmallPacket0x0CB;
     PacketSize[0x0D2] = 0x00; PacketParser[0x0D2] = &SmallPacket0x0D2;
     PacketSize[0x0D3] = 0x00; PacketParser[0x0D3] = &SmallPacket0x0D3;
-    PacketSize[0x0D4] = 0x00; PacketParser[0x0D4] = &SmallPacket0xFFF;    // not implemented
+    PacketSize[0x0D4] = 0x00; PacketParser[0x0D4] = &SmallPacket0x0D4;
+    PacketSize[0x0D5] = 0x00; PacketParser[0x0D5] = &SmallPacket0x0D5;
     PacketSize[0x0DB] = 0x00; PacketParser[0x0DB] = &SmallPacket0x0DB;
     PacketSize[0x0DC] = 0x0A; PacketParser[0x0DC] = &SmallPacket0x0DC;
     PacketSize[0x0DD] = 0x08; PacketParser[0x0DD] = &SmallPacket0x0DD;

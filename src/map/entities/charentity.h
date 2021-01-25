@@ -144,6 +144,30 @@ struct GearSetMod_t
     uint16	modValue;
 };
 
+struct GMCall_t
+{
+    // Is this a GM call (Need to check when exactly this is turned on)
+    bool isCall;
+    // Helpdesk call ID (currently unused but probably should)
+    uint32 callid;
+    // Another player's harrasing me
+    bool harassment;
+    // I'm unable to move
+    bool stuck;
+    // Someone is blocking my way
+    bool blocked;
+    // Actual message content
+    std::string message;
+    // Client version
+    std::string version;
+    // Location data
+    float loc_x;
+    float loc_y;
+    float loc_z;
+    // UNIX timestamp when the call was made
+    uint32 timestamp;
+};
+
 enum CHAR_SUBSTATE
 {
     SUBSTATE_NONE = 0,
@@ -230,6 +254,9 @@ public:
     uint32          nextFishTime;       // When char is allowed to fish again     
     uint32          lastCastTime;       // When char last cast their rod
     uint32          fishingToken;       // To track fishing process
+
+    GMCall_t m_GMCall;          // If the player opens a helpdesk ticket the details go here
+    uint32 m_HelpDeskMessageID; // ID of the helpdesk ticket being answered
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
     template        <typename F, typename... Args>
@@ -355,6 +382,7 @@ public:
 
     CHAR_SUBSTATE     m_Substate;
 
+    uint32            m_accountId;
     uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
     std::string       m_clientVersion;
     bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets

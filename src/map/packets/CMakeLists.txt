@@ -94,6 +94,8 @@ set(SOURCES
     fishing.h
     furniture_interact.cpp
     furniture_interact.h
+    gm_message.cpp
+    gm_message.h
     guild_menu.cpp
     guild_menu.h
     guild_menu_buy.cpp
@@ -104,6 +106,8 @@ set(SOURCES
     guild_menu_sell.h
     guild_menu_sell_update.cpp
     guild_menu_sell_update.h
+    help_desk.cpp
+    help_desk.h
     independant_animation.cpp
     independant_animation.h
     instance_entry.cpp

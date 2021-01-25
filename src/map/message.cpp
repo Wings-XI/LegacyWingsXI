@@ -554,6 +554,20 @@ namespace message
             }
             break;
         }
+        case MSG_NEW_TICKET:
+        {
+            zoneutils::ForEachZone([&packet](CZone* PZone) {
+                PZone->ForEachChar([&packet](CCharEntity* PChar) {
+                    if (PChar != nullptr && PChar->m_GMlevel > 0)
+                    {
+                        CBasicPacket* newPacket = new CBasicPacket();
+                        memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                        PChar->pushPacket(newPacket);
+                    }
+                });
+            });
+            break;
+        }
         default:
         {
             ShowWarning("Message: unhandled message type %d\n", (int)type);

@@ -309,6 +309,7 @@ namespace luautils
     int32 OnFishingAction(CCharEntity* PChar, int32 Action, int32 Stamina, int32 Special);  // triggers when fishing action happens to player
     int32 OnFishingCatch(CCharEntity* PChar, uint8 CatchType, int32 CatchID);               // triggers when player catches fish
     int32 OnFishingEnd(CCharEntity* PChar);                                                 // triggers when player stops fishing
+    int32 GetTickets(lua_State* L);                                                         // Fetchs a list of GM tickets
 };
 
 #endif //- _LUAUTILS_H -
