@@ -2,6 +2,7 @@
 require("scripts/globals/common")
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/settings")
 
 function getSummoningSkillOverCap(avatar)
     local summoner = avatar:getMaster()
@@ -426,6 +427,20 @@ function AvatarFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadow
             target:delStatusEffect(tpz.effect.THIRD_EYE)
         end
     end
+ 
+    if target:isNM() and skilltype == tpz.attackType.MAGICAL then
+        dmg = dmg - (dmg * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100)
+        if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT, NM_MAGIC_STACK)
+            target:queue(NM_MAGIC_STACK_WINDOW, function(target)
+                target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
+            end)
+        elseif target:getMod(tpz.mod.MAGIC_STACKING_MDT) < NM_MAGIC_STACK_CAP then
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT, target:getMod(tpz.mod.MAGIC_STACKING_MDT) + NM_MAGIC_STACK)
+        end
+    end
+
+    
 
     --TODO: Handle anything else (e.g. if you have Magic Shield and its a Magic skill, then do 0 damage.
     if skilltype == tpz.attackType.PHYSICAL and target:hasStatusEffect(tpz.effect.PHYSICAL_SHIELD) then

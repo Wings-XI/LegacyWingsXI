@@ -1818,13 +1818,8 @@ function doElementalNuke(caster, spell, target, spellParams)
         --print(string.format("MTDR was %.2f for numtargets %u",MTDR,spell:getTotalTargets()))
     end
     
-    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
-        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
-        target:queue(1100, function(target)
-            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
-        end) 
-    else
-        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
+    if target:isNM() then
+        DMG = applyNMDamagePenalty(target, DMG)
     end
     
     --get the resisted damage
@@ -1873,6 +1868,11 @@ function doNuke(caster, target, spell, params)
     local dmg = calculateMagicDamage(caster, target, spell, params)
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
+    
+    if target:isNM() then
+        dmg = applyNMDamagePenalty(target, dmg)
+    end
+
     --get the resisted damage
     dmg = dmg*resist
     if (skill == tpz.skill.NINJUTSU) then
@@ -1895,15 +1895,6 @@ function doNuke(caster, target, spell, params)
         end
     end
     
-    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
-        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
-        target:queue(1100, function(target)
-            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
-        end) 
-    else
-        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
-    end
-
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
     --add in target adjustment
@@ -1926,17 +1917,14 @@ function doDivineBanishNuke(caster, target, spell, params)
     local dmg = calculateMagicDamage(caster, target, spell, params)
     --get resist multiplier (1x if no resist)
     local resist = applyResistance(caster, target, spell, params)
+
+    if target:isNM() then
+        dmg = applyNMDamagePenalty(target, dmg)
+    end
+
     --get the resisted damage
     dmg = dmg*resist
     
-    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
-        target:setMod(tpz.mod.MAGIC_STACKING_MDT,40)
-        target:queue(1100, function(target)
-            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
-        end) 
-    else
-        DMG = DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100
-    end
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
     dmg = addBonuses(caster, spell, target, dmg, params)
@@ -2045,5 +2033,18 @@ function outputMagicHitRateInfo()
         end
     end
 end
+
+function applyNMDamagePenalty(target, DMG)
+    DMG = DMG - (DMG * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100)
+    if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
+        target:setMod(tpz.mod.MAGIC_STACKING_MDT, NM_MAGIC_STACK)
+        target:queue(NM_MAGIC_STACK_WINDOW, function(target)
+            target:setMod(tpz.mod.MAGIC_STACKING_MDT,0)
+        end)
+    elseif target:getMod(tpz.mod.MAGIC_STACKING_MDT) < NM_MAGIC_STACK_CAP then
+        target:setMod(tpz.mod.MAGIC_STACKING_MDT, target:getMod(tpz.mod.MAGIC_STACKING_MDT) + NM_MAGIC_STACK)
+    end
+    return DMG
+end 
 
 tpz.ma = tpz.magic
