@@ -147,6 +147,9 @@ ABSORB_SPELL_TICK = 9 -- duration of 1 absorb spell tick
 SNEAK_INVIS_DURATION_MULTIPLIER = 1 -- multiplies duration of sneak, invis, deodorize to reduce player torture. 1 = retail behavior.
 USE_OLD_CURE_FORMULA = true -- true/false. if true, uses older cure formula (3*MND + VIT + 3*(healing skill/5)) // cure 6 will use the newer formula
 USE_OLD_MAGIC_DAMAGE = true -- true/false. if true, uses older magic damage formulas
+NM_MAGIC_STACK = 5 -- NM stacked magical damage redcution per cast/BP, percentage.
+NM_MAGIC_STACK_CAP = 60 -- NM stacked magical damage reduction cap, percentage.
+NM_MAGIC_STACK_WINDOW = 5000 -- Time (in miliseconds) for the NM stacked magical damage reduction window.
 
 -- CELEBRATIONS
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
