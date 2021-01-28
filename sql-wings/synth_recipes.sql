@@ -1,70 +1,106 @@
--- phpMyAdmin SQL Dump
--- version 4.9.7
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Jan 01, 2021 at 07:35 PM
--- Server version: 10.5.6-MariaDB
--- PHP Version: 7.4.11
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `topaz`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `synth_recipes`
---
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 DROP TABLE IF EXISTS `synth_recipes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `synth_recipes` (
-  `ID` smallint(5) UNSIGNED NOT NULL,
-  `Desynth` tinyint(3) UNSIGNED NOT NULL,
-  `KeyItem` int(10) UNSIGNED NOT NULL,
-  `Alchemy` tinyint(3) UNSIGNED NOT NULL,
-  `Bone` tinyint(3) UNSIGNED NOT NULL,
-  `Cloth` tinyint(3) UNSIGNED NOT NULL,
-  `Cook` tinyint(3) UNSIGNED NOT NULL,
-  `Gold` tinyint(3) UNSIGNED NOT NULL,
-  `Leather` tinyint(3) UNSIGNED NOT NULL,
-  `Smith` tinyint(3) UNSIGNED NOT NULL,
-  `Wood` tinyint(3) UNSIGNED NOT NULL,
-  `Crystal` smallint(5) UNSIGNED NOT NULL,
-  `HQCrystal` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient1` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient2` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient3` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient4` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient5` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient6` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient7` smallint(5) UNSIGNED NOT NULL,
-  `Ingredient8` smallint(5) UNSIGNED NOT NULL,
-  `Result` smallint(5) UNSIGNED NOT NULL,
-  `ResultHQ1` smallint(5) UNSIGNED NOT NULL,
-  `ResultHQ2` smallint(5) UNSIGNED NOT NULL,
-  `ResultHQ3` smallint(5) UNSIGNED NOT NULL,
-  `ResultQty` tinyint(2) UNSIGNED NOT NULL,
-  `ResultHQ1Qty` tinyint(2) UNSIGNED NOT NULL,
-  `ResultHQ2Qty` tinyint(2) UNSIGNED NOT NULL,
-  `ResultHQ3Qty` tinyint(2) UNSIGNED NOT NULL,
-  `ResultName` tinytext NOT NULL
-) ENGINE=MyISAM AVG_ROW_LENGTH=79 DEFAULT CHARSET=utf8;
+  `ID` mediumint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `Desynth` tinyint(3) unsigned NOT NULL,
+  `KeyItem` int(10) unsigned NOT NULL,
+  `Wood` tinyint(3) unsigned NOT NULL,
+  `Smith` tinyint(3) unsigned NOT NULL,
+  `Gold` tinyint(3) unsigned NOT NULL,
+  `Cloth` tinyint(3) unsigned NOT NULL,
+  `Leather` tinyint(3) unsigned NOT NULL,
+  `Bone` tinyint(3) unsigned NOT NULL,
+  `Alchemy` tinyint(3) unsigned NOT NULL,
+  `Cook` tinyint(3) unsigned NOT NULL,
+  `Crystal` smallint(5) unsigned NOT NULL,
+  `HQCrystal` smallint(5) unsigned NOT NULL,
+  `Ingredient1` smallint(5) unsigned NOT NULL,
+  `Ingredient2` smallint(5) unsigned NOT NULL,
+  `Ingredient3` smallint(5) unsigned NOT NULL,
+  `Ingredient4` smallint(5) unsigned NOT NULL,
+  `Ingredient5` smallint(5) unsigned NOT NULL,
+  `Ingredient6` smallint(5) unsigned NOT NULL,
+  `Ingredient7` smallint(5) unsigned NOT NULL,
+  `Ingredient8` smallint(5) unsigned NOT NULL,
+  `Result` smallint(5) unsigned NOT NULL,
+  `ResultHQ1` smallint(5) unsigned NOT NULL,
+  `ResultHQ2` smallint(5) unsigned NOT NULL,
+  `ResultHQ3` smallint(5) unsigned NOT NULL,
+  `ResultQty` tinyint(2) unsigned NOT NULL,
+  `ResultHQ1Qty` tinyint(2) unsigned NOT NULL,
+  `ResultHQ2Qty` tinyint(2) unsigned NOT NULL,
+  `ResultHQ3Qty` tinyint(2) unsigned NOT NULL,
+  `ResultName` tinytext NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=3500 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=79;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `synth_recipes`
---
+DELIMITER $$
+DROP TRIGGER IF EXISTS ensure_ingredients_are_ordered;
+CREATE TRIGGER ensure_ingredients_are_ordered
+     BEFORE INSERT ON synth_recipes FOR EACH ROW BEGIN
+          IF NEW.Ingredient2 > 0 AND NEW.Ingredient1 > NEW.Ingredient2
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient1` is larger than Ingredient2';
+          END IF;
+
+          IF NEW.Ingredient3 > 0 AND NEW.Ingredient2 > NEW.Ingredient3
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient2` is larger than Ingredient3';
+          END IF;
+
+          IF NEW.Ingredient4 > 0 AND NEW.Ingredient3 > NEW.Ingredient4
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient3` is larger than Ingredient4';
+          END IF;
+
+          IF NEW.Ingredient5 > 0 AND NEW.Ingredient4 > NEW.Ingredient5
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient4` is larger than Ingredient5';
+          END IF;
+
+          IF NEW.Ingredient6 > 0 AND NEW.Ingredient5 > NEW.Ingredient6
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient5` is larger than Ingredient6';
+          END IF;
+
+          IF NEW.Ingredient7 > 0 AND NEW.Ingredient6 > NEW.Ingredient7
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient6` is larger than Ingredient7';
+          END IF;
+
+          IF NEW.Ingredient8 > 0 AND NEW.Ingredient7 > NEW.Ingredient8
+          THEN
+            SIGNAL SQLSTATE VALUE '45000'
+            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient7` is larger than Ingredient8';
+          END IF;
+END$$
+
+DELIMITER ;
+
+LOCK TABLES `synth_recipes` WRITE;
+/*!40000 ALTER TABLE `synth_recipes` DISABLE KEYS */;
+
+-- RECIPES START
+-- -------------
 
 INSERT INTO `synth_recipes` VALUES(1, 0, 0, 20, 0, 0, 4, 0, 0, 0, 0, 4099, 4241, 706, 706, 714, 714, 817, 824, 824, 824, 2, 2, 2, 2, 1, 1, 1, 1, 'Simple Bed');
 INSERT INTO `synth_recipes` VALUES(2, 0, 0, 49, 0, 0, 53, 0, 0, 0, 0, 4099, 4241, 716, 716, 716, 716, 819, 826, 826, 826, 3, 3, 3, 3, 1, 1, 1, 1, 'Oak Bed');
@@ -3959,7 +3995,6 @@ INSERT INTO `synth_recipes` VALUES(4544, 1, 0, 0, 0, 93, 0, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4545, 1, 0, 0, 0, 0, 0, 0, 99, 0, 0, 4100, 4242, 13467, 0, 0, 0, 0, 0, 0, 0, 903, 903, 903, 903, 1, 1, 1, 1, 'Dragon Talon');
 INSERT INTO `synth_recipes` VALUES(4546, 1, 0, 0, 0, 0, 0, 63, 0, 0, 0, 4100, 4242, 19017, 0, 0, 0, 0, 0, 0, 0, 1637, 1637, 1637, 1637, 1, 1, 1, 1, 'Bugard Leather');
 INSERT INTO `synth_recipes` VALUES(4547, 1, 0, 0, 0, 0, 0, 63, 0, 0, 0, 4100, 4242, 19018, 0, 0, 0, 0, 0, 0, 0, 1637, 1637, 1637, 1637, 1, 1, 1, 1, 'Bugard Leather');
-INSERT INTO `synth_recipes` VALUES(4548, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 4096, 4238, 651, 712, 0, 0, 0, 0, 0, 0, 21923, 21924, 21924, 21924, 1, 1, 1, 1, 'Debahocho');
 INSERT INTO `synth_recipes` VALUES(4549, 0, 2038, 0, 0, 0, 0, 0, 0, 1, 0, 4101, 4243, 888, 1893, 4509, 4509, 0, 0, 0, 0, 2952, 2952, 2952, 2952, 2, 3, 4, 5, 'Miasmal Counteragent');
 INSERT INTO `synth_recipes` VALUES(4551, 0, 0, 0, 0, 9, 58, 0, 0, 0, 0, 4099, 4241, 822, 827, 827, 828, 828, 2826, 0, 0, 11340, 11348, 11348, 11348, 1, 1, 1, 1, 'Salutary Robe');
 INSERT INTO `synth_recipes` VALUES(4552, 0, 0, 0, 0, 0, 97, 60, 0, 0, 0, 4099, 4241, 2275, 2756, 2825, 2825, 0, 0, 0, 0, 12141, 12141, 12141, 12141, 1, 1, 1, 1, 'Ebon Beret');
@@ -3972,78 +4007,24 @@ INSERT INTO `synth_recipes` VALUES(4571, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 4099, 424
 INSERT INTO `synth_recipes` VALUES(4572, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 4096, 4238, 627, 2273, 4509, 0, 0, 0, 0, 0, 5592, 5593, 5593, 5593, 1, 1, 1, 1, 'Imperial_Coffee');
 INSERT INTO `synth_recipes` VALUES(4573, 1, 0, 0, 0, 38, 0, 0, 0, 0, 0, 4100, 4242, 17984, 0, 0, 0, 0, 0, 0, 0, 648, 649, 1234, 1234, 1, 1, 6, 6, 'Spark_Dagger_Desynth');
 
---
--- Triggers `synth_recipes`
---
-DROP TRIGGER IF EXISTS `ensure_ingredients_are_ordered`;
-DELIMITER $$
-CREATE TRIGGER `ensure_ingredients_are_ordered` BEFORE INSERT ON `synth_recipes` FOR EACH ROW BEGIN
-          IF NEW.Ingredient2 > 0 AND NEW.Ingredient1 > NEW.Ingredient2
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient1` is larger than Ingredient2';
-          END IF;
 
-          IF NEW.Ingredient3 > 0 AND NEW.Ingredient2 > NEW.Ingredient3
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient2` is larger than Ingredient3';
-          END IF;
+-- -----------
+-- RECIPES END
 
-          IF NEW.Ingredient4 > 0 AND NEW.Ingredient3 > NEW.Ingredient4
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient3` is larger than Ingredient4';
-          END IF;
+-- INSERT INTO `synth_recipes` VALUES (ID,Desynth,KeyItem,WD,SM,GO,CL,LE,BO,AL,CK,Crystal,HQCrystal,I1,I2,I3,I4,I5,I6,I7,I8,R1,R2,R3,R4,Q1,Q2,Q3,Q4,ResultName); --  template
+-- crystals = fire(4096,4238) ice(4097,4239) wind(4098,4240) earth(4099,4241) lightning(4100,4242) water(4101,4243) light(4102,4244) dark(4103,4245)
 
-          IF NEW.Ingredient5 > 0 AND NEW.Ingredient4 > NEW.Ingredient5
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient4` is larger than Ingredient5';
-          END IF;
+/*!40000 ALTER TABLE `synth_recipes` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-          IF NEW.Ingredient6 > 0 AND NEW.Ingredient5 > NEW.Ingredient6
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient5` is larger than Ingredient6';
-          END IF;
-
-          IF NEW.Ingredient7 > 0 AND NEW.Ingredient6 > NEW.Ingredient7
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient6` is larger than Ingredient7';
-          END IF;
-
-          IF NEW.Ingredient8 > 0 AND NEW.Ingredient7 > NEW.Ingredient8
-          THEN
-            SIGNAL SQLSTATE VALUE '45000'
-            SET MESSAGE_TEXT = '[table:synth_recipes] - `Ingredient7` is larger than Ingredient8';
-          END IF;
-END
-$$
-DELIMITER ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `synth_recipes`
---
-ALTER TABLE `synth_recipes`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `synth_recipes`
---
-ALTER TABLE `synth_recipes`
-  MODIFY `ID` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5601;
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
