@@ -2814,7 +2814,7 @@ INSERT INTO `mob_groups` VALUES(20, 3261, 68, 'Qiqirn_Mosstrooper', 960, 0, 2056
 INSERT INTO `mob_groups` VALUES(21, 2720, 68, 'Mold_Eater', 960, 0, 1725, 0, 0, 69, 71, 0);
 INSERT INTO `mob_groups` VALUES(22, 667, 68, 'Cave_Tiger', 960, 0, 437, 0, 0, 73, 76, 0);
 INSERT INTO `mob_groups` VALUES(23, 2782, 68, 'Mycohopper', 300, 0, 1759, 0, 0, 89, 90, 0);
-INSERT INTO `mob_groups` VALUES(24, 2720, 68, 'Mold_Eater', 300, 0, 1725, 0, 0, 87, 89, 0);
+INSERT INTO `mob_groups` VALUES(24, 2720, 68, 'Mold_Eater', 960, 0, 1725, 0, 0, 69, 71, 0);
 INSERT INTO `mob_groups` VALUES(25, 5188, 68, 'Lizardtrap', 7200, 0, 3083, 10000, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(26, 858, 68, 'Crystal_Eater', 0, 128, 545, 0, 0, 69, 74, 0);
 INSERT INTO `mob_groups` VALUES(27, 477, 68, 'Bluestreak_Gyugyuroon', 0, 32, 317, 0, 0, 82, 82, 0);
