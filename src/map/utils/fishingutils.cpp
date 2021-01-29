@@ -88,14 +88,14 @@ namespace fishingutils
         return MessageOffset[ZoneID];
     }
 
-    const char* GetCharIP(CCharEntity* PChar)
+    std::string GetCharIP(CCharEntity* PChar)
     {
         uint32 client_addr = 0;
         int ret = Sql_Query(SqlHandle, "SELECT client_addr FROM accounts_sessions WHERE charid=%u LIMIT 1;", PChar->id);
         if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             client_addr = (uint32)Sql_GetUIntData(SqlHandle, 0);
-            return ip2str(client_addr).c_str();
+            return ip2str(client_addr);
         }
         return "0.0.0.0";
     }
@@ -140,7 +140,7 @@ namespace fishingutils
             catchName,
             PChar->hookedFish->catchlevel,
             PChar->hookedFish->regen,
-            GetCharIP(PChar)) == SQL_ERROR)
+            GetCharIP(PChar).c_str()) == SQL_ERROR)
         {
             ShowError("cmdhandler::call: Failed to log fishing catch record.\n");
         }
@@ -438,7 +438,7 @@ namespace fishingutils
             "mobid, "               // 0
             "name, "                // 1
             "level, "               // 2
-            "size, "                // 3
+            "difficulty, "          // 3
             "base_delay, "          // 4
             "base_move, "           // 5
             "log, "                 // 6
@@ -447,14 +447,23 @@ namespace fishingutils
             "nm_flags, "            // 9
             "rarity, "              // 10
             "min_respawn, "         // 11
-            "required_key_item, "   // 12
-            "required_lureid, "     // 13
-            "areaid "               // 14
+            "required_keyitem, "    // 12
+            "required_baitid, "     // 13
+            "areaid, "              // 14
+            "zoneid, "              // 15
+            "quest_only, "          // 16
+            "min_length, "          // 17
+            "max_length, "          // 18
+            "ranking, "             // 19
+            "max_respawn, "         // 20
+            "alternative_baitid "   // 21
             "FROM fishing_mob "
-            "WHERE zoneid = %u "
-            "AND disabled=0 "
+            "WHERE disabled=0 "
+            "AND zoneid=%u "
             "ORDER BY mobid ASC";
+
         int32 ret = Sql_Query(SqlHandle, Query, ZoneId);
+
         if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
         {
             std::vector<fishmob_t>* mobList = new std::vector<fishmob_t>();
@@ -462,21 +471,28 @@ namespace fishingutils
             while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
             {
                 fishmob_t mob;
-                mob.mobId = Sql_GetUIntData(SqlHandle, 0);
+                mob.mobId      = Sql_GetUIntData(SqlHandle, 0);
                 mob.mobName.insert(0, (const char*)Sql_GetData(SqlHandle, 1));
-                mob.level = Sql_GetUIntData(SqlHandle, 2);
-                mob.size = Sql_GetUIntData(SqlHandle, 3);
-                mob.baseDelay = Sql_GetUIntData(SqlHandle, 4);
-                mob.baseMove = Sql_GetUIntData(SqlHandle, 5);
-                mob.log = Sql_GetUIntData(SqlHandle, 6);
-                mob.quest = Sql_GetUIntData(SqlHandle, 7);
-                mob.nm = Sql_GetUIntData(SqlHandle, 8);
-                mob.nmFlags = Sql_GetUIntData(SqlHandle, 9);
-                mob.rarity = Sql_GetUIntData(SqlHandle, 10);
-                mob.minRespawn = Sql_GetUIntData(SqlHandle, 11);
-                mob.reqKeyItem = Sql_GetUIntData(SqlHandle, 12);
-                mob.reqLureId = Sql_GetUIntData(SqlHandle, 13);
-                mob.areaId = Sql_GetUIntData(SqlHandle, 14);
+                mob.level      = (uint8)Sql_GetUIntData(SqlHandle,  2);
+                mob.difficulty = (uint8)Sql_GetUIntData(SqlHandle,  3);
+                mob.baseDelay  = (uint8)Sql_GetUIntData(SqlHandle,  4);
+                mob.baseMove   = (uint8)Sql_GetUIntData(SqlHandle,  5);
+                mob.log        = (uint8)Sql_GetUIntData(SqlHandle,  6);
+                mob.quest      = (uint8)Sql_GetUIntData(SqlHandle,  7);
+                mob.nm         = ((uint8)Sql_GetUIntData(SqlHandle, 8) == 1);
+                mob.nmFlags    = (uint32)Sql_GetUIntData(SqlHandle, 9);
+                mob.rarity     = (uint16)Sql_GetUIntData(SqlHandle, 10);
+                mob.minRespawn = (uint16)Sql_GetUIntData(SqlHandle, 11);
+                mob.reqKeyItem = (uint16)Sql_GetUIntData(SqlHandle, 12);
+                mob.reqBaitId  = (uint16)Sql_GetUIntData(SqlHandle, 13);
+                mob.areaId     = (uint8)Sql_GetUIntData(SqlHandle,  14);
+                mob.zoneId     = (uint16)Sql_GetUIntData(SqlHandle, 15);
+                mob.questOnly  = ((uint8)Sql_GetUIntData(SqlHandle, 16) == 1);
+                mob.minLength  = (uint16)Sql_GetUIntData(SqlHandle, 17);
+                mob.maxLength  = (uint16)Sql_GetUIntData(SqlHandle, 18);
+                mob.ranking    = (uint8)Sql_GetUIntData(SqlHandle,  19);
+                mob.maxRespawn = (uint16)Sql_GetUIntData(SqlHandle, 20);
+                mob.altBaitId  = (uint16)Sql_GetUIntData(SqlHandle, 21);
                 mobList->push_back(mob);
             }
             return mobList;

@@ -1,6 +1,6 @@
 -------------------------------------------------
---	Author: Setzor : setzor@gmail.com
---	Fishing functions
+--    Author: Setzor : setzor@gmail.com
+--    Fishing functions
 --  Info from:
 --      Countless hours of fish testing on retail with tens of thousands of casts
 --      http://wiki.ffxiclopedia.org/wiki/Fishing
@@ -11,7 +11,7 @@ require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/equipment")
 require("scripts/globals/quests")
-require("scripts/globals/weather")
+require("scripts/globals/world")
 
 require("scripts/globals/fishing/fishing_types")
 require("scripts/globals/fishing/fishing_accessories")
@@ -464,9 +464,9 @@ function calcChanceToBreak(fishingSkill, catchSkill, catchSize, catchType, catch
                             BreakChanceTooHeavy = math.random(1, 10)
                             SnapChanceTooHeavy = math.random(5, 15)
                         else
-							-- Can snap the line but not break the rod
+                            -- Can snap the line but not break the rod
                             --BreakChanceTooHeavy = math.random(1, 5)
-							BreakChanceTooHeavy = 0
+                            BreakChanceTooHeavy = 0
                             SnapChanceTooHeavy = math.random(0, 10)
                         end
                     end
@@ -612,8 +612,8 @@ function createMobPool(player, moblist, moonModifier, areaId, lure)
             local MobItem = {}
             MobItem["id"] = l
             MobItem["mobid"] = testMob:getID()
-            if mob.nm and mob.areaId == areaId and (mob.reqLure == 0 or mob.reqLure == lure.id) then
-                if mob.quest < 255 and mob.log < 255 then
+            if mob.nm and mob.areaId == areaId and (mob.reqBait == 0 or mob.reqBait == lure.id or mob.altBait == lure.id) then
+                if mob.questOnly then
                     if player:getQuestStatus(mob.log, mob.quest) == QUEST_ACCEPTED then
                         table.insert(MobPool, MobItem)
                         MobWeightQuestBonus = 500
@@ -728,6 +728,8 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
 
     local MoonModifier = getMoonModifier()
     local WeatherModifier = getWeatherModifier(player:getWeather())
+    
+    local FishingDebugEnabled = player:getLocalVar("FishingDebug")
 
 
     -- Get Fish and Item Lists
@@ -777,7 +779,7 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     if #ItemPool == 0 then
         NoCatchWeight = NoCatchWeight + ItemDefaultPoolWeight
     end
-    if #MobPool == 0 and zoneType > 1 then
+    if #MobPool == 0 or zoneType <= 1 then
         NoCatchWeight = NoCatchWeight + MobDefaultPoolWeight
     end
 
@@ -790,9 +792,19 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
 
     TotalPoolWeight = FishWeight + ItemWeight + MobWeight + NoCatchWeight
 
-    local PoolSelect = math.random(1, TotalPoolWeight)
+    local PoolSelect = 0
+    local DebugSelect = player:getLocalVar("FishingDebugSelect")
+    if DebugSelect ~= 0 then
+        PoolSelect = DebugSelect
+    else
+        PoolSelect = math.random(1, TotalPoolWeight)
+    end
     local PoolWeight = 0
     local HookType = fishing.hookType.NONE
+    
+    if FishingDebugEnabled ~= 0 then
+        player:PrintToPlayer(string.format("PoolSelect: %i (FishWeight: %i, ItemWeight: %i, MobWeight: %i, NoCatchWeight: %i)", PoolSelect, FishWeight, ItemWeight, MobWeight, NoCatchWeight))
+    end
 
     -- Selection time
     if #FishPool > 0 and PoolSelect < FishWeight then

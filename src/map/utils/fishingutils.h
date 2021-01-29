@@ -94,21 +94,28 @@ struct fish_t {
 };
 
 struct fishmob_t {
-    uint32 mobId;               // Monster ID
-    string_t mobName;           // Monster Name
-    uint8 log;                  // Log ID
-    uint8 quest;                // Quest ID
-    bool nm;                    // Notorious Monster, no need to set for quest monsters
-    uint32 nmFlags;             // Notorious Monster flags
-    uint8 areaId;               // Can this mob only be fished up from a certain area? i.e. PLD NM
-    uint16 rarity;              // [0-1000] : 0 = not rare, 1 = rarest, 1000 = most common
-    uint16 minRespawn;          // minimum amount of time before mob can be hooked again
-    uint8 level;                // level of monster (seem to be intervals of 10)
-    uint8 size;                 // hook size of monster
-    uint8 baseDelay;            // base hook arrow delay
-    uint8 baseMove;             // base hook movement
-    uint16 reqKeyItem;          // required key item
-    uint32 reqLureId;           // required bait
+    uint32      mobId;                  // Monster ID
+    string_t    mobName;                // Monster Name
+    uint8       log;                    // Log ID
+    uint8       quest;                  // Quest ID
+    bool        nm;                     // Notorious Monster, no need to set for quest monsters
+    uint32      nmFlags;                // Notorious Monster flags
+    uint8       areaId;                 // Can this mob only be fished up from a certain area? i.e. PLD NM
+    uint16      rarity;                 // [0-1000] : 0 = not rare, 1 = rarest, 1000 = most common
+    uint16      minRespawn;             // minimum amount of time before mob can be hooked again
+    uint16      maxRespawn;             // maximum amount of time before mob can be hooked again
+    uint8       level;                  // level of monster (seem to be intervals of 10)
+    uint8       difficulty;             // mob difficulty
+    uint8       baseDelay;              // base hook arrow delay
+    uint8       baseMove;               // base hook movement
+    uint16      reqBaitId;              // required bait
+    uint16      altBaitId;              // alternative required bait
+    uint16      reqKeyItem;             // required key item
+    uint16      zoneId;                 // mob zoneId
+    uint16      minLength;              // mob min length
+    uint16      maxLength;              // mob max length
+    uint8       ranking;
+    bool        questOnly;              // only fishable during quest
 };
 
 struct areavector_t {

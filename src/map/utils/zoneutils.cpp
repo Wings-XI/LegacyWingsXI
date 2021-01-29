@@ -361,7 +361,7 @@ void LoadMOBList()
             INNER JOIN mob_spawn_points ON mob_groups.groupid = mob_spawn_points.groupid \
             INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyid \
             INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
-            WHERE NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
+            WHERE ((NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0)) OR (mobid IN (SELECT mobid FROM fishing_mob))) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
             AND mob_groups.zoneid = ((mobid >> 12) & 0xFFF);";
 
     char address[INET_ADDRSTRLEN];
