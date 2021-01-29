@@ -589,6 +589,10 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     bool cover = false;
 
+    if ((!PTarget) || (!PSkill))
+    {
+        return;
+    }
     if (this->objtype == TYPE_MOB && PTarget->objtype == TYPE_PC)
     {
         PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
