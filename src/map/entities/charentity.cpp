@@ -1134,7 +1134,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                     PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
                 }
             }
-            
+
             // display paralyzed
             loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
             return;
@@ -1160,8 +1160,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             action.recast = PAbility->getRecastTime() - meritRecastReduction;
         }
-        //656 to 750 are the ability ids for all bst pets
-        if (id > 655 && id < 751)
+        //672 to 779 are the ability ids for all bst pets
+        if (id > 671 && id < 780)
             action.recast = charge->chargeTime * PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this) / 4;
 
         if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
@@ -1358,7 +1358,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
                 state.ApplyEnmity();
             }
-        
+
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
@@ -1668,7 +1668,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             }
         }
     }
-    
+
     // Try to double shot
     //#TODO: figure out the packet structure of double/triple shot
     //if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT, 0) && !this->secondDoubleShotTaken &&	!isBarrage && !isSange)
@@ -2015,7 +2015,7 @@ int32 CCharEntity::GetTimeCreated()
     {
         return Sql_GetIntData(SqlHandle, 0);
     }
-    
+
     return 0;
 }
 
