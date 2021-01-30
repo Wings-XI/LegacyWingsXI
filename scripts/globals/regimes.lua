@@ -1202,13 +1202,13 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
             local power = 0
 
             if mLvl < 27 then
-                power = 15
+                power = 10
             elseif mLvl < 47 then
-                power = 40
+                power = 25
             elseif mLvl < 63 then
-                power = 75
+                power = 40
             else
-                power = 120
+                power = 55
             end
 
             player:delStatusEffectSilent(tpz.effect.PROTECT)
@@ -1257,7 +1257,7 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     -- select a training regime
     elseif opt.page then
         local page = getPageByNum(regimeType, zoneId, opt.page)
-		
+
 		if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
 			player:messageBasic(tpz.msg.basic.WAIT_LONGER)
 			return
