@@ -3,8 +3,8 @@
 --  Mob: Overgrown Ivy
 -----------------------------------
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.MULTI_HIT, 5)
-    mob:setMobMod(tpz.mobMod.REGAIN, 300)
+    mob:setMobMod(tpz.mobMod.MULTI_HIT, 3)
+    mob:addMod(tpz.mod.REGAIN, 50)
 end
 
 function onMobDeath(mob, player, isKiller)
