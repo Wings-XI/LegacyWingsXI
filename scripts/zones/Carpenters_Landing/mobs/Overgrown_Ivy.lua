@@ -2,9 +2,9 @@
 -- Area: Carpenters_Landing
 --  Mob: Overgrown Ivy
 -----------------------------------
-function onMobIntialize(mob)
+function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MULTI_HIT, 5)
-    mob:setMobMod(tpz.modMob.REGAIN, 125)
+    mob:setMobMod(tpz.modMob.REGAIN, 300)
 end
 
 function onMobDeath(mob, player, isKiller)
