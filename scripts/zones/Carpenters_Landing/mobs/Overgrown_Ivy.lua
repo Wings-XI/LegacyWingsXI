@@ -4,7 +4,7 @@
 -----------------------------------
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MULTI_HIT, 5)
-    mob:setMobMod(tpz.modMob.REGAIN, 300)
+    mob:setMobMod(tpz.mobMod.REGAIN, 300)
 end
 
 function onMobDeath(mob, player, isKiller)
