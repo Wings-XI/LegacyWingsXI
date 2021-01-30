@@ -293,9 +293,9 @@ INSERT INTO `zone_settings` VALUES(240, 1, '127.0.0.1', 54230, 'Port_Windurst', 
 INSERT INTO `zone_settings` VALUES(241, 1, '127.0.0.1', 54230, 'Windurst_Woods', 151, 151, 151, 151, 0, 0.00, 1608, 2);
 INSERT INTO `zone_settings` VALUES(242, 1, '127.0.0.1', 54230, 'Heavens_Tower', 162, 162, 151, 151, 0, 0.00, 1032, 2);
 INSERT INTO `zone_settings` VALUES(243, 1, '127.0.0.1', 54230, 'RuLude_Gardens', 117, 117, 117, 117, 0, 0.00, 1608, 3);
-INSERT INTO `zone_settings` VALUES(244, 1, '127.0.0.1', 54230, 'Upper_Jeuno', 239, 239, 239, 239, 0, 0.00, 1608, 3);
-INSERT INTO `zone_settings` VALUES(245, 1, '127.0.0.1', 54230, 'Lower_Jeuno', 239, 239, 239, 239, 0, 0.00, 1608, 3);
-INSERT INTO `zone_settings` VALUES(246, 1, '127.0.0.1', 54230, 'Port_Jeuno', 239, 239, 239, 239, 0, 0.00, 1608, 3);
+INSERT INTO `zone_settings` VALUES(244, 1, '127.0.0.1', 54230, 'Upper_Jeuno', 110, 110, 110, 110, 0, 0.00, 1608, 3);
+INSERT INTO `zone_settings` VALUES(245, 1, '127.0.0.1', 54230, 'Lower_Jeuno', 110, 110, 110, 110, 0, 0.00, 1608, 3);
+INSERT INTO `zone_settings` VALUES(246, 1, '127.0.0.1', 54230, 'Port_Jeuno', 110, 110, 110, 110, 0, 0.00, 1608, 3);
 INSERT INTO `zone_settings` VALUES(247, 1, '127.0.0.1', 54230, 'Rabao', 208, 208, 208, 208, 0, 0.00, 1640, 4);
 INSERT INTO `zone_settings` VALUES(248, 1, '127.0.0.1', 54230, 'Selbina', 112, 112, 112, 112, 0, 0.00, 1064, 4);
 INSERT INTO `zone_settings` VALUES(249, 1, '127.0.0.1', 54230, 'Mhaura', 105, 105, 105, 105, 0, 0.00, 1064, 2);
