@@ -17,7 +17,9 @@ function onTrigger(player, npc)
         player:startEvent(8)
     -- COP 4-1
     elseif player:hasCompletedMission(COP, tpz.mission.id.cop.SHELTERING_DOUBT) then
-        player:startEvent(551) -- Access to Sites A & B
+        --player:startEvent(551) -- Access to Sites A & B
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:startEvent(550) -- Access to Site A Only
     else
         player:startEvent(550) -- Access to Site A Only
     end
