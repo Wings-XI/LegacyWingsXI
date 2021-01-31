@@ -14,6 +14,26 @@ local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
 -- TODO: Diabolos Prime
 -- Note: Diabolos Prime fight drops all tiles at once.
 
+function closeAllTiles(mob)
+    -- Doesn't work so just close all tiles in all battlefields cause tile drops are disabled for now anyway
+    --local inst = mob:getBattlefield():getArea()
+    local inst = 0
+    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
+    for i = tile, tile + 21 do
+        GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
+    end
+end
+
+function onMobSpawn(mob)
+    closeAllTiles(mob)
+    mob:addMod(tpz.mod.INT, -40)
+    mob:addMod(tpz.mod.MND, -40)
+    mob:addMod(tpz.mod.ATTP, -20)
+    mob:addMod(tpz.mod.DEFP, -20)
+    mob:addMod(tpz.mod.MDEF, -40)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+end
+
 function onMobFight(mob, target)
     local mobOffset = mob:getID() - ID.mob.DIABOLOS_OFFSET
     if (mobOffset >= 0 and mobOffset <= 14) then
@@ -32,20 +52,20 @@ function onMobFight(mob, target)
         }
 
         local hpp = ((mob:getHP()/mob:getMaxHP())*100)
-        for k, v in pairs(tileDrops) do
-            if (hpp < v[1]) then
-                local tileId = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst * 8) + (k - 1)
-                local tile = GetNPCByID(tileId)
-                if (tile:getAnimation() == tpz.anim.CLOSE_DOOR) then
-                    SendEntityVisualPacket(tileId, v[inst+2])  -- Animation for floor dropping
-                    SendEntityVisualPacket(tileId, "s123")     -- Tile dropping sound
-                    tile:timer(5000, function(tile)
-                        tile:setAnimation(tpz.anim.OPEN_DOOR)     -- Floor opens
-                    end)
-                end
-                break
-            end
-        end
+        --for k, v in pairs(tileDrops) do
+        --    if (hpp < v[1]) then
+        --        local tileId = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst * 8) + (k - 1)
+        --        local tile = GetNPCByID(tileId)
+        --        if (tile:getAnimation() == tpz.anim.CLOSE_DOOR) then
+        --            SendEntityVisualPacket(tileId, v[inst+2])  -- Animation for floor dropping
+        --            SendEntityVisualPacket(tileId, "s123")     -- Tile dropping sound
+        --            tile:timer(5000, function(tile)
+        --                tile:setAnimation(tpz.anim.OPEN_DOOR)     -- Floor opens
+        --            end)
+        --        end
+        --        break
+        --    end
+        --end
     end
 end
 

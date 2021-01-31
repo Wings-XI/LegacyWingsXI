@@ -54,8 +54,7 @@ function onTrigger(player, npc)
         player:startEvent(9)--9
     -- COP mission 3-5
     elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.DARKNESS_NAMED  and  player:getCharVar("PromathiaStatus") == 0) then
-        --player:startEvent(82)-- 82
-        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:startEvent(82)-- 82
     elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.DARKNESS_NAMED  and  player:getCharVar("PromathiaStatus") == 3) then
         player:startEvent(75) --75
     elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.THREE_PATHS  and  player:getCharVar("COP_Tenzen_s_Path") == 2) then
