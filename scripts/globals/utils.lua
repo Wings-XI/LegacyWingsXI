@@ -526,3 +526,15 @@ utils.mask =
         return bit.band(mask, fullMask) == fullMask
     end,
 }
+
+function utils.getTargetDistance(entityA, entityB)
+    local posA = entityA:getPos()
+    local posB = entityB:getPos()
+
+    local diffX = posA.x - posB.x
+    local diffY = posA.y - posB.y
+    local diffZ = posA.z - posB.z
+
+    return math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
+end
+ 

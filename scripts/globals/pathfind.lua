@@ -13,6 +13,8 @@ tpz.path =
         RUN      = 1,
         WALLHACK = 2,
         REVERSE  = 4,
+        SCRIPT   = 8,
+        SLIDE    = 16,
     },
 
     -- returns the point at the given index

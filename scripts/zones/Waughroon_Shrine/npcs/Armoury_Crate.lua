@@ -366,6 +366,67 @@ local loot =
             {itemid =   831, droprate =  149}, -- Square Of Shining Cloth
         },
     },
+    
+    -- BCNM Royal Jelly
+    [77] =
+    {
+        {
+            { itemid = 637, droprate = 1000 },
+        },
+        {
+            { itemid = 637, droprate = 1000 },
+        },
+        {
+            { itemid = 14651, droprate = 450 },
+            { itemid = 17693, droprate = 150 },
+            { itemid = 17936, droprate = 100 },
+            { itemid = 17696, droprate = 100 },
+            { itemid = 4947, droprate = 100 },
+        },
+        {
+            { itemid = 14650, droprate = 250 },
+            { itemid = 17573, droprate = 100 },
+            { itemid = 17463, droprate = 100 },
+            { itemid = 17203, droprate = 100 },
+            { itemid = 17572, droprate = 150 },
+        },
+        {
+            { itemid = 652, droprate = 200 },
+            { itemid = 4874, droprate = 150 },
+            { itemid = 4751, droprate = 150 },
+            { itemid = 4714, droprate = 150 },
+            { itemid = 4896, droprate = 150 },
+            { itemid = 666, droprate = 200 },
+        },
+        {
+            { itemid = 770, droprate = 2 },
+            { itemid = 4947, droprate = 150 },
+            { itemid = 776, droprate = 7 },
+            { itemid = 4858, droprate = 250 },
+            { itemid = 4174, droprate = 10 },
+            { itemid = 4717, droprate = 250 },
+            { itemid = 4172, droprate = 2 },
+            { itemid = 748, droprate = 182 },
+            { itemid = 749, droprate = 133 },
+            { itemid = 793, droprate = 15 },
+            { itemid = 811, droprate = 10 },
+            { itemid = 788, droprate = 27 },
+            { itemid = 798, droprate = 20 },
+            { itemid = 772, droprate = 7 },
+            { itemid = 808, droprate = 15 },
+            { itemid = 815, droprate = 15 },
+            { itemid = 699, droprate = 5 },
+            { itemid = 701, droprate = 5 },
+            { itemid = 775, droprate = 12 },
+        },
+        {
+            { itemid = 1603, droprate = 1 },
+            { itemid = 924, droprate = 1 },
+            { itemid = 4898, droprate = 1 },
+            { itemid = 790, droprate = 7 },
+            { itemid = 773, droprate = 2 },
+        },
+    },
 
     -- BCNM The Final Bout
     [78] =
