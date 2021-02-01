@@ -288,7 +288,7 @@ local battlefields = {
      -- {12,   76, 1553},   -- The Hills are Alive (KS99) -- TODO: Tartaruga Gigante is not coded
         {13,   77, 1131},   -- Royal Jelly (BS40)
      -- {14,   78, 1177},   -- The Final Bout (BS50) -- TODO: mobskills Big Blow and Counterstance
-     -- {15,   79, 1130},   -- Up in Arms (BS60)
+        {15,   79, 1130},   -- Up in Arms (BS60)
      -- {16,   80, 1175},   -- Copycat (KS30)
      -- {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die.  Sync TP moves.  Self-bind/stun.  Build sleep resistance.
      -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
