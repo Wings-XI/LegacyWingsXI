@@ -691,6 +691,11 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     auto expression = false;
     auto latentFound = true;
 
+    if (!m_POwner || !m_POwner->loc.zone) {
+        // Yet another possible crash
+        return false;
+    }
+
     // find the latent type from the enum and find the expression to tests againts
     switch (latentEffect.GetConditionsID())
     {
