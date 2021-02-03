@@ -54,7 +54,8 @@ INSERT INTO `guild_item_points` VALUES(0, 4515, 1, 60, 1680, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4289, 1, 45, 1600, 1);
 INSERT INTO `guild_item_points` VALUES(0, 4514, 1, 60, 1680, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4379, 1, 60, 1680, 3);
-INSERT INTO `guild_item_points` VALUES(0, 4500, 1, 24, 1520, 4);
+INSERT INTO `guild_item_points` VALUES(0, 4500, 1, 24, 1520, 4);  -- Greedie. Replacement
+-- INSERT INTO `guild_item_points` VALUES(0, 5473, 1, 279, 2640, 4);  Bastore Sweeper (Can not catch)
 INSERT INTO `guild_item_points` VALUES(0, 4500, 1, 24, 1520, 5);
 INSERT INTO `guild_item_points` VALUES(0, 4313, 1, 675, 3760, 6);
 INSERT INTO `guild_item_points` VALUES(0, 4403, 1, 60, 1680, 7);
@@ -66,16 +67,16 @@ INSERT INTO `guild_item_points` VALUES(0, 4315, 2, 720, 4000, 4);
 INSERT INTO `guild_item_points` VALUES(0, 5121, 2, 714, 4000, 5);
 INSERT INTO `guild_item_points` VALUES(0, 4290, 2, 156, 2320, 6);
 INSERT INTO `guild_item_points` VALUES(0, 4483, 2, 156, 2320, 7);
-INSERT INTO `guild_item_points` VALUES(0, 5791, 3, 78, 2240, 0);
+INSERT INTO `guild_item_points` VALUES(0, 4354, 3, 78, 2240, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4528, 3, 375, 3280, 1);
-INSERT INTO `guild_item_points` VALUES(0, 5796, 3, 240, 2880, 2);
+INSERT INTO `guild_item_points` VALUES(0, 4482, 3, 240, 2880, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4428, 3, 60, 2160, 3);
-INSERT INTO `guild_item_points` VALUES(0, 5805, 3, 300, 3040, 4);
+INSERT INTO `guild_item_points` VALUES(0, 4480, 3, 300, 3040, 4);
 INSERT INTO `guild_item_points` VALUES(0, 4580, 3, 375, 3280, 5);
 INSERT INTO `guild_item_points` VALUES(0, 4428, 3, 60, 2160, 6);
-INSERT INTO `guild_item_points` VALUES(0, 5795, 3, 96, 2320, 7);
-INSERT INTO `guild_item_points` VALUES(0, 5801, 4, 900, 4480, 0);
-INSERT INTO `guild_item_points` VALUES(0, 5800, 4, 576, 3920, 1);
+INSERT INTO `guild_item_points` VALUES(0, 4481, 3, 96, 2320, 7);
+INSERT INTO `guild_item_points` VALUES(0, 4462, 4, 900, 4480, 0);
+INSERT INTO `guild_item_points` VALUES(0, 4306, 4, 576, 3920, 1);
 INSERT INTO `guild_item_points` VALUES(0, 4383, 4, 576, 3920, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4470, 4, 459, 3600, 3);
 INSERT INTO `guild_item_points` VALUES(0, 4385, 4, 93, 2480, 4);
@@ -84,15 +85,17 @@ INSERT INTO `guild_item_points` VALUES(0, 4291, 4, 78, 2400, 6);
 INSERT INTO `guild_item_points` VALUES(0, 4385, 4, 93, 2480, 7);
 INSERT INTO `guild_item_points` VALUES(0, 4427, 5, 900, 4560, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4579, 5, 525, 3920, 1);
-INSERT INTO `guild_item_points` VALUES(0, 5806, 5, 900, 4560, 2);
+INSERT INTO `guild_item_points` VALUES(0, 4479, 5, 900, 4560, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4402, 5, 900, 4560, 3);
-INSERT INTO `guild_item_points` VALUES(0, 5798, 5, 900, 4560, 4);
-INSERT INTO `guild_item_points` VALUES(0, 5806, 5, 900, 4560, 5);
-INSERT INTO `guild_item_points` VALUES(0, 4317, 5, 120, 2800, 6);
-INSERT INTO `guild_item_points` VALUES(0, 5798, 5, 900, 4560, 7);
+INSERT INTO `guild_item_points` VALUES(0, 4399, 5, 900, 4560, 4);
+INSERT INTO `guild_item_points` VALUES(0, 4479, 5, 900, 4560, 5);
+INSERT INTO `guild_item_points` VALUES(0, 4317, 5, 120, 2800, 6);  -- Triobite. Replacement or Mistake?
+-- INSERT INTO `guild_item_points` VALUES(0, 4429, 5, 576, 3920, 6);  Black Eel. Wiki entry
+INSERT INTO `guild_item_points` VALUES(0, 4399, 5, 900, 4560, 7);
 INSERT INTO `guild_item_points` VALUES(0, 4473, 6, 1320, 5120, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4473, 6, 1320, 5120, 1);
-INSERT INTO `guild_item_points` VALUES(0, 4288, 6, 1200, 5040, 2);
+INSERT INTO `guild_item_points` VALUES(0, 4288, 6, 1200, 5040, 2);  -- Zebra Eel. Replacement
+-- INSERT INTO `guild_item_points` VALUES(0, 5466, 6, 1536 , 5360, 2); Trumpet Shell. Can not catch
 INSERT INTO `guild_item_points` VALUES(0, 4288, 6, 1200, 5040, 3);
 INSERT INTO `guild_item_points` VALUES(0, 4471, 6, 1200, 5040, 4);
 INSERT INTO `guild_item_points` VALUES(0, 4288, 6, 1200, 5040, 5);
@@ -109,7 +112,8 @@ INSERT INTO `guild_item_points` VALUES(0, 4451, 7, 1500, 5360, 7);
 INSERT INTO `guild_item_points` VALUES(0, 4454, 8, 1800, 5680, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4454, 8, 1800, 5680, 1);
 INSERT INTO `guild_item_points` VALUES(0, 4461, 8, 1800, 5680, 2);
-INSERT INTO `guild_item_points` VALUES(0, 4304, 8, 2100, 5840, 3);
+INSERT INTO `guild_item_points` VALUES(0, 4304, 8, 2100, 5840, 3);  -- Grimmonite. Replacement
+-- INSERT INTO `guild_item_points` VALUES(0, 5141, 8, 1350, 5040, 3); -- Veydal Wrasse. Only caught on boats.
 INSERT INTO `guild_item_points` VALUES(0, 4474, 8, 1800, 5680, 4);
 INSERT INTO `guild_item_points` VALUES(0, 4304, 8, 2100, 5840, 5);
 INSERT INTO `guild_item_points` VALUES(0, 4474, 8, 1800, 5680, 6);
@@ -120,7 +124,8 @@ INSERT INTO `guild_item_points` VALUES(0, 4475, 9, 2100, 5840, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4316, 9, 2850, 6240, 3);
 INSERT INTO `guild_item_points` VALUES(0, 4476, 9, 2100, 5840, 4);
 INSERT INTO `guild_item_points` VALUES(0, 4463, 9, 2100, 5840, 5);
-INSERT INTO `guild_item_points` VALUES(0, 4463, 9, 2100, 5840, 6);
+INSERT INTO `guild_item_points` VALUES(0, 4463, 9, 2100, 5840, 6); -- Takitaro. Replacement or Mistake?
+-- INSERT INTO `guild_item_points` VALUES(0, 4429, 9, 576 , 3920, 6); -- Black Eel. Wiki entry.
 INSERT INTO `guild_item_points` VALUES(0, 4384, 9, 2100, 5840, 7);
 INSERT INTO `guild_item_points` VALUES(1, 17095, 0, 105, 1680, 0);
 INSERT INTO `guild_item_points` VALUES(1, 17122, 0, 120, 1680, 0);
