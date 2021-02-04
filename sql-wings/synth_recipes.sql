@@ -4003,7 +4003,7 @@ INSERT INTO `synth_recipes` VALUES(4568, 1, 0, 0, 87, 51, 0, 0, 0, 0, 0, 4100, 4
 INSERT INTO `synth_recipes` VALUES(4560, 1, 0, 0, 0, 0, 45, 0, 0, 0, 0, 4100, 4242, 12467, 0, 0, 0, 0, 0, 0, 0, 840, 820, 820, 820, 1, 5, 6, 7, 'Chocobo Feather');
 INSERT INTO `synth_recipes` VALUES(4569, 0, 0, 0, 0, 0, 93, 0, 0, 0, 0, 4098, 4240, 843, 843, 0, 0, 0, 0, 0, 0, 1417, 1417, 1417, 1417, 6, 8, 10, 12, 'Giant Bird Fletchings');
 INSERT INTO `synth_recipes` VALUES(4570, 0, 2011, 0, 0, 0, 93, 0, 0, 0, 0, 4098, 4240, 843, 843, 843, 843, 843, 843, 2145, 0, 1417, 1417, 1417, 1417, 18, 24, 30, 36, 'Giant Bird Fletchings');
-INSERT INTO `synth_recipes` VALUES(4571, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 4099, 4241, 621, 625, 4364, 4366, 4380, 4390, 0, 0, 4355, 4266, 4266, 4266, 1, 1, 1, 1, 'Salmon Sub');
+INSERT INTO `synth_recipes` VALUES(4571, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 4099, 4241, 621, 625, 4364, 4366, 4380, 4390, 0, 0, 4355, 4355, 4355, 4355, 1, 1, 1, 1, 'Salmon Sub');
 INSERT INTO `synth_recipes` VALUES(4572, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 4096, 4238, 627, 2273, 4509, 0, 0, 0, 0, 0, 5592, 5593, 5593, 5593, 1, 1, 1, 1, 'Imperial_Coffee');
 INSERT INTO `synth_recipes` VALUES(4573, 1, 0, 0, 0, 38, 0, 0, 0, 0, 0, 4100, 4242, 17984, 0, 0, 0, 0, 0, 0, 0, 648, 649, 1234, 1234, 1, 1, 6, 6, 'Spark_Dagger_Desynth');
 INSERT INTO `synth_recipes` VALUES(4574, 1, 0, 0, 0, 0, 22, 0, 0, 0, 0, 4100, 4242, 15207, 0, 0, 0, 0, 0, 0, 0, 1828, 818, 1828, 1828, 3, 3, 6, 6, 'TradersChapeau_Desynth');
