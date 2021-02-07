@@ -25,6 +25,7 @@
 
 #include "vana_time.h"
 #include "utils/zoneutils.h"
+#include "map.h"
 
 CVanaTime* CVanaTime::_instance = nullptr;
 
@@ -128,7 +129,7 @@ uint32 CVanaTime::getSysYearDay()
 
 uint32 CVanaTime::getJstHour()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_hour;
@@ -136,7 +137,7 @@ uint32 CVanaTime::getJstHour()
 
 uint32 CVanaTime::getJstMinute()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_min;
@@ -144,7 +145,7 @@ uint32 CVanaTime::getJstMinute()
 
 uint32 CVanaTime::getJstSecond()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_sec;
@@ -152,7 +153,7 @@ uint32 CVanaTime::getJstSecond()
 
 uint32 CVanaTime::getJstWeekDay()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_wday;
@@ -160,7 +161,7 @@ uint32 CVanaTime::getJstWeekDay()
 
 uint32 CVanaTime::getJstDayOfMonth()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_mday;
@@ -168,7 +169,7 @@ uint32 CVanaTime::getJstDayOfMonth()
 
 uint32 CVanaTime::getJstYearDay()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm *jtm = gmtime(&now);
 
     return jtm->tm_yday;
@@ -176,12 +177,12 @@ uint32 CVanaTime::getJstYearDay()
 
 uint32 CVanaTime::getJstMidnight()
 {
-    auto now = time(nullptr) + JST_OFFSET;
+    auto now = time(nullptr) + map_config.jst_offset;
     tm* jst = gmtime(&now);
     jst->tm_hour = 0;
     jst->tm_min = 0;
     jst->tm_sec = 0;
-    return static_cast<uint32>(timegm(jst) - JST_OFFSET + (60 * 60 * 24));     // Unix timestamp of the upcoming JST midnight
+    return static_cast<uint32>(timegm(jst) - map_config.jst_offset + (60 * 60 * 24));     // Unix timestamp of the upcoming JST midnight
 }
 
 uint32 CVanaTime::getVanaTime()

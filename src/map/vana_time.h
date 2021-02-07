@@ -33,8 +33,6 @@
 #define VTIME_DAY			1440			// 24 hours * GameHour
 #define VTIME_HOUR			60				// 60 minutes
 
-#define JST_OFFSET 32400                    // JST +offset from UTC
-
 #include "../common/cbasetypes.h"
 
 enum DAYTYPE

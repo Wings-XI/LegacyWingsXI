@@ -1229,6 +1229,7 @@ int32 map_config_default()
     map_config.ability_recast_multiplier = 1.0f;
     map_config.blood_pact_shared_timer = 0;
     map_config.vanadiel_time_epoch = 0;
+    map_config.jst_offset = 32400;
     map_config.lightluggage_block = 4;
     map_config.packetguard_enabled = false;
     map_config.max_time_lastupdate = 60000;
@@ -1342,6 +1343,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "vanadiel_time_epoch") == 0)
         {
             map_config.vanadiel_time_epoch = atoi(w2);
+        }
+        else if (strcmp(w1, "jst_offset") == 0)
+        {
+            map_config.jst_offset = atoi(w2);
         }
         else if (strcmp(w1, "fame_multiplier") == 0)
         {

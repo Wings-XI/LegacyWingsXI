@@ -395,7 +395,7 @@ void onCharLoad(CCharEntity* PChar)
     if (GetEminenceRecordCompletion(PChar, 1))
     {
         // Time gets messy, avert your eyes.
-        auto jstnow = time(nullptr) + JST_OFFSET;
+        auto jstnow = time(nullptr) + map_config.jst_offset;
         auto lastOnline = PChar->lastOnline;
 
         {   // Daily Reset
@@ -403,7 +403,7 @@ void onCharLoad(CCharEntity* PChar)
             jst->tm_hour = 0;
             jst->tm_min = 0;
             jst->tm_sec = 0;
-            auto lastJstMidnight = timegm(jst) - JST_OFFSET;     // Unix timestamp of the last JST midnight
+            auto lastJstMidnight = timegm(jst) - map_config.jst_offset;     // Unix timestamp of the last JST midnight
 
             if (lastOnline < lastJstMidnight)
             {
@@ -416,7 +416,7 @@ void onCharLoad(CCharEntity* PChar)
             jst->tm_hour = jst->tm_hour & 0xFC;
             jst->tm_min = 0;
             jst->tm_sec = 0;
-            auto lastJstTimedBlock = timegm(jst) - JST_OFFSET;   // Unix timestamp of the start of the current 4-hr block
+            auto lastJstTimedBlock = timegm(jst) - map_config.jst_offset;   // Unix timestamp of the start of the current 4-hr block
 
             if (lastOnline < lastJstTimedBlock || PChar->m_eminenceLog.active[30] != GetActiveTimedRecord())
             {
