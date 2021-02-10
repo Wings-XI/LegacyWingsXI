@@ -144,10 +144,24 @@ bool CMagicState::Update(time_point tick)
         auto PTarget = m_PEntity->IsValidTarget(m_targid, validTargets, m_errorMsg);
         action_t action;
         MSGBASIC_ID msg = MSGBASIC_IS_INTERRUPTED;
-        if (m_interrupted || !PTarget || m_errorMsg || (HasMoved() && (m_PEntity->objtype != TYPE_PET ||
-            static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON)) || !CanCastSpell(PTarget))
+
+        if (m_errorMsg || (HasMoved() && (m_PEntity->objtype != TYPE_PET ||
+            static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON)))
         {
             m_interrupted = true;
+        }
+        else if (!PTarget || !CanCastSpell(PTarget))
+        {
+            if ((m_PEntity->objtype != TYPE_MOB && m_PEntity->objtype != TYPE_PET) ||
+                (m_errorMsg && static_cast<MSGBASIC_ID>(((CMessageBasicPacket*) &m_errorMsg)->getMessageID()) != MSGBASIC_TOO_FAR_AWAY &&
+                    static_cast<MSGBASIC_ID>(((CMessageBasicPacket*) &m_errorMsg)->getMessageID()) != MSGBASIC_NONE))
+            {
+                m_interrupted = true;
+            }
+        }
+
+        if (m_interrupted)
+        {
             m_PEntity->OnCastInterrupted(*this, action, msg);
             m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
             Complete();
