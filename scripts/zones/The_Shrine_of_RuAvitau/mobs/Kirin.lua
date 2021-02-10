@@ -3,14 +3,15 @@
 --   NM: Kirin
 -----------------------------------
 local ID = require("scripts/zones/The_Shrine_of_RuAvitau/IDs")
-mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/titles")
 require("scripts/globals/mobs")
+mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function onMobInitialize( mob )
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMod(tpz.mod.REGAIN, 1000);
 end
 
 function onMobSpawn(mob)
@@ -19,11 +20,20 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.STUNRES, 35)
     mob:setMod(tpz.mod.BINDRES, 35)
     mob:setMod(tpz.mod.GRAVITYRES, 35)
+
     mob:addStatusEffect(tpz.effect.REGEN, 50, 3, 0)
     mob:setLocalVar("numAdds", 1)
 end
 
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENSTONE)
+end
+
 function onMobFight( mob, target )
+    if (mob:getLocalVar("AbiilitiesUsed") == 0) then
+        mob:setLocalVar("SwapToMagic", math.random(4, 8))
+    end
+
     -- spawn gods
     local numAdds = mob:getLocalVar("numAdds")
     if (mob:getBattleTime() / 180 == numAdds) then
@@ -52,8 +62,16 @@ function onMobFight( mob, target )
     end
 end
 
-function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENSTONE)
+function onMobSkillCheck(target, mob, skill)
+    if (mob:getLocalVar("AbilitiesUsed") >= mob:getLocalVar("SwapToMagic")) then
+        mob:setLocalVar("AbilitiesUsed", 0)
+        return 1
+    end
+    return 0
+end
+
+function onMobWeaponSkill(target, mob, skill, act)
+    mob:setLocalVar("AbilitiesUsed", mob:getLocalVar("AbilitiesUsed"))
 end
 
 function onMobDeath(mob, player, isKiller)
