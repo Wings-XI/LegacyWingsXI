@@ -728,8 +728,6 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 180);
             PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1017);
             break;
-        case JOB_SMN:
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 180); // cooldown but no skill -- the summon pet is a spell
         case JOB_PUP:
             PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1901);
             PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 720);

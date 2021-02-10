@@ -34,6 +34,17 @@ zones[tpz.zone.VELUGANNON_PALACE] =
     {
         MIMIC            = 17502567,
         BRIGANDISH_BLADE = 17502568,
+        SC_DETECTORS     = 
+        {
+            DET1 = 17502535, -- Island Seiryu (1)
+            DET2 = 17502537,
+            DET3 = 17502551, -- Island Genbu (2)
+            DET4 = 17502553,
+            DET5 = 17502541, -- Island Suzaku (3)
+            DET6 = 17502539,
+            DET7 = 17502555, -- Island Byakko (4)
+            DET8 = 17502557,
+        }
     },
     npc =
     {
@@ -44,6 +55,8 @@ zones[tpz.zone.VELUGANNON_PALACE] =
         Y_LITH_OFFSET   = 17502624,
         B_LITH_OFFSET   = 17502634,
         TREASURE_COFFER = 17502699,
+        H3_YELLOW_GATE  = 17502615,
+        H3_BLUE_GATE    = 17502616,
     },
 }
 
