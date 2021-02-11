@@ -20,16 +20,20 @@ function closeAllTiles(mob)
     local inst = 0
     local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
     for i = tile, tile + 21 do
-        GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
+        local tilenpc = GetNPCByID(i)
+        if tilenpc then
+            tilenpc:setAnimation(tpz.anim.CLOSE_DOOR)
+        end
     end
 end
 
 function onMobSpawn(mob)
     closeAllTiles(mob)
-    mob:addMod(tpz.mod.INT, -40)
-    mob:addMod(tpz.mod.MND, -40)
-    mob:addMod(tpz.mod.ATTP, -20)
-    mob:addMod(tpz.mod.DEFP, -20)
+    mob:addMod(tpz.mod.ACC, 10)
+    mob:addMod(tpz.mod.INT, -50)
+    mob:addMod(tpz.mod.MND, -50)
+    mob:addMod(tpz.mod.ATTP, -15)
+    mob:addMod(tpz.mod.DEFP, -15)
     mob:addMod(tpz.mod.MDEF, -40)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 end

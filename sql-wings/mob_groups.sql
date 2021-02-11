@@ -369,7 +369,7 @@ INSERT INTO `mob_groups` VALUES(62, 1432, 9, 'Frost_Lizard', 960, 0, 913, 0, 0, 
 INSERT INTO `mob_groups` VALUES(63, 1042, 9, 'Diremite_Dominator', 924, 0, 660, 0, 0, 74, 77, 0);
 INSERT INTO `mob_groups` VALUES(64, 217, 9, 'Archaic_Chest', 0, 128, 153, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(65, 1750, 9, 'Golden-Tongued_Culberry', 0, 128, 1190, 20000, 30000, 84, 85, 0);
-INSERT INTO `mob_groups` VALUES(1, 1027, 10, 'Diabolos', 0, 128, 0, 5200, 5000, 54, 55, 0);
+INSERT INTO `mob_groups` VALUES(1, 1027, 10, 'Diabolos', 0, 128, 0, 6000, 6000, 54, 55, 0);
 INSERT INTO `mob_groups` VALUES(2, 5156, 10, 'Diremite', 10, 128, 0, 0, 0, 43, 43, 0);
 INSERT INTO `mob_groups` VALUES(3, 3104, 10, 'Pasuk', 0, 128, 0, 0, 0, 40, 40, 0);
 INSERT INTO `mob_groups` VALUES(4, 5186, 10, 'Diabolos', 0, 128, 0, 11000, 0, 80, 82, 0);
