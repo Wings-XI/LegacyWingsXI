@@ -1096,12 +1096,12 @@ INSERT INTO `mob_skills` VALUES(1836, 1312, 'nerve_gas', 1, 10.0, 2000, 1500, 4,
 INSERT INTO `mob_skills` VALUES(1837, 1275, 'feeble_bleat', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1838, 1221, 'mine_blast', 1, 10.0, 2000, 1500, 4, 24, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1901, 505, 'activate', 0, 7.0, 2000, 0, 1, 4, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1903, 141, 'camisado', 0, 10.0, 640, 3000, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1903, 915, 'camisado', 0, 10.0, 640, 3000, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1904, 142, 'somnolence', 0, 10.0, 641, 3000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1905, 143, 'noctoshield', 1, 10.0, 644, 1800, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1906, 144, 'ultimate_terror', 1, 10.0, 643, 3000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1905, 916, 'noctoshield', 1, 10.0, 644, 1800, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1906, 917, 'ultimate_terror', 1, 10.0, 643, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1907, 145, 'dream_shroud', 1, 10.0, 645, 3000, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1908, 146, 'nightmare', 1, 10.0, 642, 3000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1908, 918, 'nightmare', 1, 10.0, 642, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1910, 148, 'nether_blast', 0, 21.0, 646, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1911, 149, 'ruinous_omen', 1, 30.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1920, 1264, 'rushing_drub', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
