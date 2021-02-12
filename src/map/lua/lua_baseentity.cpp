@@ -15987,10 +15987,17 @@ inline int32 CLuaBaseEntity::sendHelpDeskMsg(lua_State* L)
     Sql_EscapeString(SqlHandle, charname, (const char*)lua_tostring(L, -2));
     Sql_EscapeString(SqlHandle, message, (const char*)lua_tostring(L, -1));
 
+    const char* minCallIdQueryFmt = "SELECT MIN(callid) FROM server_gmcalls "
+        "WHERE charid = (SELECT charid FROM chars WHERE charname = '%s' LIMIT 1) AND `status` < 2";
+    if ((Sql_Query(SqlHandle, minCallIdQueryFmt, charname) != SQL_SUCCESS) || (Sql_NumRows(SqlHandle) == 0) || (Sql_NextRow(SqlHandle) != SQL_SUCCESS)) {
+        return 0;
+    }
+    int32 mincallid = (int32)Sql_GetIntData(SqlHandle, 0);
+
     const char* fmtQuery = "INSERT INTO char_gmmessage (callid, charid, accid, message, gmid) "
-        "SELECT MIN(callid), charid, accid, '%s', %u FROM server_gmcalls "
-        "WHERE charid = (SELECT charid FROM chars WHERE charname = '%s' LIMIT 1);";
-    if (Sql_Query(SqlHandle, fmtQuery, message, m_PBaseEntity->id, charname) == SQL_SUCCESS)
+        "SELECT %d, charid, accid, '%s', %u FROM server_gmcalls "
+        "WHERE callid = %d;";
+    if (Sql_Query(SqlHandle, fmtQuery, mincallid, message, m_PBaseEntity->id, mincallid) == SQL_SUCCESS)
     {
         // Send the message if the player is online
         CCharEntity* PTargetChar = zoneutils::GetCharByName((int8*)lua_tolstring(L, -2, nullptr));
@@ -16000,6 +16007,9 @@ inline int32 CLuaBaseEntity::sendHelpDeskMsg(lua_State* L)
             charutils::SendHelpDeskMessage(PTargetChar, (const char*)lua_tostring(L, -1));
         }
     }
+
+    const char* updateStatusQueryFmt = "UPDATE server_gmcalls SET `status` = 2 WHERE callid = %d;";
+    Sql_Query(SqlHandle, updateStatusQueryFmt, mincallid);
 
     return 0;
 }
