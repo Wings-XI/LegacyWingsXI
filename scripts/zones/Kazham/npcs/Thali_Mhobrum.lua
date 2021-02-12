@@ -4,6 +4,8 @@
 -- Standard Info NPC
 -----------------------------------
 
+require("scripts/globals/pathfind")
+
 local path =
 {
 55.816410, -11.000000, -43.992680,

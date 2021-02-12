@@ -3,6 +3,7 @@
 --   NM: Manipulator
 -- Note: Paths around the 2 staircases
 -----------------------------------
+require("scripts/globals/pathfind")
 require("scripts/globals/hunts")
 require("scripts/globals/status")
 
