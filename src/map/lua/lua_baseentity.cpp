@@ -6578,7 +6578,7 @@ inline int32 CLuaBaseEntity::addMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    uint16 MissionID = (uint16)lua_tointeger(L, 2);
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
@@ -6622,13 +6622,13 @@ inline int32 CLuaBaseEntity::delMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    uint16 MissionID = (uint16)lua_tointeger(L, 2);
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
     {
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
-        auto current = (uint8)PChar->m_missionLog[missionLogID].current;
+        auto current = (uint16)PChar->m_missionLog[missionLogID].current;
         bool complete = (missionLogID == MISSION_COP || MissionID >= 64) ? false : PChar->m_missionLog[missionLogID].complete[MissionID];
 
         if (current == MissionID)
@@ -6670,11 +6670,11 @@ inline int32 CLuaBaseEntity::getCurrentMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, -1);
-    uint8 MissionID = 0;
+    uint16 MissionID = 0;
 
     if (missionLogID < MAX_MISSIONAREA)
     {
-        MissionID = (uint8)((CCharEntity*)m_PBaseEntity)->m_missionLog[missionLogID].current;
+        MissionID = (uint16)((CCharEntity*)m_PBaseEntity)->m_missionLog[missionLogID].current;
     }
     else
     {
@@ -6705,7 +6705,7 @@ inline int32 CLuaBaseEntity::hasCompletedMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    uint16 MissionID = (uint16)lua_tointeger(L, 2);
 
     bool complete = false;
 
@@ -6743,7 +6743,7 @@ inline int32 CLuaBaseEntity::completeMission(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 missionLogID = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
-    uint8 MissionID = (uint8)lua_tointeger(L, 2);
+    uint16 MissionID = (uint16)lua_tointeger(L, 2);
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     if (missionLogID < MAX_MISSIONAREA && MissionID < MAX_MISSIONID)
