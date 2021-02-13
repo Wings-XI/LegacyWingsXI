@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4523,89 +4523,89 @@ namespace charutils
 
 
 
-        if (HasCompletedMission(PChar, 6, 0))
+        if (HasCompletedMission(PChar, 6, 101)) //ANCIENT_FLAMES_BECKON
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 1))
+        if (HasCompletedMission(PChar, 6, 110)) //THE_RITES_OF_LIFE
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 2))
+        if (HasCompletedMission(PChar, 6, 118)) //BELOW_THE_ARKS
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 3))
+        if (HasCompletedMission(PChar, 6, 128)) //THE_MOTHERCRYSTALS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 5))
+        if (HasCompletedMission(PChar, 6, 138)) //AN_INVITATION_WEST
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 15))
+        if (HasCompletedMission(PChar, 6, 218)) //THE_LOST_CITY
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 16))
+        if (HasCompletedMission(PChar, 6, 228)) //DISTANT_BELIEFS
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 17))
+        if (HasCompletedMission(PChar, 6, 238)) //AN_ETERNAL_MELODY
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 18))
+        if (HasCompletedMission(PChar, 6, 248)) //ANCIENT_VOWS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 19))
+        if (HasCompletedMission(PChar, 6, 257)) //A_TRANSIENT_DREAM
             afterMW3 += 1;
-        if (HasCompletedMission(PChar, 6, 20))
+        if (HasCompletedMission(PChar, 6, 258)) //THE_CALL_OF_THE_WYRMKING
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 27))
+        if (HasCompletedMission(PChar, 6, 318)) //A_VESSEL_WITHOUT_A_CAPTAIN (Note: The Road Forks does not give Wardrobe slots!)
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 29))
+        if (HasCompletedMission(PChar, 6, 335)) //DESCENDANTS_OF_A_LINE_LOST
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 30))
+        if (HasCompletedMission(PChar, 6, 341)) // COMEDY_OF_ERRORS_ACT_!
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 31))
+        if (HasCompletedMission(PChar, 6, 350)) //TENDING_AGED_WOUUNDS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 32))
+        if (HasCompletedMission(PChar, 6, 358)) //DARKNESS_NAMED
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 33))
+        if (HasCompletedMission(PChar, 6, 368)) //SHELTERING_DOUBT
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 40))
+        if (HasCompletedMission(PChar, 6, 418)) //THE_SAVAGE
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 41))
+        if (HasCompletedMission(PChar, 6, 428)) //THE_SECRETS_OF_WORSHIP
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 42))
+        if (HasCompletedMission(PChar, 6, 438)) //SLANDEROUS_UTTERINGS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 43))
+        if (HasCompletedMission(PChar, 6, 448)) //THE_ENDURING_TUMULT_OF_WAR
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 52))
+        if (HasCompletedMission(PChar, 6, 518)) //DESIRES_OF_EMPTINESS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 54))
+        if (HasCompletedMission(PChar, 6, 530)) //THREE_PATHS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 55))
+        if (HasCompletedMission(PChar, 6, 543)) //PARTNERS_WITHOUT_FAME
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 56))
+        if (HasCompletedMission(PChar, 6, 552)) //SPIRAL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 57))
+        if (HasCompletedMission(PChar, 6, 560)) //WHERE_MESSENGERS_GATHER
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 58))
+        if (HasCompletedMission(PChar, 6, 568)) //FLAMES_FOR_THE_DEAD
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 60))
+        if (HasCompletedMission(PChar, 6, 578)) //FOR_WHOM_THE_VERSE_IS_SUNG
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 65))
+        if (HasCompletedMission(PChar, 6, 618)) //A_PLACE_TO_RETURN
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 66))
+        if (HasCompletedMission(PChar, 6, 628)) //MORE_QUESTIONS_THAN_ANSWERS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 67))
+        if (HasCompletedMission(PChar, 6, 638)) //ONE_TO_BE_FEARED
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 68))
+        if (HasCompletedMission(PChar, 6, 648)) //CHAINS_AND_BOUNDS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 77))
+        if (HasCompletedMission(PChar, 6, 718)) //FLAMES_IN_THE_DARKNESS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 78))
+        if (HasCompletedMission(PChar, 6, 728)) //FIRE_IN_THE_EYES_OF_MEN
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 80))
+        if (HasCompletedMission(PChar, 6, 738)) //CALM_BEFORE_THE_STORM
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 81))
+        if (HasCompletedMission(PChar, 6, 748)) //THE_WARRIORS_PATH
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 82))
+        if (HasCompletedMission(PChar, 6, 758)) //EMPTINESS_BLEEDS
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 87))
+        if (HasCompletedMission(PChar, 6, 800)) //GARDEN_OF_ANTIQUITY
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 90))
+        if (HasCompletedMission(PChar, 6, 818)) //A_FATE_DECIDED
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 91))
+        if (HasCompletedMission(PChar, 6, 828)) //WHEN_ANGELS_FALL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 92))
+        if (HasCompletedMission(PChar, 6, 840)) //DAWN
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 94))
+        if (HasCompletedMission(PChar, 6, 850)) //THE_LAST_VERSE
             afterMW3 += 2;
 
         uint8 AU = 0;
