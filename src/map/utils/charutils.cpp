@@ -3791,6 +3791,9 @@ namespace charutils
                             default: exp *= (1.8f / pcinzone); break;
                         }
 
+                        // TODO: This needs to be a formula using
+                        // Astral Candescence and Imperial Defense Rating when besieged is added.
+                        exp *= 1.10f; // 10% bonus XP because we assume Astral Candescence is active.
                     }
                     else
                     {
