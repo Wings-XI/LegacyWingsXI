@@ -65,6 +65,7 @@ public:
 	uint8	GetSize();
 	uint8	GetFreeSlotsCount();					// количество свободных ячеек в хранилище
     uint8   AddBuff(int8 buff);                     // планируемый размер хранилища (размер без ограничений)
+    uint8   SetBuff(int8 buff);
     uint8   AddSize(int8 size);                     // увеличиваем/уменьшаем размер контейнера
 	uint8	SetSize(uint8 size);
 	uint8	SearchItem(uint16 ItemID);				// поиск предмета в хранилище

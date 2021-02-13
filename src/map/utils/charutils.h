@@ -154,7 +154,7 @@ namespace charutils
     void	SaveCharPosition(CCharEntity* PChar);				        // сохраняем позицию персонажа
     void	SaveMissionsList(CCharEntity* PChar);                       // Save the missions list
     void    SaveEminenceData(CCharEntity* PChar);                       // Save Eminence Record (RoE) data
-    void    UpdateMissionStorage(CCharEntity* PChar);                   // calculate the rewards for MW1/MW2/MW3/MW4/Satchel and send player a msg if went up
+    void    UpdateMissionStorage(CCharEntity* PChar, bool recovery=false); // calculate the rewards for MW1/MW2/MW3/MW4/Satchel and send player a msg if went up
     bool    HasCompletedMission(CCharEntity* PChar, uint8 log, uint8 mission); // used with UpdateMissionStorage
     void	SaveQuestsList(CCharEntity* PChar);					        // сохраняем список ксевтов
     void    SaveFame(CCharEntity* PChar);                               // Save area fame / reputation

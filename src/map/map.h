@@ -159,6 +159,7 @@ struct map_config_t
     uint32 debug_client_ip;           // Print when a packet from this IP is received (used for debug breaks)
     uint16  daily_tally_amount;       // Amount of daily tally points given at midnight for Gobbie Mystery Box
     uint16  daily_tally_limit;        // Upper limit of daily tally points for Gobbie Mystery Box
+    bool   mission_storage_recovery;  // Recalculate inventory sizes according to mission progress on login
 };
 
 /************************************************************************

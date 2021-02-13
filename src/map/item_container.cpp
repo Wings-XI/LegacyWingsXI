@@ -81,6 +81,12 @@ uint8 CItemContainer::AddBuff(int8 buff)
     return SetSize(std::min<uint8>((uint8)m_buff, 80)); // ограничение в 80 ячеек для персонажа
 }
 
+uint8 CItemContainer::SetBuff(int8 buff)
+{
+    m_buff = buff;
+    return SetSize(std::min<uint8>((uint8)m_buff, 80)); // ограничение в 80 ячеек для персонажа
+}
+
 /************************************************************************
 *                                                                       *
 *  Установка размера контейнера                                         *

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4431,13 +4431,27 @@ namespace charutils
             PChar->id);
     }
 
-    void UpdateMissionStorage(CCharEntity* PChar)
+    void UpdateMissionStorage(CCharEntity* PChar, bool recovery)
     {
-        uint8 currentMW1 = PChar->getStorage(8)->GetSize();
-        uint8 currentMW2 = PChar->getStorage(10)->GetSize();;
-        uint8 currentMW3 = PChar->getStorage(11)->GetSize();;
-        uint8 currentMW4 = PChar->getStorage(12)->GetSize();;
-        uint8 currentSack = PChar->getStorage(6)->GetSize();;
+        uint8 currentMW1 = 0;
+        uint8 currentMW2 = 0;
+        uint8 currentMW3 = 0;
+        uint8 currentMW4 = 0;
+        uint8 currentSack = 0;
+
+        uint8 realCurrentMW1 = PChar->getStorage(8)->GetSize();
+        uint8 realCurrentMW2 = PChar->getStorage(10)->GetSize();
+        uint8 realCurrentMW3 = PChar->getStorage(11)->GetSize();
+        uint8 realCurrentMW4 = PChar->getStorage(12)->GetSize();
+        uint8 realCurrentSack = PChar->getStorage(6)->GetSize();
+
+        if (!recovery) {
+            currentMW1 = realCurrentMW1;
+            currentMW2 = realCurrentMW2;
+            currentMW3 = realCurrentMW3;
+            currentMW4 = realCurrentMW4;
+            currentSack = realCurrentSack;
+        }
 
         uint8 afterMW1 = 0;
         uint8 afterMW2 = 0;
@@ -4642,68 +4656,73 @@ namespace charutils
         uint8 increase = 0;
         std::string line;
 
-        if (afterMW1 > currentMW1)
+        if ((afterMW1 != realCurrentMW1) && ((recovery) || (afterMW1 > currentMW1)))
         {
-            increase = afterMW1 - currentMW1;
-            line = "The capacity of your Mog Wardrobe 1 has increased by "; line += std::to_string(increase);
-            if (increase > 1)
-                line += " slots!";
-            else
-                line += " slot!";
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
-            PChar->getStorage(8)->AddBuff(increase);
+            if (!recovery) {
+                line = "The capacity of your Mog Wardrobe 1 has increased by "; line += std::to_string(increase);
+                if (increase > 1)
+                    line += " slots!";
+                else
+                    line += " slot!";
+                PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            }
+            PChar->getStorage(8)->SetBuff(afterMW1);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
-        if (afterMW2 > currentMW2)
+        if ((afterMW2 != realCurrentMW2) && ((recovery) || (afterMW2 > currentMW2)))
         {
-            increase = afterMW2 - currentMW2;
-            line = "The capacity of your Mog Wardrobe 2 has increased by "; line += std::to_string(increase);
-            if (increase > 1)
-                line += " slots!";
-            else
-                line += " slot!";
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
-            PChar->getStorage(10)->AddBuff(increase);
+            if (!recovery) {
+                line = "The capacity of your Mog Wardrobe 2 has increased by "; line += std::to_string(increase);
+                if (increase > 1)
+                    line += " slots!";
+                else
+                    line += " slot!";
+                PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            }
+            PChar->getStorage(10)->SetBuff(afterMW2);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
-        if (afterMW3 > currentMW3)
+        if ((afterMW3 != realCurrentMW3) && ((recovery) || (afterMW3 > currentMW3)))
         {
-            increase = afterMW3 - currentMW3;
-            line = "The capacity of your Mog Wardrobe 3 has increased by "; line += std::to_string(increase);
-            if (increase > 1)
-                line += " slots!";
-            else
-                line += " slot!";
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
-            PChar->getStorage(11)->AddBuff(increase);
+            if (!recovery) {
+                line = "The capacity of your Mog Wardrobe 3 has increased by "; line += std::to_string(increase);
+                if (increase > 1)
+                    line += " slots!";
+                else
+                    line += " slot!";
+                PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            }
+            PChar->getStorage(11)->SetBuff(afterMW3);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
-        if (afterMW4 > currentMW4)
+        if ((afterMW4 != realCurrentMW4) && ((recovery) || (afterMW4 > currentMW4)))
         {
-            increase = afterMW4 - currentMW4;
-            line = "The capacity of your Mog Wardrobe 4 has increased by "; line += std::to_string(increase);
-            if (increase > 1)
-                line += " slots!";
-            else
-                line += " slot!";
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
-            PChar->getStorage(12)->AddBuff(increase);
+            if (!recovery) {
+                line = "The capacity of your Mog Wardrobe 4 has increased by "; line += std::to_string(increase);
+                if (increase > 1)
+                    line += " slots!";
+                else
+                    line += " slot!";
+                PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            }
+            PChar->getStorage(12)->SetBuff(afterMW4);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
-        if (afterSack > currentSack)
+        if ((afterSack != realCurrentSack) && ((recovery) || (afterSack > currentSack)))
         {
-            increase = afterSack - currentSack;
-            line = "The capacity of your Mog Sack has increased by "; line += std::to_string(increase);
-            if (increase > 1)
-                line += " slots!";
-            else
-                line += " slot!";
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
-            PChar->getStorage(6)->AddBuff(increase);
+            if (!recovery) {
+                line = "The capacity of your Mog Sack has increased by "; line += std::to_string(increase);
+                if (increase > 1)
+                    line += " slots!";
+                else
+                    line += " slot!";
+                PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+            }
+            PChar->getStorage(6)->SetBuff(afterSack);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }

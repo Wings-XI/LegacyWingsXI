@@ -708,6 +708,10 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
                 PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
             }
 
+            if (map_config.mission_storage_recovery) {
+                charutils::UpdateMissionStorage(PChar, true);
+            }
+
             PChar->status = STATUS_DISAPPEAR;
 
             map_session_data->PChar = PChar;
@@ -1263,6 +1267,7 @@ int32 map_config_default()
     map_config.debug_client_ip = 0;
     map_config.daily_tally_amount = 10;
     map_config.daily_tally_limit = 50000;
+    map_config.mission_storage_recovery = false;
     return 0;
 }
 
@@ -1711,6 +1716,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "daily_tally_limit") == 0)
         {
             map_config.daily_tally_limit = atoi(w2);
+        }
+        else if (strcmp(w1, "mission_storage_recovery") == 0)
+        {
+        map_config.mission_storage_recovery = atoi(w2);
         }
         else
         {
