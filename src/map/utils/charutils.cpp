@@ -4729,7 +4729,7 @@ namespace charutils
 
     }
 
-    bool HasCompletedMission(CCharEntity* PChar, uint8 log, uint8 mission)
+    bool HasCompletedMission(CCharEntity* PChar, uint8 log, uint16 mission)
     {
         return (log == MISSION_COP || mission >= 64) ? mission < PChar->m_missionLog[log].current : PChar->m_missionLog[log].complete[mission];
     }
