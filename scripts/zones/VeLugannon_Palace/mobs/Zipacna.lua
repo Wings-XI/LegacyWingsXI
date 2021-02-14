@@ -126,6 +126,10 @@ local travellocation = {
     yellow = 3
 }
 
+function onMobInitialize(mob)
+    mob:addMod(tpz.mod.MOVE, 50)
+end
+
 function onMobSpawn(mob)
     mob:setLocalVar("Traveling", travellocation.blue)
     onMobRoam(mob)
