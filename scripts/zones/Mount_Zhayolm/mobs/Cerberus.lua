@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+local ID = require("scripts/zones/Mount_Zhayolm/IDs")
 -----------------------------------
 
 function onMobFight(mob, target)
@@ -19,5 +20,8 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 - 72 hours with 1 hour windows
+    UpdateNMSpawnPoint(mob:getID())
+	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+    mob:setRespawnTime(respawn)
+	SetServerVariable("CerbRespawn",(os.time() + respawn))
 end

@@ -40,6 +40,16 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.HYDRA)
+	local simre = GetServerVariable("HydraRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.HYDRA):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.HYDRA)
+	end
+end
+
 function onRegionEnter(player, region)
 end
 

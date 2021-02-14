@@ -55,6 +55,7 @@ zones[tpz.zone.WAJAOM_WOODLANDS] =
         IRIZ_IMA               = 16986429,
         GOTOH_ZHA_THE_REDOLENT = 16986430,
         TINNIN                 = 16986431,
+        HYDRA                  = 16986355,
     },
     npc =
     {
