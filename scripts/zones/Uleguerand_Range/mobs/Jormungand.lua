@@ -2,7 +2,7 @@
 -- Area: Uleguerand Range
 --  HNM: Jormungand
 -----------------------------------
-
+local ID = require("scripts/zones/Uleguerand_Range/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 
@@ -65,5 +65,9 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(259200, 432000)) -- 3 to 5 days
+    UpdateNMSpawnPoint(mob:getID())
+	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+    mob:setRespawnTime(respawn)
+	SetServerVariable("JormRespawn",(os.time() + respawn))
 end
+

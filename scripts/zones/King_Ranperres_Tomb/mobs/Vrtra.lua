@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 -----------------------------------
 
 local offsets = {1, 3, 5, 2, 4, 6}
@@ -59,7 +60,9 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    -- Set Vrtra's spawnpoint and respawn time (3-5 days)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(259200, 432000))
+	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+    mob:setRespawnTime(respawn)
+	SetServerVariable("VrtraRespawn",(os.time() + respawn))
 end
+
