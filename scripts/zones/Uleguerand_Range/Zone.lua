@@ -48,6 +48,16 @@ function onEventFinish(player, csid, option)
     end
 end
 
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.JORMUNGAND)
+	local simre = GetServerVariable("JormRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.JORMUNGAND)
+	end
+end
+
 function onZoneWeatherChange(weather)
     local waterfall = GetNPCByID(ID.npc.WATERFALL)
     if (weather == tpz.weather.SNOW or weather == tpz.weather.BLIZZARDS) then
