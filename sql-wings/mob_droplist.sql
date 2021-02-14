@@ -16494,7 +16494,15 @@ INSERT INTO `mob_droplist` VALUES(6860, 0, 0, 1000, 4104, 1000);
 INSERT INTO `mob_droplist` VALUES(6860, 0, 0, 1000, 4104, 400);
 INSERT INTO `mob_droplist` VALUES(6860, 0, 0, 1000, 4104, 150);
 INSERT INTO `mob_droplist` VALUES(1201, 0, 0, 1000, 1181, 80);
-
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 17952, 300);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 15530, 500);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 2851, 1000);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 2851, 300);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 2172, 1000);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 2172, 300);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 5564, 1000);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 5564, 300);
+INSERT INTO `mob_droplist` VALUES(6861, 0, 0, 1000, 2154, 500);
 --
 -- Indexes for dumped tables
 --
