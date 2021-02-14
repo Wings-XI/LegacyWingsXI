@@ -33,13 +33,15 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
+	local respawn = math.random(75600, 86400) -- 21h to 24h
+    mob:setRespawnTime(respawn)
+	SetServerVariable("KVRespawn",(os.time() + respawn))
 end
 
 function updateRegen(mob)
     local hour = VanadielHour()
     local regen = mob:getMod(tpz.mod.REGEN)
-    
+
     if hour > 3 and hour < 20 then -- daytime between 4:00 and 20:00
         if regen ~= 125 then
             mob:setMod(tpz.mod.REGEN, 125)

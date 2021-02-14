@@ -3,6 +3,7 @@
 --   NM: Khimaira
 -----------------------------------
 require("scripts/globals/titles")
+local ID = require("scripts/zones/Caedarva_Mire/IDs")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
@@ -10,5 +11,8 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 to 72 hours, in 1-hour increments
+    UpdateNMSpawnPoint(mob:getID())
+	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+    mob:setRespawnTime(respawn)
+	SetServerVariable("KhimairaRespawn",(os.time() + respawn))
 end

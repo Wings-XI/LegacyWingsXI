@@ -37,6 +37,16 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.KHIMAIRA)
+	local simre = GetServerVariable("KhimairaRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.KHIMAIRA)
+	end
+end
+
 function afterZoneIn(player)
     player:entityVisualPacket("1pb1")
     player:entityVisualPacket("2pb1")

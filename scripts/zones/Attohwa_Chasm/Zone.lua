@@ -78,6 +78,17 @@ end
 function onRegionLeave(player, region)
 end
 
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.TIAMAT)
+	local simre = GetServerVariable("TiamatRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.TIAMAT):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.TIAMAT)
+	end
+end
+
+
 function onGameHour(zone)
     --[[
         the hard-coded id that was here was wrong. there are 22 miasmas in attohwa chasm

@@ -66,3 +66,14 @@ function onZoneWeatherChange(weather)
         DespawnMob(ID.mob.KING_VINEGARROON)
     end
 end
+
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
+	local simre = GetServerVariable("KVRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.KING_VINEGARROON)
+	end
+end
+
