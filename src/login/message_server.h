@@ -27,11 +27,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 struct chat_message_t
 {
     uint64 dest;
-    MSGSERVTYPE type;
+    msg_type_t type;
     zmq::message_t data;
     zmq::message_t packet;
 };
 
 void message_server_init();
 void message_server_close();
-void queue_message(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet);
+void queue_message(uint64 ipp, msg_type_t* msg_type, zmq::message_t* extra, zmq::message_t* packet);
