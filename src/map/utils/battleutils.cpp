@@ -699,8 +699,8 @@ namespace battleutils
             switch (static_cast<SPIKES>(Action->spikesEffect))
             {
             case SPIKE_BLAZE: element = 1; break;
-            case SPIKE_ICE:   element = 5; break;
-            case SPIKE_SHOCK: element = 6; break;
+            case SPIKE_ICE:   element = 2; break;
+            case SPIKE_SHOCK: element = 5; break;
             case SPIKE_DREAD: element = 8; break;
             default: break;
             }
@@ -984,32 +984,32 @@ namespace battleutils
             {
             case ENSPELL_I_FIRE:
             case ENSPELL_II_FIRE:
-                element = 1; break;
-            case ENSPELL_I_EARTH:
-            case ENSPELL_II_EARTH:
-                element = 2; break;
-            case ENSPELL_I_WATER:
-            case ENSPELL_II_WATER:
-                element = 3; break;
-            case ENSPELL_I_WIND:
-            case ENSPELL_II_WIND:
-                element = 4; break;
+                element = ELEMENT_FIRE; break;
             case ENSPELL_I_ICE:
             case ENSPELL_II_ICE:
-                element = 5; break;
+                element = ELEMENT_ICE; break;
+            case ENSPELL_I_WIND:
+            case ENSPELL_II_WIND:
+                element = ELEMENT_WIND; break;
+            case ENSPELL_I_EARTH:
+            case ENSPELL_II_EARTH:
+                element = ELEMENT_EARTH; break;
             case ENSPELL_I_THUNDER:
             case ENSPELL_II_THUNDER:
             case ENSPELL_ROLLING_THUNDER:
-                element = 6; break;
+                element = ELEMENT_THUNDER; break;
+            case ENSPELL_I_WATER:
+            case ENSPELL_II_WATER:
+                element = ELEMENT_WATER; break;
             case ENSPELL_I_LIGHT:
             case ENSPELL_II_LIGHT:
             case ENSPELL_AUSPICE:
-                element = 7; break;
+                element = ELEMENT_LIGHT; break;
             case ENSPELL_I_DARK:
             case ENSPELL_BLOOD_WEAPON:
             case ENSPELL_DRAIN_SAMBA:
             case ENSPELL_ASPIR_SAMBA:
-                element = 8; break;
+                element = ELEMENT_DARK; break;
             default: break;
             }
 
@@ -1020,7 +1020,7 @@ namespace battleutils
 
             if (enspell > 0 && enspell <= 6)
             {
-                Action->additionalEffect = enspell_subeffects[enspell + 1];
+                Action->additionalEffect = enspell_subeffects[enspell - 1];
                 Action->addEffectMessage = 163;
                 Action->addEffectParam = CalculateEnspellDamage(PAttacker, PDefender, 1, enspell - 1) / SDTdivisor;
 
@@ -1034,7 +1034,7 @@ namespace battleutils
             }
             else if (enspell > 8 && enspell <= 14 && isFirstSwing)
             {
-                Action->additionalEffect = enspell_subeffects[enspell - 7];
+                Action->additionalEffect = enspell_subeffects[enspell - 9];
                 Action->addEffectMessage = 163;
                 Action->addEffectParam = CalculateEnspellDamage(PAttacker, PDefender, 2, enspell - 9) / SDTdivisor;
 
