@@ -14325,7 +14325,7 @@ INSERT INTO `item_basic` VALUES(17093, 0, 'rune_staff', 'rune_staff', 1, 2052, 1
 INSERT INTO `item_basic` VALUES(17094, 0, 'wise_wizards_staff', 'wis.wiz._staff', 1, 2052, 12, 0, 8158);
 INSERT INTO `item_basic` VALUES(17095, 0, 'ash_pole', 'ash_pole', 1, 2084, 12, 0, 107);
 INSERT INTO `item_basic` VALUES(17096, 0, 'holly_pole', 'holly_pole', 1, 2084, 12, 0, 431);
-INSERT INTO `item_basic` VALUES(17097, 0, 'elm_pole', 'elm_pole', 1, 2084, 12, 0, 4449);
+INSERT INTO `item_basic` VALUES(17097, 0, 'elm_pole', 'elm_pole', 1, 2084, 12, 0, 779);
 INSERT INTO `item_basic` VALUES(17098, 0, 'oak_pole', 'oak_pole', 1, 2084, 12, 0, 1560);
 INSERT INTO `item_basic` VALUES(17099, 0, 'mahogany_pole', 'mahogany_pole', 1, 2084, 12, 0, 7854);
 INSERT INTO `item_basic` VALUES(17100, 0, 'ebony_pole', 'ebony_pole', 1, 2084, 12, 0, 4337);
@@ -14345,7 +14345,7 @@ INSERT INTO `item_basic` VALUES(17115, 0, 'warhammer_+1', 'warhammer_+1', 1, 208
 INSERT INTO `item_basic` VALUES(17116, 0, 'misery_staff', 'misery_staff', 1, 2052, 12, 0, 447);
 INSERT INTO `item_basic` VALUES(17117, 0, 'hypno_staff', 'hypno_staff', 1, 2052, 12, 0, 811);
 INSERT INTO `item_basic` VALUES(17118, 0, 'lituus_+1', 'lituus_+1', 1, 2048, 0, 0, 0);
-INSERT INTO `item_basic` VALUES(17119, 0, 'elm_pole_+1', 'elm_pole_+1', 1, 2080, 12, 0, 5561);
+INSERT INTO `item_basic` VALUES(17119, 0, 'elm_pole_+1', 'elm_pole_+1', 1, 2080, 12, 0, 817);
 INSERT INTO `item_basic` VALUES(17120, 0, 'oak_pole_+1', 'oak_pole_+1', 1, 2080, 12, 0, 1692);
 INSERT INTO `item_basic` VALUES(17121, 0, 'maul_+1', 'maul_+1', 1, 2080, 11, 0, 2850);
 INSERT INTO `item_basic` VALUES(17122, 0, 'ash_pole_+1', 'ash_pole_+1', 1, 2080, 12, 0, 120);
