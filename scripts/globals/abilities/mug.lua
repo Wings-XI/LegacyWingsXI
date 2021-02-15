@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
     return 0, 0
 end
 
+--[[
 function onUseAbility(player, target, ability, action)
     local thfLevel
     local gil = 0
