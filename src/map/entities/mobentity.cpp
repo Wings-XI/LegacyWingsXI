@@ -1052,7 +1052,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         if (PChar->PParty == nullptr)
         {
-            if (((PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && conquest::GetInfluenceGraphics(PChar->loc.zone->GetRegionID()) < 64) ||
+            if (((PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && (conquest::GetRegionOwner(PChar->loc.zone->GetRegionID()) <= 2)) ||
                 (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && PChar->loc.zone->GetRegionID() >= 28 && PChar->loc.zone->GetRegionID() <= 32) ||
                 (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && PChar->loc.zone->GetRegionID() >= 33 && PChar->loc.zone->GetRegionID() <= 40)) &&
                 tpzrand::GetRandomNumber(100) < 37)
@@ -1069,7 +1069,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             {
                 if ((member->objtype == TYPE_PC && member->getZone() == mob->getZone() && distanceSquared(member->loc.p, mob->loc.p) < 10000.0f) &&
                     (
-                    ((member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && conquest::GetInfluenceGraphics(member->loc.zone->GetRegionID()) < 64) ||
+                    ((member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && (conquest::GetRegionOwner(member->loc.zone->GetRegionID()) <= 2)) ||
                         (member->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && member->loc.zone->GetRegionID() >= 28 && member->loc.zone->GetRegionID() <= 32) ||
                         (member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && member->loc.zone->GetRegionID() >= 33 && member->loc.zone->GetRegionID() <= 40)) &&
                     tpzrand::GetRandomNumber(100) < 30)
@@ -1091,6 +1091,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         // Item element matches day/weather element, not mob crystal. Lv80+ xp mobs can drop Avatarite.
         // Wiki's have conflicting info on mob lv required for Geodes. One says 50 the other 75. I think 50 is correct.
 
+        /* -- Wings implementation seems better
         uint8 effect = 0; // Begin Adding Crystals
 
         if (m_Element > 0)
@@ -1156,6 +1157,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 return;
             }
         }
+        */
     }
 }
 
