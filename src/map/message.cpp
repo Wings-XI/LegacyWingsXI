@@ -47,7 +47,7 @@ namespace message
 {
     zmq::context_t zContext;
     zmq::socket_t* zSocket = nullptr;
-    std::mutex send_mutex;
+    std::recursive_mutex send_mutex;
     std::queue<chat_message_t> message_queue;
     uint64 own_identity;
 
@@ -55,7 +55,7 @@ namespace message
     {
         while (!message_queue.empty())
         {
-            std::lock_guard<std::mutex> lk(send_mutex);
+            std::lock_guard<std::recursive_mutex> lk(send_mutex);
             chat_message_t msg = message_queue.front();
             message_queue.pop();
             try
@@ -71,7 +71,7 @@ namespace message
         }
     }
 
-    void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
+    void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet, bool from_self)
     {
         ShowDebug("Message: Received message %u from message server\n", static_cast<uint8>(type));
         switch (type)
@@ -116,7 +116,9 @@ namespace message
             }
             else
             {
-                send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
+                if (!from_self) {
+                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
+                }
             }
             break;
         }
@@ -623,7 +625,7 @@ namespace message
             msg_type_t* pmsg_type = (msg_type_t*)type.data();
             if (pmsg_type->sender != own_identity) {
                 // Already went through bypass
-                parse(pmsg_type->type, &extra, &packet);
+                parse(pmsg_type->type, &extra, &packet, false);
             }
         }
     }
@@ -696,7 +698,7 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
-        std::lock_guard<std::mutex> lk(send_mutex);
+        std::lock_guard<std::recursive_mutex> lk(send_mutex);
         chat_message_t msg;
         msg_type_t msg_type;
         msg_type.sender = own_identity;
@@ -722,7 +724,7 @@ namespace message
         // This allows to reduce latency for chat packets between people in the same
         // cluster, as well as allowing people in the same cluster to chat even
         // if ZMQ is down.
-        parse(type, msg.data, msg.packet);
+        parse(type, msg.data, msg.packet, true);
         // And of course send to ZMQ for other servers
         message_queue.push(msg);
     }
