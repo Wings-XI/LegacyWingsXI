@@ -99,7 +99,15 @@ namespace message
         }
         case MSG_CHAT_TELL:
         {
-            CCharEntity* PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
+            int8* targetCharName = (int8*)extra->data() + 4;
+            CCharEntity* PChar = zoneutils::GetCharByName(targetCharName);;
+            bool charNotFound = false;
+            if (!PChar) {
+                int32 ret = Sql_Query(SqlHandle, "SELECT charid FROM accounts_sessions WHERE charid IN (SELECT charid FROM chars WHERE charname = '%s');",targetCharName);
+                if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0) {
+                    charNotFound = true;
+                }
+            }
             if (PChar && PChar->status != STATUS_DISAPPEAR && !jailutils::InPrison(PChar))
             {
                 std::unique_ptr<CBasicPacket> newPacket = std::make_unique<CBasicPacket>();
@@ -116,7 +124,7 @@ namespace message
             }
             else
             {
-                if (!from_self) {
+                if (charNotFound || (PChar && from_self) || (!PChar && !from_self)) {
                     send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
                 }
             }
