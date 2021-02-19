@@ -29,6 +29,16 @@ function afterZoneIn(player)
     player:entityVisualPacket("2pb1")
 end
 
+function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.CERBERUS)
+	local simre = GetServerVariable("CerbRespawn")
+	if os.time() < simre then
+		GetMobByID(ID.mob.CERBERUS):setRespawnTime(simre - os.time())
+	else
+		SpawnMob(ID.mob.CERBERUS)
+	end
+end
+
 function onRegionEnter(player, region)
 end
 

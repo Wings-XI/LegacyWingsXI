@@ -4,6 +4,7 @@
 -- !pos -282 -24 -1 51
 -----------------------------------
 require("scripts/globals/titles")
+local ID = require("scripts/zones/Wajaom_Woodlands/IDs")
 -----------------------------------
 
 function onMobFight(mob, target)
@@ -42,5 +43,9 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(48, 72) * 3600) -- 48 to 72 hours, in 1 hour windows
+    UpdateNMSpawnPoint(mob:getID())
+	local respawn = math.random(172800, 259200) -- 21h to 24h
+    mob:setRespawnTime(respawn)
+	SetServerVariable("HydraRespawn",(os.time() + respawn))
 end
+

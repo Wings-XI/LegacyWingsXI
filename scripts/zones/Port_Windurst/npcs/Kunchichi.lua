@@ -20,7 +20,7 @@ end
 function onTrigger(player,npc)
     local WildcatWindurst = player:getCharVar("WildcatWindurst")
 
-    if player:getQuestStatus(WINDURST,tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and player:getMaskBit(WildcatWindurst,15) == false then
+    if player:getQuestStatus(WINDURST,tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and utils.mask.getBit(WildcatWindurst,15) == false then
         player:startEvent(623)
     else
         player:startEvent(228)
@@ -32,6 +32,7 @@ end
 
 function onEventFinish(player,csid,option)
     if (csid == 623) then
-        player:setMaskBit(player:getCharVar("WildcatWindurst"),"WildcatWindurst",15,true)
+        player:setCharVar("WildcatWindurst", utils.mask.setBit(player:getCharVar("WildcatWindurst"), 15, true))
+
     end
 end

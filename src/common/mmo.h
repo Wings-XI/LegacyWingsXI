@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -92,6 +92,14 @@ enum MSGSERVTYPE : uint8
     MSG_SEND_FL_NOTIF,
     MSG_NEW_TICKET
 };
+
+#pragma pack(push, 1)
+struct msg_type_t
+{
+    uint64 sender;
+    MSGSERVTYPE type;
+};
+#pragma pack(pop)
 
 typedef std::string string_t;
 

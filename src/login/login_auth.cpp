@@ -229,12 +229,15 @@ int32 login_parse(int32 fd)
                             uint64 port = Sql_GetUIntData(SqlHandle, 2);
 
                             ip |= (port << 32);
+                            msg_type_t msg_type;
+                            msg_type.sender = ip;
+                            msg_type.type = MSG_LOGIN;
 
                             zmq::message_t chardata(sizeof(charid));
                             ref<uint32>((uint8*)chardata.data(), 0) = charid;
                             zmq::message_t empty(0);
 
-                            queue_message(ip, MSG_LOGIN, &chardata, &empty);
+                            queue_message(ip, &msg_type, &chardata, &empty);
                         }
                     }
                     memset(&session[fd]->wdata[0], 0, 33);

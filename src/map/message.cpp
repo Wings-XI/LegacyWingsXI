@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -47,14 +47,15 @@ namespace message
 {
     zmq::context_t zContext;
     zmq::socket_t* zSocket = nullptr;
-    std::mutex send_mutex;
+    std::recursive_mutex send_mutex;
     std::queue<chat_message_t> message_queue;
+    uint64 own_identity;
 
     void send_queue()
     {
         while (!message_queue.empty())
         {
-            std::lock_guard<std::mutex> lk(send_mutex);
+            std::lock_guard<std::recursive_mutex> lk(send_mutex);
             chat_message_t msg = message_queue.front();
             message_queue.pop();
             try
@@ -70,7 +71,7 @@ namespace message
         }
     }
 
-    void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
+    void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet, bool from_self)
     {
         ShowDebug("Message: Received message %u from message server\n", static_cast<uint8>(type));
         switch (type)
@@ -98,7 +99,15 @@ namespace message
         }
         case MSG_CHAT_TELL:
         {
-            CCharEntity* PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
+            int8* targetCharName = (int8*)extra->data() + 4;
+            CCharEntity* PChar = zoneutils::GetCharByName(targetCharName);;
+            bool charNotFound = false;
+            if (!PChar) {
+                int32 ret = Sql_Query(SqlHandle, "SELECT charid FROM accounts_sessions WHERE charid IN (SELECT charid FROM chars WHERE charname = '%s');",targetCharName);
+                if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0) {
+                    charNotFound = true;
+                }
+            }
             if (PChar && PChar->status != STATUS_DISAPPEAR && !jailutils::InPrison(PChar))
             {
                 std::unique_ptr<CBasicPacket> newPacket = std::make_unique<CBasicPacket>();
@@ -115,7 +124,9 @@ namespace message
             }
             else
             {
-                send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
+                if (charNotFound || (PChar && from_self) || (!PChar && !from_self)) {
+                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
+                }
             }
             break;
         }
@@ -619,7 +630,11 @@ namespace message
                 continue;
             }
 
-            parse((MSGSERVTYPE)ref<uint8>((uint8*)type.data(), 0), &extra, &packet);
+            msg_type_t* pmsg_type = (msg_type_t*)type.data();
+            if (pmsg_type->sender != own_identity) {
+                // Already went through bypass
+                parse(pmsg_type->type, &extra, &packet, false);
+            }
         }
     }
 
@@ -656,6 +671,7 @@ namespace message
         ipp |= (port << 32);
 
         zSocket->setsockopt(ZMQ_IDENTITY, &ipp, sizeof ipp);
+        own_identity = ipp;
 
         uint32 to = 500;
         zSocket->setsockopt(ZMQ_RCVTIMEO, &to, sizeof to);
@@ -690,10 +706,15 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
-        std::lock_guard<std::mutex> lk(send_mutex);
+        std::lock_guard<std::recursive_mutex> lk(send_mutex);
         chat_message_t msg;
-        msg.type = new zmq::message_t(sizeof(MSGSERVTYPE));
-        ref<uint8>((uint8*)msg.type->data(), 0) = type;
+        msg_type_t msg_type;
+        msg_type.sender = own_identity;
+        msg_type.type = type;
+        //msg.type = new zmq::message_t(sizeof(MSGSERVTYPE));
+        msg.type = new zmq::message_t(sizeof(msg_type_t));
+        //ref<uint8>((uint8*)msg.type->data(), 0) = type;
+        ref<msg_type_t>((msg_type_t*)msg.type->data(), 0) = msg_type;
 
         msg.data = new zmq::message_t(datalen);
         if (datalen > 0)
@@ -707,6 +728,12 @@ namespace message
         {
             msg.packet = new zmq::message_t(0);
         }
+        // In addition to queueing it through ZMQ also bypass diretly to ourselves
+        // This allows to reduce latency for chat packets between people in the same
+        // cluster, as well as allowing people in the same cluster to chat even
+        // if ZMQ is down.
+        parse(type, msg.data, msg.packet, true);
+        // And of course send to ZMQ for other servers
         message_queue.push(msg);
     }
 };

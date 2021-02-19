@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -32,13 +32,13 @@ Sql_t* ChatSqlHandle = nullptr;
 std::queue<chat_message_t> msg_queue;
 std::mutex queue_mutex;
 
-void queue_message(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
+void queue_message(uint64 ipp, msg_type_t* msg_type, zmq::message_t* extra, zmq::message_t* packet)
 {
     std::lock_guard<std::mutex>lk(queue_mutex);
     chat_message_t msg;
     msg.dest = ipp;
 
-    msg.type = type;
+    msg.type = *msg_type;
 
     msg.data = zmq::message_t(extra->size());
     memcpy(msg.data.data(), extra->data(), extra->size());
@@ -49,7 +49,7 @@ void queue_message(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::mes
     msg_queue.push(std::move(msg));
 }
 
-void message_server_send(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
+void message_server_send(uint64 ipp, msg_type_t* msg_type, zmq::message_t* extra, zmq::message_t* packet)
 {
     try
     {
@@ -57,8 +57,8 @@ void message_server_send(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zm
         memcpy(to.data(), &ipp, sizeof(uint64));
         zSocket->send(to, ZMQ_SNDMORE);
 
-        zmq::message_t newType(sizeof(MSGSERVTYPE));
-        ref<uint8>((uint8*)newType.data(), 0) = type;
+        zmq::message_t newType(sizeof(msg_type_t));
+        memcpy(newType.data(), msg_type, sizeof(msg_type_t));
         zSocket->send(newType, ZMQ_SNDMORE);
 
         zmq::message_t newExtra(extra->size());
@@ -75,13 +75,14 @@ void message_server_send(uint64 ipp, MSGSERVTYPE type, zmq::message_t* extra, zm
     }
 }
 
-void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet, zmq::message_t* from)
+void message_server_parse(msg_type_t* msg_type, zmq::message_t* extra, zmq::message_t* packet, zmq::message_t* from)
 {
     int ret = SQL_ERROR;
     in_addr from_ip;
     uint16 from_port = 0;
     bool ipstring = false;
     char from_address[INET_ADDRSTRLEN];
+    MSGSERVTYPE type = msg_type->type;
 
     if (from)
     {
@@ -203,7 +204,7 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
                 ref<uint32>((uint8*)extra->data(), 0) = Sql_GetUIntData(ChatSqlHandle, 2);
             }
 
-            message_server_send(ip, type, extra, packet);
+            message_server_send(ip, msg_type, extra, packet);
         }
     }
 }
@@ -227,7 +228,7 @@ void message_server_listen()
                     while (!msg_queue.empty())
                     {
                         chat_message_t& msg = msg_queue.front();
-                        message_server_send(msg.dest, msg.type, &msg.data, &msg.packet);
+                        message_server_send(msg.dest, &msg.type, &msg.data, &msg.packet);
 
                         msg_queue.pop();
                     }
@@ -268,7 +269,8 @@ void message_server_listen()
             ShowError("Message: %s\n", e.what());
             continue;
         }
-        message_server_parse((MSGSERVTYPE)ref<uint8>((uint8*)type.data(), 0), &extra, &packet, &from);
+        msg_type_t* pmsg_type = (msg_type_t*)type.data();
+        message_server_parse(pmsg_type, &extra, &packet, &from);
     }
 }
 
