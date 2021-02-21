@@ -16,7 +16,7 @@ function onZoneIn(player, prevZone)
     local cs = -1
 
     if prevZone == 93 and player:getCharVar("SeeingBloodRed") == 4 then
-
+        player:startEvent(15)
     end
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then

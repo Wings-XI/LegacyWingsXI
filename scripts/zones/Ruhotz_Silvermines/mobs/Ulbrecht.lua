@@ -2,29 +2,37 @@
 -- Area: Ruhotz Silvermines
 --  Mob: Ulbrecht
 -----------------------------------
-require("scripts/globals/titles")
+local ID = require("scripts/zones/Ruhotz_Silvermines/IDs")
+require("scripts/globals/instance")
 -----------------------------------
 
 function onMobFight(mob, player)
     
     local instance = mob:getInstance()
     if (mob:getHPP() <= 20 and instance:completed() == false) then
+        mob:messageText(mob, ID.text.STUDENT_BECOME_MASTER)
         instance:complete()
     end
 
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
-        -- Vulcan Shot
-        if(skillId == 254) then
-            mob:showText(mob, ID.text.FOR_EPHRAMAD) -- 7497 Prepare to recieve
-            mob:timer(3000, function(mob)
-                mob:showText(mob, ID.text.TROUBLESOME_SQUABS)
-            end)
-        -- Circle Blade
-        elseif(skillId == 938) then
-            mob:showText(mob, ID.text.FOR_THE_BLACK_COFFIN)
+        local messageID = ID.text.UNLEARNT_SPRAT + math.random(0,4)
+        mob:messageText(mob, messageID)
+    end)
+
+    mob:addListener("MAGIC_START", "ULBRECHT_START_CASTING", function(mob, skillID)
+        local chance = math.random(0,99)
+        if chance < 40 then
+            local messageID = ID.text.UNLEARNT_SPRAT + math.random(0,4)
+            mob:messageText(mob, messageID)
         end
     end)
-    -- 20% hp
-    -- set seeing blood red to 4
-    -- play event 10000 > grauberg > event 15
+end
+
+function onMobEngaged(mob, target)
+    if mob:getLocalVar("dialog") == 0 then
+        mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
+        mob:setLocalVar("dialog", 1)
+
+        -- use dark arts
+    end
 end
