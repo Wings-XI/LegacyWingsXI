@@ -28,6 +28,12 @@ function onTrade(player, npc, trade)
             end
         end
     end
+
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED) == QUEST_ACCEPTED and player:getCharVar("SeeingBloodRed") == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+        if trade:hasItemQty(2550, 1) and trade:getGil() == 0 and trade:getItemCount() == 1 then
+            --player:startEvent(38) 37 and or 38 with params
+        end
+    end
 end
 
 function onTrigger(player, npc)
@@ -96,7 +102,7 @@ function onTrigger(player, npc)
         elseif (seeingBloodRedProgress == 2) then
             player:startEvent(33)
         elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
-            -- Lost BCNM
+            player:startEvent(37) -- possible param req 175, 23, 1757, 1810466574, -1507711624, 68921469, 0, 0
         elseif (seeingBloodRedProgress == 4) then
             player:startEvent(34)
         end
