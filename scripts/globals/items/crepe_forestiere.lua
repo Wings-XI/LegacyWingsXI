@@ -1,7 +1,7 @@
 -----------------------------------------
 -- ID: 5774
 -- Item: crepe_forestiere
--- Food Effect: 30Min, All Races
+-- Food Effect: 60Min, All Races
 -----------------------------------------
 -- Mind 2
 -- MP % 10 (cap 35)
@@ -21,7 +21,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 1800, 5774)
+    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 3600, 5774)
 end
 
 function onEffectGain(target, effect)
