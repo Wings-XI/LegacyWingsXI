@@ -24,6 +24,9 @@ end
 
 function onInstanceFailure(instance)
 
+    local mob = GetMobByID(ID.mob.ULBRECHT, instance)
+    mob:messageText(mob, ID.text.UNLEARNT_SPRAT)
+
     local chars = instance:getChars()
     for i, v in pairs(chars) do
         v:startEvent(10001)

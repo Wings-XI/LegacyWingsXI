@@ -99,7 +99,7 @@ function onTrigger(player, npc)
             player:startEvent(31)
         elseif (seeingBloodRedProgress == 1) then
             player:startEvent(32)
-        elseif (seeingBloodRedProgress == 2) then
+        elseif (seeingBloodRedProgress >= 2 and player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then --
             player:startEvent(33)
         elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
             player:startEvent(37) -- possible param req 175, 23, 1757, 1810466574, -1507711624, 68921469, 0, 0
