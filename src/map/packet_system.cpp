@@ -94,6 +94,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/char_health.h"
 #include "packets/char_job_extra.h"
 #include "packets/char_jobs.h"
+#include "packets/char_jump.h"
 #include "packets/char_mounts.h"
 #include "packets/char_recast.h"
 #include "packets/char_skills.h"
@@ -6904,6 +6905,36 @@ void SmallPacket0x117(map_session_data_t* const PSession, CCharEntity* const PCh
 }
 
 /************************************************************************
+*                                                                       *
+*  Jump (/jump)                                                         *
+*  (c) Wings Project, licensed under AGPLv3                             *
+*                                                                       *
+************************************************************************/
+
+void SmallPacket0x11D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
+{
+    TracyZoneScoped;
+
+    uint32 extra = data.ref<uint32>(0x08);
+
+    // Rate limit jumps
+    auto lastEmoteTime = PChar->GetLocalVar("LastJumpTime");
+    auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
+    if (lastEmoteTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastEmoteTime) > 1)
+    {
+        PChar->SetLocalVar("LastJumpTime", (uint32)timeNowSeconds.time_since_epoch().count());
+    }
+    else
+    {
+        ShowWarning(CL_YELLOW "SmallPacket0x11D: Rate limiting jump packet for %s\n" CL_RESET, PChar->GetName());
+        return;
+    }
+
+    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CCharJumpPacket(PChar, extra));
+
+}
+
+/************************************************************************
  *                                                                       *
  *  Packet Array Initialization                                          *
  *                                                                       *
@@ -7029,6 +7060,7 @@ void PacketParserInitialize()
     PacketSize[0x115] = 0x02; PacketParser[0x115] = &SmallPacket0x115;
     PacketSize[0x116] = 0x02; PacketParser[0x116] = &SmallPacket0xFFF; // not implemented
     PacketSize[0x117] = 0x00; PacketParser[0x117] = &SmallPacket0x117;
+    PacketSize[0x11D] = 0x00; PacketParser[0x11D] = &SmallPacket0x11D; // jump emote
     // clang-format on
 }
 

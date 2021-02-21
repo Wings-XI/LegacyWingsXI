@@ -20,10 +20,10 @@ set(SOURCES
     blacklist.h
     campaign_map.cpp
     campaign_map.h
-	caught_fish.cpp
-	caught_fish.h
-	caught_monster.cpp
-	caught_monster.h
+    caught_fish.cpp
+    caught_fish.h
+    caught_monster.cpp
+    caught_monster.h
     change_music.cpp
     change_music.h
     char.cpp
@@ -44,6 +44,8 @@ set(SOURCES
     char_job_extra.h
     char_jobs.cpp
     char_jobs.h
+    char_jump.cpp
+    char_jump.h
     char_mounts.cpp
     char_mounts.h
     char_recast.cpp
