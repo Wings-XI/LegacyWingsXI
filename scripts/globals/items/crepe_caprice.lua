@@ -1,7 +1,7 @@
 -----------------------------------------
 -- ID: 5776
 -- Item: Crepe Caprice
--- Food Effect: 30 Min, All Races
+-- Food Effect: 60 Min, All Races
 -----------------------------------------
 -- HP +5% (cap20)
 -- MP Healing 3
@@ -21,7 +21,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 1800, 5776)
+    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 3600, 5776)
 end
 
 function onEffectGain(target, effect)

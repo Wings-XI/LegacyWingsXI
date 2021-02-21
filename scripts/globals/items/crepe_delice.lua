@@ -1,7 +1,7 @@
 -----------------------------------------
 -- ID: 5767
 -- Item: Crepe Delice
--- Food Effect: 30 Min, All Races
+-- Food Effect: 60 Min, All Races
 -----------------------------------------
 -- HP +10% (cap 15)
 -- Magic Accuracy +21% (cap 30)
@@ -20,7 +20,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 1800, 5767)
+    target:addStatusEffect(tpz.effect.FOOD, 0, 0, 3600, 5767)
 end
 
 function onEffectGain(target, effect)
