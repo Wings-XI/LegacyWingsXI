@@ -14,8 +14,6 @@ end
 function onTrigger(player, npc)
     local loafersQuestProgress = player:getCharVar("AF_SCH_BOOTS")
 
-    player:delStatusEffect(tpz.effect.SNEAK)
-
     -- SCH AF Quest - Boots
     if loafersQuestProgress > 0 and loafersQuestProgress < 3 and not player:hasKeyItem(tpz.ki.DROGAROGAN_BONEMEAL) then
         player:addKeyItem(tpz.ki.DROGAROGAN_BONEMEAL)

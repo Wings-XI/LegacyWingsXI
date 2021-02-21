@@ -18,6 +18,8 @@ function onTrigger(player, npc)
     local onSabbaticalProgress  = player:getCharVar("OnSabbatical")
     local pantsQuestProgress    = player:getCharVar("AF_SCH_PANTS")
     local gownQuestProgress     = player:getCharVar("AF_SCH_BODY")
+    local seeingBloodRed        = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED)
+    local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed") 
 
     -- ON SABBATICAL
     if offset == 0 and onSabbatical == QUEST_ACCEPTED and onSabbaticalProgress == 2 then
@@ -25,6 +27,7 @@ function onTrigger(player, npc)
 
     -- SCH AF SIDEQUEST: PANTS
     elseif offset == 1 and pantsQuestProgress > 0 and pantsQuestProgress < 3 and not player:hasKeyItem(tpz.ki.SLUG_MUCUS) then
+        player:delStatusEffect(tpz.effect.SNEAK)
         npcUtil.giveKeyItem(player, tpz.ki.SLUG_MUCUS)
         player:setCharVar("AF_SCH_PANTS", pantsQuestProgress + 1)
 
@@ -45,6 +48,7 @@ function onTrigger(player, npc)
 
     -- SCH AF SIDEQUEST: BODY
     elseif offset == 2 and gownQuestProgress > 0 and gownQuestProgress < 3 and not player:hasKeyItem(tpz.ki.PEISTE_DUNG) then
+        player:delStatusEffect(tpz.effect.SNEAK)
         npcUtil.giveKeyItem(player, tpz.ki.PEISTE_DUNG)
         player:setCharVar("AF_SCH_BODY", gownQuestProgress + 1)
 
@@ -62,11 +66,14 @@ function onTrigger(player, npc)
         }
         local newPosition = npcUtil.pickNewPosition(npc:getID(), positions)
         npc:setPos(newPosition.x, newPosition.y, newPosition.z)
+    
+    -- SCH AF3 HAT
+    elseif offset == 0 and seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 0 and not player:hasKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER) then
+        player:startEvent(5)
 
     -- DEFAULT
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-
     end
 end
 
@@ -78,5 +85,9 @@ function onEventFinish(player, csid, option)
     if csid == 2 then
         npcUtil.giveKeyItem(player, tpz.ki.SCHULTS_SEALED_LETTER)
         player:setCharVar("OnSabbatical", 3)
+    else csid == 5 then
+        npcUtil.giveKeyItem(player, tpz.ki.UNADDRESSED_SEALED_LETTER)
+        player:setCharVar("SeeingBloodRed", 1)
     end
+
 end

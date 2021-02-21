@@ -12,6 +12,9 @@ end
 function onZoneIn(player, prevZone)
     local cs = -1
 
+    if prevZone == 89 and player:getCharVar("SeeingBloodRed") == 3 then
+
+    end
     return cs
 end
 

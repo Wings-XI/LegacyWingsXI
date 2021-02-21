@@ -37,8 +37,8 @@ function onTrigger(player, npc)
     local mLvl = player:getMainLvl()
     local mJob = player:getMainJob()
     local onSabbatical = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.ON_SABBATICAL)
-    local onSabbaticalProgress = player:getCharVar("OnSabbatical")
     local downwardHelix = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX)
+    local seeingBloodRed = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED)
 
     if (ALittleKnowledge == QUEST_AVAILABLE) then
         if (mLvl >= ADVANCED_JOB_LEVEL) then
@@ -62,6 +62,7 @@ function onTrigger(player, npc)
     elseif (onSabbatical == QUEST_AVAILABLE and mJob == tpz.job.SCH and mLvl >= AF1_QUEST_LEVEL) then
             player:startEvent(18)
     elseif (onSabbatical == QUEST_ACCEPTED) then
+        local onSabbaticalProgress = player:getCharVar("OnSabbatical")
         if (onSabbaticalProgress < 3) then
             player:startEvent(19)
         else
@@ -70,14 +71,34 @@ function onTrigger(player, npc)
     elseif (onSabbatical == QUEST_COMPLETED and player:getCharVar("Erlene_Sabbatical_Timer")~=VanadielDayOfTheYear() and mJob == tpz.job.SCH and mLvl >= AF2_QUEST_LEVEL and downwardHelix == QUEST_AVAILABLE) then
         player:startEvent(23)
     elseif (downwardHelix == QUEST_ACCEPTED) then
-        if (player:getCharVar("DownwardHelix") == 0) then
+        local downwardHelixProgress = player:getCharVar("DownwardHelix")
+        if (downwardHelixProgress == 0) then
             player:startEvent(24)
-        elseif (player:getCharVar("DownwardHelix") == 1) then
+        elseif (downwardHelixProgress == 1) then
             player:startEvent(25)
-        elseif (player:getCharVar("DownwardHelix") < 4) then
+        elseif (downwardHelixProgress < 4) then
             player:startEvent(26)
-        else
+        elseif (downwardHelixProgress == 4) then
             player:startEvent(27)
+        end
+    elseif (downwardHelix == QUEST_COMPLETED and (player:getCharVar("Erlene_DownwardHelix_Timer")==VanadielDayOfTheYear() or ... ))
+        player:startEvent(28)
+    elseif (seeingBloodRed == QUEST_AVAILABLE and downwardHelix == QUEST_COMPLETED and mJob == tpz.job.SCH and mLvl >= AF3_QUEST_LEVEL and player:getCharVar("Erlene_DownwardHelix_Timer")~=VanadielDayOfTheYear()) then
+        player:startEvent(29)
+    elseif (seeingBloodRed == QUEST_ACCEPTED) then
+        local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed")
+        if (seeingBloodRedProgress == 0) then
+            player:startEvent(30)
+        elseif (seeingBloodRedProgress == 1 and not player:seenKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER)) then
+            player:startEvent(31)
+        elseif (seeingBloodRedProgress == 1) then
+            player:startEvent(32)
+        elseif (seeingBloodRedProgress == 2) then
+            player:startEvent(33)
+        elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+            -- Lost BCNM
+        elseif (seeingBloodRedProgress == 4) then
+            player:startEvent(34)
         end
     else
         player:startEvent(15)
@@ -136,10 +157,31 @@ function onEventFinish(player, csid, option)
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED)
         else
+            player:delKeyItem(tpz.ki.ULBRECHTS_MORTARBOARD)
             player:completeQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX)
             player:addItem(15004) -- Schlar's Bracers
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15004)
             player:setCharVar("DownwardHelix", 0)
+            player:setCharVar("Erlene_DownwardHelix_Timer", VanadielDayOfTheYear())
+        end
+    elseif (csid == 29) then
+        player:setCharVar("Erlene_DownwardHelix_Timer", 0)
+        player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED)
+    --elseif (csid == 31) then
+        -- Tells you to check the letter
+    elseif (csid == 32) then
+        player:delKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER)
+        player:addKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PORTING_MAGIC_TRANSCRIPT)
+        player:setCharVar("SeeingBloodRed", 2)
+    elseif (csid == 34) then
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED)
+        else
+            player:completeQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED)
+            player:addItem(16140) -- Schlar's Mortarboard
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 16140)
+            player:setCharVar("SeeingBloodRed", 0)
         end
     end
 end
