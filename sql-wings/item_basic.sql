@@ -13480,8 +13480,8 @@ INSERT INTO `item_basic` VALUES(16231, 0, 'smilodon_mantle', 'smilodon_mantle', 
 INSERT INTO `item_basic` VALUES(16232, 0, 'smilodon_mantle_+1', 'smilod._mantle_+1', 1, 2080, 26, 0, 2026);
 INSERT INTO `item_basic` VALUES(16233, 0, 'peiste_mantle', 'peiste_mantle', 1, 2084, 26, 0, 7763);
 INSERT INTO `item_basic` VALUES(16234, 0, 'peiste_mantle_+1', 'peiste_mantle_+1', 1, 2080, 26, 0, 9703);
-INSERT INTO `item_basic` VALUES(16235, 0, 'lynx_mantle', 'lynx_mantle', 1, 2084, 26, 0, 9210);
-INSERT INTO `item_basic` VALUES(16236, 0, 'lynx_mantle_+1', 'lynx_mantle_+1', 1, 2080, 26, 0, 11512);
+INSERT INTO `item_basic` VALUES(16235, 0, 'lynx_mantle', 'lynx_mantle', 1, 2084, 26, 0, 1614);
+INSERT INTO `item_basic` VALUES(16236, 0, 'lynx_mantle_+1', 'lynx_mantle_+1', 1, 2080, 26, 0, 2115);
 INSERT INTO `item_basic` VALUES(16237, 0, 'thunderers_mantle', 'thunderer_mantle', 1, 34820, 26, 0, 1570);
 INSERT INTO `item_basic` VALUES(16238, 0, 'poison_tasters_cape', 'tasters_cape', 1, 63572, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(16239, 0, 'solitaire_cape', 'solitaire_cape', 1, 63572, 0, 1, 0);
