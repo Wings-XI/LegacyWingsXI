@@ -37,8 +37,8 @@ function onMobFight(mob, player)
     end)
 
     mob:addListener("ABILITY_USE", "ULBRECTH_ABILITY_USE", function(mob, target, skillID)
-        local chance = math.random(0,99)
-        if chance < 25 then
+        -- if not dark arts and 25% chance
+        if skillID ~= 2303 and math.random(0,99) < 25 then 
             mob:messageText(mob, ID.text.ANSWER_THIS)
         end
     end)
