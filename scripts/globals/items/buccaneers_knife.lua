@@ -19,7 +19,9 @@ function onAdditionalEffect(player, target, damage)
                 finalDMG = target:magicDmgTaken(finalDMG)
                 finalDMG = utils.clamp(finalDMG, 0, 99999)
                 target:takeDamage(finalDMG, player, tpz.attackType.MAGICAL, tpz.damageType.WATER)
-                target:setUnkillable(false)
+                if target:hasStatusEffect(tpz.effect.PHYSICAL_SHIELD) then
+                    target:setUnkillable(false)
+                end
                 return tpz.subEffect.WATER_DAMAGE, tpz.msg.basic.ADD_EFFECT_DMG, finalDMG
             end
         end
