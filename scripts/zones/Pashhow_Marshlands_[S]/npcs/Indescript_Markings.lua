@@ -85,7 +85,7 @@ function onEventFinish(player, csid, option)
     if csid == 2 then
         npcUtil.giveKeyItem(player, tpz.ki.SCHULTS_SEALED_LETTER)
         player:setCharVar("OnSabbatical", 3)
-    else csid == 5 then
+    elseif csid == 5 then
         npcUtil.giveKeyItem(player, tpz.ki.UNADDRESSED_SEALED_LETTER)
         player:setCharVar("SeeingBloodRed", 1)
     end

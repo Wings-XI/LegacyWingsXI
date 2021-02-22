@@ -29,7 +29,7 @@ function onTrade(player, npc, trade)
         end
     end
 
-    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED) == QUEST_ACCEPTED and player:getCharVar("SeeingBloodRed") == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED) == QUEST_ACCEPTED and player:getCharVar("SeeingBloodRed") == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
         if trade:hasItemQty(2550, 1) and trade:getGil() == 0 and trade:getItemCount() == 1 then
             --player:startEvent(38) 37 and or 38 with params
         end
