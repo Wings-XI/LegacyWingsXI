@@ -42,6 +42,6 @@ end
 function onEventFinish(player, csid, option)
     if csid == 15 then
         player:setCharVar("SeeingBloodRed", 5)
-        player:setPos(-277.011 -54.000 -101.048, 250)
+        player:setPos(-277.011, -54.000, -101.048, 250)
     end
 end

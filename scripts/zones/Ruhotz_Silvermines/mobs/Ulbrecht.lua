@@ -15,7 +15,7 @@ function onMonsterMagicPrepare(mob, target)
     -- Survival
     -- If under 30% then 50% chance to cure top priority
     if hpp < 30 and rnd < 0.5 then
-        mob:setLocalVar("lastSpellID" 4)
+        mob:setLocalVar("lastSpellID", 4)
         return 4 -- Cure IV
     end
 
@@ -24,12 +24,12 @@ function onMonsterMagicPrepare(mob, target)
     if not mob:hasStatusEffect(tpz.effect.PROTECT) and rnd < 0.9 then
         return 45
     end
-    -- If does not have shell then 20% chance to rebuff
+    -- If does not have shell then 25% chance to rebuff
     if not mob:hasStatusEffect(tpz.effect.SHELL) and rnd < 0.25 then
         return 50
     end
-    -- If does not have regen then 50% chance to rebuff
-    if not mob:hasStatusEffect(tpz.effect.REGEN) and rnd < 0.5 then
+    -- If does not have regen then 25% chance to rebuff
+    if not mob:hasStatusEffect(tpz.effect.REGEN) and rnd < 0.25 then
         return 110
     end
     
@@ -44,7 +44,7 @@ function onMonsterMagicPrepare(mob, target)
     local storm = 0
     for _,effect in ipairs(effects) do
         local effectType = effect:getType()
-        if (effectType >= tpz.effect.FIRESTORM and effectType <= tpz.effect.VOIDSTORM then
+        if effectType >= tpz.effect.FIRESTORM and effectType <= tpz.effect.VOIDSTORM then
             storm = effectType
             break
         end
@@ -194,7 +194,7 @@ function onMobSpawn(mob)
 
     mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, skillID)
         local chance = math.random(0,99)
-        if chance < 50 then
+        if chance < 50 then -- check offensive spells only
             mob:messageText(mob, ID.text.TRUE_TEACHING)
         end
     end)
@@ -221,4 +221,7 @@ function onMobEngaged(mob, target)
 
         mob:useMobAbility(2303) -- use dark arts
     end
+end
+
+function onMobDeath(mob, player, isKiller)
 end
