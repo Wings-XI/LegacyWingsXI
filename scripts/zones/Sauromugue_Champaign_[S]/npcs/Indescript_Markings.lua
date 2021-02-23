@@ -27,6 +27,7 @@ end
 
 function onEventFinish(player, csid, option)
     if (csid == 4) then
+        -- TODO: add option to only do during move forward
         player:addKeyItem(tpz.ki.ULBRECHTS_MORTARBOARD)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ULBRECHTS_MORTARBOARD)
         player:setCharVar("DownwardHelix", 4)

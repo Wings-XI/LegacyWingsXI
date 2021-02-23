@@ -15,21 +15,28 @@ end
 function onTrigger(player, npc)
     local gownQuestProgress = player:getCharVar("AF_SCH_BODY")
     -- SCH AF Quest - Body
-    if npc:getID() == 17142581 and gownQuestProgress > 0 and gownQuestProgress < 3 and not player:hasKeyItem(tpz.ki.SAMPLE_OF_GRAUBERG_CHERT) then
-        npcUtil.giveKeyItem(player, tpz.ki.SAMPLE_OF_GRAUBERG_CHERT)
-        player:setCharVar("AF_SCH_BODY", gownQuestProgress + 1)
-    elseif npc:getID() == 17142586 and player:getCharVar("SeeingBloodRed") == 3 then
-        player:startEvent(102, 0, 0, 34) -- cs 15 is after you win?
-        -- player:setPos(-323.6241, -23.8410, -19.5224, 93)
-    else
-        player:messageSpecial(ID.text.THERE_IS_NO_RESPONSE)
+    if npc:getID() == 17142581 then
+        if gownQuestProgress > 0 and gownQuestProgress < 3 and not player:hasKeyItem(tpz.ki.SAMPLE_OF_GRAUBERG_CHERT) then
+            npcUtil.giveKeyItem(player, tpz.ki.SAMPLE_OF_GRAUBERG_CHERT)
+            player:setCharVar("AF_SCH_BODY", gownQuestProgress + 1)
+        else
+            player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+        end
+    -- SCH AF3 Quest - Head
+    elseif npc:getID() == 17142586 then
+        if player:getCharVar("SeeingBloodRed") == 3 and player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
+            player:startEvent(102, 0, 0, 34) -- cs 15 is after you win?
+            -- player:setPos(-323.6241, -23.8410, -19.5224, 93)
+        else
+            player:messageSpecial(ID.text.THERE_IS_NO_RESPONSE)
+        end
     end
 end
 
 function onEventUpdate(player, csid, option, target)
     if csid == 102 and option == 546 then
         if player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
-            --local instanceid = bit.rshift(option, 19) + 64
+            local instanceid = bit.rshift(option, 19) + 89
             local party = player:getParty()
         
             if party ~= nil then
@@ -42,7 +49,7 @@ function onEventUpdate(player, csid, option, target)
                 end
             end
         
-            player:createInstance(93, 89)
+            player:createInstance(instanceid, 89)
         end
     end
 end

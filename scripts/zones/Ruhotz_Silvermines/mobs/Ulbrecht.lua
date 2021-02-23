@@ -4,10 +4,12 @@
 -----------------------------------
 local ID = require("scripts/zones/Ruhotz_Silvermines/IDs")
 require("scripts/globals/instance")
+mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function onMobSpawn(mob)
     mob:setUnkillable(true)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 end
 
 function onMobFight(mob, player)
@@ -18,7 +20,7 @@ function onMobFight(mob, player)
         instance:complete()
     end
 
-    mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
+    mob:addListener("WEAPONSKILL_USE", "ULBRECHT_WEAPONSKILL_USE", function(mob, skillID)
         local chance = math.random(0,99)
         if chance < 33 then
             mob:messageText(mob, ID.text.PAINFUL_LESSON)
@@ -46,6 +48,7 @@ end
 
 function onMobEngaged(mob, target)
     if mob:getLocalVar("dialog") == 0 then
+        mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
         mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
         mob:setLocalVar("dialog", 1)
 

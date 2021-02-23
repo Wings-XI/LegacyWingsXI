@@ -15,7 +15,7 @@ end
 function onZoneIn(player, prevZone)
     local cs = -1
 
-    if prevZone == 93 and player:getCharVar("SeeingBloodRed") == 4 then
+    if player:getCharVar("SeeingBloodRed") == 4 then
         player:startEvent(15)
     end
 
@@ -42,6 +42,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 15 then
+        player:setCharVar("SeeingBloodRed", 5)
         player:setPos(-277.011 -54.000 -101.048, 250)
     end
 end

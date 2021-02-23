@@ -25,7 +25,9 @@ end
 function onInstanceFailure(instance)
 
     local mob = GetMobByID(ID.mob.ULBRECHT, instance)
-    mob:messageText(mob, ID.text.UNLEARNT_SPRAT)
+    if mob then
+        mob:messageText(mob, ID.text.UNLEARNT_SPRAT)
+    end
 
     local chars = instance:getChars()
     for i, v in pairs(chars) do
@@ -54,9 +56,4 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 10000 then
-
-    end
 end
-    -- set seeing blood red to 4
-    -- play event 10000 > grauberg > event 15

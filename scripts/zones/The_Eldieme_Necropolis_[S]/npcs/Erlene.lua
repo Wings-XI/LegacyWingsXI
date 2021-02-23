@@ -75,7 +75,7 @@ function onTrigger(player, npc)
             player:startEvent(20)
         end
     elseif (onSabbatical == QUEST_COMPLETED and player:getCharVar("Erlene_Sabbatical_Timer")~=VanadielDayOfTheYear() and mJob == tpz.job.SCH and mLvl >= AF2_QUEST_LEVEL and downwardHelix == QUEST_AVAILABLE) then
-        player:startEvent(23)
+        player:startEvent(player:needToZone() and 15 or 23)
     elseif (downwardHelix == QUEST_ACCEPTED) then
         local downwardHelixProgress = player:getCharVar("DownwardHelix")
         if (downwardHelixProgress == 0) then
@@ -87,7 +87,7 @@ function onTrigger(player, npc)
         elseif (downwardHelixProgress == 4) then
             player:startEvent(27)
         end
-    elseif (downwardHelix == QUEST_COMPLETED and (player:getCharVar("Erlene_DownwardHelix_Timer")==VanadielDayOfTheYear()))
+    elseif (downwardHelix == QUEST_COMPLETED and (player:getCharVar("Erlene_DownwardHelix_Timer")==VanadielDayOfTheYear())) then
         player:startEvent(28)
     elseif (seeingBloodRed == QUEST_AVAILABLE and downwardHelix == QUEST_COMPLETED and mJob == tpz.job.SCH and mLvl >= AF3_QUEST_LEVEL and player:getCharVar("Erlene_DownwardHelix_Timer")~=VanadielDayOfTheYear()) then
         player:startEvent(player:needToZone() and 28 or 29)
@@ -103,7 +103,7 @@ function onTrigger(player, npc)
             player:startEvent(33)
         elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
             player:startEvent(37) -- possible param req 175, 23, 1757, 1810466574, -1507711624, 68921469, 0, 0
-        elseif (seeingBloodRedProgress == 4) then
+        elseif (seeingBloodRedProgress == 5) then
             player:startEvent(34)
         end
     else
@@ -153,8 +153,10 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 6058)
             player:setCharVar("onSabbatical", 0)
             player:setCharVar("Erlene_Sabbatical_Timer", VanadielDayOfTheYear())
+            player:needToZone(true)
         end
     elseif (csid == 23) then
+        -- TODO: Option to cancel quest
         player:setCharVar("Erlene_Sabbatical_Timer", 0)
         player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX)
     elseif (csid == 25) then
@@ -169,6 +171,7 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15004)
             player:setCharVar("DownwardHelix", 0)
             player:setCharVar("Erlene_DownwardHelix_Timer", VanadielDayOfTheYear())
+            player:needToZone(true)
         end
     elseif (csid == 29) then
         player:setCharVar("Erlene_DownwardHelix_Timer", 0)
