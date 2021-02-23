@@ -49,7 +49,7 @@ function onEventUpdate(player, csid, option, target)
                 end
             end
         
-            player:createInstance(instanceid, 89)
+            player:createInstance(instanceid, 93)
         end
     end
 end
@@ -71,7 +71,7 @@ function onInstanceCreated(player, target, instance)
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
                     v:setInstance(instance)
-                    --v:startEvent(116, 8)
+                    v:setPos(0, 0, 0, 0, 93)
                     v:delKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
                 end
             end

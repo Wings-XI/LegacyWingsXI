@@ -28,10 +28,9 @@ function onTrade(player, npc, trade)
             end
         end
     end
-
-    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED) == QUEST_ACCEPTED and player:getCharVar("SeeingBloodRed") == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
+    elseif player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED) == QUEST_ACCEPTED and player:getCharVar("SeeingBloodRed") == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
         if trade:hasItemQty(2550, 1) and trade:getGil() == 0 and trade:getItemCount() == 1 then
-            --player:startEvent(38) 37 and or 38 with params
+            player:startEvent(38)
         end
     end
 end
@@ -102,7 +101,7 @@ function onTrigger(player, npc)
         elseif (seeingBloodRedProgress >= 2 and player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then --
             player:startEvent(33)
         elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
-            player:startEvent(37) -- possible param req 175, 23, 1757, 1810466574, -1507711624, 68921469, 0, 0
+            player:startEvent(37)
         elseif (seeingBloodRedProgress == 5) then
             player:startEvent(34)
         end
@@ -192,5 +191,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 16140)
             player:setCharVar("SeeingBloodRed", 0)
         end
+    elseif (csid == 38) then
+        player:addKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PORTING_MAGIC_TRANSCRIPT)
     end
 end
