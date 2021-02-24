@@ -101,7 +101,7 @@ function onTrigger(player, npc)
             player:startEvent(33)
         elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
             player:startEvent(37)
-        elseif (seeingBloodRedProgress == 5) then
+        elseif (seeingBloodRedProgress == 4) then
             player:startEvent(34)
         end
     else

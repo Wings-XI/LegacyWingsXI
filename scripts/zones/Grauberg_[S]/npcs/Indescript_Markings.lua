@@ -42,7 +42,7 @@ function onEventUpdate(player, csid, option, target)
             if party ~= nil then
                 for i, v in ipairs(party) do
                     if v:getZoneID() == player:getZoneID() and v:checkDistance(player) > 50 then
-                        player:messageText(target, ID.text.MEMBER_TOO_FAR, false)
+                        player:messageText(target, ID.text.PARTY_REQUIREMENTS_FAILED, false)
                         player:instanceEntry(target, 1)
                         return
                     end
@@ -65,6 +65,7 @@ function onInstanceCreated(player, target, instance)
         player:setInstance(instance)
         player:instanceEntry(target, 4)
         player:delKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
+        player:setLocalVar("SeeingBloodRed_Instance", 1)
 
         local party = player:getParty()
         if party ~= nil then
@@ -73,6 +74,7 @@ function onInstanceCreated(player, target, instance)
                     v:setInstance(instance)
                     v:setPos(0, 0, 0, 0, 93)
                     v:delKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
+                    v:setLocalVar("SeeingBloodRed_Instance", 1)
                 end
             end
         end

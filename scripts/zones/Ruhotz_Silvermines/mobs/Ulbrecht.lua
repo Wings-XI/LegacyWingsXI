@@ -178,30 +178,7 @@ function onMobSpawn(mob)
     mob:setUnkillable(true)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 
-    mob:addListener("WEAPONSKILL_STATE_ENTER", "ULBRECHT_WEAPONSKILL", function(mob, skillID)
-        local chance = math.random(0,99)
 
-        if skillID < 19 then -- weapon skill
-            if chance < 33 then -- 33% chance
-                mob:messageText(mob, ID.text.PAINFUL_LESSON)
-            end
-        else -- ability
-            if skillID ~= 2303 and chance < 25 then -- if not dark arts and 25% chance
-                mob:messageText(mob, ID.text.ANSWER_THIS)
-            end
-        end
-    end)
-
-    mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, skillID)
-        local chance = math.random(0,99)
-        if chance < 50 then -- check offensive spells only
-            mob:messageText(mob, ID.text.TRUE_TEACHING)
-        end
-    end)
-
-    mob:addListener("JOB_SPECIAL_BEG_", "ULBRECHT_TABULA_RASA", function(mob, skillID)
-        mob.messageText(mob, ID.text.MOST_IMPRESSIVE)
-    end)
 end
 
 function onMobFight(mob, player)
@@ -215,11 +192,37 @@ end
 
 function onMobEngaged(mob, target)
     if mob:getLocalVar("dialog") == 0 then
-        mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
-        mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
-        mob:setLocalVar("dialog", 1)
+
+        mob:addListener("WEAPONSKILL_STATE_ENTER", "ULBRECHT_WEAPONSKILL", function(mob, skillID)
+            local chance = math.random(0,99)
+    
+            if skillID == 2261 then -- tabula rasa
+                mob.messageText(mob, ID.text.MOST_IMPRESSIVE)
+            elseif chance < 40 then -- 40% chance
+                if skillID < 19 then -- weapon skill
+                    mob:messageText(mob, ID.text.PAINFUL_LESSON)
+                else -- ability
+                    if skillID ~= 2303 and skillID ~= 2261 then -- if not dark arts and not tabula rasa
+                        mob:messageText(mob, ID.text.ANSWER_THIS)
+                    end
+                end
+            end
+        end)
+    
+        mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, spell, action)
+            local chance = math.random(0,99)
+            if chance < 50 and action and action.actionLists and action.actionLists[0] and action.actionLists[0].ActionTargetID ~= mob:getID() then -- check offensive spells only
+                mob:messageText(mob, ID.text.TRUE_TEACHING)
+            end
+        end)
 
         mob:useMobAbility(2303) -- use dark arts
+        mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
+        mob:setLocalVar("dialog", 1)
+         
+        mob:setMobMod(tpz.mobMod.NO_MOVE, 0) -- allow movement
+        mob:setMod(tpz.mod.REGAIN, 30) -- add slight regain for faster skill usage
+
     end
 end
 

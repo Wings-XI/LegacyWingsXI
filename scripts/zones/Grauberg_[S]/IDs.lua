@@ -19,8 +19,10 @@ zones[tpz.zone.GRAUBERG_S] =
         LOGIN_CAMPAIGN_UNDERWAY     = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET      = 7049, -- You can't fish here.
-        MEMBER_TOO_FAR              = 7450, -- One or more party members are too far away from the entrance. Unable to enter area.
         THERE_IS_NO_RESPONSE        = 7671, -- There is no response...
+        CHOSEN_NOT_ENTER            = 7678, -- You have chosen not to enter ≺Multiple Choice (Parameter 0)≻[Everbloom Hollow/the Ruhotz Silvermines/Ghoyu's Reverie].
+        CANNOT_ENTER                = 7680, -- You cannot enter at this time. Please wait a moment and try again.
+        PARTY_REQUIREMENTS_FAILED   = 7686, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
         HARVESTING_IS_POSSIBLE_HERE = 7687, -- Harvesting is possible here if you have <item>.
         COMMON_SENSE_SURVIVAL       = 9292, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
