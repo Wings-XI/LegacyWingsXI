@@ -211,7 +211,7 @@ function onMobEngaged(mob, target)
     
         mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, spell, action)
             local chance = math.random(0,99)
-            if chance < 50 and action and action.actionLists and action.actionLists[0] and action.actionLists[0].ActionTargetID ~= mob:getID() then -- check offensive spells only
+            if chance < 50 and action and action.actionLists and action.actionLists[1] and action.actionLists[1].ActionTargetID ~= mob:getID() then -- check offensive spells only
                 mob:messageText(mob, ID.text.TRUE_TEACHING)
             end
         end)
