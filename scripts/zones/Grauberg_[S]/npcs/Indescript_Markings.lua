@@ -65,7 +65,7 @@ function onInstanceCreated(player, target, instance)
         player:setInstance(instance)
         player:instanceEntry(target, 4)
         player:delKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
-        player:setLocalVar("SeeingBloodRed_Instance", 1)
+        player:setCharVar("SeeingBloodRed_Instance", 1)
 
         local party = player:getParty()
         if party ~= nil then
@@ -74,7 +74,7 @@ function onInstanceCreated(player, target, instance)
                     v:setInstance(instance)
                     v:setPos(0, 0, 0, 0, 93)
                     v:delKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)
-                    v:setLocalVar("SeeingBloodRed_Instance", 1)
+                    v:setCharVar("SeeingBloodRed_Instance", 1)
                 end
             end
         end
