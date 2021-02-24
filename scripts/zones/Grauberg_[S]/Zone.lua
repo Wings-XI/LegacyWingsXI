@@ -17,7 +17,7 @@ function onZoneIn(player, prevZone)
 
     if player:getLocalVar("SeeingBloodRed_Instance") == 1 then
         player:setLocalVar("SeeingBloodRed_Instance", 0)
-        if player:getCharVar("SeeingBloodRed") == 4) then
+        if player:getCharVar("SeeingBloodRed") == 4 then
             cs = 15
         end
     elseif (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then

@@ -221,7 +221,7 @@ function onMobEngaged(mob, target)
         mob:setLocalVar("dialog", 1)
          
         mob:setMobMod(tpz.mobMod.NO_MOVE, 0) -- allow movement
-        mob:setMod(tpz.mod.REGAIN, 30) -- add slight regain for faster skill usage
+        mob:setMod(tpz.mod.REGAIN, 50) -- 1k tp per minute bonus?
 
     end
 end
