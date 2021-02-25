@@ -50,9 +50,9 @@ CREATE TABLE `mob_skills` (
 -- Dumping data for table `mob_skills`
 --
 
-INSERT INTO `mob_skills` VALUES (16,31,'wasp_sting',0,5.0,2000,0,4,0,0,0,13,12,0);
-INSERT INTO `mob_skills` VALUES (17,32,'viper_bite',0,5.0,2000,0,4,0,0,0,13,12,0);
-INSERT INTO `mob_skills` VALUES (18,33,'shadowstitch',0,5.0,2000,0,4,0,0,0,13,12,0);
+INSERT INTO `mob_skills` VALUES (16, 31, 'wasp_sting', 0, 5.0, 2000, 0, 4, 0, 0, 0, 13, 12, 0);
+INSERT INTO `mob_skills` VALUES (17, 32, 'viper_bite', 0, 5.0, 2000, 0, 4, 0, 0, 0, 13, 12, 0);
+INSERT INTO `mob_skills` VALUES (18, 33, 'shadowstitch', 0, 5.0, 2000, 0, 4, 0, 0, 0, 13, 12, 0);
 INSERT INTO `mob_skills` VALUES(32, 1, 'fast_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(33, 2, 'burning_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 3, 0, 0);
 INSERT INTO `mob_skills` VALUES(34, 3, 'red_lotus_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
@@ -1270,6 +1270,7 @@ INSERT INTO `mob_skills` VALUES(2249, 432, 'blood_weapon', 0, 18.0, 2000, 0, 1, 
 INSERT INTO `mob_skills` VALUES(2252, 1298, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2256, 432, 'astral_flow_pet', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2257, 432, 'azure_lore', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2261, 2047, 'tabula_rasa', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0); -- wrong animation
 INSERT INTO `mob_skills` VALUES(2269, 1300, 'kamaitachi', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2299, 1486, 'bone_crusher', 0, 7.0, 2000, 1, 4, 0, 245, 0, 12, 0, 0);
 INSERT INTO `mob_skills` VALUES(2300, 1487, 'armor_piercer', 0, 15.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0);
@@ -1284,7 +1285,6 @@ INSERT INTO `mob_skills` VALUES(2335, 1639, 'lightning_spear', 4, 10.0, 2000, 10
 INSERT INTO `mob_skills` VALUES(2336, 1642, 'acheron_kick', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2337, 1653, 'damsel_memento', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2338, 1641, 'rampant_stance', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2358, 2047, 'tabula_rasa', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0); -- wrong animation
 INSERT INTO `mob_skills` VALUES(2359, 1201, 'strap_cutter', 0, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2360, 1195, 'wind_shear_znm', 1, 10.0, 2000, 1800, 4, 0, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2361, 1269, 'stave_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);

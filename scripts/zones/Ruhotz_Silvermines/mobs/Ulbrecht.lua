@@ -4,7 +4,6 @@
 -----------------------------------
 local ID = require("scripts/zones/Ruhotz_Silvermines/IDs")
 require("scripts/globals/instance")
-mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 -- Try to give him some decent AI
@@ -33,11 +32,15 @@ function onMonsterMagicPrepare(mob, target)
         return 110
     end
     
-    -- Enfeeble spells (sleep or dispel) 10% chance to cast either
+    -- Enfeeble/Dark spells (sleep or dispel) 10% chance to cast either + 7% chance to drain + 3% aspir
     if rnd < 0.1 then
         return 253 -- sleep
     elseif rnd < 0.2 then
         return 260 -- dispel
+    elseif rnd < 0.27 then
+        return 245 -- drain
+    elseif rnd < 0.3 and target:getMP() > 50 then -- make sure they have MP worthy of using aspir
+        return 247 -- aspir
     end
 
     local effects = mob:getStatusEffects()
@@ -177,12 +180,25 @@ end
 function onMobSpawn(mob)
     mob:setUnkillable(true)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-
-
+    mob:seteLocalVar("specialThreshold", math.random(40, 60));
 end
 
 function onMobFight(mob, player)
     
+    player:PrintToPlayer("STATUS -> HP:" .. mob:getHP() .. " MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
+    local effectString = "EFFECTS -> "
+    local effects = mob:getStatusEffects()
+    for _,effect in ipairs(effects) do
+        effectString = effectString .. effect:getType() .. ", "
+    end
+    player:PrintToPlayer(effectString)
+
+    if mob:getHPP() < mob:getLocalVar("specialThreshold") then
+        mob:messageText(mob, ID.text.MOST_IMPRESSIVE)
+        mob:useMobAbility(2261)
+        mob:setLocalVar("specialThreshold", 0)
+    end
+
     local instance = mob:getInstance()
     if (mob:getHPP() <= 20 and instance:completed() == false) then
         mob:messageText(mob, ID.text.STUDENT_BECOME_MASTER)
@@ -193,25 +209,16 @@ end
 function onMobEngaged(mob, target)
     if mob:getLocalVar("dialog") == 0 then
 
-        mob:addListener("WEAPONSKILL_STATE_ENTER", "ULBRECHT_WEAPONSKILL", function(mob, skillID)
-            local chance = math.random(0,99)
-    
-            if skillID == 2261 then -- tabula rasa
-                mob.messageText(mob, ID.text.MOST_IMPRESSIVE)
-            elseif chance < 40 then -- 40% chance
-                if skillID < 19 then -- weapon skill
-                    mob:messageText(mob, ID.text.PAINFUL_LESSON)
-                else -- ability
-                    if skillID ~= 2303 and skillID ~= 2261 then -- if not dark arts and not tabula rasa
-                        mob:messageText(mob, ID.text.ANSWER_THIS)
-                    end
-                end
+        mob:addListener("WEAPONSKILL_TAKE", "ULBRECHT_WEAPONSKILL_TAKE", function(target, user, wsid, tp, action)
+            if action and action.actionLists and action.actionLists[1] and action.actionLists[1].actionTargets and
+            action.actionLists[1].actionTargets[1] and action.actionLists[1].actionTargets[1].param > 500 then
+                target:messageText(target, ID.text.PAINFUL_LESSON)
             end
         end)
     
         mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, spell, action)
             local chance = math.random(0,99)
-            if chance < 50 and action and action.actionLists and action.actionLists[1] and action.actionLists[1].ActionTargetID ~= mob:getID() then -- check offensive spells only
+            if chance < 50 and spell:canTargetEnemy() then -- check offensive spells only
                 mob:messageText(mob, ID.text.TRUE_TEACHING)
             end
         end)
@@ -219,12 +226,108 @@ function onMobEngaged(mob, target)
         mob:useMobAbility(2303) -- use dark arts
         mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
         mob:setLocalVar("dialog", 1)
+        mob:setLocalVar("weaponskill_cooldown", os.time() + 30)
+        mob:setLocalVar("stratagem_cooldown", os.time())
          
         mob:setMobMod(tpz.mobMod.NO_MOVE, 0) -- allow movement
-        mob:setMod(tpz.mod.REGAIN, 50) -- 1k tp per minute bonus?
-
+        mob:setMod(tpz.mod.REGAIN, 200) -- 1k tp per 15 seconds (force faster abilities/magic)
     end
 end
 
+function onMobWeaponSkillPrepare(mob, target)
+
+    -- 2314: Parsimony
+    -- 2315: Alacrity
+    -- 2316: Manifestation
+    -- 2317: Ebullience
+    local stratagemBase = 2314
+    -- stratagem not on cooldown, use one
+    if os.time() >= mob:getLocalVar("stratagem_cooldown") then
+        return stratagemBase + math.random(0,3)
+    end
+
+    -- 16: Wasp Sting
+    -- 17: Viper Bite
+    -- 18: Shadowstitch
+    local weaponskillBase = 16
+    -- if weaponskill not on cooldown, use one
+    if os.time() >= mob:getLocalVar("weaponskill_cooldown") then
+        return weaponskillBase + math.random(0,2) -- 0, 1, or 2
+    end
+
+	return 0
+end
+
+function onMobSkillCheck(target, mob, skill)
+
+    local skillID = skill:getID()
+    
+    -- if its a weaponskill and its not on cooldown
+    if skillID < 19 then
+        if os.time() >= mob:getLocalVar("weaponskill_cooldown") then
+            return 0
+        else
+            return 1 -- on cooldown, do a spell
+        end
+    end
+
+    -- we dont have tabula rasa and we already have a buff, do magic
+    if skillID > 18 and isBuffed(mob) then
+        return 1
+    end
+
+    -- we are not buffed or we have tabula rasa
+    return 0
+end
+
+function onMobWeaponSkill(target, mob, skill)
+
+    -- if we use a weaponskill, set the cooldown
+    if skill:getID() < 19 then
+        mob:setLocalVar("weaponskill_cooldown", os.time() + 30)
+    elseif skillID >= 2314 and skillID < 2318 then
+        mob:setLocalVar("stratagem_cooldown", os.time() + 60)
+    end
+end
+
+function isBuffed(mob)
+    return not mob:hasStatusEffect(tpz.effect.TABULA_RASA) and
+    (mob:hasStatusEffect(tpz.effect.EBULLIENCE) or
+    mob:hasStatusEffect(tpz.effect.MANIFESTATION) or
+    mob:hasStatusEffect(tpz.effect.PARSIMONY) or
+    mob:hasStatusEffect(tpz.effect.ALACRITY))
+end
+
+function onMobInitialize(mob)
+    mob:setMod(tpz.mod.SLEEPRES, 10)
+end
+
 function onMobDeath(mob, player, isKiller)
+end
+
+function onSpellPrecast(mob, spell)
+    if mob:hasStatusEffect(tpz.effect.ALACRITY) then
+        spell:castTime(spell:castTime()/10) -- 1000% increased cast speed
+    end
+
+    if mob:hasStatusEffect(tpz.effect.EBULLIENCE) and
+        (spell:getSkillType() == tpz.skill.HEALING_MAGIC or
+        spell:getSkillType() == tpz.skill.ELEMENTAL_MAGIC or
+        spell:getSkillType() == tpz.skill.DARK_MAGIC) then
+        
+        spell:base(spell:base() * 1.4) -- 40% potency increase
+
+    end
+
+    if mob:hasStatusEffect(tpz.effect.MANIFESTATION) and spell:canTargetEnemy() then
+        spell:setAoE(tpz.magic.aoe.RADIAL)
+        spell:setRadius(10)
+        if(spell:getID() % 5 == 1) then -- t3 spells only (mod 5 == 1)
+            spell:setAnimation(spell:getAnimation() + 29) -- t3 becomes ga-2? should it be 3?
+        end
+    end
+
+    if mob:hasStatusEffect(tpz.effect.PARSIMONY) then
+        spell:setMPCost(1) -- normally 50% but superpowered
+    end
 end
