@@ -59,13 +59,13 @@ function onMonsterMagicPrepare(mob, target)
     
     -- Offensive spells
     local lastSpellID = mob:getLocalVar("lastSpellID")
-    local switch = { -- cast T3 spell, then next time 50/20/30 cast T3/T1/Storm
+    local switch = { -- cast T3 spell, then next time 60/10/30 cast T3/T1/Storm
         [178] = function()	-- FIRESTORM
 
             if lastSpellID == 146 then -- fire iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 144 -- fire i
                 end
             end
@@ -77,7 +77,7 @@ function onMonsterMagicPrepare(mob, target)
             if lastSpellID == 151 then -- blizzard iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 149 -- blizzard i
                 end
             end
@@ -89,7 +89,7 @@ function onMonsterMagicPrepare(mob, target)
             if lastSpellID == 156 then -- aero iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 154 -- aero i
                 end
             end
@@ -101,7 +101,7 @@ function onMonsterMagicPrepare(mob, target)
             if lastSpellID == 161 then -- stone iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 159 -- stone i
                 end
             end
@@ -113,7 +113,7 @@ function onMonsterMagicPrepare(mob, target)
             if lastSpellID == 166 then -- thunder iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 164 -- thunder i
                 end
             end
@@ -125,7 +125,7 @@ function onMonsterMagicPrepare(mob, target)
             if lastSpellID == 171 then -- water iii
                 if rnd < 0.3 then -- new storm
                     return determineStorm(hpp, rnd)
-                elseif rnd < 0.5 then
+                elseif rnd < 0.4 then
                     return 169 -- water i
                 end
             end
@@ -179,8 +179,9 @@ end
 
 function onMobSpawn(mob)
     mob:setUnkillable(true)
+    mob:SetMagicCastingEnabled(false)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-    mob:seteLocalVar("specialThreshold", math.random(40, 60));
+    mob:seteLocalVar("specialThreshold", math.random(45, 55));
 end
 
 function onMobFight(mob, player)
@@ -223,6 +224,7 @@ function onMobEngaged(mob, target)
             end
         end)
 
+        mob:SetMagicCastingEnabled(true)
         mob:useMobAbility(2303) -- use dark arts
         mob:messageText(mob, ID.text.MADE_YOUR_PEACE)
         mob:setLocalVar("dialog", 1)
@@ -281,9 +283,9 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
+    local skillID = skill:getID()
     -- if we use a weaponskill, set the cooldown
-    if skill:getID() < 19 then
+    if skillID < 19 then
         mob:setLocalVar("weaponskill_cooldown", os.time() + 30)
     elseif skillID >= 2314 and skillID < 2318 then
         mob:setLocalVar("stratagem_cooldown", os.time() + 60)
@@ -315,7 +317,7 @@ function onSpellPrecast(mob, spell)
         spell:getSkillType() == tpz.skill.ELEMENTAL_MAGIC or
         spell:getSkillType() == tpz.skill.DARK_MAGIC) then
         
-        spell:base(spell:base() * 1.4) -- 40% potency increase
+        spell:multiplier(spell:multiplier() * 1.4) -- 40% potency increase
 
     end
 
@@ -323,7 +325,7 @@ function onSpellPrecast(mob, spell)
         spell:setAoE(tpz.magic.aoe.RADIAL)
         spell:setRadius(10)
         if(spell:getID() % 5 == 1) then -- t3 spells only (mod 5 == 1)
-            spell:setAnimation(spell:getAnimation() + 29) -- t3 becomes ga-2? should it be 3?
+            spell:setAnimation(spell:getAnimation() + 30) -- t3 becomes ga-3
         end
     end
 

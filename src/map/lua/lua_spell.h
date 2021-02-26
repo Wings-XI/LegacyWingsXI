@@ -47,6 +47,7 @@ public:
     int32 setFlag(lua_State*);
     int32 setRadius(lua_State*);
     int32 base(lua_State*);
+    int32 multiplier(lua_State* L);
     int32 getAnimation(lua_State*);
     int32 setAnimation(lua_State*);
     int32 setMPCost(lua_State*);
