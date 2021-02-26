@@ -18,6 +18,7 @@ function onMobSpawn(mob)
     --mob:addMod(tpz.mod.LIGHTDEF,128)
     --mob:addMod(tpz.mod.DARKDEF,128)
     mob:addMod(tpz.mod.DMGMAGIC,-50)
+    mob:setMobMod(72, 1)
 end
 
 function onMobFight(mob, target)

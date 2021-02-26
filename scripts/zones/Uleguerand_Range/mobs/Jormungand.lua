@@ -9,6 +9,7 @@ require("scripts/globals/titles")
 function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
+    mob:setMobMod(72, 1)
 end
 
 function onMobFight(mob, target)

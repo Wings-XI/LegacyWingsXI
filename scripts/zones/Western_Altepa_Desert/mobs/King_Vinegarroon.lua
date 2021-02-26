@@ -8,6 +8,10 @@ require("scripts/globals/mobs")
 require("scripts/globals/status")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(72, 1)
+end
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end

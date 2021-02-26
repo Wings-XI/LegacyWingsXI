@@ -1242,6 +1242,11 @@ void CMobEntity::OnDespawn(CDespawnState&)
 
 void CMobEntity::Die()
 {
+    if (this->getMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE))
+    {
+        this->health.hp = 1;
+        return;
+    }
     m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();

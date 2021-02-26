@@ -20,6 +20,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MACC, 125)
     mob:addMod(tpz.mod.ATT, 150)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(72, 1)
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -16,7 +16,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setMobMod(71, 1)
+    mob:setMobMod(72, 1)
     
     local KingArthroID = mob:getID()
 

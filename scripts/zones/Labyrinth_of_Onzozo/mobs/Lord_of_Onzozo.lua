@@ -14,6 +14,7 @@ end
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEF, -30)
     mob:addMod(tpz.mod.ATT, 15)
+    mob:setMobMod(72, 1)
 end
 
 function onMonsterMagicPrepare(mob, target)
