@@ -18,7 +18,7 @@ function onEffectGain(target, effect)
     --Afflatus Misery Bonuses
     if (target:hasStatusEffect(tpz.effect.AFFLATUS_MISERY)) then
         target:getStatusEffect(tpz.effect.AFFLATUS_MISERY):setSubPower(0)
-        target:addMod(tpz.mod.ENSPELL, 18)
+        target:addMod(tpz.mod.ENSPELL, 19)
         target:addMod(tpz.mod.ENSPELL_DMG, effect:getPower())
     end
 end
