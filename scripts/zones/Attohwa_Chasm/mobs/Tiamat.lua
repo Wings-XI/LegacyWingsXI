@@ -77,5 +77,5 @@ function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
 	local respawn = math.random(259200, 432000) -- 3 to 5 days.
     mob:setRespawnTime(respawn)
-	SetServerVariable("TiamatRespawn",(os.time() + respawn))
+	SetServerVariable("SimurghRespawn",(os.time() + respawn))
 end

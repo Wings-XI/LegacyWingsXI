@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 this document is 100% original code written for the Wings FFXI server project
