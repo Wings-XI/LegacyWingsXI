@@ -75,10 +75,15 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
             {
                 bool updateSQL = false;
                 luautils::OnGameHour(PZone);
-                if (interval == 1)
+                if (interval == 1) {
                     updateSQL = true;
-                else if (PZone->GetID() % interval == CVanaTime::getInstance()->getHour() % interval)
+                }
+                else if (interval == 0) {
+                    updateSQL = false;
+                }
+                else if (PZone->GetID() % interval == CVanaTime::getInstance()->getHour() % interval) {
                     updateSQL = true;
+                }
 
 				PZone->ForEachChar([updateSQL](CCharEntity* PChar)
 				{
