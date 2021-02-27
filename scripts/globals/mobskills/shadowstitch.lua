@@ -31,7 +31,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     if (dmg > 0) then
         local resist = applyResistanceAddEffect(mob, target, tpz.magic.ele.ICE, 0)
-        if (target:hasStatusEffect(tpz.effect.BIND) == false and resist >= 0.5) then
+        if not target:hasStatusEffect(tpz.effect.BIND) and resist >= 0.5 then
             local duration = (5 + 5) * resist
             target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
         end

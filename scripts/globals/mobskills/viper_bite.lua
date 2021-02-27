@@ -29,8 +29,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
 
-    if (damage > 0 and target:hasStatusEffect(tpz.effect.POISON) == false) then
-        local duration = 90 * applyResistanceAddEffect(player, target, tpz.magic.ele.WATER, 0)
+    if dmg > 0 and not target:hasStatusEffect(tpz.effect.POISON) then
+        local duration = 90 * applyResistanceAddEffect(mob, target, tpz.magic.ele.WATER, 0)
         target:addStatusEffect(tpz.effect.POISON, 3, 0, duration)
     end
 

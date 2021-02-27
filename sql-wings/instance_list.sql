@@ -62,7 +62,7 @@ INSERT INTO `instance_list` VALUES(58, 'path_of_darkness', 72, 30, 500.000, 0.00
 INSERT INTO `instance_list` VALUES(59, 'nashmeiras_plea', 72, 45, -444.000, -4.000, 420.000, 127, 143, 143, 143, 143);
 INSERT INTO `instance_list` VALUES(65, 'arrapago_remnants', 72, 100, 340.000, 0.000, -246.000, 63, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES(79, 'shades_of_vengeance', 79, 30, 127.000, -15.000, -303.000, 0, -1, -1, -1, -1);
-INSERT INTO `instance_list` VALUES(93, 'seeing_blood_red', 89, 30, -323.568, -23.825, -19.749, 128, -1, -1, -1, -1);
+INSERT INTO `instance_list` VALUES(89, 'seeing_blood_red', 89, 30, -323.568, -23.825, -19.749, 128, -1, -1, -1, -1);
 
 --
 -- Indexes for dumped tables

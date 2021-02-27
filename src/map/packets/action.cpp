@@ -77,7 +77,8 @@ CActionPacket::CActionPacket(action_t& action)
     case ACTION_DANCE:
     case ACTION_JOBABILITY_FINISH:
     {
-        packBitsBE(data, action.actionid, 86, 10);
+        // increased to max of 4095 due to mob job abilities over 1023 (10), 2047 (11)
+        packBitsBE(data, action.actionid, 86, 12);
         packBitsBE(data, action.recast, 118, 10);
     }
     break;

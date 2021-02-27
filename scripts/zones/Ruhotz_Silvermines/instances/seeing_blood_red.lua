@@ -10,7 +10,6 @@ local ID = require("scripts/zones/Ruhotz_Silvermines/IDs")
 
 function afterInstanceRegister(player)
     local instance = player:getInstance()
-    -- maybe delete key item here?
     player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
 end
 
