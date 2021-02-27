@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4656,12 +4656,13 @@ namespace charutils
         if (afterSack > 60)
             afterSack = 60;
 
-        uint8 increase = 0;
+        int8 increase = 0;
         std::string line;
 
         if ((afterMW1 != realCurrentMW1) && ((recovery) || (afterMW1 > currentMW1)))
         {
             if (!recovery) {
+                increase = afterMW1 - currentMW1;
                 line = "The capacity of your Mog Wardrobe 1 has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
@@ -4676,6 +4677,7 @@ namespace charutils
         if ((afterMW2 != realCurrentMW2) && ((recovery) || (afterMW2 > currentMW2)))
         {
             if (!recovery) {
+                increase = afterMW2 - currentMW2;
                 line = "The capacity of your Mog Wardrobe 2 has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
@@ -4690,6 +4692,7 @@ namespace charutils
         if ((afterMW3 != realCurrentMW3) && ((recovery) || (afterMW3 > currentMW3)))
         {
             if (!recovery) {
+                increase = afterMW3 - currentMW3;
                 line = "The capacity of your Mog Wardrobe 3 has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
@@ -4704,6 +4707,7 @@ namespace charutils
         if ((afterMW4 != realCurrentMW4) && ((recovery) || (afterMW4 > currentMW4)))
         {
             if (!recovery) {
+                increase = afterMW4 - currentMW4;
                 line = "The capacity of your Mog Wardrobe 4 has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
@@ -4718,6 +4722,7 @@ namespace charutils
         if ((afterSack != realCurrentSack) && ((recovery) || (afterSack > currentSack)))
         {
             if (!recovery) {
+                increase = afterSack - currentSack;
                 line = "The capacity of your Mog Sack has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
