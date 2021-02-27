@@ -9,13 +9,15 @@ require("scripts/globals/instance")
 -- Try to give him some decent AI
 function onMonsterMagicPrepare(mob, target)
 
-    player:PrintToPlayer("STATUS -> MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
-    local effectString = "EFFECTS -> "
-    local effects = mob:getStatusEffects()
-    for _,effect in ipairs(effects) do
-        effectString = effectString .. effect:getType() .. ", "
+    if target and target:isPC() then
+        target:PrintToPlayer("STATUS -> MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
+        local effectString = "EFFECTS -> "
+        local effects = mob:getStatusEffects()
+        for _,effect in ipairs(effects) do
+            effectString = effectString .. effect:getType() .. ", "
+        end
+        target:PrintToPlayer(effectString)
     end
-    player:PrintToPlayer(effectString)
 
     local rnd = math.random()
     local hpp = mob:getHPP()
@@ -189,6 +191,7 @@ function onMobSpawn(mob)
     mob:setUnkillable(true)
     mob:SetMagicCastingEnabled(false)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+    mob:setTP(1000) -- enough TP to use a stratagem
     mob:seteLocalVar("specialThreshold", math.random(45, 55));
 end
 
@@ -211,15 +214,20 @@ function onMobEngaged(mob, target)
     if mob:getLocalVar("dialog") == 0 then
 
         mob:addListener("WEAPONSKILL_TAKE", "ULBRECHT_WEAPONSKILL_TAKE", function(target, user, wsid, tp, action)
-            if action and action.actionLists and action.actionLists[1] and action.actionLists[1].actionTargets and
-            action.actionLists[1].actionTargets[1] and action.actionLists[1].actionTargets[1].param > 500 then
-                target:messageText(target, ID.text.PAINFUL_LESSON)
+            -- this should be high damage weaponskills but can't figure this out yet so, going with 30% chance
+
+            -- if action and action.actionLists and action.actionLists[1] and action.actionLists[1].actionTargets and
+            -- action.actionLists[1].actionTargets[1] and action.actionLists[1].actionTargets[1].param > 500 then
+            --     target:messageText(target, ID.text.PAINFUL_LESSON)
+            -- end
+
+            if math.random(0,99) < 30 then
+                mob:messageText(mob, ID.text.PAINFUL_LESSON)
             end
         end)
     
         mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(mob, spell, action)
-            local chance = math.random(0,99)
-            if chance < 50 and spell:canTargetEnemy() then -- check offensive spells only
+            if math.random(0,99) < 50 and spell:canTargetEnemy() then -- check offensive spells only
                 mob:messageText(mob, ID.text.TRUE_TEACHING)
             end
         end)
@@ -291,6 +299,8 @@ function onMobWeaponSkill(target, mob, skill)
     elseif skillID >= 2314 and skillID < 2318 then
         mob:setLocalVar("stratagem_cooldown", os.time() + 60)
     end
+
+    mob:setTP(1000) -- give him enough TP to use another stratagem if he wants
 end
 
 function isBuffed(mob)
