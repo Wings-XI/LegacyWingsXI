@@ -119,16 +119,10 @@ std::pair<uint16, uint16> CGuild::getDailyGPItem(CCharEntity* PChar)
     rank = std::clamp<uint8>(rank, 3, 9);
 
     auto GPItem = m_GPItems[rank - 3];
-    uint16 curPoints = (uint16)charutils::GetCharVar(PChar, "[GUILD]daily_points");
-    if (curPoints == -1)
-    {
-        return std::make_pair(GPItem[0].item->getID(), 0);
-    }
-    else
-    {
-        // a rank-up can land player in a new pattern that rewards fewer max points than they
-        // have traded in today. we prevent remainingPoints from going negative here so that
-        // we don't later calculate a negative quantity in CGuild::addGuildPoints
-        return std::make_pair(GPItem[0].item->getID(), (uint16)(std::max<int16>(0, (((int16)(GPItem[0].maxpoints)) - ((int16)curPoints)))));
-    }
+    int16 curPoints = (int16)charutils::GetCharVar(PChar, "[GUILD]daily_points");
+
+    // a rank-up can land player in a new pattern that rewards fewer max points than they
+    // have traded in today. we prevent remainingPoints from going negative here so that
+    // we don't later calculate a negative quantity in CGuild::addGuildPoints
+    return std::make_pair(GPItem[0].item->getID(), (uint16)(std::max<int16>(0, (((int16)(GPItem[0].maxpoints)) - ((int16)curPoints)))));
 }
