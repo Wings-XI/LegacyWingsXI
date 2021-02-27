@@ -20031,6 +20031,7 @@ INSERT INTO `item_mods` VALUES (16500,8,10);     -- aluh_jambiya STR+10
 INSERT INTO `item_mods` VALUES (16500,10,-10);   -- VIT-10
 INSERT INTO `item_mods` VALUES (16500,23,15);    -- Attack+15
 INSERT INTO `item_mods` VALUES (16500,421,3);    -- Crit Hit Damage+3%
+INSERT INTO `item_mods` VALUES (16500,303,69);   -- Treasure Hunter +69.  For testing purposes only.  Will guarantee all drops on mob's table.
 INSERT INTO `item_mods` VALUES (16501,431,1);
 INSERT INTO `item_mods` VALUES (16504,250,2);
 INSERT INTO `item_mods` VALUES (16504,431,1);
