@@ -75,9 +75,9 @@ local items = {
     }
 }
 
--- function onTrade(player, npc, trade)
-    -- unionRepresentativeTrade(player, npc, trade, 691, 5)
--- end
+function onTrade(player, npc, trade)
+    unionRepresentativeTrade(player, npc, trade, 691, 5)
+end
 
 function onTrigger(player, npc)
     unionRepresentativeTrigger(player, 5, 690, "guild_leathercraft", keyitems)
