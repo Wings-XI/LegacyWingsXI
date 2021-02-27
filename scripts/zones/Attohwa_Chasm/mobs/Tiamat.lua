@@ -18,6 +18,7 @@ function onMobSpawn(mob)
     --mob:addMod(tpz.mod.LIGHTDEF,128)
     --mob:addMod(tpz.mod.DARKDEF,128)
     mob:addMod(tpz.mod.DMGMAGIC,-50)
+    mob:setMobMod(72, 1)
 end
 
 function onMobFight(mob, target)
@@ -76,5 +77,5 @@ function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
 	local respawn = math.random(259200, 432000) -- 3 to 5 days.
     mob:setRespawnTime(respawn)
-	SetServerVariable("SimurghRespawn",(os.time() + respawn))
+	SetServerVariable("TiamatRespawn",(os.time() + respawn))
 end

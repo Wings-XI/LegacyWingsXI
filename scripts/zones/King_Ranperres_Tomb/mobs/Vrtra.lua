@@ -9,6 +9,10 @@ local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 
 local offsets = {1, 3, 5, 2, 4, 6}
 
+function onMobSpawn(mob)
+    mob:setMobMod(72, 1)
+end
+
 function onMobEngaged(mob, target)
     mob:resetLocalVars()
 end

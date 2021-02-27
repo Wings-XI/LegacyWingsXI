@@ -6,6 +6,10 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMobMod(72, 1)
+end
+
+function onMobSpawn(mob)
     mob:setRespawnTime(0, true)
 end
 

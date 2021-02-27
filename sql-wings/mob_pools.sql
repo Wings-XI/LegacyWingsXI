@@ -3224,7 +3224,7 @@ INSERT INTO `mob_pools` VALUES(3160, 'Pluto', 'Pluto', 86, 0x0000400100000000000
 INSERT INTO `mob_pools` VALUES(3161, 'Pneumaflayer', 'Pneumaflayer', 233, 0x0000ef0600000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 28, 1, 0, 233);
 INSERT INTO `mob_pools` VALUES(3162, 'Poisonhand_Gnadgad', 'Poisonhand_Gnadgad', 189, 0x0000010800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 1099, 157, 0, 0, 0, 1, 0, 189);
 INSERT INTO `mob_pools` VALUES(3163, 'Poison_Bat', 'Poison_Bat', 46, 0x0000000100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 396, 643, 0, 0, 0, 1, 0, 46);
-INSERT INTO `mob_pools` VALUES(3164, 'Poison_Funguar', 'Poison_Funguar', 116, 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 116);
+INSERT INTO `mob_pools` VALUES(3164, 'Poison_Funguar', 'Poison_Funguar', 116, 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 1, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 116);
 INSERT INTO `mob_pools` VALUES(3165, 'Poison_Leech', 'Poison_Leech', 172, 0x0000140100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 449, 641, 0, 0, 0, 1, 0, 172);
 INSERT INTO `mob_pools` VALUES(3166, 'Poison_Peiste', 'Poison_Peiste', 192, 0x0000df0700000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 1, 0, 192);
 INSERT INTO `mob_pools` VALUES(3167, 'Poison_Pukis', 'Poison_Pukis', 87, 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 1, 1, 2, 513, 0, 1298, 135, 0, 0, 0, 1, 0, 87);
@@ -6215,6 +6215,7 @@ INSERT INTO `mob_pools` VALUES(6180, 'Flesh_Eater', 'Flesh_Eater', 258, 0x0000a8
 INSERT INTO `mob_pools` VALUES(6179, 'Soldier_Crawler', 'Soldier_Crawler', 79, 0x00008c0100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 1, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 79);
 INSERT INTO `mob_pools` VALUES(6178, 'Undead_Bats', 'Undead_Bats', 47, 0x0000040100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 64, 34, 1667, 0, 0, 0, 1, 0, 47);
 INSERT INTO `mob_pools` VALUES(6181, 'Tonberrys_Elemental', 'Tonberrys_Elemental', 106, 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 1, 16, 256, 0, 0, 0, 0, 0, 15, 1, 0, 106);
+INSERT INTO `mob_pools` VALUES(6182, 'Poison_Funguar', 'Poison_Funguar', 116, 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 116);
 
 --
 -- Indexes for dumped tables

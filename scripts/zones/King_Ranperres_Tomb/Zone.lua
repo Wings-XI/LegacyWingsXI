@@ -39,17 +39,6 @@ function onRegionEnter(player, region)
     end
 end
 
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.VRTRA)
-	local simre = GetServerVariable("VrtraRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.VRTRA):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.VRTRA)
-	end
-end
-
 function onRegionLeave(player, region)
 end
 
