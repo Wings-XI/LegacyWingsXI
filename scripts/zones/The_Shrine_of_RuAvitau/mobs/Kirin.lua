@@ -30,7 +30,7 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobFight( mob, target )
-    if (mob:getLocalVar("AbiilitiesUsed") == 0) then
+    if (mob:getLocalVar("AbilitiesUsed") == 0) then
         mob:setLocalVar("SwapToMagic", math.random(4, 8))
     end
 
@@ -71,7 +71,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill, act)
-    mob:setLocalVar("AbilitiesUsed", mob:getLocalVar("AbilitiesUsed"))
+    mob:setLocalVar("AbilitiesUsed", mob:getLocalVar("AbilitiesUsed") + 1)
 end
 
 function onMobDeath(mob, player, isKiller)

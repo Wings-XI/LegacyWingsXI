@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Horlais Peak
---  Mob: Sobbing Eyes
+--  Mob: Compound Eyes
 -- BCNM: Under Observation
 -----------------------------------
 require("scripts/globals/status")

@@ -1543,6 +1543,12 @@ void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGB
     }
 }
 
+void CBattleEntity::OnCastStarting(CMagicState& state)
+{
+    CSpell* PSpell = state.GetSpell();
+    luautils::OnCastStarting(this, PSpell);
+}
+
 void CBattleEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
     auto PWeaponskill = state.GetSkill();

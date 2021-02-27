@@ -15,8 +15,6 @@ function onTrigger(player, npc)
 
     local pantsQuestProgress = player:getCharVar("AF_SCH_PANTS")
 
-    player:delStatusEffect(tpz.effect.SNEAK)
-
     -- SCH AF Quest - Legs
     if (pantsQuestProgress > 0 and pantsQuestProgress < 3 and player:hasKeyItem(tpz.ki.DJINN_EMBER) == false) then
         player:addKeyItem(tpz.ki.DJINN_EMBER)
