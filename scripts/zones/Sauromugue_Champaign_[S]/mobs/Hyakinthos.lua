@@ -6,6 +6,10 @@ require("scripts/globals/hunts")
 require("scripts/globals/mobs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(72, 1)
+end
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end

@@ -4634,15 +4634,8 @@ namespace battleutils
         {
             for (auto member : *enmityList)
             {
-                if (member.second.PEnmityOwner)
+                if (member.second.PEnmityOwner && (member.second.PEnmityOwner)->objtype == TYPE_PC)
                 {
-                    if ((member.second.PEnmityOwner)->objtype != TYPE_PC)
-                    {
-                        (member.second.PEnmityOwner)->PAI->Disengage();
-                        (member.second.PEnmityOwner)->health.hp = 0;
-                        continue;
-                    }
-
                     lotteryList.emplace(i, member.second.PEnmityOwner);
                     i++;
                 }
@@ -4666,16 +4659,31 @@ namespace battleutils
             winner = lotteryList.at(tpzrand::GetRandomNumber(i));
         }
 
-        // clear enmity for everyone except the winner
+        // clear enmity for everyone except the winner and their pet
         for (auto member : *enmityList)
         {
-            if (member.first != winner->id)
+            if (member.first != winner->id ||
+                !(member.second.PEnmityOwner->PMaster && member.second.PEnmityOwner->PMaster->objtype == TYPE_PC && member.second.PEnmityOwner->PMaster->id == winner->id)) // winner's pet, don't clear enmity
             {
                 enmityList->erase(member.first);
             }
         }
 
+        // purge all pets attacking me due to the topaz bug of pets stealing claims
+        CZone* PZone = zoneutils::GetZone(PMob->getZone());
+        uint16 nmID = PMob->targid;
+        uint16 winnerID = winner->id; // don't despawn the winner's pet!
+        PZone->ForEachChar([&nmID, &winnerID](CCharEntity* PChar) {
+            if (PChar->id != winnerID && PChar->PPet && PChar->PPet->GetBattleTargetID() == nmID)
+            {
+                PChar->PPet->PAI->Disengage();
+                PChar->PPet->health.hp = 0;
+            }
+        });
+
         ClaimMob((CBattleEntity*)PMob, winner);
+
+        PMob->health.hp = PMob->health.maxhp;
 
     }
 
