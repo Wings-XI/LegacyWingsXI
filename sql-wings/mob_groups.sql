@@ -6501,7 +6501,7 @@ INSERT INTO `mob_groups` VALUES(27, 1635, 102, 'Goblin_Ambusher', 300, 0, 1017, 
 INSERT INTO `mob_groups` VALUES(28, 1738, 102, 'Goblin_Tinkerer', 300, 0, 1032, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(29, 1643, 102, 'Goblin_Butcher', 300, 0, 1032, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(30, 362, 102, 'Battering_Ram', 600, 0, 236, 500, 0, 21, 23, 0);
-INSERT INTO `mob_groups` VALUES(31, 3164, 102, 'Poison_Funguar', 300, 0, 2010, 0, 0, 14, 16, 0);
+INSERT INTO `mob_groups` VALUES(31, 6182, 102, 'Poison_Funguar', 300, 0, 2010, 0, 0, 14, 16, 0);
 INSERT INTO `mob_groups` VALUES(32, 1791, 102, 'Grass_Funguar', 300, 0, 1217, 0, 0, 11, 13, 0);
 INSERT INTO `mob_groups` VALUES(33, 1514, 102, 'Ghost', 300, 1, 956, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(34, 1659, 102, 'Goblin_Fisher', 300, 0, 1053, 0, 0, 8, 10, 0);
