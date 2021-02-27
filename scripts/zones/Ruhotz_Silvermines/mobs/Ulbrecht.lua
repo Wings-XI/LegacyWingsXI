@@ -9,6 +9,14 @@ require("scripts/globals/instance")
 -- Try to give him some decent AI
 function onMonsterMagicPrepare(mob, target)
 
+    player:PrintToPlayer("STATUS -> MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
+    local effectString = "EFFECTS -> "
+    local effects = mob:getStatusEffects()
+    for _,effect in ipairs(effects) do
+        effectString = effectString .. effect:getType() .. ", "
+    end
+    player:PrintToPlayer(effectString)
+
     local rnd = math.random()
     local hpp = mob:getHPP()
     -- Survival
@@ -185,14 +193,6 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, player)
-    
-    player:PrintToPlayer("STATUS -> HP:" .. mob:getHP() .. " MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
-    local effectString = "EFFECTS -> "
-    local effects = mob:getStatusEffects()
-    for _,effect in ipairs(effects) do
-        effectString = effectString .. effect:getType() .. ", "
-    end
-    player:PrintToPlayer(effectString)
 
     if mob:getHPP() < mob:getLocalVar("specialThreshold") then
         mob:messageText(mob, ID.text.MOST_IMPRESSIVE)
@@ -232,7 +232,8 @@ function onMobEngaged(mob, target)
         mob:setLocalVar("stratagem_cooldown", os.time())
          
         mob:setMobMod(tpz.mobMod.NO_MOVE, 0) -- allow movement
-        mob:setMod(tpz.mod.REGAIN, 200) -- 1k tp per 15 seconds (force faster abilities/magic)
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 6)
+        mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 12)
     end
 end
 
