@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -63,6 +63,12 @@ bool CMobSkill::isConal() const
 bool CMobSkill::isSingle() const
 {
     return m_Aoe == 0;
+}
+
+bool CMobSkill::isJobAbility() const
+{
+    // flag means this skill is mob job ability
+    return m_Flag & SKILLFLAG_JOB_ABILITY;
 }
 
 bool CMobSkill::isTwoHour() const

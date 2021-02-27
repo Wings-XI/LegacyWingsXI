@@ -630,6 +630,7 @@ public:
     virtual void OnEngage(CAttackState&);
     virtual void OnDisengage(CAttackState&);
     /* Casting */
+    virtual void OnCastStarting(CMagicState& state);
     virtual void OnCastFinished(CMagicState&, action_t&);
     virtual void OnCastInterrupted(CMagicState&, action_t&, MSGBASIC_ID msg);
     /* Weaponskill */

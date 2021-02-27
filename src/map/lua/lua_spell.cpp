@@ -101,6 +101,45 @@ inline int32 CLuaSpell::setRadius(lua_State* L)
     return 0;
 }
 
+inline int32 CLuaSpell::base(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        m_PLuaSpell->setBase((uint16)lua_tointeger(L, 1));
+        return 0;
+    }
+    
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+    lua_pushinteger(L, m_PLuaSpell->getBase());
+    return 1;
+}
+
+inline int32 CLuaSpell::multiplier(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        m_PLuaSpell->setMultiplier((float)lua_tonumber(L, 1));
+        return 0;
+    }
+    
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+    lua_pushnumber(L, m_PLuaSpell->getMultiplier());
+    return 1;
+}
+
+inline int32 CLuaSpell::getAnimation(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    lua_pushinteger(L, m_PLuaSpell->getAnimationID());
+    return 1;
+}
+
 inline int32 CLuaSpell::setAnimation(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
@@ -124,10 +163,13 @@ inline int32 CLuaSpell::castTime(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
 
     if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
         m_PLuaSpell->setCastTime((uint32)lua_tointeger(L, 1));
-    else
-        lua_pushinteger(L, m_PLuaSpell->getCastTime());
-
+        return 0;
+    }
+    
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+    lua_pushinteger(L, m_PLuaSpell->getCastTime());
     return 1;
 }
 
@@ -221,12 +263,16 @@ Lunar<CLuaSpell>::Register_t CLuaSpell::methods[] =
     LUNAR_DECLARE_METHOD(CLuaSpell,setAoE),
     LUNAR_DECLARE_METHOD(CLuaSpell,setFlag),
     LUNAR_DECLARE_METHOD(CLuaSpell,setRadius),
+    LUNAR_DECLARE_METHOD(CLuaSpell,base),
+    LUNAR_DECLARE_METHOD(CLuaSpell,multiplier),
+    LUNAR_DECLARE_METHOD(CLuaSpell,getAnimation),
     LUNAR_DECLARE_METHOD(CLuaSpell,setAnimation),
     LUNAR_DECLARE_METHOD(CLuaSpell,setMPCost),
     LUNAR_DECLARE_METHOD(CLuaSpell,isAoE),
     LUNAR_DECLARE_METHOD(CLuaSpell,tookEffect),
     LUNAR_DECLARE_METHOD(CLuaSpell,getMagicBurstMessage),
     LUNAR_DECLARE_METHOD(CLuaSpell,getElement),
+    LUNAR_DECLARE_METHOD(CLuaSpell,canTargetEnemy),
     LUNAR_DECLARE_METHOD(CLuaSpell,getTotalTargets),
     LUNAR_DECLARE_METHOD(CLuaSpell,getSkillType),
     LUNAR_DECLARE_METHOD(CLuaSpell,getID),

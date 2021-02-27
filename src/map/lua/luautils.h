@@ -217,6 +217,7 @@ namespace luautils
     std::tuple<int32, int32, int32> OnItemCheck(CBaseEntity* PTarget, CItem* PItem, ITEMCHECK param = ITEMCHECK::NONE, CBaseEntity* PCaster = nullptr);    // check to see if item can be used
     int32 CheckForGearSet(CBaseEntity* PTarget);                                // check for gear sets
 
+    int32 OnCastStarting(CBattleEntity* PCaster, CSpell* PSpell);                           // triggered just before starting to cast a spell (modify cast time etc.)
     int32 OnMagicCastingCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CSpell* PSpell);    // triggers when a player attempts to cast a spell
     int32 OnSpellCast(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell);      // triggered when casting a spell
     int32 OnSpellPrecast(CBattleEntity* PCaster, CSpell* PSpell);                           // triggered just before casting a spell

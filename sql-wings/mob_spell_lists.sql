@@ -3700,6 +3700,34 @@ INSERT INTO `mob_spell_lists` VALUES('Ebony_Pudding', 432, 254, 4, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ebony_Pudding', 432, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ebony_Pudding', 432, 273, 31, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ebony_Pudding', 432, 274, 56, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 4, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 45, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 50, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 99, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 110, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 113, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 114, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 115, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 116, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 117, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 118, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 119, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 144, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 146, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 149, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 151, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 154, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 156, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 159, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 161, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 164, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 166, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 169, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 171, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 245, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 247, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 253, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 260, 1, 255);
 
 --
 -- Indexes for dumped tables

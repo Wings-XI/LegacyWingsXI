@@ -2297,6 +2297,33 @@ namespace luautils
         return 0;
     }
 
+    int32 OnCastStarting(CBattleEntity* PCaster, CSpell* PSpell)
+    {
+        if (PCaster->objtype == TYPE_MOB)
+        {
+            lua_prepscript("scripts/zones/%s/mobs/%s.lua", PCaster->loc.zone->GetName(), PCaster->GetName());
+
+            if (prepFile(File, "onCastStarting"))
+            {
+                return 0;
+            }
+
+            CLuaBaseEntity LuaCasterEntity(PCaster);
+            Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaCasterEntity);
+
+            CLuaSpell LuaSpell(PSpell);
+            Lunar<CLuaSpell>::push(LuaHandle, &LuaSpell);
+
+            if (lua_pcall(LuaHandle, 2, 0, 0))
+            {
+                ShowError("luautils::onCastStarting: %s\n", lua_tostring(LuaHandle, -1));
+                lua_pop(LuaHandle, 1);
+                return 0;
+            }
+        }
+        return 0;
+    }
+
     std::optional<SpellID> OnMonsterMagicPrepare(CBattleEntity* PCaster, CBattleEntity* PTarget)
     {
         TPZ_DEBUG_BREAK_IF(PCaster == nullptr || PTarget == nullptr);
