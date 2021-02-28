@@ -6907,7 +6907,8 @@ void SmallPacket0x117(map_session_data_t* const PSession, CCharEntity* const PCh
 /************************************************************************
 *                                                                       *
 *  Jump (/jump)                                                         *
-*  (c) Wings Project, licensed under AGPLv3                             *
+*  (c) Wings Project                                                    *
+*  Note - CCharJumpPacket is AGPLv3 licensed.                           *
 *                                                                       *
 ************************************************************************/
 
@@ -6918,9 +6919,9 @@ void SmallPacket0x11D(map_session_data_t* const PSession, CCharEntity* const PCh
     uint32 extra = data.ref<uint32>(0x08);
 
     // Rate limit jumps
-    auto lastEmoteTime = PChar->GetLocalVar("LastJumpTime");
+    auto lastJumpTime = PChar->GetLocalVar("LastJumpTime");
     auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
-    if (lastEmoteTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastEmoteTime) > 1)
+    if (lastJumpTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastJumpTime) > 1)
     {
         PChar->SetLocalVar("LastJumpTime", (uint32)timeNowSeconds.time_since_epoch().count());
     }
