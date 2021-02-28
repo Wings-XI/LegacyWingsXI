@@ -1152,7 +1152,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 id = PAbility->getID();
 
         if (PAbility->getMeritModID() > 0 && (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
-            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149)) // merit adds that also get CDR from add. merits. todo: generalize this
+            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149 || id == 168)) // merit adds that also get CDR from add. merits. todo: generalize this
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
