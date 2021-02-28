@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4662,7 +4662,7 @@ namespace battleutils
         // clear enmity for everyone except the winner and their pet
         for (auto member : *enmityList)
         {
-            if (member.first != winner->id ||
+            if (member.first != winner->id &&
                 !(member.second.PEnmityOwner->PMaster && member.second.PEnmityOwner->PMaster->objtype == TYPE_PC && member.second.PEnmityOwner->PMaster->id == winner->id)) // winner's pet, don't clear enmity
             {
                 enmityList->erase(member.first);
