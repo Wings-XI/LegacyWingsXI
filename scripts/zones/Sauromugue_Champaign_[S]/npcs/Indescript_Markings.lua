@@ -4,6 +4,7 @@
 -- !pos 322 24 113
 -- Quest NPC
 -----------------------------------
+local ID = require("scripts/zones/Sauromugue_Champaign_[S]/IDs")
 require("scripts/globals/campaign")
 require("scripts/globals/titles")
 require("scripts/globals/quests")
