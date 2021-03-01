@@ -13,7 +13,7 @@ require("scripts/globals/weather")
 function onAdditionalEffect(player, target, damage)
     local chance = 10
 	
-	if (VanadielDayElement() == tpz.day.ICEDAY) then
+	if (VanadielDayOfTheWeek() == tpz.day.ICEDAY) then
         chance = 45 + player:getMainLvl()*2 - target:getMainLvl()*2
         if chance < 25 then
             chance = 25
