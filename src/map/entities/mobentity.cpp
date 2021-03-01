@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1244,7 +1244,7 @@ void CMobEntity::OnDespawn(CDespawnState&)
 
 void CMobEntity::Die()
 {
-    if (this->getMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE))
+    if (this->getMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE) && this->animation != ANIMATION_ATTACK)
     {
         this->health.hp = 1;
         return;
