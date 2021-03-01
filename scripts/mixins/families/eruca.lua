@@ -75,9 +75,9 @@ g_mixins.families.eruca = function(mob)
         elseif subAnimation == 1 and currentHour < sleepHour and currentHour >= mob:getLocalVar("[eruca]wakeHour") then
             wakeUp(mob)
         end
-        if VanadielDayElement() == tpz.day.FIRESDAY and mob:getMod(tpz.mod.REGAIN) == 0 then
+        if VanadielDayOfTheWeek() == tpz.day.FIRESDAY and mob:getMod(tpz.mod.REGAIN) == 0 then
             mob:setMod(tpz.mod.REGAIN, 30)
-        elseif VanadielDayElement() ~= tpz.day.FIRESDAY and mob:getMod(tpz.mod.REGAIN) ~= 0 then
+        elseif VanadielDayOfTheWeek() ~= tpz.day.FIRESDAY and mob:getMod(tpz.mod.REGAIN) ~= 0 then
             mob:setMod(tpz.mod.REGAIN, 0)
         end
     end)
