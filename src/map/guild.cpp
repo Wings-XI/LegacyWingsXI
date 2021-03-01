@@ -29,10 +29,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 CGuild::CGuild(uint8 id, const char* _pointsName)
 {
     m_id = id;
+    // 32400 is the difference in seconds between GMT and JST (9 hours) + our offset to get the time our guilds actually reset
+    auto vanaDays = ((CVanaTime::getInstance()->getVanaTime() - 32400 + map_config.jst_offset) / (60 * 60 * 24));
 
     for (size_t i = 0; i < m_GPItemsRank.size(); ++i)
     {
-        m_GPItemsRank[i] = (uint8)((CVanaTime::getInstance()->getVanaTime() / (60 * 60 * 24)) % (i + 4));
+        m_GPItemsRank[i] = (uint8)(vanaDays % (i + 4)); 
     }
 
     pointsName = _pointsName;
