@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,9 +39,9 @@ CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid,
     m_PSpell(nullptr),
     m_flags(flags)
 {
-    auto PSpell = spell::GetSpell(spellid);
+    m_id = MAGIC_STATE;
 
-    m_id = 2;
+    auto PSpell = spell::GetSpell(spellid);
 
     if (PSpell == nullptr)
     {

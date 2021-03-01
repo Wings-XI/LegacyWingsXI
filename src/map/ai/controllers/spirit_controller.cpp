@@ -62,7 +62,7 @@ void CSpiritController::DoRoamTick(time_point tick)
         setMagicCooldowns(false);
         return;
     }
-    if (PSpirit->PAI->GetCurrentState() == nullptr || (PSpirit->PAI->GetCurrentState() && PSpirit->PAI->GetCurrentState()->m_id != 2))
+    if (PSpirit->PAI->GetCurrentState() == nullptr || (PSpirit->PAI->GetCurrentState() && PSpirit->PAI->GetCurrentState()->m_id != MAGIC_STATE))
     {
         CPetController::DoRoamTick(tick);
     }

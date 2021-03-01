@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4712,7 +4712,7 @@ namespace battleutils
             }
             if (PAttacker)
             {
-                if (mob->getMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE))
+                if (mob->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE && mob->PAI->GetCurrentState()->IsCompleted() == false)
                 {
                     return;
                 }

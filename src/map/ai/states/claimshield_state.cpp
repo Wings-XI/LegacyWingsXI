@@ -19,7 +19,7 @@ Usage allowed only in open-source servers.
 CClaimShieldState::CClaimShieldState(CBaseEntity* PEntity) :
     CState(PEntity, 0)
 {
-    
+    m_id = CLAIMSHIELD_STATE;
 }
 
 
@@ -29,7 +29,6 @@ bool CClaimShieldState::Update(time_point tick)
     {
         Complete();
         CMobEntity* mob = (CMobEntity*)m_PEntity;
-        mob->setMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE, 0);
         battleutils::DoClaimShieldLottery(mob);
         return true;
     }

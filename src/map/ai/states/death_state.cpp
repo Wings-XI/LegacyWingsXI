@@ -34,6 +34,8 @@ CDeathState::CDeathState(CBattleEntity* PEntity, duration death_time) :
     m_deathTime(death_time),
     m_raiseTime(GetEntryTime())
 {
+    m_id = DEATH_STATE;
+
     m_PEntity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
     m_PEntity->animation = ANIMATION_DEATH;

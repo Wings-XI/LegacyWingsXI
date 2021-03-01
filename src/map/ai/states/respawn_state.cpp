@@ -28,6 +28,7 @@ CRespawnState::CRespawnState(CBaseEntity* _PEntity, duration spawnTime) :
     CState(_PEntity, _PEntity->targid),
     m_spawnTime(spawnTime)
 {
+    m_id = RESPAWN_STATE;
 }
 
 bool CRespawnState::Update(time_point tick)

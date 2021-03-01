@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,6 +39,8 @@ CMobSkillState::CMobSkillState(CMobEntity* PEntity, uint16 targid, uint16 wsid) 
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
+    m_id = MOBSKILL_STATE;
+
     auto skill = battleutils::GetMobSkill(wsid);
     m_wasInterrupted = false;
     if (!skill)

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 this document is part Wings FFXI server project.
@@ -18,7 +18,7 @@ CFishingState::CFishingState(CCharEntity* PChar) :
     CState(PChar, PChar->targid),
     m_PEntity(PChar)
 {
-
+    m_id = FISHING_STATE;
 }
 
 bool CFishingState::Update(time_point tick)
