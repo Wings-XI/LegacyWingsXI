@@ -3728,6 +3728,9 @@ INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 245, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 247, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 253, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ulbrecht', 433, 260, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Erle', 434, 156, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Erle', 434, 185, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Erle', 434, 208, 1, 255);
 
 --
 -- Indexes for dumped tables
