@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1243,7 +1243,7 @@ void CMobEntity::OnDespawn(CDespawnState&)
 
 void CMobEntity::Die()
 {
-    if (this->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE)
+    if (this->PAI && this->PAI->GetCurrentState() && this->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE)
     {
         this->health.hp = 1;
         return;
