@@ -122,7 +122,7 @@ bool CPlayerController::RangedAttack(uint16 targid)
 {
     auto PChar = static_cast<CCharEntity*>(POwner);
     uint8 anim = PChar->animation;
-    if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == 3) // is in RA state
+    if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == RANGE_STATE)
     {
         //ShowDebug("Got ranged attack request while already ranged attacking...\n");
         if (PChar->PAI->GetCurrentState()->IsCompleted())
@@ -140,7 +140,7 @@ bool CPlayerController::RangedAttack(uint16 targid)
     {
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANNOT_PERFORM_ACTION));
     }
-    else if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == 1) // in ability state
+    else if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == ABILITY_STATE)
     {
         return false;
     }

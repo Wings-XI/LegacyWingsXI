@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -32,6 +32,8 @@ CWeaponSkillState::CWeaponSkillState(CBattleEntity* PEntity, uint16 targid, uint
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
+    m_id = WEAPONSKILL_STATE;
+
     auto skill = battleutils::GetWeaponSkill(wsid);
     if (!skill)
     {

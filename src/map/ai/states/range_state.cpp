@@ -33,7 +33,7 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
-    m_id = 3;
+    m_id = RANGE_STATE;
 
     auto PTarget = m_PEntity->IsValidTarget(m_targid, TARGET_ENEMY, m_errorMsg);
 

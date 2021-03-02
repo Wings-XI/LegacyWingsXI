@@ -29,6 +29,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 CTriggerState::CTriggerState(CBaseEntity* PEntity, uint16 targid) :
     CState(PEntity, targid)
 {
+    m_id = TRIGGER_STATE;
 }
 
 bool CTriggerState::Update(time_point tick)

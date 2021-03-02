@@ -570,7 +570,6 @@ void CMobEntity::Spawn()
     // claim shield, happens after onmobspawn so that this can be added on the fly to individual mobs without any cluster restarts
     if (getMobMod(MOBMOD_CLAIM_SHIELD))
     {
-        setMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE, 1);
         PAI->Internal_ClaimShieldState();
     }
 }
@@ -1244,7 +1243,7 @@ void CMobEntity::OnDespawn(CDespawnState&)
 
 void CMobEntity::Die()
 {
-    if (this->getMobMod(MOBMOD_CLAIM_SHIELD_ACTIVE) && this->animation != ANIMATION_ATTACK)
+    if (this->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE)
     {
         this->health.hp = 1;
         return;

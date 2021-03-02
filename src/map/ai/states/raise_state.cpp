@@ -28,6 +28,7 @@ CRaiseState::CRaiseState(CBattleEntity* PEntity) :
     CState(PEntity, PEntity->targid),
     m_PEntity(PEntity)
 {
+    m_id = RAISE_STATE;
 }
 
 bool CRaiseState::Update(time_point tick)

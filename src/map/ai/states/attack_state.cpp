@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -31,6 +31,8 @@ CAttackState::CAttackState(CBattleEntity* PEntity, uint16 targid) :
     CState(PEntity, targid),
     m_PEntity(PEntity)
 {
+    m_id = ATTACK_STATE;
+
     PEntity->SetBattleTargetID(targid);
     PEntity->SetBattleStartTime(server_clock::now());
     CAttackState::UpdateTarget();

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -26,6 +26,26 @@
 #include <memory>
 #include "../../../common/mmo.h"
 #include "../../packets/message_basic.h"
+
+enum STATEID
+{
+    NONE_STATE = 0,
+    ABILITY_STATE = 1,
+    ATTACK_STATE = 2,
+    CLAIMSHIELD_STATE = 3,
+    DEATH_STATE = 4,
+    DESPAWN_STATE = 5,
+    FISHING_STATE = 6,
+    INACTIVE_STATE = 7,
+    ITEM_STATE = 8,
+    MAGIC_STATE = 9,
+    MOBSKILL_STATE = 10,
+    RAISE_STATE = 11,
+    RANGE_STATE = 12,
+    RESPAWN_STATE = 13,
+    TRIGGER_STATE = 14,
+    WEAPONSKILL_STATE = 15
+};
 
 class CBattleEntity;
 
@@ -64,7 +84,7 @@ public:
     virtual bool CanInterrupt() = 0;
     bool IsCompleted() const;
     void ResetEntryTime();
-    uint8 m_id = 0; // 1 = in ability state , 2 = in casting state , 3 = in ranged state
+    STATEID m_id = NONE_STATE;
 
 protected:
     //state logic done per tick - returns whether to exit the state or not

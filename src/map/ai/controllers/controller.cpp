@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -47,7 +47,7 @@ bool CController::Cast(uint16 targid, SpellID spellid)
 {
     if (POwner)
     {
-        if (POwner->objtype == TYPE_PC && POwner->PAI->GetCurrentState() && POwner->PAI->GetCurrentState()->m_id == 2) // is a PC in casting state
+        if (POwner->objtype == TYPE_PC && POwner->PAI->GetCurrentState() && POwner->PAI->GetCurrentState()->m_id == MAGIC_STATE)
         {
             //ShowDebug("Got spellcast request while already spellcasting...\n");
             if (POwner->PAI->GetCurrentState()->IsCompleted())

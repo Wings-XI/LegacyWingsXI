@@ -29,6 +29,8 @@ CInactiveState::CInactiveState(CBaseEntity* PEntity, duration _duration, bool ca
     m_duration(_duration),
     m_canChangeState(canChangeState)
 {
+    m_id = INACTIVE_STATE;
+
     if (!canChangeState) PEntity->PAI->InterruptStates();
 }
 
