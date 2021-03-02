@@ -4712,7 +4712,7 @@ namespace battleutils
             }
             if (PAttacker)
             {
-                if (mob->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE && mob->PAI->GetCurrentState()->IsCompleted() == false)
+                if (mob->PAI && mob->PAI->GetCurrentState() && mob->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE && mob->PAI->GetCurrentState()->IsCompleted() == false)
                 {
                     return;
                 }
