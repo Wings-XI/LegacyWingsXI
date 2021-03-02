@@ -6750,6 +6750,7 @@ INSERT INTO `nm_spawn_points` VALUES(17215868, 9, -275.682, 20.000, -438.592);
 INSERT INTO `nm_spawn_points` VALUES(17215868, 10, -280.685, 19.994, -392.479);
 INSERT INTO `nm_spawn_points` VALUES(17215868, 11, -304.221, 27.090, -345.392);
 INSERT INTO `nm_spawn_points` VALUES(17215868, 12, -296.685, 23.114, -318.141);
+INSERT INTO `nm_spawn_points` VALUES(17150081, 0, -289.200, 11.876, 167.930);
 
 --
 -- Indexes for dumped tables

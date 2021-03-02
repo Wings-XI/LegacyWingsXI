@@ -5189,6 +5189,7 @@ INSERT INTO `mob_groups` VALUES(41, 1713, 91, 'Goblin_Skirmisher', 300, 0, 1158,
 INSERT INTO `mob_groups` VALUES(42, 1688, 91, 'Goblin_Mine', 0, 128, 0, 0, 0, 53, 53, 0);
 INSERT INTO `mob_groups` VALUES(43, 3448, 91, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(44, 915, 91, 'Dark_Ixion', 0, 128, 0, 100000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(45, 6183, 91, 'Erle', 0, 32, 6862, 6300, 4000, 63, 63, 0);
 INSERT INTO `mob_groups` VALUES(52, 4701, 91, 'Agathos', 0, 128, 0, 0, 0, 95, 96, 0);
 INSERT INTO `mob_groups` VALUES(4321, 1, 91, '1st_Gold_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4322, 2, 91, '1st_Iron_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
