@@ -17,7 +17,7 @@ function onInitialize(zone)
 end
 
 function onGameHour(zone)
-    SetServerVariable("Selbina_Deastination", math.random(1, 100))
+    SetServerVariable("Selbina_Destination", math.random(1, 100))
 end
 
 function onZoneIn(player, prevZone)
@@ -56,7 +56,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 200 then
-        if GetServerVariable("Selbina_Deastination") > 89 then
+        if GetServerVariable("Selbina_Destination") > 84 then
             player:setPos(0, 0, 0, 0, tpz.zone.SHIP_BOUND_FOR_MHAURA_PIRATES)
         else
             player:setPos(0, 0, 0, 0, tpz.zone.SHIP_BOUND_FOR_MHAURA)
