@@ -3118,9 +3118,7 @@ INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2314);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2315);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2316);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2317);
-INSERT INTO `mob_skill_lists` VALUES('Erle', 1148, 334);
-INSERT INTO `mob_skill_lists` VALUES('Erle', 1148, 335);
-INSERT INTO `mob_skill_lists` VALUES('Erle', 1148, 336);
+INSERT INTO `mob_skill_lists` VALUES('Mind_Hoarder', 1149, 524);
 
 --
 -- Indexes for dumped tables

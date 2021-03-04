@@ -1166,7 +1166,6 @@ INSERT INTO `mob_spell_lists` VALUES('Mycophile', 99, 220, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Mycophile', 99, 230, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Mycophile', 99, 254, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Mycophile', 99, 256, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Mycophile', 99, 356, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Boreal_Hound', 100, 180, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Boreal_Hound', 100, 206, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Boreal_Hound', 100, 250, 1, 255);
