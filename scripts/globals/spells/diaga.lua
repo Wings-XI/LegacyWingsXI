@@ -19,11 +19,9 @@ function onSpellCast(caster, target, spell)
     params.dmg = basedmg
     params.multiplier = 1
     params.skillType = tpz.skill.ENFEEBLING_MAGIC
-    params.attribute = tpz.mod.INT
+    params.attribute = tpz.mod.MND
     params.hasMultipleTargetReduction = false
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.ENFEEBLING_MAGIC
+    params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
     params.bonus = 1.0
 
     -- Calculate raw damage
