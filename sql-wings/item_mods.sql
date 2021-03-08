@@ -21189,7 +21189,7 @@ INSERT INTO `item_mods` VALUES (17570,72,4);
 INSERT INTO `item_mods` VALUES (17572,5,22);
 INSERT INTO `item_mods` VALUES (17572,116,3);
 INSERT INTO `item_mods` VALUES (17573,5,63);      -- Himmel Stock: MP +63
-INSERT INTO `item_mods` VALUES (17573,357,3);     -- Blood Pact ability delay +3
+INSERT INTO `item_mods` VALUES (17573,357,-3);     -- Blood Pact ability delay +3
 INSERT INTO `item_mods` VALUES (17574,12,4);
 INSERT INTO `item_mods` VALUES (17574,13,4);
 INSERT INTO `item_mods` VALUES (17575,8,6);
