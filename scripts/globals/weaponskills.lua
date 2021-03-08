@@ -30,8 +30,8 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     if calcParams.firstHitRateBonus and calcParams.melee == true and (calcParams.useOAXTimes == nil or calcParams.useOAXTimes == false) then -- jumps do not get this acc bonus
         hitrate = hitrate + calcParams.firstHitRateBonus/100
     end
-    if hitrate > 0.99 then
-        hitrate = 0.99
+    if hitrate > 0.95 then
+        hitrate = 0.95
     elseif hitrate < 0.20 then
         hitrate = 0.20
     end
@@ -706,8 +706,8 @@ function accVariesWithTP(hitrate, acc, tp, a1, a2, a3)
     acclost = acc - (acc*accpct)
     hrate = hitrate - (0.005*acclost)
     -- cap it
-    if (hrate>0.99) then
-        hrate = 0.99
+    if (hrate>0.95) then
+        hrate = 0.95
     end
     if (hrate<0.2) then
         hrate = 0.2
