@@ -167,6 +167,11 @@ bool CAIContainer::UseItem(uint16 targid, uint8 loc, uint8 slotid)
 
 bool CAIContainer::Inactive(duration _duration, bool canChangeState)
 {
+    if (IsCurrentState<CClaimShieldState>())
+    {
+        return false;
+    }
+
     return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState);
 }
 

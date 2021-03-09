@@ -4688,7 +4688,7 @@ namespace battleutils
         ClaimMob((CBattleEntity*)PMob, winner);
 
         PMob->health.hp = PMob->health.maxhp;
-
+        PMob->StatusEffectContainer->KillAllStatusEffect();
     }
 
     void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
@@ -4716,9 +4716,13 @@ namespace battleutils
             }
             if (PAttacker)
             {
-                if (mob->PAI && mob->PAI->GetCurrentState() && mob->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE && mob->PAI->GetCurrentState()->IsCompleted() == false)
+                if (mob->PAI)
                 {
-                    return;
+                    CState* state = mob->PAI->GetCurrentState();
+                    if (state && state->m_id == CLAIMSHIELD_STATE && !state->IsCompleted())
+                    {
+                        return;
+                    }
                 }
                 CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
                 if (!passing)
