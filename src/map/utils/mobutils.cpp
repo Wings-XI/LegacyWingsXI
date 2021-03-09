@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -725,7 +725,7 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
             break;
         case JOB_BST:
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 180);
+            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 90);
             PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1017);
             break;
         case JOB_PUP:
