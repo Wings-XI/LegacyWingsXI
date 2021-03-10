@@ -2121,7 +2121,7 @@ INSERT INTO `mob_groups` VALUES(34, 4364, 51, 'Woodtroll_Dark_Knight', 300, 0, 2
 INSERT INTO `mob_groups` VALUES(35, 4368, 51, 'Woodtroll_Ranger', 300, 0, 2485, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(36, 5863, 51, 'Gharial', 7200, 0, 3076, 16000, 0, 83, 83, 0);
 INSERT INTO `mob_groups` VALUES(37, 71, 51, 'Air_Elemental', 300, 4, 38, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(38, 2018, 51, 'Hydra', 172800, 0, 6861, 73000, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(38, 2018, 51, 'Hydra', 172800, 0, 3150, 73000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(39, 2534, 51, 'Mamool_Ja_Sophist', 300, 0, 1602, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(40, 2508, 51, 'Mamool_Ja_Bounder', 300, 0, 1588, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(41, 2533, 51, 'Mamool_Ja_Savant', 300, 0, 1602, 0, 0, 72, 73, 0);
@@ -5189,7 +5189,7 @@ INSERT INTO `mob_groups` VALUES(41, 1713, 91, 'Goblin_Skirmisher', 300, 0, 1158,
 INSERT INTO `mob_groups` VALUES(42, 1688, 91, 'Goblin_Mine', 0, 128, 0, 0, 0, 53, 53, 0);
 INSERT INTO `mob_groups` VALUES(43, 3448, 91, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(44, 915, 91, 'Dark_Ixion', 0, 128, 0, 100000, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(45, 6183, 91, 'Erle', 0, 32, 6862, 6300, 4000, 63, 63, 0);
+INSERT INTO `mob_groups` VALUES(45, 6183, 91, 'Erle', 0, 32, 3151, 6300, 4000, 63, 63, 0);
 INSERT INTO `mob_groups` VALUES(52, 4701, 91, 'Agathos', 0, 128, 0, 0, 0, 95, 96, 0);
 INSERT INTO `mob_groups` VALUES(4321, 1, 91, '1st_Gold_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4322, 2, 91, '1st_Iron_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -7780,7 +7780,7 @@ INSERT INTO `mob_groups` VALUES(16, 1836, 127, 'Gudanna', 0, 128, 0, 0, 0, 55, 6
 INSERT INTO `mob_groups` VALUES(17, 4695, 127, 'Pil-VNM', 0, 128, 0, 0, 9999, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(1, 4218, 128, 'Velociraptor', 300, 0, 2573, 0, 0, 66, 69, 0);
 INSERT INTO `mob_groups` VALUES(2, 3120, 128, 'Peryton', 300, 0, 1991, 0, 0, 69, 72, 0);
-INSERT INTO `mob_groups` VALUES(3, 1341, 128, 'Fire_Elemental', 300, 4, 6860, 0, 0, 66, 68, 0);
+INSERT INTO `mob_groups` VALUES(3, 1341, 128, 'Fire_Elemental', 300, 4, 3149, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(4, 71, 128, 'Air_Elemental', 300, 4, 38, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(5, 4125, 128, 'Valley_Manticore', 300, 0, 2537, 0, 0, 71, 74, 0);
 INSERT INTO `mob_groups` VALUES(6, 44, 128, 'Adamantoise', 0, 128, 21, 7000, 0, 72, 74, 0);
