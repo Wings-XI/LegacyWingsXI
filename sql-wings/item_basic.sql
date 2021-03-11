@@ -1474,7 +1474,7 @@ INSERT INTO `item_basic` VALUES(1584, 0, 'mysterial_fragment', 'mysterial_frag.'
 INSERT INTO `item_basic` VALUES(1585, 0, 'ethereal_fragment', 'ethereal_fragment', 1, 61524, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1586, 0, 'titanictus_shell', 'titanictus_shell', 12, 4, 42, 0, 350);
 INSERT INTO `item_basic` VALUES(1587, 0, 'handful_of_high-quality_pugil_scales', 'h.q._pugil_scls.', 12, 4, 42, 0, 260);
-INSERT INTO `item_basic` VALUES(1588, 0, 'slab_of_tufa', 'tufa', 12, 4, 39, 0, 1982);
+INSERT INTO `item_basic` VALUES(1588, 0, 'slab_of_tufa', 'tufa', 12, 4, 39, 0, 3825);
 INSERT INTO `item_basic` VALUES(1589, 0, 'shard_of_necropsyche', 'necropsyche', 1, 57428, 0, 0, 10600);
 INSERT INTO `item_basic` VALUES(1590, 0, 'sprig_of_holy_basil', 'holy_basil', 12, 4, 59, 0, 271);
 INSERT INTO `item_basic` VALUES(1591, 0, 'high-quality_coeurl_hide', 'h.q._coeurl_hide', 12, 4, 41, 0, 860);
