@@ -206,6 +206,42 @@ INSERT INTO `fishing_catch` VALUES(249, 1, 71);
 INSERT INTO `fishing_catch` VALUES(250, 1, 94);
 INSERT INTO `fishing_catch` VALUES(252, 1, 95);
 
+-- UPDATE by XENTIS - 28/02/21
+-- //START
+--
+-- Vunkerl Inlet [S] - 4 spots
+INSERT INTO `fishing_catch` VALUES(83, 1, 139);
+INSERT INTO `fishing_catch` VALUES(83, 2, 140);
+INSERT INTO `fishing_catch` VALUES(83, 3, 141);
+INSERT INTO `fishing_catch` VALUES(83, 4, 142);
+-- Rolanberry Fields [S] - 4 spots
+INSERT INTO `fishing_catch` VALUES(91, 1, 143);
+INSERT INTO `fishing_catch` VALUES(91, 2, 144);
+INSERT INTO `fishing_catch` VALUES(91, 3, 145);
+INSERT INTO `fishing_catch` VALUES(91, 4, 146);
+-- Pashhow Marshlands [S] - 1 spots
+INSERT INTO `fishing_catch` VALUES(90, 1, 147);
+-- West Sarutabaruta [S] - 2 spots
+INSERT INTO `fishing_catch` VALUES(95, 1, 148);
+INSERT INTO `fishing_catch` VALUES(95, 2, 149);
+-- North Gustaberg [S] - 1 spots
+INSERT INTO `fishing_catch` VALUES(88, 1, 150);
+-- Grauberg [S] - 2 spots
+INSERT INTO `fishing_catch` VALUES(89, 2, 151);
+INSERT INTO `fishing_catch` VALUES(89, 1, 152);
+-- La Vaule [S] - 2 spots
+INSERT INTO `fishing_catch` VALUES(85, 1, 153);
+INSERT INTO `fishing_catch` VALUES(85, 2, 154);
+-- Jugner Forest [S] - 3 spots
+INSERT INTO `fishing_catch` VALUES(82, 1, 155);
+INSERT INTO `fishing_catch` VALUES(82, 2, 155);
+INSERT INTO `fishing_catch` VALUES(82, 3, 156);
+-- Batallia Downs [S] - 1 spot
+INSERT INTO `fishing_catch` VALUES(84, 1, 157);
+-- East Ronfaure [S] - 1 spot
+INSERT INTO `fishing_catch` VALUES(81, 1, 158);
+-- //END
+
 --
 -- Indexes for dumped tables
 --

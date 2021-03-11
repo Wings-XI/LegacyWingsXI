@@ -1127,6 +1127,152 @@ INSERT INTO `fishing_group` VALUES(138, 5450, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(138, 5451, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(138, 5452, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 
+
+-- UPDATE by XENTIS - 28/02/21
+-- //START
+
+-- Vunkerl Inlet [S] - Bridge
+INSERT INTO `fishing_group` VALUES(139, 5466, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Trumpet Shell*/
+INSERT INTO `fishing_group` VALUES(139, 4360, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Bastore Sardine*/
+INSERT INTO `fishing_group` VALUES(139, 4481, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Ogre Eel*/
+INSERT INTO `fishing_group` VALUES(139, 4514, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Quus*/
+INSERT INTO `fishing_group` VALUES(139, 4443, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Cobalt Jellyfish*/
+INSERT INTO `fishing_group` VALUES(139, 5472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Garpike*/
+INSERT INTO `fishing_group` VALUES(139, 4461, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Bastore Bream*/
+INSERT INTO `fishing_group` VALUES(139, 5468, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Matsya*/
+
+INSERT INTO `fishing_group` VALUES(139, 688, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Arrowwood Log*/
+INSERT INTO `fishing_group` VALUES(139, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Bucket*/
+INSERT INTO `fishing_group` VALUES(139, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+INSERT INTO `fishing_group` VALUES(139, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Subligar*/
+-- Vunkerl Inlet [S] - Lake Joroia
+INSERT INTO `fishing_group` VALUES(140, 4472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Crayfish*/
+INSERT INTO `fishing_group` VALUES(140, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(140, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(140, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(140, 4428, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Dark Bass*/
+INSERT INTO `fishing_group` VALUES(140, 5472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Garpike*/
+INSERT INTO `fishing_group` VALUES(140, 688, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Arrowwood Log*/
+INSERT INTO `fishing_group` VALUES(140, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+-- Vunkerl Inlet [S] - Memjar Spring
+INSERT INTO `fishing_group` VALUES(141, 5472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Garpike*/
+-- Vunkerl Inlet [S] - Ludiwa Spring
+INSERT INTO `fishing_group` VALUES(142, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(142, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(142, 4428, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Dark Bass*/
+INSERT INTO `fishing_group` VALUES(142, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(142, 4427, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Carp*/
+INSERT INTO `fishing_group` VALUES(142, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+
+-- Rolanberry Fields [S] - Small Fountain 1
+INSERT INTO `fishing_group` VALUES(143, 4472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Crayfish*/
+INSERT INTO `fishing_group` VALUES(143, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(143, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+-- Rolanberry Fields [S] - Fountain of Promises
+INSERT INTO `fishing_group` VALUES(144, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(144, 688, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Arrowwood Log*/
+-- Rolanberry Fields [S] - Fountain of Partings
+INSERT INTO `fishing_group` VALUES(145, 4472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Crayfish*/
+INSERT INTO `fishing_group` VALUES(145, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(145, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(145, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(145, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+-- Rolanberry Fields [S] - Small Fountain 2
+INSERT INTO `fishing_group` VALUES(146, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(146, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(146, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+-- Pashhow Marshlands [S] - Whole Zone
+INSERT INTO `fishing_group` VALUES(147, 4515, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Copper Frog*/
+INSERT INTO `fishing_group` VALUES(147, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(147, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(147, 5471, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gerrothorax*/
+INSERT INTO `fishing_group` VALUES(147, 12522, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Cap*/
+
+-- West Sarutabaruta [S] - Pond
+INSERT INTO `fishing_group` VALUES(148, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(148, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(148, 4428, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Dark Bass*/
+-- West Sarutabaruta [S] - Seaside
+INSERT INTO `fishing_group` VALUES(149, 4481, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Ogre Eel*/
+INSERT INTO `fishing_group` VALUES(149, 4383, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Lobster*/
+INSERT INTO `fishing_group` VALUES(149, 4399, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Bluetail*/
+INSERT INTO `fishing_group` VALUES(149, 4461, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Bastore Bream*/
+INSERT INTO `fishing_group` VALUES(149, 624, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Pamtam Kelp*/
+INSERT INTO `fishing_group` VALUES(149, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+INSERT INTO `fishing_group` VALUES(149, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Subligar*/
+
+-- North Gustaberg [S] - Whole Zone
+INSERT INTO `fishing_group` VALUES(150, 4515, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Copper Frog*/
+INSERT INTO `fishing_group` VALUES(150, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(150, 4429, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Black Eel*/
+INSERT INTO `fishing_group` VALUES(150, 4427, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Carp*/
+INSERT INTO `fishing_group` VALUES(150, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Bucket*/
+INSERT INTO `fishing_group` VALUES(150, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+INSERT INTO `fishing_group` VALUES(150, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Subligar*/
+
+-- Grauberg [S] - All Waterside
+INSERT INTO `fishing_group` VALUES(151, 4515, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Copper Frog*/
+INSERT INTO `fishing_group` VALUES(151, 5469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Brass Loach*/
+INSERT INTO `fishing_group` VALUES(151, 4429, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Black Eel*/
+INSERT INTO `fishing_group` VALUES(151, 5474, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Ca Cuong*/
+INSERT INTO `fishing_group` VALUES(151, 4477, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gavial Fish*/
+INSERT INTO `fishing_group` VALUES(151, 5470, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Pirarucu*/
+INSERT INTO `fishing_group` VALUES(151, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Leggings*/
+INSERT INTO `fishing_group` VALUES(151, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Subligar*/
+-- Grauberg [S] - Waterfall
+INSERT INTO `fishing_group` VALUES(152, 4477, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gavial Fish*/
+
+-- La Vaule [S] - Pond
+INSERT INTO `fishing_group` VALUES(153, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(153, 4428, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Dark Bass*/
+INSERT INTO `fishing_group` VALUES(153, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Bucket*/
+-- La Vaule [S] - Other Waterside
+INSERT INTO `fishing_group` VALUES(154, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(154, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(154, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(154, 4427, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Carp*/
+
+-- Jugner Forest [S] - Lake Mechieume - Mouth & Main
+INSERT INTO `fishing_group` VALUES(155, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(155, 4469, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Giant Catfish*/
+INSERT INTO `fishing_group` VALUES(155, 4428, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Dark Bass*/
+INSERT INTO `fishing_group` VALUES(155, 4402, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Red Terrapin*/
+INSERT INTO `fishing_group` VALUES(155, 4427, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Carp*/
+INSERT INTO `fishing_group` VALUES(155, 4454, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Emperor Fish*/
+INSERT INTO `fishing_group` VALUES(155, 5476, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Abaia*/
+INSERT INTO `fishing_group` VALUES(155, 12522, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Rusty Cap*/
+-- Jugner Forest [S] - River
+INSERT INTO `fishing_group` VALUES(156, 4472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Crayfish*/
+INSERT INTO `fishing_group` VALUES(156, 4401, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Moat Carp*/
+INSERT INTO `fishing_group` VALUES(156, 4379, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Cheval Salmon*/
+INSERT INTO `fishing_group` VALUES(156, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(156, 4354, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Shining Trout*/
+
+-- Batallia Downs [S] - South Seaside
+INSERT INTO `fishing_group` VALUES(157, 4443, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Cobalt Jellyfish*/
+INSERT INTO `fishing_group` VALUES(157, 4360, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Bastore Sardine*/
+INSERT INTO `fishing_group` VALUES(157, 4403, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Yellow Globe*/
+INSERT INTO `fishing_group` VALUES(157, 4483, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tiger Cod*/
+INSERT INTO `fishing_group` VALUES(157, 4482, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Nosteau Herring*/
+INSERT INTO `fishing_group` VALUES(157, 5128, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Cone Calamary*/
+INSERT INTO `fishing_group` VALUES(157, 4399, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Bluetail*/
+INSERT INTO `fishing_group` VALUES(157, 4451, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Silver Shark*/
+INSERT INTO `fishing_group` VALUES(157, 5472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Garpike*/
+INSERT INTO `fishing_group` VALUES(157, 5467, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Megalodon*/
+INSERT INTO `fishing_group` VALUES(157, 4384, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Black Sole*/
+INSERT INTO `fishing_group` VALUES(157, 5473, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Bastore Sweeper*/
+INSERT INTO `fishing_group` VALUES(157, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Subligar*/
+
+-- East Ronfaure [S] - Whole Zone
+INSERT INTO `fishing_group` VALUES(158, 4472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Crayfish*/
+INSERT INTO `fishing_group` VALUES(158, 4379, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Cheval Salmon*/
+INSERT INTO `fishing_group` VALUES(158, 4426, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Tricolored Carp*/
+INSERT INTO `fishing_group` VALUES(158, 4354, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Shining Trout*/
+INSERT INTO `fishing_group` VALUES(158, 4427, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Gold Carp*/
+INSERT INTO `fishing_group` VALUES(158, 13454, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Copper Ring*/
+-- //END
+
+
 --
 -- Indexes for dumped tables
 --
