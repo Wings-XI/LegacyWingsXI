@@ -25,7 +25,7 @@ function onTrigger(player, npc)
     -- SCH AF3 Quest - Head
     elseif npc:getID() == 17142586 then
         if player:getCharVar("SeeingBloodRed") == 3 and player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT) then
-            player:startEvent(102, 0, 0, 34) -- cs 15 is after you win?
+            player:startEvent(102, 0, 0, 34) 
             -- player:setPos(-323.6241, -23.8410, -19.5224, 93)
         else
             player:messageSpecial(ID.text.THERE_IS_NO_RESPONSE)

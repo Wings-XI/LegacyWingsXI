@@ -12,17 +12,6 @@ function onMonsterMagicPrepare(mob, target)
     local rnd = math.random()
     local hpp = mob:getHPP()
 
-    -- if target then
-    --     target:PrintToPlayer("STATUS -> MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
-    --     local effectString = "EFFECTS -> "
-    --     local effects = mob:getStatusEffects()
-    --     for _,effect in ipairs(effects) do
-    --         effectString = effectString .. effect:getType() .. ", "
-    --     end
-    --     target:PrintToPlayer(effectString)
-    --     target:PrintToPlayer("onMonsterMagicPrepare random: " .. rnd)
-    -- end
-
     -- Survival
     -- If under 30% then 50% chance to cure top priority
     if hpp < 30 and rnd < 0.5 then
@@ -66,10 +55,6 @@ function onMonsterMagicPrepare(mob, target)
     end
 
     rnd = math.random() -- new random number needed here
-
-    -- if target then
-    --     target:PrintToPlayer("onMonsterMagicPrepare random2: " .. rnd)
-    -- end
 
     if storm == 0 then
         return determineStorm(hpp, rnd)
@@ -208,18 +193,20 @@ function onMobFight(mob, player)
 
     if mob:getHPP() < mob:getLocalVar("specialThreshold") then
         mob:messageText(mob, ID.text.MOST_IMPRESSIVE)
-        mob:useMobAbility(2261)
+        mob:useMobAbility(tpz.jsa.TABULA_RASA_ULBRECHT)
         mob:setLocalVar("specialThreshold", 0)
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 10) -- reduce magic cooldown
+        mob:setMod(tpz.mod.REGAIN, 200) -- give regain so he uses more abilities
     end
 
     local instance = mob:getInstance()
     if mob:getHPP() <= 20 and not instance:completed() then
         mob:messageText(mob, ID.text.STUDENT_BECOME_MASTER)
         instance:complete()
+        DespawnMob(ID.mob.ULBRECHT, instance)
     end
 
     if os.time() >= mob:getLocalVar("stratagem_cooldown") and mob:getLocalVar("force_stratagem_tp") == 0 then
-        --player:PrintToPlayer("force stratagem tp " .. mob:getTP(), 29)
         mob:setLocalVar("force_stratagem_tp", mob:getTP())
         mob:setTP(3000) -- if stratagem is ready, increase tp to 3000 to force it
     end
@@ -241,12 +228,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-
-    -- if target then
-    --     target:PrintToPlayer("STATUS -> MP:" .. mob:getMP() .. " TP:" .. mob:getTP())
-    --     target:PrintToPlayer("onMobWeaponSkillPrepare-stratagem_CD: " .. os.time() - mob:getLocalVar("stratagem_cooldown"))
-    -- end
-
     -- 2314: Parsimony
     -- 2315: Alacrity
     -- 2316: Manifestation
@@ -272,6 +253,9 @@ function onMobWeaponSkillPrepare(mob, target)
             table.insert(availableStratagems, 2317)
         end
         if (#availableStratagems > 0) then
+            if mob:getTP() == 3000 then
+                mob:setTP(750) -- prevent ws spam during regain/tabula rasa proc
+            end
             local stratagem = availableStratagems[math.random(#availableStratagems)]
             return stratagem
         end
@@ -302,16 +286,34 @@ function onMobInitialize(mob)
     mob:addMod(tpz.mod.INT, 10)
 
     mob:addListener("WEAPONSKILL_TAKE", "ULBRECHT_WEAPONSKILL_TAKE", function(target, user, wsid, tp, action)
-        -- this should be high damage weaponskills but can't figure this out yet so, going with 30% chance
-
-        if user:isPC() and math.random() < 0.3 then
+        -- TODO: Accuracy check (does this happen only on weaponskills? seems it happens on garuda bloodpact) is this any dmg over x value? how often?
+        if user:isPC() and math.random() < 0.5 and action:param(target:getID()) > 650 then
             target:messageText(target, ID.text.PAINFUL_LESSON)
         end
     end)
 
-    mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(m, spell, action)
-        if math.random(0,99) < 50 and spell:canTargetEnemy() then -- check offensive spells only
-            m:messageText(m, ID.text.TRUE_TEACHING)
+    mob:addListener("MAGIC_START", "ULBRECHT_MAGIC_START", function(entity, spell, action)
+        if math.random() < 0.5 and spell:canTargetEnemy() then -- check offensive spells only
+            entity:messageText(entity, ID.text.TRUE_TEACHING)
+        end
+    end)
+
+    mob:addListener("MAGIC_USE", "ULBRECHT_MAGIC_USE", function(entity, target, spell, action)
+        local spellID = spell:getID()
+        if spellID == 99 or (spellID >= 113 and spellID < 120) then
+            entity:setMod(tpz.mod.FIREDEF + spell:getElement() - 1, 52) -- 52/256 = 20% reduction
+        end
+    end)
+
+    mob:addListener("EFFECT_LOSE", "ULBRECHT_EFFECT_LOSE", function(owner, effect)
+        local effectType = effect:getType()
+        if effectType >= tpz.effect.FIRESTORM and effectType <= tpz.effect.VOIDSTORM then
+            owner:setMod(tpz.mod.FIREDEF + effectType - tpz.effect.FIRESTORM, 0) -- 0/256 = 0% reduction
+        end
+
+        if effectType == tpz.effect.TABULA_RASA then
+            owner:setMobMod(tpz.mobMod.MAGIC_COOL, 20)
+            owner:setMod(tpz.mod.REGAIN, 0)
         end
     end)
 end
@@ -321,34 +323,22 @@ end
 
 function onCastStarting(mob, spell)
     if mob:hasStatusEffect(tpz.effect.ALACRITY) then
-        -- local target = mob:getTarget()
-        -- local isPlayer = target and target:isPC()
-        -- if target and isPlayer then
-        --     target:PrintToPlayer("ALACRITY")
-        -- end
-        spell:castTime(spell:castTime()/10) -- 1000% increased cast speed
+        spell:castTime(0) -- instant cast
     end
 end
 
 function onSpellPrecast(mob, spell)
-    -- local target = mob:getTarget()
-    -- local isPlayer = target and target:isPC()
 
     if mob:hasStatusEffect(tpz.effect.EBULLIENCE) and
         (spell:getSkillType() == tpz.skill.HEALING_MAGIC or
         spell:getSkillType() == tpz.skill.ELEMENTAL_MAGIC or
         spell:getSkillType() == tpz.skill.DARK_MAGIC) then
-            -- if target and isPlayer then
-            --     target:PrintToPlayer("EBULLIENCE")
-            -- end
-        spell:multiplier(spell:multiplier() * 1.4) -- 40% potency increase
 
+        spell:multiplier(spell:multiplier() * 1.4) -- 40% potency increase
     end
 
     if mob:hasStatusEffect(tpz.effect.MANIFESTATION) and spell:canTargetEnemy() then
-        -- if target and isPlayer then
-        --     target:PrintToPlayer("MANIFESTATION")
-        -- end
+
         spell:setAoE(tpz.magic.aoe.RADIAL)
         spell:setRadius(10)
         if(spell:getID() % 5 == 1) then -- t3 spells only (mod 5 == 1)
@@ -357,9 +347,6 @@ function onSpellPrecast(mob, spell)
     end
 
     if mob:hasStatusEffect(tpz.effect.PARSIMONY) then
-        -- if target and isPlayer then
-        --     target:PrintToPlayer("PARSIMONY")
-        -- end
         spell:setMPCost(1) -- normally 50% but superpowered
     end
 end
