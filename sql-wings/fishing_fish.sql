@@ -162,7 +162,7 @@ INSERT INTO `fishing_fish` VALUES(16606, 'Rusty Greatsword', 0, 7, 15, 13, 2, 1,
 INSERT INTO `fishing_fish` VALUES(14117, 'Rusty Leggings', 0, 7, 26, 13, 2, 1, 1, 0, 0, 255, 255, 9, 0, 0, 1, 1, 500, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(16655, 'Rusty Pick', 0, 7, 15, 13, 2, 1, 1, 0, 0, 255, 255, 8, 0, 0, 1, 1, 400, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(14242, 'Rusty Subligar', 0, 5, 22, 13, 2, 1, 1, 0, 0, 255, 255, 8, 0, 0, 1, 1, 500, 0, '', 0);
-INSERT INTO `fishing_fish` VALUES(4305, 'Ryugu Titan', 90, 150, 48, 1, 15, 214, 485, 1, 1, 255, 255, 0, 1, 0, 0, 1, 700, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(4305, 'Ryugu Titan', 90, 120, 48, 1, 15, 214, 485, 1, 1, 255, 255, 0, 1, 0, 0, 1, 700, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4291, 'Sandfish', 0, 50, 36, 3, 10, 1, 1, 0, 0, 255, 255, 1, 0, 0, 0, 3, 0, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5459, 'Sazanbaligi', 0, 56, 18, 10, 14, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 650, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4475, 'Sea Zombie', 90, 100, 39, 3, 15, 79, 192, 1, 1, 255, 255, 0, 1, 0, 0, 1, 700, 0, '', 0);
