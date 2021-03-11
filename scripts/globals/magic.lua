@@ -644,26 +644,23 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     
     -- percentBonus is a bit deceiving of a name. it's either 0 or a negative number. its only application is specific effect resistance (i.e. +5 resist to paralyze = -5% hitrate on incoming paras)
     -- note that this has nothing to do with the resist TRAIT which is handled BEFORE rate calculations. gear bonuses (i.e. "Enhances Resist Paralyze Effect") count as traits.
-    -- If dMAcc < 0, Magic Hit Rate = 55% + floor( dMAcc÷2 ) = magic hit rate
-    -- If dMAcc ≥ 0, Magic Hit Rate = 55% + dMAcc = magic hit rate
+    -- If dMAcc < 0, Magic Hit Rate = 70% + floor( dMAcc÷2 ) = magic hit rate
+    -- If dMAcc ≥ 0, Magic Hit Rate = 70% + dMAcc = magic hit rate
     
-    magicacc = magicacc + (casterLvl - targetLvl)*4
+    --magicacc = magicacc + (casterLvl - targetLvl)*4
+    magicacc = magicacc + utils.clamp(casterLvl - targetLvl, -5, 5)*3
     local dMAcc = magicacc - magiceva
     --print(string.format("magicacc = %u, magiceva = %u",magicacc,magiceva))
     if dMAcc < 0 then -- when penalty, half effective
-        p = 55 + math.floor(dMAcc/2)
+        p = 70 + math.floor(dMAcc/2)
     else
-        p = 55 + dMAcc
+        p = 70 + dMAcc
     end
-    p = utils.clamp(p, 5, 95)
     
     p = p + percentBonus
-    p = utils.clamp(p, 5, 95)
-    --print(string.format("step1: %u",p))
-	--GetPlayerByID(90):PrintToPlayer(string.format("pre SDT: %u",p))
+	--GetPlayerByID(2):PrintToPlayer(string.format("pre SDT: %u",p))
     p = p * SDT/100
-	--print(string.format("step2: %u",p))
-	--GetPlayerByID(90):PrintToPlayer(string.format("post SDT: %u",p))
+	--GetPlayerByID(2):PrintToPlayer(string.format("post SDT: %u",p))
     return utils.clamp(p, 5, 95)
 end
 
