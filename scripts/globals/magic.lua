@@ -869,32 +869,7 @@ end
 
  function finalMagicAdjustments(caster, target, spell, dmg)
     --Handles target's HP adjustment and returns UNSIGNED dmg (absorb message is set in this function)
-
-    -- handle multiple targets
-    if (caster:isSpellAoE(spell:getID())) then
-        local total = spell:getTotalTargets()
-
-        if (total > 9) then
-            -- ga spells on 10+ targets = 0.4
-            dmg = dmg * 0.4
-        elseif (total > 1) then
-            -- -ga spells on 2 to 9 targets = 0.9 - 0.05T where T = number of targets
-            dmg = dmg * (0.9 - 0.05 * total)
-        end
-
-        -- kill shadows
-        -- target:delStatusEffect(tpz.effect.COPY_IMAGE)
-        -- target:delStatusEffect(tpz.effect.BLINK)
-    else
-        -- this logic will eventually be moved here
-        -- dmg = utils.takeShadows(target, dmg, 1)
-
-        -- if (dmg == 0) then
-            -- spell:setMsg(tpz.msg.basic.SHADOW_ABSORB)
-            -- return 1
-        -- end
-    end
-
+    
     local skill = spell:getSkillType()
     if (skill == tpz.skill.ELEMENTAL_MAGIC) then
         dmg = dmg * ELEMENTAL_POWER
