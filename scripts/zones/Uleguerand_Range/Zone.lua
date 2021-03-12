@@ -11,14 +11,20 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.JORMUNGAND)
-    GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(math.random(86400, 259200))
+    UpdateNMSpawnPoint(ID.mob.JORMUNGAND);
+    
+    local jormre = GetServerVariable("JormRespawn")
+	if os.time() < jormre then
+		GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(jormre - os.time())
+	else
+		SpawnMob(ID.mob.JORMUNGAND)
+	end
 
     -- ffxiclopedia's pages for Black Coney and White Coney say 7 and 5 Earth seconds respectively, in game it is very fast
     -- https://ffxiclopedia.fandom.com/wiki/Black_Coney
     -- https://ffxiclopedia.fandom.com/wiki/White_Coney
     -- BG Wiki has no info. For now, triggers every 3 vana minutes
-    GetNPCByID(ID.npc.RABBIT_FOOTPRINT):addPeriodicTrigger(0, 3, 0)
+    GetNPCByID(ID.npc.RABBIT_FOOTPRINT):addPeriodicTrigger(0,3,0)
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -46,16 +52,6 @@ function onEventFinish(player, csid, option)
     if (csid == 17) then
         player:setCharVar("COP_louverance_story", 2)
     end
-end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.JORMUNGAND)
-	local simre = GetServerVariable("JormRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.JORMUNGAND):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.JORMUNGAND)
-	end
 end
 
 function onZoneWeatherChange(weather)
