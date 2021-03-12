@@ -1602,7 +1602,7 @@ function doNinjutsuNuke(caster, target, spell, params)
     end
     params.skillType = tpz.skill.NINJUTSU
     params.attribute = tpz.mod.INT
-    params.mabBonus = mabBonus
+    params.bonusmab = mabBonus
     params.dStatAccSoftCap = 10
 
     return doNuke(caster, target, spell, params)
