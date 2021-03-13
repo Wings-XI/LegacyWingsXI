@@ -19,10 +19,15 @@ function onUseAbility(player, target, ability)
     local helix = target:getStatusEffect(tpz.effect.HELIX)
     if helix ~= nil then
         local mvPower = helix:getSubPower()
-        local resist = applyResistanceAbility(player, target, tpz.magic.ele.NONE, tpz.skill.ELEMENTAL_MAGIC, 0) -- seems reasonable...
-        -- Doesn't work against NMs apparently
-        if mvPower > 0 or resist < 0.25 or target:isNM() then -- Don't let Modus Veritas stack to prevent abuse
-            ability:setMsg(tpz.msg.basic.JA_MISS) --Miss
+        
+        local resist = 1
+        if target:isNM() then -- NMs must pass a resistance check, but it seems to be implied that normal mobs don't need to https://ffxiclopedia.fandom.com/wiki/Modus_Veritas?oldid=1075469
+            local bonusAcc = player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT) - mvPower*40 -- dINT minus 40 M.acc per Modus already on the NM
+            resist = applyResistanceAbility(player, target, tpz.magic.ele.NONE, tpz.skill.NONE, bonusAcc)
+        end
+
+        if resist < 0.5 then
+            ability:setMsg(tpz.msg.basic.JA_MISS)
             return 0
         else
             -- Double power and halve remaining time
