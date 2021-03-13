@@ -6217,6 +6217,7 @@ INSERT INTO `mob_pools` VALUES(6178, 'Undead_Bats', 'Undead_Bats', 47, 0x0000040
 INSERT INTO `mob_pools` VALUES(6181, 'Tonberrys_Elemental', 'Tonberrys_Elemental', 106, 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 1, 16, 256, 0, 0, 0, 0, 0, 15, 1, 0, 106);
 INSERT INTO `mob_pools` VALUES(6182, 'Poison_Funguar', 'Poison_Funguar', 116, 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 237, 131, 0, 0, 0, 1, 0, 116);
 INSERT INTO `mob_pools` VALUES(6183, 'Erle', 'Erle', 48, 0x0000100100000000000000000000000000000000, 4, 1, 11, 240, 100, 0, 1, 0, 1, 2, 16, 0, 0, 0, 0, 0, 434, 1, 0, 48);
+INSERT INTO `mob_pools` VALUES(6184, 'Picolaton', 'Picolaton', 125, 0x0000500100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 6, 32, 0, 3, 0, 0, 0, 1, 0, 1152);
 
 --
 -- Indexes for dumped tables
