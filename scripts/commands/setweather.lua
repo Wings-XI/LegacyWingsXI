@@ -3,7 +3,7 @@
 -- desc: Sets the current weather for the current zone.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/weather")
+require("scripts/globals/world")
 
 cmdprops =
 {
