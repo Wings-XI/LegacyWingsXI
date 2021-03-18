@@ -1400,7 +1400,18 @@ function getElementalSDT(element, target) -- takes into account if magic burst w
         return 100
     end
 
-    local SDT = target:getMod(element + 967)
+    local SDT = 100
+    local SDTmod = 0
+    if     element == 1 then SDTmod = tpz.mod.SDT_FIRE
+    elseif element == 2 then SDTmod = tpz.mod.SDT_ICE
+    elseif element == 3 then SDTmod = tpz.mod.SDT_WIND
+    elseif element == 4 then SDTmod = tpz.mod.SDT_EARTH
+    elseif element == 5 then SDTmod = tpz.mod.SDT_THUNDER
+    elseif element == 6 then SDTmod = tpz.mod.SDT_WATER
+    elseif element == 7 then SDTmod = tpz.mod.SDT_LIGHT
+    elseif element == 8 then SDTmod = tpz.mod.SDT_DARK
+    end
+    if SDTmod > 0 then SDT = target:getMod(SDTmod) end
     
     if SDT == 0 or SDT == nil then -- invalid SDT, it was never set on this target... just default it.
         SDT = 100
