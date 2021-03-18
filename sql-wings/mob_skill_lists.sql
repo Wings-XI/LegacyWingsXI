@@ -1161,6 +1161,7 @@ INSERT INTO `mob_skill_lists` VALUES('KingV', 274, 719);
 INSERT INTO `mob_skill_lists` VALUES('KingV', 274, 720);
 INSERT INTO `mob_skill_lists` VALUES('KingV', 274, 722);
 INSERT INTO `mob_skill_lists` VALUES('KingV', 274, 723);
+INSERT INTO `mob_skill_lists` VALUES('KingV', 274, 279);
 INSERT INTO `mob_skill_lists` VALUES('Genbu', 277, 805);
 INSERT INTO `mob_skill_lists` VALUES('Genbu', 277, 806);
 INSERT INTO `mob_skill_lists` VALUES('Genbu', 277, 807);

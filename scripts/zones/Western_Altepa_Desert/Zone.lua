@@ -18,7 +18,12 @@ end
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-    GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(900, 10800))
+	local kvre = GetServerVariable("KVRespawn")
+    DisallowRespawn(KingVine:getID(), true)
+
+	if os.time() < kvre then
+		GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(kvre - os.time())
+	end
 
     tpz.bmt.updatePeddlestox(tpz.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
@@ -58,22 +63,25 @@ function onEventFinish(player, csid, option)
 end
 
 function onZoneWeatherChange(weather)
-    local KV = GetMobByID(ID.mob.KING_VINEGARROON)
+    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
+	local kvre = GetServerVariable("KVRespawn")
+    local KingVine = GetMobByID(ID.mob.KING_VINEGARROON)
 
-    if KV:getCurrentAction() == tpz.act.DESPAWN and (weather == tpz.weather.DUST_STORM or weather == tpz.weather.SAND_STORM) then
-        KV:spawn()
-    elseif KV:getCurrentAction() == tpz.act.ROAMING and weather ~= tpz.weather.DUST_STORM and weather ~= tpz.weather.SAND_STORM then
-        DespawnMob(ID.mob.KING_VINEGARROON)
+    if
+        not KingVine:isSpawned() and os.time() > kvre
+        and weather == tpz.weather.DUST_STORM
+    then
+        -- 10% chance for KV pop at start of single earth weather
+        chance = math.random(1, 10)
+        if chance == 1 then 
+            DisallowRespawn(KingVine:getID(), false)
+            SpawnMob(ID.mob.KING_VINEGARROON)
+        end
+    elseif
+        not KingVine:isSpawned() and os.time() > kvre
+        and weather == tpz.weather.SAND_STORM
+    then
+        DisallowRespawn(KingVine:getID(), false)
+        SpawnMob(ID.mob.KING_VINEGARROON)
     end
 end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-	local simre = GetServerVariable("KVRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.KING_VINEGARROON)
-	end
-end
-

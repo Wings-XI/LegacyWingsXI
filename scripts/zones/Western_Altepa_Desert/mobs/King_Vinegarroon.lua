@@ -17,8 +17,10 @@ function onMobInitialize(mob)
 end
 
 function onMobDrawIn(mob, target)
-    -- todo make him use AoE tp move
     mob:addTP(3000)
+    mob:useMobAbility(({354,722,723})[math.random(1,3)])
+    mob:addTP(3000)
+    mob:useMobAbility(({353,279,720})[math.random(1,3)])
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -26,7 +28,7 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDisengage(mob, weather)
-    if weather ~= tpz.weather.DUST_STORM and weather ~= tpz.weather.SAND_STORM then
+    if not (mob:getWeather() == tpz.weather.DUST_STORM or mob:getWeather() == tpz.weather.SAND_STORM) then
         DespawnMob(mob:getID())
     end
 end
@@ -40,6 +42,7 @@ function onMobDespawn(mob)
 	local respawn = math.random(75600, 86400) -- 21h to 24h
     mob:setRespawnTime(respawn)
 	SetServerVariable("KVRespawn",(os.time() + respawn))
+    DisallowRespawn(KingVine:getID(), true)
 end
 
 function updateRegen(mob)
@@ -67,4 +70,8 @@ end
 
 function onMobRoam(mob)
     updateRegen(mob)
+
+    if not (mob:getWeather() == tpz.weather.DUST_STORM or mob:getWeather() == tpz.weather.SAND_STORM) then
+        DespawnMob(mob:getID())
+    end
 end
