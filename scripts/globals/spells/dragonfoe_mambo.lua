@@ -17,17 +17,17 @@ function onSpellCast(caster, target, spell)
     -- Since nobody knows the evasion values for mambo, I'll just make it up! (aka - same as madrigal)
     local power = 9
 
-    if (sLvl+iLvl > 130) then
+    if sLvl+iLvl > 130 then
         power = power + math.floor((sLvl+iLvl-130) / 18)
     end
 
-    if (power >= 48) then
-        power = 48
+    if power > 30 then
+        power = 30
     end
 
     local iBoost = caster:getMod(tpz.mod.MAMBO_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
     if (iBoost > 0) then
-        power = power + iBoost*7
+        power = power + iBoost*2
     end
 
     if (caster:hasStatusEffect(tpz.effect.SOUL_VOICE)) then
