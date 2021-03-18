@@ -100,7 +100,8 @@ enum MOBMODIFIER : int
     MOBMOD_NO_LINK             = 69, // If set, mob cannot link until unset.
     MOBMOD_NO_REST             = 70, // Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
     MOBMOD_BCNM_LINK           = 71, // all BCNM mobs sound link each other
-    MOBMOD_CLAIM_SHIELD        = 72  // lottery pick to everyone who performed an action
+    MOBMOD_CLAIM_SHIELD        = 72, // lottery pick to everyone who performed an action
+    MOBMOD_FAMILYLINK          = 74, // Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
 };
 
 #endif

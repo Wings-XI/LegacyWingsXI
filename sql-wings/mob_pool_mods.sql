@@ -69,6 +69,7 @@ INSERT INTO `mob_pool_mods` VALUES(532, 160, -50, 0);
 INSERT INTO `mob_pool_mods` VALUES(592, 68, 15, 0);
 INSERT INTO `mob_pool_mods` VALUES(592, 302, 45, 0);
 INSERT INTO `mob_pool_mods` VALUES(592, 3, 100, 1);
+INSERT INTO `mob_pool_mods` VALUES(595, 74, 212, 1); -- Cactrot Rapido will link with all Sabotenders in the zone
 INSERT INTO `mob_pool_mods` VALUES(639, 63, 25, 0);
 INSERT INTO `mob_pool_mods` VALUES(676, 160, -50, 0);
 INSERT INTO `mob_pool_mods` VALUES(680, 1, 322, 0);
