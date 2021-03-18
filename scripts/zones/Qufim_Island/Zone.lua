@@ -44,3 +44,13 @@ function onEventFinish(player, csid, option)
         npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT, {item = 12638, fame = 60, title = tpz.title.PARAGON_OF_WARRIOR_EXCELLENCE, var = {"theTalekeeperGiftCS", "theTalekeepersGiftKilledNM"}})
     end
 end
+
+function onZoneWeatherChange(weather)
+    local DosetsuTree = GetMobByID(ID.mob.DOSETSU_TREE)
+
+    if DosetsuTree:isSpawned() and not (weather == tpz.weather.THUNDER or weather == tpz.weather.THUNDERSTORM) then
+        DespawnMob(ID.mob.DOSETSU_TREE)
+    elseif not DosetsuTree:isSpawned() and (weather == tpz.weather.THUNDER or weather == tpz.weather.THUNDERSTORM) and os.time() > DosetsuTree:getLocalVar("pop") then
+        SpawnMob(ID.mob.DOSETSU_TREE)
+    end
+end
