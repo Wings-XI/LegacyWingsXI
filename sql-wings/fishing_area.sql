@@ -215,6 +215,45 @@ INSERT INTO `fishing_area` VALUES(249, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.
 INSERT INTO `fishing_area` VALUES(250, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
 INSERT INTO `fishing_area` VALUES(252, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
 
+-- UPDATE by XENTIS - 28/02/21
+-- //START
+--
+-- Vunkerl Inlet [S] - 4 spots
+INSERT INTO `fishing_area` VALUES(83, 1, 'Bridge', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+INSERT INTO `fishing_area` VALUES(83, 2, 'Lake Joroia', 1, 20, 200, NULL, -212.553, -37.738, -307.338);
+INSERT INTO `fishing_area` VALUES(83, 3, 'Memjar Spring', 1, 20, 130, NULL, -284.279, -38.375, -656.134);
+INSERT INTO `fishing_area` VALUES(83, 4, 'Ludiwa Spring', 1, 20, 130, NULL, -423.925, -30.592, 574.216);
+-- Rolanberry Fields [S] - 4 spots
+INSERT INTO `fishing_area` VALUES(91, 1, 'Small Fountain 1', 1, 20, 20, '', -538.750, -14.000, -179.103);
+INSERT INTO `fishing_area` VALUES(91, 2, 'Fountain of Promises', 1, 20, 70, '', -670.355, -21.000, -175.250);
+INSERT INTO `fishing_area` VALUES(91, 3, 'Fountain of Partings', 1, 20, 60, '', -721.715, -26.000, -423.003);
+INSERT INTO `fishing_area` VALUES(91, 4, 'Small Fountain 2', 1, 20, 20, '', 257.238, -30.000, -258.576);
+-- Pashhow Marshlands [S] - 1 spot
+INSERT INTO `fishing_area` VALUES(90, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+-- West Sarutabaruta [S] - 2 spots
+INSERT INTO `fishing_area` VALUES(95, 1, 'Pond', 1, 20, 25, '', 110.000, -1.000, -200.000);
+INSERT INTO `fishing_area` VALUES(95, 2, 'Seaside', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+-- North Gustaberg [S] - 1 spot
+/*INSERT INTO `fishing_area` VALUES(88, 1, 'Basin of Waterfall', 1, 20, 27, '', -230.433, 96.000, 462.000);*/
+INSERT INTO `fishing_area` VALUES(88, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+-- Grauberg [S] - 2 spots
+INSERT INTO `fishing_area` VALUES(89, 2, 'All Waterside', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+INSERT INTO `fishing_area` VALUES(89, 1, 'Waterfall', 1, 30, 200, '', -102.265, -6.774, 581.573);
+-- La Vaule [S] - 2 spots
+INSERT INTO `fishing_area` VALUES(85, 1, 'Pond', 1, 20, 50, '', 198.750, 2.000, -107.220);
+INSERT INTO `fishing_area` VALUES(85, 2, 'Other Waterside', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+-- Jugner Forest [S] - 3 spots
+INSERT INTO `fishing_area` VALUES(82, 1, 'Lake Mechieume - Mouth', 1, 20, 31, '', 19.458, 3.000, 334.528);
+INSERT INTO `fishing_area` VALUES(82, 2, 'Lake Mechieume - Main', 2, 20, 0, 0xc1ca2bc30000000010981544df4f0b430000000064d3114477de0d4300000000ec41a143235b30c3000000006871a343, 0.000, 5.000, 0.000);
+INSERT INTO `fishing_area` VALUES(82, 3, 'River', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+/*INSERT INTO `fishing_area` VALUES(82, 4, 'Crystalwater Spring', 1, 20, 20, '', 300.000, 1.000, -179.833);
+INSERT INTO `fishing_area` VALUES(82, 5, 'Maidens Spring', 1, 20, 22, '', -496.682, 9.000, 298.057);*/
+-- Batallia Downs [S] - 1 spot
+INSERT INTO `fishing_area` VALUES(84, 1, 'South Seaside', 1, 20, 150, '', 102.172, 8.000, -489.808);
+-- East Ronfaure [S] - 1 spot
+INSERT INTO `fishing_area` VALUES(81, 1, 'Whole Zone', 0, 0, 0, NULL, 0.000, 0.000, 0.000);
+-- //END
+
 --
 -- Indexes for dumped tables
 --
