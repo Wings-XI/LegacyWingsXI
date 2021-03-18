@@ -569,7 +569,7 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
         --end
     end
 
-    return getMagicResist(p)
+    return res
 end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
