@@ -4634,7 +4634,7 @@ INSERT INTO `mob_pools` VALUES(4570, 'Habrok', 'Habrok', 55, 0x0000bd01000000000
 INSERT INTO `mob_pools` VALUES(4571, 'Herbage_Hunter', 'Herbage_Hunter', 79, 0x00008c0100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 79);
 INSERT INTO `mob_pools` VALUES(4572, 'Huwasi', 'Huwasi', 135, 0x0000b00100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 1, 0, 135);
 INSERT INTO `mob_pools` VALUES(4573, 'Lii_Jixa_the_Somnolist', 'Lii_Jixa_the_Somnolist', 270, 0x0000550200000000000000000000000000000000, 3, 3, 11, 240, 100, 0, 1, 0, 1, 2, 16, 0, 0, 0, 0, 1, 429, 1, 0, 270);
-INSERT INTO `mob_pools` VALUES(4574, 'Mucoid_Mass', 'Mucoid_Mass', 228, 0x0000240100000000000000000000000000000000, 8, 8, 7, 240, 100, 0, 1, 0, 0, 2, 16, 0, 0, 0, 0, 0, 5, 1, 0, 228);
+INSERT INTO `mob_pools` VALUES(4574, 'Mucoid_Mass', 'Mucoid_Mass', 228, 0x0000240100000000000000000000000000000000, 8, 1, 7, 240, 100, 0, 1, 0, 0, 2, 16, 0, 0, 0, 0, 0, 438, 1, 0, 228);
 INSERT INTO `mob_pools` VALUES(4575, 'Patripatan', 'Patripatan', 71, 0x00006f0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 1, 0, 71);
 INSERT INTO `mob_pools` VALUES(4576, 'Saa_Doyi_the_Fervid', 'Saa_Doyi_the_Fervid', 270, 0x00004b0200000000000000000000000000000000, 13, 13, 9, 240, 100, 0, 1, 0, 1, 2, 16, 32, 456, 155, 0, 0, 306, 1, 0, 270);
 INSERT INTO `mob_pools` VALUES(4577, 'Snaggletooth_Peapuk', 'Snaggletooth_Peapuk', 198, 0x0000d10600000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 0, 0, 0, 0, 0, 0, 1, 133, 0, 0, 0, 1, 0, 198);

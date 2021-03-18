@@ -3733,6 +3733,7 @@ INSERT INTO `mob_spell_lists` VALUES('Erle', 434, 208, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 435, 34, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 435, 40, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 435, 112, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 438, 242, 1, 255);
 
 
 

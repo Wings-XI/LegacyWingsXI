@@ -45,6 +45,7 @@ zones[tpz.zone.RANGUEMONT_PASS] =
         },
         TAISAIJIN    = 17457216,
         TROS         = 17457309,
+        MUCOID_MASS  = 17457245,
     },
     npc =
     {
