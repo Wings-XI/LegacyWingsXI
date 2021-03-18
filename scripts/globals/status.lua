@@ -2391,7 +2391,7 @@ tpz.mobMod =
     NO_REST             = 70, -- Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
     BCNM_LINK           = 71, -- all BCNM mobs sound link each other
     CLAIM_SHIELD        = 72, -- lottery pick to everyone who performed an action
-    CLAIM_SHIELD_ACTIVE = 73  -- volatile var
+    CLAIM_SHIELD_ACTIVE = 73, -- volatile var
     FAMILYLINK          = 74  -- Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
 }
 
