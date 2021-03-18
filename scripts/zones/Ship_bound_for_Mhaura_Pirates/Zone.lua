@@ -5,9 +5,34 @@
 -----------------------------------
 local ID = require("scripts/zones/Ship_bound_for_Mhaura_Pirates/IDs")
 require("scripts/globals/zone")
+require("scripts/globals/pirates")
+require("scripts/globals/sea_creatures")
 -----------------------------------
+local function spawnBoatMob(mob)
+    mob:spawn()
+    mob:setLocalVar("maxVerticalAggro", 4)
+end
 
 function onInitialize(zone)
+
+    tpz.pirates.init(ID)
+
+    zone:addListener("TRANSPORTZONE_END", "MHAURA_PIRATES_TRANSPORTZONE_END", function(transportZone)
+        if GetMobByID(ID.mob.PHANTOM):isSpawned() then
+            DespawnMob(ID.mob.PHANTOM)
+        end
+        tpz.sea_creatures.despawn(ID)
+    end)
+
+    zone:addListener("TRANSPORTZONE_START", "MHAURA_PIRATES_TRANSPORTZONE_START", function(transportZone)
+        tpz.pirates.start(ID)
+        tpz.sea_creatures.checkSpawns(ID, 5, 1) -- 5 percent on init
+    end)
+
+    zone:addListener("TRANSPORTZONE_UPDATE", "MHAURA_PIRATES_TRANSPORTZONE_UPDATE", function(transportZone, tripTime)
+        tpz.pirates.update(ID, transportZone, tripTime)
+        tpz.sea_creatures.checkSpawns(ID, 1, 2) -- 1 percent per vana minute, 2 total mobs
+    end)
 end
 
 function onZoneIn(player, prevZone)
@@ -19,6 +44,17 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onGameHour(zone)
+    local hour = VanadielHour()
+    if hour >= 20 or hour < 4 then
+        if math.random() < 0.20 and not GetMobByID(ID.mob.PHANTOM):isSpawned() then
+            spawnBoatMob(GetMobByID(ID.mob.PHANTOM))
+        end
+    elseif GetMobByID(ID.mob.PHANTOM):isSpawned() then
+        DespawnMob(ID.mob.PHANTOM)
+    end
 end
 
 function onTransportEvent(player, transport)

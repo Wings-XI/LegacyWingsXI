@@ -41,6 +41,7 @@ struct ai_event_t
 class CAIEventHandler
 {
 public:
+    CAIEventHandler::~CAIEventHandler();
     void addListener(std::string eventname, int lua_func, std::string identifier);
     void removeListener(std::string identifier);
 

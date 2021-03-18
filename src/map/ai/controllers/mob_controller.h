@@ -52,7 +52,7 @@ protected:
 
 
     virtual void TryLink();
-    bool CanDetectTarget(CBattleEntity* PTarget, bool forceSight = false);
+    bool CanDetectTarget(CBattleEntity* PTarget, bool forceSight = false, float maxVerticalDistance = 8.0f);
     bool CanPursueTarget(CBattleEntity* PTarget);
     bool CheckHide(CBattleEntity* PTarget);
     bool CheckDetection(CBattleEntity* PTarget);

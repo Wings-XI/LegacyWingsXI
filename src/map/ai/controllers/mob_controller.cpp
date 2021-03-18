@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -187,20 +187,20 @@ void CMobController::TryLink()
 * Checks if the mob can detect the target using it's detection (sight, sound, etc)
 * This is used to aggro and deaggro (Mobs start to deaggro after failing to detect target).
 **/
-bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
+bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, float maxVerticalDistance)
 {
     TracyZoneScoped;
     if (PTarget->isDead() || PTarget->isMounted()) return false;
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    uint16 zone = ((CCharEntity*)PTarget)->loc.zone->GetID();
-    //ShowWarning(CL_YELLOW"zone = %u\n" CL_RESET, (zone));
-
-    if (verticalDistance > 8)
+    if (verticalDistance > maxVerticalDistance)
     {
         return false;
     }
+
+    uint16 zone = ((CCharEntity*)PTarget)->loc.zone->GetID();
+    //ShowWarning(CL_YELLOW"zone = %u\n" CL_RESET, (zone));
     if ((zone == ZONE_KING_RANPERRES_TOMB && verticalDistance > 3.5f) ||
         (zone == ZONE_GUSGEN_MINES && verticalDistance > 3.5f))
     {
@@ -1048,7 +1048,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
         return false;
     }
 
-    if (PMob->PMaster == nullptr && PMob->PAI->IsSpawned() && !PMob->PAI->IsEngaged() && CanDetectTarget(PTarget))
+    uint16 maxVerticalDistance = PMob->GetLocalVar("maxVerticalAggro");
+    if (PMob->PMaster == nullptr && PMob->PAI->IsSpawned() && !PMob->PAI->IsEngaged()
+        && maxVerticalDistance == 0
+        ? CanDetectTarget(PTarget, false)
+            : CanDetectTarget(PTarget, false, maxVerticalDistance))
     {
         return true;
     }

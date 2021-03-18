@@ -47,6 +47,9 @@ CBaseEntity::CBaseEntity()
     PAI = nullptr;
     PBattlefield = nullptr;
     PInstance = nullptr;
+    animStart = false;
+    animPath = 0;
+    animBegin = 0;
 }
 
 CBaseEntity::~CBaseEntity()

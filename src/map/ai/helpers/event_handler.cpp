@@ -21,6 +21,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "event_handler.h"
 
+CAIEventHandler::~CAIEventHandler()
+{
+    eventListeners.clear();
+}
+
 void CAIEventHandler::addListener(std::string eventname, int lua_func, std::string identifier)
 {
     eventListeners[eventname].emplace_back(identifier, lua_func);

@@ -27,6 +27,7 @@
 #include "lua_baseentity.h"
 #include "../zone.h"
 #include "../entities/charentity.h"
+#include "../ai/helpers/event_handler.h"
 
 /************************************************************************
 *                                                                       *
@@ -193,6 +194,68 @@ inline int32 CLuaZone::getWeather(lua_State *L)
 }
 
 /************************************************************************
+ *  Function: addListener()
+ *  Purpose : Instructs the Event Handler to monitor for an Event, then
+ *            execute a prepared Lua function once the Event has occurred
+ *  Notes   : Function along with statements must be passed in L3
+ ************************************************************************/
+
+int32 CLuaZone::addListener(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isstring(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isfunction(L, 3));
+
+    auto eventName = lua_tostring(L, 1);
+    auto identifier = lua_tostring(L, 2);
+
+    m_pLuaZone->PEventHandler->addListener(eventName, luautils::register_fp(3), identifier);
+    
+    return 0;
+}
+
+/************************************************************************
+ *  Function: removeListener()
+ *  Purpose : Instructs the Event Handler to stop monitoring for an Event
+ *  Example : zone:removeListener("TRANSPORTZONE_EVICT")
+ *  Notes   : To be used if zones are destructed
+ ************************************************************************/
+
+int32 CLuaZone::removeListener(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    auto identifier = lua_tostring(L, 1);
+
+    m_pLuaZone->PEventHandler->removeListener(identifier);
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: triggerListener()
+ *  Purpose : Instructs Lua to execute an Event Function once a Trigger has
+ *            been identified by the Event Handler
+ *  Example : zone:triggerListener("TRANSPORTZONE_EVICT", zone)
+ *  Notes   : Manually triggered through scripts if needed
+ ************************************************************************/
+
+int32 CLuaZone::triggerListener(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    auto eventName = lua_tostring(L, 1);
+    auto top = lua_gettop(L);
+
+    m_pLuaZone->PEventHandler->triggerListener(eventName, top - 1);
+
+    return 0;
+}
+
+/************************************************************************
 *                                                                       *
 *  Initializing Methods in LUA                                          *
 *                                                                       *
@@ -210,5 +273,8 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone,getBattlefieldByInitiator),
     LUNAR_DECLARE_METHOD(CLuaZone,battlefieldsFull),
     LUNAR_DECLARE_METHOD(CLuaZone,getWeather),
+    LUNAR_DECLARE_METHOD(CLuaZone, addListener),
+    LUNAR_DECLARE_METHOD(CLuaZone, removeListener),
+    LUNAR_DECLARE_METHOD(CLuaZone, triggerListener),
     {nullptr,nullptr}
 };
