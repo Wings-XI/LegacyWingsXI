@@ -25,12 +25,14 @@ function onMobWeaponSkill(target, mob, skill)
 	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
+    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+
+	if dmg > 0 and skill:getMsg() ~= 31 then
+        target:tryInterruptSpell(mob, info.hitslanded)
+    end
 
     local typeEffect = tpz.effect.SLEEP_I
-
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 30)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     return dmg
 end
