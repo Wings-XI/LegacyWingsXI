@@ -1153,7 +1153,7 @@ INSERT INTO `mob_pools` VALUES(1089, 'Doppelganger_Dio', 'Doppelganger_Dio', 221
 INSERT INTO `mob_pools` VALUES(1090, 'Doppelganger_Gog', 'Doppelganger_Gog', 221, 0x0000230200000000000000000000000000000000, 1, 1, 5, 360, 100, 0, 1, 0, 1, 2, 0, 32, 2951, 155, 0, 0, 0, 1, 0, 221);
 INSERT INTO `mob_pools` VALUES(1091, 'Dorgerwor_the_Astute', 'Dorgerwor_the_Astute', 246, 0x0600ad0600000000000000000000000000000000, 11, 11, 5, 230, 100, 0, 1, 1, 1, 2, 0, 32, 178, 159, 4, 0, 0, 1, 0, 246);
 INSERT INTO `mob_pools` VALUES(1092, 'Dormant_Rampart', 'Dormant_Rampart', 209, 0x00001a0700000000000000000000000000000000, 1, 1, 7, 320, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 209);
-INSERT INTO `mob_pools` VALUES(1093, 'Dosetsu_Tree', 'Dosetsu_Tree', 245, 0x00008b0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 2, 0, 0, 8, 135, 0, 0, 0, 1, 0, 245);
+INSERT INTO `mob_pools` VALUES(1093, 'Dosetsu_Tree', 'Dosetsu_Tree', 245, 0x00008b0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 2, 71, 0, 8, 135, 0, 0, 0, 1, 0, 245);
 INSERT INTO `mob_pools` VALUES(1094, 'Doyen_Quadav', 'Doyen_Quadav', 202, 0x0000470800000000000000000000000000000000, 1, 1, 2, 265, 100, 0, 1, 0, 1, 0, 0, 0, 396, 131, 0, 0, 0, 1, 0, 202);
 INSERT INTO `mob_pools` VALUES(1095, 'Dozing_Dorian', 'Dozing_Dorian', 167, 0x0000550100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 815);
 INSERT INTO `mob_pools` VALUES(1096, 'Do_Bho_Venomtail', 'Do_Bho_Venomtail', 202, 0x00001f0400000000000000000000000000000000, 5, 4, 6, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 202);

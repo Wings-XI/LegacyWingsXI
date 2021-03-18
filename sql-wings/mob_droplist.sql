@@ -3642,7 +3642,7 @@ INSERT INTO `mob_droplist` VALUES(690, 0, 0, 1000, 16773, 230);
 INSERT INTO `mob_droplist` VALUES(691, 0, 0, 1000, 940, 1000);
 INSERT INTO `mob_droplist` VALUES(691, 0, 0, 1000, 16863, 270);
 INSERT INTO `mob_droplist` VALUES(692, 0, 0, 1000, 16222, 100);
-INSERT INTO `mob_droplist` VALUES(693, 0, 0, 1000, 17814, 100);
+INSERT INTO `mob_droplist` VALUES(693, 0, 0, 1000, 17814, 250);
 INSERT INTO `mob_droplist` VALUES(694, 0, 0, 1000, 2505, 60);
 INSERT INTO `mob_droplist` VALUES(694, 2, 0, 1000, 2531, 0);
 INSERT INTO `mob_droplist` VALUES(695, 0, 0, 1000, 645, 80);
