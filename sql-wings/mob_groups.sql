@@ -9814,7 +9814,7 @@ INSERT INTO `mob_groups` VALUES(15, 3839, 166, 'Taisaijin', 0, 128, 2375, 0, 0, 
 INSERT INTO `mob_groups` VALUES(16, 1537, 166, 'Giant_Scorpion', 792, 0, 972, 0, 0, 38, 40, 0);
 INSERT INTO `mob_groups` VALUES(17, 374, 166, 'Bat_Eye', 792, 0, 246, 0, 0, 42, 44, 0);
 INSERT INTO `mob_groups` VALUES(18, 1912, 166, 'Hecteyes', 960, 0, 1288, 0, 0, 31, 34, 0);
-INSERT INTO `mob_groups` VALUES(19, 4574, 166, 'Mucoid_Mass', 6000, 0, 3016, 0, 0, 45, 48, 0);
+INSERT INTO `mob_groups` VALUES(19, 4574, 166, 'Mucoid_Mass', 6000, 0, 3016, 3500, 0, 45, 48, 0);
 INSERT INTO `mob_groups` VALUES(25, 1715, 166, 'Goblin_Smithy', 960, 0, 1163, 0, 0, 32, 34, 0);
 INSERT INTO `mob_groups` VALUES(26, 1721, 166, 'Goblins_Bats', 0, 128, 0, 0, 0, 83, 84, 0);
 INSERT INTO `mob_groups` VALUES(27, 1267, 166, 'Evil_Weapon', 660, 0, 799, 0, 0, 35, 37, 0);
