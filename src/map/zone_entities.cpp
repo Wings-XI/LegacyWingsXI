@@ -250,6 +250,29 @@ void CZoneEntities::FindPartyForMob(CBaseEntity* PEntity)
         }
         PMob->PParty = new CParty(PMob);
     }
+
+    if (PMob->getMobMod(MOBMOD_FAMILYLINK))
+    {
+        MakeMobLinkWithFamily(PMob, PMob->getMobMod(MOBMOD_FAMILYLINK));
+    }
+}
+
+void CZoneEntities::MakeMobLinkWithFamily(CBaseEntity* PEntity, uint32 FamilyID)
+{
+    CMobEntity* PMob = (CMobEntity*)PEntity;
+
+    for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
+    {
+        CMobEntity* PCurrentMob = (CMobEntity*)it->second;
+
+        if (PCurrentMob->m_Family != FamilyID)
+            continue;
+
+        if (PCurrentMob->PParty == nullptr)
+            PCurrentMob->PParty = new CParty(PCurrentMob);
+
+        PCurrentMob->PParty->AddMember(PMob);
+    }
 }
 
 void CZoneEntities::TransportDepart(uint16 boundary, uint16 zone)

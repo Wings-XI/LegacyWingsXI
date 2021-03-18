@@ -58,6 +58,7 @@ public:
     void			DeleteTRUST(CBaseEntity* PTrust);
 
     void			FindPartyForMob(CBaseEntity* PEntity);                          // ищем группу для монстра
+    void            MakeMobLinkWithFamily(CBaseEntity* PEntity, uint32 FamilyID);   // Make entity link with all mobs of the family
     void			TransportDepart(uint16 boundary, uint16 zone);                  // транспотр отправляется, необходимо собрать пассажиров
 
     void			TOTDChange(TIMETYPE TOTD);										// обработка реакции мира на смену времени суток
