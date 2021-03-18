@@ -67,7 +67,7 @@ zones[tpz.zone.WESTERN_ALTEPA_DESERT] =
         },
         PICOLATON_PH =
         {
-            [17289637] = 17093059, -- -685.635, -9.206, -701.860
+            [17289637] = 17289638, -- -685.635, -9.206, -701.860
         },
         KING_VINEGARROON     = 17289575,
         SABOTENDER_ENAMORADO = 17289653,
