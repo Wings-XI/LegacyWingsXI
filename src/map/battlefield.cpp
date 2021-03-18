@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -471,7 +471,10 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
                 if (m_AllyList.size() > 0)
                 {
-                    m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
+                    if (m_AllyList.size() > 2000)
+                        m_AllyList.clear();
+                    else
+                        m_AllyList.erase(std::remove_if(m_AllyList.begin(), m_AllyList.end(), check), m_AllyList.end());
                 }
                 PEntity->status = STATUS_DISAPPEAR;
                 return found;
