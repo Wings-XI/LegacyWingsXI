@@ -4987,6 +4987,97 @@ inline int32 CLuaBaseEntity::AnimationSub(lua_State *L)
 }
 
 /************************************************************************
+ *  Function: setAnimPath()
+ *  Purpose : Updates an animation path for NPC
+ *  Example : GetNPCByID(Door_Offset+12):setAnimPath(1)
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setAnimPath(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint8 animPath = (uint8)lua_tointeger(L, 1);
+
+    if (m_PBaseEntity->animPath != animPath)
+    {
+        m_PBaseEntity->animPath = animPath;
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: setAnimStart()
+ *  Purpose : Initializes NPC start frames
+ *  Example : GetNPCByID(Door_Offset+12):setAnimStart(1724234413)
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setAnimStart(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
+
+    bool animStart = (bool)lua_toboolean(L, 1);
+
+    m_PBaseEntity->animStart = animStart;
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: setAnimBegin()
+ *  Purpose : Updates an animation start time for NPC
+ *  Example : GetNPCByID(Door_Offset+12):setAnimStart(1724234413)
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setAnimBegin(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint32 animBegin = (uint32)lua_tointeger(L, 1);
+
+    if (animBegin > 0)
+    {
+        m_PBaseEntity->animBegin = animBegin;
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: sendUpdateToZoneCharsInRange()
+ *  Purpose : Sends an entity update packet to all players in range within the zone
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::sendUpdateToZoneCharsInRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    EntityList_t charList = m_PBaseEntity->loc.zone->m_zoneEntities->GetCharList();
+
+    float maxDistance = 0.0f;
+    bool checkDistance = !lua_isnil(L, 1) && lua_isnumber(L, 1);
+    if (checkDistance)
+    {
+        maxDistance = (float)lua_tonumber(L, 1);
+    }
+
+    for (EntityList_t::const_iterator it = charList.begin(); it != charList.end(); ++it)
+    {
+        CCharEntity* PChar = (CCharEntity*)it->second;
+        if (!checkDistance || distance(PChar->loc.p, m_PBaseEntity->loc.p) < maxDistance)
+        {
+            PChar->pushPacket(new CEntityUpdatePacket(m_PBaseEntity, ENTITY_SPAWN, UPDATE_ALL_MOB));
+        }
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: getNation()
 *  Purpose : Returns the integer value of the player's nation
 *  Example : player:getNation()
@@ -16238,6 +16329,10 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAnimation),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimation),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimPath),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimStart),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimBegin),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendUpdateToZoneCharsInRange),    
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,AnimationSub),
 
     // Player Status

@@ -235,6 +235,10 @@ public:
     int32 costume2(lua_State*);              // set monstrosity costume
     int32 getAnimation(lua_State*);          // Get Entity Animation
     int32 setAnimation(lua_State*);          // Set Entity Animation
+    int32 setAnimPath(lua_State*);
+    int32 setAnimStart(lua_State*);
+    int32 setAnimBegin(lua_State*);
+    int32 sendUpdateToZoneCharsInRange(lua_State*);
     int32 AnimationSub(lua_State*);          // get or set animationsub
 
     // Player Status

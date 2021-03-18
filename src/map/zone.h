@@ -36,7 +36,6 @@
 #include "packets/weather.h"
 #include "navmesh.h"
 
-
 enum ZONEID : uint16
 {
     ZONE_RESIDENTIAL_AREA               = 0,
@@ -513,6 +512,7 @@ class CBattleEntity;
 class CTrustEntity;
 class CTreasurePool;
 class CZoneEntities;
+class CAIEventHandler;
 
 typedef std::list<CRegion*> regionList_t;
 typedef std::list<zoneLine_t*> zoneLineList_t;
@@ -600,6 +600,7 @@ public:
     CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID);
     virtual ~CZone();
 
+    CAIEventHandler* PEventHandler;
     CBattlefieldHandler* m_BattlefieldHandler;  // BCNM Instances in this zone
 
     CNavMesh*       m_navMesh;              // zones navmesh for finding paths

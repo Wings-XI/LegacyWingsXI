@@ -51,6 +51,9 @@ public:
     int32 getBattlefieldByInitiator(lua_State*);
     int32 battlefieldsFull(lua_State*);
     int32 getWeather(lua_State*);
+    int32 addListener(lua_State*);
+    int32 removeListener(lua_State*);
+    int32 triggerListener(lua_State*);
 };
 
 #endif
