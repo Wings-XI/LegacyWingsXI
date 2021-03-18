@@ -44,10 +44,6 @@ function onSpellCast(caster, target, spell)
         dmg = 0
     end
 
-    if (target:getHP() < dmg) then
-        dmg = target:getHP()
-    end
-
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 
     local leftOver = (caster:getHP() + dmg) - caster:getMaxHP()
@@ -56,7 +52,7 @@ function onSpellCast(caster, target, spell)
         caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, (leftOver/caster:getMaxHP())*100, 0, 60)
     end
 
-    caster:addHP(dmg)
-    spell:setMsg(tpz.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
+    dmg = caster:addHP(dmg)
+    
     return dmg
 end

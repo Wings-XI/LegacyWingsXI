@@ -44,13 +44,10 @@ function onSpellCast(caster, target, spell)
         dmg = 0
     end
 
-    if (target:getHP() < dmg) then
-        dmg = target:getHP()
-    end
-
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 
-    caster:addHP(dmg)
+    dmg = caster:addHP(dmg)
+
     return dmg
 
 end
