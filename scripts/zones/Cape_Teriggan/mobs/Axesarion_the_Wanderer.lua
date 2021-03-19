@@ -3,6 +3,10 @@
 --   NM: Axesarion the Wanderer
 -----------------------------------
 local ID = require("scripts/zones/Cape_Teriggan/IDs")
+-----------------------------------
+function onMobSpawn(mob)
+    mob:addMod(tpz.mod.DMGMAGIC,-50)
+end
 
 function onMobDisengage(mob)
     DespawnMob(mob:getID(), 120)

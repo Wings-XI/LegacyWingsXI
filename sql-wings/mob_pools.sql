@@ -5930,7 +5930,7 @@ INSERT INTO `mob_pools` VALUES(5866, 'Mantrap_fished', 'Mantrap', 114, 0x0000410
 INSERT INTO `mob_pools` VALUES(5867, 'Protozoan_fished', 'Protozoan', 229, 0x0000240100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 4, 0, 0, 6353, 131, 0, 0, 0, 1, 0, 229);
 INSERT INTO `mob_pools` VALUES(5868, 'Greater_Pugil_fished', 'Greater_Pugil', 197, 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 4, 0, 0, 0, 3, 0, 0, 0, 1, 0, 197);
 INSERT INTO `mob_pools` VALUES(5869, 'Zirnitra', 'Zirnitra', 6, 0x0000ae0800000000000000000000000000000000, 1, 1, 0, 240, 100, 0, 1, 1, 1, 2, 647, 0, 0, 131, 1, 0, 0, 1, 1024, 6);
-INSERT INTO `mob_pools` VALUES(5870, 'Olgoi-Khorkhoi', 'Olgoi-Khorkhoi', 258, 0x0000a80100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 2, 23, 0, 0, 129, 0, 0, 9, 1, 64, 258);
+INSERT INTO `mob_pools` VALUES(5870, 'Olgoi-Khorkhoi', 'Olgoi-Khorkhoi', 258, 0x0000a80100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 2, 16, 0, 0, 129, 0, 0, 439, 1, 64, 1153);
 INSERT INTO `mob_pools` VALUES(5871, 'Peaseblossom', 'Peaseblossom', 195, 0x0000ee0700000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 0, 2, 23, 0, 0, 513, 0, 0, 2, 1, 0, 195);
 INSERT INTO `mob_pools` VALUES(5872, 'Qiqirn_Mine', 'Qiqirn Mine', 56, 0x0000fe0600000000000000000000000000000000, 1, 1, 1, 240, 100, 0, 1, 1, 0, 33, 0, 40, 0, 665, 8, 0, 0, 2, 0, 0);
 INSERT INTO `mob_pools` VALUES(5873, 'Thunderclaw_Thuban', 'Thunderclaw_Thuban', 376, 0x00003c0100000000000000000000000000000000, 6, 6, 7, 220, 100, 0, 1, 0, 0, 2, 7, 32, 0, 129, 0, 0, 0, 1, 0, 239);

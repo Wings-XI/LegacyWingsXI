@@ -32,6 +32,7 @@ zones[tpz.zone.NORTH_GUSTABERG_S] =
         {
             [17137820] = 17137821, -- -19.961 0.5 623.989
         },
+        OLGOI_KHORKHOI = 17137859,
     },
     npc =
     {
