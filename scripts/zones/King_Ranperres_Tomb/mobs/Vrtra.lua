@@ -65,7 +65,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+	local respawn = math.random(144,240)*1800 -- 3 to 5 days in 30min windows
     mob:setRespawnTime(respawn)
 	SetServerVariable("VrtraRespawn",(os.time() + respawn))
 end

@@ -12,7 +12,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-	local respawn = math.random(172800, 259200) -- 48 to 72 hours.
+	local respawn = math.random(48,72)*3600 -- 48 to 72 hours in 60min windows
     mob:setRespawnTime(respawn)
 	SetServerVariable("KhimairaRespawn",(os.time() + respawn))
 end
