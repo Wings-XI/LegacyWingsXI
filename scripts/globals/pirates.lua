@@ -1,6 +1,8 @@
 -----------------------------------
 -- Pirates helpers
 -----------------------------------
+require("scripts/globals/pathfind")
+
 tpz = tpz or {}
 tpz.pirates = tpz.pirates or {}
 tpz.pirates.status = 
