@@ -9,7 +9,13 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
-    GetMobByID(ID.mob.CERBERUS):setRespawnTime(math.random(12, 36) * 3600)
+    UpdateNMSpawnPoint(ID.mob.CERBERUS)
+	local cerre = GetServerVariable("CerbRespawn")
+	if os.time() < cerre then
+		GetMobByID(ID.mob.CERBERUS):setRespawnTime(cerre - os.time())
+	else
+		SpawnMob(ID.mob.CERBERUS)
+	end
 
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
 end
@@ -27,16 +33,6 @@ end
 function afterZoneIn(player)
     player:entityVisualPacket("1pb1")
     player:entityVisualPacket("2pb1")
-end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.CERBERUS)
-	local simre = GetServerVariable("CerbRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.CERBERUS):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.CERBERUS)
-	end
 end
 
 function onRegionEnter(player, region)

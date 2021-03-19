@@ -43,7 +43,12 @@ function onInitialize(zone)
     zone:registerRegion(30, -385.349, 5, -173.973, 0, 0, 0)
 
     UpdateNMSpawnPoint(ID.mob.TIAMAT)
-    GetMobByID(ID.mob.TIAMAT):setRespawnTime(math.random(86400, 259200))
+	local tiare = GetServerVariable("TiamatRespawn")
+	if os.time() < tiare then
+		GetMobByID(ID.mob.TIAMAT):setRespawnTime(tiare - os.time())
+	else
+		SpawnMob(ID.mob.TIAMAT)
+	end
 
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
 end
@@ -77,17 +82,6 @@ end
 
 function onRegionLeave(player, region)
 end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.TIAMAT)
-	local simre = GetServerVariable("TiamatRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.TIAMAT):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.TIAMAT)
-	end
-end
-
 
 function onGameHour(zone)
     --[[

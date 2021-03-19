@@ -13,7 +13,14 @@ require("scripts/globals/zone")
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.AYNU_KAYSEY)
     GetMobByID(ID.mob.AYNU_KAYSEY):setRespawnTime(math.random(900, 10800))
-    GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(math.random(12, 36)*3600) -- 12 to 36 hours after maintenance, in 1-hour increments
+
+    UpdateNMSpawnPoint(ID.mob.KHIMAIRA)
+	local khire = GetServerVariable("KhimairaRespawn")
+	if os.time() < khire then
+		GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(khire - os.time())
+	else
+		SpawnMob(ID.mob.KHIMAIRA)
+	end
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
 end
@@ -35,16 +42,6 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
-end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.KHIMAIRA)
-	local simre = GetServerVariable("KhimairaRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.KHIMAIRA)
-	end
 end
 
 function afterZoneIn(player)

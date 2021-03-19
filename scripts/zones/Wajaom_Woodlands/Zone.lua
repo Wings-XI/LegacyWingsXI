@@ -19,6 +19,14 @@ function onChocoboDig(player, precheck)
 end
 
 function onInitialize(zone)
+    UpdateNMSpawnPoint(ID.mob.HYDRA)
+	local hydre = GetServerVariable("HydraRespawn")
+	if os.time() < hydre then
+		GetMobByID(ID.mob.HYDRA):setRespawnTime(hydre - os.time())
+	else
+		SpawnMob(ID.mob.HYDRA)
+	end
+    
     tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
     tpz.chocobo.initZone(zone)
 end
@@ -38,16 +46,6 @@ function onZoneIn(player, prevZone)
         cs = 513
     end
     return cs
-end
-
-function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.HYDRA)
-	local simre = GetServerVariable("HydraRespawn")
-	if os.time() < simre then
-		GetMobByID(ID.mob.HYDRA):setRespawnTime(simre - os.time())
-	else
-		SpawnMob(ID.mob.HYDRA)
-	end
 end
 
 function onRegionEnter(player, region)
