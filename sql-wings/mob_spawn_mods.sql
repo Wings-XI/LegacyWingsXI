@@ -572,6 +572,10 @@ INSERT INTO `mob_spawn_mods` VALUES(17649784, 1, 12000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17649784, 2, 20000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17649818, 1, 6000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17649818, 2, 9140, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17490101, 1, 15000, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17490101, 2, 20000, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17490101, 15, 2000, 1);
+
 
 --
 -- Indexes for dumped tables
