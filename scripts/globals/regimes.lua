@@ -1189,13 +1189,13 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
 
         elseif act == "REGEN" then
             player:delStatusEffectSilent(tpz.effect.REGEN)
-            player:addStatusEffect(tpz.effect.REGEN, 1, 3, 3600)
+            player:addStatusEffect(tpz.effect.REGEN, 1, 3, 3600, 0, 128)
 
         elseif act == "REFRESH" then
             player:delStatusEffectSilent(tpz.effect.REFRESH)
             player:delStatusEffect(tpz.effect.SUBLIMATION_COMPLETE)
             player:delStatusEffect(tpz.effect.SUBLIMATION_ACTIVATED)
-            player:addStatusEffect(tpz.effect.REFRESH, 1, 3, 3600, 0, 3)
+            player:addStatusEffect(tpz.effect.REFRESH, 1, 3, 3600, 0, 128)
 
         elseif act == "PROTECT" then
             local mLvl = player:getMainLvl()

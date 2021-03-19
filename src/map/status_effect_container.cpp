@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -701,6 +701,8 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
     {
         if (PStatusEffect->GetFlag() & flag)
         {
+            if ((flag & EFFECTFLAG_ON_SYNC) && (PStatusEffect->GetStatusID() == EFFECT_REFRESH || PStatusEffect->GetStatusID() == EFFECT_REGEN) && PStatusEffect->GetSubPower() == 128 && this->m_POwner && zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_OUTDOORS)
+                continue; // book refresh/regen persists through level sync application
             RemoveStatusEffect(PStatusEffect, silent);
         }
     }
