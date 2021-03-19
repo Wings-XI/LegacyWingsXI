@@ -59,7 +59,7 @@ INSERT INTO `mob_groups` VALUES(8, 1375, 1, 'Flytrap', 0, 128, 852, 0, 0, 15, 25
 INSERT INTO `mob_groups` VALUES(9, 2987, 1, 'Ooze', 0, 128, 1866, 0, 0, 25, 29, 0);
 INSERT INTO `mob_groups` VALUES(10, 3912, 1, 'Thunder_Elemental', 0, 128, 2410, 0, 0, 27, 29, 0);
 INSERT INTO `mob_groups` VALUES(11, 4309, 1, 'Water_Elemental', 0, 128, 2629, 0, 0, 27, 29, 0);
-INSERT INTO `mob_groups` VALUES(12, 4242, 1, 'Vodyanoi', 0, 1, 2583, 0, 0, 45, 47, 0);
+INSERT INTO `mob_groups` VALUES(12, 4242, 1, 'Vodyanoi', 0, 1, 2583, 4000, 0, 45, 47, 0);
 INSERT INTO `mob_groups` VALUES(13, 3796, 1, 'Stubborn_Dredvodd', 0, 128, 2350, 0, 0, 37, 38, 0);
 INSERT INTO `mob_groups` VALUES(14, 3048, 1, 'Orcs_Wyvern', 0, 128, 0, 0, 0, 32, 32, 0);
 INSERT INTO `mob_groups` VALUES(1, 3682, 2, 'Snipper_fished', 0, 128, 93, 0, 0, 15, 19, 0);
@@ -4652,7 +4652,7 @@ INSERT INTO `mob_groups` VALUES(22, 1214, 88, 'Enchanted_Bones', 300, 1, 677, 0,
 INSERT INTO `mob_groups` VALUES(23, 3378, 88, 'Rock_Eater', 300, 0, 1725, 0, 0, 32, 35, 0);
 INSERT INTO `mob_groups` VALUES(24, 1623, 88, 'Gloomanita', 0, 32, 1006, 0, 0, 42, 53, 0);
 INSERT INTO `mob_groups` VALUES(25, 1364, 88, 'Fledermaus', 300, 2, 82, 0, 0, 45, 47, 0);
-INSERT INTO `mob_groups` VALUES(26, 5870, 88, 'Olgoi-Khorkhoi', 0, 128, 0, 4500, 0, 53, 54, 0);
+INSERT INTO `mob_groups` VALUES(26, 5870, 88, 'Olgoi-Khorkhoi', 5400, 0, 3157, 4500, 0, 53, 54, 0);
 INSERT INTO `mob_groups` VALUES(27, 4226, 88, 'Veteran_Quadav', 300, 0, 2578, 0, 0, 59, 63, 0);
 INSERT INTO `mob_groups` VALUES(28, 1808, 88, 'Greater_Quadav', 300, 0, 1233, 0, 0, 59, 64, 0);
 INSERT INTO `mob_groups` VALUES(29, 2986, 88, 'Onyx_Quadav', 300, 0, 1861, 0, 0, 59, 63, 0);

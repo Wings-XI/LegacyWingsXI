@@ -22,6 +22,7 @@ zones[tpz.zone.PHANAUET_CHANNEL] =
     },
     mob =
     {
+      VODYANOI = 16781326,
     },
     npc =
     {
