@@ -7,12 +7,6 @@ local ID = require("scripts/zones/Ship_bound_for_Selbina/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/sea_creatures")
 -----------------------------------
-
-local function spawnBoatMob(mob)
-    mob:spawn()
-    mob:setLocalVar("maxVerticalAggro", 4)
-end
-
 function onInitialize(zone)
     zone:addListener("TRANSPORTZONE_END", "SELBINA_TRANSPORTZONE_END", function(transportZone)
         if GetMobByID(ID.mob.PHANTOM):isSpawned() then
@@ -61,11 +55,11 @@ function onGameHour(zone)
             if player:hasKeyItem(tpz.ki.SEANCE_STAFF)
                 and player:getVar("Enagakure_Killed") == 0
                 and not GetMobByID(ID.mob.ENAGAKURE):isSpawned() then
-                    spawnBoatMob(GetMobByID(ID.mob.ENAGAKURE))
+                    GetMobByID(ID.mob.ENAGAKURE):spawn()
             end
         end
         if math.random() < 0.20 and not GetMobByID(ID.mob.PHANTOM):isSpawned() then
-            spawnBoatMob(GetMobByID(ID.mob.PHANTOM))
+            GetMobByID(ID.mob.PHANTOM):spawn()
         end
     else
         if GetMobByID(ID.mob.PHANTOM):isSpawned() then
@@ -79,8 +73,7 @@ function onGameHour(zone)
     local mob = GetMobByID(ID.mob.SEA_HORROR)
     -- 3% chance per game hour (if not spawned, and min repop time)
     if math.random(0, 100) < 3 and not mob:isSpawned() and os.time() > mob:getLocalVar("respawnTime") then
-        spawnBoatMob(mob)
-
+        mob:spawn()
     end
 end
 

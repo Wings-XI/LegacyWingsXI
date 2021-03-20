@@ -8,11 +8,6 @@ require("scripts/globals/zone")
 require("scripts/globals/pirates")
 require("scripts/globals/sea_creatures")
 -----------------------------------
-local function spawnBoatMob(mob)
-    mob:spawn()
-    mob:setLocalVar("maxVerticalAggro", 4)
-end
-
 function onInitialize(zone)
 
     tpz.pirates.init(ID)
@@ -58,11 +53,11 @@ function onGameHour(zone)
             if player:hasKeyItem(tpz.ki.SEANCE_STAFF)
                 and player:getVar("Enagakure_Killed") == 0
                 and not GetMobByID(ID.mob.ENAGAKURE):isSpawned() then
-                    spawnBoatMob(GetMobByID(ID.mob.ENAGAKURE))
+                    GetMobByID(ID.mob.ENAGAKURE):spawn()
             end
         end
         if math.random() < 0.20 and not GetMobByID(ID.mob.PHANTOM):isSpawned() then
-            spawnBoatMob(GetMobByID(ID.mob.PHANTOM))
+            GetMobByID(ID.mob.PHANTOM):spawn()
         end
     else
         if GetMobByID(ID.mob.PHANTOM):isSpawned() then

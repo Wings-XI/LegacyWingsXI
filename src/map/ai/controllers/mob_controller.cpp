@@ -39,6 +39,17 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../utils/petutils.h"
 #include "../../utils/zoneutils.h"
 
+const uint16 CMobController::ZoneNoVerticalAggro[] = {
+    ZONE_KING_RANPERRES_TOMB,
+    ZONE_GUSGEN_MINES,
+    ZONE_SHIP_BOUND_FOR_MHAURA,
+    ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES,
+    ZONE_SHIP_BOUND_FOR_SELBINA,
+    ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES,
+    ZONE_SILVER_SEA_ROUTE_TO_AL_ZAHBI,
+    ZONE_SILVER_SEA_ROUTE_TO_NASHMAU
+};
+
 CMobController::CMobController(CMobEntity* PEntity) :
     CController(PEntity),
     PMob(PEntity)
@@ -210,22 +221,23 @@ void CMobController::TryLink()
 * Checks if the mob can detect the target using it's detection (sight, sound, etc)
 * This is used to aggro and deaggro (Mobs start to deaggro after failing to detect target).
 **/
-bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, float maxVerticalDistance)
+bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 {
     TracyZoneScoped;
     if (PTarget->isDead() || PTarget->isMounted()) return false;
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    if (verticalDistance > maxVerticalDistance)
+    if (verticalDistance > 8.0f)
     {
         return false;
     }
 
     uint16 zone = ((CCharEntity*)PTarget)->loc.zone->GetID();
     //ShowWarning(CL_YELLOW"zone = %u\n" CL_RESET, (zone));
-    if ((zone == ZONE_KING_RANPERRES_TOMB && verticalDistance > 3.5f) ||
-        (zone == ZONE_GUSGEN_MINES && verticalDistance > 3.5f))
+    
+    bool isNoVerticalAggroZone = std::find(std::begin(CMobController::ZoneNoVerticalAggro), std::end(CMobController::ZoneNoVerticalAggro), zone) != std::end(CMobController::ZoneNoVerticalAggro);
+    if (isNoVerticalAggroZone && verticalDistance > 3.5f)
     {
         return false;
     }
@@ -1071,11 +1083,7 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
         return false;
     }
 
-    uint16 maxVerticalDistance = PMob->GetLocalVar("maxVerticalAggro");
-    if (PMob->PMaster == nullptr && PMob->PAI->IsSpawned() && !PMob->PAI->IsEngaged()
-        && maxVerticalDistance == 0
-        ? CanDetectTarget(PTarget, false)
-            : CanDetectTarget(PTarget, false, maxVerticalDistance))
+    if (PMob->PMaster == nullptr && PMob->PAI->IsSpawned() && !PMob->PAI->IsEngaged() && CanDetectTarget(PTarget, false))
     {
         return true;
     }

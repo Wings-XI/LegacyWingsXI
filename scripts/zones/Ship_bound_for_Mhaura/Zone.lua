@@ -6,11 +6,6 @@
 local ID = require("scripts/zones/Ship_bound_for_Mhaura/IDs")
 require("scripts/globals/sea_creatures")
 -----------------------------------
-local function spawnBoatMob(mob)
-    mob:spawn()
-    mob:setLocalVar("maxVerticalAggro", 4)
-end
-
 function onInitialize(zone)
     zone:addListener("TRANSPORTZONE_END", "MHAURA_TRANSPORTZONE_END", function(transportZone)
         if GetMobByID(ID.mob.PHANTOM):isSpawned() then
@@ -47,7 +42,7 @@ function onGameHour(zone)
     local hour = VanadielHour()
     if hour >= 20 or hour < 4 then
         if math.random() < 0.20 and not GetMobByID(ID.mob.PHANTOM):isSpawned() then
-            spawnBoatMob(GetMobByID(ID.mob.PHANTOM))
+            GetMobByID(ID.mob.PHANTOM):spawn()
         end
     elseif GetMobByID(ID.mob.PHANTOM):isSpawned() then
         DespawnMob(ID.mob.PHANTOM)
@@ -56,7 +51,7 @@ function onGameHour(zone)
     local mob = GetMobByID(ID.mob.SEA_HORROR)
     -- 3% chance per game hour (if not spawned, and min repop time)
     if math.random(0, 100) < 3 and not mob:isSpawned() and os.time() > mob:getLocalVar("respawnTime") then
-        spawnBoatMob(mob)
+        mob:spawn()
     end
 end
 

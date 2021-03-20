@@ -10,7 +10,6 @@ tpz.sea_creatures.checkSpawns = function(ID, percentChance, total)
         local mob = GetMobByID(ID.mob.SEA_CREATURES[mobIdPos])
         if not mob:isSpawned() then
             mob:spawn()
-            mob:setLocalVar("maxVerticalAggro", 4)
             mob:setLocalVar("despawnTime", os.time() + math.random(180, 240)) -- 3-4 mins despawn if roaming
         end
     end

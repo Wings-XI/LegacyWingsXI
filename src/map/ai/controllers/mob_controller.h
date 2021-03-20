@@ -52,7 +52,7 @@ protected:
 
 
     virtual void TryLink();
-    bool CanDetectTarget(CBattleEntity* PTarget, bool forceSight = false, float maxVerticalDistance = 8.0f);
+    bool CanDetectTarget(CBattleEntity* PTarget, bool forceSight = false);
     bool CanPursueTarget(CBattleEntity* PTarget);
     bool CheckHide(CBattleEntity* PTarget);
     bool CheckDetection(CBattleEntity* PTarget);
@@ -88,6 +88,8 @@ private:
 
     bool m_firstSpell{ true };
     time_point m_LastRoamScript {time_point::min()};
+
+    static const uint16 ZoneNoVerticalAggro[];
 };
 
 #endif // _AI_CONTROLLER_H
