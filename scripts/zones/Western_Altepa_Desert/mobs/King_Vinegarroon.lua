@@ -6,6 +6,7 @@ require("scripts/globals/titles")
 require("scripts/globals/world")
 require("scripts/globals/mobs")
 require("scripts/globals/status")
+local ID = require("scripts/zones/Western_Altepa_Desert/IDs")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -39,6 +40,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
+    local KingVine = GetMobByID(ID.mob.KING_VINEGARROON)
 	local respawn = math.random(75600, 86400) -- 21h to 24h
     mob:setRespawnTime(respawn)
 	SetServerVariable("KVRespawn",(os.time() + respawn))
