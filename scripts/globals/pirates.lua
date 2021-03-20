@@ -67,7 +67,6 @@ tpz.pirates.spawnMob = function(mobId)
     local mob = GetMobByID(mobId)
     mob:setSpawn(x,-7.263,z,rot)
     mob:spawn()
-    mob:setLocalVar("maxVerticalAggro", 4)
 end
 
 tpz.pirates.spawnMobs = function(ID)
