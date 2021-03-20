@@ -18,6 +18,7 @@ end
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
+    local KingVine = GetMobByID(ID.mob.KING_VINEGARROON)
 	local kvre = GetServerVariable("KVRespawn")
     DisallowRespawn(KingVine:getID(), true)
 
