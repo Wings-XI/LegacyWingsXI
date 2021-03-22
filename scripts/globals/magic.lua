@@ -345,7 +345,7 @@ function doEnspell(caster, target, spell, effect)
     local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
     --calculate potency
-    local magicskill = target:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
+    local magicskill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
 
     local potency = 3 + math.floor(6 * magicskill / 100)
     if magicskill > 200 then
