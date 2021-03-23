@@ -41,19 +41,38 @@ local loot =
     [674] =
     {
         {
+            {itemid =    0, droprate = 124}, -- nothing
             {itemid = 1769, droprate = 268},  -- Square of Galateia (26.8% Drop Rate)
             {itemid = 1764, droprate = 266},  -- Kejusu Satin
             {itemid = 1763, droprate = 342},  -- Viridian Urushi
         },
         {
+            {itemid =    0, droprate = 944}, -- nothing
             {itemid = 1842, droprate = 56},   -- Cloud Evoker (5.6% Drop Rate)
         },
         {
-            {itemid = 17829, droprate = 82},  -- Hagun
-            {itemid = 17945, droprate = 92},  -- Martial Axe
-            {itemid = 17467, droprate = 63},  -- Martial Wand
-            {itemid = 13690, droprate = 105}, -- Forager's Mantle
-            {itemid = 13109, droprate = 121}, -- Harmonia's Torque
+            {itemid =     0, droprate = 607}, -- nothing
+            {itemid = 17829, droprate = 70},  -- Hagun
+            {itemid = 17945, droprate = 78},  -- Martial Axe
+            {itemid = 17467, droprate = 52},  -- Martial Wand
+            {itemid = 13690, droprate = 90}, -- Forager's Mantle
+            {itemid = 13109, droprate = 103}, -- Harmonia's Torque
+        },
+        {
+            {itemid =     0, droprate = 935}, -- nothing
+            {itemid = 17829, droprate = 12},  -- Hagun
+            {itemid = 17945, droprate = 13},  -- Martial Axe
+            {itemid = 17467, droprate = 10},  -- Martial Wand
+            {itemid = 13690, droprate = 14}, -- Forager's Mantle
+            {itemid = 13109, droprate = 16}, -- Harmonia's Torque
+        },
+        {
+            {itemid =     0, droprate = 994}, -- nothing
+            {itemid = 17829, droprate = 1},  -- Hagun
+            {itemid = 17945, droprate = 1},  -- Martial Axe
+            {itemid = 17467, droprate = 1},  -- Martial Wand
+            {itemid = 13690, droprate = 1}, -- Forager's Mantle
+            {itemid = 13109, droprate = 2}, -- Harmonia's Torque
         },
     },
 
