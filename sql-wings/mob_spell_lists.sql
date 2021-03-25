@@ -3736,7 +3736,7 @@ INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 435, 112, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 438, 242, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Olgoi-Khorkhoi', 439, 189, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Olgoi-Khorkhoi', 439, 160, 1, 255);
-
+INSERT INTO `mob_spell_lists` VALUES('Ratatoskr', 440, 2, 1, 255);
 
 
 INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 436, 166, 1, 255); -- thunder iii

@@ -3124,6 +3124,7 @@ INSERT INTO `mob_skill_lists` VALUES('Flockbock', 1150, 269);
 INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 675);
 INSERT INTO `mob_skill_lists` VALUES('Picolaton', 1152, 926);
 INSERT INTO `mob_skill_lists` VALUES('Olgoi-Khorkhoi', 1153, 426);
+INSERT INTO `mob_skill_lists` VALUES('Ratatoskr', 1154, 323);
 
 --
 -- Indexes for dumped tables
