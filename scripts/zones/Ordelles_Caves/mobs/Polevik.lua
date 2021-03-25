@@ -9,7 +9,7 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
-    mob:addMod(tpz.mod.ATT, 50) 
+    mob:addMod(tpz.mod.ATT, 150) 
 end
 
 function onMobSpawn(mob)
