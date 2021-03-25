@@ -3738,8 +3738,6 @@ INSERT INTO `mob_spell_lists` VALUES('Olgoi-Khorkhoi', 439, 189, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Olgoi-Khorkhoi', 439, 160, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ratatoskr', 440, 2, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ubume', 441, 376, 1, 255);
-
-
 INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 436, 166, 1, 255); -- thunder iii
 INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 436, 195, 1, 255); -- thundaga ii
 INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 436, 201, 1, 255); -- waterga iii
@@ -3760,34 +3758,34 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 252, 1, 255); -- stun
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 253, 1, 255); -- sleep
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 274, 1, 255); -- sleepga ii
 
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 146, 62, 67);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 151, 64, 68);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 156, 59, 66);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 191, 63, 67);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 195, 61, 65);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 201, 65, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 204, 60, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 206, 50, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 208, 52, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 210, 54, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 212, 56, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 214, 58, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 231, 35, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 235, 24, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 236, 22, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 237, 20, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 238, 18, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 239, 16, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 240, 27, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 245, 12, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 247, 25, 82);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 249, 10, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 252, 45, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 254, 4, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 258, 7, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 259, 41, 255);
-INSERT INTO `mob_spell_lists` VALUES('Beastmen_BLM', 2, 274, 56, 255);
-
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 146, 62, 67);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 151, 64, 68);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 156, 59, 66);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 191, 63, 67);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 195, 61, 65);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 201, 65, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 204, 60, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 206, 50, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 208, 52, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 210, 54, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 212, 56, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 214, 58, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 231, 35, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 235, 24, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 236, 22, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 237, 20, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 238, 18, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 239, 16, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 240, 27, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 245, 12, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 247, 25, 82);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 249, 10, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 252, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 254, 4, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 258, 7, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 259, 41, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 274, 56, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 260, 1, 255);
 
 --
 -- Indexes for dumped tables
