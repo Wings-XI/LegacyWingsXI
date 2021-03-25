@@ -9,6 +9,11 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:addMod(tpz.mod.ATT, 50) 
+end
+
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.FASTCAST,50)
 end
 
 function onMobDeath(mob, player, isKiller)
