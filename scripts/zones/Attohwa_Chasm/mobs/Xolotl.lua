@@ -6,7 +6,7 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setMobMod(72, 1)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
 end
 
 function onMobSpawn(mob)

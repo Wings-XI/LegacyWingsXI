@@ -16,7 +16,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setMobMod(72, 1)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     
     local KingArthroID = mob:getID()
 

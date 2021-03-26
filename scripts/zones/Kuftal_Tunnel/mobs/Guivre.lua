@@ -299,8 +299,8 @@ end
 function onMobSpawn(mob)
     onPath(mob)
     mob:setMod(tpz.mod.SLEEPRESTRAIT,80)
-    mob:setMobMod(1, 12000) -- gil min
-    mob:setMobMod(2, 18000) -- gil max
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 18000)
 end
 
 function onMobRoam(mob)
