@@ -654,6 +654,14 @@ namespace spell
                 }
                 else if (spell->getSpellGroup() == SPELLGROUP_BLUE)
                 {
+                    // return early
+                    auto blueSpellsLastChanged = PCaster->GetLocalVar("BlueSpellsLastChanged");
+                    auto timeSinceLastChanged = time(nullptr) - blueSpellsLastChanged;
+                    if (timeSinceLastChanged < 60)
+                    {
+                        return false;
+                    }
+
                     if (PCaster->objtype == TYPE_PC)
                     {
                         if (requirements & SPELLREQ_UNBRIDLED_LEARNING)
