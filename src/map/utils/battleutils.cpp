@@ -3292,9 +3292,9 @@ namespace battleutils
 
     SKILLCHAIN_ELEMENT FormSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill)
     {
-        for (auto& skill_element : skill)
+        for (auto& resonance_element : resonance)
         {
-            for (auto& resonance_element : resonance)
+            for (auto& skill_element : skill)
             {
                 if (auto skillchain = skillchain_map.find({ resonance_element, skill_element }); skillchain != skillchain_map.end())
                 {
