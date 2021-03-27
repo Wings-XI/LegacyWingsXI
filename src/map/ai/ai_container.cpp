@@ -34,7 +34,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "states/weaponskill_state.h"
 #include "states/range_state.h"
 #include "states/respawn_state.h"
-#include "states/fishing_state.h"
 #include "states/claimshield_state.h"
 #include "controllers/player_controller.h"
 #include "controllers/mob_controller.h"
@@ -295,14 +294,6 @@ bool CAIContainer::Internal_UseItem(uint16 targetid, uint8 loc, uint8 slotid)
     auto entity {dynamic_cast<CCharEntity*>(PEntity)};
     if (entity)
         return ChangeState<CItemState>(entity, targetid, loc, slotid);
-    return false;
-}
-
-bool CAIContainer::Internal_FishState()
-{
-    auto entity{ dynamic_cast<CCharEntity*>(PEntity) };
-    if (entity)
-        return ChangeState<CFishingState>(entity);
     return false;
 }
 

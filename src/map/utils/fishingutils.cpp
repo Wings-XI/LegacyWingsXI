@@ -597,39 +597,32 @@ namespace fishingutils
             break;
         case FISHINGFAILTYPE_RODBREAK:
             PChar->animation = ANIMATION_NEW_FISHING_ROD_BREAK;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_RODBREAK));
             break;
         case FISHINGFAILTYPE_RODBREAK_TOOBIG:
             PChar->animation = ANIMATION_NEW_FISHING_ROD_BREAK;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_RODBREAK_TOOBIG));
             break;
         case FISHINGFAILTYPE_RODBREAK_TOOHEAVY:
             PChar->animation = ANIMATION_NEW_FISHING_ROD_BREAK;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_RODBREAK_TOOHEAVY));
             break;
         case FISHINGFAILTYPE_LOST_TOOSMALL:
             PChar->animation = ANIMATION_NEW_FISHING_STOP;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST_TOOSMALL));
             break;
         case FISHINGFAILTYPE_LOST_LOWSKILL:
             PChar->animation = ANIMATION_NEW_FISHING_STOP;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST_LOWSKILL));
             break;
         case FISHINGFAILTYPE_LOST_TOOBIG:
             PChar->animation = ANIMATION_NEW_FISHING_STOP;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST_TOOBIG));
             break;
         case FISHINGFAILTYPE_LOST:
         case FISHINGFAILTYPE_NONE:
         default:
             PChar->animation = ANIMATION_NEW_FISHING_STOP;
-            PChar->PAI->Internal_FishState();
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST));
             break;
         }
@@ -640,7 +633,6 @@ namespace fishingutils
     {
         uint16 MessageOffset = GetMessageOffset(PChar->getZone());
         PChar->animation = ANIMATION_NEW_FISHING_STOP;
-        PChar->PAI->Internal_FishState();
         PChar->updatemask |= UPDATE_HP;
         switch (FailType) {
         case FISHINGFAILTYPE_NONE:
@@ -1347,7 +1339,6 @@ namespace fishingutils
                 // message: "You give up!"
                 charutils::AddCharVar(PChar, "FishingGiveUps", 1);
                 PChar->animation = ANIMATION_NEW_FISHING_STOP;
-                PChar->PAI->Internal_FishState();
                 PChar->updatemask |= UPDATE_HP;
 
                 if (PChar->hookedFish && PChar->hookedFish->caught &&
@@ -1366,7 +1357,6 @@ namespace fishingutils
                 // message: "You lost your catch!"
                 charutils::AddCharVar(PChar, "FishingTimeouts", 1);
                 PChar->animation = ANIMATION_NEW_FISHING_STOP;
-                PChar->PAI->Internal_FishState();
                 PChar->updatemask |= UPDATE_HP;
 
                 LureLoss(PChar, false, true);
