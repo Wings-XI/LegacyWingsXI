@@ -3809,7 +3809,7 @@ INSERT INTO `mob_groups` VALUES(2, 1405, 82, 'Forest_Leech', 300, 0, 895, 0, 0, 
 INSERT INTO `mob_groups` VALUES(3, 2997, 82, 'Orcish_Bowshooter', 300, 0, 1871, 0, 0, 76, 79, 0);
 INSERT INTO `mob_groups` VALUES(4, 5733, 82, 'Snipper', 300, 0, 2279, 0, 0, 38, 48, 0);
 INSERT INTO `mob_groups` VALUES(5, 4299, 82, 'War_Smilodon', 300, 0, 2626, 0, 0, 57, 60, 0);
-INSERT INTO `mob_groups` VALUES(6, 2373, 82, 'Land_Pugil', 300, 0, 0, 8000, 9999, 38, 41, 0);
+INSERT INTO `mob_groups` VALUES(6, 2373, 82, 'Land_Pugil', 300, 0, 2354, 8000, 9999, 38, 41, 0);
 INSERT INTO `mob_groups` VALUES(7, 3506, 82, 'Screamer', 300, 0, 208, 0, 0, 40, 44, 0);
 INSERT INTO `mob_groups` VALUES(8, 3752, 82, 'Stag_Beetle', 300, 0, 2319, 0, 0, 38, 48, 0);
 INSERT INTO `mob_groups` VALUES(9, 4285, 82, 'Wandering_Sapling', 300, 0, 2616, 0, 0, 38, 41, 0);

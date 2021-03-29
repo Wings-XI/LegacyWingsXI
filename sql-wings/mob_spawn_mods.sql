@@ -575,6 +575,8 @@ INSERT INTO `mob_spawn_mods` VALUES(17649818, 2, 9140, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17490101, 1, 15000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17490101, 2, 20000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17490101, 15, 2000, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17489980, 1, 15000, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17489980, 2, 25000, 1);
 
 
 --

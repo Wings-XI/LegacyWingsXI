@@ -21,7 +21,7 @@ function onMobDrawIn(mob, target)
     mob:addTP(3000)
     mob:useMobAbility(({354,722,723})[math.random(1,3)])
     mob:addTP(3000)
-    mob:useMobAbility(({353,279,720})[math.random(1,3)])
+    mob:useMobAbility(({353,350,720})[math.random(1,3)])
 end
 
 function onAdditionalEffect(mob, target, damage)
