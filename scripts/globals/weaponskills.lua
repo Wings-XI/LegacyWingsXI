@@ -607,6 +607,13 @@ end
 -- handles displaying the appropriate action/message, delivering the damage to the mob, and any enmity from it
 function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
+    local targetTPMult = wsParams.targetTPMult or 1
+    local useAutoTPFormula = wsParams.useAutoTPFormula or false
+    local passedBonusTP = wsResults.extraHitsLanded * 10 + wsResults.bonusTP
+    if useAutoTPFormula ~= nil and useAutoTPFormula == true then
+        passedBonusTP = wsResults.extraHitsLanded
+    end
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, passedBonusTP, targetTPMult, useAutoTPFormula)
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then
@@ -638,13 +645,6 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         end
         action:reaction(defender:getID(), tpz.reaction.EVADE)
     end
-    local targetTPMult = wsParams.targetTPMult or 1
-    local useAutoTPFormula = wsParams.useAutoTPFormula or false
-    local passedBonusTP = wsResults.extraHitsLanded * 10 + wsResults.bonusTP
-    if useAutoTPFormula ~= nil and useAutoTPFormula == true then
-        passedBonusTP = wsResults.extraHitsLanded
-    end
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, passedBonusTP, targetTPMult, useAutoTPFormula)
     local enmityEntity = wsResults.taChar or attacker
     if (wsParams.overrideCE and wsParams.overrideVE) then
         defender:addEnmity(enmityEntity, wsParams.overrideCE, wsParams.overrideVE)
