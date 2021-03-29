@@ -777,7 +777,7 @@ INSERT INTO `mob_groups` VALUES(35, 1555, 25, 'Gigas_Catapulter', 300, 128, 983,
 INSERT INTO `mob_groups` VALUES(36, 3014, 25, 'Orcish_Footsoldier', 300, 0, 283, 0, 0, 41, 44, 0);
 INSERT INTO `mob_groups` VALUES(37, 1592, 25, 'Gigass_Sheep', 0, 128, 0, 0, 0, 34, 36, 0);
 INSERT INTO `mob_groups` VALUES(38, 3015, 25, 'Orcish_Gladiator', 300, 0, 283, 0, 0, 41, 44, 0);
-INSERT INTO `mob_groups` VALUES(39, 2945, 25, 'Odqan', 7200, 8, 1839, 0, 0, 50, 51, 0);
+INSERT INTO `mob_groups` VALUES(39, 2945, 25, 'Odqan', 0, 128, 1839, 0, 0, 50, 51, 0);
 INSERT INTO `mob_groups` VALUES(40, 2556, 25, 'Mantrap', 300, 0, 3077, 0, 0, 45, 49, 0);
 INSERT INTO `mob_groups` VALUES(41, 3073, 25, 'Overgrown_Rose', 300, 0, 1964, 0, 0, 47, 50, 0);
 INSERT INTO `mob_groups` VALUES(42, 4105, 25, 'Upyri', 86400, 0, 2526, 0, 0, 43, 47, 0);

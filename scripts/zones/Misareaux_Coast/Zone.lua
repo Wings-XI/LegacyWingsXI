@@ -12,6 +12,15 @@ local MISAREAUX_COAST = require("scripts/zones/Misareaux_Coast/globals")
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
     MISAREAUX_COAST.ziphiusHandleQM()
+
+    UpdateNMSpawnPoint(ID.mob.ODQAN)
+    local Odqan = GetMobByID(ID.mob.ODQAN)
+    local odqanre = GetServerVariable("OdqanRespawn")
+    DisallowRespawn(Odqan:getID(), true)
+
+    if os.time() < odqanre then
+      GetMobByID(ID.mob.ODQAN):setRespawnTime(odqanre - os.time())
+    end
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -40,4 +49,19 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+end
+
+function onZoneWeatherChange(weather)
+    UpdateNMSpawnPoint(ID.mob.ODQAN)
+    local odqanre = GetServerVariable("OdqanRespawn")
+    local Odqan = GetMobByID(ID.mob.ODQAN)
+
+    if
+        not Odqan:isSpawned() and os.time() > odqanre
+        and weather == tpz.weather.FOG
+    then
+        DisallowRespawn(Odqan:getID(), false)
+    elseif not weather == tpz.weather.FOG then
+        DisallowRespawn(Odqan:getID(), true)
+    end
 end
