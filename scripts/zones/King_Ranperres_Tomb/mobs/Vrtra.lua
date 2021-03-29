@@ -10,7 +10,20 @@ local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 local offsets = {1, 3, 5, 2, 4, 6}
 
 function onMobSpawn(mob)
-    mob:setMobMod(72, 1)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 0)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 30)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
+    mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
+
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 30)
+
+    mob:setMod(tpz.mod.MDEF, 125)
+    mob:setMod(tpz.mod.DEF, 665)
+    mob:setMod(tpz.mod.MATT, 50)
+    mob:setMod(tpz.mod.VIT, 30)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
 end
 
 function onMobEngaged(mob, target)
@@ -32,7 +45,7 @@ function onMobFight(mob, target)
         mob:setLocalVar("spawnTime", spawnTime)
     end
 
-    if fifteenBlock > twohourTime then
+    if fifteenBlock > twohourTime and mob:getHPP() < 86 then -- 85% or less charm
         mob:useMobAbility(710)
         mob:setLocalVar("twohourTime", fifteenBlock + math.random(4, 6))
     elseif fifteenBlock > spawnTime then
@@ -61,6 +74,10 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.VRTRA_VANQUISHER)
+end
+
+function onSpellPrecast(mob, spell)
+    spell:setMPCost(1)
 end
 
 function onMobDespawn(mob)
