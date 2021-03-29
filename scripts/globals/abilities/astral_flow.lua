@@ -1,5 +1,5 @@
 -----------------------------------
--- Ability: Accession
+-- Ability: Astral Flow
 -- Allows avatars to use their full strength and allows summmoning of Odin and Alexander.
 -- Obtained: Summoner Level 1
 -- Recast Time: 1:00:00

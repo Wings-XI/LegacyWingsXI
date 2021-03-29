@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
     return 0, 0
 end
 
-function onUseAbility(player, target, ability)
+function onUseAbility(player, target, ability, action)
+    meritRecastReduction(player, tpz.merit.FEALTY, action)
     player:addStatusEffect(tpz.effect.FEALTY, 1, 0, 60)
 end

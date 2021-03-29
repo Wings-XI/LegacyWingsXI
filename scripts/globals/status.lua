@@ -886,6 +886,10 @@ function hasSleepEffects(target)
     return target:hasStatusEffect(tpz.effect.SLEEP_I) or target:hasStatusEffect(tpz.effect.SLEEP_II) or target:hasStatusEffect(tpz.effect.LULLABY)
 end
 
+function meritRecastReduction(player, merit, action)
+    action:recast(action:recast() - player:getMerit(merit))
+end
+
 ------------------------------------
 -- These values are the codes that represent any statistic possible on an entity.
 -- These are NOT the actual status effects such as weakness or silence,

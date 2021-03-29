@@ -13,7 +13,7 @@ end
 
 function onSpellCast(caster, target, spell)
     local effect = tpz.effect.DOOM
-    if (target:hasStatusEffect(effect) == false) then
+    if not target:hasStatusEffect(tpz.effect.FEALTY) and not target:hasStatusEffect(effect) then
         spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB) -- gains effect
         target:addStatusEffect(effect, 10, 3, 30)
     else

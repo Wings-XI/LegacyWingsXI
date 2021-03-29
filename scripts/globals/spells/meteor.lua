@@ -42,6 +42,11 @@ function onSpellCast(caster, target, spell)
     dmg = adjustForTarget(target, dmg, spell:getElement())
     --add in final adjustments
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
+
+    if target:hasStatusEffect(tpz.effect.FEALTY) then
+        dmg = math.floor(dmg / 16)
+    end
+    
     return dmg
 
 end
