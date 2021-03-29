@@ -13,9 +13,8 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    local eco = target:getSystem()
     local ele = tpz.damageType.WATER
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 1
     local accmod = 5 + math.floor(11*skill:getTP()/3000)
     local dmgmod = 3.5 * coe

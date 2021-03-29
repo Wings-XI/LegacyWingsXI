@@ -18,9 +18,8 @@ function onPetAbility(target, pet, skill)
     --end
     
     local dMND = math.floor(pet:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
-    local eco = target:getSystem()
     local ele = tpz.damageType.LIGHT
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
 
     local damage = 400
     damage = damage + (dMND * 1.5)

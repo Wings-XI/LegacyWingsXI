@@ -12,9 +12,8 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    local eco = target:getSystem()
     local ele = tpz.damageType.LIGHT
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
     local dint = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local dmg = (500 + dint*1.5 + skill:getTP()/20)*coe
     

@@ -17,10 +17,8 @@ end
 
 function onPetAbility(target, pet, skill)
     
-
-    local eco = target:getSystem()
     local ele = tpz.damageType.LIGHTNING
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 3
     local accmod = 1
     local dmgmod = 9 * coe

@@ -21,9 +21,8 @@ end
 function onPetAbility(target, pet, skill, master)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     
-    local eco = target:getSystem()
     local ele = tpz.damageType.FIRE
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
 
     local level = pet:getMainLvl()
     local damage = (48 + (level * 8)) * coe
