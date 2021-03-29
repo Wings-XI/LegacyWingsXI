@@ -501,8 +501,11 @@ INSERT INTO `mob_droplist` VALUES(71, 0, 0, 1000, 18754, 20);
 INSERT INTO `mob_droplist` VALUES(71, 0, 0, 1000, 18851, 20);
 INSERT INTO `mob_droplist` VALUES(71, 0, 0, 1000, 18944, 20);
 INSERT INTO `mob_droplist` VALUES(71, 0, 0, 1000, 19102, 20);
-INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 1473, 80);
-INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 16968, 900);
+INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 1473, 80); -- Untouched / Unknown
+INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 16968, 1000); -- 100% as per ffxidb
+INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 896, 1000); -- 100% as per ffxidb
+INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 901, 42); -- 4.2% as per ffxidb
+INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 897, 1000); -- 100% as per ffxidb
 INSERT INTO `mob_droplist` VALUES(73, 0, 0, 1000, 2750, 100);
 INSERT INTO `mob_droplist` VALUES(73, 0, 0, 1000, 2752, 100);
 INSERT INTO `mob_droplist` VALUES(73, 0, 0, 1000, 2753, 100);
