@@ -22234,6 +22234,7 @@ INSERT INTO `item_mods` VALUES (18380,345,1000);  -- Martial Sword: TP Bonus +10
 INSERT INTO `item_mods` VALUES (18381,431,1);
 INSERT INTO `item_mods` VALUES (18385,23,3);
 INSERT INTO `item_mods` VALUES (18385,302,3);
+INSERT INTO `item_mods` VALUES (18385,431,1);
 INSERT INTO `item_mods` VALUES (18386,28,2);
 INSERT INTO `item_mods` VALUES (18386,30,2);
 INSERT INTO `item_mods` VALUES (18389,392,15);    -- Crude Sword: "Weapon Bash"+15
