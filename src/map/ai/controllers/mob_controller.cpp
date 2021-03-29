@@ -255,7 +255,13 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK);
     }
 
-    if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
+    auto angle = PMob->getMobMod(MOBMOD_SIGHT_ANGLE);
+    if (angle == 0)
+    {
+        angle = 64;
+    }
+
+    if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, angle))
     {
         return CanSeePoint(PTarget->loc.p);
     }
@@ -485,6 +491,12 @@ bool CMobController::CanCastSpells()
         {
             return false;
         }
+    }
+
+    // mob has no mp and does not have manafont
+    if (PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
+    {
+        return false;
     }
 
     return IsMagicCastingEnabled();
