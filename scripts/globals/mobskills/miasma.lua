@@ -21,9 +21,6 @@ function onMobWeaponSkill(target, mob, skill)
 
     MobStatusEffectMove(mob, target, tpz.effect.POISON, mob:getMainLvl() / 3, 3, 60)
     MobStatusEffectMove(mob, target, tpz.effect.SLOW, 1250, 3, 120)
-
-    MobStatusEffectMove(mob, target, tpz.effect.POISON, mob:getMainLvl()/3, 3, 60)
-    MobStatusEffectMove(mob, target, tpz.effect.SLOW, 128, 3, 120)
     MobStatusEffectMove(mob, target, tpz.effect.PLAGUE, 5, 3, 60)
 
     local dmgmod = 1
