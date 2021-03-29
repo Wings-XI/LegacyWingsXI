@@ -15,9 +15,8 @@ end
 function onPetAbility(target, pet, skill)
     --skill:setAnim(10)
 
-    local eco = target:getSystem()
     local ele = tpz.damageType.LIGHT
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 3
     local accmod = 1 + math.floor(20*skill:getTP()/3000)
     local dmgmod = (3 + pet:getMainLvl()/15) * coe

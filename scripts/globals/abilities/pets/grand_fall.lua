@@ -22,9 +22,8 @@ function onPetAbility(target, pet, skill)
         merits = master:getMerit(tpz.merit.GRANDFALL)
     end
     
-    local eco = target:getSystem()
     local ele = tpz.damageType.WATER
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
 
     tp = tp + (merits - 40)
     if (tp > 300) then

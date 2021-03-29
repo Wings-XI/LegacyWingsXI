@@ -15,9 +15,8 @@ end
 function onPetAbility(target, pet, skill)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local tp = skill:getTP()
-    local eco = target:getSystem()
     local ele = tpz.damageType.WATER
-    local coe = getAvatarEcosystemCoefficient(eco, ele)
+    local coe = getAvatarEcosystemCoefficient(target, ele)
 
     local damage = math.floor(325 * (1 + 0.578*tp/3000) * coe)
     damage = damage + (dINT * 1.5)
