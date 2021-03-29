@@ -15,6 +15,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    -- TODO Cemetery Cherry pool 671 600ish dmg no sleep
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.3
