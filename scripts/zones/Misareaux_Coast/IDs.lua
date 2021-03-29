@@ -41,7 +41,7 @@ zones[tpz.zone.MISAREAUX_COAST] =
         BOGGELMANN       = 16879897,
         GRATION          = 16879899,
         ZIPHIUS          = 16879900,
-
+        ODQAN            = 16879737,
     },
     npc =
     {
