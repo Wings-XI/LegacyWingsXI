@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -980,7 +980,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 actionTarget.messageID = primary ? 224 : 276; //restores mp msg
                 actionTarget.reaction = REACTION_HIT;
                 damage = std::max(damage, 0);
-                actionTarget.param = addMP(damage);
+                actionTarget.param = PTarget->addMP(damage);
             }
 
             if (primary)
