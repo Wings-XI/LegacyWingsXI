@@ -53,7 +53,7 @@ function onGameHour(zone)
         local players = zone:getPlayers()
         for _, player in pairs(players) do
             if player:hasKeyItem(tpz.ki.SEANCE_STAFF)
-                and player:getVar("Enagakure_Killed") == 0
+                and player:getCharVar("Enagakure_Killed") == 0
                 and not GetMobByID(ID.mob.ENAGAKURE):isSpawned() then
                     GetMobByID(ID.mob.ENAGAKURE):spawn()
             end
