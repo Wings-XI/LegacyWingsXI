@@ -570,7 +570,16 @@ void CBattlefield::Cleanup()
     {
         auto PChar = GetZone()->GetCharByID(id);
         if (PChar)
+        {
             RemoveEntity(PChar, leavecode);
+            if (PChar->PPet)
+            {
+                PChar->PPet->PBattlefield = nullptr;
+                PChar->PPet->PInstance = nullptr;
+                if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
+                    PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+            }
+        }
     }
 
     if (m_Attacked && m_Status == BATTLEFIELD_STATUS_WON)

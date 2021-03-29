@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -9961,7 +9961,25 @@ inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
     area = !lua_isnil(L, 2) ? (uint8)lua_tointeger(L, 2) : 1;
     initiator = !lua_isnil(L, 3) ? (uint32)lua_tointeger(L, 3) : 0;
 
-    lua_pushinteger(L, PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator));
+    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator);
+
+    if (PChar->PPet)
+    {
+        if (PChar->PBattlefield)
+            PChar->PPet->PBattlefield = PChar->PBattlefield;
+
+        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
+        {
+            CStatusEffect* PCharEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
+            CStatusEffect* PNewEffect = new CStatusEffect(PCharEffect->GetStatusID(), PCharEffect->GetIcon(),
+            PCharEffect->GetPower(), PCharEffect->GetTickTime(), PCharEffect->GetDuration(), PCharEffect->GetSubID(),
+            PCharEffect->GetSubPower(), PCharEffect->GetTier());
+
+            PChar->PPet->StatusEffectContainer->AddStatusEffect(PNewEffect, true);
+        }
+    }
+
+    lua_pushinteger(L, ret);
     return 1;
 }
 
