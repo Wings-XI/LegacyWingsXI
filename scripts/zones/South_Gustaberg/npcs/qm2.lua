@@ -15,7 +15,7 @@ function onTrade(player, npc, trade)
     end
     local Smokey = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.SMOKE_ON_THE_MOUNTAIN)
 
-    if (Smokey == QUEST_ACCEPTED or Smokey == QUEST_COMPLETE) and npcUtil.tradeHas(trade, 4372) then
+    if (Smokey == QUEST_ACCEPTED or Smokey == QUEST_COMPLETED) and npcUtil.tradeHas(trade, 4372) then
             if player:getCharVar("SGusta_Sausage_Timer") == 0 then
                 -- player puts sheep meat on the fire
                 player:messageSpecial(ID.text.FIRE_PUT, 4372)
