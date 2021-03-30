@@ -18,8 +18,9 @@ function onInitialize(zone)
     -- Regions 1-6 are for the Afflictor System (RegionID, X, Radius, Z)
     zone:registerRegion(1, -163, 10, -137, 0, 0, 0)
     zone:registerRegion(2, -209, 10, -131, 0, 0, 0)
-    zone:registerRegion(3, -140, 10,   20, 0, 0, 0)
-    zone:registerRegion(4,  261, 10,  140, 0, 0, 0)
+    -- afflictor 3 and 4 have areas on map above them, so we won't use cylinders and use box regions instead.
+    zone:registerRegion(3, -150, 16, 10, -130, 28, 32)
+    zone:registerRegion(4, 251, 30, 130, 271, 50, 150)
     zone:registerRegion(5,  340, 10,  100, 0, 0, 0)
     zone:registerRegion(6,  380, 10,   60, 0, 0, 0)
 
