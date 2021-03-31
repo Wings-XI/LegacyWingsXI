@@ -217,6 +217,7 @@ INSERT INTO `mob_pool_mods` VALUES (5408,58,40,1); -- Maat (PLD) SPECIAL_DELAY: 
 INSERT INTO `mob_pool_mods` VALUES (5409,30,1036,1); -- Maat (DRK) SPECIAL_SKILL: maats_bash
 INSERT INTO `mob_pool_mods` VALUES (5409,33,50,1); -- Maat (DRK) SPECIAL_COOLDOWN: 50 sec
 INSERT INTO `mob_pool_mods` VALUES (5409,58,40,1); -- Maat (DRK) SPECIAL_DELAY: 40 sec
+INSERT INTO `mob_pool_mods` VALUES (2720,2,1000,0); -- Adds 1000 HP to Mold Eaters in Aydeewa to correct their HP pool.
 
 /*!40000 ALTER TABLE `mob_pool_mods` ENABLE KEYS */;
 UNLOCK TABLES;
