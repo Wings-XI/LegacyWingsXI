@@ -3000,10 +3000,12 @@ namespace luautils
             // onMobDeath
             memset(File, 0, sizeof(File));
 
-            lua_pushnil(LuaHandle);
-            lua_setglobal(LuaHandle, "onMobDeath");
-
             snprintf((char*)File, sizeof(File), "scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
+
+            if (prepFile(File, "onMobDeath"))
+            {
+                return -1;
+            }
 
             PChar->ForAlliance([PMob, PChar, &File](CBattleEntity* PPartyMember)
             {
@@ -3017,20 +3019,6 @@ namespace luautils
                     PMember->m_event.reset();
                     PMember->m_event.Target = PMob;
                     PMember->m_event.Script.insert(0, (const char*)File);
-
-                    if (luaL_loadfile(LuaHandle, (const char*)File) || lua_pcall(LuaHandle, 0, 0, 0))
-                    {
-                        lua_pop(LuaHandle, 1);
-                        return;
-                    }
-
-                    lua_getglobal(LuaHandle, "onMobDeath");
-                    if (lua_isnil(LuaHandle, -1))
-                    {
-                        ShowError("luautils::onMobDeath (%s): undefined procedure onMobDeath\n", File);
-                        lua_pop(LuaHandle, 1);
-                        return;
-                    }
 
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
                     if (PMember)
@@ -3072,24 +3060,12 @@ namespace luautils
                 break;
             }
 
-            lua_pushnil(LuaHandle);
-            lua_setglobal(LuaHandle, "onMobDeath");
+            if (prepFile(File, "onMobDeath"))
+            {
+                return -1;
+            }
 
             CLuaBaseEntity LuaMobEntity(PMob);
-
-            if (luaL_loadfile(LuaHandle, (const char*)File) || lua_pcall(LuaHandle, 0, 0, 0))
-            {
-                lua_pop(LuaHandle, 1);
-                return -1;
-            }
-
-            lua_getglobal(LuaHandle, "onMobDeath");
-            if (lua_isnil(LuaHandle, -1))
-            {
-                ShowError("luautils::onMobDeath (%s): undefined procedure onMobDeath\n", File);
-                lua_pop(LuaHandle, 1);
-                return -1;
-            }
 
             Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
             lua_pushnil(LuaHandle);
