@@ -5314,7 +5314,7 @@ INSERT INTO `mob_groups` VALUES(9, 2102, 92, 'Iron_Quadav', 960, 0, 87, 0, 0, 76
 INSERT INTO `mob_groups` VALUES(10, 5553, 92, 'Adaman_Quadav', 960, 0, 22, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(11, 6068, 92, 'EaTho_Cruelheart', 0, 32, 3032, 0, 0, 78, 78, 0);
 INSERT INTO `mob_groups` VALUES(12, 1195, 92, 'Electrumcap', 960, 0, 756, 0, 0, 69, 71, 0);
-INSERT INTO `mob_groups` VALUES(13, 1094, 92, 'Doyen_Quadav', 960, 0, 694, 0, 0, 80, 83, 0);
+INSERT INTO `mob_groups` VALUES(13, 1094, 92, 'Doyen_Quadav', 960, 0, 0, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(14, 703, 92, 'Chatoyant_Quadav', 960, 0, 459, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(15, 2644, 92, 'Meteor_Quadav', 960, 0, 1665, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(16, 3156, 92, 'Platinum_Quadav', 960, 0, 2005, 0, 0, 80, 83, 0);
@@ -5525,7 +5525,7 @@ INSERT INTO `mob_groups` VALUES(4694, 903, 94, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(4695, 953, 94, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4696, 960, 94, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4697, 1055, 94, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(4698, 1056, 94, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4698, 1056, 94, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4699, 1057, 94, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4700, 1062, 94, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4701, 1064, 94, 'Divine_Templar', 0, 128, 0, 0, 0, 60, 60, 0);
@@ -5571,7 +5571,7 @@ INSERT INTO `mob_groups` VALUES(4740, 3096, 94, 'Papako', 1, 0, 0, 0, 0, 1, 1, 0
 INSERT INTO `mob_groups` VALUES(4741, 3105, 94, 'Patriarch_Protector', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4742, 3106, 94, 'Patrol_Worm', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4743, 3139, 94, 'Piscean_Caster', 1, 0, 0, 0, 0, 1, 1, 0);
-INSERT INTO `mob_groups` VALUES(4744, 3158, 94, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4744, 3158, 94, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4745, 3176, 94, 'Popochu', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4746, 3184, 94, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4747, 3186, 94, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -5686,7 +5686,7 @@ INSERT INTO `mob_groups` VALUES(4816, 903, 95, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(4818, 953, 95, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4819, 960, 95, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4820, 1055, 95, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(4821, 1056, 95, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4821, 1056, 95, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4822, 1057, 95, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4823, 1059, 95, 'Divine_Inspirer', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4824, 1062, 95, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 60, 60, 0);
@@ -5730,7 +5730,7 @@ INSERT INTO `mob_groups` VALUES(4872, 2946, 95, 'Odzmanouk', 1, 0, 0, 0, 0, 1, 1
 INSERT INTO `mob_groups` VALUES(4873, 2949, 95, 'Oggbi', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4874, 3096, 95, 'Papako', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4875, 3139, 95, 'Piscean_Caster', 1, 0, 0, 0, 0, 1, 1, 0);
-INSERT INTO `mob_groups` VALUES(4877, 3158, 95, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4877, 3158, 95, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4878, 3176, 95, 'Popochu', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4881, 3184, 95, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4882, 3186, 95, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -5834,7 +5834,7 @@ INSERT INTO `mob_groups` VALUES(4968, 903, 96, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(4971, 953, 96, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4972, 960, 96, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4973, 1055, 96, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(4974, 1056, 96, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4974, 1056, 96, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4975, 1057, 96, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4976, 1062, 96, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(4977, 1063, 96, 'Divine_Sentinel', 0, 128, 0, 0, 0, 75, 80, 0);
@@ -5877,7 +5877,7 @@ INSERT INTO `mob_groups` VALUES(5022, 3096, 96, 'Papako', 0, 128, 0, 0, 0, 60, 6
 INSERT INTO `mob_groups` VALUES(5023, 3105, 96, 'Patriarch_Protector', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5024, 3106, 96, 'Patrol_Worm', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5025, 3139, 96, 'Piscean_Caster', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(5028, 3158, 96, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5028, 3158, 96, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5029, 3176, 96, 'Popochu', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5030, 3184, 96, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5031, 3186, 96, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -5990,7 +5990,7 @@ INSERT INTO `mob_groups` VALUES(5107, 903, 97, 'Darach', 0, 128, 0, 0, 0, 60, 60
 INSERT INTO `mob_groups` VALUES(5108, 953, 97, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5109, 960, 97, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5110, 1055, 97, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(5111, 1056, 97, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5111, 1056, 97, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5112, 1057, 97, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5113, 1058, 97, 'Divine_Inciter', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5114, 1062, 97, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 75, 75, 0);
@@ -6031,7 +6031,7 @@ INSERT INTO `mob_groups` VALUES(5168, 2946, 97, 'Odzmanouk', 1, 0, 0, 0, 0, 1, 1
 INSERT INTO `mob_groups` VALUES(5169, 2949, 97, 'Oggbi', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5170, 3096, 97, 'Papako', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5171, 3139, 97, 'Piscean_Caster', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(5172, 3158, 97, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5172, 3158, 97, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5173, 3176, 97, 'Popochu', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5174, 3184, 97, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5175, 3186, 97, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -6137,7 +6137,7 @@ INSERT INTO `mob_groups` VALUES(5258, 903, 98, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(5259, 953, 98, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5260, 960, 98, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5261, 1055, 98, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(5262, 1056, 98, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5262, 1056, 98, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5263, 1057, 98, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5264, 1060, 98, 'Divine_Liturgist', 0, 128, 0, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(5265, 1062, 98, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 75, 75, 0);
@@ -6182,7 +6182,7 @@ INSERT INTO `mob_groups` VALUES(5320, 2946, 98, 'Odzmanouk', 1, 0, 0, 0, 0, 1, 1
 INSERT INTO `mob_groups` VALUES(5321, 2949, 98, 'Oggbi', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5322, 3096, 98, 'Papako', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5323, 3139, 98, 'Piscean_Caster', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(5324, 3158, 98, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5324, 3158, 98, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5325, 3176, 98, 'Popochu', 0, 128, 0, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(5326, 3184, 98, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(5327, 3186, 98, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -6298,11 +6298,11 @@ INSERT INTO `mob_groups` VALUES(73, 1064, 99, 'Divine_Templar', 0, 128, 0, 0, 0,
 INSERT INTO `mob_groups` VALUES(74, 2737, 99, 'Moo_Ouzi_the_Swiftblade', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(75, 1057, 99, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(76, 2776, 99, 'Muu_Buxu_the_Elusive', 0, 0, 1758, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(77, 1056, 99, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(77, 1056, 99, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(78, 953, 99, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(79, 1055, 99, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(80, 2198, 99, 'Kazan_the_Peerless', 0, 0, 1427, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(81, 3158, 99, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(81, 3158, 99, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(82, 4267, 99, 'Vuu_Puqu_the_Beguiler', 0, 0, 2596, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(83, 1059, 99, 'Divine_Inspirer', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(84, 4486, 99, 'Yuu_Mjuu_the_Awakened', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -8561,7 +8561,7 @@ INSERT INTO `mob_groups` VALUES(17, 5559, 138, 'Orcish_Warlord', 960, 0, 1062, 0
 INSERT INTO `mob_groups` VALUES(18, 5553, 138, 'Adaman_Quadav', 960, 0, 23, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(19, 1753, 138, 'Gold_Quadav', 960, 0, 1194, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(20, 2486, 138, 'Magnes_Quadav', 960, 0, 1575, 0, 0, 77, 79, 0);
-INSERT INTO `mob_groups` VALUES(21, 3757, 138, 'Star_Ruby_Quadav', 960, 0, 1349, 0, 0, 77, 79, 0);
+INSERT INTO `mob_groups` VALUES(21, 3757, 138, 'Star_Ruby_Quadav', 960, 0, 0, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(22, 4430, 138, 'Yagudo_Knight_Templar', 960, 0, 2725, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(23, 4417, 138, 'Yagudo_Eradicator', 960, 0, 2708, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(24, 5493, 138, 'Yagudo_Chanter_past', 960, 0, 2698, 0, 0, 77, 79, 0);
@@ -8623,7 +8623,7 @@ INSERT INTO `mob_groups` VALUES(7575, 953, 138, 'Dee_Xalmo_the_Grim', 0, 0, 593,
 INSERT INTO `mob_groups` VALUES(7576, 960, 138, 'Degenhard', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7582, 1023, 138, 'De_Vyu_Headhunter', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7584, 1055, 138, 'Divine_Ascetic', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(7585, 1056, 138, 'Divine_Assassin', 0, 0, 669, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(7585, 1056, 138, 'Divine_Assassin', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7586, 1141, 138, 'Duskraven', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7587, 1143, 138, 'Dusk_Raider', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7588, 1198, 138, 'Elivira', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -8671,7 +8671,7 @@ INSERT INTO `mob_groups` VALUES(7634, 2946, 138, 'Odzmanouk', 0, 0, 0, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(7635, 2949, 138, 'Oggbi', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7644, 3096, 138, 'Papako', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7645, 3139, 138, 'Piscean_Caster', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(7646, 3158, 138, 'Plenilune_Ronin', 0, 0, 669, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(7646, 3158, 138, 'Plenilune_Ronin', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7647, 3176, 138, 'Popochu', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7648, 3184, 138, 'Poroggo_Prince', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7649, 3186, 138, 'Poroggo_Servant', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -9221,11 +9221,11 @@ INSERT INTO `mob_groups` VALUES(8, 3045, 155, 'Orcish_Wyrmbrander', 960, 0, 1871
 INSERT INTO `mob_groups` VALUES(9, 3003, 155, 'Orcish_Cupholder', 960, 0, 283, 0, 0, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(10, 3008, 155, 'Orcish_Farkiller', 960, 0, 283, 0, 0, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(11, 3021, 155, 'Orcish_Imperial_Guard', 960, 0, 1884, 0, 5000, 81, 82, 0);
-INSERT INTO `mob_groups` VALUES(12, 5227, 155, 'Doyen_Quadav_ZVHAL', 960, 0, 695, 0, 9999, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(12, 5227, 155, 'Doyen_Quadav_ZVHAL', 960, 0, 0, 0, 9999, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(13, 5229, 155, 'Meteor_Quadav', 960, 0, 1666, 0, 9999, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(14, 3769, 155, 'Steel_Quadav', 960, 0, 1378, 0, 9999, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(15, 324, 155, 'Baetyl_Quadav', 960, 0, 0, 0, 0, 81, 82, 0);
-INSERT INTO `mob_groups` VALUES(16, 3156, 155, 'Platinum_Quadav', 960, 0, 669, 0, 0, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(16, 3156, 155, 'Platinum_Quadav', 960, 0, 0, 0, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(17, 703, 155, 'Chatoyant_Quadav', 960, 0, 0, 0, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(18, 5228, 155, 'Ferroalloy_Quadav_ZVHAL', 960, 0, 0, 0, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(19, 4436, 155, 'Yagudo_Nokizaru', 960, 0, 2736, 0, 0, 81, 83, 0);
@@ -9293,7 +9293,7 @@ INSERT INTO `mob_groups` VALUES(8220, 953, 155, 'Dee_Xalmo_the_Grim', 0, 0, 593,
 INSERT INTO `mob_groups` VALUES(8221, 960, 155, 'Degenhard', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8227, 1023, 155, 'De_Vyu_Headhunter', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8228, 1055, 155, 'Divine_Ascetic', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(8229, 1056, 155, 'Divine_Assassin', 0, 0, 669, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(8229, 1056, 155, 'Divine_Assassin', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8231, 1141, 155, 'Duskraven', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8232, 1143, 155, 'Dusk_Raider', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8234, 1198, 155, 'Elivira', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -9337,7 +9337,7 @@ INSERT INTO `mob_groups` VALUES(8275, 2946, 155, 'Odzmanouk', 0, 0, 0, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(8276, 2949, 155, 'Oggbi', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8285, 3096, 155, 'Papako', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8286, 3139, 155, 'Piscean_Caster', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(8288, 3158, 155, 'Plenilune_Ronin', 0, 0, 669, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(8288, 3158, 155, 'Plenilune_Ronin', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8289, 3176, 155, 'Popochu', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8290, 5231, 155, 'Orcish_Farkiller_S', 0, 0, 0, 0, 0, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(8291, 3186, 155, 'Poroggo_Servant', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -9703,7 +9703,7 @@ INSERT INTO `mob_groups` VALUES(8628, 903, 164, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0
 INSERT INTO `mob_groups` VALUES(8629, 953, 164, 'Dee_Xalmo_the_Grim', 0, 0, 593, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8630, 960, 164, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(8632, 1055, 164, 'Divine_Ascetic', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(8633, 1056, 164, 'Divine_Assassin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(8633, 1056, 164, 'Divine_Assassin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(8634, 1057, 164, 'Divine_Disseminator', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(8635, 1061, 164, 'Divine_Martyr', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(8636, 1062, 164, 'Divine_Pilgrim', 0, 128, 0, 0, 0, 60, 60, 0);
@@ -9746,7 +9746,7 @@ INSERT INTO `mob_groups` VALUES(8677, 2946, 164, 'Odzmanouk', 1, 0, 0, 0, 0, 1, 
 INSERT INTO `mob_groups` VALUES(8678, 2949, 164, 'Oggbi', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(8679, 3096, 164, 'Papako', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(8680, 3139, 164, 'Piscean_Caster', 1, 0, 0, 0, 0, 1, 1, 0);
-INSERT INTO `mob_groups` VALUES(8681, 3158, 164, 'Plenilune_Ronin', 0, 128, 669, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(8681, 3158, 164, 'Plenilune_Ronin', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(8682, 3176, 164, 'Popochu', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(8683, 3184, 164, 'Poroggo_Prince', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(8684, 3186, 164, 'Poroggo_Servant', 1, 0, 0, 0, 0, 1, 1, 0);
