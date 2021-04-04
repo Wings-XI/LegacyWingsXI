@@ -11,19 +11,13 @@ local offsets = {1, 3, 5, 2, 4, 6}
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
-    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
-    mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 0)
-    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 30)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
     mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
+    mob:setMobMod(tpz.mobMod.GA_CHANCE, 75)
 
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 30)
-
-    mob:setMod(tpz.mod.MDEF, 125)
-    mob:setMod(tpz.mod.DEF, 665)
-    mob:setMod(tpz.mod.MATT, 50)
-    mob:setMod(tpz.mod.VIT, 30)
-    mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
+    mob:setMod(tpz.mod.DEF, 500)
+    mob:setMod(tpz.mod.MATT, 75)
+    mob:setMod(tpz.mod.INT, 4)
 end
 
 function onMobEngaged(mob, target)

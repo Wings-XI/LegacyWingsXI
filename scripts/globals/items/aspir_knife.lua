@@ -11,7 +11,7 @@ require("scripts/globals/msg")
 function onAdditionalEffect(player, target, damage)
     local chance = 10
 
-    if (math.random(0, 99) >= chance or target:isUndead()) then
+    if (math.random(0, 99) >= chance or target:isUndead() or target:hasImmunity(8192)) then
         return 0, 0, 0
     else
         local drain = math.random(1, 3)

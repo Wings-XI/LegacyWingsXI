@@ -32,6 +32,10 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    if (target:isUndead() or target:hasImmunity(8192)) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- No effect
+        return dmg
+    end
     -- also have small constant to account for 0 dark skill
     local dmg = utils.clamp(5 + 0.375 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC), 0, 165)
     -- get resist multiplier (1x if no resist)
@@ -54,11 +58,6 @@ function onSpellCast(caster, target, spell)
     end
 
     dmg = dmg * BLUE_POWER
-
-    if (target:isUndead()) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- No effect
-        return dmg
-    end
 
     if (target:getMP() > dmg) then
         caster:addMP(dmg)
