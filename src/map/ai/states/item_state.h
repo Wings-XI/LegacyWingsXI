@@ -41,6 +41,7 @@ public:
     virtual bool CanInterrupt() override { return m_interruptable; }
 
     virtual void TryInterrupt(CBattleEntity* PAttacker) override;
+    virtual void Interrupt() override;
 
     CItemUsable* GetItem();
 

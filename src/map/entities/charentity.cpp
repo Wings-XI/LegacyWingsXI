@@ -824,31 +824,74 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
     {
         for (auto&& actionTarget : actionList.actionTargets)
         {
-            if (actionTarget.param > 0 && PSpell->dealsDamage() && PSpell->getSpellGroup() == SPELLGROUP_BLUE &&
-                StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) &&
-                static_cast<CBlueSpell*>(PSpell)->getPrimarySkillchain() != 0)
+            if (actionTarget.param > 0 && PSpell->dealsDamage() && PSpell->getSpellGroup() == SPELLGROUP_BLUE)
             {
                 auto PBlueSpell = static_cast<CBlueSpell*>(PSpell);
-                SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0 );
-                if (effect != SUBEFFECT_NONE)
+                if (PBlueSpell->getPrimarySkillchain() != 0 && StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY))
                 {
-                    uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
+                    SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0 );
+                    if (effect != SUBEFFECT_NONE)
+                    {
+                        uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
 
-                    actionTarget.addEffectParam = skillChainDamage;
-                    actionTarget.addEffectMessage = 287 + effect;
-                    actionTarget.additionalEffect = effect;
+                        actionTarget.addEffectParam = skillChainDamage;
+                        actionTarget.addEffectMessage = 287 + effect;
+                        actionTarget.additionalEffect = effect;
 
+                    }
+                    if (StatusEffectContainer->HasStatusEffect({EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI}))
+                    {
+                        health.tp = (health.tp > 1000 ? health.tp - 1000 : 0);
+                    }
+                    else
+                    {
+                        health.tp = 0;
+                    }
+
+                    StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
                 }
-                if (StatusEffectContainer->HasStatusEffect({EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI}))
+
+                // do not need to knockback mobs if stun/terror/petrify
+                if (!(PTarget->objtype == TYPE_MOB && PTarget->StatusEffectContainer->HasStatusEffect({ EFFECT_STUN, EFFECT_TERROR, EFFECT_PETRIFICATION })))
                 {
-                    health.tp = (health.tp > 1000 ? health.tp - 1000 : 0);
-                }
-                else
-                {
-                    health.tp = 0;
-                }
+                    auto PSkill = battleutils::GetMobSkill(PBlueSpell->getMonsterSkillId());
+                    bool interrupted = false;
+                    if (PSkill->getKnockback() > 0)
+                    {
+                        auto knockback = PSkill->getKnockback();
+                        actionTarget.knockback = knockback;
+                        if (!(actionTarget.speceffect & SPECEFFECT_RECOIL))
+                        {
+                            actionTarget.speceffect = SPECEFFECT_RECOIL;
+                        }
 
-                StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
+                        if (!(actionTarget.reaction & REACTION_HIT))
+                        {
+                            actionTarget.reaction = REACTION_HIT;
+                        }
+
+                        if (PTarget->objtype == TYPE_PC)
+                        {
+                            // knock back player characters and prevent anti-knockback addon
+                            auto knockbackPos = nearPosition(PTarget->loc.p, knockback, (float)M_PI);
+                            if(PTarget->PAI->PathFind->isNavMeshEnabled() && PTarget->loc.zone->m_navMesh->validPosition(knockbackPos))
+                            {
+                                PTarget->loc.p = knockbackPos;
+                                PTarget->updatemask |= UPDATE_POS;
+                            }
+                        }
+
+                        battleutils::TryKnockbackInterrupt(this, PTarget);
+                    }
+                    else
+                    {
+                        // Physical Spell, try to interrupt like a normal hit
+                        if (PBlueSpell->getElement() == ELEMENT::ELEMENT_NONE)
+                        {
+                            PTarget->TryHitInterrupt(this);
+                        }
+                    }
+                }
             }
         }
     }

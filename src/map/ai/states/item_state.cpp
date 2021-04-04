@@ -223,6 +223,11 @@ void CItemState::TryInterrupt(CBattleEntity * PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, m_PItem->getID(), 0, msg);
 }
 
+void CItemState::Interrupt()
+{
+    m_interrupted = true;
+}
+
 CItemUsable* CItemState::GetItem()
 {
     return m_PItem;

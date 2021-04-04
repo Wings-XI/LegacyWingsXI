@@ -45,6 +45,7 @@ public:
 
     CSpell* GetSpell();
     virtual void TryInterrupt(CBattleEntity* PAttacker) override;
+    virtual void Interrupt() override;
 
     void SpendCost();
     uint32 GetRecast();
