@@ -23,7 +23,9 @@ function onMobWeaponSkill(target, mob, skill)
 
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*20*BOMB_TOSS_HPP, tpz.magic.ele.ICE, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
+
     mob:setHP(0)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ICE)
+
     return dmg
 end

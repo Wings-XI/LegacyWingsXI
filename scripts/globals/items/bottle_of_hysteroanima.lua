@@ -1,7 +1,7 @@
 -----------------------------------------
--- ID: 
--- Item: 
--- Item Effect: 
+-- ID: 5262 
+-- Item: Bottle Of Hysteroanima
+-- Item Effect: Amnesia
 -----------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/msg")

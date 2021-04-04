@@ -3125,6 +3125,22 @@ INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 675);
 INSERT INTO `mob_skill_lists` VALUES('Picolaton', 1152, 926);
 INSERT INTO `mob_skill_lists` VALUES('Olgoi-Khorkhoi', 1153, 426);
 INSERT INTO `mob_skill_lists` VALUES('Ratatoskr', 1154, 323);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_X', 1155, 18);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_X', 1155, 23);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_X', 1155, 25);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Y', 1156, 101);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Y', 1156, 102);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Y', 1156, 104);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Z', 1157, 116);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Z', 1157, 118);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Z', 1157, 119);
+INSERT INTO `mob_skill_lists` VALUES('Shikaree_Z', 1157, 120);
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 599);
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 600);
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 601);
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647;
+
 
 --
 -- Indexes for dumped tables

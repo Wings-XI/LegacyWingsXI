@@ -4,17 +4,24 @@
 -----------------------------------
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
+require("scripts/globals/status")
 -----------------------------------
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
+    mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
+end
 
 function onMobFight(mob, target)
 
     local OP_Mariselle = mob:getID()
 
-    -- Summons a pupil every 30 seconds.
     -- TODO: Casting animation for summons. When he spawns them isn't retail accurate.
-    -- TODO: Make him and the clones teleport around the room every 30s
-
     if (mob:getBattleTime() % 30 < 3 and mob:getBattleTime() > 3) then
+
+        mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 1)
+        mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 2)
+
         local X = mob:getXPos()
         local Y = mob:getYPos()
         local Z = mob:getZPos()
@@ -25,11 +32,18 @@ function onMobFight(mob, target)
                 m:spawn()
                 m:updateEnmity(target)
                 m:setPos(X + 1, Y, Z + 1) -- Set pupil x and z position +1 from Mariselle
+                m:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
+                m:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
                 return
+            else
+                m:setMobMod(tpz.mobMod.TELEPORT_TYPE, 1)
+                m:setMobMod(tpz.mobMod.SPAWN_LEASH, 2)
             end
         end
+    else
+        mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
+        mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
     end
-
 end
 
 function onMobDeath(mob, player, isKiller)

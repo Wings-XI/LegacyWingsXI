@@ -930,7 +930,7 @@ INSERT INTO `mob_groups` VALUES(18, 4507, 30, 'Ziryu', 0, 128, 2804, 0, 0, 75, 7
 INSERT INTO `mob_groups` VALUES(19, 215, 30, 'Arcane_Phantasm', 0, 128, 0, 0, 0, 44, 45, 0);
 INSERT INTO `mob_groups` VALUES(20, 3596, 30, 'Shieldtrap', 0, 128, 2235, 0, 0, 39, 44, 0);
 INSERT INTO `mob_groups` VALUES(1, 2499, 31, 'Mammet-19_Epsilon', 0, 128, 1585, 4000, 0, 43, 44, 0);
-INSERT INTO `mob_groups` VALUES(2, 3070, 31, 'Ouryu', 0, 128, 0, 6500, 500, 54, 55, 0);
+INSERT INTO `mob_groups` VALUES(2, 3070, 31, 'Ouryu', 0, 128, 0, 8900, 500, 54, 55, 0);
 INSERT INTO `mob_groups` VALUES(3, 1885, 31, 'Hamadryad', 0, 128, 0, 0, 0, 40, 40, 0);
 INSERT INTO `mob_groups` VALUES(4, 3333, 31, 'Razon', 0, 128, 0, 0, 0, 40, 40, 0);
 INSERT INTO `mob_groups` VALUES(5, 4304, 31, 'Watch_Hippogryph', 0, 128, 0, 0, 0, 50, 50, 0);

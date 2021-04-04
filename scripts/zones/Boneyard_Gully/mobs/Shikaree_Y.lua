@@ -2,9 +2,10 @@
 -- Area: Boneyard_Gully
 --  Mob: Shikaree Y
 -----------------------------------
-require("scripts/globals/titles")
-require("scripts/globals/status")
------------------------------------
+
+function onMobFight(mob, target)
+    mob:setMod(tpz.mod.REGAIN, 30)
+end
 
 function onMobDeath(mob, player, isKiller)
 end

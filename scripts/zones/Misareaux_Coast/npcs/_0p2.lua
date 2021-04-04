@@ -46,12 +46,13 @@ function onEventFinish(player, csid, option)
         player:setCharVar('StormsOfFate', 1)
     elseif csid == 8 and option == 1 then
         player:setCharVar("PromathiaStatus", 1)
-		-- Block entrance to site #B01 pending development
-		player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
-		player:queue(5, function(player)
-			player:setPos(-259, -30, 278, 192, 25)
-		end)
-		-- End block
+        -- Block entrance to site #B01 pending development
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:queue(5, function(player)    
+            player:setPos(-259, -30, 278, 192, 25)
+    end)
+        -- End block
         --player:setPos(729, -20, 410, 88, 29) -- Go to Riverne #B01
     end
 end

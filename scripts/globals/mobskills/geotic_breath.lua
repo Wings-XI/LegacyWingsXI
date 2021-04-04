@@ -18,17 +18,26 @@ function onMobSkillCheck(target, mob, skill)
         return 1
     elseif not target:isInfront(mob, 128) then
         return 1
-    elseif mob:AnimationSub() ~= 0 then
+    elseif mob:AnimationSub() == 1 then
         return 1
     end
-
     return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25, tpz.magic.ele.EARTH, 1400)
-    dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, 0.9)
+    local geoticMultiplier = mob:getLocalVar("savageDmgMultipliers")
+    local angleMultiplier = mob:getLocalVar("savageDmgMultipliers")
 
+    if geoticMultiplier == 1 then
+        geoticMultiplier = 800
+        angleMultiplier = 0.675
+    else
+        geoticMultiplier = 1400
+        angleMultiplier = 0.9
+    end
+
+    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25 , tpz.magic.ele.EARTH, geoticMultiplier)
+    dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, angleMultiplier)
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.EARTH, MOBPARAM_IGNORE_SHADOWS)
 
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.EARTH)
