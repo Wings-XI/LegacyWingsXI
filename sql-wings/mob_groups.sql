@@ -213,7 +213,7 @@ INSERT INTO `mob_groups` VALUES(36, 2721, 5, 'Molech', 300, 0, 359, 0, 0, 79, 82
 INSERT INTO `mob_groups` VALUES(37, 62, 5, 'Agloolik', 300, 0, 30, 0, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(38, 1278, 5, 'Fachan', 300, 0, 804, 0, 0, 86, 87, 0);
 INSERT INTO `mob_groups` VALUES(39, 5861, 5, 'Magnotaur', 0, 32, 3073, 0, 0, 83, 83, 0);
-INSERT INTO `mob_groups` VALUES(40, 2156, 5, 'Jormungand', 0, 128, 1410, 100000, 0, 95, 95, 0);
+INSERT INTO `mob_groups` VALUES(40, 2156, 5, 'Jormungand', 0, 128, 1410, 100000, 25000, 95, 95, 0);
 INSERT INTO `mob_groups` VALUES(41, 2256, 5, 'King_Buffalo', 300, 0, 3100, 0, 0, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(42, 2761, 5, 'Mountain_Worm', 300, 0, 1744, 0, 0, 66, 70, 0);
 INSERT INTO `mob_groups` VALUES(43, 2669, 5, 'Mindgazer', 300, 0, 315, 0, 0, 69, 72, 0);
@@ -277,7 +277,7 @@ INSERT INTO `mob_groups` VALUES(42, 4396, 7, 'Xolotl', 0, 1, 2683, 7000000, 0, 8
 INSERT INTO `mob_groups` VALUES(43, 4397, 7, 'Xolotls_Hound_Warrior', 0, 128, 0, 0, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(44, 4398, 7, 'Xolotls_Sacrifice', 0, 128, 0, 0, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(45, 225, 7, 'Arch_Corse', 300, 1, 162, 0, 0, 75, 81, 0);
-INSERT INTO `mob_groups` VALUES(46, 3916, 7, 'Tiamat', 0, 128, 2416, 100000, 0, 95, 95, 0);
+INSERT INTO `mob_groups` VALUES(46, 3916, 7, 'Tiamat', 0, 128, 2416, 100000, 25000, 95, 95, 0);
 INSERT INTO `mob_groups` VALUES(47, 412, 7, 'Bifrons', 300, 8, 268, 0, 0, 74, 76, 0);
 INSERT INTO `mob_groups` VALUES(48, 662, 7, 'Cave_Antlion', 300, 0, 434, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(49, 1318, 7, 'Feeler_Antlion', 0, 128, 0, 0, 0, 73, 75, 0);
@@ -10838,7 +10838,7 @@ INSERT INTO `mob_groups` VALUES(33, 2388, 190, 'Lemures', 960, 0, 1506, 0, 0, 80
 INSERT INTO `mob_groups` VALUES(34, 709, 190, 'Cherry_Sapling', 0, 128, 462, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(35, 671, 190, 'Cemetery_Cherry', 0, 128, 442, 40000, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(36, 244, 190, 'Bonnet_Beetle', 300, 0, 169, 0, 0, 64, 66, 0);
-INSERT INTO `mob_groups` VALUES(37, 4261, 190, 'Vrtra', 0, 128, 2592, 100000, 0, 95, 95, 0);
+INSERT INTO `mob_groups` VALUES(37, 4261, 190, 'Vrtra', 0, 128, 2592, 100000, 25000, 95, 95, 0);
 INSERT INTO `mob_groups` VALUES(38, 3124, 190, 'Pey', 0, 128, 0, 0, 0, 76, 76, 0);
 INSERT INTO `mob_groups` VALUES(39, 2105, 190, 'Iruci', 0, 128, 0, 0, 0, 76, 76, 0);
 INSERT INTO `mob_groups` VALUES(40, 70, 190, 'Airi', 0, 128, 0, 0, 0, 81, 81, 0);

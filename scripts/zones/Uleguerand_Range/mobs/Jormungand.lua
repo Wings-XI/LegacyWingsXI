@@ -2,14 +2,23 @@
 -- Area: Uleguerand Range
 --  HNM: Jormungand
 -----------------------------------
-local ID = require("scripts/zones/Uleguerand_Range/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+mixins = {require("scripts/mixins/families/wyrm_wakeup")}
 
 function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
-    mob:setMobMod(72, 1)
+
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
+    mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
+    mob:setMobMod(tpz.mobMod.GA_CHANCE, 80)
+    mob:setMobMod(tpz.mobMod.BUFF_CHANCE, 20)
+
+    mob:setMod(tpz.mod.DEF, 500)
+    mob:setMod(tpz.mod.MATT, 75)
+    mob:setMod(tpz.mod.INT, 4)
 end
 
 function onMobFight(mob, target)
@@ -32,8 +41,7 @@ function onMobFight(mob, target)
             -- and record the time this phase was started
             mob:setLocalVar("changeTime", mob:getBattleTime())
         -- subanimation 1 is flight, so check if he should land
-        elseif (mob:AnimationSub() == 1 and
-                mob:getBattleTime() - changeTime > 30) then
+        elseif (mob:AnimationSub() == 1 and mob:getBattleTime() - changeTime > 30) then
             mob:useMobAbility(1292)
             mob:setLocalVar("changeTime", mob:getBattleTime())
         -- subanimation 2 is grounded mode, so check if he should take off
@@ -58,6 +66,12 @@ function onMobWeaponSkill(target, mob, skill)
         else
             mob:useMobAbility(1296)
         end
+    end
+end
+
+function onCastStarting(mob, spell)
+    if spell:getID() == 181 then -- blizzaga iii
+        spell:castTime(spell:castTime()/2) -- really fast cast (2x)
     end
 end
 

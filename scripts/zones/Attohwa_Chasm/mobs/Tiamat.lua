@@ -4,25 +4,28 @@
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/status")
+mixins = {require("scripts/mixins/families/wyrm_wakeup")}
 -----------------------------------
 
 function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
-    --mob:addMod(tpz.mod.FIREDEF,128)
-    --mob:addMod(tpz.mod.ICEDEF,128)
-    --mob:addMod(tpz.mod.WINDDEF,128)
-    --mob:addMod(tpz.mod.EARTHDEF,128)
-    --mob:addMod(tpz.mod.THUNDERDEF,128)
-    --mob:addMod(tpz.mod.WATERDEF,128)
-    --mob:addMod(tpz.mod.LIGHTDEF,128)
-    --mob:addMod(tpz.mod.DARKDEF,128)
-    mob:addMod(tpz.mod.DMGMAGIC,-50)
-    mob:setMobMod(72, 1)
+
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
+    mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
+    mob:setMobMod(tpz.mobMod.GA_CHANCE, 70)
+    mob:setMobMod(tpz.mobMod.BUFF_CHANCE, 30)
+
+    mob:setMod(tpz.mod.DEF, 500)
+    mob:setMod(tpz.mod.MATT, 75)
+    mob:setMod(tpz.mod.INT, 4)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
+
+    mob:setMod(tpz.mod.DMGMAGIC,-50)
 end
 
 function onMobFight(mob, target)
-
     -- Gains a large attack boost when health is under 25% which cannot be Dispelled.
     if (mob:getHP() < ((mob:getMaxHP() / 10) * 2.5)) then
         if (mob:hasStatusEffect(tpz.effect.ATTACK_BOOST) == false) then
