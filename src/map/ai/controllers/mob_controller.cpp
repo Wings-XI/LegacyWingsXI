@@ -39,17 +39,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../utils/petutils.h"
 #include "../../utils/zoneutils.h"
 
-const uint16 CMobController::ZoneNoVerticalAggro[] = {
-    ZONE_KING_RANPERRES_TOMB,
-    ZONE_GUSGEN_MINES,
-    ZONE_SHIP_BOUND_FOR_MHAURA,
-    ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES,
-    ZONE_SHIP_BOUND_FOR_SELBINA,
-    ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES,
-    ZONE_SILVER_SEA_ROUTE_TO_AL_ZAHBI,
-    ZONE_SILVER_SEA_ROUTE_TO_NASHMAU
-};
-
 CMobController::CMobController(CMobEntity* PEntity) :
     CController(PEntity),
     PMob(PEntity)
@@ -241,12 +230,8 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
     {
         return false;
     }
-
-    uint16 zone = ((CCharEntity*)PTarget)->loc.zone->GetID();
-    //ShowWarning(CL_YELLOW"zone = %u\n" CL_RESET, (zone));
     
-    bool isNoVerticalAggroZone = std::find(std::begin(CMobController::ZoneNoVerticalAggro), std::end(CMobController::ZoneNoVerticalAggro), zone) != std::end(CMobController::ZoneNoVerticalAggro);
-    if (isNoVerticalAggroZone && verticalDistance > 3.5f)
+    if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
     {
         return false;
     }

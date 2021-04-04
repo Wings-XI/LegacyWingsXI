@@ -88,8 +88,6 @@ private:
 
     bool m_firstSpell{ true };
     time_point m_LastRoamScript {time_point::min()};
-
-    static const uint16 ZoneNoVerticalAggro[];
 };
 
 #endif // _AI_CONTROLLER_H
