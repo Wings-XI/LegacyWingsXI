@@ -22,11 +22,15 @@ function onMobWeaponSkill(target, mob, skill)
 
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.PIERCING, info.hitslanded)
 
-    if (dmg > 1) then
-       target:addTP(20)
-       mob:addTP(80)
+    local msg = skill:getMsg()
+    if dmg > 1 and msg ~= tpz.msg.basic.SHADOW_ABSORB then
+      target:addTP(20)
+      mob:addTP(80)
     end
 
-    target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+    if msg ~= tpz.msg.basic.SHADOW_ABSORB then
+        target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+    end
+
     return dmg
 end
