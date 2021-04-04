@@ -1691,22 +1691,80 @@ namespace battleutils
 
         if (chance < check)
         {
-            // Prevent interrupt if Aquaveil is active, if it were to interrupt.
-            if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_AQUAVEIL))
+            return ProcessAquaveil(PDefender);
+        }
+
+        return false;
+    }
+
+    bool ProcessAquaveil(CBattleEntity* PDefender)
+    {
+        // Prevent interrupt if Aquaveil is active, if it were to interrupt.
+        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_AQUAVEIL))
+        {
+            auto aquaCount = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->GetPower();
+            // ShowDebug("Aquaveil counter: %u\n", aquaCount);
+            if (aquaCount - 1 == 0) // removes the status, but still prevents the interrupt
             {
-                auto aquaCount = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->GetPower();
-                // ShowDebug("Aquaveil counter: %u\n", aquaCount);
-                if (aquaCount - 1 == 0) // removes the status, but still prevents the interrupt
-                {
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_AQUAVEIL);
-                }
-                else
-                {
-                    PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->SetPower(aquaCount - 1);
-                }
+                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_AQUAVEIL);
+            }
+            else
+            {
+                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->SetPower(aquaCount - 1);
+            }
+            return false;
+        }
+
+        //Otherwise interrupt the spell cast.
+        return true;
+    }
+
+    bool TryKnockbackInterrupt(CBattleEntity* PAttacker, CBattleEntity* PDefender)
+    {
+        CState* state = PDefender->PAI->GetCurrentState();
+        if (!state || state->IsCompleted())
+        {
+            return false;
+        }
+
+        // Can interrupt spellcasting or items, but not abilities
+        // TODO: Item state doesn't seem properly interruptable
+        if (state->m_id == ITEM_STATE && !state->CanInterrupt())
+        {
+            return false;
+        }
+
+        if (state->m_id != MAGIC_STATE)
+        {
+            return false;
+        }
+
+        auto levelCorrect = PAttacker->GetMLevel() - PDefender->GetMLevel();
+        float nmMod = 1.0f;
+        if (PDefender->objtype == TYPE_MOB && ((CMobEntity*)PDefender)->m_Type & MOBTYPE_NOTORIOUS)
+        {
+            if (levelCorrect < 0)
+            {
+                //do not interrupt higher level NMs via knockback
                 return false;
             }
-            //Otherwise interrupt the spell cast.
+
+            // do not get a level correct bonus for lower level NMs
+            levelCorrect = 0;
+        }
+
+        auto fSTR = battleutils::GetFSTR(PAttacker, PDefender, SLOT_MAIN);
+        if (fSTR > 22)
+        {
+            fSTR = 22;
+        }
+
+        auto interruptChance = std::clamp(40 + fSTR + (levelCorrect * 4), 5, 75);
+        auto interruptRoll = tpzrand::GetRandomNumber(100);
+        //ShowDebug("InterruptRoll: %u, InterruptChance: %u, fSTR: %u\n", interruptRoll, interruptChance, fSTR);
+        if (interruptRoll <= interruptChance && ProcessAquaveil(PDefender))
+        {
+            PDefender->PAI->GetCurrentState()->Interrupt();
             return true;
         }
 
