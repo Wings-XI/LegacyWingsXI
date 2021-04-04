@@ -57,6 +57,7 @@
 #include "automatonentity.h"
 #include "trustentity.h"
 #include "../ability.h"
+#include "../battlefield.h"
 #include "../conquest_system.h"
 #include "../spell.h"
 #include "../attack.h"
@@ -1844,23 +1845,26 @@ void CCharEntity::OnRaise()
 
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CActionPacket(action));
 
-        uint8 mLevel = (m_LevelRestriction != 0 && m_LevelRestriction < GetMLevel()) ? m_LevelRestriction : GetMLevel();
-        uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
-
-        uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
-
-        // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
-        if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))
+        uint8 mLevel = (uint8)charutils::GetCharVar(this, "RaiseCharLevel");
+        if (mLevel > 0)
         {
-            // Player probably leveled down when they died.  Give they xp for the next level.
-            expLost = GetMLevel() <= 67 ? (charutils::GetExpNEXTLevel(jobs.job[GetMJob()] + 1) * 8) / 100 : 2400;
-        }
+            uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
 
-        uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+            uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
 
-        if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= map_config.exp_loss_level)
-        {
-            charutils::AddExperiencePoints(true, this, this, xpReturned);
+            // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
+            if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))
+            {
+                // Player probably leveled down when they died.  Give they xp for the next level.
+                expLost = GetMLevel() <= 67 ? (charutils::GetExpNEXTLevel(jobs.job[GetMJob()] + 1) * 8) / 100 : 2400;
+            }
+
+            uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+
+            if (GetMLevel() >= map_config.exp_loss_level)
+            {
+                charutils::AddExperiencePoints(true, this, this, xpReturned);
+            }
         }
 
         SetLocalVar("MijinGakure", 0);
@@ -1993,10 +1997,24 @@ void CCharEntity::Die()
     //influence for conquest system
     conquest::LoseInfluencePoints(this);
 
-    if (GetLocalVar("MijinGakure") == 0)
+    // we lose xp if we didn't use mijin gakure AND (we aren't in a battlefield OR battlefiled rules say we lose xp
+    if (GetLocalVar("MijinGakure") == 0 && (!PBattlefield || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP)))
     {
         float retainPercent = std::clamp(map_config.exp_retain + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
+
+        if (m_LevelRestriction != 0 && m_LevelRestriction < GetMLevel())
+        {
+            charutils::SetCharVar(this, "RaiseCharLevel", m_LevelRestriction);
+        }
+        else
+        {
+            charutils::SetCharVar(this, "RaiseCharLevel", GetMLevel());
+        }
+    }
+    else
+    {
+        charutils::SetCharVar(this, "RaiseCharLevel", 0);
     }
 }
 
