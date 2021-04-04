@@ -44,9 +44,8 @@ function onSpellCast(caster, target, spell)
     local resist = applyResistance(caster, target, spell, params)
     local damage = BlueMagicalSpell(caster, target, spell, params, CHR_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-    local duration = getBlueEffectDuration(caster,resist,typeEffect)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
-
+    
+    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
     if damage > 0 and resist >= 0.5 then
         local typeEffect = tpz.effect.WEIGHT
         target:delStatusEffect(typeEffect)

@@ -51,7 +51,7 @@ function onUseAbility(player, target, ability)
         chance = 99
     end
     --print(string.format("chance = %u",chance))
-    tryBuildResistance(tpz.magic.buildcat.STUN, target)
+    tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
     if math.random()*100 < chance then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
     end

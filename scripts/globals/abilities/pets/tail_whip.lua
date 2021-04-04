@@ -23,14 +23,12 @@ function onPetAbility(target, pet, skill)
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
     totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
 
-    local duration = 120
-    local resm = applyPlayerResistance(pet, -1, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), tpz.skill.ELEMENTAL_MAGIC, 5)
-    if resm < 0.5 then
-        resm = 0
+    local resist = applyPlayerResistance(pet, -1, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), tpz.skill.ELEMENTAL_MAGIC, 5)
+    if resist < 0.5 then
+        resist = 0
     end
-    duration = duration * resm
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
-
+    
+    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
     if duration > 0 and AvatarPhysicalHit(skill, totaldamage) and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
         target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
     end

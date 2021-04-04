@@ -26,20 +26,16 @@ function onSpellCast(caster, target, spell)
         power = 50
     end
 
-
-    -- Duration, including resistance.  Unconfirmed.
-    local duration = 180
     local params = {}
     params.diff = nil
     params.attribute = tpz.mod.INT
     params.skillType = 35
     params.bonus = 0
     params.effect = tpz.effect.BLINDNESS
-    duration = duration * applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
-
+    -- Duration, including resistance.  Unconfirmed.
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    local duration = math.ceil(180 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
     if (duration >= 60) then --Do it!
-
         if (target:addStatusEffect(tpz.effect.BLINDNESS, power, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else

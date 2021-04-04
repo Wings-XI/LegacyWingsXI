@@ -4,7 +4,7 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/summon")
-
+require("scripts/globals/magic")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -22,9 +22,8 @@ function onPetAbility(target, pet, skill)
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
     totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
     
-    local resist = applyResistanceAbility(pet,target,8,tpz.skill.ENFEEBLING_MAGIC,bonus)
-    local duration = 60 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
+    local resist = applyResistanceAbility(pet, target, tpz.magic.element.DARK, tpz.skill.ENFEEBLING_MAGIC, bonus)
+    local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
     if resist >= 0.5 then
         target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, duration)
     end

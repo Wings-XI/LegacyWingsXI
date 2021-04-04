@@ -178,6 +178,31 @@ CLuaBaseEntity::CLuaBaseEntity(CBaseEntity* PEntity)
 }
 
 /************************************************************************
+*  Function: calculateResistanceBuildPercent()
+*  Purpose : Determines the current resistance build percentage
+*  Example : target:calculateResistanceBuildPercent(tpz.mod.RESBUILD_SLEEP)
+*  Notes   : Mostly for NM resistance building
+************************************************************************/
+inline int32 CLuaBaseEntity::calculateResistanceBuildPercent(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    auto mod = static_cast<Mod>(lua_tointeger(L, 1));
+    auto percent = battleutils::CalculateResistanceBuildPercent(mod, (CBattleEntity*)m_PBaseEntity);
+
+    lua_pushinteger(L, percent);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: showText()
 *  Purpose : Displays dialogue for NPC
 *  Example : target:showText(mob,YOU_DECIDED_TO_SHOW_UP) -- Fighting Maat
@@ -16162,6 +16187,7 @@ const char CLuaBaseEntity::className[] = "CBaseEntity";
 
 Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 {
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,calculateResistanceBuildPercent),
 
     // Messaging System
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,showText),

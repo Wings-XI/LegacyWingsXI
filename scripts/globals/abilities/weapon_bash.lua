@@ -38,10 +38,10 @@ function onUseAbility(player, target, ability)
         chance = 99
     end
     
+    tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
     if (math.random()*100 < chance) then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
     end
-    tryBuildResistance(tpz.magic.buildcat.STUN, target)
 
     -- Calculating and applying Weapon Bash damage
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))

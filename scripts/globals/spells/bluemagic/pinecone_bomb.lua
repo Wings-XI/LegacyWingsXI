@@ -43,7 +43,8 @@ function onSpellCast(caster,target,spell)
     params.chr_wsc = 0.0
 	
 	local resparams = {}
-    resparams.diff = dINT
+    resparams.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    resparams.attribute = tpz.mod.INT
     resparams.skillType = tpz.skill.BLUE_MAGIC
     resparams.bonus = 0
     resparams.effect = tpz.effect.SLEEP_I
@@ -52,11 +53,10 @@ function onSpellCast(caster,target,spell)
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
+    local duration = math.ceil(math.random(15,30) * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target))
     -- After damage is applied (which would have woken the target up from a
     -- preexisting sleep, if necesesary), apply the sleep effect for this spell.
     if damage > 0 and resist >= 0.5 then
-        local duration = math.random(15,30)
-		duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
         target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration)
     end
 

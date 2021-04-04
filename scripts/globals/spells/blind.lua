@@ -21,19 +21,17 @@ function onSpellCast(caster, target, spell)
     local basePotency = utils.clamp(math.floor(dINT * 9 / 40 + 23), 5, 50)
     local potency = calculatePotency(basePotency, spell:getSkillType(), caster, target)
 
-    -- Duration, including resistance.  Unconfirmed.
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
-
     local params = {}
     params.diff = dINT
     params.skillType = tpz.skill.ENFEEBLING_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.BLINDNESS
     local resist = applyResistanceEffect(caster, target, spell, params)
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
-
+    
+    local calcDuration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = math.ceil(calcDuration * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
     if resist >= 0.5 then --Do it!
+        -- Duration, including resistance.  Unconfirmed.
         if target:addStatusEffect(params.effect, potency, 0 , duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else

@@ -59,8 +59,7 @@ function onUseAbility(player, target, ability, action)
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
         params.bonus = -10
         local resist = applyResistance(player, target, spell, params)
-        local duration = 60 * resist
-        duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
+        local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
         if resist > 0.25 then
             target:delStatusEffectSilent(tpz.effect.WEIGHT)
             target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)

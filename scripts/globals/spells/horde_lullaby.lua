@@ -16,7 +16,7 @@ function onSpellCast(caster, target, spell)
     local mCHR = target:getStat(tpz.mod.CHR)
     local dCHR = pCHR - mCHR
     local params = {}
-    params.diff = nil
+    params.diff = dCHR
     params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.SINGING
     params.bonus = 0
@@ -30,10 +30,10 @@ function onSpellCast(caster, target, spell)
             params.skillBonus = instrument - skillcap -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
         end
     end
-    resm = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.LULLABY, target))
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
 
-    if resm < 0.5 then
+    if resist < 0.5 then
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST) -- resist message
     else
         local iBoost = caster:getMod(tpz.mod.LULLABY_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)

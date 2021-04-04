@@ -15,7 +15,6 @@ end
 function onPetAbility(target, pet, skill)
     local damage = 10 + pet:getMainLvl() * 2
     local resist = applyPlayerResistance(pet, -1, target, 0, tpz.skill.ELEMENTAL_MAGIC, tpz.magic.ele.DARK)
-    local duration = 120
 
     damage = damage*resist
     damage = MobMagicalMove(pet,target,skill,damage,tpz.magic.ele.DARK,1,TP_NO_EFFECT,0)
@@ -26,8 +25,7 @@ function onPetAbility(target, pet, skill)
         resist = 0
     end
 
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
+    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
 
     if duration > 0 and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
         target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)

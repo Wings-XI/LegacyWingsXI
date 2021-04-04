@@ -32,9 +32,9 @@ function onSpellCast(caster, target, spell)
             params.skillBonus = instrument - skillcap -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
         end
     end
-    resm = applyResistanceEffect(caster, target, spell, params)
-
-    if resm < 0.5 then
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    local buildResistPercent = tryBuildResistance(tpz.mod.RESBUILD_SLOW, target)
+    if resist < 0.5 then
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST) -- resist message
     else
         local iBoost = caster:getMod(tpz.mod.ELEGY_EFFECT) + caster:getMod(tpz.mod.ALL_SONGS_EFFECT)
@@ -48,7 +48,7 @@ function onSpellCast(caster, target, spell)
         caster:delStatusEffect(tpz.effect.MARCATO)
 
         duration = duration * (iBoost * 0.1 + caster:getMod(tpz.mod.SONG_DURATION_BONUS) / 100 + 1)
-        duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
+        duration = math.ceil(duration * resist * buildResistPercent)
 
         if (caster:hasStatusEffect(tpz.effect.TROUBADOUR)) then
             duration = duration * 2

@@ -26,15 +26,14 @@ function onSpellCast(caster, target, spell)
     local typeEffect = tpz.effect.STUN
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local params = {}
-    params.diff = nil
+    params.diff = dINT
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 5 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
-
+    
+    local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if (resist > 0.0625) then -- Do it!
         if (target:addStatusEffect(typeEffect, 2, 0, duration)) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)

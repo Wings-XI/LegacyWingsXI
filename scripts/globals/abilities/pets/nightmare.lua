@@ -13,20 +13,18 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
-    local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
-    local duration = 60 + math.floor(31*math.random()) -- wiki: duration variable from 30 to 90. can be thought of random 60-90 with possible half resist making it range 30-90
+    if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+        return tpz.effect.SLEEP_I
+    end
+
+    local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
     local effect = tpz.effect.SLEEP_I
     local resist = applyPlayerResistance(pet,-1,target, dINT, -5, tpz.magic.ele.DARK)
     
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
-    
-    if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
-        resist = 1/16
-    end
-
+    local duration = math.ceil(60 + math.floor(31*math.random()) * resist * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target)) -- wiki: duration variable from 30 to 90. can be thought of random 60-90 with possible half resist making it range 30-90
     if resist >= 0.5 then
         target:delStatusEffectSilent(effect)
         target:delStatusEffectSilent(tpz.effect.LULLABY)
@@ -43,7 +41,7 @@ function onPetAbility(target, pet, skill, summoner)
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         end
     else
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        skill:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
     return effect

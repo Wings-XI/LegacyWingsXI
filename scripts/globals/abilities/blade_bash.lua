@@ -27,7 +27,7 @@ function onUseAbility(player, target, ability)
     if (math.random() < 0.99) then
         target:addStatusEffect(tpz.effect.STUN,1,0,math.random(4,6))
     end
-    tryBuildResistance(tpz.magic.buildcat.STUN, target)
+    tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
 
     --local damage = math.floor(((player:getMainLvl() + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
     --damage = damage * math.random(50,150) / 100

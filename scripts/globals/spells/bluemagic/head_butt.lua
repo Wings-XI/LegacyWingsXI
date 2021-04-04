@@ -22,15 +22,15 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+
     local params = {}
-    params.diff = nil
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local params = {}
+    params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
     params.tpmod = TPMOD_DAMAGE
     params.attackType = tpz.attackType.PHYSICAL
@@ -52,15 +52,11 @@ function onSpellCast(caster, target, spell)
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local duration = 5 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
-    
-    if damage > 0 then
-        if resist > 0.25 then
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
-        else
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, 1) -- guaranteed stun while Knockback effect does not work
-        end
+    local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
+    if damage > 0 and resist > 0.25 then
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
     return damage
