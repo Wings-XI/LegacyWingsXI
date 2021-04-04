@@ -1548,7 +1548,7 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->TradeContainer->setItem(slotID, PItem->getID(), invSlotID, Quantity, PItem);
         }
 
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
         luautils::OnTrade(PChar, PNpc);
         PChar->TradeContainer->unreserveUnconfirmed();
     }

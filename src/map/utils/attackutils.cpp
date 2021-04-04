@@ -103,10 +103,7 @@ namespace attackutils
     ************************************************************************/
     bool IsParried(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
-            return false;
-
-        if (facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        if (!PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
             return (tpzrand::GetRandomNumber(100) < battleutils::GetParryRate(PAttacker, PDefender));
         }
@@ -120,10 +117,7 @@ namespace attackutils
     ************************************************************************/
     bool IsGuarded(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
-            return false;
-
-        if (facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        if (!PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
             return(tpzrand::GetRandomNumber(100) < battleutils::GetGuardRate(PAttacker, PDefender));
         }
@@ -137,10 +131,7 @@ namespace attackutils
     ************************************************************************/
     bool IsBlocked(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) || PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION))
-            return false;
-
-        if (facing(PDefender->loc.p, PAttacker->loc.p, 64) && !PDefender->StatusEffectContainer->HasPreventActionEffect())
+        if (!PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
             return(tpzrand::GetRandomNumber(100) < battleutils::GetBlockRate(PAttacker, PDefender));
         }
