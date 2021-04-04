@@ -608,7 +608,7 @@ function createMobPool(player, moblist, moonModifier, areaId, lure)
     local MobWeightQuestBonus = 0
     for l, mob in pairs(moblist) do
         local testMob = GetMobByID(mob.id)
-        if testMob and not testMob:isSpawned() and (testMob:getLocalVar('hooked') == 0 or testMob:getLocalVar('hookedTime') - os.time() > 100) then
+        if testMob and not testMob:isSpawned() and (testMob:getLocalVar('hooked') == 0 or os.time() - testMob:getLocalVar('hookedTime') > 100) then
             local MobItem = {}
             MobItem["id"] = l
             MobItem["mobid"] = testMob:getID()

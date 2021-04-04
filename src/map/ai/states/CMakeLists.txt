@@ -9,8 +9,6 @@ set(SOURCES
     death_state.h
     despawn_state.cpp
     despawn_state.h
-	fishing_state.cpp
-	fishing_state.h
     inactive_state.cpp
     inactive_state.h
     item_state.cpp
