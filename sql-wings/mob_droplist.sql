@@ -16539,7 +16539,7 @@ INSERT INTO `mob_droplist` VALUES(3156, 0, 0, 1000, 16447, 170);
 
 
 INSERT INTO `mob_droplist` VALUES(3157, 0, 0, 1000, 18768, 127);
-
+INSERT INTO `mob_droplist` VALUES(3158, 0, 5, 1000, 2856, 235);
 
 --
 -- Indexes for dumped tables
