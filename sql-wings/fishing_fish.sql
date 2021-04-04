@@ -181,7 +181,7 @@ INSERT INTO `fishing_fish` VALUES(4426, 'Tricolored Carp', 0, 27, 19, 12, 12, 1,
 INSERT INTO `fishing_fish` VALUES(4319, 'Tricorn', 90, 100, 25, 11, 9, 109, 181, 1, 0, 255, 255, 0, 1, 0, 0, 1, 500, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4317, 'Trilobite', 0, 59, 27, 5, 6, 1, 1, 0, 1, 255, 255, 0, 0, 0, 0, 1, 0, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5466, 'Trumpet Shell', 0, 63, 15, 10, 5, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
-INSERT INTO `fishing_fish` VALUES(5137, 'Turnabaligi', 0, 96, 15, 7, 12, 75, 174, 1, 0, 255, 255, 16, 0, 0, 0, 1, 450, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(5137, 'Turnabaligi', 0, 100, 15, 7, 12, 75, 174, 1, 0, 255, 255, 16, 0, 0, 0, 1, 450, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5452, 'Uskumru', 0, 55, 24, 4, 12, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5141, 'Veydal Wrasse', 0, 35, 18, 11, 5, 50, 124, 1, 0, 255, 255, 0, 0, 0, 0, 1, 400, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5131, 'Vongola Clam', 0, 53, 20, 8, 4, 1, 1, 0, 1, 255, 255, 0, 0, 0, 0, 1, 900, 0, '', 0);
