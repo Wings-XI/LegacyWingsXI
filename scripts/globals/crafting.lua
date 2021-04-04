@@ -3,6 +3,7 @@
 --  Info from:
 --      http://wiki.ffxiclopedia.org/wiki/Crafts_%26_Hobbies
 -------------------------------------------------
+require("scripts/globals/status")
 
 -----------------------------------
 -- IDs for signupGuild bitmask
@@ -202,6 +203,39 @@ function getAdvImageSupportCost(player, craftID)
     local Rank = player:getSkillRank(craftID)
     return (Rank+1)*30
 
+end
+
+function onEventUpdateDenounce(player, craftID)
+    local ID = zones[player:getZoneID()]
+    local rank = player:getSkillRank(craftID)
+    player:setSkillRank(craftID, rank - 1)
+    player:setSkillLevel(craftID, rank * 100)
+    player:messageSpecial(ID.text.RENOUNCE_CRAFTSMAN, 0, craftID - 49)
+end
+
+function onTriggerDenounceCheck(player, eventId, realSkill, rankCap, param3)
+
+    if player:getLocalVar("denounceDialog") == 0 then
+        local count = 0
+        local bitmask = 0
+    
+        for craftID = tpz.skill.WOODWORKING, tpz.skill.COOKING do
+            local rank = player:getSkillRank(craftID)
+            if rank < 6 then
+                bitmask = bit.bor(bitmask, bit.lshift(1, craftID - 48))
+            else
+                count = count + 1
+            end
+        end
+        -- if the number of eligible guilds for denouncement is greater than 1
+        if count > 1 then
+            player:setLocalVar("denounceDialog", 1)
+            player:startEvent(eventId, VanadielTime(), realSkill, rankCap, param3, 0, 0, count, bitmask)
+            return true
+        end
+    end
+
+    return false
 end
 
 function unionRepresentativeTrigger(player, guildID, csid, currency, keyitems)

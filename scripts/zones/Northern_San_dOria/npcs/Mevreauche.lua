@@ -43,6 +43,10 @@ function onTrigger(player, npc)
     local realSkill = (craftSkill - Rank) / 32
     if (guildMember == 1) then guildMember = 150995375; end
 
+    if onTriggerDenounceCheck(player, 626, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("SmithingExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_BLACKSMITH) then
             expertQuestStatus = 550
@@ -68,6 +72,9 @@ end
 
 -- 626  627  16  0  73  74
 function onEventUpdate(player, csid, option)
+    if csid == 626 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

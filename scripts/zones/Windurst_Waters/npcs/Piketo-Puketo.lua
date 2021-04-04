@@ -42,6 +42,11 @@ function onTrigger(player, npc)
     local Rank = player:getSkillRank(tpz.skill.COOKING)
     local realSkill = (craftSkill - Rank) / 32
     if (guildMember == 1) then guildMember = 150995375; end
+
+    if onTriggerDenounceCheck(player, 10013, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("CookingExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_CULINARIAN) then
             expertQuestStatus = 550
@@ -67,6 +72,9 @@ end
 
 -- 978  983  980  981  10013  10014
 function onEventUpdate(player, csid, option)
+    if csid == 10013 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

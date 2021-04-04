@@ -44,6 +44,11 @@ function onTrigger(player, npc)
     if guildMember == 1 then
         guildMember = 64
     end
+
+    if onTriggerDenounceCheck(player, 10016, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("BonecraftExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_BONEWORKER) then
             expertQuestStatus = 600
@@ -69,6 +74,9 @@ end
 
 -- 10016  10017  710  711  712  713  714  715  764
 function onEventUpdate(player, csid, option)
+    if csid == 10016 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

@@ -42,6 +42,11 @@ function onTrigger(player, npc)
     local Rank = player:getSkillRank(tpz.skill.GOLDSMITHING)
     local realSkill = (craftSkill - Rank) / 32
     if (guildMember == 1) then guildMember = 150995375; end
+
+    if onTriggerDenounceCheck(player, 300, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("GoldsmithingExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_GOLDSMITH) then
             expertQuestStatus = 600
@@ -67,6 +72,9 @@ end
 
 -- 300  301  402
 function onEventUpdate(player, csid, option)
+    if csid == 300 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

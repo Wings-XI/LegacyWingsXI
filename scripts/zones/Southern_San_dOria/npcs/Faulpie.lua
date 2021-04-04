@@ -44,6 +44,11 @@ function onTrigger(player, npc)
     local realSkill = (craftSkill - Rank) / 32
     local canRankUp = rankCap - realSkill -- used to make sure rank up isn't overridden by ASA mission
     if (guildMember == 1) then guildMember = 150995375; end
+
+    if onTriggerDenounceCheck(player, 648, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("LeathercraftExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_TANNER) then
             expertQuestStatus = 550
@@ -83,6 +88,9 @@ end
 
 -- 648  649  760  761  762  763  764  765  770  771  772  773  774  775  944  914
 function onEventUpdate(player, csid, option)
+    if csid == 648 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)
