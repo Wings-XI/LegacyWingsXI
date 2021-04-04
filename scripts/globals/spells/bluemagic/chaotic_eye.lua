@@ -30,10 +30,9 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = typeEffect
+    
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 90 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SILENCE, target))
-
+    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
     if (resist > 0.5) then -- Do it!
         if (target:isFacing(caster)) then
             if (target:addStatusEffect(typeEffect, 1, 0, duration)) then

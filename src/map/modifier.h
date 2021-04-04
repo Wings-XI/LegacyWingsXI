@@ -26,8 +26,8 @@
 
 enum class Mod
 {
+ // NAME                      = ID, // Comment
     NONE                      = 0, // Essential, but does nothing :)
-    //  NAME                  = ID, // Comment
     DEF                       = 1, // Target's Defense
     HP                        = 2, // Target's HP
     HPP                       = 3, // HP Percentage
@@ -108,6 +108,15 @@ enum class Mod
     WATERRES                  = 59, // % Water Resistance
     LIGHTRES                  = 60, // % Light Resistance
     DARKRES                   = 61, // % Dark Resistance
+
+    SDT_FIRE                  = 1054, // % Specific Damage Taken Fire
+    SDT_ICE                   = 1055, // % Specific Damage Taken Ice
+    SDT_WIND                  = 1056, // % Specific Damage Taken Wind
+    SDT_EARTH                 = 1057, // % Specific Damage Taken Earth
+    SDT_THUNDER               = 1058, // % Specific Damage Taken Thunder
+    SDT_WATER                 = 1059, // % Specific Damage Taken Water 
+    SDT_LIGHT                 = 1060, // % Specific Damage Taken Light
+    SDT_DARK                  = 1061, // % Specific Damage Taken Dark
 
     ATTP                      = 62, // % Attack
     DEFP                      = 63, // % Defense
@@ -274,6 +283,7 @@ enum class Mod
     LUMINION_KILLER           = 238, // Enhances "Luminion Killer" effect
 
     // Resistances to enfeebles - Traits/Job Ability
+    STATUSRES                 = 239, // "Resistance to All Status Ailments"
     SLEEPRES                  = 240, // Enhances "Resist Sleep" effect
     POISONRES                 = 241, // Enhances "Resist Poison" effect
     PARALYZERES               = 242, // Enhances "Resist Paralyze" effect
@@ -290,24 +300,36 @@ enum class Mod
     AMNESIARES                = 253, // Enhances "Resist Amnesia" effect
     LULLABYRES                = 254, // Enhances "Resist Lullaby" effect
     DEATHRES                  = 255, // Used by gear and ATMA that give resistance to instance KO
-    STATUSRES                 = 958, // "Resistance to All Status Ailments"
 
-    SLEEPRESTRAIT = 1240,
-    POISONRESTRAIT = 1241,
-    PARALYZERESTRAIT = 1242,
-    BLINDRESTRAIT = 1243,
-    SILENCERESTRAIT = 1244,
-    VIRUSRESTRAIT = 1245,
-    PETRIFYRESTRAIT = 1246,
-    BINDRESTRAIT = 1247,
-    CURSERESTRAIT = 1248,
-    GRAVITYRESTRAIT = 1249,
-    SLOWRESTRAIT = 1250,
-    STUNRESTRAIT = 1251,
-    CHARMRESTRAIT = 1252,
-    AMNESIARESTRAIT = 1253,
-    LULLABYRESTRAIT = 1254,
-    DEATHRESTRAIT = 1255,
+    // 1000 + res
+    SLEEPRESTRAIT           = 1240,
+    POISONRESTRAIT          = 1241,
+    PARALYZERESTRAIT        = 1242,
+    BLINDRESTRAIT           = 1243,
+    SILENCERESTRAIT         = 1244,
+    VIRUSRESTRAIT           = 1245,
+    PETRIFYRESTRAIT         = 1246,
+    BINDRESTRAIT            = 1247,
+    CURSERESTRAIT           = 1248,
+    GRAVITYRESTRAIT         = 1249,
+    SLOWRESTRAIT            = 1250,
+    STUNRESTRAIT            = 1251,
+    CHARMRESTRAIT           = 1252,
+    AMNESIARESTRAIT         = 1253,
+    LULLABYRESTRAIT         = 1254,
+    DEATHRESTRAIT           = 1255,
+
+    // 2000 + Effect
+    RESBUILD_SLEEP          = 2002,
+    RESBUILD_POISON         = 2003,
+    RESBUILD_PARALYZE       = 2004,
+    RESBUILD_BLIND          = 2005,
+    RESBUILD_SILENCE        = 2006,
+    RESBUILD_STUN           = 2010,
+    RESBUILD_BIND           = 2011,
+    RESBUILD_GRAVITY        = 2012,
+    RESBUILD_SLOW           = 2013,
+    RESBUILD_LULLABY        = 2193,
 
     PARALYZE                  = 257, // Paralyze -- percent chance to proc
     MIJIN_RERAISE             = 258, // Augments Mijin Gakure
@@ -361,7 +383,7 @@ enum class Mod
     PERFECT_DODGE             = 883, // Increases Perfect Dodge duration in seconds
     TRIPLE_ATTACK             = 302, // Percent chance
     TREASURE_HUNTER           = 303, // Percent chance
-    SNEAK_ATK_DEX             = 874, // % DEX boost to Sneak Attack (if gear mod, needs to be equipped on hit)
+    SNEAK_ATK_DEX             = 959, // % DEX boost to Sneak Attack (if gear mod, needs to be equipped on hit)
     TRICK_ATK_AGI             = 520, // % AGI boost to Trick Attack (if gear mod, needs to be equipped on hit)
     MUG_EFFECT                = 835, // Mug effect as multiplier
     ACC_COLLAB_EFFECT         = 884, // Increases amount of enmity transferred for Accomplice/Collaborator
@@ -567,15 +589,15 @@ enum class Mod
     SUBLIMATION_BONUS         = 401, //
     GRIMOIRE_SPELLCASTING     = 489, // "Grimoire: Reduces spellcasting time" bonus
 
-    // Geo
-    CARDINAL_CHANT            = 959,
-    INDI_DURATION             = 960,
-    GEOMANCY                  = 961,
-    WIDENED_COMPASS           = 962,
-    MENDING_HALATION          = 968,
-    RADIAL_ARCANA             = 969,
-    CURATIVE_RECANTATION      = 970,
-    PRIMEVAL_ZEAL             = 971,
+    // Geo 10000 + jobid * 100 + mod#
+    CARDINAL_CHANT            = 12100,
+    INDI_DURATION             = 12101,
+    GEOMANCY                  = 12102,
+    WIDENED_COMPASS           = 12103,
+    MENDING_HALATION          = 12104,
+    RADIAL_ARCANA             = 12105,
+    CURATIVE_RECANTATION      = 12106,
+    PRIMEVAL_ZEAL             = 12107,
 
     ENSPELL                   = 341, // stores the type of enspell active (0 if nothing)
     ENSPELL_DMG               = 343, // stores the base damage of the enspell before reductions
@@ -756,9 +778,9 @@ enum class Mod
     AUGMENTS_CONVERT          = 525, // Convert HP to MP Ratio Multiplier. Value = MP multiplier rate.
     AUGMENTS_SA               = 526, // Adds Critical Attack Bonus to Sneak Attack, percentage based.
     AUGMENTS_TA               = 527, // Adds Critical Attack Bonus to Trick Attack, percentage based.
-    AUGMENTS_FEINT            = 873, // Feint will give another -10 Evasion per merit level
     AUGMENTS_ASSASSINS_CHARGE = 886, // Gives Assassin's Charge +1% Critical Hit Rate per merit level
     AUGMENTS_AMBUSH           = 887, // Gives +1% Triple Attack per merit level when Ambush conditions are met
+    AUGMENTS_FEINT            = 888, // Feint will give another -10 Evasion per merit level
     AUGMENTS_AURA_STEAL       = 889, // 20% chance of 2 effects to be dispelled or stolen per merit level
     AUGMENTS_CONSPIRATOR      = 912, // Applies Conspirator benefits to player at the top of the hate list
     ENHANCES_REFRESH          = 529, // "Enhances Refresh" adds +1 per modifier to spell's tick result.
@@ -842,25 +864,6 @@ enum class Mod
 
     SPDEF_DOWN = 958,
 
-    RESBUILD_SLEEP = 959,
-    RESBUILD_GRAVITY = 960,
-    RESBUILD_BIND = 961,
-    RESBUILD_SLOW = 962,
-    RESBUILD_PARALYZE = 963,
-    RESBUILD_BLIND = 964,
-    RESBUILD_SILENCE = 965,
-    RESBUILD_STUN = 966,
-    RESBUILD_POISON = 967,
-
-    SDT_FIRE = 968,
-    SDT_EARTH = 969,
-    SDT_WATER = 970,
-    SDT_WIND = 971,
-    SDT_ICE = 972,
-    SDT_THUNDER = 973,
-    SDT_LIGHT = 974,
-    SDT_DARK = 975,
-
     SUSC_TO_WS_STUN = 1176,
     ENHANCES_COVER = 1178,
     AUGMENTS_COVER = 1179,
@@ -896,8 +899,6 @@ enum class Mod
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
     
-    // SPARE = 959, // stuff
-    // SPARE = 960, // stuff
     // super jump taking up 988
 };
 

@@ -24,13 +24,14 @@ function onPetAbility(target, automaton, skill, master, action)
     end
     
     local stunduration = math.random(3,6)
-    stunduration = math.ceil(stunduration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
+    stunduration = math.ceil(stunduration * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if math.random() < chance then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, stunduration)
     end
 
     local slowPower = automaton:getMod(tpz.mod.AUTO_SHIELD_BASH_SLOW)
     if slowPower > 0 and math.random() < 0.7 then
+        local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,0,bonus)
         local duration = 20
         if slowPower == 12 then
             duration = math.random(20, 35)
@@ -39,10 +40,9 @@ function onPetAbility(target, automaton, skill, master, action)
         elseif slowPower == 25 then
             duration = math.random(70, 75)
         end
-        duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLOW, target))
-        local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,0,bonus)
+        duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
         if resist > 0.25 then
-            target:addStatusEffect(tpz.effect.SLOW, slowPower * 100, 0, duration * resist)
+            target:addStatusEffect(tpz.effect.SLOW, slowPower * 100, 0, duration)
         end
     end
 

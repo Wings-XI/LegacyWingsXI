@@ -11,35 +11,25 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-
     -- Base Stats
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
-    --Duration Calculation
-    local duration = 300
     local params = {}
+    params.diff = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
     local resist = applyResistance(caster, target, spell, params)
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
-    --Kurayami base power is 30 and is not affected by resistaces.
-    local power = 30
 
-    --Calculates resist chanve from Reist Blind
-    --if (math.random(0, 100) >= target:getMod(tpz.mod.BLINDRES)) then
-        if (resist >= 0.5) then
-
-            if (target:addStatusEffect(tpz.effect.BLINDNESS, power, 0, duration)) then
-                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
-            else
-                spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-            end
+    local duration = math.ceil(300 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    if (resist >= 0.5) then
+        --Kurayami base power is 30 and is not affected by resistaces.
+        local power = 30
+        if (target:addStatusEffect(tpz.effect.BLINDNESS, power, 0, duration)) then
+            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
-            spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         end
-    --else
-        --spell:setMsg(tpz.msg.basic.MAGIC_RESIST_2)
-    --end
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+    end
     return tpz.effect.BLINDNESS
 end

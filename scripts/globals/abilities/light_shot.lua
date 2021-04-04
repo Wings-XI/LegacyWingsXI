@@ -30,9 +30,6 @@ function onUseAbility(player, target, ability)
         return tpz.effect.SLEEP_I
     end
 
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.LULLABY, target))
-
     local effects = {}
     local dia = target:getStatusEffect(tpz.effect.DIA)
     if dia ~= nil then
@@ -45,7 +42,7 @@ function onUseAbility(player, target, ability)
 
     if #effects > 0 then
         local effect = effects[math.random(#effects)]
-        local duration = effect:getDuration()
+        local effectDuration = effect:getDuration()
         local startTime = effect:getStartTime()
         local tick = effect:getTick()
         local power = effect:getPower()
@@ -56,11 +53,12 @@ function onUseAbility(player, target, ability)
         power = power * 1.5
         subpower = subpower * 1.5
         target:delStatusEffectSilent(effectId)
-        target:addStatusEffect(effectId, power, tick, duration, subId, subpower, tier)
+        target:addStatusEffect(effectId, power, tick, effectDuration, subId, subpower, tier)
         local newEffect = target:getStatusEffect(effectId)
         newEffect:setStartTime(startTime)
     end
 
+    local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
     if target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration) then
         ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
     else

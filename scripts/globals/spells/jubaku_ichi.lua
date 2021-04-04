@@ -15,42 +15,35 @@ end
 function onSpellCast(caster, target, spell)
     local effect = tpz.effect.PARALYSIS
     -- Base Stats
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     --Duration Calculation
     local duration = 180
     local params = {}
+    params.diff = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
-    local res = applyResistance(caster, target, spell, params)
-    duration = duration * res
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
-    
-    local power = 20
+    local resist = applyResistance(caster, target, spell, params)
 
-    --Calculates resist chanve from Reist Blind
-    if (math.random(0, 100) >= target:getMod(tpz.mod.PARALYZERES)) then
-        if (res >= 0.5) then
-            -- Erases a weaker blind and applies the stronger one
-            local paralysis = target:getStatusEffect(effect)
-            if (paralysis ~= nil) then
-                if (paralysis:getPower() < power) then
-                    target:delStatusEffect(effect)
-                    target:addStatusEffect(effect, power, 0, duration)
-                    spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
-                else
-                    -- no effect
-                    spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-                end
-            else
+    duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+    if (resist >= 0.5) then
+        -- Erases a weaker paralyze and applies the stronger one
+        local paralysis = target:getStatusEffect(effect)
+        if (paralysis ~= nil) then
+            local power = 20
+            if (paralysis:getPower() < power) then
+                target:delStatusEffect(effect)
                 target:addStatusEffect(effect, power, 0, duration)
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
+            else
+                spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
             end
         else
-            spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+            target:addStatusEffect(effect, power, 0, duration)
+            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
         end
     else
-        spell:setMsg(tpz.msg.basic.MAGIC_RESIST_2)
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
+
     return effect
 end

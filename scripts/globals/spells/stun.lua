@@ -13,15 +13,14 @@ end
 function onSpellCast(caster, target, spell)
     local duration = 5
 
-    local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local params = {}
-    params.diff = nil
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
-    params.skillType = 37
+    params.skillType = tpz.skill.DARK_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(duration * resist * tryBuildResistance(tpz.magic.buildcat.STUN, target))
+    duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if (resist <= (1/16)) then
         -- resisted!
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)

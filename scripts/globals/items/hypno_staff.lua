@@ -15,8 +15,7 @@ function onAdditionalEffect(player, target, damage)
     if (math.random(0,99) >= chance or resist < 0.5) then
         return 0,0,0
     else
-        local duration = 25 * resist
-        duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
+        local duration = math.ceil(25 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target))
         if (target:getMainLvl() > player:getMainLvl()) then
             duration = duration - (target:getMainLvl() - player:getMainLvl())
         end

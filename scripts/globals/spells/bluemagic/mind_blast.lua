@@ -41,17 +41,15 @@ function onSpellCast(caster, target, spell)
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
 
-    local resist = applyResistance(caster, target, spell, params)
-    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
-    local duration = getBlueEffectDuration(caster,resist,tpz.effect.PARALYSIS)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
-    
     if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
         params.multiplier = params.multiplier + 0.50
     end
 
+    local resist = applyResistance(caster, target, spell, params)
+    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)    
+    
+    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if (damage > 0 and resist > 0.3) then
         local typeEffect = tpz.effect.PARALYSIS
         target:addStatusEffect(typeEffect, 20, 0, duration) -- https://www.bg-wiki.com/bg/Mind_Blast says 20%

@@ -10,24 +10,6 @@ tpz = tpz or {}
 tpz.magic = tpz.magic or {}
 
 ------------------------------------
--- Resistance Building Categories
-------------------------------------
-
-tpz.magic.buildcat =
-{
-    SLEEP = 0,
-    GRAVITY = 1,
-    BIND = 2,
-    SLOW = 3,
-    PARALYZE = 4,
-    BLIND = 5,
-    SILENCE = 6,
-    STUN = 7,
-    LULLABY = 8,
-    OFFSET = 959, -- subtract mod by 959 to get to cat
-}
-
-------------------------------------
 -- Tables by element
 ------------------------------------
 
@@ -64,209 +46,6 @@ tpz.magic.doubleWeatherWeak   = {tpz.weather.SQUALL,            tpz.weather.HEAT
 -- The total damage, before resistance and before equipment (so no HQ staff bonus worked out here).
 local SOFT_CAP = 60 --guesstimated
 local HARD_CAP = 120 --guesstimated
-
-function tryBuildResistance(category, target)
-    if target:isPC() then
-        return 1
-    end
-    
-    local ret = 0
-    local current = 1
-    local lastcast = 0
-    local delta = target:getMod(category + tpz.magic.buildcat.OFFSET)
-    
-    -- one point falls off per 20 seconds
-    
-    if target:isNM() and (delta == 0 or delta == nil) then
-        if category == tpz.magic.buildcat.SLEEP or category == tpz.magic.buildcat.GRAVITY or category == tpz.magic.buildcat.LULLABY or category == tpz.magic.buildcat.BIND or category == tpz.magic.buildcat.SILENCE then
-            delta = 6 -- all NMs have a default delta of 6 for Sleep and Gravity resistance building
-        elseif category == tpz.magic.buildcat.STUN then
-            delta = 1
-        else
-            delta = 2 -- default 2 delta for others (40 seconds for full falloff)
-        end
-    end
-    
-    if delta == 0 or delta == nil then
-        return 1
-    end
-    
-    if category == tpz.magic.buildcat.SLEEP then
-        current = target:getLocalVar("BuildSleep")
-        lastcast = target:getLocalVar("BuildSleepLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildSleepLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildSleep",current)
-        --print(string.format("current sleep built res is %u",current))
-    elseif category == tpz.magic.buildcat.GRAVITY then
-        current = target:getLocalVar("BuildGravity")
-        lastcast = target:getLocalVar("BuildGravityLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildGravityLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildGravity",current)
-    elseif category == tpz.magic.buildcat.BIND then
-        current = target:getLocalVar("BuildBind")
-        lastcast = target:getLocalVar("BuildBindLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildBindLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildBind",current)
-    elseif category == tpz.magic.buildcat.SLOW then
-        current = target:getLocalVar("BuildSlow")
-        lastcast = target:getLocalVar("BuildSlowLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildSlowLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildSlow",current)
-    elseif category == tpz.magic.buildcat.PARALYZE then
-        current = target:getLocalVar("BuildParalyze")
-        lastcast = target:getLocalVar("BuildParalyzeLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildParalyzeLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildParalyze",current)
-    elseif category == tpz.magic.buildcat.BLIND then
-        current = target:getLocalVar("BuildBlind")
-        lastcast = target:getLocalVar("BuildBlindLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildBlindLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildBlind",current)
-    elseif category == tpz.magic.buildcat.SILENCE then
-        current = target:getLocalVar("BuildSilence")
-        lastcast = target:getLocalVar("BuildSilenceLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildSilenceLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildSilence",current)
-    elseif category == tpz.magic.buildcat.STUN then
-        current = target:getLocalVar("BuildStun")
-        lastcast = target:getLocalVar("BuildStunLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildStunLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildStun",current)
-    elseif category == tpz.magic.buildcat.LULLABY then
-        current = target:getLocalVar("BuildLullaby")
-        lastcast = target:getLocalVar("BuildLullabyLast")
-        if lastcast ~= 0 and lastcast ~= nil then
-            current = current - math.floor((os.time() - lastcast)/20)
-        else
-            current = 0
-        end
-        target:setLocalVar("BuildLullabyLast",os.time())
-        if current < 0 then
-            current = 0
-        end
-        ret = current
-        -- this is what we return as current resistance. now add on this spellcast to the build.
-        current = current + delta
-        if current > 99 then
-            current = 99
-        end
-        target:setLocalVar("BuildLullaby",current)
-    end
-    
-    return 1 - ret/100
-end
 
 function calculateMagicDamage(caster, target, spell, params)
 
@@ -515,10 +294,22 @@ params.bonus = $4
 params.effect = $5
 ]]
 function applyResistanceEffect(caster, target, spell, params) -- says "effect" but this is the global resistance fetching formula, even for damage spells
+    --TODO return 2 values resist + traitProc bool?
+    local effect = params.effect
+    if effect ~= nil and math.random() < getEffectResistanceTraitChance(caster, target, effect) then
+        return 1/16 -- this will make any status effect fail. this takes into account trait+food+gear
+        --print("restrait proc!")
+        --if spell ~= nil then
+            --spell:setMsg(MAGIC_COMPLETELY_RESIST)
+            --if spell:isAoe() == 1 then
+                --spell:setMsg(MAGIC_COMPLETELY_RESIST_AOE)
+            --end
+        --end
+    end
+
     local diff = params.diff or (caster:getStat(params.attribute) - target:getStat(params.attribute))
     local skill = params.skillType
     local bonus = params.bonus
-    local effect = params.effect
 
     local element = spell:getElement()
     local percentBonus = 0
@@ -541,7 +332,7 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
 
     if (effect ~= nil) then
         percentBonus = percentBonus - getEffectResistance(target, effect) -- this is a HITRATE penalty not a MEVA BOOST (but they are the same thing if macc > meva)
-    end -- traits are handled later
+    end
     
     if params.skillBonus ~= nil then -- bard only it seems like. takes into account signing+instrument skill. i'll need to verify those formulas later
         magicaccbonus = magicaccbonus + params.skillBonus
@@ -556,17 +347,6 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
     
     if getElementalSDT(element, target) <= 50 then -- .5 or below SDT drops a resist tier
         res = res / 2
-    end
-    
-    if effect ~= nil and math.random() < getEffectResistanceTraitChance(caster, target, effect) then
-        res = 1/16 -- this will make any status effect fail. this takes into account trait+food+gear
-        --print("restrait proc!")
-        --if spell ~= nil then
-            --spell:setMsg(MAGIC_COMPLETELY_RESIST)
-            --if spell:isAoe() == 1 then
-                --spell:setMsg(MAGIC_COMPLETELY_RESIST_AOE)
-            --end
-        --end
     end
 
     return res
@@ -1812,5 +1592,13 @@ function applyNMDamagePenalty(target, DMG)
     end
     return DMG
 end 
+
+function tryBuildResistance(mod, target)
+
+    local percent = target:calculateResistanceBuildPercent(mod)
+    --print(string.format("magic:tryBuildResistance(%u, %s) -> %u", mod, target:getName(), percent))
+    return 1 - percent/100
+end
+
 
 tpz.ma = tpz.magic

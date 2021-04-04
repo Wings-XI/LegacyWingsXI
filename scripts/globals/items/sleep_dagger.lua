@@ -15,13 +15,13 @@ function onAdditionalEffect(player, target, damage)
     if ((math.random(0,99) >= chance) or (resist < 0.5)) then
         return 0, 0, 0
     else
-        local duration = 25
-        if (target:getMainLvl() > player:getMainLvl()) then
-            duration = duration - (target:getMainLvl() - player:getMainLvl())
-        end
-        duration = utils.clamp(duration, 2, 25)
-        duration = math.ceil(duration * resist * tryBuildResistance(tpz.magic.buildcat.SLEEP, target))
+        local duration = 25 * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target)
         if (not target:hasStatusEffect(tpz.effect.SLEEP_I)) then
+            if (target:getMainLvl() > player:getMainLvl()) then
+                duration = duration - (target:getMainLvl() - player:getMainLvl())
+            end
+            duration = utils.clamp(duration, 2, 25)
+            duration = math.ceil(duration * resist)
             target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
         end
         return tpz.subEffect.SLEEP, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.SLEEP_I

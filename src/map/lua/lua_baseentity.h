@@ -44,6 +44,8 @@ public:
         return m_PBaseEntity;
     }
 
+    int32 calculateResistanceBuildPercent(lua_State*);
+
     // Messaging System
     int32 showText(lua_State*);             // Displays Dialog for npc
     int32 messageText(lua_State* L);

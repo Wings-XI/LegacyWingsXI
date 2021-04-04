@@ -375,31 +375,21 @@ end
 function getBlueEffectDuration(caster, resist, effect)
     local duration = 0
 
-    if (resist == 0.125) then
-        resist = 1
-    elseif (resist == 0.25) then
-        resist = 2
-    elseif (resist == 0.5) then
-        resist = 3
-    else
-        resist = 4
-    end
-
     if (effect == tpz.effect.BIND) then
-        duration = math.random(0, 5) + resist * 5
+        duration = math.random(5, 10) + resist * 20 -- 6-30
     elseif (effect == tpz.effect.STUN) then
-        duration = math.random(2, 3) + resist
+        duration = math.random(1, 2) + resist * 4 -- 1-6
         -- printf("Duration of stun is %i", duration)
     elseif (effect == tpz.effect.WEIGHT) then
-        duration = math.random(20, 24) + resist * 9 -- 20-24
+        duration = math.random(12, 15) + resist * 45 -- 15-60
     elseif (effect == tpz.effect.PARALYSIS) then
-        duration = math.random(50, 60) + resist * 15 -- 50- 60
+        duration = math.random(20, 30) + resist * 150 -- 30-180
     elseif (effect == tpz.effect.SLOW) then
-        duration = math.random(60, 120) + resist * 15 -- 60- 120 -- Needs confirmation but capped max duration based on White Magic Spell Slow
+        duration = math.random(20, 30) + resist * 150 -- 30-180 -- Needs confirmation but capped max duration based on White Magic Spell Slow
     elseif (effect == tpz.effect.SILENCE) then
-        duration = math.random(60, 180) + resist * 15 -- 60- 180 -- Needs confirmation but capped max duration based on White Magic Spell Silence
+        duration = math.random(15, 30) + resist * 90 -- 20-120 -- Needs confirmation but capped max duration based on White Magic Spell Silence
     elseif (effect == tpz.effect.POISON) then
-        duration = math.random(20, 30) + resist * 9 -- 20-30 -- based on magic spell poison
+        duration = math.random(5, 10) + resist * 20 -- 6-30 -- based on magic spell poison
     end
 
     return duration

@@ -41,19 +41,15 @@ function onSpellCast(caster, target, spell)
         -- printf("is behind mob")
     end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
-    --TODO: Knockback? Where does that get handled? How much knockback does it have?
-    target:addStatusEffect(tpz.effect.STUN,1,0,1) -- knockback workaround for now
     
     local params = {}
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    local duration = getBlueEffectDuration(caster,resist,typeEffect)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BIND, target))
 
+    local resist = applyResistance(caster, target, spell, params)
+    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
     if (damage > 0 and resist > 0.25) then
         local typeEffect = tpz.effect.BIND
         target:delStatusEffect(typeEffect)

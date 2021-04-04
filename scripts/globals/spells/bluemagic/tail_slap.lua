@@ -24,13 +24,13 @@ end
 function onSpellCast(caster, target, spell)
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local params = {}
-    params.diff = nil
+    params.diff = dINT
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local params = {}
+    params = {}
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
     params.tpmod = TPMOD_ATTACK
     params.attackType = tpz.attackType.PHYSICAL
@@ -52,9 +52,7 @@ function onSpellCast(caster, target, spell)
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local duration = 5 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
-
+    local duration =  math.ceil(getBlueEffectDuration(caster, resist, typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if (damage > 0 and resist >= 0.5) then -- This line may need adjusting for retail accuracy.
         target:addStatusEffect(tpz.effect.STUN, 1, 0, duration) -- pre-resist duration needs confirmed/adjusted
     end

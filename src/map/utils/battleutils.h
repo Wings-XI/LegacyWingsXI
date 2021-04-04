@@ -168,6 +168,8 @@ namespace battleutils
     uint8               GetRangedHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isBarrage, int8 accBonus);
     int32               CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element);
 
+    uint8               CalculateResistanceBuildPercent(Mod mod, CBattleEntity* PTarget);
+
     int16               GetEnmityModDamage(int16 level);
     int16               GetEnmityModCure(int16 level);
     bool                isValidSelfTargetWeaponskill(int wsid);

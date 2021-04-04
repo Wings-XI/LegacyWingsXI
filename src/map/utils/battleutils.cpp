@@ -884,7 +884,8 @@ namespace battleutils
             {
                 if (tpzrand::GetRandomNumber(100) < 20 + lvlDiff && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_PARALYSIS) == false)
                 {
-                    uint32 duration = 1 + (uint32)(29.0f * (1.0f - (float)PAttacker->GetLocalVar("BuildParalyze") / 100));
+                    uint32 duration = 1 + (uint32)(29.0f * (1.0f - (float)CalculateResistanceBuildPercent(Mod::RESBUILD_PARALYZE, PAttacker) / 100));
+                    //ShowDebug("SUBEFFECT_ICE_SPIKES - duration: %u\n", duration);
                     PAttacker->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_PARALYSIS, EFFECT_PARALYSIS, 20, 0, duration));
                 }
                 break;
@@ -893,7 +894,8 @@ namespace battleutils
             {
                 if (tpzrand::GetRandomNumber(100) < 30 + lvlDiff && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_STUN) == false)
                 {
-                    uint32 duration = 1 + (uint32)(2.0f * (1.0f - (float)PAttacker->GetLocalVar("BuildStun") / 100));
+                    uint32 duration = 1 + (uint32)(2.0f * (1.0f - (float)CalculateResistanceBuildPercent(Mod::RESBUILD_STUN, PAttacker) / 100));
+                    //ShowDebug("SUBEFFECT_SHOCK_SPIKES - duration: %u\n", duration);
                     PAttacker->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_STUN, EFFECT_STUN, 1, 0, duration));
                 }
                 break;
@@ -901,6 +903,76 @@ namespace battleutils
             default:
                 break;
         }
+    }
+
+    uint8 CalculateResistanceBuildPercent(Mod mod, CBattleEntity* PTarget)
+    {
+        if (PTarget->objtype != TYPE_MOB)
+        {
+            return 0;
+        }
+
+        uint8 delta = PTarget->getMod(mod);
+        if (((CMobEntity*)PTarget)->m_Type & MOBTYPE_NOTORIOUS && delta == 0)
+        {
+            switch (mod)
+            {
+            case Mod::RESBUILD_SLEEP:
+            case Mod::RESBUILD_SILENCE:
+            case Mod::RESBUILD_BIND:
+            case Mod::RESBUILD_GRAVITY:
+            case Mod::RESBUILD_LULLABY:
+                delta = 6;
+                break;
+            case Mod::RESBUILD_STUN:
+                delta = 1;
+                break;
+            default:
+                delta = 2;
+                break;
+            }
+        }
+
+        if (delta == 0)
+        {
+            return 0;
+        }
+        
+        uint8 resultPercent = 0;
+        int32 buildPercent = 0;
+        uint32 lastCast = PTarget->GetLocalVar(("RESBUILD_LASTCAST_" + std::to_string((int)mod)).c_str());
+        if (lastCast != 0)
+        {
+            uint32 oldPercent = PTarget->GetLocalVar(("RESBUILD_PERCENT_" + std::to_string((int)mod)).c_str());
+            int reduction = (time(nullptr) - lastCast) / 20; // TODO: Maybe have this (20 sec) be a mod value or config value OR change based on buildPercent
+            buildPercent = oldPercent - std::floor(reduction);
+        }
+        else
+        {
+            buildPercent = 0;
+        }
+
+        PTarget->SetLocalVar(("RESBUILD_LASTCAST_" + std::to_string((int)mod)).c_str(), time(nullptr));
+        if (buildPercent < 0)
+        {
+            buildPercent = 0;
+        }
+
+        resultPercent = buildPercent;
+
+        buildPercent += delta;
+        if (buildPercent > 99)
+        {
+            buildPercent = 99;
+        }
+
+        PTarget->SetLocalVar(("RESBUILD_PERCENT_" + std::to_string((int)mod)).c_str(), buildPercent);
+        ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
+        ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
+        ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
+        ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
+
+        return resultPercent;
     }
 
     /************************************************************************

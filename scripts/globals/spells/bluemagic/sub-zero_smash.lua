@@ -41,16 +41,16 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.20
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-    damage = BluePhysicalSpell(caster, target, spell, params)
+    local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local resist = applyResistanceAbility(pet,target,tpz.magic.element.ICE,tpz.skill.BLUE_MAGIC,bonus)
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
+    local resist = applyResistanceAbility(caster, target, tpz.magic.element.ICE, tpz.skill.BLUE_MAGIC, bonus)
 
+    local duration = math.ceil(getBlueEffectDuration(caster, resist, typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if (damage > 0 and resist >= 0.5) then
         local typeEffect = tpz.effect.PARALYSIS
         target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 23, 0, getBlueEffectDuration(caster, resist, typeEffect))
+        target:addStatusEffect(typeEffect, 23, 0, duration)
     end
 
     return damage

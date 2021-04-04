@@ -12,9 +12,7 @@ end
 
 function onSpellCast(caster, target, spell)
     local dMND = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
-
-    local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
-
+    
     --Resist
     local params = {}
     params.diff = dMND
@@ -22,11 +20,11 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.SILENCE
     local resist = applyResistanceEffect(caster, target, spell, params)
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.SILENCE, target))
-
+    
+    local calcDuration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    local duration = math.ceil(calcDuration * resist * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
     if resist >= 0.5 then --Do it!
-        if target:addStatusEffect(params.effect , 1, 0, duration) then
+        if target:addStatusEffect(params.effect, 1, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect

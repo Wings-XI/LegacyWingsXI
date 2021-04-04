@@ -36,8 +36,7 @@ function onPetAbility(target, pet, skill)
     end
     
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.LIGHTNING,tpz.skill.ENFEEBLING_MAGIC,bonus)
-    local duration = 5 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.STUN, target))
+    local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if resist >= 0.25 and totaldamage > 0 then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
     end

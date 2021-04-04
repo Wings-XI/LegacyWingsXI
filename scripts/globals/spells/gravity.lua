@@ -25,9 +25,8 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.WEIGHT
     local resist = applyResistanceEffect(caster, target, spell, params)
-    duration = duration * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.GRAVITY, target))
-
+    
+    duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
     if resist >= 0.5 then --Do it!
         if target:addStatusEffect(params.effect, power, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)

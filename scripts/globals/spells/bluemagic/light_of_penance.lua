@@ -31,13 +31,11 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 1.0
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 30 * resist
     local power = 100 * resist
     local returnEffect = typeEffectOne
     
-    local Lduration1 = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BLIND, target))
-    local Lduration2 = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.BIND, target))
-
+    local blindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    local bindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
     if (resist >= 0.5) then
         if (target:isFacing(caster)) then
             if (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo) and target:getTP() == 0) then
@@ -45,14 +43,14 @@ function onSpellCast(caster, target, spell)
             elseif (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo)) then
                 target:delTP(power)
                 spell:setMsg(tpz.msg.basic.MAGIC_TP_REDUCE)
-            elseif (target:hasStatusEffect(typeEffectOne)) then
-                target:addStatusEffect(typeEffectTwo, 1, 0, Lduration2)
+            elseif target:hasStatusEffect(typeEffectOne) then
+                target:addStatusEffect(typeEffectTwo, 1, 0, bindDuration)
                 target:delTP(power)
                 returnEffect = typeEffectTwo -- make it return bind message if blind can't be inflicted
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             else
-                target:addStatusEffect(typeEffectOne, 50, 0, Lduration1)
-                target:addStatusEffect(typeEffectTwo, 1, 0, Lduration2)
+                target:addStatusEffect(typeEffectTwo, 1, 0, bindDuration)
+                target:addStatusEffect(typeEffectOne, 100, 0, blindDuration)
                 target:delTP(power)
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             end

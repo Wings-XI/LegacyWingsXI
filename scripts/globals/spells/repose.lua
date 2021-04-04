@@ -11,16 +11,14 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dMND = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
     local params = {}
-    params.diff = nil
+    params.diff = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
     params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.bonus = 0
     params.effect = tpz.effect.SLEEP_II
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 90 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.LULLABY, target))
+    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
     
     -- Lii Jixa the Somnolist
     if caster:isMob() and caster:getID() == 17395896 and resist > 0.0625 and math.random() < 0.98 then

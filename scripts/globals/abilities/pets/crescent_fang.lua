@@ -23,8 +23,7 @@ function onPetAbility(target, pet, skill)
     totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, numhits)
 
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.DARK,tpz.skill.ENFEEBLING_MAGIC,bonus)
-    local duration = 90 * resist
-    duration = math.ceil(duration * tryBuildResistance(tpz.magic.buildcat.PARALYZE, target))
+    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if resist >= 0.5 then
         target:delStatusEffect(tpz.effect.PARALYSIS)
         target:addStatusEffect(tpz.effect.PARALYSIS, 30, 0, duration)
