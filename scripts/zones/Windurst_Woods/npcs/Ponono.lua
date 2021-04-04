@@ -57,6 +57,10 @@ function onTrigger(player, npc)
 
     if guildMember == 1 then guildMember = 10000; end
 
+    if onTriggerDenounceCheck(player, 10011, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("ClothcraftExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_WEAVER) then
             expertQuestStatus = 600
@@ -89,6 +93,9 @@ end
 
 -- 10011  10012  700  701  702  703  704  705  832  765
 function onEventUpdate(player, csid, option)
+    if csid == 10011 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

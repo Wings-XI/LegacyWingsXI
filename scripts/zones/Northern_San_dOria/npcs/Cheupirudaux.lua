@@ -43,6 +43,11 @@ function onTrigger(player, npc)
     local Rank = player:getSkillRank(tpz.skill.WOODWORKING)
     local realSkill = (craftSkill - Rank) / 32
     if (guildMember == 1) then guildMember = 150995375; end
+
+    if onTriggerDenounceCheck(player, 621, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("WoodworkingExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_CARPENTER) then
             expertQuestStatus = 550
@@ -68,6 +73,9 @@ end
 
 -- 621  622  759  16  0
 function onEventUpdate(player, csid, option)
+    if csid == 621 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

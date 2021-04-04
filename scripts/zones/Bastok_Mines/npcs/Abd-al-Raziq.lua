@@ -44,6 +44,11 @@ function onTrigger(player, npc)
     local realSkill = (craftSkill - Rank) / 32
     local canRankUp = rankCap - realSkill -- used to make sure rank up isn't overridden by ASA mission
     if (guildMember == 1) then guildMember = 150995375; end
+
+    if onTriggerDenounceCheck(player, 120, realSkill, rankCap, 184549887) then
+        return
+    end
+
     if player:getCharVar("AlchemyExpertQuest") == 1 then
         if player:hasKeyItem(tpz.keyItem.WAY_OF_THE_ALCHEMIST) then
             expertQuestStatus = 550
@@ -81,6 +86,9 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+    if csid == 120 and option > tpz.skill.FISHING and option < tpz.skill.SYNERGY then
+        onEventUpdateDenounce(player, option)
+    end
 end
 
 function onEventFinish(player, csid, option)

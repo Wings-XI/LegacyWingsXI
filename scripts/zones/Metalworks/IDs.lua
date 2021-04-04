@@ -33,6 +33,7 @@ zones[tpz.zone.METALWORKS] =
         NO_MORE_GP_ELIGIBLE         = 6889, -- You are not eligible to receive guild points at this time.
         GP_OBTAINED                 = 6894, -- Obtained: <number> guild points.
         NOT_HAVE_ENOUGH_GP          = 6895, -- You do not have enough guild points.
+        RENOUNCE_CRAFTSMAN          = 6911, -- You have successfully renounced your status as a ≺Multiple Choice (Parameter 5)≻[craftsman/artisan/adept] of the ≺Multiple Choice (Parameter 1)≻[Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild.
         GOOD_LUCK                   = 7447, -- Good luck on your mission. Bastokers like to do things by the book, so stay out of trouble and follow their rules.
         MISSION_DIALOG_CID_TO_AYAME = 7574, -- Give it to one of his Mythril Musketeers instead. Ayame and Naji should be on guard near the President's Office. Either one will do.
         ITS_LOCKED                  = 7985, -- It's locked.
