@@ -1560,6 +1560,13 @@ void CBattleEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& ac
 
 bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    if (this->PMaster != nullptr && this->PMaster->objtype == TYPE_PC && !static_cast<CCharEntity*>(this->PMaster)->IsMobOwner(PTarget))
+    {
+        errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
+
+        PAI->Disengage();
+        return false;
+    }
     if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > GetMeleeRange() ||
         !PAI->GetController()->IsAutoAttackEnabled())
     {
