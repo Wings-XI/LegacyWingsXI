@@ -25,6 +25,7 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         HOMEPOINT_SET                 = 1366, -- Home point set!
         IMAGE_SUPPORT_ACTIVE          = 1405, -- You have to wait a bit longer before asking for synthesis image support again.
         IMAGE_SUPPORT                 = 1407, -- Your [fishing/woodworking/smithing/goldsmithing/clothcraft/leatherworking/bonecraft/alchemy/cooking] skills went up [a little/ever so slightly/ever so slightly].
+        GATE_IS_FIRMLY_CLOSED         = 1424, -- The gate is firmly closed...≺Prompt≻
         REGIME_CANCELED               = 1466, -- Current training regime canceled.
         HUNT_ACCEPTED                 = 1484, -- Hunt accepted!
         USE_SCYLDS                    = 1485, -- You use <number> [scyld/scylds]. Scyld balance: <number>.

@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Navukgo Execution Chamber
 --  NPC: Cast Bronze Gate (Inside BCNM)
--- !pos 282 -123 380 64
+-- !pos 282 -124 380 64
 -----------------------------------
 require("scripts/globals/bcnm")
 -----------------------------------

@@ -65,6 +65,7 @@ public:
     int32 getLocalVar(lua_State*);
     int32 setLocalVar(lua_State*);
     int32 resetLocalVars(lua_State*);
+    int32 countMaskBits(lua_State*);
     int32 getLastOnline(lua_State*);        // Returns the unix timestamp of last time the player logged out or zoned
     int32 setDrawInOffsetY(lua_State*);
 

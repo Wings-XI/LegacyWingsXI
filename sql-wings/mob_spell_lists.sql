@@ -690,7 +690,7 @@ INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 225, 24, 69);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 226, 70, 255);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 230, 10, 34);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 231, 35, 59);
-INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 232, 60, 255);
+INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 232, 75, 255);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 236, 22, 50);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 245, 12, 255);
 INSERT INTO `mob_spell_lists` VALUES('Undead', 28, 247, 25, 82);
