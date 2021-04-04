@@ -33,7 +33,6 @@ function onTrigger(player, npc)
     local transformations = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.TRANSFORMATIONS)
     local transformationsProgress = player:getCharVar("TransformationsProgress")
     local currentJob = player:getMainJob()
-    local waoudNeedToZone = player:getLocalVar("WaoudNeedToZone")
 
     -- AN EMPTY VESSEL
     if anEmptyVessel == QUEST_AVAILABLE and anEmptyVesselProgress <= 1 and player:getMainLvl() >= ADVANCED_JOB_LEVEL then
@@ -43,7 +42,7 @@ function onTrigger(player, npc)
             player:startEvent(63) -- you failed, and must wait a gameday to try again
         end
     elseif anEmptyVesselProgress == 2 then
-        if divinationReady and waoudNeedToZone == 0 then
+        if divinationReady and not player:needToZone() then
             player:startEvent(65) -- gives you a clue about the stone he wants (specific conditions)
         else -- Have not zoned, or have not waited, or both.
             player:startEvent(64) -- you have succeeded, but you need to wait a gameday and zone
@@ -59,7 +58,7 @@ function onTrigger(player, npc)
     elseif anEmptyVessel == QUEST_COMPLETED and beginnings == QUEST_AVAILABLE and player:getCurrentMission(TOAU) > tpz.mission.id.toau.IMMORTAL_SENTRIES
             and currentJob == tpz.job.BLU and player:getMainLvl() >= AF1_QUEST_LEVEL then
         if divinationReady then
-            if waoudNeedToZone == 1 then
+            if player:needToZone() then
                 player:startEvent(78, player:getGil()) -- dummy questions, costs you 1000 gil
             else
                 player:startEvent(705) -- start Beginnings
@@ -82,7 +81,7 @@ function onTrigger(player, npc)
     -- OMENS
     elseif beginnings == QUEST_COMPLETED and omens == QUEST_AVAILABLE and currentJob == tpz.job.BLU and player:getMainLvl() >= AF2_QUEST_LEVEL then
         if divinationReady then
-            if waoudNeedToZone == 1 then
+            if player:needToZone() then
                 player:startEvent(78, player:getGil()) -- dummy questions, costs you 1000 gil
             else
                 player:startEvent(710) -- start Omens
@@ -102,7 +101,7 @@ function onTrigger(player, npc)
     -- TRANSFORMATIONS
     elseif omens == QUEST_COMPLETED and transformations == QUEST_AVAILABLE and currentJob == tpz.job.BLU then
         if divinationReady then
-            if waoudNeedToZone == 1 then
+            if player:needToZone() then
                 player:startEvent(78, player:getGil()) -- dummy questions, costs you 1000 gil
             elseif transformationsProgress == 1 then
                 player:startEvent(721, player:getGil())
@@ -182,7 +181,7 @@ function onEventFinish(player, csid, option)
         if option == 0 then
             player:setCharVar("AnEmptyVesselProgress", 1)
         elseif option == 50 then
-            player:setLocalVar("waoudNeedToZone", 1)
+            player:needToZone(true)
             player:setCharVar("LastDivinationDay", vanaDay())
             player:setCharVar("AnEmptyVesselProgress", 2)
             player:addQuest(AHT_URHGAN, tpz.quest.id.ahtUrhgan.AN_EMPTY_VESSEL)
@@ -195,7 +194,7 @@ function onEventFinish(player, csid, option)
     elseif csid == 67 then -- Turn in stone, go to Aydeewa
         player:setCharVar("AnEmptyVesselProgress", 4)
     elseif csid == 69 and option == 1 then
-        player:setLocalVar("waoudNeedToZone", 1)
+        player:needToZone(true)
         player:setCharVar("LastDivinationDay", vanaDay())
         player:setCharVar("BluAFBeginnings_Waoud", 1)
 

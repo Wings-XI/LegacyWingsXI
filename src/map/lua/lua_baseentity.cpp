@@ -480,7 +480,20 @@ inline int32 CLuaBaseEntity::messageSpecial(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    bool error = lua_isnil(L, 1) || !lua_isnumber(L, 1);
+    TPZ_DEBUG_BREAK_IF(error);
+
+    if (error)
+    {
+        //prevent crashes;
+        ShowError("CLuaBaseEntity::messageSpecial -> sent nil parameter by player: %u in zone: %u x: %f y: %f z: %f\n",
+            m_PBaseEntity->id,
+            m_PBaseEntity->getZone(),
+            m_PBaseEntity->loc.p.x,
+            m_PBaseEntity->loc.p.y,
+            m_PBaseEntity->loc.p.z);
+        return 0;
+    }
 
     uint16 messageID = (uint16)lua_tointeger(L, 1);
 
@@ -711,6 +724,31 @@ inline int32 CLuaBaseEntity::resetLocalVars(lua_State* L)
     m_PBaseEntity->ResetLocalVars();
 
     return 0;
+}
+
+/************************************************************************
+*  Function: countMaskBits()
+*  Purpose : Counts the number of true bits in a bit-masked variable
+*  Example : player:countMaskBits(player:getCharVar("[BLUAF]Remaining"))
+*  Notes   : Used in BLU AF quest for crafting armor tracking etc.
+************************************************************************/
+
+inline int32 CLuaBaseEntity::countMaskBits(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint8  count = 0;
+    uint32 value = (uint32)lua_tointeger(L, 1);
+
+    for (uint8 bit = 0; bit < 32; bit++)
+    {
+        if (value & (1 << bit)) count++;
+    }
+    lua_pushinteger(L, count);
+    return 1;
 }
 
 /************************************************************************
@@ -16182,6 +16220,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetLocalVars),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,countMaskBits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastOnline),
 
     // Packets, Events, and Flags
