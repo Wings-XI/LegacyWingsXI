@@ -42,6 +42,9 @@ function onInitialize(zone)
     zone:registerRegion(29, -238, 5, -118, 0, 0, 0)
     zone:registerRegion(30, -385.349, 5, -173.973, 0, 0, 0)
 
+    -- TIAMAT draw in ypos mod region
+    zone:registerRegion(100, -570, -30, -45, -492, 10, 30)
+
     UpdateNMSpawnPoint(ID.mob.TIAMAT)
 	local tiare = GetServerVariable("TiamatRespawn")
 	if os.time() < tiare then
@@ -78,9 +81,16 @@ function onRegionEnter(player, region)
             end
         end
     end
+
+    if (regionId == 100) then
+        player:setDrawInOffsetY(-3.5)
+    end
 end
 
 function onRegionLeave(player, region)
+    if (region:GetRegionID() == 100) then
+        player:setDrawInOffsetY(-1)
+    end
 end
 
 function onGameHour(zone)

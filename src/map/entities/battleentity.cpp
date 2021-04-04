@@ -89,6 +89,8 @@ CBattleEntity::CBattleEntity()
     isSuperJumped = false;
     m_unkillable = false;
     m_dmgType = (DAMAGETYPE)0;
+
+    m_drawInOffsetY = -1.0f;
 }
 
 CBattleEntity::~CBattleEntity()

@@ -681,6 +681,8 @@ public:
     CBattleEntity*  PLastAttacker;
     time_point      LastAttacked;
 
+    float           m_drawInOffsetY;
+
     std::unique_ptr<CStatusEffectContainer> StatusEffectContainer;
     std::unique_ptr<CRecastContainer> PRecastContainer;
     std::unique_ptr<CNotorietyContainer> PNotorietyContainer;
