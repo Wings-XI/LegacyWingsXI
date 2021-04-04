@@ -79,7 +79,9 @@ function onEventUpdate(player, csid, option)
             player:updateEvent(1532, 1533, 1535, 0, 0, 0, 0, 0)
         elseif (option == 13) then -- Advanced List
             player:updateEvent(1692, 1693, 1694, 0, 0, 0, 0, 0)
-        elseif (option == 14) then -- Gil Option
+        elseif (option == 14 and player:getGil() < 500000) then -- Gil Option
+            player:updateEvent(0, 0, 0, 0, 0, 0, player:getGil(), 0)
+        elseif (option == 14 and player:getGil() > 499999) then -- Gil Option
             player:updateEvent(1, 1, 1, 1, 1, 1, player:getGil(), 1)
         elseif (option == 2 or option == 1073741824) then  -- Let me think about it... / Cancel
 
