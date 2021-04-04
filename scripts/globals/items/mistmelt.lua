@@ -1,0 +1,26 @@
+-----------------------------------------
+-- ID: 5265 
+-- Item: Mistmelt
+-- Item Effect: Used to bring Ouryu down from the sky 
+-----------------------------------------
+require("scripts/globals/settings")
+require("scripts/globals/msg")
+require("scripts/globals/status")
+require("scripts/globals/player")
+
+function onItemCheck(target)
+	if (target:getID() ~= 16904202) then -- ouryu
+        return tpz.msg.basic.ITEM_UNABLE_TO_USE
+    end
+    
+    return 0
+end
+
+function onItemUse(target)
+    if (target:AnimationSub() == 1) then 
+        target:AnimationSub(2)
+        target:SetMobSkillAttack(0)
+        target:delStatusEffect(tpz.effect.TOO_HIGH)
+        target:setLocalVar("changeTime", target:getBattleTime())   
+    end
+end

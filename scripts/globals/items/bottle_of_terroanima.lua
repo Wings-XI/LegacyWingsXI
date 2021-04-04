@@ -1,21 +1,11 @@
 -----------------------------------------
--- ID: 
--- Item: 
--- Item Effect: 
+-- ID: 5263
+-- Item: Bottle Of Terroanima
+-- Item Effect: Terror
 -----------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/msg")
 require("scripts/globals/status")
-
-
-
-
-
-
-
-
-
-
 
 function onItemCheck(target)
 	local id = target:getID()

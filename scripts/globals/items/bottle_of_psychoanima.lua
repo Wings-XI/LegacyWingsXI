@@ -1,7 +1,7 @@
 -----------------------------------------
--- ID: 
--- Item: 
--- Item Effect: 
+-- ID: 5261 
+-- Item: Bottle Of Psychoanima
+-- Item Effect: Intimidate 
 -----------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/msg")

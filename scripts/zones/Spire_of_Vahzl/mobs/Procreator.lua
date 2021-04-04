@@ -4,14 +4,18 @@
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.LINK_RADIUS, 50)
 end
 
 function onMobSpawn(mob)
     mob:setLocalVar("maxBabies", 4)
+	mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 1)
 end
 
 function onMobEngaged(mob, target)
+	mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -22,6 +26,8 @@ function onMobFight(mob, target)
         local nextMob = GetMobByID(mob:getID() - 1) --Agonizer aggros at <20%
         if not nextMob:isEngaged() then
             nextMob:updateEnmity(target)
+			nextMob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+			nextMob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
         end
     end
 	

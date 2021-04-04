@@ -10,12 +10,11 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 
 function onMobSkillCheck(target, mob, skill)
+    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, skill:getID())
     return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, skill:getID())
-
     local numhits = 1
     local accmod = 1
     local dmgmod = 1

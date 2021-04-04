@@ -18,6 +18,10 @@ zones[tpz.zone.BEARCLAW_PINNACLE] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE           = 7421, -- Tallying conquest results...
+        BLOWN_AWAY              = 7607, -- Blown out of area
+        BEGINS_TO_MELT          = 7663, -- Begings to Melt
+        LARGE_STEAM             = 7664, -- Emitting a large amount of steam
+        SHOOK_SALT              = 7665, -- Shook off the salt
     },
     mob =
     {
