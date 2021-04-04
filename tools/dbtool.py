@@ -47,11 +47,15 @@ migrations = [
 player_data = [
     'accounts.sql',
     'accounts_banned.sql',
+    'account_exceptions.sql',
     'auction_house.sql',
+    'audit_chat.sql',
+    'audit_gm.sql',
     'char_blacklist.sql',
     'char_effects.sql',
     'char_equip.sql',
     'char_exp.sql',
+    'char_gmmessage.sql',
     'char_inventory.sql',
     'char_jobs.sql',
     'char_look.sql',
@@ -67,9 +71,16 @@ player_data = [
     'char_unlocks.sql',
     'char_vars.sql',
     'chars.sql',
+    'cheat_incidents.sql',
+    'cheat_types.sql',
     'conquest_system.sql',
+    'crash_reports.sql',
     'delivery_box.sql',
+    'flist.sql',
+    'flist_settings.sql',
+    'gardening_results.sql',
     'linkshells.sql',
+    'server_gmcalls.sql',
     'server_variables.sql',
 ]
 import_files = []
@@ -194,7 +205,7 @@ def fetch_files(express=False):
     if express:
         try:
             global express_enabled
-            sql_diffs = repo.commit(current_version).diff(release_version,paths='sql/')
+            sql_diffs = repo.commit(current_version).diff(release_version,paths='sql-wings/')
             if len(sql_diffs) > 0:
                 for diff in sql_diffs:
                     import_files.append(diff.a_path[4:])
@@ -204,11 +215,11 @@ def fetch_files(express=False):
         except:
             print(Fore.RED + 'Error checking diffs.\nCheck that hash is valid in ../conf/version.conf.')
     else:
-        for (_, _, filenames) in os.walk('../sql/'):
+        for (_, _, filenames) in os.walk('../sql-wings/'):
             import_files.extend(filenames)
             break
     backups.clear()
-    for (_, _, filenames) in os.walk('../sql/backups/'):
+    for (_, _, filenames) in os.walk('../sql-wings/backups/'):
         backups.extend(filenames)
         if '.gitignore' in backups:
             backups.remove('.gitignore')
@@ -253,7 +264,7 @@ def write_version(silent=False):
 def import_file(file):
     updatecmd = '"' + mysql_bin + 'mysql' + exe + '" -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database
     print('Importing ' + file + '...')
-    os.system(updatecmd + ' < ../sql/' + file + log_errors)
+    os.system(updatecmd + ' < ../sql-wings/' + file + log_errors)
     fetch_errors()
 
 def connect():
@@ -304,14 +315,14 @@ def backup_db(silent=False,lite=False):
             for table in player_data:
                 tables += table[:-4] + ' '
             dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                tables + '> ../sql/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-lite.sql'
+                tables + '> ../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-lite.sql'
         else:
             if current_version:
                 dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                    ' > ../sql/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-' + current_version + '.sql'
+                    ' > ../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-' + current_version + '.sql'
             else:
                 dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                    ' > ../sql/backups/' + database + time.strftime('%Y%m%d-%H%M%S') + '-full.sql'
+                    ' > ../sql-wings/backups/' + database + time.strftime('%Y%m%d-%H%M%S') + '-full.sql'
         os.system(dumpcmd + log_errors)
         fetch_errors()
         print(Fore.GREEN + 'Database saved!')
@@ -454,7 +465,7 @@ def restore_backup():
                     backup_file = backups[choice - 1]
                     print(colorama.ansi.clear_screen())
                     if input('Delete ' + backup_file + '? [y/N] ').lower() == 'y':
-                        os.remove('../sql/backups/' + backup_file)
+                        os.remove('../sql-wings/backups/' + backup_file)
                         print(Fore.GREEN + 'Deleted ' + backup_file + '!')
                         fetch_files()
                 else:
