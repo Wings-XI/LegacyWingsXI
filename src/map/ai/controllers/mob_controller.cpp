@@ -152,6 +152,15 @@ void CMobController::TryLink()
     {
         if (PTarget->PPet->objtype == TYPE_PET && ((CPetEntity*)PTarget->PPet)->getPetType() == PETTYPE_AVATAR)
         {
+            if (PTarget->objtype == TYPE_PC)
+            {
+                std::unique_ptr<CBasicPacket> errMsg;
+                if (!PTarget->PPet->CanAttack(PMob, errMsg))
+                {
+                    return;
+                }
+            }
+
             petutils::AttackTarget(PTarget, PMob);
         }
     }
