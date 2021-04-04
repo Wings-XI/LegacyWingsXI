@@ -5428,8 +5428,7 @@ namespace battleutils
                 {
                     // draw in!
                     PMember->loc.p.x = nearEntity.x;
-                    // move a little higher to prevent getting stuck
-                    PMember->loc.p.y = nearEntity.y - 0.5f;
+                    PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
                     PMember->loc.p.z = nearEntity.z;
                     PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 

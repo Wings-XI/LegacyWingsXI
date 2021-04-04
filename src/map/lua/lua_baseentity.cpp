@@ -738,6 +738,25 @@ inline int32 CLuaBaseEntity::getLastOnline(lua_State* L)
 }
 
 /************************************************************************
+*  Function: setDrawInOffsetY()
+*  Purpose : Custom draw in offset based on conditions determined in lua
+*  Example : player:setDrawInOffsetY(-3.5)
+*  Notes   : Normally used to set the y offset of draw in
+************************************************************************/
+inline int32 CLuaBaseEntity::setDrawInOffsetY(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    auto offsetY = (float)lua_tonumber(L, 1);
+    CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
+
+    PBattle->m_drawInOffsetY = offsetY;
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: injectPacket()
 *  Purpose : Injects a packet to the player's client
 *  Example : player:injectPacket(packet)
@@ -16183,6 +16202,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetLocalVars),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastOnline),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDrawInOffsetY),
 
     // Packets, Events, and Flags
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,injectPacket),
