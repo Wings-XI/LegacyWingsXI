@@ -152,7 +152,6 @@ namespace battleutils
     int32               TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter = false,  bool isCovered = false, CBattleEntity* POriginalTarget = nullptr);
     int32               TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool useAutoTPFormula = false);
     int32               TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 lastSkillDamage, CBattleEntity* taChar);
-    int32               TakeSpellDamage(CBattleEntity* PDefender, CCharEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType);
 
     bool                TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpell* PSpell);
     bool                ProcessAquaveil(CBattleEntity* PDefender);
@@ -167,6 +166,7 @@ namespace battleutils
     uint8               GetRangedHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isBarrage);
     uint8               GetRangedHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isBarrage, int8 accBonus);
     int32               CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element);
+    float               CalculateSubtleBlowMultiplier(CBattleEntity* PAttacker);
 
     uint8               CalculateResistanceBuildPercent(Mod mod, CBattleEntity* PTarget);
 
@@ -179,7 +179,7 @@ namespace battleutils
     void                GenerateInRangeEnmity(CBattleEntity* PSource, int16 CE, int16 VE);
 
     CItemWeapon*        GetEntityWeapon(CBattleEntity* PEntity, SLOTTYPE Slot);
-    CItemEquipment*         GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
+    CItemEquipment*     GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
 
     void                MakeEntityStandUp(CBattleEntity* PEntity);
     CBattleEntity*      getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob);
@@ -200,7 +200,6 @@ namespace battleutils
 
     void                TransferEnmity(CBattleEntity* PHateReceiver, CBattleEntity* PHateGiver, CMobEntity* PMob, uint8 percentToTransfer);
     uint8               getBarrageShotCount(CCharEntity* PChar);
-    uint8               getStoreTPbonusFromMerit(CBattleEntity* PEntity);
 
     void                DoClaimShieldLottery(CMobEntity* PMob);
     void                ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing = false);
@@ -249,7 +248,6 @@ namespace battleutils
     uint32              CalculateSpellCastTime(CBattleEntity*, CMagicState*);
     uint16              CalculateSpellCost(CBattleEntity*, CSpell*);
     uint32              CalculateSpellRecastTime(CBattleEntity*, CSpell*);
-    int16               CalculateSpellTP(CBattleEntity* PEntity, CSpell* PSpell);
     int16               CalculateWeaponSkillTP(CBattleEntity*, CWeaponSkill*, int16);
     bool                RemoveAmmo(CCharEntity*, int quantity = 1);
     int32               GetMeritValue(CBattleEntity*, MERIT_TYPE);

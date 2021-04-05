@@ -472,6 +472,7 @@ class CStatusEffectContainer;
 class CPetEntity;
 class CSpell;
 class CItemEquipment;
+class CItemWeapon;
 class CAbilityState;
 class CAttackState;
 class CWeaponSkillState;
@@ -533,6 +534,7 @@ public:
     int32           GetMaxMP();                 // максимальное количество mp
     void            UpdateHealth();             // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
+    float           GetStoreTPMultiplier();
     int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons
     uint8           GetMeleeRange();                //returns the distance considered to be within melee range of the entity
     int16			GetRangedWeaponDelay(bool tp);	//returns delay of ranged weapon + ammo where applicable
@@ -545,6 +547,9 @@ public:
     uint16			GetRangedWeaponRank();			//returns total ranged weapon DMG Rank
 
     uint16		    GetSkill(uint16 SkillID);	// текущая величина умения (не максимальная, а ограниченная уровнем)
+
+    int16           AddTPFromSpell(CBattleEntity* PAttacker, uint8 numHits = 1);
+    int16           AddTPFromHit(CBattleEntity* PAttacker, CItemWeapon* weapon, int16 baseTp, float tpMultiplier);
 
     virtual int16	addTP(int16 tp);			// увеличиваем/уменьшаем количество tp
     virtual int32	addHP(int32 hp);			// увеличиваем/уменьшаем количество hp

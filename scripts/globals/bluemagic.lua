@@ -142,14 +142,17 @@ function BluePhysicalSpell(caster, target, spell, params)
             end
 
             hitslanded = hitslanded + 1
-
-            -- increment target's TP (100TP per hit landed)
-            target:addTP(100)
         end
 
         hitsdone = hitsdone + 1
     end
 
+    finaldmg = BlueApplyTargetDamageReductions(target, finaldmg)
+
+    -- add TP minus subtle blow
+    if finaldmg > 0 then
+        target:addTPFromSpell(caster, hitslanded)
+    end
     -- print("Hits landed "..hitslanded.."/"..hitsdone.." for total damage: "..finaldmg)
 
     return finaldmg
@@ -211,12 +214,18 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 
     dmg = math.floor(addBonuses(caster, spell, target, magicAttack))
 
+    dmg = BlueApplyTargetDamageReductions(target, dmg)
+
+    -- add TP minus subtle blow
+    if dmg > 0 then
+        target:addTPFromSpell(caster)
+    end
     caster:delStatusEffectSilent(tpz.effect.BURST_AFFINITY)
 
     return dmg
 end
 
-function BlueFinalAdjustments(caster, target, spell, dmg, params)
+function BlueApplyTargetDamageReductions(target, dmg)
     if (dmg < 0) then
         dmg = 0
     end
@@ -231,9 +240,14 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params)
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
 
+    return dmg
+end
+
+function BlueFinalAdjustments(caster, target, spell, dmg, params)
+    
     local attackType = params.attackType or tpz.attackType.NONE
     local damageType = params.damageType or tpz.damageType.NONE
-    target:takeSpellDamage(caster, spell, dmg, attackType, damageType)
+    target:takeDamage(dmg, caster, attackType, damageType)
     target:updateEnmityFromDamage(caster, dmg)
     target:handleAfflatusMiseryDamage(dmg)
     -- TP has already been dealt with.

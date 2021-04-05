@@ -394,6 +394,7 @@ public:
     int32 addTP(lua_State*);                // Modify tp of Entity +/-
     int32 setTP(lua_State*);                // Set tp of Entity to value
     int32 delTP(lua_State*);                // Subtract tp of Entity
+    int32 addTPFromSpell(lua_State*);       // Adds tp minus subtle blow from spell (100 mob / 50 pc)
 
     int32 updateHealth(lua_State* L);
 

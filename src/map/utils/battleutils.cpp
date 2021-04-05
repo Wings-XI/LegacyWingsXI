@@ -2177,10 +2177,6 @@ namespace battleutils
 
         if (damage > 0)
         {
-            PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
-
-            // Check for bind breaking
-            BindBreakCheck(PAttacker, PDefender);
             int32 enmity = damage;
 
             switch (PDefender->objtype)
@@ -2264,7 +2260,6 @@ namespace battleutils
                 baseTp = CalculateBaseTP((int16)(delay * 60.0f / 1000.0f / ratio));
             }
 
-
             if (giveTPtoAttacker)
             {
                 if (weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
@@ -2276,40 +2271,22 @@ namespace battleutils
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
 
-                PAttacker->addTP((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                PAttacker->addTP((int16)(tpMultiplier * baseTp * PAttacker->GetStoreTPMultiplier()));
             }
 
             if (giveTPtoVictim)
             {
-                //account for attacker's subtle blow which reduces the baseTP gain for the defender
-                float sBlow1 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
-                float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
-                float sBlowMult = ((100.0f - std::clamp((float)(sBlow1 + sBlow2), -75.0f, 75.0f)) / 100.0f);
-                if (PAttacker->objtype == TYPE_PC && PAttacker->GetMJob() == JOB_NIN && PAttacker->GetMLevel() > 74)
-                    sBlowMult -= 0.01f * ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, (CCharEntity*)PAttacker);
-
-                //mobs hit get basetp+30 whereas pcs (or pcs pets) hit get basetp/3
-                if (PDefender->objtype == TYPE_PC || (PDefender->objtype == TYPE_PET && PDefender->PMaster && PDefender->PMaster->objtype == TYPE_PC))
-                {
-                    PDefender->addTP((int16)(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))))); //yup store tp counts on hits taken too!
-                }
-                else
-                {
-                    if (weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
-                        PDefender->addTP((uint16)(tpMultiplier * (93 * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))));
-                    else
-                        PDefender->addTP((uint16)(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); //subtle blow also reduces the "+30" on mob tp gain
-                }
+                PDefender->AddTPFromHit(PAttacker, weapon, baseTp, tpMultiplier);
             }
+
         }
         else if (PDefender->objtype == TYPE_MOB)
-            ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
+           ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
 
         if (PAttacker->objtype == TYPE_PC && !isRanged)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
         return damage;
-
     }
 
     /************************************************************************
@@ -2350,11 +2327,6 @@ namespace battleutils
 
         if (damage > 0)
         {
-            PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
-
-            // Check for bind breaking
-            BindBreakCheck(PAttacker, PDefender);
-
             switch (PDefender->objtype)
             {
                 case TYPE_MOB:
@@ -2415,36 +2387,20 @@ namespace battleutils
                     baseTp = 130;
             }
 
+            float attackerStoreTPMult = PAttacker->GetStoreTPMultiplier();
+
             // add tp to attacker
             if (primary && !useAutoTPFormula)
-            // Calculate TP Return from WS
+                // Calculate TP Return from WS
             {
-                standbyTp = ((int16)(((tpMultiplier * baseTp) + bonusTP) * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                standbyTp = ((int16)(((tpMultiplier * baseTp) + bonusTP) * attackerStoreTPMult));
             }
             else if (primary && useAutoTPFormula)
             { // bonusTP variable instead encodes extra hits we did
-                standbyTp = ((int16)(((tpMultiplier * (baseTp * (bonusTP + 1)))) * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                standbyTp = ((int16)(((tpMultiplier * (baseTp * (bonusTP + 1)))) * attackerStoreTPMult));
             }
 
-            //account for attacker's subtle blow which reduces the baseTP gain for the defender
-            float sBlow1 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
-            float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
-            float sBlowMult = ((100.0f - std::clamp((float)(sBlow1 + sBlow2), -75.0f, 75.0f)) / 100.0f);
-            if (PAttacker->objtype == TYPE_PC && PAttacker->GetMJob() == JOB_NIN && PAttacker->GetMLevel() > 74)
-                sBlowMult -= 0.01f * ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, (CCharEntity*)PAttacker);
-
-            //mobs hit get basetp+30 whereas pcs hit get basetp/3
-            if (PDefender->objtype == TYPE_PC)
-            {
-                PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))))); //yup store tp counts on hits taken too!
-            }
-            else
-            {
-                if (weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier * (93 * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))));
-                else
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); //subtle blow also reduces the "+30" on mob tp gain
-            }
+            PDefender->AddTPFromHit(PAttacker, weapon, baseTp, tpMultiplier * targetTPMultiplier);
         }
         else if (PDefender->objtype == TYPE_MOB)
             ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
@@ -2464,30 +2420,16 @@ namespace battleutils
         return damage;
     }
 
-
-    /************************************************************************
-    *                                                                       *
-    *  Handles Damage from Spells (dmg type reductions calced in lua)       *
-    *                                                                       *
-    ************************************************************************/
-
-    int32 TakeSpellDamage(CBattleEntity* PDefender, CCharEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType)
+    float CalculateSubtleBlowMultiplier(CBattleEntity* PAttacker)
     {
-        PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+        //account for attacker's subtle blow which reduces the baseTP gain for the defender
+        float sBlow1 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
+        float sBlow2 = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
+        float sBlowMult = ((100.0f - std::clamp((float)(sBlow1 + sBlow2), -75.0f, 75.0f)) / 100.0f);
+        if (PAttacker->objtype == TYPE_PC && PAttacker->GetMJob() == JOB_NIN && PAttacker->GetMLevel() > 74)
+            sBlowMult -= 0.01f * ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, (CCharEntity*)PAttacker);
 
-        // Remove effects from damage
-        if (PSpell->canTargetEnemy() && damage > 0 && PSpell->dealsDamage())
-        {
-            PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
-            // Check for bind breaking
-            BindBreakCheck(PAttacker, PDefender);
-
-            // Do we get TP for damaging spells?
-            int16 tp = battleutils::CalculateSpellTP(PAttacker, PSpell);
-            PAttacker->addTP(tp);
-        }
-
-        return damage;
+        return sBlowMult;
     }
 
     /************************************************************************
@@ -3713,8 +3655,6 @@ namespace battleutils
         battleutils::ClaimMob(PDefender, PAttacker);
         PDefender->updatemask |= UPDATE_STATUS;
 
-        PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
-
         switch (PDefender->objtype)
         {
             case TYPE_PC:
@@ -4226,25 +4166,6 @@ namespace battleutils
         }
         return damage;
     }
-
-    /************************************************************************
-    *                                                                       *
-    *   Samurai get merit storeTP value                                     *
-    *                                                                       *
-    ************************************************************************/
-    uint8 getStoreTPbonusFromMerit(CBattleEntity* PEntity)
-    {
-        if (PEntity->objtype == TYPE_PC)
-        {
-            if (((CCharEntity*)PEntity)->GetMJob() == JOB_SAM)
-            {
-                return ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, (CCharEntity*)PEntity);
-            }
-        }
-        return 0;
-    }
-
-
 
     /************************************************************************
     *                                                                       *
@@ -6192,26 +6113,6 @@ namespace battleutils
         recast = std::max(recast, 0);
 
         return recast / 1000;
-    }
-
-    // Calculate TP generated by spell for Occult Acumen trait
-    int16 CalculateSpellTP(CBattleEntity* PEntity, CSpell* PSpell)
-    {
-        // Players onry
-        if (PEntity->objtype == TYPE_PC)
-        {
-            if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC || PSpell->getSkillType() == SKILLTYPE::SKILL_DARK_MAGIC)
-            {
-                CCharEntity* PChar = static_cast<CCharEntity*>(PEntity);
-                if (charutils::hasTrait(PChar, TRAIT_OCCULT_ACUMEN))
-                {
-                    return static_cast<int16>(PSpell->getMPCost() * PChar->getMod(Mod::OCCULT_ACUMEN) / 100.f * (1 + (PChar->getMod(Mod::STORETP) / 100.f)));
-                }
-
-            }
-        }
-
-        return 0;
     }
 
     int16 CalculateWeaponSkillTP(CBattleEntity* PEntity, CWeaponSkill* PWeaponSkill, int16 spentTP)
