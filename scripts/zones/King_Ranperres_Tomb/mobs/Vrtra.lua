@@ -70,10 +70,6 @@ function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.VRTRA_VANQUISHER)
 end
 
-function onSpellPrecast(mob, spell)
-    spell:setMPCost(1)
-end
-
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
 	local respawn = math.random(144,240)*1800 -- 3 to 5 days in 30min windows
