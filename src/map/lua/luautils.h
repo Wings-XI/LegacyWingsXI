@@ -226,6 +226,7 @@ namespace luautils
     int32 OnWeaponskillHit(CBattleEntity* PMob, CBaseEntity* PAttacker, uint16 PWeaponskill); // Triggered when Weaponskill strikes monster
 
     int32 OnMobInitialize(CBaseEntity* PMob);                                     // Used for passive trait
+    int32 OnMobFamilyInitialize(CMobEntity* PMob);
     int32 ApplyMixins(CBaseEntity* PMob);
     int32 ApplyZoneMixins(CBaseEntity* PMob);
     int32 OnMobSpawn(CBaseEntity* PMob);                                          // triggers on mob spawn

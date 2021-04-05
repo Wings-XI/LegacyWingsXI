@@ -137,6 +137,7 @@ tpz.mob.additionalEffect =
     STUN       = 19,
     TERROR     = 20,
     TP_DRAIN   = 21,
+    DISEASE    = 22,
 }
 tpz.mob.ae = tpz.mob.additionalEffect
 
@@ -383,6 +384,19 @@ local additionalEffects =
         mod = tpz.mod.INT,
         bonusAbilityParams = {bonusmab = 0, includemab = false},
         code = function(mob, target, power) local tp = math.min(power, target:getTP()) target:delTP(tp) mob:addTP(tp) end,
+    },
+    [tpz.mob.ae.DISEASE] =
+    {
+        chance = 25,
+        ele = tpz.magic.ele.FIRE,
+        sub = tpz.subEffect.DISEASE,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.DISEASE,
+        power = 1,
+        duration = 30,
+        minDuration = 1,
+        maxDuration = 30,
     },
 }
 

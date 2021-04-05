@@ -125,6 +125,11 @@ CMobEntity::CMobEntity()
         std::make_unique<CTargetFind>(this));
 }
 
+const int8* CMobEntity::GetFamilyName()
+{
+    return (const int8*)m_FamilyName.c_str();
+}
+
 uint32 CMobEntity::getEntityFlags()
 {
     return m_flags;

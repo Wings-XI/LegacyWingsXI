@@ -2089,7 +2089,7 @@ INSERT INTO `mob_groups` VALUES(2, 313, 51, 'Azoth_Apsaras', 0, 128, 0, 0, 0, 68
 INSERT INTO `mob_groups` VALUES(3, 3344, 51, 'Red_Osculator', 0, 128, 174, 0, 0, 67, 71, 0);
 INSERT INTO `mob_groups` VALUES(4, 2269, 51, 'Kissing_Leech', 0, 128, 174, 0, 0, 67, 71, 0);
 INSERT INTO `mob_groups` VALUES(5, 2616, 51, 'Mercurial_Makara', 0, 128, 607, 0, 0, 68, 70, 0);
-INSERT INTO `mob_groups` VALUES(6, 714, 51, 'Chigoe', 300, 0, 466, 0, 0, 71, 73, 0);
+INSERT INTO `mob_groups` VALUES(6, 714, 51, 'Chigoe', 0, 128, 466, 0, 0, 71, 73, 0);
 INSERT INTO `mob_groups` VALUES(7, 2396, 51, 'Lesser_Colibri', 300, 0, 1509, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(8, 4650, 51, 'Fomor_Thief', 300, 1, 0, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(9, 1381, 51, 'Fomor_Beastmaster', 300, 1, 0, 0, 0, 63, 65, 0);
@@ -2103,7 +2103,7 @@ INSERT INTO `mob_groups` VALUES(16, 3343, 51, 'Red_Kisser', 300, 0, 174, 0, 0, 6
 INSERT INTO `mob_groups` VALUES(17, 1787, 51, 'Grand_Marid', 0, 32, 1214, 0, 0, 78, 79, 0);
 INSERT INTO `mob_groups` VALUES(18, 106, 51, 'Ameretat', 300, 0, 2923, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(19, 4275, 51, 'Wajaom_Tiger', 300, 0, 2601, 0, 0, 67, 69, 0);
-INSERT INTO `mob_groups` VALUES(20, 5555, 51, 'Chelicerata', 0, 128, 3041, 0, 0, 78, 78, 0);
+INSERT INTO `mob_groups` VALUES(20, 5555, 51, 'Chelicerata', 0, 128, 3041, 12000, 5000, 78, 78, 0); -- needs specific HP as the family has a .20 mod putting 12000 for now
 INSERT INTO `mob_groups` VALUES(21, 4518, 51, 'Zoraal_Jas_Pkuucha', 0, 32, 2810, 0, 0, 73, 73, 0);
 INSERT INTO `mob_groups` VALUES(22, 3118, 51, 'Percipient_Zoraal_Ja', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(23, 67, 51, 'Aht_Urhgan_Attercop', 300, 0, 34, 0, 0, 65, 67, 0);
@@ -2216,7 +2216,7 @@ INSERT INTO `mob_groups` VALUES(14, 4275, 52, 'Wajaom_Tiger', 300, 0, 2602, 0, 0
 INSERT INTO `mob_groups` VALUES(15, 4650, 52, 'Fomor_Thief', 300, 1, 0, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(16, 5137, 52, 'Harvestman', 75600, 128, 2891, 10000, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(17, 3991, 52, 'Treant_Sapling', 300, 0, 2464, 0, 0, 66, 68, 0);
-INSERT INTO `mob_groups` VALUES(18, 714, 52, 'Chigoe', 300, 0, 466, 0, 0, 71, 73, 0);
+INSERT INTO `mob_groups` VALUES(18, 714, 52, 'Chigoe', 0, 128, 466, 0, 0, 71, 73, 0);
 INSERT INTO `mob_groups` VALUES(19, 1787, 52, 'Grand_Marid', 0, 32, 1214, 0, 0, 78, 79, 0);
 INSERT INTO `mob_groups` VALUES(20, 2562, 52, 'Marid', 300, 0, 1618, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(21, 765, 52, 'Colibri', 300, 0, 500, 0, 0, 71, 73, 0);
@@ -3092,7 +3092,7 @@ INSERT INTO `mob_groups` VALUES(53, 1461, 77, 'Gargantua', 0, 128, 906, 0, 0, 75
 INSERT INTO `mob_groups` VALUES(54, 1861, 77, 'Gyre-Carlin', 0, 128, 1261, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(55, 267, 77, 'Asphyxiated_Amsel', 0, 128, 181, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(56, 1429, 77, 'Frostmane', 0, 128, 911, 0, 0, 75, 80, 0);
-INSERT INTO `mob_groups` VALUES(57, 3109, 77, 'Peallaidh', 0, 128, 906, 0, 0, 75, 80, 0);
+INSERT INTO `mob_groups` VALUES(57, 3109, 77, 'Peallaidh', 0, 128, 906, 10000, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(58, 645, 77, 'Carnero', 0, 128, 71, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(59, 1282, 77, 'Falcatus_Aranei', 0, 128, 807, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(60, 1208, 77, 'Emergent_Elm', 0, 128, 71, 0, 0, 75, 80, 0);
