@@ -818,7 +818,6 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     auto PSpell = state.GetSpell();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
-
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 
     for (auto&& actionList : action.actionLists)
@@ -896,6 +895,13 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
             }
         }
     }
+
+    if (charutils::hasTrait(this, TRAIT_OCCULT_ACUMEN) &&(PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC || PSpell->getSkillType() == SKILLTYPE::SKILL_DARK_MAGIC))
+    {
+        int16 tp = (int16)(PSpell->getMPCost() * getMod(Mod::OCCULT_ACUMEN) / 100.f * GetStoreTPMultiplier());
+        addTP(tp);
+    }
+
     charutils::RemoveStratagems(this, PSpell);
     if (PSpell->tookEffect())
     {

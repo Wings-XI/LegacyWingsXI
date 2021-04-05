@@ -258,6 +258,21 @@ bool CBattleEntity::Rest(float rate)
     return false;
 }
 
+float CBattleEntity::GetStoreTPMultiplier()
+{
+    uint8 samuraiMeritBonus = 0;
+    if (objtype == TYPE_PC)
+    {
+        auto PChar = (CCharEntity*)this;
+        if (PChar->GetMJob() == JOB_SAM)
+        {
+            samuraiMeritBonus = PChar->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, PChar);
+        }
+    }
+
+    return 1.0f + 0.01f * (float)((getMod(Mod::STORETP) + samuraiMeritBonus));
+}
+
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
     uint16 WeaponDelay = 9999;
@@ -452,6 +467,39 @@ uint16 CBattleEntity::GetRangedWeaponRank()
     return 0;
 }
 
+int16 CBattleEntity::AddTPFromSpell(CBattleEntity* PAttacker, uint8 numHits)
+{
+    // https://ffxiclopedia.fandom.com/wiki/Tactical_Points?oldid=1031494 give 50 tp to players, 100 to mobs
+    int16 baseTp = objtype == TYPE_MOB ? 100 : 50;
+
+    // https://ffxiclopedia.fandom.com/wiki/Subtle_Blow?oldid=924414 subtle blow effects spell damage tp given
+    float sBlowMult = battleutils::CalculateSubtleBlowMultiplier(PAttacker);
+    return addTP((int16)(baseTp * sBlowMult * numHits));
+}
+
+int16 CBattleEntity::AddTPFromHit(CBattleEntity* PAttacker, CItemWeapon* weapon, int16 baseTp, float tpMultiplier)
+{
+    float storeTPMult = GetStoreTPMultiplier();
+    float sBlowMult = battleutils::CalculateSubtleBlowMultiplier(PAttacker);
+
+    //mobs hit get basetp+30 whereas pcs (or pcs pets) hit get basetp/3
+    if (objtype == TYPE_PC || (objtype == TYPE_PET && PMaster && PMaster->objtype == TYPE_PC))
+    {
+        baseTp /= 3;
+
+    }
+    else if (weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
+    {
+        baseTp = 93;
+    }
+    else
+    {
+        baseTp += 30;
+    }
+
+    return addTP((int16)(baseTp * tpMultiplier * sBlowMult * storeTPMult)); //yup store tp counts on hits taken too!
+}
+
 /************************************************************************
 *                                                                       *
 *  Изменяем количество TP сущности	                                    *
@@ -546,6 +594,11 @@ int32 CBattleEntity::addMP(int32 mp)
 
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/)
 {
+    if (health.hp <= 0)
+    {
+        return 0;
+    }
+
     PLastAttacker = attacker;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
     
@@ -558,6 +611,13 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         roeutils::event(ROE_EVENT::ROE_DMGTAKEN, static_cast<CCharEntity*>(this), RoeDatagram("dmg", amount));
     else if (PLastAttacker && PLastAttacker->objtype == TYPE_PC)
         roeutils::event(ROE_EVENT::ROE_DMGDEALT, static_cast<CCharEntity*>(attacker), RoeDatagram("dmg", amount));
+
+    if (amount > 0 && attacker)
+    {
+        StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
+
+        battleutils::BindBreakCheck(attacker, this);
+    }
 
     return addHP(-amount);
 }

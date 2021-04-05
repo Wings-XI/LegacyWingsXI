@@ -8298,41 +8298,41 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
 
     int32 damage = (int32)(lua_tointeger(L, 1));
 
-    // Attempt to retrieve the attacker
-    CBattleEntity* PAttacker = nullptr;
-    if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
-    {
-        CLuaBaseEntity* PLuaAttacker = Lunar<CLuaBaseEntity>::check(L, 2);
-        TPZ_DEBUG_BREAK_IF(PLuaAttacker == nullptr);
-        TPZ_DEBUG_BREAK_IF(PLuaAttacker->m_PBaseEntity->objtype == TYPE_NPC);
-        PAttacker = dynamic_cast<CBattleEntity*>(PLuaAttacker->m_PBaseEntity);
-    }
-
-    CBattleEntity* PDefender = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
-
-    // Check for special flags which may prevent damage from waking up the target
-    bool wakeUp = true;
-    bool breakBind = true;
-    bool removePetrify = true;
-
-    if (!lua_isnil(L, 5) && lua_istable(L, 5))
-    {
-        // Attempt to wake up the target unless wakeUp is provided and is false.
-        lua_getfield(L, 5, "wakeUp");
-        wakeUp = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
-
-        // Remove petrification unless removePetrify is provided and is false
-        lua_getfield(L, 5, "removePetrify");
-        removePetrify = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
-
-        // Attempt to break Bind unless breakBind is provided and is false
-        lua_getfield(L, 5, "breakBind");
-        breakBind = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
-    }
-
     // Deal damage and liberate target when applicable
     if (damage > 0)
     {
+        // Attempt to retrieve the attacker
+        CBattleEntity* PAttacker = nullptr;
+        if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
+        {
+            CLuaBaseEntity* PLuaAttacker = Lunar<CLuaBaseEntity>::check(L, 2);
+            TPZ_DEBUG_BREAK_IF(PLuaAttacker == nullptr);
+            TPZ_DEBUG_BREAK_IF(PLuaAttacker->m_PBaseEntity->objtype == TYPE_NPC);
+            PAttacker = dynamic_cast<CBattleEntity*>(PLuaAttacker->m_PBaseEntity);
+        }
+
+        CBattleEntity* PDefender = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
+
+        // Check for special flags which may prevent damage from waking up the target
+        bool wakeUp = true;
+        bool breakBind = true;
+        bool removePetrify = true;
+
+        if (!lua_isnil(L, 5) && lua_istable(L, 5))
+        {
+            // Attempt to wake up the target unless wakeUp is provided and is false.
+            lua_getfield(L, 5, "wakeUp");
+            wakeUp = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
+
+            // Remove petrification unless removePetrify is provided and is false
+            lua_getfield(L, 5, "removePetrify");
+            removePetrify = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
+
+            // Attempt to break Bind unless breakBind is provided and is false
+            lua_getfield(L, 5, "breakBind");
+            breakBind = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
+        }
+
         ATTACKTYPE attackType = !lua_isnil(L, 3) && lua_isnumber(L, 3) ? (ATTACKTYPE)lua_tointeger(L, 3) : ATTACK_NONE;
         DAMAGETYPE damageType = !lua_isnil(L, 4) && lua_isnumber(L, 4) ? (DAMAGETYPE)lua_tointeger(L, 4) : DAMAGE_NONE;
 
@@ -8347,12 +8347,11 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         {
             PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_PETRIFICATION);
         }
-    }
 
-    // Bind has a chance to break from all direct attacks, even if they don't deal damage
-    if (PAttacker && breakBind)
-    {
-        battleutils::BindBreakCheck(PAttacker, PDefender);
+        if (breakBind)
+        {
+            battleutils::BindBreakCheck(PAttacker, PDefender);
+        }
     }
 
     return 0;
@@ -8587,6 +8586,33 @@ inline int32 CLuaBaseEntity::delTP(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     ((CBattleEntity*)m_PBaseEntity)->addTP((int16)(-lua_tointeger(L, 1)));
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: addTPFromSpell()
+*  Purpose : Adds Tactical Points to an Entity
+*  Example : target:addTPFromSpell(attacker, numhits)
+*  Notes   : numhits is optional and used for blue magic physical multi hit
+************************************************************************/
+inline int32 CLuaBaseEntity::addTPFromSpell(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    auto PAttacker = Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity;
+    auto PDefender = (CBattleEntity*)m_PBaseEntity;
+
+    uint8 numHits = 1;
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        numHits = (uint8)lua_tointeger(L, 2);
+    }
+
+    PDefender->AddTPFromSpell((CBattleEntity*)PAttacker, numHits);
 
     return 0;
 }
@@ -12885,7 +12911,8 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
 }
 
 /************************************************************************
-*  Function: int32 TakeSpellDamage()
+*  Obsolete: use takeDamage() instead
+*  Function: int32 TakeSpellDamage() 
 *  Purpose : Calls Battle Utils to calculate final spell damage against a foe
 *  Example : target:takeSpellDamage(caster, spell, finaldmg, attackType, damageType)
 *  Notes   : Global function of same name in bluemagic.lua, calls this member function from within
@@ -12902,12 +12929,12 @@ int32 CLuaBaseEntity::takeSpellDamage(lua_State* L)
 
 
     auto PChar = static_cast<CCharEntity*>(Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity);
-    auto PSpell = Lunar<CLuaSpell>::check(L, 2)->GetSpell();
+    auto PSpell = Lunar<CLuaSpell>::check(L, 2)->GetSpell(); // not used
     auto damage = (int32)lua_tointeger(L, 3);
     ATTACKTYPE attackType = (ATTACKTYPE)lua_tointeger(L, 4);
     DAMAGETYPE damageType = (DAMAGETYPE)lua_tointeger(L, 5);
 
-    lua_pushinteger(L, (lua_Integer)battleutils::TakeSpellDamage(static_cast<CBattleEntity*>(m_PBaseEntity), PChar, PSpell, damage, attackType, damageType));
+    lua_pushinteger(L, (lua_Integer)static_cast<CBattleEntity*>(m_PBaseEntity)->takeDamage(damage, PChar, attackType, damageType));
     return 1;
 }
 
@@ -16588,6 +16615,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setTP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delTP),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTPFromSpell),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateHealth),
 

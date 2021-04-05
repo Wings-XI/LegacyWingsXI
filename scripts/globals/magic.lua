@@ -729,12 +729,11 @@ end
         dmg = target:addHP(-dmg)
         spell:setMsg(tpz.msg.basic.MAGIC_RECOVERS_HP)
     else
-        target:takeSpellDamage(caster, spell, dmg, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL + spell:getElement())
+        target:takeDamage(dmg, caster, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL + spell:getElement())
         target:handleAfflatusMiseryDamage(dmg)
         target:updateEnmityFromDamage(caster, dmg)
-        -- Only add TP if the target is a mob
-        if (target:getObjType() ~= tpz.objType.PC) then
-            target:addTP(100)
+        if dmg > 0 then
+            target:addTPFromSpell(caster)
         end
     end
 
