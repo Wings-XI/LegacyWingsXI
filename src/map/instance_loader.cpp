@@ -80,6 +80,7 @@ bool CInstanceLoader::Check()
                 for (auto PMob : instance->m_mobList)
                 {
                     luautils::OnMobInitialize(PMob.second);
+                    luautils::OnMobFamilyInitialize(((CMobEntity*)PMob.second));
                     luautils::ApplyMixins(PMob.second);
                     ((CMobEntity*)PMob.second)->saveModifiers();
                     ((CMobEntity*)PMob.second)->saveMobModifiers();
@@ -110,7 +111,7 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
 		mob_pools.familyid, name_prefix, entityFlags, animationsub, \
 		(mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, ATT, ACC, mob_groups.poolid, \
 		allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, detects, \
-		mob_family_system.charmable \
+		mob_family_system.charmable, mob_family_system.family \
 		FROM instance_entities INNER JOIN mob_spawn_points ON instance_entities.id = mob_spawn_points.mobid \
         INNER JOIN mob_groups ON mob_groups.groupid = mob_spawn_points.groupid and mob_groups.zoneid=((mob_spawn_points.mobid>>12)&0xFFF) \
 		INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
@@ -238,6 +239,7 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
             PMob->m_Detects = Sql_GetUIntData(SqlInstanceHandle, 64);
 
             PMob->setMobMod(MOBMOD_CHARMABLE, Sql_GetUIntData(SqlInstanceHandle, 65));
+            PMob->m_FamilyName.insert(0, (const char*)Sql_GetData(SqlHandle, 66));
 
             // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
             // can be set in mob_spawn_mods or in their onInitialize

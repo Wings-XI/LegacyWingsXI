@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 require("scripts/globals/mobs")
+-- TODO: mixins = { require("scripts/mixins/behavior_spawn_chigoe") }
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)

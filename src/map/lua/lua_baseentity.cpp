@@ -12554,6 +12554,24 @@ inline int32 CLuaBaseEntity::getWeaponDmg(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getMeleeRange()
+*  Purpose : Gets the melee range of the attacker
+*  Example : mob:getMeleeRange()
+*  Notes   : Useful for checking mob behavior in scripts for mobs out of
+*            melee range
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getMeleeRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PAttacker = (CBattleEntity*)m_PBaseEntity;
+
+    lua_pushinteger(L, PAttacker->GetMeleeRange());
+    return 1;
+}
+
+/************************************************************************
 *  Function: getWeaponDmgRank()
 *  Purpose : Returns the damage rating for the Weapon in the Main slot
 *  Example : attacker:getWeaponDmgRank()
@@ -16783,6 +16801,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isWeaponTwoHanded),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeHitDamage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmg),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmgRank),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getOffhandDmg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getOffhandDmgRank),
