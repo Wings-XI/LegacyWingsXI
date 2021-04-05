@@ -3146,7 +3146,7 @@ INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 599);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 600);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 601);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
-INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647;
+INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647);
 
 
 --
