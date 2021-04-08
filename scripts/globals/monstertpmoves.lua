@@ -280,13 +280,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
         end
     end
     
-    if bonusacc == nil then
-        bonusacc = 0
-    end
-    bonusacc = bonusacc + avatarAccBonus
-    --print(string.format("bonusacc was %u",bonusacc))
-    
-    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), bonusacc, element)
+    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), avatarAccBonus, element)
 
     local magicDefense = getElementalDamageReduction(target, element)
 
