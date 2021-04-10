@@ -7081,7 +7081,7 @@ INSERT INTO `mob_groups` VALUES(6175, 1027, 112, 'Diabolos', 0, 0, 0, 0, 0, 0, 0
 INSERT INTO `mob_groups` VALUES(1, 3336, 113, 'Razorjaw_Pugil', 0, 128, 147, 0, 0, 59, 60, 0);
 INSERT INTO `mob_groups` VALUES(2, 3377, 113, 'Rock_Crab', 0, 128, 273, 0, 0, 59, 60, 0);
 INSERT INTO `mob_groups` VALUES(3, 3803, 113, 'Stygian_Pugil', 0, 128, 147, 0, 0, 63, 67, 0);
-INSERT INTO `mob_groups` VALUES(4, 1018, 113, 'Devil_Manta', 0, 128, 0, 0, 0, 68, 70, 0);
+INSERT INTO `mob_groups` VALUES(4, 1018, 113, 'Devil_Manta', 0, 128, 644, 0, 0, 68, 70, 0);
 INSERT INTO `mob_groups` VALUES(5, 1687, 113, 'Goblin_Mercenary', 300, 0, 1114, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(6, 3456, 113, 'Sand_Lizard', 300, 0, 2152, 0, 0, 62, 66, 0);
 INSERT INTO `mob_groups` VALUES(7, 378, 113, 'Beach_Bunny', 300, 0, 247, 0, 0, 62, 65, 0);
