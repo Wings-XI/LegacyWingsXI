@@ -196,7 +196,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
         filterQry.append("))) ");
     }
 
-    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl "
+    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2 "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -232,6 +232,9 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             PPlayer->rank = (uint8)Sql_GetIntData(SqlHandle, 6 + PPlayer->nation);
 
             PPlayer->zone = (PPlayer->zone == 0 ? PPlayer->prevzone : PPlayer->zone);
+
+            PPlayer->linkshellid1 = (uint16)Sql_GetIntData(SqlHandle, 15);
+            PPlayer->linkshellid2 = (uint16)Sql_GetIntData(SqlHandle, 16);
 
             uint32 partyid = (uint32)Sql_GetUIntData(SqlHandle, 1);
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 10);
@@ -317,6 +320,17 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
                     continue;
                 }
             }
+
+            // filter by linkshell 
+            if (sr.lsFilter)
+            {
+                // 0(none equipped) or id doesn't match either linkshell = skip/continue
+                if (sr.lsId == 0 || (sr.lsId != PPlayer->linkshellid1 && sr.lsId != PPlayer->linkshellid2))
+                {
+                    continue;
+                }
+            }
+
             // dont show hidden gm
             if (nameflag & FLAG_ANON && nameflag & FLAG_GM)
             {
