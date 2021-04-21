@@ -12795,7 +12795,7 @@ INSERT INTO `mob_groups` VALUES(33, 514, 169, 'Bouncing_Ball', 960, 0, 344, 0, 0
 INSERT INTO `mob_groups` VALUES(18, 743, 173, 'Clipper', 720, 0, 483, 0, 0, 29, 32, 0);
 INSERT INTO `mob_groups` VALUES(29, 1738, 191, 'Goblin_Tinkerer', 300, 0, 1176, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(30, 1635, 191, 'Goblin_Ambusher', 300, 0, 1020, 0, 0, 12, 16, 0);
-INSERT INTO `mob_groups` VALUES(12, 4320, 192, 'Wendigo', 300, 0, 3154, 0, 0, 25, 28, 0);
+INSERT INTO `mob_groups` VALUES(12, 4320, 192, 'Skinnymajinx', 300, 0, 219, 0, 0, 25, 28, 0);
 INSERT INTO `mob_groups` VALUES(13, 369, 192, 'Battle_Bat', 480, 0, 241, 0, 0, 17, 20, 0);
 INSERT INTO `mob_groups` VALUES(14, 1635, 192, 'Goblin_Ambusher', 900, 0, 1021, 0, 0, 14, 18, 0);
 INSERT INTO `mob_groups` VALUES(25, 1139, 193, 'Dung_Beetle', 720, 0, 721, 0, 0, 23, 26, 0);
