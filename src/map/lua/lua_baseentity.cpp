@@ -12469,6 +12469,24 @@ inline int32 CLuaBaseEntity::doWildCard(lua_State *L)
 }
 
 /************************************************************************
+*  Function: doRandomDeal()
+*  Purpose : Executes the Random Deal job ability
+*  Example : player:doRandomDeal(target)
+*  Notes   : Calls the DoRandomDealToEntity function of battleutils
+************************************************************************/
+inline int32 CLuaBaseEntity::doRandomDeal(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PTarget = Lunar<CLuaBaseEntity>::check(L, 1);
+    lua_pushboolean(L, battleutils::DoRandomDealToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PTarget->m_PBaseEntity)));
+    return 1;
+}
+
+/************************************************************************
 *  Function: addCorsairRoll()
 *  Purpose : Adds the Corsair Roll to the Target's Status Effect Container
 *  Example : target:addCorsairRoll(caster:getMainJob(), caster:getMerit(MERIT_BUST_DURATION), EFFECT_CHAOS_ROLL, effectpower, 0, duration, caster:getID(), total, MOD_ATTP)
@@ -18510,6 +18528,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,fold),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,doWildCard),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,doRandomDeal),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCorsairRoll),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasCorsairEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasBustEffect),
