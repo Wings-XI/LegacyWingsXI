@@ -126,7 +126,7 @@ add_executable(topaz_game
     ${resource})
 
 if(WIN32)
-    set_target_properties(topaz_game PROPERTIES OUTPUT_NAME topaz_game${spacer}${platform_suffix})
+    set_target_properties(topaz_game PROPERTIES OUTPUT_NAME topaz_game${spacer}${platform_suffix} DEBUG_POSTFIX _d)
 endif()
 
 target_compile_definitions(
@@ -139,6 +139,7 @@ target_compile_definitions(
 target_link_libraries(topaz_game
     PUBLIC
     common
+    new-common
     ai
     entities
     items

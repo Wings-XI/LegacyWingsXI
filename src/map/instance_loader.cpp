@@ -44,6 +44,17 @@ CInstanceLoader::CInstanceLoader(uint8 instanceid, CZone* PZone, CCharEntity* PR
 
     SqlInstanceHandle = Sql_Malloc();
 
+    if (map_config.mysql_ssl) {
+        if (Sql_SSL(SqlHandle,
+            true,
+            map_config.mysql_ssl_verify,
+            map_config.mysql_ssl_ca.c_str(),
+            map_config.mysql_ssl_cert.c_str(),
+            map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+            do_final(EXIT_FAILURE);
+        }
+    }
+
     if (Sql_Connect(SqlInstanceHandle, map_config.mysql_login.c_str(),
         map_config.mysql_password.c_str(),
         map_config.mysql_host.c_str(),

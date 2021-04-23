@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -81,7 +81,6 @@ int32 ah_cleanup(time_point tick, CTaskMgr::CTask* PTask);
 
 
 const char* SEARCH_CONF_FILENAME = "./conf/search_server.conf";
-const char* LOGIN_CONF_FILENAME = "./conf/login.conf";
 
 void TCPComm(SOCKET socket);
 
@@ -94,15 +93,10 @@ extern search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest);
 extern std::string toStr(int number);
 
 search_config_t search_config;
-login_config_t login_config;
 
 void search_config_default();
 void search_config_read(const int8* file);
 void search_config_read_from_env();
-
-void login_config_default();
-void login_config_read(const int8* file);       // We only need the search server port defined here
-void login_config_read_from_env();
 
 /************************************************************************
 *                                                                       *
@@ -172,8 +166,6 @@ int32 main(int32 argc, char **argv)
     search_config_default();
     search_config_read((const int8*)SEARCH_CONF_FILENAME);
     search_config_read_from_env();
-    login_config_read((const int8*)LOGIN_CONF_FILENAME);
-    login_config_read_from_env();
 
 #ifdef WIN32
     // Initialize Winsock
@@ -196,7 +188,7 @@ int32 main(int32 argc, char **argv)
     hints.ai_flags = AI_PASSIVE;
 
     // Resolve the server address and port
-    iResult = getaddrinfo(nullptr, login_config.search_server_port.c_str(), &hints, &result);
+    iResult = getaddrinfo(nullptr, search_config.search_server_port.c_str(), &hints, &result);
     if (iResult != 0)
     {
         ShowError("getaddrinfo failed with error: %d\n", iResult);
@@ -334,6 +326,7 @@ void search_config_default()
     search_config.expire_auctions = 1;
     search_config.expire_days = 3;
     search_config.expire_interval = 3600;
+    search_config.search_server_port = "54002";
 }
 
 /************************************************************************
@@ -401,6 +394,10 @@ void search_config_read(const int8* file)
         {
             search_config.expire_interval = atoi(w2);
         }
+        else if (strcmp(w1, "search_server_port") == 0)
+        {
+            search_config.search_server_port = std::string(w2);
+        }
         else
         {
             ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, file);
@@ -416,64 +413,7 @@ void search_config_read_from_env()
     search_config.mysql_host     = std::getenv("TPZ_DB_HOST") ? std::getenv("TPZ_DB_HOST") : search_config.mysql_host;
     search_config.mysql_port     = std::getenv("TPZ_DB_PORT") ? std::stoi(std::getenv("TPZ_DB_PORT")) : search_config.mysql_port;
     search_config.mysql_database = std::getenv("TPZ_DB_NAME") ? std::getenv("TPZ_DB_NAME") : search_config.mysql_database;
-}
-
-/************************************************************************
-*                                                                       *
-*  login_topaz                                                          *
-*                                                                       *
-************************************************************************/
-
-void login_config_default()
-{
-    login_config.search_server_port = "54002";
-}
-
-
-/************************************************************************
-*                                                                       *
-*  login_topaz                                                          *
-*                                                                       *
-************************************************************************/
-
-void login_config_read(const int8* file)
-{
-    char line[1024], w1[1024], w2[1024];
-    FILE* fp;
-
-    fp = fopen((const char*)file, "r");
-    if (fp == nullptr)
-    {
-        ShowError("configuration file not found at: %s\n", file);
-        return;
-    }
-
-    while (fgets(line, sizeof(line), fp))
-    {
-        char* ptr;
-
-        if (line[0] == '#')
-            continue;
-        if (sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2)
-            continue;
-
-        //Strip trailing spaces
-        ptr = w2 + strlen(w2);
-        while (--ptr >= w2 && *ptr == ' ');
-        ptr++;
-        *ptr = '\0';
-
-        if (strcmp(w1, "search_server_port") == 0)
-        {
-            login_config.search_server_port = std::string(w2);
-        }
-    }
-    fclose(fp);
-}
-
-void login_config_read_from_env()
-{
-    login_config.search_server_port = std::getenv("TPZ_SEARCH_PORT") ? std::getenv("TPZ_SEARCH_PORT") : login_config.search_server_port;
+    search_config.search_server_port = std::getenv("TPZ_SEARCH_PORT") ? std::getenv("TPZ_SEARCH_PORT") : search_config.search_server_port;
 }
 
 void TCPComm(SOCKET socket)

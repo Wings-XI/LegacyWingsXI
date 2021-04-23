@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 This file is part of Tonberry source code.
@@ -101,11 +101,24 @@ int32 FLnotify(CCharEntity* PChar, bool logoff, bool force)
 	}
 
     Sql_t* sqlH2 = Sql_Malloc();
-    Sql_Connect(sqlH2, map_config.mysql_login.c_str(),
+    if (map_config.mysql_ssl) {
+        if (Sql_SSL(sqlH2,
+            true,
+            map_config.mysql_ssl_verify,
+            map_config.mysql_ssl_ca.c_str(),
+            map_config.mysql_ssl_cert.c_str(),
+            map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+            return 1;
+        }
+    }
+
+    if (Sql_Connect(sqlH2, map_config.mysql_login.c_str(),
         map_config.mysql_password.c_str(),
         map_config.mysql_host.c_str(),
         map_config.mysql_port,
-        map_config.mysql_database.c_str());
+        map_config.mysql_database.c_str()) == SQL_ERROR) {
+        return 1;
+    }
 
 	uint32 callingchar;
 	uint32 listedchar;

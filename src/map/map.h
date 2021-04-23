@@ -66,6 +66,24 @@ struct map_config_t
     std::string mysql_login;        // mysql login    -> default root
     std::string mysql_password;     // mysql pass     -> default nullptr
     std::string mysql_database;     // mysql database -> default tpzdb
+    bool mysql_ssl;                 // use ssl for mysql connection
+    bool mysql_ssl_verify;          // verify the ssl peer when connecting to mysql
+    std::string mysql_ssl_ca;       // CA certificate of the mysql ssl server
+    std::string mysql_ssl_cert;     // client certificate for mysql ssl
+    std::string mysql_ssl_key;      // private key file matching the client certificate
+
+    std::string rabbitmq_host;      // rabbitmq ip addr
+    uint16 rabbitmq_port;           // rabbitmq port
+    std::string rabbitmq_login;     // rabbitmq username
+    std::string rabbitmq_password;  // rabbitmq login password
+    std::string rabbitmq_vhost;     // rabbitmq virtual host
+    bool rabbitmq_ssl;              // use ssl for rabbitmq connection
+    bool rabbitmq_ssl_verify;       // verify the ssl peer when connecting to rabbitmq
+    std::string rabbitmq_ssl_ca;    // CA certificate of the rabbitmq ssl server
+    std::string rabbitmq_ssl_cert;  // client certificate for rabbitmq ssl
+    std::string rabbitmq_ssl_key;   // private key file matching the client certificate
+
+    uint8 world_id;                 // world id as defined in login server
 
     std::string server_message;
 

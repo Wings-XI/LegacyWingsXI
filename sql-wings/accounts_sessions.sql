@@ -31,6 +31,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `accounts_sessions`;
 CREATE TABLE `accounts_sessions` (
   `accid` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `content_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `charid` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `targid` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `linkshellid1` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -45,6 +46,24 @@ CREATE TABLE `accounts_sessions` (
   `version_mismatch` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `FLsentnotif` tinyint(2) UNSIGNED DEFAULT 0,
   `client_version` varchar(16) DEFAULT NULL,
-  PRIMARY KEY (`charid`),
-  UNIQUE KEY `accid` (`accid`)
+  `expansions` smallint(6) NOT NULL DEFAULT 0,
+  `features` tinyint(4) NOT NULL DEFAULT 0,
+  `last_updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `accounts_sessions`
+--
+ALTER TABLE `accounts_sessions`
+  ADD PRIMARY KEY (`charid`),
+  ADD UNIQUE KEY `accid` (`accid`),
+  ADD UNIQUE KEY `content_id` (`content_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -478,15 +478,11 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pFeaturesSqlQuery = "SELECT features FROM accounts WHERE id = %u";
-            ret = Sql_Query(SqlHandle, pFeaturesSqlQuery, acctid);
-            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
-                PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 0));
-            }
-            const char* pClientVerQuery = "SELECT client_version FROM accounts_sessions WHERE charid = %u";
-            ret = Sql_Query(SqlHandle, pClientVerQuery, PChar->id);
+            const char* pClientFeatQuery = "SELECT client_version, features FROM accounts_sessions WHERE charid = %u";
+            ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
+                PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
             }
             PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
             PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
@@ -742,6 +738,7 @@ namespace charutils
 
 
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
+        Sql_Query(SqlHandle, "UPDATE accounts_sessions SET last_updated = NOW() WHERE charid = %u", PChar->id);
 
         if (zoning == 2)
             ShowDebug("Player <%s> logging in to zone <%u>\n", PChar->name.c_str(), PChar->getZone());

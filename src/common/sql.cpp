@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -66,6 +66,55 @@ Sql_t* Sql_Malloc(void)
 	self->keepalive = CTaskMgr::TASK_INVALID;
     self->port = 0;
 	return self;
+}
+
+/************************************************************************
+*																		*
+*  Sets up SSL connection to the database.  							*
+*  This function is (c) Wings project, licensed under AGPLv3            *
+*																		*
+************************************************************************/
+
+int Sql_SSL(Sql_t* self, bool enable, bool verify_peer, const char* ca_file, const char* cert_file, const char* key_file)
+{
+    char int_verify = 0;
+    char int_enable = 0;
+    if (enable) {
+        int_enable = 1;
+    }
+    if (verify_peer) {
+        int_verify = 1;
+    }
+    if (self == NULL) {
+        return SQL_ERROR;
+    }
+    
+    if ((ca_file != NULL) && (ca_file[0] == '\0')) {
+        ca_file = NULL;
+    }
+    if ((cert_file != NULL) && (cert_file[0] == '\0')) {
+        cert_file = NULL;
+    }
+    if ((key_file != NULL) && (key_file[0] == '\0')) {
+        key_file = NULL;
+    }
+    /* [Need to update the MariaDB lib for this to work]
+    if (mysql_options(&self->handle, MYSQL_OPT_SSL_ENFORCE, &int_enable) == SQL_ERROR) {
+        ShowSQL("%s\n", mysql_error(&self->handle));
+        return SQL_ERROR;
+    }
+    */
+    if (mysql_options(&self->handle, MYSQL_OPT_SSL_VERIFY_SERVER_CERT, &int_verify) == SQL_ERROR) {
+        ShowSQL("%s\n", mysql_error(&self->handle));
+        return SQL_ERROR;
+    }
+    
+    if (mysql_ssl_set(&self->handle, key_file, cert_file, ca_file, NULL, NULL) == SQL_ERROR) {
+        ShowSQL("%s\n", mysql_error(&self->handle));
+        return SQL_ERROR;
+    }
+    self->handle.options.use_ssl = 1;
+    return SQL_SUCCESS;
 }
 
 /************************************************************************
