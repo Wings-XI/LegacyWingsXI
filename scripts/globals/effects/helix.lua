@@ -14,9 +14,10 @@ end
 
 function onEffectTick(target, effect)
     local dmg = utils.stoneskin(target, effect:getPower())
-
+    local flags = {breakBind=false}
     if (dmg > 0) then
-        target:takeDamage(dmg)
+        -- we dont care about attacker, attack type, or dmg type
+        target:takeDamage(dmg, nil, nil, nil, flags)
     end
 
     if (effect:getTick() == 3000) then
