@@ -23,6 +23,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MAIN_DMG_RATING, 40)
     mob:setMod(tpz.mod.DEFP, -5)
     mob:setMod(tpz.mod.EVA, -20)
+    mob:addRoamFlag(256)
 end
 
 -- Reset restHP when re-engaging after a sandpit
@@ -43,18 +44,20 @@ function onMobFight(mob, target)
         mob:setLocalVar('Sandpits', mob:getLocalVar('Sandpits') + 1)
         mob:useMobAbility(276)
         mob:timer(4000, function(tuchulcha)
-            if mob:getHP() == 0 then return end
-            tuchulcha:disengage()
-            tuchulcha:setMobMod(tpz.mobMod.NO_MOVE, 1)
-            tuchulcha:setMobMod(tpz.mobMod.NO_REST, 1)
-            local pos_index = tuchulcha:getLocalVar("sand_pit" .. tuchulcha:getLocalVar('Sandpits'))
-            local coords = ID.sheepInAntlionsClothing[tuchulcha:getBattlefield():getArea()].ant_positions[pos_index]
-            tuchulcha:setPos(coords)
-            for _, char in pairs(tuchulcha:getBattlefield():getPlayers()) do
-                char:messageSpecial(ID.text.TUCHULCHA_SANDPIT)
-                char:disengage()
-                if char:hasPet() then
-                    char:petRetreat()
+            if tuchulcha:isAlive() == true then
+                tuchulcha:disengage()
+                tuchulcha:setMobMod(tpz.mobMod.NO_MOVE, 1)
+                tuchulcha:setMobMod(tpz.mobMod.NO_REST, 1)
+                local pos_index = tuchulcha:getLocalVar("sand_pit" .. tuchulcha:getLocalVar('Sandpits'))
+                local coords = ID.sheepInAntlionsClothing[tuchulcha:getBattlefield():getArea()].ant_positions[pos_index]
+                tuchulcha:setSpawn(coords[1],coords[2],coords[3],0)
+                tuchulcha:setPos(coords)
+                for _, char in pairs(tuchulcha:getBattlefield():getPlayers()) do
+                    char:messageSpecial(ID.text.TUCHULCHA_SANDPIT)
+                    char:disengage()
+                    if char:hasPet() then
+                        char:petRetreat()
+                    end
                 end
             end
         end)
