@@ -176,10 +176,18 @@ void LoginServer::Run()
                         static_cast<ProtocolFactory::LOGIN_PROTOCOLS>(mvecListeningSockets[i].iAssociatedProtocol),
                         NewTCPConnection);
                     pNewHandler->StartThread();
+                    time_t tmStartWait = time(NULL);
+                    time_t tmNow = tmStartWait;
+                    bool bErrorStarting = false;
                     while ((pNewHandler->IsRunning() == false) && (pNewHandler->IsFinished() == false)) {
                         std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                        tmNow = time(NULL);
+                        if (tmNow - tmStartWait > 5) {
+                            bErrorStarting = true;
+                            break;
+                        }
                     }
-                    if (pNewHandler->IsFinished()) {
+                    if (bErrorStarting || pNewHandler->IsFinished()) {
                         LOG_ERROR("Thread exited prematurely, discarding.");
                         delete pNewHandler;
                     }

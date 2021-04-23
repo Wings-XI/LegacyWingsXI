@@ -202,7 +202,6 @@ void LoginSession::LoadCharacterList()
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
     LOCK_DB;
-    LOCK_CONFIG;
 
     // First, query all content ids, which should be in the table even if not
     // yet associated with a character.

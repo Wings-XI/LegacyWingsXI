@@ -168,7 +168,6 @@ void WorldManager::LoadWorlds()
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
     LOCK_DB;
-    LOCK_CONFIG;
 
     std::string strSqlQueryFmt("SELECT id, name, db_server_ip, db_server_port, "
         "db_use_ssl, db_ssl_verify_cert, db_ssl_ca_cert, db_ssl_client_cert, "
