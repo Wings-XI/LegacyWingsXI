@@ -369,11 +369,24 @@ void LoadMOBList()
     int32 ret = Sql_Query(SqlHandle, Query, map_ip.s_addr, address, map_port);
 
     Sql_t* sqlH2 = Sql_Malloc();
-    Sql_Connect(sqlH2, map_config.mysql_login.c_str(),
+    if (map_config.mysql_ssl) {
+        if (Sql_SSL(sqlH2,
+            true,
+            map_config.mysql_ssl_verify,
+            map_config.mysql_ssl_ca.c_str(),
+            map_config.mysql_ssl_cert.c_str(),
+            map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+            return;
+        }
+    }
+
+    if (Sql_Connect(sqlH2, map_config.mysql_login.c_str(),
         map_config.mysql_password.c_str(),
         map_config.mysql_host.c_str(),
         map_config.mysql_port,
-        map_config.mysql_database.c_str());
+        map_config.mysql_database.c_str()) == SQL_ERROR) {
+        return;
+    }
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
     {

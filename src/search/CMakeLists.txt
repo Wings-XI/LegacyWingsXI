@@ -19,7 +19,7 @@ add_executable(topaz_search
     ${resource})
 
 if(WIN32)
-    set_target_properties(topaz_search PROPERTIES OUTPUT_NAME topaz_search${spacer}${platform_suffix})
+    set_target_properties(topaz_search PROPERTIES OUTPUT_NAME topaz_search${spacer}${platform_suffix} DEBUG_POSTFIX _d)
 endif()
 
 target_compile_definitions(

@@ -21,7 +21,7 @@ endif()
 add_executable(topaz_connect ${SOURCES} ${resource})
 
 if(WIN32)
-    set_target_properties(topaz_connect PROPERTIES OUTPUT_NAME topaz_connect${spacer}${platform_suffix})
+    set_target_properties(topaz_connect PROPERTIES OUTPUT_NAME topaz_connect${spacer}${platform_suffix} DEBUG_POSTFIX _d)
 endif()
 
 target_compile_definitions(

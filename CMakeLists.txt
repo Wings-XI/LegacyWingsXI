@@ -36,19 +36,33 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(LOCAL_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/ext/include)
 set(LOCAL_LIB_PATH ${PROJECT_SOURCE_DIR}/ext/${libpath})
+set(LOCAL_BIN_PATH ${PROJECT_SOURCE_DIR}/ext/${binpath})
 message(STATUS "LOCAL_INCLUDE_PATH: ${LOCAL_INCLUDE_PATH}")
 message(STATUS "LOCAL_LIB_PATH: ${LOCAL_LIB_PATH}")
+message(STATUS "LOCAL_BIN_PATH: ${LOCAL_BIN_PATH}")
 
 # Find Threads (pthread)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 link_libraries(${CMAKE_THREAD_LIBS_INIT})
 
+# Find ZLIB
+find_package(ZLIB REQUIRED)
+
+# Find OpenSSL
+find_package(OpenSSL REQUIRED)
+
 # Find MySQL
 find_package(MySQL REQUIRED)
 
-# Find ZMQ
-find_package(ZeroMQ REQUIRED)
+# Find MariaDB++
+find_package(MariaDBPP REQUIRED)
+
+# Find ZMQ (deprecated)
+# find_package(ZeroMQ REQUIRED)
+
+# Find RabbitMQ
+find_package(RabbitMQ REQUIRED)
 
 # Find LuaJIT
 find_package(LuaJIT)
@@ -69,5 +83,7 @@ set_no_warnings(no_warnings)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_SOURCE_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO  ${CMAKE_SOURCE_DIR})
 
 add_subdirectory(src)

@@ -266,6 +266,17 @@ int32 do_init(int32 argc, char** argv)
     SqlHandle = Sql_Malloc();
 
     ShowStatus("do_init: sqlhandle is allocating");
+    if (map_config.mysql_ssl) {
+        if (Sql_SSL(SqlHandle,
+            true,
+            map_config.mysql_ssl_verify,
+            map_config.mysql_ssl_ca.c_str(),
+            map_config.mysql_ssl_cert.c_str(),
+            map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+            do_final(EXIT_FAILURE);
+        }
+    }
+
     if (Sql_Connect(SqlHandle, map_config.mysql_login.c_str(),
         map_config.mysql_password.c_str(),
         map_config.mysql_host.c_str(),
@@ -480,6 +491,17 @@ int32 do_sockets(fd_set* rfd, duration next)
     // Check that we still have a DB connection, attempt to recover if needed
     if (!SqlHandle) {
         SqlHandle = Sql_Malloc();
+
+        if (map_config.mysql_ssl) {
+            if (Sql_SSL(SqlHandle,
+                true,
+                map_config.mysql_ssl_verify,
+                map_config.mysql_ssl_ca.c_str(),
+                map_config.mysql_ssl_cert.c_str(),
+                map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+                exit(EXIT_FAILURE);
+            }
+        }
 
         if (Sql_Connect(SqlHandle, map_config.mysql_login.c_str(),
             map_config.mysql_password.c_str(),
@@ -1181,6 +1203,16 @@ int32 map_config_default()
     map_config.mysql_password = "root";
     map_config.mysql_database = "tpzdb";
     map_config.mysql_port = 3306;
+    map_config.mysql_ssl = false;
+    map_config.mysql_ssl_verify = false;
+    map_config.rabbitmq_host = "127.0.0.1";
+    map_config.rabbitmq_port = 5672;
+    map_config.rabbitmq_login = "topaz";
+    map_config.rabbitmq_password = "topaz";
+    map_config.rabbitmq_vhost = "TOPAZ_MAP";
+    map_config.rabbitmq_ssl = false;
+    map_config.rabbitmq_ssl_verify = false;
+    map_config.world_id = 100;
     map_config.server_message = "";
     map_config.buffer_size = 1800;
     map_config.ah_base_fee_single = 1;
@@ -1604,6 +1636,70 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "mysql_database") == 0)
         {
             map_config.mysql_database = std::string(w2);
+        }
+        else if (strcmp(w1, "mysql_ssl") == 0)
+        {
+        map_config.mysql_ssl = atoi(w2);
+        }
+        else if (strcmp(w1, "mysql_ssl_verify") == 0)
+        {
+        map_config.mysql_ssl_verify = atoi(w2);
+        }
+        else if (strcmp(w1, "mysql_ssl_ca") == 0)
+        {
+        map_config.mysql_ssl_ca = std::string(w2);
+        }
+        else if (strcmp(w1, "mysql_ssl_cert") == 0)
+        {
+        map_config.mysql_ssl_cert = std::string(w2);
+        }
+        else if (strcmp(w1, "mysql_ssl_key") == 0)
+        {
+        map_config.mysql_ssl_key = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_host") == 0)
+        {
+            map_config.rabbitmq_host = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_port") == 0)
+        {
+            map_config.rabbitmq_port = atoi(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_login") == 0)
+        {
+            map_config.rabbitmq_login = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_password") == 0)
+        {
+            map_config.rabbitmq_password = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_vhost") == 0)
+        {
+            map_config.rabbitmq_vhost = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_ssl") == 0)
+        {
+            map_config.rabbitmq_ssl = atoi(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_ssl_verify") == 0)
+        {
+            map_config.rabbitmq_ssl_verify = atoi(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_ssl_ca") == 0)
+        {
+            map_config.rabbitmq_ssl_ca = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_ssl_cert") == 0)
+        {
+            map_config.rabbitmq_ssl_cert = std::string(w2);
+        }
+        else if (strcmp(w1, "rabbitmq_ssl_key") == 0)
+        {
+            map_config.rabbitmq_ssl_key = std::string(w2);
+        }
+        else if (strcmp(w1, "world_id") == 0)
+        {
+            map_config.world_id = atoi(w2);
         }
         else if (strcmpi(w1, "import") == 0)
         {

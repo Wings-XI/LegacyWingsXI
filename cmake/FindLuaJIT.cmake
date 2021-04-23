@@ -7,29 +7,30 @@ find_library(LuaJIT_LIBRARY
     NAMES 
         luajit luajit_64 luajit-5.1 libluajit libluajit_64
     PATHS
-        ${LOCAL_LIB_PATH}
-        ${PROJECT_SOURCE_DIR}
         /usr/
         /usr/bin/
         /usr/include/
         /usr/lib/
         /usr/local/
         /usr/local/bin/
-        /opt/)
+        /opt/
+        ${LOCAL_LIB_PATH}
+        ${PROJECT_SOURCE_DIR})
 
 find_path(LuaJIT_INCLUDE_DIR 
     NAMES 
         lua.h
     PATHS
-        ${LOCAL_INCLUDE_PATH}
-        ${PROJECT_SOURCE_DIR}/src/common/lua
         /usr/
         /usr/bin/
         /usr/include/
+        /usr/include/luajit-2.0/
         /usr/lib/
         /usr/local/
         /usr/local/bin/
-        /opt/)
+        /opt/
+        ${LOCAL_INCLUDE_PATH}
+        ${PROJECT_SOURCE_DIR}/src/common/lua)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LuaJIT DEFAULT_MSG LuaJIT_LIBRARY LuaJIT_INCLUDE_DIR)

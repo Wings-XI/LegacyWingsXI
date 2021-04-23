@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+﻿// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _COMMON_SQL_H
@@ -87,6 +87,9 @@ struct Sql_t
 
 /// Allocates and initializes a new Sql handle.
 struct Sql_t* Sql_Malloc(void);
+
+/// Enables an SSL connection
+int Sql_SSL(Sql_t* self, bool enable, bool verify_peer, const char* ca_file, const char* cert_file, const char* key_file);
 
 /// Establishes a connection.
 ///

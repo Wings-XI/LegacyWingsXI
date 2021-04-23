@@ -23,6 +23,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <queue>
 
 #include "message.h"
+#include "../new-common/MQConnection.h"
+#include "../new-common/CommonMessages.h"
 
 #include "party.h"
 #include "alliance.h"
@@ -40,29 +42,183 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/zoneutils.h"
 #include "utils/jailutils.h"
 #include "utils/flistutils.h"
-#include "utils/flistutils.h"
 #include "items/item_linkshell.h"
+
+
+#pragma pack(push, 1)
+
+typedef struct _MAP_MQ_MESSAGE_HEADER
+{
+    uint64 origin;
+    MSGSERVTYPE type;
+    uint32 packet_size;
+    uint32 extra_size;
+} MAP_MQ_MESSAGE_HEADER;
+
+#pragma pack(pop)
 
 namespace message
 {
-    zmq::context_t zContext;
-    zmq::socket_t* zSocket = nullptr;
     std::recursive_mutex send_mutex;
-    std::queue<chat_message_t> message_queue;
+    std::queue<uint8*> message_queue;
     uint64 own_identity;
+    std::shared_ptr<MQConnection> g_mqconnection = nullptr;
+    std::shared_ptr<MapMQHandler> g_handler = nullptr;
+    bool g_being_closed = false;
+
+    void route_message(uint8* msg)
+    {
+        int ret = SQL_ERROR;
+        bool ipstring = false;
+        MAP_MQ_MESSAGE_HEADER* header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(msg);
+        MSGSERVTYPE type = header->type;
+        uint8* extra = msg + sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size;
+        // TODO: Probably use a different routing key for each linkshell / party etc.
+        // to avoid having to send multiple messages. Better make it run as is for
+        // now and change it if we really see a performance issue.
+        bool broadcast = false;
+
+        switch (type)
+        {
+        case MSG_CHAT_TELL:
+        case MSG_LINKSHELL_RANK_CHANGE:
+        case MSG_LINKSHELL_REMOVE:
+        {
+            const char* query = "SELECT server_addr, server_port FROM accounts_sessions LEFT JOIN chars ON "
+                "accounts_sessions.charid = chars.charid WHERE charname = '%s' LIMIT 1;";
+            ret = Sql_Query(SqlHandle, query, (int8*)extra + 4);
+            if (Sql_NumRows(SqlHandle) == 0)
+            {
+                query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d LIMIT 1;";
+                ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint32*>(extra));
+            }
+            break;
+        }
+        case MSG_CHAT_PARTY:
+        case MSG_PT_RELOAD:
+        case MSG_PT_DISBAND:
+        {
+            const char* query = "SELECT server_addr, server_port, MIN(charid) FROM accounts_sessions JOIN accounts_parties USING (charid) "
+                "WHERE IF (allianceid <> 0, allianceid = (SELECT MAX(allianceid) FROM accounts_parties WHERE partyid = %d), "
+                "partyid = %d) GROUP BY server_addr, server_port;";
+            uint32 partyid = *reinterpret_cast<uint32*>(extra);
+            ret = Sql_Query(SqlHandle, query, partyid, partyid);
+            break;
+        }
+        case MSG_CHAT_LINKSHELL:
+        {
+            const char* query = "SELECT server_addr, server_port FROM accounts_sessions "
+                "WHERE linkshellid1 = %d OR linkshellid2 = %d GROUP BY server_addr, server_port;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint32*>(extra), *reinterpret_cast<uint32*>(extra));
+            break;
+        }
+        case MSG_CHAT_YELL:
+        {
+            broadcast = true;
+            //const char* query = "SELECT zoneip, zoneport FROM zone_settings WHERE misc & 1024 GROUP BY zoneip, zoneport;";
+            //ret = Sql_Query(SqlHandle, query);
+            //ipstring = true;
+            break;
+        }
+        case MSG_CHAT_SERVMES:
+        case MSG_NEW_TICKET:
+        {
+            broadcast = true;
+            //const char* query = "SELECT zoneip, zoneport FROM zone_settings GROUP BY zoneip, zoneport;";
+            //ret = Sql_Query(SqlHandle, query);
+            //ipstring = true;
+            break;
+        }
+        case MSG_PT_INVITE:
+        case MSG_PT_INV_RES:
+        case MSG_DIRECT:
+        case MSG_SEND_TO_ZONE:
+        {
+            const char* query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint32*>(extra));
+            break;
+        }
+        case MSG_SEND_TO_ENTITY:
+        {
+            const char* query = "SELECT zoneip, zoneport FROM zone_settings WHERE zoneid = %d;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint16*>(extra + 2));
+            ipstring = true;
+            break;
+        }
+        case MSG_SEND_FL_NOTIF:
+        {
+            const char* query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d LIMIT 1;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint32*>(extra + 1));
+            break;
+        }
+        case MSG_LOGIN:
+        {
+            // no op
+            break;
+        }
+        default:
+        {
+            ShowDebug("Message: unknown type received: %u\n", static_cast<uint8>(type));
+            break;
+        }
+        }
+
+        if (broadcast || ret != SQL_ERROR)
+        {
+            ShowDebug("Message: Received message %u\n", static_cast<uint8>(type));
+
+            if (broadcast) {
+                ShowDebug("Message:  -> sending broadcast\n");
+                g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
+            }
+            else {
+                while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    uint64 ipp = 0;
+
+                    if (ipstring)
+                    {
+                        inet_pton(AF_INET, (const char*)Sql_GetData(SqlHandle, 0), &ipp);
+                    }
+                    else
+                    {
+                        ipp = Sql_GetUIntData(SqlHandle, 0);
+                    }
+
+                    uint64 port = Sql_GetUIntData(SqlHandle, 1);
+                    ipp |= (port << 32);
+
+                    if (ipp != own_identity) {
+                        std::string strTargetQueue = "map_" + std::to_string(ipp);
+
+                        ShowDebug("Message:  -> sending to %s\n", strTargetQueue.c_str());
+
+                        if (type == MSG_CHAT_PARTY || type == MSG_PT_RELOAD || type == MSG_PT_DISBAND)
+                        {
+                            *reinterpret_cast<uint32*>(extra) = Sql_GetUIntData(SqlHandle, 2);
+                        }
+
+                        g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
+                    }
+                    else {
+                        ShowDebug("Message:  -> loopback\n");
+                    }
+
+                }
+            }
+        }
+    }
 
     void send_queue()
     {
         while (!message_queue.empty())
         {
             std::lock_guard<std::recursive_mutex> lk(send_mutex);
-            chat_message_t msg = message_queue.front();
+            uint8* msg = message_queue.front();
             message_queue.pop();
             try
             {
-                zSocket->send(*msg.type, ZMQ_SNDMORE);
-                zSocket->send(*msg.data, ZMQ_SNDMORE);
-                zSocket->send(*msg.packet);
+                route_message(msg);
             }
             catch (std::exception& e)
             {
@@ -71,21 +227,30 @@ namespace message
         }
     }
 
-    void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet, bool from_self)
+    MapMQHandler::MapMQHandler()
+    {
+    }
+
+    MapMQHandler::~MapMQHandler()
+    {
+    }
+
+    void MapMQHandler::parse(MSGSERVTYPE type, uint8* extra, size_t extra_size, uint8* packet, size_t packet_size, bool from_self)
     {
         ShowDebug("Message: Received message %u from message server\n", static_cast<uint8>(type));
         switch (type)
         {
         case MSG_LOGIN:
         {
-            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+            // Not sent by new-login. Kept for partial backwards compatibility.
+            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
 
             if (!PChar)
             {
-                Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %d;", ref<uint32>((uint8*)extra->data(), 0));
+                Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %d;", ref<uint32>((uint8*)extra, 0));
                 // flist stuff
-                if (FLgetSettingByID(ref<uint32>((uint8*)extra->data(), 0), 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), ref<uint32>((uint8*)extra->data(), 0)); }
-                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", ref<uint32>((uint8*)extra->data(), 0));
+                if (FLgetSettingByID(ref<uint32>((uint8*)extra, 0), 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), ref<uint32>((uint8*)extra, 0)); }
+                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", ref<uint32>((uint8*)extra, 0));
                 //FLnotify()
             }
             else
@@ -99,7 +264,7 @@ namespace message
         }
         case MSG_CHAT_TELL:
         {
-            int8* targetCharName = (int8*)extra->data() + 4;
+            int8* targetCharName = (int8*)extra + 4;
             CCharEntity* PChar = zoneutils::GetCharByName(targetCharName);;
             bool charNotFound = false;
             if (!PChar) {
@@ -111,11 +276,11 @@ namespace message
             if (PChar && PChar->status != STATUS_DISAPPEAR && !jailutils::InPrison(PChar))
             {
                 std::unique_ptr<CBasicPacket> newPacket = std::make_unique<CBasicPacket>();
-                memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
                 auto gm_sent = newPacket->ref<uint8>(0x05);
                 if (PChar->nameflags.flags & FLAG_AWAY && !gm_sent)
                 {
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedAway));
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedAway));
                 }
                 else
                 {
@@ -125,14 +290,14 @@ namespace message
             else
             {
                 if (charNotFound || (PChar && from_self) || (!PChar && !from_self)) {
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageStandardPacket(PChar, 0, 0, MsgStd::TellNotReceivedOffline));
                 }
             }
             break;
         }
         case MSG_CHAT_PARTY:
         {
-            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
             if (PChar)
             {
                 if (PChar->PParty)
@@ -142,15 +307,15 @@ namespace message
                         for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyList.size(); ++i)
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
-                            memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
-                            ((CParty*)PChar->PParty->m_PAlliance->partyList.at(i))->PushPacket(ref<uint32>((uint8*)extra->data(), 4), 0, newPacket);
+                            memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
+                            ((CParty*)PChar->PParty->m_PAlliance->partyList.at(i))->PushPacket(ref<uint32>((uint8*)extra, 4), 0, newPacket);
                         }
                     }
                     else
                     {
                         CBasicPacket* newPacket = new CBasicPacket();
-                        memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
-                        PChar->PParty->PushPacket(ref<uint32>((uint8*)extra->data(), 4), 0, newPacket);
+                        memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
+                        PChar->PParty->PushPacket(ref<uint32>((uint8*)extra, 4), 0, newPacket);
                     }
                 }
             }
@@ -158,29 +323,29 @@ namespace message
         }
         case MSG_CHAT_LINKSHELL:
         {
-            uint32 linkshellID = ref<uint32>((uint8*)extra->data(), 0);
+            uint32 linkshellID = ref<uint32>((uint8*)extra, 0);
             CLinkshell* PLinkshell = linkshell::GetLinkshell(linkshellID);
             if (PLinkshell)
             {
                 CBasicPacket* newPacket = new CBasicPacket();
-                memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
-                PLinkshell->PushPacket(ref<uint32>((uint8*)extra->data(), 4), newPacket);
+                memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
+                PLinkshell->PushPacket(ref<uint32>((uint8*)extra, 4), newPacket);
             }
             break;
         }
         case MSG_CHAT_YELL:
         {
-            zoneutils::ForEachZone([&packet, &extra](CZone* PZone)
+            zoneutils::ForEachZone([&packet, &extra, packet_size](CZone* PZone)
             {
                 if (PZone->CanUseMisc(MISC_YELL))
                 {
-                    PZone->ForEachChar([&packet, &extra](CCharEntity* PChar)
+                    PZone->ForEachChar([&packet, &extra, packet_size](CCharEntity* PChar)
                     {
                         // don't push to sender
-                        if (PChar->id != ref<uint32>((uint8*)extra->data(), 0))
+                        if (PChar->id != ref<uint32>((uint8*)extra, 0))
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
-                            memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                            memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
 
                             PChar->pushPacket(newPacket);
                         }
@@ -191,12 +356,12 @@ namespace message
         }
         case MSG_CHAT_SERVMES:
         {
-            zoneutils::ForEachZone([&packet](CZone* PZone)
+            zoneutils::ForEachZone([&packet, packet_size](CZone* PZone)
             {
-                PZone->ForEachChar([&packet](CCharEntity* PChar)
+                PZone->ForEachChar([&packet, packet_size](CCharEntity* PChar)
                 {
                     CBasicPacket* newPacket = new CBasicPacket();
-                    memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                    memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
                     PChar->pushPacket(newPacket);
                 });
             });
@@ -204,9 +369,9 @@ namespace message
         }
         case MSG_PT_INVITE:
         {
-            uint32 id = ref<uint32>((uint8*)extra->data(), 0);
+            uint32 id = ref<uint32>((uint8*)extra, 0);
             // uint16 targid = ref<uint16>((uint8*)extra->data(), 4);
-            uint8 inviteType = ref<uint8>((uint8*)packet->data(), 0x0B);
+            uint8 inviteType = ref<uint8>((uint8*)packet, 0x0B);
             CCharEntity* PInvitee = zoneutils::GetChar(id);
 
             if (PInvitee)
@@ -215,44 +380,44 @@ namespace message
                 if (PInvitee->isDead() || jailutils::InPrison(PInvitee) || PInvitee->InvitePending.id != 0 || (PInvitee->PParty && inviteType == INVITE_PARTY) ||
                     (inviteType == INVITE_ALLIANCE && (!PInvitee->PParty || PInvitee->PParty->GetLeader() != PInvitee || PInvitee->PParty->m_PAlliance)))
                 {
-                    ref<uint32>((uint8*)extra->data(), 0) = ref<uint32>((uint8*)extra->data(), 6);
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInvite));
+                    ref<uint32>((uint8*)extra, 0) = ref<uint32>((uint8*)extra, 6);
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInvite));
                     return;
                 }
                 // check /blockaid
                 if (PInvitee->getBlockingAid())
                 {
-                    ref<uint32>((uint8*)extra->data(), 0) = ref<uint32>((uint8*)extra->data(), 6);
+                    ref<uint32>((uint8*)extra, 0) = ref<uint32>((uint8*)extra, 6);
                     // Target is blocking assistance
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageSystemPacket(0, 0, 225));
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageSystemPacket(0, 0, 225));
                     // Interaction was blocked
                     PInvitee->pushPacket(new CMessageSystemPacket(0, 0, 226));
                     // You cannot invite that person at this time.
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInvite));
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInvite));
                     break;
                 }
                 if (PInvitee->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
                 {
-                    ref<uint32>((uint8*)extra->data(), 0) = ref<uint32>((uint8*)extra->data(), 6);
-                    send(MSG_DIRECT, extra->data(), sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInviteLevelSync));
+                    ref<uint32>((uint8*)extra, 0) = ref<uint32>((uint8*)extra, 6);
+                    send(MSG_DIRECT, extra, sizeof(uint32), new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::CannotInviteLevelSync));
                     return;
                 }
 
-                PInvitee->InvitePending.id = ref<uint32>((uint8*)extra->data(), 6);
-                PInvitee->InvitePending.targid = ref<uint16>((uint8*)extra->data(), 10);
+                PInvitee->InvitePending.id = ref<uint32>((uint8*)extra, 6);
+                PInvitee->InvitePending.targid = ref<uint16>((uint8*)extra, 10);
                 CBasicPacket* newPacket = new CBasicPacket();
-                memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
                 PInvitee->pushPacket(newPacket);
             }
             break;
         }
         case MSG_PT_INV_RES:
         {
-            uint32 inviterId = ref<uint32>((uint8*)extra->data(), 0);
+            uint32 inviterId = ref<uint32>((uint8*)extra, 0);
             // uint16 inviterTargid = ref<uint16>((uint8*)extra->data(), 4);
-            uint32 inviteeId = ref<uint32>((uint8*)extra->data(), 6);
+            uint32 inviteeId = ref<uint32>((uint8*)extra, 6);
             // uint16 inviteeTargid = ref<uint16>((uint8*)extra->data(), 10);
-            uint8 inviteAnswer = ref<uint8>((uint8*)extra->data(), 12);
+            uint8 inviteAnswer = ref<uint8>((uint8*)extra, 12);
             CCharEntity* PInviter = zoneutils::GetChar(inviterId);
 
             if (PInviter)
@@ -280,7 +445,7 @@ namespace message
                             }
                             else
                             {
-                                send(MSG_DIRECT, (uint8*)extra->data() + 6, sizeof(uint32), new CMessageStandardPacket(PInviter, 0, 0, MsgStd::CannotBeProcessed));
+                                send(MSG_DIRECT, (uint8*)extra + 6, sizeof(uint32), new CMessageStandardPacket(PInviter, 0, 0, MsgStd::CannotBeProcessed));
                             }
                         }
                         else
@@ -312,9 +477,9 @@ namespace message
         }
         case MSG_PT_RELOAD:
         {
-            if (extra->size() == 8)
+            if (extra_size == 8)
             {
-                CCharEntity* PChar = zoneutils::GetCharToUpdate(ref<uint32>((uint8*)extra->data(), 4), ref<uint32>((uint8*)extra->data(), 0));
+                CCharEntity* PChar = zoneutils::GetCharToUpdate(ref<uint32>((uint8*)extra, 4), ref<uint32>((uint8*)extra, 0));
                 if (PChar)
                 {
                     PChar->ReloadPartyInc();
@@ -323,7 +488,7 @@ namespace message
             }
             else
             {
-                CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+                CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
                 if (PChar)
                 {
                     PChar->ForAlliance([](CBattleEntity* PMember)
@@ -337,8 +502,8 @@ namespace message
         }
         case MSG_PT_DISBAND:
         {
-            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
-            uint32 id = ref<uint32>((uint8*)extra->data(), 4);
+            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
+            uint32 id = ref<uint32>((uint8*)extra, 4);
             if (PChar)
             {
                 if (PChar->PParty)
@@ -357,56 +522,56 @@ namespace message
         }
         case MSG_DIRECT:
         {
-            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
             if (PChar)
             {
                 CBasicPacket* newPacket = new CBasicPacket();
-                memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
                 PChar->pushPacket(newPacket);
             }
             break;
         }
         case MSG_LINKSHELL_RANK_CHANGE:
         {
-            CLinkshell* PLinkshell = linkshell::GetLinkshell(ref<uint32>((uint8*)extra->data(), 24));
+            CLinkshell* PLinkshell = linkshell::GetLinkshell(ref<uint32>((uint8*)extra, 24));
 
             if (PLinkshell)
             {
-                PLinkshell->ChangeMemberRank((int8*)extra->data() + 4, ref<uint8>((uint8*)extra->data(), 28));
+                PLinkshell->ChangeMemberRank((int8*)extra + 4, ref<uint8>((uint8*)extra, 28));
             }
             break;
         }
         case MSG_LINKSHELL_REMOVE:
         {
-            CCharEntity* PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
+            CCharEntity* PChar = zoneutils::GetCharByName((int8*)extra + 4);
 
-            if (PChar && PChar->PLinkshell1 && PChar->PLinkshell1->getID() == ref<uint32>((uint8*)extra->data(), 24))
+            if (PChar && PChar->PLinkshell1 && PChar->PLinkshell1->getID() == ref<uint32>((uint8*)extra, 24))
             {
-                uint8 kickerRank = ref<uint8>((uint8*)extra->data(), 28);
+                uint8 kickerRank = ref<uint8>((uint8*)extra, 28);
                 CItemLinkshell* targetLS = (CItemLinkshell*)PChar->getEquip(SLOT_LINK1);
                 if (targetLS && (kickerRank == LSTYPE_LINKSHELL || (kickerRank == LSTYPE_PEARLSACK && targetLS->GetLSType() == LSTYPE_LINKPEARL)))
                 {
-                    PChar->PLinkshell1->RemoveMemberByName((int8*)extra->data() + 4, (targetLS->GetLSType() == LSTYPE_LINKSHELL ? LSTYPE_PEARLSACK : kickerRank));
+                    PChar->PLinkshell1->RemoveMemberByName((int8*)extra + 4, (targetLS->GetLSType() == LSTYPE_LINKSHELL ? LSTYPE_PEARLSACK : kickerRank));
                 }
             }
-            else if (PChar && PChar->PLinkshell2 && PChar->PLinkshell2->getID() == ref<uint32>((uint8*)extra->data(), 24))
+            else if (PChar && PChar->PLinkshell2 && PChar->PLinkshell2->getID() == ref<uint32>((uint8*)extra, 24))
             {
-                uint8 kickerRank = ref<uint8>((uint8*)extra->data(), 28);
+                uint8 kickerRank = ref<uint8>((uint8*)extra, 28);
                 CItemLinkshell* targetLS = (CItemLinkshell*)PChar->getEquip(SLOT_LINK2);
                 if (targetLS && (kickerRank == LSTYPE_LINKSHELL || (kickerRank == LSTYPE_PEARLSACK && targetLS->GetLSType() == LSTYPE_LINKPEARL)))
                 {
-                    PChar->PLinkshell2->RemoveMemberByName((int8*)extra->data() + 4, kickerRank);
+                    PChar->PLinkshell2->RemoveMemberByName((int8*)extra + 4, kickerRank);
                 }
             }
             break;
         }
         case MSG_SEND_TO_ZONE:
         {
-            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+            CCharEntity* PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra, 0));
 
             if (PChar && PChar->loc.zone)
             {
-                uint32 requester = ref<uint32>((uint8*)extra->data(), 4);
+                uint32 requester = ref<uint32>((uint8*)extra, 4);
 
                 if (requester != 0)
                 {
@@ -425,12 +590,12 @@ namespace message
                     break;
                 }
 
-                uint16 zoneId = ref<uint16>((uint8*)extra->data(), 8);
-                float x = ref<float>((uint8*)extra->data(), 10);
-                float y = ref<float>((uint8*)extra->data(), 14);
-                float z = ref<float>((uint8*)extra->data(), 18);
-                uint8 rot = ref<uint8>((uint8*)extra->data(), 22);
-                uint32 moghouseID = ref<uint32>((uint8*)extra->data(), 23);
+                uint16 zoneId = ref<uint16>((uint8*)extra, 8);
+                float x = ref<float>((uint8*)extra, 10);
+                float y = ref<float>((uint8*)extra, 14);
+                float z = ref<float>((uint8*)extra, 18);
+                uint8 rot = ref<uint8>((uint8*)extra, 22);
+                uint32 moghouseID = ref<uint32>((uint8*)extra, 23);
 
                 PChar->updatemask = 0;
 
@@ -454,21 +619,21 @@ namespace message
         case MSG_SEND_TO_ENTITY:
         {
             // Need to check which server we're on so we don't get null pointers
-            bool toTargetServer = ref<bool>((uint8*)extra->data(), 0);
-            bool spawnedOnly    = ref<bool>((uint8*)extra->data(), 1);
+            bool toTargetServer = ref<bool>((uint8*)extra, 0);
+            bool spawnedOnly    = ref<bool>((uint8*)extra, 1);
 
             if (toTargetServer) // This is going to the target's game server
             {
-                CBaseEntity* Entity = zoneutils::GetEntity(ref<uint32>((uint8*)extra->data(), 6));
+                CBaseEntity* Entity = zoneutils::GetEntity(ref<uint32>((uint8*)extra, 6));
 
                 if (Entity && Entity->loc.zone)
                 {
                     char buf[22];
                     memset(&buf[0], 0, sizeof(buf));
 
-                    uint16 targetZone = ref<uint16>((uint8*)extra->data(),  2);
-                    uint16 playerZone = ref<uint16>((uint8*)extra->data(),  4);
-                    uint16 playerID   = ref<uint16>((uint8*)extra->data(), 10);
+                    uint16 targetZone = ref<uint16>((uint8*)extra,  2);
+                    uint16 playerZone = ref<uint16>((uint8*)extra,  4);
+                    uint16 playerID   = ref<uint16>((uint8*)extra, 10);
 
                     float X = Entity->GetXPos();
                     float Y = Entity->GetYPos();
@@ -517,17 +682,17 @@ namespace message
             }
             else // This is going to the player's game server
             {
-                CCharEntity* PChar = zoneutils::GetChar(ref<uint16>((uint8*)extra->data(), 4));
+                CCharEntity* PChar = zoneutils::GetChar(ref<uint16>((uint8*)extra, 4));
 
                 if (PChar && PChar->loc.zone)
                 {
-                    if (ref<bool> ((uint8*)extra->data(),  1) == true)
+                    if (ref<bool> ((uint8*)extra,  1) == true)
                     {
-                        PChar->loc.p.x         = ref<float> ((uint8*)extra->data(),  6);
-                        PChar->loc.p.y         = ref<float> ((uint8*)extra->data(), 10);
-                        PChar->loc.p.z         = ref<float> ((uint8*)extra->data(), 14);
-                        PChar->loc.p.rotation  = ref<uint8> ((uint8*)extra->data(), 18);
-                        PChar->loc.destination = ref<uint16>((uint8*)extra->data(), 20);
+                        PChar->loc.p.x         = ref<float> ((uint8*)extra,  6);
+                        PChar->loc.p.y         = ref<float> ((uint8*)extra, 10);
+                        PChar->loc.p.z         = ref<float> ((uint8*)extra, 14);
+                        PChar->loc.p.rotation  = ref<uint8> ((uint8*)extra, 18);
+                        PChar->loc.destination = ref<uint16>((uint8*)extra, 20);
 
                         PChar->m_moghouseID = 0;
                         PChar->loc.boundary = 0;
@@ -546,33 +711,33 @@ namespace message
         }
         case MSG_SEND_FL_NOTIF:
         {
-            bool logoff = ref<bool>((uint8*)extra->data(), 0);
-            uint32 charid = ref<uint32>((uint8*)extra->data(), 1);
+            bool logoff = ref<bool>((uint8*)extra, 0);
+            uint32 charid = ref<uint32>((uint8*)extra, 1);
             CCharEntity* PChar = zoneutils::GetChar(charid);
             if (PChar)
             {
                 char listedname[17] = {};
                 uint8 i = 0;
-                while (i < 16 && ref<bool>((uint8*)extra->data(), i + 5) != '\0')
+                while (i < 16 && ref<bool>((uint8*)extra, i + 5) != '\0')
                 {
-                    listedname[i] = ref<bool>((uint8*)extra->data(), i + 5);
+                    listedname[i] = ref<bool>((uint8*)extra, i + 5);
                     i++;
                 }
                 listedname[i] = '\0';
                 std::string str(listedname);
-                uint32 channel = ref<uint32>((uint8*)extra->data(), 21);
+                uint32 channel = ref<uint32>((uint8*)extra, 21);
                 FLnotifyCrossCluster(PChar, logoff, str, channel);
             }
             break;
         }
         case MSG_NEW_TICKET:
         {
-            zoneutils::ForEachZone([&packet](CZone* PZone) {
-                PZone->ForEachChar([&packet](CCharEntity* PChar) {
+            zoneutils::ForEachZone([&packet, packet_size](CZone* PZone) {
+                PZone->ForEachChar([&packet, packet_size](CCharEntity* PChar) {
                     if (PChar != nullptr && PChar->m_GMlevel > 0)
                     {
                         CBasicPacket* newPacket = new CBasicPacket();
-                        memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                        memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
                         PChar->pushPacket(newPacket);
                     }
                 });
@@ -586,61 +751,102 @@ namespace message
         }
     }
 
-    void listen()
+    bool MapMQHandler::OnStartup()
     {
-        while (true)
-        {
-            zmq::message_t type;
-            zmq::message_t extra;
-            zmq::message_t packet;
+        if (!SqlHandle) {
+            SqlHandle = Sql_Malloc();
 
-            try
-            {
-                if (!zSocket)
-                {
-                    return;
-                }
-                if (!zSocket->recv(&type))
-                {
-                    if (!message_queue.empty())
-                        send_queue();
-                    continue;
-                }
-
-                int more;
-                size_t size = sizeof(more);
-                zSocket->getsockopt(ZMQ_RCVMORE, &more, &size);
-                if (more)
-                {
-                    zSocket->recv(&extra);
-                    zSocket->getsockopt(ZMQ_RCVMORE, &more, &size);
-                    if (more)
-                    {
-                        zSocket->recv(&packet);
-                    }
+            if (map_config.mysql_ssl) {
+                if (Sql_SSL(SqlHandle,
+                    true,
+                    map_config.mysql_ssl_verify,
+                    map_config.mysql_ssl_ca.c_str(),
+                    map_config.mysql_ssl_cert.c_str(),
+                    map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+                    exit(EXIT_FAILURE);
                 }
             }
-            catch (zmq::error_t& e)
-            {
-                if (!zSocket)
-                {
-                    return;
-                }
-                ShowError("Message: %s\n", e.what());
-                continue;
-            }
 
-            msg_type_t* pmsg_type = (msg_type_t*)type.data();
-            if (pmsg_type->sender != own_identity) {
-                // Already went through bypass
-                parse(pmsg_type->type, &extra, &packet, false);
+            if (Sql_Connect(SqlHandle, map_config.mysql_login.c_str(),
+                map_config.mysql_password.c_str(),
+                map_config.mysql_host.c_str(),
+                map_config.mysql_port,
+                map_config.mysql_database.c_str()) == SQL_ERROR)
+            {
+                exit(EXIT_FAILURE);
+            }
+            Sql_Keepalive(SqlHandle);
+        }
+        return true;
+    }
+
+    void MapMQHandler::OnShutdown()
+    {
+        if (SqlHandle) {
+            Sql_Free(SqlHandle);
+            SqlHandle = nullptr;
+        }
+    }
+
+    bool MapMQHandler::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, uint32_t dwChannel)
+    {
+        MAP_MQ_MESSAGE_HEADER* header = nullptr;
+        CHAR_MQ_MESSAGE_HEADER* login_header = nullptr;
+
+        if (dwChannel == 1) {
+            if (Request.len < sizeof(CHAR_MQ_MESSAGE_HEADER)) {
+                return true;
+            }
+            // Message is coming from the login server
+            login_header = reinterpret_cast<CHAR_MQ_MESSAGE_HEADER*>(Request.bytes);
+            if (login_header->eType == MQConnection::MQ_MESSAGE_CHAR_LOGIN) {
+                // Character is logging in
+                // FIXME: This will actually get executed by all map servers (if the server
+                // is clustered). Not a big deal in the case of flist but can cause issues
+                // if we have any logic that depends on being executed only once.
+                // Since this is *not* guaranteed to run after IncrementZoneCounter, for
+                // a proper fix we will need to query the DB manually to check whether the
+                // character is about to connect to this instance.
+                if (FLgetSettingByID(login_header->dwCharacterID, 2) == 1) {
+                    Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), login_header->dwCharacterID);
+                }
+                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
+            }
+            return true;
+        }
+        else if (dwChannel == 2) {
+            if (Request.len < sizeof(MAP_MQ_MESSAGE_HEADER)) {
+                return true;
+            }
+            // Traffic between map clusters
+            header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(Request.bytes);
+            if (Request.len < sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size) {
+                return true;
+            }
+            if (header->origin != own_identity) {
+                parse(header->type, reinterpret_cast<uint8*>(Request.bytes) + sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size,
+                    header->extra_size, reinterpret_cast<uint8*>(Request.bytes) + sizeof(MAP_MQ_MESSAGE_HEADER), header->packet_size, false);
             }
         }
+        return true;
     }
 
     void init(const char* chatIp, uint16 chatPort)
     {
+        g_being_closed = false;
+
         SqlHandle = Sql_Malloc();
+
+        if (map_config.mysql_ssl) {
+            if (Sql_SSL(SqlHandle,
+                true,
+                map_config.mysql_ssl_verify,
+                map_config.mysql_ssl_ca.c_str(),
+                map_config.mysql_ssl_cert.c_str(),
+                map_config.mysql_ssl_key.c_str()) == SQL_ERROR) {
+                exit(EXIT_FAILURE);
+            }
+        }
 
         if (Sql_Connect(SqlHandle, map_config.mysql_login.c_str(),
             map_config.mysql_password.c_str(),
@@ -651,9 +857,6 @@ namespace message
             exit(EXIT_FAILURE);
         }
         Sql_Keepalive(SqlHandle);
-
-        zContext = zmq::context_t(1);
-        zSocket = new zmq::socket_t(zContext, ZMQ_DEALER);
 
         uint64 ipp = map_ip.s_addr;
         uint64 port = map_port;
@@ -670,70 +873,119 @@ namespace message
         }
         ipp |= (port << 32);
 
-        zSocket->setsockopt(ZMQ_IDENTITY, &ipp, sizeof ipp);
         own_identity = ipp;
+        std::string login_qname = "login_" + std::to_string(own_identity);
+        std::string map_qname = "map_" + std::to_string(own_identity);
 
-        uint32 to = 500;
-        zSocket->setsockopt(ZMQ_RCVTIMEO, &to, sizeof to);
+        try {
+            g_handler = std::shared_ptr<MapMQHandler>(new MapMQHandler());
+            if (!g_handler) {
+                return;
+            }
 
-        string_t server = "tcp://";
-        server.append(chatIp);
-        server.append(":");
-        server.append(std::to_string(chatPort));
+            // Initialize connection to RabbitMQ
+            // First channel is for receiving messages from the login server
+            g_mqconnection = std::shared_ptr<MQConnection>(new MQConnection(map_config.world_id,
+                map_config.rabbitmq_host,
+                map_config.rabbitmq_port,
+                map_config.rabbitmq_login,
+                map_config.rabbitmq_password,
+                map_config.rabbitmq_vhost,
+                1,
+                "amq.fanout",
+                login_qname,
+                login_qname,
+                // TODO: Add SSL support
+                map_config.rabbitmq_ssl,
+                map_config.rabbitmq_ssl_verify,
+                map_config.rabbitmq_ssl_ca.c_str(),
+                map_config.rabbitmq_ssl_cert.c_str(),
+                map_config.rabbitmq_ssl_key.c_str()));
 
-        try
-        {
-            zSocket->connect(server.c_str());
+            // And another channel for chat messages
+            g_mqconnection->ListenChannel(2, "amq.fanout", map_qname, map_qname);
+            g_mqconnection->AssignHandler(1, g_handler);
+            g_mqconnection->AssignHandler(2, g_handler);
+
         }
-        catch (zmq::error_t& err)
-        {
-            ShowFatalError("Message: Unable to connect chat socket: %s\n", err.what());
+        catch (...) {
+            ShowFatalError("Unable to connect to RabbitMQ.");
+            close();
         }
-
-        listen();
+        try {
+            g_mqconnection->StartThread();
+            while (!g_being_closed) {
+                if (!message_queue.empty()) {
+                    send_queue();
+                }
+                else {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                }
+            }
+        }
+        catch (std::runtime_error& e) {
+            // Map and MQConnection use different design philosophies, which end up with
+            // a runtime error being thrown when close() is called, so check for this
+            // specific scenario and don't crash if that's the case.
+            if (!g_being_closed) {
+                throw;
+            }
+        }
     }
 
     void close()
     {
-        if (zSocket)
-        {
-            zSocket->close();
-            delete zSocket;
-            zSocket = nullptr;
+        g_being_closed = true;
+
+        if (g_mqconnection.get()) {
+            g_mqconnection->Shutdown();
+            g_mqconnection = nullptr;
         }
-        zContext.close();
+        if (g_handler.get()) {
+            g_handler = nullptr;
+        }
     }
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
         std::lock_guard<std::recursive_mutex> lk(send_mutex);
-        chat_message_t msg;
-        msg_type_t msg_type;
-        msg_type.sender = own_identity;
-        msg_type.type = type;
-        //msg.type = new zmq::message_t(sizeof(MSGSERVTYPE));
-        msg.type = new zmq::message_t(sizeof(msg_type_t));
-        //ref<uint8>((uint8*)msg.type->data(), 0) = type;
-        ref<msg_type_t>((msg_type_t*)msg.type->data(), 0) = msg_type;
+        uint8 stub;
 
-        msg.data = new zmq::message_t(datalen);
-        if (datalen > 0)
-            memcpy(msg.data->data(), data, datalen);
+        MAP_MQ_MESSAGE_HEADER* header = nullptr;
+        if (datalen > 1048576) {
+            datalen = 1048576;
+        }
+        uint32 packet_size = packet ? packet->length() : 0;
+        uint8* msgdata = new uint8[sizeof(MAP_MQ_MESSAGE_HEADER) + packet_size + static_cast<uint32>(datalen)];
+        if (!msgdata) {
+            return;
+        }
+        header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(msgdata);
+        header->origin = own_identity;
+        header->type = type;
+        header->packet_size = packet_size;
+        header->extra_size = datalen;
+        if (packet && packet_size > 0) {
+            memcpy(msgdata + sizeof(MAP_MQ_MESSAGE_HEADER), *packet, header->packet_size);
+        }
+        if (data && datalen > 0) {
+            memcpy(msgdata + sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size, data, header->extra_size);
+        }
 
-        if (packet)
-        {
-            msg.packet = new zmq::message_t(*packet, packet->length(), [](void *data, void *hint) {delete[](uint8*) data; });
-        }
-        else
-        {
-            msg.packet = new zmq::message_t(0);
-        }
         // In addition to queueing it through ZMQ also bypass diretly to ourselves
         // This allows to reduce latency for chat packets between people in the same
         // cluster, as well as allowing people in the same cluster to chat even
-        // if ZMQ is down.
-        parse(type, msg.data, msg.packet, true);
+        // if the MQ server is down.
+        g_handler->parse(type,
+            reinterpret_cast<uint8*>(data),
+            datalen,
+            // Seems that packet must be a valid pointer no matter what, so just set it
+            // to a stub location and set length to zero and hopefully nothing else
+            // will crash.
+            packet ? *packet : &stub,
+            packet ? packet->length() : 0,
+            true);
         // And of course send to ZMQ for other servers
-        message_queue.push(msg);
+        message_queue.push(msgdata);
     }
 };

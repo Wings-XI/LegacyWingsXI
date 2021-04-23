@@ -22,9 +22,12 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(CMAKE_CONFIGURATION_TYPES STREQUAL Debug)
+    set(configuration_suffix "_d")
     set(lib_debug "-d")
 else()
+    set(configuration_suffix "")
     set(lib_debug "")
 endif()
 
 set(libpath "lib${platform_suffix}")
+set(binpath "bin${platform_suffix}")
