@@ -183,7 +183,7 @@ void LoginSession::SetFeaturesBitmask(uint32_t dwFeatures)
 
 void LoginSession::SetPrivilegesBitmask(uint32_t dwPrivileges)
 {
-    mdwFeaturesBitmask = dwPrivileges;
+    mdwPrivilegesBitmask = dwPrivileges;
 }
 
 void LoginSession::SetClientVersion(std::string& strClientVersion)
