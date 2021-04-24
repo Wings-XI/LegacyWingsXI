@@ -363,7 +363,12 @@ uint32_t WorldManager::GetNewCharIDForWorld(uint32_t dwWorldID)
     }
     else {
         pResultSet->next();
-        dwNewCharIDFromLogin = pResultSet->get_unsigned32(0) + 1;
+        if (!pResultSet->get_is_null(0)) {
+            dwNewCharIDFromLogin = pResultSet->get_unsigned32(0) + 1;
+        }
+        else {
+            dwNewCharIDFromLogin = 1;
+        }
     }
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(dwWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(dwWorldID);
@@ -376,7 +381,12 @@ uint32_t WorldManager::GetNewCharIDForWorld(uint32_t dwWorldID)
     }
     else {
         pResultSet->next();
-        dwNewCharIDFromMap = pResultSet->get_unsigned32(0) + 1;
+        if (!pResultSet->get_is_null(0)) {
+            dwNewCharIDFromMap = pResultSet->get_unsigned32(0) + 1;
+        }
+        else {
+            dwNewCharIDFromMap = 1;
+        }
     }
     dwNewCharID = ((dwNewCharIDFromMap > dwNewCharIDFromLogin) ? dwNewCharIDFromMap : dwNewCharIDFromLogin);
     // We now have a candidate ID but we need to make sure it's not reserved in

@@ -39,6 +39,7 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         bool bUserExists = false;
         bool bIpExempt = false;
 
+        LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
         std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
@@ -46,10 +47,12 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         mariadb::result_set_ref pAccountsFound = DB->query(strSqlFinalQuery);
         if (pAccountsFound->row_count() == 0) {
             // No such user. Do *NOT* return here as this will make us vulnerable to a timing attack.
+            LOG_DEBUG1("User %s does not exist in DB!", pszUsername);
             strSalt = "00000000000000000000000000000000";
             strPassHash = "0000000000000000000000000000000000000000000000000000000000000000";
         }
         else {
+            LOG_DEBUG1("User %s found.", pszUsername);
             bUserExists = true;
             pAccountsFound->next();
             dwAccountId = pAccountsFound->get_unsigned32(0);
@@ -64,30 +67,37 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         // discovery via a timing attack.
         std::string strSaltPepper = strSalt + Config->GetConfigString("password_hash_secret");
         if (PKCS5_PBKDF2_HMAC(pszPassword, -1, reinterpret_cast<const unsigned char*>(strSaltPepper.c_str()), strSaltPepper.size(), 2048, EVP_sha256(), 32, binEnteredHash) == 0) {
+            LOG_ERROR("Failed to calculate PBKDF2 for user %s.", pszUsername);
             mLastError = AUTH_INTERNAL_FAILURE;
         }
         else if (HexToBinary(strPassHash, binRealHash, sizeof(binRealHash)) == 0) {
+            LOG_ERROR("Stored password for %s is not a hex string.", pszUsername);
             mLastError = AUTH_INTERNAL_FAILURE;
         }
         else if ((memcmp(binEnteredHash, binRealHash, sizeof(binRealHash)) != 0) || (!bUserExists)) {
+            LOG_DEBUG1("Incorrect password for user %s", pszUsername);
             mLastError = AUTH_NO_USER_OR_BAD_PASSWORD;
         }
         else if ((dwStatus != 1) || (dwPrivileges & ACCT_PRIV_ENABLED) == 0) {
+            LOG_DEBUG1("Account %s is disabled.", pszUsername);
             mLastError = AUTH_ACCOUNT_DISABLED;
         }
         if (mLastError == AUTH_SUCCESS && Config->GetConfigUInt("maintenance_mode") != 0) {
             if ((dwPrivileges & ACCT_PRIV_MAINT_MODE_ACCESS) == 0) {
+                LOG_DEBUG1("Account %s does not have maintenance mode access.", pszUsername);
                 mLastError = AUTH_MAINTENANCE_MODE;
             }
         }
         if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, bIpExempt)) {
             if (mLastError == AUTH_SUCCESS) {
+                LOG_DEBUG1("Another account shares IP with %s.", pszUsername);
                 mLastError = AUTH_ANOTHER_ACCOUNT_SHARES_IP;
             }
         }
         if (mLastError != AUTH_SUCCESS) {
             return 0;
         }
+        LOG_DEBUG0("Login successful for account %s.", pszUsername);
         // Add this account to the session tracker, which will allow the client
         // to connect to the data server.
         std::shared_ptr<LoginSession> NewSession = SessionTracker::GetInstance()->InitializeNewSession(dwAccountId,
