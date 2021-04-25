@@ -114,6 +114,8 @@ void LoginServer::Run()
     SessionTrackerPtr Sessions = SessionTracker::GetInstance();
     // Whether to reject the latest connection
     bool bReject = false;
+    // Value for setsockopt
+    int lOptVal = 1;
 
 	LOG_DEBUG0("Called.");
     mbRunning = true;
@@ -153,6 +155,10 @@ void LoginServer::Run()
 					continue;
 				}
 				LOG_INFO("Accepted connection from %s", inet_ntoa(NewConnection.BindDetails.sin_addr));
+                lOptVal = 1;
+                if (setsockopt(NewConnection.iSock, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<char*>(&lOptVal), sizeof((lOptVal))) != 0) {
+                    LOG_WARNING("Unable to enable keepalives for new connection.");
+                }
                 // TODO: Implement SSL here
                 NewConnection.bSecure = false;
                 NewConnection.iAssociatedProtocol = static_cast<int>(ProtocolFactory::PROTOCOL_STUB);
