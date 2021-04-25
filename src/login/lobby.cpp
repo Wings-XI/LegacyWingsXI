@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -189,7 +189,7 @@ int32 lobbydata_parse(int32 fd)
                         ref<uint32>(uList, 16 * (i + 1)) = CharID;
                         ref<uint32>(CharList, 32 + 140 * i) = CharID;
 
-                        ref<uint32>(uList, 20 * (i + 1)) = CharID;
+                        ref<uint32>(uList, 16 * (i + 1) + 4) = CharID;
 
                         ////////////////////////////////////////////////////
                         ref<uint32>(CharList, 4 + 32 + i * 140) = CharID;
@@ -333,11 +333,20 @@ int32 lobbydata_parse(int32 fd)
                         char session_key[sizeof(key3) * 2 + 1];
                         bin2hex(session_key, key3, sizeof(key3));
 
-                        fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr, version_mismatch, client_version) VALUES(%u,%u,x'%s',%u,%u,%u,%u,'%s')";
+                        uint32_t expansions = 0;
+                        uint32_t features = 0;
+                        const char *pfmtQuery = "SELECT expansions,features FROM accounts WHERE id = %u;";
+                        int32 ret = Sql_Query(SqlHandle, pfmtQuery, sd->accid);
+                        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+                            expansions = Sql_GetUIntData(SqlHandle, 0); // Expansion Bitmask
+                            features = Sql_GetUIntData(SqlHandle, 1); // Feature Bitmask
+                        }
+
+                        fmtQuery = "INSERT INTO accounts_sessions(accid,content_id, charid,session_key,server_addr,server_port,client_addr, version_mismatch, client_version, expansions, features) VALUES(%u,%u,%u,x'%s',%u,%u,%u,%u,'%s',%u,%u)";
 
                         char client_ver_esc[32] = { 0 };
                         Sql_EscapeString(SqlHandle, client_ver_esc, session[sd->login_lobbyview_fd]->client_ver.c_str());
-                        if (Sql_Query(SqlHandle, fmtQuery, sd->accid, charid, session_key, ZoneIP, ZonePort, sd->client_addr, (uint8)session[sd->login_lobbyview_fd]->ver_mismatch, client_ver_esc) == SQL_ERROR)
+                        if (Sql_Query(SqlHandle, fmtQuery, sd->accid, charid, charid, session_key, ZoneIP, ZonePort, sd->client_addr, (uint8)session[sd->login_lobbyview_fd]->ver_mismatch, client_ver_esc, expansions, features) == SQL_ERROR)
                         {
                             // Send error message to the client.
                             LOBBBY_ERROR_MESSAGE(ReservePacket);
@@ -350,7 +359,7 @@ int32 lobbydata_parse(int32 fd)
 
                         // flist stuff
 
-                        int32 ret = Sql_Query(SqlHandle, "SELECT * FROM flist_settings WHERE callingchar = %u;", charid);
+                        ret = Sql_Query(SqlHandle, "SELECT * FROM flist_settings WHERE callingchar = %u;", charid);
 
                         if (ret == SQL_ERROR || Sql_NextRow(SqlHandle) != SQL_SUCCESS)
                         {
@@ -919,9 +928,9 @@ int32 lobby_createchar(login_session_data_t *loginsd, int8 *buf)
 
 int32 lobby_createchar_save(uint32 accid, uint32 charid, char_mini* createchar)
 {
-    const char* Query = "INSERT INTO chars(charid,accid,charname,pos_zone,nation) VALUES(%u,%u,'%s',%u,%u);";
+    const char* Query = "INSERT INTO chars(charid,content_id,accid,charname,pos_zone,nation) VALUES(%u,%u,%u,'%s',%u,%u);";
 
-    if (Sql_Query(SqlHandle, Query, charid, accid, createchar->m_name, createchar->m_zone, createchar->m_nation) == SQL_ERROR)
+    if (Sql_Query(SqlHandle, Query, charid, charid, accid, createchar->m_name, createchar->m_zone, createchar->m_nation) == SQL_ERROR)
     {
         ShowDebug(CL_WHITE"lobby_ccsave" CL_RESET": char<" CL_WHITE"%s" CL_RESET">, accid: %u, charid: %u\n", createchar->m_name, accid, charid);
         return -1;
