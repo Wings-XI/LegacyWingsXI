@@ -250,7 +250,7 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
             PMob->m_Detects = Sql_GetUIntData(SqlInstanceHandle, 64);
 
             PMob->setMobMod(MOBMOD_CHARMABLE, Sql_GetUIntData(SqlInstanceHandle, 65));
-            PMob->m_FamilyName.insert(0, (const char*)Sql_GetData(SqlHandle, 66));
+            PMob->m_FamilyName.insert(0, (const char*)Sql_GetData(SqlInstanceHandle, 66));
 
             // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
             // can be set in mob_spawn_mods or in their onInitialize
