@@ -39,10 +39,10 @@ void DataHandler::Run()
     bool bError = false;
     // Request from view server
     LoginSession::REQUESTS_TO_DATA_SERVER RequestFromView;
-    // Last packet receive time
-    time_t tmLastPacket = 0;
     // Time now
-    time_t tmNow = 0;
+    time_t tmNow = time(NULL);
+    // Last packet receive time (initialize to now so they don't get disconnected immediately)
+    time_t tmLastPacket = tmNow;
     // Time when we last sent a ping request
     time_t tmLastPing = 0;
 
