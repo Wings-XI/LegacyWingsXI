@@ -8,6 +8,8 @@
 #include "Thread.h"
 #include "Debugging.h"
 #include <stdexcept>
+#include <stdlib.h>
+#include <time.h>
 
 Thread::Thread() : mbRunning(false), mbShutdown(false), mbFinished(false)
 {
@@ -60,6 +62,7 @@ void Thread::StartThread()
 
 void Thread::stRun(Thread* thisobj)
 {
+    srand(static_cast<unsigned int>(time(NULL)));
     try {
         thisobj->Run();
     }

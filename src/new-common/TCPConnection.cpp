@@ -1,4 +1,4 @@
-/**
+﻿/**
  *	@file TCPConnection.cpp
  *	Low level TCP connection classes.
  *	@author Twilight
@@ -8,11 +8,15 @@
 #include "TCPConnection.h"
 #include "Debugging.h"
 #include <stdexcept>
+#include <errno.h>
 
 #ifdef _WIN32
 #define SHUT_RD   SD_RECEIVE
 #define SHUT_WR   SD_SEND
 #define SHUT_RDWR SD_BOTH
+#define NET_ERR WSAGetLastError()
+#else
+#define NET_ERR errno
 #endif
 
 TCPConnection::TCPConnection(BoundSocket& ConnectionDetails) : mConnectionDetails(ConnectionDetails), mbClosed(false)
@@ -45,7 +49,7 @@ int32_t TCPConnection::Read(uint8_t* bufReceived, int32_t cbBuffer)
 			LOG_DEBUG1("Connection closed by peer.");
 		}
 		else {
-			LOG_ERROR("Socket read error.");
+			LOG_ERROR("Socket read error (error=%d).", NET_ERR);
 		}
 		// Connection closed or error
 		Close();

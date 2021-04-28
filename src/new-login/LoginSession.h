@@ -10,9 +10,17 @@
 
 #include <stdint.h>
 #include <time.h>
+#include <stdexcept>
 #include <mutex>
 #include <queue>
 #include "../new-common/CommonMessages.h"
+
+class SessionExistsError : public std::runtime_error
+{
+public:
+    SessionExistsError(const std::string& what) : std::runtime_error(what)
+    {};
+};
 
 /**
  *  Represents a single open session.
@@ -329,9 +337,21 @@ public:
     time_t GetLastLookupTime() const;
 
     /**
+     *  Return the time the last network packet regarding this session
+     *  has been received.
+     *  @return UNIX timestamp indicating last packet
+     */
+    time_t GetLastPacketTime() const;
+
+    /**
      *  Set the last lookup time to the current timestamp
      */
     void SetLastLookupNow();
+
+    /**
+    *  Set the last packet time to the current timestamp
+    */
+    void SetLastPacketNow();
 
     /**
      *  Get the list of content IDs that were in use when the client connected
@@ -394,6 +414,8 @@ private:
     time_t tmLastLookup;
     // Content IDs which were used when the user connected
     std::vector<uint32_t> mvecUsedContentIDsConnect;
+    // Last time this session has received any network traffic
+    time_t tmLastPacket;
 };
 
 #endif

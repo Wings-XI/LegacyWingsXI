@@ -56,6 +56,11 @@ void ViewHandler::Run()
         mpConnection->Close();
         return;
     }
+    if (!mpSession) {
+        LOG_ERROR("Session lookup returned a NULL value.");
+        mpConnection->Close();
+        return;
+    }
     mpSession->SetViewServerFinished(false);
     mpSession->SetNeverExpire(false);
     // Don't catch this session again when performing IP lookups
@@ -83,6 +88,7 @@ void ViewHandler::Run()
                     LOG_INFO("Connection closed.");
                     break;
                 }
+                mpSession->SetLastPacketNow();
                 // Nasty but needed trick to get the raw pointer
                 pPacketHeader = reinterpret_cast<FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER*>(pRawData.get());
                 pPayloadData = pRawData.get() + sizeof(FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER);
@@ -160,6 +166,7 @@ void ViewHandler::Run()
 
     mpSession->SetViewServerFinished();
     if (mpSession->IsDataServerFinished()) {
+        mpSession->SetNeverExpire(false);
         mpSession->SetExpiryTimeAbsolute(0);
     }
     else {

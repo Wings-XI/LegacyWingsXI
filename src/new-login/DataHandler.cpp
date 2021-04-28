@@ -39,6 +39,12 @@ void DataHandler::Run()
     bool bError = false;
     // Request from view server
     LoginSession::REQUESTS_TO_DATA_SERVER RequestFromView;
+    // Last packet receive time
+    time_t tmLastPacket = 0;
+    // Time now
+    time_t tmNow = 0;
+    // Time when we last sent a ping request
+    time_t tmLastPing = 0;
 
     LOG_DEBUG0("Called.");
     mbRunning = true;
@@ -81,7 +87,31 @@ void DataHandler::Run()
 
         // Check for response from the client
         if (!mpConnection->CanRead(200)) {
-            // No data from client, keep on waiting
+            // No data from client
+            if (mpSession) {
+                tmLastPacket = ffxi_max(mpSession->GetLastPacketTime(), tmLastPacket);
+            }
+            tmNow = time(NULL);
+            if (tmLastPacket + 300 < tmNow) {
+                // Timed out
+                mbShutdown = true;
+                break;
+            }
+            else if ((tmLastPacket + 120 < tmNow) && (tmLastPing + 5 < tmNow)) {
+                // Since the bootloader doesn't support pings we just
+                // send an account ID request just to trigger it to
+                // send something (we ignore the actual answer content)
+                LOG_DEBUG0("Sending ping packet to client.");
+                cOutgoingBytePacket = static_cast<uint8_t>(S2C_PACKET_SEND_ACCOUNT_ID);
+                if (mpConnection->WriteAll(&cOutgoingBytePacket, sizeof(cOutgoingBytePacket)) != sizeof(cOutgoingBytePacket)) {
+                    // Connection dropped apparently
+                    LOG_WARNING("Connection to data server dropped.");
+                    mbShutdown = true;
+                    break;
+                }
+                tmLastPing = tmNow;
+            }
+            // Keep on waiting
             continue;
         }
         // First byte indicates which type of packet it is
@@ -97,7 +127,11 @@ void DataHandler::Run()
             bError = true;
             break;
         }
+        if (mpSession) {
+            mpSession->SetLastPacketNow();
+        }
         time_t now = time(NULL);
+        tmLastPacket = now;
         switch (static_cast<CLIENT_TO_SERVER_PACKET_TYPES>(cIncomingPacketType)) {
         case C2S_PACKET_ACCOUNT_ID:
             // Packet is 2 32-bit uints with account ID and server address
@@ -107,31 +141,48 @@ void DataHandler::Run()
                 bError = true;
                 break;
             }
-            LOG_DEBUG1("Client claims account ID: %d", AccountPacket.dwAccountID);
-            // Verify we have it in the session tracker (meaning it passed through the authentication server)
-            try {
-                mpSession = SessionTracker::GetInstance()->GetSessionDetails(AccountPacket.dwAccountID);
+            if (!bGotAccountID || !mpSession) {
+                LOG_DEBUG1("Client claims account ID: %d", AccountPacket.dwAccountID);
+                // Verify we have it in the session tracker (meaning it passed through the authentication server)
+                try {
+                    mpSession = SessionTracker::GetInstance()->GetSessionDetails(AccountPacket.dwAccountID);
+                }
+                catch (std::runtime_error) {
+                    LOG_WARNING("Client tried to connect to data server before authenticating.");
+                    bError = true;
+                    break;
+                }
+                if (!mpSession) {
+                    LOG_ERROR("Session lookup returned NULL value.");
+                    bError = true;
+                    break;
+                }
+                mpSession->SetLastPacketNow();
+                tmLastPacket = time(NULL);
+                // Also verify that it's the same client that authenticated and that the session has not expired
+                if (mpSession->GetClientIPAddress() != mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr) {
+                    LOG_WARNING("Account ID / IP address mismatch.");
+                    bError = true;
+                    break;
+                }
+                if (mpSession->HasExpired()) {
+                    LOG_WARNING("Client session has expired.");
+                    bError = true;
+                    break;
+                }
+                LOG_DEBUG1("Account ID check passed.");
+                // Client passed account ID check
+                mdwAccountID = AccountPacket.dwAccountID;
+                bGotAccountID = true;
             }
-            catch (std::runtime_error) {
-                LOG_WARNING("Client tried to connect to data server before authenticating.");
-                bError = true;
-                break;
+            else {
+                if (AccountPacket.dwAccountID != mdwAccountID) {
+                    LOG_WARNING("Client attempted to switch account ID.");
+                }
+                else {
+                    LOG_DEBUG0("Received pong packet (do nothing).");
+                }
             }
-            // Also verify that it's the same client that authenticated and that the session has not expired
-            if (mpSession->GetClientIPAddress() != mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr) {
-                LOG_WARNING("Account ID / IP address mismatch.");
-                bError = true;
-                break;
-            }
-            if (mpSession->HasExpired()) {
-                LOG_WARNING("Client session has expired.");
-                bError = true;
-                break;
-            }
-            LOG_DEBUG1("Account ID check passed.");
-            // Client passed account ID check
-            mdwAccountID = AccountPacket.dwAccountID;
-            bGotAccountID = true;
             break;
         case C2S_PACKET_KEY:
             // Packet is a 24-byte key. Add to session data. Note - Since we only accept this packet after
@@ -175,6 +226,7 @@ void DataHandler::Run()
         if (mpSession->IsViewServerFinished()) {
             // Both servers have finished so mark the session as expired
             // so it gets cleaned up immediately.
+            mpSession->SetNeverExpire(false);
             mpSession->SetExpiryTimeAbsolute(0);
         }
     }

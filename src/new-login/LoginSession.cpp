@@ -537,9 +537,19 @@ time_t LoginSession::GetLastLookupTime() const
     return tmLastLookup;
 }
 
+time_t LoginSession::GetLastPacketTime() const
+{
+    return tmLastPacket;
+}
+
 void LoginSession::SetLastLookupNow()
 {
     tmLastLookup = time(NULL);
+}
+
+void LoginSession::SetLastPacketNow()
+{
+    tmLastPacket = time(NULL);
 }
 
 const std::vector<uint32_t>* LoginSession::GetUsedContentIDsConnect() const

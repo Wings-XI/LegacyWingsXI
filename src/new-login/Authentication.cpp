@@ -106,8 +106,13 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         NewSession->SetPrivilegesBitmask(dwPrivileges);
         return dwAccountId;
     }
-    catch(...) {
-        LOG_ERROR("Exception thrown on DB access.");
+    catch (SessionExistsError) {
+        LOG_DEBUG1("Session already exists, authentication rejected.");
+        mLastError = AUTH_SESSION_EXISTS;
+        return 0;
+    }
+    catch (...) {
+        LOG_ERROR("Exception thrown during authentication.");
     }
     mLastError = AUTH_INTERNAL_FAILURE;
     return 0;

@@ -116,6 +116,17 @@ void LoginServer::Run()
     bool bReject = false;
     // Value for setsockopt
     int lOptVal = 1;
+    // Timeout for recv (socket option) - Linux
+    struct timeval tvRecvTimeout = { 300, 0 };
+    // Timeout for recv (socket option) - Windows
+    uint32_t dwRecvTimeout = (tvRecvTimeout.tv_sec * 1000) + (tvRecvTimeout.tv_usec / 1000);
+#ifdef _WIN32
+    char* pTimeout = reinterpret_cast<char*>(&dwRecvTimeout);
+    uint32_t cbTimeout = sizeof(dwRecvTimeout);
+#else
+    void* pTimeout = &tvRecvTimeout;
+    uint32_t cbTimeout = sizeof(tvRecvTimeout);
+#endif
 
 	LOG_DEBUG0("Called.");
     mbRunning = true;
@@ -156,8 +167,11 @@ void LoginServer::Run()
 				}
 				LOG_INFO("Accepted connection from %s", inet_ntoa(NewConnection.BindDetails.sin_addr));
                 lOptVal = 1;
-                if (setsockopt(NewConnection.iSock, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<char*>(&lOptVal), sizeof((lOptVal))) != 0) {
+                if (setsockopt(NewConnection.iSock, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<char*>(&lOptVal), sizeof(lOptVal)) != 0) {
                     LOG_WARNING("Unable to enable keepalives for new connection.");
+                }
+                if (setsockopt(NewConnection.iSock, SOL_SOCKET, SO_RCVTIMEO, pTimeout, cbTimeout) != 0) {
+                    LOG_WARNING("Unable to set read timeout for new connection.");
                 }
                 // TODO: Implement SSL here
                 NewConnection.bSecure = false;

@@ -71,7 +71,7 @@ std::shared_ptr<LoginSession> SessionTracker::InitializeNewSession(uint32_t dwAc
         else {
             // If it's from a different IP then this is an error
             LOG_ERROR("Received a session request for the same account from different IP address.");
-            throw std::runtime_error("Session exists with different IP");
+            throw SessionExistsError("Session exists with different IP");
         }
     }
     LOG_INFO("Creating new session.");

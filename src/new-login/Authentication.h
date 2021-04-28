@@ -37,6 +37,7 @@ public:
         AUTH_MAINTENANCE_MODE = 6,
         AUTH_BOOTLOADER_SIGNUP_DISABLED = 7,
         AUTH_ANOTHER_ACCOUNT_SHARES_IP = 8,
+        AUTH_SESSION_EXISTS = 9,
         AUTH_LAST
     };
 
