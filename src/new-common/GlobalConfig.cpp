@@ -1,4 +1,4 @@
-/**
+﻿/**
  *	@file GlobalConfig.cpp
  *	Reads and stores the global configuration
  *	@author Twilight
@@ -182,13 +182,19 @@ void GlobalConfig::Destroy()
 void GlobalConfig::trim(std::string& str)
 {
     size_t pos = 0;
+    bool bHasContent = false;
     pos = str.find_first_not_of(" \r\n");
     if (pos != std::string::npos) {
         str.erase(0, pos);
+        bHasContent = true;
     }
     pos = str.find_last_not_of(" \r\n");
     if (pos != std::string::npos) {
         str.erase(pos + 1);
+        bHasContent = true;
+    }
+    if (!bHasContent) {
+        str = "";
     }
 }
 
