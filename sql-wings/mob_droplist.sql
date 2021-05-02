@@ -16520,10 +16520,9 @@ INSERT INTO `mob_droplist` VALUES(3150, 0, 0, 1000, 5564, 300);
 INSERT INTO `mob_droplist` VALUES(3150, 0, 0, 1000, 2154, 500);
 INSERT INTO `mob_droplist` VALUES(3151, 0, 0, 1000, 19122, 96);
 INSERT INTO `mob_droplist` VALUES(3152, 0, 0, 1000, 11343, 150);
-INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 1052, 41);
-INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 919, 347);
-INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 1181, 61);
-INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 1237, 184);
+INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 2686, 1000);/*Ga'Lhu Nevermolt - Bronze Letterbox - 100%*/
+INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 16181, 123);/*Ga'Lhu Nevermolt - Terror Shield - 12.3%*/
+INSERT INTO `mob_droplist` VALUES(3153, 0, 0, 1000, 17756, 80);/*Ga'Lhu Nevermolt - Sinfender - 8%*/
 INSERT INTO `mob_droplist` VALUES(3154, 0, 0, 1000, 12382, 1000);
 INSERT INTO `mob_droplist` VALUES(3154, 0, 0, 1000, 854, 30);
 INSERT INTO `mob_droplist` VALUES(3154, 0, 0, 1000, 4435, 350);
