@@ -2555,7 +2555,7 @@ INSERT INTO `mob_groups` VALUES(29, 1170, 61, 'Ebony_Pudding', 300, 0, 740, 0, 0
 INSERT INTO `mob_groups` VALUES(30, 1952, 61, 'Hilltroll_Ranger', 300, 0, 1309, 0, 0, 79, 83, 0);
 INSERT INTO `mob_groups` VALUES(31, 4031, 61, 'Troll_Speculator', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(32, 2253, 61, 'King_Apkallu', 300, 0, 1447, 0, 0, 78, 80, 0);
-INSERT INTO `mob_groups` VALUES(33, 4371, 61, 'Wootzshell', 300, 0, 2668, 0, 0, 88, 89, 0);
+INSERT INTO `mob_groups` VALUES(33, 4371, 61, 'Wootzshell', 300, 0, 2668, 0, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(34, 5843, 61, 'Ignamoth', 0, 32, 3026, 0, 0, 84, 84, 0);
 INSERT INTO `mob_groups` VALUES(35, 2485, 61, 'Magmatic_Eruca', 300, 0, 419, 0, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(36, 894, 61, 'Dahak', 1800, 0, 0, 0, 0, 81, 82, 0);
