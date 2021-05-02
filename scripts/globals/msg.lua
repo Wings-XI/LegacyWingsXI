@@ -177,7 +177,7 @@ tpz.msg.basic =
     STEAL_EFFECT           = 453, -- <user> uses <ability>. <user> steals the effect of <status> from <target>.
     MUG_SUCCESS            = 129, -- <user> uses <ability>. <user> mugs <amount> gil from <target>.
     MUG_FAIL               = 244, -- <user> fails to mug <target>.
-    FULL_INVENTORY         = 356, --  Cannot execute command. Your inventory is full.
+    FULL_INVENTORY         = 356, -- Cannot execute command. Your inventory is full.
     OBTAINED_KEY_ITEM      = 758, -- Obtained key item: <key item>.
     ALREADY_HAVE_KEY_ITEM  = 759, -- You already have key item: <key item>.
 

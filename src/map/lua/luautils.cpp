@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -19,13 +19,14 @@
 ===========================================================================
 */
 
+#include "luautils.h"
+
 #include "../../common/showmsg.h"
 #include "../../common/timer.h"
 #include "../../common/utils.h"
 
 #include <unordered_map>
 
-#include "luautils.h"
 #include "lua_action.h"
 #include "lua_battlefield.h"
 #include "lua_region.h"
@@ -55,6 +56,8 @@
 #include "../utils/zoneutils.h"
 #include "../timetriggers.h"
 #include "../transport.h"
+#include "../items.h"
+#include "../item_container.h"
 #include "../packets/action.h"
 #include "../packets/char_update.h"
 #include "../packets/entity_update.h"
@@ -67,6 +70,10 @@
 #include "../packets/char_spells.h"
 #include "../packets/char_abilities.h"
 #include "../packets/char_recast.h"
+#include "../packets/char_emotion.h"
+#include "../packets/inventory_item.h"
+#include "../packets/inventory_finish.h"
+#include "../packets/message_special.h"
 #include "../items/item_puppet.h"
 #include "../entities/automatonentity.h"
 #include "../utils/itemutils.h"
@@ -92,7 +99,6 @@
 #include <optional>
 #include "../battlefield.h"
 #include "../daily_system.h"
-#include "../packets/char_emotion.h"
 
 namespace luautils
 {
@@ -119,6 +125,7 @@ namespace luautils
         lua_register(LuaHandle, "print", luautils::print);
         lua_register(LuaHandle, "GetNPCByID", luautils::GetNPCByID);
         lua_register(LuaHandle, "GetMobByID", luautils::GetMobByID);
+        lua_register(LuaHandle, "GetEntityByID", luautils::GetEntityByID);
         lua_register(LuaHandle, "WeekUpdateConquest", luautils::WeekUpdateConquest);
         lua_register(LuaHandle, "GetRegionOwner", luautils::GetRegionOwner);
         lua_register(LuaHandle, "GetRegionInfluence", luautils::GetRegionInfluence);
@@ -170,6 +177,7 @@ namespace luautils
         lua_register(LuaHandle, "getSpell", luautils::getSpell);
         lua_register(LuaHandle, "SelectDailyItem", luautils::SelectDailyItem);
         lua_register(LuaHandle, "GetTickets", luautils::GetTickets);
+        lua_register(LuaHandle, "GetDynaTimeRemaining", luautils::GetDynaTimeRemaining);
 
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
@@ -363,6 +371,12 @@ namespace luautils
         return 1;
     }
 
+     /************************************************************************
+     *                                                                       *
+     *                                                                       *
+     *                                                                       *
+     ************************************************************************/
+
     int32 GetNPCByID(lua_State* L)
     {
         TracyZoneScoped;
@@ -450,6 +464,55 @@ namespace luautils
                 lua_gettable(L, -2);
                 lua_insert(L, -2);
                 lua_pushlightuserdata(L, (void*)PMob);
+                lua_pcall(L, 2, 1, 0);
+            }
+
+            return 1;
+        }
+        lua_pushnil(L);
+        return 1;
+    }
+
+    /************************************************************************
+     *                                                                       *
+     *                                                                       *
+     *                                                                       *
+     ************************************************************************/
+
+    int32 GetEntityByID(lua_State* L)
+    {
+        TracyZoneScoped;
+        if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        {
+            uint32 id = (uint32)lua_tointeger(L, 1);
+            CInstance* PInstance{ nullptr };
+            CBaseEntity* PEntity{ nullptr };
+
+            if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
+            {
+                CLuaInstance* PLuaInstance = Lunar<CLuaInstance>::check(L, 2);
+                PInstance = PLuaInstance->GetInstance();
+            }
+            if (PInstance)
+            {
+                PEntity = PInstance->GetEntity(id & 0xFFF, 0xFF);
+            }
+            else
+            {
+                PEntity = zoneutils::GetEntity(id, 0xFF);
+            }
+
+            if (!PEntity)
+            {
+                lua_pushnil(L);
+            }
+            else
+            {
+                lua_getglobal(L, CLuaBaseEntity::className);
+                lua_pushstring(L, "new");
+                lua_gettable(L, -2);
+                lua_insert(L, -2);
+                lua_pushlightuserdata(L, (void*)PEntity);
                 lua_pcall(L, 2, 1, 0);
             }
 
@@ -2145,7 +2208,10 @@ namespace luautils
 
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntityCaster);
 
-        if (lua_pcall(LuaHandle, 3, 3, 0))
+        CLuaItem LuaItem(PItem);
+        Lunar<CLuaItem>::push(LuaHandle, &LuaItem);
+
+        if (lua_pcall(LuaHandle, 4, 3, 0))
         {
             ShowError("luautils::onItemCheck: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -2180,7 +2246,10 @@ namespace luautils
         CLuaBaseEntity LuaBaseEntity(PTarget);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
 
-        if (lua_pcall(LuaHandle, 1, 0, 0))
+        CLuaItem LuaItem(PItem);
+        Lunar<CLuaItem>::push(LuaHandle, &LuaItem);
+
+        if (lua_pcall(LuaHandle, 2, 0, 0))
         {
             ShowError("luautils::onItemUse: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -2646,6 +2715,125 @@ namespace luautils
                 return -1;
             }
         }
+        return 0;
+    }
+
+    int32 OnDynamisTick(CDynamisHandler* PDynamisHandler) // currently disabled for performance reasons, see comment in scripts/zones/Dynamis-Bastok/dynamis_handler.lua
+    {
+        TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
+
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+
+        if (prepFile(File, "onDynamisTick"))
+        {
+            ShowError("luautils::onDynamisTick: Unable to find onDynamisTick function for %s\n", &File[0]);
+            return -1;
+        }
+
+        lua_pushinteger(LuaHandle,
+                        (lua_Integer)(PDynamisHandler->m_expiryTimePoint -
+                                      (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
+
+        if (lua_pcall(LuaHandle, 1, 0, 0))
+        {
+            ShowError("luautils::onDynamisTick: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        return 0;
+    }
+
+    int32 OnDynamisNewInstance(CDynamisHandler* PDynamisHandler)
+    {
+        TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
+
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+
+        if (prepFile(File, "onDynamisNewInstance"))
+        {
+            ShowError("luautils::onDynamisNewInstance: Unable to find onDynamisNewInstance function for %s\n", &File[0]);
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 0, 0))
+        {
+            ShowError("luautils::onDynamisNewInstance: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        return 0;
+    }
+
+    int32 OnDynamisCleanup(CDynamisHandler* PDynamisHandler)
+    {
+        TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
+
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+
+        if (prepFile(File, "onDynamisCleanup"))
+        {
+            ShowError("luautils::onDynamisCleanup: Unable to find onDynamisCleanup function for %s\n", &File[0]);
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 0, 0))
+        {
+            ShowError("luautils::onDynamisCleanup: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        return 0;
+    }
+
+    int32 OnDynamisEjectPlayer(CDynamisHandler* PDynamisHandler, CCharEntity* PChar, bool immediate)
+    {
+        TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
+
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+
+        if (prepFile(File, "onDynamisEjectPlayer"))
+        {
+            ShowError("luautils::onDynamisEjectPlayer: Unable to find onDynamisEjectPlayer function for %s\n", &File[0]);
+            return -1;
+        }
+
+        CLuaBaseEntity LuaChar((CBaseEntity*)PChar);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaChar);
+        lua_pushboolean(LuaHandle, immediate);
+
+        if (lua_pcall(LuaHandle, 2, 0, 0))
+        {
+            ShowError("luautils::onDynamisEjectPlayer: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        return 0;
+    }
+
+    int32 OnDynamisTimeWarning(CDynamisHandler* PDynamisHandler, CCharEntity* PChar)
+    {
+        TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
+
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+
+        if (prepFile(File, "onDynamisTimeWarning"))
+        {
+            ShowError("luautils::onDynamisTimeWarning: Unable to find onDynamisTimeWarning function for %s\n", &File[0]);
+            return -1;
+        }
+
+        CLuaBaseEntity LuaChar((CBaseEntity*)PChar);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaChar);
+        lua_pushinteger(LuaHandle,
+                        (lua_Integer)(PDynamisHandler->m_expiryTimePoint -
+                                      (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
+
+        if (lua_pcall(LuaHandle, 2, 0, 0))
+        {
+            ShowError("luautils::onDynamisTimeWarning: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
         return 0;
     }
 
@@ -5353,6 +5541,20 @@ namespace luautils
                 lua_settable(L, -3);
             }
         }
+
+        return 1;
+    }
+
+    int32 GetDynaTimeRemaining(lua_State* L) // in seconds, i.e. DynaTimeRemaining(zoneID)
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+        CZone* PZone = zoneutils::GetZone((uint32)lua_tointeger(L, 1));
+
+        if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PZone->m_DynamisHandler->m_token)
+            lua_pushinteger(LuaHandle, (lua_Integer)(PZone->m_DynamisHandler->m_expiryTimePoint - (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
+        else
+            lua_pushinteger(LuaHandle, 0);
 
         return 1;
     }

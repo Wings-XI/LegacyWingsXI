@@ -12,6 +12,7 @@ require("scripts/globals/status")
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:setMod(tpz.mod.REGEN, 10)
 end
 
 function onMobDeath(mob, player, isKiller)
