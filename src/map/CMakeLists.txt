@@ -25,6 +25,8 @@ set(SOURCES
     conquest_system.h
     daily_system.cpp
     daily_system.h
+    dynamis_handler.cpp
+    dynamis_handler.h
     enmity_container.cpp
     enmity_container.h
     grades.cpp

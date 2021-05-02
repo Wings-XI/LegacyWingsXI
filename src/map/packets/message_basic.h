@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -85,6 +85,7 @@ enum MSGBASIC_ID : uint16
 	MSGBASIC_PET_CANNOT_DO_ACTION	= 574, /* <player>'s pet is currently unable to perform that action. */
 	MSGBASIC_PET_NOT_ENOUGH_TP		= 575, /* <player>'s pet does not have enough TP to perform that action. */
 	/* Items */
+	MSGBASIC_ITEM_UNABLE_TO_USE     = 55,
 	MSGBASIC_CANNOT_USE_ITEM_ON		= 92,  /* Cannot use the <item> on <target>. */
 	MSGBASIC_ITEM_FAILS_TO_ACTIVATE = 62,  /* The <item> fails to activate. */
 	MSGBASIC_FULL_INVENTORY         = 356, /* Cannot execute command. Your inventory is full. */

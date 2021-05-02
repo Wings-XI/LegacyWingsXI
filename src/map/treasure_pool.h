@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -23,6 +23,7 @@
 #define _CTREASUREPOOL_H
 
 #include "../common/cbasetypes.h"
+#include "dynamis_handler.h"
 
 #include <vector>
 
@@ -69,7 +70,7 @@ public:
 
     TREASUREPOOLTYPE GetPoolType();
 
-    uint8 AddItem(uint16 ItemID, CBaseEntity*);
+    uint8 AddItem(uint16 ItemID, CBaseEntity*, CDynamisHandler* PDynamisHandler = nullptr);
 
     void LotItem(uint8 SlotID, uint16 Lot);
     void LotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot);
@@ -95,7 +96,7 @@ private:
 
     TREASUREPOOLTYPE m_TreasurePoolType;
 
-    void CheckTreasureItem(time_point tick, uint8 SlotID);
+    void CheckTreasureItem(time_point tick, uint8 SlotID, CCharEntity* PImmediateWinner = nullptr);
 
     TreasurePoolItem m_PoolItems[TREASUREPOOL_SIZE];
 

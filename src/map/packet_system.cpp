@@ -1129,12 +1129,14 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
             PLinkshell->BreakLinkshell((int8*)PLinkshell->getName(), false);
             linkshell::UnloadLinkshell(lsid);
         }
-
+        bool checkHG = ItemID == 4237;
         if (charutils::UpdateItem(PChar, container, slotID, -quantity) != 0)
         {
             // ShowNotice(CL_CYAN"Player %s DROPPING itemID %u (quantity: %u)\n" CL_RESET, PChar->GetName(), ItemID, quantity);
             PChar->pushPacket(new CMessageStandardPacket(nullptr, ItemID, quantity, MsgStd::ThrowAway));
             PChar->pushPacket(new CInventoryFinishPacket());
+            if (checkHG) // perpetual
+                charutils::VerifyHoldsValidHourglass(PChar);
         }
         return;
     }
@@ -6562,6 +6564,7 @@ void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PCh
         PItem->setCharPrice(0);
         PItem->setQuantity(Quantity);
         PItem->setSubType(ITEM_UNLOCKED);
+        bool checkHG = PItem->getID() == 4237;
 
         if (charutils::AddItem(PChar, LOC_INVENTORY, PItem) == ERROR_SLOTID)
             return;
@@ -6574,6 +6577,8 @@ void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PCh
         PTarget->pushPacket(new CBazaarConfirmationPacket(PChar, PItem));
 
         charutils::UpdateItem(PTarget, LOC_INVENTORY, SlotID, -Quantity);
+        if (checkHG)
+            charutils::VerifyHoldsValidHourglass(PTarget);
 
         PTarget->pushPacket(new CInventoryItemPacket(PBazaar->GetItem(SlotID), LOC_INVENTORY, SlotID));
         PTarget->pushPacket(new CInventoryFinishPacket());

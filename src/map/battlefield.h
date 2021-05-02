@@ -176,7 +176,6 @@ public:
     std::vector<BattlefieldMob_t> m_AdditionalEnemyList;
     std::vector<CMobEntity*>      m_AllyList;
 
-private:
     uint16                 m_ID;
     CZone*                 m_Zone;
     std::string            m_Name;
@@ -195,6 +194,7 @@ private:
     size_t                 m_MaxParticipants;
     uint8                  m_LevelCap;
 
+private:
     bool                   m_Cleanup{ false };
     bool                   m_Attacked{ false };
     std::unordered_map<std::string, uint64_t> m_LocalVars;
