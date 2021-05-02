@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2019 Darkstar Dev Teams
@@ -39,6 +39,8 @@ namespace anticheat
         CHEAT_ID_POSHACK = 2,
         // Player using an automated fishing tool
         CHEAT_ID_FISHBOT = 3,
+        // Player using an automated chocobo digging tool
+        CHEAT_ID_DIGBOT = 4,
         // For boundary checks
         CHEAT_ID_LAST
     };
