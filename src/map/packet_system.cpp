@@ -900,6 +900,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     PChar->SetLocalVar("DiggingBlocked", 1);
                 }
+                return;
             }
             if (PChar->GetLocalVar("DiggingBlocked") != 0) {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
