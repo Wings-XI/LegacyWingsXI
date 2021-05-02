@@ -745,6 +745,19 @@ public:
     // Helpdesk functions courtesy of Setzor from Eden
     int32 sendHelpDeskMsg(lua_State*);      // Send a Help Desk (GM) Message to character
     int32 closeTicket(lua_State*);
+    int32 registerHourglass(lua_State* L);
+    int32 checkHourglassValid(lua_State* L);
+    int32 timeSinceLastDynaReservation(lua_State* L);
+    int32 updateHourglassExpireTime(lua_State* L);
+    int32 prepareDynamisEntry(lua_State* L);
+    int32 registerDynamis(lua_State* L);
+    int32 replicateHourglass(lua_State* L);
+    int32 canReplicateHourglass(lua_State* L);
+    int32 verifyHoldsValidHourglass(lua_State* L);
+    int32 addTimeToDynamis(lua_State* L);
+    int32 setSkillList(lua_State* L);
+    int32 setNM(lua_State* L);
+    int32 dynaCurrencyAutoDropEnabled(lua_State* L);
 };
 
 #endif

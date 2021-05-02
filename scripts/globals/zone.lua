@@ -18,6 +18,9 @@ tpz.zoneType =
     BATTLEFIELD    = 4,
     DYNAMIS        = 5,
     INSTANCED      = 6,
+    LIMBUS         = 7,
+    SALVAGE        = 8,
+    EINHERJAR      = 9,
 }
 
 tpz.continent =

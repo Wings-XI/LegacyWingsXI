@@ -27,40 +27,6 @@ zones[tpz.zone.DYNAMIS_JEUNO] =
         DYNAMIS_TIME_EXPIRED    = 7219, -- The sands of the hourglass have emptied...
         OMINOUS_PRESENCE        = 7230, -- You feel an ominous presence, as if something might happen if you possessed <item>.
     },
-    mob =
-    {
-        TIME_EXTENSION =
-        {
-            {minutes = 10, ki = tpz.ki.CRIMSON_GRANULES_OF_TIME,   mob = {17547301, 17547302, 17547303}},
-            {minutes = 10, ki = tpz.ki.AZURE_GRANULES_OF_TIME,     mob = 17547389},
-            {minutes = 10, ki = tpz.ki.AMBER_GRANULES_OF_TIME,     mob = 17547390},
-            {minutes = 15, ki = tpz.ki.ALABASTER_GRANULES_OF_TIME, mob = 17547420},
-            {minutes = 15, ki = tpz.ki.OBSIDIAN_GRANULES_OF_TIME,  mob = 17547467},
-        },
-        REFILL_STATUE =
-        {
-            {
-                {mob = 17547295, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17547296, eye = dynamis.eye.BLUE },
-                {mob = 17547297, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17547391, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17547392, eye = dynamis.eye.BLUE },
-                {mob = 17547393, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17547421, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17547422, eye = dynamis.eye.BLUE },
-                {mob = 17547423, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17547456, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17547457, eye = dynamis.eye.BLUE },
-                {mob = 17547458, eye = dynamis.eye.GREEN},
-            },
-        },
-    },
     npc =
     {
         QM =

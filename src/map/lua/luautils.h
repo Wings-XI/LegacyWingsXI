@@ -130,6 +130,7 @@ namespace luautils
     int32 SendEntityVisualPacket(lua_State*);                                    // временное решение для работы гейзеров в Dangruf_Wadi
     int32 GetNPCByID(lua_State*);                                               // Returns NPC By Id
     int32 GetMobByID(lua_State*);                                               // Returns Mob By Id
+    int32 GetEntityByID(lua_State* L);
     int32 WeekUpdateConquest(lua_State*);
     int32 GetRegionOwner(lua_State*);                                           // узнаем страну, владеющую текущим регионом
     int32 GetRegionInfluence(lua_State*);                                       // Return influence graphics
@@ -242,6 +243,12 @@ namespace luautils
 
     int32 OnPath(CBaseEntity* PEntity);                                           // triggers when a patrol npc finishes its pathfind
 
+    int32 OnDynamisTick(CDynamisHandler* PDynamisHandler);
+    int32 OnDynamisNewInstance(CDynamisHandler* PDynamisHandler);
+    int32 OnDynamisCleanup(CDynamisHandler* PDynamisHandler);
+    int32 OnDynamisEjectPlayer(CDynamisHandler* PDynamisHandler, CCharEntity* PChar, bool immediate = false);
+    int32 OnDynamisTimeWarning(CDynamisHandler* PDynamisHandler, CCharEntity* PChar);
+
     int32 OnBattlefieldHandlerInitialise(CZone* PZone);
     int32 OnBattlefieldInitialise(CBattlefield* PBattlefield);                    // what to do when initialising battlefield, battlefield:setLocalVar("lootId") here for any which have loot
     int32 OnBattlefieldTick(CBattlefield* PBattlefield);
@@ -312,6 +319,8 @@ namespace luautils
     int32 OnFishingCatch(CCharEntity* PChar, uint8 CatchType, int32 CatchID);               // triggers when player catches fish
     int32 OnFishingEnd(CCharEntity* PChar);                                                 // triggers when player stops fishing
     int32 GetTickets(lua_State* L);                                                         // Fetchs a list of GM tickets
+    int32 GetDynaTimeRemaining(lua_State* L);
+
 };
 
 #endif //- _LUAUTILS_H -

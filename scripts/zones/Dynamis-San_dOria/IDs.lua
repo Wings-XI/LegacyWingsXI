@@ -28,46 +28,6 @@ zones[tpz.zone.DYNAMIS_SAN_DORIA] =
         DYNAMIS_TIME_EXPIRED    = 7219, -- The sands of the hourglass have emptied...
         OMINOUS_PRESENCE        = 7230, -- You feel an ominous presence, as if something might happen if you possessed <item>.
     },
-    mob =
-    {
-        TIME_EXTENSION =
-        {
-            {minutes = 10, ki = tpz.ki.CRIMSON_GRANULES_OF_TIME,   mob = 17535026},
-            {minutes = 10, ki = tpz.ki.AZURE_GRANULES_OF_TIME,     mob = 17535057},
-            {minutes = 10, ki = tpz.ki.AMBER_GRANULES_OF_TIME,     mob = 17535139},
-            {minutes = 15, ki = tpz.ki.ALABASTER_GRANULES_OF_TIME, mob = 17535131},
-            {minutes = 15, ki = tpz.ki.OBSIDIAN_GRANULES_OF_TIME,  mob = 17535128},
-        },
-        REFILL_STATUE =
-        {
-            {
-                {mob = 17535003, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535004, eye = dynamis.eye.BLUE },
-                {mob = 17535005, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17535113, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535114, eye = dynamis.eye.BLUE },
-                {mob = 17535115, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17535154, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535155, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17535166, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535167, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17535193, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535194, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17535205, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17535206, eye = dynamis.eye.BLUE },
-            },
-        },
-    },
     npc =
     {
         QM =

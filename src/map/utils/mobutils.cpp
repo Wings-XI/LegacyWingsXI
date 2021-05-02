@@ -429,13 +429,6 @@ void CalculateStats(CMobEntity * PMob)
 
     if(isNM)
     {
-        //PMob->stats.STR = (uint16)(PMob->stats.STR * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.DEX = (uint16)(PMob->stats.DEX * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.VIT = (uint16)(PMob->stats.VIT * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.AGI = (uint16)(PMob->stats.AGI * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.INT = (uint16)(PMob->stats.INT * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.MND = (uint16)(PMob->stats.MND * 1.5f * map_config.nm_stat_multiplier);
-        //PMob->stats.CHR = (uint16)(PMob->stats.CHR * 1.5f * map_config.nm_stat_multiplier);
         PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
         PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
         PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
@@ -444,16 +437,6 @@ void CalculateStats(CMobEntity * PMob)
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
         PMob->addModifier(Mod::DEFP, 20);
     }
-    //else
-    //{
-        //PMob->stats.STR = (uint16)(PMob->stats.STR * map_config.mob_stat_multiplier);
-        //PMob->stats.DEX = (uint16)(PMob->stats.DEX * map_config.mob_stat_multiplier);
-        //PMob->stats.VIT = (uint16)(PMob->stats.VIT * map_config.mob_stat_multiplier);
-        //PMob->stats.AGI = (uint16)(PMob->stats.AGI * map_config.mob_stat_multiplier);
-        //PMob->stats.INT = (uint16)(PMob->stats.INT * map_config.mob_stat_multiplier);
-        //PMob->stats.MND = (uint16)(PMob->stats.MND * map_config.mob_stat_multiplier);
-        //PMob->stats.CHR = (uint16)(PMob->stats.CHR * map_config.mob_stat_multiplier);
-    //}
 
     // special case, give spell list to my pet
     if(PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
@@ -597,7 +580,6 @@ void CalculateStats(CMobEntity * PMob)
     case 371: // marid
     case 59:  // bugbear
         PMob->addModifier(Mod::EVA, -10);
-
     }
 
     // Check for possible miss-setups

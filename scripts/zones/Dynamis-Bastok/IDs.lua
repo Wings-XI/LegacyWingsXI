@@ -20,6 +20,7 @@ zones[tpz.zone.DYNAMIS_BASTOK] =
         CARRIED_OVER_POINTS     = 6999, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        NO_LONGER_HAVE_CLEARANCE= 7053, -- You no longer have clearance to remain in Dynamis. You will be transported out in [x] second/seconds.
         CONQUEST_BASE           = 7155, -- Tallying conquest results...
         DYNAMIS_TIME_BEGIN      = 7314, -- The sands of the <item> have begun to fall. You have <number> minutes (Earth time) remaining in Dynamis.
         DYNAMIS_TIME_EXTEND     = 7315, -- our stay in Dynamis has been extended by <number> minute[/s].
@@ -27,61 +28,6 @@ zones[tpz.zone.DYNAMIS_BASTOK] =
         DYNAMIS_TIME_UPDATE_2   = 7317, -- ou will be expelled from Dynamis in <number> [seconds/minutes] (Earth time).
         DYNAMIS_TIME_EXPIRED    = 7319, -- The sands of the hourglass have emptied...
         OMINOUS_PRESENCE        = 7330, -- You feel an ominous presence, as if something might happen if you possessed <item>.
-    },
-    mob =
-    {
-        TIME_EXTENSION =
-        {
-            {minutes = 10, ki = tpz.ki.CRIMSON_GRANULES_OF_TIME,   mob = 17539142},
-            {minutes = 10, ki = tpz.ki.AZURE_GRANULES_OF_TIME,     mob = 17539148},
-            {minutes = 10, ki = tpz.ki.AMBER_GRANULES_OF_TIME,     mob = 17539149},
-            {minutes = 15, ki = tpz.ki.ALABASTER_GRANULES_OF_TIME, mob = 17539253},
-            {minutes = 15, ki = tpz.ki.OBSIDIAN_GRANULES_OF_TIME,  mob = 17539306},
-        },
-        REFILL_STATUE =
-        {
-            {
-                {mob = 17539118, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539119, eye = dynamis.eye.BLUE },
-                {mob = 17539120, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539161, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539162, eye = dynamis.eye.BLUE },
-                {mob = 17539163, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539171, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539172, eye = dynamis.eye.BLUE },
-                {mob = 17539173, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539227, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539228, eye = dynamis.eye.BLUE },
-                {mob = 17539229, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539234, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539235, eye = dynamis.eye.BLUE },
-                {mob = 17539236, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539266, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539267, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17539274, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539275, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17539286, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539287, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17539293, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17539294, eye = dynamis.eye.GREEN},
-            },
-        },
     },
     npc =
     {

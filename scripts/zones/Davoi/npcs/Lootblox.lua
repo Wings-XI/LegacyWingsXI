@@ -27,7 +27,8 @@ function onTrade(player, npc, trade)
          player:startEvent(134)
       elseif (gil == 0) then
          if (count == 1 and trade:hasItemQty(4236, 1)) then -- Bringing back a Timeless Hourglass
-            player:startEvent(153)
+            --player:startEvent(153)
+            return
 
          -- Currency Exchanges
          elseif (count == CURRENCY_EXCHANGE_RATE and trade:hasItemQty(1452, CURRENCY_EXCHANGE_RATE)) then -- Single -> Hundred
@@ -141,10 +142,10 @@ function onEventFinish(player, csid, option)
          player:addItem(4236)
          player:messageSpecial(ID.text.ITEM_OBTAINED, 4236)
       end
-   elseif (csid == 153) then -- Bringing back an hourglass for gil.
-      player:tradeComplete()
-      player:addGil(TIMELESS_HOURGLASS_COST)
-      player:messageSpecial(ID.text.GIL_OBTAINED, TIMELESS_HOURGLASS_COST)
+   --elseif (csid == 153) then -- Bringing back an hourglass for gil.
+      --player:tradeComplete()
+      --player:addGil(TIMELESS_HOURGLASS_COST)
+      --player:messageSpecial(ID.text.GIL_OBTAINED, TIMELESS_HOURGLASS_COST)
    elseif (csid == 135) then -- Trading Singles for a Hundred
       if (player:getFreeSlotsCount() == 0) then
          player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1453)

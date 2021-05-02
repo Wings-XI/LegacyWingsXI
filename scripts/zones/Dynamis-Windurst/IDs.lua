@@ -28,54 +28,6 @@ zones[tpz.zone.DYNAMIS_WINDURST] =
         DYNAMIS_TIME_EXPIRED    = 7319, -- The sands of the hourglass have emptied...
         OMINOUS_PRESENCE        = 7330, -- You feel an ominous presence, as if something might happen if you possessed <item>.
     },
-    mob =
-    {
-        TIME_EXTENSION =
-        {
-            {minutes = 10, ki = tpz.ki.CRIMSON_GRANULES_OF_TIME,   mob = 17543258},
-            {minutes = 10, ki = tpz.ki.AZURE_GRANULES_OF_TIME,     mob = 17543342},
-            {minutes = 10, ki = tpz.ki.AMBER_GRANULES_OF_TIME,     mob = 17543372},
-            {minutes = 15, ki = tpz.ki.ALABASTER_GRANULES_OF_TIME, mob = 17543446},
-            {minutes = 15, ki = tpz.ki.OBSIDIAN_GRANULES_OF_TIME,  mob = 17543259},
-        },
-        REFILL_STATUE =
-        {
-            {
-                {mob = 17543268, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543269, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17543305, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543306, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17543353, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543354, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17543362, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543363, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17543392, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543393, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17543409, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543410, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17543419, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543420, eye = dynamis.eye.BLUE },
-                {mob = 17543421, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17543461, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17543462, eye = dynamis.eye.BLUE },
-                {mob = 17543463, eye = dynamis.eye.GREEN},
-            },
-        },
-    },
     npc =
     {
         QM =

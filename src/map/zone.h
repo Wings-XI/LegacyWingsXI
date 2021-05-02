@@ -32,6 +32,7 @@
 #include "region.h"
 #include "vana_time.h"
 #include "battlefield_handler.h"
+#include "dynamis_handler.h"
 
 #include "packets/weather.h"
 #include "navmesh.h"
@@ -409,7 +410,10 @@ enum ZONETYPE
     ZONETYPE_DUNGEON = 3,
     ZONETYPE_BATTLEFIELD = 4,
     ZONETYPE_DYNAMIS = 5,
-    ZONETYPE_DUNGEON_INSTANCED = 6
+    ZONETYPE_DUNGEON_INSTANCED = 6,
+    ZONETYPE_LIMBUS = 7, // unused yet
+    ZONETYPE_SALVAGE = 8, // unused yet
+    ZONETYPE_EINHERJAR = 9 // unused yet
 };
 
 enum GLOBAL_MESSAGE_TYPE
@@ -604,6 +608,7 @@ public:
 
     CAIEventHandler* PEventHandler;
     CBattlefieldHandler* m_BattlefieldHandler;  // BCNM Instances in this zone
+    CDynamisHandler* m_DynamisHandler;
 
     CNavMesh*       m_navMesh;              // zones navmesh for finding paths
     uint16          m_miscMask;             // битовое поле, описывающее возможности использования в зоне определенных умений
