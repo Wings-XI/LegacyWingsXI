@@ -32,8 +32,8 @@ function onMobWeaponSkill(target, mob, skill)
         geoticMultiplier = 800
         angleMultiplier = 0.675
     else
-        geoticMultiplier = 1400
-        angleMultiplier = 0.9
+        geoticMultiplier = 2000
+        angleMultiplier = 0.2
     end
 
     local dmgmod = MobBreathMove(mob, target, 0.2, 1.25 , tpz.magic.ele.EARTH, geoticMultiplier)

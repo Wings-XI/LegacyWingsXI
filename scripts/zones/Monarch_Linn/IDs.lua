@@ -18,6 +18,7 @@ zones[tpz.zone.MONARCH_LINN] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         GLOWING_MIST            = 7126, -- A glowing mist of ever-changing proportions floats before you...
+        ORB_MESSAGE_OFFSET      = 7405, -- There is a crack in the <item>. It no longer contains a monster.
         CONQUEST_BASE           = 7462, -- Tallying conquest results...
     },
     mob =

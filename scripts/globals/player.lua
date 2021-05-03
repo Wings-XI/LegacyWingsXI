@@ -65,19 +65,19 @@ local function CharCreate(player)
 
     -- add nation-specific map
     --player:addKeyItem(nationInfo.map)
-	-- add all maps instead
-	local mapID = 383
-	while mapID < 448 do
-		if mapID ~= 384 then
-			player:addKeyItem(mapID)
-		end
-		mapID = mapID + 1
-	end
-	mapID = 1856
-	while mapID < 1919 do
-		player:addKeyItem(mapID)
-		mapID = mapID + 1
-	end
+    -- add all maps instead
+    local mapID = 383
+    while mapID < 448 do
+        if mapID ~= 384 then
+            player:addKeyItem(mapID)
+        end
+        mapID = mapID + 1
+    end
+    mapID = 1856
+    while mapID < 1919 do
+        player:addKeyItem(mapID)
+        mapID = mapID + 1
+    end
 
     -- add nation- and race-specific ring
     if nation == raceInfo.homeNation and not player:hasItem(nationInfo.ring) then
@@ -191,11 +191,13 @@ function onGameIn(player, firstLogin, zoning)
     
     -- !immortal
     if player:getCharVar("Immortal") == 1 then
+        player:addStatusEffectEx(tpz.effect.GM_IMMORTAL, tpz.effect.TRANSCENDENCY, 0, 0, 0)
         player:setUnkillable(true)
     end
 
     -- !hide
     if player:getCharVar("GMHidden") == 1 then
+        player:addStatusEffectEx(tpz.effect.GM_HIDE, tpz.effect.INVISIBLE, 0, 0, 0)
         player:setGMHidden(true)
     end
 

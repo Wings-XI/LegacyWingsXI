@@ -21,6 +21,7 @@ zones[tpz.zone.HORLAIS_PEAK] =
         LOGIN_CAMPAIGN_UNDERWAY      = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                 = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE                = 7049, -- Tallying conquest results...
+        ORB_MESSAGE_OFFSET           = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         YOU_DECIDED_TO_SHOW_UP       = 7742, -- So, you decided to show up. Now it's time to see what you're really made of, heh heh heh.
         LOOKS_LIKE_YOU_WERENT_READY  = 7743, -- Looks like you weren't ready for me, were you? Now go home, wash your face, and come back when you think you've got what it takes.
         YOUVE_COME_A_LONG_WAY        = 7744, -- Hm. That was a mighty fine display of skill there, <name>. You've come a long way...

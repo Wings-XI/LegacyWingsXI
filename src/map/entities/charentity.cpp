@@ -234,6 +234,7 @@ CCharEntity::CCharEntity()
     fishingToken = 0;
 
     m_ZoneAggroImmunity = server_clock::now() + 12s;
+    m_fomorHate = 0;
 
     PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
         std::make_unique<CTargetFind>(this));
@@ -1202,7 +1203,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 id = PAbility->getID();
 
         if (PAbility->getMeritModID() > 0 && (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
-            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149 || id == 168)) // merit adds that also get CDR from add. merits. todo: generalize this
+            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149 || id == 168 || id == 154)) // merit adds that also get CDR from add. merits. todo: generalize this
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
@@ -2202,6 +2203,15 @@ void CCharEntity::UpdateMoghancement()
         SetMoghancement(newMoghancementID);
         charutils::SaveCharMoghancement(this);
     }
+}
+
+void CCharEntity::SetFomorHate(uint32 fomorHate)
+{
+    if (fomorHate > 60) {
+        fomorHate = 60;
+    }
+    m_fomorHate = fomorHate;
+    charutils::SetCharVar(this, "FOMOR_HATE", fomorHate);
 }
 
 void CCharEntity::SetMoghancement(uint16 moghancementID)
