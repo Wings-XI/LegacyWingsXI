@@ -1177,19 +1177,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
             else
             {
-                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
-
-                // innin and yonin share recasts
-                if (PAbility->getRecastId() == 146)
-                    PRecastContainer->Add(RECAST_ABILITY, 147, action.recast);
-                else if (PAbility->getRecastId() == 147)
-                    PRecastContainer->Add(RECAST_ABILITY, 146, action.recast);
-
-                uint16 recastID = PAbility->getRecastId();
-                if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
-                {
-                    PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
-                }
+                SetAbilityRecastTime(state, action);
+                ResetAbilityRecast(PAbility->getRecastId(), action.recast);
             }
 
             // display paralyzed
@@ -1197,53 +1186,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             return;
         }
 
-        // get any available merit recast reduction
-        uint16 meritRecastReduction = 0;
-        uint16 id = PAbility->getID();
-
-        if (PAbility->getMeritModID() > 0 && (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
-            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149 || id == 168 || id == 154)) // merit adds that also get CDR from add. merits. todo: generalize this
-        {
-            MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
-            meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
-        }
-
-        auto charge = ability::GetCharge(this, PAbility->getRecastId());
-        if (charge && PAbility->getID() != ABILITY_SIC)
-        {
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
-        }
-        else
-        {
-            action.recast = PAbility->getRecastTime() - meritRecastReduction;
-        }
-        //672 to 779 are the ability ids for all bst pets
-        if (id > 671 && id < 780)
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this) / 4;
-
-        if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
-        {
-            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_TABULA_RASA))
-                action.recast = 0;
-        }
-        else if (PAbility->getID() == ABILITY_DEACTIVATE && PAutomaton && PAutomaton->health.hp == PAutomaton->GetMaxHP())
-        {
-            CAbility* PAbility = ability::GetAbility(ABILITY_ACTIVATE);
-            if (PAbility)
-                PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
-        }
-        else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
-        {
-            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
-            {
-                action.recast = 0;
-            }
-            else
-            {
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
-            }
-        }
+        SetAbilityRecastTime(state, action);
 
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
@@ -1255,15 +1198,6 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK) {
                 // remove invisible only
                 StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
-            }
-        }
-
-        if (PAbility->getID() == ABILITY_REWARD) {
-            CItem* PItem = getEquip(SLOT_HEAD);
-            if (PItem && (PItem->getID() == 15157 || PItem->getID() == 15158 || PItem->getID() == 16104 || PItem->getID() == 16105)) {
-                //TODO: Transform this into an item Mod::REWARD_RECAST perhaps ?
-                //The Bison/Brave's Warbonnet & Khimaira/Stout Bonnet reduces recast time by 10 seconds.
-                action.recast -= 10;   // remove 10 seconds
             }
         }
 
@@ -1417,21 +1351,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
 
         }
-        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
-        // innin and yonin share recasts
-        if (PAbility->getRecastId() == 146)
-            PRecastContainer->Add(RECAST_ABILITY, 147, action.recast);
-        else if (PAbility->getRecastId() == 147)
-            PRecastContainer->Add(RECAST_ABILITY, 146, action.recast);
-
-        uint16 recastID = PAbility->getRecastId();
-        if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
-        {
-            PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
-        }
-
-        pushPacket(new CCharRecastPacket(this));
+        ResetAbilityRecast(PAbility->getRecastId(), action.recast);
 
         auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
         if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
@@ -1480,9 +1401,113 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
     }
 }
 
+void CCharEntity::SetAbilityRecastTime(CAbilityState& state, action_t& action)
+{
+    auto PAbility = state.GetAbility();
+
+    // get any available merit recast reduction
+    uint16 meritRecastReduction = 0;
+    uint16 id = PAbility->getID();
+
+    if (PAbility->getMeritModID() > 0 &&
+        (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
+         id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 ||
+         id == 149 || id == 168)) // merit adds that also get CDR from add. merits. todo: generalize this
+    {
+        MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
+        meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
+    }
+
+    auto charge = ability::GetCharge(this, PAbility->getRecastId());
+    if (charge && PAbility->getID() != ABILITY_SIC)
+    {
+        action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+    }
+    else
+    {
+        action.recast = PAbility->getRecastTime() - meritRecastReduction;
+    }
+    // 672 to 779 are the ability ids for all bst pets
+    if (id > 671 && id < 780)
+        action.recast = charge->chargeTime * PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this) / 4;
+
+    if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) // stratagems
+    {
+        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_TABULA_RASA))
+            action.recast = 0;
+    }
+    else if (PAbility->getID() == ABILITY_DEACTIVATE && PAutomaton && PAutomaton->health.hp == PAutomaton->GetMaxHP())
+    {
+        CAbility* PAbility = ability::GetAbility(ABILITY_ACTIVATE);
+        if (PAbility)
+        {
+            // same ?
+            PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
+        }
+    }
+    else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+    {
+        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
+        {
+            action.recast = 0;
+        }
+        else
+        {
+            action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
+            action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+        }
+    }
+
+    if (PAbility->getID() == ABILITY_REWARD)
+    {
+        CItem* PItem = getEquip(SLOT_HEAD);
+        if (PItem && (PItem->getID() == 15157 || PItem->getID() == 15158 || PItem->getID() == 16104 || PItem->getID() == 16105))
+        {
+            // TODO: Transform this into an item Mod::REWARD_RECAST perhaps ?
+            // The Bison/Brave's Warbonnet & Khimaira/Stout Bonnet reduces recast time by 10 seconds.
+            action.recast -= 10; // remove 10 seconds
+        }
+    }
+}
+
+void CCharEntity::ResetAbilityRecast(const uint16& recastID, const uint16& recastDelay)
+{
+    PRecastContainer->Add(RECAST_ABILITY, recastID, recastDelay);
+
+    // innin and yonin share recasts
+    if (recastID == 146)
+        PRecastContainer->Add(RECAST_ABILITY, 147, recastDelay);
+    else if (recastID == 147)
+        PRecastContainer->Add(RECAST_ABILITY, 146, recastDelay);
+
+    if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
+    {
+        PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), recastDelay);
+    }
+
+    pushPacket(new CCharRecastPacket(this));
+}
+
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    if (battleutils::IsParalyzed(this))
+    {
+        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+
+        action.id = id;
+        action.actiontype = ACTION_RANGED_INTERRUPT;
+
+        actionList_t& actionList = action.getNewActionList();
+        actionList.ActionTargetID = PTarget->id;
+
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation = ANIMATION_RANGED;
+
+        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CActionPacket(action));
+        return;
+    }
 
     int32 damage = 0;
     int32 totalDamage = 0;
@@ -1909,7 +1934,11 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
     actionTarget.animation = PItem->getAnimationID();
+    ConsumeItem(PItem);
+}
 
+void CCharEntity::ConsumeItem(CItemUsable* PItem)
+{
     if (PItem->isType(ITEM_EQUIPMENT))
     {
         if (PItem->getMaxCharges() > 1)
