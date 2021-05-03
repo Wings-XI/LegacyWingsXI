@@ -26,8 +26,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25, tpz.magic.ele.FIRE, 1400)
-    dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, 0.9)
+    local dmgmod = MobBreathMove(mob, target, 0.2, 1.25, tpz.magic.ele.FIRE, 2000)
+    dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, 0.2)
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
 

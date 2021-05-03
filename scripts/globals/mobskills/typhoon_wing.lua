@@ -27,12 +27,12 @@ function onMobWeaponSkill(target, mob, skill)
     if typhoonMultiplier == 1 then
         typhoonMultiplier = 1.75
     else
-        typhoonMultiplier = 5
+        typhoonMultiplier = 4
     end
 
     local typeEffect = tpz.effect.BLINDNESS
-    local dmgmod = 1
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*typhoonMultiplier, tpz.magic.ele.DARK, dmgmod, TP_NO_EFFECT)
+    local dmgmod = typhoonMultiplier
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.DARK, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_WIPE_SHADOWS)
     MobStatusEffectMove(mob, target, typeEffect, 60, 0, 30)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
