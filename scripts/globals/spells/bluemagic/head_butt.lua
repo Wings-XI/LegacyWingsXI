@@ -55,8 +55,6 @@ function onSpellCast(caster, target, spell)
     local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if damage > 0 and resist > 0.25 then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
-    else
-        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
     return damage
