@@ -72,6 +72,12 @@ function onMobFight(mob, target)
     end
 end
 
+function onCastStarting(mob, spell)
+    if spell:getID() == 176 then -- firaga iii
+        spell:castTime(spell:castTime()/2) -- really fast cast (2x)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.TIAMAT_TROUNCER)
 end

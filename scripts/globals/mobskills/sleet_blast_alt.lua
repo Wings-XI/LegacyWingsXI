@@ -17,8 +17,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 1
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.ICE, dmgmod, TP_NO_EFFECT)
+    local dmgmod = 2.5 -- could be as low as 2.125 or 17/8
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.ICE, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ICE)
     skill:setMsg(tpz.msg.basic.HIT_DMG)
