@@ -19,6 +19,7 @@ zones[tpz.zone.CLOISTER_OF_GALES] =
         LOGIN_NUMBER                     = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE                    = 7049, -- Tallying conquest results...
         YOU_CANNOT_ENTER_THE_BATTLEFIELD = 7210, -- You cannot enter the battlefield at present. Please wait a little longer.
+        ORB_MESSAGE_OFFSET               = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         PROTOCRYSTAL                     = 7234, -- It is a giant crystal.
         GARUDA_UNLOCKED                  = 7568, -- You are now able to summon [Ifrit/Titan/Leviathan/Garuda/Shiva/Ramuh].
     },

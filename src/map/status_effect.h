@@ -723,8 +723,10 @@ enum EFFECT
     EFFECT_MEDITATE                 = 801, // Dummy effect for SAM Meditate JA
     EFFECT_ELEMENTALRES_DOWN        = 802, // Elemental resistance down
     EFFECT_FULL_SPEED_AHEAD         = 803, // Used to track Full Speed Ahead quest minigame
-    EFFECT_SUPER_JUMP               = 804
-    // 804-1022
+    EFFECT_SUPER_JUMP               = 804,
+    EFFECT_GM_HIDE                  = 805,
+    EFFECT_GM_IMMORTAL              = 806
+    // 807-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 

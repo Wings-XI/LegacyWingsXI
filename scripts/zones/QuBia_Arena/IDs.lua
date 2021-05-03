@@ -18,6 +18,7 @@ zones[tpz.zone.QUBIA_ARENA] =
         LOGIN_CAMPAIGN_UNDERWAY      = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                 = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE                = 7049, -- Tallying conquest results...
+        ORB_MESSAGE_OFFSET           = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         FLAT_PREPARE                 = 7622, -- I am Trion, of San d'Oria!
         FLAT_LAND                    = 7623, -- Feel the fire of my forefathers!
         RLB_PREPARE                  = 7624, -- The darkness before me that shrouds the light of good...

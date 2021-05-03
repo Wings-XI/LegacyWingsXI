@@ -554,7 +554,7 @@ function checkReqs(player, npc, bfid, registrant)
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
     end
-
+    
     -- requirements to register a battlefield
     local registerReqs =
     {
@@ -646,16 +646,16 @@ function checkReqs(player, npc, bfid, registrant)
         [ 739] = function() return ( player:hasKeyItem(tpz.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Pulling Your Strings
         [ 740] = function() return ( player:hasKeyItem(tpz.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Automaton Assault
         [ 768] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_HOLLA))   ) end, -- PM1-3: The Mothercrystals
-		--[ 768] = function() return ( true   ) end, -- PM1-3: The Mothercrystals
+        --[ 768] = function() return ( true   ) end, -- PM1-3: The Mothercrystals
         [ 769] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ABANDONMENT)                                                                                        ) end, -- ENM: Simulant
         [ 800] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_DEM))     ) end, -- PM1-3: The Mothercrystals
-		--[ 800] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
+        --[ 800] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
         [ 801] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ANTIPATHY)                                                                                          ) end, -- ENM: You Are What You Eat
         [ 832] = function() return ( (cop == mi.cop.BELOW_THE_ARKS and copStat==1) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(tpz.ki.LIGHT_OF_MEA))     ) end, -- PM1-3: The Mothercrystals
-		--[ 832] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
+        --[ 832] = function() return ( true     ) end, -- PM1-3: The Mothercrystals
         [ 833] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ANIMUS)                                                                                             ) end, -- ENM: Playing Host
         [ 864] = function() return ( cop == mi.cop.DESIRES_OF_EMPTINESS and copStat == 8                                                                                    ) end, -- PM5-2: Desires of Emptiness
-		--[ 864] = function() return ( true                                                                                    ) end, -- PM5-2: Desires of Emptiness
+        --[ 864] = function() return ( true                                                                                    ) end, -- PM5-2: Desires of Emptiness
         [ 865] = function() return ( player:hasKeyItem(tpz.ki.CENSER_OF_ACRIMONY)                                                                                           ) end, -- ENM: Pulling the Plug
         [ 896] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and player:getCharVar('StormsOfFate') == 2           ) end, -- Quest: Storms of Fate
         [ 960] = function() return ( cop == mi.cop.ANCIENT_VOWS and copStat == 2                                                                                            ) end, -- PM2-5: Ancient Vows
@@ -923,6 +923,20 @@ function getItemById(player, bfid)
 end
 
 -----------------------------------------------
+-- get offset for orb related messages
+-----------------------------------------------
+
+function GetCrackedMessage(player, option)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    local base = text.ORB_MESSAGE_OFFSET
+    if base == nil then
+        return nil
+    end
+    return base + option
+end
+
+-----------------------------------------------
 -- onTrade Action
 -----------------------------------------------
 
@@ -940,7 +954,12 @@ function TradeBCNM(player, npc, trade, onUpdate)
         if itemId == nil or itemId < 1 or itemId > 65535 or trade:getItemCount() ~= 1 or trade:getSlotQty(0) ~= 1 then
             return false
         elseif player:hasWornItem(itemId) then
-            player:messageBasic(56, 0, 0) -- Unable to use item.
+            local wornmessage = GetCrackedMessage(player, 0)
+            if wornmessage ~= nil then
+                player:messageSpecial(wornmessage, 0, 0, 0, itemId)
+            else
+                player:messageBasic(56, 0, 0) -- Unable to use item.
+            end
             return false
         end
     end
@@ -1083,6 +1102,10 @@ function EventUpdateBCNM(player, csid, option, extras)
                     -- set other traded item to worn
                     elseif player:hasItem(item) and player:getName() == initiatorName then
                         player:createWornItem(item)
+                        local wornmessage = GetCrackedMessage(player, 1)
+                        if wornmessage ~= nil then
+                            player:messageSpecial(wornmessage, 0, 0, 0, item)
+                        end
                     end
                 end
 

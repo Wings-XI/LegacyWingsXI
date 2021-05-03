@@ -20,6 +20,7 @@ zones[tpz.zone.CLOISTER_OF_STORMS] =
         CONQUEST_BASE                    = 7049, -- Tallying conquest results...
         YOU_CANNOT_ENTER_THE_BATTLEFIELD = 7210, -- You cannot enter the battlefield at present. Please wait a little longer.
         PROTOCRYSTAL                     = 7234, -- It is a giant crystal.
+        ORB_MESSAGE_OFFSET               = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         RAMUH_UNLOCKED                   = 7568, -- You are now able to summon [Ifrit/Titan/Leviathan/Garuda/Shiva/Ramuh].
     },
     mob =

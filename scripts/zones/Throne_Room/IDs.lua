@@ -18,6 +18,7 @@ zones[tpz.zone.THRONE_ROOM] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE           = 7049, -- Tallying conquest results...
+        ORB_MESSAGE_OFFSET      = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         NO_HIDE_AWAY            = 7698, -- I have not been hiding away from my troubles!
         FEEL_MY_PAIN            = 7699, -- Feel my twenty years of pain!
         YOUR_ANSWER             = 7700, -- Is that your answer!?

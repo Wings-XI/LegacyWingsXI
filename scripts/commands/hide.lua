@@ -28,10 +28,12 @@ function onTrigger(player, cmd)
 
     -- If hidden animate us beginning our hide..
     if (isHidden == 1) then
+        player:addStatusEffectEx(tpz.effect.GM_HIDE, tpz.effect.INVISIBLE, 0, 0, 0)
         player:setCharVar( "GMHidden", 1 )
         player:setGMHidden(true)
         player:PrintToPlayer( "You are now GM hidden from other players." )
     else
+        player:delStatusEffectSilent(tpz.effect.GM_HIDE)
         player:setCharVar( "GMHidden", 0 )
         player:setGMHidden(false)
         player:PrintToPlayer( "You are no longer GM hidden from other players." )
