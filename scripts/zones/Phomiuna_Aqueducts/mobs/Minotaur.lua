@@ -7,7 +7,8 @@ require("scripts/globals/missions")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("fomorHateAdj", -2)
+    mob:setLocalVar("fomorHateDecrease", 1)
+    mob:setLocalVar("fomorHateAdj", 2)
 end
 
 function onMobDeath(mob, player, isKiller)
