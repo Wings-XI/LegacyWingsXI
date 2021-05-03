@@ -144,8 +144,7 @@ void CMobController::TryLink()
         {
             if (PTarget->objtype == TYPE_PC)
             {
-                std::unique_ptr<CBasicPacket> errMsg;
-                if (!PTarget->PPet->CanAttack(PMob, errMsg))
+                if (!((CCharEntity*)PTarget)->IsMobOwner(PMob))
                 {
                     return;
                 }
