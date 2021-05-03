@@ -234,6 +234,7 @@ CCharEntity::CCharEntity()
     fishingToken = 0;
 
     m_ZoneAggroImmunity = server_clock::now() + 12s;
+    m_fomorHate = 0;
 
     PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
         std::make_unique<CTargetFind>(this));
@@ -2202,6 +2203,15 @@ void CCharEntity::UpdateMoghancement()
         SetMoghancement(newMoghancementID);
         charutils::SaveCharMoghancement(this);
     }
+}
+
+void CCharEntity::SetFomorHate(uint32 fomorHate)
+{
+    if (fomorHate > 60) {
+        fomorHate = 60;
+    }
+    m_fomorHate = fomorHate;
+    charutils::SetCharVar(this, "FOMOR_HATE", fomorHate);
 }
 
 void CCharEntity::SetMoghancement(uint16 moghancementID)

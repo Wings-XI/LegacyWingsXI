@@ -13,7 +13,7 @@ g_mixins.fomor_hate = function(mob)
                     if adj == 0 then
                         adj = 2 -- default: most fomor add 2 hate
                     end
-                    member:setCharVar("FOMOR_HATE", utils.clamp(hate + adj, 0, 60))
+                    member:setFomorHate(utils.clamp(hate + adj, 0, 60))
                 end
             end
         end

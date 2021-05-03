@@ -364,6 +364,7 @@ public:
 
     uint8             m_hitCounter;                 // auto-attack it counter for Tredecim Scythe
     time_point        m_ZoneAggroImmunity;
+    uint32            m_fomorHate;
 
     int8			  getShieldSize();
 
@@ -439,6 +440,7 @@ public:
     void SetMoghancement(uint16 moghancementID);
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
+    void SetFomorHate(uint32 fomorHate);
 
     /* State callbacks */
     virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
