@@ -43,13 +43,12 @@ public:
     uint8         RegisterBattlefield(CCharEntity* PChar, uint16 battlefieldID, uint8 area, uint32 initiator);               // attempts to register or load battlefield, returns BATTLEFIELD_RETURN_CODE
     bool          RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield = nullptr, uint8 leavecode = 3);
     bool          IsRegistered(CCharEntity* PChar);
-    bool          IsEntered(CCharEntity* PChar);
+    bool          IsEntered(CCharEntity* PChar); // help, i don't exist!
     bool          ReachedMaxCapacity(int battlefieldId = -1) const;
 
-private:
     CZone*                                       m_PZone;
     uint8                                        m_MaxBattlefields; // usually 3 except dynamis, einherjar, besieged, ...
-    std::map<int, CBattlefield*> m_Battlefields;    // area
+    std::map<int, CBattlefield*>                 m_Battlefields;    // area
     std::map<uint32, uint8>                      m_ReservedAreas;   // <charid, area>
 };
 

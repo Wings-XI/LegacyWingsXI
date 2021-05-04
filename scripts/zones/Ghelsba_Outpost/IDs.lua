@@ -13,6 +13,7 @@ zones[tpz.zone.GHELSBA_OUTPOST] =
         CONQUEST_BASE                    = 0, -- Tallying conquest results...
         YOU_CANNOT_ENTER_THE_BATTLEFIELD = 161, -- You cannot enter the battlefield at present. Please wait a little longer.
         UNABLE_TO_PROTECT                = 218, -- You were unable to protect the special character. Now leaving the battlefield.
+        ORB_MESSAGE_OFFSET               = 474, -- There is a crack in the <item>. It no longer contains a monster.
         ITEM_CANNOT_BE_OBTAINED          = 6912, -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED                    = 6918, -- Obtained: <item>.
         GIL_OBTAINED                     = 6919, -- Obtained <number> gil.

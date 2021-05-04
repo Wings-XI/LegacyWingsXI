@@ -37,10 +37,10 @@ function onTrigger(player, target)
             local immortal = false
             if targ:isPC() then
                 if targ:getCharVar("Immortal") == 1 then
-                    targ:delStatusEffectSilent(0)
+                    targ:delStatusEffectSilent(tpz.effect.GM_IMMORTAL)
                     targ:setCharVar("Immortal", 0)
                 else
-                    targ:addStatusEffectEx(0, tpz.effect.TRANSCENDENCY, 0, 0, 0)
+                    targ:addStatusEffectEx(tpz.effect.GM_IMMORTAL, tpz.effect.TRANSCENDENCY, 0, 0, 0)
                     targ:setCharVar("Immortal", 1)
                     immortal = true
                 end

@@ -1663,7 +1663,7 @@ INSERT INTO `item_basic` VALUES(1773, 0, 'handful_of_darksteel_scales', 'dark_sc
 INSERT INTO `item_basic` VALUES(1774, 0, 'pile_of_red_gravel', 'red_gravel', 12, 4, 46, 0, 632);
 INSERT INTO `item_basic` VALUES(1775, 0, 'jar_of_brimsand', 'brimsand', 12, 4, 44, 0, 674);
 INSERT INTO `item_basic` VALUES(1776, 0, 'serving_of_spaghetti', 'spaghetti', 12, 4, 59, 0, 200);
-INSERT INTO `item_basic` VALUES(1777, 0, 'flaxen_pouch', 'flaxen_pouch', 1, 61520, 0, 1, 0);
+INSERT INTO `item_basic` VALUES(1777, 0, 'flaxen_pouch', 'flaxen_pouch', 1, 61504, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1778, 0, 'pouch_of_parradamo_stones', 'parradamo_stones', 1, 61504, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1779, 0, 'cotton_pouch', 'cotton_pouch', 1, 61520, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1780, 0, 'handful_of_chamnaet_ice', 'chamnaet_ice', 1, 61504, 0, 1, 0);

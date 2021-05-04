@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -122,6 +122,7 @@
 #include "../packets/inventory_finish.h"
 #include "../packets/inventory_modify.h"
 #include "../packets/inventory_size.h"
+#include "../packets/inventory_item.h"
 #include "../packets/key_items.h"
 #include "../packets/menu_mog.h"
 #include "../packets/menu_merit.h"
@@ -5817,19 +5818,23 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 *  Function: setLevel()
 *  Purpose : Updates the level of the entity's main job
 *  Example : player:setLevel(50)
-*  Notes   :
+*  Notes   : can now accept monsters too. for mobs, M and S levels are the same
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::setLevel(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC && m_PBaseEntity->objtype != TYPE_MOB);
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
     TPZ_DEBUG_BREAK_IF(lua_tointeger(L, 1) > 99);
 
-    if (auto PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    if (m_PBaseEntity->objtype == TYPE_PC)
     {
+        auto PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+        if (!PChar)
+            return 0;
+
         PChar->SetMLevel((uint8)lua_tointeger(L, 1));
         PChar->jobs.job[PChar->GetMJob()] = (uint8)lua_tointeger(L, 1);
         PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
@@ -5860,6 +5865,17 @@ inline int32 CLuaBaseEntity::setLevel(lua_State *L)
         PChar->pushPacket(new CCharUpdatePacket(PChar));
         PChar->pushPacket(new CMenuMeritPacket(PChar));
         PChar->pushPacket(new CCharSyncPacket(PChar));
+    }
+    else
+    {
+        auto PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+        if (!PMob)
+            return 0;
+
+        PMob->SetMLevel((uint8)lua_tointeger(L, 1));
+        PMob->SetSLevel((uint8)lua_tointeger(L, 1));
+        mobutils::CalculateStats(PMob);
+        PMob->updatemask |= UPDATE_HP;
     }
 
     return 0;
@@ -15196,6 +15212,7 @@ int32 CLuaBaseEntity::setDropID(lua_State* L)
 *  Function: addTreasure()
 *  Purpose : Manually adds treasure to a party's treasure pool
 *  Example : targ:addTreasure(itemId, dropper)
+*  Notes   : WARNING: this uses the old TH formula so do NOT use anything other than droprate 1000!
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
@@ -16283,6 +16300,508 @@ inline int32 CLuaBaseEntity::closeTicket(lua_State* L)
     return 0;
 }
 
+/************************************************************************
+ *  Function: player:registerHourglass(zone)
+ *  Purpose : adds a newly registered perpetual hourglass to player. Lua handles deleting the traded timeless hourglass.
+ *  Example : 
+ *  Notes   : it should already be checked in Lua if the battlefield is taken at the moment
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    uint8 zoneid = (uint8)lua_tonumber(L, 1);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CZone* PZone = zoneutils::GetZone(zoneid);
+    if (!PChar || !PZone)
+        return 0;
+
+    std::chrono::seconds DynaReservationStart = (std::chrono::seconds)charutils::GetCharVar(PChar, "DynaReservationStart");
+    std::chrono::seconds now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+    if (now > DynaReservationStart + 71h && PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount())
+    {
+        CItem* PItem = itemutils::GetItem(4237);
+        PItem->setQuantity(1);
+        ref<uint8>(PItem->m_extra, 0x02) = 1;
+        ref<uint32>(PItem->m_extra, 0x04) = PChar->id;
+        ref<uint32>(PItem->m_extra, 0x0C) = now.count(); // registration start time (lasts 15 min)
+        ref<uint8>(PItem->m_extra, 0x10) = zoneid;
+        ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber((uint32)0,(uint32)-1); // token
+        
+        if (charutils::AddItem(PChar, LOC_INVENTORY, PItem, false) == ERROR_SLOTID)
+            delete PItem;
+        else
+        {
+            lua_pushboolean(L, true);
+            return 1;
+        }
+    }
+
+    lua_pushboolean(L, false);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:checkHourglassValid(item, zoneid)
+ *  Purpose : checks if player who traded glass can enter (71h from their last dynamis)
+ *  Example :
+ *  Notes   : 
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::checkHourglassValid(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    CLuaItem* PItem = Lunar<CLuaItem>::check(L, 1);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar || !PItem || !PItem->GetItem())
+        return 0;
+    uint8 zoneid = (uint8)lua_tonumber(L, 2);
+    uint8 canEnter = 0; // 0 = cannot enter
+    if (zoneid && ref<uint8>(PItem->GetItem()->m_extra, 0x10) == zoneid)
+    {
+        std::chrono::seconds DynaReservationStart = (std::chrono::seconds)charutils::GetCharVar(PChar, "DynaReservationStart");
+        std::chrono::seconds now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+        std::chrono::seconds glassReservationStart = (std::chrono::seconds)ref<uint32>(PItem->GetItem()->m_extra, 0x0C);
+
+        if (now > glassReservationStart && now < glassReservationStart + 15min)
+        {
+            if (now > DynaReservationStart + 71h)
+            {
+                canEnter = 1; // 1 = first time entering this reserved instance
+            }
+            else if (DynaReservationStart == glassReservationStart)
+            {
+                canEnter = 2; // 2 = i am re-entering this dynamis, give me weakness
+            }
+        }
+    }
+    lua_pushinteger(L, canEnter);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:timeSinceLastDynaReservation()
+ *  Purpose : it returns the.... time since last dyna reservation
+ *  Example :
+ *  Notes   : in hours, rounded down
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::timeSinceLastDynaReservation(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar)
+        return 0;
+
+    std::chrono::seconds DynaReservationStart = (std::chrono::seconds)charutils::GetCharVar(PChar, "DynaReservationStart");
+    std::chrono::seconds now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+    lua_pushinteger(L, (now - DynaReservationStart).count()/3600);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:updateHourglassExpireTime()
+ *  Purpose : it updates the hourglass expire time
+ *  Example :
+ *  Notes   : 
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::updateHourglassExpireTime(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar)
+        return 0;
+    CZone* PZone = zoneutils::GetZone(PChar->getZone());
+    uint32 expiryTimeStamp = 0;
+    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler)
+        expiryTimeStamp = PZone->m_DynamisHandler->m_expiryTimePoint;
+    else
+        return 0;
+
+    uint8 numItemsUpdated = 0;
+    PChar->getStorage(LOC_INVENTORY)->ForEachItem([&expiryTimeStamp, &PChar, &numItemsUpdated](CItem* PItem) {
+        if (PItem && PItem->getID() == 4237 && PItem->m_extra)
+        {
+            ref<uint32>(PItem->m_extra, 0x08) = expiryTimeStamp;
+            PChar->pushPacket(new CInventoryItemPacket(PItem, LOC_INVENTORY, PItem->getSlotID()));
+            numItemsUpdated++;
+        }
+    });
+    if (numItemsUpdated)
+        PChar->pushPacket(new CInventoryFinishPacket());
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: player:prepareDynamisEntry(item)
+ *  Purpose : saves hourglass properties as localvars while we view the menu cs
+ *  Example :
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaItem* PItem = Lunar<CLuaItem>::check(L, 1);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar || !PItem || !PItem->GetItem())
+        return 0;
+
+    uint8 zoneid = ref<uint8>(PItem->GetItem()->m_extra, 0x10);
+    uint32 registrationStartTime = ref<uint32>(PItem->GetItem()->m_extra, 0x0C);
+    uint32 token = ref<uint32>(PItem->GetItem()->m_extra, 0x14);
+    uint32 originalRegistrant = ref<uint32>(PItem->GetItem()->m_extra, 0x04);
+
+    PChar->SetLocalVar("DynaPrep_zoneid", zoneid);
+    PChar->SetLocalVar("DynaPrep_registrationStartTime", registrationStartTime);
+    PChar->SetLocalVar("DynaPrep_token", token);
+    PChar->SetLocalVar("DynaPrep_originalRegistrant", originalRegistrant);
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1)
+        PChar->SetLocalVar("DynaPrep_bypassWeakness", 1);
+    
+    return 0;
+}
+
+/************************************************************************
+ *  Function: player:registerDynamis()
+ *  Purpose :
+ *  Example :
+ *  Notes   : registers the player to an ongoing dynamis OR registers a new instance if one is not ongoing
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::registerDynamis(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    uint8 zoneid = PChar->GetLocalVar("DynaPrep_zoneid");
+    uint32 registrationStartTime = PChar->GetLocalVar("DynaPrep_registrationStartTime");
+    uint32 token = PChar->GetLocalVar("DynaPrep_token");
+    uint32 originalRegistrant = PChar->GetLocalVar("DynaPrep_originalRegistrant");
+    CZone* PZone = zoneutils::GetZone(zoneid);
+    bool canLoadNewDynamis = true;
+
+    if ((std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count() > (uint64)registrationStartTime + 60*15)
+    {
+        canLoadNewDynamis = false;
+    }
+    if ((std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count() > (uint64)registrationStartTime + 60*60*4)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    
+    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler)
+    {
+        bool success = false;
+        if (PZone->m_DynamisHandler->m_token == 0)
+        {
+            if (canLoadNewDynamis)
+                success = PZone->m_DynamisHandler->LoadDynamis(PChar, token, originalRegistrant);
+        }
+        else
+        {
+            success = PZone->m_DynamisHandler->RegisterPlayer(PChar);
+        }
+
+        if (success)
+        {
+            charutils::SetCharVar(PChar, "DynaReservationStart", registrationStartTime);
+            if (PChar->GetLocalVar("DynaPrep_bypassWeakness") == 1)
+                charutils::SetCharVar(PChar, "DynaBypassWeakness", 1);
+        }
+        lua_pushboolean(L, success);
+        return 1;
+    }
+
+    lua_pushboolean(L, false);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:replicateHourglass(item)
+ *  Purpose : replicate perpetual hourglass on use
+ *  Example :
+ *  Notes   : 
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::replicateHourglass(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaItem* PItem = Lunar<CLuaItem>::check(L, 1);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar || !PItem || !PItem->GetItem())
+        return 0;
+
+    CItem* glass1 = itemutils::GetItem(4237);
+    CItem* glass2 = itemutils::GetItem(4237);
+    glass1->setQuantity(1);
+    glass2->setQuantity(1);
+    memcpy(glass1->m_extra, PItem->GetItem()->m_extra, sizeof(PItem->GetItem()->m_extra));
+    memcpy(glass2->m_extra, PItem->GetItem()->m_extra, sizeof(PItem->GetItem()->m_extra));
+
+    if (charutils::AddItem(PChar, LOC_INVENTORY, glass1, false) == ERROR_SLOTID)
+    {
+        delete glass1;
+        delete glass2;
+        return 0;
+    }
+    else if (charutils::AddItem(PChar, LOC_INVENTORY, glass2, false) == ERROR_SLOTID)
+    {
+        delete glass2;
+        return 0;
+    }
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: player:canReplicateHourglass(item)
+ *  Purpose :
+ *  Example :
+ *  Notes   : returns 0 if they can, otherwise returns a messagebasic ID
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::canReplicateHourglass(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaItem* PItem = Lunar<CLuaItem>::check(L, 1);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar || !PItem || !PItem->GetItem() || zoneutils::GetZone(PChar->getZone())->GetType() == ZONETYPE_DYNAMIS)
+    {
+        lua_pushinteger(L, MSGBASIC_ITEM_UNABLE_TO_USE);
+        return 1;
+    }
+
+    if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() < 2)
+    {
+        lua_pushinteger(L, MSGBASIC_FULL_INVENTORY);
+        return 1;
+    }
+
+    std::chrono::seconds now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+    std::chrono::seconds glassReservationStart = (std::chrono::seconds)ref<uint32>(PItem->GetItem()->m_extra, 0x0C);
+    if (now > glassReservationStart + 4h)
+    { // stale glass, it's older than the longest possible dyna (3.5hr) plus the registration period (15min)
+        lua_pushinteger(L, MSGBASIC_ITEM_UNABLE_TO_USE);
+        return 1;
+    }
+
+    lua_pushinteger(L, 0);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:verifyHoldsValidHourglass()
+ *  Purpose :
+ *  Example :
+ *  Notes   : do i hold a valid hourglass registered for the dynamis instance im in?
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::verifyHoldsValidHourglass(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (PChar)
+        lua_pushboolean(L, charutils::VerifyHoldsValidHourglass(PChar));
+    else
+        lua_pushboolean(L, false);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: player:addTimeToDynamis(minutes, msg) or mob:addTimeToDynamis(minutes, msg)
+ *  Purpose : not entirely sure, but i think it adds time to dynamis
+ *  Example : 
+ *  Notes   : 
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::addTimeToDynamis(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CZone* PZone = zoneutils::GetZone(m_PBaseEntity->getZone());
+    int16 minutes = (int16)lua_tointeger(L, 1);
+    uint16 messageID = 0;
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        messageID = (uint16)lua_tointeger(L, 2);
+
+    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PZone->m_DynamisHandler->m_expirationRoutine == false)
+    {
+        PZone->m_DynamisHandler->m_expiryTimePoint += minutes * 60;
+        if (PZone->m_DynamisHandler->m_expiryTimePoint >= 660)
+            PZone->m_DynamisHandler->m_given10MinWarning = false;
+        if (PZone->m_DynamisHandler->m_expiryTimePoint >= 240)
+            PZone->m_DynamisHandler->m_given3MinWarning = false;
+
+        uint32 expiryTimeStamp = PZone->m_DynamisHandler->m_expiryTimePoint;
+        uint8 numItemsUpdated = 0;
+
+        PZone->ForEachChar([&messageID, &minutes, &expiryTimeStamp, &numItemsUpdated](CCharEntity* PChar) {
+            if (messageID && minutes > 0)
+                PChar->pushPacket(new CMessageSpecialPacket(PChar, messageID, minutes));
+
+            // update everyone's hourglasses to show new expiry time
+            numItemsUpdated = 0;
+            PChar->getStorage(LOC_INVENTORY)->ForEachItem([&expiryTimeStamp, &numItemsUpdated, &PChar](CItem* PItem) {
+                if (PItem && PItem->getID() == 4237 && PItem->m_extra)
+                {
+                    ref<uint32>(PItem->m_extra, 0x08) = expiryTimeStamp;
+                    PChar->pushPacket(new CInventoryItemPacket(PItem, LOC_INVENTORY, PItem->getSlotID()));
+                    numItemsUpdated++;
+                }
+            });
+            if (numItemsUpdated)
+                PChar->pushPacket(new CInventoryFinishPacket());
+        });
+    }
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: mob:setSkillList(120)
+ *  Purpose : sets mob skill list
+ *  Example : 
+ *  Notes   : 
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setSkillList(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB)
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    
+    ((CMobEntity*)m_PBaseEntity)->m_MobSkillList = (uint16)lua_tointeger(L, 1);
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: mob:setNM(true)
+ *  Purpose : sets a mob to be an NM (lua boolean true/false)
+ *  Example :
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setNM(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB)
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
+
+    if (lua_toboolean(L, 1))
+        ((CMobEntity*)m_PBaseEntity)->m_Type |= MOBTYPE_NOTORIOUS;
+    else if (((CMobEntity*)m_PBaseEntity)->m_Type & MOBTYPE_NOTORIOUS)
+        ((CMobEntity*)m_PBaseEntity)->m_Type -= MOBTYPE_NOTORIOUS;
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: player:dynaCurrencyAutoDropEnabled()
+ *  Purpose : returns true if auto drop is enabled for this player
+ *  Example :
+ *  Notes   : if passed a boolean parameter, it will set it to true or false
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::dynaCurrencyAutoDropEnabled(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CZone* PZone = zoneutils::GetZone(PChar->getZone());
+
+    if (PChar && PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PChar->id == PZone->m_DynamisHandler->m_originalRegistrantID)
+    {
+        if (!lua_isnil(L, 1) && lua_isboolean(L, 1))
+            PZone->m_DynamisHandler->m_currencyAutoDistribute = lua_toboolean(L, 1);
+
+        lua_pushboolean(L, PZone->m_DynamisHandler->m_currencyAutoDistribute);
+        return 1;
+    }
+
+    lua_pushboolean(L, false);
+    return 1;
+}
+
+/************************************************************************
+*  Function: getFomorHate()
+*  Purpose : Returns the current fomor hate of the player
+*  Example : local status = player:getFomorHate()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getFomorHate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_fomorHate);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setFomorHate()
+*  Purpose : Updates PC's fomor hate (both DB and local)
+*  Example : player:setFomorHate(4)
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setFomorHate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    int32 value = (int32)lua_tointeger(L, -1);
+    ((CCharEntity*)m_PBaseEntity)->SetFomorHate(value);
+
+    lua_pushnil(L);
+    return 1;
+}
+
+
 //=======================================================//
 
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -16987,8 +17506,23 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
 
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity, sendHelpDeskMsg),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity, closeTicket),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendHelpDeskMsg),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeTicket),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,registerHourglass),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkHourglassValid),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,timeSinceLastDynaReservation),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateHourglassExpireTime),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,prepareDynamisEntry),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,registerDynamis),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,replicateHourglass),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,canReplicateHourglass),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,verifyHoldsValidHourglass),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTimeToDynamis),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSkillList),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setNM),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,dynaCurrencyAutoDropEnabled),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getFomorHate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setFomorHate),
 
     {nullptr,nullptr}
 };

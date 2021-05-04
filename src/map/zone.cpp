@@ -417,6 +417,14 @@ void CZone::LoadZoneSettings()
         {
             m_TreasurePool = new CTreasurePool(TREASUREPOOL_ZONE);
         }
+        if (m_zoneType == ZONETYPE_DYNAMIS)
+        {
+            m_DynamisHandler = new CDynamisHandler(this);
+        }
+        else
+        {
+            m_DynamisHandler = nullptr;
+        }
     }
     else
     {
@@ -841,6 +849,10 @@ void CZone::ZoneServer(time_point tick, bool check_regions)
     {
         m_BattlefieldHandler->HandleBattlefields(tick);
     }
+    if (m_DynamisHandler != nullptr)
+    {
+        m_DynamisHandler->HandleDynamis(tick);
+    }
 }
 
 void CZone::ForEachChar(std::function<void(CCharEntity*)> func)
@@ -946,22 +958,30 @@ void CZone::CharZoneIn(CCharEntity* PChar)
 
     PChar->ReloadPartyInc();
 
-    if (PChar->PParty != nullptr)
+    if (this->m_TreasurePool && this->m_TreasurePool->GetPoolType() == TREASUREPOOL_ZONE)
     {
-        if (m_TreasurePool != nullptr)
-        {
-            PChar->PTreasurePool = m_TreasurePool;
-            PChar->PTreasurePool->AddMember(PChar);
-        }
-        else
-        {
-            PChar->PParty->ReloadTreasurePool(PChar);
-        }
+        PChar->PTreasurePool = m_TreasurePool;
+        PChar->PTreasurePool->AddMember(PChar);
     }
     else
     {
-        PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_SOLO);
-        PChar->PTreasurePool->AddMember(PChar);
+        if (PChar->PParty != nullptr)
+        {
+            if (m_TreasurePool != nullptr)
+            {
+                PChar->PTreasurePool = m_TreasurePool;
+                PChar->PTreasurePool->AddMember(PChar);
+            }
+            else
+            {
+                PChar->PParty->ReloadTreasurePool(PChar);
+            }
+        }
+        else
+        {
+            PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_SOLO);
+            PChar->PTreasurePool->AddMember(PChar);
+        }
     }
 
     if (m_zoneType != ZONETYPE_DUNGEON_INSTANCED)
@@ -1050,6 +1070,21 @@ void CZone::CharZoneOut(CCharEntity* PChar)
 
     if (PChar->isDead())
         charutils::SaveDeathTime(PChar);
+
+    PChar->PBattlefield = nullptr;
+    PChar->PInstance = nullptr;
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+    }
+    if (PChar->PPet)
+    {
+        PChar->PPet->PBattlefield = nullptr;
+        PChar->PPet->PInstance = nullptr;
+        if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+            PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+        }
+    }
+
 
     PChar->loc.zone = nullptr;
 

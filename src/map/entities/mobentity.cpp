@@ -41,6 +41,8 @@
 #include "../utils/itemutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/zoneutils.h"
+#include "../dynamis_handler.h"
 #include "../status_effect_container.h"
 #include "../enmity_container.h"
 #include "../mob_spell_container.h"
@@ -361,7 +363,7 @@ uint16 CMobEntity::TPUseChance()
         return 0;
     }
 
-    if (health.tp == 3000 || (GetHPP() <= 25 && health.tp >= 1000))
+    if (health.tp == 3000 || (GetHPP() <= 50 && health.tp >= 2000) || (GetHPP() <= 25 && health.tp >= 1000))
     {
         return 10000;
     }
@@ -837,7 +839,7 @@ void CMobEntity::DistributeRewards()
             blueutils::TryLearningSpells(PChar, this);
             m_UsedSkillIds.clear();
 
-            if (m_giveExp && !PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
+            if (m_giveExp && !PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD) && zoneutils::GetZone(this->getZone())->GetType() != ZONETYPE_DYNAMIS)
             {
                 charutils::DistributeExperiencePoints(PChar, this);
             }
@@ -869,10 +871,12 @@ void CMobEntity::DistributeRewards()
 
 void CMobEntity::DropItems(CCharEntity* PChar)
 {
+    CDynamisHandler* PDynamisHandler = zoneutils::GetZone(this->getZone())->m_DynamisHandler;
+
     //Adds an item to the treasure pool and returns true if the pool has been filled
-    auto AddItemToPool = [this, PChar](uint16 ItemID, uint8 dropCount)
+    auto AddItemToPool = [this, PChar, PDynamisHandler](uint16 ItemID, uint8 dropCount)
     {
-        PChar->PTreasurePool->AddItem(ItemID, this);
+        PChar->PTreasurePool->AddItem(ItemID, this, PDynamisHandler);
         return dropCount >= TREASUREPOOL_SIZE;
     };
 
@@ -1025,9 +1029,9 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
 
 
-    uint16 Pzone = PChar->getZone();
+    uint16 zoneID = PChar->getZone();
 
-    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
+    bool validZone = ((zoneID > 0 && zoneID < 39) || (zoneID > 42 && zoneID < 134) || (zoneID > 135 && zoneID < 185) || (zoneID > 188 && zoneID < 255));
 
     if (validZone && charutils::GetRealExp(PChar->GetMLevel(), GetMLevel()) > 0)
     {

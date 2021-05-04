@@ -44,68 +44,6 @@ zones[tpz.zone.DYNAMIS_XARCABARD] =
         ANIMATED_SHIELD_DIALOG       = 7777, -- I am Aegis, the impervious shield of everlasting.
         PRISON_OF_SOULS_HAS_SET_FREE = 7809, -- e prison of souls has set free its captive spirits!
     },
-    mob =
-    {
-        TIME_EXTENSION =
-        {
-            {minutes = 10, ki = tpz.ki.CRIMSON_GRANULES_OF_TIME,   mob = 17330531},
-            {minutes = 10, ki = tpz.ki.AZURE_GRANULES_OF_TIME,     mob = 17330532},
-            {minutes = 10, ki = tpz.ki.AMBER_GRANULES_OF_TIME,     mob = 17330533},
-            {minutes = 10, ki = tpz.ki.ALABASTER_GRANULES_OF_TIME, mob = 17330534},
-            {minutes = 20, ki = tpz.ki.OBSIDIAN_GRANULES_OF_TIME,  mob = 17330535},
-        },
-        REFILL_STATUE =
-        {
-            {
-                {mob = 17330230, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17330231, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17330240, eye = dynamis.eye.RED  }, -- Adamantking_Effigy
-                {mob = 17330241, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17330248, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17330249, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17330256, eye = dynamis.eye.RED  }, -- Serjeant_Tombstone
-                {mob = 17330257, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17330273, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17330274, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17330285, eye = dynamis.eye.RED  }, -- Avatar_Icon
-                {mob = 17330286, eye = dynamis.eye.BLUE },
-            },
-            {
-                {mob = 17330471, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17330472, eye = dynamis.eye.GREEN},
-            },
-            {
-                {mob = 17330483, eye = dynamis.eye.RED  }, -- Goblin_Replica
-                {mob = 17330484, eye = dynamis.eye.BLUE },
-            },
-        },
-        YING                 = 17330183,
-        COUNT_ZAEBOS_PH      = {[17330376] = 17330377}, -- Kindred_Warrior
-        DUKE_GOMORY_PH       = {[17330303] = 17330304}, -- Kindred_Monk
-        PRINCE_SEERE_PH      = {[17330331] = 17330332}, -- Kindred_White_Mage
-        MARQUIS_ORIAS_PH     = {[17330333] = 17330343}, -- Kindred_Black_Mage
-        DUKE_BERITH_PH       = {[17330352] = 17330353}, -- Kindred_Red_Mage
-        COUNT_RAUM_PH        = {[17330314] = 17330315}, -- Kindred_Thief
-        MARQUIS_SABNAK_PH    = {[17330359] = 17330360}, -- Kindred_Paladin
-        DUKE_SCOX_PH         = {[17330427] = 17330417}, -- Kindred_Dark_Knight
-        MARQUIS_ANDRAS_PH    = {[17330388] = 17330390}, -- Kindred_Beastmaster
-        MARQUIS_DECARABIA_PH = {[17330222] = 17330223}, -- Kindred_Bard
-        MARQUIS_CIMERIES_PH  = {[17330414] = 17330415}, -- Kindred_Ranger
-        COUNT_VINE_PH        = {[17330439] = 17330440}, -- Kindred_Samurai
-        MARQUIS_GAMYGYN_PH   = {[17330450] = 17330451}, -- Kindred_Ninja
-        KING_ZAGAN_PH        = {[17330418] = 17330430}, -- Kindred_Dragoon
-        MARQUIS_NEBIROS_PH   = {[17330479] = 17330481}, -- Kindred_Summoner
-    },
     npc =
     {
         QM =

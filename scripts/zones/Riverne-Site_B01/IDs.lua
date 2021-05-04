@@ -19,6 +19,7 @@ zones[tpz.zone.RIVERNE_SITE_B01] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE           = 7049, -- Tallying conquest results...
+        ORB_MESSAGE_OFFSET      = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         SD_VERY_SMALL           = 7585, -- The spatial displacement is very small. If you only had some item that could make it bigger...
         SD_HAS_GROWN            = 7586, -- The spatial displacement has grown.
         SPACE_SEEMS_DISTORTED   = 7587, -- The space around you seems oddly distorted and disrupted.

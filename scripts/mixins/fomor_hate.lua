@@ -10,10 +10,16 @@ g_mixins.fomor_hate = function(mob)
                 if member:getZoneID() == player:getZoneID() then
                     local hate = member:getCharVar("FOMOR_HATE")
                     local adj = mob:getLocalVar("fomorHateAdj")
+                    local decrease = mob:getLocalVar("fomorHateDecrease")
                     if adj == 0 then
                         adj = 2 -- default: most fomor add 2 hate
                     end
-                    member:setCharVar("FOMOR_HATE", utils.clamp(hate + adj, 0, 60))
+                    if decrease ~= 0 then
+                        hate = hate - adj
+                    else
+                        hate = hate + adj
+                    end
+                    member:setFomorHate(utils.clamp(hate, 0, 60))
                 end
             end
         end

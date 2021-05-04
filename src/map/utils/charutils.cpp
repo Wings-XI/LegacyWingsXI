@@ -1,4 +1,5 @@
-﻿/*
+﻿#include "charutils.h"
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -863,6 +864,7 @@ namespace charutils
         PChar->animation = (HP == 0 ? ANIMATION_DEATH : ANIMATION_NONE);
 
         PChar->StatusEffectContainer->LoadStatusEffects();
+        PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
 
         charutils::LoadEquip(PChar);
         PChar->health.hp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxHP() : HP;
@@ -1567,6 +1569,7 @@ namespace charutils
     void DoTrade(CCharEntity* PChar, CCharEntity* PTarget)
     {
         ShowDebug(CL_CYAN"%s->%s trade item movement started\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+        bool checkHG = false;
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
         {
             CItem* PItem = PChar->UContainer->GetItem(slotid);
@@ -1588,10 +1591,15 @@ namespace charutils
                 ShowDebug(CL_CYAN"Removing %s from %s's inventory\n" CL_RESET, PItem->getName(), PChar->GetName());
                 auto amount = PItem->getReserve();
                 PItem->setReserve(0);
+                if (PItem->getID() == 4237)
+                    checkHG = true;
                 UpdateItem(PChar, LOC_INVENTORY, PItem->getSlotID(), (int32)(0 - amount));
+                
                 PChar->UContainer->ClearSlot(slotid);
             }
         }
+        if (checkHG)
+            charutils::VerifyHoldsValidHourglass(PChar);
     }
 
     /************************************************************************
@@ -6266,6 +6274,33 @@ void LoadHelpDeskMessage(CCharEntity* PChar)
         std::string message((const char*)Sql_GetData(SqlHandle, 1));
         SendHelpDeskMessage(PChar, message);
     }
+}
+
+bool VerifyHoldsValidHourglass(CCharEntity* PChar)
+{
+    CZone* PZone = zoneutils::GetZone(PChar->getZone());
+    bool valid = false;
+    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler)
+    {
+        if (PChar->nameflags.flags & FLAG_GM)
+            return true;
+        if (!PZone->m_DynamisHandler->m_token)
+        {
+            PZone->m_DynamisHandler->EjectPlayer(PChar, true);
+            return false;
+        }
+
+        uint32 token = PZone->m_DynamisHandler->m_token;
+
+        PChar->getStorage(LOC_INVENTORY)->ForEachItem([&token, &valid](CItem* PItem) {
+            if (!valid && PItem->getID() == 4237 && ref<uint32>(PItem->m_extra, 0x14) == token)
+                valid = true;
+        });
+
+        if (!valid)
+            PZone->m_DynamisHandler->EjectPlayer(PChar, false);
+    }
+    return valid;
 }
 
 }; // namespace charutils

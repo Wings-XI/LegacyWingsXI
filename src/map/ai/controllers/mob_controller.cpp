@@ -144,8 +144,7 @@ void CMobController::TryLink()
         {
             if (PTarget->objtype == TYPE_PC)
             {
-                std::unique_ptr<CBasicPacket> errMsg;
-                if (!PTarget->PPet->CanAttack(PMob, errMsg))
+                if (!((CCharEntity*)PTarget)->IsMobOwner(PMob))
                 {
                     return;
                 }
@@ -595,7 +594,7 @@ void CMobController::DoCombatTick(time_point tick)
     {
         return;
     }
-    else if (m_Tick >= m_LastMobSkillTime && tpzrand::GetRandomNumber(10000) <= PMob->TPUseChance() && MobSkill())
+    else if (m_Tick >= m_LastMobSkillTime && tpzrand::GetRandomNumber(1, 10000) <= PMob->TPUseChance() && MobSkill())
     {
         return;
     }
@@ -1064,6 +1063,25 @@ bool CMobController::Engage(uint16 targid)
     return ret;
 }
 
+int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
+{
+    if (!PTarget || PTarget->objtype != TYPE_PC) {
+        return -1;
+    }
+    CCharEntity* PChar = (CCharEntity*)PTarget;
+    int32 hate = (int32)PChar->m_fomorHate;
+    PChar->ForAlliance([PChar, &hate](CBattleEntity* PMember)
+    {
+        if (PMember->id != PChar->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == PChar->loc.zone->GetID()) {
+            int32 memberHate = ((CCharEntity*)PMember)->m_fomorHate;
+            if (memberHate > hate) {
+                hate = memberHate;
+            }
+        }    
+    });
+    return hate;
+}
+
 bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
 {
     TracyZoneScoped;
@@ -1091,6 +1109,15 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     if (PTarget->isDead() || PTarget->isMounted())
     {
         return false;
+    }
+
+    // Don't aggro I'm a fomor and I don't hate you
+    if (PMob->getMobMod(MOBMOD_FOMOR_HATE) > 0)
+    {
+        int32 hate = GetFomorHate(PTarget);
+        if (hate >= 0 && hate < 8) {
+            return false;
+        }
     }
 
     if (PTarget->objtype == TYPE_PC && server_clock::now() < ((CCharEntity*)PTarget)->m_ZoneAggroImmunity)

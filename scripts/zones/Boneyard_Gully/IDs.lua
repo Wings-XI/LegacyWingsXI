@@ -15,6 +15,7 @@ zones[tpz.zone.BONEYARD_GULLY] = {
         CARRIED_OVER_POINTS     = 6999, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        ORB_MESSAGE_OFFSET      = 7364, -- There is a crack in the <item>. It no longer contains a monster.
         CONQUEST_BASE           = 7421, -- Tallying conquest results...
         TUCHULCHA_SANDPIT       = 7739, -- Tuchulcha retreats beneath the soil!
         TUCHULCHA_DROPS_CRATE   = 7743, -- Tuchulcha drops an Armoury Crate!
@@ -32,8 +33,8 @@ zones[tpz.zone.BONEYARD_GULLY] = {
             SHREWD_HUNTER_ID  = 16810003,
             ARMORED_HUNTER_ID = 16810004,
             -- List of positions used to set
-            -- 	(1) Tuchulcha's location after using sand pit
-            -- 	(2) The starting position of the hunters
+            --     (1) Tuchulcha's location after using sand pit
+            --     (2) The starting position of the hunters
             ant_positions = {
                 { -588.45, -4.34, -461.28, 171 },
                 { -572.16, -3.29, -466.94, 171 },

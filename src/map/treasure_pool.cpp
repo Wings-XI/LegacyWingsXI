@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -28,6 +28,7 @@
 
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
+#include "dynamis_handler.h"
 #include "treasure_pool.h"
 #include "recast_container.h"
 #include "item_container.h"
@@ -141,7 +142,7 @@ void CTreasurePool::DelMember(CCharEntity* PChar)
 *                                                                       *
 ************************************************************************/
 
-uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
+uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity, CDynamisHandler* PDynamisHandler)
 {
     uint8  SlotID;
     uint8  FreeSlotID = -1;
@@ -158,6 +159,25 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
                 members[i]->PRecastContainer->Add(RECAST_LOOT, 1, 300); //300 = 5 min cooldown
             }
             break;
+    }
+
+    // dynamis auto-drops for currency and other non-ex
+    CCharEntity* PImmediateWinner = nullptr;
+    if (PDynamisHandler && PDynamisHandler->m_currencyAutoDistribute && this->GetPoolType() == TREASUREPOOL_ZONE)
+    {
+        CItem* PItem = itemutils::GetItemPointer(ItemID);
+        if (PItem && !(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)))
+        {
+            for (uint32 i = 0; i < members.size(); ++i)
+            {
+                if (members[i]->id == PDynamisHandler->m_originalRegistrantID)
+                {
+                    if (members[i]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount())
+                        PImmediateWinner = members[i];
+                    break;
+                }
+            }
+        }
     }
 
     for (SlotID = 0; SlotID < 10; ++SlotID)
@@ -214,7 +234,7 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
     if (SlotID == 10)
     {
         m_PoolItems[FreeSlotID].TimeStamp = get_server_start_time();
-        CheckTreasureItem(server_clock::now(), FreeSlotID);
+        CheckTreasureItem(server_clock::now(), FreeSlotID, PImmediateWinner);
     }
 
     m_count++;
@@ -227,7 +247,11 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
     }
     if (m_TreasurePoolType == TREASUREPOOL_SOLO)
     {
-        CheckTreasureItem(server_clock::now(), FreeSlotID);
+        CheckTreasureItem(server_clock::now(), FreeSlotID, PImmediateWinner);
+    }
+    else if (PImmediateWinner)
+    {
+        CheckTreasureItem(server_clock::now(), FreeSlotID, PImmediateWinner);
     }
     return m_count;
 }
@@ -406,9 +430,18 @@ void CTreasurePool::CheckItems(time_point tick)
 *                                                                       *
 ************************************************************************/
 
-void CTreasurePool::CheckTreasureItem(time_point tick, uint8 SlotID)
+void CTreasurePool::CheckTreasureItem(time_point tick, uint8 SlotID, CCharEntity* PImmediateWinner)
 {
     if (m_PoolItems[SlotID].ID == 0) return;
+
+    if (PImmediateWinner)
+    {
+        if (charutils::AddItem(PImmediateWinner, LOC_INVENTORY, m_PoolItems[SlotID].ID, 1, true) != ERROR_SLOTID)
+        {
+            TreasureWon(PImmediateWinner, SlotID);
+        }
+        return;
+    }
 
     if ((tick - m_PoolItems[SlotID].TimeStamp) > treasure_livetime ||
         (m_TreasurePoolType == TREASUREPOOL_SOLO && members[0]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0) ||

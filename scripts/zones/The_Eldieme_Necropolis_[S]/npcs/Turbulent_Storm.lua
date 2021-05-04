@@ -22,9 +22,9 @@ function onTrigger(player, npc)
             -- message for other nations missing
             player:startEvent(9)
         end
-    elseif (player:hasKeyItem(tpz.ki.RED_RECOMMENDATION_LETTER) == true) then
+    elseif (player:hasKeyItem(tpz.ki.BLUE_RECOMMENDATION_LETTER) == true) then
         player:startEvent(8)
-    elseif (player:hasKeyItem(tpz.ki.RED_RECOMMENDATION_LETTER) == false) then
+    elseif (player:hasKeyItem(tpz.ki.BLUE_RECOMMENDATION_LETTER) == false) then
         player:startEvent(7)
     end
 end

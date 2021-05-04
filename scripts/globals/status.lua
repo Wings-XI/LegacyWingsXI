@@ -820,8 +820,10 @@ tpz.effect =
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
     FULL_SPEED_AHEAD         = 803, -- Helper for quest: Full Speed Ahead!
-    SUPER_JUMP              = 804, -- Description
-    -- 804-1022
+    SUPER_JUMP               = 804, -- Description
+    GM_HIDE                  = 805,
+    GM_IMMORTAL              = 806,
+    -- 807-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 

@@ -17,7 +17,7 @@ end
 
 function onZoneIn(player, prevZone)
     local cs = -1
-    local dynamisMask = player:getCharVar("Dynamis_Status")
+    local charDynaCS = player:getCharVar("HasSeenXarcabardDynamisCS")
 
     local UnbridledPassionCS = player:getCharVar("unbridledPassion")
 
@@ -33,7 +33,7 @@ function onZoneIn(player, prevZone)
         not player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
         player:getRank() >= 6 and
         player:getMainLvl() >= 65 and
-        not utils.mask.getBit(dynamisMask, 0)
+        charDynaCS == 0
     then
         cs = 13
     elseif quests.rainbow.onZoneIn(player) then
@@ -70,6 +70,6 @@ function onEventFinish(player, csid, option)
     if csid == 4 then
         player:setCharVar("unbridledPassion", 4)
     elseif csid == 13 then
-        player:setCharVar("Dynamis_Status", utils.mask.setBit(player:getCharVar("Dynamis_Status"), 0, true))
+        player:setCharVar("HasSeenXarcabardDynamisCS", 1)
     end
 end

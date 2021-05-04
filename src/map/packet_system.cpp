@@ -892,6 +892,18 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (!PChar->isMounted())
             {
+                char cheatDesc[128];
+                snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s attempted to dig without being mounted.", PChar->name.c_str());
+                cheatDesc[127] = '\0';
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGBOT, 0, cheatDesc);
+                if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_DIGBOT, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
+                {
+                    PChar->SetLocalVar("DiggingBlocked", 1);
+                }
+                return;
+            }
+            if (PChar->GetLocalVar("DiggingBlocked") != 0) {
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
                 return;
             }
 
@@ -1129,12 +1141,14 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
             PLinkshell->BreakLinkshell((int8*)PLinkshell->getName(), false);
             linkshell::UnloadLinkshell(lsid);
         }
-
+        bool checkHG = ItemID == 4237;
         if (charutils::UpdateItem(PChar, container, slotID, -quantity) != 0)
         {
             // ShowNotice(CL_CYAN"Player %s DROPPING itemID %u (quantity: %u)\n" CL_RESET, PChar->GetName(), ItemID, quantity);
             PChar->pushPacket(new CMessageStandardPacket(nullptr, ItemID, quantity, MsgStd::ThrowAway));
             PChar->pushPacket(new CInventoryFinishPacket());
+            if (checkHG) // perpetual
+                charutils::VerifyHoldsValidHourglass(PChar);
         }
         return;
     }
@@ -6562,6 +6576,7 @@ void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PCh
         PItem->setCharPrice(0);
         PItem->setQuantity(Quantity);
         PItem->setSubType(ITEM_UNLOCKED);
+        bool checkHG = PItem->getID() == 4237;
 
         if (charutils::AddItem(PChar, LOC_INVENTORY, PItem) == ERROR_SLOTID)
             return;
@@ -6574,6 +6589,8 @@ void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PCh
         PTarget->pushPacket(new CBazaarConfirmationPacket(PChar, PItem));
 
         charutils::UpdateItem(PTarget, LOC_INVENTORY, SlotID, -Quantity);
+        if (checkHG)
+            charutils::VerifyHoldsValidHourglass(PTarget);
 
         PTarget->pushPacket(new CInventoryItemPacket(PBazaar->GetItem(SlotID), LOC_INVENTORY, SlotID));
         PTarget->pushPacket(new CInventoryFinishPacket());
