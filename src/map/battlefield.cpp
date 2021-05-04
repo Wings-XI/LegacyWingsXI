@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -554,6 +554,7 @@ void CBattlefield::Cleanup()
     auto tempNpcs = m_NpcList;
     auto tempAllies = m_AllyList;
     auto tempPlayers = m_EnteredPlayers;
+    std::set<uint32> tempOutsidePlayers;
 
     for (auto mob : tempEnemies)
         RemoveEntity(mob.PMob);
@@ -566,6 +567,22 @@ void CBattlefield::Cleanup()
 
     uint8 leavecode = m_Status == BATTLEFIELD_STATUS_WON ? BATTLEFIELD_LEAVE_CODE_WIN : BATTLEFIELD_LEAVE_CODE_LOSE;
 
+    for (auto id : m_EnteredPlayers)
+    {
+        auto PChar = GetZone()->GetCharByID(id);
+        if (PChar)
+        {
+            PChar->ForAlliance([this, PChar, id, &tempOutsidePlayers](CBattleEntity* PMember)
+                {
+                    if ((PMember->getZone() == PChar->getZone()) &&
+                        (this->m_EnteredPlayers.find(PMember->id) == this->m_EnteredPlayers.end()) &&
+                        (tempOutsidePlayers.find(PMember->id) == tempOutsidePlayers.end()))
+                    {
+                        tempOutsidePlayers.insert(PMember->id);
+                    }
+                });
+        }
+    }
     for (auto id : tempPlayers)
     {
         auto PChar = GetZone()->GetCharByID(id);
@@ -578,6 +595,26 @@ void CBattlefield::Cleanup()
                 PChar->PPet->PInstance = nullptr;
                 if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
                     PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+            }
+        }
+    }
+    // Remove battlefield status from players waiting outside
+    for (auto id : tempOutsidePlayers)
+    {
+        auto PChar = GetZone()->GetCharByID(id);
+        if (PChar) {
+            PChar->PBattlefield = nullptr;
+            PChar->PInstance = nullptr;
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+            }
+            if (PChar->PPet)
+            {
+                PChar->PPet->PBattlefield = nullptr;
+                PChar->PPet->PInstance = nullptr;
+                if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+                    PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+                }
             }
         }
     }
