@@ -94,6 +94,7 @@ void DataHandler::Run()
             tmNow = time(NULL);
             if (tmLastPacket + 300 < tmNow) {
                 // Timed out
+                LOG_WARNING("Ping timed out, closing data connection.");
                 mbShutdown = true;
                 break;
             }
