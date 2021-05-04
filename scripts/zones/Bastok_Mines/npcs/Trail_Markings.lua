@@ -9,7 +9,7 @@ require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
 -----------------------------------
 
-local npcEnabled = true
+local npcEnabled = false
 local csRegisterGlass = 200 -- The time and destination for your foray into Dynamis will be recorded on your hourglass (registering a Perpet from a Timeless)
 local csEntry = 201 -- You just traded the perpetual and the msg says "You will now be warped to dynamis" "Ready!"
 local csShroudedSand = 203 -- cs with cornelia where you acquire the KI Vial of Shrouded Sand
