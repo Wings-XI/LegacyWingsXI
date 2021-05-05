@@ -9819,6 +9819,7 @@ INSERT INTO `mob_groups` VALUES(25, 1715, 166, 'Goblin_Smithy', 960, 0, 1163, 0,
 INSERT INTO `mob_groups` VALUES(26, 1721, 166, 'Goblins_Bats', 0, 128, 0, 0, 0, 83, 84, 0);
 INSERT INTO `mob_groups` VALUES(27, 1267, 166, 'Evil_Weapon', 660, 0, 799, 0, 0, 35, 37, 0);
 INSERT INTO `mob_groups` VALUES(28, 4041, 166, 'Tros', 0, 128, 0, 0, 0, 44, 44, 0);
+INSERT INTO `mob_groups` VALUES(29, 6185, 166, 'Hyakume', 0, 32, 3159, 3000, 0, 45, 48, 0);
 INSERT INTO `mob_groups` VALUES(8748, 1370, 166, 'Floating_Eye', 960, 0, 850, 0, 0, 34, 36, 0);
 INSERT INTO `mob_groups` VALUES(8750, 1665, 166, 'Goblin_Furrier', 960, 0, 1071, 0, 0, 32, 34, 0);
 INSERT INTO `mob_groups` VALUES(8754, 1694, 166, 'Goblin_Pathfinder', 960, 0, 1131, 0, 0, 32, 34, 0);
