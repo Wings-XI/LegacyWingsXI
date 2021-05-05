@@ -5241,7 +5241,7 @@ INSERT INTO `mob_groups` VALUES(4372, 1067, 91, 'Di_Dhas_Elite_Guard', 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(4374, 1141, 91, 'Duskraven', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4375, 1143, 91, 'Dusk_Raider', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4376, 1147, 91, 'Du_Vha_Grimewind', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(4377, 1151, 91, 'Dyinyinga', 7200, 0, 728, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4377, 1151, 91, 'Dyinyinga', 0, 32, 728, 10000, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(4378, 1168, 91, 'Ea_Zhu_Tremorcrag', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4379, 1198, 91, 'Elivira', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4381, 1262, 91, 'Eurytos', 0, 128, 0, 0, 0, 75, 75, 0);
