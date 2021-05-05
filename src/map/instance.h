@@ -65,6 +65,8 @@ public:
     bool Completed();                // Checks if instance is completed
     void Cancel();                   // Sets instance to fail without calling onInstanceFailure
     bool CheckFirstEntry(uint32 id); // Checks if this is the first time a char is entering
+    const std::vector<uint32>* GetRegisteredChars() const;
+    const std::set<uint32>* GetEnteredChars() const;
 
     uint8 GetSoloBattleMusic();
     uint8 GetPartyBattleMusic();

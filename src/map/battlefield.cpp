@@ -291,7 +291,7 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                 m_EnteredPlayers.emplace(PEntity->id);
                 PChar->ClearTrusts();
                 luautils::OnBattlefieldEnter(PChar, this);
-                charutils::SendTimerPacket(PChar, m_TimeLimit);
+                charutils::SendTimerPacket(PChar, GetRemainingTime());
             }
             else if (!IsRegistered(PChar))
             {
@@ -603,19 +603,7 @@ void CBattlefield::Cleanup()
     {
         auto PChar = GetZone()->GetCharByID(id);
         if (PChar) {
-            PChar->PBattlefield = nullptr;
-            PChar->PInstance = nullptr;
-            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-            }
-            if (PChar->PPet)
-            {
-                PChar->PPet->PBattlefield = nullptr;
-                PChar->PPet->PInstance = nullptr;
-                if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-                    PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-                }
-            }
+            PChar->DropBattlefield();
         }
     }
 
