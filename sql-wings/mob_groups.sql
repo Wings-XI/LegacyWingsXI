@@ -5322,7 +5322,7 @@ INSERT INTO `mob_groups` VALUES(17, 3769, 92, 'Steel_Quadav', 960, 0, 2331, 0, 0
 INSERT INTO `mob_groups` VALUES(18, 1325, 92, 'Ferroalloy_Quadav', 960, 0, 826, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(19, 324, 92, 'Baetyl_Quadav', 960, 0, 212, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(20, 377, 92, 'BaTho_Mercifulheart', 0, 32, 3030, 0, 0, 80, 81, 0);
-INSERT INTO `mob_groups` VALUES(21, 928, 92, 'Da_Dha_Hundredmask', 0, 32, 3031, 0, 0, 80, 81, 0);
+INSERT INTO `mob_groups` VALUES(21, 928, 92, 'Da_Dha_Hundredmask', 0, 32, 3031, 12000, 0, 81, 81, 0);
 INSERT INTO `mob_groups` VALUES(22, 4238, 92, 'Virulent_Peiste', 960, 0, 1621, 0, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(23, 3912, 92, 'Thunder_Elemental', 960, 4, 2410, 0, 0, 75, 82, 0);
 INSERT INTO `mob_groups` VALUES(24, 4309, 92, 'Water_Elemental', 960, 4, 2629, 0, 0, 75, 82, 0);
