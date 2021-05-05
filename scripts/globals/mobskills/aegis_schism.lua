@@ -11,6 +11,7 @@ require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
+    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, skill:getID())
     return 0
 end
 
