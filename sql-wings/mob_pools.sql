@@ -1250,7 +1250,7 @@ INSERT INTO `mob_pools` VALUES(1186, 'Eight_of_Swords', 'Eight_of_Swords', 61, 0
 INSERT INTO `mob_pools` VALUES(1187, 'Einherjar_Brei', 'Einherjar_Brei', 229, 0x0000240100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 229);
 INSERT INTO `mob_pools` VALUES(1188, 'Einherjar_Eater', 'Einherjar_Eater', 258, 0x0000aa0100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 9, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(1189, 'Ekimmu', 'Ekimmu', 121, 0x0000700100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 0, 0, 0, 562, 131, 0, 0, 28, 0, 0, 121);
-INSERT INTO `mob_pools` VALUES(1190, 'Eldertaur', 'Eldertaur', 240, 0x00004f0500000000000000000000000000000000, 3, 7, 7, 240, 100, 0, 1, 1, 1, 18, 0, 0, 4255, 1153, 0, 0, 203, 0, 0, 317);
+INSERT INTO `mob_pools` VALUES(1190, 'Eldertaur', 'Eldertaur', 240, 0x00004f0500000000000000000000000000000000, 3, 7, 7, 240, 100, 0, 1, 1, 1, 18, 16, 0, 4255, 1153, 0, 0, 203, 0, 0, 317); /*immunity silence*/
 INSERT INTO `mob_pools` VALUES(1191, 'Elder_Goobbue', 'Elder_Goobbue', 136, 0x0000280100000000000000000000000000000000, 1, 1, 12, 320, 100, 0, 1, 0, 1, 0, 0, 0, 1, 1157, 0, 0, 0, 0, 0, 136);
 INSERT INTO `mob_pools` VALUES(1192, 'Elder_Quadav', 'Elder_Quadav', 202, 0x0000450800000000000000000000000000000000, 1, 1, 2, 265, 100, 0, 1, 0, 1, 0, 0, 0, 709, 131, 0, 0, 0, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(1193, 'Elder_Treant', 'Elder_Treant', 245, 0x0000840100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 502, 1155, 0, 0, 0, 0, 0, 245);
