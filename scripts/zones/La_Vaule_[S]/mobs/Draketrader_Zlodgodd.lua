@@ -5,6 +5,18 @@
 mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
+function onMobInitialize(mob)
+    -- "Spams Jump constantly"
+    mob:addMod(tpz.mod.REGAIN, 1000)
+end
+
+function onMobFight(mob, target)
+    --  "Jump gets stronger as Draketrader Zlodgodd gets weaker"
+    local power = 20 + math.floor(utils.clamp(100 - mob:getHPP(), 0, 75) * 2.4)
+    mob:setMod(tpz.mod.ATT, power)
+end
+
+
 function onMobDeath(mob, player, isKiller)
 end
 

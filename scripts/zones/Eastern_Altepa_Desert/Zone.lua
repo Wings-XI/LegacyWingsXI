@@ -22,7 +22,12 @@ function onInitialize(zone)
     GetMobByID(ID.mob.CACTROT_RAPIDO):setRespawnTime(math.random(900, 10800))
 
     UpdateNMSpawnPoint(ID.mob.CENTURIO_XII_I)
-    GetMobByID(ID.mob.CENTURIO_XII_I):setRespawnTime(math.random(900, 10800))
+    local centuriore = GetServerVariable("CenturioRespawn")
+    if os.time() < centuriore then
+        GetMobByID(ID.mob.CENTURIO_XII_I):setRespawnTime(centuriore - os.time())
+    else
+        SpawnMob(ID.mob.CENTURIO_XII_I)
+    end
 
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
     tpz.chocobo.initZone(zone)

@@ -3149,6 +3149,8 @@ INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647);
 
 
+INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
+
 --
 -- Indexes for dumped tables
 --
