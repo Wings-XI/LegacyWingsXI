@@ -3786,6 +3786,22 @@ INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 259, 41, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 274, 56, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 260, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 145, 38, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 155, 34, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 165, 46, 55);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 170, 30, 54);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 174, 28, 52);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 184, 23, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 185, 48, 56);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 194, 36, 60);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 235, 24, 50);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 237, 24, 50);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 245, 12, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 247, 25, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 252, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 254, 4, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 258, 7, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 259, 41, 55);
 
 --
 -- Indexes for dumped tables
