@@ -5641,7 +5641,7 @@ INSERT INTO `mob_groups` VALUES(30, 1688, 95, 'Goblin_Mine', 0, 128, 0, 0, 0, 52
 INSERT INTO `mob_groups` VALUES(31, 3148, 95, 'Pixie', 300, 0, 2001, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(32, 3181, 95, 'Poroggo_Gent', 300, 8, 2014, 0, 0, 56, 67, 0);
 INSERT INTO `mob_groups` VALUES(33, 3934, 95, 'Toad', 300, 0, 0, 0, 0, 51, 54, 0);
-INSERT INTO `mob_groups` VALUES(34, 4710, 95, 'Ramponneau', 0, 32, 2987, 0, 5000, 47, 54, 0);
+INSERT INTO `mob_groups` VALUES(34, 4710, 95, 'Ramponneau', 0, 32, 2987, 4300, 5000, 47, 54, 0);
 INSERT INTO `mob_groups` VALUES(35, 3448, 95, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(36, 1696, 95, 'Goblin_Picaroon', 300, 0, 0, 0, 0, 57, 62, 0);
 INSERT INTO `mob_groups` VALUES(37, 4457, 95, 'Yagudo_Transporter', 0, 128, 0, 0, 0, 60, 60, 0);
