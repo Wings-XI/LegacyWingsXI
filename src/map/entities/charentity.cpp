@@ -58,6 +58,7 @@
 #include "trustentity.h"
 #include "../ability.h"
 #include "../battlefield.h"
+#include "../instance.h"
 #include "../conquest_system.h"
 #include "../spell.h"
 #include "../attack.h"
@@ -65,6 +66,7 @@
 #include "../utils/charutils.h"
 #include "../utils/battleutils.h"
 #include "../utils/gardenutils.h"
+#include "../utils/zoneutils.h"
 #include "../item_container.h"
 #include "../items/item_weapon.h"
 #include "../items/item_usable.h"
@@ -2212,6 +2214,49 @@ void CCharEntity::SetFomorHate(uint32 fomorHate)
     }
     m_fomorHate = fomorHate;
     charutils::SetCharVar(this, "FOMOR_HATE", fomorHate);
+}
+
+void CCharEntity::DropBattlefield()
+{
+    PBattlefield = nullptr;
+    PInstance = nullptr;
+    if (StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+        StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+    }
+    if (PPet)
+    {
+        PPet->PBattlefield = nullptr;
+        PPet->PInstance = nullptr;
+        if (PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
+            PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
+        }
+    }
+    auto PZone = zoneutils::GetZone(getZone());
+    if ((PZone) && (PZone->m_BattlefieldHandler)) {
+        auto PBattlefield = PZone->m_BattlefieldHandler->GetBattlefield(this, true);
+        if (PBattlefield && PZone->m_BattlefieldHandler->IsRegistered(this)) {
+            PBattlefield->m_RegisteredPlayers.erase(PBattlefield->m_RegisteredPlayers.find(id));
+        }
+    }
+}
+
+void CCharEntity::DropBattlefieldIfOutside()
+{
+    if ((PBattlefield) && (PBattlefield->m_EnteredPlayers.find(id) == PBattlefield->m_EnteredPlayers.end())) {
+        DropBattlefield();
+        return;
+    }
+    if (PInstance) {
+        auto enteredChars = PInstance->GetEnteredChars();
+        if (enteredChars->find(id) == enteredChars->end()) {
+            DropBattlefield();
+            return;
+        }
+    }
+    if ((!PBattlefield) && (!PInstance)) {
+        DropBattlefield();
+        return;
+    }
 }
 
 void CCharEntity::SetMoghancement(uint16 moghancementID)

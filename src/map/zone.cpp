@@ -1071,20 +1071,7 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     if (PChar->isDead())
         charutils::SaveDeathTime(PChar);
 
-    PChar->PBattlefield = nullptr;
-    PChar->PInstance = nullptr;
-    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-    }
-    if (PChar->PPet)
-    {
-        PChar->PPet->PBattlefield = nullptr;
-        PChar->PPet->PInstance = nullptr;
-        if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-            PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-        }
-    }
-
+    PChar->DropBattlefield();
 
     PChar->loc.zone = nullptr;
 
