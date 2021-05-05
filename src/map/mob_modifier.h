@@ -103,6 +103,7 @@ enum MOBMODIFIER : int
     MOBMOD_CLAIM_SHIELD        = 72, // lottery pick to everyone who performed an action
     MOBMOD_ATTRACT_FAMILY_NM   = 73, // NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
     MOBMOD_FAMILYLINK          = 74, // Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
+    MOBMOD_ENCROACH_PLAYER     = 75,
     MOBMOD_SIGHT_ANGLE         = 84, // Angle in which a mob will detect by sight
     MOBMOD_FOMOR_HATE          = 85, // Mob aggros according to fomor hate
 };
