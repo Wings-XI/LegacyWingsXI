@@ -11327,10 +11327,10 @@ INSERT INTO `mob_groups` VALUES(21, 1120, 204, 'Droma', 960, 0, 709, 0, 0, 54, 5
 INSERT INTO `mob_groups` VALUES(22, 614, 204, 'Camazotz', 960, 0, 401, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(23, 4112, 204, 'Utukku', 960, 0, 2880, 0, 0, 55, 57, 0);
 INSERT INTO `mob_groups` VALUES(24, 3723, 204, 'Specter', 960, 0, 2302, 0, 0, 55, 58, 0);
-INSERT INTO `mob_groups` VALUES(25, 5320, 204, 'Specter2', 300, 0, 2302, 0, 0, 55, 58, 0);
-INSERT INTO `mob_groups` VALUES(26, 5321, 204, 'Specter3', 300, 0, 2302, 0, 0, 55, 58, 0);
+INSERT INTO `mob_groups` VALUES(25, 5320, 204, 'Specter2', 960, 0, 2302, 0, 0, 55, 58, 0);
+INSERT INTO `mob_groups` VALUES(26, 5321, 204, 'Specter3', 960, 0, 2302, 0, 0, 55, 58, 0);
 INSERT INTO `mob_groups` VALUES(27, 770, 204, 'Colossus', 960, 0, 505, 0, 0, 56, 58, 0);
-INSERT INTO `mob_groups` VALUES(28, 5322, 204, 'Specter4', 300, 0, 2302, 0, 0, 55, 58, 0);
+INSERT INTO `mob_groups` VALUES(28, 5322, 204, 'Specter4', 960, 0, 2302, 0, 0, 55, 58, 0);
 INSERT INTO `mob_groups` VALUES(29, 2231, 204, 'Killing_Weapon', 960, 0, 0, 0, 0, 59, 61, 0);
 INSERT INTO `mob_groups` VALUES(30, 1921, 204, 'Hellish_Weapon', 960, 0, 1294, 0, 0, 61, 63, 0);
 INSERT INTO `mob_groups` VALUES(31, 1754, 204, 'Goliath', 0, 32, 1195, 0, 0, 62, 62, 0);
