@@ -9,6 +9,8 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onInitialize(zone)
+    -- FFXI wiki has vague info of ~10mins realtime for Phomiuna Aqueducts
+    GetNPCByID(ID.npc.SECRETS_OF_OVENS_LOST_QM):addPeriodicTrigger(0,250,0)
 end
 
 function onConquestUpdate(zone, updatetype)
