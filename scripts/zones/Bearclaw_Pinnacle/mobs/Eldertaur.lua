@@ -4,6 +4,8 @@
 --  ENM: Brothers
 -----------------------------------
 require("scripts/globals/status")
+require("scripts/globals/monstertpmoves")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onMobInitialize(mob)
