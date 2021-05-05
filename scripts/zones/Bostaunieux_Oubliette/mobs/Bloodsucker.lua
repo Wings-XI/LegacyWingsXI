@@ -24,8 +24,11 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    if mob:getID() == ID.mob.BLOODSUCKER then
-        UpdateNMSpawnPoint(mob)
-        mob:setRespawnTime(3600 * 72)
+    local BloodID = GetMobByID(ID.mob.BLOODSUCKER)
+    if mob:getID() == BloodID then
+        UpdateNMSpawnPoint(mob:getID())
+        local respawn = 259200 -- Respawn 72 hours
+        mob:setRespawnTime(respawn)
+        SetServerVariable("BloodRespawn",(os.time() + respawn))
     end
 end

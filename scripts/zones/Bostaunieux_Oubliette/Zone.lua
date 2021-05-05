@@ -15,7 +15,13 @@ function onInitialize(zone)
     GetMobByID(ID.mob.PHANDURON_THE_CONDEMNED):setRespawnTime(math.random(900, 10800))
 
     UpdateNMSpawnPoint(ID.mob.BLOODSUCKER)
-    GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(3600)
+    local bloodre = GetServerVariable("BloodRespawn")
+
+	if os.time() < bloodre then
+		GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(bloodre - os.time())
+    else
+        Spawnmob(ID.mob.BLOODSUCKER)
+	end
 end
 
 function onZoneIn(player, prevZone)
