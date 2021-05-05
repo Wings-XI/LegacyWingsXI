@@ -441,6 +441,8 @@ public:
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
     void SetFomorHate(uint32 fomorHate);
+    void DropBattlefield();
+    void DropBattlefieldIfOutside();
 
     /* State callbacks */
     virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
