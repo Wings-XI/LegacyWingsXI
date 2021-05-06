@@ -16601,6 +16601,13 @@ INSERT INTO `mob_droplist` VALUES(3161, 0, 0, 1000, 1236, 100);
 INSERT INTO `mob_droplist` VALUES(3161, 0, 0, 1000, 1592, 420);
 INSERT INTO `mob_droplist` VALUES(3161, 0, 0, 1000, 18138, 400);
 INSERT INTO `mob_droplist` VALUES(3161, 0, 0, 1000, 18138, 100);
+
+INSERT INTO `mob_droplist` VALUES(3162, 0, 0, 1000, 916, 220);
+INSERT INTO `mob_droplist` VALUES(3162, 0, 0, 1000, 1236, 220);
+INSERT INTO `mob_droplist` VALUES(3162, 0, 0, 1000, 1592, 440);
+INSERT INTO `mob_droplist` VALUES(3162, 0, 0, 1000, 14168, 1000);
+
+
 --
 -- Indexes for dumped tables
 --

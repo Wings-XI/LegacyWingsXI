@@ -6222,6 +6222,7 @@ INSERT INTO `mob_pools` VALUES(6185, 'Hyakume', 'Hyakume', 139, 0x00008001000000
 
 INSERT INTO `mob_pools` VALUES(6186, 'Sabotender_Bailaor', 'Sabotender_Bailaor', 212, 0x0000740100000000000000000000000000000000, 2, 2, 5, 360, 100, 0, 1, 0, 0, 0, 0, 0, 204, 133, 0, 0, 0, 1, 0, 212);
 INSERT INTO `mob_pools` VALUES(6187, 'Sabotender_Bailarin', 'Sabotender_Bailarin', 212, 0x0000740100000000000000000000000000000000, 2, 2, 7, 360, 100, 0, 1, 0, 0, 2, 0, 0, 204, 133, 0, 0, 0, 1, 0, 212);
+INSERT INTO `mob_pools` VALUES(6188, 'Sabotender_Bailarina', 'Sabotender_Bailarina', 212, 0x0000740100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 2, 0, 0, 204, 135, 0, 0, 0, 1, 0, 212);
 --
 -- Indexes for dumped tables
 --
