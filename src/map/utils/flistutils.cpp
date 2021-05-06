@@ -1006,6 +1006,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 14:
 			return "Hall of Transference";
 			break;
+        case 15:
+            return "Abyssea-Konschtat";
+            break;
 		case 16:
 			return "Promyvion Holla";
 			break;
@@ -1076,16 +1079,16 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Apollyon";
 			break;
 		case 39:
-			return "Dynamis Valkurm";
+			return "Dynamis-Valkurm";
 			break;
 		case 40:
-			return "Dynamis Buburimu";
+			return "Dynamis-Buburimu";
 			break;
 		case 41:
-			return "Dynamis Qufim";
+			return "Dynamis-Qufim";
 			break;
 		case 42:
-			return "Dynamis Tavnazia";
+			return "Dynamis-Tavnazia";
 			break;
 		case 43:
 			return "Diorama Abdhaljs Ghelsba";
@@ -1093,6 +1096,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 44:
 			return "Abdhaljs Isle Purgonorgo";
 			break;
+        case 45:
+            return "Abyssea-Tahrongi";
+            break;
 		case 46:
 			return "Open sea route to Al Zahbi";
 			break;
@@ -1101,6 +1107,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 48:
 			return "Al Zahbi";
+			break;
+        case 49:
+			return "Zone 49";
 			break;
 		case 50:
 			return "Aht Urhgan Whitegate";
@@ -1190,11 +1199,68 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Hazhalm Testing Grounds";
 			break;
 		case 79:
-			return "Caedarva_Mire";
+			return "Caedarva Mire";
+			break;
+        case 80:
+			return "Southern San d'Oria [S]";
+			break;
+		case 81:
+			return "East Ronfaure [S]";
 			break;
 		case 82:
 			return "Jugner Forest [S]";
 			break;
+        case 83:
+            return "Vunkerl Inlet [S]";
+            break;
+        case 84:
+            return "Batallia Downs [S]";
+            break;
+        case 85:
+            return "La Vaule [S]";
+            break;
+        case 86:
+            return "Everbloom Hollow";
+            break;
+        case 87:
+            return "Bastok Markets [S]";
+            break;
+        case 88:
+            return "North Gustaberg [S]";
+            break;
+        case 89:
+            return "Grauberg [S]";
+            break;
+        case 90:
+            return "Pashhow Marshlands [S]";
+            break;
+        case 91:
+            return "Rolanberry Fields [S]";
+            break;
+        case 92:
+            return "Beadeaux [S]";
+            break;
+        case 93:
+            return "Ruhotz Silvermines";
+            break;
+        case 94:
+            return "Windurst Waters [S]";
+            break;
+        case 95:
+            return "West Sarutabaruta [S]";
+            break;
+        case 96:
+            return "Fort Karugo-Narugo [S]";
+            break;
+        case 97:
+            return "Meriphataud Mountains [S]";
+            break;
+        case 98:
+            return "Sauromugue Champaign [S]";
+            break;
+        case 99:
+            return "Castle Oztroja [S]";
+            break;
 		case 100:
 			return "West Ronfaure";
 			break;
@@ -1292,13 +1358,25 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Mordion Gaol";
 			break;
 		case 132:
-			return "Abyssea La Theine";
+			return "Abyssea-La Theine";
 			break;
+        case 133:
+            return "Zone 133";
+            break;
 		case 134:
-			return "Dynamis Beaucedine";
+			return "Dynamis-Beaucedine";
 			break;
 		case 135:
-			return "Dynamis Xarcabard";
+			return "Dynamis-Xarcabard";
+			break;
+        case 136:
+            return "Beaucedine Glacier [S]";
+            break;
+		case 137:
+			return "Xarcabard [S]";
+			break;
+		case 138:
+			return "Castle Zvahl Baileys [S]";
 			break;
 		case 139:
 			return "Horlais Peak";
@@ -1346,7 +1424,13 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "The Boyahda Tree";
 			break;
 		case 154:
-			return "Dragons Aery";
+			return "Dragon's Aery";
+			break;
+        case 155:
+			return "Castle Zvahl Keep [S]";
+			break;
+		case 156:
+			return "Throne Room [S]";
 			break;
 		case 157:
 			return "Middle Delkfutt's Tower";
@@ -1369,6 +1453,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 163:
 			return "Sacrificial Chamber";
 			break;
+        case 164:
+			return "Garlaige Citadel [S]";
+			break;
 		case 165:
 			return "Throne Room";
 			break;
@@ -1387,6 +1474,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 170:
 			return "Full Moon Fountain";
 			break;
+        case 171:
+			return "Crawlers' Nest [S]";
+			break;
 		case 172:
 			return "Zeruhn Mines";
 			break;
@@ -1395,6 +1485,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 174:
 			return "Kuftal Tunnel";
+			break;
+        case 175:
+			return "The Eldieme Necropolis [S]";
 			break;
 		case 176:
 			return "Sea Serpent Grotto";
@@ -1424,16 +1517,16 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Lower Delkfutt's Tower";
 			break;
 		case 185:
-			return "Dynamis San d'Oria";
+			return "Dynamis-San d'Oria";
 			break;
 		case 186:
-			return "Dynamis Bastok";
+			return "Dynamis-Bastok";
 			break;
 		case 187:
-			return "Dynamis Windurst";
+			return "Dynamis-Windurst";
 			break;
 		case 188:
-			return "Dynamis Jeuno";
+			return "Dynamis-Jeuno";
 			break;
 		case 189:
 			return "Residential Area";
@@ -1513,6 +1606,18 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 214:
 			return "Residential Area";
 			break;
+        case 215:
+			return "Abyssea-Attohwa";
+			break;
+		case 216:
+			return "Abyssea-Misareaux";
+			break;
+		case 217:
+			return "Abyssea-Vunkerl";
+			break;
+		case 218:
+			return "Abyssea-Altepa";
+			break;
 		case 219:
 			return "Residential Area";
 			break;
@@ -1542,6 +1647,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 228:
 			return "Ship bound for Mhaura";
+			break;
+        case 229:
+			return "Zone 229";
 			break;
 		case 230:
 			return "Southern San d'Oria";
@@ -1612,20 +1720,143 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 252:
 			return "Norg";
 			break;
+        case 253:
+			return "Abyssea-Uleguerand";
+			break;
+        case 254:
+			return "Abyssea-Grauberg";
+			break;
+        case 255:
+            return "Abyssea-Empyreal Paradox";
+            break;
+        case 256:
+            return "Western Adoulin";
+            break;
+        case 257:
+            return "Eastern Adoulin";
+            break;
+        case 258:
+            return "Rala Waterways";
+            break;
+        case 259:
+            return "Rala Waterways U";
+            break;
+        case 260:
+            return "Yahse Hunting Grounds";
+            break;
+        case 261:
+            return "Ceizak Battlegrounds";
+            break;
+        case 262:
+            return "Foret de Hennetiel";
+            break;
+        case 263:
+            return "Yorcia Weald";
+            break;
+        case 264:
+            return "Yorcia Weald U";
+            break;
+        case 265:
+            return "Morimar Basalt Fields";
+            break;
+        case 266:
+            return "Marjami Ravine";
+            break;
+        case 267:
+            return "Kamihr Drifts";
+            break;
+        case 268:
+            return "Sih Gates";
+            break;
+        case 269:
+            return "Moh Gates";
+            break;
+        case 270:
+            return "Cirdas Caverns";
+            break;
+        case 271:
+            return "Cirdas Caverns U";
+            break;
+        case 272:
+            return "Dho Gates";
+            break;
+        case 273:
+            return "Woh Gates";
+            break;
+        case 274:
+            return "Outer RaKaznar";
+            break;
+        case 275:
+            return "Outer RaKaznar U";
+            break;
+        case 276:
+            return "RaKaznar Inner Court";
+            break;
+        case 277:
+            return "RaKaznar Turris";
+            break;
+        case 278:
+            return "Zone 278";
+            break;
+        case 279:
+            return "Walk of Echoes";
+            break;
 		case 280:
 			return "Mog Garden";
 			break;
+        case 281:
+			return "Leafallia";
+			break;
+        case 282:
+            return "Mount Kamihr";
+            break;
+        case 283:
+            return "Silver Knife";
+            break;
+        case 284:
+            return "Celennia Memorial Library";
+            break;
+        case 285:
+            return "Feretory";
+            break;
+        case 286:
+            return "Zone 286";
+            break;
+        case 287:
+            return "Maquette Abdhaljs-Legion B";
+            break;
+        case 288:
+            return "Escha Zi'Tah";
+            break;
+        case 289:
+            return "Escha Ru'Aun";
+            break;
+        case 290:
+            return "Desuetia Empyreal Paradox";
+            break;
+        case 291:
+            return "Reisenjima";
+            break;
+        case 292:
+            return "Reisenjima Henge";
+            break;
+        case 293:
+            return "Reisenjima Sanctorium";
+            break;
 		case 294:
-			return "Dynamis San d'Oria";
+			return "Dynamis-San d'Oria [D]";
 			break;
 		case 295:
-			return "Dynamis Bastok";
+			return "Dynamis-Bastok [D]";
 			break;
 		case 296:
-			return "Dynamis Windurst";
+			return "Dynamis-Windurst [D]";
 			break;
 		case 297:
-			return "Dynamis Jeuno";
+			return "Dynamis-Jeuno [D]";
+			break;
+        case 298:
+			return "Walk of Echoes";
 			break;
 		}
 	}
@@ -1679,6 +1910,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 14:
 			return "Hall of Transference";
 			break;
+        case 15:
+            return "Abyssea-Konschtat";
+            break;
 		case 16:
 			return "Promyvion Holla";
 			break;
@@ -1749,16 +1983,16 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Apollyon";
 			break;
 		case 39:
-			return "Dynamis Valkurm";
+			return "Dynamis-Valkurm";
 			break;
 		case 40:
-			return "Dynamis Buburimu";
+			return "Dynamis-Buburimu";
 			break;
 		case 41:
-			return "Dynamis Qufim";
+			return "Dynamis-Qufim";
 			break;
 		case 42:
-			return "Dynamis Tavnazia";
+			return "Dynamis-Tavnazia";
 			break;
 		case 43:
 			return "Diorama Abd. Ghelsba";
@@ -1766,6 +2000,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 44:
 			return "Abd. Isle Purgonorgo";
 			break;
+        case 45:
+            return "Abyssea-Tahrongi";
+            break;
 		case 46:
 			return "Sea Route to Al Zahbi";
 			break;
@@ -1774,6 +2011,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 48:
 			return "Al Zahbi";
+			break;
+        case 49:
+			return "Zone 49";
 			break;
 		case 50:
 			return "Aht Urhgan Whitegate";
@@ -1863,11 +2103,68 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Hazhalm Tst. Grounds";
 			break;
 		case 79:
-			return "Caedarva_Mire";
+			return "Caedarva Mire";
+			break;
+        case 80:
+			return "South. San d'Oria [S]";
+			break;
+		case 81:
+			return "East Ronfaure [S]";
 			break;
 		case 82:
 			return "Jugner Forest [S]";
 			break;
+        case 83:
+            return "Vunkerl Inlet [S]";
+            break;
+        case 84:
+            return "Batallia Downs [S]";
+            break;
+        case 85:
+            return "La Vaule [S]";
+            break;
+        case 86:
+            return "Everbloom Hollow";
+            break;
+        case 87:
+            return "Bastok Markets [S]";
+            break;
+        case 88:
+            return "North Gustaberg [S]";
+            break;
+        case 89:
+            return "Grauberg [S]";
+            break;
+        case 90:
+            return "Pash. Marshlands [S]";
+            break;
+        case 91:
+            return "Rolanberry Fields [S]";
+            break;
+        case 92:
+            return "Beadeaux [S]";
+            break;
+        case 93:
+            return "Ruhotz Silvermines";
+            break;
+        case 94:
+            return "Windurst Waters [S]";
+            break;
+        case 95:
+            return "West Sarutabaruta [S]";
+            break;
+        case 96:
+            return "Ft. Karugo-Narugo [S]";
+            break;
+        case 97:
+            return "Meriph. Mountains [S]";
+            break;
+        case 98:
+            return "Saurom. Champaign [S]";
+            break;
+        case 99:
+            return "Castle Oztroja [S]";
+            break;
 		case 100:
 			return "West Ronfaure";
 			break;
@@ -1965,13 +2262,25 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Mordion Gaol";
 			break;
 		case 132:
-			return "Abyssea La Theine";
+			return "Abyssea-La Theine";
 			break;
+        case 133:
+            return "Zone 133";
+            break;
 		case 134:
-			return "Dynamis Beaucedine";
+			return "Dynamis-Beaucedine";
 			break;
 		case 135:
-			return "Dynamis Xarcabard";
+			return "Dynamis-Xarcabard";
+			break;
+        case 136:
+            return "Beauc. Glacier [S]";
+            break;
+		case 137:
+			return "Xarcabard [S]";
+			break;
+		case 138:
+			return "Castle Z. Baileys [S]";
 			break;
 		case 139:
 			return "Horlais Peak";
@@ -2019,7 +2328,13 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "The Boyahda Tree";
 			break;
 		case 154:
-			return "Dragons Aery";
+			return "Dragon's Aery";
+			break;
+        case 155:
+			return "Castle Z. Keep [S]";
+			break;
+		case 156:
+			return "Throne Room [S]";
 			break;
 		case 157:
 			return "Mid. Delkfutt's Tower";
@@ -2042,6 +2357,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 163:
 			return "Sacrificial Chamber";
 			break;
+        case 164:
+			return "Garlaige Citadel [S]";
+			break;
 		case 165:
 			return "Throne Room";
 			break;
@@ -2060,6 +2378,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 170:
 			return "Full Moon Fountain";
 			break;
+        case 171:
+			return "Crawlers' Nest [S]";
+			break;
 		case 172:
 			return "Zeruhn Mines";
 			break;
@@ -2068,6 +2389,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 174:
 			return "Kuftal Tunnel";
+			break;
+        case 175:
+			return "Eldieme Necrop. [S]";
 			break;
 		case 176:
 			return "Sea Serpent Grotto";
@@ -2097,16 +2421,16 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			return "Low. Delkfutt's Tower";
 			break;
 		case 185:
-			return "Dynamis San d'Oria";
+			return "Dynamis-San d'Oria";
 			break;
 		case 186:
-			return "Dynamis Bastok";
+			return "Dynamis-Bastok";
 			break;
 		case 187:
-			return "Dynamis Windurst";
+			return "Dynamis-Windurst";
 			break;
 		case 188:
-			return "Dynamis Jeuno";
+			return "Dynamis-Jeuno";
 			break;
 		case 189:
 			return "Residential Area";
@@ -2186,6 +2510,18 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 214:
 			return "Residential Area";
 			break;
+        case 215:
+			return "Abyssea-Attohwa";
+			break;
+		case 216:
+			return "Abyssea-Misareaux";
+			break;
+		case 217:
+			return "Abyssea-Vunkerl";
+			break;
+		case 218:
+			return "Abyssea-Altepa";
+			break;
 		case 219:
 			return "Residential Area";
 			break;
@@ -2215,6 +2551,9 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 			break;
 		case 228:
 			return "Ship bd. for Mhaura";
+			break;
+        case 229:
+			return "Zone 229";
 			break;
 		case 230:
 			return "Southern San d'Oria";
@@ -2285,20 +2624,143 @@ std::string FLgetZone(uint16 zoneid, uint8 sSize)
 		case 252:
 			return "Norg";
 			break;
+        case 253:
+			return "Abyssea-Uleguerand";
+			break;
+        case 254:
+			return "Abyssea-Grauberg";
+			break;
+        case 255:
+            return "Abyssea-Emp. Paradox";
+            break;
+        case 256:
+            return "Western Adoulin";
+            break;
+        case 257:
+            return "Eastern Adoulin";
+            break;
+        case 258:
+            return "Rala Waterways";
+            break;
+        case 259:
+            return "Rala Waterways U";
+            break;
+        case 260:
+            return "Yahse Hunt. Grounds";
+            break;
+        case 261:
+            return "Ceizak Battlegr.";
+            break;
+        case 262:
+            return "Foret de Hennetiel";
+            break;
+        case 263:
+            return "Yorcia Weald";
+            break;
+        case 264:
+            return "Yorcia Weald U";
+            break;
+        case 265:
+            return "Morimar Basalt Fld.";
+            break;
+        case 266:
+            return "Marjami Ravine";
+            break;
+        case 267:
+            return "Kamihr Drifts";
+            break;
+        case 268:
+            return "Sih Gates";
+            break;
+        case 269:
+            return "Moh Gates";
+            break;
+        case 270:
+            return "Cirdas Caverns";
+            break;
+        case 271:
+            return "Cirdas Caverns U";
+            break;
+        case 272:
+            return "Dho Gates";
+            break;
+        case 273:
+            return "Woh Gates";
+            break;
+        case 274:
+            return "Outer RaKaznar";
+            break;
+        case 275:
+            return "Outer RaKaznar U";
+            break;
+        case 276:
+            return "RaKaznar Inner Court";
+            break;
+        case 277:
+            return "RaKaznar Turris";
+            break;
+        case 278:
+            return "Zone 278";
+            break;
+        case 279:
+            return "Walk of Echoes";
+            break;
 		case 280:
 			return "Mog Garden";
 			break;
+        case 281:
+			return "Leafallia";
+			break;
+        case 282:
+            return "Mount Kamihr";
+            break;
+        case 283:
+            return "Silver Knife";
+            break;
+        case 284:
+            return "Celennia Mem. Library";
+            break;
+        case 285:
+            return "Feretory";
+            break;
+        case 286:
+            return "Zone 286";
+            break;
+        case 287:
+            return "Maquette Abd.-Leg. B";
+            break;
+        case 288:
+            return "Escha Zi'Tah";
+            break;
+        case 289:
+            return "Escha Ru'Aun";
+            break;
+        case 290:
+            return "Desuetia Em. Paradox";
+            break;
+        case 291:
+            return "Reisenjima";
+            break;
+        case 292:
+            return "Reisenjima Henge";
+            break;
+        case 293:
+            return "Reisenjima Sanct.";
+            break;
 		case 294:
-			return "Dynamis San d'Oria";
+			return "Dynamis-San. [D]";
 			break;
 		case 295:
-			return "Dynamis Bastok";
+			return "Dynamis-Bastok [D]";
 			break;
 		case 296:
-			return "Dynamis Windurst";
+			return "Dynamis-Win. [D]";
 			break;
 		case 297:
-			return "Dynamis Jeuno";
+			return "Dynamis-Jeuno [D]";
+			break;
+        case 298:
+			return "Walk of Echoes";
 			break;
 		}
 	}
