@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -402,15 +402,24 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
 ************************************************************************/
 void CAttackRound::CreateKickAttacks()
 {
-    if (m_attacker->objtype == TYPE_PC)
+    if (m_attacker->objtype == TYPE_PC || m_attacker->objtype == TYPE_MOB)
     {
         if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
             return;
 
+        if (m_attacker->objtype == TYPE_MOB)
+        {
+            // Only allow kick attacks for Sabotender Bailarina
+            if (((CMobEntity*)m_attacker)->id != 17629587) // ToDo: If any other mobs ever require kick attacks - change id to a list and store in db
+            {
+                return;
+            }
+        }
+
         // kick attack mod (All jobs)
         uint16 kickAttack = m_attacker->getMod(Mod::KICK_ATTACK_RATE);
 
-        if (m_attacker->GetMJob() == JOB_MNK) // MNK (Main job)
+        if (m_attacker->objtype == TYPE_PC && m_attacker->GetMJob() == JOB_MNK) // MNK (Main job))
         {
             kickAttack += ((CCharEntity*)m_attacker)->PMeritPoints->GetMeritValue(MERIT_KICK_ATTACK_RATE, (CCharEntity*)m_attacker);
         }

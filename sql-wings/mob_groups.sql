@@ -11497,6 +11497,7 @@ INSERT INTO `mob_groups` VALUES(37, 3201, 208, 'Proconsul_XII', 7200, 0, 2024, 1
 INSERT INTO `mob_groups` VALUES(38, 1607, 208, 'Girtablulu', 0, 128, 0, 10000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES (39, 6186, 208, 'Sabotender_Bailaor', 960, 0, 3160, 0, 0, 52, 59, 0);
 INSERT INTO `mob_groups` VALUES (40, 6187, 208, 'Sabotender_Bailarin', 0, 32, 3161, 0, 0, 59, 59, 0);
+INSERT INTO `mob_groups` VALUES (41, 6188, 208, 'Sabotender_Bailarina', 0, 32, 3162, 30000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(10085, 3428, 208, 'Sabotender_Bail', 960, 0, 0, 0, 0, 52, 59, 0);
 INSERT INTO `mob_groups` VALUES(10097, 4498, 208, 'Zeid', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1, 4644, 209, 'Titan_Prime', 0, 128, 0, 9500, 0, 63, 68, 0);

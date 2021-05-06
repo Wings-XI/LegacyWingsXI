@@ -229,7 +229,8 @@ INSERT INTO `mob_pool_mods` VALUES(5409, 58, 40, 1);
 INSERT INTO `mob_pool_mods` VALUES(3667, 28, -100, 1);
 INSERT INTO `mob_pool_mods` VALUES(6187, 1, 2000, 1);
 INSERT INTO `mob_pool_mods` VALUES(6187, 2, 13640, 1);
-
+INSERT INTO `mob_pool_mods` VALUES(6188, 1, 10000, 1);
+INSERT INTO `mob_pool_mods` VALUES(6188, 2, 30000, 1);
 --
 -- Indexes for dumped tables
 --
