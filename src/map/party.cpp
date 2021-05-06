@@ -124,6 +124,7 @@ void CParty::DisbandParty(bool playerInitiated)
         for (uint8 i = 0; i < members.size(); ++i)
         {
             CCharEntity* PChar = (CCharEntity*)members.at(i);
+            PChar->DropBattlefieldIfOutside();
             PChar->ClearTrusts();
 
             PChar->PParty = nullptr;
@@ -246,6 +247,9 @@ void CParty::RemoveMember(CBattleEntity* PEntity)
 
     if (m_PLeader == PEntity)
     {
+        if (PEntity->objtype == TYPE_PC) {
+            ((CCharEntity*)PEntity)->DropBattlefieldIfOutside();
+        }
         RemovePartyLeader(PEntity);
 
         // Remove their trusts
@@ -258,6 +262,9 @@ void CParty::RemoveMember(CBattleEntity* PEntity)
         {
             if (PEntity == members.at(i))
             {
+                if (PEntity->objtype == TYPE_PC) {
+                    ((CCharEntity*)PEntity)->DropBattlefieldIfOutside();
+                }
                 members.erase(members.begin() + i);
 
                 if (m_PartyType == PARTY_PCS)
@@ -328,6 +335,9 @@ void CParty::DelMember(CBattleEntity* PEntity)
 
     if (m_PLeader == PEntity)
     {
+        if (PEntity->objtype == TYPE_PC) {
+            ((CCharEntity*)PEntity)->DropBattlefieldIfOutside();
+        }
         RemovePartyLeader(PEntity);
     }
     else
@@ -336,6 +346,9 @@ void CParty::DelMember(CBattleEntity* PEntity)
         {
             if (PEntity == members.at(i))
             {
+                if (PEntity->objtype == TYPE_PC) {
+                    ((CCharEntity*)PEntity)->DropBattlefieldIfOutside();
+                }
                 members.erase(members.begin() + i);
 
                 if (m_PartyType == PARTY_PCS)

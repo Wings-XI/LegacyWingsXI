@@ -308,3 +308,13 @@ uint8 CInstance::GetBackgroundMusicNight()
 {
     return m_zone_music_override.m_songNight != (uint8)-1 ? m_zone_music_override.m_songNight : GetZone()->GetBackgroundMusicNight();
 }
+
+const std::vector<uint32>* CInstance::GetRegisteredChars() const
+{
+    return &m_registeredChars;
+}
+
+const std::set<uint32>* CInstance::GetEnteredChars() const
+{
+    return &m_enteredChars;
+}
