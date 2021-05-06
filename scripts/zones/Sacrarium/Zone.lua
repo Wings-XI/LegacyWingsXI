@@ -15,6 +15,9 @@ function onInitialize(zone)
     SetServerVariable("Old_Prof_Spawn_Location", math.random(2, 7))
 
     tpz.treasure.initZone(zone)
+
+    -- FFXI wiki claims 4hours and 10mins game time Sacrarium
+    GetNPCByID(ID.npc.SECRETS_OF_OVENS_LOST_QM):addPeriodicTrigger(0,250,0)
 end
 
 function onZoneIn(player, prevZone)
