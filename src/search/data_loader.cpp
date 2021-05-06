@@ -196,7 +196,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
         filterQry.append("))) ");
     }
 
-    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2 "
+    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2, nnameflags "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -238,6 +238,8 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
 
             uint32 partyid = (uint32)Sql_GetUIntData(SqlHandle, 1);
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 10);
+            uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 17);
+
 
             if (partyid == PPlayer->id) PPlayer->flags1 |= 0x0008;
             if (nameflag & FLAG_AWAY)   PPlayer->flags1 |= 0x0100;
@@ -245,6 +247,8 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             if (partyid != 0)           PPlayer->flags1 |= 0x2000;
             if (nameflag & FLAG_ANON)   PPlayer->flags1 |= 0x4000;
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
+
+            if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
 
             PPlayer->flags2 = PPlayer->flags1;
 
@@ -361,7 +365,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
 {
     std::list<SearchEntity*> PartyList;
 
-    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl "
+    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, nnameflags "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING(charid) "
         "LEFT JOIN chars USING(charid) "
@@ -394,6 +398,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
             PPlayer->rank = (uint8)Sql_GetIntData(SqlHandle, 5 + PPlayer->nation);
 
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 9);
+            uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 14);
 
             if (PartyID == PPlayer->id) PPlayer->flags1 |= 0x0008;
             if (nameflag & FLAG_AWAY)   PPlayer->flags1 |= 0x0100;
@@ -401,6 +406,8 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
             if (PartyID != 0)           PPlayer->flags1 |= 0x2000;
             if (nameflag & FLAG_ANON)   PPlayer->flags1 |= 0x4000;
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
+
+            if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
 
             PPlayer->flags2 = PPlayer->flags1;
 
@@ -421,7 +428,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
     std::list<SearchEntity*> LinkshellList;
     const char* fmtQuery = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, "
         "mlvl, slvl, linkshellid1, linkshellid2, "
-        "linkshellrank1, linkshellrank2 "
+        "linkshellrank1, linkshellrank2, nnameflags "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -459,6 +466,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
 
             uint32 partyid = (uint32)Sql_GetUIntData(SqlHandle, 1);
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 9);
+            uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 18);
 
             if (partyid == PPlayer->id) PPlayer->flags1 |= 0x0008;
             if (nameflag & FLAG_AWAY)   PPlayer->flags1 |= 0x0100;
@@ -466,6 +474,8 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
             if (partyid != 0)           PPlayer->flags1 |= 0x2000;
             if (nameflag & FLAG_ANON)   PPlayer->flags1 |= 0x4000;
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
+
+            if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
 
             PPlayer->flags2 = PPlayer->flags1;
 
