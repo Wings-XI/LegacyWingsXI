@@ -200,3 +200,16 @@ cmake_install.cmake
 
 # Tracy download
 tracy/
+libcrypto-3-x64.dll
+libmariadb.dll
+libssl-3-x64.dll
+libzmq_64.dll
+libzmq-d_64.dll
+lua51_64.dll
+rabbitmq.4.dll
+zlib1.dll
+libcrypto-3.dll
+libssl-3.dll
+libzmq.dll
+libzmq-d.dll
+lua51.dll
