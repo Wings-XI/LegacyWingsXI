@@ -765,124 +765,128 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
         return;
     }
     LOG_DEBUG0("Starting zone: %u.", pNewChar->wZone);
+    std::string strSqlQueryFmt;
+    std::string strSqlFinalQuery;
     // Add to world server's char table
-    LOG_DEBUG0("Accessing map server database.");
-    std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pNewChar->cWorldID);
-    const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pNewChar->cWorldID);
-    LOCK_PWORLDDB(WorldDB);
-    DBConnection WorldDBObj = WorldDB->GetDatabase();
-    // Double check that they're not banned
-    LOG_DEBUG0("Checking whether the account is banned.");
-    std::string strSqlQueryFmt = "SELECT accid FROM %saccounts_banned WHERE accid = %u AND (timeunbann IS NULL or timeunbann > NOW());";
-    std::string strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        mpSession->GetAccountID());
-    mariadb::result_set_ref pResultSet = WorldDB->GetDatabase()->query(strSqlFinalQuery);
-    if (pResultSet->row_count() != 0) {
-        LOG_ERROR("The account is banned from the target world.");
-        mParser.SendError(FFXILoginPacket::FFXI_ERROR_CREATE_DENIED);
-        return;
-    }
-    LOG_DEBUG0("Saving character data to map server database.");
-    strSqlQueryFmt = "INSERT INTO %schars (charid, content_id, accid, goldworldpass, charname, pos_zone, nation) "
-        "VALUES (%u, %u, %u, '%s', '%s', %u, %u);";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID,
-        pNewChar->dwContentID,
-        mpSession->GetAccountID(),
-        Database::RealEscapeString(pNewChar->szGoldWorldPass).c_str(),
-        Database::RealEscapeString(pNewChar->szCharName).c_str(),
-        pNewChar->wZone,
-        pNewChar->cNation);
-    //LOG_DEBUG0("SQL: %s", strSqlFinalQuery.c_str());
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character look.");
-    strSqlQueryFmt = "INSERT INTO %schar_look (charid, face, race, size) VALUES (%u, %u, %u, %u);";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID,
-        pNewChar->cFace,
-        pNewChar->cRace,
-        pNewChar->cSize);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character stats.");
-    strSqlQueryFmt = "INSERT INTO %schar_stats (charid, mjob) VALUES (%u, %u);";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID,
-        pNewChar->cMainJob);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character exp.");
-    strSqlQueryFmt = "INSERT INTO %schar_exp (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character jobs.");
-    strSqlQueryFmt = "INSERT INTO %schar_jobs (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character points.");
-    strSqlQueryFmt = "INSERT INTO %schar_points (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character unlocks.");
-    strSqlQueryFmt = "INSERT INTO %schar_unlocks (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character profile.");
-    strSqlQueryFmt = "INSERT INTO %schar_profile (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character storage.");
-    strSqlQueryFmt = "INSERT INTO %schar_storage (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    LOG_DEBUG0("Removing possible leftover inventory.");
-    strSqlQueryFmt = "DELETE FROM %schar_inventory WHERE charid = %u;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->execute(strSqlFinalQuery);
-    LOG_DEBUG0("Saving character inventory.");
-    strSqlQueryFmt = "INSERT INTO %schar_inventory (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
-    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
-        pcszWorldPrefix,
-        pNewChar->dwCharacterID);
-    WorldDBObj->insert(strSqlFinalQuery);
-    if (WorldManager::GetInstance()->HasFriendList(pNewChar->cWorldID)) {
-        LOG_DEBUG0("Saving character friend list settings.");
-        strSqlQueryFmt = "INSERT INTO %sflist_settings (callingchar, visible, notifications, channel, size, lastcall, lastonline) "
-            "VALUES (%u, 1, 3, 29, 3, 0, %u);";
+    {
+        LOG_DEBUG0("Accessing map server database.");
+        std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pNewChar->cWorldID);
+        const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pNewChar->cWorldID);
+        LOCK_PWORLDDB(WorldDB);
+        DBConnection WorldDBObj = WorldDB->GetDatabase();
+        // Double check that they're not banned
+        LOG_DEBUG0("Checking whether the account is banned.");
+        strSqlQueryFmt = "SELECT accid FROM %saccounts_banned WHERE accid = %u AND (timeunbann IS NULL or timeunbann > NOW());";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            mpSession->GetAccountID());
+        mariadb::result_set_ref pResultSet = WorldDB->GetDatabase()->query(strSqlFinalQuery);
+        if (pResultSet->row_count() != 0) {
+            LOG_ERROR("The account is banned from the target world.");
+            mParser.SendError(FFXILoginPacket::FFXI_ERROR_CREATE_DENIED);
+            return;
+        }
+        LOG_DEBUG0("Saving character data to map server database.");
+        strSqlQueryFmt = "INSERT INTO %schars (charid, content_id, accid, goldworldpass, charname, pos_zone, nation) "
+            "VALUES (%u, %u, %u, '%s', '%s', %u, %u);";
         strSqlFinalQuery = FormatString(&strSqlQueryFmt,
             pcszWorldPrefix,
             pNewChar->dwCharacterID,
-            time(NULL));
+            pNewChar->dwContentID,
+            mpSession->GetAccountID(),
+            Database::RealEscapeString(pNewChar->szGoldWorldPass).c_str(),
+            Database::RealEscapeString(pNewChar->szCharName).c_str(),
+            pNewChar->wZone,
+            pNewChar->cNation);
+        //LOG_DEBUG0("SQL: %s", strSqlFinalQuery.c_str());
         WorldDBObj->insert(strSqlFinalQuery);
-    }
-    // If a gold world pass was specified, mark it as used
-    if (pNewChar->szGoldWorldPass[0] != '\0') {
-        LOG_DEBUG0("Marking gold world pass as used.");
-        strSqlQueryFmt = "UPDATE %sgoldworldpass SET user_contentid = %u, user_charid = %u, usage_time = NOW() where passid = '%s';";
+        LOG_DEBUG0("Saving character look.");
+        strSqlQueryFmt = "INSERT INTO %schar_look (charid, face, race, size) VALUES (%u, %u, %u, %u);";
         strSqlFinalQuery = FormatString(&strSqlQueryFmt,
             pcszWorldPrefix,
-            pRequestPacket->dwContentID,
             pNewChar->dwCharacterID,
-            Database::RealEscapeString(pNewChar->szGoldWorldPass).c_str());
+            pNewChar->cFace,
+            pNewChar->cRace,
+            pNewChar->cSize);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character stats.");
+        strSqlQueryFmt = "INSERT INTO %schar_stats (charid, mjob) VALUES (%u, %u);";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID,
+            pNewChar->cMainJob);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character exp.");
+        strSqlQueryFmt = "INSERT INTO %schar_exp (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character jobs.");
+        strSqlQueryFmt = "INSERT INTO %schar_jobs (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character points.");
+        strSqlQueryFmt = "INSERT INTO %schar_points (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character unlocks.");
+        strSqlQueryFmt = "INSERT INTO %schar_unlocks (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character profile.");
+        strSqlQueryFmt = "INSERT INTO %schar_profile (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character storage.");
+        strSqlQueryFmt = "INSERT INTO %schar_storage (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        LOG_DEBUG0("Removing possible leftover inventory.");
+        strSqlQueryFmt = "DELETE FROM %schar_inventory WHERE charid = %u;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
         WorldDBObj->execute(strSqlFinalQuery);
+        LOG_DEBUG0("Saving character inventory.");
+        strSqlQueryFmt = "INSERT INTO %schar_inventory (charid) VALUES (%u) ON DUPLICATE KEY UPDATE charid = charid;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            pNewChar->dwCharacterID);
+        WorldDBObj->insert(strSqlFinalQuery);
+        if (WorldManager::GetInstance()->HasFriendList(pNewChar->cWorldID)) {
+            LOG_DEBUG0("Saving character friend list settings.");
+            strSqlQueryFmt = "INSERT INTO %sflist_settings (callingchar, visible, notifications, channel, size, lastcall, lastonline) "
+                "VALUES (%u, 1, 3, 29, 3, 0, %u);";
+            strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+                pcszWorldPrefix,
+                pNewChar->dwCharacterID,
+                time(NULL));
+            WorldDBObj->insert(strSqlFinalQuery);
+        }
+        // If a gold world pass was specified, mark it as used
+        if (pNewChar->szGoldWorldPass[0] != '\0') {
+            LOG_DEBUG0("Marking gold world pass as used.");
+            strSqlQueryFmt = "UPDATE %sgoldworldpass SET user_contentid = %u, user_charid = %u, usage_time = NOW() where passid = '%s';";
+            strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+                pcszWorldPrefix,
+                pRequestPacket->dwContentID,
+                pNewChar->dwCharacterID,
+                Database::RealEscapeString(pNewChar->szGoldWorldPass).c_str());
+            WorldDBObj->execute(strSqlFinalQuery);
+        }
+        WorldDBObj->execute("COMMIT;");
     }
-    WorldDBObj->execute("COMMIT;");
     LOCK_SESSION;
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();

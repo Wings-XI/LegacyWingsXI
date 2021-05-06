@@ -201,24 +201,30 @@ void LoginSession::LoadCharacterList()
     LOCK_SESSION;
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
-    LOCK_DB;
+    std::string strSqlQueryFmt;
+    std::string strSqlFinalQuery;
+    mariadb::result_set_ref pResultSet;
 
-    // First, query all content ids, which should be in the table even if not
-    // yet associated with a character.
-    std::string strSqlQueryFmt("SELECT %scontents.content_id, enabled, character_id FROM %scontents LEFT JOIN %schars ON %scontents.content_id = %schars.content_id WHERE account_id=%d ORDER BY content_id LIMIT 16;");
-    std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
-        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
-        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
-        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
-        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
-        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
-        mdwAccountId));
-    mariadb::result_set_ref pResultSet = DB->query(strSqlFinalQuery);
-    mcNumCharsAllowed = static_cast<uint8_t>(pResultSet->row_count());
-    if (mcNumCharsAllowed == 0) {
-        LOG_ERROR("No Content IDs associated with the given account");
-        mbCharListLoaded = true;
-        return;
+    {
+        LOCK_DB;
+
+        // First, query all content ids, which should be in the table even if not
+        // yet associated with a character.
+        strSqlQueryFmt = "SELECT %scontents.content_id, enabled, character_id FROM %scontents LEFT JOIN %schars ON %scontents.content_id = %schars.content_id WHERE account_id=%d ORDER BY content_id LIMIT 16;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+            Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+            Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+            Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+            Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+            mdwAccountId);
+        pResultSet = DB->query(strSqlFinalQuery);
+        mcNumCharsAllowed = static_cast<uint8_t>(pResultSet->row_count());
+        if (mcNumCharsAllowed == 0) {
+            LOG_ERROR("No Content IDs associated with the given account");
+            mbCharListLoaded = true;
+            return;
+        }
     }
     memset(&mCharacters, 0, sizeof(mCharacters));
     uint32_t i = 0;
@@ -339,9 +345,11 @@ void LoginSession::LoadCharacterList()
                     pWorldResultSet->get_unsigned32(1));
             }
             //LOG_DEBUG0("SQL: %s", strSqlFinalQuery.c_str());
+            LOCK_DB;
             DB->execute(strSqlFinalQuery);
         }
     }
+    LOCK_DB;
     DB->execute("COMMIT");
     // It's now time to get the actual list of characters
     strSqlQueryFmt = "SELECT content_id, character_id, name, world_id, main_job, main_job_lv, "
