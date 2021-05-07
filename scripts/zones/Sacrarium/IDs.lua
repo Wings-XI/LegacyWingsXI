@@ -56,6 +56,7 @@ zones[tpz.zone.SACRARIUM] =
         LABYRINTH_OFFSET   = 16892110,
         SMALL_KEYHOLE      = 16892142,
         TREASURE_CHEST     = 16892183,
+        SECRETS_OF_OVENS_LOST_QM = 16892184,
     },
 }
 

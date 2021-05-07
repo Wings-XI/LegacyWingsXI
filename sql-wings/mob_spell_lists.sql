@@ -3786,6 +3786,35 @@ INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 259, 41, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 274, 56, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 260, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 145, 38, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 155, 34, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 165, 46, 55);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 170, 30, 54);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 174, 28, 52);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 184, 23, 47);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 185, 48, 56);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 194, 36, 60);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 235, 24, 50);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 237, 24, 50);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 245, 12, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 247, 25, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 252, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 254, 4, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 258, 7, 255);
+INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 259, 41, 55);
+INSERT INTO `mob_spell_lists` VALUES('Velkeng', 444, 23, 1, 255);
+
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 172, 1, 255); -- water IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 200, 1, 255); -- waterga II
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 201, 1, 255); -- waterga III
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 214, 1, 255); -- flood
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Nepionic_Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 51, 1, 255); -- shell IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255);/ -- cure IV
 
 --
 -- Indexes for dumped tables

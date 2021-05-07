@@ -1104,6 +1104,10 @@ INSERT INTO `mob_skill_lists` VALUES('CynoprosopiWyrm', 261, 958);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 951);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 952);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 953);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 955);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 956);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 957);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 958);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1039);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1040);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1041);
@@ -1322,18 +1326,18 @@ INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2116);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2117);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2118);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2119);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 498);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 499);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 500);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 501);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 503);
-INSERT INTO `mob_skill_lists` VALUES('Eldertaur', 317, 1360);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 498);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 499);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 500);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 501);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 502);
-INSERT INTO `mob_skill_lists` VALUES('Mindertaur', 318, 503);
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,498); -- triclip
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,499); -- back_swish
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,500); -- mow
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,501); -- frightful_roar
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,503); -- unblessed_armor
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,1359); -- Chthonian_Ray
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,1360); -- apocalyptic_ray
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,498); -- triclip
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,499); -- back_swish
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,500); -- mow
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,501); -- frightful_roar
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,503); -- unblessed_armor
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 881);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 882);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 883);
@@ -3147,7 +3151,9 @@ INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 600);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 601);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647);
-
+INSERT INTO `mob_skill_lists` VALUES('Goblintrap', 1160, 434);
+INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm-Flying-Attack', 1159, 950);
 
 --
 -- Indexes for dumped tables

@@ -44,11 +44,13 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/flistutils.h"
 #include "items/item_linkshell.h"
 
+#define MAP_MQ_MESSAGE_MAGIC 0x4441574E
 
 #pragma pack(push, 1)
 
 typedef struct _MAP_MQ_MESSAGE_HEADER
 {
+    uint32 magic;
     uint64 origin;
     MSGSERVTYPE type;
     uint32 packet_size;
@@ -60,7 +62,7 @@ typedef struct _MAP_MQ_MESSAGE_HEADER
 namespace message
 {
     std::recursive_mutex send_mutex;
-    std::queue<uint8*> message_queue;
+    std::queue<std::shared_ptr<uint8>> message_queue;
     uint64 own_identity;
     std::shared_ptr<MQConnection> g_mqconnection = nullptr;
     std::shared_ptr<MapMQHandler> g_handler = nullptr;
@@ -78,6 +80,10 @@ namespace message
         // now and change it if we really see a performance issue.
         bool broadcast = false;
 
+        if (header->magic != MAP_MQ_MESSAGE_MAGIC) {
+            // Not a map message so silent drop
+            return;
+        }
         switch (type)
         {
         case MSG_CHAT_TELL:
@@ -156,6 +162,14 @@ namespace message
             // no op
             break;
         }
+        case MSG_RPC_REQUEST:
+        case MSG_RPC_RESPONSE:
+        {
+            const char* query = "SELECT zoneip, zoneport FROM zone_settings WHERE zoneid = %d;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint16*>(extra + 4));
+            ipstring = true;
+            break;
+        }
         default:
         {
             ShowDebug("Message: unknown type received: %u\n", static_cast<uint8>(type));
@@ -214,7 +228,7 @@ namespace message
         while (!message_queue.empty())
         {
             std::lock_guard<std::recursive_mutex> lk(send_mutex);
-            uint8* msg = message_queue.front();
+            uint8* msg = message_queue.front().get();
             message_queue.pop();
             try
             {
@@ -790,10 +804,16 @@ namespace message
 
     bool MapMQHandler::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, uint32_t dwChannel)
     {
+        uint32 magic = 0;
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
         CHAR_MQ_MESSAGE_HEADER* login_header = nullptr;
 
-        if (dwChannel == 1) {
+        if (Request.len < sizeof(uint32)) {
+            // Way too short
+            return false;
+        }
+        magic = *reinterpret_cast<uint32*>(Request.bytes);
+        if (magic == LOGIN_MQ_MSG_MAGIC) {
             if (Request.len < sizeof(CHAR_MQ_MESSAGE_HEADER)) {
                 return true;
             }
@@ -814,7 +834,7 @@ namespace message
             }
             return true;
         }
-        else if (dwChannel == 2) {
+        else if (magic == MAP_MQ_MESSAGE_MAGIC) {
             if (Request.len < sizeof(MAP_MQ_MESSAGE_HEADER)) {
                 return true;
             }
@@ -961,6 +981,7 @@ namespace message
             return;
         }
         header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(msgdata);
+        header->magic = MAP_MQ_MESSAGE_MAGIC;
         header->origin = own_identity;
         header->type = type;
         header->packet_size = packet_size;
@@ -986,6 +1007,6 @@ namespace message
             packet ? packet->length() : 0,
             true);
         // And of course send to ZMQ for other servers
-        message_queue.push(msgdata);
+        message_queue.push(std::shared_ptr<uint8>(msgdata));
     }
 };

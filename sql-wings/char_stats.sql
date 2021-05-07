@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS `char_stats` (
   `death` int(10) unsigned NOT NULL DEFAULT '0',
   `2h` int(10) unsigned NOT NULL DEFAULT '0',
   `title` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `seacom_type` int(10) unsigned DEFAULT NULL,
+  `search_message` BLOB DEFAULT NULL,
   `bazaar_message` BLOB,
   `zoning` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `mlvl` tinyint(2) unsigned NOT NULL DEFAULT '1',

@@ -19,6 +19,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 ===========================================================================
 */
 
+#ifndef _MESSAGE_H
+#define _MESSAGE_H
+
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/mmo.h"
@@ -72,3 +75,4 @@ namespace message
 
 }
 
+#endif

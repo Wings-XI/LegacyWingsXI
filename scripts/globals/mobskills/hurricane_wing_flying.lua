@@ -1,7 +1,8 @@
 ---------------------------------------------
 --  Hurricane Wing (Airborne Version)
 --
---  Description: Deals hurricane-force wind damage to enemies within a very wide area of effect. Additional effect: Blind
+--  Description: Deals hurricane-force wind damage to enemies within a very wide area of effect. 
+--  Additional effect: Blind
 --  Type: Magical
 --  Utsusemi/Blink absorb: Wipes shadows
 --  Range: 30' radial.
@@ -10,9 +11,11 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
+    if (mob:AnimationSub() ~= 1) then
+        return 1
+    end
     return 0
 end
 

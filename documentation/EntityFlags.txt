@@ -1,0 +1,19 @@
+Documentation for EntityFlags and what they do
+Feel free to update
+
+
+Int		Hex		Effect on Mobs											Notes
+0		xx		No Flags Set
+1		xx		has no immediately observable impact
+2		xx		Increases the render size of a mob						Can be combined with 4 to produce the largest size
+4		xx		Increases the render size of a mob (more than 2)		Can be combined with 2 to produce the largest size
+8		xx		no obvious impact										Should hide name based on enum?
+16		xx		no obvious impact
+32		xx		Call for help
+64		xx		POL away symbol
+128		xx		no obvious impact
+256		xx		Hide HP bar
+512		xx		no obvious impact
+1024	xx		no obvious impact
+2048	xx		Untargetable
+>2048	--		no obvious impact

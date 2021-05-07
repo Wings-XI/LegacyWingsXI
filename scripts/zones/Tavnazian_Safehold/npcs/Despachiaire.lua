@@ -42,6 +42,12 @@ function onTrigger(player, npc)
         else
             player:startEvent(134)
         end
+    -- Putting Secrets of Ovens Lost at a lower priority than all missions
+    elseif player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.SECRETS_OF_OVENS_LOST) == QUEST_AVAILABLE and
+           player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.SPICE_GALS) == QUEST_COMPLETED and
+           (player:hasCompletedMission(COP, tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP) or (copCurrentMission == tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP and PromathiaStatus >= 1)) then
+           -- wiki says access to Sacrarium, so going with can trigger entrance to Sacrarium or later
+        player:startEvent(505) -- Tells player to talk to Jonette
     -- COP Default dialogue change
     elseif player:getCurrentMission(COP) > copMissions.DARKNESS_NAMED then
         player:startEvent(315) -- "Jeuno offered its help"; TODO: might trigger as early as 5-2?
@@ -62,6 +68,8 @@ function onEventFinish(player, csid, option)
         player:setCharVar("COP_optional_CS_Despachaire", 1)
     elseif csid == 118 then
         player:setCharVar("COP_Louverance_s_Path", 1)
+    elseif csid == 505 then
+        player:setCharVar("SecretsOfOvenLostDespCS", 1)
     end
 
 end
@@ -85,7 +93,7 @@ end
 --Despachiaire     315 chat
 --Despachiaire     317 chat
 --Despachiaire     318 chat
---Despachiaire     505 CS
+--Despachiaire     505 CS - openeing CS for Secrets of Ovens lost
 --Despachiaire     517 CS (despachiaire's wife)
 --Despachiaire     518 CS (ulmia mother)
 --Despachiaire     576 CS

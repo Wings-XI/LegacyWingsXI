@@ -50,6 +50,7 @@ struct search_req
     bool lsFilter;
     string_t name;
     uint8 nameLen;
+    uint32 comment;
 };
 
 extern search_config_t search_config;

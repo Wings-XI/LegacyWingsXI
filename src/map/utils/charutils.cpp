@@ -697,7 +697,7 @@ namespace charutils
         }
 
         fmtQuery = "SELECT nameflags, mjob, sjob, hp, mp, mhflag, title, bazaar_message, zoning, "
-            "pet_id, pet_type, pet_hp, pet_mp "
+            "pet_id, pet_type, pet_hp, pet_mp, seacom_type, search_message "
             "FROM char_stats WHERE charid = %u;";
 
         ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
@@ -717,6 +717,15 @@ namespace charutils
 
             PChar->profile.mhflag = (uint8)Sql_GetIntData(SqlHandle, 5);
             PChar->profile.title = (uint16)Sql_GetIntData(SqlHandle, 6);
+
+            PChar->search.messagetype = Sql_GetUIntData(SqlHandle, 13);
+            int8* message_raw = Sql_GetData(SqlHandle, 14);
+            if (message_raw) {
+                PChar->search.message = (char*)message_raw;
+            }
+            else {
+                PChar->search.message = "";
+            }
 
             int8* bazaarMessage = Sql_GetData(SqlHandle, 7);
             if (bazaarMessage != nullptr)

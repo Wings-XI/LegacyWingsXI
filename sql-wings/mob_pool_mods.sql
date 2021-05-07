@@ -130,11 +130,11 @@ INSERT INTO `mob_pool_mods` VALUES(2420, 302, 10, 0);
 INSERT INTO `mob_pool_mods` VALUES(2461, 61, 25, 1);
 INSERT INTO `mob_pool_mods` VALUES(2462, 61, 25, 1);
 INSERT INTO `mob_pool_mods` VALUES(2463, 61, 20, 1);
---INSERT INTO `mob_pool_mods` VALUES(2566, 40, 30, 1);
---INSERT INTO `mob_pool_mods` VALUES(2566, 41, 936, 1);
---INSERT INTO `mob_pool_mods` VALUES(2566, 42, 962, 1);
---INSERT INTO `mob_pool_mods` VALUES(2566, 43, 1, 1);
---INSERT INTO `mob_pool_mods` VALUES(2566, 47, 5, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2566, 40, 30, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2566, 41, 936, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2566, 42, 962, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2566, 43, 1, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2566, 47, 5, 1);
 INSERT INTO `mob_pool_mods` VALUES(2614, 368, 100, 0);
 INSERT INTO `mob_pool_mods` VALUES(2643, 160, -50, 0);
 INSERT INTO `mob_pool_mods` VALUES(2647, 160, -50, 0);
@@ -151,11 +151,11 @@ INSERT INTO `mob_pool_mods` VALUES(2793, 4, 4, 1);
 INSERT INTO `mob_pool_mods` VALUES(2840, 368, 70, 0);
 INSERT INTO `mob_pool_mods` VALUES(2840, 370, 50, 0);
 INSERT INTO `mob_pool_mods` VALUES(2922, 370, 100, 0);
---INSERT INTO `mob_pool_mods` VALUES(2964, 40, 30, 1);
---INSERT INTO `mob_pool_mods` VALUES(2964, 41, 936, 1);
---INSERT INTO `mob_pool_mods` VALUES(2964, 42, 962, 1);
---INSERT INTO `mob_pool_mods` VALUES(2964, 43, 1, 1);
---INSERT INTO `mob_pool_mods` VALUES(2964, 47, 5, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2964, 40, 30, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2964, 41, 936, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2964, 42, 962, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2964, 43, 1, 1);
+-- INSERT INTO `mob_pool_mods` VALUES(2964, 47, 5, 1);
 INSERT INTO `mob_pool_mods` VALUES(2973, 370, 1, 0);
 INSERT INTO `mob_pool_mods` VALUES(3051, 4, 4, 1);
 INSERT INTO `mob_pool_mods` VALUES(3124, 48, 434, 1);
@@ -227,7 +227,10 @@ INSERT INTO `mob_pool_mods` VALUES(5409, 30, 1036, 1);
 INSERT INTO `mob_pool_mods` VALUES(5409, 33, 50, 1);
 INSERT INTO `mob_pool_mods` VALUES(5409, 58, 40, 1);
 INSERT INTO `mob_pool_mods` VALUES(3667, 28, -100, 1);
-
+INSERT INTO `mob_pool_mods` VALUES(6187, 1, 2000, 1);
+INSERT INTO `mob_pool_mods` VALUES(6187, 2, 13640, 1);
+INSERT INTO `mob_pool_mods` VALUES(6188, 1, 10000, 1);
+INSERT INTO `mob_pool_mods` VALUES(6188, 2, 30000, 1);
 --
 -- Indexes for dumped tables
 --
