@@ -1230,66 +1230,66 @@ INSERT INTO `item_basic` VALUES(1340, 0, 'neptunal_abjuration_body', 'n.abjurati
 INSERT INTO `item_basic` VALUES(1341, 0, 'neptunal_abjuration_hands', 'n.abjuration_hn.', 1, 61524, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1342, 0, 'neptunal_abjuration_legs', 'n.abjuration_lg.', 1, 61524, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1343, 0, 'neptunal_abjuration_feet', 'n.abjuration_ft.', 1, 61524, 0, 1, 0);
-INSERT INTO `item_basic` VALUES(1344, 0, 'cursed_kabuto', 'cursed_kabuto', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1345, 0, 'cursed_kabuto_-1', 'cursed_kabuto_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1346, 0, 'cursed_togi', 'cursed_togi', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1347, 0, 'cursed_togi_-1', 'cursed_togi_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1348, 0, 'cursed_kote', 'cursed_kote', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1349, 0, 'cursed_kote_-1', 'cursed_kote_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1350, 0, 'cursed_haidate', 'cursed_haidate', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1351, 0, 'cursed_haidate_-1', 'cursed_haidate_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1352, 0, 'cursed_sune-ate', 'cursed_sune-ate', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1353, 0, 'cursed_sune-ate_-1', 'c._sune-ate_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1354, 0, 'cursed_celata', 'cursed_celata', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1355, 0, 'cursed_celata_-1', 'cursed_celata_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1356, 0, 'cursed_hauberk', 'cursed_hauberk', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1357, 0, 'cursed_hauberk_-1', 'cursed_hauberk_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1358, 0, 'cursed_mufflers', 'cursed_mufflers', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1359, 0, 'cursed_mufflers_-1', 'c._mufflers_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1360, 0, 'cursed_breeches', 'cursed_breeches', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1361, 0, 'cursed_breeches_-1', 'c._breeches_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1362, 0, 'cursed_sollerets', 'cursed_sollerets', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1363, 0, 'cursed_sollerets_-1', 'c._sollerets_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1364, 0, 'cursed_crown', 'cursed_crown', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1365, 0, 'cursed_crown_-1', 'cursed_crown_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1366, 0, 'cursed_dalmatica', 'cursed_dalmatica', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1367, 0, 'cursed_dalmatica_-1', 'c._dalmatica_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1368, 0, 'cursed_mitts', 'cursed_mitts', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1369, 0, 'cursed_mitts_-1', 'cursed_mitts_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1370, 0, 'cursed_slacks', 'cursed_slacks', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1371, 0, 'cursed_slacks_-1', 'cursed_slacks_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1372, 0, 'cursed_pumps', 'cursed_pumps', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1373, 0, 'cursed_pumps_-1', 'cursed_pumps_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1374, 0, 'cursed_schaller', 'cursed_schaller', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1375, 0, 'cursed_schaller_-1', 'cursed_schaller_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1376, 0, 'cursed_cuirass', 'cursed_cuirass', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1377, 0, 'cursed_cuirass_-1', 'cursed_cuirass_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1378, 0, 'cursed_handschuhs', 'c._handschuhs', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1379, 0, 'cursed_handschuhs_-1', 'c._handschuhs_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1380, 0, 'cursed_diechlings', 'cursed_diechlings', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1381, 0, 'cursed_diechlings_-1', 'c._diechlings_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1382, 0, 'cursed_schuhs', 'cursed_schuhs', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1383, 0, 'cursed_schuhs_-1', 'cursed_schuhs_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1384, 0, 'cursed_mask', 'cursed_mask', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1385, 0, 'cursed_mask_-1', 'cursed_mask_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1386, 0, 'cursed_mail', 'cursed_mail', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1387, 0, 'cursed_mail_-1', 'cursed_mail_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1388, 0, 'cursed_finger_gauntlets', 'cursed_fng._gnt.', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1389, 0, 'cursed_finger_gauntlets_-1', 'cursed_f._gnt._-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1390, 0, 'cursed_cuisses', 'cursed_cuisses', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1391, 0, 'cursed_cuisses_-1', 'cursed_cuisses_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1392, 0, 'cursed_greaves', 'cursed_greaves', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1393, 0, 'cursed_greaves_-1', 'cursed_greaves_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1394, 0, 'cursed_cap', 'cursed_cap', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1395, 0, 'cursed_cap_-1', 'cursed_cap_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1396, 0, 'cursed_harness', 'cursed_harness', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1397, 0, 'cursed_harness_-1', 'cursed_harness_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1398, 0, 'cursed_gloves', 'cursed_gloves', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1399, 0, 'cursed_gloves_-1', 'cursed_gloves_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1400, 0, 'cursed_subligar', 'cursed_subligar', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1401, 0, 'cursed_subligar_-1', 'cursed_subligar_-1', 1, 0, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1402, 0, 'cursed_leggings', 'cursed_leggings', 1, 4, 37, 0, 0);
-INSERT INTO `item_basic` VALUES(1403, 0, 'cursed_leggings_-1', 'c._leggings_-1', 1, 0, 37, 0, 0);
+INSERT INTO `item_basic` VALUES(1344, 0, 'cursed_kabuto', 'cursed_kabuto', 1, 4, 37, 0, 11543);
+INSERT INTO `item_basic` VALUES(1345, 0, 'cursed_kabuto_-1', 'cursed_kabuto_-1', 1, 0, 37, 0, 12901);
+INSERT INTO `item_basic` VALUES(1346, 0, 'cursed_togi', 'cursed_togi', 1, 4, 37, 0, 19596);
+INSERT INTO `item_basic` VALUES(1347, 0, 'cursed_togi_-1', 'cursed_togi_-1', 1, 0, 37, 0, 21050);
+INSERT INTO `item_basic` VALUES(1348, 0, 'cursed_kote', 'cursed_kote', 1, 4, 37, 0, 11352);
+INSERT INTO `item_basic` VALUES(1349, 0, 'cursed_kote_-1', 'cursed_kote_-1', 1, 0, 37, 0, 12766);
+INSERT INTO `item_basic` VALUES(1350, 0, 'cursed_haidate', 'cursed_haidate', 1, 4, 37, 0, 10702);
+INSERT INTO `item_basic` VALUES(1351, 0, 'cursed_haidate_-1', 'cursed_haidate_-1', 1, 0, 37, 0, 12086);
+INSERT INTO `item_basic` VALUES(1352, 0, 'cursed_sune-ate', 'cursed_sune-ate', 1, 4, 37, 0, 9190);
+INSERT INTO `item_basic` VALUES(1353, 0, 'cursed_sune-ate_-1', 'c._sune-ate_-1', 1, 0, 37, 0, 10593);
+INSERT INTO `item_basic` VALUES(1354, 0, 'cursed_celata', 'cursed_celata', 1, 4, 37, 0, 10185);
+INSERT INTO `item_basic` VALUES(1355, 0, 'cursed_celata_-1', 'cursed_celata_-1', 1, 0, 37, 0, 10185); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1356, 0, 'cursed_hauberk', 'cursed_hauberk', 1, 4, 37, 0, 27705);
+INSERT INTO `item_basic` VALUES(1357, 0, 'cursed_hauberk_-1', 'cursed_hauberk_-1', 1, 0, 37, 0, 29063);
+INSERT INTO `item_basic` VALUES(1358, 0, 'cursed_mufflers', 'cursed_mufflers', 1, 4, 37, 0, 8353);
+INSERT INTO `item_basic` VALUES(1359, 0, 'cursed_mufflers_-1', 'c._mufflers_-1', 1, 0, 37, 0, 10185);
+INSERT INTO `item_basic` VALUES(1360, 0, 'cursed_breeches', 'cursed_breeches', 1, 4, 37, 0, 9235);
+INSERT INTO `item_basic` VALUES(1361, 0, 'cursed_breeches_-1', 'c._breeches_-1', 1, 0, 37, 0, 9235); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1362, 0, 'cursed_sollerets', 'cursed_sollerets', 1, 4, 37, 0, 15767);
+INSERT INTO `item_basic` VALUES(1363, 0, 'cursed_sollerets_-1', 'c._sollerets_-1', 1, 0, 37, 0, 15767); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1364, 0, 'cursed_crown', 'cursed_crown', 1, 4, 37, 0, 6757);
+INSERT INTO `item_basic` VALUES(1365, 0, 'cursed_crown_-1', 'cursed_crown_-1', 1, 0, 37, 0, 6757); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1366, 0, 'cursed_dalmatica', 'cursed_dalmatica', 1, 4, 37, 0, 25804);
+INSERT INTO `item_basic` VALUES(1367, 0, 'cursed_dalmatica_-1', 'c._dalmatica_-1', 1, 0, 37, 0, 25804); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1368, 0, 'cursed_mitts', 'cursed_mitts', 1, 4, 37, 0, 10865);
+INSERT INTO `item_basic` VALUES(1369, 0, 'cursed_mitts_-1', 'cursed_mitts_-1', 1, 0, 37, 0, 10865); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1370, 0, 'cursed_slacks', 'cursed_slacks', 1, 4, 37, 0, 20371);
+INSERT INTO `item_basic` VALUES(1371, 0, 'cursed_slacks_-1', 'cursed_slacks_-1', 1, 0, 37, 0, 20371); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1372, 0, 'cursed_pumps', 'cursed_pumps', 1, 4, 37, 0, 19556);
+INSERT INTO `item_basic` VALUES(1373, 0, 'cursed_pumps_-1', 'cursed_pumps_-1', 1, 0, 37, 0, 21865);
+INSERT INTO `item_basic` VALUES(1374, 0, 'cursed_schaller', 'cursed_schaller', 1, 4, 37, 0, 10427);
+INSERT INTO `item_basic` VALUES(1375, 0, 'cursed_schaller_-1', 'cursed_schaller_-1', 1, 0, 37, 0, 10427); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1376, 0, 'cursed_cuirass', 'cursed_cuirass', 1, 4, 37, 0, 39150);
+INSERT INTO `item_basic` VALUES(1377, 0, 'cursed_cuirass_-1', 'cursed_cuirass_-1', 1, 0, 37, 0, 39150); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1378, 0, 'cursed_handschuhs', 'c._handschuhs', 1, 4, 37, 0, 11275);
+INSERT INTO `item_basic` VALUES(1379, 0, 'cursed_handschuhs_-1', 'c._handschuhs_-1', 1, 0, 37, 0, 11275); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1380, 0, 'cursed_diechlings', 'cursed_diechlings', 1, 4, 37, 0, 11500);
+INSERT INTO `item_basic` VALUES(1381, 0, 'cursed_diechlings_-1', 'c._diechlings_-1', 1, 0, 37, 0, 11500); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1382, 0, 'cursed_schuhs', 'cursed_schuhs', 1, 4, 37, 0, 11250);
+INSERT INTO `item_basic` VALUES(1383, 0, 'cursed_schuhs_-1', 'cursed_schuhs_-1', 1, 0, 37, 0, 11250); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1384, 0, 'cursed_mask', 'cursed_mask', 1, 4, 37, 0, 8513);
+INSERT INTO `item_basic` VALUES(1385, 0, 'cursed_mask_-1', 'cursed_mask_-1', 1, 0, 37, 0, 9913);
+INSERT INTO `item_basic` VALUES(1386, 0, 'cursed_mail', 'cursed_mail', 1, 4, 37, 0, 15237);
+INSERT INTO `item_basic` VALUES(1387, 0, 'cursed_mail_-1', 'cursed_mail_-1', 1, 0, 37, 0, 15237); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1388, 0, 'cursed_finger_gauntlets', 'cursed_fng._gnt.', 1, 4, 37, 0, 7420);
+INSERT INTO `item_basic` VALUES(1389, 0, 'cursed_finger_gauntlets_-1', 'cursed_f._gnt._-1', 1, 0, 37, 0, 7420); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1390, 0, 'cursed_cuisses', 'cursed_cuisses', 1, 4, 37, 0, 10202);
+INSERT INTO `item_basic` VALUES(1391, 0, 'cursed_cuisses_-1', 'cursed_cuisses_-1', 1, 0, 37, 0, 11181);
+INSERT INTO `item_basic` VALUES(1392, 0, 'cursed_greaves', 'cursed_greaves', 1, 4, 37, 0, 6625);
+INSERT INTO `item_basic` VALUES(1393, 0, 'cursed_greaves_-1', 'cursed_greaves_-1', 1, 0, 37, 0, 8148);
+INSERT INTO `item_basic` VALUES(1394, 0, 'cursed_cap', 'cursed_cap', 1, 4, 37, 0, 16367);
+INSERT INTO `item_basic` VALUES(1395, 0, 'cursed_cap_-1', 'cursed_cap_-1', 1, 0, 37, 0, 16367); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1396, 0, 'cursed_harness', 'cursed_harness', 1, 4, 37, 0, 26482);
+INSERT INTO `item_basic` VALUES(1397, 0, 'cursed_harness_-1', 'cursed_harness_-1', 1, 0, 37, 0, 26482); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1398, 0, 'cursed_gloves', 'cursed_gloves', 1, 4, 37, 0, 11130);
+INSERT INTO `item_basic` VALUES(1399, 0, 'cursed_gloves_-1', 'cursed_gloves_-1', 1, 0, 37, 0, 11130); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1400, 0, 'cursed_subligar', 'cursed_subligar', 1, 4, 37, 0, 10629);
+INSERT INTO `item_basic` VALUES(1401, 0, 'cursed_subligar_-1', 'cursed_subligar_-1', 1, 0, 37, 0, 10629); -- No vendor price data
+INSERT INTO `item_basic` VALUES(1402, 0, 'cursed_leggings', 'cursed_leggings', 1, 4, 37, 0, 11388);
+INSERT INTO `item_basic` VALUES(1403, 0, 'cursed_leggings_-1', 'c._leggings_-1', 1, 0, 37, 0, 11388); -- No vendor price data
 INSERT INTO `item_basic` VALUES(1404, 0, 'seal_of_genbu', 'seal_of_genbu', 1, 45140, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1405, 0, 'seal_of_seiryu', 'seal_of_seiryu', 1, 45140, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(1406, 0, 'seal_of_byakko', 'seal_of_byakko', 1, 45140, 0, 1, 0);
