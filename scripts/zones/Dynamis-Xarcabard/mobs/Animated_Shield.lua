@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 -----------------------------------
 
 function onMobEngaged(mob, target)
+    mob:setMod(tpz.mod.SHIELD_BASH, 8) -- Sets a dmg multiplier for shield_bash
 
     if (mob:AnimationSub() == 3) then
         SetDropRate(113, 1822, 1000)

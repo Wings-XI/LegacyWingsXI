@@ -4183,7 +4183,7 @@ INSERT INTO `mob_pools` VALUES(4119, 'Vaicoliaux_B_D_Aurphe', 'Vaicoliaux_B_D_Au
 INSERT INTO `mob_pools` VALUES(4120, 'Vajra_Quadav', 'Vajra_Quadav', 202, 0x00009f0200000000000000000000000000000000, 3, 3, 3, 265, 100, 0, 1, 0, 1, 0, 0, 0, 237, 1155, 0, 0, 1, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(4121, 'Valaineral_R_Davilles', 'Valaineral_R_Davilles', 145, 0x01001a034d104d204d304d404d508f611d700080, 7, 1, 3, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 145);
 INSERT INTO `mob_pools` VALUES(4122, 'Vale_Crab', 'Vale_Crab', 0, 0x0000000000000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_pools` VALUES(4123, 'Valkeng', 'Valkeng', 28, 0x0600b90700000000000000000000000000000000, 1, 1, 5, 320, 100, 0, 1, 1, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 28);
+INSERT INTO `mob_pools` VALUES(4123, 'Valkeng', 'Valkeng', 28, 0x0600b90700000000000000000000000000000000, 5, 5, 5, 320, 100, 0, 1, 1, 1, 2, 0, 0, 0, 3, 0, 0, 444, 1, 0, 363);
 INSERT INTO `mob_pools` VALUES(4124, 'Valkurm_Emperor', 'Valkurm_Emperor', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 113);
 INSERT INTO `mob_pools` VALUES(4125, 'Valley_Manticore', 'Valley_Manticore', 179, 0x0000920100000000000000000000000000000000, 1, 1, 7, 360, 100, 0, 1, 0, 1, 0, 0, 0, 152, 129, 0, 0, 0, 0, 0, 179);
 INSERT INTO `mob_pools` VALUES(4126, 'Valor', 'Valor', 218, 0x0000600100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 2, 0, 32, 27, 159, 0, 0, 0, 0, 0, 218);

@@ -1,4 +1,4 @@
------------------------------------
+﻿-----------------------------------
 -- Area: Talacca_Cove
 -----------------------------------
 require("scripts/globals/zone")
@@ -19,7 +19,13 @@ zones[tpz.zone.TALACCA_COVE] =
         LOGIN_NUMBER                 = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET       = 7049, -- You can't fish here.
         ORB_MESSAGE_OFFSET           = 7623, -- There is a crack in the <item>. It no longer contains a monster.
-        YOU_CAN_NOW_BECOME_A_CORSAIR = 7782, -- You can now become a corsair!
+        YOU_CAN_NOW_BECOME_A_CORSAIR = 7781, -- You can now become a corsair!
+        VALKENG_MELEE_CHANGE_FRAME   = 7852, -- Confirming status...Damage from melee attacks...≺Numeric Parameter 0≻%.Changing frame...
+        VALKENG_RANGED_CHANGE_FRAME  = 7853, -- Confirming status...Damage from ranged attacks...≺Numeric Parameter 0≻%.Changing frame...
+        VALKENG_MAGIC_CHANGE_FRAME   = 7854, -- Confirming status...Damage from magic attacks...≺Numeric Parameter 0≻%.Changing frame...
+        VALKENG_MELEE_KEEP_FRAME     = 7855, -- Confirming status...Damage from melee attacks...≺Numeric Parameter 0≻%.Executing maneuver...
+        VALKENG_RANGED_KEEP_FRAME    = 7856, -- Confirming status...Damage from ranged attacks...≺Numeric Parameter 0≻%.Executing maneuver...
+        VALKENG_MAGIC_KEEP_FRAME     = 7857, -- Confirming status...Damage from magic attacks...≺Numeric Parameter 0≻%.Executing maneuver...
     },
     mob =
     {
