@@ -1,5 +1,5 @@
 ---------------------------------------------
---  Final Heaven
+--  Shield Bash
 --
 --  Description:  Delivers an attack that can stun the target. Shield required.
 --  Type: Physical
@@ -20,7 +20,11 @@ function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 1
     local accmod = 1
-    local dmgmod = 8
+    local dmgmod = 1
+    local shieldBashDamageMod = mob:getMod(tpz.mod.SHIELD_BASH);
+    if (shieldBashDamageMod > 0) then
+        dmgmod = shieldBashDamageMod
+    end
 	if math.random()*100 < target:getGuardRate(mob) then
 		skill:setMsg(tpz.msg.basic.SKILL_MISS)
 		target:trySkillUp(mob, tpz.skill.GUARD, numhits)

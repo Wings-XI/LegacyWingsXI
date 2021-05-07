@@ -2481,7 +2481,7 @@ INSERT INTO `mob_groups` VALUES(1978, 2318, 57, 'Lahama', 0, 128, 0, 0, 0, 77, 7
 INSERT INTO `mob_groups` VALUES(1979, 2426, 57, 'Llamhigyn_Y_Dwr', 0, 128, 1528, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(1980, 3292, 57, 'Qultada', 0, 128, 0, 0, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(1981, 3840, 57, 'Talacca_Clot', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(1982, 4123, 57, 'Valkeng', 0, 128, 0, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(1982, 4123, 57, 'Valkeng', 0, 128, 0, 8500, 10000, 67, 67, 0);
 INSERT INTO `mob_groups` VALUES(1983, 4371, 57, 'Wootzshell', 0, 128, 1248, 0, 0, 73, 74, 0);
 INSERT INTO `mob_groups` VALUES(1984, 4468, 57, 'Yazquhl', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1985, 23, 58, 'Abyssal_Pugil', 0, 128, 0, 0, 0, 54, 55, 0);

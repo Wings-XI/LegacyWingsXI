@@ -3802,6 +3802,7 @@ INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 252, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 254, 4, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 259, 41, 55);
+INSERT INTO `mob_spell_lists` VALUES('Velkeng', 444, 23, 1, 255);
 
 --
 -- Indexes for dumped tables
