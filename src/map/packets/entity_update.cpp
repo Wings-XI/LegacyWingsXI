@@ -36,7 +36,7 @@
 CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask)
 {
     this->type = 0x0E;
-    this->size = 0x2C;
+    this->size = 0x1C;
     m_entityId = PEntity->id;
     m_targId = PEntity->targid;
     m_updateType = type;
