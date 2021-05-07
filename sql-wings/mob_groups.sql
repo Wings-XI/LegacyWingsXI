@@ -2342,7 +2342,7 @@ INSERT INTO `mob_groups` VALUES(53, 2631, 54, 'Merrow_Wavedancer', 960, 0, 1657,
 INSERT INTO `mob_groups` VALUES(54, 2335, 54, 'Lamia_Idolater', 960, 0, 1492, 14650, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(55, 2338, 54, 'Lamia_Necromancer', 960, 0, 1494, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(56, 5892, 54, 'Euryale', 7200, 0, 3091, 20000, 0, 87, 87, 0);
-INSERT INTO `mob_groups` VALUES(57, 2361, 54, 'Lamia_Toxophilite', 960, 0, 1495, 0, 0, 81, 83, 0);
+INSERT INTO `mob_groups` VALUES(57, 2361, 54, 'Lamia_Toxophilite', 960, 0, 1495, 0, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(58, 3541, 54, 'Seneschal_Imp', 960, 0, 1002, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(59, 2630, 54, 'Merrow_Typhoondancer', 960, 0, 1657, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(60, 1211, 54, 'Emperor_Apkallu', 960, 0, 767, 0, 0, 81, 83, 0);
