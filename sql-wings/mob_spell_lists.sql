@@ -3814,7 +3814,7 @@ INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 214, 1, 255); -- flood
 -- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Nepionic_Bladmall
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 46, 1, 255); -- protect IV
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 51, 1, 255); -- shell IV
-INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255);/ -- cure IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255); -- cure IV
 
 --
 -- Indexes for dumped tables
