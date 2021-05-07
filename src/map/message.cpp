@@ -183,7 +183,7 @@ namespace message
 
             if (broadcast) {
                 ShowDebug("Message:  -> sending broadcast\n");
-                g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
+                g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
             }
             else {
                 while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -212,7 +212,7 @@ namespace message
                             *reinterpret_cast<uint32*>(extra) = Sql_GetUIntData(SqlHandle, 2);
                         }
 
-                        g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
+                        g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
                     }
                     else {
                         ShowDebug("Message:  -> loopback\n");
@@ -228,7 +228,8 @@ namespace message
         while (!message_queue.empty())
         {
             std::lock_guard<std::recursive_mutex> lk(send_mutex);
-            uint8* msg = message_queue.front().get();
+            std::shared_ptr<uint8> msgptr = message_queue.front();
+            uint8* msg = msgptr.get();
             message_queue.pop();
             try
             {
@@ -830,7 +831,7 @@ namespace message
                 if (FLgetSettingByID(login_header->dwCharacterID, 2) == 1) {
                     Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), login_header->dwCharacterID);
                 }
-                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
+                // Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
             }
             return true;
         }
@@ -894,7 +895,6 @@ namespace message
         ipp |= (port << 32);
 
         own_identity = ipp;
-        std::string login_qname = "login_" + std::to_string(own_identity);
         std::string map_qname = "map_" + std::to_string(own_identity);
 
         try {
@@ -904,7 +904,6 @@ namespace message
             }
 
             // Initialize connection to RabbitMQ
-            // First channel is for receiving messages from the login server
             g_mqconnection = std::shared_ptr<MQConnection>(new MQConnection(map_config.world_id,
                 map_config.rabbitmq_host,
                 map_config.rabbitmq_port,
@@ -913,19 +912,15 @@ namespace message
                 map_config.rabbitmq_vhost,
                 1,
                 "amq.fanout",
-                login_qname,
-                login_qname,
-                // TODO: Add SSL support
+                map_qname,
+                map_qname,
                 map_config.rabbitmq_ssl,
                 map_config.rabbitmq_ssl_verify,
                 map_config.rabbitmq_ssl_ca.c_str(),
                 map_config.rabbitmq_ssl_cert.c_str(),
                 map_config.rabbitmq_ssl_key.c_str()));
 
-            // And another channel for chat messages
-            g_mqconnection->ListenChannel(2, "amq.fanout", map_qname, map_qname);
             g_mqconnection->AssignHandler(1, g_handler);
-            g_mqconnection->AssignHandler(2, g_handler);
 
         }
         catch (...) {
