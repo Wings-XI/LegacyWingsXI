@@ -24,7 +24,7 @@ bool CharMessageHnd::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, 
 {
     LOG_DEBUG0("Called.");
 
-    if (Request.len < sizeof(MQConnection::MQ_MESSAGE_TYPES)) {
+    if (Request.len < sizeof(uint32_t) + sizeof(MQConnection::MQ_MESSAGE_TYPES)) {
         LOG_ERROR("Received message is too small.");
         throw std::runtime_error("Message too small.");
     }
@@ -33,7 +33,12 @@ bool CharMessageHnd::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, 
         LOG_ERROR("Message size too big.");
         throw std::runtime_error("Message too big.");
     }
-    MQConnection::MQ_MESSAGE_TYPES eMessageType = *reinterpret_cast<MQConnection::MQ_MESSAGE_TYPES*>(Request.bytes);
+    if (*reinterpret_cast<uint32_t*>(Request.bytes) != LOGIN_MQ_MSG_MAGIC) {
+        LOG_DEBUG0("Not a login server message, passing.");
+        return false;
+    }
+    MQConnection::MQ_MESSAGE_TYPES eMessageType = *reinterpret_cast<MQConnection::MQ_MESSAGE_TYPES*>
+        (reinterpret_cast<uint8_t*>(Request.bytes) + 4);
     if ((eMessageType < MQConnection::MQ_MESSAGE_CHARHND_FIRST) || (eMessageType > MQConnection::MQ_MESSAGE_CHARHND_LAST)) {
         // This is not a message we're handling so pass on to next handler
         LOG_DEBUG0("Not a message for this handler, passing.");

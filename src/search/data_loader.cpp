@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -17,7 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
+
+===========================================================================
+
+Mentor and Search Comment functions and logic
+Copyright (c) 2021 Wings Open Source Project
+Distributed under AGPLv3. See LICENSE FILE.
+
+===========================================================================
 */
+
 #include <string.h>
 
 #include "../common/mmo.h"
@@ -196,7 +205,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
         filterQry.append("))) ");
     }
 
-    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2, nnameflags "
+    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2, nnameflags, seacom_type "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -239,6 +248,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             uint32 partyid = (uint32)Sql_GetUIntData(SqlHandle, 1);
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 10);
             uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 17);
+            uint32 seacomtype = (uint32)Sql_GetUIntData(SqlHandle, 18);
 
 
             if (partyid == PPlayer->id) PPlayer->flags1 |= 0x0008;
@@ -249,10 +259,18 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
 
             if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
+            if (seacomtype != 0)          PPlayer->flags1 |= 0x10;
 
             PPlayer->flags2 = PPlayer->flags1;
 
-            // TODO: search comments
+            // 0x11 - Green (EXP)
+            // 0x21 - White (Battle)
+            // 0x31 - Red (Missions)
+            // 0x41 - Blue (Items)
+            // 0x51 - Pink (Linkshell)
+            // 0x61 - Black (Friends)
+            // 0x71 - Yellow (Other)
+            PPlayer->comment = seacomtype;
 
             // skip anons if we searched by something that's being hidden from us
             if (nameflag & FLAG_ANON && (sr.jobid > 0 || sr.nation != 255 || sr.race != 255 || sr.minlvl > 0 || sr.maxlvl > 0 || sr.minRank > 0 || sr.maxRank > 0))
@@ -295,6 +313,10 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
 
             // filter by flag (away, seek party etc.)
             if (sr.flags != 0 && !(PPlayer->flags2 & sr.flags))
+                continue;
+
+            // filter by comment
+            if (sr.comment != 0 && ((PPlayer->comment & 0xF0) != (sr.comment & 0xF0)))
                 continue;
 
             // filter by level
@@ -365,7 +387,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
 {
     std::list<SearchEntity*> PartyList;
 
-    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, nnameflags "
+    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, nnameflags, seacom_type "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING(charid) "
         "LEFT JOIN chars USING(charid) "
@@ -399,6 +421,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
 
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 9);
             uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 14);
+            uint32 seacomtype = (uint32)Sql_GetUIntData(SqlHandle, 15);
 
             if (PartyID == PPlayer->id) PPlayer->flags1 |= 0x0008;
             if (nameflag & FLAG_AWAY)   PPlayer->flags1 |= 0x0100;
@@ -408,8 +431,11 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
 
             if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
+            if (seacomtype != 0)          PPlayer->flags1 |= 0x10;
 
             PPlayer->flags2 = PPlayer->flags1;
+
+            PPlayer->comment = seacomtype;
 
             PartyList.push_back(PPlayer);
         }
@@ -428,7 +454,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
     std::list<SearchEntity*> LinkshellList;
     const char* fmtQuery = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, "
         "mlvl, slvl, linkshellid1, linkshellid2, "
-        "linkshellrank1, linkshellrank2, nnameflags "
+        "linkshellrank1, linkshellrank2, nnameflags, seacom_type "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -467,6 +493,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
             uint32 partyid = (uint32)Sql_GetUIntData(SqlHandle, 1);
             uint32 nameflag = (uint32)Sql_GetUIntData(SqlHandle, 9);
             uint32 nnameflag = (uint32)Sql_GetUIntData(SqlHandle, 18);
+            uint32 seacomtype = (uint32)Sql_GetUIntData(SqlHandle, 19);
 
             if (partyid == PPlayer->id) PPlayer->flags1 |= 0x0008;
             if (nameflag & FLAG_AWAY)   PPlayer->flags1 |= 0x0100;
@@ -476,14 +503,39 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
             if (nameflag & FLAG_INVITE) PPlayer->flags1 |= 0x8000;
 
             if (nnameflag & NFLAG_MENTOR) PPlayer->flags1 |= 0x01;
+            if (seacomtype != 0)          PPlayer->flags1 |= 0x10;
 
             PPlayer->flags2 = PPlayer->flags1;
+
+            PPlayer->comment = seacomtype;
 
             LinkshellList.push_back(PPlayer);
         }
     }
 
     return LinkshellList;
+}
+
+// (c) 2021 Wings Open Source Project
+uint32 CDataLoader::GetPlayerSearchComment(uint16 player, std::string* SeaCom)
+{
+    if (!SeaCom) {
+        return 0;
+    }
+    const char* fmtQuery = "SELECT seacom_type, search_message FROM char_stats WHERE charid = %u";
+    int32 ret = Sql_Query(SqlHandle, fmtQuery, player);
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+    {
+        if (Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+            uint32 seacomtype = (uint32)Sql_GetUIntData(SqlHandle, 0);
+            int8* search_message = Sql_GetData(SqlHandle, 1);
+            if ((seacomtype != 0) && (search_message)) {
+                *SeaCom = (char*)search_message;
+                return seacomtype;
+            }
+        }
+    }
+    return 0;
 }
 
 void CDataLoader::ExpireAHItems()

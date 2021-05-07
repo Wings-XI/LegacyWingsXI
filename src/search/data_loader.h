@@ -17,6 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
+
+===========================================================================
+
+Mentor and Search Comment functions and logic
+Copyright (c) 2021 Wings Open Source Project
+Distributed under AGPLv3. See LICENSE FILE.
+
+===========================================================================
 */
 
 #ifndef _CDATALOADER_H_
@@ -28,6 +36,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <vector>
 #include <stdio.h>
 #include <string.h>
+#include <string>
 
 struct Sql_t;
 struct search_req;
@@ -89,6 +98,7 @@ public:
     std::list<SearchEntity*> GetPartyList(uint16 PartyID, uint16 AllianceID);
     std::list<SearchEntity*> GetLinkshellList(uint32 LinkshellID);
     std::list<SearchEntity*> GetPlayersList(search_req sr, int* count);
+    uint32                   GetPlayerSearchComment(uint16 player, std::string* SeaCom);
     std::vector<ahItem*>     GetAHItemsToCategory(uint8 AHCategoryID, int8* OrderByString);
     void                     ExpireAHItems();
 

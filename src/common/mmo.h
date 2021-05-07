@@ -90,7 +90,11 @@ enum MSGSERVTYPE : uint8
     MSG_SEND_TO_ZONE,
     MSG_SEND_TO_ENTITY,
     MSG_SEND_FL_NOTIF,
-    MSG_NEW_TICKET
+    MSG_NEW_TICKET,
+
+    // RPC
+    MSG_RPC_REQUEST,
+    MSG_RPC_RESPONSE
 };
 
 #pragma pack(push, 1)
