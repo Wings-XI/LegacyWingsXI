@@ -80,20 +80,24 @@ local loot =
     [675] =
     {
         {
+            {itemid =    0, droprate =  34}, -- nothing
             {itemid = 1762, droprate = 375},  -- Cassia Lumber
             {itemid = 1767, droprate = 328},  -- Eltoro Leather
             {itemid = 1771, droprate = 263},  -- Dragon Bone
         },
         {
+            {itemid =    0, droprate =  812}, -- nothing
             {itemid = 1842, droprate = 188},  -- Cloud Evoker
         },
         {
+            {itemid =     0, droprate =  199}, -- nothing
             {itemid = 18099, droprate = 150}, -- Stone-splitter
             {itemid = 17365, droprate = 175}, -- Frenzy Fife
             {itemid = 18015, droprate = 238}, -- Blau Dolch
             {itemid = 4990, droprate = 238},  -- Scroll of Army's Paeon V
         },
         {
+            {itemid =     0, droprate =  199}, -- nothing
             {itemid = 18099, droprate = 150}, -- Stone-splitter
             {itemid = 17365, droprate = 175}, -- Frenzy Fife
             {itemid = 18015, droprate = 238}, -- Blau Dolch

@@ -3803,6 +3803,18 @@ INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 254, 4, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 259, 41, 55);
 
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 172, 1, 255); -- water IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 200, 1, 255); -- waterga II
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 201, 1, 255); -- waterga III
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 214, 1, 255); -- flood
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Nepionic_Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 51, 1, 255); -- shell IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255);/ -- cure IV
+
 --
 -- Indexes for dumped tables
 --
