@@ -9240,8 +9240,8 @@ INSERT INTO `mob_groups` VALUES(20, 4424, 155, 'Yagudo_Hierogrammat', 960, 0, 0,
 INSERT INTO `mob_groups` VALUES(21, 4460, 155, 'Yagudo_Yojimbo', 960, 0, 0, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(22, 5488, 155, 'Yagudo_Conductor_past', 960, 0, 0, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(23, 5487, 155, 'Yagudo_Flagellant_past', 960, 0, 0, 0, 0, 81, 83, 0);
-INSERT INTO `mob_groups` VALUES(24, 5479, 155, 'Yagudo_Abbot_past', 960, 0, 3161, 0, 9000, 81, 83, 0);
-INSERT INTO `mob_groups` VALUES(25, 5226, 155, 'Doom_Lens', 960, 0, 3162, 0, 9000, 82, 83, 0);
+INSERT INTO `mob_groups` VALUES(24, 5479, 155, 'Yagudo_Abbot_past', 960, 0, 3163, 0, 9000, 81, 83, 0);
+INSERT INTO `mob_groups` VALUES(25, 5226, 155, 'Doom_Lens', 960, 0, 3164, 0, 9000, 82, 83, 0);
 INSERT INTO `mob_groups` VALUES(26, 996, 155, 'Demon_Warrior', 960, 0, 0, 0, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(27, 983, 155, 'Demon_Befouler', 960, 0, 0, 0, 999, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(28, 5233, 155, 'Keep_Imp', 960, 0, 1002, 0, 0, 81, 83, 0);
