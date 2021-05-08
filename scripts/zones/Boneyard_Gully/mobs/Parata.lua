@@ -3,12 +3,16 @@
 --  Mob: Parata
 --  ENM: Shell We Dance?
 -----------------------------------
+mixins = {require("scripts/mixins/families/uragnite")}
 local ID = require("scripts/zones/Boneyard_Gully/IDs")
 require("scripts/globals/titles")
 require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:addMod(tpz.mod.DEFP, 50)
+    mob:addMod(tpz.mod.MDEF, 20)
+    mob:addMod(tpz.mod.ATTP, 30)
 end
 
 function onMobFight(mob,target)
