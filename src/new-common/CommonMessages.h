@@ -10,13 +10,16 @@
 
 #include "MQConnection.h"
 
- // Name of the login server queue
+// Name of the login server queue
 #define LOGIN_MQ_NAME "LOGIN_MQ"
+// Magic value that identifies login messages
+#define LOGIN_MQ_MSG_MAGIC 0x54574C54
 
 #pragma pack(push, 1)
 
 struct CHAR_MQ_MESSAGE_HEADER
 {
+    uint32_t dwMagic;
     MQConnection::MQ_MESSAGE_TYPES eType;
     uint32_t dwContentID;
     uint32_t dwCharacterID;

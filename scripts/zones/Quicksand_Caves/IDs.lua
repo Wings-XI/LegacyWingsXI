@@ -80,6 +80,15 @@ zones[tpz.zone.QUICKSAND_CAVES] =
         {
             [17629557] = 17629561, -- -343.859 -0.411 751.608
         },
+        SABOTENDER_BAILARIN_PH        =
+        {
+            [17629261] = 17629264, -- 601.4016, -5.9207, -689.1025
+            [17629262] = 17629264, -- 589.2606, -5.6367, -671.8018
+        },
+        SABOTENDER_BAILARINA_PH    =
+        {
+            [17629582] = 17629587,  -- -456.949, -0.456, 780.811 and -504.1063, 0.0000, 779.0835
+        },
         VALOR                 = 17629185,
         HONOR                 = 17629186,
         CENTURIO_IV_VII       = 17629187,
@@ -89,6 +98,7 @@ zones[tpz.zone.QUICKSAND_CAVES] =
         ANCIENT_VESSEL        = 17629642,
         TRIBUNUS_VII_I        = 17629643,
         GIRTABLULU            = 17629645,
+        SABOTENDER_BAILARIN   = 17629264,
     },
     npc =
     {

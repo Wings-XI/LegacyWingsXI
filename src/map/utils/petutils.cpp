@@ -1452,6 +1452,10 @@ namespace petutils
             if (PetID == PETID_CARBUNCLE)
             {
                 ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.67f)));
+                if (PPet->GetMLevel() >= 25)
+                {
+                    PPet->setModifier(Mod::REGEN, 1);
+                }
             }
 
             //Set B+ weapon skill (assumed capped for level derp)

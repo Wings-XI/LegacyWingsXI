@@ -298,3 +298,4 @@
 -- Fear_Touch = done
 -- Sonic Boom = done
 -- Water Wall = done
+-- Chthonian Ray = done

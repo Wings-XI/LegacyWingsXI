@@ -8,6 +8,7 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMod(tpz.mod.SILENCERES, 75)
+    mob:setMod(tpz.mod.LULLABYRES, 75)
     mob:setMod(tpz.mod.DMGMAGIC, -10)
     mob:setMod(tpz.mod.SLEEPRES, 50)
 end

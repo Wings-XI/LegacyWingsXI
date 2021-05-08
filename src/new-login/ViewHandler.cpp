@@ -320,6 +320,7 @@ void ViewHandler::HandleLoginRequest(const LOGIN_REQUEST_PACKET* pRequestPacket)
     mpSession->UnreserveCharacter();
     // Notify the world server that a character wants to log in
     MESSAGE_LOGIN_REQUEST LoginMessage;
+    LoginMessage.Header.dwMagic = LOGIN_MQ_MSG_MAGIC;
     LoginMessage.Header.eType = MQConnection::MQ_MESSAGE_CHAR_LOGIN;
     LoginMessage.Header.dwContentID = pRequestPacket->dwContentID;
     LoginMessage.Header.dwCharacterID = pRequestPacket->dwCharacterID;
@@ -929,6 +930,7 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
     DB->execute("COMMIT;");
     LOG_DEBUG0("All checks passed, sending notification to map server.");
     MESSAGE_CONFIRM_CREATE_REQUEST ConfirmRequest;
+    ConfirmRequest.Header.dwMagic = LOGIN_MQ_MSG_MAGIC;
     ConfirmRequest.Header.eType = MQConnection::MQ_MESSAGE_CHAR_CREATE;
     ConfirmRequest.Header.dwAccountID = mpSession->GetAccountID();
     ConfirmRequest.Header.dwContentID = pNewChar->dwContentID;
@@ -1223,6 +1225,7 @@ void ViewHandler::DeleteCharacter(const DELETE_REQUEST_PACKET* pRequestPacket)
     // Send a message to the world server in case it needs to do something
     LOG_DEBUG0("Sending notification to map server.");
     CHAR_MQ_MESSAGE_HEADER DeleteRequest;
+    DeleteRequest.dwMagic = LOGIN_MQ_MSG_MAGIC;
     DeleteRequest.eType = MQConnection::MQ_MESSAGE_CHAR_DELETE;
     DeleteRequest.dwAccountID = mpSession->GetAccountID();
     DeleteRequest.dwContentID = pRequestPacket->dwContentID;

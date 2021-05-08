@@ -142,7 +142,7 @@ INSERT INTO `mob_spawn_mods` VALUES(17629403, 2, 6000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629238, 1, 2000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629238, 2, 6000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629238, 15, 630, 1);
-INSERT INTO `mob_spawn_mods` VALUES(17629301, 1, 1000, 1);
+INSERT INTO `mob_spawn_mods` VALUES(17629301, 1, 3000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629301, 2, 3000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629264, 1, 10000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17629264, 2, 13640, 1);
@@ -577,9 +577,9 @@ INSERT INTO `mob_spawn_mods` VALUES(17490101, 2, 20000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17490101, 15, 2000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17489980, 1, 15000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17489980, 2, 25000, 1);
-INSERT INTO `mob_spawn_mods` VALUES(17027458, 12, 15, 1); --Draw in for Cerberus
-INSERT INTO `mob_spawn_mods` VALUES(17101201, 12, 15, 1); --Draw in for Khimaira
-INSERT INTO `mob_spawn_mods` VALUES(16986355, 12, 15, 1); --Draw in for Hydra
+INSERT INTO `mob_spawn_mods` VALUES(17027458, 12, 15, 1); -- Draw in for Cerberus
+INSERT INTO `mob_spawn_mods` VALUES(17101201, 12, 15, 1); -- Draw in for Khimaira
+INSERT INTO `mob_spawn_mods` VALUES(16986355, 12, 15, 1); -- Draw in for Hydra
 
 --
 -- Indexes for dumped tables

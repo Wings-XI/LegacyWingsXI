@@ -2131,8 +2131,9 @@ INSERT INTO `item_mods` VALUES (10728,1,36);      -- Etoile Tights +2: DEF 36
 INSERT INTO `item_mods` VALUES (10728,8,6);       -- STR +6
 INSERT INTO `item_mods` VALUES (10728,14,6);      -- CHR +6
 INSERT INTO `item_mods` VALUES (10728,25,6);      -- Accuracy +6
-INSERT INTO `item_mods` VALUES (10728,384,400);    -- Haste +4%
-INSERT INTO `item_mods` VALUES (10728,492,35);    -- Jig duration +35%
+INSERT INTO `item_mods` VALUES (10728,384,400);   -- Haste +4%
+INSERT INTO `item_mods` VALUES (10728,492,35);    -- Chocobo Jig duration +35%
+INSERT INTO `item_mods` VALUES (10728,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (10729,1,35);
 INSERT INTO `item_mods` VALUES (10729,2,24);
 INSERT INTO `item_mods` VALUES (10729,5,24);
@@ -4623,14 +4624,16 @@ INSERT INTO `item_mods` VALUES (11393,8,3);       -- STR +3
 INSERT INTO `item_mods` VALUES (11393,11,3);      -- AGI +3
 INSERT INTO `item_mods` VALUES (11393,23,5);      -- Attack +5
 INSERT INTO `item_mods` VALUES (11393,68,5);      -- Evasion +5
-INSERT INTO `item_mods` VALUES (11393,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (11393,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (11393,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (11394,1,15);      -- Dancer's Toe Shoes +1 (female): DEF 15
 INSERT INTO `item_mods` VALUES (11394,2,12);      -- HP +12
 INSERT INTO `item_mods` VALUES (11394,8,3);       -- STR +3
 INSERT INTO `item_mods` VALUES (11394,11,3);      -- AGI +3
 INSERT INTO `item_mods` VALUES (11394,23,5);      -- Attack +5
 INSERT INTO `item_mods` VALUES (11394,68,5);      -- Evasion +5
-INSERT INTO `item_mods` VALUES (11394,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (11394,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (11394,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (11395,1,11);
 INSERT INTO `item_mods` VALUES (11395,5,20);
 INSERT INTO `item_mods` VALUES (11395,11,3);
@@ -18384,7 +18387,8 @@ INSERT INTO `item_mods` VALUES (15747,1,14);      -- Dancer's Shoes (female): DE
 INSERT INTO `item_mods` VALUES (15747,2,7);       -- HP +7
 INSERT INTO `item_mods` VALUES (15747,23,5);      -- Attack +5
 INSERT INTO `item_mods` VALUES (15747,68,5);      -- Evasion +5
-INSERT INTO `item_mods` VALUES (15747,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (15747,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (15747,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (15748,1,10);
 INSERT INTO `item_mods` VALUES (15748,5,15);
 INSERT INTO `item_mods` VALUES (15748,27,-2);
@@ -19861,13 +19865,15 @@ INSERT INTO `item_mods` VALUES (16359,336,15);
 INSERT INTO `item_mods` VALUES (16360,1,28);      -- Etoile Tights: DEF 28
 INSERT INTO `item_mods` VALUES (16360,8,3);       -- STR +3
 INSERT INTO `item_mods` VALUES (16360,14,3);      -- CHR +3
-INSERT INTO `item_mods` VALUES (16360,384,300);    -- Haste +3%
-INSERT INTO `item_mods` VALUES (16360,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (16360,384,300);   -- Haste +3%
+INSERT INTO `item_mods` VALUES (16360,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (16360,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (16361,1,29);      -- Etoile Tights +1: DEF 29
 INSERT INTO `item_mods` VALUES (16361,8,4);       -- STR +4
 INSERT INTO `item_mods` VALUES (16361,14,4);      -- CHR +4
-INSERT INTO `item_mods` VALUES (16361,384,300);    -- Haste +3%
-INSERT INTO `item_mods` VALUES (16361,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (16361,384,300);   -- Haste +3%
+INSERT INTO `item_mods` VALUES (16361,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (16361,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (16362,1,27);
 INSERT INTO `item_mods` VALUES (16362,2,15);
 INSERT INTO `item_mods` VALUES (16362,5,15);

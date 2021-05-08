@@ -21,7 +21,7 @@ local battlefields = {
         { 0,  640,    0},   -- Flames of the Dead (PM5-3 U3)
      -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
-     -- { 3,  643,    0},   -- Brothers (ENM) -- TODO: Chthonian Ray mobskill
+        { 3,  643,    0},   -- Brothers (ENM)
      -- { 4,  644,    0},   -- Holy Cow (ENM)
      -- { 5,    ?, 3454},   -- Taurassic Park (HKC30)
     },
@@ -167,7 +167,7 @@ local battlefields = {
     {
      -- { 0, 1088,    0},   -- Call to Arms (ISNM)
      -- { 1, 1089,    0},   -- Compliments to the Chef (ISNM)
-     -- { 2, 1090,    0},   -- Puppetmaster Blues (Quest)
+        { 2, 1090,    0},   -- Puppetmaster Blues (Quest)
         { 3, 1091, 2332},   -- Breaking the Bonds of Fate (COR LB5)
         { 4, 1092,    0},   -- Legacy of the Lost (TOAU35)
      -- { 5,    ?,    0},   -- *Legacy of the Lost (HTMBF)
@@ -316,7 +316,7 @@ local battlefields = {
         { 8,  104, 1552},   -- Creeping Doom (BS30)
      -- { 9,  105, 1551},   -- Charming Trio (BS20)
      -- {10,  106, 1552},   -- Harem Scarem (BS30)
-     -- {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99) -- TODO: Wyrm is not coded at all
+        {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99)
      -- {12,  108, 1131},   -- Royal Succession (BS40)
      -- {13,  109, 1177},   -- Rapid Raptors (BS50)
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.

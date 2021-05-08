@@ -3,6 +3,8 @@
 --  Mob: Nepionic Parata
 --  ENM: Shell We Dance?
 -----------------------------------
+mixins = {require("scripts/mixins/families/uragnite")}
+local ID = require("scripts/zones/Boneyard_Gully/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------

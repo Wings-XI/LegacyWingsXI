@@ -262,7 +262,7 @@ INSERT INTO `bcnm_info` VALUES(1056, 36, 'dawn', 'nobody', 0, 1800, 1800, 75, 6,
 INSERT INTO `bcnm_info` VALUES(1057, 36, 'apocalypse_nigh', 'nobody', 0, 1800, 1800, 99, 6, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(1088, 57, 'call_to_arms', 'nobody', 0, 1800, 1800, 60, 6, 1088, 15, 0);
 INSERT INTO `bcnm_info` VALUES(1089, 57, 'compliments_to_the_chef', 'nobody', 0, 1800, 1800, 75, 6, 1089, 15, 0);
-INSERT INTO `bcnm_info` VALUES(1090, 57, 'puppetmaster_blues', 'nobody', 0, 1800, 1800, 0, 6, 0, 7, 0);
+INSERT INTO `bcnm_info` VALUES(1090, 57, 'puppetmaster_blues', 'nobody', 0, 1800, 1800, 75, 6, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(1091, 57, 'breaking_the_bonds_of_fate', 'nobody', 0, 600, 600, 99, 1, 0, 6, 0);
 INSERT INTO `bcnm_info` VALUES(1092, 57, 'legacy_of_the_lost', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 0);
 INSERT INTO `bcnm_info` VALUES(1120, 64, 'tough_nut_to_crack', 'nobody', 0, 1800, 1800, 60, 6, 1120, 15, 0);

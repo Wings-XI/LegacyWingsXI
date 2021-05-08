@@ -281,7 +281,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 496) then
         player:addQuest(WINDURST,tpz.quest.id.windurst.CRYING_OVER_ONIONS);
     elseif (csid == 497) then
-        player:setCharVar("CryingOverOnions",3);
+        player:setCharVar("CryingOverOnions",4);
     elseif (csid == 513) then
         player:addQuest(WINDURST,tpz.quest.id.windurst.THE_PROMISE);
     elseif (csid == 522) then
