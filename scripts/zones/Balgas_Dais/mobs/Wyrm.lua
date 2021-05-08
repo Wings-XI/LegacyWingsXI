@@ -13,6 +13,8 @@ local function grounded(mob)
 end
 
 function onMobSpawn(mob)
+    mob:addMod(tpz.mod.MDEF, 10)
+    mob:addMod(tpz.mod.ATTP, 10)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setTP(3000) -- opens fight with a skill
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
@@ -63,9 +65,9 @@ function onMobFight(mob, target)
             mob:setLocalVar("state", 3) -- final state
             mob:useMobAbility(954)
             grounded(mob)
-            mob:addStatusEffect(tpz.effect.EVASION_BOOST, 75, 0, 0)
-            mob:addStatusEffect(tpz.effect.DEFENSE_BOOST, 75, 0, 0)
-            mob:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 75, 0, 0)
+            mob:addStatusEffect(tpz.effect.EVASION_BOOST, 50, 0, 0)
+            mob:addStatusEffect(tpz.effect.DEFENSE_BOOST, 50, 0, 0)
+            mob:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 40, 0, 0)
         end
     end
 end
