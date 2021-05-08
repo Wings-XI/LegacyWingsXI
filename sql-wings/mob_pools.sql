@@ -6219,10 +6219,10 @@ INSERT INTO `mob_pools` VALUES(6182, 'Poison_Funguar', 'Poison_Funguar', 116, 0x
 INSERT INTO `mob_pools` VALUES(6183, 'Erle', 'Erle', 48, 0x0000100100000000000000000000000000000000, 4, 1, 11, 240, 100, 0, 1, 0, 1, 2, 16, 0, 0, 0, 0, 0, 434, 1, 0, 48);
 INSERT INTO `mob_pools` VALUES(6184, 'Picolaton', 'Picolaton', 125, 0x0000500100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 6, 32, 0, 3, 0, 0, 0, 1, 0, 1152);
 INSERT INTO `mob_pools` VALUES(6185, 'Hyakume', 'Hyakume', 139, 0x0000800100000000000000000000000000000000, 4, 4, 12, 280, 100, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 443, 1, 0, 139);
-
 INSERT INTO `mob_pools` VALUES(6186, 'Sabotender_Bailaor', 'Sabotender_Bailaor', 212, 0x0000740100000000000000000000000000000000, 2, 2, 5, 360, 100, 0, 1, 0, 0, 0, 0, 0, 204, 133, 0, 0, 0, 1, 0, 212);
 INSERT INTO `mob_pools` VALUES(6187, 'Sabotender_Bailarin', 'Sabotender_Bailarin', 212, 0x0000740100000000000000000000000000000000, 2, 2, 7, 360, 100, 0, 1, 0, 0, 2, 0, 0, 204, 133, 0, 0, 0, 1, 0, 212);
 INSERT INTO `mob_pools` VALUES(6188, 'Sabotender_Bailarina', 'Sabotender_Bailarina', 212, 0x0000740100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 2, 0, 0, 204, 135, 0, 0, 0, 1, 0, 212);
+
 --
 -- Indexes for dumped tables
 --

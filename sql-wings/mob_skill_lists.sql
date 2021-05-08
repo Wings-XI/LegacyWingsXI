@@ -3151,9 +3151,9 @@ INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 600);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 601);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm-Flying-Attack', 1159, 950);
 INSERT INTO `mob_skill_lists` VALUES('Goblintrap', 1160, 434);
 INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
-INSERT INTO `mob_skill_lists` VALUES('Wyrm-Flying-Attack', 1159, 950);
 
 --
 -- Indexes for dumped tables
