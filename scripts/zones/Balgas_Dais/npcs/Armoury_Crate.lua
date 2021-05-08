@@ -359,6 +359,8 @@ local loot =
         },
     },
     -- KSNM Early Bird Catches the Wyrm
+    -- Juggernaut and Speed Belt were added to this KSNM as an RMT measure.  Drop table below based on original drop tables cited here: https://ffxiclopedia.fandom.com/wiki/Early_Bird_Catches_the_Wyrm?oldid=157593
+
     [107] =
     {
         {
@@ -382,8 +384,8 @@ local loot =
         {
             {itemid = 4486, droprate = 522}, -- Dragon Heart
             {itemid = 4272, droprate = 346}, -- Slice Of Dragon Meat
-            {itemid = 17928, droprate = 82}, -- Juggernaut
-            {itemid = 13189, droprate = 59}, -- Speed Belt ??? Questionable Need Wings staff to confirm
+--          {itemid = 17928, droprate = 82}, -- Juggernaut, commented out due to RMT changes.  See heading for details.
+--          {itemid = 13189, droprate = 59}, -- Speed Belt, commented out due to RMT changes.  See heading for details.
         },
         {
             {itemid = 887, droprate = 32},   -- Coral Fragment
