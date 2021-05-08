@@ -23,7 +23,7 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
     duration = duration * applyResistance(caster, target, spell, params)
-    --Paralyze base power is 35 and is not affected by resistaces.
+    --Jubaku base powers are not effected by resistances, Ichi:20, Ni:30, San:35.
     local power = 35
 
     --Calculates resist chanve from Reist Blind
