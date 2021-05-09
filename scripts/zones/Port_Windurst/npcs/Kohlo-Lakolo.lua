@@ -95,9 +95,9 @@ Fame       = player:getFameLevel(WINDURST);
     elseif (CryingOverOnions == QUEST_ACCEPTED) then
         CryingOverOnionsVar = player:getCharVar("CryingOverOnions");
 
-        if (CryingOverOnionsVar == 3) then
+        if (CryingOverOnionsVar == 4) then
             player:startEvent(512);
-        elseif (CryingOverOnionsVar == 2) then
+        elseif (CryingOverOnionsVar == 3) then
             player:startEvent(497);
         else
             player:startEvent(498);
