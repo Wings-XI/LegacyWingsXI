@@ -48,21 +48,15 @@ CREATE TABLE `accounts_sessions` (
   `client_version` varchar(16) DEFAULT NULL,
   `expansions` smallint(6) NOT NULL DEFAULT 0,
   `features` tinyint(4) NOT NULL DEFAULT 0,
-  `last_updated` datetime DEFAULT NULL
+  `last_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`charid`),
+  UNIQUE KEY `accid` (`accid`),
+  UNIQUE KEY `content_id` (`content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `accounts_sessions`
---
-ALTER TABLE `accounts_sessions`
-  ADD PRIMARY KEY (`charid`),
-  ADD UNIQUE KEY `accid` (`accid`),
-  ADD UNIQUE KEY `content_id` (`content_id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
