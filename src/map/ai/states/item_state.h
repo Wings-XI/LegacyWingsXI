@@ -60,7 +60,6 @@ protected:
     position_t m_startPos;
     bool m_interrupted {false};
     bool m_interruptable {true};
-    bool m_consumeItem {true};
 };
 
 #endif
