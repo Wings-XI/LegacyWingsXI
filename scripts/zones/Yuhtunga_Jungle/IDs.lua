@@ -62,6 +62,7 @@ zones[tpz.zone.YUHTUNGA_JUNGLE] =
         VOLUPTUOUS_VILMA        = 17281358,
         NASUS_OFFSET            = 17281491,
         SIREN                   = 17281547,
+        PYUU_THE_SPATEMAKER     = 17281296,
     },
     npc =
     {

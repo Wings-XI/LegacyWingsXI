@@ -7618,6 +7618,7 @@ INSERT INTO `mob_groups` VALUES(48, 3441, 123, 'Sahagin_Patriarch', 0, 128, 0, 0
 INSERT INTO `mob_groups` VALUES(49, 2811, 123, 'Nasus', 0, 128, 0, 0, 0, 34, 40, 0);
 INSERT INTO `mob_groups` VALUES(50, 2924, 123, 'Nutcracker', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(51, 6170, 123, 'Siren', 0, 128, 0, 0, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(52, 6189, 123, 'Pyuu_The_Spatemaker', 14400, 0, 3202, 9000, 10000, 73, 73, 0);
 INSERT INTO `mob_groups` VALUES(1, 5868, 124, 'Greater_Pugil_fished', 0, 128, 147, 0, 0, 30, 33, 0);
 INSERT INTO `mob_groups` VALUES(2, 743, 124, 'Clipper', 0, 128, 93, 0, 0, 30, 33, 0);
 INSERT INTO `mob_groups` VALUES(3, 4220, 124, 'Vepar', 0, 128, 147, 0, 0, 36, 37, 0);
