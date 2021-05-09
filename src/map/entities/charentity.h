@@ -460,9 +460,6 @@ public:
     virtual void OnDeathTimer() override;
     virtual void OnRaise() override;
     virtual void OnItemFinish(CItemState&, action_t&);
-    void ResetAbilityRecast(const uint16&, const uint16&);
-    void SetAbilityRecastTime(CAbilityState&, action_t&);
-    void ConsumeItem(CItemUsable*); // Remove item in inventory
 
     CCharEntity();									// constructor
     ~CCharEntity();									// destructor
