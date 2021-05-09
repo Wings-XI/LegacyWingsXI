@@ -5,6 +5,10 @@
 require("scripts/globals/mobs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+end
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end

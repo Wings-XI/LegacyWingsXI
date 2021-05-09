@@ -13,6 +13,7 @@ function onMobSpawn(mob)
             {id = tpz.jsa.BENEDICTION, hpp = math.random(10, 50)},
         },
     })
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
 end
 
 function onMobDeath(mob, player, isKiller)
