@@ -23,13 +23,14 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.NINJUTSU
     params.bonus = 0
     local resist = applyResistance(caster, target, spell, params)
-    
+    --Jubaku base powers are not effected by resistances, Ichi:20, Ni:30, San:35.
+    local power = 30
+
     duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if (resist >= 0.5) then
         -- Erases a weaker paralyze and applies the stronger one
         local paralysis = target:getStatusEffect(effect)
         if (paralysis ~= nil) then
-            local power = 30
             if (paralysis:getPower() < power) then
                 target:delStatusEffect(effect)
                 target:addStatusEffect(effect, power, 0, duration)
