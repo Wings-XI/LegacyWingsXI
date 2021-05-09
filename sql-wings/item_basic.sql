@@ -1566,7 +1566,7 @@ INSERT INTO `item_basic` VALUES(1676, 0, 'frigid_orichalcum_ingot', 'frgd._orich
 INSERT INTO `item_basic` VALUES(1677, 0, 'aqueous_orichalcum_ingot', 'aqueous_ocl.', 12, 4, 39, 0, 1463);
 INSERT INTO `item_basic` VALUES(1678, 0, 'rogues_silver_ingot', 'rogues_silver', 12, 4, 39, 0, 3870);
 INSERT INTO `item_basic` VALUES(1679, 0, 'bewitched_gold_ingot', 'bewitched_gold', 12, 4, 39, 0, 2136);
-INSERT INTO `item_basic` VALUES(1680, 0, 'high-quality_bugard_skin', 'h.q._bugard_skin', 12, 4, 41, 0, 412);
+INSERT INTO `item_basic` VALUES(1680, 0, 'high-quality_bugard_skin', 'h.q._bugard_skin', 12, 4, 41, 0, 1658);
 INSERT INTO `item_basic` VALUES(1681, 0, 'light_steel_ingot', 'light_steel', 12, 4, 38, 0, 766);
 INSERT INTO `item_basic` VALUES(1682, 0, 'ingot_of_royal_treasury_gold', 'treasury_gold', 1, 57428, 0, 0, 1000);
 INSERT INTO `item_basic` VALUES(1683, 0, 'piece_of_attohwa_ginseng', 'attohwa_ginseng', 1, 57428, 0, 0, 750);
