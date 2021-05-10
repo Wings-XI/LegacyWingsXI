@@ -2852,7 +2852,8 @@ namespace charutils
 
             if (PetID == 47) // AMIGO SABOTENDER
             {
-                ab1 = 682;
+                ab1 = 683;
+                ab2 = 682;
             }
 
             if (ab1 != 0) { abilityidindex = ab1; }
