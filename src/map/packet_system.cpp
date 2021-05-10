@@ -752,7 +752,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
             CBaseEntity* PNpc = nullptr;
             PNpc = PChar->GetEntity(TargID, TYPE_NPC);
 
-            if (PNpc != nullptr && distance(PNpc->loc.p, PChar->loc.p) <= 10 && (PNpc->PAI->IsSpawned() || PChar->m_moghouseID != 0))
+            if (PNpc != nullptr && distanceSquared(PNpc->loc.p, PChar->loc.p) <  10.0f * 10.0f && (PNpc->PAI->IsSpawned() || PChar->m_moghouseID != 0))
             {
                 PNpc->PAI->Trigger(PChar->targid);
             }
@@ -1349,7 +1349,7 @@ void SmallPacket0x033(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     if (PChar->UContainer->IsContainerEmpty() && PTarget->UContainer->IsContainerEmpty())
                     {
-                        if (distance(PChar->loc.p, PTarget->loc.p) < 6)
+                        if (distanceSquared(PChar->loc.p, PTarget->loc.p) < 6.0f * 6.0f)
                         {
                             PChar->UContainer->SetType(UCONTAINER_TRADE);
                             PChar->pushPacket(new CTradeActionPacket(PTarget, action));
@@ -1533,7 +1533,7 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
 
     CBaseEntity* PNpc = PChar->GetEntity(targid, TYPE_NPC);
 
-    if ((PNpc != nullptr) && (PNpc->id == npcid) && distance(PNpc->loc.p, PChar->loc.p) <= 10)
+    if ((PNpc != nullptr) && (PNpc->id == npcid) && distanceSquared(PNpc->loc.p, PChar->loc.p) < 10.0f * 10.0f)
     {
         uint8 numItems = data.ref<uint8>(0x3C);
 

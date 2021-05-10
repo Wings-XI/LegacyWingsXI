@@ -3696,10 +3696,10 @@ namespace charutils
         {
             if (PChar->PParty->GetSyncTarget())
             {
-                if (distance(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) >= 100 || PChar->PParty->GetSyncTarget()->health.hp == 0)
+                if (distanceSquared(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) > 100.0f * 100.0f || PChar->PParty->GetSyncTarget()->health.hp == 0)
                 {
                     PChar->ForParty([&PMob](CBattleEntity* PMember) {
-                        if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+                        if (PMember->getZone() == PMob->getZone() && distanceSquared(PMember->loc.p, PMob->loc.p) < 100.0f * 100.0f)
                         {
                             if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(PMember))
                                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 545));
@@ -3712,7 +3712,7 @@ namespace charutils
         }
 
         PChar->ForAlliance([&pcinzone, &PMob, &minlevel, &maxlevel](CBattleEntity* PMember) {
-            if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+            if (PMember->getZone() == PMob->getZone() && distanceSquared(PMember->loc.p, PMob->loc.p) < 100.0f * 100.0f)
             {
                 if (PMember->PPet != nullptr && PMember->PPet->GetMLevel() > maxlevel && PMember->PPet->objtype != TYPE_PET)
                 {
