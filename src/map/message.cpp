@@ -23,6 +23,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <queue>
 
 #include "message.h"
+#include "rpcmapper.h"
 #include "../new-common/MQConnection.h"
 #include "../new-common/CommonMessages.h"
 
@@ -67,6 +68,7 @@ namespace message
     std::shared_ptr<MQConnection> g_mqconnection = nullptr;
     std::shared_ptr<MapMQHandler> g_handler = nullptr;
     bool g_being_closed = false;
+    RPCMapper* g_mapper = nullptr;
 
     void route_message(uint8* msg)
     {
@@ -759,6 +761,42 @@ namespace message
             });
             break;
         }
+        case MSG_RPC_REQUEST:
+        {
+            if (extra_size < sizeof(RPCMapper::RPC_CALL_DETAILS)) {
+                ShowWarning("Message: RPC Call packet is too short\n");
+                break;
+            }
+            RPCMapper::RPC_CALL_DETAILS* rpcheader = reinterpret_cast<RPCMapper::RPC_CALL_DETAILS*>(extra);
+            if (zoneutils::GetZone(rpcheader->zone) == nullptr) {
+                // Silently ignore messages intended for zones on other clusters
+                break;
+            }
+            if (!g_mapper) {
+                ShowError("Message: RPC mapper not initialized\n");
+                break;
+            }
+            g_mapper->IncomingRPCRequestHandler(rpcheader);
+            break;
+        }
+        case MSG_RPC_RESPONSE:
+        {
+            if (extra_size < sizeof(RPCMapper::RPC_RESPONSE_DETAILS)) {
+                ShowWarning("Message: RPC Response packet is too short\n");
+                break;
+            }
+            RPCMapper::RPC_RESPONSE_DETAILS* rpcheader = reinterpret_cast<RPCMapper::RPC_RESPONSE_DETAILS*>(extra);
+            if (zoneutils::GetZone(rpcheader->zone) == nullptr) {
+                // Silently ignore messages intended for zones on other clusters
+                break;
+            }
+            if (!g_mapper) {
+                ShowError("Message: RPC mapper not initialized\n");
+                break;
+            }
+            g_mapper->IncomingRPCResponseHandler(rpcheader);
+            break;
+        }
         default:
         {
             ShowWarning("Message: unhandled message type %d\n", (int)type);
@@ -927,6 +965,9 @@ namespace message
             ShowFatalError("Unable to connect to RabbitMQ.");
             close();
         }
+
+        g_mapper = RPCMapper::GetInstance();
+
         try {
             g_mqconnection->StartThread();
             while (!g_being_closed) {
@@ -946,11 +987,14 @@ namespace message
                 throw;
             }
         }
+
     }
 
     void close()
     {
         g_being_closed = true;
+        message::RPCMapper::Destroy();
+        g_mapper = nullptr;
 
         if (g_mqconnection.get()) {
             g_mqconnection->Shutdown();

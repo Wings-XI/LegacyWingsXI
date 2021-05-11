@@ -67,7 +67,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/basic.h"
 #include "packets/char_update.h"
 #include "message.h"
-#include "rpcmapper.h"
 
 #include "utils/flistutils.h"
 #include "pruned_session.h"
@@ -424,7 +423,6 @@ void do_final(int code)
     {
         messageThread.join();
     }
-    message::RPCMapper::Destroy();
 
     CTaskMgr::delInstance();
     CVanaTime::delInstance();

@@ -44,6 +44,7 @@
 #include "vana_time.h"
 #include "zone.h"
 #include "zone_entities.h"
+#include "rpcmapper.h"
 
 #include "entities/npcentity.h"
 #include "entities/petentity.h"
@@ -178,6 +179,13 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
 
     // settings should load first
     LoadZoneSettings();
+
+    // Callback for trail markings (dynamis entry points).
+    // Not a lot of overhead to define this for any zone.
+    message::RPCMapper* mapper = message::RPCMapper::GetInstance();
+    if (mapper) {
+        mapper->RegisterIncomingRPC(RPC_DYNAMIS_BASE_INDEX + (ZoneID << 2) + 1, CDynamisHandler::DynamisTrailMarkingRPCCallback, this);
+    }
 
     LoadZoneLines();
     LoadZoneWeather();

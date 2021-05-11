@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -168,6 +168,9 @@ bool CTradeContainer::setConfirmedStatus(uint8 slotID, uint32 amount)
 {
     if (slotID < m_PItem.size() && m_PItem[slotID] && m_PItem[slotID]->getQuantity() >= amount)
     {
+        if (m_PItem[slotID]->getReserve() < amount) {
+            m_PItem[slotID]->setReserve(amount);
+        }
         m_confirmed[slotID] = std::min<uint32>(amount, m_PItem[slotID]->getQuantity());
         return true;
     }

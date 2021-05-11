@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -2722,7 +2722,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
 
-        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->DynamisGetZone()->GetName());
 
         if (prepFile(File, "onDynamisTick"))
         {
@@ -2731,7 +2731,7 @@ namespace luautils
         }
 
         lua_pushinteger(LuaHandle,
-                        (lua_Integer)(PDynamisHandler->m_expiryTimePoint -
+                        (lua_Integer)(PDynamisHandler->DynamisGetExpiryTimepoint() -
                                       (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
 
         if (lua_pcall(LuaHandle, 1, 0, 0))
@@ -2743,11 +2743,35 @@ namespace luautils
         return 0;
     }
 
+    int32 OnDynamisServerReply(CZone* PZone, CCharEntity* PChar, int32 result)
+    {
+        TPZ_DEBUG_BREAK_IF(PZone == nullptr);
+
+        lua_prepscript("scripts/zones/%s/npcs/Trail_Markings.lua", PZone->GetName());
+
+        if (prepFile(File, "onDynamisServerReply"))
+        {
+            ShowError("luautils::onDynamisServerReply: Unable to find onDynamisServerReply function for %s\n", &File[0]);
+            return -1;
+        }
+
+        CLuaBaseEntity LuaChar((CBaseEntity*)PChar);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaChar);
+        lua_pushinteger(LuaHandle, result);
+        if (lua_pcall(LuaHandle, 2, 0, 0))
+        {
+            ShowError("luautils::onDynamisServerReply: %s\n", lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+
+        return 0;
+    }
+
     int32 OnDynamisNewInstance(CDynamisHandler* PDynamisHandler)
     {
         TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
 
-        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->DynamisGetZone()->GetName());
 
         if (prepFile(File, "onDynamisNewInstance"))
         {
@@ -2768,7 +2792,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
 
-        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->DynamisGetZone()->GetName());
 
         if (prepFile(File, "onDynamisCleanup"))
         {
@@ -2789,7 +2813,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
 
-        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->DynamisGetZone()->GetName());
 
         if (prepFile(File, "onDynamisEjectPlayer"))
         {
@@ -2814,7 +2838,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PDynamisHandler == nullptr);
 
-        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->m_PZone->GetName());
+        lua_prepscript("scripts/zones/%s/dynamis_handler.lua", PDynamisHandler->DynamisGetZone()->GetName());
 
         if (prepFile(File, "onDynamisTimeWarning"))
         {
@@ -2825,7 +2849,7 @@ namespace luautils
         CLuaBaseEntity LuaChar((CBaseEntity*)PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaChar);
         lua_pushinteger(LuaHandle,
-                        (lua_Integer)(PDynamisHandler->m_expiryTimePoint -
+                        (lua_Integer)(PDynamisHandler->DynamisGetExpiryTimepoint() -
                                       (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
 
         if (lua_pcall(LuaHandle, 2, 0, 0))
@@ -5549,10 +5573,10 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-        CZone* PZone = zoneutils::GetZone((uint32)lua_tointeger(L, 1));
+        uint16 zoneId = (uint16)lua_tointeger(L, 1);
 
-        if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PZone->m_DynamisHandler->m_token)
-            lua_pushinteger(LuaHandle, (lua_Integer)(PZone->m_DynamisHandler->m_expiryTimePoint - (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
+        if (zoneutils::GetZoneType(zoneId) == ZONETYPE_DYNAMIS && CDynamisHandler::DynamisGetToken(zoneId))
+            lua_pushinteger(LuaHandle, (lua_Integer)(CDynamisHandler::DynamisGetExpiryTimepoint(zoneId) - (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count()));
         else
             lua_pushinteger(LuaHandle, 0);
 

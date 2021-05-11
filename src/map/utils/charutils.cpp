@@ -5890,9 +5890,14 @@ namespace charutils
 
     int32 GetCharVar(CCharEntity* PChar, const char* var)
     {
+        return GetCharVar(PChar->id, var);
+    }
+
+    int32 GetCharVar(uint32 charid, const char* var)
+    {
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
 
-        int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var);
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, charid, var);
 
         if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&
@@ -5905,7 +5910,12 @@ namespace charutils
 
     bool AddCharVar(CCharEntity* PChar, const char* var, int32 increment)
     {
-        uint16 id = PChar->id;
+        return AddCharVar(PChar->id, var, increment);
+    }
+
+    bool AddCharVar(uint32 charid, const char* var, int32 increment)
+    {
+        uint16 id = (uint16)charid;
 
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
         int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
@@ -5937,7 +5947,12 @@ namespace charutils
 
     bool SetCharVar(CCharEntity* PChar, const char* var, int32 value)
     {
-        uint16 id = PChar->id;
+        return SetCharVar(PChar->id, var, value);
+    }
+
+    bool SetCharVar(uint32 charid, const char* var, int32 value)
+    {
+        uint16 id = (uint16)charid;
 
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
         int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
@@ -6294,13 +6309,13 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
     {
         if (PChar->nameflags.flags & FLAG_GM)
             return true;
-        if (!PZone->m_DynamisHandler->m_token)
+        uint32 token = PZone->m_DynamisHandler->DynamisGetToken();
+
+        if (!token)
         {
             PZone->m_DynamisHandler->EjectPlayer(PChar, true);
             return false;
         }
-
-        uint32 token = PZone->m_DynamisHandler->m_token;
 
         PChar->getStorage(LOC_INVENTORY)->ForEachItem([&token, &valid](CItem* PItem) {
             if (!valid && PItem->getID() == 4237 && ref<uint32>(PItem->m_extra, 0x14) == token)

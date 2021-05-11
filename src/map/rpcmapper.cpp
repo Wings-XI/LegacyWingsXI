@@ -12,6 +12,7 @@ Author: Twilight
 
 #include "rpcmapper.h"
 #include "message.h"
+#include "utils/zoneutils.h"
 #include <memory>
 #include <chrono>
 #include <thread>
@@ -42,6 +43,10 @@ namespace message
             return false;
         }
         if (details->maxout > 1048576) {
+            return false;
+        }
+        if (details->zone != 0 && zoneutils::GetZone(details->zone) == nullptr) {
+            // Zone inactive or not in this cluster
             return false;
         }
         std::unique_ptr<uint8> outbuf = std::unique_ptr<uint8>(new uint8[details->maxout]);
