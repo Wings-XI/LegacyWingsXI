@@ -204,6 +204,7 @@ public:
     int32 getContainerSize(lua_State*);      // Gets the current capacity of a container
     int32 changeContainerSize(lua_State*);   // Increase/Decreases container size
     int32 getFreeSlotsCount(lua_State*);     // Gets value of free slots in Entity inventory
+    int32 getCurrentTrade(lua_State*);       // Gets the trade window
     int32 confirmTrade(lua_State*);          // Complete trade with an npc, only removing confirmed items
     int32 tradeComplete(lua_State*);         // Complete trade with an npc
 
@@ -751,6 +752,7 @@ public:
     int32 updateHourglassExpireTime(lua_State* L);
     int32 prepareDynamisEntry(lua_State* L);
     int32 registerDynamis(lua_State* L);
+    int32 pingDynamis(lua_State* L);
     int32 replicateHourglass(lua_State* L);
     int32 canReplicateHourglass(lua_State* L);
     int32 verifyHoldsValidHourglass(lua_State* L);

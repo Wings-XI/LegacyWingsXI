@@ -12,6 +12,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     mob:setLocalVar("[rage]timer", 1800)
     --mob:addMod(tpz.mod.ATTP, 20)
 end

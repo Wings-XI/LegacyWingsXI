@@ -9696,6 +9696,7 @@ INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4618, 26);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4719, 211);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4741, 368);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 13804, 342);
+INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 1313, 50); -- Could not find a source for drop %, set to 5% as a conservative guess.
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 100);
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 50);
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 30);
@@ -10493,6 +10494,7 @@ INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 4360, 80);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 4443, 80);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 4514, 80);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 16882, 100);
+INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 1313, 50); -- Could not find a source for drop %, set to 5% as a conservative guess.
 INSERT INTO `mob_droplist` VALUES(1974, 0, 0, 1000, 14021, 20);
 INSERT INTO `mob_droplist` VALUES(1974, 0, 0, 1000, 16173, 100);
 INSERT INTO `mob_droplist` VALUES(1975, 0, 0, 1000, 497, 800);
@@ -12252,6 +12254,7 @@ INSERT INTO `mob_droplist` VALUES(2362, 1, 2, 200, 1316, 280);
 INSERT INTO `mob_droplist` VALUES(2362, 1, 2, 200, 1319, 240);
 INSERT INTO `mob_droplist` VALUES(2362, 1, 2, 200, 1327, 240);
 INSERT INTO `mob_droplist` VALUES(2362, 1, 2, 200, 1343, 325);
+INSERT INTO `mob_droplist` VALUES(2362, 1, 2, 200, 1313, 50); -- Couldn't find a confirmed drop rate, set to 5% to be conservative.
 INSERT INTO `mob_droplist` VALUES(2362, 0, 0, 1000, 831, 61);
 INSERT INTO `mob_droplist` VALUES(2362, 0, 0, 1000, 836, 249);
 INSERT INTO `mob_droplist` VALUES(2362, 0, 0, 1000, 901, 24);
@@ -12484,6 +12487,7 @@ INSERT INTO `mob_droplist` VALUES(2416, 0, 0, 1000, 1313, 90);
 INSERT INTO `mob_droplist` VALUES(2416, 0, 0, 1000, 1816, 490);
 INSERT INTO `mob_droplist` VALUES(2416, 0, 0, 1000, 4272, 70);
 INSERT INTO `mob_droplist` VALUES(2416, 0, 0, 1000, 4486, 70);
+INSERT INTO `mob_droplist` VALUES(2416, 0, 0, 1000, 1313, 50);
 INSERT INTO `mob_droplist` VALUES(2417, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(2417, 0, 0, 1000, 4876, 50);
 INSERT INTO `mob_droplist` VALUES(2417, 0, 0, 1000, 4877, 40);
@@ -13915,6 +13919,7 @@ INSERT INTO `mob_droplist` VALUES(2592, 0, 0, 1000, 1713, 1000);
 INSERT INTO `mob_droplist` VALUES(2592, 0, 0, 1000, 1712, 1000);
 INSERT INTO `mob_droplist` VALUES(2592, 0, 0, 1000, 1816, 80);
 INSERT INTO `mob_droplist` VALUES(2592, 0, 0, 1000, 4272, 30);
+INSERT INTO `mob_droplist` VALUES(2592, 0, 0, 1000, 1313, 50);
 INSERT INTO `mob_droplist` VALUES(2593, 0, 0, 1000, 2521, 40);
 INSERT INTO `mob_droplist` VALUES(2593, 0, 0, 1000, 15915, 100);
 INSERT INTO `mob_droplist` VALUES(2594, 0, 0, 1000, 2616, 1000);
@@ -15236,6 +15241,7 @@ INSERT INTO `mob_droplist` VALUES(2814, 0, 0, 1000, 5569, 130);
 INSERT INTO `mob_droplist` VALUES(2815, 0, 0, 1000, 646, 72);
 INSERT INTO `mob_droplist` VALUES(2815, 0, 0, 1000, 3541, 137);
 INSERT INTO `mob_droplist` VALUES(2815, 0, 0, 1000, 3543, 71);
+INSERT INTO `mob_droplist` VALUES(2815, 0, 0, 1000, 1313, 50); -- Could not find a source for drop %, set to 5% as a conservative guess.
 INSERT INTO `mob_droplist` VALUES(2816, 0, 0, 1000, 640, 258);
 INSERT INTO `mob_droplist` VALUES(2816, 0, 0, 1000, 641, 135);
 INSERT INTO `mob_droplist` VALUES(2816, 0, 0, 1000, 738, 16);
@@ -16575,7 +16581,7 @@ INSERT INTO `mob_droplist` VALUES(3164, 0, 0, 1000, 557, 130);
 INSERT INTO `mob_droplist` VALUES(3165, 0, 0, 1000, 921, 120);
 INSERT INTO `mob_droplist` VALUES(3165, 0, 0, 1000, 557, 130);
 INSERT INTO `mob_droplist` VALUES(3165, 0, 0, 1000, 935, 130);
-
+INSERT INTO `mob_droplist` VALUES(3166, 0, 0, 1000, 15054, 125);
 
 
 
@@ -16609,9 +16615,11 @@ INSERT INTO `mob_droplist` VALUES(3201, 0, 0, 1000, 1455, 300);
 INSERT INTO `mob_droplist` VALUES(3201, 0, 0, 1000, 1469, 1);
 INSERT INTO `mob_droplist` VALUES(3201, 0, 0, 1000, 1470, 4);
 INSERT INTO `mob_droplist` VALUES(3201, 0, 0, 1000, 1521, 1);
-
-
-
+INSERT INTO `mob_droplist` VALUES(3202, 0, 0, 1000, 2850, 59);
+INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1052, 41);
+INSERT INTO `mob_droplist` VALUES(3202, 0, 0, 1000, 919, 347);
+INSERT INTO `mob_droplist` VALUES(3202, 0, 0, 1000, 1181, 61);
+INSERT INTO `mob_droplist` VALUES(3202, 0, 0, 1000, 1237, 184);
 
 --
 -- Indexes for dumped tables

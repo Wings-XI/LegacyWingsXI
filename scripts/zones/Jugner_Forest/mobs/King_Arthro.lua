@@ -13,21 +13,21 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    UpdateNMSpawnPoint(mob:getID())
 end
 
 function onMobSpawn(mob)
-    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
-    
     local KingArthroID = mob:getID()
 
     -- Use King Arthro ID to determine Knight Crab Id's, then set their respawn to 0 so they don't spawn while KA is up
     for offset = 1, 10 do
         GetMobByID(KingArthroID - offset):setRespawnTime(0)
     end
-    
+
     mob:addMod(tpz.mod.ATT, 25)
     mob:addMod(tpz.mod.DEF, 25)
     mob:addMod(tpz.mod.MACC, 15)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -56,6 +56,7 @@ function onMonsterMagicPrepare(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+    
 end
 
 function onMobDespawn(mob)
@@ -68,6 +69,8 @@ function onMobDespawn(mob)
     for offset = 1, 10 do
         GetMobByID(KingArthroID - offset):setRespawnTime(respawnTime)
     end
-	
+
 	SetServerVariable("KnightCrabRespawn",(os.time() + respawnTime))
+    
+    UpdateNMSpawnPoint(mob:getID())
 end

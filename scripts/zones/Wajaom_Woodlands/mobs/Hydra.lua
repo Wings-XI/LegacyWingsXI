@@ -7,6 +7,10 @@ require("scripts/globals/titles")
 local ID = require("scripts/zones/Wajaom_Woodlands/IDs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+end
+
 function onMobFight(mob, target)
 
     local battletime = mob:getBattleTime()

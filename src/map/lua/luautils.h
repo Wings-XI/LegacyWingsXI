@@ -244,6 +244,7 @@ namespace luautils
     int32 OnPath(CBaseEntity* PEntity);                                           // triggers when a patrol npc finishes its pathfind
 
     int32 OnDynamisTick(CDynamisHandler* PDynamisHandler);
+    int32 OnDynamisServerReply(CZone* PZone, CCharEntity* PChar, int32 result);
     int32 OnDynamisNewInstance(CDynamisHandler* PDynamisHandler);
     int32 OnDynamisCleanup(CDynamisHandler* PDynamisHandler);
     int32 OnDynamisEjectPlayer(CDynamisHandler* PDynamisHandler, CCharEntity* PChar, bool immediate = false);

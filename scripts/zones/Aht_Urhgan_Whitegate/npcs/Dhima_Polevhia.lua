@@ -74,8 +74,10 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 789 or csid == 791 and option ~=0 then -- choosing CSs
-        player:setCharVar("[PUPAF]Current", option)
+    if csid == 789 or csid == 791 then -- choosing CSs
+        if option == 1 or option == 2 or option == 3 then -- player canceling the selection dialog will give an odd value here so be explicit
+            player:setCharVar("[PUPAF]Current", option)
+        end
     end
     local remainingPUPAF = player:getCharVar("[PUPAF]Remaining") -- Bitmask of AF the player has NOT crafted
     local currentTask = player:getCharVar("[PUPAF]Current")

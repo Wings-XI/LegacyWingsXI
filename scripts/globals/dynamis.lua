@@ -36,9 +36,11 @@ dynamis.entryInfo =
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         csBit = 1,
+        csRegisterGlass = 684,
         csSand = 686,
         csWin = 698,
         csDyna = 685,
+        enabled = false,
         winVar = "DynaSandoria_Win",
         hasEnteredVar = "DynaSandoria_HasEntered",
         hasSeenWinCSVar = "DynaSandoria_HasSeenWinCS",
@@ -49,9 +51,11 @@ dynamis.entryInfo =
     [tpz.zone.BASTOK_MINES] =
     {
         csBit = 2,
+        csRegisterGlass = 200,
         csSand = 203,
         csWin = 215,
         csDyna = 201,
+        enabled = false,
         winVar = "DynaBastok_Win",
         hasEnteredVar = "DynaBastok_HasEntered",
         hasSeenWinCSVar = "DynaBastok_HasSeenWinCS",
@@ -62,9 +66,11 @@ dynamis.entryInfo =
     [tpz.zone.WINDURST_WALLS] =
     {
         csBit = 3,
+        csRegisterGlass = 451,
         csSand = 455,
         csWin = 465,
         csDyna = 452,
+        enabled = false,
         winVar = "DynaWindurst_Win",
         hasEnteredVar = "DynaWindurst_HasEntered",
         hasSeenWinCSVar = "DynaWindurst_HasSeenWinCS",
@@ -75,9 +81,11 @@ dynamis.entryInfo =
     [tpz.zone.RULUDE_GARDENS] =
     {
         csBit = 4,
+        csRegisterGlass = 10011,
         csSand = 10016,
         csWin = 10026,
         csDyna = 10012,
+        enabled = false,
         winVar = "DynaJeuno_Win",
         hasEnteredVar = "DynaJeuno_HasEntered",
         hasSeenWinCSVar = "DynaJeuno_HasSeenWinCS",
@@ -88,8 +96,10 @@ dynamis.entryInfo =
     [tpz.zone.BEAUCEDINE_GLACIER] =
     {
         csBit = 5,
+        csRegisterGlass = 118,
         csWin = 134,
         csDyna = 119,
+        enabled = false,
         winVar = "DynaBeaucedine_Win",
         hasEnteredVar = "DynaBeaucedine_HasEntered",
         hasSeenWinCSVar = "DynaBeaucedine_HasSeenWinCS",
@@ -106,8 +116,10 @@ dynamis.entryInfo =
     [tpz.zone.XARCABARD] =
     {
         csBit = 6,
+        csRegisterGlass = 15,
         csWin = 32,
         csDyna = 16,
+        enabled = false,
         winVar = "DynaXarcabard_Win",
         hasEnteredVar = "DynaXarcabard_HasEntered",
         hasSeenWinCSVar = "DynaXarcabard_HasSeenWinCS",
@@ -121,9 +133,11 @@ dynamis.entryInfo =
     [tpz.zone.VALKURM_DUNES] =
     {
         csBit = 7,
+        csRegisterGlass = 57,
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
+        enabled = false,
         winVar = "DynaValkurm_Win",
         hasEnteredVar = "DynaValkurm_HasEntered",
         hasSeenWinCSVar = "DynaValkurm_HasSeenWinCS",
@@ -137,9 +151,11 @@ dynamis.entryInfo =
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
         csBit = 8,
+        csRegisterGlass = 21,
         csFirst = 40,
         csWin = 46,
         csDyna = 22,
+        enabled = false,
         winVar = "DynaBuburimu_Win",
         hasEnteredVar = "DynaBuburimu_HasEntered",
         hasSeenWinCSVar = "DynaBuburimu_HasSeenWinCS",
@@ -153,9 +169,11 @@ dynamis.entryInfo =
     [tpz.zone.QUFIM_ISLAND] =
     {
         csBit = 9,
+        csRegisterGlass = 2,
         csFirst = 22,
         csWin = 28,
         csDyna = 3,
+        enabled = false,
         winVar = "DynaQufim_Win",
         hasEnteredVar = "DynaQufim_HasEntered",
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
@@ -169,9 +187,11 @@ dynamis.entryInfo =
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {
         csBit = 10,
+        csRegisterGlass = 587,
         csFirst = 614,
         csWin = 615,
         csDyna = 588,
+        enabled = false,
         winVar = "DynaTavnazia_Win",
         hasEnteredVar = "DynaTavnazia_HasEntered",
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
@@ -357,12 +377,133 @@ dynamis.reservation_cancel = 180
 dynamis.reentry_days = 3
 dynamis.maxchars = 64
 
-dynamis.entryNpcOnTrigger = function(player, npc)
-    -- todo: generalize the function function onTrigger(player, npc) in bastok_mines Trail_Markings.lua
+dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
+    local playerZoneID = player:getZoneID()
+    if dynamis.entryInfo[playerZoneID].enabled == false then return end
+    if player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) == false then return end
+    if player:getMainLvl() < dynamis.min_lvl then
+        player:messageSpecial(message_not_reached_level, dynamis.min_lvl)
+        return
+    end
+    
+    local remaining = GetDynaTimeRemaining(dynamis.entryInfo[playerZoneID].enterPos[5])
+    local hasEntered = player:getCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar)
+    local timeSinceLastDynaReservation = player:timeSinceLastDynaReservation()
+    
+    if npcUtil.tradeHas(trade, dynamis.timeless, true, false) then -- timeless hourglass, attempting to trade for a perpetual hourglass
+        if remaining > 0 then
+            player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
+        elseif timeSinceLastDynaReservation < 71 then
+            player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
+        else
+            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+        end
+    elseif npcUtil.tradeHas(trade, dynamis.perpetual, true, false) then -- perpetual hourglass, attempting to enter a registered instance or start a new one
+        local hgValid = player:checkHourglassValid(trade:getItem(0), dynamis.entryInfo[playerZoneID].enterPos[5])
+        if hgValid > 0 then -- 0 = can't enter (wrong glass or didn't wait 71 hours since last dynamis), 1 = entering, 2 = re-entering (weakness)
+            player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
+            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+        elseif timeSinceLastDynaReservation < 71 then
+            player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
+        elseif remaining > 0 then
+            player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
+        else
+            player:PrintToPlayer("The Perpetual Hourglass' time has run out.", 29)
+        end
+    end
 end
 
-dynamis.entryNpcOnEventFinish = function(player, csid, option)
-    -- todo: generalize the function onEventFinish(player, csid, option) in bastok_mines Trail_Markings.lua
+dynamis.entryNpcOnTrigger = function(player, npc, message_default)
+    local playerZoneID = player:getZoneID()
+    if dynamis.entryInfo[playerZoneID].enabled == false then
+        player:messageSpecial(message_default)
+        return
+    end
+    if dynamis.entryInfo[playerZoneID].csSand ~= nil and player:getCharVar("HasSeenXarcabardDynamisCS") == 1 and player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) == false then
+        player:startEvent(dynamis.entryInfo[playerZoneID].csSand)
+    elseif dynamis.entryInfo[playerZoneID].csWin ~= nil and player:hasKeyItem(dynamis.entryInfo[playerZoneID].winKI) and player:getCharVar(dynamis.entryInfo[playerZoneID].hasSeenWinCSVar) == 0 then
+        player:startEvent(dynamis.entryInfo[playerZoneID].csWin)
+    else
+        player:messageSpecial(message_default)
+    end
+end
+
+dynamis.entryNpcOnEventUpdate = function(player, csid, option, message_unable_to_connect)
+    local playerZoneID = player:getZoneID()
+    if dynamis.entryInfo[playerZoneID].enabled == false then return end
+    if csid == dynamis.entryInfo[playerZoneID].csRegisterGlass then -- trade out timeless hourglass for a perpetual hourglass
+        -- Do not proceed until we know the Dynamis server is up.
+        -- This will prevent us from deleting the expensive hourglass
+        -- if we cannot provide the service
+        player:setLocalVar("DynamisWaitingForServer", 1)
+        player:pingDynamis()
+        player:queue(5000, function(player)
+            if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
+                player:setLocalVar("DynamisWaitingForServer", 0)
+                player:release()
+                player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
+            end
+        end)
+    end
+end
+
+dynamis.entryNpcOnEventFinish = function(player, csid, option, message_connecting_with_the_server, message_unable_to_connect)
+    local playerZoneID = player:getZoneID()
+    if dynamis.entryInfo[playerZoneID].enabled == false then return end
+    if csid == dynamis.entryInfo[playerZoneID].csDyna then -- enter dynamis
+        -- Will call onDynamisServerReply async when the server replies
+        player:setLocalVar("DynamisWaitingForServer", 1)
+        player:registerDynamis()
+        -- In case the Dynamis server failed notify the player
+        player:messageSpecial(message_connecting_with_the_server, dynamis.entryInfo[playerZoneID].csBit)
+        player:queue(5000, function(player)
+            if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
+                player:setLocalVar("DynamisWaitingForServer", 0)
+                player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
+                player:queue(1000, function(player)
+                    player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+                end)
+            end
+        end)
+    elseif csid == dynamis.entryInfo[playerZoneID].csSand then -- get shrouded sand
+        npcUtil.giveKeyItem(player, tpz.ki.VIAL_OF_SHROUDED_SAND)
+    elseif csid == dynamis.entryInfo[playerZoneID].csWin then -- just saw win cs
+        player:setCharVar(dynamis.entryInfo[playerZoneID].hasSeenWinCSVar, 1)
+    end
+end
+
+dynamis.entryNpcOnDynamisServerReply = function(player, result, message_information_recorded, message_obtained, message_another_group)
+    local playerZoneID = player:getZoneID()
+    if dynamis.entryInfo[playerZoneID].enabled == false then return end
+    player:setLocalVar("DynamisWaitingForServer", 0)
+    if result == 2 then
+        -- Ping response when trading timeless hourglass
+        player:release()
+        if player:registerHourglass(dynamis.entryInfo[playerZoneID].enterPos[5]) == true then
+            trade = player:getCurrentTrade()
+            if trade ~= nil and npcUtil.tradeHasExactly(trade, dynamis.timeless) then
+                player:confirmTrade()
+                player:messageSpecial(message_information_recorded, dynamis.perpetual)
+                player:messageSpecial(message_obtained, dynamis.perpetual)
+            end
+        end
+    elseif result == 1 then
+        -- Entry when trading perpetual hourglass
+        local entryPos = dynamis.entryInfo[playerZoneID].enterPos
+        if entryPos == nil then return end
+        player:setCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar, 1)
+        player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4], entryPos[5])
+    elseif result == 3 then
+        player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
+        player:queue(1000, function(player)
+            player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+        end)
+    else
+        player:PrintToPlayer("The Dynamis instance has reached its maximum capacity of 64 registrants.", 29)
+        player:queue(1000, function(player)
+            player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+        end)
+    end
 end
 
 dynamis.zoneOnInitialize = function(zone)

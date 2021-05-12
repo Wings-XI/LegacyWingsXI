@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -163,14 +163,14 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity, CDynamisHandle
 
     // dynamis auto-drops for currency and other non-ex
     CCharEntity* PImmediateWinner = nullptr;
-    if (PDynamisHandler && PDynamisHandler->m_currencyAutoDistribute && this->GetPoolType() == TREASUREPOOL_ZONE)
+    if (PDynamisHandler && PDynamisHandler->DynamisGetCurrencyAutoDistribute() && this->GetPoolType() == TREASUREPOOL_ZONE)
     {
         CItem* PItem = itemutils::GetItemPointer(ItemID);
         if (PItem && !(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)))
         {
             for (uint32 i = 0; i < members.size(); ++i)
             {
-                if (members[i]->id == PDynamisHandler->m_originalRegistrantID)
+                if (members[i]->id == PDynamisHandler->DynamisGetOriginalRegistrant())
                 {
                     if (members[i]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount())
                         PImmediateWinner = members[i];

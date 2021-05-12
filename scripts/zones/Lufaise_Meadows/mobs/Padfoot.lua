@@ -16,6 +16,7 @@ function onMobSpawn(mob)
     else
         mob:setDropID(1972)
     end
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
 end
 
 function onMobDeath(mob, player, isKiller)
