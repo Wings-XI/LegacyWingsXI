@@ -4830,7 +4830,10 @@ namespace luautils
             return 1;
         }
         //ShowDebug("2\n");
-        int32 ret = Sql_Query(SqlHandle, "SELECT itemid FROM item_basic WHERE name LIKE '%s' LIMIT 1;", lua_tostring(L, 1));
+        const char* itemname = lua_tostring(L, 1);
+        char itemname_esc[64] = { 0 };
+        Sql_EscapeStringLen(SqlHandle, itemname_esc, itemname, std::min(strlen(itemname), sizeof(itemname_esc) - 1));
+        int32 ret = Sql_Query(SqlHandle, "SELECT itemid FROM item_basic WHERE name = '%s' LIMIT 1;", itemname_esc);
         if (ret == SQL_SUCCESS && Sql_NumRows(SqlHandle) == 1 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             id = Sql_GetUIntData(SqlHandle, 0);
@@ -4838,7 +4841,9 @@ namespace luautils
         }
         else
         {
-            std::string fmtQuery1 = "SELECT itemid FROM item_basic WHERE name LIKE '%"; fmtQuery1 += lua_tostring(L, 1); fmtQuery1 += "%' LIMIT 1;";
+            std::string fmtQuery1 = "SELECT itemid FROM item_basic WHERE name LIKE '%";
+            fmtQuery1 += itemname_esc;
+            fmtQuery1 += "%' LIMIT 1;";
             ret = Sql_QueryStr(SqlHandle, (const char*)(fmtQuery1.c_str()));
             //ShowDebug("4\n");
             if (ret == SQL_SUCCESS && Sql_NumRows(SqlHandle) == 1 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)

@@ -1394,6 +1394,8 @@ inline int32 CLuaBaseEntity::setFlag(lua_State *L)
 
     ((CCharEntity*)m_PBaseEntity)->nameflags.flags ^= (uint32)lua_tointeger(L, 1);
     m_PBaseEntity->updatemask |= UPDATE_HP;
+    // Do not allow dropping GM flag while in Dynamis
+    charutils::VerifyHoldsValidHourglass((CCharEntity*)m_PBaseEntity);
     return 0;
 }
 
@@ -4243,7 +4245,7 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State* L)
             CItem* PItem = PChar->TradeContainer->getItem(slotID);
             if (PItem)
             {
-                uint8 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
                 auto quantity = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
 
                 PItem->setReserve(PItem->getReserve() - quantity);
