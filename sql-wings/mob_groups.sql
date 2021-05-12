@@ -278,8 +278,8 @@ INSERT INTO `mob_groups` VALUES(37, 3944, 7, 'Tomb_Warrior', 300, 1, 701, 0, 0, 
 INSERT INTO `mob_groups` VALUES(38, 2770, 7, 'Mummy', 300, 1, 1753, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(39, 2407, 7, 'Lich', 300, 1, 958, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(40, 801, 7, 'Corse', 300, 1, 517, 0, 0, 66, 67, 0);
-INSERT INTO `mob_groups` VALUES(41, 733, 7, 'Citipati', 0, 32, 475, 0, 0, 67, 70, 0);
-INSERT INTO `mob_groups` VALUES(42, 4396, 7, 'Xolotl', 0, 1, 2683, 7000000, 0, 80, 81, 0);
+INSERT INTO `mob_groups` VALUES(41, 733, 7, 'Citipati', 0, 33, 475, 0, 0, 67, 70, 0);
+INSERT INTO `mob_groups` VALUES(42, 4396, 7, 'Xolotl', 0, 128, 2683, 20000, 0, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(43, 4397, 7, 'Xolotls_Hound_Warrior', 0, 128, 0, 0, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(44, 4398, 7, 'Xolotls_Sacrifice', 0, 128, 0, 0, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(45, 225, 7, 'Arch_Corse', 300, 1, 162, 0, 0, 75, 81, 0);

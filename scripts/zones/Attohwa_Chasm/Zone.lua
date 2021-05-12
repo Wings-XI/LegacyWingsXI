@@ -46,12 +46,23 @@ function onInitialize(zone)
     zone:registerRegion(100, -570, -30, -45, -492, 10, 30)
 
     UpdateNMSpawnPoint(ID.mob.TIAMAT)
-	local tiare = GetServerVariable("TiamatRespawn")
-	if os.time() < tiare then
-		GetMobByID(ID.mob.TIAMAT):setRespawnTime(tiare - os.time())
-	else
-		SpawnMob(ID.mob.TIAMAT)
-	end
+    local tiare = GetServerVariable("TiamatRespawn")
+    if os.time() < tiare then
+        GetMobByID(ID.mob.TIAMAT):setRespawnTime(tiare - os.time())
+    else
+        SpawnMob(ID.mob.TIAMAT)
+    end
+
+    UpdateNMSpawnPoint(ID.mob.XOLOTL)
+    local xolre = GetServerVariable("XolotlRespawn")
+    local Xolotl = GetMobByID(ID.mob.XOLOTL)
+    local hour = VanadielTime()
+    DisallowRespawn(Xolotl:getID(), true)
+    if os.time() < xolre then
+        GetMobByID(ID.mob.XOLOTL):setRespawnTime(xolre - os.time())
+    elseif hour < 4 or hour >= 20 then
+        SpawnMob(Xolotl)
+    end
 
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
 end
@@ -99,6 +110,26 @@ function onGameHour(zone)
         starting at ID.npc.MIASMA_OFFSET. some are supposed to toggle open, but need retail test
         to determine which.  for now, they're just statically set per npc_list.animation
     --]]
+
+    UpdateNMSpawnPoint(ID.mob.XOLOTL)
+    local xolre = GetServerVariable("XolotlRespawn")
+    local XolotlDead = GetServerVariable("XolotlDead")
+    local Xolotl = GetMobByID(ID.mob.XOLOTL)
+    local hour = VanadielHour()
+
+    if hour < 4 or hour >= 20 and (xolre - os.time() < 140) then -- If respawn is less than one in game hour, allow Xolotl to spawn
+        DisallowRespawn(Xolotl:getID(), false)
+        SetServerVariable("XolotlDead", 0)
+    elseif hour < 4 or hour >= 20 and xolre < os.time() then -- If Xolotl's respawn window has passed, spawn him
+        DisallowRespawn(Xolotl:getID(), false)
+        SetServerVariable("XolotlDead", 0)
+        SpawnMob(Xolotl)
+    elseif hour == 20 and XolotlDead == 0 then
+        DisallowRespawn(Xolotl:getID(), false)
+        SpawnMob(Xolotl)
+    else
+        DisallowRespawn(Xolotl:getID(), true)
+    end
 end
 
 function onEventUpdate(player, csid, option)
