@@ -16354,7 +16354,7 @@ inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
         ref<uint32>(PItem->m_extra, 0x04) = PChar->id;
         ref<uint32>(PItem->m_extra, 0x0C) = now.count(); // registration start time (lasts 15 min)
         ref<uint8>(PItem->m_extra, 0x10) = zoneid;
-        ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber((uint32)0,(uint32)-1); // token
+        ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber(0,0x0FFFFFFF); // token
         
         if (charutils::AddItem(PChar, LOC_INVENTORY, PItem, false) == ERROR_SLOTID)
             delete PItem;

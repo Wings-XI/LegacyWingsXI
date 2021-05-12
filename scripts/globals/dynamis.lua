@@ -435,15 +435,20 @@ dynamis.entryNpcOnEventUpdate = function(player, csid, option, message_unable_to
         -- Do not proceed until we know the Dynamis server is up.
         -- This will prevent us from deleting the expensive hourglass
         -- if we cannot provide the service
-        player:setLocalVar("DynamisWaitingForServer", 1)
-        player:pingDynamis()
-        player:queue(5000, function(player)
-            if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
-                player:setLocalVar("DynamisWaitingForServer", 0)
-                player:release()
-                player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
-            end
-        end)
+        if option == 0 then
+            player:setCharVar("DynaPrep_zoneid", dynamis.entryInfo[playerZoneID].enterPos[5])
+            player:setLocalVar("DynamisWaitingForServer", 1)
+            player:pingDynamis()
+            player:queue(5000, function(player)
+                if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
+                    player:setLocalVar("DynamisWaitingForServer", 0)
+                    player:release()
+                    player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
+                end
+            end)
+        else
+            player:release()
+        end
     end
 end
 
@@ -451,20 +456,22 @@ dynamis.entryNpcOnEventFinish = function(player, csid, option, message_connectin
     local playerZoneID = player:getZoneID()
     if dynamis.entryInfo[playerZoneID].enabled == false then return end
     if csid == dynamis.entryInfo[playerZoneID].csDyna then -- enter dynamis
-        -- Will call onDynamisServerReply async when the server replies
-        player:setLocalVar("DynamisWaitingForServer", 1)
-        player:registerDynamis()
-        -- In case the Dynamis server failed notify the player
-        player:messageSpecial(message_connecting_with_the_server, dynamis.entryInfo[playerZoneID].csBit)
-        player:queue(5000, function(player)
-            if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
-                player:setLocalVar("DynamisWaitingForServer", 0)
-                player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
-                player:queue(1000, function(player)
-                    player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
-                end)
-            end
-        end)
+        if option == 0 then
+            -- Will call onDynamisServerReply async when the server replies
+            player:setLocalVar("DynamisWaitingForServer", 1)
+            player:registerDynamis()
+            -- In case the Dynamis server failed notify the player
+            player:messageSpecial(message_connecting_with_the_server, dynamis.entryInfo[playerZoneID].csBit)
+            player:queue(5000, function(player)
+                if player:getLocalVar("DynamisWaitingForServer") ~= 0 then
+                    player:setLocalVar("DynamisWaitingForServer", 0)
+                    player:messageSpecial(message_unable_to_connect, dynamis.entryInfo[playerZoneID].csBit)
+                    player:queue(1000, function(player)
+                        player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+                    end)
+                end
+            end)
+        end
     elseif csid == dynamis.entryInfo[playerZoneID].csSand then -- get shrouded sand
         npcUtil.giveKeyItem(player, tpz.ki.VIAL_OF_SHROUDED_SAND)
     elseif csid == dynamis.entryInfo[playerZoneID].csWin then -- just saw win cs
