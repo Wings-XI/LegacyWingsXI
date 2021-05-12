@@ -23,6 +23,11 @@ function onInitialize(zone)
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+
+    local Yalun = GetMobByID(ID.mob.YALUN_EKE)
+    DisallowRespawn(Yalun:getID(), true)
+    SetServerVariable("YalunRespawn", 0)
+    SetServerVariable("YalunPH", ID.mob.YALUN_EKE_PH[math.random(1,2)])
 end
 
 function onConquestUpdate(zone, updatetype)
