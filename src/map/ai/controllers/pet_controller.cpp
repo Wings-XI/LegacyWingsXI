@@ -64,11 +64,11 @@ void CPetController::DoRoamTick(time_point tick)
         return;
     }
 
-    float currentDistance = distance(PPet->loc.p, PPet->PMaster->loc.p);
+    float currentDistanceSquared = distanceSquared(PPet->loc.p, PPet->PMaster->loc.p);
 
-    if (currentDistance > PetRoamDistance)
+    if (currentDistanceSquared > PetRoamDistance * PetRoamDistance)
     {
-        if (currentDistance < 35.0f && PPet->PAI->PathFind->PathAround(PPet->PMaster->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        if (currentDistanceSquared < 35.0f * 35.0f && PPet->PAI->PathFind->PathAround(PPet->PMaster->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             PPet->PAI->PathFind->FollowPath();
         }

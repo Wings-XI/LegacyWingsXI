@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1569,14 +1569,14 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         PEntity = PEntity->PMaster;
     }
 
-    float aura_range = 6.25; // TODO: Add mods
+    constexpr float aura_range = 6.25; // TODO: Add mods
 
     if (PEntity->objtype == TYPE_PC)
     {
         if (auraTarget == AURATARGET_ALLIES)
         {
             PEntity->ForParty([&](CBattleEntity* PMember) {
-                if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(m_POwner->loc.p, PMember->loc.p) <= aura_range && !PMember->isDead())
+                if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distanceSquared(m_POwner->loc.p, PMember->loc.p) < aura_range * aura_range && !PMember->isDead())
                 {
                     CStatusEffect* PEffect = new CStatusEffect(
                         (EFFECT)PStatusEffect->GetSubID(), // Effect ID
@@ -1593,7 +1593,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         {
             for (CBattleEntity* PTarget : *PEntity->PNotorietyContainer)
             {
-                if (PTarget != nullptr && PEntity->loc.zone->GetID() == PTarget->loc.zone->GetID() && distance(m_POwner->loc.p, PTarget->loc.p) <= aura_range && !PTarget->isDead())
+                if (PTarget != nullptr && PEntity->loc.zone->GetID() == PTarget->loc.zone->GetID() && distanceSquared(m_POwner->loc.p, PTarget->loc.p) < aura_range * aura_range && !PTarget->isDead())
                 {
                     CStatusEffect* PEffect = new CStatusEffect(
                         (EFFECT)PStatusEffect->GetSubID(), // Effect ID

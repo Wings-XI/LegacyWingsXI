@@ -97,11 +97,11 @@ void CPlayerCharmController::DoRoamTick(time_point tick)
         POwner->PAI->Internal_Engage(POwner->PMaster->GetBattleTargetID());
     }
 
-    float currentDistance = distance(POwner->loc.p, POwner->PMaster->loc.p);
+    float currentDistanceSquared = distanceSquared(POwner->loc.p, POwner->PMaster->loc.p);
 
-    if (currentDistance > RoamDistance)
+    if (currentDistanceSquared > RoamDistance * RoamDistance)
     {
-        if (currentDistance < 35.0f && POwner->PAI->PathFind->PathAround(POwner->PMaster->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        if (currentDistanceSquared < 35.0f * 35.0f && POwner->PAI->PathFind->PathAround(POwner->PMaster->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             POwner->PAI->PathFind->FollowPath();
         }
