@@ -13,6 +13,7 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    UpdateNMSpawnPoint(mob:getID())
 end
 
 function onMobSpawn(mob)
@@ -55,6 +56,7 @@ function onMonsterMagicPrepare(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+    
 end
 
 function onMobDespawn(mob)
@@ -69,4 +71,6 @@ function onMobDespawn(mob)
     end
 
 	SetServerVariable("KnightCrabRespawn",(os.time() + respawnTime))
+    
+    UpdateNMSpawnPoint(mob:getID())
 end
