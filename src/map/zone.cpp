@@ -131,12 +131,20 @@ int32 zone_update_weather(time_point tick, CTaskMgr::CTask* PTask)
 int32 deleteZoneTimer(time_point tick, CTaskMgr::CTask* PTask)
 {
     CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
+    if (!PZone) {
+        return 0;
+    }
 
-    if (PZone->ZoneTimer && PZone->m_zoneEntities->CharListEmpty())
-    {
-        PZone->ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
-        PZone->ZoneTimer = nullptr;
-        PZone->m_zoneEntities->HealAllMobs();
+    if (PZone->m_zoneEntities && PZone->m_zoneEntities->CharListEmpty()) {
+        if (PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler) {
+            PZone->m_DynamisHandler->CleanupDynamis();
+        }
+        if (PZone->ZoneTimer)
+        {
+            PZone->ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
+            PZone->ZoneTimer = nullptr;
+            PZone->m_zoneEntities->HealAllMobs();
+        }
     }
 
     return 0;
