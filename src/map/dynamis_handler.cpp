@@ -78,6 +78,7 @@ void CDynamisHandler::HandleDynamis(time_point tick)
 
 bool CDynamisHandler::LoadDynamis(uint32 charid, uint32 token, uint32 originalRegistrant)
 {
+    ShowDebug("LoadDynamis: %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>");
     ClearPlayerRegistry();
     EjectAllPlayers(true);
     RegisterPlayer(charid);
@@ -111,12 +112,15 @@ uint32 CDynamisHandler::AddTimeToDynamis(int16 minutes)
 
 void CDynamisHandler::ExpireDynamis()
 {
+    ShowDebug("ExpireDynamis: %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>");
     m_expirationRoutine = true;
     EjectAllPlayers();
 }
 
 void CDynamisHandler::CleanupDynamis()
 {
+    ShowDebug("CleanupDynamis: %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>");
+    m_expirationRoutine = true;
     ClearPlayerRegistry();
     EjectAllPlayers(true);
     DynamisSetToken(0);
@@ -160,6 +164,7 @@ bool CDynamisHandler::IsRegistered(uint32 charid)
 
 bool CDynamisHandler::RegisterPlayer(uint32 charid)
 {
+    ShowDebug("RegisterPlayer: %s, %u\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>", charid);
     uint8 i = 0;
     while (i < 64)
     {
@@ -177,6 +182,7 @@ bool CDynamisHandler::RegisterPlayer(uint32 charid)
 
 bool CDynamisHandler::EjectPlayer(CCharEntity* PChar, bool immediate)
 {
+    ShowDebug("EjectPlayer: %s, %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>", PChar ? PChar->GetName() : (const int8*)"<null>");
     luautils::OnDynamisEjectPlayer(this, PChar, immediate);
     return true;
 }
@@ -209,7 +215,7 @@ void CDynamisHandler::DynamisSetToken(uint32 token)
 {
     m_token = token;
     std::string valstr("[DYNA]Token_" + std::to_string(m_zoneId));
-    Sql_Query(SqlHandle, "UPDATE server_variables SET value = %u WHERE name = '%s';", token, valstr);
+    Sql_Query(SqlHandle, "INSERT INTO server_variables (name, value) VALUES ('%s', %u) ON DUPLICATE KEY UPDATE value = %u;", valstr, token, token);
 }
 
 uint32 CDynamisHandler::DynamisGetExpiryTimepoint(uint16 zone)
