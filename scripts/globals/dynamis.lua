@@ -629,7 +629,7 @@ end
 dynamis.mobOnDeath = function (mob, mobList, msg)
     local mobID = mob:getID()
     if mobList[mobID] ~= nil and mobList[mobID].timeExtension ~= nil then mob:addTimeToDynamis(mobList[mobID].timeExtension, msg) end
-    if child:getLocalVar("clearSpawnPosOnDeath") == 1 then mob:setSpawn(1,1,1,0) end
+    if mob:getLocalVar("clearSpawnPosOnDeath") == 1 then mob:setSpawn(1,1,1,0) end
     
     local i = 2
     local j = 1
