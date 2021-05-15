@@ -124,19 +124,40 @@ function BluePhysicalSpell(caster, target, spell, params)
     local hitsdone = 0
     local hitslanded = 0
     local finaldmg = 0
+    local checkaoe = spell:isAoE()
 
-    while (hitsdone < params.numhits) do
+    while hitsdone < params.numhits do
+        local isSneakValid = caster:hasStatusEffect(tpz.effect.SNEAK_ATTACK)
         local chance = math.random()
-        if (chance <= hitrate) then -- it hit
-            -- TODO: Check for shadow absorbs.
+        local isBehind = caster:isBehind(target)
+        local hasHide = caster:hasStatusEffect(tpz.effect.HIDE)
+        
+        if isSneakValid and not (isBehind or hasHide) then
+            isSneakValid = false
+            caster:delStatusEffect(tpz.effect.SNEAK_ATTACK)
+        end
 
+        if (isSneakValid and (isBehind or hasHide)) or (chance <= hitrate) then -- it hit
             -- Generate a random pDIF between min and max
             local pdif = math.random((cratio[1]*1000), (cratio[2]*1000))
             pdif = pdif/1000
 
+            if spell:isAoE() == 0 and isSneakValid then                            
+                caster:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
+                caster:delStatusEffect(tpz.effect.SNEAK_ATTACK)
+
+                if hitsdone == 0 then
+                    pdif = math.random(300,325)
+                    pdif = pdif / 100
+                end
+            end
             -- Apply it to our final D
-            if (hitsdone == 0) then -- only the first hit benefits from multiplier
+            if hitsdone == 0 then -- only the first hit benefits from multiplier
                 finaldmg = finaldmg + (finalD * pdif)
+
+                if spell:isAoE() == 0 and isSneakValid then
+                    finaldmg = finaldmg + finaldmg*0.25
+                end
             else
                 finaldmg = finaldmg + ((math.floor(D + fStr + WSC)) * pdif) -- same as finalD but without multiplier (it should be 1.0)
             end
