@@ -4166,6 +4166,15 @@ namespace charutils
                 PChar->pushPacket(new CConquestPacket(PChar));
             }
 
+            // TEMPORARY: Until we have campaign implemented, allow players
+            // to get allied notes by exping in past zones with sigil.
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) &&
+                (region >= 33 && region <= 40))
+            {
+                charutils::AddPoints(PChar, "allied_notes", (int32)(exp * 0.1f));
+                PChar->pushPacket(new CConquestPacket(PChar));
+            }
+
             // Cruor Drops in Abyssea zones.
             uint16 Pzone = PChar->getZone();
             if (zoneutils::GetCurrentRegion(Pzone) == REGION_ABYSSEA)
