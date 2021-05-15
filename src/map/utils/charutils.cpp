@@ -2852,7 +2852,8 @@ namespace charutils
 
             if (PetID == 47) // AMIGO SABOTENDER
             {
-                ab1 = 682;
+                ab1 = 683;
+                ab2 = 682;
             }
 
             if (ab1 != 0) { abilityidindex = ab1; }
@@ -3696,10 +3697,10 @@ namespace charutils
         {
             if (PChar->PParty->GetSyncTarget())
             {
-                if (distance(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) >= 100 || PChar->PParty->GetSyncTarget()->health.hp == 0)
+                if (distanceSquared(PMob->loc.p, PChar->PParty->GetSyncTarget()->loc.p) > 100.0f * 100.0f || PChar->PParty->GetSyncTarget()->health.hp == 0)
                 {
                     PChar->ForParty([&PMob](CBattleEntity* PMember) {
-                        if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+                        if (PMember->getZone() == PMob->getZone() && distanceSquared(PMember->loc.p, PMob->loc.p) < 100.0f * 100.0f)
                         {
                             if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(PMember))
                                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 545));
@@ -3712,7 +3713,7 @@ namespace charutils
         }
 
         PChar->ForAlliance([&pcinzone, &PMob, &minlevel, &maxlevel](CBattleEntity* PMember) {
-            if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+            if (PMember->getZone() == PMob->getZone() && distanceSquared(PMember->loc.p, PMob->loc.p) < 100.0f * 100.0f)
             {
                 if (PMember->PPet != nullptr && PMember->PPet->GetMLevel() > maxlevel && PMember->PPet->objtype != TYPE_PET)
                 {
@@ -4162,6 +4163,15 @@ namespace charutils
                 (region >= 28 && region <= 32))
             {
                 charutils::AddPoints(PChar, "imperial_standing", (int32)(exp * 0.1f));
+                PChar->pushPacket(new CConquestPacket(PChar));
+            }
+
+            // TEMPORARY: Until we have campaign implemented, allow players
+            // to get allied notes by exping in past zones with sigil.
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) &&
+                (region >= 33 && region <= 40))
+            {
+                charutils::AddPoints(PChar, "allied_notes", (int32)(exp * 0.1f));
                 PChar->pushPacket(new CConquestPacket(PChar));
             }
 
@@ -5889,9 +5899,14 @@ namespace charutils
 
     int32 GetCharVar(CCharEntity* PChar, const char* var)
     {
+        return GetCharVar(PChar->id, var);
+    }
+
+    int32 GetCharVar(uint32 charid, const char* var)
+    {
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
 
-        int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var);
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, charid, var);
 
         if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&
@@ -5904,7 +5919,12 @@ namespace charutils
 
     bool AddCharVar(CCharEntity* PChar, const char* var, int32 increment)
     {
-        uint16 id = PChar->id;
+        return AddCharVar(PChar->id, var, increment);
+    }
+
+    bool AddCharVar(uint32 charid, const char* var, int32 increment)
+    {
+        uint16 id = (uint16)charid;
 
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
         int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
@@ -5936,7 +5956,12 @@ namespace charutils
 
     bool SetCharVar(CCharEntity* PChar, const char* var, int32 value)
     {
-        uint16 id = PChar->id;
+        return SetCharVar(PChar->id, var, value);
+    }
+
+    bool SetCharVar(uint32 charid, const char* var, int32 value)
+    {
+        uint16 id = (uint16)charid;
 
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
         int32 ret = Sql_Query(SqlHandle, fmtQuery, id, var);
@@ -6293,13 +6318,13 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
     {
         if (PChar->nameflags.flags & FLAG_GM)
             return true;
-        if (!PZone->m_DynamisHandler->m_token)
+        uint32 token = PZone->m_DynamisHandler->DynamisGetToken();
+
+        if (!token)
         {
             PZone->m_DynamisHandler->EjectPlayer(PChar, true);
             return false;
         }
-
-        uint32 token = PZone->m_DynamisHandler->m_token;
 
         PChar->getStorage(LOC_INVENTORY)->ForEachItem([&token, &valid](CItem* PItem) {
             if (!valid && PItem->getID() == 4237 && ref<uint32>(PItem->m_extra, 0x14) == token)

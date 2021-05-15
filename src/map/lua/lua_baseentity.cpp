@@ -60,6 +60,7 @@
 #include "../transport.h"
 #include "../treasure_pool.h"
 #include "../weapon_skill.h"
+#include "../rpcmapper.h"
 
 #include "../ai/ai_container.h"
 
@@ -1393,6 +1394,8 @@ inline int32 CLuaBaseEntity::setFlag(lua_State *L)
 
     ((CCharEntity*)m_PBaseEntity)->nameflags.flags ^= (uint32)lua_tointeger(L, 1);
     m_PBaseEntity->updatemask |= UPDATE_HP;
+    // Do not allow dropping GM flag while in Dynamis
+    charutils::VerifyHoldsValidHourglass((CCharEntity*)m_PBaseEntity);
     return 0;
 }
 
@@ -4200,6 +4203,28 @@ inline int32 CLuaBaseEntity::getFreeSlotsCount(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getCurrentTrade()
+*  Purpose : Gets a trade object with the current trade window
+*  Example : player:getCurrentTrade()
+************************************************************************/
+inline int32 CLuaBaseEntity::getCurrentTrade(lua_State* L)
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (!PChar)
+    {
+        lua_pushnil(L);
+        return 1;
+    }
+    lua_getglobal(L, CLuaTradeContainer::className);
+    lua_pushstring(L, "new");
+    lua_gettable(L, -2);
+    lua_insert(L, -2);
+    lua_pushlightuserdata(L, PChar->TradeContainer);
+    lua_pcall(L, 2, 1, 0);
+    return 1;
+}
+
+/************************************************************************
 *  Function: confirmTrade()
 *  Purpose : Completes a trade and takes ONLY confirmed items
 *  Example : player:confirmTrade()
@@ -4220,7 +4245,7 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State* L)
             CItem* PItem = PChar->TradeContainer->getItem(slotID);
             if (PItem)
             {
-                uint8 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
                 auto quantity = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
 
                 PItem->setReserve(PItem->getReserve() - quantity);
@@ -16313,12 +16338,10 @@ inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     uint8 zoneid = (uint8)lua_tonumber(L, 1);
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    CZone* PZone = zoneutils::GetZone(zoneid);
-    if (!PChar || !PZone)
+    if (!PChar)
         return 0;
 
     std::chrono::seconds DynaReservationStart = (std::chrono::seconds)charutils::GetCharVar(PChar, "DynaReservationStart");
@@ -16331,7 +16354,7 @@ inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
         ref<uint32>(PItem->m_extra, 0x04) = PChar->id;
         ref<uint32>(PItem->m_extra, 0x0C) = now.count(); // registration start time (lasts 15 min)
         ref<uint8>(PItem->m_extra, 0x10) = zoneid;
-        ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber((uint32)0,(uint32)-1); // token
+        ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber(0,0x0FFFFFFF); // token
         
         if (charutils::AddItem(PChar, LOC_INVENTORY, PItem, false) == ERROR_SLOTID)
             delete PItem;
@@ -16365,23 +16388,28 @@ inline int32 CLuaBaseEntity::checkHourglassValid(lua_State* L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     if (!PChar || !PItem || !PItem->GetItem())
         return 0;
-    uint8 zoneid = (uint8)lua_tonumber(L, 2);
+    uint16 zoneid = (uint16)lua_tonumber(L, 2);
     uint8 canEnter = 0; // 0 = cannot enter
+    uint32 token = CDynamisHandler::DynamisGetToken(zoneid);
     if (zoneid && ref<uint8>(PItem->GetItem()->m_extra, 0x10) == zoneid)
     {
         std::chrono::seconds DynaReservationStart = (std::chrono::seconds)charutils::GetCharVar(PChar, "DynaReservationStart");
         std::chrono::seconds now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
         std::chrono::seconds glassReservationStart = (std::chrono::seconds)ref<uint32>(PItem->GetItem()->m_extra, 0x0C);
+        uint32 itemToken = ref<uint32>(PItem->GetItem()->m_extra, 0x14);
 
-        if (now > glassReservationStart && now < glassReservationStart + 15min)
+        if (token == itemToken || token == 0)
         {
-            if (now > DynaReservationStart + 71h)
+            if (now > glassReservationStart && now < glassReservationStart + 15min)
             {
-                canEnter = 1; // 1 = first time entering this reserved instance
-            }
-            else if (DynaReservationStart == glassReservationStart)
-            {
-                canEnter = 2; // 2 = i am re-entering this dynamis, give me weakness
+                if (now > DynaReservationStart + 71h)
+                {
+                    canEnter = 1; // 1 = first time entering this reserved instance
+                }
+                else if (DynaReservationStart == glassReservationStart)
+                {
+                    canEnter = 2; // 2 = i am re-entering this dynamis, give me weakness
+                }
             }
         }
     }
@@ -16426,12 +16454,13 @@ inline int32 CLuaBaseEntity::updateHourglassExpireTime(lua_State* L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     if (!PChar)
         return 0;
-    CZone* PZone = zoneutils::GetZone(PChar->getZone());
     uint32 expiryTimeStamp = 0;
-    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler)
-        expiryTimeStamp = PZone->m_DynamisHandler->m_expiryTimePoint;
-    else
+    if (zoneutils::GetZoneType(PChar->getZone()) == ZONETYPE_DYNAMIS) {
+        expiryTimeStamp = CDynamisHandler::DynamisGetExpiryTimepoint(PChar->getZone());
+    }
+    else {
         return 0;
+    }
 
     uint8 numItemsUpdated = 0;
     PChar->getStorage(LOC_INVENTORY)->ForEachItem([&expiryTimeStamp, &PChar, &numItemsUpdated](CItem* PItem) {
@@ -16472,12 +16501,11 @@ inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
     uint32 token = ref<uint32>(PItem->GetItem()->m_extra, 0x14);
     uint32 originalRegistrant = ref<uint32>(PItem->GetItem()->m_extra, 0x04);
 
-    PChar->SetLocalVar("DynaPrep_zoneid", zoneid);
-    PChar->SetLocalVar("DynaPrep_registrationStartTime", registrationStartTime);
-    PChar->SetLocalVar("DynaPrep_token", token);
-    PChar->SetLocalVar("DynaPrep_originalRegistrant", originalRegistrant);
-    if (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1)
-        PChar->SetLocalVar("DynaPrep_bypassWeakness", 1);
+    charutils::SetCharVar(PChar, "DynaPrep_zoneid", zoneid);
+    charutils::SetCharVar(PChar, "DynaPrep_registrationStartTime", registrationStartTime);
+    charutils::SetCharVar(PChar, "DynaPrep_token", token);
+    charutils::SetCharVar(PChar, "DynaPrep_originalRegistrant", originalRegistrant);
+    charutils::SetCharVar(PChar, "DynaPrep_bypassWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1) ? 1 : 0);
     
     return 0;
 }
@@ -16501,11 +16529,11 @@ inline int32 CLuaBaseEntity::registerDynamis(lua_State* L)
         return 1;
     }
 
-    uint8 zoneid = PChar->GetLocalVar("DynaPrep_zoneid");
-    uint32 registrationStartTime = PChar->GetLocalVar("DynaPrep_registrationStartTime");
-    uint32 token = PChar->GetLocalVar("DynaPrep_token");
-    uint32 originalRegistrant = PChar->GetLocalVar("DynaPrep_originalRegistrant");
-    CZone* PZone = zoneutils::GetZone(zoneid);
+    uint8 zoneid = charutils::GetCharVar(PChar, "DynaPrep_zoneid");
+    uint32 registrationStartTime = charutils::GetCharVar(PChar, "DynaPrep_registrationStartTime");
+    uint32 token = charutils::GetCharVar(PChar, "DynaPrep_token");
+    uint32 originalRegistrant = charutils::GetCharVar(PChar, "DynaPrep_originalRegistrant");
+    //CZone* PZone = zoneutils::GetZone(zoneid);
     bool canLoadNewDynamis = true;
 
     if ((std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count() > (uint64)registrationStartTime + 60*15)
@@ -16517,31 +16545,61 @@ inline int32 CLuaBaseEntity::registerDynamis(lua_State* L)
         lua_pushboolean(L, false);
         return 1;
     }
-    
-    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler)
-    {
-        bool success = false;
-        if (PZone->m_DynamisHandler->m_token == 0)
-        {
-            if (canLoadNewDynamis)
-                success = PZone->m_DynamisHandler->LoadDynamis(PChar, token, originalRegistrant);
-        }
-        else
-        {
-            success = PZone->m_DynamisHandler->RegisterPlayer(PChar);
-        }
 
-        if (success)
-        {
-            charutils::SetCharVar(PChar, "DynaReservationStart", registrationStartTime);
-            if (PChar->GetLocalVar("DynaPrep_bypassWeakness") == 1)
-                charutils::SetCharVar(PChar, "DynaBypassWeakness", 1);
-        }
-        lua_pushboolean(L, success);
+    // The rest needs to be done on the Dynamis zone cluster.
+    // This is done asynchoronously. The response will be given using
+    // another RPC call in reverse direction.
+    message::RPCMapper* mapper = message::RPCMapper::GetInstance();
+    if (!mapper) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    uint8 rpcsendbuffer[5] = { 0 };
+    *reinterpret_cast<uint32*>(rpcsendbuffer) = PChar->id;
+    rpcsendbuffer[4] = canLoadNewDynamis;
+    if (mapper->CallRPCAsync(zoneid, PChar->getZone(), RPC_DYNAMIS_BASE_INDEX + (zoneid << 2) , rpcsendbuffer, sizeof(rpcsendbuffer), 0, false) == 0) {
+        lua_pushboolean(L, false);
         return 1;
     }
 
-    lua_pushboolean(L, false);
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+*  Function: player:pingDynamis()
+*  Purpose :
+*  Example :
+*  Notes   : verifies the dynamis server is online to avoid accidental removal of hourglass
+************************************************************************/
+
+inline int32 CLuaBaseEntity::pingDynamis(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    uint8 zoneid = charutils::GetCharVar(PChar, "DynaPrep_zoneid");
+
+    message::RPCMapper* mapper = message::RPCMapper::GetInstance();
+    if (!mapper) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    uint8 rpcsendbuffer[4] = { 0 };
+    *reinterpret_cast<uint32*>(rpcsendbuffer) = PChar->id;
+    if (mapper->CallRPCAsync(zoneid, PChar->getZone(), RPC_DYNAMIS_BASE_INDEX + (zoneid << 2) + 2, rpcsendbuffer, sizeof(rpcsendbuffer), 0, false) == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
@@ -16665,15 +16723,10 @@ inline int32 CLuaBaseEntity::addTimeToDynamis(lua_State* L)
     if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
         messageID = (uint16)lua_tointeger(L, 2);
 
-    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PZone->m_DynamisHandler->m_expirationRoutine == false)
+    if (PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PZone->m_DynamisHandler->DynamisIsExpiring() == false)
     {
-        PZone->m_DynamisHandler->m_expiryTimePoint += minutes * 60;
-        if (PZone->m_DynamisHandler->m_expiryTimePoint >= 660)
-            PZone->m_DynamisHandler->m_given10MinWarning = false;
-        if (PZone->m_DynamisHandler->m_expiryTimePoint >= 240)
-            PZone->m_DynamisHandler->m_given3MinWarning = false;
 
-        uint32 expiryTimeStamp = PZone->m_DynamisHandler->m_expiryTimePoint;
+        uint32 expiryTimeStamp = PZone->m_DynamisHandler->AddTimeToDynamis(minutes);
         uint8 numItemsUpdated = 0;
 
         PZone->ForEachChar([&messageID, &minutes, &expiryTimeStamp, &numItemsUpdated](CCharEntity* PChar) {
@@ -16752,12 +16805,12 @@ inline int32 CLuaBaseEntity::dynaCurrencyAutoDropEnabled(lua_State* L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     CZone* PZone = zoneutils::GetZone(PChar->getZone());
 
-    if (PChar && PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PChar->id == PZone->m_DynamisHandler->m_originalRegistrantID)
+    if (PChar && PZone && PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler && PChar->id == PZone->m_DynamisHandler->DynamisGetOriginalRegistrant())
     {
         if (!lua_isnil(L, 1) && lua_isboolean(L, 1))
-            PZone->m_DynamisHandler->m_currencyAutoDistribute = lua_toboolean(L, 1);
+            PZone->m_DynamisHandler->DynamisSetCurrencyAutoDistribute(lua_toboolean(L, 1));
 
-        lua_pushboolean(L, PZone->m_DynamisHandler->m_currencyAutoDistribute);
+        lua_pushboolean(L, PZone->m_DynamisHandler->DynamisGetCurrencyAutoDistribute());
         return 1;
     }
 
@@ -16959,6 +17012,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,changeContainerSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getFreeSlotsCount),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,confirmTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeComplete),
 
@@ -17514,6 +17568,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateHourglassExpireTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,prepareDynamisEntry),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,registerDynamis),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pingDynamis),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,replicateHourglass),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canReplicateHourglass),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,verifyHoldsValidHourglass),

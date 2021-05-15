@@ -7,6 +7,10 @@ require("scripts/globals/titles")
 local ID = require("scripts/zones/Mount_Zhayolm/IDs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+end
+
 function onMobFight(mob, target)
     if mob:getHPP() > 25 then
         mob:setMod(tpz.mod.REGAIN, 10)

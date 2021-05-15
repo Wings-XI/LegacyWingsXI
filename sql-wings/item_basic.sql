@@ -1566,7 +1566,7 @@ INSERT INTO `item_basic` VALUES(1676, 0, 'frigid_orichalcum_ingot', 'frgd._orich
 INSERT INTO `item_basic` VALUES(1677, 0, 'aqueous_orichalcum_ingot', 'aqueous_ocl.', 12, 4, 39, 0, 1463);
 INSERT INTO `item_basic` VALUES(1678, 0, 'rogues_silver_ingot', 'rogues_silver', 12, 4, 39, 0, 3870);
 INSERT INTO `item_basic` VALUES(1679, 0, 'bewitched_gold_ingot', 'bewitched_gold', 12, 4, 39, 0, 2136);
-INSERT INTO `item_basic` VALUES(1680, 0, 'high-quality_bugard_skin', 'h.q._bugard_skin', 12, 4, 41, 0, 412);
+INSERT INTO `item_basic` VALUES(1680, 0, 'high-quality_bugard_skin', 'h.q._bugard_skin', 12, 4, 41, 0, 1658);
 INSERT INTO `item_basic` VALUES(1681, 0, 'light_steel_ingot', 'light_steel', 12, 4, 38, 0, 766);
 INSERT INTO `item_basic` VALUES(1682, 0, 'ingot_of_royal_treasury_gold', 'treasury_gold', 1, 57428, 0, 0, 1000);
 INSERT INTO `item_basic` VALUES(1683, 0, 'piece_of_attohwa_ginseng', 'attohwa_ginseng', 1, 57428, 0, 0, 750);
@@ -14097,7 +14097,7 @@ INSERT INTO `item_basic` VALUES(16863, 0, 'cruel_spear', 'cruel_spear', 1, 34820
 INSERT INTO `item_basic` VALUES(16864, 0, 'brass_spear_+1', 'brass_spear_+1', 1, 2080, 8, 0, 419);
 INSERT INTO `item_basic` VALUES(16865, 0, 'spear_+1', 'spear_+1', 1, 2080, 8, 0, 2827);
 INSERT INTO `item_basic` VALUES(16866, 0, 'halberd_+1', 'halberd_+1', 1, 2080, 8, 0, 1695);
-INSERT INTO `item_basic` VALUES(16867, 0, 'orc_piercer', 'orc_piercer', 1, 2052, 8, 0, 275);
+INSERT INTO `item_basic` VALUES(16867, 0, 'orc_piercer', 'orc_piercer', 1, 2052, 8, 0, 8370);
 INSERT INTO `item_basic` VALUES(16868, 0, 'heavy_halberd', 'heavy_halberd', 1, 2052, 8, 0, 4431);
 INSERT INTO `item_basic` VALUES(16869, 0, 'thundercloud', 'thundercloud', 1, 2052, 8, 0, 12487);
 INSERT INTO `item_basic` VALUES(16870, 0, 'envy_spear', 'envy_spear', 1, 34820, 8, 0, 5562);
@@ -14516,7 +14516,7 @@ INSERT INTO `item_basic` VALUES(17289, 0, 'chakram_+1', 'chakram_+1', 1, 2080, 1
 INSERT INTO `item_basic` VALUES(17290, 0, 'coarse_boomerang', 'coarse_boomerang', 1, 2052, 13, 0, 120);
 INSERT INTO `item_basic` VALUES(17291, 0, 'flame_boomerang', 'flame_boomerang', 1, 2052, 13, 0, 1152);
 INSERT INTO `item_basic` VALUES(17292, 0, 'long_boomerang', 'long_boomerang', 1, 2052, 13, 0, 2948);
-INSERT INTO `item_basic` VALUES(17293, 0, 'yagudo_freezer', 'yagudo_freezer', 1, 2052, 13, 0, 136);
+INSERT INTO `item_basic` VALUES(17293, 0, 'yagudo_freezer', 'yagudo_freezer', 1, 2052, 13, 0, 3696); -- Couldn't find a confirmed price for this, only top-end price.  
 INSERT INTO `item_basic` VALUES(17294, 0, 'comet_tail', 'comet_tail', 1, 2052, 13, 0, 9384);
 INSERT INTO `item_basic` VALUES(17295, 0, 'rising_sun_+1', 'rising_sun_+1', 1, 2080, 13, 0, 4653);
 INSERT INTO `item_basic` VALUES(17296, 0, 'pebble', 'pebble', 99, 2052, 15, 0, 1);
@@ -14638,7 +14638,7 @@ INSERT INTO `item_basic` VALUES(17411, 0, 'holy_mace_+1', 'holy_mace_+1', 1, 208
 INSERT INTO `item_basic` VALUES(17412, 0, 'wild_cudgel', 'wild_cudgel', 1, 2052, 11, 0, 302);
 INSERT INTO `item_basic` VALUES(17413, 0, 'hermits_wand', 'hermits_wand', 1, 2052, 11, 0, 391);
 INSERT INTO `item_basic` VALUES(17414, 0, 'pixie_mace', 'pixie_mace', 1, 2052, 11, 0, 2095);
-INSERT INTO `item_basic` VALUES(17415, 0, 'shellbuster', 'shellbuster', 1, 2052, 11, 0, 98);
+INSERT INTO `item_basic` VALUES(17415, 0, 'shellbuster', 'shellbuster', 1, 2052, 11, 0, 3920);
 INSERT INTO `item_basic` VALUES(17416, 0, 'arcana_breaker', 'arcana_breaker', 1, 2052, 11, 0, 7790);
 INSERT INTO `item_basic` VALUES(17417, 0, 'rabbit_stick', 'rabbit_stick', 1, 34820, 11, 0, 226);
 INSERT INTO `item_basic` VALUES(17418, 0, 'moonlight_wand', 'moonlight_wand', 1, 34820, 11, 0, 678);

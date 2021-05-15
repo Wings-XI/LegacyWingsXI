@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -65,7 +65,7 @@ uint32 CTradeContainer::getQuantity(uint8 slotID)
     return 0;
 }
 
-uint8 CTradeContainer::getConfirmedStatus(uint8 slotID)
+uint32 CTradeContainer::getConfirmedStatus(uint8 slotID)
 {
     if (slotID < m_PItem.size())
     {
@@ -168,6 +168,9 @@ bool CTradeContainer::setConfirmedStatus(uint8 slotID, uint32 amount)
 {
     if (slotID < m_PItem.size() && m_PItem[slotID] && m_PItem[slotID]->getQuantity() >= amount)
     {
+        if (m_PItem[slotID]->getReserve() < amount) {
+            m_PItem[slotID]->setReserve(amount);
+        }
         m_confirmed[slotID] = std::min<uint32>(amount, m_PItem[slotID]->getQuantity());
         return true;
     }
@@ -270,7 +273,7 @@ void CTradeContainer::unreserveUnconfirmed()
 
         if (PItem)
         {
-            uint8 confirmedStatus = getConfirmedStatus(slotID);
+            uint32 confirmedStatus = getConfirmedStatus(slotID);
             if (confirmedStatus && confirmedStatus > 0)
             {
 

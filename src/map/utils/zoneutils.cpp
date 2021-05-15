@@ -1130,4 +1130,19 @@ bool IsResidentialArea(CCharEntity* PChar)
     return PChar->m_moghouseID != 0;
 }
 
+ZONETYPE GetZoneType(uint16 ZoneID)
+{
+    static const char* Query =
+        "SELECT zonetype FROM zone_settings "
+        "WHERE zoneid = %u LIMIT 1";
+
+    if (Sql_Query(SqlHandle, Query, ZoneID) != SQL_ERROR &&
+        Sql_NumRows(SqlHandle) != 0 &&
+        Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        return (ZONETYPE)Sql_GetUIntData(SqlHandle, 0);
+    }
+    return ZONETYPE_NONE;
+}
+
 }; // namespace zoneutils

@@ -154,7 +154,7 @@ void CZoneEntities::InsertPET(CBaseEntity* PPet)
         {
             CCharEntity* PCurrentChar = (CCharEntity*)it->second;
 
-            if (distance(PPet->loc.p, PCurrentChar->loc.p) < 50)
+            if (distanceSquared(PPet->loc.p, PCurrentChar->loc.p) < 50.0f * 50.0f)
             {
                 PCurrentChar->SpawnPETList[PPet->id] = PPet;
                 PCurrentChar->pushPacket(new CEntityUpdatePacket(PPet, ENTITY_SPAWN, UPDATE_ALL_MOB));
@@ -193,7 +193,7 @@ void CZoneEntities::InsertTRUST(CBaseEntity* PTrust)
         {
             CCharEntity* PCurrentChar = (CCharEntity*)it->second;
 
-            if (distance(PTrust->loc.p, PCurrentChar->loc.p) < 50)
+            if (distanceSquared(PTrust->loc.p, PCurrentChar->loc.p) < 50.0f * 50.0f)
             {
                 if (PCurrentChar->targid == ((CBattleEntity*)PTrust)->PMaster->targid)
                 {
@@ -460,9 +460,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         CMobEntity* PCurrentMob = (CMobEntity*)it->second;
         SpawnIDList_t::iterator MOB = PChar->SpawnMOBList.lower_bound(PCurrentMob->id);
 
-        float CurrentDistance = distance(PChar->loc.p, PCurrentMob->loc.p);
-
-        if (PCurrentMob->status != STATUS_DISAPPEAR && CurrentDistance < 50)
+        if (PCurrentMob->status != STATUS_DISAPPEAR && distanceSquared(PChar->loc.p, PCurrentMob->loc.p) < 50.0f * 50.0f)
         {
             if (MOB == PChar->SpawnMOBList.end() || PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first))
             {
@@ -504,7 +502,7 @@ void CZoneEntities::SpawnPETs(CCharEntity* PChar)
         SpawnIDList_t::iterator PET = PChar->SpawnPETList.lower_bound(PCurrentPet->id);
 
         if ((PCurrentPet->status == STATUS_NORMAL || PCurrentPet->status == STATUS_MOB) &&
-            distance(PChar->loc.p, PCurrentPet->loc.p) < 50)
+            distanceSquared(PChar->loc.p, PCurrentPet->loc.p) < 50.0f * 50.0f)
         {
             if (PET == PChar->SpawnPETList.end() ||
                 PChar->SpawnPETList.key_comp()(PCurrentPet->id, PET->first))
@@ -536,7 +534,7 @@ void CZoneEntities::SpawnNPCs(CCharEntity* PChar)
 
             if (PCurrentNpc->status == STATUS_NORMAL || PCurrentNpc->status == STATUS_MOB)
             {
-                if (distance(PChar->loc.p, PCurrentNpc->loc.p) < 50)
+                if (distanceSquared(PChar->loc.p, PCurrentNpc->loc.p) < 50.0f*50.0f)
                 {
                     if (NPC == PChar->SpawnNPCList.end() ||
                         PChar->SpawnNPCList.key_comp()(PCurrentNpc->id, NPC->first))
@@ -567,7 +565,7 @@ void CZoneEntities::SpawnTRUSTs(CCharEntity* PChar)
             SpawnIDList_t::iterator SpawnTrustItr = PChar->SpawnTRUSTList.lower_bound(PCurrentTrust->id);
             CCharEntity* PMaster = dynamic_cast<CCharEntity*>(PCurrentTrust->PMaster);
 
-            if (PCurrentTrust->status == STATUS_NORMAL && distance(PChar->loc.p, PCurrentTrust->loc.p) < 50)
+            if (PCurrentTrust->status == STATUS_NORMAL && distanceSquared(PChar->loc.p, PCurrentTrust->loc.p) < 50.0f * 50.0f)
             {
                 if (SpawnTrustItr == PChar->SpawnTRUSTList.end() || PChar->SpawnTRUSTList.key_comp()(PCurrentTrust->id, SpawnTrustItr->first))
                 {
@@ -601,7 +599,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
 
         if (PChar != PCurrentChar)
         {
-            if (distance(PChar->loc.p, PCurrentChar->loc.p) < 50 && PChar->m_moghouseID == PCurrentChar->m_moghouseID)
+            if (distanceSquared(PChar->loc.p, PCurrentChar->loc.p) < 50.0f * 50.0f && PChar->m_moghouseID == PCurrentChar->m_moghouseID)
             {
                 if (PC == PChar->SpawnPCList.end())
                 {
@@ -984,7 +982,7 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
                     CCharEntity* PCurrentChar = (CCharEntity*)it->second;
                     if (PEntity != PCurrentChar)
                     {
-                        if (distance(PEntity->loc.p, PCurrentChar->loc.p) < 180 &&
+                        if (distanceSquared(PEntity->loc.p, PCurrentChar->loc.p) < 180.0f * 180.0f &&
                             ((PEntity->objtype != TYPE_PC) || (((CCharEntity*)PEntity)->m_moghouseID == PCurrentChar->m_moghouseID)))
                         {
                             PCurrentChar->pushPacket(new CBasicPacket(*packet));
@@ -1123,7 +1121,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
                 for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
                 {
                     CCharEntity* PChar = (CCharEntity*)it->second;
-                    if (distance(PChar->loc.p, PTrust->loc.p) < 50)
+                    if (distanceSquared(PChar->loc.p, PTrust->loc.p) < 50.0f * 50.0f)
                     {
                         PChar->SpawnTRUSTList.erase(PTrust->id);
                         PChar->ReloadPartyInc();

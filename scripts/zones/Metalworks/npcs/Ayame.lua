@@ -91,7 +91,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-
     if (csid == 712) then
         finishMissionTimeline(player, 1, csid, option)
     elseif (csid == 748) then
@@ -109,7 +108,7 @@ function onEventFinish(player, csid, option)
         end
     elseif (csid == 935) then
         player:setCharVar("WildcatBastok", utils.mask.setBit(player:getCharVar("WildcatBastok"), 9, true))
-    elseif (csid == 803 and option == 1) then
+    elseif (csid == 803 and option == 0) then -- accepting returns option 0, declining returns option 1073741824 ???
         player:setCharVar("FadedPromises", 2)
     elseif (csid == 804) then
         player:setCharVar("FadedPromises", 4)

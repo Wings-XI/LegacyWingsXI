@@ -710,7 +710,7 @@ void CMobController::Move()
                     {
                         for (auto PSpawnedMob : static_cast<CCharEntity*>(PTarget)->SpawnMOBList)
                         {
-                            if (PSpawnedMob.second != PMob && !PSpawnedMob.second->PAI->PathFind->IsFollowingPath() && distance(PSpawnedMob.second->loc.p, PMob->loc.p) < 1.f)
+                            if (PSpawnedMob.second != PMob && !PSpawnedMob.second->PAI->PathFind->IsFollowingPath() && distanceSquared(PSpawnedMob.second->loc.p, PMob->loc.p) < 1.f)
                             {
                                 auto angle = worldAngle(PMob->loc.p, PTarget->loc.p) + 64;
                                 position_t new_pos {PMob->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),

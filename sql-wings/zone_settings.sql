@@ -328,7 +328,7 @@ INSERT INTO `zone_settings` VALUES(275, 0, '0.0.0.0', 0, 'Outer_RaKaznar_U', 62,
 INSERT INTO `zone_settings` VALUES(276, 0, '0.0.0.0', 0, 'RaKaznar_Inner_Court', 73, 73, 57, 57, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(277, 0, '0.0.0.0', 0, 'RaKaznar_Turris', 0, 0, 0, 0, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(278, 0, '0.0.0.0', 0, '278', 0, 0, 0, 0, 0, 0.00, 1024, 6);
-INSERT INTO `zone_settings` VALUES(279, 0, '127.0.0.1', 54230, 'Walk_of_Echoes_[P2]', 0, 0, 0, 0, 0, 0.00, 1024, 6);
+INSERT INTO `zone_settings` VALUES(279, 0, '0.0.0.0', 0, 'Walk_of_Echoes_[P2]', 0, 0, 0, 0, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(280, 1, '0.0.0.0', 0, 'Mog_Garden', 67, 67, 67, 67, 0, 0.00, 1056, 6);
 INSERT INTO `zone_settings` VALUES(281, 0, '0.0.0.0', 0, 'Leafallia', 0, 0, 0, 0, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(282, 0, '0.0.0.0', 0, 'Mount_Kamihr', 0, 0, 0, 0, 0, 0.00, 1024, 6);
@@ -343,11 +343,11 @@ INSERT INTO `zone_settings` VALUES(290, 0, '0.0.0.0', 0, 'Desuetia_Empyreal_Para
 INSERT INTO `zone_settings` VALUES(291, 0, '0.0.0.0', 0, 'Reisenjima', 79, 79, 79, 79, 0, 0.00, 1152, 6);
 INSERT INTO `zone_settings` VALUES(292, 0, '0.0.0.0', 0, 'Reisenjima_Henge', 0, 0, 0, 0, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(293, 0, '0.0.0.0', 0, 'Reisenjima_Sanctorium', 0, 0, 0, 0, 0, 0.00, 1152, 6);
-INSERT INTO `zone_settings` VALUES(294, 5, '127.0.0.1', 54230, 'Dynamis-San_dOria_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(295, 5, '127.0.0.1', 54230, 'Dynamis-Bastok_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(296, 5, '127.0.0.1', 54230, 'Dynamis-Windurst_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(297, 5, '127.0.0.1', 54230, 'Dynamis-Jeuno_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(298, 0, '127.0.0.1', 54230, 'Walk_of_Echoes_[P1]', 186, 186, 186, 186, 0, 0.00, 1024, 6);
+INSERT INTO `zone_settings` VALUES(294, 5, '0.0.0.0', 0, 'Dynamis-San_dOria_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(295, 5, '0.0.0.0', 0, 'Dynamis-Bastok_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(296, 5, '0.0.0.0', 0, 'Dynamis-Windurst_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(297, 5, '0.0.0.0', 0, 'Dynamis-Jeuno_[D]', 88, 88, 88, 88, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(298, 0, '0.0.0.0', 0, 'Walk_of_Echoes_[P1]', 186, 186, 186, 186, 0, 0.00, 1024, 6);
 
 --
 -- Indexes for dumped tables

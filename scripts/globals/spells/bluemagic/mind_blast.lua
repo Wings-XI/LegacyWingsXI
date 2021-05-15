@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 1.0
     -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.multiplier = 7.08
+    params.multiplier = 2.08
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -47,8 +47,8 @@ function onSpellCast(caster, target, spell)
 
     local resist = applyResistance(caster, target, spell, params)
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)    
-    
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+
     local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if (damage > 0 and resist > 0.3) then
         local typeEffect = tpz.effect.PARALYSIS
