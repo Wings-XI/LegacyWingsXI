@@ -44,6 +44,7 @@
 #include "vana_time.h"
 #include "zone.h"
 #include "zone_entities.h"
+#include "rpcmapper.h"
 
 #include "entities/npcentity.h"
 #include "entities/petentity.h"
@@ -130,12 +131,20 @@ int32 zone_update_weather(time_point tick, CTaskMgr::CTask* PTask)
 int32 deleteZoneTimer(time_point tick, CTaskMgr::CTask* PTask)
 {
     CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
+    if (!PZone) {
+        return 0;
+    }
 
-    if (PZone->ZoneTimer && PZone->m_zoneEntities->CharListEmpty())
-    {
-        PZone->ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
-        PZone->ZoneTimer = nullptr;
-        PZone->m_zoneEntities->HealAllMobs();
+    if (PZone->m_zoneEntities && PZone->m_zoneEntities->CharListEmpty()) {
+        if (PZone->GetType() == ZONETYPE_DYNAMIS && PZone->m_DynamisHandler) {
+            PZone->m_DynamisHandler->CleanupDynamis();
+        }
+        if (PZone->ZoneTimer)
+        {
+            PZone->ZoneTimer->m_type = CTaskMgr::TASK_REMOVE;
+            PZone->ZoneTimer = nullptr;
+            PZone->m_zoneEntities->HealAllMobs();
+        }
     }
 
     return 0;
@@ -178,6 +187,13 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
 
     // settings should load first
     LoadZoneSettings();
+
+    // Callback for trail markings (dynamis entry points).
+    // Not a lot of overhead to define this for any zone.
+    message::RPCMapper* mapper = message::RPCMapper::GetInstance();
+    if (mapper) {
+        mapper->RegisterIncomingRPC(RPC_DYNAMIS_BASE_INDEX + (ZoneID << 2) + 1, CDynamisHandler::DynamisTrailMarkingRPCCallback, this);
+    }
 
     LoadZoneLines();
     LoadZoneWeather();
@@ -1071,20 +1087,7 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     if (PChar->isDead())
         charutils::SaveDeathTime(PChar);
 
-    PChar->PBattlefield = nullptr;
-    PChar->PInstance = nullptr;
-    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-    }
-    if (PChar->PPet)
-    {
-        PChar->PPet->PBattlefield = nullptr;
-        PChar->PPet->PInstance = nullptr;
-        if (PChar->PPet->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
-            PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
-        }
-    }
-
+    PChar->DropBattlefield();
 
     PChar->loc.zone = nullptr;
 

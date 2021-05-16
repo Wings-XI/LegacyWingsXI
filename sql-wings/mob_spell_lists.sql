@@ -3802,6 +3802,31 @@ INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 252, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 254, 4, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Hyakume', 443, 259, 41, 55);
+INSERT INTO `mob_spell_lists` VALUES('Velkeng', 444, 23, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 147, 73, 85);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 152, 74, 88);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 167, 75, 92);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 181, 71, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 186, 67, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 196, 73, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 176, 1, 255);
+
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 172, 1, 255); -- water IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 200, 1, 255); -- waterga II
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 201, 1, 255); -- waterga III
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 214, 1, 255); -- flood
+-- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Nepionic_Bladmall
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 46, 1, 255); -- protect IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 51, 1, 255); -- shell IV
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255); -- cure IV
 
 --
 -- Indexes for dumped tables

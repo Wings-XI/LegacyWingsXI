@@ -20,7 +20,7 @@ function onInitialize(zone)
 	if os.time() < bloodre then
 		GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(bloodre - os.time())
     else
-        Spawnmob(ID.mob.BLOODSUCKER)
+        SpawnMob(ID.mob.BLOODSUCKER)
 	end
 end
 

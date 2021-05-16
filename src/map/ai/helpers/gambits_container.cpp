@@ -110,7 +110,7 @@ void CGambitsContainer::Tick(time_point tick)
     {
         auto isValidMember = [&](CBattleEntity* PPartyTarget) -> bool
         {
-            return PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
+            return PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distanceSquared(POwner->loc.p, PPartyTarget->loc.p) < 15.0f * 15.0f;
         };
 
         if (predicate.target == G_TARGET::SELF)
@@ -228,7 +228,7 @@ void CGambitsContainer::Tick(time_point tick)
 
             auto isValidMember = [this](CBattleEntity* PSettableTarget, CBattleEntity* PPartyTarget)
             {
-                return !PSettableTarget && PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
+                return !PSettableTarget && PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distanceSquared(POwner->loc.p, PPartyTarget->loc.p) < 15.0f * 15.0f;
             };
 
             // TODO: This whole section is messy and bonkers

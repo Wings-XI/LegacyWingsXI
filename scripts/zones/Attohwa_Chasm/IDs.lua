@@ -41,6 +41,7 @@ zones[tpz.zone.ATTOHWA_CHASM] =
         LIOUMERE            = 16806031,
         TIAMAT              = 16806227,
         FEELER_ANTLION      = 16806242,
+        XOLOTL              = 16806215,
     },
     npc =
     {

@@ -359,11 +359,10 @@ local loot =
         },
     },
     -- KSNM Early Bird Catches the Wyrm
+    -- Juggernaut and Speed Belt were added to this KSNM as an RMT measure.  Drop table below based on original drop tables cited here: https://ffxiclopedia.fandom.com/wiki/Early_Bird_Catches_the_Wyrm?oldid=157593
+
     [107] =
     {
-        {
-            {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
-        },
         {
             {itemid = 1441, droprate = 312}, -- Libation Abjuration
             {itemid = 17694, droprate = 182}, -- Guespiere
@@ -372,12 +371,6 @@ local loot =
             {itemid = 18173, droprate = 181}, -- Nokizaru Shuriken
             {itemid = 17823, droprate = 217}, -- Shinsoku
             {itemid = 17575, droprate = 43}, -- Somnus Signa
-        },
-        {
-            {itemid = 722, droprate = 94},   -- Divine Log
-            {itemid = 1446, droprate = 196}, -- Lacquer Tree Log
-            {itemid = 703, droprate = 572},  -- Petrified Log
-            {itemid = 831, droprate = 43},   -- Square Of Shining Cloth
         },
         {
             {itemid = 1442, droprate = 159}, -- Oblation Abjuration
@@ -391,8 +384,8 @@ local loot =
         {
             {itemid = 4486, droprate = 522}, -- Dragon Heart
             {itemid = 4272, droprate = 346}, -- Slice Of Dragon Meat
-            {itemid = 17928, droprate = 82}, -- Juggernaut
-            {itemid = 13189, droprate = 59}, -- Speed Belt
+--          {itemid = 17928, droprate = 82}, -- Juggernaut, commented out due to RMT changes.  See heading for details.
+--          {itemid = 13189, droprate = 59}, -- Speed Belt, commented out due to RMT changes.  See heading for details.
         },
         {
             {itemid = 887, droprate = 32},   -- Coral Fragment
@@ -432,25 +425,7 @@ local loot =
             {itemid = 4175, droprate = 217}, -- Vile Elixir +1
         },
         {
-            {itemid = 887, droprate = 87},   -- Coral Fragment
-            {itemid = 645, droprate = 80},   -- Chunk Of Darksteel Ore
-            {itemid = 902, droprate = 58},   -- Demon Horn
-            {itemid = 702, droprate = 72},   -- Ebony Log
-            {itemid = 737, droprate = 87},   -- Chunk Of Gold Ore
-            {itemid = 823, droprate = 14},   -- Spool Of Gold Thread
-            {itemid = 4173, droprate = 22},  -- Hi-reraiser
-            {itemid = 700, droprate = 80},   -- Mahogany Log
-            {itemid = 644, droprate = 36},   -- Chunk Of Mythril Ore
-            {itemid = 703, droprate = 145},  -- Petrified Log
-            {itemid = 844, droprate = 7},    -- Phoenix Feather
-            {itemid = 738, droprate = 51},   -- Chunk Of Platinum Ore
-            {itemid = 830, droprate = 29},   -- Square Of Rainbow Cloth
-            {itemid = 895, droprate = 36},   -- Ram Horn
-            {itemid = 1132, droprate = 72},  -- Square Of Raxa
-            {itemid = 4172, droprate = 29},  -- Reraiser
-            {itemid = 4174, droprate = 29},  -- Vile Elixir
-            {itemid = 4175, droprate = 7},   -- Vile Elixir +1
-            {itemid = 866, droprate = 22},   -- Handful Of Wyvern Scales
+            {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
         },
         {
             {itemid = 1110, droprate = 58},  -- Vial Of Black Beetle Blood
@@ -460,6 +435,12 @@ local loot =
             {itemid = 942, droprate = 275},  -- Philosophers Stone
             {itemid = 844, droprate = 196},  -- Phoenix Feather
             {itemid = 1132, droprate = 225}, -- Square Of Raxa
+        },
+        {
+            {itemid = 722, droprate = 94},   -- Divine Log
+            {itemid = 1446, droprate = 196}, -- Lacquer Tree Log
+            {itemid = 703, droprate = 572},  -- Petrified Log
+            {itemid = 831, droprate = 43},   -- Square Of Shining Cloth
         },
     },
     -- BCNM Royal Succession

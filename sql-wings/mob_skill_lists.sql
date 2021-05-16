@@ -1104,6 +1104,10 @@ INSERT INTO `mob_skill_lists` VALUES('CynoprosopiWyrm', 261, 958);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 951);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 952);
 INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 953);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 955);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 956);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 957);
+INSERT INTO `mob_skill_lists` VALUES('Wyrm', 262, 958);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1039);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1040);
 INSERT INTO `mob_skill_lists` VALUES('NidhoggWyrm', 263, 1041);
@@ -3147,11 +3151,11 @@ INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 600);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 601);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 602);
 INSERT INTO `mob_skill_lists` VALUES('Snoll_Tzar', 1158, 1647);
-
+INSERT INTO `mob_skill_lists` VALUES('Wyrm-Flying-Attack', 1159, 950);
 INSERT INTO `mob_skill_lists` VALUES('Goblintrap', 1160, 434);
-
 INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
-
+INSERT INTO `mob_skill_lists` VALUES('Pyuu_The_Spatemaker', 1162, 770);
+INSERT INTO `mob_skill_lists` VALUES('Yal-un_Eke', 1163, 567);
 --
 -- Indexes for dumped tables
 --

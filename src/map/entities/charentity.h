@@ -441,6 +441,8 @@ public:
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
     void SetFomorHate(uint32 fomorHate);
+    void DropBattlefield();
+    void DropBattlefieldIfOutside();
 
     /* State callbacks */
     virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
@@ -458,9 +460,6 @@ public:
     virtual void OnDeathTimer() override;
     virtual void OnRaise() override;
     virtual void OnItemFinish(CItemState&, action_t&);
-    void ResetAbilityRecast(const uint16&, const uint16&);
-    void SetAbilityRecastTime(CAbilityState&, action_t&);
-    void ConsumeItem(CItemUsable*); // Remove item in inventory
 
     CCharEntity();									// constructor
     ~CCharEntity();									// destructor

@@ -14,6 +14,7 @@ require("scripts/globals/zone")
 -----------------------------------
 
 local zone = tpz.zone.DYNAMIS_VALKURM
+nmsKilled = 0
 
 function onDynamisTick(timeRemaining)
     -- haven't had a reason to use this yet, for now this function is disabled for optimization purposes (a lua callback every server tick!!)
@@ -28,6 +29,10 @@ function onDynamisNewInstance()
     local i = iStart
     local iEnd = iStart + 1023
     
+    if npcList == nil then print("npcList was nil") end
+    if npcList[zone] == nil then print("npcList[zone] was nil") end
+    
+    nmsKilled = 0
     while i <= iEnd do
         entity = GetEntityByID(i)
         if entity ~= nil and entity:isNPC() then entity:setStatus(tpz.status.DISAPPEAR) end
@@ -92,5 +97,18 @@ function onDynamisTimeWarning(player, timeRemaining)
         local minutes = math.floor(timeRemaining/60)
         if minutes == 1 then player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_1, minutes, 1)
         elseif ID.text.DYNAMIS_TIME_UPDATE_2 ~= nil then player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, minutes, 1) end
+    end
+end
+function onDynamisNMDeath(mob, player, iskKiller)
+    nmsKilled = nmsKilled + 1
+    if nmsKilled >= numNMS then
+        local mob = GetMobByID(megaBoss)
+        mob:setNM(true)
+        mob:resetLocalVars()
+        if mobList[zone][megaBoss].pos ~= nil then
+            mob:setSpawn(mobList[zone][megaBoss].pos[1],mobList[zone][megaBoss].pos[2],mobList[zone][megaBoss].pos[3],mobList[zone][megaBoss].pos[4])
+        else mob:setSpawn(1,1,1,0) end
+        SpawnMob(megaBoss)
+        mob:addRoamFlag(256) -- scripted pathing only
     end
 end

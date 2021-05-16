@@ -752,7 +752,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
             CBaseEntity* PNpc = nullptr;
             PNpc = PChar->GetEntity(TargID, TYPE_NPC);
 
-            if (PNpc != nullptr && distance(PNpc->loc.p, PChar->loc.p) <= 10 && (PNpc->PAI->IsSpawned() || PChar->m_moghouseID != 0))
+            if (PNpc != nullptr && distanceSquared(PNpc->loc.p, PChar->loc.p) <  10.0f * 10.0f && (PNpc->PAI->IsSpawned() || PChar->m_moghouseID != 0))
             {
                 PNpc->PAI->Trigger(PChar->targid);
             }
@@ -1349,7 +1349,7 @@ void SmallPacket0x033(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     if (PChar->UContainer->IsContainerEmpty() && PTarget->UContainer->IsContainerEmpty())
                     {
-                        if (distance(PChar->loc.p, PTarget->loc.p) < 6)
+                        if (distanceSquared(PChar->loc.p, PTarget->loc.p) < 6.0f * 6.0f)
                         {
                             PChar->UContainer->SetType(UCONTAINER_TRADE);
                             PChar->pushPacket(new CTradeActionPacket(PTarget, action));
@@ -1533,7 +1533,7 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
 
     CBaseEntity* PNpc = PChar->GetEntity(targid, TYPE_NPC);
 
-    if ((PNpc != nullptr) && (PNpc->id == npcid) && distance(PNpc->loc.p, PChar->loc.p) <= 10)
+    if ((PNpc != nullptr) && (PNpc->id == npcid) && distanceSquared(PNpc->loc.p, PChar->loc.p) < 10.0f * 10.0f)
     {
         uint8 numItems = data.ref<uint8>(0x3C);
 
@@ -5422,6 +5422,7 @@ void SmallPacket0x0DE(map_session_data_t* const PSession, CCharEntity* const PCh
 /************************************************************************
  *                                                                       *
  *  Set Search Message                                                   *
+ *  All code (other than documentation) (c) Wings, under AGPLv3          *
  *                                                                       *
  ************************************************************************/
 
@@ -5429,9 +5430,30 @@ void SmallPacket0x0E0(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
     PChar->search.message.clear();
-    PChar->search.message.insert(0, (const char*)data[4]);
+    char message_raw[128] = { 0 };
+    strncpy(message_raw, (const char*)data[4], 120);
+    // Since it's padded with spaces instead of properly
+    // being null-terminated and since we don't wish to
+    // store all the spaces in the DB, look-up the last
+    // non-space character.
+    uint16 last_non_space = 0;
+    for (uint16 i = 0; i < 120; i++) {
+        if (message_raw[i] == '\0') {
+            break;
+        }
+        if (message_raw[i] != 0x20) {
+            last_non_space = i;
+        }
+    }
+    message_raw[last_non_space + 1] = '\0';
+    PChar->search.message = message_raw;
 
-    PChar->search.messagetype = data.ref<uint8>(0xA4);
+    if (message_raw[0] != '\0') {
+        PChar->search.messagetype = data.ref<uint8>(0x94);
+    }
+    else {
+        PChar->search.messagetype = 0;
+    }
 
     // No response is needed to be sent from this packet.
     // This is only used when searching for a character.
@@ -5476,6 +5498,20 @@ void SmallPacket0x0E0(map_session_data_t* const PSession, CCharEntity* const PCh
     //  0x63 - Other
     // Others
     //  0x73 - others
+
+    char message[256];
+    Sql_EscapeString(SqlHandle, message, message_raw);
+
+    if (PChar->search.messagetype != 0 && message_raw[0] != '\0') {
+        Sql_Query(SqlHandle,
+            "UPDATE char_stats SET seacom_type = %u, search_message = '%s' WHERE charid = %u;",
+            PChar->search.messagetype, message, PChar->id);
+    }
+    else {
+        Sql_Query(SqlHandle,
+            "UPDATE char_stats SET seacom_type = NULL, search_message = NULL WHERE charid = %u;",
+            PChar->id);
+    }
     return;
 }
 

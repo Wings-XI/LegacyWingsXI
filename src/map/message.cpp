@@ -23,6 +23,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <queue>
 
 #include "message.h"
+#include "rpcmapper.h"
 #include "../new-common/MQConnection.h"
 #include "../new-common/CommonMessages.h"
 
@@ -44,11 +45,13 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/flistutils.h"
 #include "items/item_linkshell.h"
 
+#define MAP_MQ_MESSAGE_MAGIC 0x4441574E
 
 #pragma pack(push, 1)
 
 typedef struct _MAP_MQ_MESSAGE_HEADER
 {
+    uint32 magic;
     uint64 origin;
     MSGSERVTYPE type;
     uint32 packet_size;
@@ -60,11 +63,12 @@ typedef struct _MAP_MQ_MESSAGE_HEADER
 namespace message
 {
     std::recursive_mutex send_mutex;
-    std::queue<uint8*> message_queue;
+    std::queue<std::shared_ptr<uint8>> message_queue;
     uint64 own_identity;
     std::shared_ptr<MQConnection> g_mqconnection = nullptr;
     std::shared_ptr<MapMQHandler> g_handler = nullptr;
     bool g_being_closed = false;
+    RPCMapper* g_mapper = nullptr;
 
     void route_message(uint8* msg)
     {
@@ -78,6 +82,10 @@ namespace message
         // now and change it if we really see a performance issue.
         bool broadcast = false;
 
+        if (header->magic != MAP_MQ_MESSAGE_MAGIC) {
+            // Not a map message so silent drop
+            return;
+        }
         switch (type)
         {
         case MSG_CHAT_TELL:
@@ -156,6 +164,14 @@ namespace message
             // no op
             break;
         }
+        case MSG_RPC_REQUEST:
+        case MSG_RPC_RESPONSE:
+        {
+            const char* query = "SELECT zoneip, zoneport FROM zone_settings WHERE zoneid = %d;";
+            ret = Sql_Query(SqlHandle, query, *reinterpret_cast<uint16*>(extra + 4));
+            ipstring = true;
+            break;
+        }
         default:
         {
             ShowDebug("Message: unknown type received: %u\n", static_cast<uint8>(type));
@@ -169,7 +185,7 @@ namespace message
 
             if (broadcast) {
                 ShowDebug("Message:  -> sending broadcast\n");
-                g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
+                g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
             }
             else {
                 while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -198,7 +214,7 @@ namespace message
                             *reinterpret_cast<uint32*>(extra) = Sql_GetUIntData(SqlHandle, 2);
                         }
 
-                        g_mqconnection->Send(2, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
+                        g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
                     }
                     else {
                         ShowDebug("Message:  -> loopback\n");
@@ -214,7 +230,8 @@ namespace message
         while (!message_queue.empty())
         {
             std::lock_guard<std::recursive_mutex> lk(send_mutex);
-            uint8* msg = message_queue.front();
+            std::shared_ptr<uint8> msgptr = message_queue.front();
+            uint8* msg = msgptr.get();
             message_queue.pop();
             try
             {
@@ -744,6 +761,42 @@ namespace message
             });
             break;
         }
+        case MSG_RPC_REQUEST:
+        {
+            if (extra_size < sizeof(RPCMapper::RPC_CALL_DETAILS)) {
+                ShowWarning("Message: RPC Call packet is too short\n");
+                break;
+            }
+            RPCMapper::RPC_CALL_DETAILS* rpcheader = reinterpret_cast<RPCMapper::RPC_CALL_DETAILS*>(extra);
+            if (zoneutils::GetZone(rpcheader->zone) == nullptr) {
+                // Silently ignore messages intended for zones on other clusters
+                break;
+            }
+            if (!g_mapper) {
+                ShowError("Message: RPC mapper not initialized\n");
+                break;
+            }
+            g_mapper->IncomingRPCRequestHandler(rpcheader);
+            break;
+        }
+        case MSG_RPC_RESPONSE:
+        {
+            if (extra_size < sizeof(RPCMapper::RPC_RESPONSE_DETAILS)) {
+                ShowWarning("Message: RPC Response packet is too short\n");
+                break;
+            }
+            RPCMapper::RPC_RESPONSE_DETAILS* rpcheader = reinterpret_cast<RPCMapper::RPC_RESPONSE_DETAILS*>(extra);
+            if (zoneutils::GetZone(rpcheader->zone) == nullptr) {
+                // Silently ignore messages intended for zones on other clusters
+                break;
+            }
+            if (!g_mapper) {
+                ShowError("Message: RPC mapper not initialized\n");
+                break;
+            }
+            g_mapper->IncomingRPCResponseHandler(rpcheader);
+            break;
+        }
         default:
         {
             ShowWarning("Message: unhandled message type %d\n", (int)type);
@@ -790,10 +843,16 @@ namespace message
 
     bool MapMQHandler::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, uint32_t dwChannel)
     {
+        uint32 magic = 0;
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
         CHAR_MQ_MESSAGE_HEADER* login_header = nullptr;
 
-        if (dwChannel == 1) {
+        if (Request.len < sizeof(uint32)) {
+            // Way too short
+            return false;
+        }
+        magic = *reinterpret_cast<uint32*>(Request.bytes);
+        if (magic == LOGIN_MQ_MSG_MAGIC) {
             if (Request.len < sizeof(CHAR_MQ_MESSAGE_HEADER)) {
                 return true;
             }
@@ -810,11 +869,11 @@ namespace message
                 if (FLgetSettingByID(login_header->dwCharacterID, 2) == 1) {
                     Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), login_header->dwCharacterID);
                 }
-                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
+                // Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
             }
             return true;
         }
-        else if (dwChannel == 2) {
+        else if (magic == MAP_MQ_MESSAGE_MAGIC) {
             if (Request.len < sizeof(MAP_MQ_MESSAGE_HEADER)) {
                 return true;
             }
@@ -874,7 +933,6 @@ namespace message
         ipp |= (port << 32);
 
         own_identity = ipp;
-        std::string login_qname = "login_" + std::to_string(own_identity);
         std::string map_qname = "map_" + std::to_string(own_identity);
 
         try {
@@ -884,7 +942,6 @@ namespace message
             }
 
             // Initialize connection to RabbitMQ
-            // First channel is for receiving messages from the login server
             g_mqconnection = std::shared_ptr<MQConnection>(new MQConnection(map_config.world_id,
                 map_config.rabbitmq_host,
                 map_config.rabbitmq_port,
@@ -893,25 +950,24 @@ namespace message
                 map_config.rabbitmq_vhost,
                 1,
                 "amq.fanout",
-                login_qname,
-                login_qname,
-                // TODO: Add SSL support
+                map_qname,
+                map_qname,
                 map_config.rabbitmq_ssl,
                 map_config.rabbitmq_ssl_verify,
                 map_config.rabbitmq_ssl_ca.c_str(),
                 map_config.rabbitmq_ssl_cert.c_str(),
                 map_config.rabbitmq_ssl_key.c_str()));
 
-            // And another channel for chat messages
-            g_mqconnection->ListenChannel(2, "amq.fanout", map_qname, map_qname);
             g_mqconnection->AssignHandler(1, g_handler);
-            g_mqconnection->AssignHandler(2, g_handler);
 
         }
         catch (...) {
             ShowFatalError("Unable to connect to RabbitMQ.");
             close();
         }
+
+        g_mapper = RPCMapper::GetInstance();
+
         try {
             g_mqconnection->StartThread();
             while (!g_being_closed) {
@@ -931,11 +987,14 @@ namespace message
                 throw;
             }
         }
+
     }
 
     void close()
     {
         g_being_closed = true;
+        message::RPCMapper::Destroy();
+        g_mapper = nullptr;
 
         if (g_mqconnection.get()) {
             g_mqconnection->Shutdown();
@@ -961,6 +1020,7 @@ namespace message
             return;
         }
         header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(msgdata);
+        header->magic = MAP_MQ_MESSAGE_MAGIC;
         header->origin = own_identity;
         header->type = type;
         header->packet_size = packet_size;
@@ -986,6 +1046,6 @@ namespace message
             packet ? packet->length() : 0,
             true);
         // And of course send to ZMQ for other servers
-        message_queue.push(msgdata);
+        message_queue.push(std::shared_ptr<uint8>(msgdata));
     }
 };

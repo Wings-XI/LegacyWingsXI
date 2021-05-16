@@ -79,6 +79,8 @@ set(SOURCES
     region.h
     roe.cpp
     roe.h
+    rpcmapper.h
+    rpcmapper.cpp
     spell.cpp
     spell.h
     status_effect_container.cpp

@@ -116,7 +116,7 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
 			continue;
 		}
 
-		if (distance(PBlueMage->loc.p, PMob->loc.p) > 100) { // too far away to learn
+		if (distanceSquared(PBlueMage->loc.p, PMob->loc.p) > 100.0f * 100.0f) { // too far away to learn
 			continue;
 		}
 

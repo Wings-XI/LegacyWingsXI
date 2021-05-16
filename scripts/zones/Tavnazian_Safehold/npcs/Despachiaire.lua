@@ -45,7 +45,7 @@ function onTrigger(player, npc)
     -- Putting Secrets of Ovens Lost at a lower priority than all missions
     elseif player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.SECRETS_OF_OVENS_LOST) == QUEST_AVAILABLE and
            player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.SPICE_GALS) == QUEST_COMPLETED and
-           (player:hasCompletedMission(COP, tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP) or (copCurrentMission == tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP and PromathiaStatus >= 1)) then
+           (player:hasCompletedMission(COP, tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP) or (copCurrentMission == tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP and copMissionStatus >= 1)) then
            -- wiki says access to Sacrarium, so going with can trigger entrance to Sacrarium or later
         player:startEvent(505) -- Tells player to talk to Jonette
     -- COP Default dialogue change

@@ -6,6 +6,10 @@ require("scripts/globals/titles")
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+end
+
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.KHIMAIRA_CARVER)
 end

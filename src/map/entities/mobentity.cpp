@@ -264,7 +264,7 @@ bool CMobEntity::CanRoamHome()
         return true;
     }
 
-    return distance(m_SpawnPoint, loc.p) < roam_home_distance;
+    return distanceSquared(m_SpawnPoint, loc.p) < roam_home_distance * roam_home_distance;
 }
 
 bool CMobEntity::CanRoam()

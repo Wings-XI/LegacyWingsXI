@@ -210,8 +210,11 @@ namespace charutils
     bool    AddWeaponSkillPoints(CCharEntity*, SLOTTYPE, int);
 
     int32   GetCharVar(CCharEntity* PChar, const char* var);
+    int32   GetCharVar(uint32 charid, const char* var);
     bool    AddCharVar(CCharEntity* PChar, const char* var, int32 increment);
+    bool    AddCharVar(uint32 charid, const char* var, int32 increment);
     bool    SetCharVar(CCharEntity* PChar, const char* var, int32 value);
+    bool    SetCharVar(uint32 charid, const char* var, int32 value);
 
     uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance);
 

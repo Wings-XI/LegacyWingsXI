@@ -32,6 +32,8 @@ function onTrigger(player, npc)
     local TheWaywardAutomationProgress = player:getCharVar("TheWaywardAutomationProgress")
     local OperationTeatime = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.OPERATION_TEATIME)
     local OperationTeatimeProgress = player:getCharVar("OperationTeatimeProgress")
+    local PuppetmasterBlues = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.PUPPETMASTER_BLUES)
+    local PuppetmasterBluesProgress = player:getCharVar("PuppetmasterBluesProgress")
     local LvL = player:getMainLvl()
     local Job = player:getMainJob()
 
@@ -59,10 +61,7 @@ function onTrigger(player, npc)
         player:startEvent(776) -- tell him you found automation
     elseif Job == tpz.job.PUP and LvL < AF2_QUEST_LEVEL and TheWaywardAutomation == QUEST_COMPLETED then
         player:startEvent(777)
-    elseif Job ~= tpz.job.PUP and TheWaywardAutomation == QUEST_COMPLETED then
-        player:startEvent(777)
-    elseif Job ~= tpz.job.PUP and NoStringsAttached == QUEST_COMPLETED then
-        player:startEvent(267) -- asking you how are you doing with your automaton
+    
 
 
     --Quest: Operation teatime
@@ -72,8 +71,26 @@ function onTrigger(player, npc)
         player:startEvent(779) -- Reminds you to get items
     elseif OperationTeatime == QUEST_ACCEPTED and OperationTeatimeProgress == 2 then
         player:startEvent(781) -- Reminds you to get items
-    elseif OperationTeatime == QUEST_COMPLETED then
-        player:startEvent(777)
+
+    --Quest: Puppetmaster Blues
+    elseif Job == tpz.job.PUP and LvL >= AF2_QUEST_LEVEL and NoStringsAttached == QUEST_COMPLETED and TheWaywardAutomation == QUEST_COMPLETED and OperationTeatime == QUEST_COMPLETED and PuppetmasterBlues == QUEST_AVAILABLE then
+        player:startEvent(782) -- CS, sends player to see Shamarhaan
+    elseif PuppetmasterBlues == QUEST_ACCEPTED and PuppetmasterBluesProgress >= 1 and PuppetmasterBluesProgress < 4 then
+        player:startEvent(783) -- Reminds Player to talk to Shamarhaan
+    elseif PuppetmasterBlues == QUEST_ACCEPTED and PuppetmasterBluesProgress == 4 then
+        player:startEvent(784)  -- CS directing Player to Nashmau
+    elseif PuppetmasterBlues == QUEST_ACCEPTED and PuppetmasterBluesProgress == 5 then
+        player:startEvent(785) -- Reminds Player to go to Nashmau
+    elseif PuppetmasterBlues == QUEST_ACCEPTED and PuppetmasterBluesProgress == 6 then
+        player:startEvent(786) -- End CS and reward for Puppetmaster Blues
+
+     -- Quests Complete
+    elseif PuppetmasterBlues == QUEST_COMPLETED then
+        player:startEvent(787) -- Recognizes the player and mentions Ellie as reference to AF3
+    elseif OperationTeatime == QUEST_COMPLETED or TheWaywardAutomation == QUEST_COMPLETED then
+        player:startEvent(777) -- Only triggered if you dont meet the requirements to start the next AF Quest
+    elseif Job ~= tpz.job.PUP and NoStringsAttached == QUEST_COMPLETED then
+        player:startEvent(267) -- asking you how are you doing with your automaton
     end
 end
 
@@ -101,5 +118,13 @@ function onEventFinish(player, csid, option)
     elseif csid == 780 then
         player:setCharVar("OperationTeatimeProgress", 2)
         player:confirmTrade()
+    elseif csid == 782 then
+        player:setCharVar("PuppetmasterBluesProgress", 1)
+        player:addQuest(AHT_URHGAN, tpz.quest.id.ahtUrhgan.PUPPETMASTER_BLUES)
+        player:setCharVar("[PUPAF]Remaining", 7) -- Player can now craft PUP AF
+    elseif csid == 784 then
+        player:setCharVar("PuppetmasterBluesProgress", 5)
+    elseif csid == 786 then
+        npcUtil.completeQuest(player, AHT_URHGAN, tpz.quest.id.ahtUrhgan.PUPPETMASTER_BLUES, {item=15267, title=tpz.title.PARAGON_OF_PUPPETMASTER_EXCELLENCE, var="PuppetmasterBluesProgress"})
     end
 end

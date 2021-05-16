@@ -3883,7 +3883,7 @@ namespace battleutils
 
         auto checkPosition = [&](CBattleEntity* PEntity) -> bool
         {
-            if (taUser->id != PEntity->id && distance(PEntity->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
+            if (taUser->id != PEntity->id && distanceSquared(PEntity->loc.p, PMob->loc.p) < distanceSquared(taUser->loc.p, PMob->loc.p))
             {
                 float memberXdif = PEntity->loc.p.x - mobX;
                 float memberZdif = PEntity->loc.p.z - mobZ;
@@ -4021,7 +4021,7 @@ namespace battleutils
                 CBattleEntity* member = PTarget->PParty->members.at(i);
                 if (!member->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) || member->id == PTarget->id || !(member->GetMJob() == JOB_PLD || member->GetSJob() == JOB_PLD))
                     continue;
-                if (member->id != PTarget->id && distance(member->loc.p, PMob->loc.p) <= distance(PTarget->loc.p, PMob->loc.p))
+                if (member->id != PTarget->id && distanceSquared(member->loc.p, PMob->loc.p) < distanceSquared(PTarget->loc.p, PMob->loc.p))
                 {
                     float memberXdif = member->loc.p.x - mobX;
                     float memberZdif = member->loc.p.z - mobZ;
@@ -4858,7 +4858,7 @@ namespace battleutils
                 uint8 pcinzone = 0;
                 uint8 maxLevel = 0;
                 PAttacker->ForAlliance([&pcinzone, &maxLevel, &mob](CBattleEntity* PMember) {
-                    if (PMember->getZone() == mob->getZone() && distance(PMember->loc.p, mob->loc.p) < 100)
+                    if (PMember->getZone() == mob->getZone() && distanceSquared(PMember->loc.p, mob->loc.p) < 100.0f * 100.0f)
                     {
                         maxLevel = std::max(maxLevel, PMember->GetMLevel());
                         pcinzone++;
@@ -6384,7 +6384,7 @@ namespace battleutils
                 }
 
                 if (distance(PCoverAbilityUser->loc.p, PMob->loc.p) <= (float)PMob->GetMeleeRange() &&                   //make sure cover user is within melee range
-                   distance(PCoverAbilityUser->loc.p, PMob->loc.p) <= distance(PCoverAbilityTarget->loc.p, PMob->loc.p)) //make sure cover user is closer to the mob than cover target
+                   distanceSquared(PCoverAbilityUser->loc.p, PMob->loc.p) < distanceSquared(PCoverAbilityTarget->loc.p, PMob->loc.p)) //make sure cover user is closer to the mob than cover target
                 {
                     float coverAbilityUserXdif = PCoverAbilityUser->loc.p.x - coverAbilityTargetX;
                     float coverAbilityUserZdif = PCoverAbilityUser->loc.p.z - coverAbilityTargetZ;

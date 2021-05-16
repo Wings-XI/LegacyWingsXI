@@ -113,10 +113,10 @@ void CTrustController::DoCombatTick(time_point tick)
     {
         if (POwner->PAI->CanFollowPath() && POwner->speed > 0)
         {
-            float currentDistanceToTarget = distance(POwner->loc.p, PTarget->loc.p);
-            float currentDistanceToMaster = distance(POwner->loc.p, PMaster->loc.p);
+            float currentDistanceToTargetSquared = distanceSquared(POwner->loc.p, PTarget->loc.p);
+            float currentDistanceToMasterSquared = distanceSquared(POwner->loc.p, PMaster->loc.p);
 
-            if (currentDistanceToTarget > WarpDistance)
+            if (currentDistanceToTargetSquared > WarpDistance * WarpDistance)
             {
                 POwner->PAI->PathFind->WarpTo(PTarget->loc.p);
             }
@@ -127,11 +127,11 @@ void CTrustController::DoCombatTick(time_point tick)
             {
             case NO_MOVE:
             {
-                if (currentDistanceToMaster > CastingDistance)
+                if (currentDistanceToMasterSquared > CastingDistance * CastingDistance)
                 {
                     PathOutToDistance(PTarget, 9.0f);
                 }
-                else if (currentDistanceToTarget > CastingDistance)
+                else if (currentDistanceToTargetSquared > CastingDistance * CastingDistance)
                 {
                     PathOutToDistance(PTarget, 9.0f);
                 }
@@ -153,9 +153,10 @@ void CTrustController::DoCombatTick(time_point tick)
                 std::unique_ptr<CBasicPacket> err;
                 if (!POwner->CanAttack(PTarget, err) && POwner->speed > 0)
                 {
-                    if (currentDistanceToTarget > RoamDistance)
+                    if (currentDistanceToTargetSquared > RoamDistance * RoamDistance)
                     {
-                        if (currentDistanceToTarget < RoamDistance * 3.0f && POwner->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+                        if (currentDistanceToTargetSquared < RoamDistance * RoamDistance * 3.0f * 3.0f &&
+                            POwner->PAI->PathFind->PathAround(PTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
                         {
                             POwner->PAI->PathFind->FollowPath();
                         }
@@ -202,11 +203,11 @@ void CTrustController::DoRoamTick(time_point tick)
 
     uint8 currentPartyPos = GetPartyPosition();
     CBattleEntity* PFollowTarget = (GetPartyPosition() > 0) ? (CBattleEntity*)PMaster->PTrusts.at(currentPartyPos - 1) : POwner->PMaster;
-    float currentDistance = distance(POwner->loc.p, PFollowTarget->loc.p);
+    float currentDistanceSquared = distanceSquared(POwner->loc.p, PFollowTarget->loc.p);
 
     for (auto POtherTrust : PMaster->PTrusts)
     {
-        if (POtherTrust != POwner && distance(POtherTrust->loc.p, POwner->loc.p) < 1.0f && !POwner->PAI->PathFind->IsFollowingPath())
+        if (POtherTrust != POwner && distanceSquared(POtherTrust->loc.p, POwner->loc.p) < 1.0f && !POwner->PAI->PathFind->IsFollowingPath())
         {
             auto diff_angle = worldAngle(POwner->loc.p, POtherTrust->loc.p) + 64;
             auto amount = (currentPartyPos % 2) ? 1.0f : -1.0f;
@@ -227,13 +228,13 @@ void CTrustController::DoRoamTick(time_point tick)
         }
     }
 
-    if (currentDistance > WarpDistance)
+    if (currentDistanceSquared > WarpDistance * WarpDistance)
     {
         POwner->PAI->PathFind->WarpTo(PFollowTarget->loc.p);
     }
-    else if (currentDistance > RoamDistance)
+    else if (currentDistanceSquared > RoamDistance * RoamDistance)
     {
-        if (currentDistance < RoamDistance * 3.0f && POwner->PAI->PathFind->PathAround(PFollowTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        if (currentDistanceSquared < RoamDistance * RoamDistance * 3.0f * 3.0f && POwner->PAI->PathFind->PathAround(PFollowTarget->loc.p, RoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
         {
             POwner->PAI->PathFind->FollowPath();
         }
@@ -269,7 +270,7 @@ void CTrustController::Declump(CCharEntity* PMaster, CBattleEntity* PTarget)
     uint8 currentPartyPos = GetPartyPosition();
     for (auto POtherTrust : PMaster->PTrusts)
     {
-        if (POtherTrust != POwner && !POtherTrust->PAI->PathFind->IsFollowingPath() && distance(POtherTrust->loc.p, POwner->loc.p) < 1.2f)
+        if (POtherTrust != POwner && !POtherTrust->PAI->PathFind->IsFollowingPath() && distanceSquared(POtherTrust->loc.p, POwner->loc.p) < 1.2f * 1.2f)
         {
             auto diff_angle = worldAngle(POwner->loc.p, PTarget->loc.p) + 64;
             auto amount = (currentPartyPos % 2) ? 1.0f : -1.0f;
@@ -344,7 +345,7 @@ void CTrustController::PathOutToDistance(CBattleEntity* PTarget, float amount)
     }
 
     // Get somewhat close to the target destination
-    if (distance(POwner->loc.p, target_position) > 2.0f && m_failedRepositionAttempts < 3)
+    if (distanceSquared(POwner->loc.p, target_position) > 2.0f * 2.0f && m_failedRepositionAttempts < 3)
     {
         POwner->PAI->PathFind->PathTo(target_position, PATHFLAG_RUN | PATHFLAG_WALLHACK);
     }

@@ -45,11 +45,17 @@ zones[tpz.zone.LUFAISE_MEADOWS] =
         {
             [16875720] = 16875741, -- -137.168 -15.390 91.016
         },
+        YALUN_EKE_PH          =
+        {
+            16875593, -- 236.418, -0.573, -118.742
+            16875604, -- 387.196, 0.060, -115.952
+        },
         LESHY_OFFSET          = 16875754,
         COLORFUL_LESHY        = 16875762,
         SPLINTERSPINE_GRUKJUK = 16875774,
         KURREA                = 16875778,
         AMALTHEIA             = 16875779,
+        YALUN_EKE             = 16875600,
     },
     npc =
     {

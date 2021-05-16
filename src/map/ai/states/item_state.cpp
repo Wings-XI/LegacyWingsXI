@@ -154,20 +154,6 @@ bool CItemState::Update(time_point tick)
             m_PEntity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
 			FinishItem(action);
         }
-        else if (m_consumeItem)
-        {
-            auto PItem = static_cast<CItemUsable*>(GetItem());
-            m_PEntity->ConsumeItem(PItem);
-
-            action.id = m_PEntity->id;
-            action.actiontype = ACTION_ITEM_INTERRUPT;
-
-            actionList_t& actionList = action.getNewActionList();
-            actionList.ActionTargetID = m_targid;
-
-            actionTarget_t& actionTarget = actionList.getNewActionTarget();
-            actionTarget.animation = ANIMATION_NONE;
-        }
         m_PEntity->PAI->EventHandler.triggerListener("ITEM_USE", m_PEntity, m_PItem, &action);
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
         Complete();

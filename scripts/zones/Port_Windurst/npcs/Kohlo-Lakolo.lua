@@ -95,9 +95,9 @@ Fame       = player:getFameLevel(WINDURST);
     elseif (CryingOverOnions == QUEST_ACCEPTED) then
         CryingOverOnionsVar = player:getCharVar("CryingOverOnions");
 
-        if (CryingOverOnionsVar == 3) then
+        if (CryingOverOnionsVar == 4) then
             player:startEvent(512);
-        elseif (CryingOverOnionsVar == 2) then
+        elseif (CryingOverOnionsVar == 3) then
             player:startEvent(497);
         else
             player:startEvent(498);
@@ -281,7 +281,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 496) then
         player:addQuest(WINDURST,tpz.quest.id.windurst.CRYING_OVER_ONIONS);
     elseif (csid == 497) then
-        player:setCharVar("CryingOverOnions",3);
+        player:setCharVar("CryingOverOnions",4);
     elseif (csid == 513) then
         player:addQuest(WINDURST,tpz.quest.id.windurst.THE_PROMISE);
     elseif (csid == 522) then
