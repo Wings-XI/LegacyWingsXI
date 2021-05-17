@@ -18,6 +18,10 @@ function onMobInitialize(mob)
     mob:setMod(tpz.mod.EVA, 50)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DEFP, -20)
+end
+
 function onMobEngaged (mob, target)
     local mobId = mob:getID()
 
