@@ -874,6 +874,7 @@ namespace charutils
 
         PChar->StatusEffectContainer->LoadStatusEffects();
         PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
+        PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
 
         charutils::LoadEquip(PChar);
         PChar->health.hp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxHP() : HP;

@@ -468,6 +468,12 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
                 PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_SPAWN, UPDATE_ALL_MOB));
             }
 
+            if (PCurrentMob->getMobMod(MOBMOD_PIXIE) > 0) {
+                PCurrentMob->PixieTryHealPlayer(PChar);
+                // Pixies never aggro
+                continue;
+            }
+
             if (PChar->isDead() || PChar->nameflags.flags & FLAG_GM || PCurrentMob->PMaster)
                 continue;
 

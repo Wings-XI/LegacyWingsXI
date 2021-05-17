@@ -2216,6 +2216,15 @@ void CCharEntity::SetFomorHate(uint32 fomorHate)
     charutils::SetCharVar(this, "FOMOR_HATE", fomorHate);
 }
 
+void CCharEntity::SetPixieHate(uint32 pixieHate)
+{
+    if (pixieHate > 60) {
+        pixieHate = 60;
+    }
+    m_pixieHate = pixieHate;
+    charutils::SetCharVar(this, "PIXIE_HATE", pixieHate);
+}
+
 void CCharEntity::DropBattlefield()
 {
     PBattlefield = nullptr;
