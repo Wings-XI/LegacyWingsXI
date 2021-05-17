@@ -52090,6 +52090,73 @@ INSERT INTO `item_mods` VALUES (28671,8,7);       -- STR +7
 INSERT INTO `item_mods` VALUES (28671,10,7);      -- VIT +7
 INSERT INTO `item_mods` VALUES (28671,13,7);      -- MND +7
 INSERT INTO `item_mods` VALUES (28671,161,-4);    -- Physical damage taken -4%
+INSERT INTO `item_mods` VALUES (17548,431,1);     -- aquilos staff additional effect
+INSERT INTO `item_mods` VALUES (16945,431,1);     -- arondight additional effect
+INSERT INTO `item_mods` VALUES (16943,431,1);     -- ascalon additional effect
+INSERT INTO `item_mods` VALUES (18042,431,1);     -- ascention additional effect
+INSERT INTO `item_mods` VALUES (17550,431,1);     -- austers staff additional effect
+INSERT INTO `item_mods` VALUES (18041,431,1);     -- a loutrance additional effect
+INSERT INTO `item_mods` VALUES (17623,431,1);     -- bartholomews knife additional effect
+INSERT INTO `item_mods` VALUES (16888,431,1);     -- battle fork additional effect
+INSERT INTO `item_mods` VALUES (16889,431,1);     -- battle fork +1 additional effect
+INSERT INTO `item_mods` VALUES (16580,431,1);     -- bloodsword additional effect
+INSERT INTO `item_mods` VALUES (16846,431,1);     -- bloody lance additional effect
+INSERT INTO `item_mods` VALUES (16609,431,1);     -- bloody sword additional effect
+INSERT INTO `item_mods` VALUES (18198,431,1);     -- byakkos axe additional effect
+INSERT INTO `item_mods` VALUES (16881,431,1);     -- carnage lance additional effect
+INSERT INTO `item_mods` VALUES (17646,431,1);     -- carnage sword additional effect
+INSERT INTO `item_mods` VALUES (16515,431,1);     -- colichemarde additional effect
+INSERT INTO `item_mods` VALUES (17632,431,1);     -- colichemarde +1 additional effect
+INSERT INTO `item_mods` VALUES (16548,431,1);     -- coral sword additional effect
+INSERT INTO `item_mods` VALUES (17651,431,1);     -- dainslaif additional effect
+INSERT INTO `item_mods` VALUES (17559,431,1);     -- dark staff additional effect
+INSERT INTO `item_mods` VALUES (16787,431,1);     -- demonslicer additional effect
+INSERT INTO `item_mods` VALUES (16416,431,1);     -- dragon claws additional effect
+INSERT INTO `item_mods` VALUES (17485,431,1);     -- dragon claws +1 additional effect
+INSERT INTO `item_mods` VALUES (17551,431,1);     -- earth staff additional effect
+INSERT INTO `item_mods` VALUES (17545,431,1);     -- fire staff additional effect
+INSERT INTO `item_mods` VALUES (17291,431,1);     -- flame boomerang additional effect
+INSERT INTO `item_mods` VALUES (16522,431,1);     -- flame degen additional effect
+INSERT INTO `item_mods` VALUES (16823,431,1);     -- flame degen +1 additional effect
+INSERT INTO `item_mods` VALUES (16726,431,1);     -- forsetis axe additional effect
+INSERT INTO `item_mods` VALUES (17576,431,1);     -- grim staff additional effect
+INSERT INTO `item_mods` VALUES (17738,431,1);     -- hauteclaire additional effect
+INSERT INTO `item_mods` VALUES (16860,431,1);     -- holy lance additional effect
+INSERT INTO `item_mods` VALUES (16880,431,1);     -- holy lance +1 additional effect
+INSERT INTO `item_mods` VALUES (17041,431,1);     -- holy mace additional effect
+INSERT INTO `item_mods` VALUES (17411,431,1);     -- holy mace +1 additional effect
+INSERT INTO `item_mods` VALUES (17547,431,1);     -- ice staff additional effect
+INSERT INTO `item_mods` VALUES (17665,431,1);     -- ifrits blade additional effect
+INSERT INTO `item_mods` VALUES (17511,431,1);     -- indra katars additional effect
+INSERT INTO `item_mods` VALUES (17554,431,1);     -- jupiters staff additional effect
+INSERT INTO `item_mods` VALUES (18859,431,1);     -- kerykeion additional effect
+INSERT INTO `item_mods` VALUES (17439,431,1);     -- leviathans rod additional effect
+INSERT INTO `item_mods` VALUES (16620,431,1);     -- mermans sword additional effect
+INSERT INTO `item_mods` VALUES (17778,431,1);     -- muketsu additional effect
+INSERT INTO `item_mods` VALUES (17779,431,1);     -- muketsu +1 additional effect
+INSERT INTO `item_mods` VALUES (16961,431,1);     -- murasame additional effect
+INSERT INTO `item_mods` VALUES (16884,431,1);     -- narval additional effect
+INSERT INTO `item_mods` VALUES (16720,431,1);     -- plantbane additional effect
+INSERT INTO `item_mods` VALUES (17560,431,1);     -- plutos staff additional effect
+INSERT INTO `item_mods` VALUES (18210,431,1);     -- raifu additional effect
+INSERT INTO `item_mods` VALUES (17531,431,1);     -- ramuhs staff additional effect
+INSERT INTO `item_mods` VALUES (17659,431,1);     -- seiryus sword additional effect
+INSERT INTO `item_mods` VALUES (16675,431,1);     -- storm axe additional effect
+INSERT INTO `item_mods` VALUES (18043,431,1);     -- suzakus scythe additional effect
+INSERT INTO `item_mods` VALUES (17552,431,1);     -- terras staff additional effect
+INSERT INTO `item_mods` VALUES (16869,431,1);     -- thundercloud additional effect
+INSERT INTO `item_mods` VALUES (17553,431,1);     -- thunder staff additional effect
+INSERT INTO `item_mods` VALUES (17438,431,1);     -- titans cudgel additional effect
+INSERT INTO `item_mods` VALUES (16837,431,1);     -- trident additional effect
+INSERT INTO `item_mods` VALUES (17546,431,1);     -- vulcans staff additional effect
+INSERT INTO `item_mods` VALUES (17135,431,1);     -- walrus staff additional effect
+INSERT INTO `item_mods` VALUES (17555,431,1);     -- water staff additional effect
+INSERT INTO `item_mods` VALUES (18040,431,1);     -- webcutter additional effect
+INSERT INTO `item_mods` VALUES (16857,431,1);     -- wind spear additional effect
+INSERT INTO `item_mods` VALUES (17549,431,1);     -- wind staff additional effect
+INSERT INTO `item_mods` VALUES (16542,431,1);     -- wing sword additional effect
+INSERT INTO `item_mods` VALUES (17637,431,1);     -- wing sword +1 additional effect
+
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
