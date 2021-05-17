@@ -20,12 +20,12 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     local criticalHit = false
     local pdif = 0
     local finaldmg = 0
-    
+
     local testEntity = attacker
     if not attacker:isPC() and attacker:isPet() and (attacker:getMaster()):isPC() then
         testEntity = attacker:getMaster()
     end
-    
+
     local hitrate = calcParams.hitRate
     if calcParams.firstHitRateBonus and calcParams.melee == true and (calcParams.useOAXTimes == nil or calcParams.useOAXTimes == false) then -- jumps do not get this acc bonus
         hitrate = hitrate + calcParams.firstHitRateBonus/100
@@ -63,8 +63,8 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
 
                 finaldmg = finaldmg + magicdmg
             end
-            
-            
+
+
             -- if criticalHit == false then
                 --testEntity:PrintToPlayer(string.format("non-critical WS hit for %i",finaldmg))
             -- else
@@ -149,15 +149,9 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Calculate critrates
     local critRate = 0
 
-    if (wsParams.canCrit) then -- Work out critical hit ratios
+    if wsParams.canCrit then -- Work out critical hit ratios
         local nativecrit = 0
-        critrate = fTP(tp, wsParams.crit100, wsParams.crit200, wsParams.crit300)
-
-        if calcParams.flourishEffect then
-            if calcParams.flourishEffect:getPower() > 1 then
-                critrate = critrate + (10 + calcParams.flourishEffect:getSubPower()/2)/100
-            end
-        end
+        critRate = fTP(tp, wsParams.crit100, wsParams.crit200, wsParams.crit300)
 
         -- Add on native crit hit rate (guesstimated, it actually follows an exponential curve)
         nativecrit = (attacker:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI))*0.005 -- assumes +0.5% crit rate per 1 dDEX
@@ -176,9 +170,14 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
             nativecrit = nativecrit + attacker:getStatusEffect(tpz.effect.INNIN):getPower()
         end
 
-        critrate = critrate + nativecrit
+        critRate = critRate + nativecrit
+
+        if calcParams.flourishEffect and calcParams.flourishEffect:getPower() > 2 then
+            critRate = critRate + 0.25 + calcParams.flourishEffect:getSubPower()/100
+        end
     end
-    calcParams.critRate = critrate
+    calcParams.critRate = critRate
+    --print(string.format("critrate = %f",critRate))
 
     -- Start the WS
     local hitdmg = 0
@@ -235,7 +234,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     local offHitsDone = 0
     local numHits, numOffhandHits = getMultiAttacks(attacker, target, wsParams.numHits, wsParams.useOAXTimes, calcParams.melee)
     calcParams.useOAXTimes = wsParams.useOAXTimes
-	
+
     while (hitsDone < numHits) do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
         finaldmg = finaldmg + hitdmg
@@ -317,9 +316,12 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-    
+
     calcParams.firstHitRateBonus = 50
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
+
+    -- allow crit if building flourish is on (3+ moves)
+    if calcParams.flourishEffect ~= nil and calcParams.flourishEffect:getPower() > 2 then wsParams.canCrit = true end
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
@@ -329,13 +331,13 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
     attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
-    
+
     local hthres = target:getMod(tpz.mod.HTHRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
     local impactres = target:getMod(tpz.mod.IMPACTRES)
     local slashres = target:getMod(tpz.mod.SLASHRES)
     local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
-    
+
     -- Calculate reductions
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
@@ -365,7 +367,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
             end
         end
     end
-    
+
     --[[
     // Circle Effects
     if (m_victim->objtype == TYPE_MOB && m_damage > 0)
@@ -392,13 +394,13 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
         m_damage = m_damage * circlemult / 100;
     }
     ]]
-    
+
     -- Circle Effects
     if target:isMob() and finaldmg > 0 then
         local eco = target:getSystem()
         local circlemult = 100
         local mod = 0
-        
+
         if     eco == 1  then mod = 1226
         elseif eco == 2  then mod = 1228
         elseif eco == 3  then mod = 1232
@@ -413,14 +415,14 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
         elseif eco == 19 then mod = 1231
         elseif eco == 20 then mod = 1224
         end
-        
+
         if mod > 0 then
             circlemult = 100 + attacker:getMod(mod)
         end
-        
+
         finaldmg = math.floor(finaldmg * circlemult / 100)
     end
-    
+
     if wsParams.useAutoTPFormula == nil or wsParams.useAutoTPFormula == false then
         finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.0 -- Add server bonus
     end
@@ -474,11 +476,11 @@ end
         bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC),
         bonusWSmods = wsParams.bonusWSmods or 0
     }
-	
+
     if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) == true then
         calcParams.accStat = calcParams.accStat + 20
     end
-    
+
     calcParams.firstHitRateBonus = 0
     calcParams.hitRate = getRangedHitRate(attacker, target, false, calcParams.bonusAcc)
 
@@ -495,13 +497,13 @@ end
     else
         finaldmg = finaldmg * pierceres / 1000
     end
-	
+
     finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.05 -- Add server bonus
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     attacker:delStatusEffect(tpz.effect.FLASHY_SHOT)
     attacker:delStatusEffect(tpz.effect.STEALTH_SHOT)
-	
+
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -740,15 +742,12 @@ function getMeleeDmg(attacker, weaponType, kick)
 end
 
 function getHitRate(attacker, target, capHitRate, bonus)
-    local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:addMod(tpz.mod.ACC, 20 + flourisheffect:getSubPower())
-    end
     local acc = attacker:getACC()
     local eva = target:getEVA()
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:delMod(tpz.mod.ACC, 20 + flourisheffect:getSubPower())
-    end
+
+    local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
+    if flourisheffect ~= nil then acc = acc + 20 + flourisheffect:getSubPower()*2 end
+
     if (bonus == nil) then
         bonus = 0
     end
@@ -771,9 +770,9 @@ function getHitRate(attacker, target, capHitRate, bonus)
     if lvldiff < -8 then
         lvldiff = -8 + (lvldiff + 8)/3
     end
-    
+
     acc = acc + lvldiff*4
-    
+
     --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
         --acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
     --elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
@@ -790,7 +789,7 @@ function getHitRate(attacker, target, capHitRate, bonus)
     end
 
     hitrate = hitrate+hitdiff
-    
+
     --[[
     local firstBonus = 0
     if hitrate < 95 then -- 35% bonus at 75% below this threshhold
@@ -803,10 +802,10 @@ function getHitRate(attacker, target, capHitRate, bonus)
         firstBonus = 0
     end
     ]]
-    
+
     hitrate = hitrate/100
     --firstBonus = firstBonus/100
-    
+
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
         if (hitrate>0.95) then
@@ -834,7 +833,7 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
     end
 
     acc = acc + bonus
-    
+
     local lvldiff = attacker:getMainLvl() - target:getMainLvl()
     if lvldiff > 6 then
         lvldiff = 6 + (lvldiff - 8)/3
@@ -842,7 +841,7 @@ function getRangedHitRate(attacker, target, capHitRate, bonus)
     if lvldiff < -6 then
         lvldiff = -6 + (lvldiff + 8)/3
     end
-    
+
     acc = acc + lvldiff*4
 
     --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
@@ -914,13 +913,12 @@ end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
-
+    local flourishCoefficient = 1
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:addMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
-    end
+    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 2 + flourisheffect:getSubPower()/50 end
+
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local cratio = (attacker:getStat(tpz.mod.ATT) * atkmulti * flourishCoefficient) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
     --attacker:PrintToPlayer(string.format("att post wsmod: %i ... def post ignoreddef: %i",attacker:getStat(tpz.mod.ATT) * atkmulti,defender:getStat(tpz.mod.DEF) - ignoredDef))
     local levelcor = 1 + (attacker:getMainLvl() - defender:getMainLvl())*0.02
     if levelcor > 1 then levelcor = 1
@@ -928,9 +926,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     cratio = cratio * levelcor
     --cratio = utils.clamp(cratio, 0, 2.25)
     cratio = utils.clamp(cratio, 0, 4.0)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
-        attacker:delMod(tpz.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
-    end
+    --print(string.format("cratio = %f",cratio))
     --local levelcor = 0
     local pdifmin = 0
     local pdifmax = 0
@@ -974,13 +970,13 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
         pdifmin = cratio - 0.375
     end
     ]]
-    
-    
+
+
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then
 		pdifmax = 0.15
 	end
-	
+
     pdifmin = pdifmax * 0.675 + 1/6
     if pdifmax > 2.75 then
         pdifmax = 2.75
@@ -988,13 +984,13 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     if pdifmin > pdifmax - 0.1 then
         pdifmin = pdifmax - 0.1
     end
-    
-    
-    
+
+
+
     local pdif = {}
     pdif[1] = pdifmin
     pdif[2] = pdifmax
-    
+
     --attacker:PrintToPlayer(string.format("ratio: %f min: %f max %f and level correction was %f", cratio, pdifmin, pdifmax, levelcor))
 
     local pdifcrit = {}
@@ -1029,12 +1025,12 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
         pdifmin = cratio - 0.375
     end
     ]]
-    
+
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then
 		pdifmax = 0.15
 	end
-	
+
     pdifmin = pdifmax * 0.675 + 1/6
     if pdifmax > 2.75 then
         pdifmax = 2.75
@@ -1042,7 +1038,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     if pdifmin > pdifmax - 0.1 then
         pdifmin = pdifmax - 0.1
     end
-    
+
 
     local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
     critbonus = utils.clamp(critbonus, 0, 100)
@@ -1053,9 +1049,9 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
 end
 
 function cRangedRatio(attacker, defender, params, ignoredDef, tp)
-    
+
     local range = attacker:checkDistance(defender)
-    
+
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local cratio = attacker:getRATT(range) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
@@ -1076,10 +1072,10 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp)
     if (cratio < 0) then
         cratio = 0
     end
-    
+
     local pdifmin = 0
     local pdifmax = 0
-    
+
     --[[
     -- max
     local pdifmax = 0
@@ -1101,17 +1097,17 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp)
         pdifmin = (cratio * (20/19))-(3/19)
     end
     ]]
-    
+
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then
 		pdifmax = 0.15
 	end
-	
+
     pdifmin = pdifmax * 0.675 + 1/6
     if pdifmin > pdifmax - 0.1 then
         pdifmin = pdifmax - 0.1
     end
-    
+
     pdif = {}
     pdif[1] = pdifmin
     pdif[2] = pdifmax
@@ -1251,7 +1247,7 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
     local oaThriceRate = attacker:getMod(tpz.mod.MYTHIC_OCC_ATT_THRICE)/100
     local oaTwiceRate = attacker:getMod(tpz.mod.MYTHIC_OCC_ATT_TWICE)/100
     local offHandHits = 0
-    
+
     --doubleRate = 1
 
     -- Add Ambush Augments to Triple Attack
@@ -1259,12 +1255,12 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
         --tripleRate = tripleRate + attacker:getMerit(tpz.merit.AMBUSH) / 3 -- Value of Ambush is 3 per mert, augment gives +1 Triple Attack per merit
     --end
     -- this is lv90 item onry
-    
+
     -- QA/TA/DA can only proc on the first hit of each weapon or each fist
     if (attacker:getOffhandDmg() > 0 or attacker:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.HAND_TO_HAND) then
         multiChances = 2
     end
-    
+
     if melee == false then
         bonusHits = 0
         multiChances = 0
@@ -1298,12 +1294,12 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
             quadRate = attacker:getMod(tpz.mod.QUAD_ATTACK)/100
         end
     end
-    
+
     -- for Jump, now check multihit weapons if we have no bonushits
     if attacker:isPC() and useOAXTimes ~= nil and useOAXTimes == true and bonusHits == 0 then
         local mhandOAX = attacker:getOAXTimes(0)
         local offhandOAX = attacker:getOAXTimes(1)
-        
+
         if mhandOAX > 0 then
             bonusHits = bonusHits + mhandOAX - 1
         end
@@ -1311,13 +1307,13 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
             offHandHits = offhandOAX - 1
         end
     end
-    
+
     local ret1 = numHits + bonusHits
-    
+
     if (ret1 > 8) then
         ret1 = 8
     end
-    
+
     return ret1, offHandHits
 end
 
