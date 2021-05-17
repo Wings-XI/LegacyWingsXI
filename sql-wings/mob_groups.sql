@@ -10902,7 +10902,7 @@ INSERT INTO `mob_groups` VALUES(1, 372, 192, 'Battue_Bats', 480, 0, 244, 0, 0, 1
 INSERT INTO `mob_groups` VALUES(2, 1737, 192, 'Goblin_Thug', 900, 0, 1174, 0, 0, 1, 6, 0);
 INSERT INTO `mob_groups` VALUES(3, 443, 192, 'Blade_Bat', 480, 0, 19, 0, 0, 4, 6, 0);
 INSERT INTO `mob_groups` VALUES(4, 1744, 192, 'Goblin_Weaver', 900, 0, 1187, 0, 0, 1, 7, 0);
-INSERT INTO `mob_groups` VALUES(5, 2475, 192, 'Magicked_Bones', 480, 0, 0, 0, 0, 3, 8, 0);
+INSERT INTO `mob_groups` VALUES(5, 2475, 192, 'Magicked_Bones', 900, 0, 2867, 0, 0, 3, 8, 0);
 INSERT INTO `mob_groups` VALUES(11, 4319, 192, 'Wendigo', 300, 0, 2638, 0, 0, 25, 28, 0);
 INSERT INTO `mob_groups` VALUES(10, 1635, 192, 'Goblin_Ambusher', 900, 0, 1021, 0, 0, 14, 18, 0);
 INSERT INTO `mob_groups` VALUES(9, 1738, 192, 'Goblin_Tinkerer', 900, 0, 1035, 0, 0, 14, 18, 0);
