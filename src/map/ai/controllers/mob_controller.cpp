@@ -219,10 +219,10 @@ void CMobController::TryLink()
 * Checks if the mob can detect the target using it's detection (sight, sound, etc)
 * This is used to aggro and deaggro (Mobs start to deaggro after failing to detect target).
 **/
-bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
+bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bool detectDead)
 {
     TracyZoneScoped;
-    if (PTarget->isDead() || PTarget->isMounted()) return false;
+    if ((!detectDead) && (PTarget->isDead() || PTarget->isMounted())) return false;
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
@@ -1080,6 +1080,16 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
             }
         }    
     });
+    return hate;
+}
+
+int32 CMobController::GetPixieHate(CBattleEntity* PTarget)
+{
+    if (!PTarget || PTarget->objtype != TYPE_PC) {
+        return -1;
+    }
+    CCharEntity* PChar = (CCharEntity*)PTarget;
+    int32 hate = (int32)PChar->m_pixieHate;
     return hate;
 }
 

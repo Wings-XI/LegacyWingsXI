@@ -573,9 +573,13 @@ void LoadMOBList()
             luautils::ApplyZoneMixins(PMob);
             PMob->saveModifiers();
             PMob->saveMobModifiers();
-            PMob->m_AllowRespawn = PMob->m_SpawnType == SPAWNTYPE_NORMAL;
+            PMob->m_AllowRespawn = PMob->m_SpawnType == SPAWNTYPE_NORMAL || PMob->m_SpawnType == SPAWNTYPE_PIXIE;
+            bool shouldSpawn = PMob->m_AllowRespawn;
+            if (PMob->m_SpawnType == SPAWNTYPE_PIXIE) {
+                shouldSpawn = PMob->PixieShouldSpawn();
+            }
 
-            if (PMob->m_AllowRespawn)
+            if (shouldSpawn)
             {
                 PMob->Spawn();
             }
