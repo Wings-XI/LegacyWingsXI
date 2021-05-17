@@ -27,7 +27,7 @@ function onTrigger(player, npc)
         -- this decides if allied ring is in the Allied Notes item list.
     -- end
 
-    if medal_rank == 0 then
+    if medalRank == 0 then
         player:startEvent(14)
     else
         player:startEvent(13, 0, notes, freelances, unknown, medalRank, bonusEffects, timeStamp, 0)
