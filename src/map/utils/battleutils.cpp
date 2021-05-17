@@ -3380,8 +3380,6 @@ namespace battleutils
 
     SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary)
     {
-        const std::lock_guard<std::mutex> lock(PDefender->scMutex);
-
         CStatusEffect* PSCEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
         CStatusEffect* PCBEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_CHAINBOUND, 0);
         SKILLCHAIN_ELEMENT skillchain = SC_NONE;
@@ -3401,7 +3399,7 @@ namespace battleutils
             // Chainbound active on target
             if (PCBEffect)
             {
-                if (PCBEffect->GetStartTime() + 3s < server_clock::now())
+                if (PCBEffect->GetStartTime() + 1s < server_clock::now())
                 {
                     //Konzen-Ittai
                     if (PCBEffect->GetPower() > 1)
@@ -3433,7 +3431,7 @@ namespace battleutils
                 // Previous effect is an opening effect, meaning the power is
                 // actually the ID of the opening weaponskill.  We need all 3
                 // of the possible skillchain properties on the initial link.
-                if (PSCEffect->GetStartTime() + 3s < server_clock::now())
+                if (PSCEffect->GetStartTime() + 1s < server_clock::now())
                 {
                     auto properties = PSCEffect->GetPower();
                     resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(properties & 0b1111));
@@ -3446,7 +3444,7 @@ namespace battleutils
             {
                 // Previous effect is not an opening effect, meaning the power is
                 // The skill chain ID resonating.
-                if (PSCEffect->GetStartTime() + 3s < server_clock::now())
+                if (PSCEffect->GetStartTime() + 1s < server_clock::now())
                 {
                     resonanceProperties.push_back((SKILLCHAIN_ELEMENT)PSCEffect->GetPower());
                     skillchain = FormSkillchain(resonanceProperties, skillProperties);
