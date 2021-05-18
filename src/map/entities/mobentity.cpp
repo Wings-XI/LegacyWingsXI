@@ -1338,6 +1338,51 @@ bool CMobEntity::OnAttack(CAttackState& state, action_t& action)
     }
 }
 
+int32 CMobEntity::PixieGetAmity()
+{
+    // Prevent spamming the DB with calls
+    time_t now = time(NULL);
+    if (g_pixieLastAmityRefresh + 60 < now) {
+        int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = 'PixieAmity';");
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+            g_pixieAmity = Sql_GetIntData(SqlHandle, 0);
+        }
+        g_pixieLastAmityRefresh = now;
+    }
+    int32 amity = g_pixieAmity;
+    if (amity < -255) {
+        amity = -255;
+    }
+    if (amity > 255) {
+        amity = 255;
+    }
+    return amity;
+}
+
+uint32 CMobEntity::PixieGetHealHateThreshold(CCharEntity* PChar)
+{
+    int32 amity = PixieGetAmity();
+    if (amity >= 200) {
+        // Pixies extremely happy, will cure even most offenders
+        return 50;
+    }
+    if (amity >= 50) {
+        // Will generally cure most players
+        return 20;
+    }
+    if (amity >= -50) {
+        // Default state
+        return 10;
+    }
+    if (amity >= -100) {
+        // Pixies are afraid, will not cure easily
+        return 5;
+    }
+    // Pixies on the verge of extinction, will not cure anyone
+    // who's ever touched a pixie (unless hate was reset)
+    return 1;
+}
+
 void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
 {
     time_t now = time(NULL);
@@ -1356,7 +1401,7 @@ void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
         // Must rest between casts (TODO: Check real value)
         return;
     }
-    if (PChar->m_pixieHate >= 20) {
+    if (PChar->m_pixieHate >= PixieGetHealHateThreshold(PChar)) {
         // TODO: Find real values
         // You killed my relatives so I don't care if you die
         return;
@@ -1404,26 +1449,7 @@ void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
 
 bool CMobEntity::PixieShouldSpawn()
 {
-    int32 amity = 0;
-    // Prevent spamming the DB with calls
-    time_t now = time(NULL);
-    if (g_pixieLastAmityRefresh + 60 < now) {
-        int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = 'PixieAmity';");
-        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
-            amity = Sql_GetIntData(SqlHandle, 0);
-        }
-        g_pixieAmity = amity;
-        g_pixieLastAmityRefresh = now;
-    }
-    else {
-        amity = g_pixieAmity;
-    }
-    if (amity < -255) {
-        amity = -255;
-    }
-    if (amity > 255) {
-        amity = 255;
-    }
+    int32 amity = PixieGetAmity();
     if (loc.zone->GetRegionID() < 33 || loc.zone->GetRegionID() > 40) {
         // Pixies in the present require higher amity
         amity -= 300;
