@@ -28,6 +28,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../states/inactive_state.h"
 #include "../states/magic_state.h"
 #include "../states/weaponskill_state.h"
+#include "../states/claimshield_state.h"
 #include "../../mobskill.h"
 #include "../../party.h"
 #include "../../status_effect_container.h"
@@ -1132,6 +1133,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->objtype == TYPE_PC && server_clock::now() < ((CCharEntity*)PTarget)->m_ZoneAggroImmunity)
+    {
+        return false;
+    }
+
+    if (PMob->PAI && PMob->PAI->IsCurrentState<CClaimShieldState>())
     {
         return false;
     }
