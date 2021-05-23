@@ -1537,6 +1537,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         isSange = true;
         hitCount += getMod(Mod::UTSUSEMI);
     }
+    //ShowDebug("max barrage hitcount = %u\n", hitCount);
 
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
@@ -1569,6 +1570,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 // at least 1 hit occured
                 hitOccured = true;
                 realHits++;
+                //ShowDebug("RA hit!\n");
 
                 if (isSange)
                 {
