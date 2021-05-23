@@ -54,6 +54,9 @@
 #include "../treasure_pool.h"
 #include "../conquest_system.h"
 
+int32 g_pixieAmity = 0;
+time_t g_pixieLastAmityRefresh = 0;
+
 CMobEntity::CMobEntity()
 {
     objtype = TYPE_MOB;
@@ -119,6 +122,8 @@ CMobEntity::CMobEntity()
     m_SpellListContainer = nullptr;
     PEnmityContainer = new CEnmityContainer(this);
     SpellContainer = new CMobSpellContainer(this);
+
+    m_pixieLastCast = 0;
 
     // For Dyna Stats
     m_StatPoppedMobs = false;
@@ -1331,4 +1336,130 @@ bool CMobEntity::OnAttack(CAttackState& state, action_t& action)
     {
         return CBattleEntity::OnAttack(state, action);
     }
+}
+
+int32 CMobEntity::PixieGetAmity()
+{
+    // Prevent spamming the DB with calls
+    time_t now = time(NULL);
+    if (g_pixieLastAmityRefresh + 60 < now) {
+        int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = 'PixieAmity';");
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+            g_pixieAmity = Sql_GetIntData(SqlHandle, 0);
+        }
+        g_pixieLastAmityRefresh = now;
+    }
+    int32 amity = g_pixieAmity;
+    if (amity < -255) {
+        amity = -255;
+    }
+    if (amity > 255) {
+        amity = 255;
+    }
+    return amity;
+}
+
+uint32 CMobEntity::PixieGetHealHateThreshold(CCharEntity* PChar)
+{
+    int32 amity = PixieGetAmity();
+    if (amity >= 200) {
+        // Pixies extremely happy, will cure even most offenders
+        return 50;
+    }
+    if (amity >= 50) {
+        // Will generally cure most players
+        return 20;
+    }
+    if (amity >= -50) {
+        // Default state
+        return 10;
+    }
+    if (amity >= -100) {
+        // Pixies are afraid, will not cure easily
+        return 5;
+    }
+    // Pixies on the verge of extinction, will not cure anyone
+    // who's ever touched a pixie (unless hate was reset)
+    return 1;
+}
+
+void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
+{
+    time_t now = time(NULL);
+    SpellID spell = SpellID::NULLSPELL;
+    if (!PAI) {
+        return;
+    }
+    CMobController* controller = static_cast<CMobController*>(PAI->GetController());
+    if (!controller) {
+        return;
+    }
+    if (getMobMod(MOBMOD_PIXIE) <= 0) {
+        return;
+    }
+    if (m_pixieLastCast + 30 >= now) {
+        // Must rest between casts (TODO: Check real value)
+        return;
+    }
+    if (PChar->m_pixieHate >= PixieGetHealHateThreshold(PChar)) {
+        // TODO: Find real values
+        // You killed my relatives so I don't care if you die
+        return;
+    }
+    if (!controller->CanDetectTarget(PChar, false, true)) {
+        // Must be able to detect the player to cast
+        return;
+    }
+    if (PChar->isDead()) {
+        spell = SpellID::Raise_III;
+    }
+    else if (PChar->GetHPP() <= 90) {
+        // TODO: Check what's the cure threshold on retail
+        int32 max_hp = PChar->GetMaxHP();
+        int32 current_hp = PChar->health.hp;
+        int32 to_cure = max_hp - current_hp;
+        if (to_cure < 0) {
+            to_cure = 0;
+        }
+        if (to_cure > 0) {
+            // Set according to the soft cap of each cure
+            if (to_cure <= 30) {
+                spell = SpellID::Cure;
+            }
+            else if (to_cure <= 90) {
+                spell = SpellID::Cure_II;
+            }
+            else if (to_cure <= 190) {
+                spell = SpellID::Cure_III;
+            }
+            else if (to_cure <= 380) {
+                spell = SpellID::Cure_IV;
+            }
+            else {
+                spell = SpellID::Cure_V;
+            }
+        }
+    }
+    if (spell != SpellID::NULLSPELL) {
+        if (controller->Cast(PChar->targid, spell)) {
+            m_pixieLastCast = now;
+        }
+    }
+}
+
+bool CMobEntity::PixieShouldSpawn()
+{
+    int32 amity = PixieGetAmity();
+    if (loc.zone->GetRegionID() < 33 || loc.zone->GetRegionID() > 40) {
+        // Pixies in the present require higher amity
+        amity -= 300;
+    }
+    if (amity >= -50) {
+        return true;
+    }
+    if (amity <= -150) {
+        return false;
+    }
+    int32 chance = amity + 150;
+    return (tpzrand::GetRandomNumber(100) < chance);
 }

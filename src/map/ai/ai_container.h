@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -129,15 +129,6 @@ public:
     uint16 m_queuedSpellTargId;
     SpellID m_queuedSpell;
 
-protected:
-    // input controller
-    std::unique_ptr<CController> Controller;
-    // current synchronized server time (before AI loop execution)
-    time_point m_Tick;
-    time_point m_PrevTick;
-    //entity who holds this AI
-    CBaseEntity* PEntity;
-
     void CheckCompletedStates();
     template<typename T, typename... Args>
     bool ChangeState(Args&&... args)
@@ -174,6 +165,15 @@ protected:
         }
         return false;
     }
+
+protected:
+    // input controller
+    std::unique_ptr<CController> Controller;
+    // current synchronized server time (before AI loop execution)
+    time_point m_Tick;
+    time_point m_PrevTick;
+    //entity who holds this AI
+    CBaseEntity* PEntity;
 
 private:
     std::stack<std::unique_ptr<CState>> m_stateStack;

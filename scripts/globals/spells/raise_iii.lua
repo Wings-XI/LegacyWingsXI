@@ -11,7 +11,11 @@ end
 
 function onSpellCast(caster, target, spell)
     if (target:isPC()) then
-        target:sendRaise(3)
+        if (caster:getObjType() == tpz.objType.MOB) and (caster:getMobMod(tpz.mobMod.PIXIE) > 0) then
+            target:sendRaise(5)
+        else
+            target:sendRaise(3)
+        end
     else
         if (target:getName() == "Prishe") then
             -- CoP 8-4 Prishe

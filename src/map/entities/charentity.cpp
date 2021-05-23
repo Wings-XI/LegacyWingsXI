@@ -1537,6 +1537,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         isSange = true;
         hitCount += getMod(Mod::UTSUSEMI);
     }
+    //ShowDebug("max barrage hitcount = %u\n", hitCount);
 
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
@@ -1569,6 +1570,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 // at least 1 hit occured
                 hitOccured = true;
                 realHits++;
+                //ShowDebug("RA hit!\n");
 
                 if (isSange)
                 {
@@ -2214,6 +2216,15 @@ void CCharEntity::SetFomorHate(uint32 fomorHate)
     }
     m_fomorHate = fomorHate;
     charutils::SetCharVar(this, "FOMOR_HATE", fomorHate);
+}
+
+void CCharEntity::SetPixieHate(uint32 pixieHate)
+{
+    if (pixieHate > 60) {
+        pixieHate = 60;
+    }
+    m_pixieHate = pixieHate;
+    charutils::SetCharVar(this, "PIXIE_HATE", pixieHate);
 }
 
 void CCharEntity::DropBattlefield()

@@ -54,6 +54,11 @@ bool CRespawnState::Update(time_point tick)
     }
     if (m_spawnTime > 0s && tick > GetEntryTime() + m_spawnTime)
     {
+        if (PMob->m_SpawnType == SPAWNTYPE_PIXIE && !PMob->PixieShouldSpawn()) {
+            m_spawnTime = std::chrono::milliseconds(PMob->m_RespawnTime);
+            PMob->PAI->ForceChangeState<CRespawnState>(PMob, std::chrono::milliseconds(PMob->m_RespawnTime));
+            return true;
+        }
         m_PEntity->Spawn();
         return true;
     }

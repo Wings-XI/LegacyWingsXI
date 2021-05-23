@@ -224,6 +224,11 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
     TracyZoneScoped;
     if (!IsWithinEnmityRange(PEntity))
         return;
+    if ((PEntity->objtype == TYPE_MOB) && (PEntity->m_OwnerID.id == 0)) {
+        // Don't get hate when mobs cast cures on players
+        // e.g. pixies, colibri mimics
+        return;
+    }
 
     int32 CE = 0;
     int32 VE = 0;

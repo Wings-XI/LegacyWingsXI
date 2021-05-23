@@ -762,6 +762,8 @@ public:
     int32 dynaCurrencyAutoDropEnabled(lua_State* L);
     int32 getFomorHate(lua_State *L);
     int32 setFomorHate(lua_State *L);
+    int32 getPixieHate(lua_State *L);
+    int32 setPixieHate(lua_State *L);
 };
 
 #endif

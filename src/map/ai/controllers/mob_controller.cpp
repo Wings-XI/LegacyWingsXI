@@ -28,6 +28,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../states/inactive_state.h"
 #include "../states/magic_state.h"
 #include "../states/weaponskill_state.h"
+#include "../states/claimshield_state.h"
 #include "../../mobskill.h"
 #include "../../party.h"
 #include "../../status_effect_container.h"
@@ -219,10 +220,10 @@ void CMobController::TryLink()
 * Checks if the mob can detect the target using it's detection (sight, sound, etc)
 * This is used to aggro and deaggro (Mobs start to deaggro after failing to detect target).
 **/
-bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
+bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bool detectDead)
 {
     TracyZoneScoped;
-    if (PTarget->isDead() || PTarget->isMounted()) return false;
+    if ((!detectDead) && (PTarget->isDead() || PTarget->isMounted())) return false;
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
@@ -1083,6 +1084,16 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
     return hate;
 }
 
+int32 CMobController::GetPixieHate(CBattleEntity* PTarget)
+{
+    if (!PTarget || PTarget->objtype != TYPE_PC) {
+        return -1;
+    }
+    CCharEntity* PChar = (CCharEntity*)PTarget;
+    int32 hate = (int32)PChar->m_pixieHate;
+    return hate;
+}
+
 bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
 {
     TracyZoneScoped;
@@ -1122,6 +1133,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->objtype == TYPE_PC && server_clock::now() < ((CCharEntity*)PTarget)->m_ZoneAggroImmunity)
+    {
+        return false;
+    }
+
+    if (PMob->PAI && PMob->PAI->IsCurrentState<CClaimShieldState>())
     {
         return false;
     }

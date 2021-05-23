@@ -40,7 +40,8 @@ enum SPAWNTYPE
     SPAWNTYPE_MOONPHASE = 0x10,
     SPAWNTYPE_LOTTERY   = 0x20,
     SPAWNTYPE_WINDOWED  = 0x40,
-    SPAWNTYPE_SCRIPTED  = 0x80  // scripted spawn
+    SPAWNTYPE_SCRIPTED  = 0x80, // scripted spawn
+    SPAWNTYPE_PIXIE     = 0x100, // according to server amity
 };
 
 enum SPECIALFLAG
@@ -251,6 +252,12 @@ public:
 
     CMobSpellContainer* SpellContainer;                // retrieves spells for the mob
     uint8     m_HasSpellScript;                        // 1 if they have a spell script to use for working out what to cast.
+
+    time_t    m_pixieLastCast;
+    int32     PixieGetAmity();                         // Get the global server amity of pixies
+    uint32    PixieGetHealHateThreshold(CCharEntity* PChar); // Pixies - Get the max hate with which the pixie is still willing to heal
+    void      PixieTryHealPlayer(CCharEntity* PChar);  // Pixies only - attempt to cast a cure or a raise on a player
+    bool      PixieShouldSpawn();                       // Calculate whether pixie should spawn according to amity
 
     static constexpr float sound_range {8.f};
     static constexpr float sight_range {15.f};

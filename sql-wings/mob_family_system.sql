@@ -259,7 +259,7 @@ INSERT INTO `mob_family_system` VALUES(191, 'Orobon', 2, 'Aquan', 1, 40, 90, 90,
 INSERT INTO `mob_family_system` VALUES(192, 'Peiste', 14, 'Lizard', 1, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 0.7, 1, 0.6, 1, 1, 6, 1, 0);
 INSERT INTO `mob_family_system` VALUES(193, 'PetWyvern', 10, 'Dragon', 0, 40, 70, 90, 3, 2, 3, 4, 6, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.875, 1.125, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(194, 'Phuabo', 15, 'Luminian', 2, 70, 90, 140, 3, 3, 4, 1, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 0.5, 0.85, 1.3, 0, 2, 0);
-INSERT INTO `mob_family_system` VALUES(195, 'Pixie', 18, 'Unclassified', 0, 40, 90, 100, 4, 6, 4, 5, 5, 1, 3, 3, 3, 3, 3, 0.375, 0.375, 0.375, 0.375, 0.85, 0.85, 0.05, 0.85, 0.85, 0.85, 0.2, 0.85, 3, 1, 0);
+INSERT INTO `mob_family_system` VALUES(195, 'Pixie', 18, 'Unclassified', 0, 40, 90, 100, 4, 6, 4, 5, 5, 1, 3, 3, 3, 3, 3, 0.375, 0.375, 0.375, 0.375, 0.85, 0.85, 0.05, 0.85, 0.85, 0.85, 0.2, 0.85, 3, 5, 0);
 INSERT INTO `mob_family_system` VALUES(196, 'Poroggo', 7, 'Beastmen', 0, 40, 70, 140, 5, 5, 5, 1, 1, 6, 3, 3, 3, 3, 5, 1, 1, 1, 1, 1, 0.7, 1, 0.85, 1.15, 0.2, 0.3, 1, 6, 2, 0);
 INSERT INTO `mob_family_system` VALUES(197, 'Pugil', 2, 'Aquan', 1, 40, 90, 90, 4, 4, 4, 3, 4, 4, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.5, 1.3, 1.3, 1.5, 0.3, 1.3, 1.3, 6, 2, 1);
 INSERT INTO `mob_family_system` VALUES(198, 'Puk', 10, 'Dragon', 0, 40, 93, 90, 3, 3, 5, 2, 6, 6, 2, 3, 3, 3, 4, 1, 1.25, 1, 1, 1.15, 1.3, 0.05, 1.15, 1, 1.15, 1.15, 1.15, 3, 3, 1);
@@ -533,6 +533,7 @@ INSERT INTO `mob_family_system` VALUES(500, 'Mokkurkalfi', 3, 'Arcana', 1, 40, 1
 INSERT INTO `mob_family_system` VALUES(501, 'NioA_NioHum', 3, 'Arcana', 1, 40, 108, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.25, 1, 1, 1, 2, 34, 0);
 INSERT INTO `mob_family_system` VALUES(502, 'Shikigami_Weapon', 3, 'Arcana', 0, 40, 105, 120, 3, 3, 5, 4, 3, 3, 4, 3, 5, 3, 3, 1, 1, 1, 1, 1.5, 1, 1.3, 1.3, 1.3, 1.3, 1.5, 1, 3, 32, 0);
 INSERT INTO `mob_family_system` VALUES(503, 'Mammet', 3, 'Arcana', 0, 40, 90, 110, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 0, 2, 0);
+INSERT INTO `mob_family_system` VALUES(504, 'Sidhe', 18, 'Unclassified', 0, 40, 90, 100, 4, 6, 4, 5, 5, 1, 3, 3, 3, 3, 3, 0.375, 0.375, 0.375, 0.375, 0.85, 0.85, 0.05, 0.85, 0.85, 0.85, 0.2, 0.85, 3, 5, 0);
 
 --
 -- Indexes for dumped tables

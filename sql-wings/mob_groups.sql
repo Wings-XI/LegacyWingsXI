@@ -35,7 +35,7 @@ CREATE TABLE `mob_groups` (
   `zoneid` smallint(3) UNSIGNED NOT NULL DEFAULT 0,
   `name` varchar(24) DEFAULT NULL,
   `respawntime` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `spawntype` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `spawntype` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `dropid` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `HP` mediumint(8) NOT NULL DEFAULT 0,
   `MP` mediumint(8) NOT NULL DEFAULT 0,
@@ -278,7 +278,7 @@ INSERT INTO `mob_groups` VALUES(37, 3944, 7, 'Tomb_Warrior', 300, 1, 701, 0, 0, 
 INSERT INTO `mob_groups` VALUES(38, 2770, 7, 'Mummy', 300, 1, 1753, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(39, 2407, 7, 'Lich', 300, 1, 958, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(40, 801, 7, 'Corse', 300, 1, 517, 0, 0, 66, 67, 0);
-INSERT INTO `mob_groups` VALUES(41, 733, 7, 'Citipati', 0, 33, 475, 0, 0, 67, 70, 0);
+INSERT INTO `mob_groups` VALUES(41, 733, 7, 'Citipati', 0, 32, 475, 0, 0, 67, 70, 0);
 INSERT INTO `mob_groups` VALUES(42, 4396, 7, 'Xolotl', 0, 128, 2683, 20000, 0, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(43, 4397, 7, 'Xolotls_Hound_Warrior', 0, 128, 0, 0, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(44, 4398, 7, 'Xolotls_Sacrifice', 0, 128, 0, 0, 0, 72, 72, 0);
@@ -3697,7 +3697,7 @@ INSERT INTO `mob_groups` VALUES(31, 3022, 81, 'Orcish_Mesmerizer', 300, 0, 1884,
 INSERT INTO `mob_groups` VALUES(32, 3033, 81, 'Orcish_Stonechucker', 300, 0, 1884, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(33, 3013, 81, 'Orcish_Fodder', 300, 0, 1902, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(34, 3023, 81, 'Orcish_Neckchopper', 300, 0, 1927, 0, 0, 62, 64, 0);
-INSERT INTO `mob_groups` VALUES(35, 3148, 81, 'Pixie', 300, 0, 2000, 0, 0, 53, 55, 0);
+INSERT INTO `mob_groups` VALUES(35, 3148, 81, 'Pixie', 300, 256, 2000, 0, 0, 53, 55, 0);
 INSERT INTO `mob_groups` VALUES(36, 3448, 81, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(37, 1696, 81, 'Goblin_Picaroon', 300, 0, 1135, 0, 0, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(38, 3038, 81, 'Orcish_Transporter', 0, 128, 283, 0, 0, 60, 60, 0);
@@ -3844,7 +3844,7 @@ INSERT INTO `mob_groups` VALUES(29, 1693, 82, 'Goblin_Paratrooper', 300, 0, 1123
 INSERT INTO `mob_groups` VALUES(30, 1697, 82, 'Goblin_Picket', 300, 0, 1135, 0, 0, 71, 74, 0);
 INSERT INTO `mob_groups` VALUES(31, 1688, 82, 'Goblin_Mine', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(32, 3645, 82, 'Skeleton_Esquire', 0, 128, 701, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(33, 3745, 82, 'Sprite', 300, 0, 2001, 0, 0, 66, 68, 0);
+INSERT INTO `mob_groups` VALUES(33, 3745, 82, 'Sprite', 300, 256, 2001, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(34, 1339, 82, 'Fingerfilcher_Dradzad', 0, 128, 0, 0, 0, 78, 85, 0);
 INSERT INTO `mob_groups` VALUES(35, 755, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0, 0, 0, 78, 85, 0);
 INSERT INTO `mob_groups` VALUES(36, 1262, 82, 'Eurytos', 0, 128, 0, 0, 0, 80, 80, 0);
@@ -4016,7 +4016,7 @@ INSERT INTO `mob_groups` VALUES(42, 714, 83, 'Chigoe', 300, 0, 466, 0, 0, 75, 78
 INSERT INTO `mob_groups` VALUES(43, 1755, 83, 'Goliath_Beetle', 300, 0, 169, 0, 0, 34, 36, 0);
 INSERT INTO `mob_groups` VALUES(44, 1631, 83, 'Gnole', 300, 0, 1011, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(45, 1044, 83, 'Dire_Bat', 300, 2, 234, 0, 0, 61, 63, 0);
-INSERT INTO `mob_groups` VALUES(46, 3745, 83, 'Sprite', 300, 0, 2001, 0, 0, 66, 68, 0);
+INSERT INTO `mob_groups` VALUES(46, 3745, 83, 'Sprite', 300, 256, 2001, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(47, 3038, 83, 'Orcish_Transporter', 0, 128, 283, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(48, 3018, 83, 'Orcish_Guard', 0, 128, 1910, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(49, 3203, 83, 'Procrustes', 0, 128, 0, 0, 0, 1, 1, 0);
@@ -4162,7 +4162,7 @@ INSERT INTO `mob_groups` VALUES(29, 3001, 84, 'Orcish_Chasseur', 300, 0, 1878, 0
 INSERT INTO `mob_groups` VALUES(30, 2998, 84, 'Orcish_Brawler', 300, 0, 1878, 0, 0, 65, 69, 0);
 INSERT INTO `mob_groups` VALUES(31, 3039, 84, 'Orcish_Trooper', 300, 0, 1881, 0, 0, 65, 69, 0);
 INSERT INTO `mob_groups` VALUES(32, 1631, 84, 'Gnole', 300, 0, 1011, 0, 0, 65, 67, 0);
-INSERT INTO `mob_groups` VALUES(33, 3148, 84, 'Pixie', 300, 0, 2001, 0, 0, 57, 58, 0);
+INSERT INTO `mob_groups` VALUES(33, 3148, 84, 'Pixie', 300, 256, 2001, 0, 0, 57, 58, 0);
 INSERT INTO `mob_groups` VALUES(34, 3448, 84, 'Sandworm', 86400, 0, 2145, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(35, 3038, 84, 'Orcish_Transporter', 0, 128, 283, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(36, 3018, 84, 'Orcish_Guard', 0, 128, 1910, 0, 0, 60, 60, 0);
@@ -4671,7 +4671,7 @@ INSERT INTO `mob_groups` VALUES(33, 2000, 88, 'Huge_Hornet', 300, 0, 1333, 0, 0,
 INSERT INTO `mob_groups` VALUES(34, 1695, 88, 'Goblin_Patrolman', 300, 0, 1056, 0, 0, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(35, 1722, 88, 'Goblins_Bee', 0, 128, 0, 0, 0, 52, 53, 0);
 INSERT INTO `mob_groups` VALUES(36, 2547, 88, 'Maneating_Hornet', 300, 0, 1608, 0, 0, 40, 42, 0);
-INSERT INTO `mob_groups` VALUES(37, 3148, 88, 'Pixie', 300, 0, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(37, 3148, 88, 'Pixie', 300, 256, 2001, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(38, 3780, 88, 'Stone_Eater', 300, 0, 1725, 0, 0, 18, 22, 0);
 INSERT INTO `mob_groups` VALUES(39, 3381, 88, 'Rock_Lizard', 300, 0, 2119, 0, 0, 21, 24, 0);
 INSERT INTO `mob_groups` VALUES(40, 5871, 88, 'Peaseblossom', 0, 128, 0, 0, 0, 74, 74, 0);
@@ -4838,7 +4838,7 @@ INSERT INTO `mob_groups` VALUES(41, 525, 89, 'Brass_Quadav', 300, 0, 348, 0, 0, 
 INSERT INTO `mob_groups` VALUES(42, 4226, 89, 'Veteran_Quadav', 300, 0, 1233, 0, 0, 61, 69, 0);
 INSERT INTO `mob_groups` VALUES(43, 1808, 89, 'Greater_Quadav', 300, 0, 1233, 0, 0, 61, 69, 0);
 INSERT INTO `mob_groups` VALUES(44, 473, 89, 'Blood_Soul', 300, 1, 311, 0, 0, 53, 56, 0);
-INSERT INTO `mob_groups` VALUES(45, 3148, 89, 'Pixie', 300, 0, 2001, 0, 0, 51, 56, 0);
+INSERT INTO `mob_groups` VALUES(45, 3148, 89, 'Pixie', 300, 256, 2001, 0, 0, 51, 56, 0);
 INSERT INTO `mob_groups` VALUES(46, 1698, 89, 'Goblin_Pioneer', 300, 0, 1138, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(47, 1688, 89, 'Goblin_Mine', 0, 128, 0, 0, 0, 59, 59, 0);
 INSERT INTO `mob_groups` VALUES(48, 2654, 89, 'Migratory_Hippogryph', 0, 128, 0, 2000, 0, 45, 45, 0);
@@ -4992,7 +4992,7 @@ INSERT INTO `mob_groups` VALUES(10969, 523, 89, 'Brasscap', 240, 0, 0, 3800, 999
 INSERT INTO `mob_groups` VALUES(10970, 1808, 89, 'Greater_Quadav', 240, 0, 0, 4500, 9999, 61, 63, 0);
 INSERT INTO `mob_groups` VALUES(10971, 4226, 89, 'Veteran_Quadav', 240, 0, 0, 4600, 9999, 61, 63, 0);
 INSERT INTO `mob_groups` VALUES(10972, 473, 89, 'Blood_Soul', 240, 0, 0, 3000, 9999, 52, 54, 0);
-INSERT INTO `mob_groups` VALUES(10973, 3148, 89, 'Pixie', 240, 0, 0, 3000, 9999, 56, 59, 0);
+INSERT INTO `mob_groups` VALUES(10973, 3148, 89, 'Pixie', 240, 256, 0, 3000, 9999, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(10974, 1688, 89, 'Goblin_Mine', 240, 0, 0, 500, 9999, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(10975, 1698, 89, 'Goblin_Pioneer', 240, 0, 0, 5000, 9999, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(10977, 3276, 89, 'Quadav_Transporter', 240, 0, 0, 500, 9999, 56, 59, 0);
@@ -5041,7 +5041,7 @@ INSERT INTO `mob_groups` VALUES(37, 4516, 90, 'Zombie', 300, 1, 2808, 0, 0, 67, 
 INSERT INTO `mob_groups` VALUES(38, 485, 90, 'Bogy', 300, 1, 320, 0, 0, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(39, 2877, 90, 'Night_Bats', 300, 2, 80, 0, 0, 65, 66, 0);
 INSERT INTO `mob_groups` VALUES(40, 2736, 90, 'Moor_Hound', 300, 1, 1278, 0, 0, 70, 74, 0);
-INSERT INTO `mob_groups` VALUES(41, 3745, 90, 'Sprite', 300, 0, 2001, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(41, 3745, 90, 'Sprite', 300, 256, 2001, 0, 0, 61, 63, 0);
 INSERT INTO `mob_groups` VALUES(42, 1740, 90, 'Goblin_Toxophilite', 300, 0, 1178, 0, 0, 66, 69, 0);
 INSERT INTO `mob_groups` VALUES(43, 1688, 90, 'Goblin_Mine', 0, 128, 0, 0, 0, 62, 62, 0);
 INSERT INTO `mob_groups` VALUES(44, 2251, 90, 'Kinepikwa', 0, 128, 1446, 0, 0, 57, 79, 0);
@@ -5192,7 +5192,7 @@ INSERT INTO `mob_groups` VALUES(36, 1207, 91, 'Emerald_Quadav', 300, 0, 761, 0, 
 INSERT INTO `mob_groups` VALUES(37, 538, 91, 'Bronze_Quadav', 300, 0, 360, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(38, 3464, 91, 'Sapphirine_Quadav', 300, 0, 2161, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(39, 525, 91, 'Brass_Quadav', 300, 0, 349, 0, 0, 65, 69, 0);
-INSERT INTO `mob_groups` VALUES(40, 3745, 91, 'Sprite', 300, 0, 2001, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(40, 3745, 91, 'Sprite', 300, 256, 2001, 0, 0, 61, 63, 0);
 INSERT INTO `mob_groups` VALUES(41, 1713, 91, 'Goblin_Skirmisher', 300, 0, 1158, 0, 0, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(42, 1688, 91, 'Goblin_Mine', 0, 128, 0, 0, 0, 53, 53, 0);
 INSERT INTO `mob_groups` VALUES(43, 3448, 91, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
@@ -5646,7 +5646,7 @@ INSERT INTO `mob_groups` VALUES(27, 4440, 95, 'Yagudo_Persecutor', 300, 0, 2741,
 INSERT INTO `mob_groups` VALUES(28, 4411, 95, 'Yagudo_Condottiere', 300, 0, 2700, 0, 0, 61, 64, 0);
 INSERT INTO `mob_groups` VALUES(29, 1713, 95, 'Goblin_Skirmisher', 300, 0, 1158, 0, 0, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(30, 1688, 95, 'Goblin_Mine', 0, 128, 0, 0, 0, 52, 53, 0);
-INSERT INTO `mob_groups` VALUES(31, 3148, 95, 'Pixie', 300, 0, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(31, 3148, 95, 'Pixie', 300, 256, 2001, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(32, 3181, 95, 'Poroggo_Gent', 300, 8, 2014, 0, 0, 56, 67, 0);
 INSERT INTO `mob_groups` VALUES(33, 3934, 95, 'Toad', 300, 0, 0, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(34, 4710, 95, 'Ramponneau', 0, 32, 2987, 4300, 5000, 47, 54, 0);
@@ -5797,7 +5797,7 @@ INSERT INTO `mob_groups` VALUES(18, 4456, 96, 'Yagudo_Theologist_both', 300, 0, 
 INSERT INTO `mob_groups` VALUES(19, 5486, 96, 'Yagudo_Herald_past', 300, 0, 1890, 0, 0, 66, 69, 0);
 INSERT INTO `mob_groups` VALUES(20, 650, 96, 'Carrion_Crow', 300, 0, 425, 0, 0, 38, 40, 0);
 INSERT INTO `mob_groups` VALUES(21, 1160, 96, 'Earth_Elemental', 300, 4, 733, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(22, 3148, 96, 'Pixie', 300, 0, 2001, 0, 0, 56, 58, 0);
+INSERT INTO `mob_groups` VALUES(22, 3148, 96, 'Pixie', 300, 256, 2001, 0, 0, 56, 58, 0);
 INSERT INTO `mob_groups` VALUES(23, 1698, 96, 'Goblin_Pioneer', 300, 0, 1138, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(24, 1688, 96, 'Goblin_Mine', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(25, 4298, 96, 'War_Lynx', 0, 128, 0, 0, 0, 68, 72, 0);
@@ -5955,7 +5955,7 @@ INSERT INTO `mob_groups` VALUES(32, 2163, 97, 'Jubjub', 300, 0, 208, 0, 0, 42, 4
 INSERT INTO `mob_groups` VALUES(33, 2759, 97, 'Mountain_Jubjub', 300, 0, 208, 0, 0, 60, 63, 0);
 INSERT INTO `mob_groups` VALUES(34, 1160, 97, 'Earth_Elemental', 300, 4, 733, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(35, 1341, 97, 'Fire_Elemental', 300, 4, 831, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(36, 3745, 97, 'Sprite', 300, 0, 2001, 0, 0, 66, 67, 0);
+INSERT INTO `mob_groups` VALUES(36, 3745, 97, 'Sprite', 300, 256, 2001, 0, 0, 66, 67, 0);
 INSERT INTO `mob_groups` VALUES(37, 1697, 97, 'Goblin_Picket', 300, 0, 1136, 0, 0, 71, 74, 0);
 INSERT INTO `mob_groups` VALUES(38, 1688, 97, 'Goblin_Mine', 0, 128, 0, 0, 0, 66, 67, 0);
 INSERT INTO `mob_groups` VALUES(39, 3448, 97, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
@@ -6103,7 +6103,7 @@ INSERT INTO `mob_groups` VALUES(27, 4447, 98, 'Yagudo_Pythoness', 300, 0, 2758, 
 INSERT INTO `mob_groups` VALUES(28, 4454, 98, 'Yagudos_Elemental', 0, 128, 0, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(29, 1160, 98, 'Earth_Elemental', 300, 4, 733, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(30, 5725, 98, 'Hyakinthos', 5400, 0, 2990, 6200, 0, 58, 59, 0);
-INSERT INTO `mob_groups` VALUES(31, 3745, 98, 'Sprite', 300, 0, 2001, 0, 0, 62, 64, 0);
+INSERT INTO `mob_groups` VALUES(31, 3745, 98, 'Sprite', 300, 256, 2001, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(32, 3448, 98, 'Sandworm', 86400, 0, 0, 0, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(33, 4457, 98, 'Yagudo_Transporter', 0, 128, 0, 0, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(34, 4421, 98, 'Yagudo_Guard', 0, 128, 0, 0, 0, 75, 75, 0);
@@ -6423,7 +6423,7 @@ INSERT INTO `mob_groups` VALUES(31, 3032, 100, 'Orcish_Serjeant', 0, 128, 1886, 
 INSERT INTO `mob_groups` VALUES(32, 3009, 100, 'Orcish_Fighter', 0, 128, 1886, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(33, 3001, 100, 'Orcish_Chasseur', 0, 128, 1884, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(34, 3010, 100, 'Orcish_Fighterchief', 0, 128, 0, 0, 0, 25, 25, 0);
-INSERT INTO `mob_groups` VALUES(35, 3148, 100, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(35, 3148, 100, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(36, 1775, 100, 'Gougetooth_Ganzaga', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(37, 5166, 100, 'Lancing_Lamorak', 0, 128, 0, 0, 9999, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(38, 579, 100, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -6465,7 +6465,7 @@ INSERT INTO `mob_groups` VALUES(24, 490, 101, 'Bomb', 210, 8, 216, 0, 0, 8, 10, 
 INSERT INTO `mob_groups` VALUES(25, 3818, 101, 'Swamfisk', 0, 32, 2364, 0, 0, 11, 15, 0);
 INSERT INTO `mob_groups` VALUES(26, 414, 101, 'Bigmouth_Billy', 0, 32, 276, 0, 0, 9, 10, 0);
 INSERT INTO `mob_groups` VALUES(27, 1648, 101, 'Goblin_Digger', 210, 0, 1039, 0, 0, 5, 8, 0);
-INSERT INTO `mob_groups` VALUES(28, 3148, 101, 'Pixie', 0, 128, 2001, 0, 0, 53, 55, 0);
+INSERT INTO `mob_groups` VALUES(28, 3148, 101, 'Pixie', 300, 256, 2001, 0, 0, 12, 13, 0);
 INSERT INTO `mob_groups` VALUES(29, 1479, 101, 'Gawky_Gawain', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(30, 5165, 101, 'Sarimanok', 0, 128, 0, 0, 9999, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(31, 579, 101, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -6525,7 +6525,7 @@ INSERT INTO `mob_groups` VALUES(42, 3170, 102, 'Poltergeist', 300, 0, 0, 0, 0, 1
 INSERT INTO `mob_groups` VALUES(43, 1648, 102, 'Goblin_Digger', 300, 0, 1039, 0, 0, 11, 14, 0);
 INSERT INTO `mob_groups` VALUES(44, 1636, 102, 'Goblin_Archaeologist', 0, 128, 3104, 0, 0, 30, 75, 0);
 INSERT INTO `mob_groups` VALUES(45, 2880, 102, 'Nihniknoovi', 0, 128, 1809, 715, 0, 14, 14, 0);
-INSERT INTO `mob_groups` VALUES(46, 3148, 102, 'Pixie', 300, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(46, 3148, 102, 'Pixie', 300, 256, 2001, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(47, 5167, 102, 'Stachysaurus', 0, 128, 0, 0, 0, 96, 97, 0);
 INSERT INTO `mob_groups` VALUES(5629, 305, 102, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5649, 2804, 102, 'Nanaa_Mihgo', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -6597,7 +6597,7 @@ INSERT INTO `mob_groups` VALUES(61, 1717, 103, 'Goblin_Swindler', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(62, 1994, 103, 'Houu_the_Shoalwader', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(63, 379, 103, 'Beach_Monk', 0, 128, 0, 0, 0, 20, 20, 0);
 INSERT INTO `mob_groups` VALUES(64, 1915, 103, 'Heike_Crab', 0, 128, 0, 0, 0, 20, 20, 0);
-INSERT INTO `mob_groups` VALUES(65, 3148, 103, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(65, 3148, 103, 'Pixie', 300, 256, 2001, 0, 0, 23, 26, 0);
 INSERT INTO `mob_groups` VALUES(66, 479, 103, 'Blue_Bascinet', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(67, 4693, 103, 'Ig-Alima', 0, 128, 0, 0, 9999, 119, 120, 0);
 INSERT INTO `mob_groups` VALUES(68, 1642, 103, 'Goblin_Bounty_Hunter', 0, 0, 1030, 0, 0, 17, 20, 0);
@@ -6670,7 +6670,7 @@ INSERT INTO `mob_groups` VALUES(64, 3645, 104, 'Skeleton_Esquire', 0, 128, 0, 0,
 INSERT INTO `mob_groups` VALUES(65, 3001, 104, 'Orcish_Chasseur', 0, 128, 1884, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(66, 3002, 104, 'Orcish_Colonel', 0, 128, 0, 0, 0, 35, 35, 0);
 INSERT INTO `mob_groups` VALUES(67, 682, 104, 'Cernunnos', 0, 128, 0, 0, 0, 75, 80, 0);
-INSERT INTO `mob_groups` VALUES(68, 3745, 104, 'Sprite', 0, 128, 0, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(68, 3745, 104, 'Sprite', 300, 256, 0, 0, 0, 26, 29, 0);
 INSERT INTO `mob_groups` VALUES(69, 2297, 104, 'Kumbaba', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(70, 5152, 104, 'Belphoebe', 0, 128, 0, 0, 9999, 88, 90, 0);
 INSERT INTO `mob_groups` VALUES(5755, 1518, 104, 'Ghoul', 0, 0, 960, 0, 0, 0, 0, 0);
@@ -6723,7 +6723,7 @@ INSERT INTO `mob_groups` VALUES(43, 3800, 105, 'Sturmtiger', 0, 128, 0, 0, 0, 29
 INSERT INTO `mob_groups` VALUES(44, 3809, 105, 'Suparna', 0, 128, 0, 10000, 0, 65, 70, 0);
 INSERT INTO `mob_groups` VALUES(45, 3810, 105, 'Suparna_Fledgling', 0, 128, 0, 8000, 0, 65, 70, 0);
 INSERT INTO `mob_groups` VALUES(46, 322, 105, 'Badshah', 0, 128, 0, 0, 0, 29, 35, 0);
-INSERT INTO `mob_groups` VALUES(47, 3745, 105, 'Sprite', 0, 128, 0, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(47, 3745, 105, 'Sprite', 300, 256, 0, 0, 0, 36, 39, 0);
 INSERT INTO `mob_groups` VALUES(48, 2375, 105, 'Lanky_Lenglen', 300, 0, 0, 0, 0, 26, 36, 0);
 INSERT INTO `mob_groups` VALUES(49, 4215, 105, 'Vegnix_Greenthumb', 300, 128, 0, 0, 0, 26, 36, 0);
 INSERT INTO `mob_groups` VALUES(50, 5185, 105, 'Cherufe', 0, 128, 0, 0, 0, 93, 94, 0);
@@ -6771,7 +6771,7 @@ INSERT INTO `mob_groups` VALUES(36, 1917, 106, 'Heliodor_Quadav', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(37, 525, 106, 'Brass_Quadav', 0, 128, 0, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(38, 3464, 106, 'Sapphirine_Quadav', 0, 128, 0, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(39, 2383, 106, 'Lead_Quadav', 0, 128, 0, 0, 0, 25, 25, 0);
-INSERT INTO `mob_groups` VALUES(40, 3148, 106, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(40, 3148, 106, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(41, 936, 106, 'Deathly_Stinger', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(42, 4687, 106, 'Sallow_Seymour', 0, 128, 0, 0, 9999, 100, 101, 0);
 INSERT INTO `mob_groups` VALUES(43, 579, 106, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 12, 12, 0);
@@ -6819,7 +6819,7 @@ INSERT INTO `mob_groups` VALUES(26, 3611, 107, 'Shrapnel', 210, 8, 216, 0, 0, 8,
 INSERT INTO `mob_groups` VALUES(27, 5419, 107, 'Tococo', 3600, 0, 2939, 146, 0, 4, 5, 0);
 INSERT INTO `mob_groups` VALUES(28, 2384, 107, 'Leaping_Lizzy', 0, 32, 1504, 0, 0, 10, 11, 0);
 INSERT INTO `mob_groups` VALUES(29, 1648, 107, 'Goblin_Digger', 210, 0, 1039, 0, 0, 5, 8, 0);
-INSERT INTO `mob_groups` VALUES(30, 3148, 107, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(30, 3148, 107, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(31, 1829, 107, 'Grylio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(32, 4688, 107, 'Bhishani', 0, 128, 0, 0, 9999, 99, 99, 0);
 INSERT INTO `mob_groups` VALUES(33, 579, 107, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -6870,7 +6870,7 @@ INSERT INTO `mob_groups` VALUES(32, 1636, 108, 'Goblin_Archaeologist', 0, 128, 3
 INSERT INTO `mob_groups` VALUES(33, 1407, 108, 'Forger', 0, 128, 897, 0, 0, 33, 33, 0);
 INSERT INTO `mob_groups` VALUES(34, 1899, 108, 'Haty', 0, 128, 253, 850, 0, 14, 14, 0);
 INSERT INTO `mob_groups` VALUES(35, 390, 108, 'Bendigeit_Vran', 0, 128, 253, 880, 0, 14, 14, 0);
-INSERT INTO `mob_groups` VALUES(36, 3148, 108, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(36, 3148, 108, 'Pixie', 300, 256, 2001, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(37, 3911, 108, 'Thunderhead', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(38, 5163, 108, 'GwynnApnudd', 0, 128, 0, 0, 9999, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(5967, 305, 108, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -6932,7 +6932,7 @@ INSERT INTO `mob_groups` VALUES(55, 2637, 109, 'Metaquadav_Dark_Knight', 0, 128,
 INSERT INTO `mob_groups` VALUES(56, 1917, 109, 'Heliodor_Quadav', 0, 128, 0, 0, 0, 35, 35, 0);
 INSERT INTO `mob_groups` VALUES(57, 3464, 109, 'Sapphirine_Quadav', 0, 128, 0, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(58, 753, 109, 'Cobalt_Quadav', 0, 128, 0, 0, 0, 35, 35, 0);
-INSERT INTO `mob_groups` VALUES(59, 3745, 109, 'Sprite', 0, 128, 0, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(59, 3745, 109, 'Sprite', 300, 256, 0, 0, 0, 26, 29, 0);
 INSERT INTO `mob_groups` VALUES(60, 331, 109, 'Ballistosporer', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(61, 5312, 109, 'Murk_veinedBan', 0, 128, 0, 0, 99999, 92, 94, 0);
 INSERT INTO `mob_groups` VALUES(6001, 305, 109, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -6979,7 +6979,7 @@ INSERT INTO `mob_groups` VALUES(38, 5729, 110, 'Eldritch_Edge', 0, 32, 2993, 509
 INSERT INTO `mob_groups` VALUES(39, 1124, 110, 'Drooling_Daisy', 0, 32, 712, 0, 0, 39, 40, 0);
 INSERT INTO `mob_groups` VALUES(40, 1648, 110, 'Goblin_Digger', 300, 0, 1040, 0, 0, 28, 32, 0);
 INSERT INTO `mob_groups` VALUES(41, 3630, 110, 'Simurgh', 0, 128, 2255, 45000, 0, 58, 58, 0);
-INSERT INTO `mob_groups` VALUES(42, 3745, 110, 'Sprite', 0, 128, 0, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(42, 3745, 110, 'Sprite', 300, 256, 0, 0, 0, 36, 39, 0);
 INSERT INTO `mob_groups` VALUES(43, 4107, 110, 'Urayuli', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(44, 726, 110, 'Chuglix_Berrypaws', 0, 128, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(45, 4703, 110, 'Yatagarasu', 0, 128, 0, 0, 0, 94, 95, 0);
@@ -7223,7 +7223,7 @@ INSERT INTO `mob_groups` VALUES(29, 4456, 115, 'Yagudo_Theologist_both', 0, 128,
 INSERT INTO `mob_groups` VALUES(30, 4419, 115, 'Yagudo_Follower', 0, 128, 0, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(31, 4444, 115, 'Yagudo_Priest_present', 0, 128, 0, 0, 0, 20, 25, 0);
 INSERT INTO `mob_groups` VALUES(32, 4411, 115, 'Yagudo_Condottiere', 0, 128, 0, 0, 0, 25, 25, 0);
-INSERT INTO `mob_groups` VALUES(33, 3148, 115, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(33, 3148, 115, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(34, 327, 115, 'Bakru', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(35, 5148, 115, 'Virvatuli', 0, 128, 0, 0, 9999, 89, 90, 0);
 INSERT INTO `mob_groups` VALUES(36, 579, 115, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -7270,7 +7270,7 @@ INSERT INTO `mob_groups` VALUES(23, 1659, 116, 'Goblin_Fisher', 210, 0, 1054, 0,
 INSERT INTO `mob_groups` VALUES(24, 3734, 116, 'Spiny_Spipi', 0, 32, 2308, 0, 0, 9, 10, 0);
 INSERT INTO `mob_groups` VALUES(25, 4529, 116, 'Duke_Decapod', 3600, 128, 2988, 200, 125, 8, 8, 0);
 INSERT INTO `mob_groups` VALUES(26, 1648, 116, 'Goblin_Digger', 210, 0, 1039, 0, 0, 5, 8, 0);
-INSERT INTO `mob_groups` VALUES(27, 3148, 116, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(27, 3148, 116, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(28, 489, 116, 'Bolster', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(29, 4709, 116, 'RwNwPrtMHrw', 0, 128, 0, 0, 5000, 95, 97, 0);
 INSERT INTO `mob_groups` VALUES(30, 579, 116, 'Bull_[Herd1]', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -7319,7 +7319,7 @@ INSERT INTO `mob_groups` VALUES(30, 4571, 117, 'Herbage_Hunter', 0, 32, 2983, 0,
 INSERT INTO `mob_groups` VALUES(31, 1648, 117, 'Goblin_Digger', 300, 0, 1039, 0, 0, 11, 14, 0);
 INSERT INTO `mob_groups` VALUES(32, 1636, 117, 'Goblin_Archaeologist', 0, 128, 3104, 0, 0, 30, 75, 0);
 INSERT INTO `mob_groups` VALUES(33, 4466, 117, 'Yara_Ma_Yha_Who', 0, 128, 2779, 0, 0, 15, 20, 0);
-INSERT INTO `mob_groups` VALUES(34, 3148, 117, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(34, 3148, 117, 'Pixie', 300, 256, 2001, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(35, 92, 117, 'Allocamelus', 0, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(36, 4735, 117, 'Smierc', 0, 128, 0, 0, 9999, 92, 95, 0);
 INSERT INTO `mob_groups` VALUES(6397, 305, 117, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -7374,7 +7374,7 @@ INSERT INTO `mob_groups` VALUES(47, 1735, 118, 'Goblin_Thespian', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(48, 1665, 118, 'Goblin_Furrier', 0, 128, 0, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(49, 1710, 118, 'Goblin_Shaman', 0, 128, 0, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(50, 1672, 118, 'Goblin_Guide', 0, 128, 0, 0, 0, 35, 35, 0);
-INSERT INTO `mob_groups` VALUES(51, 3148, 118, 'Pixie', 0, 128, 2001, 0, 0, 51, 54, 0);
+INSERT INTO `mob_groups` VALUES(51, 3148, 118, 'Pixie', 300, 256, 2001, 0, 0, 23, 26, 0);
 INSERT INTO `mob_groups` VALUES(52, 2213, 118, 'Ketos', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(53, 4734, 118, 'Botulus_Rex', 0, 128, 0, 0, 9999, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(54, 1642, 118, 'Goblin_Bounty_Hunter', 0, 0, 1030, 0, 0, 17, 20, 0);
@@ -7438,7 +7438,7 @@ INSERT INTO `mob_groups` VALUES(53, 3892, 119, 'Theoyagudo_Summoner', 0, 128, 0,
 INSERT INTO `mob_groups` VALUES(54, 4453, 119, 'Yagudos_Avatar', 0, 128, 0, 0, 0, 28, 28, 0);
 INSERT INTO `mob_groups` VALUES(55, 4419, 119, 'Yagudo_Follower', 0, 128, 0, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(56, 4433, 119, 'Yagudo_Missionary', 0, 128, 0, 0, 0, 35, 35, 0);
-INSERT INTO `mob_groups` VALUES(57, 3745, 119, 'Sprite', 0, 128, 0, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(57, 3745, 119, 'Sprite', 300, 256, 0, 0, 0, 26, 29, 0);
 INSERT INTO `mob_groups` VALUES(58, 4044, 119, 'Tsaagan', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(59, 5189, 119, 'Lord_Asag', 0, 128, 0, 0, 25000, 94, 95, 0);
 INSERT INTO `mob_groups` VALUES(6532, 4440, 119, 'Yagudo_Persecutor', 0, 0, 2741, 0, 0, 0, 0, 0);
@@ -7484,7 +7484,7 @@ INSERT INTO `mob_groups` VALUES(39, 1266, 120, 'Evil_Spirit', 300, 1, 797, 0, 0,
 INSERT INTO `mob_groups` VALUES(40, 1648, 120, 'Goblin_Digger', 300, 0, 1040, 0, 0, 28, 32, 0);
 INSERT INTO `mob_groups` VALUES(41, 3376, 120, 'Roc', 0, 128, 2112, 30000, 0, 55, 55, 0);
 INSERT INTO `mob_groups` VALUES(42, 741, 120, 'Climbpix_Highrise', 0, 128, 478, 0, 0, 55, 55, 0);
-INSERT INTO `mob_groups` VALUES(43, 3745, 120, 'Sprite', 0, 128, 0, 0, 0, 61, 63, 0);
+INSERT INTO `mob_groups` VALUES(43, 3745, 120, 'Sprite', 300, 256, 0, 0, 0, 36, 39, 0);
 INSERT INTO `mob_groups` VALUES(44, 328, 120, 'Balam-Agab', 0, 128, 0, 0, 0, 30, 36, 0);
 INSERT INTO `mob_groups` VALUES(45, 1119, 120, 'Dribblix_Greasemaw', 300, 128, 0, 0, 0, 30, 36, 0);
 INSERT INTO `mob_groups` VALUES(46, 5149, 120, 'Goji', 0, 128, 0, 0, 0, 92, 94, 0);
@@ -9181,7 +9181,7 @@ INSERT INTO `mob_groups` VALUES(7, 1201, 153, 'Ellyllon', 0, 32, 2890, 0, 0, 65,
 INSERT INTO `mob_groups` VALUES(8, 2762, 153, 'Mourioche', 960, 0, 1746, 0, 0, 62, 68, 0);
 INSERT INTO `mob_groups` VALUES(9, 2754, 153, 'Moss_Eater', 960, 0, 1742, 0, 0, 62, 66, 0);
 INSERT INTO `mob_groups` VALUES(10, 2272, 153, 'Knight_Crawler', 960, 0, 1456, 0, 0, 62, 67, 0);
-INSERT INTO `mob_groups` VALUES(11, 2962, 153, 'Old_Goobbue', 960, 0, 3202, 0, 0, 65, 68, 0);
+INSERT INTO `mob_groups` VALUES(11, 2962, 153, 'Old_Goobbue', 960, 0, 3204, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(12, 3375, 153, 'Robber_Crab', 960, 0, 2109, 0, 0, 62, 66, 0);
 INSERT INTO `mob_groups` VALUES(13, 4309, 153, 'Water_Elemental', 960, 4, 2629, 0, 0, 69, 72, 0);
 INSERT INTO `mob_groups` VALUES(14, 206, 153, 'Aquarius', 0, 32, 149, 0, 0, 69, 71, 0);
@@ -10902,7 +10902,7 @@ INSERT INTO `mob_groups` VALUES(1, 372, 192, 'Battue_Bats', 480, 0, 244, 0, 0, 1
 INSERT INTO `mob_groups` VALUES(2, 1737, 192, 'Goblin_Thug', 900, 0, 1174, 0, 0, 1, 6, 0);
 INSERT INTO `mob_groups` VALUES(3, 443, 192, 'Blade_Bat', 480, 0, 19, 0, 0, 4, 6, 0);
 INSERT INTO `mob_groups` VALUES(4, 1744, 192, 'Goblin_Weaver', 900, 0, 1187, 0, 0, 1, 7, 0);
-INSERT INTO `mob_groups` VALUES(5, 2475, 192, 'Magicked_Bones', 480, 0, 0, 0, 0, 3, 8, 0);
+INSERT INTO `mob_groups` VALUES(5, 2475, 192, 'Magicked_Bones', 900, 0, 2867, 0, 0, 3, 8, 0);
 INSERT INTO `mob_groups` VALUES(11, 4319, 192, 'Wendigo', 300, 0, 2638, 0, 0, 25, 28, 0);
 INSERT INTO `mob_groups` VALUES(10, 1635, 192, 'Goblin_Ambusher', 900, 0, 1021, 0, 0, 14, 18, 0);
 INSERT INTO `mob_groups` VALUES(9, 1738, 192, 'Goblin_Tinkerer', 900, 0, 1035, 0, 0, 14, 18, 0);
@@ -12003,7 +12003,7 @@ INSERT INTO `mob_groups` VALUES(10698, 913, 254, 'Dark_Elemental', 0, 0, 0, 0, 0
 INSERT INTO `mob_groups` VALUES(10703, 1428, 254, 'Frog_Prince', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10705, 1455, 254, 'Gamayun', 0, 0, 927, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10717, 2474, 254, 'Maere', 0, 0, 1564, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(10723, 3148, 254, 'Pixie', 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(10723, 3148, 254, 'Pixie', 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10731, 3742, 254, 'Spring_Pugil', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10733, 3798, 254, 'Sturdy_Pyxis', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10739, 4122, 254, 'Vale_Crab', 0, 0, 0, 0, 0, 0, 0, 0);

@@ -2510,6 +2510,8 @@ tpz.mobMod =
     FAMILYLINK          = 74, -- Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
     ENCROACH_PLAYER     = 75,
     SIGHT_ANGLE         = 84, -- Angle in which a mob will detect by sight
+    FOMOR_HATE          = 85, -- Fomors: Only aggro if the target player (or a player in party/alliance) has hate
+    PIXIE               = 86, -- Pixies: Cure and raise players
 }
 
 ------------------------------------

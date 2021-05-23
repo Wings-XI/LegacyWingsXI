@@ -365,6 +365,7 @@ public:
     uint8             m_hitCounter;                 // auto-attack it counter for Tredecim Scythe
     time_point        m_ZoneAggroImmunity;
     uint32            m_fomorHate;
+    uint32            m_pixieHate;
 
     int8			  getShieldSize();
 
@@ -441,6 +442,7 @@ public:
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
     void SetFomorHate(uint32 fomorHate);
+    void SetPixieHate(uint32 pixieHate);
     void DropBattlefield();
     void DropBattlefieldIfOutside();
 

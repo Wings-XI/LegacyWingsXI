@@ -468,6 +468,18 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
                 PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_SPAWN, UPDATE_ALL_MOB));
             }
 
+            if (PCurrentMob->getMobMod(MOBMOD_PIXIE) > 0) {
+                PCurrentMob->PixieTryHealPlayer(PChar);
+                // There have been rumors of pixies aggroing in some forums, possibly when
+                // the server amity is extremely low and the player's hate extremely high,
+                // however this is unconfirmed (some pixies in Abyssea are known to be
+                // aggressive, could the reports be mistaken?)
+                // If there is sufficient evidence that pixies aggro in certain situations
+                // this may be changed, but for the time being pixies never aggro.
+                // - Twilight
+                continue;
+            }
+
             if (PChar->isDead() || PChar->nameflags.flags & FLAG_GM || PCurrentMob->PMaster)
                 continue;
 
