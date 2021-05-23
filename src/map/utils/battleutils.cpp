@@ -4215,19 +4215,25 @@ namespace battleutils
 
         // only archery + marksmanship can use barrage
         CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
-
         if (PItem && PItem->getSkillType() != 25 && PItem->getSkillType() != 26)
-        {
             return 0;
-        }
 
-        uint8 lvl = PChar->jobs.job[JOB_RNG];       // Get Ranger level of char
+        // RNG level
+        uint8 lvl;                              
+        if (PChar->GetMJob() == JOB_RNG)
+            lvl = PChar->GetMLevel();
+        else if (PChar->GetSJob() == JOB_RNG)
+            lvl = PChar->GetSLevel();
+        else
+            return 0;
+
         uint8 shotCount = 0;                    // the total number of extra hits
 
         if (PChar->GetSJob() == JOB_RNG)        // if rng is sub then use the sub level
             lvl = PChar->GetSLevel();
 
         // Hunters bracers+1 will add an extra shot
+        // todo: convert this to a MOD
         CItemEquipment* PItemHands = PChar->getEquip(SLOT_HANDS);
 
 
