@@ -2560,7 +2560,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
     // 0x04 - Selling Items
     // 0x05 - Open List Of Sales / Wait (Sales History menu in-game)
     // 0x0A - Retrieve List of Items Sold By Player
-    // 0x0B - Proof Of Purchase
+    // 0x0B - Proof Of Purchase (confirming sale of item w/ tax)
     // 0x0E - Purchasing Items
     // 0x0C - Cancel Sale
     // 0x0D - Update Sale List By Player
@@ -2585,33 +2585,63 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x05:
         {
             uint32 curTick = gettick();
+            if (!PChar->AuctionPlayerContainer)
+                return;
 
-            if (curTick - PChar->m_AHHistoryTimestamp > 5000)
+            if (curTick - PChar->AuctionPlayerContainer->m_AHHistoryTimestamp > 100)
             {
-                PChar->m_ah_history.clear();
-                PChar->m_AHHistoryTimestamp = curTick;
+                PChar->AuctionPlayerContainer->m_AHHistoryTimestamp = curTick;
                 PChar->pushPacket(new CAuctionHousePacket(action));
-
-                // todo: different sort types by price/date/name asc/desc
-
-                // A single SQL query for the player's AH history which is stored in a Char Entity struct + vector.
-                const char* Query = "SELECT itemid, price, stack FROM auction_house WHERE seller = %u and sale=0 ORDER BY id ASC LIMIT 6;";
-
-                int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
-
-                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+                
+                if (!PChar->AuctionPlayerContainer->m_maxPage)
                 {
-                    while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                    const char* Query = "SELECT itemid, price, stack FROM auction_house WHERE seller = %u and sale=0 ORDER BY id ASC;";
+
+                    int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
+
+                    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle))
                     {
-                        AuctionHistory_t ah;
-                        ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
-                        ah.price = (uint32)Sql_GetUIntData(SqlHandle, 1);
-                        ah.stack = (uint8)Sql_GetIntData(SqlHandle, 2);
-                        ah.status = 0;
-                        PChar->m_ah_history.push_back(ah);
+                        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                        {
+                            AuctionHistory_t ah;
+                            ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
+                            ah.price = (uint32)Sql_GetUIntData(SqlHandle, 1);
+                            ah.stack = (uint8)Sql_GetIntData(SqlHandle, 2);
+                            ah.status = 0;
+                            PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
+                        }
+                    }
+
+                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                    int32 maxPage = 1 + (itemsListed - 1) / 6;
+                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                    PChar->AuctionPlayerContainer->m_page = 1;
+
+                    std::string line = "Total of ";
+                    line += std::to_string(itemsListed);
+                    line += " item";
+                    if (itemsListed != 1)
+                        line += "s";
+                    line += " listed (";
+                    line += std::to_string(maxPage);
+                    line += " pages).";
+                    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+                }
+                else
+                {
+                    if (PChar->AuctionPlayerContainer->isPageResetQueued)
+                    {
+                        PChar->AuctionPlayerContainer->m_page = 1;
+                        PChar->AuctionPlayerContainer->isPageResetQueued = false;
+                    }
+                    else
+                    {
+                        PChar->AuctionPlayerContainer->m_page++;
+                        if (PChar->AuctionPlayerContainer->m_page > PChar->AuctionPlayerContainer->m_maxPage)
+                            PChar->AuctionPlayerContainer->m_page = 1;
                     }
                 }
-                ShowDebug("%s has %i items up on the AH. \n", PChar->GetName(), PChar->m_ah_history.size());
+                
             }
             else
             {
@@ -2621,7 +2651,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0A:
         {
-            auto totalItemsOnAh = PChar->m_ah_history.size();
+            auto totalItemsOnAh = PChar->AuctionPlayerContainer->m_ah_history.size();
 
             for (size_t slot = 0; slot < totalItemsOnAh; slot++)
             {
@@ -2693,6 +2723,21 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // failed to place up
                     return;
                 }
+
+                if (PChar->AuctionPlayerContainer && PChar->AuctionPlayerContainer->m_maxPage)
+                {
+                    AuctionHistory_t ah;
+                    ah.itemid = PItem->getID();
+                    ah.price = price;
+                    ah.stack = !quantity;
+                    ah.status = 0;
+                    PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
+                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                    int32 maxPage = 1 + (itemsListed - 1) / 6;
+                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                    PChar->AuctionPlayerContainer->isPageResetQueued = true;
+                }
+
                 charutils::UpdateItem(PChar, LOC_INVENTORY, slot, -(int32)(quantity != 0 ? 1 : PItem->getStackSize()));
                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)auctionFee); // Deduct AH fee
 
@@ -2755,10 +2800,10 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x0C: // Removing item from AH
         {
-            if (slotid < PChar->m_ah_history.size())
+            if (PChar->AuctionPlayerContainer && slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1) < PChar->AuctionPlayerContainer->m_ah_history.size())
             {
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
-                AuctionHistory_t canceledItem = PChar->m_ah_history[slotid];
+                AuctionHistory_t canceledItem = PChar->AuctionPlayerContainer->m_ah_history[slotid + 6 * (PChar->AuctionPlayerContainer->m_page-1)];
 
                 if (Sql_SetAutoCommit(SqlHandle, false) && Sql_TransactionStart(SqlHandle))
                 {
@@ -2778,6 +2823,17 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                                 PChar->pushPacket(new CAuctionHousePacket(action, 0, PChar, slotid, false));
                                 PChar->pushPacket(new CInventoryFinishPacket());
                                 Sql_SetAutoCommit(SqlHandle, isAutoCommitOn);
+
+                                if (PChar->AuctionPlayerContainer->m_maxPage)
+                                {
+                                    PChar->AuctionPlayerContainer->m_ah_history.erase(PChar->AuctionPlayerContainer->m_ah_history.begin() + slotid +
+                                                                                      6 * (PChar->AuctionPlayerContainer->m_page - 1));
+                                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                                    int32 maxPage = 1 + (itemsListed - 1) / 6;
+                                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                                    PChar->AuctionPlayerContainer->isPageResetQueued = true;
+                                }
+
                                 return;
                             }
                         }
