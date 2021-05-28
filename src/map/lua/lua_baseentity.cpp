@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -6231,7 +6231,7 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
                 fame = (uint16)(PChar->profile.fame[fameArea] * fameMultiplier);
                 break;
             case 3: // Jeuno
-                fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                fame = (uint16)(PChar->profile.fame[4] * fameMultiplier + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
                 break;
             case 4: // Selbina / Rabao
                 fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
