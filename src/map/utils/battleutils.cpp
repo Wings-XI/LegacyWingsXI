@@ -5886,7 +5886,7 @@ namespace battleutils
             {
                 cast = (uint32)((float)cast * 1.5f);
             }
-            uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME);
+            uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME_REDUCTION);
             cast = (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f)));
         }
 
