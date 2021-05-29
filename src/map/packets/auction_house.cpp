@@ -88,15 +88,17 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* 
     ref<uint8>(0x05) = slot;          // Serial number of the subject
     ref<uint8>(0x06) = IsAuctionOpen;
 
-    if (slot < 7 && slot < PChar->m_ah_history.size())
+    if (slot < 6 && PChar->AuctionPlayerContainer &&
+        (uint16)slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1) < PChar->AuctionPlayerContainer->m_ah_history.size())
     {
         ref<uint8>(0x14) = 0x03;
         ref<uint8>(0x16) = 0x01;                                   // Value is changed, the purpose is unknown UNKNOWN
 
-        ref<uint16>(0x28) = PChar->m_ah_history.at(slot).itemid;    // Item ID of item in slot
-        ref<uint8>(0x2A) = 1 - PChar->m_ah_history.at(slot).stack; // Number of items stack size
+        ref<uint16>(0x28) = PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).itemid; // Item ID of item in slot
+        ref<uint8>(0x2A) =
+            1 - PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).stack; // Number of items stack size
         ref<uint8>(0x2B) = 0x02;                                   // Number of items stack size?
-        ref<uint32>(0x2C) = PChar->m_ah_history.at(slot).price;     // Selling price
+        ref<uint32>(0x2C) = PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).price; // Selling price
 
         ref<uint8>(0x30) = AUCTION_ID;
     }
@@ -123,17 +125,20 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, CCharEntit
     ref<uint8>(0x06) = message;
 
     // we need all this guff so the item stays in the history.
-    if (keepItem && slot < 7 && slot < PChar->m_ah_history.size())
+    if (keepItem && slot < 6 && PChar->AuctionPlayerContainer &&
+        (uint16)slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1) < PChar->AuctionPlayerContainer->m_ah_history.size())
     {
         ref<uint8>(0x14) = 0x03;
         ref<uint8>(0x16) = 0x01; // Value is changed, the purpose is unknown UNKNOWN
 
         memcpy(data+(0x18), PChar->GetName(), PChar->name.size());
 
-        ref<uint16>(0x28) = PChar->m_ah_history.at(slot).itemid;    // Id sell items item id
-        ref<uint8>(0x2A) = 1 - PChar->m_ah_history.at(slot).stack; // Number of items stack size
+        ref<uint16>(0x28) =
+            PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).itemid; // Id sell items item id
+        ref<uint8>(0x2A) =
+            1 - PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).stack; // Number of items stack size
         ref<uint8>(0x2B) = 0x02;                                   // Number of items stack size?
-        ref<uint32>(0x2C) = PChar->m_ah_history.at(slot).price;     // Price selling price
+        ref<uint32>(0x2C) = PChar->AuctionPlayerContainer->m_ah_history.at(slot + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).price; // Price selling price
 
         ref<uint8>(0x30) = AUCTION_ID;
     }

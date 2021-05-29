@@ -27,7 +27,8 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     local resist = applyResistance(caster, target, spell, params)
-    local power = 3000 * resist
+    local power = math.random(100, 600) * resist
+--  caster:PrintToPlayer(string.format("Tickled for %u TP.",power)) -- Optional debug message for testing.
 
     if (target:getTP() == 0) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
