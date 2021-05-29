@@ -5455,8 +5455,11 @@ namespace battleutils
         }
     }
 
-    bool DrawIn(CBattleEntity* PEntity, CMobEntity* PMob, float offset)
+    bool DrawIn(CBattleEntity* PEntity, CMobEntity* PMob, float offset, uint8 drawInRange, uint16 maximumReach, bool includeParty)
     {
+        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
+            return false;
+
         position_t& pos = PMob->loc.p;
         position_t nearEntity = nearPosition(pos, offset, (float)0);
 
@@ -5467,58 +5470,38 @@ namespace battleutils
         }
 
         bool success = false;
-        float drawInDistance = (float)(PMob->getMobMod(MOBMOD_DRAW_IN) > 1 ? PMob->getMobMod(MOBMOD_DRAW_IN) : PMob->GetMeleeRange() * 2);
 
-        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
-            return false;
-
-        std::function <void(CBattleEntity*)> drawInFunc = [PMob, drawInDistance, &nearEntity, &success](CBattleEntity* PMember)
+        std::function<void(CBattleEntity*)> drawInFunc = [PMob, drawInRange, maximumReach, &nearEntity, &success](CBattleEntity* PMember)
         {
-            float pDistance = distance(PMob->loc.p, PMember->loc.p);
-
-            if (PMob->loc.zone == PMember->loc.zone && pDistance > drawInDistance && PMember->status != STATUS_CUTSCENE_ONLY)
+            float dist = distance(PMob->loc.p, PMember->loc.p);
+            if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
+                !PMember->isDead() && !PMember->isMounted())
             {
-                // don't draw in dead players for now!
-                // see tractor
-                if (PMember->isDead() || PMember->isMounted())
+                PMember->loc.p.x = nearEntity.x;
+                PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
+                PMember->loc.p.z = nearEntity.z;
+                PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+
+                if (PMember->objtype == TYPE_PC)
                 {
-                    // don't do anything
+                    CCharEntity* PChar = (CCharEntity*)PMember;
+                    PChar->pushPacket(new CPositionPacket(PChar));
                 }
                 else
                 {
-                    // draw in!
-                    PMember->loc.p.x = nearEntity.x;
-                    PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                    PMember->loc.p.z = nearEntity.z;
-                    PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
-
-                    if (PMember->objtype == TYPE_PC)
-                    {
-                        CCharEntity* PChar = (CCharEntity*)PMember;
-                        PChar->pushPacket(new CPositionPacket(PChar));
-                    }
-                    else
-                    {
-                        PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
-                    }
-
-                    luautils::OnMobDrawIn(PMob, PMember);
-                    PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
-                    success = true;
+                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
                 }
+
+                luautils::OnMobDrawIn(PMob, PMember);
+                PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
+                success = true;
             }
         };
 
-        // check if i should draw-in party/alliance
-        if (PMob->getMobMod(MOBMOD_DRAW_IN) > 1)
-        {
+        if (includeParty) // (and alliance)
             PEntity->ForAlliance(drawInFunc);
-        }
-        // no party present or draw-in is set to target only
         else
-        {
             drawInFunc(PEntity);
-        }
 
         if (success)
             PMob->SetLocalVar("DrawInTime", (uint32)std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count());

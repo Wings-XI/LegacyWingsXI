@@ -8,7 +8,8 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 2)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
 end
 
 function onMobSpawn(mob)
