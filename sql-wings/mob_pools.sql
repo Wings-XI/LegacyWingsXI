@@ -5835,7 +5835,7 @@ INSERT INTO `mob_pools` VALUES(5771, 'Naa_Zeku_the_Unwaiting', 'Naa_Zeku_the_Unw
 INSERT INTO `mob_pools` VALUES(5772, 'Centipedal_Centruroides', 'Centipedal_Centruroides', 217, 0x0000c30800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 217);
 INSERT INTO `mob_pools` VALUES(5773, 'Okyupete', 'Okyupete', 125, 0x0000500100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 125);
 INSERT INTO `mob_pools` VALUES(5774, 'BeHya_Hundredwall', 'BeHya_Hundredwall', 202, 0x0000850200000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 2, 7, 32, 0, 0, 0, 0, 0, 0, 0, 202);
-INSERT INTO `mob_pools` VALUES(5775, 'Cait_Sith', 'Cait_Sith', 60, 0x00001c0000000000000000000000000000000000, 5, 3, 2, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 60);
+INSERT INTO `mob_pools` VALUES(5775, 'Cait_Sith', 'Cait_Sith', 60, 0x00001c0000000000000000000000000000000000, 3, 5, 2, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 60);
 INSERT INTO `mob_pools` VALUES(5776, 'Paramount_Botulus', 'Paramount_Botulus', 112, 0x00000c0800000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 1, 135, 0, 0, 2, 0, 0, 112);
 INSERT INTO `mob_pools` VALUES(5777, 'Paramount_Gallu', 'Paramount_Gallu', 467, 0x00000b08506172616d6f756e7447616c6c750000, 1, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 135, 0, 0, 2, 0, 0, 467);
 INSERT INTO `mob_pools` VALUES(5778, 'Paramount_Ironclad', 'Paramount_Ironclad', 350, 0x0000580800000000000000000000000000000000, 1, 1, 4, 240, 100, 0, 1, 1, 0, 2, 0, 0, 1, 135, 0, 0, 0, 0, 0, 350);
