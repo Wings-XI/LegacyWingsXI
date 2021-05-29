@@ -4009,7 +4009,8 @@ INSERT INTO `synth_recipes` VALUES(4574, 1, 0, 0, 0, 0, 22, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4575, 1, 0, 0, 0, 57, 0, 0, 0, 0, 0, 4100, 4242, 13372, 0, 0, 0, 0, 0, 0, 0, 745, 745, 745, 745, 1, 1, 2, 2, 'Gold_EarringHQ_Desynth');
 INSERT INTO `synth_recipes` VALUES(4576, 1, 0, 0, 37, 0, 0, 0, 0, 0, 0, 4100, 4242, 14329, 0, 0, 0, 0, 0, 0, 0, 649, 649, 848, 848, 1, 2, 1, 1, 'Eisendiechlings_Desynth');
 INSERT INTO `synth_recipes` VALUES(4577, 1, 0, 0, 0, 39, 0, 0, 0, 0, 0, 4100, 4242, 19013, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 1, 1, 'Mythril_Grip_Desynth');
-INSERT INTO `synth_recipes` VALUES(4578, 1, 0, 0, 0, 0, 0, 0, 95, 0, 0, 4100, 4242, 16212, 0, 0, 0, 0, 0, 0, 0, 2169, 2169, 2169, 2169, 1, 1, 1, 1, 'Cerberus_Mantle_Desynth');
+INSERT INTO `synth_recipes` VALUES(4578, 1, 0, 0, 0, 0, 0, 95, 0, 0, 0, 4100, 4242, 16212, 0, 0, 0, 0, 0, 0, 0, 2169, 2169, 2169, 2169, 1, 1, 1, 1, 'Cerberus_Mantle_Desynth');
+
 
 -- -----------
 -- RECIPES END
