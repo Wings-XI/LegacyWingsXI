@@ -3815,19 +3815,24 @@ INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 157, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 201, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 176, 1, 255);
-
 -- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 360, 1, 255); -- dispelga
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 356, 1, 255); -- paralyga
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 143, 1, 255); -- erase
+INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 10, 1, 255); -- curaga IV
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 172, 1, 255); -- water IV
-INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 200, 1, 255); -- waterga II
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 201, 1, 255); -- waterga III
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 214, 1, 255); -- flood
 -- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Nepionic_Bladmall
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 46, 1, 255); -- protect IV
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 51, 1, 255); -- shell IV
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 4, 1, 255); -- cure IV
-
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 361, 1, 255); -- blindga
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 357, 1, 255); -- slowga
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 171, 1, 255); -- water III
+INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 200, 1, 255); -- waterga II
 --
 -- Indexes for dumped tables
 --
