@@ -2358,6 +2358,8 @@ inline int32 CLuaBaseEntity::sendMenu(lua_State *L)
             PChar->pushPacket(new CShopItemsPacket(PChar));
             break;
         case 3:
+            if (PChar->AuctionPlayerContainer)
+                PChar->AuctionPlayerContainer->reset();
             PChar->pushPacket(new CAuctionHousePacket(2));
             break;
         default:

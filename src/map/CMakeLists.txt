@@ -9,6 +9,8 @@ set(SOURCES
     attack.h
     attackround.cpp
     attackround.h
+    auction_player_container.cpp
+    auction_player_container.h
     battlefield_handler.cpp
     battlefield_handler.h
     battlefield.cpp

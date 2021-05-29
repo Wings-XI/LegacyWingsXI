@@ -99,6 +99,7 @@ CCharEntity::CCharEntity()
     Container = new CTradeContainer();
     UContainer = new CUContainer();
     CraftContainer = new CTradeContainer();
+    AuctionPlayerContainer = new CAuctionPlayerContainer(this);
 
     m_Inventory = std::make_unique<CItemContainer>(LOC_INVENTORY);
     m_Mogsafe = std::make_unique<CItemContainer>(LOC_MOGSAFE);
@@ -175,7 +176,6 @@ CCharEntity::CCharEntity()
     m_InsideRegionID = 0;
     m_LevelRestriction = 0;
     m_lastBcnmTimePrompt = 0;
-    m_AHHistoryTimestamp = 0;
     m_DeathTimestamp = 0;
 
     m_EquipFlag = 0;
@@ -257,6 +257,7 @@ CCharEntity::~CCharEntity()
     delete UContainer;
     delete CraftContainer;
     delete PMeritPoints;
+    delete AuctionPlayerContainer;
 }
 
 uint8 CCharEntity::GetGender()
