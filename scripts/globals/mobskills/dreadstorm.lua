@@ -12,16 +12,7 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-  if (mob:getFamily() == 316) then
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 1805) then
-        return 0
-    else
-        return 1
-    end
-  end
-    return 1
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -30,8 +21,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
 
-    local dmgmod = 2.5
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 4, tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS, 1)
+    local dmgmod = 6
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_WIPE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
     return dmg
