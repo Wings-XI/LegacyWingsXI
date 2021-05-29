@@ -154,6 +154,7 @@ public:
     bool      IsHPHidden();
     void      Untargetable(bool untargetable);
     bool      IsUntargetable();
+    void      DoAutoTarget();
 
     void      PostTick() override;
     float     GetRoamDistance();
