@@ -160,7 +160,7 @@ void MQConnection::ListenChannel(uint32_t dwChannel,
             throw std::runtime_error("MQ queue bind error.");
         }
     }
-    amqp_basic_consume(mConnection, dwChannel, amqp_cstring_bytes(strQueueName.c_str()), amqp_empty_bytes, 0, 0, 0, amqp_empty_table);
+    amqp_basic_consume(mConnection, dwChannel, amqp_cstring_bytes(strQueueName.c_str()), amqp_empty_bytes, 0, 1, 0, amqp_empty_table);
     if (amqp_get_rpc_reply(mConnection).reply_type != AMQP_RESPONSE_NORMAL) {
         LOG_ERROR("Unable to start consumer.");
         amqp_queue_unbind(mConnection, 1, amqp_cstring_bytes(strQueueName.c_str()), amqp_cstring_bytes(strExchange.c_str()), amqp_cstring_bytes(strRouteKey.c_str()), amqp_empty_table);
