@@ -39,7 +39,7 @@ public:
     CLuaBaseEntity(lua_State*);
     CLuaBaseEntity(CBaseEntity*);
 
-    CBaseEntity* GetBaseEntity() const
+    CBaseEntity* GetBaseEntity()const
     {
         return m_PBaseEntity;
     }
@@ -473,7 +473,7 @@ public:
     int32 battlefieldAtCapacity(lua_State*);     // 1 if this battlefield is full
     int32 enterBattlefield(lua_State*);    // enter a battlefield entity is registered with
     int32 leaveBattlefield(lua_State*);    // leave battlefield if inside one
-    int32 isInDynamis(lua_State*);         //If player is in Dynamis return true else false
+    int32 isInDynamis(lua_State*);             //If player is in Dynamis return true else false
 
 
     // Battle Utilities
@@ -764,6 +764,12 @@ public:
     int32 setFomorHate(lua_State *L);
     int32 getPixieHate(lua_State *L);
     int32 setPixieHate(lua_State *L);
+
+    // Linkshell Concierge
+    int32 getLinkShellID(lua_State*);        // Gets the Linkshell Id of of a specified linkshell slot (0 for LS1, 1 for LS2)
+    int32 lsConciergeUpdate(lua_State *L);   // handle Concierge's onEventUpdate (listing and distribution)
+    int32 lsConciergeRegister(lua_State *L); // handle Concierge's Linkshell Registration
+    int32 lsConciergeCancel(lua_State *L);   // handle Concierge's Linkshell Cancellation
 };
 
 #endif

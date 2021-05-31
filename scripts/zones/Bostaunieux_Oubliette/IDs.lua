@@ -15,6 +15,7 @@ zones[tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
         ITEM_OBTAINED            = 6547,  -- Obtained: <item>.
         GIL_OBTAINED             = 6548,  -- Obtained <number> gil.
         KEYITEM_OBTAINED         = 6550,  -- Obtained key item: <keyitem>.
+        NOT_HAVE_ENOUGH_GIL      = 6552, -- You do not have enough gil.
         NOTHING_OUT_OF_ORDINARY  = 6561,  -- There is nothing out of the ordinary here.
         FELLOW_MESSAGE_OFFSET    = 6576,  -- I'm ready. I suppose.
         CARRIED_OVER_POINTS      = 7158, -- You have carried over <number> login point[/s].
@@ -34,6 +35,11 @@ zones[tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
         PLAYER_OBTAINS_TEMP_ITEM = 10586, -- <name> obtains the temporary item: <item>!
         ALREADY_POSSESS_TEMP     = 10587, -- You already possess that temporary item.
         NO_COMBINATION           = 10592, -- You were unable to enter a combination.
+        LS_CONCIERGE_LISTING_CANCEL = 10654, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_SAME_DAY       = 14658, -- In the interest of fairness, I am unable to distribute multiple linkpearls to someone on the same day. Please come back tomorrow.
+        LS_CONCIERGE_REGISTERED1    = 10706, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2    = 10707, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED = 10708, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
     },
     mob =
     {
