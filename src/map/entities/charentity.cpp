@@ -210,6 +210,8 @@ CCharEntity::CCharEntity()
     petZoningInfo.petMP = 0;
     petZoningInfo.petTP = 0;
 
+    m_LastEngagedTargID = 0;
+
     m_PlayTime = 0;
     m_SaveTime = 0;
     m_reloadParty = 0;
@@ -738,14 +740,15 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
     if (!IsMobOwner(PTarget))
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
-
-        PAI->Disengage();
+        if (PAI->Disengage())
+            m_LastEngagedTargID = 0;
         return false;
     }
     else if (dist > 30)
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_LOSE_SIGHT);
-        PAI->Disengage();
+        if (PAI->Disengage())
+            m_LastEngagedTargID = 0;
         return false;
     }
     else if (!facing(this->loc.p, PTarget->loc.p, 64))
@@ -1822,6 +1825,8 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
 
 void CCharEntity::Die()
 {
+    m_LastEngagedTargID = 0;
+
     if (PLastAttacker)
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(PLastAttacker, this, 0, 0, MSGBASIC_PLAYER_DEFEATED_BY));
     else

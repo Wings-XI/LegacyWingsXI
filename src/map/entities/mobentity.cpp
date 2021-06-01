@@ -487,7 +487,7 @@ void CMobEntity::DoAutoTarget()
 
     if (this->m_OwnerID.id)
     {
-        // ShowDebug("Auto-Target start.\n");
+        //ShowDebug("Auto-Target start.\n");
         CCharEntity* POwner = zoneutils::GetChar(m_OwnerID.id);
         if (POwner)
         {
@@ -497,27 +497,48 @@ void CMobEntity::DoAutoTarget()
             });
 
             POwner->ForAlliance([this](CBattleEntity* PMemberBE) {
-                if (PMemberBE && PMemberBE->objtype == TYPE_PC && PMemberBE->animation == ANIMATION_ATTACK &&
-                    PMemberBE->loc.zone->GetID() == this->loc.zone->GetID() && PMemberBE->GetBattleTarget()->id == this->id &&
-                    ((CCharEntity*)PMemberBE)->m_hasAutoTarget)
+                /*
+                std::string line2 = "Potential party member, of 5 checks, passed: ";
+
+                if (PMemberBE)
+                {
+                    line2 += "1";
+                    if (PMemberBE->objtype == TYPE_PC)
+                        line2 += "2";
+                    if (PMemberBE->loc.zone->GetID() == this->loc.zone->GetID())
+                        line2 += "3";
+                    if (((CCharEntity*)PMemberBE)->m_LastEngagedTargID == this->targid)
+                        line2 += "4";
+                    if (((CCharEntity*)PMemberBE)->m_hasAutoTarget)
+                        line2 += "5";
+                }
+                line2 += "\n";
+
+                ShowDebug(line2);
+                */
+
+                bool success = false;
+
+                if (PMemberBE && PMemberBE->objtype == TYPE_PC && PMemberBE->loc.zone->GetID() == this->loc.zone->GetID() &&
+                    ((CCharEntity*)PMemberBE)->m_LastEngagedTargID == this->targid && ((CCharEntity*)PMemberBE)->m_hasAutoTarget)
                 {
                     CCharEntity* PMember = (CCharEntity*)PMemberBE;
                     std::unique_ptr<CBasicPacket> errMsg;
                     if (PMember->m_autoTargetOverride)
                     {
-                        // ShowDebug("Auto-Target: TargetOverride found.\n");
+                        //ShowDebug("Auto-Target: TargetOverride found.\n");
                         if (PMember->m_autoTargetOverride->allegiance == ALLEGIANCE_MOB && PMember->IsMobOwner(PMember->m_autoTargetOverride) &&
                             !((CBattleEntity*)(PMember->m_autoTargetOverride)->IsNameHidden()) &&
                             distanceSquared(PMember->loc.p, PMember->m_autoTargetOverride->loc.p) < 29.0f * 29.0f)
                         {
                             auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
-                            controller->ChangeTarget(PMember->m_autoTargetOverride->targid);
-                            // ShowDebug("Auto-Target: engaging the TargetOverride mob.\n");
+                            success = controller->ChangeTarget(PMember->m_autoTargetOverride->targid);
+                            //ShowDebug("Auto-Target: engaging the TargetOverride mob.\n");
                         }
                     }
                     else
                     {
-                        // ShowDebug("Auto-Target: no TargetOverride was found.\n");
+                        //ShowDebug("Auto-Target: no TargetOverride was found.\n");
                         auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
                         for (auto&& PPotentialTarget : PMember->SpawnMOBList)
                         {
@@ -554,8 +575,8 @@ void CMobEntity::DoAutoTarget()
                                 distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 29.0f * 29.0f &&
                                 !PMember->m_autoTargetOverride)
                             {
-                                // ShowDebug("Auto-Target: found valid target, engaging and setting override for all members.\n");
-                                controller->ChangeTarget(PPotentialTarget.second->targid);
+                                //ShowDebug("Auto-Target: found valid target, engaging and setting override for all members.\n");
+                                success = controller->ChangeTarget(PPotentialTarget.second->targid);
                                 PMember->ForAlliance([PMember, PPotentialTarget](CBattleEntity* PMembermember) {
                                     if (PMembermember->objtype == TYPE_PC && PMembermember->loc.zone->GetID() == PMember->loc.zone->GetID() &&
                                         PMembermember->animation == ANIMATION_ATTACK)
@@ -565,6 +586,10 @@ void CMobEntity::DoAutoTarget()
                         }
                     }
                 }
+
+                if (!success && PMemberBE && PMemberBE->objtype == TYPE_PC)
+                    ((CCharEntity*)PMemberBE)->m_LastEngagedTargID = 0;
+
             });
         }
     }

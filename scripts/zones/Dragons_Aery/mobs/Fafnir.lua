@@ -11,7 +11,6 @@ require("scripts/globals/titles")
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
 
     if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then

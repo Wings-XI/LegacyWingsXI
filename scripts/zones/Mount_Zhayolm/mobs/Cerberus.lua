@@ -9,6 +9,8 @@ local ID = require("scripts/zones/Mount_Zhayolm/IDs")
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
 end
 
 function onMobFight(mob, target)
