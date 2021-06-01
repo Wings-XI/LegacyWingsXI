@@ -1568,8 +1568,9 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         }
     }
 
-    // TODO: Pixies will probably break here, once they're added.
-    if (this->allegiance != PActionTarget->allegiance)
+    // Pixie cures should not remove players' sneak/invis/deo
+    // No need to check for raise spell because dead players can't have those effects
+    if ((this->allegiance != PActionTarget->allegiance) && (!PSpell->isCure()))
     {
         // Should not be removed by AoE effects that don't target the player or
         // buffs cast by other players or mobs.

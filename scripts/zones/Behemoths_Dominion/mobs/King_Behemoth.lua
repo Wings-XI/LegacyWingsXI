@@ -20,6 +20,8 @@ function onMobSpawn(mob)
         GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
     end
     
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes

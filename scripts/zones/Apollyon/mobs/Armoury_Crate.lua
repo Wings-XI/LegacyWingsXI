@@ -7,7 +7,7 @@ require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobInitialize(mob)
-    --mob:setMobMod(tpz.mobMod.DRAW_IN, 2) -- need to set a maximum distance for draw-in
+    --mob:setMobMod(tpz.mobMod.DRAW_IN, 2) -- need to set a maximum distance for draw-in (this is now a thing with mobMod #77!!)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

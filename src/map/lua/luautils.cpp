@@ -746,15 +746,9 @@ namespace luautils
 
     int32 VanadielDayAbsolute(lua_State* L)
     {
-        int32 day;
-        int32 month;
-        int32 year;
+        int32 vanatime = (int32)CVanaTime::getInstance()->getTimeAbsolute();
 
-        day = CVanaTime::getInstance()->getDayOfTheMonth();
-        month = CVanaTime::getInstance()->getMonth();
-        year = CVanaTime::getInstance()->getYear();
-
-        lua_pushinteger(L, (month * 30 - 30) + day + year*360);
+        lua_pushinteger(L, vanatime);
         return 1;
     }
 

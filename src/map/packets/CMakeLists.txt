@@ -126,6 +126,8 @@ set(SOURCES
     inventory_size.h
     key_items.cpp
     key_items.h
+    linkshell_concierge.cpp
+    linkshell_concierge.h
     linkshell_equip.cpp
     linkshell_equip.h
     linkshell_message.cpp

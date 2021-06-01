@@ -8,9 +8,13 @@ local ID = require("scripts/zones/Xarcabard/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/quests")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
     -- Failsafe to make sure NPC is down when NM is up
     if OLDSCHOOL_G2 then
         GetNPCByID(ID.npc.BOREAL_TIGER_QM):showNPC(0)

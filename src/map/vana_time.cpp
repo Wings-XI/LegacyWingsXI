@@ -87,6 +87,15 @@ uint32 CVanaTime::getWeekday()
     return m_vDay;
 }
 
+uint32 CVanaTime::getTimeAbsolute()
+{
+    int32 day = getDayOfTheMonth();
+    int32 month = getMonth();
+    int32 year = getInstance()->getYear();
+
+    return ((month * 30 - 30) + day + year*360);
+}
+
 uint32 CVanaTime::getSysHour()
 {
     time_t now = time(0);

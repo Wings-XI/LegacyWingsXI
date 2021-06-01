@@ -9,7 +9,7 @@ require("scripts/globals/status")
 
 function onMobSkillCheck(target, mob, skill)
     -- notorious monsters shouldn't explode, nor dynamis
-    if mob:isMobType(MOBTYPE_NOTORIOUS) or mob:isInDynamis() then
+    if mob:isMobType(MOBTYPE_NOTORIOUS) or mob:isInDynamis() or mob:getHPP() > 25 then
         return 1
     end
 
@@ -20,7 +20,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 1
     local BOMB_TOSS_HPP = skill:getMobHPP() / 100
 
-    local job = mob:getMainJob()
     local power = math.random(12, 18)
 
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*power*BOMB_TOSS_HPP, tpz.magic.ele.FIRE, dmgmod, TP_MAB_BONUS, 1)

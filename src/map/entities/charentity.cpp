@@ -99,6 +99,7 @@ CCharEntity::CCharEntity()
     Container = new CTradeContainer();
     UContainer = new CUContainer();
     CraftContainer = new CTradeContainer();
+    AuctionPlayerContainer = new CAuctionPlayerContainer(this);
 
     m_Inventory = std::make_unique<CItemContainer>(LOC_INVENTORY);
     m_Mogsafe = std::make_unique<CItemContainer>(LOC_MOGSAFE);
@@ -175,7 +176,6 @@ CCharEntity::CCharEntity()
     m_InsideRegionID = 0;
     m_LevelRestriction = 0;
     m_lastBcnmTimePrompt = 0;
-    m_AHHistoryTimestamp = 0;
     m_DeathTimestamp = 0;
 
     m_EquipFlag = 0;
@@ -209,6 +209,8 @@ CCharEntity::CCharEntity()
     petZoningInfo.petHP = 0;
     petZoningInfo.petMP = 0;
     petZoningInfo.petTP = 0;
+
+    m_LastEngagedTargID = 0;
 
     m_PlayTime = 0;
     m_SaveTime = 0;
@@ -257,6 +259,7 @@ CCharEntity::~CCharEntity()
     delete UContainer;
     delete CraftContainer;
     delete PMeritPoints;
+    delete AuctionPlayerContainer;
 }
 
 uint8 CCharEntity::GetGender()
@@ -737,14 +740,15 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
     if (!IsMobOwner(PTarget))
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
-
-        PAI->Disengage();
+        if (PAI->Disengage())
+            m_LastEngagedTargID = 0;
         return false;
     }
     else if (dist > 30)
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_LOSE_SIGHT);
-        PAI->Disengage();
+        if (PAI->Disengage())
+            m_LastEngagedTargID = 0;
         return false;
     }
     else if (!facing(this->loc.p, PTarget->loc.p, 64))
@@ -780,38 +784,6 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
-    if (PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
-    {
-        if (this->m_autoTargetOverride && distanceSquared(this->loc.p, m_autoTargetOverride->loc.p) < 20.0f * 20.0f)
-        {
-            //ShowDebug("Have autotarget override target within range...\n");
-            controller->ChangeTarget(m_autoTargetOverride->targid);
-            this->m_autoTargetOverride = nullptr;
-        }
-        else
-        {
-            this->m_autoTargetOverride = nullptr;
-            for (auto&& PPotentialTarget : this->SpawnMOBList)
-            {
-                if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                    distanceSquared(this->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                {
-                    //ShowDebug("Potential target within range...\n");
-                    std::unique_ptr<CBasicPacket> errMsg;
-                    if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
-                    {
-                        controller->ChangeTarget(PPotentialTarget.second->targid);
-                        // now tell my party members to autotarget this as well
-                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
-                            {
-                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
-                            });
-                    }
-                }
-            }
-        }
-    }
     return ret;
 }
 
@@ -918,40 +890,6 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 if (Skilltype == SKILL_STRING_INSTRUMENT || Skilltype == SKILL_WIND_INSTRUMENT || Skilltype == SKILL_SINGING)
                 {
                     charutils::TrySkillUP(this, Skilltype, PTarget->GetMLevel());
-                }
-            }
-        }
-    }
-
-    auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
-    if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
-    {
-        if (this->m_autoTargetOverride && distanceSquared(this->loc.p, m_autoTargetOverride->loc.p) < 20.0f * 20.0f)
-        {
-            //ShowDebug("Have autotarget override target within range...\n");
-            controller->ChangeTarget(m_autoTargetOverride->targid);
-            this->m_autoTargetOverride = nullptr;
-        }
-        else
-        {
-            this->m_autoTargetOverride = nullptr;
-            for (auto&& PPotentialTarget : this->SpawnMOBList)
-            {
-                if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                    distanceSquared(this->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                {
-                    //ShowDebug("Potential target within range...\n");
-                    std::unique_ptr<CBasicPacket> errMsg;
-                    if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
-                    {
-                        controller->ChangeTarget(PPotentialTarget.second->targid);
-                        // now tell my party members to autotarget this as well
-                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
-                            {
-                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
-                            });
-                    }
                 }
             }
         }
@@ -1099,40 +1037,6 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             }
         }
         battleutils::ClaimMob(PBattleTarget, this);
-
-        auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
-        if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PBattleTarget->targid && PBattleTarget->isDead() && this->m_hasAutoTarget && PBattleTarget->objtype == TYPE_MOB) // Auto-Target
-        {
-            if (this->m_autoTargetOverride && distanceSquared(this->loc.p, m_autoTargetOverride->loc.p) < 20.0f * 20.0f)
-            {
-                //ShowDebug("Have autotarget override target within range...\n");
-                controller->ChangeTarget(m_autoTargetOverride->targid);
-                this->m_autoTargetOverride = nullptr;
-            }
-            else
-            {
-                this->m_autoTargetOverride = nullptr;
-                for (auto&& PPotentialTarget : this->SpawnMOBList)
-                {
-                    if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                        distanceSquared(this->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                    {
-                        //ShowDebug("Potential target within range...\n");
-                        std::unique_ptr<CBasicPacket> errMsg;
-                        if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
-                        {
-                            controller->ChangeTarget(PPotentialTarget.second->targid);
-                            // now tell my party members to autotarget this as well
-                            this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
-                                {
-                                    if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                                        ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
-                                });
-                        }
-                    }
-                }
-            }
-        }
     }
     else
     {
@@ -1436,40 +1340,6 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         pushPacket(new CCharRecastPacket(this));
 
-        auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
-        if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
-        {
-            if (this->m_autoTargetOverride && distanceSquared(this->loc.p, m_autoTargetOverride->loc.p) < 20.0f * 20.0f)
-            {
-                //ShowDebug("Have autotarget override target within range...\n");
-                controller->ChangeTarget(m_autoTargetOverride->targid);
-                this->m_autoTargetOverride = nullptr;
-            }
-            else
-            {
-                this->m_autoTargetOverride = nullptr;
-                for (auto&& PPotentialTarget : this->SpawnMOBList)
-                {
-                    if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                        distanceSquared(this->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                    {
-                        //ShowDebug("Potential target within range...\n");
-                        std::unique_ptr<CBasicPacket> errMsg;
-                        if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
-                        {
-                            controller->ChangeTarget(PPotentialTarget.second->targid);
-                            // now tell my party members to autotarget this as well
-                            this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
-                                {
-                                    if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                                        ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
-                                });
-                        }
-                    }
-                }
-            }
-        }
-
         //#TODO: refactor
         //if (this->getMijinGakure())
         //{
@@ -1696,40 +1566,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     battleutils::RemoveAmmo(this, ammoConsumed);
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-
-    auto controller{ static_cast<CPlayerController*>(PAI->GetController()) };
-    if (this->animation == ANIMATION_ATTACK && this->GetBattleTargetID() == PTarget->targid && PTarget->isDead() && this->m_hasAutoTarget && PTarget->objtype == TYPE_MOB) // Auto-Target
-    {
-        if (this->m_autoTargetOverride && distanceSquared(this->loc.p, m_autoTargetOverride->loc.p) < 20.0f * 20.0f)
-        {
-            //ShowDebug("Have autotarget override target within range...\n");
-            controller->ChangeTarget(m_autoTargetOverride->targid);
-            this->m_autoTargetOverride = nullptr;
-        }
-        else
-        {
-            this->m_autoTargetOverride = nullptr;
-            for (auto&& PPotentialTarget : this->SpawnMOBList)
-            {
-                if (PPotentialTarget.second->animation == ANIMATION_ATTACK &&
-                    distanceSquared(this->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                {
-                    //ShowDebug("Potential target within range...\n");
-                    std::unique_ptr<CBasicPacket> errMsg;
-                    if (IsValidTarget(PPotentialTarget.second->targid, TARGET_ENEMY, errMsg))
-                    {
-                        controller->ChangeTarget(PPotentialTarget.second->targid);
-                        // now tell my party members to autotarget this as well
-                        this->ForAlliance([this, PPotentialTarget](CBattleEntity* PMember)
-                            {
-                                if (PMember->id != this->id && PMember->objtype == TYPE_PC && PMember->loc.zone->GetID() == this->loc.zone->GetID() && distanceSquared(PMember->loc.p, PPotentialTarget.second->loc.p) < 14.0f * 14.0f)
-                                    ((CCharEntity*)PMember)->m_autoTargetOverride = (CBattleEntity*)(PPotentialTarget.second);
-                            });
-                    }
-                }
-            }
-        }
-    }
 
     // Try to double shot
     //#TODO: figure out the packet structure of double/triple shot
@@ -1989,6 +1825,8 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
 
 void CCharEntity::Die()
 {
+    m_LastEngagedTargID = 0;
+
     if (PLastAttacker)
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(PLastAttacker, this, 0, 0, MSGBASIC_PLAYER_DEFEATED_BY));
     else

@@ -10,7 +10,6 @@ function onMobSpawn(mob)
     mob:SetMagicCastingEnabled(false)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 0)
 end
 
 function onMobEngaged(mob, target)

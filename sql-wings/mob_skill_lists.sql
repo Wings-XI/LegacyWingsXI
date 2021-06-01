@@ -682,6 +682,7 @@ INSERT INTO `mob_skill_lists` VALUES('Karakul', 167, 264);
 INSERT INTO `mob_skill_lists` VALUES('Karakul', 167, 1837);
 INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2022);
 INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2023);
+INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2024);
 INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2025);
 INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2026);
 INSERT INTO `mob_skill_lists` VALUES('Khimaira', 168, 2027);

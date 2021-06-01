@@ -23,6 +23,7 @@
 
 #include "message_text.h"
 #include "../entities/baseentity.h"
+#include "../entities/charentity.h"
 
 
 CMessageTextPacket::CMessageTextPacket(CBaseEntity* PEntity, uint16 messageID, bool showName, uint8 mode)
@@ -30,16 +31,29 @@ CMessageTextPacket::CMessageTextPacket(CBaseEntity* PEntity, uint16 messageID, b
 	this->type = 0x36;
 	this->size = 0x08;
 
-	// если в качестве объекта передается персонаж,
-	// то не будем отображать имя
+    // Packet should include the ID of the sender.
+    // Unfortunately without a major refactor we can only know that
+    // if the player is in an event.
+    uint32 sender_id = PEntity->id;
+    uint32 targ_id = PEntity->targid;
+    if (PEntity->objtype == TYPE_PC) {
+        CCharEntity* PChar = (CCharEntity*)PEntity;
+        if (PChar->m_event.Target) {
+            sender_id = PChar->m_event.Target->id;
+            targ_id = PChar->m_event.Target->targid;
+        }
+    }
 
-	if (PEntity->objtype == TYPE_PC || showName == false)
+    // if a character is passed as an object,
+    // then we will not display the name
+    // (Google translated from Russian)
+    if (PEntity->objtype == TYPE_PC || showName == false)
 	{
 		messageID += 0x8000;
 	}
 
-	ref<uint32>(0x04) = PEntity->id;
-	ref<uint16>(0x08) = PEntity->targid;
+	ref<uint32>(0x04) = sender_id;
+	ref<uint16>(0x08) = targ_id;
 	ref<uint16>(0x0A) = messageID;
     ref<uint8>(0x0C) = mode;
 }

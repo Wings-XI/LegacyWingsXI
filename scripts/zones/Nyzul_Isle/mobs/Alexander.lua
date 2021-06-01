@@ -10,6 +10,8 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     -- "Draw in" should only trigger when target is beyond 20' (out of Radiant_Sacrament range)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_IGNORE_STATIONARY, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
 
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         -- Radiant Sacrament

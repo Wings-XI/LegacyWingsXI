@@ -14,6 +14,8 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
     mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 75)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
 
     mob:setMod(tpz.mod.DEF, 500)
     mob:setMod(tpz.mod.MATT, 75)
@@ -40,6 +42,7 @@ function onMobFight(mob, target)
     end
 
     if fifteenBlock > twohourTime and mob:getHPP() < 86 then -- 85% or less charm
+        mob:setLocalVar("twohour_tp", mob:getTP())
         mob:useMobAbility(710)
         mob:setLocalVar("twohourTime", fifteenBlock + math.random(4, 6))
     elseif fifteenBlock > spawnTime then
@@ -57,6 +60,14 @@ function onMobFight(mob, target)
             end
         end
         mob:setLocalVar("spawnTime", fifteenBlock + 4)
+    end
+end
+
+function onMobWeaponSkill(target, mob, skill, action)
+    local skillID = skill:getID()
+    if skillID == 710 then
+        mob:addTP(mob:getLocalVar("twohour_tp"))
+        mob:setLocalVar("twohour_tp", 0)
     end
 end
 

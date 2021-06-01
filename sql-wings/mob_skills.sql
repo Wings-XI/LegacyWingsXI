@@ -1167,12 +1167,12 @@ INSERT INTO `mob_skills` VALUES(2001, 364, 'happobarai', 0, 7.0, 2000, 1500, 4, 
 INSERT INTO `mob_skills` VALUES(2002, 354, 'rinpyotosha', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2021, 438, 'eraser', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2022, 1367, 'tenebrous_mist', 1, 13.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2023, 1368, 'thunderstrike', 1, 13.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2024, 1371, 'tourbillion', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2023, 1368, 'thunderstrike', 1, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2024, 1371, 'tourbillion', 1, 18.0, 2000, 1500, 4, 0, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2025, 1369, 'dreadstorm', 1, 13.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2026, 1381, 'fossilizing_breath', 4, 12.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2027, 1382, 'plague_swipe', 4, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2028, 1386, 'fulmination', 1, 32.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2028, 1386, 'fulmination', 1, 32.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2031, 433, 'reactive_shield', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2038, 1387, 'artificial_gravity', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2039, 1388, 'antigravity', 1, 15.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);

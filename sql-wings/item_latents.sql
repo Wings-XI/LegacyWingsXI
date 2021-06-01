@@ -223,7 +223,7 @@ INSERT INTO `item_latents` VALUES(13294, 235, 3, 2, 75);
 INSERT INTO `item_latents` VALUES(13294, 236, 3, 2, 75);
 INSERT INTO `item_latents` VALUES(13294, 237, 3, 2, 75);
 INSERT INTO `item_latents` VALUES(13294, 238, 3, 2, 75);
-INSERT INTO `item_latents` VALUES(13295, 455, -25, 2, 75);
+INSERT INTO `item_latents` VALUES(13295, 455, 25, 2, 75);
 INSERT INTO `item_latents` VALUES(13296, 27, -2, 2, 75);
 INSERT INTO `item_latents` VALUES(13297, 25, 5, 2, 75);
 INSERT INTO `item_latents` VALUES(13298, 384, 400, 2, 75);
