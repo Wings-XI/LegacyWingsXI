@@ -12,7 +12,6 @@ mixins = {require("scripts/mixins/job_special")}
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
 end
 
 function onMobEngaged(mob, target)

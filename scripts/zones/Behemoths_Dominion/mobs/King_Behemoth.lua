@@ -21,7 +21,6 @@ function onMobSpawn(mob)
     end
     
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 
