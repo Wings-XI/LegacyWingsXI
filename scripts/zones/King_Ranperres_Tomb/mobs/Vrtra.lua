@@ -15,7 +15,6 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SIGHT_ANGLE, 90)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 75)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
 
     mob:setMod(tpz.mod.DEF, 500)
