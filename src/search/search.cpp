@@ -897,6 +897,13 @@ search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
         }
         }
     }
+
+    if (flags == 0x01) {
+        // Mentor search is server wide
+        printf("SEARCH::Mentor Search, ignoring areas.\n");
+        areaCount = 0;
+        memset(areas, 0, sizeof(areas));
+    }
     printf("\n");
 
     ShowMessage("Name: %s Job: %u Lvls: %u ~ %u \n", (nameLen > 0 ? name : 0), jobid, minLvl, maxLvl);
