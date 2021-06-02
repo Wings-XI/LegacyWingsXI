@@ -4010,8 +4010,8 @@ INSERT INTO `synth_recipes` VALUES(4575, 1, 0, 0, 0, 57, 0, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4576, 1, 0, 0, 37, 0, 0, 0, 0, 0, 0, 4100, 4242, 14329, 0, 0, 0, 0, 0, 0, 0, 649, 649, 848, 848, 1, 2, 1, 1, 'Eisendiechlings_Desynth');
 INSERT INTO `synth_recipes` VALUES(4577, 1, 0, 0, 0, 39, 0, 0, 0, 0, 0, 4100, 4242, 19013, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 1, 1, 'Mythril_Grip_Desynth');
 INSERT INTO `synth_recipes` VALUES(4578, 1, 0, 0, 0, 0, 0, 95, 0, 0, 0, 4100, 4242, 16212, 0, 0, 0, 0, 0, 0, 0, 2169, 2169, 2169, 2169, 1, 1, 1, 1, 'Cerberus_Mantle_Desynth');
-INSERT INTO `synth_recipes` VALUES(4579, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4240, 4240, 15848, 0, 0, 0, 0, 0, 0, 0, 15848, 15848, 15848, 15848, 1, 1, 1, 1, 'Matrimony_Band_Signed')
-INSERT INTO `synth_recipes` VALUES(4579, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4240, 4240, 15848, 0, 0, 0, 0, 0, 0, 0, 15847, 15847, 15847, 15847, 1, 1, 1, 1, 'Matrimony_Ring_Signed')
+INSERT INTO `synth_recipes` VALUES(4579, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4240, 4240, 15848, 0, 0, 0, 0, 0, 0, 0, 15848, 15848, 15848, 15848, 1, 1, 1, 1, 'Matrimony_Band_Signed');
+INSERT INTO `synth_recipes` VALUES(4579, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4240, 4240, 15848, 0, 0, 0, 0, 0, 0, 0, 15847, 15847, 15847, 15847, 1, 1, 1, 1, 'Matrimony_Ring_Signed');
 
 -- -----------
 -- RECIPES END
