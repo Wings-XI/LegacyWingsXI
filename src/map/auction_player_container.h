@@ -24,6 +24,7 @@ struct AuctionHistory_t
     uint8 stack;
     uint32 price;
     uint8 status; // e.g. if sold/not sold/on market
+    bool delisted;
 };
 
 class CAuctionPlayerContainer

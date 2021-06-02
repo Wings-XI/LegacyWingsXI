@@ -10393,7 +10393,7 @@ INSERT INTO `mob_groups` VALUES(28, 4670, 178, 'PetGenbu', 0, 128, 0, 10000, 0, 
 INSERT INTO `mob_groups` VALUES(29, 4671, 178, 'PetSeiryu', 0, 128, 0, 11000, 0, 83, 84, 0);
 INSERT INTO `mob_groups` VALUES(30, 4672, 178, 'PetByakko', 0, 128, 0, 10500, 0, 83, 84, 0);
 INSERT INTO `mob_groups` VALUES(31, 4673, 178, 'PetSuzaku', 0, 128, 0, 10000, 0, 83, 84, 0);
-INSERT INTO `mob_groups` VALUES(32, 2266, 178, 'Kirins_Avatar', 0, 128, 0, 0, 0, 72, 72, 0);
+INSERT INTO `mob_groups` VALUES(32, 2266, 178, 'Kirins_Avatar', 0, 128, 0, 0, 0, 92, 92, 0);
 INSERT INTO `mob_groups` VALUES(33, 4716, 178, 'Qilin', 0, 128, 0, 0, 5000, 100, 101, 0);
 INSERT INTO `mob_groups` VALUES(34, 4715, 178, 'BaiHu', 0, 128, 0, 0, 5000, 98, 99, 0);
 INSERT INTO `mob_groups` VALUES(35, 4714, 178, 'QingLong', 0, 128, 0, 0, 5000, 98, 99, 0);

@@ -1,5 +1,5 @@
                     WINGS FFXI PRIVATE SERVER LICENSE
-                       Version 1, 14 January 2021
+                      Version 1.2, 14 January 2021
 
  Copyright (C) 2020-2021 the Wings project.
 
@@ -212,8 +212,29 @@ the following additional terms to our material:
     interface of your choosing - that the Program has been modified 
     from its original version, unless that modification was necessary 
     for the basic operation of the server.
+    
+  4. Special exceptions.
+  
+    As a special exception, the copyright holders grant you permission to
+    withhold publication of specific commits for a period of 14 days at
+    most for the following reasons:
+    
+    a) In case of an out of band commit to a running server in order to
+    solve an urgent issue, where going through the proper commit procedure
+    is not possible.
+    
+    b) In case the commit is a patch to an exploit, where a public
+    disclosure delay is required in order to allow time for server owners
+    (whether based on Wings or not) to patch their servers before the
+    information goes public.
+    
+    c) In case there is a need to debug the commit in a multi-player
+    environment.
+    
+    For the purpose of this exception the 14-day count begins when such
+    code begins running on a public facing server for the fist time.
 
-  4. Revised Versions.
+  5. Revised Versions.
 
   Should a new version of the GNU AGPL license be issued, you are allowed
 to use the code under the terms of the new version as long as it has
