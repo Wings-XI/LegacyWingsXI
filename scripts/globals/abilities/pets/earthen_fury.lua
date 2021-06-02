@@ -12,7 +12,7 @@ function onAbilityCheck(player, target, ability)
     local level = player:getMainLvl() * 2
 
     if(player:getMP()<level) then
-       return 87, 0
+        return 87, 0
     end
 
     return 0, 0
@@ -26,7 +26,7 @@ function onPetAbility(target, pet, skill, master)
     damage = damage + (dINT * 1.5)
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.EARTH, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.EARTH)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, MOBPARAM_WIPE_SHADOWS)
 
     master:setMP(0)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.EARTH)
