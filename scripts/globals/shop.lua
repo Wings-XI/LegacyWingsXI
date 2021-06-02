@@ -143,9 +143,14 @@ tpz.shop =
             5424, 6000, -- Serene Serinette
             5425, 6000, -- Joyous Serinette
             4441, 1116, -- Grape Juice
-            4238, 3000, -- Inferno Crystal
-            4240, 3000, -- Cyclone Crystal
-            4241, 3000, -- Terra Crystal
+            4238, 10000, -- Inferno Crystal (Fire)
+            4240, 10000, -- Cyclone Crystal (Wind)
+            4241, 10000, -- Terra Crystal (Earth)
+            4243, 10000, -- Torrent Crystal (Water)
+            4239, 10000, -- Glacier Crystal (Ice)
+            4242, 10000, -- Plasma Crystal (Lightning)
+            4244, 10000, -- Aurora Crystal (Light)
+            4245, 10000, -- Twilight Crystal (Dark)
         }
         tpz.shop.general(player, stock)
     end,
