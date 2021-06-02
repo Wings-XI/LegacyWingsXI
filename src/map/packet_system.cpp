@@ -2609,6 +2609,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                             ah.price = (uint32)Sql_GetUIntData(SqlHandle, 1);
                             ah.stack = (uint8)Sql_GetIntData(SqlHandle, 2);
                             ah.status = 0;
+                            ah.delisted = false;
                             PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
                         }
                     }
@@ -2617,6 +2618,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     int32 maxPage = 1 + (itemsListed - 1) / 6;
                     PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
                     PChar->AuctionPlayerContainer->m_page = 1;
+                    PChar->AuctionPlayerContainer->isPageResetQueued = false;
 
                     std::string line = "Total of ";
                     line += std::to_string(itemsListed);
@@ -2630,8 +2632,19 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 else
                 {
+                    for (int16 i = 0; i < PChar->AuctionPlayerContainer->m_ah_history.size(); i++)
+                    {
+                        if (PChar->AuctionPlayerContainer->m_ah_history.at(i).delisted)
+                        {
+                            PChar->AuctionPlayerContainer->m_ah_history.erase(PChar->AuctionPlayerContainer->m_ah_history.begin() + i);
+                            i--; // the proceeding element now occupies this iteration, let's re-check it
+                        }
+                    }
                     if (PChar->AuctionPlayerContainer->isPageResetQueued)
                     {
+                        int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                        int32 maxPage = 1 + (itemsListed - 1) / 6;
+                        PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
                         PChar->AuctionPlayerContainer->m_page = 1;
                         PChar->AuctionPlayerContainer->isPageResetQueued = false;
                     }
@@ -2732,6 +2745,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     ah.price = price;
                     ah.stack = !quantity;
                     ah.status = 0;
+                    ah.delisted = false;
                     PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
                     int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
                     int32 maxPage = 1 + (itemsListed - 1) / 6;
@@ -2803,6 +2817,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (PChar->AuctionPlayerContainer && slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1) < PChar->AuctionPlayerContainer->m_ah_history.size())
             {
+                //ShowDebug("Delist request for slot %u (vector position %u)\n", slotid, slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1));
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
                 AuctionHistory_t canceledItem = PChar->AuctionPlayerContainer->m_ah_history[slotid + 6 * (PChar->AuctionPlayerContainer->m_page-1)];
 
@@ -2827,11 +2842,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                                 if (PChar->AuctionPlayerContainer->m_maxPage)
                                 {
-                                    PChar->AuctionPlayerContainer->m_ah_history.erase(PChar->AuctionPlayerContainer->m_ah_history.begin() + slotid +
-                                                                                      6 * (PChar->AuctionPlayerContainer->m_page - 1));
-                                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
-                                    int32 maxPage = 1 + (itemsListed - 1) / 6;
-                                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                                    PChar->AuctionPlayerContainer->m_ah_history.at((uint16)slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).delisted = true;
                                     PChar->AuctionPlayerContainer->isPageResetQueued = true;
                                 }
 

@@ -5,16 +5,24 @@
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/summon")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, skill:getID())
     return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 3
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 9, tpz.magic.ele.THUNDER, dmgmod, TP_NO_EFFECT, 1)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
-    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)
-    return dmg
+    local dINT = math.floor(mob:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
+    
+    local level = mob:getMainLvl()
+    local damage = 48 + (level * 8)
+    damage = damage + (dINT * 1.5)
+    damage = MobMagicalMove(mob, target, skill, damage, tpz.magic.ele.LIGHTNING, 1, TP_NO_EFFECT, 0)
+    damage = mobAddBonuses(mob, nil, target, damage.dmg, tpz.magic.ele.LIGHTNING)
+    damage = AvatarFinalAdjustments(damage, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_WIPE_SHADOWS)
+
+    target:takeDamage(damage, mob, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)
+    return damage
 end
