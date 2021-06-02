@@ -1,18 +1,17 @@
 ---------------------------------------------------
 -- Aerial Blast
 ---------------------------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/monstertpmoves")
-
+require("/scripts/globals/settings")
+require("/scripts/globals/status")
+require("/scripts/globals/monstertpmoves")
+require("/scripts/globals/magic")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
     local level = player:getMainLvl() * 2
 
     if(player:getMP()<level) then
-       return 87, 0
+        return 87, 0
     end
 
     return 0, 0
@@ -27,7 +26,7 @@ function onPetAbility(target, pet, skill, master)
     damage = damage + (dINT * 1.5)
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.WIND, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.WIND)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
     
     local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.WIND - 5, target)
     if (skillchainTier > 0) then
