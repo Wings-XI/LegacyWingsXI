@@ -10146,27 +10146,29 @@ inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
     int battlefield = -1;
     uint8 area = 0;
     uint32 initiator = 0;
+    bool allowinitiate = true;
 
     battlefield = !lua_isnil(L, 1) ? (int)lua_tointeger(L, 1) : -1;
     area = !lua_isnil(L, 2) ? (uint8)lua_tointeger(L, 2) : 1;
     initiator = !lua_isnil(L, 3) ? (uint32)lua_tointeger(L, 3) : 0;
+    allowinitiate = !lua_isnil(L, 4) ? (bool)lua_toboolean(L, 4) : true;
 
-    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator);
+    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator, allowinitiate);
 
     if (PChar->PPet)
-{
+    {
         if (PChar->PBattlefield)
             PChar->PPet->PBattlefield = PChar->PBattlefield;
 
         if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
-{
+        {
             CStatusEffect* PCharEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
             CStatusEffect* PNewEffect = new CStatusEffect(PCharEffect->GetStatusID(), PCharEffect->GetIcon(),
             PCharEffect->GetPower(), PCharEffect->GetTickTime(), PCharEffect->GetDuration(), PCharEffect->GetSubID(),
             PCharEffect->GetSubPower(), PCharEffect->GetTier());
 
             PChar->PPet->StatusEffectContainer->AddStatusEffect(PNewEffect, true);
-    }
+        }
     }
 
     lua_pushinteger(L, ret);
