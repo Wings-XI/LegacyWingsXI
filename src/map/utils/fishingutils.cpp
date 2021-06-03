@@ -741,6 +741,7 @@ namespace fishingutils
         PMob->SetLocalVar("hooked", 0);
         if (!PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK))
         {
+            ((CMobEntity*)PMob)->m_AutoClaimed = true;
             PMob->PEnmityContainer->AddBaseEnmity(PChar);
             battleutils::ClaimMob((CMobEntity*)PMob, (CBattleEntity*)PChar);
         }

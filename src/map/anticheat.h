@@ -41,6 +41,8 @@ namespace anticheat
         CHEAT_ID_FISHBOT = 3,
         // Player using an automated chocobo digging tool
         CHEAT_ID_DIGBOT = 4,
+        // Player using an automated mob claiming tool
+        CHEAT_ID_CLAIMBOT = 5,
         // For boundary checks
         CHEAT_ID_LAST
     };

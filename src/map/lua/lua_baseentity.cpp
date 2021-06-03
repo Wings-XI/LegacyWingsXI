@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -11287,6 +11287,8 @@ inline int32 CLuaBaseEntity::updateClaim(lua_State *L)
     if (PEntity != NULL &&
         PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
+        // A scripted claim cannot be considered claimbotting
+        ((CMobEntity*)m_PBaseEntity)->m_AutoClaimed = true;
         battleutils::ClaimMob((CMobEntity*)m_PBaseEntity, (CBattleEntity*)PEntity->GetBaseEntity());
     }
     return 0;

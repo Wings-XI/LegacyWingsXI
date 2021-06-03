@@ -43,6 +43,7 @@
 #include "charutils.h"
 #include "battleutils.h"
 #include "attackutils.h"
+#include "../anticheat.h"
 #include "../attack.h"
 #include "../map.h"
 #include "../party.h"
@@ -4776,6 +4777,28 @@ namespace battleutils
             }
             if (PAttacker)
             {
+                CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
+                time_point claim_time = server_clock::now();
+                std::chrono::milliseconds time_since_spawn = std::chrono::duration_cast<std::chrono::milliseconds>(claim_time - mob->m_SpawnTime);
+                if ((!mob->m_AutoClaimed) && (time_since_spawn.count() < map_config.claimbot_threshold))
+                {
+                    char cheatDesc[128];
+                    snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s claimed a mob faster than humanly possible: %d ms since spawn (mobid=%u)", attacker->name.c_str(),
+                        (int)time_since_spawn.count(), PDefender->id);
+                    cheatDesc[127] = '\0';
+                    uint8 strikes = 1;
+                    if (mob->m_Type & MOBTYPE_NOTORIOUS) {
+                        // Usually we want to be certain that a player cheats so we require
+                        // several consecutive incidents but that's not possible in the case
+                        // of NMs.
+                        strikes = 5;
+                    }
+                    anticheat::ReportCheatIncident(attacker, anticheat::CheatID::CHEAT_ID_CLAIMBOT, static_cast<uint32>(time_since_spawn.count()), cheatDesc, strikes);
+                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_CLAIMBOT, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
+                    {
+                        return;
+                    }
+                }
                 if (mob->PAI)
                 {
                     CState* state = mob->PAI->GetCurrentState();
@@ -4784,7 +4807,6 @@ namespace battleutils
                         return;
                     }
                 }
-                CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
                 if (!passing)
                 {
                     battleutils::DirtyExp(PDefender, PAttacker);

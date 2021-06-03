@@ -1294,6 +1294,7 @@ int32 map_config_default()
     map_config.anticheat_jail_disable = false;
     map_config.mog_garden_enabled = false;
     map_config.poshack_threshold = 60.0;
+    map_config.claimbot_threshold = 10;
     map_config.cheat_threshold_warn = 1;
     map_config.cheat_threshold_jail = 1;
     map_config.debug_client_ip = 0;
@@ -1792,6 +1793,9 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "poshack_threshold") == 0)
         {
             map_config.poshack_threshold = (float)atof(w2);
+        }
+        else if (strcmp(w1, "claimbot_threshold") == 0) {
+            map_config.claimbot_threshold = atoi(w2);
         }
         else if (strcmp(w1, "cheat_threshold_warn") == 0)
         {
