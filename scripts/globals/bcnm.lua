@@ -974,6 +974,7 @@ function TradeBCNM(player, npc, trade, onUpdate)
     local validBattlefields = findBattlefields(player, npc, itemId)
     if validBattlefields ~= 0 then
         if not onUpdate then
+            trade:confirmItem(itemId)
             player:startEvent(32000, 0, 0, 0, validBattlefields, 0, 0, 0, 0)
         end
         return true
@@ -1022,7 +1023,7 @@ end
 -----------------------------------------------
 
 function EventUpdateBCNM(player, csid, option, extras)
-    -- player:PrintToPlayer(string.format("EventUpdateBCNM csid=%i option=%i extras=%i", csid, option, extras))
+    -- player:PrintToPlayer(string.format("EventUpdateBCNM csid=%i option=%i", csid, option))
 
     -- requesting a battlefield
     if csid == 32000 then
@@ -1076,6 +1077,10 @@ function EventUpdateBCNM(player, csid, option, extras)
             return false
         else
             if not player:getBattlefield() then
+                if player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
+                    -- Another instance still being initiated
+                    return false
+                end
                 player:enterBattlefield()
             end
             local initiatorId = 0
@@ -1101,7 +1106,13 @@ function EventUpdateBCNM(player, csid, option, extras)
 
                     -- set other traded item to worn
                     elseif player:hasItem(item) and player:getName() == initiatorName then
-                        player:createWornItem(item)
+                        -- player:createWornItem(item)
+                        -- Only turn them into worn items if the player actually traded them
+                        if player:confirmTrade(1) == 0 then
+                            -- Also don't block entry as that would split them into
+                            -- a different battlefield
+                            return 0
+                        end
                         local wornmessage = GetCrackedMessage(player, 1)
                         if wornmessage ~= nil then
                             player:messageSpecial(wornmessage, 0, 0, 0, item)
@@ -1111,8 +1122,8 @@ function EventUpdateBCNM(player, csid, option, extras)
 
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
-                        member:addStatusEffect(effect)
                         member:registerBattlefield(id, area, player:getID())
+                        member:addStatusEffect(effect)
                     end
                 end
             end
@@ -1140,6 +1151,8 @@ end
 function EventFinishBCNM(player, csid, option)
     -- player:PrintToPlayer(string.format("EventFinishBCNM csid=%i option=%i", csid, option))
     player:setLocalVar("[battlefield]area", 0)
+    -- If they traded an orb abort the trade
+    player:tradeCancel()
     if player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
         if csid == 32003 and option == 4 then
             if player:getBattlefield() then

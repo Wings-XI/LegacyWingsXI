@@ -1543,6 +1543,60 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Turn the item in a given slot into a worn item                       *
+    *                                                                       *
+    ************************************************************************/
+
+    uint32 CreateWornItemBySlot(CCharEntity* PChar, uint8 LocationID, uint8 slotID)
+    {
+        CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
+
+        if (PItem == nullptr)
+        {
+            ShowDebug("UpdateItem: No item in slot %u\n", slotID);
+            PChar->pushPacket(new CInventoryItemPacket(nullptr, LocationID, slotID));
+            return 0;
+        }
+
+        uint16 ItemID = PItem->getID();
+
+        PItem->m_extra[0] = 1;
+
+        char extra[sizeof(PItem->m_extra) * 2 + 1];
+        Sql_EscapeStringLen(SqlHandle, extra, (const char*)PItem->m_extra, sizeof(PItem->m_extra));
+
+        const char* Query =
+            "UPDATE char_inventory "
+            "SET extra = '%s' "
+            "WHERE charid = %u AND location = %u AND slot = %u;";
+
+        Sql_Query(SqlHandle, Query, extra, PChar->id, PItem->getLocationID(), PItem->getSlotID());
+
+        return ItemID;
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Turn a specific item into a worn item                                *
+    *                                                                       *
+    ************************************************************************/
+
+    bool CreateWornItemByItemId(CCharEntity* PChar, uint8 LocationID, uint16 itemID)
+    {
+        uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemID);
+
+        if (slotID == ERROR_SLOTID) {
+            return false;
+        }
+
+        if (CreateWornItemBySlot(PChar, LocationID, slotID)) {
+            return true;
+        }
+        return false;
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Check the possibility of trade between the characters                *
     *                                                                       *
     ************************************************************************/

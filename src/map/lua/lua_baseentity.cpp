@@ -3938,23 +3938,7 @@ inline int32 CLuaBaseEntity::createWornItem(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem((uint16)lua_tointeger(L, 1));
-
-    if (slotID != ERROR_SLOTID)
-    {
-        CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
-        PItem->m_extra[0] = 1;
-
-        char extra[sizeof(PItem->m_extra) * 2 + 1];
-        Sql_EscapeStringLen(SqlHandle, extra, (const char*)PItem->m_extra, sizeof(PItem->m_extra));
-
-        const char* Query =
-            "UPDATE char_inventory "
-            "SET extra = '%s' "
-            "WHERE charid = %u AND location = %u AND slot = %u;";
-
-        Sql_Query(SqlHandle, Query, extra, PChar->id, PItem->getLocationID(), PItem->getSlotID());
-    }
+    charutils::CreateWornItemByItemId(PChar, LOC_INVENTORY, (uint16)lua_tointeger(L, 1));
 
     return 0;
 }
@@ -4241,6 +4225,13 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
+    bool do_worn_items = false;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1) && (uint8)lua_tointeger(L, 1) != 0) {
+        do_worn_items = true;
+    }
+
+    uint32 totalConfirmed = 0;
+
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     for (uint8 slotID = 0; slotID < TRADE_CONTAINER_SIZE; ++slotID)
@@ -4255,16 +4246,26 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State *L)
 
                 PItem->setReserve(PItem->getReserve() - quantity);
                 if (confirmedItems > 0)
-        {
-            uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
-            charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
-        }
-    }
+                {
+                    totalConfirmed += confirmedItems;
+                    uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
+                    if (do_worn_items) {
+                        PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                        charutils::CreateWornItemBySlot(PChar, LOC_INVENTORY, invSlotID);
+                    }
+                    else {
+                        charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                    }
+                }
+            }
         }
     }
     PChar->TradeContainer->Clean();
-    PChar->pushPacket(new CInventoryFinishPacket());
-    return 0;
+    if (!do_worn_items) {
+        PChar->pushPacket(new CInventoryFinishPacket());
+    }
+    lua_pushinteger(L, totalConfirmed);
+    return 1;
 }
 
 /************************************************************************
@@ -4291,12 +4292,47 @@ inline int32 CLuaBaseEntity::tradeComplete(lua_State *L)
             if (PItem)
             {
                 PItem->setReserve(0);
-            charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+            }
         }
-    }
     }
     PChar->TradeContainer->Clean();
     PChar->pushPacket(new CInventoryFinishPacket());
+    return 0;
+}
+
+/************************************************************************
+*  Function: tradeCancel()
+*  Purpose : Cancels a trade and unconfirms all items
+*  Example : player:tradeCancel()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::tradeCancel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    for (uint8 slotID = 0; slotID < TRADE_CONTAINER_SIZE; ++slotID)
+    {
+        if (PChar->TradeContainer->getInvSlotID(slotID) != 0xFF)
+        {
+            CItem* PItem = PChar->TradeContainer->getItem(slotID);
+            if (PItem)
+            {
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                auto quantity = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
+
+                PItem->setReserve(PItem->getReserve() - quantity);
+                if (confirmedItems > 0)
+                {
+                    PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                }
+            }
+        }
+    }
+    PChar->TradeContainer->Clean();
     return 0;
 }
 
@@ -17421,6 +17457,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,confirmTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeComplete),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeCancel),
 
     // Equipping
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canEquipItem),
