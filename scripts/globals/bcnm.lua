@@ -1063,7 +1063,11 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
-        result = player:registerBattlefield(id, area)
+        local can_initiate = false
+        if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
+            can_initiate = true
+        end
+        result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
             if result == tpz.battlefield.returnCode.INCREMENT_REQUEST then
@@ -1077,10 +1081,6 @@ function EventUpdateBCNM(player, csid, option, extras)
             return false
         else
             if not player:getBattlefield() then
-                if player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
-                    -- Another instance still being initiated
-                    return false
-                end
                 player:enterBattlefield()
             end
             local initiatorId = 0
