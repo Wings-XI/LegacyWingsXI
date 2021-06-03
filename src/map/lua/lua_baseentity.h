@@ -207,6 +207,7 @@ public:
     int32 getCurrentTrade(lua_State*);       // Gets the trade window
     int32 confirmTrade(lua_State*);          // Complete trade with an npc, only removing confirmed items
     int32 tradeComplete(lua_State*);         // Complete trade with an npc
+    int32 tradeCancel(lua_State*);           // Cancel the current trade and unconfirm everything
 
     // Equipping
     int32 canEquipItem(lua_State*);          // returns true if the player is able to equip the item
