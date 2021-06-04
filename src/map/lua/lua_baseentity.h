@@ -179,6 +179,7 @@ public:
     int32 setHomePoint(lua_State*);          // Sets character's homepoint
 
     int32 resetPlayer(lua_State*);           // if player is stuck, GM command @resetPlayer name
+    int32 clearSession(lua_State*);          // if account session is hung
 
     int32 goToEntity(lua_State*);            // Warps self to NPC or Mob; works across multiple game servers
     int32 gotoPlayer(lua_State*);            // warps self to target player
