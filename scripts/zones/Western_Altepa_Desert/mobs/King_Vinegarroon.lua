@@ -21,10 +21,16 @@ function onMobInitialize(mob)
 end
 
 function onMobDrawIn(mob, target)
-    mob:addTP(3000)
-    mob:useMobAbility(({354,722,723})[math.random(1,3)])
-    mob:addTP(3000)
-    mob:useMobAbility(({353,350,720})[math.random(1,3)])
+    local drawInTime = 0
+
+    if drawInTime < os.time() then
+        mob:addTP(3000)
+        mob:useMobAbility(({354,722,723})[math.random(1,3)])
+        mob:addTP(3000)
+        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+
+        drawInTime = os.time() + 5  -- Forces KV to wait 5 seconds before doing double TP move again
+    end
 end
 
 function onAdditionalEffect(mob, target, damage)

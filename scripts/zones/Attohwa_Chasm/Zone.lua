@@ -117,14 +117,14 @@ function onGameHour(zone)
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
     local hour = VanadielHour()
 
-    if hour < 4 or hour >= 20 and (xolre - os.time() < 140) then -- If respawn is less than one in game hour, allow Xolotl to spawn
+    if (hour < 4 or hour >= 20) and (xolre - os.time() < 140) then -- If respawn is less than one in game hour, allow Xolotl to spawn
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
-    elseif hour < 4 or hour >= 20 and xolre < os.time() then -- If Xolotl's respawn window has passed, spawn him
+    elseif (hour < 4 or hour >= 20) and xolre < os.time() then -- If Xolotl's respawn window has passed, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
         SpawnMob(Xolotl)
-    elseif hour == 20 and XolotlDead == 0 then
+    elseif hour == 20 and XolotlDead == 0 then -- If Xolotl didn't die last night, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SpawnMob(Xolotl)
     else

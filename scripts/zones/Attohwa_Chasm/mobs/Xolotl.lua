@@ -11,7 +11,7 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
-    SetServerVariable("XolotlDead",0)
+    SetServerVariable("XolotlDead", 0)
 end
 
 function onMobFight(mob,target)
@@ -60,6 +60,8 @@ function onMobDespawn(mob)
     -- "If he despawns, he will repop again the next night and keep doing so until he is defeated"
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
+    
+    print(XolotlDead)
     if XolotlDead == 1 then
         UpdateNMSpawnPoint(mob:getID())
         local respawn = math.random(75600, 86400) -- 21h to 24h
