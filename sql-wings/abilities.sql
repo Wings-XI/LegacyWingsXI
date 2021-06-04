@@ -252,7 +252,7 @@ INSERT INTO `abilities` VALUES(210, 'tabula_rasa', 20, 0, 1, 7200, 0, 0, 0, 190,
 INSERT INTO `abilities` VALUES(211, 'light_arts', 20, 10, 1, 60, 228, 0, 0, 171, 2000, 0, 6, 20.0, 0, 1, 80, 1600, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(212, 'dark_arts', 20, 10, 1, 60, 232, 0, 0, 176, 2000, 0, 6, 20.0, 0, 1, 80, 1600, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(213, 'flourishes_ii', 19, 40, 1, 0, 0, 0, 0, 0, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(214, 'modus_veritas', 20, 65, 4, 180, 230, 0, 0, 188, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(214, 'modus_veritas', 20, 65, 4, 600, 230, 0, 0, 188, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(215, 'penury', 20, 10, 1, 1, 231, 0, 0, 172, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
 INSERT INTO `abilities` VALUES(216, 'celerity', 20, 25, 1, 1, 231, 0, 0, 173, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
 INSERT INTO `abilities` VALUES(217, 'rapture', 20, 55, 1, 1, 231, 0, 0, 174, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
