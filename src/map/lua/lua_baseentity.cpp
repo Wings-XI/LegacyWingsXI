@@ -3360,7 +3360,9 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 
     // char will not be logged in so get the id manually
     const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
-    int32 ret = Sql_Query(SqlHandle, Query, charName);
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         id = (int32)Sql_GetIntData(SqlHandle, 0);
@@ -3370,6 +3372,7 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     if (id == 0)
     {
         ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
         return 1;
     }
 
@@ -3385,29 +3388,21 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     Query =
         "UPDATE chars "
         "SET "
-        "pos_zone = %u,"
-        "pos_prevzone = %u,"
-        "pos_rot = %u,"
-        "pos_x = %.3f,"
-        "pos_y = %.3f,"
-        "pos_z = %.3f,"
-        "boundary = %u,"
-        "moghouse = %u "
+        "pos_zone = home_zone,"
+        "pos_prevzone = pos_zone,"
+        "pos_rot = home_rot,"
+        "pos_x = home_x,"
+        "pos_y = home_y,"
+        "pos_z = home_z,"
+        "boundary = 0,"
+        "moghouse = 0 "
         "WHERE charid = %u;";
 
-    Sql_Query(SqlHandle, Query,
-        245,        // lower jeuno
-        122,        // prev zone
-        86,         // rotation
-        33.464f,    // x
-        -5.000f,    // y
-        69.162f,    // z
-        0,          //boundary,
-        0,          //moghouse,
-        id);
+    Sql_Query(SqlHandle, Query, id);
 
     ShowDebug("Player reset was successful.\n");
 
+    lua_pushboolean(L, true);
     return 1;
 }
 
