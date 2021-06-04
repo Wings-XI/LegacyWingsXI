@@ -3407,6 +3407,53 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 }
 
 /************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::clearSession(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    const char* charName = lua_tostring(L, 1);
+    uint32 id = 0;
+
+    // char will not be logged in so get the id manually
+    const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        id = (int32)Sql_GetIntData(SqlHandle, 0);
+
+    // could not get player from database
+    if (id == 0)
+    {
+        ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    // delete the account session
+    Query = "DELETE FROM accounts_sessions WHERE charid = %u;";
+    Sql_Query(SqlHandle, Query, id);
+
+    // flist stuff
+    if (FLgetSettingByID(id, 2) == 1)
+    {
+        Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), id);
+    }
+    Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", id);
+
+    ShowDebug("Player reset was successful.\n");
+
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
 *  Function: goToEntity()
 *  Purpose : Transports PC to a Mob or NPC; works across multiple servers
 *  Example : player:goToEntity(ID, Option)
@@ -17426,6 +17473,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTeleportMenu),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setHomePoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearSession),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
