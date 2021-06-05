@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2021 Wings Open Source Project
@@ -20,7 +20,7 @@ CDigAreaContainer::CDigAreaContainer()
 {
     uint16 i = 0;
     time_point now = std::chrono::system_clock::now();
-    while (i < 500)
+    while (i < 2000)
     {
         m_DigObject[i] = CDigObject(0, 0, 0, now, 0);
         i++;
