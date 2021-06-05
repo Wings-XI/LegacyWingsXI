@@ -27,6 +27,10 @@ set(SOURCES
     conquest_system.h
     daily_system.cpp
     daily_system.h
+    dig_area_container.cpp
+    dig_area_container.h
+    dig_object.cpp
+    dig_object.h
     dynamis_handler.cpp
     dynamis_handler.h
     enmity_container.cpp

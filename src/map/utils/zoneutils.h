@@ -41,6 +41,7 @@ namespace zoneutils
     void LoadZoneList();                                                            // загружаем список зон
     void FreeZoneList();                                                            // освобождаем список зон
     void InitializeWeather();                                                       // обновляем погоду в зонах
+    void InitializeDigAreaTimer();
     void TOTDChange(TIMETYPE TOTD);                                                 // реакция мира на смену времени суток
     void SavePlayTime();
 

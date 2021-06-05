@@ -128,6 +128,15 @@ int32 zone_update_weather(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
+int32 zone_expire_digs(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
+
+    PZone->ExpireDigObjects();
+
+    return 0;
+}
+
 int32 deleteZoneTimer(time_point tick, CTaskMgr::CTask* PTask)
 {
     CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
@@ -198,6 +207,10 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     LoadZoneLines();
     LoadZoneWeather();
     LoadNavMesh();
+
+    PDigAreaContainer = nullptr;
+    if (GetType() == ZONETYPE_OUTDOORS)
+        PDigAreaContainer = new CDigAreaContainer();
 }
 
 CZone::~CZone()
@@ -647,6 +660,15 @@ void CZone::UpdateWeather()
 
     CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask("zone_update_weather",
         server_clock::now() + std::chrono::seconds(WeatherNextUpdate), this, CTaskMgr::TASK_ONCE, zone_update_weather));
+}
+
+void CZone::ExpireDigObjects()
+{
+    if (PDigAreaContainer)
+    {
+        PDigAreaContainer->ExpireOldDigs(server_clock::now());
+        CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask("zone_expire_digs", server_clock::now() + 2min, this, CTaskMgr::TASK_ONCE, zone_expire_digs));
+    }
 }
 
 /************************************************************************
