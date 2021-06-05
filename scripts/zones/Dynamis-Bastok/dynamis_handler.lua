@@ -99,17 +99,3 @@ function onDynamisTimeWarning(player, timeRemaining)
         elseif ID.text.DYNAMIS_TIME_UPDATE_2 ~= nil then player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, minutes, 1) end
     end
 end
-
-function onDynamisNMDeath(mob, player, iskKiller)
-    nmsKilled = nmsKilled + 1
-    if nmsKilled >= numNMS then
-        local mob = GetMobByID(megaBoss)
-        mob:setNM(true)
-        mob:resetLocalVars()
-        if mobList[zone][megaBoss].pos ~= nil then
-            mob:setSpawn(mobList[zone][megaBoss].pos[1],mobList[zone][megaBoss].pos[2],mobList[zone][megaBoss].pos[3],mobList[zone][megaBoss].pos[4])
-        else mob:setSpawn(1,1,1,0) end
-        SpawnMob(megaBoss)
-        mob:addRoamFlag(256) -- scripted pathing only
-    end
-end

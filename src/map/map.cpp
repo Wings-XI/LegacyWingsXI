@@ -373,6 +373,7 @@ int32 do_init(int32 argc, char** argv)
     CVanaTime::getInstance()->setCustomEpoch(map_config.vanadiel_time_epoch);
 
     zoneutils::InitializeWeather(); // Need VanaTime initialized
+    zoneutils::InitializeDigAreaTimer();
 
     CTransportHandler::getInstance()->InitializeTransport();
 

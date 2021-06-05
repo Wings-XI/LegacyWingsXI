@@ -344,6 +344,8 @@ public:
     uint8             m_hasAutoTarget;              // возможность использования AutoTarget функции
     position_t		  m_StartActionPos;				// позиция начала действия (использование предмета, начало стрельбы, позиция tractor)
 
+    time_point        m_lastDig;
+
     uint32			  m_PlayTime;
     uint32			  m_SaveTime;
 
