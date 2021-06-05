@@ -1,5 +1,6 @@
 require("scripts/globals/status")
 require("scripts/globals/magic")
+require("scripts/globals/utils")
 
 -- The TP modifier
 TPMOD_NONE = 0
@@ -289,45 +290,32 @@ end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
 function BluecRatio(ratio, atk_lvl, def_lvl)
-    -- Level penalty...
-    local levelcor = 0
-    if (atk_lvl < def_lvl) then
-        levelcor = 0.05 * (def_lvl - atk_lvl)
-    end
-    ratio = ratio - levelcor
+    local levelcor = 1 + (atk_lvl - def_lvl)*0.02
+    if levelcor > 1 then levelcor = 1
+    elseif levelcor < 0.2 then levelcor = 0.2 end
+    ratio = ratio * levelcor
+    ratio = utils.clamp(ratio, 0, 4.0)
+    --print(string.format("blue cratio = %f",ratio))
+    
+    local pdifmin = 0
+    local pdifmax = 0
 
-    -- apply caps
-    if (ratio<0) then
-        ratio = 0
-    elseif (ratio>2) then
-        ratio = 2
-    end
+    pdifmax = ratio * 1.25
+	if pdifmax < 0.15 then
+		pdifmax = 0.15
+	end
 
-    -- Obtaining cRatio_MIN
-    local cratiomin = 0
-    if (ratio<1.25) then
-        cratiomin = 1.2 * ratio - 0.5
-    elseif (ratio>=1.25 and ratio<=1.5) then
-        cratiomin = 1
-    elseif (ratio>1.5 and ratio<=2) then
-        cratiomin = 1.2 * ratio - 0.8
+    pdifmin = pdifmax * 0.675 + 1/6
+    if pdifmax > 2.75 then
+        pdifmax = 2.75
     end
-
-    -- Obtaining cRatio_MAX
-    local cratiomax = 0
-    if (ratio<0.5) then
-        cratiomax = 0.4 + 1.2 * ratio
-    elseif (ratio<=0.833 and ratio>=0.5) then
-        cratiomax = 1
-    elseif (ratio<=2 and ratio>0.833) then
-        cratiomax = 1.2 * ratio
+    if pdifmin > pdifmax - 0.1 then
+        pdifmin = pdifmax - 0.1
     end
-    cratio = {}
-    if (cratiomin < 0) then
-        cratiomin = 0
-    end
-    cratio[1] = cratiomin
-    cratio[2] = cratiomax
+    
+    local cratio = {}
+    cratio[1] = pdifmin
+    cratio[2] = pdifmax
     return cratio
 end
 
