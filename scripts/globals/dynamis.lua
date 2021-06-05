@@ -647,7 +647,8 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
         i = i + 1
     end
     
-    if mobFound == true then -- mob's defeat is a requirement for wave number i
+    if mobFound == true then
+        --print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
         local allReqsMet = true
         while mobList.waveDefeatRequirements[i][j] ~= nil do
