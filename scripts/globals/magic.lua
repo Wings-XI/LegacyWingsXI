@@ -348,7 +348,14 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
     if getElementalSDT(element, target) <= 50 then -- .5 or below SDT drops a resist tier
         res = res / 2
     end
-
+    
+    if target:isPC() and element ~= nil and element > 0 and element < 9 then
+        -- shiyo's research https://discord.com/channels/799050462539284533/799051759544434698/827052905151332354 (Project Wings Discord)
+        local eleres = target:getMod(element+53)
+        if     eleres < 0  and res < 0.5  then res = 0.5
+        elseif eleres < 10 and res < 0.25 then res = 0.25 end
+    end
+    --print(string.format("res was %f",res))
     return res
 end
 
@@ -363,8 +370,16 @@ end
 function applyResistanceAddEffect(player, target, element, bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus)
-
-    return getMagicResist(p)
+    local res = getMagicResist(p)
+    
+    if target:isPC() and element ~= nil and element > 0 and element < 9 then
+        -- shiyo's research https://discord.com/channels/799050462539284533/799051759544434698/827052905151332354 (Project Wings Discord)
+        local eleres = target:getMod(element+53)
+        if     eleres < 0  and res < 0.5  then res = 0.5
+        elseif eleres < 10 and res < 0.25 then res = 0.25 end
+    end
+    
+    return res
 end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
@@ -437,7 +452,7 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     -- If dMAcc ≥ 0, Magic Hit Rate = 70% + dMAcc = magic hit rate
     
     --magicacc = magicacc + (casterLvl - targetLvl)*4
-    magicacc = magicacc + utils.clamp(casterLvl - targetLvl, -5, 5)*3
+    magicacc = magicacc + utils.clamp(casterLvl - targetLvl, -10, 5)*3
     local dMAcc = magicacc - magiceva
     --print(string.format("magicacc = %u, magiceva = %u",magicacc,magiceva))
     if dMAcc < 0 then -- when penalty, half effective
