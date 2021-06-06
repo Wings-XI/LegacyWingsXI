@@ -159,6 +159,9 @@
 #include "../utils/zoneutils.h"
 #include "../utils/flistutils.h"
 
+#include "../packets/linkshell_concierge.h"
+#include "../linkshell.h"
+
 CLuaBaseEntity::CLuaBaseEntity(lua_State* L)
 {
     if (!lua_isnil(L, 1))
@@ -760,7 +763,7 @@ inline int32 CLuaBaseEntity::resetLocalVars(lua_State* L)
 *  Notes   : Used in BLU AF quest for crafting armor tracking etc.
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::countMaskBits(lua_State* L)
+inline int32 CLuaBaseEntity::countMaskBits(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -849,14 +852,14 @@ inline int32 CLuaBaseEntity::injectPacket(lua_State *L)
             return 0;
         }
 
-        fseek(File, 0, SEEK_SET);
-        if (fread(*PPacket, 1, size * 2, File) != size * 2)
-        {
-            ShowError(CL_RED"CLuaBaseEntity::injectPacket : Did not read entire packet\n" CL_RESET);
-            return 0;
-        }
+            fseek(File, 0, SEEK_SET);
+            if (fread(*PPacket, 1, size * 2, File) != size * 2)
+            {
+                ShowError(CL_RED"CLuaBaseEntity::injectPacket : Did not read entire packet\n" CL_RESET);
+                return 0;
+            }
 
-        ((CCharEntity*)m_PBaseEntity)->pushPacket(PPacket);
+            ((CCharEntity*)m_PBaseEntity)->pushPacket(PPacket);
 
         fclose(File);
     }
@@ -1857,8 +1860,8 @@ inline int32 CLuaBaseEntity::pathTo(lua_State* L)
         }
         else
         {
-            m_PBaseEntity->PAI->PathFind->PathTo(point, PATHFLAG_RUN | PATHFLAG_WALLHACK | PATHFLAG_SCRIPT);
-        }
+        m_PBaseEntity->PAI->PathFind->PathTo(point, PATHFLAG_RUN | PATHFLAG_WALLHACK | PATHFLAG_SCRIPT);
+    }
     }
 
     return 0;
@@ -1968,7 +1971,7 @@ inline int32 CLuaBaseEntity::checkDistance(lua_State *L)
 
     if (lua_isuserdata(L, 1))
     {
-        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
         calcdistance = distance(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p);
     }
     else
@@ -2358,6 +2361,8 @@ inline int32 CLuaBaseEntity::sendMenu(lua_State *L)
             PChar->pushPacket(new CShopItemsPacket(PChar));
             break;
         case 3:
+            if (PChar->AuctionPlayerContainer)
+                PChar->AuctionPlayerContainer->reset();
             PChar->pushPacket(new CAuctionHousePacket(2));
             break;
         default:
@@ -2589,13 +2594,13 @@ inline int32 CLuaBaseEntity::isInfront(lua_State* L)
 }
 
 /************************************************************************
- *  Function: isBehind()
+*  Function: isBehind()
  *  Purpose : Returns true if an entity is behind another entity
- *  Example : if (attacker:isBehind(target)) then
- *  Notes   : Can specify angle for wider/narrower ranges
- ************************************************************************/
+*  Example : if (attacker:isBehind(target)) then
+*  Notes   : Can specify angle for wider/narrower ranges
+************************************************************************/
 
-inline int32 CLuaBaseEntity::isBehind(lua_State* L)
+inline int32 CLuaBaseEntity::isBehind(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
@@ -2614,8 +2619,8 @@ inline int32 CLuaBaseEntity::isBehind(lua_State* L)
  *  Function: isBeside()
  *  Purpose : Returns true if an entity is to the side of another entity
  *  Example : if (attacker:isBeside(target)) then
- *  Notes   : Can specify angle for wider/narrower ranges
- ************************************************************************/
+*  Notes   : Can specify angle for wider/narrower ranges
+************************************************************************/
 
 inline int32 CLuaBaseEntity::isBeside(lua_State* L)
 {
@@ -3355,7 +3360,9 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 
     // char will not be logged in so get the id manually
     const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
-    int32 ret = Sql_Query(SqlHandle, Query, charName);
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         id = (int32)Sql_GetIntData(SqlHandle, 0);
@@ -3365,6 +3372,7 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     if (id == 0)
     {
         ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
         return 1;
     }
 
@@ -3380,29 +3388,68 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     Query =
         "UPDATE chars "
         "SET "
-        "pos_zone = %u,"
-        "pos_prevzone = %u,"
-        "pos_rot = %u,"
-        "pos_x = %.3f,"
-        "pos_y = %.3f,"
-        "pos_z = %.3f,"
-        "boundary = %u,"
-        "moghouse = %u "
+        "pos_zone = home_zone,"
+        "pos_prevzone = pos_zone,"
+        "pos_rot = home_rot,"
+        "pos_x = home_x,"
+        "pos_y = home_y,"
+        "pos_z = home_z,"
+        "boundary = 0,"
+        "moghouse = 0 "
         "WHERE charid = %u;";
 
-    Sql_Query(SqlHandle, Query,
-        245,        // lower jeuno
-        122,        // prev zone
-        86,         // rotation
-        33.464f,    // x
-        -5.000f,    // y
-        69.162f,    // z
-        0,          //boundary,
-        0,          //moghouse,
-        id);
+    Sql_Query(SqlHandle, Query, id);
 
     ShowDebug("Player reset was successful.\n");
 
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::clearSession(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    const char* charName = lua_tostring(L, 1);
+    uint32 id = 0;
+
+    // char will not be logged in so get the id manually
+    const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        id = (int32)Sql_GetIntData(SqlHandle, 0);
+
+    // could not get player from database
+    if (id == 0)
+    {
+        ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    // delete the account session
+    Query = "DELETE FROM accounts_sessions WHERE charid = %u;";
+    Sql_Query(SqlHandle, Query, id);
+
+    // flist stuff
+    if (FLgetSettingByID(id, 2) == 1)
+    {
+        Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), id);
+    }
+    Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", id);
+
+    ShowDebug("Player reset was successful.\n");
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
@@ -3726,75 +3773,75 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
     else
     {
         /* FORMAT 2:
-        player:addItem(itemID, quantity) -- add quantity of itemID
+    player:addItem(itemID, quantity) -- add quantity of itemID
 
-        player:addItem(itemID, true) -- silently add 1 of itemID
+    player:addItem(itemID, true) -- silently add 1 of itemID
 
-        player:addItem(itemID, quantity, true) -- silently add quantity of itemID
-        */
+    player:addItem(itemID, quantity, true) -- silently add quantity of itemID
+    */
 
-        bool silence = false;
-        uint16 itemID = (uint16)lua_tointeger(L, 1);
+    bool silence = false;
+    uint16 itemID = (uint16)lua_tointeger(L, 1);
         int32 quantity = 1;
-        uint16 augment0 = 0; uint8 augment0val = 0;
-        uint16 augment1 = 0; uint8 augment1val = 0;
-        uint16 augment2 = 0; uint8 augment2val = 0;
-        uint16 augment3 = 0; uint8 augment3val = 0;
-        uint16 trialNumber = 0;
+    uint16 augment0 = 0; uint8 augment0val = 0;
+    uint16 augment1 = 0; uint8 augment1val = 0;
+    uint16 augment2 = 0; uint8 augment2val = 0;
+    uint16 augment3 = 0; uint8 augment3val = 0;
+    uint16 trialNumber = 0;
 
-        if (!lua_isnil(L, 2) && lua_isboolean(L, 2))
+    if (!lua_isnil(L, 2) && lua_isboolean(L, 2))
             silence = lua_toboolean(L, 2);
-        else if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
-        {
+    else if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
             quantity = (int32)lua_tointeger(L, 2);
-            if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
+        if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
                 silence = lua_toboolean(L, 3);
-        }
+    }
 
-        if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
-            augment0 = (uint16)lua_tointeger(L, 3);
-        if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
-            augment0val = (uint8)lua_tointeger(L, 4);
-        if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
-            augment1 = (uint16)lua_tointeger(L, 5);
-        if (!lua_isnil(L, 6) && lua_isnumber(L, 6))
-            augment1val = (uint8)lua_tointeger(L, 6);
-        if (!lua_isnil(L, 7) && lua_isnumber(L, 7))
-            augment2 = (uint16)lua_tointeger(L, 7);
-        if (!lua_isnil(L, 8) && lua_isnumber(L, 8))
-            augment2val = (uint8)lua_tointeger(L, 8);
-        if (!lua_isnil(L, 9) && lua_isnumber(L, 9))
-            augment3 = (uint16)lua_tointeger(L, 9);
-        if (!lua_isnil(L, 10) && lua_isnumber(L, 10))
-            augment3val = (uint8)lua_tointeger(L, 10);
+    if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
+        augment0 = (uint16)lua_tointeger(L, 3);
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+        augment0val = (uint8)lua_tointeger(L, 4);
+    if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
+        augment1 = (uint16)lua_tointeger(L, 5);
+    if (!lua_isnil(L, 6) && lua_isnumber(L, 6))
+        augment1val = (uint8)lua_tointeger(L, 6);
+    if (!lua_isnil(L, 7) && lua_isnumber(L, 7))
+        augment2 = (uint16)lua_tointeger(L, 7);
+    if (!lua_isnil(L, 8) && lua_isnumber(L, 8))
+        augment2val = (uint8)lua_tointeger(L, 8);
+    if (!lua_isnil(L, 9) && lua_isnumber(L, 9))
+        augment3 = (uint16)lua_tointeger(L, 9);
+    if (!lua_isnil(L, 10) && lua_isnumber(L, 10))
+        augment3val = (uint8)lua_tointeger(L, 10);
 
-        if (!lua_isnil(L, 11) && lua_isnumber(L, 11))
-            trialNumber = (uint16)lua_tointeger(L, 11);
+    if (!lua_isnil(L, 11) && lua_isnumber(L, 11))
+        trialNumber = (uint16)lua_tointeger(L, 11);
 
         while (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && quantity > 0)
-        {
+    {
             if (CItem* PItem = itemutils::GetItem(itemID))
-            {
-                PItem->setQuantity(quantity);
+        {
+            PItem->setQuantity(quantity);
                 quantity -= PItem->getStackSize();
 
                 if (PItem->isType(ITEM_EQUIPMENT))
-                {
+            {
                     if (augment0 != 0) ((CItemEquipment*)PItem)->setAugment(0, augment0, augment0val);
                     if (augment1 != 0) ((CItemEquipment*)PItem)->setAugment(1, augment1, augment1val);
                     if (augment2 != 0) ((CItemEquipment*)PItem)->setAugment(2, augment2, augment2val);
                     if (augment3 != 0) ((CItemEquipment*)PItem)->setAugment(3, augment3, augment3val);
                     if (trialNumber != 0) ((CItemEquipment*)PItem)->setTrialNumber(trialNumber);
-                }
-                SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silence);
+            }
+            SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silence);
 
                 // Paranoid check
                 if (SlotID == ERROR_SLOTID)
                     break;
-            }
-            else
-            {
-                ShowWarning(CL_YELLOW"charplugin::AddItem: Item <%i> is not found in a database\n" CL_RESET, itemID);
+        }
+        else
+        {
+            ShowWarning(CL_YELLOW"charplugin::AddItem: Item <%i> is not found in a database\n" CL_RESET, itemID);
                 break;
             }
         }
@@ -3933,23 +3980,7 @@ inline int32 CLuaBaseEntity::createWornItem(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem((uint16)lua_tointeger(L, 1));
-
-    if (slotID != ERROR_SLOTID)
-    {
-        CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
-        PItem->m_extra[0] = 1;
-
-        char extra[sizeof(PItem->m_extra) * 2 + 1];
-        Sql_EscapeStringLen(SqlHandle, extra, (const char*)PItem->m_extra, sizeof(PItem->m_extra));
-
-        const char* Query =
-            "UPDATE char_inventory "
-            "SET extra = '%s' "
-            "WHERE charid = %u AND location = %u AND slot = %u;";
-
-        Sql_Query(SqlHandle, Query, extra, PChar->id, PItem->getLocationID(), PItem->getSlotID());
-    }
+    charutils::CreateWornItemByItemId(PChar, LOC_INVENTORY, (uint16)lua_tointeger(L, 1));
 
     return 0;
 }
@@ -4231,10 +4262,17 @@ inline int32 CLuaBaseEntity::getCurrentTrade(lua_State* L)
 *  Notes   : Must use trade:confirmItem(slotID) first
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::confirmTrade(lua_State* L)
+inline int32 CLuaBaseEntity::confirmTrade(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    bool do_worn_items = false;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1) && (uint8)lua_tointeger(L, 1) != 0) {
+        do_worn_items = true;
+    }
+
+    uint32 totalConfirmed = 0;
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
@@ -4251,15 +4289,25 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State* L)
                 PItem->setReserve(PItem->getReserve() - quantity);
                 if (confirmedItems > 0)
                 {
+                    totalConfirmed += confirmedItems;
                     uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
-                    charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                    if (do_worn_items) {
+                        PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                        charutils::CreateWornItemBySlot(PChar, LOC_INVENTORY, invSlotID);
+                    }
+                    else {
+                        charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                    }
                 }
             }
         }
     }
     PChar->TradeContainer->Clean();
-    PChar->pushPacket(new CInventoryFinishPacket());
-    return 0;
+    if (!do_worn_items) {
+        PChar->pushPacket(new CInventoryFinishPacket());
+    }
+    lua_pushinteger(L, totalConfirmed);
+    return 1;
 }
 
 /************************************************************************
@@ -4269,7 +4317,7 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State* L)
 *  Notes   :
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::tradeComplete(lua_State* L)
+inline int32 CLuaBaseEntity::tradeComplete(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -4292,6 +4340,41 @@ inline int32 CLuaBaseEntity::tradeComplete(lua_State* L)
     }
     PChar->TradeContainer->Clean();
     PChar->pushPacket(new CInventoryFinishPacket());
+    return 0;
+}
+
+/************************************************************************
+*  Function: tradeCancel()
+*  Purpose : Cancels a trade and unconfirms all items
+*  Example : player:tradeCancel()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::tradeCancel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    for (uint8 slotID = 0; slotID < TRADE_CONTAINER_SIZE; ++slotID)
+    {
+        if (PChar->TradeContainer->getInvSlotID(slotID) != 0xFF)
+        {
+            CItem* PItem = PChar->TradeContainer->getItem(slotID);
+            if (PItem)
+            {
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                auto quantity = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
+
+                PItem->setReserve(PItem->getReserve() - quantity);
+                if (confirmedItems > 0)
+                {
+                    PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                }
+            }
+        }
+    }
+    PChar->TradeContainer->Clean();
     return 0;
 }
 
@@ -4693,7 +4776,7 @@ inline int32 CLuaBaseEntity::storeWithPorterMoogle(lua_State *L)
                 if (PItem)
                 {
                     PItem->setReserve(0);
-                    charutils::UpdateItem(PChar, LOC_INVENTORY, slotId, -1);
+                charutils::UpdateItem(PChar, LOC_INVENTORY, slotId, -1);
                 }
                 //else
                 //{
@@ -5860,36 +5943,36 @@ inline int32 CLuaBaseEntity::setLevel(lua_State *L)
         if (!PChar)
             return 0;
 
-        PChar->SetMLevel((uint8)lua_tointeger(L, 1));
-        PChar->jobs.job[PChar->GetMJob()] = (uint8)lua_tointeger(L, 1);
-        PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
-        PChar->jobs.exp[PChar->GetMJob()] = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1;
+    PChar->SetMLevel((uint8)lua_tointeger(L, 1));
+    PChar->jobs.job[PChar->GetMJob()] = (uint8)lua_tointeger(L, 1);
+    PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
+    PChar->jobs.exp[PChar->GetMJob()] = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1;
 
-        charutils::SetStyleLock(PChar, false);
-        blueutils::ValidateBlueSpells(PChar);
-        charutils::CalculateStats(PChar);
-        charutils::CheckValidEquipment(PChar);
-        charutils::BuildingCharSkillsTable(PChar);
-        charutils::BuildingCharAbilityTable(PChar);
-        charutils::BuildingCharTraitsTable(PChar);
+    charutils::SetStyleLock(PChar, false);
+    blueutils::ValidateBlueSpells(PChar);
+    charutils::CalculateStats(PChar);
+    charutils::CheckValidEquipment(PChar);
+    charutils::BuildingCharSkillsTable(PChar);
+    charutils::BuildingCharAbilityTable(PChar);
+    charutils::BuildingCharTraitsTable(PChar);
 
-        PChar->UpdateHealth();
-        PChar->health.hp = PChar->GetMaxHP();
-        PChar->health.mp = PChar->GetMaxMP();
+    PChar->UpdateHealth();
+    PChar->health.hp = PChar->GetMaxHP();
+    PChar->health.mp = PChar->GetMaxMP();
 
-        charutils::SaveCharStats(PChar);
-        charutils::SaveCharJob(PChar, PChar->GetMJob());
-        charutils::SaveCharExp(PChar, PChar->GetMJob());
-        PChar->updatemask |= UPDATE_HP;
+    charutils::SaveCharStats(PChar);
+    charutils::SaveCharJob(PChar, PChar->GetMJob());
+    charutils::SaveCharExp(PChar, PChar->GetMJob());
+    PChar->updatemask |= UPDATE_HP;
 
-        PChar->pushPacket(new CCharJobsPacket(PChar));
-        PChar->pushPacket(new CCharStatsPacket(PChar));
-        PChar->pushPacket(new CCharSkillsPacket(PChar));
-        PChar->pushPacket(new CCharRecastPacket(PChar));
-        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-        PChar->pushPacket(new CCharUpdatePacket(PChar));
-        PChar->pushPacket(new CMenuMeritPacket(PChar));
-        PChar->pushPacket(new CCharSyncPacket(PChar));
+    PChar->pushPacket(new CCharJobsPacket(PChar));
+    PChar->pushPacket(new CCharStatsPacket(PChar));
+    PChar->pushPacket(new CCharSkillsPacket(PChar));
+    PChar->pushPacket(new CCharRecastPacket(PChar));
+    PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+    PChar->pushPacket(new CCharUpdatePacket(PChar));
+    PChar->pushPacket(new CMenuMeritPacket(PChar));
+    PChar->pushPacket(new CCharSyncPacket(PChar));
     }
     else
     {
@@ -6231,7 +6314,7 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
                 fame = (uint16)(PChar->profile.fame[fameArea] * fameMultiplier);
                 break;
             case 3: // Jeuno
-                fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                fame = (uint16)(PChar->profile.fame[4] * fameMultiplier + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
                 break;
             case 4: // Selbina / Rabao
                 fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
@@ -6465,12 +6548,12 @@ inline int32 CLuaBaseEntity::getFameLevel(lua_State *L)
 *  Notes   : Returns current nation if no nation is provided
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::getRank(lua_State* L)
+inline int32 CLuaBaseEntity::getRank(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CCharEntity * PChar = (CCharEntity*)m_PBaseEntity;
 
     if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
     {
@@ -6478,7 +6561,7 @@ inline int32 CLuaBaseEntity::getRank(lua_State* L)
     }
     else
     {
-        lua_pushinteger(L, PChar->profile.rank[PChar->profile.nation]);
+    lua_pushinteger(L, PChar->profile.rank[PChar->profile.nation]);
     }
     return 1;
 }
@@ -7083,8 +7166,8 @@ inline int32 CLuaBaseEntity::getMissionLogEx(lua_State *L)
     else
     {
         ShowError(CL_RED"Lua::getMissionLogEx: missionLogID %i is invalid\n" CL_RESET, missionLogID);
-        return 0;
-    }
+    return 0;
+}
     return 1;
 }
 
@@ -9892,7 +9975,7 @@ inline int32 CLuaBaseEntity::checkKillCredit(lua_State *L)
         else
         {
             credit = true;
-        }
+    }
     }
 
     lua_pushboolean(L, credit);
@@ -10105,12 +10188,14 @@ inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
     int battlefield = -1;
     uint8 area = 0;
     uint32 initiator = 0;
+    bool allowinitiate = true;
 
     battlefield = !lua_isnil(L, 1) ? (int)lua_tointeger(L, 1) : -1;
     area = !lua_isnil(L, 2) ? (uint8)lua_tointeger(L, 2) : 1;
     initiator = !lua_isnil(L, 3) ? (uint32)lua_tointeger(L, 3) : 0;
+    allowinitiate = !lua_isnil(L, 4) ? (bool)lua_toboolean(L, 4) : true;
 
-    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator);
+    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator, allowinitiate);
 
     if (PChar->PPet)
     {
@@ -11282,6 +11367,8 @@ inline int32 CLuaBaseEntity::updateClaim(lua_State *L)
     if (PEntity != NULL &&
         PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
+        // A scripted claim cannot be considered claimbotting
+        ((CMobEntity*)m_PBaseEntity)->m_AutoClaimed = true;
         battleutils::ClaimMob((CMobEntity*)m_PBaseEntity, (CBattleEntity*)PEntity->GetBaseEntity());
     }
     return 0;
@@ -12326,7 +12413,7 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    
+
     auto weapon = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_RANGED]);
     auto ammo = dynamic_cast<CItemWeapon*>(((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_AMMO]);
     if ((weapon && weapon->getSkillType() == SKILL_FISHING) || (ammo && ammo->getSkillType() == SKILL_FISHING))
@@ -12334,14 +12421,14 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
         lua_pushinteger(L, 0);
         return 1;
     }
-    
+
     if (weapon == nullptr)
     {
         ShowDebug(CL_CYAN"lua::getRACC weapon in ranged slot is NULL!\n" CL_RESET);
         return 0;
     }
     CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
-    
+
     uint8 skilltype = weapon->getSkillType();
     if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
         skilltype = SKILL_AUTOMATON_RANGED;
@@ -13500,18 +13587,18 @@ inline int32 CLuaBaseEntity::getMaster(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC)
 
-    if (((CBattleEntity*)m_PBaseEntity)->PMaster != nullptr)
-    {
-        CBaseEntity* PMaster = ((CBattleEntity*)m_PBaseEntity)->PMaster;
+        if (((CBattleEntity*)m_PBaseEntity)->PMaster != nullptr)
+        {
+            CBaseEntity* PMaster = ((CBattleEntity*)m_PBaseEntity)->PMaster;
 
-        lua_getglobal(L, CLuaBaseEntity::className);
-        lua_pushstring(L, "new");
-        lua_gettable(L, -2);
-        lua_insert(L, -2);
-        lua_pushlightuserdata(L, (void*)PMaster);
-        lua_pcall(L, 2, 1, 0);
-        return 1;
-    }
+            lua_getglobal(L, CLuaBaseEntity::className);
+            lua_pushstring(L, "new");
+            lua_gettable(L, -2);
+            lua_insert(L, -2);
+            lua_pushlightuserdata(L, (void*)PMaster);
+            lua_pcall(L, 2, 1, 0);
+            return 1;
+        }
 
     lua_pushnil(L);
     return 1;
@@ -16871,7 +16958,7 @@ inline int32 CLuaBaseEntity::getPixieHate(lua_State *L)
 }
 
 /************************************************************************
-*  Function: setFomorHate()
+*  Function: setPixieHate()
 *  Purpose : Updates PC's fomor hate (both DB and local)
 *  Example : player:setFomorHate(4)
 ************************************************************************/
@@ -16889,6 +16976,370 @@ inline int32 CLuaBaseEntity::setPixieHate(lua_State *L)
     lua_pushnil(L);
     return 1;
 }
+
+
+/************************************************************************
+*  Function: getLinkShellID()
+*  Purpose : Returns the LinkShell ID and Type for an equipped LinkShell
+*  Example : lsID, lsType = player:getLinkShellID(0)
+*  Notes   : zero-offset linkshell number, returns 0,0 if none equipped
+*            lsType is the itemID minus 0x200:  1 = Shell, 3 = pearl, ect ...
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getLinkShellID(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC && m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_MOB);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        uint8 SLOT = (uint8)lua_tointeger(L, 1);
+
+        TPZ_DEBUG_BREAK_IF(SLOT > 2);
+
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+        CItem* PItem = PChar->getEquip((SLOTTYPE)(SLOT + SLOT_LINK1));
+
+        if ((PItem != nullptr) && PItem->isType(ITEM_LINKSHELL))
+        {
+            CItemLinkshell* PLinkShell = (CItemLinkshell*)PItem;
+            lua_pushinteger(L, PLinkShell->GetLSID());
+            lua_pushinteger(L, PLinkShell->GetLSType());
+            return 2;
+        }
+
+    }
+    lua_pushinteger(L, 0);
+    lua_pushinteger(L, 0);
+    return 2;
+}
+
+
+/************************************************************************
+*  Function: lsConciergeUpdate()
+*  Purpose : Returns the LinkShell List for Concierges onEventUpdate
+*  Example : player:lsConciergeUpdate(csid,option,LINKSHELL_CONCIERGE_SHARE)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::lsConciergeUpdate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC && m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_MOB);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || lua_isnil(L, 2) || lua_isnil(L, 3) || !lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3));
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        uint32 csid = (uint32)lua_tointeger(L, 1);
+        uint32 option = (uint32)lua_tointeger(L, 2);
+        uint8 conciergeShareSettings = (uint8)lua_tointeger(L, 3);
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+        uint32 conciergeID = PChar->m_event.Target->id;
+        uint8 lsAmountListed = 0;
+
+        CLinkshellConciergePacket* PPacket;
+        CEventUpdatePacket* EUPacket;
+
+        uint16 optionLSID = option >> 16;
+        uint16 optionMode = option & 0x0000FFFF;
+
+        int8 EncodedString[16] = { 0 };
+        char* extra = nullptr;
+        size_t extra_length = 0;
+        CItem* PItem = nullptr;
+        uint8 SlotID = ERROR_SLOTID;
+        std::string qStr;
+        std::string LSName;
+        int32 ret = SQL_ERROR;
+
+        switch (optionMode)
+        {
+        case 0: // do stuff
+                // Actually not sure why it even needs this first one, but that's what retail does ...
+            PPacket = new CLinkshellConciergePacket(PChar, conciergeID, csid, option, conciergeShareSettings);
+            PChar->pushPacket(PPacket);
+            break;
+        case 1: // 1 to 4 is for requesting packet 1 to 4 containing 4 linkshells each
+        case 2:
+        case 3:
+        case 4:
+            PPacket = new CLinkshellConciergePacket(PChar, conciergeID, csid, option, conciergeShareSettings);
+            lsAmountListed = PPacket->linkshellEntriesListed;
+            PChar->pushPacket(PPacket);
+
+            // Needs a accompanying Dialog Information packet, or it won't list anything
+            EUPacket = new CEventUpdatePacket(
+                0x1ED0B3C7 + option, // No idea what this is, seems to increment every time, maybe it's supposed to be a timestamp of some sort ?
+                2, // Seems like always 2
+                0, 0, 0, 0, // Sometimes contains junk ?
+                lsAmountListed, // Number of LS entries used in previous 0x048 packet (from 0 to 4), just setting this to 4 all the time will also work, the clients filters the empty ones
+                0);
+            PChar->pushPacket(EUPacket);
+
+            break;
+        case 5: // "purchases" a linkpearl, contains Linkshell ID in the higher word of option
+
+                // ToDo: add safety check if we still have stock at this point
+
+            if (charutils::GetCharVar(PChar->id, "LSCON_LAST_PURCHASE") == CVanaTime::getInstance()->getTimeAbsolute()) {
+                ShowWarning(CL_YELLOW"lsConciergeUpdate: %s cannot purchase second linkshell on the same day\n" CL_RESET, PChar->GetName());
+                lua_pushinteger(L, 97);
+                return 1;
+            }
+
+            qStr = ("SELECT name, extra FROM linkshell_concierge, linkshells ");
+            qStr += "WHERE linkshell_concierge.linkshellid = ";
+            qStr += std::to_string(optionLSID);
+            qStr += " AND linkshells.linkshellid = ";
+            qStr += std::to_string(optionLSID);
+            if (conciergeShareSettings == 0)
+            {
+                qStr += " AND npcid = ";
+                qStr += std::to_string(conciergeID);
+                qStr += " ";
+            }
+            qStr += "LIMIT 1";
+
+            if ((Sql_Query(SqlHandle, qStr.c_str(), optionLSID) != SQL_SUCCESS) || (Sql_NumRows(SqlHandle) == 0) || (Sql_NextRow(SqlHandle) != SQL_SUCCESS))
+            {
+                ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": error querying details for LSID !\n", optionLSID);
+
+                lua_pushinteger(L, 99);
+                return 1;
+            }
+            Sql_GetData(SqlHandle, 1, &extra, &extra_length);
+            LSName = (char*)Sql_GetData(SqlHandle, 0);
+
+            if ((PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0) && (optionLSID != 0) && (extra) && (extra_length != 0))
+            {
+                PItem = itemutils::GetItem(0x0203); // <-- linkpearl
+
+                if ((PItem != nullptr) && (PItem->isType(ITEM_LINKSHELL)))
+                {
+                    PItem->setQuantity(1);
+
+                    CItemLinkshell* linkPearl = (CItemLinkshell*)PItem;
+
+                    EncodeStringLinkshell((int8*)LSName.c_str(), EncodedString);
+                    linkPearl->setSignature(EncodedString);
+                    memcpy(PItem->m_extra, extra, (extra_length > sizeof(PItem->m_extra) ? sizeof(PItem->m_extra) : extra_length));
+
+                    SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, false);
+
+                    if (SlotID != ERROR_SLOTID)
+                    {
+                        charutils::SetCharVar(PChar->id, "LSCON_LAST_PURCHASE", CVanaTime::getInstance()->getTimeAbsolute());
+
+                        ShowNotice(CL_CYAN"lsConciergeUpdate: %s aquired Linkpearl for %s \n" CL_RESET, PChar->GetName(), LSName.c_str());
+                        // Update SQL to lower pearl count by 1
+                        // UPDATE linkshell_concierge SET lspearlcount = lspearlcount - 1 WHERE linkshellid = 6 and npcid = 17764609 LIMIT 1
+
+                        qStr = ("UPDATE linkshell_concierge SET lspearlcount = lspearlcount - 1  ");
+                        qStr += "WHERE linkshellid = ";
+                        qStr += std::to_string(optionLSID);
+                        qStr += " ";
+                        if (conciergeShareSettings == 0)
+                        {
+                            qStr += "AND npcid = ";
+                            qStr += std::to_string(conciergeID);
+                            qStr += " ";
+                        }
+                        qStr += "LIMIT 1";
+
+                        ret = Sql_Query(SqlHandle, qStr.c_str());
+                        if (ret != SQL_SUCCESS)
+                        {
+                            ShowNotice(CL_YELLOW"lsConciergeUpdate: Failed to update pearlcount for %s \n" CL_RESET, LSName.c_str());
+                        }
+
+                        qStr = ("DELETE FROM linkshell_concierge WHERE lspearlcount < 1 ");
+                        Sql_Query(SqlHandle, qStr.c_str()); // We don't really care what this returns, it's simply to perform cleanups
+
+                    }
+
+                }
+                else
+                {
+                    ShowWarning(CL_YELLOW"lsConciergeUpdate: Item Linkpearl is not found in a database? What are you doing ?\n" CL_RESET);
+                }
+            }
+            else {
+                ShowWarning(CL_YELLOW"lsConciergeUpdate: Cannot add Linkpearl for %s, no more free space or linkshell not found\n" CL_RESET, PChar->GetName());
+                lua_pushinteger(L, 98);
+                return 1;
+            }
+
+
+
+            break;
+        case 6: // 6 and 7 are called after purchases, but don't seem to contain any useful information
+        case 7: // not sure why these are even called
+            break;
+        default:
+            // Unknown option ?
+            TPZ_DEBUG_BREAK_IF(true);
+            lua_pushinteger(L, 0);
+            return 1;
+        }
+
+        lua_pushinteger(L, optionMode);
+        return 1;
+
+    }
+    lua_pushinteger(L, 0);
+    return 1;
+}
+
+/************************************************************************
+*  Function: lsConciergeRegister()
+*  Purpose : Registered specific Linkshell ID for specified Linkshell Concierge NPC
+*  Example : res = player:lsConciergeRegister(myLinkShellID, player:getEventTarget():getID(), vLang, vCount, vDays, vTimeZone, vTimeOfDay, LINKSHELL_CONCIERGE_SHARE);
+*  Notes   : returns 3 on success, 99 when already registered, 0xFF for other fails
+************************************************************************/
+
+inline int32 CLuaBaseEntity::lsConciergeRegister(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC && m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_MOB);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 6) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 7) || !lua_isnumber(L, 7));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 8) || !lua_isnumber(L, 8));
+
+    std::string qStr;
+    uint32 i = 0;
+    uint8 extra[0x18] = { 0 };
+    bool ls_found = false;
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        uint16 myLinkshellID = (uint16)lua_tointeger(L, 1);
+        uint32 npcid = (uint32)lua_tointeger(L, 2);
+        uint8 vLang = (uint8)lua_tointeger(L, 3);
+        uint8 vCount = (uint8)lua_tointeger(L, 4);
+        uint8 vDays = (uint8)lua_tointeger(L, 5);
+        uint8 vTimeZone = (uint8)lua_tointeger(L, 6);
+        uint8 vTimeOfDay = (uint8)lua_tointeger(L, 7);
+        uint8 conciergeShareSetting = (uint8)lua_tointeger(L, 8);
+
+        // Check if we are already registered at this NPC
+        qStr = "SELECT listingid FROM linkshell_concierge WHERE linkshellid = %u ";
+        if (conciergeShareSetting == 0)
+        {
+            qStr += " AND npcid = %u";
+        }
+
+        if ((Sql_Query(SqlHandle, qStr.c_str(), myLinkshellID, npcid) == SQL_SUCCESS) && (Sql_NumRows(SqlHandle) > 0))
+        {
+            ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": error adding Linkshell %u by player: %u already registered !\n", myLinkshellID, m_PBaseEntity->id);
+
+            lua_pushinteger(L, 99);
+            return 1;
+        }
+
+        for (i = 0; i < 2; i++) {
+            CItem* PItem = ((CCharEntity*)m_PBaseEntity)->getEquip((SLOTTYPE)(i + SLOT_LINK1));
+
+            if ((PItem != nullptr) && PItem->isType(ITEM_LINKSHELL))
+            {
+                CItemLinkshell* PLinkShell = (CItemLinkshell*)PItem;
+                if (PLinkShell->GetLSID() == myLinkshellID) {
+                    ls_found = true;
+                    memcpy(extra, PLinkShell->m_extra, sizeof(extra));
+                    ref<LSTYPE>(extra, 0x08) = LSTYPE_LINKPEARL;
+                }
+            }
+        }
+        if (!ls_found) {
+            ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": Linkshell item with Linkshell ID %u not found in inventory of player: %u\n", myLinkshellID, m_PBaseEntity->id);
+
+            lua_pushinteger(L, 99);
+            return 1;
+        }
+
+        char extra_encoded[sizeof(extra) * 2 + 1];
+        Sql_EscapeStringLen(SqlHandle, extra_encoded, (const char*)extra, sizeof(extra));
+        qStr = "INSERT INTO linkshell_concierge(npcid, linkshellid, extra, lslanguage, lspearlcount, lsactivedays, lstimezone, lstimeofday, madebyplayerid) VALUES(%u,%u,'%s',%u,%u,%u,%u,%u,%u);";
+        if (Sql_Query(SqlHandle, qStr.c_str(), npcid, myLinkshellID, extra_encoded, vLang, vCount, vDays, vTimeZone, vTimeOfDay, m_PBaseEntity->id) == SQL_ERROR)
+        {
+            ShowDebug(CL_WHITE"linkshell_concierge" CL_RESET": error adding Linkshell %u by player: %u\n", myLinkshellID, m_PBaseEntity->id);
+
+            lua_pushinteger(L, 99);
+            return 1;
+        }
+
+        lua_pushinteger(L, 1);
+        return 1;
+
+    }
+    lua_pushinteger(L, 0xFF); // not used from withing a player object
+    return 1;
+}
+
+
+/************************************************************************
+*  Function: lsConciergeCancel()
+*  Purpose : Cancel specific Linkshell ID for specified Linkshell Concierge NPC
+*  Example : res = player:lsConciergeCancel(myLinkShellID,npcid,LINKSHELL_CONCIERGE_SHARE);
+*  Notes   : returns 3 on successfull cancel, 0xFF for fails
+************************************************************************/
+
+inline int32 CLuaBaseEntity::lsConciergeCancel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC && m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_MOB);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+
+    uint8 conciergeShareSetting = (uint8)lua_tointeger(L, 3);
+
+    std::string qStr;
+    int32 ret = SQL_ERROR;
+
+    // ToDo: test me
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        uint16 myLinkshellID = (uint16)lua_tointeger(L, 1);
+        uint32 npcid = (uint32)lua_tointeger(L, 2);
+
+        qStr = ("DELETE FROM linkshell_concierge WHERE linkshellid = ");
+        qStr += std::to_string(myLinkshellID);
+        if (conciergeShareSetting == 0)
+        {
+        qStr += " AND npcid = ";
+        qStr += std::to_string(npcid);
+        }
+        qStr += " LIMIT 1 ";
+
+        ret = Sql_Query(SqlHandle, qStr.c_str()); // We don't really care what this returns, but we check it anyway
+
+        if (ret == SQL_SUCCESS)
+        {
+            lua_pushinteger(L, 3);
+            return 1;
+        }
+        else {
+            lua_pushinteger(L, 0xFF);
+            return 1;
+        }
+
+    }
+    lua_pushinteger(L, 0xFF); // not used from a player object
+    return 1;
+}
+
 
 //=======================================================//
 
@@ -16995,7 +17446,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isInfront),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isBehind),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isBeside),
-    
+
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZoneID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZoneName),
@@ -17022,6 +17473,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTeleportMenu),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setHomePoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearSession),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
@@ -17050,6 +17502,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,confirmTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeComplete),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeCancel),
 
     // Equipping
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canEquipItem),
@@ -17615,6 +18068,11 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setFomorHate),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPixieHate),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPixieHate),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getLinkShellID),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeUpdate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeRegister),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeCancel),
 
     {nullptr,nullptr}
 };

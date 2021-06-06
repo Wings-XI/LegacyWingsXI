@@ -39,7 +39,7 @@ public:
     CLuaBaseEntity(lua_State*);
     CLuaBaseEntity(CBaseEntity*);
 
-    CBaseEntity* GetBaseEntity() const
+    CBaseEntity* GetBaseEntity()const
     {
         return m_PBaseEntity;
     }
@@ -179,6 +179,7 @@ public:
     int32 setHomePoint(lua_State*);          // Sets character's homepoint
 
     int32 resetPlayer(lua_State*);           // if player is stuck, GM command @resetPlayer name
+    int32 clearSession(lua_State*);          // if account session is hung
 
     int32 goToEntity(lua_State*);            // Warps self to NPC or Mob; works across multiple game servers
     int32 gotoPlayer(lua_State*);            // warps self to target player
@@ -207,6 +208,7 @@ public:
     int32 getCurrentTrade(lua_State*);       // Gets the trade window
     int32 confirmTrade(lua_State*);          // Complete trade with an npc, only removing confirmed items
     int32 tradeComplete(lua_State*);         // Complete trade with an npc
+    int32 tradeCancel(lua_State*);           // Cancel the current trade and unconfirm everything
 
     // Equipping
     int32 canEquipItem(lua_State*);          // returns true if the player is able to equip the item
@@ -473,7 +475,7 @@ public:
     int32 battlefieldAtCapacity(lua_State*);     // 1 if this battlefield is full
     int32 enterBattlefield(lua_State*);    // enter a battlefield entity is registered with
     int32 leaveBattlefield(lua_State*);    // leave battlefield if inside one
-    int32 isInDynamis(lua_State*);         //If player is in Dynamis return true else false
+    int32 isInDynamis(lua_State*);             //If player is in Dynamis return true else false
 
 
     // Battle Utilities
@@ -764,6 +766,12 @@ public:
     int32 setFomorHate(lua_State *L);
     int32 getPixieHate(lua_State *L);
     int32 setPixieHate(lua_State *L);
+
+    // Linkshell Concierge
+    int32 getLinkShellID(lua_State*);        // Gets the Linkshell Id of of a specified linkshell slot (0 for LS1, 1 for LS2)
+    int32 lsConciergeUpdate(lua_State *L);   // handle Concierge's onEventUpdate (listing and distribution)
+    int32 lsConciergeRegister(lua_State *L); // handle Concierge's Linkshell Registration
+    int32 lsConciergeCancel(lua_State *L);   // handle Concierge's Linkshell Cancellation
 };
 
 #endif

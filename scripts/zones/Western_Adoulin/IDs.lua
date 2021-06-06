@@ -38,6 +38,11 @@ zones[tpz.zone.WESTERN_ADOULIN] =
         MINNIFI_DIALOGUE        = 10237, -- Come, ladies and gentlemen, and enjoy our delightful array of frrresh vegetables!
         SPARK_EXCHANGE          = 11357, -- Hm? Oh, spark exchange... Of course.
         NOT_ENOUGH_SPARKS       = 11371, -- You do not possess enough sparks of eminence to complete the transaction.
+        LS_CONCIERGE_LISTING_CANCEL = 12747, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_SAME_DAY       = 12751, -- In the interest of fairness, I am unable to distribute multiple linkpearls to someone on the same day. Please come back tomorrow.
+        LS_CONCIERGE_REGISTERED1    = 12799, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2    = 12800, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED = 12801, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
     },
     mob =
     {

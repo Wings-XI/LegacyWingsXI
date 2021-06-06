@@ -198,7 +198,7 @@ CBattlefield* CBattlefieldHandler::GetBattlefieldByInitiator(uint32 charID)
     return nullptr;
 }
 
-uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battlefieldId, uint8 area, uint32 initiator)
+uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battlefieldId, uint8 area, uint32 initiator, bool allowinitiate)
 {
     if (PChar->PBattlefield)
     {
@@ -238,7 +238,10 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battle
             return BATTLEFIELD_RETURN_CODE_LOCKED;
         }
     }
-    return LoadBattlefield(PChar, battlefieldId, area);
+    if (allowinitiate) {
+        return LoadBattlefield(PChar, battlefieldId, area);
+    }
+    return BATTLEFIELD_RETURN_CODE_WAIT;
 }
 
 bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield, uint8 leavecode)

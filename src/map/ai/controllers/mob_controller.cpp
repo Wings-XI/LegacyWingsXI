@@ -676,11 +676,25 @@ void CMobController::Move()
     }
     else if (((currentDistance > closureDistance) || move) && PMob->PAI->CanFollowPath())
     {
-        //#TODO: can this be moved to scripts entirely?
-        if (PMob->getMobMod(MOBMOD_DRAW_IN) > 0)
+        if (PMob->getMobMod(MOBMOD_DRAW_IN))
         {
-            if (currentDistance >= PMob->GetMeleeRange() * 2 && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f))
+            uint8 drawInRange = PMob->getMobMod(MOBMOD_DRAW_IN_CUSTOM_RANGE) > 0 ? PMob->getMobMod(MOBMOD_DRAW_IN_CUSTOM_RANGE) : PMob->GetMeleeRange() * 2;
+            uint16 maximumReach = PMob->getMobMod(MOBMOD_DRAW_IN_MAXIMUM_REACH) > 0 ? PMob->getMobMod(MOBMOD_DRAW_IN_MAXIMUM_REACH) : 0xFFFF;
+            bool includeParty = PMob->getMobMod(MOBMOD_DRAW_IN_INCLUDE_PARTY); // (and alliance)
+
+            if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
+            {
                 FaceTarget();
+            }
+            else
+            {
+                drawInRange = PMob->GetMeleeRange(); // if i'm bound/can't move, draw in the moment they leave my melee range
+                if ((PMob->speed == 0 || PMob->getMobMod(MOBMOD_NO_MOVE)) && !PMob->getMobMod(MOBMOD_DRAW_IN_IGNORE_STATIONARY) &&
+                currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 1.2f, drawInRange, maximumReach, includeParty))
+                {
+                    FaceTarget();
+                }
+            }
         }
         if (PMob->speed != 0 && PMob->getMobMod(MOBMOD_NO_MOVE) == 0 && m_Tick >= m_LastSpecialTime)
         {

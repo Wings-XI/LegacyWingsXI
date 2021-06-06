@@ -9,6 +9,8 @@ set(SOURCES
     attack.h
     attackround.cpp
     attackround.h
+    auction_player_container.cpp
+    auction_player_container.h
     battlefield_handler.cpp
     battlefield_handler.h
     battlefield.cpp
@@ -25,6 +27,10 @@ set(SOURCES
     conquest_system.h
     daily_system.cpp
     daily_system.h
+    dig_area_container.cpp
+    dig_area_container.h
+    dig_object.cpp
+    dig_object.h
     dynamis_handler.cpp
     dynamis_handler.h
     enmity_container.cpp

@@ -192,7 +192,7 @@ bool CAIContainer::Internal_Engage(uint16 targetid)
     if (entity)
     {
         //#TODO: remove m_battleTarget if possible (need to check disengage)
-        if (CanChangeState() || (GetCurrentState() && GetCurrentState()->IsCompleted()))
+        if (CanChangeState() || (GetCurrentState() && GetCurrentState()->IsCompleted()) && GetCurrentState()->m_id != STATEID::MOBSKILL_STATE)
         {
             if (ForceChangeState<CAttackState>(entity, targetid))
             {

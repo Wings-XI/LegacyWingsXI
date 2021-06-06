@@ -19,7 +19,7 @@ function onPetAbility(target, pet, skill, master)
     master:delStatusEffect(tpz.effect.ASTRAL_FLOW)
 
     if (target:isNM()) then
-        local dmg = 0.1 * target:getHP() + 0.1 * target:getHP() * power
+        local dmg = 0.142 * target:getHP() + 0.142 * target:getHP() * power
         if (dmg > 9999) then
             dmg = 9999
         end

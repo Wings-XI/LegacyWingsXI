@@ -11,7 +11,7 @@ mixins = {require("scripts/mixins/job_special")}
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 2)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 end
 
 function onMobEngaged(mob, target)

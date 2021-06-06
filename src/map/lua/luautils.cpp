@@ -746,15 +746,9 @@ namespace luautils
 
     int32 VanadielDayAbsolute(lua_State* L)
     {
-        int32 day;
-        int32 month;
-        int32 year;
+        int32 vanatime = (int32)CVanaTime::getInstance()->getTimeAbsolute();
 
-        day = CVanaTime::getInstance()->getDayOfTheMonth();
-        month = CVanaTime::getInstance()->getMonth();
-        year = CVanaTime::getInstance()->getYear();
-
-        lua_pushinteger(L, (month * 30 - 30) + day + year*360);
+        lua_pushinteger(L, vanatime);
         return 1;
     }
 
@@ -4897,29 +4891,23 @@ namespace luautils
         return 0;
     }
 
-    bool OnChocoboDig(CCharEntity* PChar, bool pre)
+    void OnChocoboDig(CCharEntity* PChar)
     {
         lua_prepscript("scripts/zones/%s/Zone.lua", PChar->loc.zone->GetName());
 
         if (prepFile(File, "onChocoboDig"))
-            return false;
+            return;
 
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
 
-        lua_pushboolean(LuaHandle, pre);
-
-        if (lua_pcall(LuaHandle, 2, 1, 0))
+        if (lua_pcall(LuaHandle, 1, 0, 0))
         {
             ShowError("luautils::onChocoboDig: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
-            return false;
         }
 
-        bool canDig = lua_toboolean(LuaHandle, -1);
-        lua_pop(LuaHandle, 1);
-
-        return canDig;
+        return;
     }
 
     /************************************************************************

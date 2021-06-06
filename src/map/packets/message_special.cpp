@@ -27,6 +27,7 @@
 #include "message_special.h"
 
 #include "../entities/baseentity.h"
+#include "../entities/charentity.h"
 
 
 CMessageSpecialPacket::CMessageSpecialPacket(
@@ -43,14 +44,27 @@ CMessageSpecialPacket::CMessageSpecialPacket(
 
 	//TPZ_DEBUG_BREAK_IF(PEntity == nullptr);
 
-	ref<uint32>(0x04) = PEntity->id;
+    // Packet should include the ID of the sender.
+    // Unfortunately without a major refactor we can only know that
+    // if the player is in an event.
+    uint32 sender_id = PEntity->id;
+    uint32 targ_id = PEntity->targid;
+    if (PEntity->objtype == TYPE_PC) {
+        CCharEntity* PChar = (CCharEntity*)PEntity;
+        if (PChar->m_event.Target) {
+            sender_id = PChar->m_event.Target->id;
+            targ_id = PChar->m_event.Target->targid;
+        }
+    }
+
+	ref<uint32>(0x04) = sender_id;
 
 	ref<uint32>(0x08) = param0;
 	ref<uint32>(0x0C) = param1;
 	ref<uint32>(0x10) = param2;
 	ref<uint32>(0x14) = param3;
 
-	ref<uint16>(0x18) = PEntity->targid;
+	ref<uint16>(0x18) = targ_id;
 
 	if (ShowName)
 	{

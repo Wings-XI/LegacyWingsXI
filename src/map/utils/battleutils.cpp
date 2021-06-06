@@ -43,6 +43,7 @@
 #include "charutils.h"
 #include "battleutils.h"
 #include "attackutils.h"
+#include "../anticheat.h"
 #include "../attack.h"
 #include "../map.h"
 #include "../party.h"
@@ -1614,14 +1615,11 @@ namespace battleutils
 
         float levelCorrection = 1.0f;
 
-        //get ratio (not capped for RAs)
         float ratio = (float)rAttack / (float)PDefender->DEF();
         
         ratio = std::clamp<float>(ratio, 0, 3);
 
-        //level correct (0.025 not 0.05 like for melee)
         if (PDefender->GetMLevel() > PAttacker->GetMLevel()) {
-            //ratio -= 0.025f * (PDefender->GetMLevel() - PAttacker->GetMLevel());
             levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel())*0.01f;
             if (PAttacker->objtype == TYPE_PC && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
             {
@@ -1635,23 +1633,6 @@ namespace battleutils
         //calculate min/max PDIF
         float minPdif = 0;
         float maxPdif = 0;
-        /*
-        if (ratio < 0.9)
-        {
-            minPdif = ratio;
-            maxPdif = (10.0f / 9.0f) * ratio;
-        }
-        else if (ratio <= 1.1)
-        {
-            minPdif = 1;
-            maxPdif = 1;
-        }
-        else
-        {
-            minPdif = (-3.0f / 19.0f) + ((20.0f / 19.0f) * ratio);
-            maxPdif = ratio;
-        }
-        */
 
         maxPdif = ratio * 1.25f;
         minPdif = maxPdif * 0.675f + 1 / 6;
@@ -2700,199 +2681,63 @@ namespace battleutils
 
     float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent)
     {
-        uint16 attack = PAttacker->ATT();
-        // Bonus attack currently only from footwork
-        if (bonusAttPercent >= 1) 
-        {
-            attack = static_cast<uint16>(attack * bonusAttPercent);
-        }
+        float attPercentBonus = 0;
+        if (bonusAttPercent >= 0.001f)
+            attPercentBonus = PAttacker->ATT() * bonusAttPercent;
 
-        // Wholly possible for DEF to be near 0 with the amount of debuffs/effects now.
-        uint16 defense = PDefender->DEF();
-        if (defense == 0)
-        {
-            defense = 1;
-        }
-
-        // https://www.bg-wiki.com/bg/PDIF
-        // https://www.bluegartr.com/threads/127523-pDIF-Changes-(Feb.-10th-2016)
-        float ratio = (static_cast<float>(attack)) / (static_cast<float>(defense));
+        float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
+        float cRatioMax = 0;
+        float cRatioMin = 0;
+        float ratioCap = 4.0f;
+        float levelCorrection = 1.0f;
+        
+        ratio = std::clamp<float>(ratio, 0, ratioCap);
         float cRatio = ratio;
-
-        // Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
-        // Level correction is only a penalty to players, a player does not get any bonus for fighting lower level monsters
-        // Level correct does give bonuses to Monsters and Avatars. For Avatars it caps at a level difference of 38
-        // I am going to assume that the 38 level difference cap applies to monsters as well
-        // https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
-        // This thread references the level correction cap for avatars and states that penalties are ignored for avatars
-        // Monster pDIF = Avatar pDIF = Pet pDIF
-        // Based on these points we know monsters and avatars ignore penalties from level correct and only get bonuses so
-        // I believe it is safe to assume all pets do this.
-
-        uint16 zoneId = PAttacker->getZone();
-        // All zones from Adoulin onward have an id of 256+
-        // This includes Escha/Reisenjima and the new Dynamis zones
-        // (Not a post Adoulin Zone) && (Not Legion_A)
-        bool shouldApplyLevelCorrection = (zoneId < 256) && (zoneId != 183);
-
-        ENTITYTYPE attackerType = PAttacker->objtype;
-
-        uint8 attackerLvl = PAttacker->GetMLevel();
-        uint8 defenderLvl = PDefender->GetMLevel();
-        uint8 dLvl = std::abs(attackerLvl - defenderLvl);
-        float correction = static_cast<float>(dLvl) * 0.05f;
-
-        // Assuming the cap for mobs is the same as Avatars
-        // Cap at 38 level diff so 38*0.05 = 1.9
-        float cappedCorrection = std::min(correction, 1.9f);
-        
-        if (shouldApplyLevelCorrection)
+        if (PAttacker->objtype == TYPE_PC)
         {
-            // Players only get penalties
-            if (attackerType == TYPE_PC)
+            if (PAttacker->GetMLevel() < PDefender->GetMLevel())
             {
-                if (attackerLvl < defenderLvl)
-                {
-                    // Screw the players, no known cap
-                    cRatio -= correction;
-                }
+                levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 0.02f;
+                if (levelCorrection < 0.2f)
+                    levelCorrection = 0.2f;
+                cRatio *= levelCorrection;
             }
-            // Mobs, Avatars and pets only get bonuses, no penalties (or they are calculated differently)
-            else if (attackerType == TYPE_MOB || attackerType == TYPE_PET)
-            {
-                if (attackerLvl > defenderLvl)
-                {
-                    cRatio += cappedCorrection;
-                }
-            }
-        }
-
-        float wRatio = cRatio;
-        
-        if (isCritical)
-        {
-            wRatio += 1;
-        }
-
-        float qRatio = wRatio;
-        float upperLimit = 0.0f;
-        float lowerLimit = 0.0f;
-
-        // https://www.bg-wiki.com/bg/PDIF
-        // Pre-Randomized values excluding Damage Limit+ trait
-        // Damage Limit+ trait adds 0.1/rank to these values
-        // type : non-crit : crit
-        // 1H : 3.25 : 4.25
-        // H2H & GK : 3.5 : 4.5
-        // 2H : 3.75 : 4.75
-        // Scythe : 4 : 5
-        // Archery & Throwing : 3.25 : 3.25*1.25
-        // Marksmanship : 3.5 : 3.5*1.25
-        
-        // https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
-        // Monster pDIF = Avatar pDIF = Pet pDIF
-
-        auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
-
-        // Default for 1H is 3.25
-        float maxRatio = 3.25f;
-
-        if (attackerType == TYPE_MOB || attackerType == TYPE_PET)
-        {
-            // Mobs and pets cap at 4.25 regardless of crit so no need to bother with crits for the max
-            maxRatio = 4.25f;
         }
         else
         {
-            // If null ignore the checks and fallback to 1H values
-            if (targ_weapon)
+            if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
-                if (targ_weapon->isHandToHand() || targ_weapon->getSkillType() == SKILL_GREAT_KATANA)
-                {
-                    maxRatio = 3.5f;
-                }
-                else if (targ_weapon->getSkillType() == SKILL_SCYTHE)
-                {
-                    maxRatio = 4.0f;
-                }
-                else if (targ_weapon->isTwoHanded())
-                {
-                    maxRatio = 3.75f;
-                }
-            }
-            // Skipping Ranged since that is handled in a separate function
-            
-            // Default to 1H and check for +1 to max from crit
-            if (isCritical)
-            {
-                maxRatio += 1.0f;
+                cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
             }
         }
-
-        // https://www.bg-wiki.com/bg/Damage_Limit+
-        // There is an additional step here but I am skipping it for now because we do not have the data in the database.
-        // The Damage Limit+ trait adds 0.1 to the maxRatio per trait level so a level 80 DRK would get maxRatio += 0.5
-        
-        if (wRatio < 0.5)
-        {
-            upperLimit = std::max(wRatio + 0.5f, 0.5f);
-        }
-        else if (wRatio < 0.7)
-        {
-            upperLimit = 1;
-        }
-        else if (wRatio < 1.2)
-        {
-            upperLimit = wRatio + 0.3f;
-        }
-        else if (wRatio < 1.5)
-        {
-            upperLimit = wRatio * 1.25f;
-        }
-        else
-        {
-            upperLimit = std::min(wRatio + 0.375f, maxRatio);
-        }
-
-        if (wRatio < 0.38)
-        {
-            lowerLimit = std::max(wRatio, 0.5f);
-        }
-        else if (wRatio < 1.25)
-        {
-            lowerLimit = (wRatio * (1176.0f/1024.0f)) - (448.0f/1024.0f);
-        }
-        else if (wRatio < 1.51)
-        {
-            lowerLimit = 1.0f;
-        }
-        else if (wRatio < 2.44)
-        {
-            lowerLimit = (wRatio * (1176.0f/1024.0f)) - (755.0f/1024.0f);
-        }
-        else
-        {
-            lowerLimit = std::min(wRatio - 0.375f, maxRatio);
-        }
-
-        // https://www.bg-wiki.com/bg/Damage_Limit+
-        // See: "Physical damage limit +n%" is a multiplier to the total pDIF cap. 
-        // There is one more step here that I am skipping for Physical Damage +% from gear and augments.
-        // I don't believe support for this modifier exists yet in the project.
-        // Physical Damage +% (PDL) is a flat % increase to the final pDIF cap value
-        // Meaning if a player has PDL+10% and an uppwerLimit of 1 then this would become 1.1
-        // upperLimit = upperLimit * 1.1
-
-        qRatio = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
-
-        float pDIF = qRatio * tpzrand::GetRandomNumber(1.f, 1.05f);
 
         if (isCritical)
         {
-            // Crit Attack Bonus caps at +100% and is a flat increase to final crit damage
-            // so this is change to increase pDIF and not the qRatio
+            cRatio += 1;
+        }
+
+        cRatio = std::clamp<float>(cRatio, 0, ratioCap);
+
+        cRatioMax = cRatio * 1.25f;
+        cRatioMin = cRatioMax * 0.675f + 1 / 6;
+        if (cRatioMax > 2.75f)
+            cRatioMax = 2.75f;
+        if (!isCritical && cRatioMin > cRatioMax - 0.1f)
+            cRatioMin = cRatioMax - 0.1f;
+        if (isCritical && cRatioMin > cRatioMax)
+            cRatioMin = cRatioMax;
+
+        // ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
+
+        float pDIF = 1.0f;
+        if (cRatioMin == cRatioMax)
+            pDIF = cRatioMax;
+        else
+            pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
+
+        if (isCritical)
+        {
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
-
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
@@ -4215,19 +4060,25 @@ namespace battleutils
 
         // only archery + marksmanship can use barrage
         CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
-
         if (PItem && PItem->getSkillType() != 25 && PItem->getSkillType() != 26)
-        {
             return 0;
-        }
 
-        uint8 lvl = PChar->jobs.job[JOB_RNG];       // Get Ranger level of char
+        // RNG level
+        uint8 lvl;                              
+        if (PChar->GetMJob() == JOB_RNG)
+            lvl = PChar->GetMLevel();
+        else if (PChar->GetSJob() == JOB_RNG)
+            lvl = PChar->GetSLevel();
+        else
+            return 0;
+
         uint8 shotCount = 0;                    // the total number of extra hits
 
         if (PChar->GetSJob() == JOB_RNG)        // if rng is sub then use the sub level
             lvl = PChar->GetSLevel();
 
         // Hunters bracers+1 will add an extra shot
+        // todo: convert this to a MOD
         CItemEquipment* PItemHands = PChar->getEquip(SLOT_HANDS);
 
 
@@ -4770,6 +4621,28 @@ namespace battleutils
             }
             if (PAttacker)
             {
+                CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
+                time_point claim_time = server_clock::now();
+                std::chrono::milliseconds time_since_spawn = std::chrono::duration_cast<std::chrono::milliseconds>(claim_time - mob->m_SpawnTime);
+                if ((!mob->m_AutoClaimed) && (time_since_spawn.count() < map_config.claimbot_threshold))
+                {
+                    char cheatDesc[128];
+                    snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s claimed a mob faster than humanly possible: %d ms since spawn (mobid=%u)", attacker->name.c_str(),
+                        (int)time_since_spawn.count(), PDefender->id);
+                    cheatDesc[127] = '\0';
+                    uint8 strikes = 1;
+                    if (mob->m_Type & MOBTYPE_NOTORIOUS) {
+                        // Usually we want to be certain that a player cheats so we require
+                        // several consecutive incidents but that's not possible in the case
+                        // of NMs.
+                        strikes = 5;
+                    }
+                    anticheat::ReportCheatIncident(attacker, anticheat::CheatID::CHEAT_ID_CLAIMBOT, static_cast<uint32>(time_since_spawn.count()), cheatDesc, strikes);
+                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_CLAIMBOT, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
+                    {
+                        return;
+                    }
+                }
                 if (mob->PAI)
                 {
                     CState* state = mob->PAI->GetCurrentState();
@@ -4778,7 +4651,6 @@ namespace battleutils
                         return;
                     }
                 }
-                CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
                 if (!passing)
                 {
                     battleutils::DirtyExp(PDefender, PAttacker);
@@ -5449,8 +5321,11 @@ namespace battleutils
         }
     }
 
-    bool DrawIn(CBattleEntity* PEntity, CMobEntity* PMob, float offset)
+    bool DrawIn(CBattleEntity* PEntity, CMobEntity* PMob, float offset, uint8 drawInRange, uint16 maximumReach, bool includeParty)
     {
+        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
+            return false;
+
         position_t& pos = PMob->loc.p;
         position_t nearEntity = nearPosition(pos, offset, (float)0);
 
@@ -5461,58 +5336,38 @@ namespace battleutils
         }
 
         bool success = false;
-        float drawInDistance = (float)(PMob->getMobMod(MOBMOD_DRAW_IN) > 1 ? PMob->getMobMod(MOBMOD_DRAW_IN) : PMob->GetMeleeRange() * 2);
 
-        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
-            return false;
-
-        std::function <void(CBattleEntity*)> drawInFunc = [PMob, drawInDistance, &nearEntity, &success](CBattleEntity* PMember)
+        std::function<void(CBattleEntity*)> drawInFunc = [PMob, drawInRange, maximumReach, &nearEntity, &success](CBattleEntity* PMember)
         {
-            float pDistance = distance(PMob->loc.p, PMember->loc.p);
-
-            if (PMob->loc.zone == PMember->loc.zone && pDistance > drawInDistance && PMember->status != STATUS_CUTSCENE_ONLY)
+            float dist = distance(PMob->loc.p, PMember->loc.p);
+            if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
+                !PMember->isDead() && !PMember->isMounted())
             {
-                // don't draw in dead players for now!
-                // see tractor
-                if (PMember->isDead() || PMember->isMounted())
+                PMember->loc.p.x = nearEntity.x;
+                PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
+                PMember->loc.p.z = nearEntity.z;
+                PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+
+                if (PMember->objtype == TYPE_PC)
                 {
-                    // don't do anything
+                    CCharEntity* PChar = (CCharEntity*)PMember;
+                    PChar->pushPacket(new CPositionPacket(PChar));
                 }
                 else
                 {
-                    // draw in!
-                    PMember->loc.p.x = nearEntity.x;
-                    PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                    PMember->loc.p.z = nearEntity.z;
-                    PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
-
-                    if (PMember->objtype == TYPE_PC)
-                    {
-                        CCharEntity* PChar = (CCharEntity*)PMember;
-                        PChar->pushPacket(new CPositionPacket(PChar));
-                    }
-                    else
-                    {
-                        PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
-                    }
-
-                    luautils::OnMobDrawIn(PMob, PMember);
-                    PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
-                    success = true;
+                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
                 }
+
+                luautils::OnMobDrawIn(PMob, PMember);
+                PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
+                success = true;
             }
         };
 
-        // check if i should draw-in party/alliance
-        if (PMob->getMobMod(MOBMOD_DRAW_IN) > 1)
-        {
+        if (includeParty) // (and alliance)
             PEntity->ForAlliance(drawInFunc);
-        }
-        // no party present or draw-in is set to target only
         else
-        {
             drawInFunc(PEntity);
-        }
 
         if (success)
             PMob->SetLocalVar("DrawInTime", (uint32)std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count());
@@ -5880,7 +5735,7 @@ namespace battleutils
             {
                 cast = (uint32)((float)cast * 1.5f);
             }
-            uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME);
+            uint16 songcasting = PEntity->getMod(Mod::SONG_SPELLCASTING_TIME_REDUCTION);
             cast = (uint32)(cast * (1.0f - ((songcasting > 50 ? 50 : songcasting) / 100.0f)));
         }
 

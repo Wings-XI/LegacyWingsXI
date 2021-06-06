@@ -54,6 +54,7 @@ public:
     int32 addListener(lua_State*);
     int32 removeListener(lua_State*);
     int32 triggerListener(lua_State*);
+    int32 printToZone(lua_State*);
 };
 
 #endif

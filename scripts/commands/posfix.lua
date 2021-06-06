@@ -19,7 +19,11 @@ function onTrigger(player, target)
     if (target == nil) then
         error(player, "You must supply the name of an offline player.")
     else
-        player:resetPlayer( target )
-        player:PrintToPlayer(string.format("Fixed %s's position.", target))
+        local res = player:resetPlayer( target )
+        if res then
+            player:PrintToPlayer(string.format("Fixed %s's position.", target))
+        else
+            player:PrintToPlayer(string.format("No player named %s found.", target))
+        end
     end
 end

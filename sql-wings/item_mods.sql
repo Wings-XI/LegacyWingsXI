@@ -31882,7 +31882,7 @@ INSERT INTO `item_mods` VALUES (23675,68,78);     -- Bihu Slippers +3: Evasion+7
 INSERT INTO `item_mods` VALUES (23675,120,15);    -- Bihu Slippers +3: String instrument skill +15
 INSERT INTO `item_mods` VALUES (23675,161,-5);    -- Bihu Slippers +3: Physical damage taken -5%
 INSERT INTO `item_mods` VALUES (23675,384,300);   -- Bihu Slippers +3: Haste+3%
-INSERT INTO `item_mods` VALUES (23675,455,-10);   -- Bihu Slippers +3: Song spellcasting time -10%
+INSERT INTO `item_mods` VALUES (23675,455, 10);   -- Bihu Slippers +3: Song spellcasting time -10%
 INSERT INTO `item_mods` VALUES (23676,1,88);      -- Arcadian Socks +3: DEF:88
 INSERT INTO `item_mods` VALUES (23676,2,33);      -- Arcadian Socks +3: HP+33
 INSERT INTO `item_mods` VALUES (23676,8,24);      -- Arcadian Socks +3: STR+24

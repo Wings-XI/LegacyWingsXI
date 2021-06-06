@@ -792,7 +792,8 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x04: // disengage
         {
-            PChar->PAI->Disengage();
+            if (PChar->PAI->Disengage())
+                PChar->m_LastEngagedTargID = 0;
         }
         break;
         case 0x05: // call for help
@@ -902,7 +903,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 return;
             }
-            if (PChar->GetLocalVar("DiggingBlocked") != 0) {
+            if (PChar->GetLocalVar("DiggingBlocked")) {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
                 return;
             }
@@ -912,34 +913,32 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
 
             if (slotID != ERROR_SLOTID)
             {
-                assert(sizeof(float) == sizeof(uint32));
-                uint32 now_tick = gettick();
-                uint32 lastdig_tick = PChar->GetLocalVar("LastDigTick");
-                uint32 lastdig_x_temp = PChar->GetLocalVar("LastDigPos_x");
-                uint32 lastdig_z_temp = PChar->GetLocalVar("LastDigPos_z");
-                float lastdig_x = *reinterpret_cast<float*>(&lastdig_x_temp);
-                float lastdig_z = *reinterpret_cast<float*>(&lastdig_z_temp);
-                bool moved = (lastdig_x != PChar->loc.p.x) || (lastdig_z != PChar->loc.p.z);
-                // attempt to dig
-                if ((moved) && (now_tick >= lastdig_tick + 2000) && (luautils::OnChocoboDig(PChar, true)))
+                time_point now = std::chrono::system_clock::now();
+                CDigAreaContainer* PDigAreaContainer = zoneutils::GetZone(PChar->getZone())->PDigAreaContainer;
+
+                if (now < PChar->m_lastDig + std::chrono::seconds(16 - PChar->RealSkills.rank[SKILL_DIG] * 5 < 4 ? 4 : 16 - PChar->RealSkills.rank[SKILL_DIG] * 5) || // 16s/11s/6s/4s based on rank
+                    now - time_point(std::chrono::seconds(PChar->GetLocalVar("ZoneInTime"))) < 60s - 5s * PChar->RealSkills.rank[SKILL_DIG]) // 60s/55s/50s/45s/40s/etc. based on rank
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                }
+                else if (PDigAreaContainer && PDigAreaContainer->IsInExhaustedArea(PChar))
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANT_BE_USED_IN_AREA));
+                }
+                else
                 {
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
 
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
+                    luautils::OnChocoboDig(PChar);
+                    PChar->m_lastDig = now;
 
-                    // dig is possible
-                    lastdig_x_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.x));
-                    lastdig_z_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.z));
-                    PChar->SetLocalVar("LastDigTick", lastdig_tick);
-                    PChar->SetLocalVar("LastDigPos_x", lastdig_x_temp);
-                    PChar->SetLocalVar("LastDigPos_z", lastdig_z_temp);
-                    luautils::OnChocoboDig(PChar, false);
-                }
-                else
-                {
-                    // unable to dig yet
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                    if (PDigAreaContainer)
+                    {
+                        CDigObject DigObject = CDigObject(PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, now, PChar->id);
+                        PDigAreaContainer->AddDigObject(DigObject);
+                    }
                 }
             }
             else
@@ -1289,6 +1288,14 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             // If either player is in prison don't allow the trade.
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+            return;
+        }
+
+        // If either player is crafting, don't allow the trade request
+        if (PChar->animation == ANIMATION_SYNTH || PTarget->animation == ANIMATION_SYNTH)
+        {
+            ShowDebug(CL_CYAN "%s trade request with %s was blocked.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+            PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
             return;
         }
 
@@ -2560,7 +2567,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
     // 0x04 - Selling Items
     // 0x05 - Open List Of Sales / Wait (Sales History menu in-game)
     // 0x0A - Retrieve List of Items Sold By Player
-    // 0x0B - Proof Of Purchase
+    // 0x0B - Proof Of Purchase (confirming sale of item w/ tax)
     // 0x0E - Purchasing Items
     // 0x0C - Cancel Sale
     // 0x0D - Update Sale List By Player
@@ -2585,33 +2592,76 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x05:
         {
             uint32 curTick = gettick();
+            if (!PChar->AuctionPlayerContainer)
+                return;
 
-            if (curTick - PChar->m_AHHistoryTimestamp > 5000)
+            if (curTick - PChar->AuctionPlayerContainer->m_AHHistoryTimestamp > 100)
             {
-                PChar->m_ah_history.clear();
-                PChar->m_AHHistoryTimestamp = curTick;
+                PChar->AuctionPlayerContainer->m_AHHistoryTimestamp = curTick;
                 PChar->pushPacket(new CAuctionHousePacket(action));
-
-                // todo: different sort types by price/date/name asc/desc
-
-                // A single SQL query for the player's AH history which is stored in a Char Entity struct + vector.
-                const char* Query = "SELECT itemid, price, stack FROM auction_house WHERE seller = %u and sale=0 ORDER BY id ASC LIMIT 6;";
-
-                int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
-
-                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+                
+                if (!PChar->AuctionPlayerContainer->m_maxPage)
                 {
-                    while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                    const char* Query = "SELECT itemid, price, stack FROM auction_house WHERE seller = %u and sale=0 ORDER BY id ASC;";
+
+                    int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
+
+                    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle))
                     {
-                        AuctionHistory_t ah;
-                        ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
-                        ah.price = (uint32)Sql_GetUIntData(SqlHandle, 1);
-                        ah.stack = (uint8)Sql_GetIntData(SqlHandle, 2);
-                        ah.status = 0;
-                        PChar->m_ah_history.push_back(ah);
+                        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                        {
+                            AuctionHistory_t ah;
+                            ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
+                            ah.price = (uint32)Sql_GetUIntData(SqlHandle, 1);
+                            ah.stack = (uint8)Sql_GetIntData(SqlHandle, 2);
+                            ah.status = 0;
+                            ah.delisted = false;
+                            PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
+                        }
+                    }
+
+                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                    int32 maxPage = 1 + (itemsListed - 1) / 6;
+                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                    PChar->AuctionPlayerContainer->m_page = 1;
+                    PChar->AuctionPlayerContainer->isPageResetQueued = false;
+
+                    std::string line = "Total of ";
+                    line += std::to_string(itemsListed);
+                    line += " item";
+                    if (itemsListed != 1)
+                        line += "s";
+                    line += " listed (";
+                    line += std::to_string(maxPage);
+                    line += " pages).";
+                    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
+                }
+                else
+                {
+                    for (int16 i = 0; i < PChar->AuctionPlayerContainer->m_ah_history.size(); i++)
+                    {
+                        if (PChar->AuctionPlayerContainer->m_ah_history.at(i).delisted)
+                        {
+                            PChar->AuctionPlayerContainer->m_ah_history.erase(PChar->AuctionPlayerContainer->m_ah_history.begin() + i);
+                            i--; // the proceeding element now occupies this iteration, let's re-check it
+                        }
+                    }
+                    if (PChar->AuctionPlayerContainer->isPageResetQueued)
+                    {
+                        int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                        int32 maxPage = 1 + (itemsListed - 1) / 6;
+                        PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                        PChar->AuctionPlayerContainer->m_page = 1;
+                        PChar->AuctionPlayerContainer->isPageResetQueued = false;
+                    }
+                    else
+                    {
+                        PChar->AuctionPlayerContainer->m_page++;
+                        if (PChar->AuctionPlayerContainer->m_page > PChar->AuctionPlayerContainer->m_maxPage)
+                            PChar->AuctionPlayerContainer->m_page = 1;
                     }
                 }
-                ShowDebug("%s has %i items up on the AH. \n", PChar->GetName(), PChar->m_ah_history.size());
+                
             }
             else
             {
@@ -2621,7 +2671,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0A:
         {
-            auto totalItemsOnAh = PChar->m_ah_history.size();
+            auto totalItemsOnAh = PChar->AuctionPlayerContainer->m_ah_history.size();
 
             for (size_t slot = 0; slot < totalItemsOnAh; slot++)
             {
@@ -2693,6 +2743,22 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // failed to place up
                     return;
                 }
+
+                if (PChar->AuctionPlayerContainer && PChar->AuctionPlayerContainer->m_maxPage)
+                {
+                    AuctionHistory_t ah;
+                    ah.itemid = PItem->getID();
+                    ah.price = price;
+                    ah.stack = !quantity;
+                    ah.status = 0;
+                    ah.delisted = false;
+                    PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
+                    int32 itemsListed = PChar->AuctionPlayerContainer->m_ah_history.size();
+                    int32 maxPage = 1 + (itemsListed - 1) / 6;
+                    PChar->AuctionPlayerContainer->m_maxPage = (uint16)(maxPage);
+                    PChar->AuctionPlayerContainer->isPageResetQueued = true;
+                }
+
                 charutils::UpdateItem(PChar, LOC_INVENTORY, slot, -(int32)(quantity != 0 ? 1 : PItem->getStackSize()));
                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)auctionFee); // Deduct AH fee
 
@@ -2755,10 +2821,11 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x0C: // Removing item from AH
         {
-            if (slotid < PChar->m_ah_history.size())
+            if (PChar->AuctionPlayerContainer && slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1) < PChar->AuctionPlayerContainer->m_ah_history.size())
             {
+                //ShowDebug("Delist request for slot %u (vector position %u)\n", slotid, slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1));
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
-                AuctionHistory_t canceledItem = PChar->m_ah_history[slotid];
+                AuctionHistory_t canceledItem = PChar->AuctionPlayerContainer->m_ah_history[slotid + 6 * (PChar->AuctionPlayerContainer->m_page-1)];
 
                 if (Sql_SetAutoCommit(SqlHandle, false) && Sql_TransactionStart(SqlHandle))
                 {
@@ -2778,6 +2845,13 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                                 PChar->pushPacket(new CAuctionHousePacket(action, 0, PChar, slotid, false));
                                 PChar->pushPacket(new CInventoryFinishPacket());
                                 Sql_SetAutoCommit(SqlHandle, isAutoCommitOn);
+
+                                if (PChar->AuctionPlayerContainer->m_maxPage)
+                                {
+                                    PChar->AuctionPlayerContainer->m_ah_history.at((uint16)slotid + 6 * (PChar->AuctionPlayerContainer->m_page - 1)).delisted = true;
+                                    PChar->AuctionPlayerContainer->isPageResetQueued = true;
+                                }
+
                                 return;
                             }
                         }
@@ -4300,6 +4374,37 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
         return;
     }
+
+    // NOTE: This section is intended to be temporary to ensure that duping shenanigans aren't possible.
+    // It should be replaced by something more robust or more stateful as soon as is reasonable
+    CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
+
+    // Clear pending trades on synthesis start
+    if (PTarget != nullptr && PChar->TradePending.id == PTarget->id)
+    {
+        PChar->TradePending.clean();
+        PTarget->TradePending.clean();
+    }
+
+    // Clears out trade session and blocks synthesis at any point in trade process after accepting
+    // trade request.
+    if (PChar->UContainer->GetType() != UCONTAINER_EMPTY)
+    {
+        ShowDebug(CL_CYAN "%s trade request with %s was canceled because %s tried to craft.\n" CL_RESET,
+                  PChar->GetName(), PTarget->GetName(), PChar->GetName());
+        if (PTarget != nullptr)
+        {
+            PTarget->TradePending.clean();
+            PTarget->UContainer->Clean();
+            PTarget->pushPacket(new CTradeActionPacket(PChar, 0x01));
+        }
+        PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
+        PChar->TradePending.clean();
+        PChar->UContainer->Clean();
+        PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
+        return;
+    }
+    // End temporary additions
 
     if (PChar->m_LastSynthTime + 10s > server_clock::now())
     {

@@ -30,12 +30,8 @@ function onUseAbility(player, target, ability)
 
     local skillbonus = player:getMod(tpz.mod.LIGHT_ARTS_SKILL)
     local effectbonus = player:getMod(tpz.mod.LIGHT_ARTS_EFFECT)
-    local regenbonus = 0
-    if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
-        regenbonus = 3 * math.floor((player:getMainLvl() - 10) / 10)
-    end
 
-    player:addStatusEffect(tpz.effect.LIGHT_ARTS, effectbonus, 0, 7200, 0, regenbonus)
+    player:addStatusEffect(tpz.effect.LIGHT_ARTS, effectbonus, 0, 7200, 0, 0)
 
     return tpz.effect.LIGHT_ARTS
 end

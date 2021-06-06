@@ -76,6 +76,7 @@ public:
 	uint32	 getHour();
 	uint32	 getMinute();
 	uint32	 getWeekday();
+	uint32   getTimeAbsolute();
 	uint32	 getMoonPhase();
 	uint8	 getMoonDirection();
 	uint8	 getRSERace();

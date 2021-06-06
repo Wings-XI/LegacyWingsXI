@@ -438,7 +438,7 @@ enum class Mod
     ALL_SONGS_EFFECT          = 452, //
     MAXIMUM_SONGS_BONUS       = 453, //
     SONG_DURATION_BONUS       = 454, //
-    SONG_SPELLCASTING_TIME    = 455, //
+    SONG_SPELLCASTING_TIME_REDUCTION = 455, // As a percent, capped at 50%
     SONG_RECAST_DELAY         = 833, // Reduces song recast time in seconds.
 
     // Ranger

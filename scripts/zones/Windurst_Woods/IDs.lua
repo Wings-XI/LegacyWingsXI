@@ -76,6 +76,11 @@ zones[tpz.zone.WINDURST_WOODS] =
         CHOCOBO_DIALOG               = 10404, -- Kweh!
         TRRRADE_IN_SPARKS            = 13833, -- You want to trrrade in sparks, do you?
         NOT_ENOUGH_SPARKS            = 13853, -- You do not possess enough sparks of eminence to complete the transaction.
+        LS_CONCIERGE_LISTING_CANCEL  = 14181, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
+        LS_CONCIERGE_SAME_DAY        = 14185, -- In the interest of fairness, I am unable to distribute multiple linkpearls to someone on the same day. Please come back tomorrow.
+        LS_CONCIERGE_REGISTERED1     = 14233, -- Your registration is officially complete.
+        LS_CONCIERGE_REGISTERED2     = 14234, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
+        LS_CONCIERGE_ALREADY_LISTED  = 14235, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
     },
     mob =
     {

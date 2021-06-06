@@ -627,6 +627,9 @@ dynamis.mobOnRoamAction = function(mob)
 end
 
 dynamis.mobOnDeath = function (mob, mobList, msg)
+    if mob:getLocalVar("dynamisMobOnDeathTriggered") == 1 then return end
+    mob:setLocalVar("dynamisMobOnDeathTriggered", 1) -- onDeath lua happens once per party member that killed the mob, but we want this to only run once per mob
+    
     local mobID = mob:getID()
     if mobList[mobID] ~= nil and mobList[mobID].timeExtension ~= nil then mob:addTimeToDynamis(mobList[mobID].timeExtension, msg) end
     if mob:getLocalVar("clearSpawnPosOnDeath") == 1 then mob:setSpawn(1,1,1,0) end
@@ -647,7 +650,8 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
         i = i + 1
     end
     
-    if mobFound == true then -- mob's defeat is a requirement for wave number i
+    if mobFound == true then
+        --print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
         local allReqsMet = true
         while mobList.waveDefeatRequirements[i][j] ~= nil do

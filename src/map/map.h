@@ -172,6 +172,7 @@ struct map_config_t
     bool   anticheat_jail_disable;    // Globally disable auto-jailing by the anti-cheat system
     bool   mog_garden_enabled;        // Player can zone from the mog-house to mog-garden after completing exit quest
     float  poshack_threshold;         // If the distance between two pos packet is bigger than this it's cheating
+    int32  claimbot_threshold;         // If a mob is quicker than this threshold assume that it's a claimbot
     uint8  cheat_threshold_warn;      // Number of cheating attempts that triggers a warning
     uint8  cheat_threshold_jail;      // Number of cheating attempts that triggers autojail
     uint32 debug_client_ip;           // Print when a packet from this IP is received (used for debug breaks)

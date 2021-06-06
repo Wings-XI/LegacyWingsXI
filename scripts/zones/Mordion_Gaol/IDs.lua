@@ -20,6 +20,8 @@ zones[tpz.zone.MORDION_GAOL] =
         LOGIN_NUMBER            = 7160, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         NO_ESCAPE               = 7208, -- Any attempt at escape is futile!
         PROHIBITED_ACTIVITIES   = 7224, -- Your character has been jailed due to prohibited activities. Your account will soon be suspended due to this violation.
+        DEPENDANT_UPON_OUTCOME  = 7225, -- Dependant upon the outcome of the investigation, your account may also be banned. We will not be accepting any GM calls from this account at this point in time.
+        ONCE_YOUR_SUSPENSION    = 7226, -- Once your suspension has been processed and lifted, login and place a GM call to be removed from jail. You will automatically be transferred back to your home point.
     },
     mob =
     {
