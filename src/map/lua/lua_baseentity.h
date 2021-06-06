@@ -288,6 +288,7 @@ public:
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level
     int32 getSubLvl(lua_State*);            // Get Entity Sub Job Level
     int32 getJobLevel(lua_State*);          // Gets character job level for specified JOBTYPE
+    int32 getHighestJobLevel(lua_State*);   // Gets the highest level the player has on any job
     int32 setLevel(lua_State*);             // sets the character's level
     int32 setsLevel(lua_State*);            // sets the character's level
     int32 levelCap(lua_State*);             // genkai

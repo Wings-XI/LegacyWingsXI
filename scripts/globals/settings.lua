@@ -151,6 +151,12 @@ NM_MAGIC_STACK = 5 -- NM stacked magical damage redcution per cast/BP, percentag
 NM_MAGIC_STACK_CAP = 60 -- NM stacked magical damage reduction cap, percentage.
 NM_MAGIC_STACK_WINDOW = 5000 -- Time (in miliseconds) for the NM stacked magical damage reduction window.
 
+-- FISHING
+FISHING_FATIGUE = 0 -- Max number of fish allowed per day (set to zero to disable)
+FISHING_FATIGUE_NEW_PLAYERS = 10 -- Max number of fish allowed per day for new players (set to zero to disable)
+FISHING_NEW_PLAYER_DAYS = 14 -- How many days the character need to exist before it's no longer considered new
+FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to not be considered new
+
 -- CELEBRATIONS
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
