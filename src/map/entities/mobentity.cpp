@@ -85,6 +85,8 @@ CMobEntity::CMobEntity()
     m_Type = MOBTYPE_NORMAL;
     m_Behaviour = BEHAVIOUR_NONE;
     m_SpawnType = SPAWNTYPE_NORMAL;
+    m_SpawnTime = time_point::min();
+    m_AutoClaimed = false;
     m_EcoSystem = SYSTEM_UNCLASSIFIED;
     m_Element = 0;
     m_HiPCLvl = 0;
@@ -663,6 +665,7 @@ void CMobEntity::Spawn()
     m_THLvl = 0;
     m_ItemStolen = false;
     m_DropItemTime = 1000;
+    m_SpawnTime = server_clock::now();
     animationsub = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
     CallForHelp(false);
 
@@ -1378,6 +1381,8 @@ void CMobEntity::OnDeathTimer()
 void CMobEntity::OnDespawn(CDespawnState&)
 {
     FadeOut();
+    m_SpawnTime = time_point::min();
+    m_AutoClaimed = false;
     PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
     luautils::OnMobDespawn(this);
     //#event despawn

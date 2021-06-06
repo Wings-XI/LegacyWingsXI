@@ -97,6 +97,8 @@ namespace charutils
     uint8	AddItem(CCharEntity* PChar, uint8 LocationID, uint16 itemID, uint32 quantity = 1, bool silence = false);
     uint8   MoveItem(CCharEntity* PChar, uint8 LocationID, uint8 SlotID, uint8 NewSlotID);
     uint32	UpdateItem(CCharEntity* PChar, uint8 LocationID, uint8 slotID, int32 quantity, bool force = false);
+    uint32  CreateWornItemBySlot(CCharEntity* PChar, uint8 LocationID, uint8 slotID);
+    bool    CreateWornItemByItemId(CCharEntity* PChar, uint8 LocationID, uint16 itemID);
     void	CheckValidEquipment(CCharEntity* PChar);
     void	CheckEquipLogic(CCharEntity* PChar, SCRIPTTYPE ScriptType, uint32 param);
     void	EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 containerID);

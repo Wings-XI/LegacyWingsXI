@@ -544,7 +544,7 @@ INSERT INTO `mob_groups` VALUES(1, 4283, 16, 'Wanderer', 960, 0, 2612, 0, 0, 22,
 INSERT INTO `mob_groups` VALUES(2, 4317, 16, 'Weeper', 960, 0, 2634, 0, 0, 24, 26, 0);
 INSERT INTO `mob_groups` VALUES(3, 2048, 16, 'Idle_Wanderer', 0, 0, 1350, 0, 0, 22, 24, 0);
 INSERT INTO `mob_groups` VALUES(4, 3897, 16, 'Thinker', 960, 0, 2398, 0, 0, 28, 28, 0);
-INSERT INTO `mob_groups` VALUES(5, 2614, 16, 'Memory_Receptacle', 300, 0, 0, 0, 0, 30, 30, 0);
+INSERT INTO `mob_groups` VALUES(5, 2614, 16, 'Memory_Receptacle', 300, 0, 0, 2000, 0, 30, 30, 0);
 INSERT INTO `mob_groups` VALUES(6, 3784, 16, 'Stray', 300, 0, 0, 0, 0, 21, 21, 0);
 INSERT INTO `mob_groups` VALUES(7, 4283, 16, 'Wanderer', 960, 0, 2612, 0, 0, 26, 28, 0);
 INSERT INTO `mob_groups` VALUES(8, 4317, 16, 'Weeper', 960, 0, 2634, 0, 0, 28, 30, 0);
@@ -570,7 +570,7 @@ INSERT INTO `mob_groups` VALUES(1, 4283, 18, 'Wanderer', 960, 0, 2613, 0, 0, 22,
 INSERT INTO `mob_groups` VALUES(2, 2048, 18, 'Idle_Wanderer', 0, 0, 1351, 0, 0, 22, 24, 0);
 INSERT INTO `mob_groups` VALUES(3, 4317, 18, 'Weeper', 960, 0, 2635, 0, 0, 24, 26, 0);
 INSERT INTO `mob_groups` VALUES(4, 1768, 18, 'Gorger', 960, 0, 1207, 0, 0, 29, 31, 0);
-INSERT INTO `mob_groups` VALUES(5, 2614, 18, 'Memory_Receptacle', 300, 0, 0, 0, 0, 30, 30, 0);
+INSERT INTO `mob_groups` VALUES(5, 2614, 18, 'Memory_Receptacle', 300, 0, 0, 2000, 0, 30, 30, 0);
 INSERT INTO `mob_groups` VALUES(6, 3784, 18, 'Stray', 300, 0, 0, 0, 0, 20, 21, 0);
 INSERT INTO `mob_groups` VALUES(7, 4317, 18, 'Weeper', 960, 0, 2635, 0, 0, 28, 30, 0);
 INSERT INTO `mob_groups` VALUES(8, 4283, 18, 'Wanderer', 960, 0, 2613, 0, 0, 26, 28, 0);
@@ -600,7 +600,7 @@ INSERT INTO `mob_groups` VALUES(1, 4283, 20, 'Wanderer', 960, 0, 2614, 0, 0, 22,
 INSERT INTO `mob_groups` VALUES(2, 4317, 20, 'Weeper', 960, 0, 2636, 0, 0, 25, 30, 0);
 INSERT INTO `mob_groups` VALUES(3, 2048, 20, 'Idle_Wanderer', 0, 0, 1350, 0, 0, 22, 24, 0);
 INSERT INTO `mob_groups` VALUES(4, 830, 20, 'Craver', 960, 0, 526, 0, 0, 29, 31, 0);
-INSERT INTO `mob_groups` VALUES(5, 2614, 20, 'Memory_Receptacle', 300, 0, 0, 0, 0, 30, 30, 0);
+INSERT INTO `mob_groups` VALUES(5, 2614, 20, 'Memory_Receptacle', 300, 0, 0, 2000, 0, 30, 30, 0);
 INSERT INTO `mob_groups` VALUES(6, 3784, 20, 'Stray', 300, 0, 0, 0, 0, 21, 21, 0);
 INSERT INTO `mob_groups` VALUES(7, 4283, 20, 'Wanderer', 960, 0, 2614, 0, 0, 26, 28, 0);
 INSERT INTO `mob_groups` VALUES(8, 4317, 20, 'Weeper', 960, 0, 2636, 0, 0, 28, 30, 0);
@@ -632,7 +632,7 @@ INSERT INTO `mob_groups` VALUES(7, 2048, 22, 'Idle_Wanderer', 0, 0, 1350, 0, 0, 
 INSERT INTO `mob_groups` VALUES(8, 3897, 22, 'Thinker', 960, 0, 2399, 0, 0, 52, 54, 0);
 INSERT INTO `mob_groups` VALUES(9, 1768, 22, 'Gorger', 960, 0, 1208, 0, 0, 52, 54, 0);
 INSERT INTO `mob_groups` VALUES(10, 830, 22, 'Craver', 960, 0, 527, 0, 0, 52, 54, 0);
-INSERT INTO `mob_groups` VALUES(11, 2614, 22, 'Memory_Receptacle', 300, 0, 0, 0, 0, 50, 50, 0);
+INSERT INTO `mob_groups` VALUES(11, 2614, 22, 'Memory_Receptacle', 300, 0, 0, 5000, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(12, 3784, 22, 'Stray', 300, 0, 0, 0, 0, 39, 40, 0);
 INSERT INTO `mob_groups` VALUES(13, 4317, 22, 'Weeper', 960, 0, 2637, 0, 0, 48, 50, 0);
 INSERT INTO `mob_groups` VALUES(14, 4283, 22, 'Wanderer', 960, 0, 2192, 0, 0, 46, 48, 0);
@@ -666,7 +666,7 @@ INSERT INTO `mob_groups` VALUES(5, 782, 23, 'Contemplator', 0, 128, 0, 0, 0, 50,
 INSERT INTO `mob_groups` VALUES(6, 2081, 23, 'Ingurgitator', 0, 128, 0, 0, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(7, 3351, 23, 'Repiner', 0, 128, 0, 0, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(8, 2826, 23, 'Neoingurgitator', 0, 128, 0, 0, 0, 50, 50, 0);
-INSERT INTO `mob_groups` VALUES(9, 2614, 23, 'Memory_Receptacle', 300, 128, 0, 0, 0, 50, 50, 0);
+INSERT INTO `mob_groups` VALUES(9, 2614, 23, 'Memory_Receptacle', 300, 128, 0, 5000, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(1, 743, 24, 'Clipper', 0, 128, 93, 0, 0, 30, 34, 0);
 INSERT INTO `mob_groups` VALUES(2, 1817, 24, 'Grindylow', 0, 128, 93, 0, 0, 30, 34, 0);
 INSERT INTO `mob_groups` VALUES(3, 5868, 24, 'Greater_Pugil_fished', 0, 128, 147, 0, 0, 35, 39, 0);

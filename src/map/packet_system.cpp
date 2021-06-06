@@ -903,7 +903,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 return;
             }
-            if (PChar->GetLocalVar("DiggingBlocked") != 0) {
+            if (PChar->GetLocalVar("DiggingBlocked")) {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
                 return;
             }
@@ -913,34 +913,32 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
 
             if (slotID != ERROR_SLOTID)
             {
-                assert(sizeof(float) == sizeof(uint32));
-                uint32 now_tick = gettick();
-                uint32 lastdig_tick = PChar->GetLocalVar("LastDigTick");
-                uint32 lastdig_x_temp = PChar->GetLocalVar("LastDigPos_x");
-                uint32 lastdig_z_temp = PChar->GetLocalVar("LastDigPos_z");
-                float lastdig_x = *reinterpret_cast<float*>(&lastdig_x_temp);
-                float lastdig_z = *reinterpret_cast<float*>(&lastdig_z_temp);
-                bool moved = (lastdig_x != PChar->loc.p.x) || (lastdig_z != PChar->loc.p.z);
-                // attempt to dig
-                if ((moved) && (now_tick >= lastdig_tick + 2000) && (luautils::OnChocoboDig(PChar, true)))
+                time_point now = std::chrono::system_clock::now();
+                CDigAreaContainer* PDigAreaContainer = zoneutils::GetZone(PChar->getZone())->PDigAreaContainer;
+
+                if (now < PChar->m_lastDig + std::chrono::seconds(16 - PChar->RealSkills.rank[SKILL_DIG] * 5 < 4 ? 4 : 16 - PChar->RealSkills.rank[SKILL_DIG] * 5) || // 16s/11s/6s/4s based on rank
+                    now - time_point(std::chrono::seconds(PChar->GetLocalVar("ZoneInTime"))) < 60s - 5s * PChar->RealSkills.rank[SKILL_DIG]) // 60s/55s/50s/45s/40s/etc. based on rank
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                }
+                else if (PDigAreaContainer && PDigAreaContainer->IsInExhaustedArea(PChar))
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANT_BE_USED_IN_AREA));
+                }
+                else
                 {
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
 
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
+                    luautils::OnChocoboDig(PChar);
+                    PChar->m_lastDig = now;
 
-                    // dig is possible
-                    lastdig_x_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.x));
-                    lastdig_z_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.z));
-                    PChar->SetLocalVar("LastDigTick", lastdig_tick);
-                    PChar->SetLocalVar("LastDigPos_x", lastdig_x_temp);
-                    PChar->SetLocalVar("LastDigPos_z", lastdig_z_temp);
-                    luautils::OnChocoboDig(PChar, false);
-                }
-                else
-                {
-                    // unable to dig yet
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                    if (PDigAreaContainer)
+                    {
+                        CDigObject DigObject = CDigObject(PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, now, PChar->id);
+                        PDigAreaContainer->AddDigObject(DigObject);
+                    }
                 }
             }
             else
@@ -1290,6 +1288,14 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             // If either player is in prison don't allow the trade.
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+            return;
+        }
+
+        // If either player is crafting, don't allow the trade request
+        if (PChar->animation == ANIMATION_SYNTH || PTarget->animation == ANIMATION_SYNTH)
+        {
+            ShowDebug(CL_CYAN "%s trade request with %s was blocked.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+            PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
             return;
         }
 
@@ -4368,6 +4374,37 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
         return;
     }
+
+    // NOTE: This section is intended to be temporary to ensure that duping shenanigans aren't possible.
+    // It should be replaced by something more robust or more stateful as soon as is reasonable
+    CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
+
+    // Clear pending trades on synthesis start
+    if (PTarget != nullptr && PChar->TradePending.id == PTarget->id)
+    {
+        PChar->TradePending.clean();
+        PTarget->TradePending.clean();
+    }
+
+    // Clears out trade session and blocks synthesis at any point in trade process after accepting
+    // trade request.
+    if (PChar->UContainer->GetType() != UCONTAINER_EMPTY)
+    {
+        ShowDebug(CL_CYAN "%s trade request with %s was canceled because %s tried to craft.\n" CL_RESET,
+                  PChar->GetName(), PTarget->GetName(), PChar->GetName());
+        if (PTarget != nullptr)
+        {
+            PTarget->TradePending.clean();
+            PTarget->UContainer->Clean();
+            PTarget->pushPacket(new CTradeActionPacket(PChar, 0x01));
+        }
+        PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
+        PChar->TradePending.clean();
+        PChar->UContainer->Clean();
+        PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
+        return;
+    }
+    // End temporary additions
 
     if (PChar->m_LastSynthTime + 10s > server_clock::now())
     {

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -3360,7 +3360,9 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 
     // char will not be logged in so get the id manually
     const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
-    int32 ret = Sql_Query(SqlHandle, Query, charName);
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         id = (int32)Sql_GetIntData(SqlHandle, 0);
@@ -3370,6 +3372,7 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     if (id == 0)
     {
         ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
         return 1;
     }
 
@@ -3385,29 +3388,68 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     Query =
         "UPDATE chars "
         "SET "
-        "pos_zone = %u,"
-        "pos_prevzone = %u,"
-        "pos_rot = %u,"
-        "pos_x = %.3f,"
-        "pos_y = %.3f,"
-        "pos_z = %.3f,"
-        "boundary = %u,"
-        "moghouse = %u "
+        "pos_zone = home_zone,"
+        "pos_prevzone = pos_zone,"
+        "pos_rot = home_rot,"
+        "pos_x = home_x,"
+        "pos_y = home_y,"
+        "pos_z = home_z,"
+        "boundary = 0,"
+        "moghouse = 0 "
         "WHERE charid = %u;";
 
-    Sql_Query(SqlHandle, Query,
-        245,        // lower jeuno
-        122,        // prev zone
-        86,         // rotation
-        33.464f,    // x
-        -5.000f,    // y
-        69.162f,    // z
-        0,          //boundary,
-        0,          //moghouse,
-        id);
+    Sql_Query(SqlHandle, Query, id);
 
     ShowDebug("Player reset was successful.\n");
 
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::clearSession(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    const char* charName = lua_tostring(L, 1);
+    uint32 id = 0;
+
+    // char will not be logged in so get the id manually
+    const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        id = (int32)Sql_GetIntData(SqlHandle, 0);
+
+    // could not get player from database
+    if (id == 0)
+    {
+        ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    // delete the account session
+    Query = "DELETE FROM accounts_sessions WHERE charid = %u;";
+    Sql_Query(SqlHandle, Query, id);
+
+    // flist stuff
+    if (FLgetSettingByID(id, 2) == 1)
+    {
+        Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), id);
+    }
+    Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", id);
+
+    ShowDebug("Player reset was successful.\n");
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
@@ -3938,23 +3980,7 @@ inline int32 CLuaBaseEntity::createWornItem(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem((uint16)lua_tointeger(L, 1));
-
-    if (slotID != ERROR_SLOTID)
-    {
-        CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
-        PItem->m_extra[0] = 1;
-
-        char extra[sizeof(PItem->m_extra) * 2 + 1];
-        Sql_EscapeStringLen(SqlHandle, extra, (const char*)PItem->m_extra, sizeof(PItem->m_extra));
-
-        const char* Query =
-            "UPDATE char_inventory "
-            "SET extra = '%s' "
-            "WHERE charid = %u AND location = %u AND slot = %u;";
-
-        Sql_Query(SqlHandle, Query, extra, PChar->id, PItem->getLocationID(), PItem->getSlotID());
-    }
+    charutils::CreateWornItemByItemId(PChar, LOC_INVENTORY, (uint16)lua_tointeger(L, 1));
 
     return 0;
 }
@@ -4241,6 +4267,13 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
+    bool do_worn_items = false;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1) && (uint8)lua_tointeger(L, 1) != 0) {
+        do_worn_items = true;
+    }
+
+    uint32 totalConfirmed = 0;
+
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     for (uint8 slotID = 0; slotID < TRADE_CONTAINER_SIZE; ++slotID)
@@ -4255,16 +4288,26 @@ inline int32 CLuaBaseEntity::confirmTrade(lua_State *L)
 
                 PItem->setReserve(PItem->getReserve() - quantity);
                 if (confirmedItems > 0)
-        {
-            uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
-            charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
-        }
-    }
+                {
+                    totalConfirmed += confirmedItems;
+                    uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
+                    if (do_worn_items) {
+                        PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                        charutils::CreateWornItemBySlot(PChar, LOC_INVENTORY, invSlotID);
+                    }
+                    else {
+                        charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                    }
+                }
+            }
         }
     }
     PChar->TradeContainer->Clean();
-    PChar->pushPacket(new CInventoryFinishPacket());
-    return 0;
+    if (!do_worn_items) {
+        PChar->pushPacket(new CInventoryFinishPacket());
+    }
+    lua_pushinteger(L, totalConfirmed);
+    return 1;
 }
 
 /************************************************************************
@@ -4291,12 +4334,47 @@ inline int32 CLuaBaseEntity::tradeComplete(lua_State *L)
             if (PItem)
             {
                 PItem->setReserve(0);
-            charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+                charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
+            }
         }
-    }
     }
     PChar->TradeContainer->Clean();
     PChar->pushPacket(new CInventoryFinishPacket());
+    return 0;
+}
+
+/************************************************************************
+*  Function: tradeCancel()
+*  Purpose : Cancels a trade and unconfirms all items
+*  Example : player:tradeCancel()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::tradeCancel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    for (uint8 slotID = 0; slotID < TRADE_CONTAINER_SIZE; ++slotID)
+    {
+        if (PChar->TradeContainer->getInvSlotID(slotID) != 0xFF)
+        {
+            CItem* PItem = PChar->TradeContainer->getItem(slotID);
+            if (PItem)
+            {
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                auto quantity = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
+
+                PItem->setReserve(PItem->getReserve() - quantity);
+                if (confirmedItems > 0)
+                {
+                    PChar->TradeContainer->setConfirmedStatus(slotID, 0);
+                }
+            }
+        }
+    }
+    PChar->TradeContainer->Clean();
     return 0;
 }
 
@@ -5823,7 +5901,7 @@ inline int32 CLuaBaseEntity::getSubLvl(lua_State *L)
 
 /************************************************************************
 *  Function: getJobLevel()
-*  Purpose : Return the levle of job specified by JOBTYPE
+*  Purpose : Return the level of job specified by JOBTYPE
 *  Example : player:getJobLevel(BRD)
 *  Notes   :
 ************************************************************************/
@@ -5840,6 +5918,32 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     lua_pushinteger(L, PChar->jobs.job[JobID]);
+
+    return 1;
+}
+
+
+/************************************************************************
+*  Function: getHighestJobLevel()
+*  Purpose : Return highest level the player has on any job
+*  Example : player:getHighestJobLevel()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint8 max_lv = 0;
+    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+        if (PChar->jobs.job[i] > max_lv) {
+            max_lv = PChar->jobs.job[i];
+        }
+    }
+
+    lua_pushinteger(L, max_lv);
 
     return 1;
 }
@@ -10110,27 +10214,29 @@ inline int32 CLuaBaseEntity::registerBattlefield(lua_State* L)
     int battlefield = -1;
     uint8 area = 0;
     uint32 initiator = 0;
+    bool allowinitiate = true;
 
     battlefield = !lua_isnil(L, 1) ? (int)lua_tointeger(L, 1) : -1;
     area = !lua_isnil(L, 2) ? (uint8)lua_tointeger(L, 2) : 1;
     initiator = !lua_isnil(L, 3) ? (uint32)lua_tointeger(L, 3) : 0;
+    allowinitiate = !lua_isnil(L, 4) ? (bool)lua_toboolean(L, 4) : true;
 
-    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator);
+    uint8 ret = PZone->m_BattlefieldHandler->RegisterBattlefield(PChar, (uint16)battlefield, area, initiator, allowinitiate);
 
     if (PChar->PPet)
-{
+    {
         if (PChar->PBattlefield)
             PChar->PPet->PBattlefield = PChar->PBattlefield;
 
         if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
-{
+        {
             CStatusEffect* PCharEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD);
             CStatusEffect* PNewEffect = new CStatusEffect(PCharEffect->GetStatusID(), PCharEffect->GetIcon(),
             PCharEffect->GetPower(), PCharEffect->GetTickTime(), PCharEffect->GetDuration(), PCharEffect->GetSubID(),
             PCharEffect->GetSubPower(), PCharEffect->GetTier());
 
             PChar->PPet->StatusEffectContainer->AddStatusEffect(PNewEffect, true);
-    }
+        }
     }
 
     lua_pushinteger(L, ret);
@@ -11287,6 +11393,8 @@ inline int32 CLuaBaseEntity::updateClaim(lua_State *L)
     if (PEntity != NULL &&
         PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
+        // A scripted claim cannot be considered claimbotting
+        ((CMobEntity*)m_PBaseEntity)->m_AutoClaimed = true;
         battleutils::ClaimMob((CMobEntity*)m_PBaseEntity, (CBattleEntity*)PEntity->GetBaseEntity());
     }
     return 0;
@@ -17391,6 +17499,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTeleportMenu),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setHomePoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearSession),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
@@ -17419,6 +17528,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,confirmTrade),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeComplete),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,tradeCancel),
 
     // Equipping
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canEquipItem),
@@ -17500,6 +17610,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMainLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSubLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getJobLevel),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getHighestJobLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setsLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,levelCap),

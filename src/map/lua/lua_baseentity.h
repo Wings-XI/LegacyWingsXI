@@ -179,6 +179,7 @@ public:
     int32 setHomePoint(lua_State*);          // Sets character's homepoint
 
     int32 resetPlayer(lua_State*);           // if player is stuck, GM command @resetPlayer name
+    int32 clearSession(lua_State*);          // if account session is hung
 
     int32 goToEntity(lua_State*);            // Warps self to NPC or Mob; works across multiple game servers
     int32 gotoPlayer(lua_State*);            // warps self to target player
@@ -207,6 +208,7 @@ public:
     int32 getCurrentTrade(lua_State*);       // Gets the trade window
     int32 confirmTrade(lua_State*);          // Complete trade with an npc, only removing confirmed items
     int32 tradeComplete(lua_State*);         // Complete trade with an npc
+    int32 tradeCancel(lua_State*);           // Cancel the current trade and unconfirm everything
 
     // Equipping
     int32 canEquipItem(lua_State*);          // returns true if the player is able to equip the item
@@ -286,6 +288,7 @@ public:
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level
     int32 getSubLvl(lua_State*);            // Get Entity Sub Job Level
     int32 getJobLevel(lua_State*);          // Gets character job level for specified JOBTYPE
+    int32 getHighestJobLevel(lua_State*);   // Gets the highest level the player has on any job
     int32 setLevel(lua_State*);             // sets the character's level
     int32 setsLevel(lua_State*);            // sets the character's level
     int32 levelCap(lua_State*);             // genkai

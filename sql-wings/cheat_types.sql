@@ -46,6 +46,7 @@ INSERT INTO `cheat_types` (`cheatid`, `name`, `description`, `argument`, `action
 INSERT INTO `cheat_types` (`cheatid`, `name`, `description`, `argument`, `action_bitmask`, `warning_message`) VALUES(2, 'POSHACK', 'The player used an addon to teleport into a different position in the zone.', 0, 9, 'You have been caught speed / position hacking. Your account will be banned.');
 INSERT INTO `cheat_types` (`cheatid`, `name`, `description`, `argument`, `action_bitmask`, `warning_message`) VALUES(3, 'FISHBOT', 'Player is using an automated fishing tool', 0, 3, 'Fishing bot detected. You have been banned from fishing.');
 INSERT INTO `cheat_types` (`cheatid`, `name`, `description`, `argument`, `action_bitmask`, `warning_message`) VALUES(4, 'DIGBOT', 'Player is using an automated digging tool', 0, 9, 'Chobobo digging bot detected. This incident will be reported.');
+INSERT INTO `cheat_types` (`cheatid`, `name`, `description`, `argument`, `action_bitmask`, `warning_message`) VALUES(5, 'CLAIMBOT', 'Player is using an automated mob claiming tool', 0, 9, 'Claim bot tool detected. This incident will be reported.');
 
 --
 -- Indexes for dumped tables

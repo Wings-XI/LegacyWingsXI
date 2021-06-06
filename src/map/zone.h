@@ -33,6 +33,7 @@
 #include "vana_time.h"
 #include "battlefield_handler.h"
 #include "dynamis_handler.h"
+#include "dig_area_container.h"
 
 #include "packets/weather.h"
 #include "navmesh.h"
@@ -526,6 +527,7 @@ typedef std::map<uint16, zoneWeather_t> weatherVector_t;
 typedef std::map<uint16, CBaseEntity*> EntityList_t;
 
 int32 zone_update_weather(uint32 tick, CTaskMgr::CTask *PTask);
+int32 zone_expire_digs(uint32 tick, CTaskMgr::CTask* PTask);
 
 class CZone
 {
@@ -556,6 +558,7 @@ public:
     bool            CanUseMisc(uint16 misc);
     void            SetWeather(WEATHER weatherCondition);
     void            UpdateWeather();
+    void            ExpireDigObjects();
 
     virtual void    SpawnPCs(CCharEntity* PChar);                                   // отображаем персонажей в зоне
     virtual void    SpawnMOBs(CCharEntity* PChar);                                  // отображаем MOBs в зоне
@@ -605,6 +608,8 @@ public:
 
     CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID);
     virtual ~CZone();
+
+    CDigAreaContainer* PDigAreaContainer;
 
     CAIEventHandler* PEventHandler;
     CBattlefieldHandler* m_BattlefieldHandler;  // BCNM Instances in this zone

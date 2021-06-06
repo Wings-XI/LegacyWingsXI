@@ -28,6 +28,8 @@
 #include "../zone.h"
 #include "../entities/charentity.h"
 #include "../ai/helpers/event_handler.h"
+#include "../packets/chat_message.h"
+
 
 /************************************************************************
 *                                                                       *
@@ -256,6 +258,26 @@ int32 CLuaZone::triggerListener(lua_State* L)
 }
 
 /************************************************************************
+*  Function: printToZone()
+*  Purpose : Sends a chat message to all players in the zone
+************************************************************************/
+int32 CLuaZone::printToZone(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    // see scripts\globals\msg.lua or src\map\packets\chat_message.h for values
+    CHAT_MESSAGE_TYPE messageLook = (lua_isnil(L, 2) || !lua_isnumber(L, 2)) ? MESSAGE_SYSTEM_1 : (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2);
+    uint8 messageRange = (lua_isnil(L, 3) || !lua_isnumber(L, 3)) ? 0 : (CHAT_MESSAGE_TYPE)lua_tointeger(L, 3);
+    std::string name = (lua_isnil(L, 4) || !lua_isstring(L, 4)) ? std::string() : lua_tostring(L, 4);
+
+    m_pLuaZone->PushPacket(nullptr, CHAR_INZONE, new CChatMessagePacket(nullptr, messageLook, (char*)lua_tostring(L, 1), name, m_pLuaZone->GetID()));
+
+    return 0;
+}
+
+
+/************************************************************************
 *                                                                       *
 *  Initializing Methods in LUA                                          *
 *                                                                       *
@@ -276,5 +298,6 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone, addListener),
     LUNAR_DECLARE_METHOD(CLuaZone, removeListener),
     LUNAR_DECLARE_METHOD(CLuaZone, triggerListener),
+    LUNAR_DECLARE_METHOD(CLuaZone, printToZone),
     {nullptr,nullptr}
 };
