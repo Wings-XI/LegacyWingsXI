@@ -17,6 +17,9 @@ function onPetAbility(target, pet, skill)
     local dint = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local dmg = (500 + dint*1.5 + skill:getTP()/20)*coe
     
+    local res = applyResistanceAbility(pet, target, tpz.magic.element.LIGHT, 0, -25)
+    dmg = dmg * res
+    
     local burst = 1.0
     local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.LIGHT - 5, target)
     if (skillchainTier > 0) then
