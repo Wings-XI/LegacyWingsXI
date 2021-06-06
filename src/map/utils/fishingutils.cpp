@@ -987,9 +987,10 @@ namespace fishingutils
 
         if (charutils::GetCharVar(PChar, "FishingDenied") == 1) {
             charutils::AddCharVar(PChar, "FishingDeniedAttempts", 1);
-            PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_CANNOTFISH_TIME));
-            PChar->pushPacket(new CReleasePacket(PChar, RELEASE_FISHING));
-            return;
+            // Let them fish... a change on the LUA side makes them never catch anything
+            // PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_CANNOTFISH_TIME));
+            // PChar->pushPacket(new CReleasePacket(PChar, RELEASE_FISHING));
+            // return;
         }
 
 
@@ -1095,11 +1096,13 @@ namespace fishingutils
                 break;
             case FISHINGCATCHTYPE_SMALLFISH:
                 charutils::AddCharVar(PChar, "FishingCaughtSmallFish", 1);
+                charutils::AddCharVar(PChar->id, "FishingCaughtSinceJST", 1);
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHSMALL;
                 CatchFish(PChar, PChar->hookedFish->catchid, false, 0, 0, PChar->hookedFish->count);
                 break;
             case FISHINGCATCHTYPE_BIGFISH:
                 charutils::AddCharVar(PChar, "FishingCaughtLargeFish", 1);
+                charutils::AddCharVar(PChar->id, "FishingCaughtSinceJST", 1);
                 PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHLARGE;
                 CatchFish(PChar, PChar->hookedFish->catchid, true, PChar->hookedFish->length, PChar->hookedFish->weight, PChar->hookedFish->count);
                 break;
@@ -1139,7 +1142,7 @@ namespace fishingutils
     {
         uint16 MessageOffset = GetMessageOffset(PChar->getZone());
         uint32 vanaTime = CVanaTime::getInstance()->getVanaTime();
-        
+
         if (charutils::GetCharVar(PChar, "FishingDenied") == 1) {
             CatchNothing(PChar, FISHINGFAILTYPE_NONE);
             PChar->fishingToken = 0;

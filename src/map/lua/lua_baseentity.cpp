@@ -5901,7 +5901,7 @@ inline int32 CLuaBaseEntity::getSubLvl(lua_State *L)
 
 /************************************************************************
 *  Function: getJobLevel()
-*  Purpose : Return the levle of job specified by JOBTYPE
+*  Purpose : Return the level of job specified by JOBTYPE
 *  Example : player:getJobLevel(BRD)
 *  Notes   :
 ************************************************************************/
@@ -5918,6 +5918,32 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     lua_pushinteger(L, PChar->jobs.job[JobID]);
+
+    return 1;
+}
+
+
+/************************************************************************
+*  Function: getHighestJobLevel()
+*  Purpose : Return highest level the player has on any job
+*  Example : player:getHighestJobLevel()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint8 max_lv = 0;
+    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+        if (PChar->jobs.job[i] > max_lv) {
+            max_lv = PChar->jobs.job[i];
+        }
+    }
+
+    lua_pushinteger(L, max_lv);
 
     return 1;
 }
@@ -17584,6 +17610,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMainLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSubLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getJobLevel),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getHighestJobLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setsLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,levelCap),
