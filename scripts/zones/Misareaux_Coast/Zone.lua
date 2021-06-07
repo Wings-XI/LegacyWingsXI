@@ -15,12 +15,7 @@ function onInitialize(zone)
 
     UpdateNMSpawnPoint(ID.mob.ODQAN)
     local Odqan = GetMobByID(ID.mob.ODQAN)
-    local odqanre = GetServerVariable("OdqanRespawn")
-    DisallowRespawn(Odqan:getID(), true)
-
-    if os.time() < odqanre then
-      GetMobByID(ID.mob.ODQAN):setRespawnTime(odqanre - os.time())
-    end
+    DisallowRespawn(Odqan:getID(), true) -- prevents accidental 'pop' during no fog and immediate despawn
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -61,6 +56,7 @@ function onZoneWeatherChange(weather)
         and weather == tpz.weather.FOG
     then
         DisallowRespawn(Odqan:getID(), false)
+        Odqan:setRespawnTime(math.random(15, 90)) -- pop 15-90 sec after fog starts (FOG can be pretty short)
     elseif not weather == tpz.weather.FOG then
         DisallowRespawn(Odqan:getID(), true)
     end
