@@ -604,6 +604,7 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
         return;
     }
     // Verify that the character name is not already taken
+    LOCK_WORLDMGR;
     LOG_DEBUG0("Accessing map server database.");
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(dwWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(dwWorldID);
