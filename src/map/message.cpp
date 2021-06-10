@@ -62,7 +62,6 @@ typedef struct _MAP_MQ_MESSAGE_HEADER
 
 namespace message
 {
-    std::recursive_mutex send_mutex;
     std::queue<std::shared_ptr<uint8>> message_queue;
     uint64 own_identity;
     std::shared_ptr<MQConnection> g_mqconnection = nullptr;
@@ -229,7 +228,9 @@ namespace message
     {
         while (!message_queue.empty())
         {
-            std::lock_guard<std::recursive_mutex> lk(send_mutex);
+            g_mqconnection->IncrementHighPriorityThreadsWaiting();
+            std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+            g_mqconnection->DecrementHighPriorityThreadsWaiting();
             std::shared_ptr<uint8> msgptr = message_queue.front();
             uint8* msg = msgptr.get();
             message_queue.pop();
@@ -1007,7 +1008,9 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
-        std::lock_guard<std::recursive_mutex> lk(send_mutex);
+        g_mqconnection->IncrementHighPriorityThreadsWaiting();
+        std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+        g_mqconnection->DecrementHighPriorityThreadsWaiting();
         uint8 stub;
 
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
