@@ -502,6 +502,11 @@ void CParty::AddMember(CBattleEntity* PEntity)
     TPZ_DEBUG_BREAK_IF(PEntity->PParty != nullptr);
 
     PEntity->PParty = this;
+
+    if (m_PartyType == PARTY_PCS && members.size() > 5) {
+        return;
+    }
+
     members.push_back(PEntity);
 
     if (PEntity->objtype == TYPE_PC && this->members.size() > 1)
@@ -566,6 +571,10 @@ void CParty::AddMember(uint32 id)
 {
     if (m_PartyType == PARTY_PCS)
     {
+        if (members.size() > 5) {
+            return;
+        }
+
         uint32 allianceid = 0;
         uint16 Flags = 0;
         if (m_PAlliance)
@@ -604,6 +613,11 @@ void CParty::PushMember(CBattleEntity* PEntity)
     TPZ_DEBUG_BREAK_IF(PEntity->PParty != nullptr);
 
     PEntity->PParty = this;
+
+    if (m_PartyType == PARTY_PCS && members.size() > 5) {
+        return;
+    }
+
     members.push_back(PEntity);
 
     auto info = GetPartyInfo();
