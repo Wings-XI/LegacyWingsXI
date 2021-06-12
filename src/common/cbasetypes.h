@@ -13,7 +13,7 @@
 #endif
 
 // define a break macro for debugging.
-#if defined(DEBUG)
+#if (defined(DEBUG) && !defined(FORCE_NO_ASSERTS)) || defined(FORCE_ASSERTS)
 #if defined(_MSC_VER)
 #define TPZ_DEBUG_BREAK_IF(_CONDITION_) if (_CONDITION_) {__debugbreak();}
 #else
