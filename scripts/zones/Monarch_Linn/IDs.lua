@@ -19,6 +19,7 @@ zones[tpz.zone.MONARCH_LINN] =
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         GLOWING_MIST            = 7126, -- A glowing mist of ever-changing proportions floats before you...
         ORB_MESSAGE_OFFSET      = 7405, -- There is a crack in the <item>. It no longer contains a monster.
+        KI_TORN_FROM_YOUR_HANDS = 7455, -- The <keyItem> is torn from your hands and sucked into the spatial displacement!
         CONQUEST_BASE           = 7462, -- Tallying conquest results...
     },
     mob =
