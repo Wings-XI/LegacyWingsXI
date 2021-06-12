@@ -55,7 +55,7 @@ function onTrigger(player, npc)
             rand = math.random(1, 2)
             if (rand == 1) then
                 player:startEvent(674) -- Quest finish 1
-            elseif (scoop == 4 and door == 1) then
+            else
                 player:startEvent(670)    -- Quest finish 2
             end
         end

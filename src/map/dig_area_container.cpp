@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2021 Wings Open Source Project
@@ -36,7 +36,7 @@ bool CDigAreaContainer::IsInExhaustedArea(CCharEntity* PChar)
 
     while (i != m_DigObjectIteratorEnd)
     {
-        if ((PChar->id == m_DigObject[i].m_ownerID || now - m_DigObject[i].m_timestamp < 2min) &&
+        if ((PChar->id == m_DigObject[i].m_ownerID || now - m_DigObject[i].m_timestamp < 30s) &&
             distanceSquared(PChar->loc.p, m_DigObject[i].m_pos) < 5 * 5)
             return true;
         i = i == 1999 ? 0 : i + 1;
@@ -58,7 +58,7 @@ void CDigAreaContainer::AddDigObject(CDigObject DigObject)
 
 void CDigAreaContainer::ExpireOldDigs(time_point tick)
 {
-    while (m_DigObjectIteratorStart != m_DigObjectIteratorEnd && m_DigObject[m_DigObjectIteratorStart].m_timestamp + 30min < tick)
+    while (m_DigObjectIteratorStart != m_DigObjectIteratorEnd && m_DigObject[m_DigObjectIteratorStart].m_timestamp + 15min < tick)
     {
         m_DigObjectIteratorStart++;
     }
