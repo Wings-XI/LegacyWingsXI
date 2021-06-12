@@ -120,6 +120,22 @@ public:
     std::recursive_mutex* GetMutex();
 
     /**
+     *  Check the number of high priority threads waiting
+     *  @return Number of high priority threads
+     */
+    uint32_t GetHighPriorityThreadsWaiting() const;
+
+    /**
+     *  Increment the number of high priority threads waiting
+     */
+    void IncrementHighPriorityThreadsWaiting();
+
+    /**
+     *  Decrement the number of high priority threads waiting
+     */
+    void DecrementHighPriorityThreadsWaiting();
+
+    /**
      *  Runs the MQ consumer thread.
      */
     void Run();
@@ -178,6 +194,8 @@ private:
 
     // Mutex for access sync
     std::recursive_mutex mMutex;
+    /// High priority thread requesting mutex access
+    std::atomic<uint32_t> madwHighPriorityAccess;
     // Counts the number of senders that want to send data
     std::atomic<uint32_t> madwSendersWaiting;
 };

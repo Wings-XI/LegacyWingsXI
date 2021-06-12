@@ -236,7 +236,7 @@ void MQConnection::Run()
     LOG_DEBUG1("MQ consumer started.");
 
     while (mbShutdown == false) {
-        if (madwSendersWaiting != 0) {
+        if (madwHighPriorityAccess != 0 || madwSendersWaiting != 0) {
             // There are senders waiting to send data so give them some time to do their business
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
@@ -358,6 +358,21 @@ void MQConnection::Send(uint32_t dwChannel, const uint8_t* bufData, uint32_t cbD
 std::recursive_mutex* MQConnection::GetMutex()
 {
     return &mMutex;
+}
+
+uint32_t MQConnection::GetHighPriorityThreadsWaiting() const
+{
+    return madwHighPriorityAccess;
+}
+
+void MQConnection::IncrementHighPriorityThreadsWaiting()
+{
+    madwHighPriorityAccess++;
+}
+
+void MQConnection::DecrementHighPriorityThreadsWaiting()
+{
+    madwHighPriorityAccess--;
 }
 
 uint32_t MQConnection::GetWorldId() const

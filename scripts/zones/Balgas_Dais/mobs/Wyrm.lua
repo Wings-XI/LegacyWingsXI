@@ -63,7 +63,7 @@ function onMobFight(mob, target)
             mob:setLocalVar("state", 1) -- moving to spawn
 
         -- Land @ 33%    
-        elseif mob:AnimationSub() == 1 and mob:getHPP() <= 33 and state >= 2 then
+        elseif mob:AnimationSub() == 1 and mob:getHPP() <= 33 and state == 2 then
             mob:setLocalVar("state", 3) -- final state
             mob:useMobAbility(954)
             grounded(mob)

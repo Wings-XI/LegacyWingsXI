@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2019 Darkstar Dev Teams
@@ -104,7 +104,7 @@ namespace anticheat
         time_t timeNow = time(NULL);
         // Reset if has not cheated for an hour
         if (timeNow < last_cheat + 5) {
-            // Probably same incident as last tie
+            // Probably same incident as last time
             return true;
         }
         if (timeNow > last_cheat + 1800) {

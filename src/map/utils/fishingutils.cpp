@@ -151,9 +151,10 @@ namespace fishingutils
     {
         CItemWeapon* PLure = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
 
-        TPZ_DEBUG_BREAK_IF(PLure == nullptr);
-        TPZ_DEBUG_BREAK_IF(PLure->isType(ITEM_WEAPON) == false);
-        TPZ_DEBUG_BREAK_IF(PLure->getSkillType() != SKILL_FISHING);
+        if (!PLure || !PLure->isType(ITEM_WEAPON) || PLure->getSkillType() != SKILL_FISHING || PLure->getID() != charutils::GetCharVar(PChar, "FishingUsedBait")) {
+            ShowExploit(CL_YELLOW "%s unequipped the lure while fishing!" CL_RESET, PChar->GetName());
+            return true;
+        }
 
         if (PLure != nullptr) {
             if (!RemoveFly &&
@@ -1067,6 +1068,8 @@ namespace fishingutils
             // luautils::OnFishingStart(PChar, Rod->getID(), Bait->getID(), FishingAreaID);
 
             charutils::AddCharVar(PChar, "FishingStarts", 1);
+            charutils::SetCharVar(PChar, "FishingUsedRod", Rod->getID());
+            charutils::SetCharVar(PChar, "FishingUsedBait", Bait->getID());
 
             // Start fishing animation
             PChar->animation = ANIMATION_NEW_FISHING_START;
@@ -1263,6 +1266,32 @@ namespace fishingutils
                 CItemWeapon* Rod = nullptr;
 
                 Rod = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
+                if (!Rod || Rod->getID() != charutils::GetCharVar(PChar, "FishingUsedRod")) {
+                    ShowExploit(CL_YELLOW "%s unequipped the rod while fishing!" CL_RESET, PChar->GetName());
+                    PChar->animation = ANIMATION_NEW_FISHING_STOP;
+                    PChar->updatemask |= UPDATE_HP;
+
+                    LureLoss(PChar, false, true);
+                    PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_NOROD));
+                    if (PChar->hookedFish) {
+                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_NONE;
+                    }
+                    break;
+                }
+                CItemWeapon* PLure = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
+                if (!PLure || PLure->getID() != charutils::GetCharVar(PChar, "FishingUsedBait")) {
+                    ShowExploit(CL_YELLOW "%s unequipped the lure while fishing!" CL_RESET, PChar->GetName());
+                    PChar->animation = ANIMATION_NEW_FISHING_STOP;
+                    PChar->updatemask |= UPDATE_HP;
+
+                    LureLoss(PChar, false, true);
+                    PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_NOBAIT));
+                    if (PChar->hookedFish) {
+                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_NONE;
+                    }
+                    break;
+                }
+
                 fishingrod_t* FishingRod = GetRod(Rod->getID());
 
                 luautils::OnFishingCatch(PChar, PChar->hookedFish->catchtype, PChar->hookedFish->catchid);
