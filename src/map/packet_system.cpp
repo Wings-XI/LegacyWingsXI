@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -624,8 +624,8 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->m_distanceFromLastCheck = 0.0;
                 PChar->m_distanceLastCheckTime = timeNow;
             }
-            if (PChar->m_lastDig + 4s > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 3 * 3)
-            {
+            if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5)
+            { // player left the 5 radius circle before dig is even ready. dig anim takes 4 seconds so this shouldn't be possible
                 char cheatDesc[128];
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGSKIP, 0, cheatDesc, 1);
             }
