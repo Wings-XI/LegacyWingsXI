@@ -178,7 +178,10 @@ CCharEntity::CCharEntity()
     m_lastBcnmTimePrompt = 0;
     m_DeathTimestamp = 0;
 
-    m_lastDig = std::chrono::system_clock::now();
+    m_lastDig = std::chrono::system_clock::now() - 5s;
+    m_lastDigPosition.x = 0;
+    m_lastDigPosition.y = 0;
+    m_lastDigPosition.z = 0;
 
     m_EquipFlag = 0;
     m_EquipBlock = 0;
