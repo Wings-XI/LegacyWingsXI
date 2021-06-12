@@ -624,6 +624,11 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->m_distanceFromLastCheck = 0.0;
                 PChar->m_distanceLastCheckTime = timeNow;
             }
+            if (PChar->m_lastDig + 4s > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 3 * 3)
+            {
+                char cheatDesc[128];
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGSKIP, 0, cheatDesc, 1);
+            }
         }
 
         bool isUpdate = moved || PChar->updatemask & UPDATE_POS;
@@ -936,6 +941,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
                     luautils::OnChocoboDig(PChar);
                     PChar->m_lastDig = now;
+                    PChar->m_lastDigPosition = PChar->loc.p;
 
                     if (PDigAreaContainer)
                     {
