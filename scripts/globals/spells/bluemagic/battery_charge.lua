@@ -13,6 +13,7 @@
 --
 -- Combos: None
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
@@ -24,27 +25,20 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.REFRESH
-    local power = 3
     local duration = 300
 
-    if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
-        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
-
-        if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
-        end
-
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:hasStatusEffect(tpz.effect.REFRESH)) then
+    if target:hasStatusEffect(tpz.effect.REFRESH) then
         target:delStatusEffect(tpz.effect.REFRESH)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 3, duration) == false) then
+    if target:addStatusEffect(tpz.effect.REFRESH, 3, 3, duration) == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.REFRESH
 end

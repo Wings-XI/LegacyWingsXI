@@ -23,7 +23,7 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_AQUAN
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
     params.multiplier = 2.375
@@ -36,24 +36,20 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.3
     params.mnd_wsc = 0.1
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local params = {}
-
+    params = {}
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-
     params.attribute = tpz.mod.INT
-
     params.skillType = tpz.skill.BLUE_MAGIC
-
-    params.bonus = 1.0
+    params.bonus = 0
 
     local resist = applyResistance(caster, target, spell, params)
 
-    if (damage > 0 and resist > 0.0625) then
-        if (target:canGainStatusEffect(tpz.effect.STR_DOWN)) then
-            target:addStatusEffect(tpz.effect.STR_DOWN, 20, 3, 60)
+    if resist >= 0.5 then
+        if target:canGainStatusEffect(tpz.effect.STR_DOWN) then
+            target:addStatusEffect(tpz.effect.STR_DOWN, 20*resist, 3, 60*resist)
         end
     end
 

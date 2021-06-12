@@ -23,9 +23,9 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_PLANTOID
     params.tpmod = TPMOD_CRITICAL
-    params.attackType = tpz.attackType.PHYSICAL
+    params.attackType = tpz.attackType.PHYSICAL -- wiki: despite the 11 yalm range, it's still considered melee
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_GRAVITATION
     params.numhits = 3
@@ -41,15 +41,24 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.20
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    damage = BluePhysicalSpell(caster, target, spell, params)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local chance = math.random()
+    params = {}
+    params.eco = ECO_PLANTOID
+    params.diff = caster:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
+    params.attribute = tpz.mod.DEX
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
 
-    if (damage > 0 and chance > 1) then
-        local typeEffect = tpz.effect.DEFENSE_DOWN
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 4, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) then
+        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 8, 0, 30*resist)
     end
 
     return damage

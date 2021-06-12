@@ -22,16 +22,15 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     local params = {}
+    params.eco = ECO_VERMIN
     params.diff = nil
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = -10
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
     local params = {}
-    -- Todo: determine if these param values are retail
     params.tpmod = TPMOD_DAMAGE
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
@@ -52,8 +51,8 @@ function onSpellCast(caster, target, spell)
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    if (resist > 0.25) then -- This line may need adjusting for retail accuracy.
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 20 * resist) -- Wiki says duration of "up to" 20 second..
+    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, 20 * resist) -- wiki says 20 sec max
     end
 
     return damage

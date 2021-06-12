@@ -1238,8 +1238,11 @@ CStatusEffect* CStatusEffectContainer::StealStatusEffect(EFFECTFLAG flag)
         CStatusEffect* oldEffect = dispelableList.at(rndIdx);
 
         //make a copy
-        CStatusEffect* EffectCopy = new CStatusEffect(oldEffect->GetStatusID(), oldEffect->GetIcon(), oldEffect->GetPower(), oldEffect->GetTickTime() / 1000, oldEffect->GetDuration() / 1000);
-
+        CStatusEffect* EffectCopy = new CStatusEffect(oldEffect->GetStatusID(), oldEffect->GetIcon(), oldEffect->GetPower(), oldEffect->GetTickTime() / 1000,
+        oldEffect->GetDuration() / 1000 -
+        ((std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch())).count() -
+         (std::chrono::duration_cast<std::chrono::seconds>(oldEffect->GetStartTime().time_since_epoch())).count() ) );
+        
         RemoveStatusEffect(oldEffect);
 
         return EffectCopy;

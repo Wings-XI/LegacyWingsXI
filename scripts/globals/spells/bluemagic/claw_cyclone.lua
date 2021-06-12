@@ -23,16 +23,17 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_BEAST
     params.tpmod = TPMOD_ATTACK
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_SCISSION
+    params.spellLevel = 20
     params.numhits = 2
-    params.multiplier = 1.4375
-    params.tp150 = 1.4375
-    params.tp300 = 1.4375
-    params.azuretp = 1.4375
+    params.multiplier = 2.8
+    params.tp150 = 3.1
+    params.tp300 = 3.3
+    params.azuretp = 3.4
     params.duppercap = 23
     params.str_wsc = 0.0
     params.dex_wsc = 0.3
@@ -41,8 +42,12 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    damage = BluePhysicalSpell(caster, target, spell, params)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
 
     return damage
 end

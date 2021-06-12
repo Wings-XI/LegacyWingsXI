@@ -13,9 +13,9 @@
 --
 -- Combos: Magic Attack Bonus
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/bluemagic")
 require("scripts/globals/msg")
 -----------------------------------------
 
@@ -24,34 +24,24 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffectOne = tpz.effect.ICE_SPIKES
-    local typeEffectTwo = tpz.effect.DEFENSE_BOOST
-    local powerOne = 5
-    local powerTwo = 12
     local duration = 120
-    local returnEffect = typeEffectOne
 
-    if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
-        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
-
-        if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
-        end
-
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
+    
+    local successSpikes = target:addStatusEffect(tpz.effect.ICE_SPIKES, 5, 0, duration)
+    local successDefense = target:addStatusEffect(tpz.effect.DEFENSE_BOOST, 12, 0, duration)
 
-    if (target:addStatusEffect(typeEffectOne, powerOne, 0, duration) == false and target:addStatusEffect(typeEffectTwo, powerTwo, 0, duration) == false) then -- both statuses fail to apply
+    if successSpikes == false and successDefense == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    elseif (target:addStatusEffect(typeEffectOne, powerOne, 0, duration) == false) then -- the first status fails to apply
-        target:addStatusEffect(typeEffectTwo, powerTwo, 0, duration)
+        return tpz.effect.ICE_SPIKES
+    elseif successSpikes == false then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
-        returnEffect = typeEffectTwo
+        return tpz.effect.DEFENSE_BOOST
     else
-        target:addStatusEffect(typeEffectOne, powerOne, 0, duration)
-        target:addStatusEffect(typeEffectTwo, powerTwo, 0, duration)
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
+        return tpz.effect.ICE_SPIKES
     end
-
-    return returnEffect
 end

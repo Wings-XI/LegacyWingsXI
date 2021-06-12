@@ -22,15 +22,8 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    
     local params = {}
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_DEMON
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.WIND
     params.multiplier = 1.375
@@ -43,14 +36,21 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
-    if (damage > 0 and resist > 0.25) then
-        local typeEffect = tpz.effect.BLINDNESS
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 5, 0, duration)
+    params = {}
+    params.eco = ECO_DEMON
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = tpz.effect.BLINDNESS
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    
+    local duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BLINDNESS) then
+        target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration*resist)
     end
 
     return damage

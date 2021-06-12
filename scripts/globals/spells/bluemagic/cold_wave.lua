@@ -12,6 +12,7 @@
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Auto Refresh
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
@@ -23,44 +24,46 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.FROST
-    local dINT = caster:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT)
     local params = {}
-    params.diff = nil
+    params.eco = ECO_ARCANA
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = nil
-    local resist = applyResistance(caster, target, spell, params)
-
-    if (target:getStatusEffect(tpz.effect.BURN) ~= nil) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
-    elseif (resist > 0.5) then
-        if (target:getStatusEffect(tpz.effect.CHOKE) ~= nil) then
+    params.attackType = tpz.attackType.MAGICAL
+    params.damageType = tpz.damageType.ICE
+    params.multiplier = 1
+    params.tMultiplier = 1
+    params.duppercap = 50
+    params.str_wsc = 0.0
+    params.dex_wsc = 0.0
+    params.vit_wsc = 0.0
+    params.agi_wsc = 0.0
+    params.int_wsc = 0.1
+    params.mnd_wsc = 0.0
+    params.chr_wsc = 0.0
+    
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    params = {}
+    params.eco = ECO_ARCANA
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    
+    if resist >= 0.5 and target:getStatusEffect(tpz.effect.BURN) == nil and target:getStatusEffect(tpz.effect.FROST) == nil then
+        if target:getStatusEffect(tpz.effect.CHOKE) ~= nil then
             target:delStatusEffect(tpz.effect.CHOKE)
         end
-        local sINT = caster:getStat(tpz.mod.INT)
-        local DOT = getElementalDebuffDOT(sINT)
-        local effect = target:getStatusEffect(typeEffect)
-        local noeffect = false
-        if (effect ~= nil) then
-            if (effect:getPower() >= DOT) then
-                noeffect = true
-            end
-        end
-        if (noeffect) then
-            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
-        else
-            if (effect ~= nil) then
-                target:delStatusEffect(typeEffect)
-            end
-                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
-            local duration = math.floor(ELEMENTAL_DEBUFF_DURATION * resist)
-            target:addStatusEffect(typeEffect, DOT, 3, ELEMENTAL_DEBUFF_DURATION)
-        end
-    else
-        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+        local BLUlvl = caster:getMainLvl()
+        if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+        local power = 3 + math.floor(BLUlvl/5) -- per wiki
+        target:addStatusEffect(tpz.effect.FROST, power, 3, 30*resist)
     end
 
-    return typeEffect
+    return damage
 end

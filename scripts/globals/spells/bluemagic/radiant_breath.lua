@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
     end
 
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_DRAGON
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.LIGHT
     params.multiplier = multi
@@ -44,33 +44,35 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-
-    local resist = applyResistance(caster, target, spell, params)
+    params.bonus = 0
+    
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local slowDuration = math.ceil(getBlueEffectDuration(caster,resist,tpz.effect.SLOW) * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
-    local silenceDuration = math.ceil(getBlueEffectDuration(caster,resist,tpz.effect.SILENCE) * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
+    params.effect = tpz.effect.SLOW
+    local resistSlow = applyResistanceEffect(caster, target, spell, params)
+    params.effect = tpz.effect.SILENCE
+    local resistSilence = applyResistanceEffect(caster, target, spell, params)
     
-    if (damage > 0 and resist > 0.3) then
+    
+    local slowDuration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+    local silenceDuration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
+    
+    if resistSlow >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
         local cMND = caster:getStat(tpz.mod.MND)
         local tMND = target:getStat(tpz.mod.MND)
         local power = 1800
         
         if cMND < tMND then
             power = power - (tMND - cMND)*50
-            if power < 300 then
-                power = 300
-            end
+            if power < 300 then power = 300 end
         end
-        target:delStatusEffect(tpz.effect.SLOW)
-        target:addStatusEffect(tpz.effect.SLOW, power, 0, slowDuration)
+        
+        target:addStatusEffect(tpz.effect.SLOW, power, 0, slowDuration*resistSlow)
     end
 
-    if (damage > 0 and resist > 0.3) then
-        target:delStatusEffect(tpz.effect.SILENCE)
-        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, silenceDuration)
+    if resistSilence >= 0.5 and not target:hasStatusEffect(tpz.effect.SILENCE) then
+        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, silenceDuration*resistSilence)
     end
 
     return damage

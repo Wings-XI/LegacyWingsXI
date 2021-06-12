@@ -23,13 +23,13 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_NONE
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.EARTH
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.bonus = 0
     params.multiplier = 2.0
     params.tMultiplier = 1.0
     params.duppercap = 56
@@ -40,16 +40,15 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.2
+    params.effect = tpz.effect.WEIGHT
 
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = applyResistanceEffect(caster, target, spell, params)
     local damage = BlueMagicalSpell(caster, target, spell, params, CHR_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-    if damage > 0 and resist >= 0.5 then
-        local typeEffect = tpz.effect.WEIGHT
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 25, 0, duration)
+    local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then
+        target:addStatusEffect(tpz.effect.WEIGHT, 25, 0, duration*resist)
     end
 
     return damage

@@ -23,17 +23,18 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_LUMINION
     params.tpmod = TPMOD_ACC
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_DISTORTION
+    params.spellLevel = 72
     params.numhits = 5
     params.multiplier = 1.5
     params.tp150 = 0.8
     params.tp300 = 1.0
     params.azuretp = 1.0
-    params.duppercap = 100 -- D upper >=69
+    params.duppercap = 100
     params.str_wsc = 0.2
     params.dex_wsc = 0.2
     params.vit_wsc = 0.0
@@ -41,14 +42,19 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    damage = BluePhysicalSpell(caster, target, spell, params)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
-    poison = target:getStatusEffect(tpz.effect.POISON)
-    local chance = math.random()
-    if (chance < 0.95 and poison == nil) then
-        local power = (caster:getMainLvl()/5) + 3 -- from http://wiki.ffxiclopedia.org/wiki/Disseverment
-        target:addStatusEffect(tpz.effect.POISON, power, 3, 180) -- for 180secs
+    params.effect = tpz.effect.POISON
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
+    
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
+    if resist >= 0.5 and target:getStatusEffect(tpz.effect.POISON) == nil then
+        local power = (caster:getMainLvl()/5) + 3
+        target:addStatusEffect(tpz.effect.POISON, power, 3, duration*resist)
     end
 
     return damage

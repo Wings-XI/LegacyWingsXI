@@ -27,16 +27,13 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.effect = tpz.effect.TERROR
-    local resist = applyResistance(caster, target, spell, params)
-    local duration = 5 * resist
-
-    if (resist > 0.5) then -- Do it!
-        if (target:isFacing(caster)) then
-            if (target:addStatusEffect(params.effect, 1, 0, duration)) then
-                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
-            else
-                spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-            end
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    
+    if not target:isFacing(caster) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.5 then
+        if target:addStatusEffect(tpz.effect.TERROR, 1, 0, math.ceil(5*resist)) then
+            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         end
@@ -44,5 +41,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return params.effect
+    return tpz.effect.TERROR
 end

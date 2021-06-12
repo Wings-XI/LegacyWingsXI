@@ -23,20 +23,14 @@ end
 
 function onSpellCast(caster, target, spell)
     local multi
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
+    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
         multi = 2.58
     else
         multi = 2.08
     end
 
     local params = {}
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_VERMIN
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.ICE
     params.multiplier = multi
@@ -49,14 +43,21 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local duration = math.ceil(getBlueEffectDuration(caster,resist,tpz.effect.PARALYSIS) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if (damage > 0 and resist > 0.3) then
-        local typeEffect = tpz.effect.PARALYSIS
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 16, 0, duration)
+    params = {}
+    params.eco = ECO_VERMIN
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = tpz.effect.PARALYSIS
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    
+    local duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+        target:addStatusEffect(tpz.effect.PARALYSIS, 16, 0, duration*resist)
     end
 
     return damage

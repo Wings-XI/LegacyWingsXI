@@ -23,7 +23,7 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_AQUAN
     params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
@@ -41,16 +41,25 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.20
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-    local damage = BluePhysicalSpell(caster, target, spell, params)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
-    local resist = applyResistanceAbility(caster, target, tpz.magic.element.ICE, tpz.skill.BLUE_MAGIC, bonus)
+    params = {}
+    params.eco = ECO_AQUAN
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = tpz.effect.PARALYSIS
+    local resist = applyResistanceEffect(caster, target, spell, params)
 
-    local duration = math.ceil(getBlueEffectDuration(caster, resist, typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if (damage > 0 and resist >= 0.5) then
-        local typeEffect = tpz.effect.PARALYSIS
-        target:delStatusEffect(typeEffect)
-        target:addStatusEffect(typeEffect, 23, 0, duration)
+    local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+        target:addStatusEffect(tpz.effect.PARALYSIS, 23, 0, duration*resist)
     end
 
     return damage

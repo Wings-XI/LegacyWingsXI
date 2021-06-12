@@ -24,25 +24,24 @@ end
 
 function onSpellCast(caster, target, spell)
 
-    if (target:hasStatusEffect(tpz.effect.STR_DOWN)) then
+    if target:hasStatusEffect(tpz.effect.STR_DOWN) or not target:isFacing(caster) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    elseif (target:isFacing(caster)) then
-        local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-        local params = {}
-        params.diff = nil
-        params.attribute = tpz.mod.INT
-        params.skillType = tpz.skill.BLUE_MAGIC
-        params.bonus = 0
-        params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
-        if (resist <= 0) then
-            spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
-        else
-            spell:setMsg(tpz.msg.basic.MAGIC_ERASE)
-            target:addStatusEffect(tpz.effect.STR_DOWN, ABSORB_SPELL_AMOUNT*resist, ABSORB_SPELL_TICK, ABSORB_SPELL_AMOUNT*ABSORB_SPELL_TICK) -- target loses STR
-        end
+        return tpz.effect.STR_DOWN
+    end
+    
+    local params = {}
+    params.attribute = tpz.mod.CHR
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = -10
+    params.effect = nil
+    
+    local resist = applyResistance(caster, target, spell, params)
+    
+    if resist >= 0.5 then
+        spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
+        target:addStatusEffect(tpz.effect.STR_DOWN, 32*resist, 3, 60*resist)
     else
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
     return tpz.effect.STR_DOWN
