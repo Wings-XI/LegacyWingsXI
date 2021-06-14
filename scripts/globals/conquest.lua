@@ -948,7 +948,7 @@ tpz.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTy
                     if pRank == 1 then
                         player:showText(npc, mOffset - 7) -- "I cannot accept crystals from someone whose rank is still 1."
                         break
-                    elseif pRankPoints == 4000 then
+                    elseif pRankPoints >= 4000 then
                         player:showText(npc, mOffset + 43) -- "You do not need to donate any more crystals at your current rank."
                         break
                     else

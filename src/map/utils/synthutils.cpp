@@ -885,6 +885,7 @@ int32 startSynth(CCharEntity* PChar)
     }
 
     PChar->animation = ANIMATION_SYNTH;
+    PChar->SetLocalVar("InSynth", 1);
     PChar->updatemask |= UPDATE_HP;
     PChar->pushPacket(new CCharUpdatePacket(PChar));
 
@@ -909,6 +910,8 @@ int32 startSynth(CCharEntity* PChar)
 int32 doSynthResult(CCharEntity* PChar)
 {
     uint8 m_synthResult = PChar->CraftContainer->getQuantity(0);
+    PChar->SetLocalVar("InSynth", 0);
+
     if (map_config.anticheat_enabled)
     {
         std::chrono::duration animationDuration = server_clock::now() - PChar->m_LastSynthTime;
