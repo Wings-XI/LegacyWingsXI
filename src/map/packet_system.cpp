@@ -459,7 +459,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
 
     }
 
-    if (PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH)
+    if (PChar->CraftContainer->getItemsCount() > 0 && (PChar->animation == ANIMATION_SYNTH || PChar->GetLocalVar("InSynth") != 0))
     {
         // NOTE:
         // Supposed non-losable items are reportely lost if this condition is met:
@@ -471,6 +471,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
         // This should be a critical fail (i.e. loss of all materials)
         PChar->CraftContainer->m_failType = 3;
         synthutils::doSynthFail(PChar);
+        PChar->SetLocalVar("InSynth", 0);
     }
 
     if (PChar->loc.zone != nullptr)
