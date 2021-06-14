@@ -3554,6 +3554,10 @@ namespace battleutils
                 PPlayer->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
                 PPlayer->updatemask |= UPDATE_HP;
             }
+            else if (PPlayer->isSitting())
+            {
+                PPlayer->animation = ANIMATION_NONE;
+            }
         }
     }
 
