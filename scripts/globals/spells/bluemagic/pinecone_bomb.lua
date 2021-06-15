@@ -24,7 +24,6 @@ end
 function onSpellCast(caster,target,spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_DURATION
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIQUEFACTION
@@ -58,8 +57,10 @@ function onSpellCast(caster,target,spell)
     local resist = applyResistanceEffect(caster, target, spell, resparams)
 
     local duration = math.ceil(math.random(15,30) * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target))
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
+    
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLEEP_I) and not target:hasStatusEffect(tpz.effect.SLEEP_II) and not target:hasStatusEffect(tpz.effect.LULLABY) then -- wont wake up if we hit their stoneskin!
-        target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration)
+        target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration+bonus)
     end
 
     return damage

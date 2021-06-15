@@ -24,15 +24,14 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.PHYSICAL -- wiki: despite the 11 yalm range, it's still considered melee
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_GRAVITATION
     params.numhits = 3
-    params.multiplier = 1.925
-    params.tp150 = 1.25
-    params.tp300 = 1.25
-    params.azuretp = 1.25
+    params.multiplier = 3.2
+    params.tp150 = 3.2
+    params.tp300 = 3.2
+    params.azuretp = 3.2
     params.duppercap = 61
     params.str_wsc = 0.0
     params.dex_wsc = 0.30
@@ -53,7 +52,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
     params.attribute = tpz.mod.DEX
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or 0)
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
 

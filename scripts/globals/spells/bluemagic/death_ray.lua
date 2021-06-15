@@ -23,14 +23,10 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    local multi = 1.625
-    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
-        multi = multi + 2.0
-    end
     params.eco = ECO_AMORPH
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.DARK
-    params.multiplier = multi
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.625 or 3.625
     params.tMultiplier = 1.0
     params.duppercap = 51
     params.str_wsc = 0.0

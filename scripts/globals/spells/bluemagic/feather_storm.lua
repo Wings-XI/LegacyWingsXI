@@ -24,7 +24,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_NONE
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIGHT
@@ -37,7 +36,7 @@ function onSpellCast(caster, target, spell)
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
-    params.agi_wsc = 0.30
+    params.agi_wsc = 0.3
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
@@ -51,7 +50,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or 0)
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))

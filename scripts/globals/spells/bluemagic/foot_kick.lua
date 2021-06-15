@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_BEAST
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_DETONATION
     params.spellLevel = 1
     params.numhits = 1
     params.multiplier = 1.6
-    params.tp150 = 1.8
-    params.tp300 = 2.0
-    params.azuretp = 2.1
+    params.tp150 = 1.6
+    params.tp300 = 1.6
+    params.azuretp = 1.6
     params.duppercap = 9
     params.str_wsc = 0.1
     params.dex_wsc = 0.1
@@ -42,6 +41,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    params.critchance = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 55 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/75)+8 or 8)
     local damage = 0
     local hitslanded = 0
     local taChar = nil

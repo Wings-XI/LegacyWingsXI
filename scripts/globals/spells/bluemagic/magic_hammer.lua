@@ -30,16 +30,11 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local multi = 1.5
-    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
-        multi = multi + 0.50
-    end
-
     local params = {}
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.LIGHT
-    params.multiplier = multi
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.0 or 1.5
     params.tMultiplier = 1.0
     params.duppercap = 35
     params.str_wsc = 0.0

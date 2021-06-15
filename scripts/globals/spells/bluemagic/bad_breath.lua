@@ -24,9 +24,7 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     local multi = 2.08
-    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
-        multi = multi + 0.50
-    end
+    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then multi = multi + 0.50 end
     params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.EARTH

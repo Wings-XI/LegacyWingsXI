@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_AQUAN
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = 2.375
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 3.275 or 2.375
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0

@@ -24,7 +24,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.LIGHT
     params.scattr = SC_COMPRESSION

@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_VERMIN
-    params.tpmod = TPMOD_ATTACK
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_INDURATION
     params.spellLevel = 44
     params.numhits = 1
-    params.multiplier = 2.0
-    params.tp150 = 1.2
-    params.tp300 = 1.4
-    params.azuretp = 1.5
+    params.multiplier = 3.8
+    params.tp150 = 4.3
+    params.tp300 = 4.8
+    params.azuretp = 4.96
     params.duppercap = 45
     params.str_wsc = 0.2
     params.dex_wsc = 0.0

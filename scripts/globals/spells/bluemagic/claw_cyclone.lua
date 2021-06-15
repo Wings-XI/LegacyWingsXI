@@ -24,7 +24,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_BEAST
-    params.tpmod = TPMOD_ATTACK
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_SCISSION
@@ -32,8 +31,8 @@ function onSpellCast(caster, target, spell)
     params.numhits = 2
     params.multiplier = 2.8
     params.tp150 = 3.1
-    params.tp300 = 3.3
-    params.azuretp = 3.4
+    params.tp300 = 3.4
+    params.azuretp = 3.5
     params.duppercap = 23
     params.str_wsc = 0.0
     params.dex_wsc = 0.3

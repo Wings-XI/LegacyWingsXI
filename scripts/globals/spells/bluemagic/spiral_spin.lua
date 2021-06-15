@@ -24,15 +24,14 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_VERMIN
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_TRANSFIXION
     params.numhits = 1
-    params.multiplier = 1.925
-    params.tp150 = 1.25
-    params.tp300 = 1.25
-    params.azuretp = 1.25
+    params.multiplier = 2.7
+    params.tp150 = 2.7
+    params.tp300 = 2.7
+    params.azuretp = 2.7
     params.duppercap = 60
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
@@ -53,7 +52,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
     params.attribute = tpz.mod.DEX
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or 0)
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
 

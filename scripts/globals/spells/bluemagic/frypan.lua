@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)    
     local params = {}
     params.eco = ECO_NONE
-    params.tpmod = TPMOD_ACC
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_IMPACTION
     params.spellLevel = 63
     params.numhits = 1
-    params.multiplier = 1.78
-    params.tp150 = 1.78
-    params.tp300 = 1.78
-    params.azuretp = 1.78
+    params.multiplier = 3.5
+    params.tp150 = 3.5
+    params.tp300 = 3.5
+    params.azuretp = 3.5
     params.duppercap = 75
     params.str_wsc = 0.2
     params.dex_wsc = 0.0
@@ -42,6 +41,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.2
     params.chr_wsc = 0.0
+    params.bonusacc = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or nil)
     local damage = 0
     local hitslanded = 0
     local taChar = nil

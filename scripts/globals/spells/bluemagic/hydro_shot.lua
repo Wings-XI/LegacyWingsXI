@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_NONE
-    params.tpmod = TPMOD_CHANCE
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_REVERBERATION
     params.spellLevel = 63
     params.numhits = 1
-    params.multiplier = 1.25
-    params.tp150 = 1.25
-    params.tp300 = 1.25
-    params.azuretp = 1.25
+    params.multiplier = 3.2
+    params.tp150 = 3.2
+    params.tp300 = 3.2
+    params.azuretp = 3.2
     params.duppercap = 75
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
@@ -48,10 +47,18 @@ function onSpellCast(caster, target, spell)
     damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
-
-    if target:isMob() then
-        if taChar ~= nil then target:lowerEnmity(taChar, 50)
-        else target:lowerEnmity(caster, 50) end
+    
+    params = {}
+    params.eco = ECO_NONE
+    params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+    params.attribute = tpz.mod.MND
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or 0)
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    if target:isMob() and resist >= 0.25 then
+        if taChar ~= nil then target:lowerEnmity(taChar, math.floor(50*resist))
+        else target:lowerEnmity(caster, math.floor(50*resist)) end
     end
 
     return damage

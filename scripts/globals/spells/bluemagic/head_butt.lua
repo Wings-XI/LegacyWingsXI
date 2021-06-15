@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_NONE
-    params.tpmod = TPMOD_DAMAGE
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_IMPACTION
     params.spellLevel = 12
     params.numhits = 1
     params.multiplier = 1.8
-    params.tp150 = 2.2
-    params.tp300 = 2.3
-    params.azuretp = 2.35
+    params.tp150 = 2.0
+    params.tp300 = 2.2
+    params.azuretp = 2.27
     params.duppercap = 17
     params.str_wsc = 0.2
     params.dex_wsc = 0.0
@@ -60,6 +59,20 @@ function onSpellCast(caster, target, spell)
     local duration = math.ceil(4 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+    end
+    
+    -- todo: proper knockback tech requires navmesh work. for now, it's just a 1 second stun to still interrupt mob skills/spells
+    -- per Mattyg's research, apparently the knockback itself can be resisted so we have to pass a resist check
+    params = {}
+    params.eco = ECO_NONE
+    params.diff = caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)
+    params.attribute = tpz.mod.STR
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.STUN) then
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, 1)
     end
 
     return damage

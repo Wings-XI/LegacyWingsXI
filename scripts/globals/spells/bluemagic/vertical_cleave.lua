@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_LUMINION
-    params.tpmod = TPMOD_ATTACK
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_GRAVITATION
     params.spellLevel = 75
     params.numhits = 1
-    params.multiplier = 3.0
-    params.tp150 = 3.0
-    params.tp300 = 3.0
-    params.azuretp = 3.0
+    params.multiplier = 6.0
+    params.tp150 = 7.0
+    params.tp300 = 8.0
+    params.azuretp = 8.33
     params.duppercap = 75
     params.str_wsc = 0.5
     params.dex_wsc = 0.0

@@ -24,7 +24,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_AQUAN
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_TRANSFIXION
@@ -43,14 +42,13 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.2
     params.chr_wsc = 0.0
+    params.critchance = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 55 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/75)+8 or 8)
     local damage = 0
     local hitslanded = 0
     local taChar = nil
     damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
-    
-    if caster:hasStatusEffect(tpz.effect.MADRIGAL) == false then caster:addStatusEffect(tpz.effect.MADRIGAL, 20, 0, 3600) end
     
     return damage
 end

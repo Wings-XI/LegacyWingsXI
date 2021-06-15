@@ -25,7 +25,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_DURATION
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_TRANSFIXION
@@ -58,9 +57,10 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
     
     if not target:hasStatusEffect(tpz.effect.VIT_DOWN) and resist >= 0.5 then
-        target:addStatusEffect(tpz.effect.VIT_DOWN, 10*resist, 3, 30*resist)
+        target:addStatusEffect(tpz.effect.VIT_DOWN, 10*resist, 3, 30*resist + bonus)
     end
 
     return damage

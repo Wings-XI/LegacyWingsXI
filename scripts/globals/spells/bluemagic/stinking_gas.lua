@@ -35,7 +35,7 @@ function onSpellCast(caster, target, spell)
     if target:hasStatusEffect(tpz.effect.VIT_DOWN) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     elseif resist >= 0.5 then
-        if target:addStatusEffect(tpz.effect.VIT_DOWN, 12, 0, 30*resist) then
+        if target:addStatusEffect(tpz.effect.VIT_DOWN, 10, 0, 60*resist) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

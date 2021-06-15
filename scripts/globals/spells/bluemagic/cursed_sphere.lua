@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_VERMIN
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = 1.50
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.0 or 1.5
     params.tMultiplier = 1.0
     params.duppercap = 30
     params.str_wsc = 0.0

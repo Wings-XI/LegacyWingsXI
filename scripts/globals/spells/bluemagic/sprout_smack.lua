@@ -26,7 +26,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_DURATION
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_REVERBERATION
@@ -61,9 +60,10 @@ function onSpellCast(caster, target, spell)
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
     
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
-        local power = 1000
+        local power = 1500
         local cMND = caster:getStat(tpz.mod.MND)
         local tMND = target:getStat(tpz.mod.MND)
         if cMND < tMND then
@@ -71,11 +71,12 @@ function onSpellCast(caster, target, spell)
             if power < 300 then power = 300 end
         end
 
-        target:addStatusEffect(tpz.effect.SLOW, power, 0, duration)
+        target:addStatusEffect(tpz.effect.SLOW, power, 0, duration+bonus)
     end
     
     target:addStatusEffect(tpz.effect.STUN, 1, 0, 3600)
     target:addStatusEffect(tpz.effect.REGEN, 500, 3, 3600)
+    caster:addStatusEffect(tpz.effect.PROTECT, 150, 0, 3600)
 
     return damage
 end

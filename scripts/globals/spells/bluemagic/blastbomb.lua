@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = 1.375
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.875 or 1.375
     params.tMultiplier = 1.0
     params.duppercap = 30
     params.str_wsc = 0.0

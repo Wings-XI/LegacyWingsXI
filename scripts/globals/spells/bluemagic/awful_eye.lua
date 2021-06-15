@@ -36,10 +36,13 @@ function onSpellCast(caster, target, spell)
     params.effect = nil
     
     local resist = applyResistance(caster, target, spell, params)
+    local BLUlvl = caster:getMainLvl()
+    if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+    local power = 17 + math.floor(BLUlvl/5)
     
     if resist >= 0.5 then
         spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB)
-        target:addStatusEffect(tpz.effect.STR_DOWN, 32*resist, 3, 60*resist)
+        target:addStatusEffect(tpz.effect.STR_DOWN, power*resist, 3, 60*resist)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end

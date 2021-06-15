@@ -25,7 +25,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_NONE
-    params.tpmod = TPMOD_DURATION
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_IMPACTION
@@ -59,9 +58,10 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
     
     if not target:hasStatusEffect(tpz.effect.DEX_DOWN) and resist >= 0.5 then
-        target:addStatusEffect(tpz.effect.DEX_DOWN, 10, 9, 60*resist)
+        target:addStatusEffect(tpz.effect.DEX_DOWN, 10, 9, 60*resist + bonus)
     end
 
     return damage

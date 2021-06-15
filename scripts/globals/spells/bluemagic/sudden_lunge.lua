@@ -31,15 +31,14 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
     local params = {}
-    params.tpmod = TPMOD_DAMAGE
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_DETONATION
     params.numhits = 1
-    params.multiplier = 1.875
+    params.multiplier = 1.0
     params.tp150 = 1.25
     params.tp300 = 1.50
-    params.azuretp = 1.4375
+    params.azuretp = 1.55
     params.duppercap = 100
     params.str_wsc = 0.0
     params.dex_wsc = 0.0

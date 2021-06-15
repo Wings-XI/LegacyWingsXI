@@ -24,16 +24,15 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_ARCANA
-    params.tpmod = TPMOD_DAMAGE
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_DETONATION
     params.spellLevel = 34
     params.numhits = 1
     params.multiplier = 3.3
-    params.tp150 = 4.3
-    params.tp300 = 5.3
-    params.azuretp = 5.7
+    params.tp150 = 3.9
+    params.tp300 = 4.5
+    params.azuretp = 4.7
     params.duppercap = 35
     params.str_wsc = 0.2
     params.dex_wsc = 0.2

@@ -32,9 +32,9 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.SLOW
     
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
     if resist >= 0.5 then
-        local power = 2000
+        local power = 2500
         local cMND = caster:getStat(tpz.mod.MND)
         local tMND = target:getStat(tpz.mod.MND)
         if cMND < tMND then

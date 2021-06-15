@@ -24,7 +24,6 @@ end
 function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_PLANTOID
-    params.tpmod = TPMOD_CRITICAL
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_DARK
@@ -61,12 +60,13 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
 
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
         local BLUlvl = caster:getMainLvl()
         if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
         local power = 3 + math.floor(BLUlvl/15)
-        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
+        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist + bonus)
     end
 
     return damage
