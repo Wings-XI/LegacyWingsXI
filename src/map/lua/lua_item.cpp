@@ -370,6 +370,37 @@ inline int32 CLuaItem::setAppraisalID(lua_State* L)
 
     return 1;
 }
+
+void CLuaItem::setSoulPlateName(std::string name)
+{
+    m_PLuaItem->setSoulPlateName(name);
+}
+
+void CLuaItem::setSoulPlateSkillIndex(uint16 index)
+{
+    m_PLuaItem->setSoulPlateSkillIndex(index);
+}
+
+void CLuaItem::setSoulPlateFP(uint8 fp)
+{
+    m_PLuaItem->setSoulPlateFP(fp);
+}
+
+auto CLuaItem::getSoulPlateName() -> std::string
+{
+    return m_PLuaItem->getSoulPlateName();
+}
+
+auto CLuaItem::getSoulPlateSkillIndex() -> uint16
+{
+    return m_PLuaItem->getSoulPlateSkillIndex();
+}
+
+auto CLuaItem::getSoulPlateFP() -> uint8
+{
+    return m_PLuaItem->getSoulPlateFP();
+}
+
 //==========================================================//
 
 const char CLuaItem::className[] = "CItem";
