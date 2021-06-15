@@ -371,34 +371,14 @@ inline int32 CLuaItem::setAppraisalID(lua_State* L)
     return 1;
 }
 
-void CLuaItem::setSoulPlateName(std::string name)
+void CLuaItem::setSoulPlateData(std::string name, uint16 skillIndex, uint8 fp)
 {
-    m_PLuaItem->setSoulPlateName(name);
+    m_PLuaItem->setSoulPlateData(name, skillIndex, fp);
 }
 
-void CLuaItem::setSoulPlateSkillIndex(uint16 index)
+auto CLuaItem::getSoulPlateData() -> std::tuple<std::string, uint16, uint8>
 {
-    m_PLuaItem->setSoulPlateSkillIndex(index);
-}
-
-void CLuaItem::setSoulPlateFP(uint8 fp)
-{
-    m_PLuaItem->setSoulPlateFP(fp);
-}
-
-auto CLuaItem::getSoulPlateName() -> std::string
-{
-    return m_PLuaItem->getSoulPlateName();
-}
-
-auto CLuaItem::getSoulPlateSkillIndex() -> uint16
-{
-    return m_PLuaItem->getSoulPlateSkillIndex();
-}
-
-auto CLuaItem::getSoulPlateFP() -> uint8
-{
-    return m_PLuaItem->getSoulPlateFP();
+    return m_PLuaItem->getSoulPlateData();
 }
 
 //==========================================================//

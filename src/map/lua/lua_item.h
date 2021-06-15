@@ -83,14 +83,8 @@ public:
     int32 getAppraisalID(lua_State*);          // Get Appraisal ID
     int32 setAppraisalID(lua_State*);         // Set Appraisal ID
 
-    // Soultrapper
-    void setSoulPlateName(std::string name);
-    void setSoulPlateSkillIndex(uint16 index);
-    void setSoulPlateFP(uint8 fp);
-
-    auto getSoulPlateName() -> std::string;
-    auto getSoulPlateSkillIndex() -> uint16;
-    auto getSoulPlateFP() -> uint8;
+    void setSoulPlateData(std::string name, uint16 skillIndex, uint8 fp);
+    auto getSoulPlateData() -> std::tuple<std::string, uint16, uint8>;
 };
 
 #endif
