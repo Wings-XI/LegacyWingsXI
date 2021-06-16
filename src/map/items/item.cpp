@@ -372,7 +372,7 @@ void CItem::setAppraisalID(uint8 appID)
 
 void CItem::setSoulPlateData(std::string name, uint16 skillIndex, uint8 fp)
 {
-    PackSoultrapperName(name, m_extra, 20);
+    PackSoultrapperName(name, m_extra, name.size());
 
     m_extra[20] = skillIndex << 7;
     m_extra[21] = skillIndex >> 1;
