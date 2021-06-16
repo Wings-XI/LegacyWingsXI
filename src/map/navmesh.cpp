@@ -106,6 +106,8 @@ CNavMesh::~CNavMesh()
 
 bool CNavMesh::load(const std::string& filename)
 {
+    this->filename = filename;
+
     std::ifstream file(filename.c_str(), std::ios_base::in | std::ios_base::binary);
 
     if (!file.good())
@@ -169,6 +171,17 @@ bool CNavMesh::load(const std::string& filename)
     return true;
 }
 
+void CNavMesh::reload()
+{
+    this->unload();
+    this->load(this->filename);
+}
+
+void CNavMesh::unload()
+{
+    m_navMesh.reset();
+}
+
 void CNavMesh::outputError(uint32 status)
 {
     if (status & DT_WRONG_MAGIC)
@@ -203,11 +216,6 @@ void CNavMesh::outputError(uint32 status)
     {
         ShowNavError("Detour: A tile has already been assigned to the given x,y coordinate\n");
     }
-}
-
-void CNavMesh::unload()
-{
-    m_navMesh.reset();
 }
 
 std::vector<position_t> CNavMesh::findPath(const position_t& start, const position_t& end)

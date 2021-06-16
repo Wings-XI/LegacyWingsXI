@@ -69,6 +69,7 @@ public:
     ~CNavMesh();
 
     bool load(const std::string& path);
+    void reload();
     void unload();
 
     std::vector<position_t> findPath(const position_t& start, const position_t& end);
@@ -93,9 +94,10 @@ private:
     void outputError(uint32 status);
     bool onSameFloor(const position_t& start, float* spos, const position_t& end, float* epos, dtQueryFilter& filter);
 
-    uint16 m_zoneID;
-    dtRaycastHit m_hit;
-    dtPolyRef m_hitPath[20];
+    std::string                filename;
+    uint16                     m_zoneID;
+    dtRaycastHit               m_hit;
+    dtPolyRef                  m_hitPath[20];
     std::unique_ptr<dtNavMesh> m_navMesh;
     dtNavMeshQuery m_navMeshQuery;
 };

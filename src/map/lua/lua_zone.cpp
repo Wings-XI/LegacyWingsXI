@@ -397,6 +397,11 @@ int32 CLuaZone::setMusicBackgroundNight(lua_State* L)
     return 0;
 }
 
+void CLuaZone::reloadNavmesh()
+{
+    m_pLuaZone->m_navMesh->reload();
+}
+
 /************************************************************************
 *  Function: getPlayerAbilitiesState()
 *  Purpose : Returns whether the zone checks for mobs that react to job abilities
