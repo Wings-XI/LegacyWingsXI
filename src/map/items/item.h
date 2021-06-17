@@ -126,6 +126,7 @@ public:
     uint8       getAppraisalID();
     void        setAppraisalID(uint8 appID);
 
+    bool isSoultrapper() const;
     void setSoulPlateData(std::string name, uint8 zeni, uint16 skillIndex, uint8 fp);
     auto getSoulPlateData() -> std::tuple<std::string, uint8, uint16, uint8>;
 
