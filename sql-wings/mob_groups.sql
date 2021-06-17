@@ -4851,6 +4851,7 @@ INSERT INTO `mob_groups` VALUES(54, 3421, 89, 'Ru_Bha_Stonewall', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(55, 3544, 89, 'Sentinel_Wivre', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(56, 4679, 89, 'Ocythoe', 0, 128, 0, 0, 9999, 90, 95, 0);
 INSERT INTO `mob_groups` VALUES(57, 71, 89, 'Air_Elemental', 300, 4, 38, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(58, 6191, 89, 'Vasiliceratops', 0, 32, 3205, 18000, 0, 89, 89, 0);
 INSERT INTO `mob_groups` VALUES(4015, 1, 89, '1st_Gold_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4016, 2, 89, '1st_Iron_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4017, 3, 89, '1st_Legionnaire', 0, 0, 0, 0, 0, 0, 0, 0);
