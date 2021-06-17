@@ -25,11 +25,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local multi = 1.08
-    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
-        multi = multi + 0.50
-    end
-    
+    local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
     local params = {}
     params.eco = ECO_UNDEAD
     params.attackType = tpz.attackType.BREATH
@@ -38,28 +34,25 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
-    params.multiplier = multi
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.5
-    params.duppercap = 69
+    params.D = caster:getHP()/10 + BLUlvl/1.25
+    params.duppercap = 2000
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
-    params.mnd_wsc = 0.3
+    params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
     
-    local HP = caster:getHP()
-    local LVL = caster:getMainLvl()
-    local damage = (HP / 10) + (LVL / 1.25) -- todo for all breaths!!!!
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
-        local BLUlvl = caster:getMainLvl()
-        if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
         local power = 3 + math.floor(BLUlvl/15)
         target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
     end

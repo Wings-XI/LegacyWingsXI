@@ -22,6 +22,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
     local params = {}
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.BREATH
@@ -30,20 +31,21 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
-    params.multiplier = 2.0
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.0
-    params.duppercap = 56
+    params.D = caster:getHP()/6 + BLUlvl/1.875
+    params.duppercap = 2000
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
-    params.chr_wsc = 0.2
+    params.chr_wsc = 0.0
     params.effect = tpz.effect.WEIGHT
 
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local damage = BlueMagicalSpell(caster, target, spell, params, CHR_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))

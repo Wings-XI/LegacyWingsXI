@@ -40,7 +40,7 @@ function onSpellCast(caster, target, spell)
         local BLUlvl = caster:getMainLvl()
         if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
         local power = 3 + math.floor(BLUlvl/5) -- bgwiki
-        target:addStatusEffect(tpz.effect.FROST, power, 3, 30*resist, 0, power*2, 0)
+        target:addStatusEffect(tpz.effect.FROST, power, 9, 90*resist, 0, power*2, 0)
     end
 
     return damage

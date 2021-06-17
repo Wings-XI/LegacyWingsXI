@@ -119,8 +119,7 @@ function GetMonsterCorrelation(eco,targeco)
 end
 
 function BluePhysicalSpell(caster, target, spell, params)
-    local BLUlvl = caster:getMainLvl()
-    if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+    local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
     
     -- http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
     
@@ -129,6 +128,7 @@ function BluePhysicalSpell(caster, target, spell, params)
     
     local fStr = BluefSTR(caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT))
     local WSC = BlueGetWsc(caster, params) -- ex. params.str_wsc of 0.2 = 20% STR added to base dmg
+    if caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then WSC = WSC * 2 end
     local multiplier = params.multiplier -- a.k.a. ftp0
     
     -- monster correlation affects fTP mults
@@ -150,24 +150,26 @@ function BluePhysicalSpell(caster, target, spell, params)
     elseif chainAffinity ~= nil then
         -- Calculate the total TP available for the fTP multiplier.
         local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
-        if tp > 3000 then
-            tp = 3000
-        end
+        if tp > 3000 then tp = 3000 end
 
         multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
     end
-
+    
     local finalD = math.floor(D + fStr + WSC) * multiplier
     GetPlayerByID(1):PrintToPlayer(string.format("finalD = (D + fSTR + WSC) * mult ... %u = (%u + %u + %u) * %f",finalD,D,fStr,WSC,multiplier))
-
+    
+    print(params.offcratiomod)
     if params.offcratiomod == nil then -- cannonball uses def (cannonball.lua)
         -- https://forum.square-enix.com/ffxi/threads/43706-Aug-12-2014-%28JST%29-Version-Update
-        -- implies that pre-2014, player attack has NO effect on BLU spell damage, so let's just calculate the "attack" as a flat number based on level.
-        params.offcratiomod = BLUlvl*5 + 5
-        if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then params.offcratiomod = (params.spellLevel + 16)*5 + 5 end
+        -- implies that pre-2014, player attack has NO effect on BLU spell damage. one of the physical spells stated it did more damage based on skill, so let's use that
+        params.offcratiomod = math.floor(caster:getSkillLevel(tpz.skill.BLUE_MAGIC)*1.35) + 5
+        if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
+            local cap = (params.spellLevel + 16)*5 + 5
+            params.offcratiomod = params.offcratiomod > cap and cap or params.offcratiomod
+        end
         -- https://ffxiclopedia.fandom.com/wiki/Talk:Physical_Potency need to go to talk page because the main page is saying only +accuracy and nobody ever fixed it
-        params.offcratiomod = params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100
     end
+    params.offcratiomod = params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100
     
     params.bonusacc = params.bonusacc == nil and 0 or params.bonusacc
     params.critchance = params.critchance == nil and 0 or utils.clamp(params.critchance + caster:getStat(tpz.mod.DEX)/2 - target:getStat(tpz.mod.AGI)/2, 5, 65) / 100
@@ -176,7 +178,7 @@ function BluePhysicalSpell(caster, target, spell, params)
     local hitrate = BlueGetHitRate(caster, target, true, params.bonusacc)
     
     -- print("pdifmin "..cratio[1].." pdifmax "..cratio[2])
-
+    
     -------------------------
     --     Attack Loop     --
     -------------------------
@@ -185,7 +187,7 @@ function BluePhysicalSpell(caster, target, spell, params)
     local finaldmg = 0
     local isSneakValid = caster:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and spell:isAoE() == 0 and params.attackType ~= tpz.attackType.RANGED and (caster:isBehind(target) or caster:hasStatusEffect(tpz.effect.HIDE))
     local taChar = (caster:hasStatusEffect(tpz.effect.TRICK_ATTACK) == true and spell:isAoE() == 0 and params.attackType ~= tpz.attackType.RANGED) and caster:getTrickAttackChar(target) or nil
-
+    
     while hitsdone < params.numhits do
         if isSneakValid or math.random() < hitrate then
             local pdif = math.random((cratio[1]*1000), (cratio[2]*1000))
@@ -291,21 +293,17 @@ function BluePhysicalSpell(caster, target, spell, params)
 end
 
 function BlueMagicalSpell(caster, target, spell, params, statMod)
-    local BLUlvl = caster:getMainLvl()
-    if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+    local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
     
     local D = BLUlvl + 2
+    if params.D ~= nil then D = params.D end -- breath attacks calculate their own D.
 
-    if D > params.duppercap then
-        D = params.duppercap
-    end
-
-    local ST = BlueGetWsc(caster, params) -- According to Wiki ST is the same as WSC, essentially Blue mage spells that are magical use the dmg formula of Magical type Weapon skills
-
-    if caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) then
-        ST = ST * 2
-    end
-
+    if D > params.duppercap then D = params.duppercap end
+    
+    local ST = BlueGetWsc(caster, params) -- Wiki: ST is the same as WSC, magical Blue mage spells are much like magical WS
+    
+    if caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) then ST = ST * 2 end
+    
     local convergenceBonus = 1.0
     if caster:hasStatusEffect(tpz.effect.CONVERGENCE) then
         convergenceEffect = getStatusEffect(tpz.effect.CONVERGENCE)
@@ -317,7 +315,7 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     end
 
     local statBonus = 0
-    local dStat = 0 -- make sure to add an additional stat check if there is to be a spell that uses neither INT, MND, or CHR. None currently exist.
+    local dStat = 0
     if statMod == INT_BASED then
         dStat = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
         statBonus = dStat * params.tMultiplier
@@ -334,7 +332,11 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     -- At this point according to wiki we apply standard magic attack calculations
     
     local MTDR = 1.0
-    if params.ignoreMTDR == nil then
+    if params.attackType == tpz.attackType.BREATH then
+        -- bgwiki: When dealing with multiple enemy, there seems to be a correction factor of 1/(2^n) depending on angle.
+        -- not exactly sure what this means, hopefully i did this correctly (?)
+        MTDR = 1/spell:getTotalTargets()
+    elseif params.ignoreMTDR == nil then
         MTDR = 0.90 - spell:getTotalTargets() * 0.05
         if MTDR == 0.85 then -- 1 target, stay at 1.0
             MTDR = 1.0
@@ -348,7 +350,7 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     local rparams = {}
     rparams.diff = dStat
     rparams.skillType = tpz.skill.BLUE_MAGIC
-    D = math.floor(D * applyResistance(caster, target, spell, rparams))
+    --D = math.floor(D * applyResistance(caster, target, spell, rparams))
     
     local bparams = {}
     bparams.bonusmab = 0
@@ -403,14 +405,10 @@ end
 ------------------------------
 
 function BlueGetWsc(attacker, params)
-    local wsc = (attacker:getStat(tpz.mod.STR) * params.str_wsc + attacker:getStat(tpz.mod.DEX) * params.dex_wsc +
+    return (attacker:getStat(tpz.mod.STR) * params.str_wsc + attacker:getStat(tpz.mod.DEX) * params.dex_wsc +
         attacker:getStat(tpz.mod.VIT) * params.vit_wsc + attacker:getStat(tpz.mod.AGI) * params.agi_wsc +
         attacker:getStat(tpz.mod.INT) * params.int_wsc + attacker:getStat(tpz.mod.MND) * params.mnd_wsc +
         attacker:getStat(tpz.mod.CHR) * params.chr_wsc) * BlueGetAlpha(attacker:getMainLvl())
-    
-    if attacker:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then wsc = wsc * 2 end
-    
-    return wsc
 end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
@@ -438,6 +436,9 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isRanged)
     if pdifmin > pdifmax - 0.1 then
         pdifmin = pdifmax - 0.1
     end
+    
+    print(pdifmin)
+    print(pdifmax)
     
     local cratio = {}
     cratio[1] = pdifmin
