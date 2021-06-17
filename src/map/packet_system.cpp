@@ -271,7 +271,13 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->loc.destination = destination = ZONE_RESIDENTIAL_AREA;
         }
 
-        zoneutils::GetZone(destination)->IncreaseZoneCounter(PChar);
+        CZone* destZone = zoneutils::GetZone(destination);
+        if (!destZone) {
+            ShowWarning("packet_system::SmallPacket0x00A player tried to enter nonexistent zone: %d\n", destination);
+            PChar->loc.destination = destination = ZONE_RESIDENTIAL_AREA;
+        }
+
+        destZone->IncreaseZoneCounter(PChar);
 
         PChar->m_ZonesList[PChar->getZone() >> 3] |= (1 << (PChar->getZone() % 8));
 
