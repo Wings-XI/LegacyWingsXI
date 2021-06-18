@@ -658,6 +658,50 @@ function calcBigFishStats(minLength, maxLength)
     return Lm, Pz, EpicCatch
 end
 
+function isFatigued(player)
+
+    -- CPP side always increments count so need to reset
+    -- it even if fatigue is disabled. Besides, it can
+    -- help spot botters.
+    local player_jst = player:getCharVar("FishingNextJST")
+    local now_jst = JstMidnight()
+    if now_jst > player_jst then
+        -- Midnight rollover, reset fatigue
+        player:setCharVar("FishingNextJST", now_jst)
+        player:setCharVar("FishingCaughtSinceJST", 0)
+        player:setCharVar("FishingAttemptsFatigue", 0)
+        -- No need to check further
+        -- player:PrintToPlayer("Fatigue: JST rollover reset")
+        return false
+    end
+    
+    if FISHING_FATIGUE == 0 and FISHING_FATIGUE_NEW_PLAYERS == 0 then
+        -- Fatigue completely disabled
+        -- player:PrintToPlayer("Fatigue is disabled")
+        return false
+    end
+    
+    local max_fish = FISHING_FATIGUE
+    if player:getHighestJobLevel() < FISHING_NEW_PLAYER_MIN_LV or player:getTimeCreated() + FISHING_NEW_PLAYER_DAYS * 86400 > os.time() then
+        -- player:PrintToPlayer("Fatigue: Player is a new player")
+        max_fish = FISHING_FATIGUE_NEW_PLAYERS
+    end
+    if max_fish == 0 then
+        -- Player not subject to fatigue
+        -- player:PrintToPlayer("Player is not subject to fatigue")
+        return false
+    end
+    
+    -- player:PrintToPlayer(string.format("Caught since midnight: %i", player:getCharVar("FishingCaughtSinceJST")))
+    if player:getCharVar("FishingCaughtSinceJST") >= max_fish then
+        -- Fatigued
+        player:addCharVar("FishingAttemptsFatigue", 1)
+        return true
+    end
+    
+    return false
+end
+
 function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, areaid, areaname, zoneType, zoneDifficulty, fishingToken)
     local Caught = 0
     local CatchID = 0
@@ -730,7 +774,6 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     local WeatherModifier = getWeatherModifier(player:getWeather())
     
     local FishingDebugEnabled = player:getLocalVar("FishingDebug")
-
 
     -- Get Fish and Item Lists
 
@@ -807,7 +850,17 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     end
 
     -- Selection time
-    if #FishPool > 0 and PoolSelect < FishWeight then
+    if player:getCharVar("FishingDenied") ~= 0 or player:getCharVar("FishingBot") ~= 0 then
+        if FishingDebugEnabled ~= 0 then
+            player:PrintToPlayer("Fishing is denied, catching nothing")
+        end
+        HookType = fishing.hookType.NONE
+    elseif isFatigued(player) then
+        if FishingDebugEnabled ~= 0 then
+            player:PrintToPlayer("Player is fatigued, catching nothing")
+        end
+        HookType = fishing.hookType.NONE
+    elseif #FishPool > 0 and PoolSelect < FishWeight then
         local FishSelect = math.random(1, FishPoolWeight)
         for k, fish in pairs(FishPool) do
             PoolWeight = PoolWeight + fish["weight"]

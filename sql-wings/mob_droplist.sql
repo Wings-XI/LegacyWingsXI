@@ -2611,7 +2611,7 @@ INSERT INTO `mob_droplist` VALUES(458, 0, 0, 1000, 3081, 200);
 INSERT INTO `mob_droplist` VALUES(458, 0, 0, 1000, 4377, 430);
 INSERT INTO `mob_droplist` VALUES(458, 0, 0, 1000, 4377, 210);
 INSERT INTO `mob_droplist` VALUES(459, 0, 0, 1000, 2531, 200);
-INSERT INTO `mob_droplist` VALUES(459, 0, 0, 1000, 2564, 10);
+INSERT INTO `mob_droplist` VALUES(459, 0, 0, 1000, 2564, 20);
 INSERT INTO `mob_droplist` VALUES(460, 0, 0, 1000, 2618, 1000);
 INSERT INTO `mob_droplist` VALUES(460, 0, 0, 1000, 16340, 320);
 INSERT INTO `mob_droplist` VALUES(460, 0, 0, 1000, 17755, 320);
@@ -8527,7 +8527,7 @@ INSERT INTO `mob_droplist` VALUES(1663, 0, 0, 1000, 2910, 100);
 INSERT INTO `mob_droplist` VALUES(1664, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(1664, 0, 0, 1000, 17947, 440);
 INSERT INTO `mob_droplist` VALUES(1665, 0, 0, 1000, 2531, 100);
-INSERT INTO `mob_droplist` VALUES(1665, 0, 0, 1000, 2564, 0);
+INSERT INTO `mob_droplist` VALUES(1665, 0, 0, 1000, 2564, 20);
 INSERT INTO `mob_droplist` VALUES(1666, 0, 0, 1000, 17843, 400);
 INSERT INTO `mob_droplist` VALUES(1667, 4, 0, 1000, 922, 0);
 INSERT INTO `mob_droplist` VALUES(1667, 0, 0, 1000, 922, 390);
@@ -14148,7 +14148,7 @@ INSERT INTO `mob_droplist` VALUES(2637, 0, 0, 1000, 1687, 90);
 INSERT INTO `mob_droplist` VALUES(2638, 2, 0, 1000, 880, 0);
 INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 880, 300);
 INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 880, 270);
-INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 16447, 160);
+INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 4824, 50);
 INSERT INTO `mob_droplist` VALUES(2639, 2, 0, 1000, 880, 0);
 INSERT INTO `mob_droplist` VALUES(2639, 0, 0, 1000, 880, 250);
 INSERT INTO `mob_droplist` VALUES(2639, 0, 0, 1000, 1031, 30);
@@ -16622,6 +16622,7 @@ INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1052, 41);
 INSERT INTO `mob_droplist` VALUES(3204, 0, 0, 1000, 919, 347);
 INSERT INTO `mob_droplist` VALUES(3204, 0, 0, 1000, 1181, 61);
 INSERT INTO `mob_droplist` VALUES(3204, 0, 0, 1000, 1237, 184);
+INSERT INTO `mob_droplist` VALUES(3205, 0, 0, 1000, 18508, 100);
 
 --
 -- Indexes for dumped tables

@@ -97,6 +97,15 @@ void InitializeWeather()
     ShowDebug(CL_CYAN"InitializeWeather Finished\n" CL_RESET);
 }
 
+void InitializeDigAreaTimer()
+{
+    TracyZoneScoped;
+    for (auto PZone : g_PZoneList)
+    {
+        PZone.second->ExpireDigObjects();
+    }
+}
+
 void SavePlayTime()
 {
     for (auto PZone : g_PZoneList)

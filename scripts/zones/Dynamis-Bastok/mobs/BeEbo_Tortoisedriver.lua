@@ -16,7 +16,6 @@ function onMobDeath(mob, player, isKiller)
     require("scripts/zones/Dynamis-Bastok/dynamis_mobs")
     require("scripts/zones/Dynamis-Bastok/dynamis_handler")
     local ID = require("scripts/zones/Dynamis-Bastok/IDs")
-    onDynamisNMDeath(mob, player, isKiller)
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 

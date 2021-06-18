@@ -43,6 +43,8 @@ namespace anticheat
         CHEAT_ID_DIGBOT = 4,
         // Player using an automated mob claiming tool
         CHEAT_ID_CLAIMBOT = 5,
+        // Player used an animation packet blocker/uncapped FPS to skip/heavily speed up the digging animation
+        CHEAT_ID_DIGSKIP = 6,
         // For boundary checks
         CHEAT_ID_LAST
     };

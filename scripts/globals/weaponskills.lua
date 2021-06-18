@@ -498,7 +498,7 @@ end
         finaldmg = finaldmg * pierceres / 1000
     end
 
-    finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.05 -- Add server bonus
+    finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     attacker:delStatusEffect(tpz.effect.FLASHY_SHOT)
@@ -924,53 +924,11 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     if levelcor > 1 then levelcor = 1
     elseif levelcor < 0.2 then levelcor = 0.2 end
     cratio = cratio * levelcor
-    --cratio = utils.clamp(cratio, 0, 2.25)
     cratio = utils.clamp(cratio, 0, 4.0)
     --print(string.format("cratio = %f",cratio))
-    --local levelcor = 0
+    
     local pdifmin = 0
     local pdifmax = 0
-    --[[
-    if attacker:getMainLvl() < defender:getMainLvl() then
-        levelcor = 0.05 * (defender:getMainLvl() - attacker:getMainLvl())
-    end
-
-    cratio = cratio - levelcor
-
-    if cratio < 0 then
-        cratio = 0
-    end
-
-    -- max
-
-    if cratio < 0.5 then
-        pdifmax = cratio + 0.5
-    elseif cratio < 0.7 then
-        pdifmax = 1
-    elseif cratio < 1.2 then
-        pdifmax = cratio + 0.3
-    elseif cratio < 1.5 then
-        pdifmax = cratio * 0.25 + cratio
-    elseif cratio < 2.625 then
-        pdifmax = cratio + 0.375
-    else
-        pdifmax = 3
-    end
-    -- min
-
-    if cratio < 0.5 then
-        pdifmin = 0.1367
-    elseif (cratio < 1.25) then
-        pdifmin = cratio * 1176 / 1024 - 448 / 1024
-    elseif cratio < 1.51 then
-        pdifmin = 1
-    elseif cratio < 2.44 then
-        pdifmin = cratio * 1176 / 1024 - 775 / 1024
-    else
-        pdifmin = cratio - 0.375
-    end
-    ]]
-
 
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then
@@ -995,36 +953,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
 
     local pdifcrit = {}
     cratio = cratio + 1
-    --cratio = utils.clamp(cratio, 0, 3)
     cratio = utils.clamp(cratio, 0, 4)
-    --[[
-    if cratio < 0.5 then
-        pdifmax = cratio + 0.5
-    elseif cratio < 0.7 then
-        pdifmax = 1
-    elseif (cratio < 1.2) then
-        pdifmax = cratio + 0.3
-    elseif cratio < 1.5 then
-        pdifmax = cratio * 0.25 + cratio
-    elseif cratio < 2.625 then
-        pdifmax = cratio + 0.375
-    else
-        pdifmax = 3
-    end
-    -- min
-
-    if cratio < 0.38 then
-        pdifmin = 0
-    elseif cratio < 1.25 then
-        pdifmin = cratio * 1176 / 1024 - 448 / 1024
-    elseif cratio < 1.51 then
-        pdifmin = 1
-    elseif cratio < 2.44 then
-        pdifmin = cratio * 1176 / 1024 - 775 / 1024
-    else
-        pdifmin = cratio - 0.375
-    end
-    ]]
 
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then
@@ -1075,28 +1004,6 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp)
 
     local pdifmin = 0
     local pdifmax = 0
-
-    --[[
-    -- max
-    local pdifmax = 0
-    if (cratio < 0.9) then
-        pdifmax = cratio * (10/9)
-    elseif (cratio < 1.1) then
-        pdifmax = 1
-    else
-        pdifmax = cratio
-    end
-
-    -- min
-    local pdifmin = 0
-    if (cratio < 0.9) then
-        pdifmin = cratio
-    elseif (cratio < 1.1) then
-        pdifmin = 1
-    else
-        pdifmin = (cratio * (20/19))-(3/19)
-    end
-    ]]
 
     pdifmax = cratio * 1.25
 	if pdifmax < 0.15 then

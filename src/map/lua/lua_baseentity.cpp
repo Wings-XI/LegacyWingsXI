@@ -3360,7 +3360,9 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
 
     // char will not be logged in so get the id manually
     const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
-    int32 ret = Sql_Query(SqlHandle, Query, charName);
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         id = (int32)Sql_GetIntData(SqlHandle, 0);
@@ -3370,6 +3372,7 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     if (id == 0)
     {
         ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
         return 1;
     }
 
@@ -3385,29 +3388,68 @@ inline int32 CLuaBaseEntity::resetPlayer(lua_State *L)
     Query =
         "UPDATE chars "
         "SET "
-        "pos_zone = %u,"
-        "pos_prevzone = %u,"
-        "pos_rot = %u,"
-        "pos_x = %.3f,"
-        "pos_y = %.3f,"
-        "pos_z = %.3f,"
-        "boundary = %u,"
-        "moghouse = %u "
+        "pos_zone = home_zone,"
+        "pos_prevzone = pos_zone,"
+        "pos_rot = home_rot,"
+        "pos_x = home_x,"
+        "pos_y = home_y,"
+        "pos_z = home_z,"
+        "boundary = 0,"
+        "moghouse = 0 "
         "WHERE charid = %u;";
 
-    Sql_Query(SqlHandle, Query,
-        245,        // lower jeuno
-        122,        // prev zone
-        86,         // rotation
-        33.464f,    // x
-        -5.000f,    // y
-        69.162f,    // z
-        0,          //boundary,
-        0,          //moghouse,
-        id);
+    Sql_Query(SqlHandle, Query, id);
 
     ShowDebug("Player reset was successful.\n");
 
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::clearSession(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    const char* charName = lua_tostring(L, 1);
+    uint32 id = 0;
+
+    // char will not be logged in so get the id manually
+    const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
+    char name_escaped[24] = { 0 };
+    Sql_EscapeStringLen(SqlHandle, name_escaped, charName, std::min<size_t>(strlen(charName), sizeof(name_escaped) - 1));
+    int32 ret = Sql_Query(SqlHandle, Query, name_escaped);
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        id = (int32)Sql_GetIntData(SqlHandle, 0);
+
+    // could not get player from database
+    if (id == 0)
+    {
+        ShowDebug("Could not get the character from database.\n");
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    // delete the account session
+    Query = "DELETE FROM accounts_sessions WHERE charid = %u;";
+    Sql_Query(SqlHandle, Query, id);
+
+    // flist stuff
+    if (FLgetSettingByID(id, 2) == 1)
+    {
+        Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), id);
+    }
+    Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", id);
+
+    ShowDebug("Player reset was successful.\n");
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
@@ -5859,7 +5901,7 @@ inline int32 CLuaBaseEntity::getSubLvl(lua_State *L)
 
 /************************************************************************
 *  Function: getJobLevel()
-*  Purpose : Return the levle of job specified by JOBTYPE
+*  Purpose : Return the level of job specified by JOBTYPE
 *  Example : player:getJobLevel(BRD)
 *  Notes   :
 ************************************************************************/
@@ -5876,6 +5918,32 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     lua_pushinteger(L, PChar->jobs.job[JobID]);
+
+    return 1;
+}
+
+
+/************************************************************************
+*  Function: getHighestJobLevel()
+*  Purpose : Return highest level the player has on any job
+*  Example : player:getHighestJobLevel()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint8 max_lv = 0;
+    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+        if (PChar->jobs.job[i] > max_lv) {
+            max_lv = PChar->jobs.job[i];
+        }
+    }
+
+    lua_pushinteger(L, max_lv);
 
     return 1;
 }
@@ -17431,6 +17499,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTeleportMenu),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setHomePoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearSession),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
@@ -17541,6 +17610,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMainLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSubLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getJobLevel),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getHighestJobLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setsLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,levelCap),

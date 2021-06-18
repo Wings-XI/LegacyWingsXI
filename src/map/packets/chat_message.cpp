@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -24,7 +24,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "chat_message.h"
 #include "../entities/charentity.h"
 
-CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE MessageType, const std::string& message, const std::string& sender)
+CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE MessageType, const std::string& message, const std::string& sender, uint16 zoneid)
 {
     //there seems to be some sort of variable cap on the length of the packet, which I cannot determine
     // (it changed when zoning, but not when zoning back)
@@ -32,7 +32,8 @@ CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE Mes
     // variable in the same way, and is probably so under the same circumstances
     // until that can be found, we'll just use the max length
     auto buffSize = std::min<size_t>(message.size(), 236);
-    const std::string& name = sender.empty() ? (const char*)PChar->GetName() : sender;
+    std::string defaultSender("");
+    const std::string& name = sender.empty() ? (PChar != nullptr ? (const char*)PChar->GetName() : defaultSender) : sender;
     // Build the packet..
     CBasicPacket::id(id);
     this->type = 0x17;
@@ -42,10 +43,10 @@ CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE Mes
 
     ref<uint8>(0x04) = MessageType;
 
-    if (PChar->nameflags.flags & FLAG_GM && sender.empty())
+    if (PChar && PChar->nameflags.flags & FLAG_GM && sender.empty())
         ref<uint8>(0x05) = 0x01;
 
-    ref<uint16>(0x06) = PChar->getZone();
+    ref<uint16>(0x06) = zoneid != 0 ? zoneid : (PChar ? PChar->getZone() : 0);
 
     memcpy(data + (0x08), &name[0], name.size());
     memcpy(data + (0x18), &message[0], buffSize);

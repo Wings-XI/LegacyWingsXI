@@ -502,6 +502,11 @@ void CParty::AddMember(CBattleEntity* PEntity)
     TPZ_DEBUG_BREAK_IF(PEntity->PParty != nullptr);
 
     PEntity->PParty = this;
+
+    if (m_PartyType == PARTY_PCS && GetRealNumberOfPeople() > 5) {
+        return;
+    }
+
     members.push_back(PEntity);
 
     if (PEntity->objtype == TYPE_PC && this->members.size() > 1)
@@ -562,10 +567,24 @@ void CParty::AddMember(CBattleEntity* PEntity)
     }
 }
 
+uint32 CParty::GetRealNumberOfPeople()
+{
+    int32 ret = Sql_Query(SqlHandle, "SELECT charid, partyid FROM accounts_parties WHERE partyid =  %u;", m_PartyID);
+    if (ret == SQL_ERROR) {
+        // Fallback to local member count because it's better than returning zero
+        return members.size();
+    }
+    return Sql_NumRows(SqlHandle);
+}
+
 void CParty::AddMember(uint32 id)
 {
     if (m_PartyType == PARTY_PCS)
     {
+        if (GetRealNumberOfPeople() > 5) {
+            return;
+        }
+
         uint32 allianceid = 0;
         uint16 Flags = 0;
         if (m_PAlliance)

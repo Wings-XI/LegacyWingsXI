@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -271,7 +271,13 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->loc.destination = destination = ZONE_RESIDENTIAL_AREA;
         }
 
-        zoneutils::GetZone(destination)->IncreaseZoneCounter(PChar);
+        CZone* destZone = zoneutils::GetZone(destination);
+        if (!destZone) {
+            ShowWarning("packet_system::SmallPacket0x00A player tried to enter nonexistent zone: %d\n", destination);
+            PChar->loc.destination = destination = ZONE_RESIDENTIAL_AREA;
+        }
+
+        destZone->IncreaseZoneCounter(PChar);
 
         PChar->m_ZonesList[PChar->getZone() >> 3] |= (1 << (PChar->getZone() % 8));
 
@@ -457,17 +463,21 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 1 WHERE charid = %u", PChar->id);
         charutils::CheckEquipLogic(PChar, SCRIPT_CHANGEZONE, PChar->getZone());
 
-        if (PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH)
-        {
-            // NOTE:
-            // Supposed non-losable items are reportely lost if this condition is met:
-            // https://ffxiclopedia.fandom.com/wiki/Lu_Shang%27s_Fishing_Rod
-            // The broken rod can never be lost in a normal failed synth. It will only be lost if the synth is
-            // interrupted in some way, such as by being attacked or moving to another area (e.g. ship docking).
+    }
 
-            ShowExploit(CL_YELLOW "SmallPacket0x00D: %s attempting to zone in the middle of a synth, failing their synth!\n" CL_RESET, PChar->GetName());
-            synthutils::doSynthFail(PChar);
-        }
+    if (PChar->CraftContainer->getItemsCount() > 0 && (PChar->animation == ANIMATION_SYNTH || PChar->GetLocalVar("InSynth") != 0))
+    {
+        // NOTE:
+        // Supposed non-losable items are reportely lost if this condition is met:
+        // https://ffxiclopedia.fandom.com/wiki/Lu_Shang%27s_Fishing_Rod
+        // The broken rod can never be lost in a normal failed synth. It will only be lost if the synth is
+        // interrupted in some way, such as by being attacked or moving to another area (e.g. ship docking).
+
+        ShowExploit(CL_YELLOW "SmallPacket0x00D: %s attempting to zone or logout in the middle of a synth, failing their synth!\n" CL_RESET, PChar->GetName());
+        // This should be a critical fail (i.e. loss of all materials)
+        PChar->CraftContainer->m_failType = 3;
+        synthutils::doSynthFail(PChar);
+        PChar->SetLocalVar("InSynth", 0);
     }
 
     if (PChar->loc.zone != nullptr)
@@ -620,6 +630,11 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 PChar->m_distanceFromLastCheck = 0.0;
                 PChar->m_distanceLastCheckTime = timeNow;
+            }
+            if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5)
+            { // player left the 5 radius circle before dig is even ready. dig anim takes 4 seconds so this shouldn't be possible
+                char cheatDesc[128];
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGSKIP, 0, cheatDesc, 1);
             }
         }
 
@@ -903,7 +918,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 return;
             }
-            if (PChar->GetLocalVar("DiggingBlocked") != 0) {
+            if (PChar->GetLocalVar("DiggingBlocked")) {
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
                 return;
             }
@@ -913,34 +928,33 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
 
             if (slotID != ERROR_SLOTID)
             {
-                assert(sizeof(float) == sizeof(uint32));
-                uint32 now_tick = gettick();
-                uint32 lastdig_tick = PChar->GetLocalVar("LastDigTick");
-                uint32 lastdig_x_temp = PChar->GetLocalVar("LastDigPos_x");
-                uint32 lastdig_z_temp = PChar->GetLocalVar("LastDigPos_z");
-                float lastdig_x = *reinterpret_cast<float*>(&lastdig_x_temp);
-                float lastdig_z = *reinterpret_cast<float*>(&lastdig_z_temp);
-                bool moved = (lastdig_x != PChar->loc.p.x) || (lastdig_z != PChar->loc.p.z);
-                // attempt to dig
-                if ((moved) && (now_tick >= lastdig_tick + 2000) && (luautils::OnChocoboDig(PChar, true)))
+                time_point now = std::chrono::system_clock::now();
+                CDigAreaContainer* PDigAreaContainer = zoneutils::GetZone(PChar->getZone())->PDigAreaContainer;
+
+                if (now < PChar->m_lastDig + std::chrono::seconds(16 - PChar->RealSkills.rank[SKILL_DIG] * 5 < 4 ? 4 : 16 - PChar->RealSkills.rank[SKILL_DIG] * 5) || // 16s/11s/6s/4s based on rank
+                    now - time_point(std::chrono::seconds(PChar->GetLocalVar("ZoneInTime"))) < 60s - 5s * PChar->RealSkills.rank[SKILL_DIG]) // 60s/55s/50s/45s/40s/etc. based on rank
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                }
+                else if (PDigAreaContainer && PDigAreaContainer->IsInExhaustedArea(PChar))
+                {
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANT_BE_USED_IN_AREA));
+                }
+                else
                 {
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
 
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
+                    luautils::OnChocoboDig(PChar);
+                    PChar->m_lastDig = now;
+                    PChar->m_lastDigPosition = PChar->loc.p;
 
-                    // dig is possible
-                    lastdig_x_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.x));
-                    lastdig_z_temp = *reinterpret_cast<uint32*>(&(PChar->loc.p.z));
-                    PChar->SetLocalVar("LastDigTick", lastdig_tick);
-                    PChar->SetLocalVar("LastDigPos_x", lastdig_x_temp);
-                    PChar->SetLocalVar("LastDigPos_z", lastdig_z_temp);
-                    luautils::OnChocoboDig(PChar, false);
-                }
-                else
-                {
-                    // unable to dig yet
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_WAIT_LONGER));
+                    if (PDigAreaContainer)
+                    {
+                        CDigObject DigObject = CDigObject(PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, now, PChar->id);
+                        PDigAreaContainer->AddDigObject(DigObject);
+                    }
                 }
             }
             else
@@ -1290,6 +1304,14 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             // If either player is in prison don't allow the trade.
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+            return;
+        }
+
+        // If either player is crafting, don't allow the trade request
+        if (PChar->animation == ANIMATION_SYNTH || PTarget->animation == ANIMATION_SYNTH)
+        {
+            ShowDebug(CL_CYAN "%s trade request with %s was blocked.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+            PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
             return;
         }
 
@@ -4368,6 +4390,42 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
         return;
     }
+
+    // NOTE: This section is intended to be temporary to ensure that duping shenanigans aren't possible.
+    // It should be replaced by something more robust or more stateful as soon as is reasonable
+    CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
+
+    // Clear pending trades on synthesis start
+    if (PTarget != nullptr && PChar->TradePending.id == PTarget->id)
+    {
+        PChar->TradePending.clean();
+        PTarget->TradePending.clean();
+    }
+
+    // Clears out trade session and blocks synthesis at any point in trade process after accepting
+    // trade request.
+    if (PChar->UContainer->GetType() != UCONTAINER_EMPTY)
+    {
+        if (PTarget != nullptr)
+        {
+            ShowDebug(CL_CYAN "%s trade request with %s was canceled because %s tried to craft.\n" CL_RESET,
+                PChar->GetName(), PTarget->GetName(), PChar->GetName());
+            PTarget->TradePending.clean();
+            PTarget->UContainer->Clean();
+            PTarget->pushPacket(new CTradeActionPacket(PChar, 0x01));
+        }
+        else
+        {
+            ShowDebug(CL_CYAN "%s trade request with was canceled because they tried to craft.\n" CL_RESET,
+                PChar->GetName());
+        }
+        PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
+        PChar->TradePending.clean();
+        PChar->UContainer->Clean();
+        PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
+        return;
+    }
+    // End temporary additions
 
     if (PChar->m_LastSynthTime + 10s > server_clock::now())
     {

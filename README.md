@@ -8,6 +8,12 @@
 ## Welcome to the Wings Project
 The Wing project is a server emulator for FFXI, aiming to reproduce the game experience as it was in March 2010.
 
+### Getting Started
+For help with getting a local server setup, please see the following:
+- [Installation Guide](https://gitlab.com/ffxiwings/wings/-/wikis/Server-Installation-Guide)
+- [How to use Git](https://gitlab.com/ffxiwings/wings/-/wikis/How-To-Work-With-Git)
+- [Updating your server](https://gitlab.com/ffxiwings/wings/-/wikis/Updating-Your-Server)
+
 ### Website
 https://www.wingsxi.com/
 

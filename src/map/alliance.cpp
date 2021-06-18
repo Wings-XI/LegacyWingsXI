@@ -201,6 +201,11 @@ void CAlliance::delParty(CParty* party)
 void CAlliance::addParty(CParty * party)
 {
 	party->m_PAlliance = this;
+
+    if (partyCount() > 2) {
+        return;
+    }
+
 	partyList.push_back(party);
 
     uint8 newparty = 0;
@@ -235,6 +240,10 @@ void CAlliance::addParty(CParty * party)
 void CAlliance::addParty(uint32 partyid)
 {
     int newparty = 0;
+
+    if (partyCount() > 2) {
+        return;
+    }
 
     int ret = Sql_Query(SqlHandle, "SELECT partyflag FROM accounts_parties WHERE allianceid = %d ORDER BY partyflag & %d ASC;", m_AllianceID, PARTY_SECOND | PARTY_THIRD);
 
