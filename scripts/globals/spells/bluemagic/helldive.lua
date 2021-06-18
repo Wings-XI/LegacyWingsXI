@@ -48,19 +48,5 @@ function onSpellCast(caster, target, spell)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
     
-    -- todo: proper knockback tech requires navmesh work. for now, it's just a 1 second stun to still interrupt mob skills/spells
-    -- per Mattyg's research, apparently the knockback itself can be resisted so we have to pass a resist check
-    params = {}
-    params.eco = ECO_NONE
-    params.diff = caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)
-    params.attribute = tpz.mod.STR
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = nil
-    local resist = applyResistanceEffect(caster, target, spell, params)
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.STUN) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 1)
-    end
-
     return damage
 end
