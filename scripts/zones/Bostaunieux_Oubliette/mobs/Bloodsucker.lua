@@ -23,13 +23,12 @@ function onMobDeath(mob, player, isKiller)
     tpz.regime.checkRegime(player, mob, 613, 1, tpz.regime.type.GROUNDS)
 end
 
-function onMobDespawn(mob)
-    local BloodID = ID.mob.BLOODSUCKER
-    print(BloodID)
-    if mob:getID() == BloodID then
+function onMobDespawn(mob)  
+    if mob:getID() == ID.mob.BLOODSUCKER then
         UpdateNMSpawnPoint(mob:getID())
         local respawn = 259200 -- Respawn 72 hours
         mob:setRespawnTime(respawn)
+
         SetServerVariable("BloodRespawn",(os.time() + respawn))
     end
 end
