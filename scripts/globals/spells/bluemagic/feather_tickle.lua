@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     local resist = applyResistance(caster, target, spell, params)
-    local power = math.random(250, 500)
+    local power = math.random(200, 300)
 
     if target:getTP() == 0 then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
