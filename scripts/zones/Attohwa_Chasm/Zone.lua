@@ -63,7 +63,6 @@ function onInitialize(zone)
     elseif hour < 4 or hour >= 20 then
         DisallowRespawn(Xolotl:getID(), false)
         SpawnMob(Xolotl:getID())
-        print("Spawning Xolotl")
     end
 
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
@@ -114,33 +113,18 @@ function onGameHour()
     local hour = VanadielHour()
     local totd = VanadielTOTD()
 
-    print("XolotlDead:")
-    print(XolotlDead)
-
     if (totd == 1 or totd == 7) and (xolre - os.time() < 140) and XolotlDead == 1 and not Xolotl:isSpawned() then -- If respawn is less than one in game hour, allow Xolotl to spawn
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
-        printf("Less than 140")
-        print(hour)
-        print(totd)
     elseif (totd == 1 or totd == 7) and xolre < os.time() and XolotlDead == 1 and not Xolotl:isSpawned() then -- If Xolotl's respawn window has passed, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
         SpawnMob(Xolotl:getID())
-        printf("Respawn is up")
-        print(hour)
-        print(totd)
     elseif (totd == 1 or totd == 7) and XolotlDead == 0 and not Xolotl:isSpawned() then -- If Xolotl didn't die last night, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SpawnMob(Xolotl:getID())
-        printf("Xolotl never died")
-        print(hour)
-        print(totd)
     else
         DisallowRespawn(Xolotl:getID(), true)
-        printf("Its daytime or Xolotl is dead/spawned")
-        print(hour)
-        print(totd)
     end
 end
 

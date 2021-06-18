@@ -12,7 +12,6 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     SetServerVariable("XolotlDead", 0)
-    print("Xolotl onmobspawn")
 end
 
 function onMobFight(mob,target)
