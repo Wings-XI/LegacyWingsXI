@@ -188,7 +188,7 @@ INSERT INTO `mob_pools` VALUES(124, 'Ancient_Orobon', 'Ancient_Orobon', 191, 0x0
 INSERT INTO `mob_pools` VALUES(125, 'Ancient_Quadav', 'Ancient_Quadav', 202, 0x0000450800000000000000000000000000000000, 1, 1, 2, 265, 100, 0, 1, 0, 1, 0, 0, 0, 399, 131, 0, 0, 0, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(126, 'Ancient_Royal_Knight', 'Ancient_Royal_Knight', 227, 0x0000980400000000000000000000000000000000, 1, 1, 4, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(127, 'Ancient_Sorcerer', 'Ancient_Sorcerer', 227, 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 1, 18, 0, 0, 5046, 0, 0, 0, 28, 0, 0, 227);
-INSERT INTO `mob_pools` VALUES(128, 'Ancient_Vessel', 'Ancient_Vessel', 175, 0x00009c0100000000000000000000000000000000, 5, 1, 7, 240, 200, 0, 1, 0, 0, 2, 17, 0, 645, 1159, 0, 0, 36, 0, 0, 175);
+INSERT INTO `mob_pools` VALUES(128, 'Ancient_Vessel', 'Ancient_Vessel', 175, 0x00009c0100000000000000000000000000000000, 5, 1, 7, 240, 350, 0, 1, 0, 0, 2, 17, 0, 645, 1159, 0, 0, 36, 0, 0, 175);
 INSERT INTO `mob_pools` VALUES(129, 'Ancient_Warrior', 'Ancient_Warrior', 227, 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1935, 1155, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(130, 'Ancient_Weapon', 'Ancient_Weapon', 110, 0x0000dc0100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(131, 'Ancilla_Beetle', 'Ancilla_Beetle', 49, 0x0000980100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49);

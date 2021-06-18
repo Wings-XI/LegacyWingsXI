@@ -56,12 +56,14 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.XOLOTL)
     local xolre = GetServerVariable("XolotlRespawn")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
-    local hour = VanadielTime()
+    local hour = VanadielHour()
     DisallowRespawn(Xolotl:getID(), true)
     if os.time() < xolre then
         GetMobByID(ID.mob.XOLOTL):setRespawnTime(xolre - os.time())
     elseif hour < 4 or hour >= 20 then
-        SpawnMob(Xolotl)
+        DisallowRespawn(Xolotl:getID(), false)
+        SpawnMob(Xolotl:getID())
+        print("Spawning Xolotl")
     end
 
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
@@ -104,31 +106,41 @@ function onRegionLeave(player, region)
     end
 end
 
-function onGameHour(zone)
-    --[[
-        the hard-coded id that was here was wrong. there are 22 miasmas in attohwa chasm
-        starting at ID.npc.MIASMA_OFFSET. some are supposed to toggle open, but need retail test
-        to determine which.  for now, they're just statically set per npc_list.animation
-    --]]
-
+function onGameHour()
     UpdateNMSpawnPoint(ID.mob.XOLOTL)
     local xolre = GetServerVariable("XolotlRespawn")
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
     local hour = VanadielHour()
+    local totd = VanadielTOTD()
 
-    if (hour < 4 or hour >= 20) and (xolre - os.time() < 140) then -- If respawn is less than one in game hour, allow Xolotl to spawn
+    print("XolotlDead:")
+    print(XolotlDead)
+
+    if (totd == 1 or totd == 7) and (xolre - os.time() < 140) and XolotlDead == 1 and not Xolotl:isSpawned() then -- If respawn is less than one in game hour, allow Xolotl to spawn
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
-    elseif (hour < 4 or hour >= 20) and xolre < os.time() then -- If Xolotl's respawn window has passed, spawn him
+        printf("Less than 140")
+        print(hour)
+        print(totd)
+    elseif (totd == 1 or totd == 7) and xolre < os.time() and XolotlDead == 1 and not Xolotl:isSpawned() then -- If Xolotl's respawn window has passed, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
-        SpawnMob(Xolotl)
-    elseif hour == 20 and XolotlDead == 0 then -- If Xolotl didn't die last night, spawn him
+        SpawnMob(Xolotl:getID())
+        printf("Respawn is up")
+        print(hour)
+        print(totd)
+    elseif (totd == 1 or totd == 7) and XolotlDead == 0 and not Xolotl:isSpawned() then -- If Xolotl didn't die last night, spawn him
         DisallowRespawn(Xolotl:getID(), false)
-        SpawnMob(Xolotl)
+        SpawnMob(Xolotl:getID())
+        printf("Xolotl never died")
+        print(hour)
+        print(totd)
     else
         DisallowRespawn(Xolotl:getID(), true)
+        printf("Its daytime or Xolotl is dead/spawned")
+        print(hour)
+        print(totd)
     end
 end
 

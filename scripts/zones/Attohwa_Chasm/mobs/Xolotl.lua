@@ -12,6 +12,7 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     SetServerVariable("XolotlDead", 0)
+    print("Xolotl onmobspawn")
 end
 
 function onMobFight(mob,target)
@@ -20,7 +21,7 @@ function onMobFight(mob,target)
     for i = 1, 2 do
         local child = GetMobByID(mobId + i)
         if child:isSpawned() then
-            if target and child:getCurrentAction() == 16 then -- doing nothing, make share enmity
+            if target and child:getCurrentAction() == tpz.act.ROAMING then -- doing nothing, make share enmity
                 child:updateEnmity(target)
             end
         elseif mob:getCurrentAction() ~= 30 and mob:actionQueueEmpty() and timeInterval == (i-1)*3 then -- not spawned, not casting, not using an ability and should summon
@@ -34,6 +35,24 @@ function onMobFight(mob,target)
                 child:spawn()
             end)
         end
+    end
+end
+
+function onMobRoam(mob)
+    local mobId = mob:getID()
+
+    for i = 1, 2 do
+        local child = GetMobByID(mobId + i)
+        if child:isSpawned() and child:getID() == mobId + 1 then
+            child:pathTo(mob:getXPos() + 1, mob:getYPos() + 3, mob:getZPos() + 0.15) 
+        elseif child:isSpawned() and child:getID() == mobId + 2 then
+            child:pathTo(mob:getXPos() + 3, mob:getYPos() + 5, mob:getZPos() + 0.15) 
+        end
+    end
+
+    local totd = VanadielTOTD()
+    if totd ~= 1 and totd ~= 7 then -- Despawn Xolotl if its day
+        DespawnMob(mob:getID())
     end
 end
 
@@ -61,7 +80,6 @@ function onMobDespawn(mob)
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
     
-    print(XolotlDead)
     if XolotlDead == 1 then
         UpdateNMSpawnPoint(mob:getID())
         local respawn = math.random(75600, 86400) -- 21h to 24h
