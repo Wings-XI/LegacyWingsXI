@@ -449,9 +449,9 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     end
     
     p = p + percentBonus
-	--GetPlayerByID(2):PrintToPlayer(string.format("pre SDT: %u",p))
+	--GetPlayerByID(1):PrintToPlayer(string.format("magic hit rate pre SDT: %u",p))
     p = p * SDT/100
-	--GetPlayerByID(2):PrintToPlayer(string.format("post SDT: %u",p))
+	--GetPlayerByID(1):PrintToPlayer(string.format("magic hit rate post SDT: %u",p))
     return utils.clamp(p, 5, 95)
 end
 
@@ -614,11 +614,6 @@ function getSpellBonusAcc(caster, target, spell, params)
     --add acc for RDM group 1 merits
     if element >= tpz.magic.element.FIRE and element <= tpz.magic.element.WATER then
         magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
-    end
-
-    -- BLU mag acc merits - nuke acc is handled in bluemagic.lua
-    if skill == tpz.skill.BLUE_MAGIC then
-        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     end
 
     return magicAccBonus

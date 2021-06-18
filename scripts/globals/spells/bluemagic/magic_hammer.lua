@@ -34,7 +34,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.LIGHT
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.0 or 1.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.25 or 1.75
     params.tMultiplier = 1.0
     params.duppercap = 35
     params.str_wsc = 0.0
@@ -44,14 +44,15 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-
+    
+    spell:setMsg(tpz.msg.basic.MAGIC_DMG)
     if target:isUndead() then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return 0
     else
         local dmg = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
         dmg = BlueFinalAdjustments(caster, target, spell, dmg, params)
         caster:addMP(target:getMP() > dmg and dmg or target:getMP())
+        return dmg
     end
-
-    return dmg
 end

@@ -30,8 +30,6 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_UNDEAD
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.WATER
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
     params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
@@ -45,12 +43,16 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    
+    
+    local damage = BlueMagicalSpell(caster, target, spell, params, nil)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
     params.effect = tpz.effect.POISON
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-    
-    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
         local power = 3 + math.floor(BLUlvl/15)

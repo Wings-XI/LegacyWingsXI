@@ -30,8 +30,8 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_ARCANA
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = 1 + HP/180
-    params.tMultiplier = 1 + HP/180
+    params.multiplier = 1 + HP/60
+    params.tMultiplier = 1 + HP/60
     params.duppercap = 500
     params.str_wsc = 0.0
     params.dex_wsc = 0.0

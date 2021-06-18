@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_LIZARD
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.83 or 1.83
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4 or 3
     params.tMultiplier = 2.0
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -36,6 +36,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.30
     params.chr_wsc = 0.0
+    params.enmityPercent = 10
     local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     if caster:isBehind(target, 20) then damage = math.floor(damage * 1.25) end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)

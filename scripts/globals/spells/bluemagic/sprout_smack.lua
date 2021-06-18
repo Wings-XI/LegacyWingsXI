@@ -73,10 +73,6 @@ function onSpellCast(caster, target, spell)
 
         target:addStatusEffect(tpz.effect.SLOW, power, 0, duration+bonus)
     end
-    
-    target:addStatusEffect(tpz.effect.STUN, 1, 0, 3600)
-    target:addStatusEffect(tpz.effect.REGEN, 500, 3, 3600)
-    caster:addStatusEffect(tpz.effect.PROTECT, 150, 0, 3600)
 
     return damage
 end

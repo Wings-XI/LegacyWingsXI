@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     params.azuretp = 1.5
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.625 or 2.125
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 3.7 or 3.2
     params.tMultiplier = 2.0
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -37,6 +37,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.2
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    params.enmityPercent = 10
     local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
@@ -51,11 +52,11 @@ function onSpellCast(caster, target, spell)
     local resistAtt = applyResistanceEffect(caster, target, spell, params)
 
     if resistDef >= 0.5 and not target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) then
-        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 5, 0, 60*resist)
+        target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 5, 0, 60*resistDef)
     end
     
     if resistAtt >= 0.5 and not target:hasStatusEffect(tpz.effect.ATTACK_DOWN) then
-        target:addStatusEffect(tpz.effect.ATTACK_DOWN, 5, 0, 60*resist)
+        target:addStatusEffect(tpz.effect.ATTACK_DOWN, 5, 0, 60*resistAtt)
     end
 
     return damage

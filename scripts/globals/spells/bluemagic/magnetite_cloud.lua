@@ -27,11 +27,10 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.EARTH
-    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    params.attribute = tpz.mod.INT
+    
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.5 or 1.25
     params.tMultiplier = 1.0
     params.D = caster:getHP()/6 + BLUlvl/1.875
     params.duppercap = 2000
@@ -42,11 +41,14 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    params.effect = tpz.effect.WEIGHT
-
-    local resist = applyResistanceEffect(caster, target, spell, params)
-    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    
+    local damage = BlueMagicalSpell(caster, target, spell, params, nil)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.effect = tpz.effect.WEIGHT
+    local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then

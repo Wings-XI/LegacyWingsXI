@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_BEAST
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.0 or 1.75
     params.tMultiplier = 1.5
     params.D = caster:getHP()/2
     params.duppercap = 2000
@@ -37,7 +37,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, nil)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     return damage

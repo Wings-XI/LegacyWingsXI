@@ -33,7 +33,9 @@ function onSpellCast(caster, target, spell)
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
     
-    if resist >= 0.5 and target:getStatusEffect(tpz.effect.BURN) == nil and target:getStatusEffect(tpz.effect.FROST) == nil then
+    if target:getStatusEffect(tpz.effect.BURN) ~= nil or target:getStatusEffect(tpz.effect.FROST) ~= nil then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.5 then
         if target:getStatusEffect(tpz.effect.CHOKE) ~= nil then
             target:delStatusEffect(tpz.effect.CHOKE)
         end
@@ -41,7 +43,10 @@ function onSpellCast(caster, target, spell)
         if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
         local power = 3 + math.floor(BLUlvl/5) -- bgwiki
         target:addStatusEffect(tpz.effect.FROST, power, 9, 90*resist, 0, power*2, 0)
+        spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return damage
+    return tpz.effect.FROST
 end

@@ -139,7 +139,7 @@ function BluePhysicalSpell(caster, target, spell, params)
         if multiplier ~= nil then multiplier = multiplier + correl end
         if params.tp150 ~= nil then params.tp150 = params.tp150 + correl end
         if params.tp300 ~= nil then params.tp300 = params.tp300 + correl end
-        print(string.format("monster family correl was %f",correl))
+        --print(string.format("monster family correl was %f",correl))
     end
 
     -- If under CA, replace multiplier with fTP(multiplier, tp150, tp300)
@@ -156,13 +156,13 @@ function BluePhysicalSpell(caster, target, spell, params)
     end
     
     local finalD = math.floor(D + fStr + WSC) * multiplier
-    GetPlayerByID(1):PrintToPlayer(string.format("finalD = (D + fSTR + WSC) * mult ... %u = (%u + %u + %u) * %f",finalD,D,fStr,WSC,multiplier))
+    --GetPlayerByID(1):PrintToPlayer(string.format("finalD = (D + fSTR + WSC) * mult ... %u = (%u + %u + %u) * %f",finalD,D,fStr,WSC,multiplier))
     
-    print(params.offcratiomod)
+    --print(params.offcratiomod)
     if params.offcratiomod == nil then -- cannonball uses def (cannonball.lua)
         -- https://forum.square-enix.com/ffxi/threads/43706-Aug-12-2014-%28JST%29-Version-Update
         -- implies that pre-2014, player attack has NO effect on BLU spell damage. one of the physical spells stated it did more damage based on skill, so let's use that
-        params.offcratiomod = math.floor(caster:getSkillLevel(tpz.skill.BLUE_MAGIC)*1.35) + 5
+        params.offcratiomod = math.floor(caster:getSkillLevel(tpz.skill.BLUE_MAGIC)*1.33) + 15
         if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
             local cap = (params.spellLevel + 16)*5 + 5
             params.offcratiomod = params.offcratiomod > cap and cap or params.offcratiomod
@@ -223,7 +223,7 @@ function BluePhysicalSpell(caster, target, spell, params)
         hitsdone = hitsdone + 1
     end
     caster:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
-    GetPlayerByID(1):PrintToPlayer(string.format("landed %u/%u hits ... hitrate was %u%% ... critchance was %u%%",hitslanded,hitsdone,hitrate*100,params.critchance*100))
+    --GetPlayerByID(1):PrintToPlayer(string.format("landed %u/%u hits ... hitrate was %u%% ... critchance was %u%%",hitslanded,hitsdone,hitrate*100,params.critchance*100))
     
     local hthres = target:getMod(tpz.mod.HTHRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
@@ -304,15 +304,9 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     
     if caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) then ST = ST * 2 end
     
-    local convergenceBonus = 1.0
-    if caster:hasStatusEffect(tpz.effect.CONVERGENCE) then
-        convergenceEffect = getStatusEffect(tpz.effect.CONVERGENCE)
-        local convLvl = convergenceEffect:getPower()
-        if     convLvl == 1 then convergenceBonus = 1.05
-        elseif convLvl == 2 then convergenceBonus = 1.1
-        elseif convLvl == 3 then convergenceBonus = 1.15
-        end
-    end
+    local convergence = caster:getStatusEffect(tpz.effect.CONVERGENCE)
+    local convergenceBonus = convergence == nil and 1 or 1 + convergence:getPower()/100
+    --print(string.format("cbonus = %f",convergenceBonus))
 
     local statBonus = 0
     local dStat = 0
@@ -350,23 +344,32 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     local rparams = {}
     rparams.diff = dStat
     rparams.skillType = tpz.skill.BLUE_MAGIC
-    --D = math.floor(D * applyResistance(caster, target, spell, rparams))
+    rparams.bonus = convergence == nil and 0 or convergence:getPower()
+    rparams.bonus = rparams.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
+    local res = applyResistance(caster, target, spell, rparams)
+    D = math.floor(D * res)
     
     local bparams = {}
     bparams.bonusmab = 0
     
     if params.eco ~= nil and target:isMob() then
         local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
-        if correl > 0 then bparams.bonusmab = 20 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)
-        elseif correl < 0 then bparams.bonusmab = -20 end
+        if correl > 0 then bparams.bonusmab = 25 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)
+        elseif correl < 0 then bparams.bonusmab = -25 end
         --print(string.format("monster family correl bonus MAB was %i",bparams.bonusmab))
     end
     
     D = math.floor(addBonuses(caster, spell, target, D, params))
     D = BlueApplyTargetDamageReductions(target, D)
+    
+    if params.attackType == tpz.attackType.BREATH  then
+        local head = caster:getEquipID(tpz.slot.HEAD)
+        if head == 16150 or head == 11465 then D = math.floor(D*1.1) end -- saurian helm and Mirage Keffiyeh
+    end
 
     if D > 0 then target:addTPFromSpell(caster) end
     caster:delStatusEffectSilent(tpz.effect.BURST_AFFINITY)
+    caster:delStatusEffectSilent(tpz.effect.CONVERGENCE)
 
     return D
 end
@@ -388,11 +391,12 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
     local attackType = params.attackType or tpz.attackType.NONE
     local damageType = params.damageType or tpz.damageType.NONE
     target:takeDamage(dmg, caster, attackType, damageType)
+    local Emult = params.enmityPercent == nil and 1 or params.enmityPercent/100
     if not target:isPC() then
 		if taChar == nil then
-			target:updateEnmityFromDamage(caster,dmg)
+			target:updateEnmityFromDamage(caster,dmg*Emult)
 		else
-			target:updateEnmityFromDamage(taChar,dmg)
+			target:updateEnmityFromDamage(taChar,dmg*Emult)
 		end
 	end
     target:handleAfflatusMiseryDamage(dmg)
@@ -437,8 +441,8 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isRanged)
         pdifmin = pdifmax - 0.1
     end
     
-    print(pdifmin)
-    print(pdifmax)
+    --print(pdifmin)
+    --print(pdifmax)
     
     local cratio = {}
     cratio[1] = pdifmin

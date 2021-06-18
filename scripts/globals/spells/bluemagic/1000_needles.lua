@@ -26,25 +26,14 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.LIGHT
-    params.scattr = SC_COMPRESSION
-    params.numhits = 1
-    params.multiplier = 1.5
-    params.tp150 = 1.5
-    params.tp300 = 1.5
-    params.azuretp = 1.5
-    params.duppercap = 49
-    params.str_wsc = 1.0
-    params.dex_wsc = 1.5
-    params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
-    params.int_wsc = 2.0
-    params.mnd_wsc = 1.0
-    params.chr_wsc = 1.0
-    local damage = 0
-    local hitslanded = 0
-    local taChar = nil
-    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
-    if hitslanded == 0 then return 0 end
+    params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+    params.attribute = tpz.mod.MND
+    params.bonus = 10
+    params.effect = nil
+    
+    local resist = target:isNM() and applyResistanceEffect(caster, target, spell, params) or 1
+    local damage = target:isPC() and 750/spell:getTotalTargets() or 1000/spell:getTotalTargets()
+    damage = resist < 1 and 0 or damage
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     return damage

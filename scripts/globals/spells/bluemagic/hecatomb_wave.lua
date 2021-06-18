@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_DEMON
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.WIND
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.5 or 1.25
     params.tMultiplier = 1.0
     params.D = caster:getHP()/4 + BLUlvl/1.5
     params.duppercap = 2000
@@ -36,9 +36,9 @@ function onSpellCast(caster, target, spell)
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
-    params.mnd_wsc = 0.3
+    params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, nil)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
     params = {}
