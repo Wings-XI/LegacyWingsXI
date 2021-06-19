@@ -1045,7 +1045,7 @@ namespace message
             // Seems that packet must be a valid pointer no matter what, so just set it
             // to a stub location and set length to zero and hopefully nothing else
             // will crash.
-            packet ? *packet : &stub,
+            packet ? (uint8 *)*packet : &stub,
             packet ? packet->length() : 0,
             true);
         // And of course send to ZMQ for other servers
