@@ -968,10 +968,10 @@ namespace battleutils
         }
 
         PTarget->SetLocalVar(("RESBUILD_PERCENT_" + std::to_string((int)mod)).c_str(), buildPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
-        ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
-        ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
+        //ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
+        //ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
 
         return resultPercent;
     }
