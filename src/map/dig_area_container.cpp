@@ -12,9 +12,9 @@
 
 #include <algorithm>
 
-#include "..\common\utils.h"
+#include "../common/utils.h"
 #include "dig_area_container.h"
-#include "entities\charentity.h"
+#include "entities/charentity.h"
 
 CDigAreaContainer::CDigAreaContainer()
 {

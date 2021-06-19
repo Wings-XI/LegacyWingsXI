@@ -24,6 +24,7 @@
 #include "../../common/showmsg.h"
 
 #include <string.h> 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 #include "../universal_container.h"
@@ -102,7 +103,7 @@ namespace fishingutils
 
     void AddFishingLog(CCharEntity* PChar)
     {
-        char* catchName = "Unknown";
+        const char* catchName = "Unknown";
         switch (PChar->hookedFish->catchtype) {
         case FISHINGCATCHTYPE_SMALLFISH:
         case FISHINGCATCHTYPE_BIGFISH:
@@ -850,7 +851,7 @@ namespace fishingutils
     // Generate a non-cumulative normal distribution value
     static double NormalDist(double x, double mean, double standard_dev)
     {
-        return exp(-0.5 * log(2 * std::_Pi) - log(standard_dev) - pow(x - mean, 2) / (2 * standard_dev * standard_dev));
+        return exp(-0.5 * log(2 * M_PI) - log(standard_dev) - pow(x - mean, 2) / (2 * standard_dev * standard_dev));
     }
 
     void FishingSkillup(CCharEntity* PChar, uint8 catchLevel, uint8 successType)
