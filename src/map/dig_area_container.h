@@ -33,7 +33,7 @@ public:
     void ExpireOldDigs(time_point tick);
 
 private:
-    CDigObject m_DigObject[2000]; // 27 bytes each, array memory impact 54kb
+    CDigObject m_DigObject[1000]; // 27 bytes each, array memory impact 27kb
     uint16 m_DigObjectIteratorStart; // iterator to the first element, oldest dig
     uint16 m_DigObjectIteratorEnd; // iterator to just past the last element, most recently added dig
     

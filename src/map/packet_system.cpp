@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -631,10 +631,15 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->m_distanceFromLastCheck = 0.0;
                 PChar->m_distanceLastCheckTime = timeNow;
             }
-            if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5)
-            { // player left the 5 radius circle before dig is even ready. dig anim takes 4 seconds so this shouldn't be possible
-                char cheatDesc[128];
-                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGSKIP, 0, cheatDesc, 1);
+            if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5 && PChar->status != STATUS_DISAPPEAR
+                && (uint64)PChar->GetLocalVar("LastTeleportDig") + 1 < std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+            { // player left the 5 radius circle before dig is even ready. dig anim takes 4 seconds so this shouldn't be possible. anti-cheat measure: send them back
+                PChar->SetLocalVar("LastTeleportDig", static_cast<uint32>(time(NULL)));
+                PChar->loc.p.x = PChar->m_lastDigPosition.x;
+                PChar->loc.p.y = PChar->m_lastDigPosition.y;
+                PChar->loc.p.z = PChar->m_lastDigPosition.z;
+                PChar->pushPacket(new CPositionPacket(PChar));
+                PChar->updatemask |= UPDATE_POS;
             }
         }
 
