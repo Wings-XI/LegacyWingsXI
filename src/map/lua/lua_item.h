@@ -83,7 +83,7 @@ public:
     int32 getAppraisalID(lua_State*);          // Get Appraisal ID
     int32 setAppraisalID(lua_State*);         // Set Appraisal ID
 
-    void setSoulPlateData(std::string name, uint8 zeni, uint16 skillIndex, uint8 fp);
+    void setSoulPlateData(std::string name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp);
     auto getSoulPlateData() -> sol::table;
 };
 

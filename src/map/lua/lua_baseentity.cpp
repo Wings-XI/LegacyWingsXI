@@ -4266,7 +4266,7 @@ inline int32 CLuaBaseEntity::getContainerSize(lua_State *L)
     return 1;
 }
 
-auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>
+auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
@@ -4283,7 +4283,7 @@ auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint8 zeni, uint16 sk
         // Used Soul Plate
         CItem* PItem = itemutils::GetItem(2477); 
         PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, zeni, skillIndex, fp);
+        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {

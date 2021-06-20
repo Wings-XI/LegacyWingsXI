@@ -371,9 +371,9 @@ inline int32 CLuaItem::setAppraisalID(lua_State* L)
     return 1;
 }
 
-void CLuaItem::setSoulPlateData(std::string name, uint8 zeni, uint16 skillIndex, uint8 fp)
+void CLuaItem::setSoulPlateData(std::string name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp)
 {
-    m_PLuaItem->setSoulPlateData(name, zeni, skillIndex, fp);
+    m_PLuaItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
 }
 
 auto CLuaItem::getSoulPlateData() -> sol::table
@@ -382,9 +382,10 @@ auto CLuaItem::getSoulPlateData() -> sol::table
     sol::table table = luautils::lua.create_table();
 
     table["name"]       = std::get<0>(data);
-    table["zeni"]       = std::get<1>(data);
-    table["skillIndex"] = std::get<2>(data);
-    table["fp"]         = std::get<3>(data);
+    table["mobFamily"]  = std::get<1>(data);
+    table["zeni"]       = std::get<2>(data);
+    table["skillIndex"] = std::get<3>(data);
+    table["fp"]         = std::get<4>(data);
 
     return table;
 }
