@@ -34,6 +34,7 @@ class CItemState : public CState
 {
 public:
     CItemState(CCharEntity* PEntity, uint16 targid, uint8 loc, uint8 slotid);
+    virtual void UpdateTarget(CBaseEntity* target) override;
     virtual bool Update(time_point tick) override;
     virtual void Cleanup(time_point tick) override;
     virtual bool CanChangeState() override;
@@ -50,8 +51,6 @@ public:
 
 protected:
     bool HasMoved();
-
-    CBattleEntity* HandleSoultrapperUse();
 
     CCharEntity* m_PEntity;
     CItemUsable* m_PItem;
