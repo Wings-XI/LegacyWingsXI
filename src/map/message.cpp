@@ -359,8 +359,8 @@ namespace message
                 {
                     PZone->ForEachChar([&packet, &extra, packet_size](CCharEntity* PChar)
                     {
-                        // don't push to sender
-                        if (PChar->id != ref<uint32>((uint8*)extra, 0))
+                        // don't push to the sender or anyone with yell filtered
+                        if (PChar->id != ref<uint32>((uint8*)extra, 0) && !PChar->isYellFiltered())
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
                             memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
