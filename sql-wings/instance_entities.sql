@@ -612,6 +612,23 @@ INSERT INTO `instance_entities` VALUES(79, 17006761);
 INSERT INTO `instance_entities` VALUES(79, 17006762);
 INSERT INTO `instance_entities` VALUES(79, 17006763);
 INSERT INTO `instance_entities` VALUES(89, 17158191);
+INSERT INTO `instance_entities` VALUES(96, 17305662); -- Laa_Yaku_the_Austere
+INSERT INTO `instance_entities` VALUES(96, 17305921); -- Door
+INSERT INTO `instance_entities` VALUES(96, 17305647);
+INSERT INTO `instance_entities` VALUES(96, 17305648);
+INSERT INTO `instance_entities` VALUES(96, 17305649);
+INSERT INTO `instance_entities` VALUES(96, 17305650);
+INSERT INTO `instance_entities` VALUES(96, 17305651);
+INSERT INTO `instance_entities` VALUES(96, 17305652);
+INSERT INTO `instance_entities` VALUES(96, 17305653);
+INSERT INTO `instance_entities` VALUES(96, 17305654);
+INSERT INTO `instance_entities` VALUES(96, 17305655);
+INSERT INTO `instance_entities` VALUES(96, 17305656);
+INSERT INTO `instance_entities` VALUES(96, 17305657);
+INSERT INTO `instance_entities` VALUES(96, 17305658);
+INSERT INTO `instance_entities` VALUES(96, 17305659);
+INSERT INTO `instance_entities` VALUES(96, 17305660);
+INSERT INTO `instance_entities` VALUES(96, 17305661);
 
 --
 -- Indexes for dumped tables

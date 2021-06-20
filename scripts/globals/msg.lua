@@ -107,6 +107,7 @@ tpz.msg.basic =
     SELF_HEAL_SECONDARY    = 263, -- <target> recovers <amount> HP.
     AOE_REGAIN_HP          = 357, -- <target> regains <amount> HP.
     AOE_REGAIN_MP          = 358, -- <target> regains <amount> MP.
+    AOE_INCREASE_TP        = 537, -- <target>'s TP increases to <amount>%.
     SKILL_ERASE            = 159, -- <user> uses <skill> <target>'s <status> effect disappears!
     DAMAGE                 = 185, -- player uses, target takes 10 damage. DEFAULT
     DAMAGE_SECONDARY       = 264,
