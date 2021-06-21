@@ -4018,6 +4018,11 @@ INSERT INTO `synth_recipes` VALUES(4581, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4582, 1, 0, 0, 102, 60, 0, 0, 0, 0, 0, 4100, 4242, 12676, 0, 0, 0, 0, 0, 0, 0, 914, 1225, 654, 655, 1, 6, 1, 1, 'Adaman_Gauntlets_Desynth');
 INSERT INTO `synth_recipes` VALUES(4583, 1, 0, 0, 98, 60, 0, 0, 0, 0, 0, 4100, 4242, 12420, 0, 0, 0, 0, 0, 0, 0, 914, 1225, 654, 655, 1, 6, 1, 1, 'Adaman_Barbuta_Desynth');
 INSERT INTO `synth_recipes` VALUES(4584, 1, 0, 22, 0, 0, 0, 0, 0, 0, 0, 4100, 4242, 2543, 0, 0, 0, 0, 0, 0, 0, 712, 4379, 5474, 5789, 1, 1, 4, 4, 'Goblin_weel_desynth');
+INSERT INTO `synth_recipes` VALUES(4585, 1, 0, 0, 102, 60, 0, 0, 0, 0, 0, 4100, 4242, 14828, 0, 0, 0, 0, 0, 0, 0, 914, 1225, 654, 655, 1, 6, 1, 1, 'Gem_Gauntlets_Desynth');
+INSERT INTO `synth_recipes` VALUES(4586, 1, 0, 0, 98, 60, 0, 0, 0, 0, 0, 4100, 4242, 13941, 0, 0, 0, 0, 0, 0, 0, 914, 1225, 654, 655, 1, 6, 1, 1, 'Gem_Barbuta_Desynth');
+INSERT INTO `synth_recipes` VALUES(4587, 1, 0, 0, 91, 0, 0, 0, 0, 0, 0, 4100, 4242, 18406, 0, 0, 0, 0, 0, 0, 0, 2302, 2302, 2302, 2302, 1, 1, 2, 2, 'Jadagna_+1_Desynth');
+INSERT INTO `synth_recipes` VALUES(4588, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13414, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_Desynth');
+INSERT INTO `synth_recipes` VALUES(4589, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 14719, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_+1_Desynth');
 
 -- -----------
 -- RECIPES END
