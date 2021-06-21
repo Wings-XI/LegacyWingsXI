@@ -139,6 +139,7 @@ void CItemState::UpdateTarget(CBaseEntity* target)
 {
     if (target != nullptr)
     {
+        CState::UpdateTarget(target);
         CState::SetTarget(target->targid);
     }
 
