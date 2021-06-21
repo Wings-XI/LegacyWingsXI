@@ -24,7 +24,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     mob:setHP(0)
-    
+
     if math.random()*100 < target:getGuardRate(mob) then
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         target:trySkillUp(mob, tpz.skill.GUARD, numhits)
