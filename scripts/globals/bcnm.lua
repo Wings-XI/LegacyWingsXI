@@ -990,6 +990,7 @@ end
 -----------------------------------------------
 
 function EventTriggerBCNM(player, npc)
+    -- player:PrintToPlayer("EventTriggerBCNM")
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
         player:startEvent(32003)
@@ -1124,7 +1125,7 @@ function EventUpdateBCNM(player, csid, option, extras)
 
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
-                        member:registerBattlefield(id, area, player:getID())
+                        member:registerBattlefield(id, area, player:getID(), false)
                         member:addStatusEffect(effect)
                     end
                 end
