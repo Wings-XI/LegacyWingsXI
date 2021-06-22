@@ -277,6 +277,25 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->loc.destination = destination = ZONE_RESIDENTIAL_AREA;
         }
 
+        uint32 inJail = charutils::GetCharVar(PChar->id, "InJail");
+        if (inJail && destZone->GetID() != ZONE_MORDION_GAOL) {
+            ShowExploit("packet_system::SmallPacket0x00A player tried to zone out of jail: %d\n", destination);
+            PChar->loc.destination = ZONE_MORDION_GAOL;
+            anticheat::JailChar(PChar, inJail);
+            return;
+        }
+
+        if ((destZone->GetID() == ZONE_MORDION_GAOL) && ((PChar->nameflags.flags & FLAG_GM) == 0)) {
+            // When getting jailed heal the player all the way and remove all
+            // status effects so they can't get out by dying
+            PChar->health.hp = PChar->GetMaxHP();
+            PChar->health.mp = PChar->GetMaxMP();
+            PChar->m_unkillable = true;
+            PChar->animation = ANIMATION_NONE;
+            PChar->updatemask |= UPDATE_HP;
+            PChar->StatusEffectContainer->KillAllStatusEffect();
+        }
+
         destZone->IncreaseZoneCounter(PChar);
 
         PChar->m_ZonesList[PChar->getZone() >> 3] |= (1 << (PChar->getZone() % 8));
@@ -303,8 +322,14 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
             uint32 secondsSinceDeath = (uint32)Sql_GetUIntData(SqlHandle, 0);
             if (PChar->health.hp == 0)
             {
-                PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
-                PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
+                if (destZone->GetID() == ZONE_MORDION_GAOL) {
+                    PChar->health.hp = 1;
+                    charutils::SaveCharStats(PChar);
+                }
+                else {
+                    PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
+                    PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
+                }
             }
         }
 

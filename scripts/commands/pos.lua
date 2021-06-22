@@ -74,6 +74,20 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
             zoneId = targ:getZoneID()
             targ:setPos(x, y, z, 0)
         else
+        
+            -- When zoning in and out of Mordion Gaol adjust the jail var
+            local to_prison = 0
+            if zoneId == 131 then
+                to_prison = 1
+            end
+            local in_prison = targ:getCharVar("inJail")
+            if in_prison ~= 0 then
+                in_prison = 1
+            end
+            if in_prison ~= to_prison then
+                targ:setCharVar( "inJail", to_prison )
+            end
+
             targ:setPos(x, y, z, 0, zoneId)
         end
         if (player:getID() ~= targ:getID()) then
