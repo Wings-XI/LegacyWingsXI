@@ -38,11 +38,11 @@ function onMobWeaponSkill(target, mob, skill)
 
     mob:setHP(0)
 
-    if math.random()*100 < target:getGuardRate(mob) then
-        skill:setMsg(tpz.msg.basic.SKILL_MISS)
-        target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-        return 0
-    end
+	if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
+		return 0
+	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
