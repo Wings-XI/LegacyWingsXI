@@ -13,6 +13,7 @@
 --
 -- Combos: Auto Refresh
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/bluemagic")
@@ -24,23 +25,16 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.SHOCK_SPIKES
-    local power = 5
     local duration = 60
 
-    if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
-        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
-
-        if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
-        end
-
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if target:addStatusEffect(tpz.effect.SHOCK_SPIKES, 5, 0, duration) == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.SHOCK_SPIKES
 end

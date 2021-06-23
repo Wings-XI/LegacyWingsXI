@@ -5166,6 +5166,10 @@ namespace battleutils
             else
                 return SPELLAOE_NONE;
         }
+        if (PSpell->getSkillType() == SKILL_BLUE_MAGIC && PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE) && PSpell->getMagicBurstMessage())
+        {
+            return SPELLAOE_NONE;
+        }
 
         return PSpell->getAOE();
     }

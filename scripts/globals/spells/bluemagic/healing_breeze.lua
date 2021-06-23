@@ -12,6 +12,7 @@
 --
 -- Combos: Auto Regen
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
@@ -28,25 +29,24 @@ function onSpellCast(caster, target, spell)
     local constant = -45
     local power = getCurePowerOld(caster)
 
-    if (power > 459) then
+    if power > 459 then
         divisor = 6.5
         constant = 144.6666
-    elseif (power > 219) then
+    elseif power > 219 then
         divisor =  2
         constant = 65
     end
 
     local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
-    local diff = (target:getMaxHP() - target:getHP())
+    local diff = target:getMaxHP() - target:getHP()
 
     final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
-    if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
-        --Applying server mods....
+    if target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB) then
         final = final * CURE_POWER
     end
 
-    if (final > diff) then
+    if final > diff then
         final = diff
     end
 

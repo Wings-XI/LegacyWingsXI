@@ -23,10 +23,10 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_ARCANA
     params.attackType = tpz.damageType.MAGICAL
     params.damageType = tpz.damageType.LIGHTNING
-    params.multiplier = 1.5625
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 5.5 or 4.5
     params.tMultiplier = 1.0
     params.duppercap = 61
     params.str_wsc = 0.0
@@ -43,13 +43,13 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    params.bonus = 1
+    params.effect = tpz.effect.STUN
+    local resist = applyResistanceEffect(caster, target, spell, params)
     
-    local typeEffect = tpz.effect.STUN
-    local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if (damage > 0 and resist > 0.0625 and not target:hasStatusEffect(typeEffect)) then
-        target:addStatusEffect(typeEffect, 1, 0, duration)
+    local duration = math.ceil(4 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
+    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
     end
 
     return damage

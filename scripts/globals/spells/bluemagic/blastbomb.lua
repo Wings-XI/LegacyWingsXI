@@ -23,9 +23,10 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_NONE
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = 1.375
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.875 or 1.375
     params.tMultiplier = 1.0
     params.duppercap = 30
     params.str_wsc = 0.0
@@ -35,19 +36,20 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.2
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     params = {}
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    params.bonus = 0
+    params.effect = tpz.effect.BIND
     
-    local duration = math.ceil(getBlueEffectDuration(caster,resist,tpz.effect.BIND) * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if (damage > 0 and resist > 0.25) then
-        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
+    if not target:hasStatusEffect(tpz.effect.BIND) and resist >= 0.5 then
+        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration*resist)
     end
 
     return damage
