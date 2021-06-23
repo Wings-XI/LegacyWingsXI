@@ -10,6 +10,19 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 ---------------------------------------------
+function onMobSkillCheck(target, mob, skill)
+    local param = skill:getParam()
+    if (param == 0) then
+        param = 50
+    end
+
+    if (mob:getHPP() <= param) then
+        return 0
+    end
+
+    return 1
+end
+
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 1
