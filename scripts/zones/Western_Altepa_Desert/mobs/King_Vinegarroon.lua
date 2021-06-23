@@ -21,10 +21,12 @@ function onMobInitialize(mob)
 end
 
 function onMobDrawIn(mob, target)
-    mob:addTP(3000)
-    mob:useMobAbility(({354,722,723})[math.random(1,3)])
-    mob:addTP(3000)
-    mob:useMobAbility(({353,350,720})[math.random(1,3)])
+    local battleTarget = mob:getTarget()
+    
+    if target:getID() == battleTarget:getID() then
+        mob:useMobAbility(({354,722,723})[math.random(1,3)])
+        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+    end
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -63,10 +65,6 @@ function updateRegen(mob)
             mob:setMod(tpz.mod.REGEN, 250)
         end
     end
-end
-
-function onMobSpawn(mob)
-    updateRegen(mob)
 end
 
 function onMobFight(mob)

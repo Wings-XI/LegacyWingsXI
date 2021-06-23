@@ -3133,7 +3133,7 @@ INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2316);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2317);
 INSERT INTO `mob_skill_lists` VALUES('Mind_Hoarder', 1149, 524);
 INSERT INTO `mob_skill_lists` VALUES('Flockbock', 1150, 269);
-INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 675);
+INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 3868);
 INSERT INTO `mob_skill_lists` VALUES('Picolaton', 1152, 926);
 INSERT INTO `mob_skill_lists` VALUES('Olgoi-Khorkhoi', 1153, 426);
 INSERT INTO `mob_skill_lists` VALUES('Ratatoskr', 1154, 323);
