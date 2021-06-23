@@ -8,11 +8,13 @@ local ID = require("scripts/zones/Fort_Karugo-Narugo_[S]/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/status")
+require("scripts/globals/instance")
 -----------------------------------
 
+local A_MANIFEST_PROBLEM_INSTANCE_ID = 96
 
 function onTrigger(player, npc)
-    if(player:hasKeyItem(tpz.ki.FORT_KEY) and false) then -- "and false"  hard block to prevent this from being live before testing
+    if VerfyInstanceForPlayer(player, A_MANIFEST_PROBLEM_INSTANCE_ID, true) then
         player:startEvent(235, 0, 0, 28)
     end
 end
@@ -21,21 +23,20 @@ function onEventUpdate(player, csid, option, target)
     --printf("onUpdate CSID: %u", csid)
     --printf("onUpdate RESULT: %u", option)
     if csid == 235 and option == 540 then
-        if player:hasKeyItem(tpz.ki.FORT_KEY) then
-            local instanceid = bit.rshift(option, 19) + 96 --Bitshifting 540 to the right 19 times??? so 0 + 96, need to verify this
-            local party = player:getParty()
+        local instanceid = bit.rshift(option, 19) + A_MANIFEST_PROBLEM_INSTANCE_ID --Bitshifting 540 to the right 19 times??? so 0 + 96, need to verify this
+        local party = player:getParty()
         
-            if party ~= nil then
-                for i, v in ipairs(party) do
-                    if v:getZoneID() == player:getZoneID() and v:checkDistance(player) > 50 then
-                        player:messageText(target, ID.text.PARTY_REQUIREMENTS_FAILED, false)
-                        player:instanceEntry(target, 1)
-                        return
-                    end
+        if party ~= nil then
+            for i, v in ipairs(party) do
+                if v:getID() ~= player:getID() and ((v:getZoneID() == player:getZoneID() and v:checkDistance(player) > 50) or not VerfyInstanceForPlayer(v, A_MANIFEST_PROBLEM_INSTANCE_ID, false)) then
+                    player:messageText(target, ID.text.PARTY_REQUIREMENTS_FAILED, false)
+                    -- might have to be messagespecial
+                    player:instanceEntry(target, 1)
+                    return
                 end
             end
-            player:createInstance(instanceid, 129)
         end
+        player:createInstance(instanceid, 129)
     end
 end
 
