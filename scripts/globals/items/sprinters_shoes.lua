@@ -11,6 +11,9 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.QUICKENING, 10, 0, 3600)
-    target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.QUICKENING)
+   if(target:addStatusEffect(tpz.effect.QUICKENING, 10, 0, 3600)) then
+        target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.QUICKENING)
+    else
+        target:messageBasic(tpz.msg.basic.NO_EFFECT)
+    end
 end

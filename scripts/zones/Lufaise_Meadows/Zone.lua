@@ -15,9 +15,15 @@ require("scripts/globals/helm")
 function onInitialize(zone)
     zone:registerRegion(1, 179, -26, 327, 219, -18, 347)
 
-    SetServerVariable("realPadfoot", math.random(1, 5))
-    for _, v in pairs(ID.mob.PADFOOT) do
-        SpawnMob(v)
+    local padfootre = GetServerVariable("PadfootRespawn")
+    if os.time() < padfootre then
+        for _, v in pairs(ID.mob.PADFOOT) do
+            GetMobByID(v):setRespawnTime(padfootre - os.time())
+        end
+    else
+        for _, v in pairs(ID.mob.PADFOOT) do
+            SpawnMob(v)
+        end
     end
 
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
