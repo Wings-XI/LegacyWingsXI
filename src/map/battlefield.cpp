@@ -653,6 +653,14 @@ bool CBattlefield::LoadMobs()
             if (PMob)
             {
                 this->InsertEntity(PMob, true, static_cast<BATTLEFIELDMOBCONDITION>(condition));
+                if (PMob->PEnmityContainer->GetEnmityList()->size()) {
+                    // Had issues with mob hate not being reset, causing the battlefield handler
+                    // to think the battlefield is locked, which in turn can lead to players
+                    // being split between battlefields. I couldn't figure how this happens in
+                    // the first place so as a safeguard just add a check when a new battlefield
+                    // is loaded and clear any such remaining hate.
+                    PMob->PEnmityContainer->Clear();
+                }
             }
             else
             {

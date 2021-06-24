@@ -22,10 +22,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local multi = 1.0
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
+    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
         multi = multi + 1.50
     end
     local params = {}
+    params.eco = ECO_AQUAN
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
     params.attribute = tpz.mod.INT
@@ -41,9 +42,11 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    params.bonus = 10
+    params.effect = nil
 
-    local resist = applyResistance(caster, target, spell, params)
-    if (resist > 0.0625) then
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    if resist >= 0.25 then
         target:dispelStatusEffect()
     end
 

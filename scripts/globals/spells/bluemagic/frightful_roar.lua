@@ -24,15 +24,14 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_DEMON
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.effect = tpz.effect.DEFENSE_DOWN
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 60 * resist
-    local power = 10
 
-    if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(params.effect, power, 0, duration)) then
+    if resist >= 0.5 then -- Do it!
+        if target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 10, 0, 60*resist) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

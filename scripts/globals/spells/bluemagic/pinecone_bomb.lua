@@ -23,16 +23,15 @@ end
 
 function onSpellCast(caster,target,spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_DURATION
+    params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIQUEFACTION
     params.numhits = 1
-    params.multiplier = 2.25
-    params.tp150 = 2.25
-    params.tp300 = 2.25
-    params.azuretp = 2.25
+    params.multiplier = 2.7
+    params.tp150 = 2.7
+    params.tp300 = 2.7
+    params.azuretp = 2.7
     params.duppercap = 37
     params.str_wsc = 0.20
     params.dex_wsc = 0.0
@@ -41,8 +40,15 @@ function onSpellCast(caster,target,spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-	
-	local resparams = {}
+    
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    local resparams = {}
     resparams.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     resparams.attribute = tpz.mod.INT
     resparams.skillType = tpz.skill.BLUE_MAGIC
@@ -50,14 +56,11 @@ function onSpellCast(caster,target,spell)
     resparams.effect = tpz.effect.SLEEP_I
     local resist = applyResistanceEffect(caster, target, spell, resparams)
 
-    local damage = BluePhysicalSpell(caster, target, spell, params)
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
     local duration = math.ceil(math.random(15,30) * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target))
-    -- After damage is applied (which would have woken the target up from a
-    -- preexisting sleep, if necesesary), apply the sleep effect for this spell.
-    if damage > 0 and resist >= 0.5 then
-        target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration)
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
+    
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLEEP_I) and not target:hasStatusEffect(tpz.effect.SLEEP_II) and not target:hasStatusEffect(tpz.effect.LULLABY) then -- wont wake up if we hit their stoneskin!
+        target:addStatusEffect(tpz.effect.SLEEP_I, 2, 0, duration+bonus)
     end
 
     return damage

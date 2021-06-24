@@ -89,6 +89,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../treasure_pool.h"
 #include "../mob_modifier.h"
 #include "../roe.h"
+#include "../anticheat.h"
 
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
@@ -5942,6 +5943,14 @@ namespace charutils
         PChar->updatemask |= UPDATE_HP;
 
         PChar->clearPacketList();
+
+        uint32 inJail = charutils::GetCharVar(PChar->id, "InJail");
+        if (inJail) {
+            ShowExploit("charutils::HomePoint Player tried to blood warp out of jail");
+            PChar->loc.destination = ZONE_MORDION_GAOL;
+            anticheat::JailChar(PChar, inJail);
+        }
+
         SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
     }
 

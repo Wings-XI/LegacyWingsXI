@@ -23,14 +23,14 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_DEMON
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.LIGHTNING
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.multiplier = 2.08
+    params.bonus = 0
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 6.0 or 5.0
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -40,19 +40,19 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
+    params.effect = tpz.effect.PARALYSIS
 
-    if (caster:hasStatusEffect(tpz.effect.AZURE_LORE)) then
+    if caster:hasStatusEffect(tpz.effect.AZURE_LORE) then
         params.multiplier = params.multiplier + 0.50
     end
 
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = applyResistanceEffect(caster, target, spell, params)
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local duration = math.ceil(getBlueEffectDuration(caster,resist,typeEffect) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if (damage > 0 and resist > 0.3) then
-        local typeEffect = tpz.effect.PARALYSIS
-        target:addStatusEffect(typeEffect, 20, 0, duration) -- https://www.bg-wiki.com/bg/Mind_Blast says 20%
+    local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+        target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, duration*resist) -- https://www.bg-wiki.com/bg/Mind_Blast 20%
     end
 
     return damage

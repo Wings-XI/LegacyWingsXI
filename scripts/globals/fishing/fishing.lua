@@ -21,9 +21,9 @@ local MaxFishLevelDifferenceToHook = 100
 local FishTablePoolWeight = 60
 
 local FishDefaultPoolWeight = 110
-local ItemDefaultPoolWeight = 20
-local MobDefaultPoolWeight = 15
-local NoCatchDefaultPoolWeight = 30
+local ItemDefaultPoolWeight = 10
+local MobDefaultPoolWeight = 10
+local NoCatchDefaultPoolWeight = 15
 
 local MaxDiscernmentChance = 70
 
@@ -788,14 +788,14 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
 
     -- Area Type Pool Weight Bonus/Penalties
     if zoneType == 1 then               -- city
-        ItemWeightAdd = 20
-        NoCatchWeightAdd = 20
+        ItemWeightAdd = 15
+        NoCatchWeightAdd = 15
     elseif zoneType == 2 then           -- outdoors
         FishWeightAdd = 20
-        ItemWeightAdd = 10
-        MobWeightAdd = 10
+        ItemWeightAdd = 5
+        MobWeightAdd = 5
     elseif zoneType == 3 then           -- dungeon
-        MobWeightAdd = 40
+        MobWeightAdd = 20
     end
 
     -- Calculate Pool Weight modifiers
@@ -803,6 +803,11 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         FishWeight = FishDefaultPoolWeight
         FishWeight = FishWeight * WeatherModifier
         FishWeight = math.floor(FishWeight + (FishWeight * (MoonModifier - 1))) + FishWeightAdd
+    end
+
+    -- Fishermans Apron reduce items
+    if player:getEquipID(tpz.slot.BODY) == fishing.gear.FISHERMANS_APRON then
+        ItemDefaultPoolWeight = 5
     end
 
     if #ItemPool > 0 then
@@ -813,8 +818,8 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         MobWeight = MobDefaultPoolWeight + math.floor(MoonModifier * 20) + MobWeightQuestBonus + MobWeightAdd
     end
 
-    NoCatchWeight = NoCatchDefaultPoolWeight + math.floor(math.random(40, 60) * (MoonModifier - 1))
-    NoCatchWeight = NoCatchWeight + (zoneDifficulty * math.random(40,60)) + NoCatchWeightAdd
+    NoCatchWeight = NoCatchDefaultPoolWeight + (20 * (MoonModifier - 1))
+    NoCatchWeight = NoCatchWeight + (zoneDifficulty * 20) + NoCatchWeightAdd
 
     if #FishPool == 0 then
         NoCatchWeight = NoCatchWeight + FishDefaultPoolWeight

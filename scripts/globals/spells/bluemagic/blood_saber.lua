@@ -24,32 +24,26 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dmg = 1 + (0.709 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC))
+    if target:isUndead() then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return 0
+    end
+    
+    local dmg = 1 + 0.385 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
     local params = {}
-    params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
-    params.attribute = tpz.mod.MND
+    params.eco = ECO_UNDEAD
+    params.diff = 0 -- INT does not affect the accuracy of this spell. t. wiki
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
     local resist = applyResistance(caster, target, spell, params)
     dmg = dmg*resist
     dmg = addBonuses(caster, spell, target, dmg)
     dmg = adjustForTarget(target, dmg, spell:getElement())
-    if (dmg > (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)) then
-        dmg = (caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20)
+    
+    if dmg > caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20 then
+        dmg = caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20
     end
-
-    if (dmg < 0) then
-        dmg = 0
-    end
-
-    if (target:isUndead()) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-        return dmg
-    end
-
-    if (target:getHP() < dmg) then
-        dmg = target:getHP()
-    end
+    if dmg < 0 then dmg = 0 end
+    if target:getHP() < dmg then dmg = target:getHP() end
 
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.DARK

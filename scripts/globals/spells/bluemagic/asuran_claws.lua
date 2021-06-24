@@ -23,25 +23,30 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-        params.tpmod = TPMOD_ACC
-        params.attackType = tpz.attackType.PHYSICAL
-        params.damageType = tpz.damageType.HTH
-        params.scattr = SC_IMPACTION
-        params.numhits = 6
-        params.multiplier = 1.0
-        params.tp150 = 1.05
-        params.tp300 = 1.1
-        params.azuretp = 1.2
-        params.duppercap = 21
-        params.str_wsc = 0.3
-        params.dex_wsc = 0.0
-        params.vit_wsc = 0.0
-        params.agi_wsc = 0.0
-        params.int_wsc = 0.0
-        params.mnd_wsc = 0.0
-        params.chr_wsc = 0.0
-    damage = BluePhysicalSpell(caster, target, spell, params)
+    params.eco = ECO_BEAST
+    params.attackType = tpz.attackType.PHYSICAL
+    params.damageType = tpz.damageType.HTH
+    params.scattr = SC_IMPACTION
+    params.spellLevel = 70
+    params.numhits = 6
+    params.multiplier = 3.5
+    params.tp150 = 3.5
+    params.tp300 = 3.5
+    params.azuretp = 3.5
+    params.duppercap = 90
+    params.str_wsc = 0.3
+    params.dex_wsc = 0.0
+    params.vit_wsc = 0.0
+    params.agi_wsc = 0.0
+    params.int_wsc = 0.0
+    params.mnd_wsc = 0.0
+    params.chr_wsc = 0.0
+    params.bonusacc = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and math.floor(caster:getTP()/50) or nil)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     return damage
