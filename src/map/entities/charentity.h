@@ -205,7 +205,6 @@ public:
 
     nameflags_t				nameflags;						// флаги перед именем персонажа
     nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
-    uint64                  chatFilterFlags;                // Chat Filters
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
@@ -394,9 +393,6 @@ public:
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
 
     time_t            m_lastPacketTime;             // Last time a packet was received from the player
-
-    bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?
-    bool              isYellSpamFiltered() const;   // Does the user have "all yell/shout messages deemed spam" filtered?
 
     int16 addTP(int16 tp) override;
     int32 addHP(int32 hp) override;

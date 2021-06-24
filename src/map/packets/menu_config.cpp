@@ -39,8 +39,6 @@ CMenuConfigPacket::CMenuConfigPacket(CCharEntity* PChar)
     ref<uint8>(0x06) = PChar->menuConfigFlags.byte3;
     ref<uint8>(0x07) = PChar->menuConfigFlags.byte4;
 
-    ref<uint64>(0x08) = PChar->chatFilterFlags;
-
     ref<uint8>(0x12) = 0x02; // Have seen this as 0x01 on retail
     ref<uint8>(0x14) = 0x02;
 }
