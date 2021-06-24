@@ -5531,7 +5531,7 @@ namespace luautils
         {
             int counter = 0;
             int hours;
-            char _Buffer[5] = { 0 };
+            char _Buffer[8] = { 0 };
 
             while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
             {
@@ -5544,13 +5544,15 @@ namespace luautils
                 if (hours > 24)
                 {
                     hours = hours / 24;
-                    ticket.append(itoa(hours, _Buffer, 10));
-                    ticket.append("d] ");
+                    snprintf(_Buffer, sizeof(_Buffer), "%dd] ", hours);
+                    _Buffer[sizeof(_Buffer)-1] = '\0';
+                    ticket.append(_Buffer);
                 }
                 else
                 {
-                    ticket.append(itoa(hours, _Buffer, 10));
-                    ticket.append("h] ");
+                    snprintf(_Buffer, sizeof(_Buffer), "%dh] ", hours);
+                    _Buffer[sizeof(_Buffer)-1] = '\0';
+                    ticket.append(_Buffer);
                 }
                 ticket.append((const char*)Sql_GetData(SqlHandle, 3));
                 lua_pushnumber(L, ++counter);

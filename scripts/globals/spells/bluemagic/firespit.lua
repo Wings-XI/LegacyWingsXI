@@ -23,10 +23,10 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_NONE
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = 3.0
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 11.0 or 7.0
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -36,7 +36,7 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.2
     params.mnd_wsc = 0.2
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     return damage

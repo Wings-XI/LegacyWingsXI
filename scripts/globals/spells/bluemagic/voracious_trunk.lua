@@ -11,6 +11,7 @@
 -- Recast Time: 56 seconds
 -- Combos: Auto Refresh
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/magic")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -22,12 +23,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local resist = applyResistanceAbility(caster, target, tpz.magic.ele.WIND, 0, 0)
-    local StealChance = math.random(1, 100)
     local stolen = 0
 
-    if resist > 0.0625 and StealChance < 90 then
+    if resist >= 0.25 and math.random() < 0.8 then
         stolen = caster:stealStatusEffect(target)
-        if stolen ~= 0 then
+        if stolen ~= 0 and stolen ~= nil then
             spell:setMsg(tpz.msg.basic.MAGIC_STEAL)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

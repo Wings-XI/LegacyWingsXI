@@ -24,33 +24,24 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffectOne = tpz.effect.MAGIC_ATK_BOOST
-    local typeEffectTwo = tpz.effect.MAGIC_DEF_BOOST
-    local power = 10
     local duration = 90
-    local returnEffect = typeEffectOne
 
-    if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
-        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
-
-        if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
-        end
-
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
-
-    if (target:addStatusEffect(typeEffectOne, power, 0, duration) == false and target:addStatusEffect(typeEffectTwo, power, 0, duration) == false) then -- both statuses fail to apply
+    
+    local attackSuccess = target:addStatusEffect(tpz.effect.MAGIC_ATK_BOOST, 10, 0, duration)
+    local defenseSuccess = target:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 10, 0, duration)
+    
+    if attackSuccess == false and defenseSuccess == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    elseif (target:addStatusEffect(typeEffectOne, power, 0, duration) == false) then -- the first status fails to apply
-        target:addStatusEffect(typeEffectTwo, power, 0, duration)
+        return tpz.effect.MAGIC_ATK_BOOST
+    elseif attackSuccess == false then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
-        returnEffect = typeEffectTwo
+        return tpz.effect.MAGIC_DEF_BOOST
     else
-        target:addStatusEffect(typeEffectOne, power, 0, duration)
-        target:addStatusEffect(typeEffectTwo, power, 0, duration)
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
+        return tpz.effect.MAGIC_ATK_BOOST
     end
-
-    return returnEffect
 end

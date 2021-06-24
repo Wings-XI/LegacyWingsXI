@@ -24,15 +24,16 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_BIRD
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.effect = tpz.effect.INT_DOWN
-    local resist = applyResistance(caster, target, spell, params)
-    local duration = 30 * resist
-    local power = 6
-
-    if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(params.effect, power, 0, duration)) then
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    
+    if target:hasStatusEffect(tpz.effect.INT_DOWN) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.5 then
+        if target:addStatusEffect(tpz.effect.INT_DOWN, 10, 0, 30*resist) then -- wiki talk page says -10 INT
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -41,6 +42,6 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return params.effect
+    return tpz.effect.INT_DOWN
 end
 

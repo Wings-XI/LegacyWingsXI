@@ -12,6 +12,7 @@
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/magic")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -22,35 +23,28 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-
-    local dmg = 5 + 0.575 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
-    --get resist multiplier (1x if no resist)
-    local params = {}
-    params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
-    params.attribute = tpz.mod.MND
-    params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    --get the resisted damage
-    dmg = dmg*resist
-    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
-    dmg = addBonuses(caster, spell, target, dmg)
-    --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
-    --add in final adjustments
-
-    if (dmg < 0) then
-        dmg = 0
-    end
-
-    if (target:isUndead()) then
+    if target:isUndead() then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return dmg
     end
-
-    if (target:getHP() < dmg) then
-        dmg = target:getHP()
+    
+    local dmg = 1 + 0.55 * caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+    local params = {}
+    params.eco = ECO_AMORPH
+    params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
+    params.attribute = tpz.mod.MND
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    local resist = applyResistance(caster, target, spell, params)
+    dmg = dmg*resist
+    dmg = addBonuses(caster, spell, target, dmg)
+    dmg = adjustForTarget(target, dmg, spell:getElement())
+    
+    if dmg > caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20 then
+        dmg = caster:getSkillLevel(tpz.skill.BLUE_MAGIC) + 20
     end
+    if dmg < 0 then dmg = 0 end
+    if target:getHP() < dmg then dmg = target:getHP() end
 
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.DARK

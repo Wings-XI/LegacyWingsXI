@@ -45,6 +45,11 @@ zones[tpz.zone.GRAUBERG_S] =
             [17141978] = 17141979,
             [17141981] = 17141979,
         },
+        VASILICERATOPS_PH =
+        {
+            [17141882] = 17141885,
+            [17141818] = 17141885,
+        },    
         MIGRATORY_HIPPOGRYPH = 17142108,
     },
     npc =

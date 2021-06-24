@@ -3815,7 +3815,7 @@ INSERT INTO `mob_groups` VALUES(3095, 4481, 81, 'Yrvaulair_S_Cousseraux', 0, 0, 
 INSERT INTO `mob_groups` VALUES(1, 2166, 82, 'Jugner_Funguar', 300, 0, 1418, 0, 0, 42, 44, 0);
 INSERT INTO `mob_groups` VALUES(2, 1405, 82, 'Forest_Leech', 300, 0, 895, 0, 0, 39, 51, 0);
 INSERT INTO `mob_groups` VALUES(3, 2997, 82, 'Orcish_Bowshooter', 300, 0, 1871, 0, 0, 76, 79, 0);
-INSERT INTO `mob_groups` VALUES(4, 5733, 82, 'Snipper', 300, 0, 2279, 0, 0, 38, 48, 0);
+INSERT INTO `mob_groups` VALUES(4, 5733, 82, 'Snipper', 300, 0, 2279, 0, 0, 38, 41, 0);
 INSERT INTO `mob_groups` VALUES(5, 4299, 82, 'War_Smilodon', 300, 0, 2626, 0, 0, 57, 60, 0);
 INSERT INTO `mob_groups` VALUES(6, 2373, 82, 'Land_Pugil', 300, 0, 2354, 8000, 9999, 38, 41, 0);
 INSERT INTO `mob_groups` VALUES(7, 3506, 82, 'Screamer', 300, 0, 208, 0, 0, 40, 44, 0);
@@ -4851,6 +4851,7 @@ INSERT INTO `mob_groups` VALUES(54, 3421, 89, 'Ru_Bha_Stonewall', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(55, 3544, 89, 'Sentinel_Wivre', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(56, 4679, 89, 'Ocythoe', 0, 128, 0, 0, 9999, 90, 95, 0);
 INSERT INTO `mob_groups` VALUES(57, 71, 89, 'Air_Elemental', 300, 4, 38, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(58, 6191, 89, 'Vasiliceratops', 0, 32, 3205, 18000, 0, 89, 89, 0);
 INSERT INTO `mob_groups` VALUES(4015, 1, 89, '1st_Gold_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4016, 2, 89, '1st_Iron_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4017, 3, 89, '1st_Legionnaire', 0, 0, 0, 0, 0, 0, 0, 0);

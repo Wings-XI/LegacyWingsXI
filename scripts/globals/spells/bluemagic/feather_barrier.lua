@@ -24,23 +24,16 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.EVASION_BOOST
-    local power = 10
     local duration = 30
 
-    if (caster:hasStatusEffect(tpz.effect.DIFFUSION)) then
-        local diffMerit = caster:getMerit(tpz.merit.DIFFUSION)
-
-        if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
-        end
-
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION)/100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
-    if (target:addStatusEffect(typeEffect, power, 0, duration) == false) then
+    if target:addStatusEffect(tpz.effect.EVASION_BOOST, 20, 0, duration) == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return typeEffect
+    return tpz.effect.EVASION_BOOST
 end

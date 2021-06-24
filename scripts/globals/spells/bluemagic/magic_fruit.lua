@@ -12,6 +12,7 @@
 --
 -- Combos: Resist Sleep
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
@@ -28,26 +29,23 @@ function onSpellCast(caster, target, spell)
     local constant = 130
     local power = getCurePowerOld(caster)
     local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
-    local diff = (target:getMaxHP() - target:getHP())
+    local diff = target:getMaxHP() - target:getHP()
 
-    if (power > 559) then
+    if power > 559 then
         divisor = 2.8333
         constant = 391.2
-    elseif (power > 319) then
+    elseif power > 319 then
         divisor =  1
         constant = 210
     end
 
     final = final + (final * (target:getMod(tpz.mod.CURE_POTENCY_RCVD)/100))
 
-    if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
-        --Applying server mods....
+    if target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB) then
         final = final * CURE_POWER
     end
 
-    if (final > diff) then
-        final = diff
-    end
+    if final > diff then final = diff end
 
     target:addHP(final)
     target:wakeUp()

@@ -40,6 +40,25 @@ function onTrigger(player, target, forceZone)
 
     -- bring target
     if (targ:getZoneID() ~= player:getZoneID() or forceZone == 1) then
+        
+        -- When zoning in and out of Mordion Gaol adjust the jail var
+        local to_prison = 0
+        local jail_cell = 0
+        if player:getZoneID() == 131 then
+            to_prison = 1
+            jail_cell = player:getCharVar("inJail")
+            if jail_cell == 0 then
+                jail_cell = 1
+            end
+        end
+        local in_prison = targ:getCharVar("inJail")
+        if in_prison ~= 0 then
+            in_prison = 1
+        end
+        if in_prison ~= to_prison then
+            targ:setCharVar( "inJail", jail_cell )
+        end
+        
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
     else
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos() )

@@ -65,6 +65,19 @@ function onTrigger(player, target)
 
         -- half a second later, go.  this delay gives time for previous message to appear
         player:timer(500, function(player)
+            -- When zoning in and out of Mordion Gaol adjust the jail var
+            local to_prison = 0
+            if gotoZone == 131 then
+                to_prison = 1
+            end
+            local in_prison = targ:getCharVar("inJail")
+            if in_prison ~= 0 then
+                in_prison = 1
+            end
+            if in_prison ~= to_prison then
+                targ:setCharVar( "inJail", to_prison )
+            end
+
             player:setPos(targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos(), gotoZone)
         end)
     end

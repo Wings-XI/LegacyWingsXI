@@ -9,8 +9,9 @@ Usage allowed only in open-source servers.
 */
 
 #include "pruned_session.h"
+#include <cstring>
 
-pruned_session::pruned_session(uint32 accid, uint32 charid, uint32* session_key, uint32 ZoneIP, uint16 ZonePort, uint32 client_addr, uint8 version_mismatch, char client_version[32])
+pruned_session::pruned_session(uint32 accid, uint32 charid, uint32* session_key, uint32 ZoneIP, uint16 ZonePort, uint32 client_addr, uint8 version_mismatch, char client_version[CLIENT_VERSION_SIZE])
 {
     m_0_accid = accid;
     m_1_charid = charid;
@@ -19,7 +20,7 @@ pruned_session::pruned_session(uint32 accid, uint32 charid, uint32* session_key,
     m_4_ZonePort = ZonePort;
     m_5_client_addr = client_addr;
     m_6_version_mismatch = version_mismatch;
-    memcpy(m_7_client_version, client_version, sizeof(client_version));
+    memcpy(m_7_client_version, client_version, CLIENT_VERSION_SIZE);
 
     m_recoveryQueued = false;
 }
