@@ -124,7 +124,6 @@ CCharEntity::CCharEntity()
     memset(&expChain, 0, sizeof(expChain));
     memset(&nameflags, 0, sizeof(nameflags));
     memset(&menuConfigFlags, 0, sizeof(menuConfigFlags));
-    chatFilterFlags = 0;
 
     // TODO: -Wno-class-memaccess - clearing an object on non-trivial type use assignment or value-init
     memset(&m_SpellList, 0, sizeof(m_SpellList));
@@ -511,28 +510,6 @@ bool CCharEntity::getBlockingAid()
 void CCharEntity::setBlockingAid(bool isBlockingAid)
 {
     m_isBlockingAid = isBlockingAid;
-}
-
-/************************************************************************
-*                                                                       *
-*  Does the user have all yell mesages filtered?                        *
-*                                                                       *
-************************************************************************/
-
-bool CCharEntity::isYellFiltered() const
-{
-    return (chatFilterFlags & CHATFILTER_YELL) != 0;
-}
-
-/************************************************************************
-*                                                                       *
-*  Does the user have "all yell/shout messages deemed spam" filtered?   *
-*                                                                       *
-************************************************************************/
-
-bool CCharEntity::isYellSpamFiltered() const
-{
-    return (chatFilterFlags & CHATFILTER_YELL_SPAM) != 0;
 }
 
 void CCharEntity::SetPlayTime(uint32 playTime)
