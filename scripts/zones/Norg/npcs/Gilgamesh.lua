@@ -84,7 +84,6 @@ function onEventFinish(player, csid, option)
                 player:completeMission(COP, tpz.mission.id.cop.DAWN)
                 player:addMission(COP, tpz.mission.id.cop.THE_LAST_VERSE)
                 player:setCharVar("PromathiaStatus", 0)
-                player:completeMission(ZILART, tpz.mission.id.cop.AWAKENING)
                 player:addMission(ZILART, tpz.mission.id.zilart.THE_LAST_VERSE)
                 player:setCharVar("ZilartStatus", 0)
             end
