@@ -6,7 +6,7 @@ require("scripts/globals/instance")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMod(tpz.mod.SLEEPRES, 100) -- immune to sleep
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100) -- immune to sleep
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1);
     mob:setMobMod(tpz.mobMod.MUG_GIL, -1);
     mob:setMobMod(tpz.mobMod.EXP_BONUS, -100);
