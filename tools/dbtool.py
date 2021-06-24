@@ -25,7 +25,6 @@ from migrations import extend_mission_log
 from migrations import eminence_blob
 from migrations import char_timestamp
 from migrations import currency_columns
-from migrations import chat_filters
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -43,7 +42,6 @@ migrations = [
     eminence_blob,
     char_timestamp,
     currency_columns,
-    chat_filters,
 ]
 # These are the default 'protected' files
 player_data = [
