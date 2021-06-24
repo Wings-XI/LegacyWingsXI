@@ -847,7 +847,8 @@ namespace charutils
             "SELECT "
             "gmlevel, "    // 0
             "mentor, "     // 1
-            "nnameflags "  // 2
+            "nnameflags, "  // 2
+            "chatfilters " // 3
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -860,6 +861,7 @@ namespace charutils
             PChar->m_GMlevel = (uint8)Sql_GetUIntData(SqlHandle, 0);
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
+            PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
         }
 
         charutils::LoadInventory(PChar);
@@ -5099,6 +5101,19 @@ namespace charutils
         const char* Query = "UPDATE %s SET %s %u WHERE charid = %u;";
 
         Sql_Query(SqlHandle, Query, "chars", "nnameflags =", PChar->menuConfigFlags.flags, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Save the char's chat filter flags                                    *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveChatFilterFlags(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET chatfilters = %llu WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->chatFilterFlags, PChar->id);
     }
 
     /************************************************************************

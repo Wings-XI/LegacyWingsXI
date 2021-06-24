@@ -179,6 +179,7 @@ int32 Sql_GetData(Sql_t* self, size_t col, char** out_buf, size_t* out_len);
 int8*  Sql_GetData(Sql_t* self, size_t col);
 int32  Sql_GetIntData(Sql_t *self, size_t col);
 uint32 Sql_GetUIntData(Sql_t *self, size_t col);
+uint64 Sql_GetUInt64Data(Sql_t *self, size_t col);
 float  Sql_GetFloatData(Sql_t *self, size_t col);
 
 

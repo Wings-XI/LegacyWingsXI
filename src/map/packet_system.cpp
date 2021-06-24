@@ -5273,14 +5273,26 @@ void SmallPacket0x0D5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 /************************************************************************
  *                                                                       *
- *  Set Preferred Language                                               *
+ *  Set Chat Filters, Preferred Language                                 *
  *                                                                       *
  ************************************************************************/
 
 void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
+
+    // Extract the system filter bits and update MenuConfig
+    const uint8 systemFilterMask = (NFLAG_SYSTEM_FILTER_H | NFLAG_SYSTEM_FILTER_L) >> 8;
+    PChar->menuConfigFlags.byte2 &= ~systemFilterMask;
+    PChar->menuConfigFlags.byte2 |= data.ref<uint8>(0x09) & systemFilterMask;
+
+    PChar->chatFilterFlags = data.ref<uint64>(0x0C);
+
     PChar->search.language = data.ref<uint8>(0x24);
+
+    charutils::SaveMenuConfigFlags(PChar);
+    charutils::SaveChatFilterFlags(PChar);
+    PChar->pushPacket(new CMenuConfigPacket(PChar));
     return;
 }
 
