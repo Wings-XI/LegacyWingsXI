@@ -539,6 +539,25 @@ uint32 Sql_GetUIntData(Sql_t *self, size_t col)
 *																		*
 ************************************************************************/
 
+uint64 Sql_GetUInt64Data(Sql_t *self, size_t col)
+{
+	if( self && self->row )
+	{
+		if( col < Sql_NumColumns(self) )
+		{
+			return (self->row[col] ? (uint64)strtoull(self->row[col],NULL,10) : 0);
+		}
+	}
+	ShowFatalError("Sql_GetUInt64Data: SQL_ERROR\n");
+	return 0;
+}
+
+/************************************************************************
+*																		*
+*				  														*
+*																		*
+************************************************************************/
+
 float Sql_GetFloatData(Sql_t *self, size_t col)
 {
 	if( self && self->row )
