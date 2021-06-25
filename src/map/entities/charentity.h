@@ -209,6 +209,7 @@ public:
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
+    bool                    m_disconnecting;                // Player is currently disconnecting from the server
 
     profile_t				profile;						// профиль персонажа (все, что связывает города и персонажа)
     expChain_t				expChain;						// Exp Chains
@@ -342,6 +343,7 @@ public:
 
     uint8			  m_hasTractor;					// checks if player has tractor already
     uint8			  m_hasRaise;					// checks if player has raise already
+    bool              m_resendRaise;                // force resending raise menu
     uint8             m_hasAutoTarget;              // возможность использования AutoTarget функции
     position_t		  m_StartActionPos;				// позиция начала действия (использование предмета, начало стрельбы, позиция tractor)
 
@@ -376,6 +378,8 @@ public:
     void              setStyleLocked(bool isStyleLocked);
     bool              getBlockingAid();
     void              setBlockingAid(bool isBlockingAid);
+
+    void              RefreshSpawns();
 
     bool              m_EquipSwap;					// true if equipment was recently changed
     bool              m_EffectsChanged;

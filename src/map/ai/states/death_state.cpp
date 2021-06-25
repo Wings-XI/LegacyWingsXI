@@ -49,6 +49,10 @@ CDeathState::CDeathState(CBattleEntity* PEntity, duration death_time) :
 
 bool CDeathState::Update(time_point tick)
 {
+    CCharEntity* PChar = nullptr;
+    if (m_PEntity->objtype == TYPE_PC) {
+        PChar = static_cast<CCharEntity*>(m_PEntity);
+    }
     if (IsCompleted() || m_PEntity->animation != ANIMATION_DEATH)
     {
         return true;
@@ -58,14 +62,14 @@ bool CDeathState::Update(time_point tick)
         Complete();
         m_PEntity->OnDeathTimer();
     }
-    else if (m_PEntity->objtype == TYPE_PC && tick > GetEntryTime() + 8s && !IsCompleted() &&
-        !m_raiseSent && m_PEntity->isDead())
+    else if (m_PEntity->objtype == TYPE_PC && PChar && tick > GetEntryTime() + 8s && !IsCompleted() &&
+        (!m_raiseSent || PChar->m_resendRaise) && m_PEntity->isDead())
     {
-        auto PChar = static_cast<CCharEntity*>(m_PEntity);
         if (PChar->m_hasRaise)
         {
             PChar->pushPacket(new CRaiseTractorMenuPacket(PChar, TYPE_RAISE));
             m_raiseSent = true;
+            PChar->m_resendRaise = false;
         }
     }
     return false;

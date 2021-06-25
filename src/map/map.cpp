@@ -1007,6 +1007,7 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         //clear accounts_sessions if character is logging out (not when zoning)
         if (map_session_data->shuttingDown == 1)
         {
+            map_session_data->PChar->m_disconnecting = true;
             Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u", map_session_data->PChar->id);
             // flist stuff
             if (FLgetSetting(map_session_data->PChar, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), map_session_data->PChar->id); }
@@ -1108,6 +1109,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                     }
                     else
                     {
+                        map_session_data->PChar->m_disconnecting = true;
                         map_session_data->PChar->StatusEffectContainer->SaveStatusEffects(true);
                         Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u;", map_session_data->PChar->id);
 
@@ -1125,6 +1127,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
 
                     ShowWarning(CL_YELLOW"map_cleanup: WHITHOUT CHAR timed out, session closed\n" CL_RESET);
 
+                    map_session_data->PChar->m_disconnecting = true;
                     const char* Query = "DELETE FROM accounts_sessions WHERE client_addr = %u AND client_port = %u";
                     Sql_Query(SqlHandle, Query, map_session_data->client_addr, map_session_data->client_port);
 
@@ -1256,7 +1259,7 @@ int32 map_config_default()
     map_config.subjob_ratio = 1;
     map_config.include_mob_sj = false;
     map_config.vana_hours_per_pos_update = 1;
-    map_config.zone_sleep_timer = 120;
+    map_config.zone_sleep_timer = 240;
     map_config.zone_crash_recovery_min_players = 3;
     map_config.nm_stat_multiplier = 1.0f;
     map_config.mob_stat_multiplier = 1.0f;
