@@ -5813,6 +5813,7 @@ INSERT INTO `mob_groups` VALUES(33, 3846, 96, 'Tartalo', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(34, 2308, 96, 'Laa_Vaqu_the_Sutler', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(35, 3149, 96, 'Pixiebane', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(36, 4708, 96, 'Kalasutrax', 0, 128, 0, 0, 9999, 96, 98, 0);
+INSERT INTO `mob_groups` VALUES(37, 940, 96, 'Death_Jacket', 0, 128, 584, 0, 0, 33, 37, 0);
 INSERT INTO `mob_groups` VALUES(4937, 18, 96, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4938, 37, 96, 'Achtelle', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4940, 75, 96, 'Ajido-Marujido', 0, 0, 0, 0, 0, 0, 0, 0);

@@ -881,6 +881,7 @@ INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2163);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2164);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2165);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2166);
+INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2167);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 265);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 266);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 267);
