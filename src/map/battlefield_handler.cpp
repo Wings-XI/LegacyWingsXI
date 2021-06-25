@@ -83,7 +83,13 @@ void CBattlefieldHandler::HandleBattlefields(time_point tick)
     }
 }
 
-uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefieldID, uint8 area)
+/********************************************************************\
+ * Determine whether there is a free battlefield area and attempt   *
+ * to launch a new battlefield if there's room. if allow_initiate   *
+ * is set to false this will block any attempt to create a new      *
+ * battlefield.
+\********************************************************************/
+uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefieldID, uint8 area, bool allow_initiate)
 {
     if (PChar->PBattlefield == nullptr && m_Battlefields.size() < m_MaxBattlefields)
     {
@@ -116,6 +122,10 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
         }
         else
         {
+            if (!allow_initiate) {
+                return BATTLEFIELD_RETURN_CODE_WAIT;
+            }
+
             auto PBattlefield = new CBattlefield(battlefieldID, m_PZone, area, PChar);
 
             auto name = Sql_GetData(SqlHandle, 0);
@@ -148,6 +158,7 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
                 return BATTLEFIELD_RETURN_CODE_WAIT;
             }
 
+            charutils::SetCharVar(PChar->id, "BattlefieldToken", PBattlefield->m_Token);
             PBattlefield->InsertEntity(PChar, true);
 
             if (lootid != 0)
@@ -198,6 +209,11 @@ CBattlefield* CBattlefieldHandler::GetBattlefieldByInitiator(uint32 charID)
     return nullptr;
 }
 
+/********************************************************************\
+ * Register a player to a battlefield. If allowinitiate is true it  *
+ * will create a new battlefield if the player is the first one to  *
+ * go in.                                                           *
+\********************************************************************/
 uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battlefieldId, uint8 area, uint32 initiator, bool allowinitiate)
 {
     if (PChar->PBattlefield)
@@ -239,9 +255,19 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battle
         }
     }
     if (allowinitiate) {
-        return LoadBattlefield(PChar, battlefieldId, area);
+        // A safeguard against battlefield splits - Do not allow the player
+        // to start a new battlefield if someone on their party is already
+        // registered to one.
+        PChar->ForAlliance([this, PChar, &allowinitiate](CBattleEntity* PMember)
+        {
+            if ((PMember->getZone() == PChar->getZone()) &&
+                ((PMember->PBattlefield) || (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))))
+            {
+                allowinitiate = false;
+            }
+        });
     }
-    return BATTLEFIELD_RETURN_CODE_WAIT;
+    return LoadBattlefield(PChar, battlefieldId, area, allowinitiate);
 }
 
 bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefield* PBattlefield, uint8 leavecode)
@@ -251,6 +277,16 @@ bool CBattlefieldHandler::RemoveFromBattlefield(CBaseEntity* PEntity, CBattlefie
 }
 
 bool CBattlefieldHandler::IsRegistered(CCharEntity * PChar)
+{
+    for (const auto& battlefield : m_Battlefields)
+    {
+        if (battlefield.second->IsRegistered(PChar))
+            return true;
+    }
+    return false;
+}
+
+bool CBattlefieldHandler::IsEntered(CCharEntity * PChar)
 {
     for (const auto& battlefield : m_Battlefields)
     {

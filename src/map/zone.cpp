@@ -1109,7 +1109,9 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     if (PChar->isDead())
         charutils::SaveDeathTime(PChar);
 
-    PChar->DropBattlefield();
+    if (!PChar->m_disconnecting) {
+        PChar->DropBattlefield();
+    }
 
     PChar->loc.zone = nullptr;
 

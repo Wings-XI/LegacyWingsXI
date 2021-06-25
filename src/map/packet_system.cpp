@@ -69,6 +69,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/synthutils.h"
 #include "utils/zoneutils.h"
 #include "zone.h"
+#include "battlefield.h"
 
 #include "items/item_flowerpot.h"
 #include "items/item_shop.h"
@@ -307,6 +308,57 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
 
         Sql_Query(SqlHandle, fmtQuery, PChar->targid, session_key, currentZone->GetIP(), PSession->client_port, PChar->id);
 
+        if (currentZone->m_BattlefieldHandler) {
+            // Player logging into a battlefield type zone. Doesn't mean they're
+            // actually inside a battlefield so we need to check that.
+            bool kickout = false;
+            // Check whether the player is registered with any ongoing battlefield.
+            CBattlefield* currentBattlefield = currentZone->m_BattlefieldHandler->GetBattlefield(PChar, true);
+            int32 regToken = charutils::GetCharVar(PChar->id, "BattlefieldToken");
+            int32 enterToken = charutils::GetCharVar(PChar->id, "BattlefieldEnterToken");
+            if (currentBattlefield) {
+                bool allowed = false;
+                // Check whether the registration token matches. This doesn't mean they're inside,
+                // just means they're registered.
+                if (currentBattlefield->IsRegistered(PChar) && currentBattlefield->GetToken() == regToken) {
+                    currentBattlefield->InsertEntity(PChar);
+                    if (currentBattlefield->GetToken() == enterToken) {
+                        // Only if the enter token matches it means they got disconnected while
+                        // the battle was ongoing, in which case they are allowed to rejoin.
+                        if (currentBattlefield->ReinsertPlayer(PChar)) {
+                            allowed = true;
+                        }
+                    }
+                }
+                if (!allowed && (currentBattlefield->IsEntered(PChar) || enterToken != 0)) {
+                    kickout = true;
+                }
+            }
+            else {
+                if (enterToken != 0) {
+                    // Battlefield has already ended, prevent player from logging in
+                    // to an empty battlefield area.
+                    kickout = true;
+                }
+                charutils::SetCharVar(PChar->id, "BattlefieldToken", 0);
+                charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", 0);
+            }
+
+            if (kickout) {
+                PChar->DropBattlefield();
+                charutils::SetCharVar(PChar->id, "BattlefieldToken", 0);
+                charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", 0);
+                PChar->loc.destination = PChar->getZone();
+                PChar->loc.p.x = 0;
+                PChar->loc.p.y = 0;
+                PChar->loc.p.z = 0;
+                // This function sets the destination to the zone line. It also
+                // determines whether we need to play a cs on entry but we've
+                // already done this check earlier so this is ignored.
+                luautils::OnZoneIn(PChar);
+            }
+        }
+
         // flist stuff (on zone, not login/logout)
         if (FLgetSetting(PChar, 2) == 1)
         {
@@ -440,6 +492,8 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (PChar->status == STATUS_SHUTDOWN)
     {
+        PChar->m_disconnecting = true;
+
         if (PChar->PParty != nullptr)
         {
             if (PChar->PParty->m_PAlliance != nullptr)
@@ -1010,14 +1064,15 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (data.ref<uint8>(0x0C) == 0 && PChar->m_hasTractor != 0) // ACCEPTED TRACTOR
             {
-                // PChar->PBattleAI->SetCurrentAction(ACTION_RAISE_MENU_SELECTION);
-                PChar->loc.p = PChar->m_StartActionPos;
+                // The old implementation actually caused the player to zone into the
+                // new spot, which casued all sorts of fun stuff like losing battlefield
+                // status and also just took more time and more resources. If anyone
+                // actually finds out that a zone is necessary please document it here.
+                // For now we'll just change it to a simple position update.
                 PChar->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
-                PChar->loc.destination = PChar->getZone();
-                PChar->status = STATUS_DISAPPEAR;
-                PChar->loc.boundary = 0;
-                PChar->clearPacketList();
-                charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
+                PChar->loc.p = PChar->m_StartActionPos;
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CPositionPacket(PChar));
+                PChar->updatemask |= UPDATE_POS;
             }
 
             PChar->m_hasTractor = 0;
@@ -3218,6 +3273,23 @@ void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PCh
 
         PChar->pushPacket(new CCSPositionPacket(PChar));
         PChar->pushPacket(new CPositionPacket(PChar));
+
+        // If they're dead and had the raise menu open send the packet
+        // again so the menu repops after they change position.
+        if (PChar->isDead()) {
+            if (PChar->m_hasRaise > 0) {
+                // Apparently we need to wait for the animation to end before we can
+                // resend the raise menu, otherwise the client ignores it.
+                std::string taskName = "resendRaisePlayer" + std::to_string(PChar->id);
+                CTaskMgr::getInstance()->RemoveTask(taskName.c_str());
+                CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask(taskName.c_str(),
+                    server_clock::now() + std::chrono::seconds(10), PChar, CTaskMgr::TASK_ONCE, charutils::DelayedRaiseMenu));
+            }
+            // However tractor is always removed since it's position dependent
+            // and may transport them back to an undesired location (e.g. an
+            // empty battlefield).
+            PChar->m_hasTractor = 0;
+        }
     }
     PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
     return;

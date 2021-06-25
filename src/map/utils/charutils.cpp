@@ -6416,4 +6416,14 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
     return valid;
 }
 
+int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
+    if (PChar->isDead() && PChar->m_hasRaise) {
+        // Death state handler will resend the menu on next tick
+        PChar->m_resendRaise = true;
+    }
+    return 0;
+}
+
 }; // namespace charutils

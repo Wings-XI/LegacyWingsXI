@@ -228,6 +228,9 @@ namespace charutils
     void   SendTimerPacket(CCharEntity* PChar, duration dur);
     void   SendClearTimerPacket(CCharEntity* PChar);
 
+    // Allows resending a raise menu as a scheduled task
+    int32  DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask);
+
     // Helpdesk routines
     // Coutesy of Setzor (from Eden)
 

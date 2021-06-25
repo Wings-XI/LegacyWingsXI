@@ -173,11 +173,15 @@ CCharEntity::CCharEntity()
     m_Monstrosity = 0;
     m_hasTractor = 0;
     m_hasRaise = 0;
+    m_resendRaise = false;
     m_hasAutoTarget = 1;
     m_InsideRegionID = 0;
     m_LevelRestriction = 0;
     m_lastBcnmTimePrompt = 0;
     m_DeathTimestamp = 0;
+
+    m_openMH = false;
+    m_disconnecting = false;
 
     m_lastDig = std::chrono::system_clock::now() - 5s;
     m_lastDigPosition.x = 0;
@@ -612,6 +616,25 @@ void CCharEntity::ClearTrusts()
     PTrusts.clear();
 
     ReloadPartyInc();
+}
+
+void CCharEntity::RefreshSpawns()
+{
+    for (SpawnIDList_t::const_iterator it = SpawnPCList.begin(); it != SpawnPCList.end(); ++it) {
+        pushPacket(new CEntityUpdatePacket(it->second, ENTITY_SPAWN, UPDATE_ALL_CHAR));
+    }
+    for (SpawnIDList_t::const_iterator it = SpawnMOBList.begin(); it != SpawnMOBList.end(); ++it) {
+        pushPacket(new CEntityUpdatePacket(it->second, ENTITY_SPAWN, UPDATE_ALL_MOB));
+    }
+    for (SpawnIDList_t::const_iterator it = SpawnPETList.begin(); it != SpawnPETList.end(); ++it) {
+        pushPacket(new CEntityUpdatePacket(it->second, ENTITY_SPAWN, UPDATE_ALL_MOB));
+    }
+    for (SpawnIDList_t::const_iterator it = SpawnTRUSTList.begin(); it != SpawnTRUSTList.end(); ++it) {
+        pushPacket(new CEntityUpdatePacket(it->second, ENTITY_SPAWN, UPDATE_ALL_MOB));
+    }
+    for (SpawnIDList_t::const_iterator it = SpawnNPCList.begin(); it != SpawnNPCList.end(); ++it) {
+        pushPacket(new CEntityUpdatePacket(it->second, ENTITY_SPAWN, UPDATE_ALL_MOB));
+    }
 }
 
 void CCharEntity::Tick(time_point tick)
@@ -2097,6 +2120,8 @@ void CCharEntity::DropBattlefield()
 {
     PBattlefield = nullptr;
     PInstance = nullptr;
+    charutils::SetCharVar(id, "BattlefieldToken", 0);
+    charutils::SetCharVar(id, "BattlefieldEnterToken", 0);
     if (StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD)) {
         StatusEffectContainer->DelStatusEffect(EFFECT_BATTLEFIELD);
     }
