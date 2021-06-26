@@ -162,10 +162,22 @@ function BluePhysicalSpell(caster, target, spell, params)
     if params.offcratiomod == nil then -- cannonball uses def (cannonball.lua)
         -- https://forum.square-enix.com/ffxi/threads/43706-Aug-12-2014-%28JST%29-Version-Update
         -- implies that pre-2014, player attack has NO effect on BLU spell damage. one of the physical spells stated it did more damage based on skill, so let's use that
-        params.offcratiomod = math.floor(caster:getSkillLevel(tpz.skill.BLUE_MAGIC)*1.33) + 15
+        local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
+        if skill > 200 then
+            params.offcratiomod = 215 + (skill-200)*0.9
+        else
+            params.offcratiomod = skill + 15
+        end
         if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
-            local cap = (params.spellLevel + 16)*5 + 5
-            params.offcratiomod = params.offcratiomod > cap and cap or params.offcratiomod
+            local capskill = (params.spellLevel + 16)*276/75
+            local capattack = 0
+            if capskill > 200 then
+                capattack = 215 + (capskill-200)*0.9
+            else
+                capattack = capskill + 15
+            end
+            capattack = capattack + (skill - capskill)*0.66
+            params.offcratiomod = params.offcratiomod > capattack and capattack or params.offcratiomod
         end
         -- https://ffxiclopedia.fandom.com/wiki/Talk:Physical_Potency need to go to talk page because the main page is saying only +accuracy and nobody ever fixed it
     end
@@ -323,24 +335,6 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 
     D = ((D + ST) * params.multiplier * convergenceBonus) + statBonus
 
-    -- At this point according to wiki we apply standard magic attack calculations
-    
-    local MTDR = 1.0
-    if params.attackType == tpz.attackType.BREATH then
-        -- bgwiki: When dealing with multiple enemy, there seems to be a correction factor of 1/(2^n) depending on angle.
-        -- not exactly sure what this means, hopefully i did this correctly (?)
-        MTDR = 1/spell:getTotalTargets()
-    elseif params.ignoreMTDR == nil then
-        MTDR = 0.90 - spell:getTotalTargets() * 0.05
-        if MTDR == 0.85 then -- 1 target, stay at 1.0
-            MTDR = 1.0
-        elseif MTDR < 0.4 then
-            MTDR = 0.4
-        end
-        -- print(string.format("MTDR was %.2f for numtargets %u",MTDR,spell:getTotalTargets()))
-    end
-    D = math.floor(D * MTDR)
-
     local rparams = {}
     rparams.diff = dStat
     rparams.skillType = tpz.skill.BLUE_MAGIC
@@ -349,14 +343,13 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     local res = applyResistance(caster, target, spell, rparams)
     D = math.floor(D * res)
     
-    local bparams = {}
-    bparams.bonusmab = 0
+    params.bonusmab = params.bonusmab == nil and 0 or params.bonusmab
     
     if params.eco ~= nil and target:isMob() then
         local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
-        if correl > 0 then bparams.bonusmab = 25 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)
-        elseif correl < 0 then bparams.bonusmab = -25 end
-        --print(string.format("monster family correl bonus MAB was %i",bparams.bonusmab))
+        if correl > 0 then params.bonusmab = 25 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)
+        elseif correl < 0 then params.bonusmab = -25 end
+        --print(string.format("monster family correl bonus MAB was %i",params.bonusmab))
     end
     
     D = math.floor(addBonuses(caster, spell, target, D, params))
@@ -369,7 +362,6 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 
     if D > 0 then target:addTPFromSpell(caster) end
     caster:delStatusEffectSilent(tpz.effect.BURST_AFFINITY)
-    caster:delStatusEffectSilent(tpz.effect.CONVERGENCE)
 
     return D
 end
@@ -390,6 +382,13 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
     
     local attackType = params.attackType or tpz.attackType.NONE
     local damageType = params.damageType or tpz.damageType.NONE
+    if attackType == tpz.attackType.MAGICAL or attackType == tpz.attackType.SPECIAL or attackType == tpz.attackType.BREATH then
+        dmg = target:magicDmgTaken(dmg)
+    elseif attackType == tpz.attackType.RANGED then
+        dmg = target:rangedDmgTaken(dmg)
+    elseif attackType == tpz.attackType.PHYSICAL then
+        dmg = target:physicalDmgTaken(dmg, damageType)
+    end
     target:takeDamage(dmg, caster, attackType, damageType)
     local Emult = params.enmityPercent == nil and 1 or params.enmityPercent/100
     if not target:isPC() then

@@ -882,7 +882,7 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 {
                     auto PSkill = battleutils::GetMobSkill(PBlueSpell->getMonsterSkillId());
                     bool interrupted = false;
-                    if (PSkill->getKnockback() > 0)
+                    if (PSkill && PSkill->getKnockback() > 0)
                     {
                         auto knockback = PSkill->getKnockback();
                         actionTarget.knockback = knockback;

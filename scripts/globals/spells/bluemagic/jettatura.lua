@@ -27,6 +27,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.effect = tpz.effect.TERROR
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     if not target:isFacing(caster) then

@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_VERMIN
     params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = tpz.effect.SLOW
     
     local resist = applyResistanceEffect(caster, target, spell, params)

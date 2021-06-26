@@ -33,6 +33,7 @@ function onSpellCast(caster, target, spell)
     
     local resist = target:isNM() and applyResistanceEffect(caster, target, spell, params) or 1
     local damage = target:isPC() and 750/spell:getTotalTargets() or 1000/spell:getTotalTargets()
+    damage = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and damage or damage*(1 + (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()/100)
     damage = resist < 1 and 0 or damage
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 

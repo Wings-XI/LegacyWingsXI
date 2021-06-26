@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_BEAST
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.FIRE
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.0 or 1.75
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.5
     params.D = caster:getHP()/2
     params.duppercap = 2000

@@ -34,6 +34,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_UNDEAD
     params.diff = 0 -- INT does not affect the accuracy of this spell. t. wiki
     params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = applyResistance(caster, target, spell, params)
     dmg = dmg*resist
     dmg = addBonuses(caster, spell, target, dmg)

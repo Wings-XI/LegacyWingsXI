@@ -32,4 +32,5 @@ function onTrigger(player)
     player:delStatusEffect(tpz.effect.SLOW)
     player:delStatusEffect(tpz.effect.BIO)
     player:delStatusEffect(tpz.effect.DIA)
+    player:delStatusEffect(tpz.effect.AMNESIA)
 end

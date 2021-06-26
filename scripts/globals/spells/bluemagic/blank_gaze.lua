@@ -27,6 +27,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_BEAST
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
 
     local resist = applyResistance(caster, target, spell, params)
     local effect = tpz.effect.NONE

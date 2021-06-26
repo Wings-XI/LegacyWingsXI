@@ -70,11 +70,11 @@ function onTrigger(player, target)
             if gotoZone == 131 then
                 to_prison = 1
             end
-            local in_prison = targ:getCharVar("inJail")
+            local in_prison = targ:isPC() and targ:getCharVar("inJail") or 0
             if in_prison ~= 0 then
                 in_prison = 1
             end
-            if in_prison ~= to_prison then
+            if in_prison ~= to_prison and targ:isPC() then
                 targ:setCharVar( "inJail", to_prison )
             end
 
