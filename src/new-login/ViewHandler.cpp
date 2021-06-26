@@ -774,6 +774,7 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
         LOG_DEBUG0("Accessing map server database.");
         std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pNewChar->cWorldID);
         const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pNewChar->cWorldID);
+        LOCK_WORLDMGR;
         LOCK_PWORLDDB(WorldDB);
         DBConnection WorldDBObj = WorldDB->GetDatabase();
         // Double check that they're not banned
