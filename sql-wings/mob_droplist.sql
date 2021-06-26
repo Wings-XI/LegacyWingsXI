@@ -14148,7 +14148,7 @@ INSERT INTO `mob_droplist` VALUES(2637, 0, 0, 1000, 1687, 90);
 INSERT INTO `mob_droplist` VALUES(2638, 2, 0, 1000, 880, 0);
 INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 880, 300);
 INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 880, 270);
-INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 4824, 50);
+INSERT INTO `mob_droplist` VALUES(2638, 0, 0, 1000, 16447, 160);
 INSERT INTO `mob_droplist` VALUES(2639, 2, 0, 1000, 880, 0);
 INSERT INTO `mob_droplist` VALUES(2639, 0, 0, 1000, 880, 250);
 INSERT INTO `mob_droplist` VALUES(2639, 0, 0, 1000, 1031, 30);
