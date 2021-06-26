@@ -119,7 +119,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 ite
         if (quantity == 0)
         {
             CItem* PItem = itemutils::GetItem(itemid);
-            quantity = PItem->getStackSize();
+            quantity = PItem ? PItem->getStackSize() : 1;
         }
         ref<uint8>(0x10) = quantity;
     }
