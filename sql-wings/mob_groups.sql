@@ -398,7 +398,7 @@ INSERT INTO `mob_groups` VALUES(14, 2700, 11, 'Moblin_Ragman', 792, 0, 1715, 0, 
 INSERT INTO `mob_groups` VALUES(15, 2687, 11, 'Moblin_Chapman', 792, 0, 1705, 0, 0, 33, 36, 0);
 INSERT INTO `mob_groups` VALUES(16, 565, 11, 'Bugbear_Servingman', 720, 0, 377, 0, 0, 32, 35, 0);
 INSERT INTO `mob_groups` VALUES(17, 1160, 11, 'Earth_Elemental', 924, 4, 733, 0, 0, 45, 50, 0);
-INSERT INTO `mob_groups` VALUES(18, 563, 11, 'Bugbear_Muscleman', 5700, 0, 376, 0, 0, 52, 52, 0);
+INSERT INTO `mob_groups` VALUES(18, 563, 11, 'Bugbear_Muscleman', 5700, 0, 376, 4700, 0, 52, 52, 0);
 INSERT INTO `mob_groups` VALUES(19, 3776, 11, 'Stirge', 792, 0, 2338, 0, 0, 33, 36, 0);
 INSERT INTO `mob_groups` VALUES(20, 121, 11, 'Ancient_Bomb', 924, 0, 83, 0, 0, 40, 45, 0);
 INSERT INTO `mob_groups` VALUES(21, 3912, 11, 'Thunder_Elemental', 924, 4, 2412, 0, 0, 45, 50, 0);
@@ -5813,6 +5813,7 @@ INSERT INTO `mob_groups` VALUES(33, 3846, 96, 'Tartalo', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(34, 2308, 96, 'Laa_Vaqu_the_Sutler', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(35, 3149, 96, 'Pixiebane', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(36, 4708, 96, 'Kalasutrax', 0, 128, 0, 0, 9999, 96, 98, 0);
+INSERT INTO `mob_groups` VALUES(37, 940, 96, 'Death_Jacket', 0, 128, 584, 0, 0, 33, 37, 0);
 INSERT INTO `mob_groups` VALUES(4937, 18, 96, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4938, 37, 96, 'Achtelle', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4940, 75, 96, 'Ajido-Marujido', 0, 0, 0, 0, 0, 0, 0, 0);
