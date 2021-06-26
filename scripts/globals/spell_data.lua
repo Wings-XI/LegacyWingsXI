@@ -28,6 +28,8 @@ tpz.magic.aoe =
     RADIAL_ACCE = 4, -- AOE when under SCH stratagem Accession
     PIANISSIMO  = 5, -- Single target when under BRD JA Pianissimo
     DIFFUSION   = 6, -- AOE when under Diffusion
+    SPELLAOE_CONVERGENCE = 7,  -- radial AOE spell that switches to single target under BLU merit Convergence
+    SPELLAOE_CONAL_CONVERGENCE = 8  -- conal AOE spell that switches to single target under BLU merit Convergence
 }
 
 ------------------------------------

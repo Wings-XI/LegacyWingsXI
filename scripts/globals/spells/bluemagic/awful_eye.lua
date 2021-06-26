@@ -32,7 +32,7 @@ function onSpellCast(caster, target, spell)
     local params = {}
     params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = -10
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = nil
     
     local resist = applyResistance(caster, target, spell, params)

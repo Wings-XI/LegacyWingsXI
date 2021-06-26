@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.WIND
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.75 or 1.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 2.912
     params.D = caster:getHP()/3
     params.duppercap = 2000

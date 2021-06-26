@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = 0
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.5 or 1.25
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.0
     params.D = caster:getHP()/6 + BLUlvl/1.875
     params.duppercap = 2000
@@ -48,6 +48,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.effect = tpz.effect.WEIGHT
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))

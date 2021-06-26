@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR)
     params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = tpz.effect.SLEEP_I
     local resist = applyResistanceEffect(caster, target, spell, params)
     
