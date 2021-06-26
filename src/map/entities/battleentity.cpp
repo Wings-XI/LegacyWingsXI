@@ -1560,6 +1560,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
             luautils::OnMagicHit(this, PTarget, PSpell);
         }
     }
+    this->StatusEffectContainer->DelStatusEffect(EFFECT_CONVERGENCE);
     if ((!(PSpell->isHeal()) || PSpell->tookEffect()) && PActionTarget->isAlive())
     {
         if (objtype != TYPE_PET && doEnmityAndClaim)

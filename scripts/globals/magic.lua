@@ -808,7 +808,7 @@ function addBonuses(caster, spell, target, dmg, params)
     local ele = spell:getElement()
 
     local affinityBonus = AffinityBonusDmg(caster, ele)
-    dmg = math.floor(dmg * affinityBonus)
+    if params.attackType ~= tpz.attackType.BREATH then dmg = math.floor(dmg * affinityBonus) end -- BLU breaths unaffected by staff
 
     params.bonusmab = params.bonusmab or 0
     params.AMIIburstBonus = params.AMIIburstBonus or 0
@@ -896,6 +896,7 @@ function addBonuses(caster, spell, target, dmg, params)
                 mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
             end
         end
+        if params.attackType == tpz.attackType.BREATH then mab = params.bonusmab end -- BLU breaths only affected by correlation bonuses
         mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
     end
 

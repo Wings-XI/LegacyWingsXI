@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
     params.diff = nil
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = tpz.effect.BLINDNESS
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(120 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))

@@ -31,7 +31,7 @@ function onSpellCast(caster, target, spell)
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.WATER
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.5
     params.D = caster:getHP()/10 + BLUlvl/1.25

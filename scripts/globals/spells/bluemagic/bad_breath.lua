@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.EARTH
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.5 or 1.25
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.5
     params.D = caster:getHP()/8 + BLUlvl/3
     params.duppercap = 2000
@@ -45,7 +45,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = 1
     local duration = 1
     

@@ -5166,9 +5166,17 @@ namespace battleutils
             else
                 return SPELLAOE_NONE;
         }
-        if (PSpell->getSkillType() == SKILL_BLUE_MAGIC && PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE) && PSpell->getMagicBurstMessage())
+        if (PSpell->getAOE() == SPELLAOE_CONVERGENCE)
         {
-            return SPELLAOE_NONE;
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_RADIAL;
+        }
+        if (PSpell->getAOE() == SPELLAOE_CONAL_CONVERGENCE)
+        {
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_CONAL;
         }
 
         return PSpell->getAOE();

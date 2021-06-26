@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_VERMIN
     params.attackType = tpz.attackType.BREATH
     params.damageType = tpz.damageType.ICE
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.75 or 1.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.25 or 1
     params.tMultiplier = 1.5
     params.D = caster:getHP()/3 + BLUlvl/0.625
     params.duppercap = 2000
@@ -46,7 +46,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = tpz.effect.PARALYSIS
     local resist = applyResistanceEffect(caster, target, spell, params)
     
