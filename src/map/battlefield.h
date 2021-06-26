@@ -128,6 +128,7 @@ public:
     duration               GetFinishTime() const;
     duration               GetRemainingTime() const;
     duration               GetLastTimeUpdate() const;
+    int32                  GetToken() const;
     uint64_t               GetLocalVar(const std::string& name) const;
 
     bool                   CheckInProgress();
@@ -159,8 +160,10 @@ public:
     void                   ApplyLevelRestrictions(CCharEntity* PChar) const;
     void                   ClearEnmityForEntity(CBattleEntity* PEntity);
     bool                   InsertEntity(CBaseEntity* PEntity, bool inBattlefield = false, BATTLEFIELDMOBCONDITION conditions = CONDITION_NONE, bool ally = false);
+    bool                   ReinsertPlayer(CCharEntity* PChar);
     CBaseEntity*           GetEntity(CBaseEntity* PEntity);
     bool                   IsRegistered(CCharEntity* PChar);
+    bool                   IsEntered(CCharEntity* PChar);
     bool                   RemoveEntity(CBaseEntity* PEntity, uint8 leavecode = 0);
     void                   onTick(time_point time);
     bool                   CanCleanup(bool cleanup = false);
@@ -193,6 +196,12 @@ public:
     duration               m_LastPromptTime;
     size_t                 m_MaxParticipants;
     uint8                  m_LevelCap;
+    int32                  m_Token;
+    bool                   m_HasCoords;
+    float                  m_PosX;
+    float                  m_PosY;
+    float                  m_PosZ;
+    uint8                  m_PosR;
 
 private:
     bool                   m_Cleanup{ false };

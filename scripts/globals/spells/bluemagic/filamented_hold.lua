@@ -24,30 +24,25 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.SLOW
-    local cMND = caster:getStat(tpz.mod.MND)
-    local tMND = target:getStat(tpz.mod.MND)
-    local dINT = cMND - tMND
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
+    params.eco = ECO_VERMIN
+    params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = tpz.effect.SLOW
     
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
-    if resist > 0.5 then -- Do it!
-        local power = 2000
-        
+    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+    if resist >= 0.5 then
+        local power = 2500
+        local cMND = caster:getStat(tpz.mod.MND)
+        local tMND = target:getStat(tpz.mod.MND)
         if cMND < tMND then
             power = power - (tMND - cMND)*50
-            if power < 300 then
-                power = 300
-            end
+            if power < 300 then power = 300 end
         end
         
-        if target:addStatusEffect(typeEffect, power, 0, duration) then
+        if target:addStatusEffect(tpz.effect.SLOW, power, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -56,5 +51,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.SLOW
 end

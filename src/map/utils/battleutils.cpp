@@ -968,10 +968,10 @@ namespace battleutils
         }
 
         PTarget->SetLocalVar(("RESBUILD_PERCENT_" + std::to_string((int)mod)).c_str(), buildPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
-        ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
-        ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
+        //ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
+        //ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
 
         return resultPercent;
     }
@@ -3554,6 +3554,10 @@ namespace battleutils
                 PPlayer->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
                 PPlayer->updatemask |= UPDATE_HP;
             }
+            else if (PPlayer->isSitting())
+            {
+                PPlayer->animation = ANIMATION_NONE;
+            }
         }
     }
 
@@ -5161,6 +5165,18 @@ namespace battleutils
                 return SPELLAOE_RADIAL;
             else
                 return SPELLAOE_NONE;
+        }
+        if (PSpell->getAOE() == SPELLAOE_CONVERGENCE)
+        {
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_RADIAL;
+        }
+        if (PSpell->getAOE() == SPELLAOE_CONAL_CONVERGENCE)
+        {
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_CONAL;
         }
 
         return PSpell->getAOE();

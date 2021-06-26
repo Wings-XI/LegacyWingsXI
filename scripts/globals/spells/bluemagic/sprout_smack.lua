@@ -25,11 +25,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_DURATION
+    params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.PHYSICAL
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_REVERBERATION
+    params.spellLevel = 4
     params.numhits = 1
     params.multiplier = 1.5
     params.tp150 = 1.5
@@ -43,29 +43,35 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    params.SA = 1.3
-	params.eco = tpz.ecosystem.PLANTOID
-    damage = BluePhysicalSpell(caster, target, spell, params)
-    if damage == 0 then
-		return 0
-	end
-    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
     
-    local resist = applyResistanceAbility(caster,target,tpz.magic.element.EARTH,tpz.skill.BLUE_MAGIC,bonus)
+    params = {}
+    params.eco = ECO_ARCANA
+    params.diff = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+    params.attribute = tpz.mod.MND
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = tpz.effect.SLOW
+    local resist = applyResistanceEffect(caster, target, spell, params)
     
-    local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
-    if not target:hasStatusEffect(tpz.effect.SLOW) and resist >= 0.5 then
-        local power = 1000
+    local duration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
+    
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
+        local power = 1500
         local cMND = caster:getStat(tpz.mod.MND)
         local tMND = target:getStat(tpz.mod.MND)
         if cMND < tMND then
             power = power - (tMND - cMND)*40
-            if power < 300 then
-                power = 300
-            end
+            if power < 300 then power = 300 end
         end
 
-        target:addStatusEffect(tpz.effect.SLOW, power, 0, duration)
+        target:addStatusEffect(tpz.effect.SLOW, power, 0, duration+bonus)
     end
 
     return damage

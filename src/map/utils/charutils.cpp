@@ -89,6 +89,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../treasure_pool.h"
 #include "../mob_modifier.h"
 #include "../roe.h"
+#include "../anticheat.h"
 
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
@@ -846,7 +847,8 @@ namespace charutils
             "SELECT "
             "gmlevel, "    // 0
             "mentor, "     // 1
-            "nnameflags "  // 2
+            "nnameflags, "  // 2
+            "chatfilters " // 3
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -859,6 +861,7 @@ namespace charutils
             PChar->m_GMlevel = (uint8)Sql_GetUIntData(SqlHandle, 0);
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
+            PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
         }
 
         charutils::LoadInventory(PChar);
@@ -5102,6 +5105,19 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Save the char's chat filter flags                                    *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveChatFilterFlags(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET chatfilters = %llu WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->chatFilterFlags, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Saves character nation changes                                       *
     *                                                                       *
     ************************************************************************/
@@ -5927,6 +5943,14 @@ namespace charutils
         PChar->updatemask |= UPDATE_HP;
 
         PChar->clearPacketList();
+
+        uint32 inJail = charutils::GetCharVar(PChar->id, "InJail");
+        if (inJail) {
+            ShowExploit("charutils::HomePoint Player tried to blood warp out of jail");
+            PChar->loc.destination = ZONE_MORDION_GAOL;
+            anticheat::JailChar(PChar, inJail);
+        }
+
         SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
     }
 
@@ -6390,6 +6414,16 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
             PZone->m_DynamisHandler->EjectPlayer(PChar, false);
     }
     return valid;
+}
+
+int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
+    if (PChar->isDead() && PChar->m_hasRaise) {
+        // Death state handler will resend the menu on next tick
+        PChar->m_resendRaise = true;
+    }
+    return 0;
 }
 
 }; // namespace charutils

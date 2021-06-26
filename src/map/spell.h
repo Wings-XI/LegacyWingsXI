@@ -222,7 +222,9 @@ enum SPELLAOE
     SPELLAOE_RADIAL_MANI    = 3,  //AOE when under SCH stratagem Manifestation
     SPELLAOE_RADIAL_ACCE    = 4,  //AOE when under SCH stratagem Accession
     SPELLAOE_PIANISSIMO     = 5,  //Single target when under BRD JA Pianissimo
-    SPELLAOE_DIFFUSION      = 6   //AOE when under Diffusion
+    SPELLAOE_DIFFUSION      = 6,  //AOE when under Diffusion
+    SPELLAOE_CONVERGENCE    = 7,  //radial AOE spell that switches to single target under BLU merit Convergence
+    SPELLAOE_CONAL_CONVERGENCE=8  //conal AOE spell that switches to single target under BLU merit Convergence
 };
 
 enum SPELLFLAG

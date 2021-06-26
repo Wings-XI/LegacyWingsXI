@@ -881,6 +881,7 @@ INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2163);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2164);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2165);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2166);
+INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2167);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 265);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 266);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 267);
@@ -3133,7 +3134,7 @@ INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2316);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2317);
 INSERT INTO `mob_skill_lists` VALUES('Mind_Hoarder', 1149, 524);
 INSERT INTO `mob_skill_lists` VALUES('Flockbock', 1150, 269);
-INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 675);
+INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 3868);
 INSERT INTO `mob_skill_lists` VALUES('Picolaton', 1152, 926);
 INSERT INTO `mob_skill_lists` VALUES('Olgoi-Khorkhoi', 1153, 426);
 INSERT INTO `mob_skill_lists` VALUES('Ratatoskr', 1154, 323);
@@ -3157,6 +3158,7 @@ INSERT INTO `mob_skill_lists` VALUES('Goblintrap', 1160, 434);
 INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Pyuu_The_Spatemaker', 1162, 770);
 INSERT INTO `mob_skill_lists` VALUES('Yal-un_Eke', 1163, 567);
+INSERT INTO `mob_skill_lists` VALUES('Bugbear_Muscleman', 1164, 361);
 --
 -- Indexes for dumped tables
 --

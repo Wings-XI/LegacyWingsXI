@@ -24,20 +24,17 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.FLASH
-    local dINT = (caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
     local params = {}
-    params.diff = nil
-    params.attribute = tpz.mod.INT
+    params.eco = ECO_LUMINION
+    params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus =  150
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = nil
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 20 * resist
-    local power = 200
+    local duration = 15 * resist
 
-    if (resist > 0.0625) then -- Do it!
-        if (target:addStatusEffect(typeEffect, power, 0, duration)) then
+    if resist >= 0.25 then
+        if target:addStatusEffect(tpz.effect.FLASH, 200, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -46,5 +43,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.FLASH
 end

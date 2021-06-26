@@ -23,33 +23,39 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffectOne = tpz.effect.DEFENSE_DOWN
-    local typeEffectTwo = tpz.effect.MAGIC_DEF_DOWN
     local params = {}
+    params.eco = ECO_NONE
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    local duration = 30 * resist
-    local returnEffect = typeEffectOne
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = nil
+    local resist = applyResistanceEffect(caster, target, spell, params)
 
-    if (resist >= 0.5) then
-        if (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo)) then -- the def/mag def down does not overwrite the same debuff from any other source
-            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
-        elseif (target:hasStatusEffect(typeEffectOne)) then
-            target:addStatusEffect(typeEffectTwo, 8, 0, duration)
-            returnEffect = typeEffectTwo
-            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
-        elseif (target:hasStatusEffect(typeEffectTwo)) then
-            target:addStatusEffect(typeEffectOne, 10, 0, duration)
-            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+    if resist >= 0.5 then
+        if target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) and target:hasStatusEffect(tpz.effect.MAGIC_DEF_DOWN) then
+            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+            return tpz.effect.DEFENSE_DOWN
+        elseif target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) then
+            if target:addStatusEffect(tpz.effect.MAGIC_DEF_DOWN, 8, 0, 30*resist) then
+                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+                return tpz.effect.MAGIC_DEF_DOWN
+            end
+        elseif target:hasStatusEffect(tpz.effect.MAGIC_DEF_DOWN) then
+            if target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 10, 0, 30*resist) then
+                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+                return tpz.effect.DEFENSE_DOWN
+            end
         else
-            target:addStatusEffect(typeEffectOne, 10, 0, duration)
-            target:addStatusEffect(typeEffectTwo, 8, 0, duration)
-            spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+            local defSuccess = target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 10, 0, 30*resist)
+            local magSuccess = target:addStatusEffect(tpz.effect.MAGIC_DEF_DOWN, 8, 0, 30*resist)
+            if defSuccess or magSuccess then
+                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+                if defSuccess then return tpz.effect.DEFENSE_DOWN else return tpz.effect.MAGIC_DEF_DOWN end
+            end
         end
     end
-
-    return returnEffect
+    
+    spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+    return tpz.effect.DEFENSE_DOWN
 end

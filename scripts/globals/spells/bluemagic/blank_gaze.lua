@@ -23,22 +23,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
+    params.eco = ECO_BEAST
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
 
     local resist = applyResistance(caster, target, spell, params)
     local effect = tpz.effect.NONE
-
-    if (resist > 0.0625) then
-        if (target:isFacing(caster)) then
-            spell:setMsg(tpz.msg.basic.MAGIC_ERASE)
-            effect = target:dispelStatusEffect()
-            if (effect == tpz.effect.NONE) then
-                spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-            end
-        else
+    
+    if not target:isFacing(caster) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.125 then
+        spell:setMsg(tpz.msg.basic.MAGIC_ERASE)
+        effect = target:dispelStatusEffect()
+        if effect == tpz.effect.NONE then
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         end
     else
