@@ -4467,7 +4467,51 @@ void SmallPacket0x085(map_session_data_t* const PSession, CCharEntity* const PCh
             return;
         }
 
-        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * PItem->getBasePrice());
+        uint32 basePrice = PItem->getBasePrice();
+        float mult = 0.8f;
+
+        // fame start
+
+        CZone* PZone = PChar->loc.zone;
+        uint16 fame = 0;
+        float fameMultiplier = map_config.fame_multiplier;
+
+        switch (PZone->m_fameType)
+        {
+            case 0: // San d'Oria
+            case 1: // Bastok
+            case 2: // Windurst
+                fame = (uint16)(PChar->profile.fame[PZone->m_fameType] * fameMultiplier);
+                break;
+            case 3: // Jeuno
+                fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                break;
+            case 4: // Selbina / Rabao
+                fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
+                break;
+            case 5: // Norg
+                fame = (uint16)(PChar->profile.fame[3] * fameMultiplier);
+                break;
+            default: // default to no fame for worst sale price
+                fame = 0;
+                break;
+        }
+
+        // Amalasanda
+        if (PZone->GetID() == ZONE_LOWER_JEUNO && PChar->loc.p.x > 23.0f && PChar->loc.p.x < 45.0f && PChar->loc.p.z > -62.0f && PChar->loc.p.z < -29.0f)
+            fame = (uint16)(PChar->profile.fame[3] * fameMultiplier); // use tenshodo fame
+
+        if (fame >= 613) // fame level 9
+            mult = 1.0f;
+        else
+            mult = 0.8f + 0.2f * (float)fame / 612.0f;
+
+        if (basePrice == 1)
+            mult = 1.0f; // dont round down to 0
+
+        // fame end
+
+        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * (uint32)((float)basePrice * mult));
         charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -(int32)quantity);
         ShowNotice(CL_CYAN "SmallPacket0x085: Player '%s' sold %u of itemID %u [to VENDOR] \n" CL_RESET, PChar->GetName(), quantity, itemID);
         PChar->pushPacket(new CMessageStandardPacket(0, itemID, quantity, MsgStd::Sell));
