@@ -379,10 +379,10 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                     charutils::SaveCharStats(PChar);
                 }
                 else {
-                    PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
-                    PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
-                }
+                PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
+                PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
             }
+        }
         }
 
         fmtQuery = "SELECT pos_prevzone FROM chars WHERE charid = %u";
