@@ -690,7 +690,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                     // Compensate for speedy chickens
                     threshold = threshold * 2;
                 }
-                if ((diffPerSecond > threshold) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel == 0)))
+                if ((diffPerSecond > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel == 0)))
                 {
                     char cheatDesc[128];
                     snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s went over the speed limit: %f (raw=%f, time=%d, threshold=%f)", PChar->name.c_str(),
