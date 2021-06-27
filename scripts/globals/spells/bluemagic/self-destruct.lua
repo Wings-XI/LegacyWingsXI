@@ -12,28 +12,43 @@
 -- Magic Bursts on: Liquefaction, Fusion, and Light
 -- Combos: Auto Refresh
 -----------------------------------------
-
+require("scripts/globals/bluemagic")
 require("scripts/globals/settings")
 require("scripts/globals/magic")
 require("scripts/globals/status")
-require("scripts/globals/bluemagic")
+-----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    if caster:hasStatusEffect(tpz.effect.WEAKNESS) then return 17 end
     caster:setLocalVar("self-destruct_hp", caster:getHP())
     return 0
 end
 
 function onSpellCast(caster, target, spell)
-    local duration = 300
-    local playerHP = caster:getLocalVar("self-destruct_hp")
-    local damage = playerHP - 1
-
-    if damage > 0 then
-        target:takeDamage(playerHP, caster, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
-        caster:setHP(1)
-        caster:delStatusEffect(tpz.effect.WEAKNESS)
-        caster:addStatusEffect(tpz.effect.WEAKNESS, 1, 0, duration)
-    end
+    local HP = caster:getLocalVar("self-destruct_hp")
+    local params = {}
+    params.eco = ECO_ARCANA
+    params.attackType = tpz.attackType.MAGICAL
+    params.damageType = tpz.damageType.FIRE
+    params.multiplier = 1 + HP/60
+    params.tMultiplier = 1 + HP/60
+    params.duppercap = 500
+    params.str_wsc = 0.0
+    params.dex_wsc = 0.0
+    params.vit_wsc = 0.0
+    params.agi_wsc = 0.0
+    params.int_wsc = 0.2
+    params.mnd_wsc = 0.0
+    params.chr_wsc = 0.0
+    params.ignoreMTDR = true
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    --print(string.format("self-destruct damage %u (before HP capped)",damage))
+    if damage > HP then damage = HP end
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    caster:setHP(1)
+    caster:delStatusEffect(tpz.effect.WEAKNESS)
+    caster:addStatusEffect(tpz.effect.WEAKNESS, 1, 0, 300)
 
     return damage
 end

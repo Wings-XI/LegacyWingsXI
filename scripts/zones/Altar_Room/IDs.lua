@@ -19,6 +19,7 @@ zones[tpz.zone.ALTAR_ROOM] =
         LOGIN_NUMBER                 = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         THE_MAGICITE_GLOWS_OMINOUSLY = 7102, -- The magicite glows ominously.
         CONQUEST_BASE                = 7103, -- Tallying conquest results...
+        DRAWS_NEAR                   = 7347, -- You brush away all surrounding dust and place the Vault Quipus on the stone lid.
     },
     mob =
     {

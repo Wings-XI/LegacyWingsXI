@@ -24,17 +24,20 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_BIRD
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     local resist = applyResistance(caster, target, spell, params)
-    local power = math.random(100, 600) * resist
---  caster:PrintToPlayer(string.format("Tickled for %u TP.",power)) -- Optional debug message for testing.
+    local power = math.random(200, 300)
 
-    if (target:getTP() == 0) then
+    if target:getTP() == 0 then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist < 0.5 then
+        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     else
-        target:delTP(power)
+        target:delTP(power*resist)
         spell:setMsg(tpz.msg.basic.MAGIC_TP_REDUCE)
+        -- caster:PrintToPlayer(string.format("Tickled for %u TP.",power*resist))
     end
 
     return tp

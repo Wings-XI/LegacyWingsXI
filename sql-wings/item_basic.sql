@@ -15104,7 +15104,7 @@ INSERT INTO `item_basic` VALUES(17878, 0, 'jug_of_lucky_carrot_broth', 'l._carro
 INSERT INTO `item_basic` VALUES(17879, 0, 'jug_of_curdled_plasma_broth', 'c._plasma_broth', 12, 2052, 66, 0, 153);
 INSERT INTO `item_basic` VALUES(17880, 0, 'jug_of_seedbed_soil', 'seedbed_soil', 12, 2052, 48, 0, 108);
 INSERT INTO `item_basic` VALUES(17881, 0, 'jug_of_deepbed_soil', 'deepbed_soil', 12, 2052, 66, 0, 65);
-INSERT INTO `item_basic` VALUES(17882, 0, 'jug_of_alchemists_water', 'alchemist_water', 12, 2052, 48, 0, 82);
+INSERT INTO `item_basic` VALUES(17882, 0, 'jug_of_alchemists_water', 'alchemist_water', 12, 2052, 48, 0, 350);
 INSERT INTO `item_basic` VALUES(17883, 0, 'jug_of_mellow_bird_broth', 'mlw._bird_broth', 12, 2052, 66, 0, 189);
 INSERT INTO `item_basic` VALUES(17884, 0, 'jug_of_sun_water', 'sun_water', 12, 2052, 48, 0, 1358);
 INSERT INTO `item_basic` VALUES(17885, 0, 'jug_of_grasshopper_broth', 'grass._broth', 12, 2052, 48, 0, 172);

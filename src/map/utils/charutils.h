@@ -171,6 +171,7 @@ namespace charutils
     void    SaveCharGMLevel(CCharEntity* PChar);                        // saves the char's gm level and nameflags
     void    SaveMentorFlag(CCharEntity* PChar);                         // saves the char's mentor flag
     void    SaveMenuConfigFlags(CCharEntity* PChar);                    // saves the char's unnamed flags
+    void    SaveChatFilterFlags(CCharEntity* PChar);                    // saves the char's chat filters
     void	SaveCharNation(CCharEntity* PChar);							// Save the character's nation of allegiance.
     void    SaveCampaignAllegiance(CCharEntity* PChar);                 // Save the character's campaign allegiance.
     void	SaveCharMoghancement(CCharEntity* PChar);                   // Save the character's current moghancement
@@ -226,6 +227,9 @@ namespace charutils
     void   SendTimerPacket(CCharEntity* PChar, uint32 seconds);
     void   SendTimerPacket(CCharEntity* PChar, duration dur);
     void   SendClearTimerPacket(CCharEntity* PChar);
+
+    // Allows resending a raise menu as a scheduled task
+    int32  DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask);
 
     // Helpdesk routines
     // Coutesy of Setzor (from Eden)

@@ -23,41 +23,46 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffectOne = tpz.effect.BLINDNESS
-    local typeEffectTwo = tpz.effect.BIND
+    if not target:isFacing(caster, 40) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.BIND
+    end
+
+    local returnEffect = nil
     local params = {}
+    params.eco = ECO_NONE
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
-    local power = 100 * resist
-    local returnEffect = typeEffectOne
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     
+    params.effect = tpz.effect.BLINDNESS
+    local blindResist = applyResistanceEffect(caster, target, spell, params)
     local blindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    
+    params.effect = tpz.effect.BIND
+    local bindResist = applyResistanceEffect(caster, target, spell, params)
     local bindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if (resist >= 0.5) then
-        if (target:isFacing(caster)) then
-            if (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo) and target:getTP() == 0) then
-                spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
-            elseif (target:hasStatusEffect(typeEffectOne) and target:hasStatusEffect(typeEffectTwo)) then
-                target:delTP(power)
-                spell:setMsg(tpz.msg.basic.MAGIC_TP_REDUCE)
-            elseif target:hasStatusEffect(typeEffectOne) then
-                target:addStatusEffect(typeEffectTwo, 1, 0, bindDuration)
-                target:delTP(power)
-                returnEffect = typeEffectTwo -- make it return bind message if blind can't be inflicted
-                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
-            else
-                target:addStatusEffect(typeEffectTwo, 1, 0, bindDuration)
-                target:addStatusEffect(typeEffectOne, 100, 0, blindDuration)
-                target:delTP(power)
-                spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
-            end
-        else
-            spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    
+    if blindResist >= 0.5 then
+        target:delTP(100*blindResist)
+        if not target:hasStatusEffect(tpz.effect.BLINDNESS) and target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, blindDuration) then
+            returnEffect = tpz.effect.BLINDNESS
         end
     end
-
-    return returnEffect
+    
+    if bindResist >= 0.5 then
+        target:delTP(100*bindResist)
+        if not target:hasStatusEffect(tpz.effect.BIND) and target:addStatusEffect(tpz.effect.BIND, 1, 0, bindDuration) then
+            returnEffect = tpz.effect.BIND
+        end
+    end
+    
+    if returnEffect == nil then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.BIND
+    else
+        spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
+        return returnEffect
+    end
 end

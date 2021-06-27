@@ -83,6 +83,8 @@ function tpz.battlefield.onBattlefieldTick(battlefield, timeinside, players)
             elseif battlefield:getLocalVar("lootSeen") == 1 then
                 canLeave = true
             end
+        elseif tpz.battlefield.status.LOST then
+            canLeave = true
         end
         if canLeave and cutsceneTimer >= 15 then
             battlefield:cleanup(true)
@@ -172,9 +174,6 @@ function tpz.battlefield.HandleWipe(battlefield, players)
                 end
             end
 
-            if rekt then
-                battlefield:setStatus(tpz.battlefield.status.LOST)
-            end
         end
     end
 end

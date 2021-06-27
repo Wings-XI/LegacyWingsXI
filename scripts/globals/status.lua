@@ -1372,6 +1372,7 @@ tpz.mod =
     -- Blue Mage
     BLUE_POINTS               = 309, -- Tracks extra blue points
     BLUE_LEARN_CHANCE         = 945, -- Additional chance to learn blue magic
+    MONSTER_CORRELATION_BONUS = 936, -- AF head
 
     -- Corsair
     EXP_BONUS                 = 382, --

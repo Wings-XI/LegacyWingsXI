@@ -104,7 +104,7 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity* 
     }
 }
 
-CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price)
+CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price, uint8 quantity)
 {
     this->type = 0x4C;
     this->size = 0x1E;
@@ -113,6 +113,16 @@ CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, uint16 ite
     ref<uint8>(0x06) = message;
     ref<uint32>(0x08) = price;
     ref<uint16>(0x0C) = itemid;
+
+    if (itemid != 0)
+    {
+        if (quantity == 0)
+        {
+            CItem* PItem = itemutils::GetItem(itemid);
+            quantity = PItem ? PItem->getStackSize() : 1;
+        }
+        ref<uint8>(0x10) = quantity;
+    }
 }
 
 CAuctionHousePacket::CAuctionHousePacket(uint8 action, uint8 message, CCharEntity* PChar, uint8 slot, bool keepItem)
