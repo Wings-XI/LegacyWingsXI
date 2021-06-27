@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -4568,7 +4568,8 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
         PChar->TradePending.clean();
         PChar->UContainer->Clean();
-        PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
+        if (PTarget)
+            PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
         return;
     }
     // End temporary additions
