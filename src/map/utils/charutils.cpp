@@ -5798,9 +5798,9 @@ namespace charutils
             //once parties and alliances have been reassembled, reload the party/parties
             if (PChar->PParty->m_PAlliance)
             {
-                for (auto party : PChar->PParty->m_PAlliance->partyList)
+                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); i++)
                 {
-                    party->ReloadParty();
+                    PChar->PParty->m_PAlliance->getParty(i)->ReloadParty();
                 }
             }
             else

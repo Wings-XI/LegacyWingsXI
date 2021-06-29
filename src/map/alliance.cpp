@@ -60,6 +60,22 @@ CAlliance::CAlliance(uint32 id): m_AllianceID(id), aLeader(nullptr)
 {
 }
 
+CAlliance::~CAlliance()
+{
+    // Force set all parties whose alliance flag still points
+    // to this object to null so it doesn't end up dangling.
+    for (uint8 i = 0; i < partyList.size(); ++i) {
+        CParty* PParty = partyList.at(i);
+        if (!PParty) {
+            continue;
+        }
+        if (PParty->m_PAlliance == this) {
+            PParty->m_PAlliance = nullptr;
+            PParty->SetPartyNumber(0);
+        }
+    }
+}
+
 void CAlliance::dissolveAlliance(bool playerInitiated)
 {
     if (playerInitiated)
@@ -116,6 +132,11 @@ uint32 CAlliance::partyCount(void)
     return 0;
 }
 
+uint8 CAlliance::partyCountLocal()
+{
+    return partyList.size();
+}
+
 void CAlliance::removeParty(CParty * party)
 {
 
@@ -166,9 +187,13 @@ void CAlliance::delParty(CParty* party)
     party->SetPartyNumber(0);
 
     // Remove party members from the alliance treasure pool
-    for (auto* entry : party->members)
+    uint8 numMembers = party->MemberCount();
+    for (uint8 i = 0; i < numMembers; i++)
     {
-        auto* member = dynamic_cast<CCharEntity*>(entry);
+        auto* member = dynamic_cast<CCharEntity*>(party->GetMember(i));
+        if (!member) {
+            continue;
+        }
         member->DropBattlefieldIfOutside();
         if (member != nullptr && member->PTreasurePool != nullptr && member->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
         {
@@ -177,17 +202,17 @@ void CAlliance::delParty(CParty* party)
     }
 
     // Create a a new treasure pool for whoever is in the server from this party (if anyone)
-    if (!party->members.empty())
+    if (!party->MemberCount() != 0)
     {
-        auto* PChar = dynamic_cast<CCharEntity*>(party->members.at(0));
+        auto* PChar = dynamic_cast<CCharEntity*>(party->GetMember(0));
 
         PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
         PChar->PTreasurePool->AddMember(PChar);
         PChar->PTreasurePool->UpdatePool(PChar);
 
-        for (uint8 i = 0; i < party->members.size(); ++i)
+        for (uint8 i = 0; i < party->MemberCount(); ++i)
         {
-            auto* PMember = dynamic_cast<CCharEntity*>(party->members.at(i));
+            auto* PMember = dynamic_cast<CCharEntity*>(party->GetMember(i));
             if (PChar != PMember)
             {
                 PMember->PTreasurePool = PChar->PTreasurePool;
@@ -196,6 +221,14 @@ void CAlliance::delParty(CParty* party)
             }
         }
     }
+}
+
+CParty* CAlliance::getParty(uint8 number)
+{
+    if (number >= partyList.size()) {
+        return nullptr;
+    }
+    return partyList.at(number);
 }
 
 void CAlliance::addParty(CParty * party)
@@ -223,10 +256,10 @@ void CAlliance::addParty(CParty * party)
         }
     }
 
-	for (uint8 i = 0; i < party->members.size(); ++i)
+	for (uint8 i = 0; i < party->MemberCount(); ++i)
 	{
-		party->ReloadTreasurePool((CCharEntity*)party->members.at(i));
-		charutils::SaveCharStats((CCharEntity*)party->members.at(i));
+		party->ReloadTreasurePool((CCharEntity*)party->GetMember(i));
+		charutils::SaveCharStats((CCharEntity*)party->GetMember(i));
 	}
     Sql_Query(SqlHandle, "UPDATE accounts_parties SET allianceid = %u, partyflag = partyflag | %d WHERE partyid = %u;", m_AllianceID, newparty, party->GetPartyID());
     party->SetPartyNumber(newparty);
@@ -272,10 +305,10 @@ void CAlliance::pushParty(CParty* PParty, uint8 number)
     partyList.push_back(PParty);
     PParty->SetPartyNumber(number);
 
-    for (uint8 i = 0; i < PParty->members.size(); ++i)
+    for (uint8 i = 0; i < PParty->MemberCount(); ++i)
     {
-        PParty->ReloadTreasurePool((CCharEntity*)PParty->members.at(i));
-        charutils::SaveCharStats((CCharEntity*)PParty->members.at(i));
+        PParty->ReloadTreasurePool((CCharEntity*)PParty->GetMember(i));
+        charutils::SaveCharStats((CCharEntity*)PParty->GetMember(i));
     }
 }
 
