@@ -4,16 +4,26 @@
 -- Type: Campaign Arbiter
 -- !pos 50.217 -1.769 51.095 82
 -----------------------------------
+require("scripts/globals/campaign")
+-----------------------------------
+
+local campaignEvent = 457
 
 function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(453)
+    if player:getCampaignAllegiance() == 0 then
+        player:startEvent(453)
+    else
+        tpz.campaign.campaignArbiterOnTrigger(player, npc, campaignEvent)        
+    end
 end
 
 function onEventUpdate(player, csid, option)
+    tpz.campaign.campaignArbiterOnEventUpdate(player, csid, option, campaignEvent)
 end
 
 function onEventFinish(player, csid, option)
+    tpz.campaign.campaignArbiterOnEventFinish(player, csid, option, campaignEvent)
 end

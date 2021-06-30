@@ -7,6 +7,7 @@ require("scripts/globals/teleports")
 -----------------------------------
 
 function onEffectGain(target, effect)
+printf("\n Teleport GAIN")
 end
 
 function onEffectTick(target, effect)
@@ -14,7 +15,6 @@ end
 
 function onEffectLose(target, effect)
     local destination = effect:getPower()
-
     if (target:isMob()) then
         DespawnMob(target:getID())
     elseif (destination == tpz.teleport.id.WARP) then
@@ -30,6 +30,9 @@ function onEffectLose(target, effect)
         tpz.teleport.toHomeNation(target)
     elseif (destination == tpz.teleport.id.RETRACE) then
         tpz.teleport.toAlliedNation(target)
+    elseif (destination == tpz.teleport.id.CAMPAIGN) then
+        local campaignDestination = effect:getSubPower()
+        tpz.teleport.toCampaign(target, campaignDestination)
     else
         tpz.teleport.to(target, destination)
     end
