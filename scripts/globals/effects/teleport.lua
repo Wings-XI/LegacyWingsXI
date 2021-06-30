@@ -7,7 +7,6 @@ require("scripts/globals/teleports")
 -----------------------------------
 
 function onEffectGain(target, effect)
-printf("\n Teleport GAIN")
 end
 
 function onEffectTick(target, effect)
@@ -15,6 +14,7 @@ end
 
 function onEffectLose(target, effect)
     local destination = effect:getPower()
+
     if (target:isMob()) then
         DespawnMob(target:getID())
     elseif (destination == tpz.teleport.id.WARP) then
