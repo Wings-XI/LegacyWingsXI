@@ -2382,7 +2382,7 @@ INSERT INTO `mob_groups` VALUES(91, 2920, 54, 'Nuhn', 0, 128, 1828, 36000, 0, 86
 INSERT INTO `mob_groups` VALUES(92, 5198, 54, 'Dimgruzub', 0, 128, 0, 0, 5000, 95, 95, 0);
 INSERT INTO `mob_groups` VALUES(93, 5199, 54, 'Assassins_ap', 0, 128, 0, 0, 5000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(1806, 110, 54, 'Amnaf_blu', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(1815, 872, 54, 'Cutter', 900, 0, 552, 0, 0, 65, 70, 0);
+INSERT INTO `mob_groups` VALUES(1815, 872, 54, 'Cutter', 0, 0, 0, 0, 0, 65, 70, 0);
 INSERT INTO `mob_groups` VALUES(1821, 1284, 54, 'Fallen_Imperial', 960, 0, 0, 0, 0, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(1825, 1506, 54, 'Gessho', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1827, 1776, 54, 'Gowam', 0, 0, 0, 0, 0, 0, 0, 0);
