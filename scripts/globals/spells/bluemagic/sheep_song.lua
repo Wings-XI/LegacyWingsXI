@@ -13,6 +13,8 @@
 -- Magic Bursts on: Transfixion, Fusion, and Light
 -- Combos: Auto Regen
 -----------------------------------------
+require("scripts/globals/bluemagic")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -23,19 +25,21 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.SLEEP_I
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
-    params.diff = dINT
-    params.attribute = tpz.mod.INT
+    params.eco = ECO_BEAST
+    params.diff = caster:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR)
+    params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = tpz.effect.SLEEP_I
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
-    if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(typeEffect, 1, 0, duration)) then
+    
+    if target:hasStatusEffect(tpz.effect.SLEEP_I) or target:hasStatusEffect(tpz.effect.SLEEP_II) or target:hasStatusEffect(tpz.effect.LULLABY) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.5 then
+        if target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -44,5 +48,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.SLEEP_I
 end

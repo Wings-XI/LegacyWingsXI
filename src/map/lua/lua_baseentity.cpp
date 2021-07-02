@@ -9476,9 +9476,9 @@ inline int32 CLuaBaseEntity::getPartySize(lua_State* L)
     if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (allianceparty == 0)
-            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->members.size();
+            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->MemberCount();
         else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr)
-            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size();
+            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->MemberCount();
     }
 
     lua_pushnumber(L, partysize);
@@ -9502,9 +9502,9 @@ inline int32 CLuaBaseEntity::hasPartyJob(lua_State *L)
 
     if (((CCharEntity*)m_PBaseEntity)->PParty != nullptr)
     {
-        for (uint32 i = 0; i < ((CCharEntity*)m_PBaseEntity)->PParty->members.size(); i++)
+        for (uint32 i = 0; i < ((CCharEntity*)m_PBaseEntity)->PParty->MemberCount(); i++)
         {
-            CCharEntity* PTarget = (CCharEntity*)((CCharEntity*)m_PBaseEntity)->PParty->members[i];
+            CCharEntity* PTarget = (CCharEntity*)((CCharEntity*)m_PBaseEntity)->PParty->GetMember(i);
             if (PTarget->GetMJob() == job)
             {
                 lua_pushboolean(L, true);
@@ -9548,10 +9548,10 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
         PTargetChar = ((CBattleEntity*)m_PBaseEntity);
     else if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
-        if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member];
-        else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member];
+        if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->MemberCount())
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->GetMember(member);
+        else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->MemberCount())
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->GetMember(member);
     }
 
     if (PTargetChar != nullptr)
@@ -9689,8 +9689,9 @@ inline int32 CLuaBaseEntity::hasPartyEffect(lua_State *L)
 
     if (PChar->PParty != nullptr)
     {
-        for (const auto& member : PChar->PParty->members)
+        for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++)
         {
+            const CBattleEntity* member = PChar->PParty->GetMember(i);
             if (member->loc.zone == PChar->loc.zone)
             {
                 if (member->StatusEffectContainer->HasStatusEffect((EFFECT)lua_tointeger(L, 1)))
@@ -9721,8 +9722,9 @@ inline int32 CLuaBaseEntity::removePartyEffect(lua_State *L)
 
     CCharEntity* PChar = ((CCharEntity*)m_PBaseEntity);
 
-    for (const auto& member : PChar->PParty->members)
+    for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++)
     {
+        const CBattleEntity* member = PChar->PParty->GetMember(i);
         if (member->loc.zone == PChar->loc.zone)
         {
             member->StatusEffectContainer->DelStatusEffect((EFFECT)lua_tointeger(L, 1));
@@ -9749,9 +9751,9 @@ inline int32 CLuaBaseEntity::getAlliance(lua_State* L)
     if (PChar->PParty && PChar->PParty->m_PAlliance)
     {
         size = 0;
-        for (auto PParty : PChar->PParty->m_PAlliance->partyList)
+        for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); i++)
         {
-            size += PParty->MemberCount(m_PBaseEntity->getZone());
+            size += (PChar->PParty->m_PAlliance->getParty(i))->MemberCount(m_PBaseEntity->getZone());
         }
     }
     else if (PChar->PParty)
@@ -9793,7 +9795,7 @@ inline int32 CLuaBaseEntity::getAllianceSize(lua_State* L)
     if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr)
-            alliancesize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.size();
+            alliancesize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyCountLocal();
     }
     lua_pushnumber(L, alliancesize);
     return 1;

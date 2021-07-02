@@ -301,7 +301,7 @@ INSERT INTO `merits` VALUES(2952, 'thunderstorm', 5, 40, 16384, 7, 45);
 INSERT INTO `merits` VALUES(2954, 'grandfall', 5, 40, 16384, 7, 45);
 INSERT INTO `merits` VALUES(3008, 'convergence', 5, 5, 32768, 7, 46);
 INSERT INTO `merits` VALUES(3010, 'diffusion', 5, 5, 32768, 7, 46);
-INSERT INTO `merits` VALUES(3012, 'enchainment', 5, 10, 32768, 7, 46);
+INSERT INTO `merits` VALUES(3012, 'enchainment', 5, 100, 32768, 7, 46);
 INSERT INTO `merits` VALUES(3014, 'assimilation', 5, 1, 32768, 7, 46);
 INSERT INTO `merits` VALUES(3072, 'snake_eye', 5, 5, 65536, 7, 47);
 INSERT INTO `merits` VALUES(3074, 'fold', 5, 10, 65536, 7, 47);

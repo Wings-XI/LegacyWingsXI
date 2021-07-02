@@ -44,7 +44,7 @@ public:
 
     CAuctionHousePacket(uint8 action);                                  // Send the auction menu
     CAuctionHousePacket(uint8 action, uint8 slot, CCharEntity * PChar); // Send the list of items sold by a character
-    CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price);
+    CAuctionHousePacket(uint8 action, uint8 message, uint16 itemid, uint32 price, uint8 quantity);
     CAuctionHousePacket(uint8 action, uint8 message, CCharEntity* PChar, uint8 slot, bool keepItem);
     CAuctionHousePacket(uint8 action, CItem* PItem, uint8 quantity, uint32 price);
 };

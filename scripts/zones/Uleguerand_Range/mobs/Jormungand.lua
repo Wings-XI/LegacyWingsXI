@@ -56,6 +56,13 @@ function onMobFight(mob, target)
     end
 end
 
+-- Prevents any stuck logic due to wipes
+function onMobDisengage(mob)
+    mob:setLocalVar("changeTime", 0)
+    mob:setLocalVar("twohourTime", 0)
+    mob:setLocalVar("roarCounter", 0)
+end
+
 function onMobWeaponSkill(target, mob, skill)
     if (skill:getID() == 1296 and mob:getHPP() <= 30) then
         local roarCounter = mob:getLocalVar("roarCounter")

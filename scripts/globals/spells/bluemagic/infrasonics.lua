@@ -24,15 +24,15 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
+    params.eco = ECO_LIZARD
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.effect = tpz.effect.EVASION_DOWN
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = applyResistance(caster, target, spell, params)
-    local duration = 60 * resist
-    local power = 20
 
-    if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(params.effect, power, 0, duration)) then
+    if resist >= 0.5 then
+        if target:addStatusEffect(tpz.effect.EVASION_DOWN, 20, 0, 60*resist) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -41,5 +41,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return params.effect
+    return tpz.effect.EVASION_DOWN
 end

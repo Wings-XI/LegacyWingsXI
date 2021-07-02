@@ -23,8 +23,7 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    params.tpmod = TPMOD_CRITICAL
+    params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_DARK
@@ -41,15 +40,33 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.20
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    
+    target:delStatusEffect(tpz.effect.BLINK)
+    target:delStatusEffect(tpz.effect.UTSUSEMI)
 
-    local damage = BluePhysicalSpell(caster, target, spell, params)
+    local damage = 0
+    local hitslanded = 0
+    local taChar = nil
+    damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
+    if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+    
+    params = {}
+    params.eco = ECO_PLANTOID
+    params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    params.attribute = tpz.mod.INT
+    params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = tpz.effect.POISON
+    local resist = applyResistanceEffect(caster, target, spell, params)
+    local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
+    local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
 
-    local chance = math.random()
-
-    if (damage > 0 and chance > 10) then
-        target:delStatusEffect(tpz.effect.POISON)
-        target:addStatusEffect(tpz.effect.POISON, 3, 0, getBlueEffectDuration(caster, resist, tpz.effect.POISON))
+    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
+        local BLUlvl = caster:getMainLvl()
+        if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+        local power = 3 + math.floor(BLUlvl/15)
+        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist + bonus)
     end
 
     return damage

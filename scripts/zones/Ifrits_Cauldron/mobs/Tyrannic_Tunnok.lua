@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Ifrit's Cauldron
 --   NM: Tyrannic Tunnok
+-- !pos -119.790 19.797 -106.198 205
 -----------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/mobs")

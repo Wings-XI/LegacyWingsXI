@@ -33,6 +33,7 @@ zones[tpz.zone.OLDTON_MOVALPOLOS] =
             [16822426] = 16822427, -- 58.013, 15.5, -121.928 (east)
         },
         GOBLIN_WOLFMAN        = 16822459,
+        BUGBEAR_MUSCLEMAN     = 16822322,
     },
     npc =
     {

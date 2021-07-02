@@ -69,6 +69,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/synthutils.h"
 #include "utils/zoneutils.h"
 #include "zone.h"
+#include "battlefield.h"
 
 #include "items/item_flowerpot.h"
 #include "items/item_shop.h"
@@ -307,6 +308,57 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
 
         Sql_Query(SqlHandle, fmtQuery, PChar->targid, session_key, currentZone->GetIP(), PSession->client_port, PChar->id);
 
+        if (currentZone->m_BattlefieldHandler) {
+            // Player logging into a battlefield type zone. Doesn't mean they're
+            // actually inside a battlefield so we need to check that.
+            bool kickout = false;
+            // Check whether the player is registered with any ongoing battlefield.
+            CBattlefield* currentBattlefield = currentZone->m_BattlefieldHandler->GetBattlefield(PChar, true);
+            int32 regToken = charutils::GetCharVar(PChar->id, "BattlefieldToken");
+            int32 enterToken = charutils::GetCharVar(PChar->id, "BattlefieldEnterToken");
+            if (currentBattlefield) {
+                bool allowed = false;
+                // Check whether the registration token matches. This doesn't mean they're inside,
+                // just means they're registered.
+                if (currentBattlefield->IsRegistered(PChar) && currentBattlefield->GetToken() == regToken) {
+                    currentBattlefield->InsertEntity(PChar);
+                    if (currentBattlefield->GetToken() == enterToken) {
+                        // Only if the enter token matches it means they got disconnected while
+                        // the battle was ongoing, in which case they are allowed to rejoin.
+                        if (currentBattlefield->ReinsertPlayer(PChar)) {
+                            allowed = true;
+                        }
+                    }
+                }
+                if (!allowed && (currentBattlefield->IsEntered(PChar) || enterToken != 0)) {
+                    kickout = true;
+                }
+            }
+            else {
+                if (enterToken != 0) {
+                    // Battlefield has already ended, prevent player from logging in
+                    // to an empty battlefield area.
+                    kickout = true;
+                }
+                charutils::SetCharVar(PChar->id, "BattlefieldToken", 0);
+                charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", 0);
+            }
+
+            if (kickout) {
+                PChar->DropBattlefield();
+                charutils::SetCharVar(PChar->id, "BattlefieldToken", 0);
+                charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", 0);
+                PChar->loc.destination = PChar->getZone();
+                PChar->loc.p.x = 0;
+                PChar->loc.p.y = 0;
+                PChar->loc.p.z = 0;
+                // This function sets the destination to the zone line. It also
+                // determines whether we need to play a cs on entry but we've
+                // already done this check earlier so this is ignored.
+                luautils::OnZoneIn(PChar);
+            }
+        }
+
         // flist stuff (on zone, not login/logout)
         if (FLgetSetting(PChar, 2) == 1)
         {
@@ -327,10 +379,10 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                     charutils::SaveCharStats(PChar);
                 }
                 else {
-                    PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
-                    PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
-                }
+                PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
+                PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
             }
+        }
         }
 
         fmtQuery = "SELECT pos_prevzone FROM chars WHERE charid = %u";
@@ -440,15 +492,17 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (PChar->status == STATUS_SHUTDOWN)
     {
+        PChar->m_disconnecting = true;
+
         if (PChar->PParty != nullptr)
         {
             if (PChar->PParty->m_PAlliance != nullptr)
             {
                 if (PChar->PParty->GetLeader() == PChar)
                 {
-                    if (PChar->PParty->members.size() == 1)
+                    if (PChar->PParty->MemberCount() == 1)
                     {
-                        if (PChar->PParty->m_PAlliance->partyList.size() == 1)
+                        if (PChar->PParty->m_PAlliance->partyCountLocal() == 1)
                         {
                             PChar->PParty->m_PAlliance->dissolveAlliance();
                         }
@@ -636,7 +690,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                     // Compensate for speedy chickens
                     threshold = threshold * 2;
                 }
-                if ((diffPerSecond > threshold) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel == 0)))
+                if ((diffPerSecond > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel == 0)))
                 {
                     char cheatDesc[128];
                     snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s went over the speed limit: %f (raw=%f, time=%d, threshold=%f)", PChar->name.c_str(),
@@ -1010,14 +1064,15 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (data.ref<uint8>(0x0C) == 0 && PChar->m_hasTractor != 0) // ACCEPTED TRACTOR
             {
-                // PChar->PBattleAI->SetCurrentAction(ACTION_RAISE_MENU_SELECTION);
-                PChar->loc.p = PChar->m_StartActionPos;
+                // The old implementation actually caused the player to zone into the
+                // new spot, which casued all sorts of fun stuff like losing battlefield
+                // status and also just took more time and more resources. If anyone
+                // actually finds out that a zone is necessary please document it here.
+                // For now we'll just change it to a simple position update.
                 PChar->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
-                PChar->loc.destination = PChar->getZone();
-                PChar->status = STATUS_DISAPPEAR;
-                PChar->loc.boundary = 0;
-                PChar->clearPacketList();
-                charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
+                PChar->loc.p = PChar->m_StartActionPos;
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CPositionPacket(PChar));
+                PChar->updatemask |= UPDATE_POS;
             }
 
             PChar->m_hasTractor = 0;
@@ -2628,7 +2683,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PItem->isSubType(ITEM_CHARGED) && ((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
                 {
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity));
                     return;
                 }
                 PChar->pushPacket(new CAuctionHousePacket(action, PItem, quantity, price));
@@ -2711,7 +2766,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             }
             else
             {
-                PChar->pushPacket(new CAuctionHousePacket(action, 246, 0, 0)); // try again in a little while msg
+                PChar->pushPacket(new CAuctionHousePacket(action, 246, 0, 0, quantity)); // try again in a little while msg
                 break;
             }
         }
@@ -2733,7 +2788,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PItem->isSubType(ITEM_CHARGED) && ((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
                 {
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity));
                     return;
                 }
                 uint32 auctionFee = 0;
@@ -2742,7 +2797,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     if (PItem->getStackSize() == 1 || PItem->getStackSize() != PItem->getQuantity())
                     {
                         ShowError(CL_RED "SmallPacket0x04E::AuctionHouse: Incorrect quantity of item %s\n" CL_RESET, PItem->getName());
-                        PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Failed to place up
+                        PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Failed to place up
                         return;
                     }
                     auctionFee = (uint32)(map_config.ah_base_fee_stacks + (price * map_config.ah_tax_rate_stacks / 100));
@@ -2757,7 +2812,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (PChar->getStorage(LOC_INVENTORY)->GetItem(0)->getQuantity() < auctionFee)
                 {
                     // ShowDebug(CL_CYAN"%s Can't afford the AH fee\n" CL_RESET,PChar->GetName());
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Not enough gil to pay fee
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Not enough gil to pay fee
                     return;
                 }
 
@@ -2777,7 +2832,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (map_config.ah_list_limit && ah_listings >= map_config.ah_list_limit)
                 {
                     // ShowDebug(CL_CYAN"%s already has %d items on the AH\n" CL_RESET,PChar->GetName(), ah_listings);
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Failed to place up
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Failed to place up
                     return;
                 }
 
@@ -2786,7 +2841,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (Sql_Query(SqlHandle, fmtQuery, PItem->getID(), quantity == 0, PChar->id, PChar->GetName(), (uint32)time(nullptr), price) == SQL_ERROR)
                 {
                     ShowError(CL_RED "SmallPacket0x04E::AuctionHouse: Cannot insert item %s to database\n" CL_RESET, PItem->getName());
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // failed to place up
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // failed to place up
                     return;
                 }
 
@@ -2808,7 +2863,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 charutils::UpdateItem(PChar, LOC_INVENTORY, slot, -(int32)(quantity != 0 ? 1 : PItem->getStackSize()));
                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)auctionFee); // Deduct AH fee
 
-                PChar->pushPacket(new CAuctionHousePacket(action, 1, 0, 0));                 // Merchandise put up on auction msg
+                PChar->pushPacket(new CAuctionHousePacket(action, 1, 0, 0, quantity));                 // Merchandise put up on auction msg
                 PChar->pushPacket(new CAuctionHousePacket(0x0C, (uint8)ah_listings, PChar)); // Inform history of slot
             }
         }
@@ -2819,7 +2874,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
             if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() == 0)
             {
-                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
             }
             else
             {
@@ -2833,7 +2888,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                         {
                             if (PChar->getStorage(LocID)->SearchItem(itemid) != ERROR_SLOTID)
                             {
-                                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
                                 return;
                             }
                         }
@@ -2854,14 +2909,14 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                             {
                                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)(price));
 
-                                PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price));
+                                PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price, quantity));
                                 PChar->pushPacket(new CInventoryFinishPacket());
                             }
                             return;
                         }
                     }
                 }
-                PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price));
+                PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price, quantity));
             }
         }
         break;
@@ -3218,6 +3273,23 @@ void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PCh
 
         PChar->pushPacket(new CCSPositionPacket(PChar));
         PChar->pushPacket(new CPositionPacket(PChar));
+
+        // If they're dead and had the raise menu open send the packet
+        // again so the menu repops after they change position.
+        if (PChar->isDead()) {
+            if (PChar->m_hasRaise > 0) {
+                // Apparently we need to wait for the animation to end before we can
+                // resend the raise menu, otherwise the client ignores it.
+                std::string taskName = "resendRaisePlayer" + std::to_string(PChar->id);
+                CTaskMgr::getInstance()->RemoveTask(taskName.c_str());
+                CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask(taskName.c_str(),
+                    server_clock::now() + std::chrono::seconds(10), PChar, CTaskMgr::TASK_ONCE, charutils::DelayedRaiseMenu));
+            }
+            // However tractor is always removed since it's position dependent
+            // and may transport them back to an undesired location (e.g. an
+            // empty battlefield).
+            PChar->m_hasTractor = 0;
+        }
     }
     PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
     return;
@@ -3581,7 +3653,7 @@ void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0: // party - must by party leader or solo
             if (PChar->PParty == nullptr || PChar->PParty->GetLeader() == PChar)
             {
-                if (PChar->PParty && PChar->PParty->members.size() > 5)
+                if (PChar->PParty && PChar->PParty->MemberCount() > 5)
                 {
                     PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 0, MsgStd::CannotInvite));
                     break;
@@ -3743,7 +3815,7 @@ void SmallPacket0x06F(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             case 0: // party - anyone may remove themself from party regardless of leadership or alliance
                 if (PChar->PParty->m_PAlliance &&
-                    PChar->PParty->members.size() == 1) // single member alliance parties must be removed from alliance before disband
+                    PChar->PParty->MemberCount() == 1) // single member alliance parties must be removed from alliance before disband
                 {
                     ShowDebug(CL_CYAN "%s party size is one\n" CL_RESET, PChar->GetName());
                     if (PChar->PParty->m_PAlliance->partyCount() == 1) // if there is only 1 party then dissolve alliance
@@ -3848,7 +3920,7 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                     if (PVictim == PChar) // using kick on yourself, let's borrow the logic from /pcmd leave to prevent alliance crash
                     {
                         if (PChar->PParty->m_PAlliance &&
-                            PChar->PParty->members.size() == 1) // single member alliance parties must be removed from alliance before disband
+                            PChar->PParty->MemberCount() == 1) // single member alliance parties must be removed from alliance before disband
                         {
                             if (PChar->PParty->m_PAlliance->partyCount() == 1) // if there is only 1 party then dissolve alliance
                             {
@@ -3924,9 +3996,9 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
             if (PChar->PParty && PChar->PParty->GetLeader() == PChar && PChar->PParty->m_PAlliance)
             {
                 CCharEntity* PVictim = nullptr;
-                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyList.size(); ++i)
+                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); ++i)
                 {
-                    PVictim = (CCharEntity*)(PChar->PParty->m_PAlliance->partyList[i]->GetMemberByName(data[0x0C]));
+                    PVictim = (CCharEntity*)(PChar->PParty->m_PAlliance->getParty(i)->GetMemberByName(data[0x0C]));
                     if (PVictim && PVictim->PParty && PVictim->PParty->m_PAlliance) // victim is in this party
                     {
                         ShowDebug(CL_CYAN "%s is trying to kick %s party from alliance\n" CL_RESET, PChar->GetName(), PVictim->GetName());
@@ -4077,7 +4149,7 @@ void SmallPacket0x074(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 if (PInviter->PParty->GetLeader() == PInviter)
                 {
-                    if (PInviter->PParty->members.size() > 5)
+                    if (PInviter->PParty->MemberCount() > 5)
                     { // someone else accepted invitation
                         // PInviter->pushPacket(new CMessageStandardPacket(PInviter, 0, 0, 14)); Don't think retail sends error packet to inviter on full pt
                         ShowDebug(CL_CYAN "Someone else accepted party invite, %s cannot be added to party\n" CL_RESET, PChar->GetName());
@@ -4395,7 +4467,51 @@ void SmallPacket0x085(map_session_data_t* const PSession, CCharEntity* const PCh
             return;
         }
 
-        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * PItem->getBasePrice());
+        uint32 basePrice = PItem->getBasePrice();
+        float mult = 0.8f;
+
+        // fame start
+
+        CZone* PZone = PChar->loc.zone;
+        uint16 fame = 0;
+        float fameMultiplier = map_config.fame_multiplier;
+
+        switch (PZone->m_fameType)
+        {
+            case 0: // San d'Oria
+            case 1: // Bastok
+            case 2: // Windurst
+                fame = (uint16)(PChar->profile.fame[PZone->m_fameType] * fameMultiplier);
+                break;
+            case 3: // Jeuno
+                fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                break;
+            case 4: // Selbina / Rabao
+                fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
+                break;
+            case 5: // Norg
+                fame = (uint16)(PChar->profile.fame[3] * fameMultiplier);
+                break;
+            default: // default to no fame for worst sale price
+                fame = 0;
+                break;
+        }
+
+        // Amalasanda
+        if (PZone->GetID() == ZONE_LOWER_JEUNO && PChar->loc.p.x > 23.0f && PChar->loc.p.x < 45.0f && PChar->loc.p.z > -62.0f && PChar->loc.p.z < -29.0f)
+            fame = (uint16)(PChar->profile.fame[3] * fameMultiplier); // use tenshodo fame
+
+        if (fame >= 613) // fame level 9
+            mult = 1.0f;
+        else
+            mult = 0.8f + 0.2f * (float)fame / 612.0f;
+
+        if (basePrice == 1)
+            mult = 1.0f; // dont round down to 0
+
+        // fame end
+
+        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * (uint32)((float)basePrice * mult));
         charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -(int32)quantity);
         ShowNotice(CL_CYAN "SmallPacket0x085: Player '%s' sold %u of itemID %u [to VENDOR] \n" CL_RESET, PChar->GetName(), quantity, itemID);
         PChar->pushPacket(new CMessageStandardPacket(0, itemID, quantity, MsgStd::Sell));
@@ -4452,7 +4568,8 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
         PChar->TradePending.clean();
         PChar->UContainer->Clean();
-        PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
+        if (PTarget)
+            PChar->pushPacket(new CTradeActionPacket(PTarget, 0x01));
         return;
     }
     // End temporary additions

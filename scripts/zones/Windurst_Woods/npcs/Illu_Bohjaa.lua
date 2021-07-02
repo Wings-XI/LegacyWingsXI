@@ -35,7 +35,14 @@ end
 function onEventFinish(player, csid, option)
     if csid == 333 and option == 1 then
         player:addQuest(WINDURST, tpz.quest.id.windurst.CREEPY_CRAWLIES)
-    elseif csid == 335 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.CREEPY_CRAWLIES, {gil=600, fame=0, title=tpz.title.CRAWLER_CULLER}) then
+    elseif csid == 335 then
+        local hideMessage = true
+        if player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CREEPY_CRAWLIES) == QUEST_AVAILABLE then
+            npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.CREEPY_CRAWLIES, {fame=0, title=tpz.title.CRAWLER_CULLER})
+            npcUtil.giveCurrency(player, "gil", 600, hideMessage)
+        else
+            npcUtil.giveCurrency(player, "gil", 600, hideMessage)
+        end
         player:confirmTrade()
     end
 end

@@ -5798,9 +5798,9 @@ namespace charutils
             //once parties and alliances have been reassembled, reload the party/parties
             if (PChar->PParty->m_PAlliance)
             {
-                for (auto party : PChar->PParty->m_PAlliance->partyList)
+                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); i++)
                 {
-                    party->ReloadParty();
+                    PChar->PParty->m_PAlliance->getParty(i)->ReloadParty();
                 }
             }
             else
@@ -6414,6 +6414,16 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
             PZone->m_DynamisHandler->EjectPlayer(PChar, false);
     }
     return valid;
+}
+
+int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
+    if (PChar->isDead() && PChar->m_hasRaise) {
+        // Death state handler will resend the menu on next tick
+        PChar->m_resendRaise = true;
+    }
+    return 0;
 }
 
 }; // namespace charutils

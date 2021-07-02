@@ -98,9 +98,9 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
 
 	// populate PBlueMages
 	if (PChar->PParty != nullptr) {
-        for (uint8 i = 0; i < PChar->PParty->members.size(); i++) {
-			if (PChar->PParty->members[i]->GetMJob() == JOB_BLU && PChar->PParty->members[i]->objtype == TYPE_PC) {
-				PBlueMages.push_back((CCharEntity*)PChar->PParty->members[i]);
+        for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++) {
+			if (PChar->PParty->GetMember(i)->GetMJob() == JOB_BLU && PChar->PParty->GetMember(i)->objtype == TYPE_PC) {
+				PBlueMages.push_back((CCharEntity*)PChar->PParty->GetMember(i));
 			}
 		}
 	}
@@ -133,9 +133,10 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
             auto playerSkillLvl = PBlueMage->GetSkill(SKILL_BLUE_MAGIC);
 
             // make sure the difference between spell skill and player is at most 31 points
-            if (playerSkillLvl >= skillLvlForSpell - 31)
+            if (playerSkillLvl + 30 >= skillLvlForSpell)
             {
-                auto chanceToLearn = 33 + PBlueMage->getMod(Mod::BLUE_LEARN_CHANCE);
+                int chanceToLearn = 35 + PBlueMage->getMod(Mod::BLUE_LEARN_CHANCE) + playerSkillLvl - skillLvlForSpell;
+                chanceToLearn = std::clamp(chanceToLearn, 10, 70);
                 if (tpzrand::GetRandomNumber(100) < chanceToLearn) {
 					if (charutils::addSpell(PBlueMage, static_cast<uint16>(PSpell->getID()))) {
 						PBlueMage->pushPacket(new CMessageBasicPacket(PBlueMage, PBlueMage, static_cast<uint16>(PSpell->getID()), 0, MSGBASIC_LEARNS_SPELL));
