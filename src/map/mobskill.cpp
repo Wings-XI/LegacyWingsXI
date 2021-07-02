@@ -231,7 +231,6 @@ uint16 CMobSkill::getPetAnimationID() const
         return m_AnimID - 493; // 128,129,130,131,132,133,134,135,136,137,138,139
     }
 
-    // 144 is diabolos ruinous omen it seems
     // 151 Odin's Zantetsuken
     // 152 Alexander's Perfect Defense
     // 153 dark noodles coming out of the ground. looks like it might be for odin.
@@ -263,8 +262,20 @@ uint16 CMobSkill::getPetAnimationID() const
     // 254 empty
     // 255 empty
 
+    // Diabolos pet animation range 141 to 149.
+    // Pet animations 142, 145, 148, 149 are directly referenced in sql
+    if (m_AnimID == 915) // Diabolos Camisado
+        return 141;
+    if (m_AnimID == 916) // Diabolos Noctoshield
+        return 143;
+    if (m_AnimID == 917) // Diabolos Ultimate Terror
+        return 144;
+    if (m_AnimID == 918) // Diabolos Nightmare 
+        return 146;
+    //  return 147; pet animationID 147 is an unused Diabolos aoe move encircling him in red rings/script
+    
     Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name LIKE 'PetAnimID' LIMIT 1;"); Sql_NextRow(SqlHandle); uint16 PetAnimID = (uint16)Sql_GetUIntData(SqlHandle, 0);
-
+    
     if (m_AnimID == 1467) // Alexander Perfect Defense
         return 152;
     if (m_AnimID == 1447) // Odin Zantetsuken
