@@ -497,7 +497,7 @@ bool CMobController::CanCastSpells()
     }
 
     // mob has no mp and does not have manafont
-    if (PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetMJob() != JOB_BRD && PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
     }
