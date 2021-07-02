@@ -258,10 +258,12 @@ end
 tpz.campaign.teleporterOnEventFinish = function(player, csid, option, teleporterNation, teleporterEvent)
     if csid == teleporterEvent and option <= 20 and option >= 1 then
         local fee = tpz.campaign.teleportFee(player, teleporterNation, option)
-        player:delCurrency("allied_notes", fee)
-        -- TODO:Campaign_Control - We dont have control modeled yet - until we do there is only one telepoint per zone
-        -- Once control is modeled - 2 telepoint per zone - one for nation controlled one for beastmen controlled
-        player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.CAMPAIGN, 0, 1, 0, option)
+        if player:getCurrency("allied_notes") >= fee then
+            player:delCurrency("allied_notes", fee)
+            -- TODO:Campaign_Control - We dont have control modeled yet - until we do there is only one telepoint per zone
+            -- Once control is modeled - 2 telepoint per zone - one for nation controlled one for beastmen controlled
+            player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.CAMPAIGN, 0, 1, 0, option)
+        end
     end
 end
 
@@ -278,19 +280,19 @@ tpz.campaign.teleportFee = function(player, teleporterNation, destination)
     local fee = 0
     -- Calculate distance fee
     if destination >= campaignZone.EAST_RONFAURE_S and destination <= campaignZone.WEST_SARUTABARUTA_S then
-        fee = fee + 20
+        fee = 20
     elseif destination >= campaignZone.VUNKERL_INLET_S and destination <= campaignZone.FORT_KARUGO_NARUGO_S then
-        fee = fee + 30
+        fee = 30
     elseif destination >= campaignZone.JUGNER_FOREST_S and destination <= campaignZone.MERIPHATAUD_MOUNTAINS_S then
-        fee = fee + 40
+        fee = 40
     elseif destination >= campaignZone.BATALLIA_DOWNS_S and destination <= campaignZone.SAUROMUGUE_CHAMPAIGN_S then
-        fee = fee + 50
+        fee = 50
     elseif destination >= campaignZone.XARCABARD_S and destination <= campaignZone.BEAUCEDINE_GLACIER_S then
-        fee = fee + 60
+        fee = 60
     elseif destination >= campaignZone.GARLAIGE_CITADEL_S and destination <= campaignZone.THE_ELDIEME_NECROPOLIS_S then
         -- have not found documentation on the cost of these zones other than that they are enabled
         -- going by the "distance from home nation" trend, these zones are one step further than Rolanberry/Batallia/Sauromugue
-        fee = fee + 60
+        fee = 60
     end
 
     -- Calculate control cost - Until control is modeled treat all zones as allied controlled
@@ -375,8 +377,10 @@ tpz.campaign.campaignArbiterOnEventFinish = function(player, csid, option, campa
 end
 
 function deductFeeAndRetrace(player, fee)
-    player:delCurrency("allied_notes", fee)
-    player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.RETRACE, 0, 1)
+    if player:getCurrency("allied_notes") >= fee then
+        player:delCurrency("allied_notes", fee)
+        player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.RETRACE, 0, 1)
+    end
 end
 
 -- -----------------------------------------------------------------------------------------------
