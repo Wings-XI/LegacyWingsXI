@@ -4486,7 +4486,7 @@ INSERT INTO `mob_groups` VALUES(3712, 2103, 86, 'Iron_Ram_Knight', 0, 0, 0, 0, 0
 INSERT INTO `mob_groups` VALUES(3713, 2254, 86, 'King_Arthro', 0, 0, 1448, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3714, 2271, 86, 'Knight_Crab', 0, 0, 93, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3715, 2322, 86, 'Lambton_Worm', 0, 0, 1481, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(3716, 2837, 86, 'Nickel_Quadav_both', 0, 0, 1780, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(3716, 2837, 86, 'Nickel_Quadav_both', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3717, 2839, 86, 'Nicolaus', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3718, 2909, 86, 'Norvallen_Knight', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3719, 2980, 86, 'One-eyed_Gwajboj', 0, 0, 1859, 0, 0, 0, 0, 0);
@@ -9017,7 +9017,7 @@ INSERT INTO `mob_groups` VALUES(35, 3463, 147, 'Sapphire_Quadav', 960, 0, 2158, 
 INSERT INTO `mob_groups` VALUES(36, 2377, 147, 'Larva', 960, 0, 1501, 0, 0, 35, 38, 0);
 INSERT INTO `mob_groups` VALUES(37, 2664, 147, 'Mimic', 0, 128, 1677, 0, 0, 65, 69, 0);
 INSERT INTO `mob_groups` VALUES(38, 2486, 147, 'Magnes_Quadav', 0, 128, 0, 0, 0, 43, 45, 0);
-INSERT INTO `mob_groups` VALUES(39, 2837, 147, 'Nickel_Quadav_both', 0, 128, 1781, 0, 0, 43, 45, 0);
+INSERT INTO `mob_groups` VALUES(39, 2837, 147, 'Nickel_Quadav_both', 0, 128, 0, 0, 0, 43, 45, 0);
 INSERT INTO `mob_groups` VALUES(7945, 305, 147, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7954, 896, 147, 'Dalzakk', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7982, 3992, 147, 'Treasure_Chest', 0, 0, 0, 0, 0, 0, 0, 0);
