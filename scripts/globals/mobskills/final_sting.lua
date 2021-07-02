@@ -12,7 +12,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
     local param = skill:getParam()
-    if param == 0 then param = 50 end
+    if param == 0 then param = 30 end
     
     if mob:getHPP() <= param then return 0 end
 
