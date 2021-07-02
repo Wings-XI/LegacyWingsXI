@@ -203,65 +203,29 @@ void CalculateStats(CMobEntity * PMob)
     uint8 mLvl = PMob->GetMLevel();
     ZONETYPE zoneType = PMob->loc.zone->GetType();
 
-    if(PMob->HPmodifier == 0)
+    if(!PMob->HPmodifier)
     {
-        float hpScale = PMob->HPscale;
+        float hpScale = PMob->getMobMod(MOBMOD_HP_SCALE) != 0 ? (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f : PMob->HPscale;
 
-        if (PMob->getMobMod(MOBMOD_HP_SCALE) != 0)
-        {
-            hpScale = (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f;
-        }
+        float growth;
 
-        float growth = 1.06f;
-        float petGrowth = 0.75f;
-        float base = 18.0f;
+        // https://www.desmos.com/calculator/z1mq4w5ipz
 
-        //give hp boost every 10 levels after 25
-        //special boosts at 25 and 50
-        if(mLvl > 75)
-        {
+        if (mLvl < 45)
+            growth = 1.04535f + 0.002630f*mLvl;
+        else if (mLvl < 55)
+            growth = 1.10295f + 0.001350f*mLvl;
+        else if (mLvl < 65)
+            growth = 0.79990f + 0.006860f*mLvl;
+        else if (mLvl < 80)
+            growth = 1.10106f + 0.002228f*mLvl;
+        else
             growth = 1.28f;
-            petGrowth = 1.03f;
-        }
-        else if(mLvl > 65)
-        {
-            growth = 1.27f;
-            petGrowth = 1.02f;
-        }
-        else if(mLvl > 55)
-        {
-            growth = 1.25f;
-            petGrowth = 0.99f;
-        }
-        else if(mLvl > 50)
-        {
-            growth = 1.21f;
-            petGrowth = 0.96f;
-        }
-        else if(mLvl > 45)
-        {
-            growth = 1.17f;
-            petGrowth = 0.95f;
-        }
-        else if(mLvl > 35)
-        {
-            growth = 1.14f;
-            petGrowth = 0.92f;
-        }
-        else if(mLvl > 25)
-        {
-            growth = 1.1f;
-            petGrowth = 0.82f;
-        }
 
-        // pets have lower health
-        if(PMob->PMaster != nullptr)
-        {
-            growth = petGrowth;
-        }
+        if (PMob->PMaster != nullptr) // pets have lower health
+            growth -= 0.25f;
 
-
-        PMob->health.maxhp = (int16)(base * pow(mLvl, growth) * hpScale);
+        PMob->health.maxhp = (int16)(18 * pow(mLvl, growth) * hpScale);
     }
     else
     {
