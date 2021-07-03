@@ -41,6 +41,7 @@ class CLatentEffectContainer
 {
 public:
 
+    void CheckAllLatents();
 	void CheckLatentsHP();
 	void CheckLatentsTP();
 	void CheckLatentsMP();
@@ -58,6 +59,7 @@ public:
 	void CheckLatentsPartyAvatar();
 	void CheckLatentsJobLevel();
 	void CheckLatentsPetType();
+    void CheckLatentsSubJob();
 	void CheckLatentsTime();
 	void CheckLatentsWeaponBreak(uint8 slot);
 	void CheckLatentsZone();

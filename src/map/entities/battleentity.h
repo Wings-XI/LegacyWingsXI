@@ -463,6 +463,7 @@ struct health_t
     int32   hp, mp;             // текущие значения
     int32   maxhp, maxmp;       // максимальные значения
     int32   modhp, modmp;       // модифицированные максимальные значения
+    int32   zoneinhp, zoneinmp; // HP and MP from previous zone
 };
 
 typedef std::vector<apAction_t> ActionList_t;
