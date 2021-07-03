@@ -8,7 +8,7 @@ mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:addMod(tpz.mod.SLEEPRES, 150)
+    mob:addMod(tpz.mod.SLEEPRES, 150)   
     mob:addMod(tpz.mod.SILENCERES, 150)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         -- Vorpal Blade
@@ -22,6 +22,12 @@ function onMobSpawn(mob)
             mob:showText(mob, ID.text.STOP_US)
         end
     end)
+end
+
+function onMobFight(mob, target)
+    -- Share Hate
+    local gowam = GetMobByID(mob:getID() - 1, mob:getInstance())
+    gowam:updateEnmity(target)
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -1018,11 +1018,11 @@ namespace battleutils
         {
             if (PAttacker->PParty != nullptr)
             {
-                for (uint8 i = 0; i < PAttacker->PParty->members.size(); i++)
+                for (uint8 i = 0; i < PAttacker->PParty->MemberCount(); i++)
                 {
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->members[i]->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->members[i]->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->members[i]->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->GetMember(i)->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->GetMember(i)->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->GetMember(i)->id);
                 }
             }
             else
@@ -1203,24 +1203,24 @@ namespace battleutils
                 uint16 power = 0;
                 if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
                 {
-                    for (uint8 i = 0; i < PAttacker->PParty->members.size(); i++)
+                    for (uint8 i = 0; i < PAttacker->PParty->MemberCount(); i++)
                     {
-                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->members[i]->id))
+                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->GetMember(i)->id))
                         {
                             daze = EFFECT_DRAIN_DAZE;
-                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->members[i]->id)->GetPower();
+                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->GetMember(i)->id)->GetPower();
                             break;
                         }
-                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->members[i]->id))
+                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->GetMember(i)->id))
                         {
                             daze = EFFECT_HASTE_DAZE;
-                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->members[i]->id)->GetPower();
+                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->GetMember(i)->id)->GetPower();
                             break;
                         }
-                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->members[i]->id))
+                        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->GetMember(i)->id))
                         {
                             daze = EFFECT_ASPIR_DAZE;
-                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->members[i]->id)->GetPower();
+                            power = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->GetMember(i)->id)->GetPower();
                             break;
                         }
                     }
@@ -3775,11 +3775,11 @@ namespace battleutils
         {
             if (taUser->PParty->m_PAlliance != nullptr)
             {
-                for (uint8 a = 0; a < taUser->PParty->m_PAlliance->partyList.size(); ++a)
+                for (uint8 a = 0; a < taUser->PParty->m_PAlliance->partyCountLocal(); ++a)
                 {
-                    for (uint8 i = 0; i < taUser->PParty->m_PAlliance->partyList.at(a)->members.size(); ++i)
+                    for (uint8 i = 0; i < taUser->PParty->m_PAlliance->getParty(a)->MemberCount(); ++i)
                     {
-                        CBattleEntity* member = taUser->PParty->m_PAlliance->partyList.at(a)->members.at(i);
+                        CBattleEntity* member = taUser->PParty->m_PAlliance->getParty(a)->GetMember(i);
                         if (checkPosition(member))
                         {
                             return member;
@@ -3794,9 +3794,9 @@ namespace battleutils
             }
             else
             { // No alliance
-                for (uint8 i = 0; i < taUser->PParty->members.size(); ++i)
+                for (uint8 i = 0; i < taUser->PParty->MemberCount(); ++i)
                 {
-                    CBattleEntity* member = taUser->PParty->members.at(i);
+                    CBattleEntity* member = taUser->PParty->GetMember(i);
                     if (checkPosition(member))
                     {
                         return member;
@@ -3863,9 +3863,9 @@ namespace battleutils
         }
         if (PTarget->PParty != nullptr)
         {
-            for (uint8 i = 0; i < PTarget->PParty->members.size(); ++i)
+            for (uint8 i = 0; i < PTarget->PParty->MemberCount(); ++i)
             {
-                CBattleEntity* member = PTarget->PParty->members.at(i);
+                CBattleEntity* member = PTarget->PParty->GetMember(i);
                 if (!member->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) || member->id == PTarget->id || !(member->GetMJob() == JOB_PLD || member->GetSJob() == JOB_PLD))
                     continue;
                 if (member->id != PTarget->id && distanceSquared(member->loc.p, PMob->loc.p) < distanceSquared(PTarget->loc.p, PMob->loc.p))
@@ -6190,9 +6190,9 @@ namespace battleutils
         //If the cover ability target is in a party, try to find a cover ability user
         if (PCoverAbilityTarget->PParty != nullptr)
         {
-            for (uint8 i = 0; i < PCoverAbilityTarget->PParty->members.size(); ++i)
+            for (uint8 i = 0; i < PCoverAbilityTarget->PParty->MemberCount(); ++i)
             {
-                CBattleEntity* member = PCoverAbilityTarget->PParty->members.at(i);
+                CBattleEntity* member = PCoverAbilityTarget->PParty->GetMember(i);
 
                 if (coverAbilityTargetID == member->GetLocalVar("COVER_ABILITY_TARGET") &&
                     member->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) &&

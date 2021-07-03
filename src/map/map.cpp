@@ -1074,9 +1074,9 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         //if char then disconnects we need to tell the server about the alliance change
                         if (PChar->PParty != nullptr && PChar->PParty->m_PAlliance != nullptr && PChar->PParty->GetLeader() == PChar)
                         {
-                            if (PChar->PParty->members.size() == 1)
+                            if (PChar->PParty->MemberCount() == 1)
                             {
-                                if (PChar->PParty->m_PAlliance->partyList.size() == 1)
+                                if (PChar->PParty->m_PAlliance->partyCountLocal() == 1)
                                 {
                                     PChar->PParty->m_PAlliance->dissolveAlliance();
                                 }
@@ -1127,7 +1127,6 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
 
                     ShowWarning(CL_YELLOW"map_cleanup: WHITHOUT CHAR timed out, session closed\n" CL_RESET);
 
-                    map_session_data->PChar->m_disconnecting = true;
                     const char* Query = "DELETE FROM accounts_sessions WHERE client_addr = %u AND client_port = %u";
                     Sql_Query(SqlHandle, Query, map_session_data->client_addr, map_session_data->client_port);
 

@@ -13,6 +13,11 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
+
+    -- Share Hate
+    local yazquhl = GetMobByID(mob:getID() + 1, mob:getInstance())
+    yazquhl:updateEnmity(target)
+
     if (mob:hasStatusEffect(tpz.effect.AZURE_LORE))then
         mob:setMobMod(tpz.mobMod.MAGIC_COOL, 0)
     else
