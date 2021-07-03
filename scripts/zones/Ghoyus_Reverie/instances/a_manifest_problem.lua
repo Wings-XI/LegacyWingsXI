@@ -34,6 +34,7 @@ function afterInstanceRegister(player)
 end
 
 function onInstanceCreated(instance)
+    cleanUpInstance(instance)
     for mobID = ID.mob.MANIFEST_PROBLEM_START, ID.mob.MANIFEST_PROBLEM_END, 1
     do
         SpawnMob(mobID, instance)
@@ -74,7 +75,7 @@ end
 
 function onInstanceFailure(instance)
     -- intentionally no localVar status update on failure
-    resetMobSpawns(instance)
+    cleanUpInstance(instance)
 
     local chars = instance:getChars()
     for i, v in pairs(chars) do
@@ -83,33 +84,6 @@ function onInstanceFailure(instance)
 end
 
 function onInstanceProgressUpdate(instance, progress)
-    -- this could be made into a percentage chance as well - no hard data
-    if progress % 15 == 0 then
-        local players = instance:getChars()
-        for i, player in pairs(players) do
-            local hp = player:getMaxHP() - player:getHP()
-            player:restoreHP(hp)
-            -- TODO play benediction animation
-            player:messageBasic(tpz.msg.basic.AOE_REGAIN_HP, 0, hp)
-        end
-    end
-    if progress % 20 == 0 then
-        local players = instance:getChars()
-        for i, player in pairs(players) do
-            local mp = player:getMaxMP() - player:getMP()
-            player:restoreMP(mp)
-            -- TODO play benediction animation
-            player:messageBasic(tpz.msg.basic.AOE_REGAIN_MP, 0, mp)
-        end
-    end
-    if progress % 25 == 0 then
-        local players = instance:getChars()
-        for i, player in pairs(players) do
-            player:addTP(3000)
-            -- TODO play benediction animation
-            player:messageBasic(tpz.msg.basic.AOE_INCREASE_TP, 0, 3000)
-        end
-    end
     if progress > 45 and instance:getStage() == 1 then
         instance:setStage(2) -- Spawn the boss, stop respawn of other yagudos
     end
@@ -119,7 +93,7 @@ function onInstanceStageChange(instance, stage)
     if stage == 1 then
         pathAllMobsToCenter(instance, false)
     elseif stage == 2 then
-        -- Attempt to respawn all yagudo who may not be spawned along with the boss
+        -- Attempt to respawn all yagudo who may not be currently spawned along with the boss
         local mobs = instance:getMobs()
         for i, mob in pairs(mobs) do
             if not mob:isSpawned() then
@@ -132,7 +106,7 @@ function onInstanceStageChange(instance, stage)
 end
 
 function onInstanceComplete(instance)
-    resetMobSpawns(instance)
+    cleanUpInstance(instance)
 
     local chars = instance:getChars()
 
@@ -182,5 +156,11 @@ function resetMobSpawns(instance)
         mobID = mob:getID()
         mob:setSpawn(originalSpawns[mobID].x, originalSpawns[mobID].z, originalSpawns[mobID].y)
     end
+end
+
+function cleanUpInstance(instance)
+    resetMobSpawns(instance)
+    instance:setStage(0)
+    instance:setProgress(0)
 end
 
