@@ -428,6 +428,7 @@ public:
     virtual void delTrait(CTrait*) override;
 
     bool IsMobOwner(CBattleEntity* PTarget);
+    bool IsPartiedWith(CCharEntity* PTarget);
     virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
     virtual bool CanUseSpell(CSpell*) override;
 
