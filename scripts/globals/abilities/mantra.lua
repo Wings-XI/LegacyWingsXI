@@ -13,11 +13,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:delStatusEffect(tpz.effect.MAX_HP_BOOST)
+    target:delStatusEffect(tpz.effect.MAX_HP_BOOST)
 
-    local merits = player:getMerit(tpz.merit.MANTRA)
-
-    target:addStatusEffect(tpz.effect.MAX_HP_BOOST, merits, 0, 180)
+    local boost = (target:getBaseHP() + target:getMod(tpz.mod.HP)) * player:getMerit(tpz.merit.MANTRA)/100
+    
+    target:addStatusEffect(tpz.effect.MAX_HP_BOOST, math.floor(boost), 0, 180, 0, 0, 1)
 
     return tpz.effect.MANTRA
 end
