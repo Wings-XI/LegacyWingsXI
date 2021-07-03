@@ -715,6 +715,8 @@ namespace charutils
 
             HP = Sql_GetIntData(SqlHandle, 3);
             MP = Sql_GetIntData(SqlHandle, 4);
+            PChar->health.zoneinhp = HP;
+            PChar->health.zoneinmp = MP;
 
             PChar->profile.mhflag = (uint8)Sql_GetIntData(SqlHandle, 5);
             PChar->profile.title = (uint16)Sql_GetIntData(SqlHandle, 6);
@@ -880,9 +882,11 @@ namespace charutils
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
 
         charutils::LoadEquip(PChar);
+        luautils::CheckForGearSet(PChar);
+        PChar->PLatentEffectContainer->CheckAllLatents();
+        PChar->UpdateHealth();
         PChar->health.hp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxHP() : HP;
         PChar->health.mp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxMP() : MP;
-        PChar->UpdateHealth();
         PChar->m_event.EventID = luautils::OnZoneIn(PChar);
         luautils::OnGameIn(PChar, zoning == 1);
     }
