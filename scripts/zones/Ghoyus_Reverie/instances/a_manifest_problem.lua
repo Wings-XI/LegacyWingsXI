@@ -124,7 +124,7 @@ function onRegionEnter(player, region)
     local regionId = region:GetRegionID()
 
     local instance = player:getInstance()
-    if instance ~= nil and instance:getStage()==0 then
+    if instance ~= nil and instance:getStage() == 0 and regionId == 1 then
         instance:setStage(1) -- this triggeres the mobs to be active and begin moving in the instance
     end
     

@@ -9,7 +9,7 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
-    zone:registerRegion(45, -185.23, 5, 264.43, 0, 0, 0)
+    zone:registerRegion(1, -185.23, 5, 264.43, 0, 0, 0)
 end
 
 function onInstanceZoneIn(player, instance)
