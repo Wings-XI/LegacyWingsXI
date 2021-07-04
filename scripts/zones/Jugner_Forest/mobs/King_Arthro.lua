@@ -28,6 +28,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEF, 25)
     mob:addMod(tpz.mod.MACC, 15)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
 end
 
 function onAdditionalEffect(mob, target, damage)
