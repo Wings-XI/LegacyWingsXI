@@ -66,6 +66,11 @@ function onMobFight(mob, target)
     end
 end
 
+-- Prevents any stuck logic due to wipes
+function onMobDisengage(mob)
+    mob:setLocalVar("changeTime", 0) 
+end
+
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.MIST_MELTER)
 end

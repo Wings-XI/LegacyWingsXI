@@ -1,18 +1,29 @@
 -----------------------------------
 -- Area: Southern SandOria [S]
---  NPC: Saphiriance T.K
--- !pos 113 1 -40 80
+--  NPC: Saphiriance, T.K.
+-- Type: Campaign Arbiter
+-- !pos TODO
 -----------------------------------
+require("scripts/globals/campaign")
+-----------------------------------
+
+local campaignEvent = 454
 
 function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(450)
+    if player:getCampaignAllegiance() == 0 then
+        player:startEvent(450)
+    else
+        tpz.campaign.campaignArbiterOnTrigger(player, npc, campaignEvent)        
+    end
 end
 
 function onEventUpdate(player, csid, option)
+    tpz.campaign.campaignArbiterOnEventUpdate(player, csid, option, campaignEvent)
 end
 
 function onEventFinish(player, csid, option)
+    tpz.campaign.campaignArbiterOnEventFinish(player, csid, option, campaignEvent)
 end

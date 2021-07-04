@@ -130,16 +130,17 @@ function BluePhysicalSpell(caster, target, spell, params)
     local WSC = BlueGetWsc(caster, params) -- ex. params.str_wsc of 0.2 = 20% STR added to base dmg
     if caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then WSC = WSC * 2 end
     local multiplier = params.multiplier -- a.k.a. ftp0
+    print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
     
     -- monster correlation affects fTP mults
     local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
     if params.eco ~= nil and target:isMob() then
-        if correl > 0 then correl = 0.5 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)*2/100 + caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS)
-        elseif correl < 0 then correl = -0.5 end
+        if correl > 0 then correl = 0.25 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)/100 + caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS)/100
+        elseif correl < 0 then correl = -0.25 end
         if multiplier ~= nil then multiplier = multiplier + correl end
         if params.tp150 ~= nil then params.tp150 = params.tp150 + correl end
         if params.tp300 ~= nil then params.tp300 = params.tp300 + correl end
-        --print(string.format("monster family correl was %f",correl))
+        print(string.format("monster family correl was %f",correl))
     end
 
     -- If under CA, replace multiplier with fTP(multiplier, tp150, tp300)
@@ -216,13 +217,11 @@ function BluePhysicalSpell(caster, target, spell, params)
                 DBonusFromSA = DBonusFromSA + caster:getStat(tpz.mod.AGI) * (1 + caster:getMod(tpz.mod.TRICK_ATK_AGI)/100) * (100+(caster:getMod(tpz.mod.AUGMENTS_TA)))/100
             end
             
-            local correlmult = correl > 0 and 1.25 or (correl < 0 and 0.75 or 1.0)
-            
             if hitsdone == 0 then -- only the first hit benefits from multiplier
                 finaldmg = finaldmg + (finalD + DBonusFromSA) * pdif
             else
-                finaldmg = finaldmg + (math.floor(D + fStr + WSC)) * pdif -- same as finalD but without multiplier (it should be 1.0)
-                finaldmg = finaldmg * correlmult -- this still applies to multihits past the first, says bgwiki
+                local correlmult = correl > 0 and 1.25 or (correl < 0 and 0.75 or 1.0) -- this still applies to multihits past the first, says bgwiki
+                finaldmg = finaldmg + (math.floor(D + fStr + WSC)) * pdif * correlmult -- same as finalD but without multiplier (it should be 1.0)
             end
 
             hitslanded = hitslanded + 1

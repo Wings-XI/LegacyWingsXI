@@ -74,7 +74,8 @@ local ids =
     RETRACE               = 60,
     SOUTHERN_SAN_DORIA_S  = 61,
     BASTOK_MARKETS_S      = 62,
-    WINDURST_WATERS_S     = 63
+    WINDURST_WATERS_S     = 63,
+    CAMPAIGN              = 64
 }
 tpz.teleport.id = ids
 

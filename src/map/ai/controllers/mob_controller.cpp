@@ -164,9 +164,9 @@ void CMobController::TryLink()
     // Handle monster linking if they are close enough
     if (PMob->PParty != nullptr)
     {
-        for (uint16 i = 0; i < PMob->PParty->members.size(); ++i)
+        for (uint16 i = 0; i < PMob->PParty->MemberCount(); ++i)
         {
-            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->members[i];
+            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->GetMember(i);
 
             if (PPartyMember->PAI->IsRoaming() && PPartyMember->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
             {
@@ -497,7 +497,7 @@ bool CMobController::CanCastSpells()
     }
 
     // mob has no mp and does not have manafont
-    if (PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetMJob() != JOB_BRD && PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
     }

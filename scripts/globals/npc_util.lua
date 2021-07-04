@@ -246,7 +246,7 @@ end
         gil, 500
         bayld, 1000
 ******************************************************************************* --]]
-function npcUtil.giveCurrency(player, currency, amount)
+function npcUtil.giveCurrency(player, currency, amount, silenceMessage)
     local ID = zones[player:getZoneID()]
 
     if (not type(currency) == "string") or (not type(amount) == "number") then
@@ -281,6 +281,10 @@ function npcUtil.giveCurrency(player, currency, amount)
         player:addGil(amount)
     else
         player:addCurrency(currency, amount)
+    end
+
+    if nil ~= silenceMessage and silenceMessage then
+        return true
     end
     player:messageSpecial(message_id, amount)
 

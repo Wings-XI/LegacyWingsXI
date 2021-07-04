@@ -98,6 +98,49 @@ bool CLatentEffectContainer::DelLatentEffect(LATENT conditionID, uint16 conditio
 *  the conditions are met.												*
 *																		*
 ************************************************************************/
+void CLatentEffectContainer::CheckAllLatents()
+{
+    CheckLatentsZone();
+    CheckLatentsDay();
+    CheckLatentsWeekDay();
+    CheckLatentsHours();
+    CheckLatentsTime();
+    CheckLatentsMoonPhase();
+    CheckLatentsWeather();
+    CheckLatentsEquip(SLOT_AMMO);
+    CheckLatentsEquip(SLOT_RANGED);
+    CheckLatentsEquip(SLOT_SUB);
+    CheckLatentsEquip(SLOT_MAIN);
+    CheckLatentsEquip(SLOT_HEAD);
+    CheckLatentsEquip(SLOT_NECK);
+    CheckLatentsEquip(SLOT_EAR1);
+    CheckLatentsEquip(SLOT_EAR2);
+    CheckLatentsEquip(SLOT_RING2);
+    CheckLatentsEquip(SLOT_RING1);
+    CheckLatentsEquip(SLOT_HANDS);
+    CheckLatentsEquip(SLOT_BODY);
+    CheckLatentsEquip(SLOT_BACK);
+    CheckLatentsEquip(SLOT_WAIST);
+    CheckLatentsEquip(SLOT_LEGS);
+    CheckLatentsEquip(SLOT_FEET);
+    CheckLatentsFoodEffect();
+    CheckLatentsJobLevel();
+    CheckLatentsSubJob();
+    CheckLatentsPartyAvatar();
+    CheckLatentsPartyJobs();
+    CheckLatentsPetType();
+    CheckLatentsRollSong();
+    CheckLatentsStatusEffect();
+    CheckLatentsTargetChange();
+    CheckLatentsWeaponBreak(SLOT_MAIN);
+    CheckLatentsWeaponBreak(SLOT_SUB);
+    CheckLatentsWeaponBreak(SLOT_RANGED);
+    CheckLatentsWeaponBreak(SLOT_AMMO);
+    CheckLatentsHP();
+    CheckLatentsMP();
+    CheckLatentsTP();
+}
+
 void CLatentEffectContainer::CheckLatentsHP()
 {
     //TODO: hook into this from anywhere HP changes
@@ -454,7 +497,7 @@ void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
                 auto inZone = 0;
                 for (size_t m = 0; m < members; ++m)
                 {
-                    auto PMember = (CCharEntity*)m_POwner->PParty->members.at(m);
+                    auto PMember = (CCharEntity*)m_POwner->PParty->GetMember(m);
                     if (PMember->getZone() == m_POwner->getZone())
                     {
                         inZone++;
@@ -560,6 +603,27 @@ void CLatentEffectContainer::CheckLatentsPetType()
             break;
         default:
             break;
+        }
+        return false;
+    });
+}
+
+/************************************************************************
+ *																		*
+ *  Checks all latents that are affected by sub job and     			*
+ *  activates them if the conditions are met.							*
+ *																		*
+ ************************************************************************/
+void CLatentEffectContainer::CheckLatentsSubJob()
+{
+    ProcessLatentEffects([this](CLatentEffect& latentEffect) {
+        switch (latentEffect.GetConditionsID())
+        {
+            case LATENT_SUBJOB:
+                return ProcessLatentEffect(latentEffect);
+                break;
+            default:
+                break;
         }
         return false;
     });
@@ -760,15 +824,16 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         expression = !m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD);
         break;
     case LATENT_PARTY_MEMBERS:
-        expression = m_POwner->PParty != nullptr && latentEffect.GetConditionsValue() <= m_POwner->PParty->members.size();
+        expression = m_POwner->PParty != nullptr && latentEffect.GetConditionsValue() <= m_POwner->PParty->MemberCount();
         break;
     case LATENT_PARTY_MEMBERS_IN_ZONE:
     {
         auto inZone = 0;
         if (m_POwner->PParty != nullptr)
         {
-            for (auto member : m_POwner->PParty->members)
+            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
             {
+                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->getZone() == m_POwner->getZone())
                 {
                     ++inZone;
@@ -781,8 +846,9 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     case LATENT_AVATAR_IN_PARTY:
         if (m_POwner->PParty != nullptr)
         {
-            for (auto member : m_POwner->PParty->members)
+            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
             {
+                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->PPet != nullptr)
                 {
                     auto PPet = (CPetEntity*)member->PPet;
@@ -808,8 +874,9 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     case LATENT_JOB_IN_PARTY:
         if (m_POwner->PParty != nullptr)
         {
-            for (auto member : m_POwner->PParty->members)
+            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
             {
+                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->id != m_POwner->id)
                 {
                     if (member->GetMJob() == latentEffect.GetConditionsValue())

@@ -59,10 +59,12 @@ class CParty
 public:
     CParty(CBattleEntity* PEntity);
 	CParty(uint32 id);
+    ~CParty();
 
     uint32 GetPartyID();                                // узнаем уникальный ID группы
     uint16 GetMemberFlags(CBattleEntity* PEntity);      // получаем список флагов персонажа
     uint8  MemberCount(uint16 ZoneID);                   // узнаем количество участников группы в указанной зоне
+    uint8  MemberCount();                               // Total number of party members
 
     CBattleEntity* GetLeader();                         // узнаем лидера группы
     CBattleEntity* GetSyncTarget();                     // узнаем цель синхронизации
@@ -74,6 +76,7 @@ public:
 	void ReloadPartyMembers(CCharEntity* PChar);        // oбновляем статусы участников группы для выбранного персонажа
 	void ReloadTreasurePool(CCharEntity* PChar);
 
+    CBattleEntity* GetMember(uint8 pos); // Get a party member by position
     void AddMember(CBattleEntity* PEntity); // добавляем персонажа в группу
 	void AddMember(uint32 id);	// Add party member from outside this server's scope
     void RemoveMember(CBattleEntity* PEntity);          // удаление персонажа из группы
@@ -98,9 +101,9 @@ public:
 
     // ВНИМАНИЕ: НЕ ИЗМЕНЯТЬ ЗНАЧЕНИЯ СПИСКА ВНЕ КЛАССА ГРУППЫ
 
-    std::vector<CBattleEntity*> members;                // список участников группы
-
 private:
+
+    std::vector<CBattleEntity*> members;                // Google translate: List of group members
 
     struct partyInfo_t;
     uint32    m_PartyID;                                // уникальный ID группы

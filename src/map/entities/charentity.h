@@ -259,11 +259,11 @@ public:
     void            ForPartyWithTrusts(F func, Args&&... args)
     {
         if (PParty) {
-            for (auto PMember : PParty->members) {
-                func(PMember, std::forward<Args>(args)...);
+            for (uint8 MemberNum = 0; MemberNum < PParty->MemberCount(); MemberNum++) {
+                func(PParty->GetMember(MemberNum), std::forward<Args>(args)...);
             }
-            for (auto PMember : PParty->members) {
-                for (auto PTrust : static_cast<CCharEntity*>(PMember)->PTrusts) {
+            for (uint8 MemberNum = 0; MemberNum < PParty->MemberCount(); MemberNum++) {
+                for (auto PTrust : static_cast<CCharEntity*>(PParty->GetMember(MemberNum))->PTrusts) {
                     func(PTrust, std::forward<Args>(args)...);
                 }
             }
@@ -428,6 +428,7 @@ public:
     virtual void delTrait(CTrait*) override;
 
     bool IsMobOwner(CBattleEntity* PTarget);
+    bool IsPartiedWith(CCharEntity* PTarget);
     virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
     virtual bool CanUseSpell(CSpell*) override;
 

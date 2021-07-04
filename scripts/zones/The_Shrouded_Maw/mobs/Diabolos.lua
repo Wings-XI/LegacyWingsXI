@@ -29,13 +29,17 @@ end
 
 function onMobSpawn(mob)
     closeAllTiles(mob)
-    mob:addMod(tpz.mod.ACC, 10)
-    mob:addMod(tpz.mod.INT, -50)
-    mob:addMod(tpz.mod.MND, -50)
-    mob:addMod(tpz.mod.ATTP, -15)
-    mob:addMod(tpz.mod.DEFP, -15)
-    mob:addMod(tpz.mod.MDEF, -40)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:addMod(tpz.mod.ACC, 10)
+    -- Only add these for the CoP Diabolos NOT Prime
+    local copDiabolos = ID.mob.DIABOLOS_OFFSET
+    if mob:getID() == copDiabolos then
+        mob:addMod(tpz.mod.INT, -50)
+        mob:addMod(tpz.mod.MND, -50)
+        mob:addMod(tpz.mod.ATTP, -15)
+        mob:addMod(tpz.mod.DEFP, -15)
+        mob:addMod(tpz.mod.MDEF, -40)
+    end
 end
 
 function onMobFight(mob, target)
