@@ -204,7 +204,7 @@ INSERT INTO `item_usable` VALUES(4251, 'festive_fan', 1, 1, 61, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(4252, 'summer_fan', 1, 1, 62, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(4253, 'spirit_masque', 1, 1, 63, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(4254, 'megalixir', 1, 3, 34, 0, 0, 0, 0, 0);
-INSERT INTO `item_usable` VALUES(4255, 'pinch_of_mana_powder', 1, 3, 89, 0, 0, 0, 0, 0);
+INSERT INTO `item_usable` VALUES(4255, 'pinch_of_mana_powder', 1, 3, 89, 0, 0, 0, 0, 1);
 INSERT INTO `item_usable` VALUES(4256, 'ouka_ranman', 1, 1, 56, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(4257, 'papillion', 1, 1, 57, 12, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(4258, 'red_drop', 1, 2, 28, 0, 0, 0, 0, 0);
@@ -1160,7 +1160,7 @@ INSERT INTO `item_usable` VALUES(5318, 'toolbag_(kodoku)', 1, 1, 55, 0, 0, 0, 0,
 INSERT INTO `item_usable` VALUES(5319, 'toolbag_(shinobi-tabi)', 1, 1, 55, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(5320, 'chunk_of_smelling_salts', 1, 1, 24, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(5321, 'bottle_of_romance_potion', 1, 3, 24, 0, 0, 0, 0, 0);
-INSERT INTO `item_usable` VALUES(5322, 'flask_of_healing_powder', 1, 3, 30, 0, 0, 0, 0, 0);
+INSERT INTO `item_usable` VALUES(5322, 'flask_of_healing_powder', 1, 3, 30, 0, 0, 0, 0, 1);
 INSERT INTO `item_usable` VALUES(5323, 'copy_of_the_brenner_bluebook', 1, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(5324, 'page_of_the_brenner_bluebook', 1, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `item_usable` VALUES(5325, 'copy_of_the_brenner_blackbook', 1, 1, 0, 0, 0, 0, 0, 0);
