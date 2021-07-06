@@ -1021,9 +1021,9 @@ bool CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers)
 
     if (maneuvers.water && PAutomaton->getHead() == HEAD_SOULSOOTHER && PAutomaton->PMaster->PParty) // Water + Soulsoother head -> Remove party's statuses
     {
-        for (uint8 i = 0; i < PAutomaton->PMaster->PParty->MemberCount(); ++i)
+        for (uint8 i = 0; i < PAutomaton->PMaster->PParty->members.size(); ++i)
         {
-            CBattleEntity* member = PAutomaton->PMaster->PParty->GetMember(i);
+            CBattleEntity* member = PAutomaton->PMaster->PParty->members.at(i);
             if (member->id != PAutomaton->PMaster->id)
             {
                 castPriority.clear();
@@ -1190,7 +1190,7 @@ bool CAutomatonController::TryEnhance()
     // Unknown whether it only applies buffs to other members if they have hate or if the Soulsoother head is needed
     if (PAutomaton->PMaster->PParty)
     {
-        members = PAutomaton->PMaster->PParty->MemberCount();
+        members = PAutomaton->PMaster->PParty->members.size();
         static_cast<CCharEntity*>(PAutomaton->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
             if (PMember->id != PAutomaton->PMaster->id && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < 20*20)
             {

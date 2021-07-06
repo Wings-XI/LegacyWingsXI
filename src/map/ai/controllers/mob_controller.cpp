@@ -164,9 +164,9 @@ void CMobController::TryLink()
     // Handle monster linking if they are close enough
     if (PMob->PParty != nullptr)
     {
-        for (uint16 i = 0; i < PMob->PParty->MemberCount(); ++i)
+        for (uint16 i = 0; i < PMob->PParty->members.size(); ++i)
         {
-            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->GetMember(i);
+            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->members[i];
 
             if (PPartyMember->PAI->IsRoaming() && PPartyMember->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
             {
