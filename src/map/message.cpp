@@ -322,11 +322,11 @@ namespace message
                 {
                     if (PChar->PParty->m_PAlliance != nullptr)
                     {
-                        for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); ++i)
+                        for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyList.size(); ++i)
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
                             memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
-                            ((CParty*)PChar->PParty->m_PAlliance->getParty(i))->PushPacket(ref<uint32>((uint8*)extra, 4), 0, newPacket);
+                            ((CParty*)PChar->PParty->m_PAlliance->partyList.at(i))->PushPacket(ref<uint32>((uint8*)extra, 4), 0, newPacket);
                         }
                     }
                     else
