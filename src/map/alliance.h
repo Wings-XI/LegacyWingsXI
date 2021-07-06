@@ -40,12 +40,10 @@ public:
 
     CAlliance(CBattleEntity* PEntity);
 	CAlliance(uint32 id);
-    ~CAlliance();
 
 	uint32  m_AllianceID;
 	CParty* getMainParty();
 	void setMainParty(CParty * aLeader);
-    CParty* getParty(uint8 number);
     void addParty(CParty * party);
 	void addParty(uint32 partyid);
     void pushParty(CParty* PParty, uint8 number);
@@ -54,14 +52,12 @@ public:
     void dissolveAlliance(bool playerInitiated = true);
 	uint32 partyCount(void);
     void assignAllianceLeader(const char* name);
-    uint8 partyCountLocal();
 
+	std::vector<CParty*> partyList; //list of parties in alliance
 
 private:
 
-    std::vector<CParty*> partyList; //list of parties in alliance
-
-    CParty* aLeader;		      		//alliance lead party
+	CParty* aLeader;		      		//alliance lead party
 };
 
 #endif

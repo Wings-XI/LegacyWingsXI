@@ -497,7 +497,7 @@ void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
                 auto inZone = 0;
                 for (size_t m = 0; m < members; ++m)
                 {
-                    auto PMember = (CCharEntity*)m_POwner->PParty->GetMember(m);
+                    auto PMember = (CCharEntity*)m_POwner->PParty->members.at(m);
                     if (PMember->getZone() == m_POwner->getZone())
                     {
                         inZone++;
@@ -824,16 +824,15 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         expression = !m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_FOOD);
         break;
     case LATENT_PARTY_MEMBERS:
-        expression = m_POwner->PParty != nullptr && latentEffect.GetConditionsValue() <= m_POwner->PParty->MemberCount();
+        expression = m_POwner->PParty != nullptr && latentEffect.GetConditionsValue() <= m_POwner->PParty->members.size();
         break;
     case LATENT_PARTY_MEMBERS_IN_ZONE:
     {
         auto inZone = 0;
         if (m_POwner->PParty != nullptr)
         {
-            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
+            for (auto member : m_POwner->PParty->members)
             {
-                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->getZone() == m_POwner->getZone())
                 {
                     ++inZone;
@@ -846,9 +845,8 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     case LATENT_AVATAR_IN_PARTY:
         if (m_POwner->PParty != nullptr)
         {
-            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
+            for (auto member : m_POwner->PParty->members)
             {
-                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->PPet != nullptr)
                 {
                     auto PPet = (CPetEntity*)member->PPet;
@@ -874,9 +872,8 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     case LATENT_JOB_IN_PARTY:
         if (m_POwner->PParty != nullptr)
         {
-            for (uint8 i = 0; i < m_POwner->PParty->MemberCount(); i++)
+            for (auto member : m_POwner->PParty->members)
             {
-                CBattleEntity* member = m_POwner->PParty->GetMember(i);
                 if (member->id != m_POwner->id)
                 {
                     if (member->GetMJob() == latentEffect.GetConditionsValue())
