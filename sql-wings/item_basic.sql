@@ -18301,8 +18301,8 @@ INSERT INTO `item_basic` VALUES(21919, 0, 'ajja_katana', 'ajja_katana', 1, 63552
 INSERT INTO `item_basic` VALUES(21920, 0, 'eletta_katana', 'eletta_katana', 1, 63552, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(21921, 0, 'kaja_katana', 'kaja_katana', 1, 63552, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(21922, 0, 'gokotai', 'gokotai', 1, 63552, 0, 1, 0);
-INSERT INTO `item_basic` VALUES(21923, 0, 'debahocho', 'debahocho', 1, 2084, 9, 0, 0);
-INSERT INTO `item_basic` VALUES(21924, 0, 'debahocho_+1', 'debahocho_+1', 1, 2080, 9, 0, 0);
+INSERT INTO `item_basic` VALUES(21923, 0, 'debahocho', 'debahocho', 1, 2084, 0, 0, 0);
+INSERT INTO `item_basic` VALUES(21924, 0, 'debahocho_+1', 'debahocho_+1', 1, 2080, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21954, 0, 'amanomurakumo', 'amanomurakumo', 1, 63552, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21955, 0, 'kogarasumaru', 'kogarasumaru', 1, 63552, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21956, 0, 'masamune', 'masamune', 1, 63552, 0, 0, 0);
