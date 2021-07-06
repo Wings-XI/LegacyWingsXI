@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -202,7 +202,7 @@ void CAlliance::delParty(CParty* party)
     }
 
     // Create a a new treasure pool for whoever is in the server from this party (if anyone)
-    if (!party->MemberCount() != 0)
+    if (party->MemberCount() > 0)
     {
         auto* PChar = dynamic_cast<CCharEntity*>(party->GetMember(0));
 
