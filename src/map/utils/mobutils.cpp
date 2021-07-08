@@ -718,6 +718,8 @@ void SetupRoaming(CMobEntity* PMob)
     PMob->defaultMobMod(MOBMOD_ROAM_COOL, cool);
     PMob->defaultMobMod(MOBMOD_ROAM_RATE, rate);
 
+    float maxDistance = ((float)PMob->getMobMod(MOBMOD_ROAM_DISTANCE) / 10.0f) + 2.0f;
+
     if(PMob->m_roamFlags & ROAMFLAG_AMBUSH)
     {
         PMob->m_specialFlags |= SPECIALFLAG_HIDDEN;
@@ -726,7 +728,9 @@ void SetupRoaming(CMobEntity* PMob)
         PMob->setMobMod(MOBMOD_ROAM_DISTANCE, 5);
         PMob->setMobMod(MOBMOD_ROAM_TURNS, 1);
     }
-
+    else if (maxDistance > PMob->m_maxRoamDistance) {
+        PMob->m_maxRoamDistance = maxDistance;
+    }
 }
 
 void SetupPetSkills(CMobEntity* PMob)
