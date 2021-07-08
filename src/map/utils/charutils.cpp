@@ -6339,24 +6339,30 @@ void ReceiveHelpDeskMessage(CCharEntity* PChar, CBasicPacket data)
     {
         if (PChar->m_GMCall.isCall)
         {
-            const char* fmtQuery = "INSERT INTO server_gmcalls (charid,charname,accid,zoneid,pos_x,pos_y,pos_z,version,message,harassment,stuck,blocked) "
-                                   "VALUES(%u,'%s',%u,%u,%.3f,%.3f,%.3f,'%s','%s',%u,%u,%u)";
+            if (map_config.helpdesk_enabled) {
+                const char* fmtQuery = "INSERT INTO server_gmcalls (charid,charname,accid,zoneid,pos_x,pos_y,pos_z,version,message,harassment,stuck,blocked) "
+                    "VALUES(%u,'%s',%u,%u,%.3f,%.3f,%.3f,'%s','%s',%u,%u,%u)";
 
-            std::string message;
-            message.reserve(strlen(PChar->m_GMCall.message.c_str()) * 2 + 1);
-            Sql_EscapeString(SqlHandle, message.data(), PChar->m_GMCall.message.c_str());
+                std::string message;
+                message.reserve(strlen(PChar->m_GMCall.message.c_str()) * 2 + 1);
+                Sql_EscapeString(SqlHandle, message.data(), PChar->m_GMCall.message.c_str());
 
-            // Send the ticket to all online GMs
-            std::string broadcast((const char*)PChar->GetName());
-            broadcast.append(" placed a GM ticket: ");
-            broadcast.append(PChar->m_GMCall.message);
-            message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)broadcast.c_str()));
+                // Send the ticket to all online GMs
+                std::string broadcast((const char*)PChar->GetName());
+                broadcast.append(" placed a GM ticket: ");
+                broadcast.append(PChar->m_GMCall.message);
+                message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)broadcast.c_str()));
 
-            if (Sql_Query(SqlHandle, fmtQuery, PChar->id, PChar->name.c_str(), PChar->m_accountId, PChar->getZone(), PChar->GetXPos(), PChar->GetYPos(), PChar->GetZPos(),
-                          PChar->m_GMCall.version.c_str(), message.data(), PChar->m_GMCall.harassment ? 1 : 0, PChar->m_GMCall.stuck ? 1 : 0,
-                          PChar->m_GMCall.blocked ? 1 : 0) == SQL_ERROR)
-            {
-                ShowError("cmdhandler::call: Failed to log GM call.\n");
+                if (Sql_Query(SqlHandle, fmtQuery, PChar->id, PChar->name.c_str(), PChar->m_accountId, PChar->getZone(), PChar->GetXPos(), PChar->GetYPos(), PChar->GetZPos(),
+                    PChar->m_GMCall.version.c_str(), message.data(), PChar->m_GMCall.harassment ? 1 : 0, PChar->m_GMCall.stuck ? 1 : 0,
+                    PChar->m_GMCall.blocked ? 1 : 0) == SQL_ERROR)
+                {
+                    ShowError("cmdhandler::call: Failed to log GM call.\n");
+                }
+            }
+            else {
+                std::string disabled_msg("The helpdesk function is currently disabled. Please use Discord to submit a ticket.");
+                message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, (const char*)disabled_msg.c_str()));
             }
         }
     }
