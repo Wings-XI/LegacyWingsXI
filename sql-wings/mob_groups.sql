@@ -2518,11 +2518,11 @@ INSERT INTO `mob_groups` VALUES(2013, 3912, 59, 'Thunder_Elemental', 0, 128, 241
 INSERT INTO `mob_groups` VALUES(2014, 4112, 59, 'Utukku', 0, 128, 2091, 0, 0, 55, 56, 0);
 INSERT INTO `mob_groups` VALUES(1, 1776, 60, 'Gowam', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2, 4468, 60, 'Yazquhl', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(3, 1506, 60, 'Gessho', 0, 128, 0, 0, 0, 75, 75, 1);
-INSERT INTO `mob_groups` VALUES(4, 5430, 60, 'Ashu_Talif_Crew2', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(5, 5431, 60, 'Ashu_Talif_Crew3', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(6, 263, 60, 'Ashu_Talif_Crew', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(7, 262, 60, 'Ashu_Talif_Captain', 0, 128, 0, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(3, 1506, 60, 'Gessho', 0, 128, 0, 0, 0, 60, 60, 1);
+INSERT INTO `mob_groups` VALUES(4, 5430, 60, 'Ashu_Talif_Crew2', 0, 128, 0, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(5, 5431, 60, 'Ashu_Talif_Crew3', 0, 128, 0, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(6, 263, 60, 'Ashu_Talif_Crew', 0, 128, 0, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(7, 262, 60, 'Ashu_Talif_Captain', 0, 128, 0, 0, 0, 68, 68, 0);
 INSERT INTO `mob_groups` VALUES(2017, 264, 60, 'Ashu_Talif_Marine', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2018, 432, 60, 'Black_Bartholomew', 0, 0, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2019, 550, 60, 'Bubbly', 0, 0, 0, 0, 0, 80, 80, 0);
