@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1833,7 +1833,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     }
     else
     {
-        luautils::OnItemUse(PTarget, PItem);
+        luautils::OnItemUse(PTarget, PItem, this);
     }
 
     action.id = this->id;
