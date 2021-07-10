@@ -35,6 +35,7 @@ zones[tpz.zone.THE_SHRINE_OF_RUAVITAU] =
         ULLIKUMMI        = 17506418,
         OLLAS_OFFSET     = 17506667,
         KIRIN            = 17506670,
+        FAUST            = 17506370,   
         MOTHER_GLOBE = 
         {
             MOTHER = 17506396,
