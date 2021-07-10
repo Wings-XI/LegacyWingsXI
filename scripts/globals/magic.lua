@@ -1270,7 +1270,7 @@ function doDivineNuke(caster, target, spell, params)
 end
 
 function doNinjutsuNuke(caster, target, spell, params)
-    local mabBonus = params.mabBonus
+    local mabBonus = params.bonusmab
 
     mabBonus = mabBonus or 0
 
