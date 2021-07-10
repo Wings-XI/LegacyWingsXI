@@ -11,6 +11,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 18000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 28000)
 end
