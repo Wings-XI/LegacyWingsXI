@@ -3759,6 +3759,15 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     }
                     lua_pop(L, 2);
                 }
+                
+                lua_getfield(L, 1, "appraisal");
+                uint8 appraisalId = (uint8)lua_tointeger(L, -1);
+                if (appraisalId > 0)
+                {
+                    PItem->setAppraisalID(appraisalId);
+                }
+                lua_pop(L, 1);
+
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
                 if (SlotID == ERROR_SLOTID)
                     break;
