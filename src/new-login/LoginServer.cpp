@@ -101,7 +101,7 @@ void LoginServer::Run()
 	// Current socket being iterated
 	SOCKET sockCurrentSocket = 0;
 	// Timeout for select calls
-	struct timeval tv = { 0, 1000 };
+	struct timeval tv, tv_orig = { 0, 1000 };
 	// Size of saddrNewConnection
 	socklen_t cbsaddrNewConnection = 0;
 	// New bound socket for incoming connections
@@ -149,6 +149,9 @@ void LoginServer::Run()
 				nfds = static_cast<int>(sockCurrentSocket);
 			}
 		}
+
+		tv.tv_sec = tv_orig.tv_sec;
+		tv.tv_usec = tv_orig.tv_usec;
 		if (select(nfds+1, &SocketDescriptors, NULL, NULL, &tv) < 0) {
 			LOG_CRITICAL("select function failed.");
 			throw std::runtime_error("select function failed.");

@@ -718,6 +718,8 @@ void SetupRoaming(CMobEntity* PMob)
     PMob->defaultMobMod(MOBMOD_ROAM_COOL, cool);
     PMob->defaultMobMod(MOBMOD_ROAM_RATE, rate);
 
+    float maxDistance = ((float)PMob->getMobMod(MOBMOD_ROAM_DISTANCE) / 10.0f) + 2.0f;
+
     if(PMob->m_roamFlags & ROAMFLAG_AMBUSH)
     {
         PMob->m_specialFlags |= SPECIALFLAG_HIDDEN;
@@ -726,7 +728,9 @@ void SetupRoaming(CMobEntity* PMob)
         PMob->setMobMod(MOBMOD_ROAM_DISTANCE, 5);
         PMob->setMobMod(MOBMOD_ROAM_TURNS, 1);
     }
-
+    else if (maxDistance > PMob->m_maxRoamDistance) {
+        PMob->m_maxRoamDistance = maxDistance;
+    }
 }
 
 void SetupPetSkills(CMobEntity* PMob)
@@ -1179,7 +1183,7 @@ CMobEntity* InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance)
         Fire, Ice, Wind, Earth, Lightning, Water, Light, Dark, Element, \
         mob_pools.familyid, name_prefix, entityFlags, animationsub, \
         (mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, ATT, ACC, mob_groups.poolid, \
-        allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, packet_name \
+        allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, packet_name, \
         mob_family_system.family \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyid \

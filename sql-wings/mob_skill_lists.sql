@@ -3159,6 +3159,17 @@ INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Pyuu_The_Spatemaker', 1162, 770);
 INSERT INTO `mob_skill_lists` VALUES('Yal-un_Eke', 1163, 567);
 INSERT INTO `mob_skill_lists` VALUES('Bugbear_Muscleman', 1164, 361);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1923);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1924);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1920);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1921);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1922);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1923);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1924);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,2361);
 --
 -- Indexes for dumped tables
 --

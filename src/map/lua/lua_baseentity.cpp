@@ -3759,6 +3759,15 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     }
                     lua_pop(L, 2);
                 }
+                
+                lua_getfield(L, 1, "appraisal");
+                uint8 appraisalId = (uint8)lua_tointeger(L, -1);
+                if (appraisalId > 0)
+                {
+                    PItem->setAppraisalID(appraisalId);
+                }
+                lua_pop(L, 1);
+
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
                 if (SlotID == ERROR_SLOTID)
                     break;
@@ -16346,6 +16355,57 @@ int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
 }
 
 /************************************************************************
+*  Function: deaggroPlayer
+*  Purpose : Removes enmity for a specific player
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroPlayer(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    int8* charName = (int8*)lua_tolstring(L, 1, nullptr);
+    if (!charName) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CCharEntity* PChar = zoneutils::GetCharByName(charName);
+    if (!PChar) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroEntity(PChar));
+    return 1;
+}
+
+/************************************************************************
+*  Function: deaggroAll
+*  Purpose : Completely clears the mob's enmity list
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroAll(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroAll());
+    return 1;
+}
+
+/************************************************************************
  *  Function: sendHelpDeskMsg()
  *  Purpose : Sends player a Help Desk/GM message
  *  Example : player:sendHelpDeskMsg("please logout");
@@ -18074,6 +18134,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroAll),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendHelpDeskMsg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeTicket),

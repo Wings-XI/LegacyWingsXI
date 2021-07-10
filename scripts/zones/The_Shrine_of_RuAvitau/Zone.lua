@@ -38,6 +38,20 @@ function onInitialize(zone)
     zone:registerRegion(2, 777, -103, -503, 783, -99, -497) --> E (G-6)
     zone:registerRegion(1, 816, -103, -503, 822, -99, -497) --> F (I-6)
 
+    local faust_respawn = GetServerVariable("Faust_Respawn")
+	if os.time() < faust_respawn then
+		GetMobByID(ID.mob.FAUST):setRespawnTime(faust_respawn - os.time())
+	else
+		SpawnMob(ID.mob.FAUST)
+	end
+
+    local mg_respawn = GetServerVariable("MG_Respawn")
+	if os.time() < mg_respawn then
+		GetMobByID(ID.mob.MOTHER_GLOBE):setRespawnTime(mg_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MOTHER_GLOBE)
+	end
+
 end
 
 function onZoneIn(player, prevZone)

@@ -51,6 +51,7 @@ public:
     int32 getTimeLimit(lua_State*);
     int32 getEntryPos(lua_State*);
     int32 getLastTimeUpdate(lua_State*);
+    int32 getLevelCap(lua_State*);
     int32 getProgress(lua_State*);
     int32 getWipeTime(lua_State*);
     int32 getEntity(lua_State*);

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Periqia
 -----------------------------------
+require("scripts/globals/missions")
 require("scripts/globals/zone")
 -----------------------------------
 
@@ -9,27 +10,16 @@ zones = zones or {}
 zones[tpz.zone.PERIQIA] =
 {
     text = {
-        ITEM_CANNOT_BE_OBTAINED    = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        FULL_INVENTORY_AFTER_TRADE = 6386, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
-        ITEM_OBTAINED              = 6388, -- Obtained: <item>.
-        GIL_OBTAINED               = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED           = 6391, -- Obtained key item: <keyitem>.
-        KEYITEM_LOST               = 6392, -- Lost key item: <keyitem>.
-        NOT_HAVE_ENOUGH_GIL        = 6393, -- You do not have enough gil.
-        ITEMS_OBTAINED             = 6397, -- You obtain <number> <item>!
-        CARRIED_OVER_POINTS        = 6999, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY    = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
-        LOGIN_NUMBER               = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
-        ASSAULT_31_START           = 7477, -- Commencing <assault>! Objective: Escort the prisoner
-        ASSAULT_32_START           = 7478, -- Commencing <assault>! Objective: Destroy the undead
-        ASSAULT_33_START           = 7479, -- Commencing <assault>! Objective: Find the survivors
-        ASSAULT_34_START           = 7480, -- Commencing <assault>! Objective: Eliminate the Black Baron
-        ASSAULT_35_START           = 7481, -- Commencing <assault>! Objective: Activate the bridge
-        ASSAULT_36_START           = 7482, -- Commencing <assault>! Objective: Exterminate the chigoes
-        ASSAULT_37_START           = 7483, -- Commencing <assault>! Objective: Clear the mine fields
-        ASSAULT_38_START           = 7484, -- Commencing <assault>! Objective: Locate the generals
-        ASSAULT_39_START           = 7485, -- Commencing <assault>! Objective: Retrieve the Mark-IIs
-        ASSAULT_40_START           = 7486, -- Commencing <assault>! Objective: Assassinate King Goldemar
+        ITEM_CANNOT_BE_OBTAINED    = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        FULL_INVENTORY_AFTER_TRADE = 6387, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
+        ITEM_OBTAINED              = 6389, -- Obtained: <item>.
+        GIL_OBTAINED               = 6390, -- Obtained <number> gil.
+        KEYITEM_OBTAINED           = 6392, -- Obtained key item: <keyitem>.
+        KEYITEM_LOST               = 6393, -- Lost key item: <keyitem>.
+        NOT_HAVE_ENOUGH_GIL        = 6394, -- You do not have enough gil.
+        ITEMS_OBTAINED             = 6398, -- You obtain <number> <item>!
+        PLAYER_OBTAINS_ITEM        = 7312, -- <name> obtains <item>!
+        ASSAULT_START_OFFSET       = 7446, -- USE ONLY to chose the right starting text for the right assault
         TIME_TO_COMPLETE           = 7507, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED             = 7508, -- The mission has failed. Leaving area.
         RUNE_UNLOCKED_POS          = 7509, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
@@ -60,48 +50,21 @@ zones[tpz.zone.PERIQIA] =
 
     mob =
     {
-        -- Seagull Grounded
-        [31] =
+        [SEAGULL_GROUNDED] =
         {
-            CRAB1      = 17006594,
-            CRAB2      = 17006595,
-            CRAB3      = 17006596,
-            CRAB4      = 17006597,
-            CRAB5      = 17006598,
-            CRAB6      = 17006599,
-            CRAB7      = 17006600,
-            CRAB8      = 17006601,
-            CRAB9      = 17006602,
-            DEBAUCHER1 = 17006603,
-            PUGIL1     = 17006604,
-            PUGIL2     = 17006605,
-            PUGIL3     = 17006606,
-            PUGIL4     = 17006607,
-            PUGIL5     = 17006608,
-            DEBAUCHER2 = 17006610,
-            DEBAUCHER3 = 17006611,
+            MOBS_START =
+            {
+                17006594, 17006595, 17006596, 17006597, 17006598, 17006599, 17006600, 17006601,
+                17006602, 17006603, 17006604, 17006605, 17006606, 17006607, 17006608, 17006610, 17006611,
+            },
         },
-        -- Requiem
-        [32] =
+        [REQUIEM] =
         {
-            PUTRID_IMMORTAL_GUARD1 = 17006612,
-            PUTRID_IMMORTAL_GUARD2 = 17006613,
-            BATTEILANT_BHOOT1      = 17006614,
-            BATTEILANT_BHOOT2      = 17006615,
-            DARKLING_DRAUGAR1      = 17006616,
-            DRACONIC_DRAUGAR1      = 17006617,
-            DARKLING_DRAUGAR2      = 17006619,
-            DARKLING_DRAUGAR3      = 17006620,
-            DRACONIC_DRAUGAR2      = 17006621,
-            DRACONIC_DRAUGAR3      = 17006623,
-            BATTEILANT_BHOOT3      = 17006625,
-            BATTEILANT_BHOOT4      = 17006626,
-            DARKLING_DRAUGAR4      = 17006627,
-            DRACONIC_DRAUGAR4      = 17006628,
-            DARKLING_DRAUGAR5      = 17006630,
-            DRACONIC_DRAUGAR5      = 17006631,
-            DARKLING_DRAUGAR6      = 17006633,
-            DARKLING_DRAUGAR7      = 17006634,
+            MOBS_START =
+            {
+                17006612, 17006613, 17006614, 17006615, 17006616, 17006617, 17006619, 17006620, 17006621,
+                17006623, 17006625, 17006626, 17006627, 17006628, 17006630, 17006631, 17006633, 17006634,
+            },
         },
         -- Shades of Vengeance
         [79] =
@@ -117,7 +80,9 @@ zones[tpz.zone.PERIQIA] =
             K23H1LAMIA9  = 17006762,
             K23H1LAMIA10 = 17006763,
         }
+
     },
+
 
     npc =
     {

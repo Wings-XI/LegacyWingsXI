@@ -2,34 +2,54 @@
 -- Area: Ilrusi Atoll
 --  Mob: Cursed Chest
 -----------------------------------
+local ID = require("scripts/zones/Ilrusi_Atoll/IDs")
 require("scripts/globals/status")
+require("scripts/globals/assault")
 -----------------------------------
 
+function onMobSpawn(mob)
+    printf("onMobSpawn")
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 2)
+    mob:setStatus(tpz.status.NORMAL)
+    --mob:hideName(true)
+    -- mob:setLocalVar("despawn", 0)
+end
+
+function onMobEngaged(mob, target)
+    mob:setStatus(1)
+    mob:hideName(false)
+    mob:setModelId(258)
+    mob:AnimationSub(0)
+end
+
 function onMobFight(mob, target)
-    local PX = target:getXPos()
-    local PY = target:getYPos()
-    local PZ = target:getZPos()
-    local MX = mob:getXPos()
-    local MY = mob:getYPos()
-    local MZ = mob:getZPos()
-    local distanceMin = 3
-    local distanceMax = 20
-    if (CheckForDrawnIn(MX, MY, MZ, PX, PY, PZ, distanceMin, distanceMax) == true) then
-        target:setPos(mob:getXPos(), mob:getYPos(), mob:getZPos())
+    if mob:AnimationSub() ~= 1 then
+        mob:AnimationSub(1)
+    end
+
+    if mob:checkDistance(target) < 22 then
+        mob:setMobMod(tpz.mobMod.DRAW_IN, 3)
+        mob:setLocalVar("despawn", 0)
+    else
+        mob:setMobMod(tpz.mobMod.DRAW_IN, 0)
+        if mob:getLocalVar("despawn") == 0 then
+            mob:setLocalVar("despawn", os.time() + 30)
+        end
+    end
+
+    if mob:getLocalVar("despawn") ~= 0 then
+        if mob:getLocalVar("despawn") < os.time() then
+            mob:setStatus(tpz.status.NORMAL)
+            mob:disengage()
+            mob:AnimationSub(0)
+            mob:setHP(mob:getMaxHP())
+            mob:setModelId(960)
+            mob:hideName(true)
+        end
     end
 end
 
-function CheckForDrawnIn(centerX, centerY, centerZ, playerX, playerY, playerZ, Rayon, maxRayon)
-    local difX = playerX-centerX
-    local difY = playerY-centerY
-    local difZ = playerZ-centerZ
-    local Distance = math.sqrt( math.pow(difX, 2) + math.pow(difY, 2) + math.pow(difZ, 2) )
-
-    if (Distance > Rayon and Distance < maxRayon) then
-        return true
-    else
-        return false
-    end
+function onMobDespawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
