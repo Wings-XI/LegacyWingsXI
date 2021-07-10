@@ -10,6 +10,13 @@ require("scripts/globals/treasure")
 
 function onInitialize(zone)
     tpz.treasure.initZone(zone)
+
+    local zipacna_respawn = GetServerVariable("Zipacna_Respawn")
+	if os.time() < zipacna_respawn then
+		GetMobByID(ID.mob.ZIPACNA):setRespawnTime(zipacna_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ZIPACNA)
+	end
 end
 
 function onConquestUpdate(zone, updatetype)

@@ -156,5 +156,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(10800, 21600)) -- 3 to 6 hours
+    local respawn = math.random(10800, 21600)
+    mob:setRespawnTime(respawn) -- 3 to 6 hours
+    SetServerVariable("MG_Respawn", (os.time() + respawn))
 end
