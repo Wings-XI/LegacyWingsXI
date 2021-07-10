@@ -151,7 +151,7 @@ end
 -- Selection of the entrance portal of the assault
 -- -------------------------------------------------------------------
 function onAssaultTrigger(player, npc, csid, orders, indexID)
-    if player:hasKeyItem(orders) and player:getCharVar("assaultEntered") == 0 and IS_ASSAULT_ACTIVATED == 0 then
+    if player:hasKeyItem(orders) and player:getCharVar("assaultEntered") == 0 and IS_ASSAULT_ACTIVATED == 1 then
         local assaultID = player:getCurrentAssault()
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0

@@ -187,4 +187,4 @@ LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her ow
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
 -- ASSAULTS
-IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area (0 = true / 1 = false)
+IS_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take assault and door to let you enter in assault area
