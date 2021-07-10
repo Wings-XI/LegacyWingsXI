@@ -7,6 +7,11 @@ local ID = require("scripts/zones/Attohwa_Chasm/IDs")
 -----------------------------------
 
 function onMobInitialize(mob)
+    -- Wiki: Susceptible to Slow, Paralyze, Silence and Gravity but will build resistance to them all. Unclear exactly how fast
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY,10)
+    mob:setMod(tpz.mod.RESBUILD_PARALYZE,10)
+    mob:setMod(tpz.mod.RESBUILD_SLOW,10)
+    mob:setMod(tpz.mod.RESBUILD_SILENCE,10)
 end
 
 function onMobSpawn(mob)
