@@ -59,6 +59,7 @@ class CParty
 public:
     CParty(CBattleEntity* PEntity);
 	CParty(uint32 id);
+    ~CParty();
 
     uint32 GetPartyID();                                // узнаем уникальный ID группы
     uint16 GetMemberFlags(CBattleEntity* PEntity);      // получаем список флагов персонажа

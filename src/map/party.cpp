@@ -99,6 +99,15 @@ CParty::CParty(uint32 id)
     m_EffectsChanged = false;
 }
 
+CParty::~CParty()
+{
+    for (uint8 i = 0; i < members.size(); i++) {
+        if (members[i]->PParty == this) {
+            members[i]->PParty = nullptr;
+        }
+    }
+}
+
 /************************************************************************
 *																		*
 *  Распускаем группу													*
