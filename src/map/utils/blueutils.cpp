@@ -98,9 +98,9 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob) {
 
 	// populate PBlueMages
 	if (PChar->PParty != nullptr) {
-        for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++) {
-			if (PChar->PParty->GetMember(i)->GetMJob() == JOB_BLU && PChar->PParty->GetMember(i)->objtype == TYPE_PC) {
-				PBlueMages.push_back((CCharEntity*)PChar->PParty->GetMember(i));
+        for (uint8 i = 0; i < PChar->PParty->members.size(); i++) {
+			if (PChar->PParty->members[i]->GetMJob() == JOB_BLU && PChar->PParty->members[i]->objtype == TYPE_PC) {
+				PBlueMages.push_back((CCharEntity*)PChar->PParty->members[i]);
 			}
 		}
 	}

@@ -1072,9 +1072,9 @@ void CZone::CharZoneOut(CCharEntity* PChar)
             if (PChar->PParty->GetSyncTarget() != nullptr)
             {
                 uint8 count = 0;
-                for (uint32 i = 0; i < PChar->PParty->MemberCount(); ++i)
+                for (uint32 i = 0; i < PChar->PParty->members.size(); ++i)
                 {
-                    if (PChar->PParty->GetMember(i) != PChar && PChar->PParty->GetMember(i)->getZone() == PChar->PParty->GetSyncTarget()->getZone())
+                    if (PChar->PParty->members.at(i) != PChar && PChar->PParty->members.at(i)->getZone() == PChar->PParty->GetSyncTarget()->getZone())
                     {
                         count++;
                     }

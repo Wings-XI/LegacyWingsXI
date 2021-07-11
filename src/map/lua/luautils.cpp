@@ -1482,6 +1482,8 @@ namespace luautils
 
     void AfterZoneIn(CBaseEntity* PChar)
     {
+        if (PChar->objtype != TYPE_PC)
+            return;
         charutils::LoadHelpDeskMessage((CCharEntity*)PChar);
         lua_prepscript("scripts/zones/%s/Zone.lua", PChar->loc.zone->GetName());
 
@@ -1503,37 +1505,45 @@ namespace luautils
         return;
     }
 
-    void AfterZoneInLong(CBaseEntity* PChar) // fixes issues with level restriction not calculating stats properly. this is called 2 sec after re-zoning into bcnm
+    void AfterZoneInLong(CBaseEntity* PEntity) // fixes issues with level restriction not calculating stats properly. this is called 2 sec after re-zoning into bcnm
     {
-        CCharEntity* Char = (CCharEntity*)PChar;
+        if (PEntity->objtype != TYPE_PC)
+            return;
+        CCharEntity* PChar = (CCharEntity*)PEntity;
         
-        Char->StatusEffectContainer->UpdateStatusIcons();
-        Char->PLatentEffectContainer->CheckLatentsFoodEffect();
-        Char->PLatentEffectContainer->CheckLatentsStatusEffect();
-        Char->PLatentEffectContainer->CheckLatentsRollSong();
-        Char->m_EquipSwap = true;
-        Char->m_EffectsChanged = true;
+        PChar->StatusEffectContainer->UpdateStatusIcons();
+        PChar->PLatentEffectContainer->CheckAllLatents();
+        PChar->m_EquipSwap = true;
+        PChar->m_EffectsChanged = true;
 
-        charutils::RemoveAllEquipMods(Char);
-        charutils::ApplyAllEquipMods(Char);
+        charutils::RemoveAllEquipMods(PChar);
+        charutils::ApplyAllEquipMods(PChar);
 
-        blueutils::ValidateBlueSpells(Char);
-        charutils::BuildingCharSkillsTable(Char);
-        charutils::CalculateStats(Char);
-        charutils::BuildingCharTraitsTable(Char);
-        charutils::BuildingCharAbilityTable(Char);
-        charutils::CheckValidEquipment(Char);
-        Char->pushPacket(new CCharJobsPacket(Char));
-        Char->pushPacket(new CCharStatsPacket(Char));
-        Char->pushPacket(new CCharSkillsPacket(Char));
-        Char->pushPacket(new CCharRecastPacket(Char));
-        Char->pushPacket(new CCharAbilitiesPacket(Char));
-        Char->pushPacket(new CCharSpellsPacket(Char));
-        Char->pushPacket(new CCharUpdatePacket(Char));
-        Char->pushPacket(new CCharSyncPacket(Char));
-        Char->UpdateHealth();
-        Char->updatemask |= UPDATE_HP;
+        blueutils::ValidateBlueSpells(PChar);
+        charutils::BuildingCharSkillsTable(PChar);
+        charutils::CalculateStats(PChar);
+        charutils::BuildingCharTraitsTable(PChar);
+        charutils::BuildingCharAbilityTable(PChar);
+        charutils::CheckValidEquipment(PChar);
+        PChar->pushPacket(new CCharJobsPacket(PChar));
+        PChar->pushPacket(new CCharStatsPacket(PChar));
+        PChar->pushPacket(new CCharSkillsPacket(PChar));
+        PChar->pushPacket(new CCharRecastPacket(PChar));
+        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+        PChar->pushPacket(new CCharSpellsPacket(PChar));
+        PChar->pushPacket(new CCharUpdatePacket(PChar));
+        PChar->pushPacket(new CCharSyncPacket(PChar));
+        luautils::CheckForGearSet(PChar);
+        PChar->PLatentEffectContainer->CheckAllLatents();
+        PChar->UpdateHealth();
 
+        PChar->health.hp = PChar->health.zoneinhp > PChar->health.modhp ? PChar->health.modhp : PChar->health.zoneinhp;
+        PChar->health.mp = PChar->health.zoneinmp > PChar->health.modmp ? PChar->health.modmp : PChar->health.zoneinmp;
+        if (zoneutils::IsResidentialArea(PChar))
+        {
+            PChar->health.hp = PChar->health.modhp;
+            PChar->health.mp = PChar->health.modmp;
+        }
 
         return;
     }
@@ -2228,7 +2238,7 @@ namespace luautils
     *                                                                       *
     ************************************************************************/
 
-    int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem)
+    int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar)
     {
         lua_prepscript("scripts/globals/items/%s.lua", PItem->getName());
 
@@ -2243,7 +2253,10 @@ namespace luautils
         CLuaItem LuaItem(PItem);
         Lunar<CLuaItem>::push(LuaHandle, &LuaItem);
 
-        if (lua_pcall(LuaHandle, 2, 0, 0))
+        CLuaBaseEntity LuaBaseEntityChar(PChar);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntityChar);
+
+        if (lua_pcall(LuaHandle, 3, 0, 0))
         {
             ShowError("luautils::onItemUse: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);

@@ -184,6 +184,9 @@ public:
     uint32    m_RespawnTime;              // respawn time
     uint32    m_DropItemTime;             // time until monster death animation
 
+    bool         m_autoTargetReady;       // autotarget logic is in multiple places. makes sure it only triggers once.
+    CCharEntity* m_autoTargetKiller;      // the player that landed the killing blow. used in auto-target logic
+
     uint32    m_DropID;                   // dropid of items to be dropped. dropid in Database (mob_droplist)
 
     uint8     m_minLevel;                 // lowest possible level of the mob
@@ -277,7 +280,7 @@ private:
     time_point    m_DespawnTimer {time_point::min()};  // Despawn Timer to despawn mob after set duration
     std::unordered_map<int, int16>     m_mobModStat;
     std::unordered_map<int, int16>     m_mobModStatSave;
-    static constexpr float roam_home_distance {120.f};
+    static constexpr float roam_home_distance {80.f};
 };
 
 #endif

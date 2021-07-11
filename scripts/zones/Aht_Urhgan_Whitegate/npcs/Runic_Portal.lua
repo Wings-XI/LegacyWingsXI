@@ -43,7 +43,27 @@ function onEventFinish(player, csid, option)
             player:delCurrency("imperial_standing", 200)
         end
     elseif csid >= 120 and csid <= 125 and option == 1 then -- Has Assault Orders
-        offset = csid - 120
+        switch (csid): caseof
+        {
+            [120] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.AZOUPH_SP)
+            end,
+            [121] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.MAMOOL_SP)
+            end,
+            [122] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.HALVUNG_SP)
+            end,
+            [123] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.DVUCCA_SP)
+            end,
+            [124] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.ILRUSI_SP)
+            end,
+            --[[[125] = function ()
+                tpz.teleport.to(player, tpz.teleport.id.NYZUL_SP)
+            end,]]
+        }
     end
 
     if offset then

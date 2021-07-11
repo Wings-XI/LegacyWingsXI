@@ -99,22 +99,11 @@ CParty::CParty(uint32 id)
     m_EffectsChanged = false;
 }
 
-/************************************************************************
-*																		*
-* Destructor                                                            *
-*																		*
-************************************************************************/
 CParty::~CParty()
 {
-    // Force set all members whose party flag still points
-    // to this object to null so it doesn't end up dangling.
-    for (uint8 i = 0; i < members.size(); ++i) {
-        CBattleEntity* PEntity = members.at(i);
-        if (!PEntity) {
-            continue;
-        }
-        if (PEntity->PParty == this) {
-            PEntity->PParty = nullptr;
+    for (uint8 i = 0; i < members.size(); i++) {
+        if (members[i]->PParty == this) {
+            members[i]->PParty = nullptr;
         }
     }
 }
@@ -235,17 +224,6 @@ uint8 CParty::MemberCount(uint16 ZoneID)
         }
     }
     return count;
-}
-
-/************************************************************************
-*																		*
-*  Total number of party members                        				*
-*																		*
-************************************************************************/
-
-uint8 CParty::MemberCount()
-{
-    return members.size();
 }
 
 /************************************************************************
@@ -456,12 +434,12 @@ void CParty::PopMember(CBattleEntity* PEntity)
             {
                 m_PAlliance->setMainParty(nullptr);
             }
-            for (uint8 i = 0; i < m_PAlliance->partyCountLocal(); ++i)
+            for (uint8 i = 0; i < m_PAlliance->partyList.size(); ++i)
             {
-                m_PAlliance->delParty(this);
+                if (this == m_PAlliance->partyList.at(i))
+                    m_PAlliance->partyList.erase(m_PAlliance->partyList.begin() + i);
             }
         }
-        // TODO: This has got to go... someone might still be holding a pointer to us
         delete this;
     }
     PEntity->PParty = nullptr;
@@ -519,20 +497,6 @@ std::vector<CParty::partyInfo_t> CParty::GetPartyInfo()
         }
     }
     return memberinfo;
-}
-
-/************************************************************************
-*																		*
-*  Get party member by position											*
-*																		*
-************************************************************************/
-
-CBattleEntity* CParty::GetMember(uint8 pos)
-{
-    if (pos >= members.size()) {
-        return nullptr;
-    }
-    return members.at(pos);
 }
 
 /************************************************************************
@@ -787,9 +751,8 @@ void CParty::ReloadParty()
     //alliance
     if (this->m_PAlliance != nullptr)
     {
-        for (uint8 i = 0; i < m_PAlliance->partyCountLocal(); i++)
+        for (auto&& party : m_PAlliance->partyList)
         {
-            CParty* party = m_PAlliance->getParty(i);
             party->RefreshFlags(info);
             for (auto&& member : party->members)
             {
@@ -935,11 +898,11 @@ void CParty::ReloadTreasurePool(CCharEntity* PChar)
     {
         if (PChar->PParty->m_PAlliance != nullptr)
         {
-            for (uint8 a = 0; a < PChar->PParty->m_PAlliance->partyCountLocal(); ++a)
+            for (uint8 a = 0; a < PChar->PParty->m_PAlliance->partyList.size(); ++a)
             {
-                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->getParty(a)->members.size(); ++i)
+                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyList.at(a)->members.size(); ++i)
                 {
-                    CCharEntity* PPartyMember = (CCharEntity*)PChar->PParty->m_PAlliance->getParty(a)->members.at(i);
+                    CCharEntity* PPartyMember = (CCharEntity*)PChar->PParty->m_PAlliance->partyList.at(a)->members.at(i);
 
                     if (PPartyMember != PChar && PPartyMember->PTreasurePool != nullptr &&	PPartyMember->getZone() == PChar->getZone())
                     {

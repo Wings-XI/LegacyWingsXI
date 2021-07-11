@@ -43,7 +43,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 CMobController::CMobController(CMobEntity* PEntity) :
     CController(PEntity),
-    PMob(PEntity)
+    PMob(PEntity),
+    m_forceDeaggroAll(false)
 {}
 
 void CMobController::Tick(time_point tick)
@@ -71,9 +72,12 @@ bool CMobController::TryDeaggro()
     TracyZoneScoped;
     if (PTarget == nullptr && (PMob->PEnmityContainer != nullptr && PMob->PEnmityContainer->GetHighestEnmity() == nullptr))
     {
+        m_forcedDeaggroEntities.clear();
+        m_forceDeaggroAll = false;
         return true;
     }
 
+    bool isForcedDeaggro = (std::find(m_forcedDeaggroEntities.begin(), m_forcedDeaggroEntities.end(), PTarget) != m_forcedDeaggroEntities.end());
     // target is no longer valid, so wipe them from our enmity list
     if (!PTarget || PTarget->isDead() ||
         PTarget->isMounted() ||
@@ -81,7 +85,9 @@ bool CMobController::TryDeaggro()
         PMob->StatusEffectContainer->GetConfrontationEffect() != PTarget->StatusEffectContainer->GetConfrontationEffect() ||
         PMob->allegiance == PTarget->allegiance ||
         CheckDetection(PTarget) ||
-        CheckHide(PTarget))
+        CheckHide(PTarget) ||
+        isForcedDeaggro ||
+        m_forceDeaggroAll)
     {
         if (PTarget) PMob->PEnmityContainer->Clear(PTarget->id);
         PTarget = PMob->PEnmityContainer->GetHighestEnmity();
@@ -89,6 +95,8 @@ bool CMobController::TryDeaggro()
         return TryDeaggro();
     }
 
+    m_forcedDeaggroEntities.clear();
+    m_forceDeaggroAll = false;
     return false;
 }
 
@@ -164,9 +172,9 @@ void CMobController::TryLink()
     // Handle monster linking if they are close enough
     if (PMob->PParty != nullptr)
     {
-        for (uint16 i = 0; i < PMob->PParty->MemberCount(); ++i)
+        for (uint16 i = 0; i < PMob->PParty->members.size(); ++i)
         {
-            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->GetMember(i);
+            CMobEntity* PPartyMember = (CMobEntity*)PMob->PParty->members[i];
 
             if (PPartyMember->PAI->IsRoaming() && PPartyMember->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
             {
@@ -497,7 +505,7 @@ bool CMobController::CanCastSpells()
     }
 
     // mob has no mp and does not have manafont
-    if (PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetMJob() != JOB_BRD && PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
     }
@@ -1150,6 +1158,20 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
             return false;
         }
     }
+    // Don't aggro I'm a pixie and I don't hate you
+    if (PMob->getMobMod(MOBMOD_PIXIE) > 0) {
+        if (PTarget->objtype != TYPE_PC) {
+            return false;
+        }
+        CCharEntity* PChar = (CCharEntity*)PTarget;
+        uint32 threshold = PMob->PixieGetHealHateThreshold(PChar);
+        if (PChar->m_pixieHate < threshold) {
+            return false;
+        }
+        if (PChar->m_pixieHate < 60 && PChar->m_pixieHate < threshold * 2) {
+            return false;
+        }
+    }
 
     if (PTarget->objtype == TYPE_PC && server_clock::now() < ((CCharEntity*)PTarget)->m_ZoneAggroImmunity)
     {
@@ -1177,6 +1199,21 @@ void CMobController::TapDeaggroTime()
 void CMobController::TapDeclaimTime()
 {
     m_DeclaimTime = m_Tick;
+}
+
+bool CMobController::DeaggroEntity(CBattleEntity* PEntity)
+{
+    if (!PEntity) {
+        return false;
+    }
+    m_forcedDeaggroEntities.push_back(PEntity);
+    return true;
+}
+
+bool CMobController::DeaggroAll()
+{
+    m_forceDeaggroAll = true;
+    return true;
 }
 
 bool CMobController::Cast(uint16 targid, SpellID spellid)

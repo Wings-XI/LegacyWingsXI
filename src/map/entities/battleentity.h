@@ -463,6 +463,7 @@ struct health_t
     int32   hp, mp;             // текущие значения
     int32   maxhp, maxmp;       // максимальные значения
     int32   modhp, modmp;       // модифицированные максимальные значения
+    int32   zoneinhp, zoneinmp; // HP and MP from previous zone
 };
 
 typedef std::vector<apAction_t> ActionList_t;
@@ -586,8 +587,8 @@ public:
     void            ForParty(F func, Args&&... args)
     {
         if (PParty) {
-            for (uint8 MemberNum = 0; MemberNum < PParty->MemberCount(); MemberNum++) {
-                func(PParty->GetMember(MemberNum), std::forward<Args>(args)...);
+            for (auto PMember : PParty->members) {
+                func(PMember, std::forward<Args>(args)...);
             }
         }
         else {
@@ -600,16 +601,15 @@ public:
     {
         if (PParty) {
             if (PParty->m_PAlliance) {
-                for (uint8 PartyNum = 0; PartyNum < PParty->m_PAlliance->partyCountLocal(); PartyNum++) {
-                    CParty* PAllianceParty = PParty->m_PAlliance->getParty(PartyNum);
-                    for (uint8 MemberNum = 0; MemberNum < PAllianceParty->MemberCount(); MemberNum++) {
-                        func(PAllianceParty->GetMember(MemberNum), std::forward<Args>(args)...);
+                for (auto PAllianceParty : PParty->m_PAlliance->partyList) {
+                    for (auto PMember : PAllianceParty->members) {
+                        func(PMember, std::forward<Args>(args)...);
                     }
                 }
             }
             else {
-                for (uint8 MemberNum = 0; MemberNum < PParty->MemberCount(); MemberNum++) {
-                    func(PParty->GetMember(MemberNum), std::forward<Args>(args)...);
+                for (auto PMember : PParty->members) {
+                    func(PMember, std::forward<Args>(args)...);
                 }
             }
         }

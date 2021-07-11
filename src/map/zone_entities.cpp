@@ -470,14 +470,6 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 
             if (PCurrentMob->getMobMod(MOBMOD_PIXIE) > 0) {
                 PCurrentMob->PixieTryHealPlayer(PChar);
-                // There have been rumors of pixies aggroing in some forums, possibly when
-                // the server amity is extremely low and the player's hate extremely high,
-                // however this is unconfirmed (some pixies in Abyssea are known to be
-                // aggressive, could the reports be mistaken?)
-                // If there is sufficient evidence that pixies aggro in certain situations
-                // this may be changed, but for the time being pixies never aggro.
-                // - Twilight
-                continue;
             }
 
             if (PChar->isDead() || PChar->nameflags.flags & FLAG_GM || PCurrentMob->PMaster)
@@ -485,7 +477,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 
             // проверка ночного/дневного сна монстров уже учтена в проверке CurrentAction, т.к. во сне монстры не ходят ^^
 
-            const EMobDifficulty mobCheck = charutils::CheckMob(PChar->GetMLevel(), PCurrentMob->GetMLevel());
+            const EMobDifficulty mobCheck = charutils::CheckMob(PChar->GetMLevel(), PCurrentMob->m_minLevel);
 
             CMobController* PController = static_cast<CMobController*>(PCurrentMob->PAI->GetController());
 

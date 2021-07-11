@@ -208,7 +208,7 @@ void MQConnection::Run()
     amqp_envelope_t Envelope;
     amqp_frame_t Frame;
     amqp_message_t Message;
-    struct timeval tv = { 0, 1000 };
+    struct timeval tv, tv_orig = { 0, 1000 };
     size_t dwNumHandlers = 0;
     size_t dwNumChannels = 0;
     size_t i = 0;
@@ -242,6 +242,8 @@ void MQConnection::Run()
         }
         LOCK_MQCONNECTION;
 
+        tv.tv_sec = tv_orig.tv_sec;
+        tv.tv_usec = tv_orig.tv_usec;
         Response = amqp_consume_message(mConnection, &Envelope, &tv, 0);
         if (Response.reply_type == AMQP_RESPONSE_NORMAL) {
             LOG_DEBUG1("Received message.");

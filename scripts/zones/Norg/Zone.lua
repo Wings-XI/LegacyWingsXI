@@ -61,9 +61,6 @@ function onEventFinish(player, csid, option)
         player:addMission(ZILART, tpz.mission.id.zilart.WELCOME_TNORG)
     elseif (csid == 176) then
         player:addCharVar("ZilartStatus", 1)
-        if player:getCharVar("ZilartStatus") == 3 then
-            player:completeMission(ZILART, tpz.mission.id.zilart.AWAKENING)
-        end
     elseif (csid == 226) then
         player:setCharVar("anUndyingPledgeCS", 2)
     end

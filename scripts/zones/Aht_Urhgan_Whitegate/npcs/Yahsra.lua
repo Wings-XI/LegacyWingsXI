@@ -4,11 +4,12 @@
 -- Type: Assault Mission Giver
 -- !pos 120.967 0.161 -44.002 50
 -----------------------------------
-require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
+require("scripts/globals/keyitems")
 require("scripts/globals/besieged")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -25,11 +26,11 @@ function onTrigger(player, npc)
         haveimperialIDtag = 0
     end
 
-    --[[if (rank > 0) then
+    if (rank > 0 and IS_ASSAULT_ACTIVATED == 1) then
         player:startEvent(273, rank, haveimperialIDtag, assaultPoints, player:getCurrentAssault())
-    else]]
+    else
         player:startEvent(279) -- no rank
-    --end
+    end
 end
 
 function onEventUpdate(player, csid, option)
@@ -47,8 +48,6 @@ function onEventFinish(player, csid, option)
         elseif selectiontype == 2 then
             -- purchased an item
             local item = bit.rshift(option, 14)
-            local itemID = 0
-            local price = 0
             local items =
             {
                 [1]  = {itemid = 15970, price = 3000},
@@ -56,17 +55,17 @@ function onEventFinish(player, csid, option)
                 [3]  = {itemid = 15521, price = 8000},
                 [4]  = {itemid = 15884, price = 10000},
                 [5]  = {itemid = 15490, price = 10000},
-                [6]  = {itemid = 18408, price = 10000},
+                [6]  = {itemid = 18408, price = 15000},
                 [7]  = {itemid = 18485, price = 15000},
                 [8]  = {itemid = 18365, price = 15000},
-                [9]  = {itemid = 14933, price = 15000},
+                [9]  = {itemid = 14933, price = 20000},
                 [10] = {itemid = 16069, price = 20000},
                 [11] = {itemid = 15606, price = 20000},
             }
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delAssaultPoint("LEUJAOAM_ASSAULT_POINT", choice.price)
+                player:delAssaultPoint(0, choice.price) -- Remove from LEUJAOAM_ASSAULT_POINT
             end
         end
     end

@@ -3759,6 +3759,15 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     }
                     lua_pop(L, 2);
                 }
+                
+                lua_getfield(L, 1, "appraisal");
+                uint8 appraisalId = (uint8)lua_tointeger(L, -1);
+                if (appraisalId > 0)
+                {
+                    PItem->setAppraisalID(appraisalId);
+                }
+                lua_pop(L, 1);
+
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
                 if (SlotID == ERROR_SLOTID)
                     break;
@@ -9476,9 +9485,9 @@ inline int32 CLuaBaseEntity::getPartySize(lua_State* L)
     if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (allianceparty == 0)
-            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->MemberCount();
+            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->members.size();
         else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr)
-            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->MemberCount();
+            partysize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size();
     }
 
     lua_pushnumber(L, partysize);
@@ -9502,9 +9511,9 @@ inline int32 CLuaBaseEntity::hasPartyJob(lua_State *L)
 
     if (((CCharEntity*)m_PBaseEntity)->PParty != nullptr)
     {
-        for (uint32 i = 0; i < ((CCharEntity*)m_PBaseEntity)->PParty->MemberCount(); i++)
+        for (uint32 i = 0; i < ((CCharEntity*)m_PBaseEntity)->PParty->members.size(); i++)
         {
-            CCharEntity* PTarget = (CCharEntity*)((CCharEntity*)m_PBaseEntity)->PParty->GetMember(i);
+            CCharEntity* PTarget = (CCharEntity*)((CCharEntity*)m_PBaseEntity)->PParty->members[i];
             if (PTarget->GetMJob() == job)
             {
                 lua_pushboolean(L, true);
@@ -9548,10 +9557,10 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
         PTargetChar = ((CBattleEntity*)m_PBaseEntity);
     else if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
-        if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->MemberCount())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->GetMember(member);
-        else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->MemberCount())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->getParty(allianceparty)->GetMember(member);
+        if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->members.size())
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member];
+        else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size())
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member];
     }
 
     if (PTargetChar != nullptr)
@@ -9689,9 +9698,8 @@ inline int32 CLuaBaseEntity::hasPartyEffect(lua_State *L)
 
     if (PChar->PParty != nullptr)
     {
-        for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++)
+        for (const auto& member : PChar->PParty->members)
         {
-            const CBattleEntity* member = PChar->PParty->GetMember(i);
             if (member->loc.zone == PChar->loc.zone)
             {
                 if (member->StatusEffectContainer->HasStatusEffect((EFFECT)lua_tointeger(L, 1)))
@@ -9722,9 +9730,8 @@ inline int32 CLuaBaseEntity::removePartyEffect(lua_State *L)
 
     CCharEntity* PChar = ((CCharEntity*)m_PBaseEntity);
 
-    for (uint8 i = 0; i < PChar->PParty->MemberCount(); i++)
+    for (const auto& member : PChar->PParty->members)
     {
-        const CBattleEntity* member = PChar->PParty->GetMember(i);
         if (member->loc.zone == PChar->loc.zone)
         {
             member->StatusEffectContainer->DelStatusEffect((EFFECT)lua_tointeger(L, 1));
@@ -9751,9 +9758,9 @@ inline int32 CLuaBaseEntity::getAlliance(lua_State* L)
     if (PChar->PParty && PChar->PParty->m_PAlliance)
     {
         size = 0;
-        for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); i++)
+        for (auto PParty : PChar->PParty->m_PAlliance->partyList)
         {
-            size += (PChar->PParty->m_PAlliance->getParty(i))->MemberCount(m_PBaseEntity->getZone());
+            size += PParty->MemberCount(m_PBaseEntity->getZone());
         }
     }
     else if (PChar->PParty)
@@ -9795,7 +9802,7 @@ inline int32 CLuaBaseEntity::getAllianceSize(lua_State* L)
     if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr)
-            alliancesize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyCountLocal();
+            alliancesize = (uint8)((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.size();
     }
     lua_pushnumber(L, alliancesize);
     return 1;
@@ -16348,6 +16355,57 @@ int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
 }
 
 /************************************************************************
+*  Function: deaggroPlayer
+*  Purpose : Removes enmity for a specific player
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroPlayer(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    int8* charName = (int8*)lua_tolstring(L, 1, nullptr);
+    if (!charName) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CCharEntity* PChar = zoneutils::GetCharByName(charName);
+    if (!PChar) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroEntity(PChar));
+    return 1;
+}
+
+/************************************************************************
+*  Function: deaggroAll
+*  Purpose : Completely clears the mob's enmity list
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroAll(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroAll());
+    return 1;
+}
+
+/************************************************************************
  *  Function: sendHelpDeskMsg()
  *  Purpose : Sends player a Help Desk/GM message
  *  Example : player:sendHelpDeskMsg("please logout");
@@ -18076,6 +18134,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroAll),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendHelpDeskMsg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeTicket),

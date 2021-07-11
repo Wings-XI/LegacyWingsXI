@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -835,6 +835,12 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
+    if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
+    {
+        ((CMobEntity*)PTarget)->m_autoTargetKiller = this;
+        ((CMobEntity*)PTarget)->DoAutoTarget();
+    }
+
     return ret;
 }
 
@@ -944,6 +950,12 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 }
             }
         }
+    }
+
+    if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
+    {
+        ((CMobEntity*)PTarget)->m_autoTargetKiller = this;
+        ((CMobEntity*)PTarget)->DoAutoTarget();
     }
 }
 
@@ -1088,6 +1100,12 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
             }
         }
         battleutils::ClaimMob(PBattleTarget, this);
+
+        if (PBattleTarget->isDead() && PBattleTarget->objtype == TYPE_MOB)
+        {
+            ((CMobEntity*)PBattleTarget)->m_autoTargetKiller = this;
+            ((CMobEntity*)PBattleTarget)->DoAutoTarget();
+        }
     }
     else
     {
@@ -1391,6 +1409,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         pushPacket(new CCharRecastPacket(this));
 
+        if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
+        {
+            ((CMobEntity*)PTarget)->m_autoTargetKiller = this;
+            ((CMobEntity*)PTarget)->DoAutoTarget();
+        }
+
         //#TODO: refactor
         //if (this->getMijinGakure())
         //{
@@ -1618,6 +1642,12 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 
+    if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
+    {
+        ((CMobEntity*)PTarget)->m_autoTargetKiller = this;
+        ((CMobEntity*)PTarget)->DoAutoTarget();
+    }
+
     // Try to double shot
     //#TODO: figure out the packet structure of double/triple shot
     //if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT, 0) && !this->secondDoubleShotTaken &&	!isBarrage && !isSange)
@@ -1646,6 +1676,20 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 
     static_cast<CCharEntity*>(this)->ForAlliance([&PBattleTarget, &found](CBattleEntity* PEntity) {
         if (PEntity->id == PBattleTarget->m_OwnerID.id)
+        {
+            found = true;
+        }
+    });
+
+    return found;
+}
+
+bool CCharEntity::IsPartiedWith(CCharEntity* PTarget)
+{
+    bool found = false;
+
+    static_cast<CCharEntity*>(this)->ForAlliance([&PTarget, &found](CBattleEntity* PEntity) {
+        if (PEntity->id == PTarget->id)
         {
             found = true;
         }
@@ -1789,7 +1833,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     }
     else
     {
-        luautils::OnItemUse(PTarget, PItem);
+        luautils::OnItemUse(PTarget, PItem, this);
     }
 
     action.id = this->id;

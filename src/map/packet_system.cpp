@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -500,9 +500,9 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PChar->PParty->GetLeader() == PChar)
                 {
-                    if (PChar->PParty->MemberCount() == 1)
+                    if (PChar->PParty->members.size() == 1)
                     {
-                        if (PChar->PParty->m_PAlliance->partyCountLocal() == 1)
+                        if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                         {
                             PChar->PParty->m_PAlliance->dissolveAlliance();
                         }
@@ -3095,7 +3095,7 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
             // uint8 locationId = data.ref<uint8>(i + 0x02);
             uint16 itemId = data.ref<uint16>(i + 0x04);
 
-            if (equipSlotId > SLOT_BACK || equipSlotId == SLOT_RANGED || equipSlotId == SLOT_AMMO)
+            if (equipSlotId > SLOT_BACK || equipSlotId == SLOT_AMMO)
                 continue;
 
             auto PItem = itemutils::GetItem(itemId);
@@ -3653,7 +3653,7 @@ void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0: // party - must by party leader or solo
             if (PChar->PParty == nullptr || PChar->PParty->GetLeader() == PChar)
             {
-                if (PChar->PParty && PChar->PParty->MemberCount() > 5)
+                if (PChar->PParty && PChar->PParty->members.size() > 5)
                 {
                     PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 0, MsgStd::CannotInvite));
                     break;
@@ -3815,7 +3815,7 @@ void SmallPacket0x06F(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             case 0: // party - anyone may remove themself from party regardless of leadership or alliance
                 if (PChar->PParty->m_PAlliance &&
-                    PChar->PParty->MemberCount() == 1) // single member alliance parties must be removed from alliance before disband
+                    PChar->PParty->members.size() == 1) // single member alliance parties must be removed from alliance before disband
                 {
                     ShowDebug(CL_CYAN "%s party size is one\n" CL_RESET, PChar->GetName());
                     if (PChar->PParty->m_PAlliance->partyCount() == 1) // if there is only 1 party then dissolve alliance
@@ -3920,7 +3920,7 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                     if (PVictim == PChar) // using kick on yourself, let's borrow the logic from /pcmd leave to prevent alliance crash
                     {
                         if (PChar->PParty->m_PAlliance &&
-                            PChar->PParty->MemberCount() == 1) // single member alliance parties must be removed from alliance before disband
+                            PChar->PParty->members.size() == 1) // single member alliance parties must be removed from alliance before disband
                         {
                             if (PChar->PParty->m_PAlliance->partyCount() == 1) // if there is only 1 party then dissolve alliance
                             {
@@ -3996,9 +3996,9 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
             if (PChar->PParty && PChar->PParty->GetLeader() == PChar && PChar->PParty->m_PAlliance)
             {
                 CCharEntity* PVictim = nullptr;
-                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyCountLocal(); ++i)
+                for (uint8 i = 0; i < PChar->PParty->m_PAlliance->partyList.size(); ++i)
                 {
-                    PVictim = (CCharEntity*)(PChar->PParty->m_PAlliance->getParty(i)->GetMemberByName(data[0x0C]));
+                    PVictim = (CCharEntity*)(PChar->PParty->m_PAlliance->partyList[i]->GetMemberByName(data[0x0C]));
                     if (PVictim && PVictim->PParty && PVictim->PParty->m_PAlliance) // victim is in this party
                     {
                         ShowDebug(CL_CYAN "%s is trying to kick %s party from alliance\n" CL_RESET, PChar->GetName(), PVictim->GetName());
@@ -4149,7 +4149,7 @@ void SmallPacket0x074(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 if (PInviter->PParty->GetLeader() == PInviter)
                 {
-                    if (PInviter->PParty->MemberCount() > 5)
+                    if (PInviter->PParty->members.size() > 5)
                     { // someone else accepted invitation
                         // PInviter->pushPacket(new CMessageStandardPacket(PInviter, 0, 0, 14)); Don't think retail sends error packet to inviter on full pt
                         ShowDebug(CL_CYAN "Someone else accepted party invite, %s cannot be added to party\n" CL_RESET, PChar->GetName());
