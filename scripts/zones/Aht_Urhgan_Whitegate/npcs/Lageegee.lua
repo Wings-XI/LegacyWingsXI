@@ -5,10 +5,11 @@
 -- !pos 120.808 0.161 -30.435
 -----------------------------------
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
-require("scripts/globals/besieged")
 require("scripts/globals/keyitems")
+require("scripts/globals/besieged")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -25,11 +26,11 @@ function onTrigger(player, npc)
         haveimperialIDtag = 0
     end
 
---[[    if (rank > 0) then
+    if (rank > 0 and IS_ASSAULT_ACTIVATED == 1) then
         player:startEvent(276, rank, haveimperialIDtag, assaultPoints, player:getCurrentAssault())
-    else]]
+    else
         player:startEvent(282) -- no rank
-    --end
+    end
 end
 
 function onEventUpdate(player, csid, option)
@@ -63,7 +64,7 @@ function onEventFinish(player, csid, option)
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delCurrency("PERIQIA_ASSAULT_POINT", choice.price)
+                player:delAssaultPoint(3, choice.price) -- Remove from PERIQIA_ASSAULT_POINT
             end
         end
     end

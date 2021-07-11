@@ -1304,6 +1304,7 @@ int32 map_config_default()
     map_config.daily_tally_amount = 10;
     map_config.daily_tally_limit = 50000;
     map_config.mission_storage_recovery = false;
+    map_config.helpdesk_enabled = false;
     return 0;
 }
 
@@ -1823,6 +1824,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "mission_storage_recovery") == 0)
         {
         map_config.mission_storage_recovery = atoi(w2);
+        }
+        else if (strcmp(w1, "helpdesk_enabled") == 0)
+        {
+        map_config.helpdesk_enabled = atoi(w2);
         }
         else
         {

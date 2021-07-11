@@ -20,6 +20,6 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.AMNESIA
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 60))
+    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 2, 0, 60))
     return typeEffect
 end

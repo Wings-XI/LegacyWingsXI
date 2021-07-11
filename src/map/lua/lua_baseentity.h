@@ -745,6 +745,8 @@ public:
     int32 trySkillUp(lua_State* L);
     int32 addRoamFlag(lua_State* L);
     int32 delRoamFlag(lua_State* L);
+    int32 deaggroPlayer(lua_State* L);
+    int32 deaggroAll(lua_State* L);
 
     // Helpdesk functions courtesy of Setzor from Eden
     int32 sendHelpDeskMsg(lua_State*);      // Send a Help Desk (GM) Message to character

@@ -207,6 +207,15 @@ inline int32 CLuaInstance::getEntryPos(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaInstance::getLevelCap(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
+    
+    lua_pushinteger(L, m_PLuaInstance->GetLevelCap());
+
+    return 1;
+}
+
 inline int32 CLuaInstance::getLastTimeUpdate(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
@@ -407,6 +416,7 @@ Lunar<CLuaInstance>::Register_t CLuaInstance::methods[] =
     LUNAR_DECLARE_METHOD(CLuaInstance, getEntryPos),
     LUNAR_DECLARE_METHOD(CLuaInstance, getLastTimeUpdate),
     LUNAR_DECLARE_METHOD(CLuaInstance, setLastTimeUpdate),
+    LUNAR_DECLARE_METHOD(CLuaInstance, getLevelCap),
     LUNAR_DECLARE_METHOD(CLuaInstance, getProgress),
     LUNAR_DECLARE_METHOD(CLuaInstance, getEntity),
     LUNAR_DECLARE_METHOD(CLuaInstance, setProgress),

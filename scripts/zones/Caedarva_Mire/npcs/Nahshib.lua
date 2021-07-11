@@ -46,7 +46,6 @@ function onTrigger(player, npc)
             player:startEvent(148, 50, IPpoint)
         else
             player:startEvent(7)
-            -- player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
         end
 
     -- DEFAULT DIALOG
