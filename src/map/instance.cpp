@@ -201,6 +201,7 @@ void CInstance::SetProgress(uint32 progress)
 void CInstance::SetStage(uint32 stage)
 {
     m_stage = stage;
+    luautils::OnInstanceStageChange(this);
 }
 
 void CInstance::SetWipeTime(duration time)
