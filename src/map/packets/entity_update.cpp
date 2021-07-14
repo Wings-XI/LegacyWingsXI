@@ -42,6 +42,8 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
     m_updateType = type;
     m_updateMask = 0;
 
+    this->packetEntityUpdateType = type;
+
     ref<uint32>(0x04) = m_entityId;
     ref<uint16>(0x08) = m_targId;
     ref<uint8>(0x0A) = 0;
@@ -61,6 +63,8 @@ void CEntityUpdatePacket::merge(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 u
     m_nameSize = PEntity->name.size();
 
     ref<uint8>(0x0A) |= updatemask;
+
+    this->packetUpdateMask = ref<uint8>(0x0A);
 
     switch (type)
     {

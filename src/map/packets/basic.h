@@ -27,6 +27,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include <stdio.h>
 #include <string.h>
+#include <vector>
 
 #define PACKET_SIZE 0x104
 
@@ -37,6 +38,7 @@ enum ENTITYUPDATE
     ENTITY_UPDATE,
     ENTITY_HIDE,
     ENTITY_DESPAWN,
+    ENTITY_NONE
 };
 
 /** Base class for all packets
@@ -56,6 +58,15 @@ protected:
     bool owner;
 
 public:
+
+    bool recyclePacket = true; // if this packet is dropped by the prio algorithm, should it try again next network cycle?
+    bool selectedForThisNetworkCycle = false; // toggled once this is selected by the prio algorithm to be shipped this network cycle
+    bool overflowDropImmunity = false; // character's reserve packet list can reach up to 1.6k packets. this will give immunity to dropping past 2k.
+
+    // prioritization parameters
+    std::vector<uint32> AffectedIDs;
+    uint8 packetUpdateMask = 0;
+    ENTITYUPDATE packetEntityUpdateType = ENTITYUPDATE::ENTITY_NONE;
 
     CBasicPacket()
         : data(new uint8[PACKET_SIZE]), type(ref<uint8>(0)), size(ref<uint8>(1)), code(ref<uint16>(2)), owner(true)
@@ -102,6 +113,16 @@ public:
         return size;
     }
 
+    uint16 getCode() const
+    {
+        return code;
+    }
+
+    bool getOwner() const
+    {
+        return owner;
+    }
+
     uint8* getData()
     {
         return data;
@@ -125,8 +146,8 @@ public:
     // Set the first 9 bits to the ID. The highest bit overflows into the second byte.
     void id(unsigned int new_id)
     {
-        ref<uint16>(0) &= ~0x1FF;
-        ref<uint16>(0) |= new_id & 0x1FF;
+        ref<uint16>(0) &= ~0x01FF;
+        ref<uint16>(0) |= new_id & 0x01FF;
     }
 
     // The length "byte" is actually just the highest 7 bits.

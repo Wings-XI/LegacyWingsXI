@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -359,13 +359,23 @@ PacketList_t CCharEntity::getPacketList()
     return PacketList;
 }
 
+PacketList_t* CCharEntity::getPacketListPtr()
+{
+    return &PacketList;
+}
+
+std::mutex* CCharEntity::getPacketListMutexPtr()
+{
+    return &m_PacketListMutex;
+}
+
 size_t CCharEntity::getPacketCount()
 {
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
     return PacketList.size();
 }
 
-void CCharEntity::erasePackets(uint8 num)
+void CCharEntity::erasePackets(uint16 num)
 {
     for (auto i = 0; i < num; i++)
     {

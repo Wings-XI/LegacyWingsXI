@@ -297,8 +297,10 @@ public:
     bool			  isPacketListEmpty();          // проверка размера PacketList
     CBasicPacket*	  popPacket();                  // получение первого пакета из PacketList
     PacketList_t      getPacketList();              // returns a COPY of packet list
+    PacketList_t*     getPacketListPtr();           // by pointer instead
+    std::mutex*       getPacketListMutexPtr();      // always use this when doing stuff with getPacketListPtr
     size_t            getPacketCount();
-    void              erasePackets(uint8 num);      // erase num elements from front of packet list
+    void              erasePackets(uint16 num);      // erase num elements from front of packet list
     virtual void      HandleErrorMessage(std::unique_ptr<CBasicPacket>&) override;
 
     CLinkshell*       PLinkshell1;                  // linkshell, в которой общается персонаж
@@ -498,7 +500,7 @@ private:
     bool            m_isBlockingAid;
     bool			m_reloadParty;
 
-    PacketList_t      PacketList;					// the list of packets to be sent to the character during the next network cycle
+    PacketList_t    PacketList;					// the list of packets to be sent to the character during the next network cycle
 
     std::mutex      m_PacketListMutex;
 };
