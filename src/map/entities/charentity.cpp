@@ -84,6 +84,8 @@
 
 CCharEntity::CCharEntity()
 {
+    downloadingInitialData = DOWNLOADING_DATA_STATE::LOCKED_IN;
+
     objtype = TYPE_PC;
     m_EcoSystem = SYSTEM_HUMANOID;
 
@@ -307,36 +309,141 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
         pktsize -= 0x18;
         memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
     }
+
+    bool packetUpdatesPosition = false;
+    uint16 entityID = 0;
+
     if (packet->getType() == 0x0E)
-    {
-        // Entity update. To prevent spamming we will check whether the vector
-        // already has a packet updating the same entity, in which case we will
-        // merge them into a single packet.
-        CEntityUpdatePacket* thisPacket = dynamic_cast<CEntityUpdatePacket*>(packet);
-        if (thisPacket)
+    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+        packetUpdatesPosition = true;
+        entityID = ref<uint16>(packet->getData(), 0x04);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
         {
-            int num_packets = PacketList.size();
-            for (int i = 0; i < num_packets; i++)
-            {
-                auto currentPacket = PacketList[i];
-                if (currentPacket->getType() == 0x0E)
+            if ((*it)->getType() == 0x0E && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            { // match found, already an update queued for this entity
+                if (packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                 {
-                    auto currentPacket = PacketList[i];
-                    CEntityUpdatePacket* currentEntityPacket = dynamic_cast<CEntityUpdatePacket*>(currentPacket);
-                    if ((currentEntityPacket) &&
-                        (currentEntityPacket->getEntityId() == thisPacket->getEntityId()) &&
-                        (currentEntityPacket->getTargId() == thisPacket->getTargId()))
+                    if ((*it)->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                     {
-                        // PEntity stored in the current packet is assumed to still be valid.
-                        ShowDebug("Merging two entity update packets into a single packet.\n");
-                        currentEntityPacket->merge(thisPacket);
+                        if ((*it)->packetUpdateMask | UPDATE_LOOK && !(packet->packetUpdateMask | UPDATE_LOOK))
+                        {
+                            // wait to update their look before pushing any new updates.
+                            delete packet;
+                            return;
+                        }
+                        // i am the newer packet with more up-to-date information so i supercede this one
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                    else
+                    {
+                        // there is a pending update to spawn or despawn this entity, let's wait for that to go through
+                        // before trying to send any update information about it
                         delete packet;
                         return;
                     }
                 }
+                else
+                {
+                    // i am updating spawn/despawn of the mob. no matter what i run into, i supercede it
+                    delete (*it);
+                    it = PacketList.erase(it);
+                    break;
+                }
+                
+            }
+            else
+            {
+                it++;
             }
         }
     }
+
+    if (packet->getType() == 0x0D)
+    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+        packetUpdatesPosition = true;
+        entityID = ref<uint16>(packet->getData(), 0x04);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x0D && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            { // match found, already an update queued for this character
+                if ((*it)->packetUpdateMask | UPDATE_LOOK)
+                {
+                    if (packet->packetUpdateMask | UPDATE_LOOK)
+                    {
+                        // i update look as well, and my information is more up-to-date.
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                    else
+                    {
+                        // all my info is more up-to-date but i don't update look, i steal yours.
+                        memcpy(packet->getData() + 0x48, (*it)->getData() + 0x48, 0x12);
+                        packet->packetUpdateMask |= UPDATE_LOOK;
+                        ref<uint8>(packet->getData(), 0x0A) |= UPDATE_LOOK;
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                }
+                else
+                {
+                    // my information is more up-to-date.
+                    delete (*it);
+                    it = PacketList.erase(it);
+                    break;
+                }
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    if (packet->getType() == 0x37)
+    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+        entityID = ref<uint16>(packet->getData(), 0x24);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x37 && ref<uint16>((*it)->getData(), 0x24) == entityID)
+            { // match found, already an update queued for this character
+                // my information is more up-to-date.
+                delete (*it);
+                it = PacketList.erase(it);
+                break;
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    if (packetUpdatesPosition || packet->getType() == 0x5B)
+    { // remove any position packets we have queued (0x5B)
+        entityID = entityID ? entityID : ref<uint16>(packet->getData(), 0x10);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x5B && ref<uint16>((*it)->getData(), 0x10) == entityID)
+            {
+                delete (*it);
+                it = PacketList.erase(it);
+                break;
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
     PacketList.push_back(packet);
 }
 
@@ -712,9 +819,6 @@ void CCharEntity::PostTick()
                 }
             });
         }
-        // Do not send an update packet when only the position has change
-        if (updatemask ^ UPDATE_POS)
-        pushPacket(new CCharUpdatePacket(this));
         updatemask = 0;
     }
 }

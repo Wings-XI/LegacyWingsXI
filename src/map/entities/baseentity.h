@@ -159,7 +159,7 @@ enum UPDATETYPE
     UPDATE_COMBAT   = 0x07,
     UPDATE_NAME     = 0x08,
     UPDATE_LOOK     = 0x10,
-    UPDATE_ALL_MOB  = 0x0F,
+    UPDATE_ALL_MOB  = 0x0F, // more accurately, update all except look (armor pieces)
     UPDATE_ALL_CHAR = 0x1F
 };
 

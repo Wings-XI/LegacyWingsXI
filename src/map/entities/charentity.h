@@ -169,6 +169,13 @@ enum CHAR_SUBSTATE
     SUBSTATE_LAST,
 };
 
+enum DOWNLOADING_DATA_STATE
+{
+    FREE = 0,
+    PREPARED_TO_EXIT = 1,
+    LOCKED_IN = 2
+};
+
 /************************************************************************
 *                                                                       *
 *                                                                       *
@@ -197,6 +204,7 @@ typedef std::vector<EntityID_t> BazaarList_t;
 class CCharEntity : public CBattleEntity
 {
 public:
+    DOWNLOADING_DATA_STATE  downloadingInitialData;         // just zoned in and still downloading character information
 
     jobs_t					jobs;							// доступрые профессии персонажа
     keyitems_t				keys;							// таблица ключевых предметов

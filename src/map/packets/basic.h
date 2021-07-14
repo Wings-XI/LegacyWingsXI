@@ -61,10 +61,9 @@ public:
 
     bool recyclePacket = true; // if this packet is dropped by the prio algorithm, should it try again next network cycle?
     bool selectedForThisNetworkCycle = false; // toggled once this is selected by the prio algorithm to be shipped this network cycle
-    bool overflowDropImmunity = false; // character's reserve packet list can reach up to 1.6k packets. this will give immunity to dropping past 2k.
+    bool overflowDropImmunity = false; // character's reserve packet list can reach up to 600 packets. this will give immunity to dropping past that
 
     // prioritization parameters
-    std::vector<uint32> AffectedIDs;
     uint8 packetUpdateMask = 0;
     ENTITYUPDATE packetEntityUpdateType = ENTITYUPDATE::ENTITY_NONE;
 

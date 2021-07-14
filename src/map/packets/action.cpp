@@ -335,16 +335,13 @@ CActionPacket::CActionPacket(action_t& action)
 
     bitOffset += 64;
 
-    this->AffectedIDs.clear();
-
     for (auto&& list : action.actionLists)
     {
         if (actions >= 8)
             break;
+
         bitOffset = packBitsBE(data, list.ActionTargetID, bitOffset, 32);
         bitOffset = packBitsBE(data, list.actionTargets.size(), bitOffset, 4);
-        //ShowDebug("Pushing to AffectedIDs...\n");
-        this->AffectedIDs.push_back(list.ActionTargetID);
 
         for (auto&& target : list.actionTargets)
         {

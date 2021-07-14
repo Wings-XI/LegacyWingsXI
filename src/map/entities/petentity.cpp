@@ -136,7 +136,7 @@ void CPetEntity::PostTick()
     CBattleEntity::PostTick();
     if (loc.zone && updatemask && status != STATUS_DISAPPEAR)
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
+        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         if (PMaster && PMaster->PPet == this)
         {

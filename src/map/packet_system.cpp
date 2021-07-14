@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -595,6 +595,9 @@ void SmallPacket0x00F(map_session_data_t* const PSession, CCharEntity* const PCh
 
     // Note: This sends the stop downloading packet!
     blacklistutils::SendBlacklist(PChar);
+
+    if (PChar->downloadingInitialData != DOWNLOADING_DATA_STATE::FREE)
+        PChar->downloadingInitialData = DOWNLOADING_DATA_STATE::PREPARED_TO_EXIT;
 
     return;
 }
