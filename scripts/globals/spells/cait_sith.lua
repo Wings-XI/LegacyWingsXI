@@ -6,6 +6,7 @@ require("scripts/globals/summon")
 require("scripts/globals/pets")
 require("scripts/globals/msg")
 require("scripts/globals/status")
+require("scripts/globals/avatars_favor")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
@@ -20,5 +21,12 @@ end
 
 function onSpellCast(caster, target, spell)
     tpz.pet.spawnPet(caster, tpz.pet.id.CAIT_SITH)
+
+    if caster:hasStatusEffect(tpz.effect.AVATAR_S_FAVOR) then
+        local effect = caster:getStatusEffect(tpz.effect.AVATAR_S_FAVOR)
+        effect:setPower(1) -- resummon resets effect
+        applyAvatarsFavorAuraToPet(caster, effect)
+    end
+
     return 0
 end

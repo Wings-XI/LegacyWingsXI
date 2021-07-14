@@ -151,6 +151,21 @@ bool CMobSkillState::Update(time_point tick)
             }
         }
         m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_STATE_EXIT", m_PEntity, m_PSkill->getID());
+        
+        if (m_PEntity->objtype == TYPE_PET && m_PEntity->PMaster && m_PEntity->PMaster->objtype == TYPE_PC && (WasBloodPactRage(m_PSkill->getID()) || WasBloodPactWard(m_PSkill->getID())))
+        {
+            CCharEntity* PSummoner = (CCharEntity*)(m_PEntity->PMaster);
+            if (PSummoner->StatusEffectContainer->HasStatusEffect(EFFECT_AVATARS_FAVOR))
+            {
+                int power = PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->GetPower();
+                // Rage BPs reduce the power of Avatar's Favor by 4 levels
+                // Ward BPs reduce the power of Avatar's Favor by 2 levels
+                // Inorder for the effect drop to be noticable - bumping to 5 and 3
+                int levelLost = WasBloodPactRage(m_PSkill->getID()) ? 5 : 3;
+                power -= levelLost;        
+                PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->SetPower(power > 0 ? power : 1);
+            }
+        }
         return true;
     }
     return false;

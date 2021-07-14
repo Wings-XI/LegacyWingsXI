@@ -1572,7 +1572,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         PEntity = PEntity->PMaster;
     }
 
-    constexpr float aura_range = 6.25; // TODO: Add mods
+    constexpr float aura_range = 10.0; // TODO: Add mods
 
     if (PEntity->objtype == TYPE_PC)
     {
@@ -1699,12 +1699,17 @@ void CStatusEffectContainer::TickRegen(time_point tick)
                         CPetEntity* PPet = (CPetEntity*)m_POwner->PPet;
                         CItem* hands = PChar->getEquip(SLOT_HANDS);
 
+                        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_AVATARS_FAVOR) &&
+                            PPet->m_PetID >= PETID_CARBUNCLE && PPet->m_PetID <= PETID_CAIT_SITH)
+                        {
+                            perpetuation -= 2;
+                        }
+
                         // carbuncle mitts only work on carbuncle
                         if (hands && hands->getID() == 14062 && PPet->name == "Carbuncle") {
                             perpetuation /= 2;
                         }
                     }
-
 
                     perpetuation -= charutils::AvatarPerpetuationReduction(PChar);
 
