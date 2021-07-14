@@ -84,8 +84,6 @@
 
 CCharEntity::CCharEntity()
 {
-    downloadingInitialData = DOWNLOADING_DATA_STATE::LOCKED_IN;
-
     objtype = TYPE_PC;
     m_EcoSystem = SYSTEM_HUMANOID;
 
