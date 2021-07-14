@@ -926,17 +926,12 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
     if (getBufferSize(priorityList) < map_config.buffer_size && getCompressedBufferSize(priorityList) + 4 < 1200 - FFXI_HEADER_SIZE - 16)
     { // no prioritization needed. optimization: just return the list. for some reason 1300 can make us go over limit, so being conservative.
         // finalization: all packets in priorityList will be sent, so do cleanup for what will be recycled and what will not
-        if (PChar->downloadingInitialData != DOWNLOADING_DATA_STATE::LOCKED_IN)
-        {
-            PChar->downloadingInitialData = DOWNLOADING_DATA_STATE::FREE;
-            //ShowDebug("Freeing DL state.\n");
-        }
         for (auto it = priorityList.begin(); it != priorityList.end(); it++)
             (*it)->selectedForThisNetworkCycle = true;
         return priorityList;
     }
 
-    bool isOrdered = PChar->downloadingInitialData != DOWNLOADING_DATA_STATE::FREE;
+    bool isOrdered = false;
     auto orderPacketList = [&isOrdered, &PChar](PacketList_t list) {
         if (isOrdered)
             return list;
@@ -2247,9 +2242,11 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
 
     // 1800 buffer limit is on the uncompressed list of smallpackets (default, cant be changed with map_config.buffer_size)
     // 1300 buffer limit is on the compressed list of smallpackets + compressed size indicator(4chars) + md5 hash(16chars)
+    /*
     ShowDebug("SEQUENCE %u: Attempting to send %u/%u packets to character %s (size %u/%u buffer bytes, %u/1300 compressed).\n",
               map_session_data->server_packet_id, packetsAfterPrio, packetsBeforePrio, PChar->GetName(), (uint16)*buffsize,
               map_config.buffer_size, PacketSizeBytes + 20);
+              */
     
     ref<uint32>(PTempBuff, (size_t)PacketSizeBytes) = PacketSizeBits; // client wants to know size in bits
 
