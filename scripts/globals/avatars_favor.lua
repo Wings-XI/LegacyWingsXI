@@ -18,7 +18,7 @@ SKILL_317_INDEX = 10
 local avatarsFavorEffect = {
     [tpz.pet.id.CARBUNCLE] = -- Regen
     {
-        scaling = {1, 2, 3, 4, 5, 6, 8, 10, 12, 15},
+        scaling = {1, 2, 3, 4, 5, 6, 8, 10, 12, 14},
         effect = tpz.effect.CARBUNCLE_S_FAVOR
     },
     [tpz.pet.id.FENRIR] = -- Magic Eva
@@ -106,8 +106,12 @@ function applyAvatarsFavorDebuffsToPet(target)
 end
 
 function removeAvatarsFavorDebuffsFromPet(target)
-    pet:addMod(tpz.mod.MATT, 20)
-    pet:addMod(tpz.mod.ATT, 20)
-    pet:delMod(tpz.mod.ACC, 6)
-    pet:delMod(tpz.mod.DEF, 6)
+    local petId = target:getPetID()
+    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+        local pet = target:getPet()
+        pet:addMod(tpz.mod.MATT, 20)
+        pet:addMod(tpz.mod.ATT, 20)
+        pet:addMod(tpz.mod.ACC, 6)
+        pet:addMod(tpz.mod.DEF, 6)
+    end
 end

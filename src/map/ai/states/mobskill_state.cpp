@@ -155,7 +155,7 @@ bool CMobSkillState::Update(time_point tick)
         if (m_PEntity->objtype == TYPE_PET && m_PEntity->PMaster && m_PEntity->PMaster->objtype == TYPE_PC && (WasBloodPactRage(m_PSkill->getID()) || WasBloodPactWard(m_PSkill->getID())))
         {
             CCharEntity* PSummoner = (CCharEntity*)(m_PEntity->PMaster);
-            if (PSummoner->StatusEffectContainer->HasStatusEffect(EFFECT_AVATARS_FAVOR))
+            if (PSummoner && PSummoner->StatusEffectContainer->HasStatusEffect(EFFECT_AVATARS_FAVOR))
             {
                 int power = PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->GetPower();
                 // Rage BPs reduce the power of Avatar's Favor by 4 levels
