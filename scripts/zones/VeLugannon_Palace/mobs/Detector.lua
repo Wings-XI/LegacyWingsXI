@@ -234,16 +234,9 @@ function canDetectorSummonSC(mob)
 
     for i,v in pairs(ID.mob.SC_DETECTORS) do
         printf("ID %d", v)
-        if mobId == v then
-            
+        if mobId == v then   
             canSummonSC = true
         end
-    end
-
-    if canSummonSC then
-        printf("CAN SUMMON SC")
-    else
-        printf("CANT SUMMON SC")
     end
 
     return canSummonSC    
