@@ -129,11 +129,130 @@ SC_DETECTOR_PATHS =
     }
 }
 
+DETECTOR_PATHS = 
+{
+    ISLAND1 =
+    {
+        a = 
+        {
+            220, 16, 420,
+            220, 16, 452,
+            212, 16, 460,
+            194, 16, 460,
+            171, 16, 460,
+            159, 16, 440,
+            132, 16, 440,
+            140, 16, 418,
+            140, 16, 380,
+            180, 16, 380,
+            210, 16, 380,
+            220, 16, 388,
+        },
+        b = 
+        {
+            220, 16, 388,
+            210, 16, 380,
+            180, 16, 380,
+            140, 16, 380,
+            140, 16, 418,
+            132, 16, 440,
+            159, 16, 440,
+            171, 16, 460,
+            194, 16, 460,
+            212, 16, 460,
+            220, 16, 452,
+            220, 16, 420,
+        },
+    },
+    ISLAND2 = 
+    {
+        a = 
+        {
+            -220, 16, 420,
+            -220, 16, 460,
+            -176, 16, 460,
+            -135, 16, 460,
+            -126, 16, 450,
+            -126, 16, 391,
+            -133, 16, 380,
+            -176, 16, 380,
+            -220, 16, 380,
+        },
+        b =
+        {
+            -220, 16, 380,
+            -176, 16, 380,
+            -133, 16, 380,
+            -126, 16, 391,
+            -126, 16, 450,
+            -135, 16, 460,
+            -176, 16, 460,
+            -220, 16, 460,
+            -220, 16, 420,
+        },
+    },
+    ISLAND3 =
+    {
+        a =
+        {
+            419, 16, -260,
+            420, 16, -220,
+            420, 16, -180,
+            379, 16, -179,
+            340, 16, -180,
+            340, 16, -220,
+            339, 16, -260,
+            380, 16, -259,
+            419, 16, -260,
+        },
+        b =
+        {
+            419, 16, -260,
+            380, 16, -259,
+            339, 16, -260,
+            340, 16, -220,
+            340, 16, -180,
+            379, 16, -179,
+            420, 16, -180,
+            420, 16, -220,
+        },
+    },
+    ISLAND4 =
+    {
+        a = 
+        {
+            -419, 16, -259,
+            -381, 16, -259,
+            -340, 16, -259,
+            -339, 16, -220,
+            -339, 16, -179,
+            -380, 16, -179,
+            -419, 16, -179,
+            -419, 16, -219,
+            -419, 16, -259,
+        },
+        b = 
+        {
+            -419, 16, -259,
+            -419, 16, -219,
+            -419, 16, -179,
+            -380, 16, -179,
+            -339, 16, -179,
+            -339, 16, -220,
+            -340, 16, -259,
+            -381, 16, -259,
+            -419, 16, -259,
+        }
+    }
+}
+
 function onMobSpawn(mob)
     onMobRoam(mob)
     mob:setLocalVar("petCount", 1)
 end
 
+-- This and OnRoam are getting ugly.  We should consider a table keyed on MobID tied to path.
+-- While that approach would tightly tie us to mobID - we have the same coupling today just abstracted through IDs.lua
 function onPath(mob)
     local mobId = mob:getID()
     if mobId == ID.mob.SC_DETECTORS.DET1 then
@@ -152,6 +271,22 @@ function onPath(mob)
         tpz.path.patrol(mob, SC_DETECTOR_PATHS.ISLAND4.a)
     elseif mobId == ID.mob.SC_DETECTORS.DET8 then
         tpz.path.patrol(mob, SC_DETECTOR_PATHS.ISLAND4.b)
+    elseif mobId == ID.mob.DETECTORS.DET9 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND1.a)
+    elseif mobId == ID.mob.DETECTORS.DET10 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND1.b)
+    elseif mobId == ID.mob.DETECTORS.DET11 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND2.a)
+    elseif mobId == ID.mob.DETECTORS.DET12 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND2.b)
+    elseif mobId == ID.mob.DETECTORS.DET13 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND3.a)
+    elseif mobId == ID.mob.DETECTORS.DET14 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND3.b)
+    elseif mobId == ID.mob.DETECTORS.DET15 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND4.a)
+    elseif mobId == ID.mob.DETECTORS.DET16 then
+        tpz.path.patrol(mob, DETECTOR_PATHS.ISLAND4.b)
     end
 end
 
@@ -173,6 +308,22 @@ function onMobRoam(mob)
         mob:pathThrough(tpz.path.first(SC_DETECTOR_PATHS.ISLAND4.a))
     elseif mobId == ID.mob.SC_DETECTORS.DET8 and (mob:isFollowingPath() == false) then
         mob:pathThrough(tpz.path.first(SC_DETECTOR_PATHS.ISLAND4.b))
+    elseif mobId == ID.mob.DETECTORS.DET9 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND1.a))
+    elseif mobId == ID.mob.DETECTORS.DET10 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND1.b))
+    elseif mobId == ID.mob.DETECTORS.DET11 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND2.a))
+    elseif mobId == ID.mob.DETECTORS.DET12 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND2.b))
+    elseif mobId == ID.mob.DETECTORS.DET13 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND3.a))
+    elseif mobId == ID.mob.DETECTORS.DET14 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND3.b))
+    elseif mobId == ID.mob.DETECTORS.DET15 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND4.a))
+    elseif mobId == ID.mob.DETECTORS.DET16 and (mob:isFollowingPath() == false) then
+        mob:pathThrough(tpz.path.first(DETECTOR_PATHS.ISLAND4.b))
     end
 end
 
