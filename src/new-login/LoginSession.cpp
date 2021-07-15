@@ -283,6 +283,7 @@ void LoginSession::LoadCharacterList()
             Database::RealEscapeString(strDBPrefix).c_str(),
             Database::RealEscapeString(strDBPrefix).c_str(),
             contentIdsStr.c_str());
+        LOCK_DB;
         LOCK_PWORLDDB(it->second.pWorldDBConnection);
         mariadb::result_set_ref pWorldResultSet = it->second.pWorldDBConnection->GetDatabase()->query(strWorldSqlFinalQuery);
         while (pWorldResultSet->next()) {
@@ -345,7 +346,7 @@ void LoginSession::LoadCharacterList()
                     pWorldResultSet->get_unsigned32(1));
             }
             //LOG_DEBUG0("SQL: %s", strSqlFinalQuery.c_str());
-            LOCK_DB;
+            //LOCK_DB;
             DB->execute(strSqlFinalQuery);
         }
     }
