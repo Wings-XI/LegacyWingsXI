@@ -14,7 +14,7 @@ SKILL_317_INDEX = 10
 -- Index 6 is the value for the low skill tier
 -- Index 9 is the value for ~level 75, up to 317 skill
 -- Index 10 is the value for having 318 or more skill
--- This can be extended for servers who are higher than 75 cap by adding additional values to the "arrays" and new skill tier logic
+-- This can be extended for servers who are higher than 75 cap by adding additional values to the "arrays" and new skill tier logic (and Siren)
 local avatarsFavorEffect = {
     [tpz.pet.id.CARBUNCLE] = -- Regen
     {
@@ -70,8 +70,7 @@ local avatarsFavorEffect = {
 
 function applyAvatarsFavorAuraToPet(target, effect) 
     local petId = target:getPetID()
-
-    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+    if shouldAvatarsFavorBeApplied(petId) then
         local power = avatarsFavorEffect[petId].scaling[effect:getPower()]
         local avatarEffect = avatarsFavorEffect[petId].effect
 
@@ -84,8 +83,7 @@ end
 
 function removeAvatarsFavorAuraFromPet(target)
     local petId = target:getPetID()
-
-    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+    if shouldAvatarsFavorBeApplied(petId) then
         local pet = target:getPet()
         if pet:hasStatusEffect(avatarsFavorEffect[petId].effect) then
             pet:delStatusEffect(avatarsFavorEffect[petId].effect)
@@ -96,7 +94,7 @@ end
 
 function applyAvatarsFavorDebuffsToPet(target)
     local petId = target:getPetID()
-    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+    if shouldAvatarsFavorBeApplied(petId) then
         local pet = target:getPet()
         pet:delMod(tpz.mod.MATT, 20) -- Other than MATT most of these values are myth and guesses from multiple sources
         pet:delMod(tpz.mod.ATT, 20)
@@ -107,11 +105,31 @@ end
 
 function removeAvatarsFavorDebuffsFromPet(target)
     local petId = target:getPetID()
-    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+    if shouldAvatarsFavorBeApplied(petId) then
         local pet = target:getPet()
         pet:addMod(tpz.mod.MATT, 20)
         pet:addMod(tpz.mod.ATT, 20)
         pet:addMod(tpz.mod.ACC, 6)
         pet:addMod(tpz.mod.DEF, 6)
     end
+end
+
+-------------------------------------------
+-- Given a :getPetID petID (Not a getMobID)
+-- Returns if Avatars Favor should be applied
+-- This equates to is the pet not nil and should have avatars favor effect
+-- Does not account for Siren
+-------------------------------------------
+function shouldAvatarsFavorBeApplied(petId)
+    local shouldApply = false
+
+    if petId and petId >= tpz.pet.id.CARBUNCLE and petId <= tpz.pet.id.DIABOLOS then
+        shouldApply = true
+    end
+
+    if petId and petId == tpz.pet.id.CAIT_SITH then
+        shouldApply = true
+    end
+
+    return shouldApply
 end

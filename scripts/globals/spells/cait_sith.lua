@@ -26,6 +26,7 @@ function onSpellCast(caster, target, spell)
         local effect = caster:getStatusEffect(tpz.effect.AVATAR_S_FAVOR)
         effect:setPower(1) -- resummon resets effect
         applyAvatarsFavorAuraToPet(caster, effect)
+        applyAvatarsFavorDebuffsToPet(caster)
     end
 
     return 0
