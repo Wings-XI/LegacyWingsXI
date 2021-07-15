@@ -38,15 +38,16 @@ zones[tpz.zone.VELUGANNON_PALACE] =
         ZIPACNA          = 17502570,
         SC_DETECTORS     = 
         {
-            DET1 = 17502535, -- Island Seiryu (1)
-            DET2 = 17502537,
+            DET1 = 17502545, -- Island Seiryu (1)
+            DET2 = 17502543,
             DET3 = 17502551, -- Island Genbu (2)
             DET4 = 17502553,
-            DET5 = 17502541, -- Island Suzaku (3)
-            DET6 = 17502539,
+            DET5 = 17502547, -- Island Suzaku (3)
+            DET6 = 17502549,
             DET7 = 17502555, -- Island Byakko (4)
             DET8 = 17502557,
         }
+        
     },
     npc =
     {

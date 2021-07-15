@@ -13,26 +13,33 @@ SC_DETECTOR_PATHS =
     {
         a = 
         {
-            419, 16, -260,
-            420, 16, -220,
-            420, 16, -180,
-            379, 16, -179,
-            340, 16, -180,
-            340, 16, -220,
-            339, 16, -260,
-            380, 16, -259,
-            419, 16, -260
+            410, 16, -20,
+            423, 16, -20,
+            430, 16, -25,
+            446, 16, -36,
+            459, 16, -26,
+            460, 16, -6,
+            460, 16, 19,
+            414, 16, 21,
+            395, 16, 39,
+            380, 16, 26,
+            380, 16, 2,
+            380, 16, -19,
         },
         b = 
         {
-            419, 16, -260,
-            380, 16, -259,
-            339, 16, -260,
-            340, 16, -220,
-            340, 16, -180,
-            379, 16, -179,
-            420, 16, -180,
-            420, 16, -220,
+            380, 16, -19,
+            380, 16, 2,
+            380, 16, 26,
+            395, 16, 39,
+            414, 16, 21,
+            460, 16, 19,
+            460, 16, -6,
+            459, 16, -26,
+            446, 16, -36,
+            430, 16, -25,
+            423, 16, -20,
+            410, 16, -20,
         },
     },
     ISLAND2 = 
@@ -68,27 +75,21 @@ SC_DETECTOR_PATHS =
     {
         a =
         {
-            -419, 16, -259,
-            -381, 16, -259,
-            -340, 16, -259,
-            -339, 16, -220,
-            -339, 16, -179,
-            -380, 16, -179,
-            -419, 16, -179,
-            -419, 16, -219,
-            -419, 16, -259,
+            399, 16, 37,
+            381, 16, 28,
+            380, 16, 6,
+            380, 16, -19,
+            401, 16, -20,
+            424, 16, -20,
         },
-        b = 
+        b =
         {
-            -419, 16, -259,
-            -419, 16, -219,
-            -419, 16, -179,
-            -380, 16, -179,
-            -339, 16, -179,
-            -339, 16, -220,
-            -340, 16, -259,
-            -381, 16, -259,
-            -419, 16, -259,
+            424, 16, -20,
+            401, 16, -20,
+            380, 16, -19,
+            380, 16, 6,
+            381, 16, 28,
+            399, 16, 37,
         },
     },
     ISLAND4 =
@@ -180,10 +181,11 @@ function onMobFight(mob, target)
     local petCount = mob:getLocalVar("petCount")
     local now = os.time()
 
+    
     -- Summons a Caretaker every 15 seconds.
     -- TODO: Casting animation for before summons. When he spawns them isn't exactly retail accurate.
     --       Should be ~10s to start cast, and another ~5 to finish.
-    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
+    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() and canDetectorSummonSC(mob) then
         if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 10) then
             local sc = GetMobByID(ID.mob.STEAM_CLEANER)
             if not sc:isSpawned() then
@@ -221,10 +223,28 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
+    if canDetectorSummonSC(mob) then
+        mob:setRespawnTime(1800)
+    end
+end
+
+function canDetectorSummonSC(mob)
+    local canSummonSC = false
     local mobId = mob:getID()
+
     for i,v in pairs(ID.mob.SC_DETECTORS) do
+        printf("ID %d", v)
         if mobId == v then
-            mob:setRespawnTime(1800)
+            
+            canSummonSC = true
         end
     end
+
+    if canSummonSC then
+        printf("CAN SUMMON SC")
+    else
+        printf("CANT SUMMON SC")
+    end
+
+    return canSummonSC    
 end
