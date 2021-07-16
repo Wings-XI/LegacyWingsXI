@@ -45,7 +45,7 @@ function onEffectTick(target, effect)
         -- curse II also known as "zombie"
         if not(target:hasStatusEffect(tpz.effect.DISEASE)) and target:hasStatusEffect(tpz.effect.PLAGUE) == false and target:hasStatusEffect(tpz.effect.CURSE_II) == false then
             local healHP = 0
-            if target:getContinentID() == 1 and target:hasStatusEffect(tpz.effect.SIGNET) then
+            if (target:getContinentID() == 1 and target:hasStatusEffect(tpz.effect.SIGNET)) or (target:getContinentID() == 3 and target:hasStatusEffect(tpz.effect.SIGIL)) then
                 healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) + (healtime - 2) * (1 + math.floor(target:getMaxHP() / 300)) + target:getMod(tpz.mod.HPHEAL)
             else
                 target:addTP(HEALING_TP_CHANGE)
