@@ -51,7 +51,7 @@ local avatarsFavorEffect = {
         scaling = {1, 2, 3, 4, 5, 7, 9, 12, 15, 18},
         effect = tpz.effect.SHIVA_S_FAVOR
     },
-    [tpz.pet.id.RAMUH] = -- Potency
+    [tpz.pet.id.RAMUH] = -- Potency (Critical Hit+%)
     {
         scaling = {1, 2, 3, 4, 5, 6, 8, 10, 12, 15},
         effect = tpz.effect.RAMUH_S_FAVOR
@@ -97,9 +97,9 @@ function applyAvatarsFavorDebuffsToPet(target)
     if shouldAvatarsFavorBeApplied(petId) then
         local pet = target:getPet()
         pet:delMod(tpz.mod.MATT, 20) -- Other than MATT most of these values are myth and guesses from multiple sources
-        pet:delMod(tpz.mod.ATT, 20)
+        pet:delMod(tpz.mod.ATTP, 20)
         pet:delMod(tpz.mod.ACC, 6)
-        pet:delMod(tpz.mod.DEF, 6)
+        pet:delMod(tpz.mod.DEFP, 6)
     end
 end
 
@@ -108,9 +108,9 @@ function removeAvatarsFavorDebuffsFromPet(target)
     if shouldAvatarsFavorBeApplied(petId) then
         local pet = target:getPet()
         pet:addMod(tpz.mod.MATT, 20)
-        pet:addMod(tpz.mod.ATT, 20)
+        pet:addMod(tpz.mod.ATTP, 20)
         pet:addMod(tpz.mod.ACC, 6)
-        pet:addMod(tpz.mod.DEF, 6)
+        pet:addMod(tpz.mod.DEFP, 6)
     end
 end
 
