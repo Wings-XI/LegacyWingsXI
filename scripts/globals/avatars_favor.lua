@@ -98,8 +98,8 @@ function applyAvatarsFavorDebuffsToPet(target)
         local pet = target:getPet()
         pet:delMod(tpz.mod.MATT, 20) -- Other than MATT most of these values are myth and guesses from multiple sources
         pet:delMod(tpz.mod.ATTP, 20)
-        pet:delMod(tpz.mod.ACC, 6)
-        pet:delMod(tpz.mod.DEFP, 6)
+        pet:delMod(tpz.mod.ACC, 10)
+        pet:delMod(tpz.mod.DEFP, 10)
     end
 end
 
@@ -109,8 +109,8 @@ function removeAvatarsFavorDebuffsFromPet(target)
         local pet = target:getPet()
         pet:addMod(tpz.mod.MATT, 20)
         pet:addMod(tpz.mod.ATTP, 20)
-        pet:addMod(tpz.mod.ACC, 6)
-        pet:addMod(tpz.mod.DEFP, 6)
+        pet:addMod(tpz.mod.ACC, 10)
+        pet:addMod(tpz.mod.DEFP, 10)
     end
 end
 
