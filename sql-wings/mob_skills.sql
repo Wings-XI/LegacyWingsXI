@@ -1049,6 +1049,7 @@ INSERT INTO `mob_skills` VALUES(1743, 1232, 'rock_smash', 0, 7.0, 2000, 1500, 4,
 INSERT INTO `mob_skills` VALUES(1744, 1233, 'diamondhide', 1, 16.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1745, 1234, 'enervation', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1746, 1235, 'quake_stomp', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1747, 1236, 'zarraqa', 0, 25.0, 2000, 1500, 4, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1752, 1184, 'gusting_gouge', 4, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1753, 1185, 'hysteric_barrage', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1754, 1186, 'dukkeripen_heal', 0, 7.0, 2000, 1700, 1, 0, 0, 0, 0, 0, 0);
