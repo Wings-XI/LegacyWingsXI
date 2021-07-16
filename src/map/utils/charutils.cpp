@@ -3877,6 +3877,24 @@ namespace charutils
                         // Astral Candescence and Imperial Defense Rating when besieged is added.
                         exp *= 1.10f; // 10% bonus XP because we assume Astral Candescence is active.
                     }
+                    else if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && region >= 33 && region <= 40)
+                    {
+                        switch (pcinzone)
+                        {
+                            case 1: exp *= 1.00f; break;
+                            case 2: exp *= 0.75f; break;
+                            case 3: exp *= 0.55f; break;
+                            case 4: exp *= 0.45f; break;
+                            case 5: exp *= 0.39f; break;
+                            case 6: exp *= 0.35f; break;
+                            default: exp *= (1.8f / pcinzone); break;
+                        }
+                        // Sigil bonus for parties under 6
+                        if (pcinzone < 6)
+                        {
+                            exp *= 1.20f; // 20% bonus XP
+                        }
+                    }
                     else
                     {
                         switch (pcinzone)
