@@ -75,21 +75,35 @@ SC_DETECTOR_PATHS =
     {
         a =
         {
-            399, 16, 37,
-            381, 16, 28,
-            380, 16, 6,
-            380, 16, -19,
-            401, 16, -20,
-            424, 16, -20,
+            -418, 16, -20,
+            -460, 16, -20,
+            -460, 16, 21,
+            -459, 16, 26,
+            -430, 16, 56,
+            -426, 16, 60,
+            -390, 16, 60,
+            -382, 16, 56,
+            -380, 16, 50,
+            -380, 16, -24,
+            -391, 16, -36,
+            -410, 16, -25,
+            -414, 16, -20,
         },
         b =
         {
-            424, 16, -20,
-            401, 16, -20,
-            380, 16, -19,
-            380, 16, 6,
-            381, 16, 28,
-            399, 16, 37,
+            -414, 16, -20,
+            -410, 16, -25,
+            -391, 16, -36,
+            -380, 16, -24,
+            -380, 16, 50,
+            -382, 16, 56,
+            -390, 16, 60,
+            -426, 16, 60,
+            -430, 16, 56,
+            -459, 16, 26,
+            -460, 16, 21,
+            -460, 16, -20,
+            -418, 16, -20,
         },
     },
     ISLAND4 =
@@ -330,28 +344,19 @@ end
 function onMobFight(mob, target)
     local caretaker = GetMobByID(mob:getID() + 1)
     local petCount = mob:getLocalVar("petCount")
-    local now = os.time()
+    local sc = GetMobByID(ID.mob.STEAM_CLEANER)
 
-    
     -- Summons a Caretaker every 15 seconds.
     -- TODO: Casting animation for before summons. When he spawns them isn't exactly retail accurate.
     --       Should be ~10s to start cast, and another ~5 to finish.
     if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() and canDetectorSummonSC(mob) then
-        if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 10) then
-            local sc = GetMobByID(ID.mob.STEAM_CLEANER)
-            if not sc:isSpawned() then
-                sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-                sc:spawn()
-                sc:updateEnmity(target)
-            end
+        if spawnSteamCleaner(mob, target) then 
             return
+        elseif mob:getLocalVar("iSpawnedSC") and not sc:isSpawned() then -- If this specific detector spawned SC - dont spawn caretakers until SC is dead
+            spawnCaretaker(mob, caretaker, target)
         end
-    end
-    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
-        caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-        caretaker:spawn()
-        caretaker:updateEnmity(target)
-        mob:setLocalVar("petCount", petCount + 1)
+    elseif petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
+        spawnCaretaker(mob, caretaker, target)
     end
 
     -- make sure pet has a target
@@ -374,6 +379,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
+    mob:resetLocalVars()
     if canDetectorSummonSC(mob) then
         mob:setRespawnTime(1800)
     end
@@ -384,11 +390,32 @@ function canDetectorSummonSC(mob)
     local mobId = mob:getID()
 
     for i,v in pairs(ID.mob.SC_DETECTORS) do
-        printf("ID %d", v)
         if mobId == v then   
             canSummonSC = true
         end
     end
 
     return canSummonSC    
+end
+
+function spawnCaretaker(mob, caretaker, target)
+    caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+    caretaker:spawn()
+    caretaker:updateEnmity(target)
+    mob:setLocalVar("petCount", petCount + 1)
+end
+
+function spawnSteamCleaner(mob, target)
+    local now = os.time()
+    local sc = GetMobByID(ID.mob.STEAM_CLEANER)
+    if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 10) then
+       if not sc:isSpawned() then
+          sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+          sc:spawn()
+          sc:updateEnmity(target)
+          mob:setLocalVar("iSpawnedSC", 1)
+          return true
+       end
+    end
+    return false
 end
