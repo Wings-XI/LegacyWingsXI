@@ -415,6 +415,7 @@ function spawnSteamCleaner(mob, target)
           sc:spawn()
           sc:updateEnmity(target)
           mob:setLocalVar("iSpawnedSC", 1)
+          mob:setLocalVar("petCount", petCount + 1)
           return true
        end
     end
