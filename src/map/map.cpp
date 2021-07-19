@@ -1444,7 +1444,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                                 priorityNum = 3;
                             break;
                         }
-                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size()))/2 + 2)
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
                             priorityNum = 2;
                         else
                             priorityNum = 9;
@@ -1460,7 +1460,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                                 priorityNum = 3;
                             break;
                         }
-                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size()))/2 + 2)
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
                             priorityNum = 2;
                         else
                             priorityNum = 9;
@@ -1474,7 +1474,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     }
                     else
                     {
-                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size()))/2 + 2)
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
                             priorityNum = 2;
                         else
                             priorityNum = 8;
@@ -1502,7 +1502,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                         priorityNum = 2;
                         break;
                     }
-                    if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())) / 2 + 2)
+                    if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
                     {
                         priorityNum = 2;
                         break;
@@ -1546,7 +1546,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                         break;
                     }
 
-                    if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())) / 2 + 2)
+                    if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
                     {
                         priorityNum = 2;
                         break;
