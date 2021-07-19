@@ -744,7 +744,7 @@ void LoadZoneList()
 
 /************************************************************************
 *                                                                       *
-*  Узнаем текущий регион по номеру зоны                                 *
+*  Returns the current Region by Zone Enum                              *
 *                                                                       *
 ************************************************************************/
 
@@ -1045,13 +1045,66 @@ REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 
 /************************************************************************
 *                                                                       *
-*                                                                       *
+*   Returns the current Continent by Region Enum                        *
 *                                                                       *
 ************************************************************************/
 
 CONTINENTTYPE GetCurrentContinent(uint16 ZoneID)
 {
-    return GetCurrentRegion(ZoneID) != REGION_UNKNOWN ? THE_MIDDLE_LANDS : OTHER_AREAS;
+    CONTINENTTYPE continentID;
+    switch (GetCurrentRegion(ZoneID))
+    {
+        case REGION_RONFAURE:
+        case REGION_ZULKHEIM:
+        case REGION_NORVALLEN:
+        case REGION_GUSTABERG:
+        case REGION_DERFLAND:
+        case REGION_SARUTABARUTA:
+        case REGION_KOLSHUSHU:
+        case REGION_ARAGONEU:
+        case REGION_FAUREGANDI:
+        case REGION_VALDEAUNIA:
+        case REGION_QUFIMISLAND:
+        case REGION_LITELOR:
+        case REGION_KUZOTZ:
+        case REGION_VOLLBOW:
+        case REGION_ELSHIMOLOWLANDS:
+        case REGION_ELSHIMOUPLANDS:
+        case REGION_TULIA:
+        case REGION_MOVALPOLOS:
+        case REGION_TAVNAZIA:
+        case REGION_SANDORIA:
+        case REGION_BASTOK:
+        case REGION_WINDURST:
+        case REGION_JEUNO:
+        case REGION_DYNAMIS:
+        case REGION_TAVNAZIAN_MARQ:
+        case REGION_PROMYVION:
+        case REGION_LUMORIA:
+        case REGION_LIMBUS:
+            continentID = THE_MIDDLE_LANDS;
+            break;
+        case REGION_WEST_AHT_URHGAN:
+        case REGION_MAMOOL_JA_SAVAGE:
+        case REGION_HALVUNG:
+        case REGION_ARRAPAGO:
+        case REGION_ALZADAAL:
+            continentID = THE_ARADJIAH_CONTINENT;
+            break;
+        case REGION_RONFAURE_FRONT:
+        case REGION_NORVALLEN_FRONT:
+        case REGION_GUSTABERG_FRONT:
+        case REGION_DERFLAND_FRONT:
+        case REGION_SARUTA_FRONT:
+        case REGION_ARAGONEAU_FRONT:
+        case REGION_FAUREGANDI_FRONT:
+        case REGION_VALDEAUNIA_FRONT:
+            continentID = THE_SHADOWREIGN_ERA;
+            break;
+        default:
+            continentID = OTHER_AREAS;
+    }
+    return continentID;
 }
 
 int GetWeatherElement(WEATHER weather)

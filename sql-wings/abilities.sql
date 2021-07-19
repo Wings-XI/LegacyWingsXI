@@ -287,6 +287,7 @@ INSERT INTO `abilities` VALUES(246, 'afflatus_misery', 3, 40, 1, 60, 30, 0, 0, 2
 INSERT INTO `abilities` VALUES(247, 'composure', 5, 50, 1, 300, 50, 0, 0, 215, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(248, 'yonin', 13, 40, 1, 300, 146, 0, 0, 218, 2000, 0, 6, 20.0, 0, 1, 600, 0, 4, 'WOTG');
 INSERT INTO `abilities` VALUES(249, 'innin', 13, 40, 1, 300, 147, 0, 0, 219, 2000, 0, 6, 20.0, 0, 1, 60, 0, 4, 'WOTG');
+INSERT INTO `abilities` VALUES(250, 'avatars_favor', 15, 55, 1, 300, 176, 100, 0, 94, 2000, 0, 6, 10.0, 0, 1, 80, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(251, 'ready', 9, 25, 1, 0, 102, 0, 0, 83, 2000, 0, 6, 18.0, 0, 0, 0, 902, 64, NULL);
 INSERT INTO `abilities` VALUES(257, 'double_shot', 11, 79, 1, 180, 126, 0, 0, 225, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'ABYSSEA');
 INSERT INTO `abilities` VALUES(259, 'futae', 13, 77, 1, 180, 148, 0, 0, 227, 2000, 0, 6, 20.0, 0, 1, 0, 0, 0, 'ABYSSEA');

@@ -39,44 +39,24 @@ local keyitems = {
 
 local items = {
     [0] = {
-        id = 15445,
+        id = 15445, -- Blacksmith's Belt
         rank = 3,
         cost = 10000
     },
     [1] = {
-        id = 14831,
+        id = 14831, -- Smithy's Mitts
         rank = 5,
         cost = 70000
     },
     [2] = {
-        id = 14393,
+        id = 14393, -- Smithy's Apron
         rank = 7,
         cost = 100000
     },
-    [3] = {
-        id = 153,
+	[3] = {
+        id = 153, -- Mastersmith Anvil
         rank = 9,
         cost = 150000
-    },
-    [4] = {
-        id = 334,
-        rank = 9,
-        cost = 200000
-    },
-    [5] = {
-        id = 15820,
-        rank = 6,
-        cost = 80000
-    },
-    [6] = {
-        id = 3661,
-        rank = 7,
-        cost = 50000
-    },
-    [7] = {
-        id = 3324,
-        rank = 9,
-        cost = 15000
     }
 }
 

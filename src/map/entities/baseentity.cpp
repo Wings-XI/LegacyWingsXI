@@ -138,8 +138,9 @@ CBaseEntity* CBaseEntity::GetEntity(uint16 targid, uint8 filter)
         return nullptr;
     else if (PInstance)
         return PInstance->GetEntity(targid, filter);
-    else
+    else if (loc.zone)
         return loc.zone->GetEntity(targid, filter);
+    return nullptr;
     }
 
 void CBaseEntity::ResetLocalVars()

@@ -16,6 +16,11 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+	if csid == 106 and option == 0 then
+		for _, entry in pairs(player:getNotorietyList()) do
+			entry:disengage() -- resetEnmity(player) is not consistently working on all mobs.
+		end
+	end
 end
 
 function onEventFinish(player, csid, option)

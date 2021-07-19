@@ -653,7 +653,7 @@ void CMobEntity::PostTick()
     CBattleEntity::PostTick();
     if (loc.zone && updatemask)
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
+        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         // If this mob is charmed, it should sync with its master
         if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)

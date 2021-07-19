@@ -2185,12 +2185,12 @@ namespace battleutils
 
                     //if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
-                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
                     break;
 
                 case TYPE_PET:
-                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
                     break;
                 case TYPE_PC:
                     if (PAttacker->objtype == TYPE_MOB)
@@ -2313,7 +2313,7 @@ namespace battleutils
                 case TYPE_MOB:
                     //if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
-                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
                     if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
                     {
@@ -2323,7 +2323,7 @@ namespace battleutils
                     break;
 
                 case TYPE_PET:
-                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
                     break;
 
                 default:
@@ -5371,7 +5371,7 @@ namespace battleutils
                 }
                 else
                 {
-                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
+                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_ALL_MOB));
                 }
 
                 luautils::OnMobDrawIn(PMob, PMember);

@@ -100,7 +100,7 @@ void CNpcEntity::PostTick()
 {
     if (loc.zone && updatemask)
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
+        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, UPDATE_ALL_MOB));
         updatemask = 0;
     }
 }

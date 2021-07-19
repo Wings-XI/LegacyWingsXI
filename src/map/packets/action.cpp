@@ -339,6 +339,7 @@ CActionPacket::CActionPacket(action_t& action)
     {
         if (actions >= 8)
             break;
+
         bitOffset = packBitsBE(data, list.ActionTargetID, bitOffset, 32);
         bitOffset = packBitsBE(data, list.actionTargets.size(), bitOffset, 4);
 

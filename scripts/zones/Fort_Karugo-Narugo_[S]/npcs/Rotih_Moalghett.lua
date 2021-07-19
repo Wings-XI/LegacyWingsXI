@@ -26,6 +26,8 @@ function onTrigger(player, npc)
 			player:startEvent(106)
 		elseif player:getCharVar("ManifestProblem") == 3 then -- continuiation cs
 			player:startEvent(111)
+        elseif player:getCharVar("ManifestProblem") == 4 and not player:hasKeyItem(tpz.ki.FORT_KEY) then -- continuiation cs)
+            player:startEvent(109) -- player failed the mission and needs a new FORT_KEY
 		elseif player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.A_MANIFEST_PROBLEM) == QUEST_ACCEPTED then
 			player:startEvent(107)
 		end
@@ -47,6 +49,9 @@ function onEventFinish(player, csid, option)
 	elseif csid == 111 then
 		player:setCharVar("ManifestProblem",4)
 		player:addKeyItem(tpz.ki.FORT_KEY)
+		player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.FORT_KEY)
+    elseif csid == 109 then
+        player:addKeyItem(tpz.ki.FORT_KEY)
 		player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.FORT_KEY)
     end
 end

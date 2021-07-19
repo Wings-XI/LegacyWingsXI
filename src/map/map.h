@@ -217,6 +217,7 @@ extern thread_local Sql_t* SqlHandle;
 
 extern CCommandHandler CmdHandler;
 
+typedef std::deque<CBasicPacket*> PacketList_t;
 typedef std::map<uint64,map_session_data_t*> map_session_list_t;
 extern map_session_list_t map_session_list;
 
@@ -230,6 +231,7 @@ extern inline map_session_data_t* mapsession_createsession(uint32 ip,uint16 port
 
 int32 recv_parse(int8 *buff,size_t* buffsize,sockaddr_in *from,map_session_data_t*);    // main function to parse recv packets
 int32 parse(int8 *buff,size_t* buffsize,sockaddr_in *from,map_session_data_t*);         // main function parsing the packets
+PacketList_t generate_priority_packet_list(CCharEntity* PChar);                        // generate packetlist within size constraints for big packet
 int32 send_parse(int8 *buff,size_t* buffsize, sockaddr_in *from,map_session_data_t*);   // main function is building big packet
 
 void  map_helpscreen(int32 flag);                                                       // Map-Server Version Screen [venom]
