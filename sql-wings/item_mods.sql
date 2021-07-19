@@ -18384,7 +18384,8 @@ INSERT INTO `item_mods` VALUES (15746,1,14);      -- Dancer's Shoes (male): DEF 
 INSERT INTO `item_mods` VALUES (15746,2,7);       -- HP +7
 INSERT INTO `item_mods` VALUES (15746,23,5);      -- Attack +5
 INSERT INTO `item_mods` VALUES (15746,68,5);      -- Evasion +5
-INSERT INTO `item_mods` VALUES (15746,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (15746,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (15746,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (15747,1,14);      -- Dancer's Shoes (female): DEF 14
 INSERT INTO `item_mods` VALUES (15747,2,7);       -- HP +7
 INSERT INTO `item_mods` VALUES (15747,23,5);      -- Attack +5
