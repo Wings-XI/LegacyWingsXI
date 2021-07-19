@@ -43,45 +43,25 @@ local keyitems = {
 
 local items = {
     [0] = {
-        id = 15446,
+        id = 15446, -- Goldsmith's Belt
         rank = 3,
         cost = 10000
     },
     [1] = {
-        id = 13945,
+        id = 13945, -- Shaded Specs.
         rank = 5,
         cost = 70000
     },
     [2] = {
-        id = 14394,
+        id = 14394, -- Goldsmith's Apron
         rank = 5,
         cost = 100000
     },
-    [3] = {
-        id = 151,
-        rank = 9,
-        cost = 150000
-    },
-    [4] = {
-        id = 335,
-        rank = 9,
-        cost = 200000
-    },
-    [5] = {
-        id = 15821,
-        rank = 6,
-        cost = 80000
-    },
-    [6] = {
-        id = 3595,
-        rank = 7,
-        cost = 50000
-    },
-    [7] = {
-        id = 3325,
-        rank = 9,
-        cost = 15000
-    }
+	[3] = {
+	    id = 151, -- Fool's Gold
+		rank = 9,
+		cost = 150000
+	}
 }
 
 function onTrade(player, npc, trade)
