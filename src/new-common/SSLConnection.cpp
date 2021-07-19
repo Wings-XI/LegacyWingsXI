@@ -9,6 +9,7 @@
 #include "Debugging.h"
 #include <chrono>
 #include <thread>
+#include <stdexcept>
 
 void SSLConnection::InitSSL()
 {
