@@ -17,7 +17,8 @@
 #include "CharMessageHnd.h"
 
 // Easy way to lock the config mutex
-#define LOCK_WORLDMGR std::lock_guard<std::recursive_mutex> l_worldmgr(*WorldManager::GetMutex())
+// Disabled for now due to too many deadlocks. Use LOCK_DB instead.
+// #define LOCK_WORLDMGR std::lock_guard<std::recursive_mutex> l_worldmgr(*WorldManager::GetMutex())
 
 class WorldManager;
 typedef WorldManager* WorldManagerPtr;

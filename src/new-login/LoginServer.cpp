@@ -12,6 +12,8 @@
 #include "ProtocolFactory.h"
 #include "SessionTracker.h"
 #include "WorldManager.h"
+#include "../new-common/TCPConnection.h"
+#include "../new-common/SSLConnection.h"
 
 #include <string.h>
 #include <stdexcept>
@@ -74,7 +76,7 @@ void LoginServer::AddBind(ProtocolFactory::LOGIN_PROTOCOLS eProtocol, uint16_t w
 		throw std::runtime_error("socket function failed.");
 	}
 	if (bind(NewBind.iSock, (sockaddr*)&NewBind.BindDetails, sizeof(NewBind.BindDetails)) != 0) {
-		LOG_ERROR("bid function failed.");
+		LOG_ERROR("bind function failed.");
 		throw std::runtime_error("bind function failed.");
 	}
 	if (listen(NewBind.iSock, LISTEN_ALLOWED_BACKLOG) != 0) {
@@ -120,6 +122,9 @@ void LoginServer::Run()
     struct timeval tvRecvTimeout = { 300, 0 };
     // Timeout for recv (socket option) - Windows
     uint32_t dwRecvTimeout = (tvRecvTimeout.tv_sec * 1000) + (tvRecvTimeout.tv_usec / 1000);
+    // SSL files
+    std::string SSLCertificate = LoginGlobalConfig::GetInstance()->GetConfigString("ssl_certificate_file");
+    std::string SSLKey = LoginGlobalConfig::GetInstance()->GetConfigString("ssl_private_key_file");
 #ifdef _WIN32
     char* pTimeout = reinterpret_cast<char*>(&dwRecvTimeout);
     uint32_t cbTimeout = sizeof(dwRecvTimeout);
@@ -176,21 +181,34 @@ void LoginServer::Run()
                 if (setsockopt(NewConnection.iSock, SOL_SOCKET, SO_RCVTIMEO, pTimeout, cbTimeout) != 0) {
                     LOG_WARNING("Unable to set read timeout for new connection.");
                 }
-                // TODO: Implement SSL here
-                NewConnection.bSecure = false;
-                NewConnection.iAssociatedProtocol = static_cast<int>(ProtocolFactory::PROTOCOL_STUB);
-                std::shared_ptr<TCPConnection> NewTCPConnection(new TCPConnection(NewConnection));
-                // Simple DoS protection - do not allow clients to open too many concurrent connections
-                dwNumConcurrent = 0;
-                dwNumWorkingHandlers = mvecWorkingHandlers.size();
-                bReject = false;
-                for (j = 0; j < dwNumWorkingHandlers; j++) {
-                    if (mvecWorkingHandlers[j]->GetClientDetails().BindDetails.sin_addr.s_addr == NewConnection.BindDetails.sin_addr.s_addr) {
-                        dwNumConcurrent++;
-                        if (dwNumConcurrent >= dwMaxConcurrent) {
-                            LOG_WARNING("Too many concurrent connections from this client, dropping connection.");
-                            bReject = true;
+                std::shared_ptr<TCPConnection> NewTCPConnection = nullptr;
+                try {
+                    NewConnection.bSecure = mvecListeningSockets[i].bSecure;
+                    NewConnection.iAssociatedProtocol = static_cast<int>(ProtocolFactory::PROTOCOL_STUB);
+                    if (NewConnection.bSecure) {
+                        NewTCPConnection = std::shared_ptr<TCPConnection>(new SSLConnection(NewConnection, SSLCertificate.c_str(), SSLKey.c_str()));
+                    }
+                    else {
+                        NewTCPConnection = std::shared_ptr<TCPConnection>(new TCPConnection(NewConnection));
+                    }
+                    // Simple DoS protection - do not allow clients to open too many concurrent connections
+                    dwNumConcurrent = 0;
+                    dwNumWorkingHandlers = mvecWorkingHandlers.size();
+                    bReject = false;
+                    for (j = 0; j < dwNumWorkingHandlers; j++) {
+                        if (mvecWorkingHandlers[j]->GetClientDetails().BindDetails.sin_addr.s_addr == NewConnection.BindDetails.sin_addr.s_addr) {
+                            dwNumConcurrent++;
+                            if (dwNumConcurrent >= dwMaxConcurrent) {
+                                LOG_WARNING("Too many concurrent connections from this client, dropping connection.");
+                                bReject = true;
+                            }
                         }
+                    }
+                }
+                catch (std::runtime_error) {
+                    bReject = true;
+                    if (!NewTCPConnection) {
+                        closesocket(NewConnection.iSock);
                     }
                 }
                 if (bReject == false) {
@@ -219,10 +237,12 @@ void LoginServer::Run()
                     }
                 }
                 else {
-                    NewTCPConnection->Close();
+                    if (NewTCPConnection) {
+                        NewTCPConnection->Close();
+                    }
                 }
-			}
-		}
+            }
+        }
         // Clean up already finished threads from the vector
         i = 0;
         while (i < mvecWorkingHandlers.size()) {
