@@ -282,7 +282,6 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
         if (inJail && destZone->GetID() != ZONE_MORDION_GAOL) {
             ShowExploit("packet_system::SmallPacket0x00A player tried to zone out of jail: %d\n", destination);
             PChar->loc.destination = ZONE_MORDION_GAOL;
-            anticheat::JailChar(PChar, inJail);
             return;
         }
 
