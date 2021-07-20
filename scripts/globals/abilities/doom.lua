@@ -1,7 +1,7 @@
 ---------------------------------------------
--- Chthonian Ray
--- Only used by Mindertaur
--- Description: Inflicts Doom to enemies with a gaze attack.  The doom effect from this move cannot be removed.
+-- Doom
+-- Used by some Yagudo NMs in Dynamis
+-- Description: Inflicts Doom to target.  The doom effect is removed when the NM dies.
 -- Type: Magical (Dark)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
@@ -15,8 +15,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DOOM
-    -- Setting the Power to be greater than the default 10 to indicate a difference
-    skill:setMsg(MobGazeMove(mob, target, typeEffect, 11, 3, 30))
+    target:addStatusEffect(typeEffect, 10, 3, 30)
 
     return typeEffect
 end

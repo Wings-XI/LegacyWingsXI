@@ -307,7 +307,6 @@ INSERT INTO `mob_skills` VALUES(499, 852, 'back_swish', 4, 10.0, 2000, 1800, 4, 
 INSERT INTO `mob_skills` VALUES(500, 853, 'mow', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(501, 854, 'frightful_roar', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(502, 855, 'mortal_ray', 0, 10.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(503, 856, 'unblessed_armor', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(510, 254, 'berserk', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(511, 253, 'self-destruct', 1, 20.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
@@ -885,6 +884,7 @@ INSERT INTO `mob_skills` VALUES(1355, 1006, 'spine_lash', 4, 12.0, 2000, 1000, 4
 INSERT INTO `mob_skills` VALUES(1356, 1007, 'voiceless_storm', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1357, 1008, 'tidal_dive', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1358, 1009, 'plasma_charge', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(1360, 855, 'apocalyptic_ray', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1365, 1043, 'tail_thrust', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1366, 1044, 'temporal_shift', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
