@@ -3473,10 +3473,17 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
             }
             else
             {
-                // Ensure the destination exists..
-                CZone* PDestination = zoneutils::GetZone(PZoneLine->m_toZone);
-                if (PDestination && PDestination->GetIP() == 0)
+                if (PZoneLine->m_toZone == 0)
                 {
+                    // Entering mog house
+                    // TODO: for entering another persons mog house, it must be set here
+                    PChar->m_moghouseID = PChar->id;
+                    PChar->loc.p = PZoneLine->m_toPos;
+                    PChar->loc.destination = PChar->getZone();
+                }
+                else if (!zoneutils::IsZoneEnabled(PZoneLine->m_toZone))
+                {
+                    // Zone is invalid or disabled
                     ShowDebug(CL_CYAN "SmallPacket0x5E: Zone %u closed to chars\n" CL_RESET, PZoneLine->m_toZone);
 
                     PChar->loc.p.rotation += 128;
@@ -3486,13 +3493,6 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                     PChar->status = STATUS_NORMAL;
                     return;
-                }
-                else if (PZoneLine->m_toZone == 0)
-                {
-                    // TODO: for entering another persons mog house, it must be set here
-                    PChar->m_moghouseID = PChar->id;
-                    PChar->loc.p = PZoneLine->m_toPos;
-                    PChar->loc.destination = PChar->getZone();
                 }
                 else
                 {

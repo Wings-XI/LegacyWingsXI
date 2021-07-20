@@ -2171,12 +2171,14 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         packetList.pop_front();
     }
 
+    uint16 packetsRemaining = PChar->getPacketCount();
+    std::mutex* ptr = (PChar->getPacketListMutexPtr());
+    std::lock_guard lk(*ptr);
+
     if (packetsBeforePrio)
     {
         // delete the packets we just copied into the buffer as well as any of the non-used objects that are toggled to not recycle to the next network cycle
 
-        std::mutex* PPacketListMutex = PChar->getPacketListMutexPtr();
-        std::lock_guard lk(*PPacketListMutex);
         PacketList_t* PPacketList = PChar->getPacketListPtr();
         auto it = PPacketList->cbegin();
         while (it != PPacketList->cend())
@@ -2192,14 +2194,11 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
             }
         }
     }
-
-    uint16 packetsRemaining = PChar->getPacketCount();
+    
     if (packetsRemaining > 600)
     {
         uint32 packetsToDrop = packetsRemaining - 600;
 
-        std::mutex* PPacketListMutex = PChar->getPacketListMutexPtr();
-        std::lock_guard lk(*PPacketListMutex);
         PacketList_t* PPacketList = PChar->getPacketListPtr();
         auto it = PPacketList->cbegin();
         while (it != PPacketList->cend() && packetsToDrop)
@@ -2246,7 +2245,7 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
     ShowDebug("SEQUENCE %u: Attempting to send %u/%u packets to character %s (size %u/%u buffer bytes, %u/1300 compressed).\n",
               map_session_data->server_packet_id, packetsAfterPrio, packetsBeforePrio, PChar->GetName(), (uint16)*buffsize,
               map_config.buffer_size, PacketSizeBytes + 20);
-              */
+    */          
     
     ref<uint32>(PTempBuff, (size_t)PacketSizeBytes) = PacketSizeBits; // client wants to know size in bits
 

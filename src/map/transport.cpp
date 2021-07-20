@@ -119,7 +119,7 @@ void CTransportHandler::InitializeTransport()
                             boundary, zone, anim_arrive, anim_depart, time_offset, time_interval, \
                             time_waiting, time_anim_arrive, time_anim_depart FROM transport LEFT JOIN \
                             zone_settings ON ((transport >> 12) & 0xFFF) = zoneid WHERE \
-                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -180,7 +180,7 @@ void CTransportHandler::InitializeTransport()
     fmtQuery = "SELECT zone, time_offset, time_interval, time_waiting, time_anim_arrive, time_anim_depart \
                 FROM transport LEFT JOIN \
                 zone_settings ON zone = zoneid WHERE \
-                IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE)";
+                IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0)";
 
     ret = Sql_Query(SqlHandle, fmtQuery, map_ip.s_addr, address, map_port);
 

@@ -3000,10 +3000,13 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
     {
         if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
         {
-            if ((uint16)lua_tointeger(L, 5) >= MAX_ZONEID)
+            uint16 dest_zone = lua_tointeger(L, 5);
+            if (dest_zone >= MAX_ZONEID || !zoneutils::IsZoneEnabled(dest_zone)) {
+                ((CCharEntity*)m_PBaseEntity)->pushPacket(new CMessageSystemPacket(0, 0, 2));
                 return 0;
+            }
 
-            ((CCharEntity*)m_PBaseEntity)->loc.destination = (uint16)lua_tointeger(L, 5);
+            ((CCharEntity*)m_PBaseEntity)->loc.destination = dest_zone;
             ((CCharEntity*)m_PBaseEntity)->status = STATUS_DISAPPEAR;
             ((CCharEntity*)m_PBaseEntity)->loc.boundary = 0;
             ((CCharEntity*)m_PBaseEntity)->m_moghouseID = 0;

@@ -404,7 +404,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     }
 
     if (packet->getType() == 0x37)
-    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+    { // there can only be one of me. decide which one has the most up-to-date information to send.
         entityID = ref<uint16>(packet->getData(), 0x24);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
@@ -799,6 +799,11 @@ void CCharEntity::PostTick()
     }
     if (updatemask)
     {
+        if (!m_EffectsChanged)
+        {
+            pushPacket(new CCharUpdatePacket(this));
+            pushPacket(new CCharSyncPacket(this));
+        }
         if (loc.zone && !m_isGMHidden)
         {
             loc.zone->PushPacket(this, CHAR_INRANGE, new CCharPacket(this, ENTITY_UPDATE, updatemask));
