@@ -5914,6 +5914,14 @@ namespace charutils
     {
         if (type == 2)
         {
+            if (((ipp & 0xFFFFFFFF) == 0) || ((ipp >> 32) == 0)) {
+                // Do not send people to invalid or disabled zones
+                if (PChar->status == STATUS_DISAPPEAR) {
+                    PChar->status = STATUS_NORMAL;
+                }
+                PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
+                return;
+            }
             Sql_Query(SqlHandle, "UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
                 (uint32)ipp, (uint32)(ipp >> 32), PChar->id);
 

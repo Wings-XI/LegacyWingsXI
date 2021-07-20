@@ -276,7 +276,7 @@ void LoadNPCList()
           widescan \
         FROM npc_list INNER JOIN zone_settings \
         ON (npcid & 0xFFF000) >> 12 = zone_settings.zoneid \
-        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -370,7 +370,7 @@ void LoadMOBList()
             INNER JOIN mob_spawn_points ON mob_groups.groupid = mob_spawn_points.groupid \
             INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyid \
             INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
-            WHERE ((NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0)) OR (mobid IN (SELECT mobid FROM fishing_mob))) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
+            WHERE ((NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0)) OR (mobid IN (SELECT mobid FROM fishing_mob))) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0) \
             AND mob_groups.zoneid = ((mobid >> 12) & 0xFFF);";
 
     char address[INET_ADDRSTRLEN];
@@ -606,7 +606,7 @@ void LoadMOBList()
         LEFT JOIN mob_spawn_points ON mob_pets.mob_mobid = mob_spawn_points.mobid \
         LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid \
         INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
-        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
+        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0) \
         AND mob_groups.zoneid = ((mobid >> 12) & 0xFFF);";
 
     ret = Sql_Query(SqlHandle, PetQuery, map_ip.s_addr, address, map_port);
@@ -703,7 +703,7 @@ void LoadZoneList()
     g_PTrigger = new CNpcEntity();  // нужно в конструкторе CNpcEntity задавать модель по умолчанию
 
     std::vector<uint16> zones;
-    const char* query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+    const char* query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -1209,6 +1209,18 @@ ZONETYPE GetZoneType(uint16 ZoneID)
         return (ZONETYPE)Sql_GetUIntData(SqlHandle, 0);
     }
     return ZONETYPE_NONE;
+}
+
+bool IsZoneEnabled(uint16 ZoneID)
+{
+    CZone* zone = GetZone(ZoneID);
+    if (zone) {
+        return ((zone->GetIP() != 0) && (zone->GetPort() != 0));
+    }
+    else {
+        uint64 ipp = GetZoneIPP(ZoneID);
+        return (((ipp & 0xFFFFFFFF) != 0) && ((ipp >> 32) != 0));
+    }
 }
 
 }; // namespace zoneutils
