@@ -41,19 +41,19 @@ local items =
 {
     [0] =
     {
-        id = 15449,
+        id = 15449, -- Boneworker's Belt
         rank = 3,
         cost = 10000
     },
     [1] =
     {
-        id = 13947,
+        id = 13947, -- Protective Specs.
         rank = 5,
         cost = 70000
     },
     [2] =
     {
-        id = 14397,
+        id = 14397, -- Boneworker's Apron
         rank = 7,
         cost = 100000
     },
@@ -62,30 +62,6 @@ local items =
         id = 142, -- Drogaroga's Fang
         rank = 9,
         cost = 150000
-    },
-    [4] =
-    {
-        id = 336, -- Boneworker's Signboard
-        rank = 9,
-        cost = 200000
-    },
-    [5] =
-    {
-        id = 15824, -- Bonecrafter's Ring
-        rank = 6,
-        cost = 80000
-    },
-    [6] =
-    {
-        id = 3663, -- Bonecraft Tools
-        rank = 7,
-        cost = 50000
-    },
-    [7] =
-    {
-        id = 3326, -- Boneworker's Emblem
-        rank = 9,
-        cost = 15000
     }
 }
 

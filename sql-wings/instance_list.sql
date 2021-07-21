@@ -120,7 +120,7 @@ INSERT INTO `instance_list` VALUES (59, 'nashmeiras_plea', 72, 45, -444, -4, 420
 -- INSERT INTO `instance_list` VALUES (73, 'silver_sea_remnants_ii', 76, 72, 100, 340.000, 12.000, -165.500, 63, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (79, 'shades_of_vengeance', 79, 30, 127, -15, -303, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (89, 'seeing_blood_red', 89, 30, -323.568, -23.825, -19.749, 128, -1, -1, -1, -1);
-
+INSERT INTO `instance_list` VALUES(96, 'a_manifest_problem', 96, 30, -220.89, 30.198, 258.137, 254, -1, -1, -1, -1);
 --
 -- Indexes for dumped tables
 --

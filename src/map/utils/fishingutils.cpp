@@ -782,7 +782,7 @@ namespace fishingutils
         // @todo: spawnchest
         Chest->loc.p = m;
         Chest->status = STATUS_NORMAL;
-        zoneutils::GetZone(PChar->getZone())->PushPacket(Chest, CHAR_INRANGE, new CEntityUpdatePacket(Chest, ENTITY_UPDATE, UPDATE_COMBAT));
+        zoneutils::GetZone(PChar->getZone())->PushPacket(Chest, CHAR_INRANGE, new CEntityUpdatePacket(Chest, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         return 1;
     }

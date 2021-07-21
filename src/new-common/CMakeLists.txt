@@ -16,6 +16,8 @@ set(SOURCES
     MQConnection.h
     MQHandler.cpp
     MQHandler.h
+    SSLConnection.cpp
+    SSLConnection.h
     TCPConnection.cpp
     TCPConnection.h
     Thread.cpp

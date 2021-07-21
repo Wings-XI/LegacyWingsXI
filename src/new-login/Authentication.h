@@ -38,6 +38,8 @@ public:
         AUTH_BOOTLOADER_SIGNUP_DISABLED = 7,
         AUTH_ANOTHER_ACCOUNT_SHARES_IP = 8,
         AUTH_SESSION_EXISTS = 9,
+        AUTH_IP_BLOCKED = 10,
+        AUTH_IP_LOCKED_OUT = 11,
         AUTH_LAST
     };
 
@@ -101,6 +103,13 @@ public:
      *  @return If one account per IP is enabled, this will return whether login can proceed
      */
     bool LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOperation, bool bResult, bool bIPExempt = false);
+
+    /**
+     *  Check if the IP address associated with the current
+     *  connection is on the range blacklist.
+     *  @return True if blocked
+     */
+    bool IsIPAddressBlocked();
 
     /**
      *  Return the value of the last authentication error.

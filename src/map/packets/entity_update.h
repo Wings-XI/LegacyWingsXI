@@ -53,10 +53,6 @@ public:
 
 	CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
 
-    void merge(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
-
-    void merge(CEntityUpdatePacket* other);
-
     uint32 getEntityId() const
     {
         return m_entityId;

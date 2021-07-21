@@ -22,6 +22,8 @@ function onTrigger(player, npc)
         player:startEvent(520)
     elseif gotItAllProg == 4 then
         player:startEvent(525)
+    elseif gotItAllProg == 5 then
+        player:startEvent(534)
     elseif gotItAllProg == 6 then
         player:startEvent(527)
     elseif gotItAllProg >= 7 and player:getCharVar("Wait1DayForgotitallCS_date") < os.time() and player:needToZone() == false then

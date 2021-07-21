@@ -19,7 +19,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 4
     local accmod = 1
-    local dmgmod = 0.5
+    local dmgmod = 0.4
 	
     if math.random()*100 < target:getGuardRate(mob) then
 		skill:setMsg(tpz.msg.basic.SKILL_MISS)

@@ -14,14 +14,14 @@ end
 
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.MOVE, 200)
-    onMobRoam(mob)
+    onPath(mob)
 end
 
 function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.STUN)
 end
 
-function onMobRoam(mob)
+function onPath(mob)
     local mother = GetMobByID(ID.mob.MOTHER_GLOBE.MOTHER)
     if mother:isSpawned() then
         local mobId = mob:getID()

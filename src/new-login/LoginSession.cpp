@@ -534,7 +534,8 @@ uint32_t LoginSession::GenerateNewCharID(uint8_t cWorldID)
         LOG_ERROR("Character ID already reserved for this session: %d.", mdwReservedCharID);
         throw std::runtime_error("Character ID already reserved.");
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     uint32_t dwNewCharID = WorldManager::GetInstance()->GetNewCharIDForWorld(cWorldID);
     mdwReservedCharID = dwNewCharID;
     mcReservedCharWorld = cWorldID;
