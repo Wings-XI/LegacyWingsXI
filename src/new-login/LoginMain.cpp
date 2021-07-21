@@ -66,13 +66,14 @@ int main(int argc, char* argv[])
     if (dwSSLSettings != 2) {
         // Authentication server
         LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("auth_port"));
-        // Key management and character list server (communicates with the bootloader)
     }
     if (dwSSLSettings == 1 || dwSSLSettings == 2) {
         SSLConnection::InitSSL();
         LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("ssl_auth_port"), (const char*)0, true);
+        // Commented out since it puts too much stress on the server.
         // LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("ssl_data_port"), (const char*)0, true);
     }
+    // Key management and character list server (communicates with the bootloader)
     LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("data_port"));
     // Lobby server (communicates with the game client). Port not configurable because it's
     // hardcoded in the game client.
