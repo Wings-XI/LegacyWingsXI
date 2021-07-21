@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     if (dwSSLSettings == 1 || dwSSLSettings == 2) {
         SSLConnection::InitSSL();
         LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("ssl_auth_port"), (const char*)0, true);
-        LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("ssl_data_port"), (const char*)0, true);
+        // LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("ssl_data_port"), (const char*)0, true);
     }
     // Lobby server (communicates with the game client). Port not configurable because it's
     // hardcoded in the game client.
