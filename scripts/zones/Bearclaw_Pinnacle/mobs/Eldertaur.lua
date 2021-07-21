@@ -13,11 +13,9 @@ function onMobWeaponSkillPrepare(mob, target)
     local returnVal = 0
 
     if mob:getLocalVar("unlockRay") == 1 then
-        printf("Elder Might Use Ray")
         local apocalypticRay = 1360
 	    if math.random() < 0.75 then -- heavily prefer Apocalyptic Ray
 		    returnVal = apocalypticRay
-            printf("Elder Ray")
 	    end
     end
 
@@ -35,6 +33,5 @@ function onMobDeath(mob, player, isKiller)
 
     if mindertaur and mindertaur:isAlive() then
         mindertaur:setLocalVar("unlockRay", 1)
-        printf("Unlocking mindertaur")
     end
 end

@@ -13,11 +13,9 @@ function onMobWeaponSkillPrepare(mob, target)
     local returnVal = 0
 
     if mob:getLocalVar("unlockRay") == 1 then
-        printf("Minder Might Use Ray")
         local chthonianRay = 1359
 	    if math.random() < 0.75 then -- heavily prefer Chthonian Ray
 		    returnVal = chthonianRay
-            printf("Minder Ray")
 	    end
     end
 
@@ -36,6 +34,5 @@ function onMobDeath(mob, player, isKiller)
 
     if eldertaur and eldertaur:isAlive() then
         eldertaur:setLocalVar("unlockRay", 1)
-        printf("Unlocking eldertaur")
     end
 end
