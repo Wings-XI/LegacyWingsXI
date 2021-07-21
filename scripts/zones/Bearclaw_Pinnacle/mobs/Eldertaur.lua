@@ -6,7 +6,23 @@
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
+require("scripts/globals/mobs")
 -----------------------------------
+
+function onMobWeaponSkillPrepare(mob, target)
+    local returnVal = 0
+
+    if mob:getLocalVar("unlockRay") == 1 then
+        printf("Elder Might Use Ray")
+        local apocalypticRay = 1360
+	    if math.random() < 0.75 then -- heavily prefer Apocalyptic Ray
+		    returnVal = apocalypticRay
+            printf("Elder Ray")
+	    end
+    end
+
+    return returnVal
+end
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
@@ -15,4 +31,10 @@ function onMobInitialize(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    local mindertaur = GetMobByID(mob:getID()+1)
+
+    if mindertaur and mindertaur:isAlive() then
+        mindertaur:setLocalVar("unlockRay", 1)
+        printf("Unlocking mindertaur")
+    end
 end
