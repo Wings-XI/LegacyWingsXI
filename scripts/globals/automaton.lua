@@ -27,21 +27,7 @@ function getManeuverBonus(player)
         level = player:getSubLvl()
     end
 
-    local bonus = 0
-
-    if level <= 14 then
-        bonus = 1
-    elseif level <= 29 then
-        bonus = 2
-    elseif level <= 44 then
-        bonus = 3
-    elseif level <= 59 then
-        bonus = 4
-    elseif level <= 74 then
-        bonus = 5
-    else
-        bonus = 6
-    end
+    local bonus = 1 + math.floor(level/15)
 
     return bonus
 end
