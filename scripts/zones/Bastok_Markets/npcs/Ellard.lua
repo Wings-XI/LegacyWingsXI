@@ -54,7 +54,7 @@ local items = {
     },
     [2] = {
         id = 14394, -- Goldsmith's Apron
-        rank = 5,
+        rank = 7,
         cost = 100000
     },
 	[3] = {
