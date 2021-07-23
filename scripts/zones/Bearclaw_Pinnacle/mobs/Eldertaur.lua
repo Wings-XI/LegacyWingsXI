@@ -10,28 +10,28 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobWeaponSkillPrepare(mob, target)
-    local returnVal = 0
+	local returnVal = 0
 
-    if mob:getLocalVar("unlockRay") == 1 then
-        local apocalypticRay = 1360
-	    if math.random() < 0.75 then -- heavily prefer Apocalyptic Ray
-		    returnVal = apocalypticRay
-	    end
-    end
+	if mob:getLocalVar("unlockRay") == 1 then
+		local apocalypticRay = 1360
+		if math.random() < 0.75 then -- heavily prefer Apocalyptic Ray
+			returnVal = apocalypticRay
+		end
+	end
 
-    return returnVal
+	return returnVal
 end
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMod(tpz.mod.DMGMAGIC, -10)
-    mob:setMod(tpz.mod.SLEEPRES, 75)
+	mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+	mob:setMod(tpz.mod.DMGMAGIC, -10)
+	mob:setMod(tpz.mod.SLEEPRES, 75)
 end
 
 function onMobDeath(mob, player, isKiller)
-    local mindertaur = GetMobByID(mob:getID()+1)
+	local mindertaur = GetMobByID(mob:getID()+1)
 
-    if mindertaur and mindertaur:isAlive() then
-        mindertaur:setLocalVar("unlockRay", 1)
-    end
+	if mindertaur and mindertaur:isAlive() then
+		mindertaur:setLocalVar("unlockRay", 1)
+	end
 end
