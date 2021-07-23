@@ -1,13 +1,12 @@
 ---------------------------------------------
 -- Doom
---
--- Description: Inflicts Doom upon an enemy.
---              Used by Yagudo NMs in Dynamis
+-- Used by some Yagudo NMs in Dynamis
+-- Description: Inflicts Doom to target.  The doom effect is removed when the NM dies.
 -- Type: Magical (Dark)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
-require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/settings")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -16,12 +15,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DOOM
-
-    if target:hasStatusEffect(tpz.effect.FEALTY) then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-    else
-        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 10, 3, 30))
-    end
+    target:addStatusEffect(typeEffect, 10, 3, 30)
 
     return typeEffect
 end
