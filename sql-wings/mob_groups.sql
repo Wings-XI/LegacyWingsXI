@@ -2648,7 +2648,7 @@ INSERT INTO `mob_groups` VALUES(2132, 4493, 62, 'Zazarg', 0, 0, 0, 0, 0, 0, 0, 0
 INSERT INTO `mob_groups` VALUES(1, 4245, 63, 'Volcanic_Bomb', 0, 128, 0, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(2, 3248, 63, 'Qiqirn_Ceramist', 0, 128, 0, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(3, 3268, 63, 'Qiqirn_Volcanist', 0, 128, 0, 0, 0, 77, 78, 0);
-INSERT INTO `mob_groups` VALUES(4, 534, 63, 'Brittle_Rock', 0, 128, 0, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(4, 534, 63, 'Brittle_Rock', 0, 128, 0, 2350, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(5, 4813, 63, 'Imperial_Stormer1', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(6, 4815, 63, 'Imperial_Stormer2', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(7, 4814, 63, 'Imperial_Stormer2', 0, 128, 0, 0, 0, 75, 75, 0);

@@ -28,7 +28,7 @@ function onInstanceFailure(instance)
 end
 
 function onInstanceProgressUpdate(instance, progress)
-    if (progress >= 15) then
+    if (instance:getProgress() >= 15) then
         instance:complete()
     end
 end
