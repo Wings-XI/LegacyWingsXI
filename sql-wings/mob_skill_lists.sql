@@ -1333,11 +1333,13 @@ INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,499); -- back_swish
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,500); -- mow
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,501); -- frightful_roar
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,503); -- unblessed_armor
+INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,1360); -- apocalyptic_ray
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,498); -- triclip
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,499); -- back_swish
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,500); -- mow
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,501); -- frightful_roar
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,503); -- unblessed_armor
+INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,1359); -- Chthonian_Ray
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 881);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 882);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 883);
@@ -2132,7 +2134,6 @@ INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1245);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1248);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1251);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1252);
-INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1271);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1229);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1232);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1233);
@@ -3168,6 +3169,14 @@ INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,192
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1923);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1924);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,2361);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 900);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 901);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 902);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 903);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 904);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 905);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 896);
+INSERT INTO `mob_skill_lists` VALUES('Psoxja_Gargoyle', 5003, 538);
 --
 -- Indexes for dumped tables
 --

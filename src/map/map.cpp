@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -2195,9 +2195,9 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         }
     }
     
-    if (packetsRemaining > 600)
+    if (packetsRemaining > 1200)
     {
-        uint32 packetsToDrop = packetsRemaining - 600;
+        uint32 packetsToDrop = packetsRemaining - 1200;
 
         PacketList_t* PPacketList = PChar->getPacketListPtr();
         auto it = PPacketList->cbegin();

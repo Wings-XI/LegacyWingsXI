@@ -42,7 +42,8 @@ function onTrigger(player, npc)
         player:startEvent(207) -- Ildy meets up with Rhinostery peers
     elseif tuningOutProgress == 8 then
         player:startEvent(208) -- Talks about Ildy being passionate about his work
-
+    elseif player:getCurrentMission(COP) == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") == 10 then
+        player:startEvent(211)
     else
         player:startEvent(101) -- standard dialog
     end

@@ -900,7 +900,6 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         target.animation = PSkill->getAnimationID();
         target.messageID = PSkill->getMsg();
 
-
         // reset the skill's message back to default
         PSkill->setMsg(defaultMessage);
 
@@ -954,7 +953,8 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             }
         }
 
-        if (target.speceffect & SPECEFFECT_HIT)
+         // the target has been hit by the attack - proceed to perform knockback and skillchain check
+        if (target.reaction == REACTION_HIT || target.reaction == REACTION_BLOCK || target.reaction == REACTION_GUARD)
         {
             target.speceffect = SPECEFFECT_RECOIL;
             target.knockback = PSkill->getKnockback();
@@ -964,6 +964,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                 {
                     SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PSkill->getPrimarySkillchain(),
                         PSkill->getSecondarySkillchain(), PSkill->getTertiarySkillchain());
+
                     if (effect != SUBEFFECT_NONE)
                     {
                         int32 skillChainDamage = battleutils::TakeSkillchainDamage(this, PTarget, target.param, nullptr);
@@ -983,6 +984,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                 first = false;
             }
         }
+
         if (this->objtype != TYPE_PET && this->PMaster != nullptr && this->PMaster->objtype != TYPE_PC)
             PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 
@@ -992,6 +994,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         }
         battleutils::DirtyExp(PTarget, this);
     }
+
     PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     if (PTarget->objtype == TYPE_MOB && (PTarget->isDead() || (objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR)))
     {

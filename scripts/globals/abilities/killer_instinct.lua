@@ -41,7 +41,8 @@ function onUseAbility(player,target,ability,action)
             target:delStatusEffect(tpz.effect.KILLER_INSTINCT)
         end
         target:addStatusEffect(tpz.effect.KILLER_INSTINCT,killerMod,0,60)
+        return tpz.effect.KILLER_INSTINCT
     end
     
-    return 0
+    ability:setMsg(tpz.msg.basic.NONE)
 end

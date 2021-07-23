@@ -24,6 +24,7 @@ zones[tpz.zone.MINE_SHAFT_2716] =
         MOVAMUQ_GO_CRAZY        = 7803, -- Bug Bug! Go crazy crazy!
         MOVAMUQ_PIG_PIG         = 7804, -- You useless pig pig!
         MOVAMUQ_BUG_BUG         = 7805, -- Eh? Where's Bug Bug?
+        CHEKOCHUK_COME          = 7809, -- Buuug! Oooveeer heeere nooow!
         CHEKOCHUK_SHOWTIME      = 7811, -- Buuug! Iiit's shooowtiiime!
         CHEKOCHUK_IDIOT         = 7812, -- Yooouuu iiidiiiooot!
         CHEKOCHUK_NO            = 7813, -- Buuug! Noooooooooo!
@@ -37,6 +38,7 @@ zones[tpz.zone.MINE_SHAFT_2716] =
         BUGBBY_UGH              = 7832, -- Ugh.
         BUGBBY_UGH_UGH          = 7833, -- Ugh ugh.
         BUGBBY_ARGH             = 7835, -- Arrrgh!
+        BUGBBY_UG               = 7837, -- Ug ug ug.
         BUGBBY_PANT             = 7838, -- <Pant...pant...>
         BUGBBY_SIGH             = 7839, -- <Sigh>... Arg!
     },
@@ -45,6 +47,17 @@ zones[tpz.zone.MINE_SHAFT_2716] =
     },
     npc =
     {
+    },
+    aCenturyOfHardship = {
+        [1] = {
+            MOBLIN_IDS = { 16830465, 16830466, 16830467, 16830468 }
+        },
+        [2] = {
+            MOBLIN_IDS = { 16830470, 16830471, 16830472, 16830473 }
+        },
+        [3] = {
+            MOBLIN_IDS = { 16830475, 16830476, 16830477, 16830478 }
+        },
     },
 }
 

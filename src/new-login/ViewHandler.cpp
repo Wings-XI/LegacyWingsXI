@@ -372,6 +372,7 @@ void ViewHandler::HandleLoginRequest(const LOGIN_REQUEST_PACKET* pRequestPacket)
     LOG_DEBUG0("Accessing world database of world %u.", pCurrentChar->cWorldID);
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
     // LOCK_WORLDMGR;
+    LOCK_DB;
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pCurrentChar->cWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pCurrentChar->cWorldID);
     LOCK_PWORLDDB(WorldDB);

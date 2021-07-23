@@ -17,8 +17,6 @@ local SMB = 17547664 -- statue mob base to allow mobID represented as format SMB
 mobList = mobList or { }
 randomChildrenList = randomChildrenList or { }
 npcList = npcList or { }
-megaBoss = 17547265
-numNMS = 4
 
 mobList[zone] =
 {
