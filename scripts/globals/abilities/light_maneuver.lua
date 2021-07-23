@@ -8,6 +8,7 @@
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/utils")
+require("scripts/globals/automaton")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -39,14 +40,9 @@ function onUseAbility(player, target, ability)
         target:removeAllManeuvers()
         target:addStatusEffect(tpz.effect.OVERLOAD, 0, 0, overload)
     else
-        local level
-        if (target:getMainJob() == tpz.job.PUP) then
-            level = target:getMainLvl()
-        else
-            level = target:getSubLvl()
-        end
+        local bonus = getManeuverBonus(player)
 
-        local bonus = 1 + target:getMod(tpz.mod.MANEUVER_BONUS)
+        bonus = bonus + target:getMod(tpz.mod.MANEUVER_BONUS)
 
         if (target:getActiveManeuvers() == 3) then
             target:removeOldestManeuver()
