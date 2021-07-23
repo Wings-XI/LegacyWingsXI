@@ -45,7 +45,8 @@ function onRegionEnter(player, region)
         if player:getCurrentMission(COP) == tpz.mission.id.cop.A_VESSEL_WITHOUT_A_CAPTAIN and player:getCharVar("PromathiaStatus") == 1 then
             player:startEvent(65, player:getNation())
         elseif player:getCurrentMission(COP) == tpz.mission.id.cop.A_PLACE_TO_RETURN and player:getCharVar("PromathiaStatus") == 0 then
-            player:startEvent(10048)
+            player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+            --player:startEvent(10048)
         elseif player:getCurrentMission(COP) == tpz.mission.id.cop.FLAMES_IN_THE_DARKNESS and player:getCharVar("PromathiaStatus") == 2 then
             player:startEvent(10051)
         elseif player:getCurrentMission(TOAU) == tpz.mission.id.toau.EASTERLY_WINDS and player:getCharVar("AhtUrganStatus") == 1 then
