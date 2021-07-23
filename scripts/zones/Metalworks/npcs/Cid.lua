@@ -100,8 +100,8 @@ function onTrigger(player, npc)
     elseif (currentCOPMission == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") > 8) then
         player:startEvent(850) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ENDURING_TUMULT_OF_WAR and player:getCharVar("PromathiaStatus")==1) then
-        --player:startEvent(849) -- COP event -- (Current Devblock)
         player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        --player:startEvent(849) Current Dev Block
     elseif (currentCOPMission == tpz.mission.id.cop.THE_CALL_OF_THE_WYRMKING and player:getCharVar("PromathiaStatus")==1) then
         player:startEvent(845) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ROAD_FORKS and player:getCharVar("EMERALD_WATERS_Status")== 7 and player:getCharVar("MEMORIES_OF_A_MAIDEN_Status")== 12) then --two paths are finished ?
