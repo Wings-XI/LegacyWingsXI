@@ -1434,17 +1434,24 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 }
             }
         }
-        //#TODO: make this generic enough to not require an if
-        else if (PAbility->isAoE() && this->PParty != nullptr)
+        else
         {
-            PAI->TargetFind->reset();
+            std::vector<CBattleEntity*> targets = { PTarget };
+            auto& PTargets = targets;
+            bool first = true;
 
-            float distance = PAbility->getRange();
+            if (PAbility->isAoE() && this->PParty != nullptr)
+            {
+                PAI->TargetFind->reset();
 
-            PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+                float distance = PAbility->getRange();
 
-            uint16 msg = 0;
-            for (auto&& PTarget : PAI->TargetFind->m_targets)
+                PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+
+                PTargets = PAI->TargetFind->m_targets;
+            }
+
+            for (auto&& PTarget : PTargets)
             {
                 actionList_t& actionList = action.getNewActionList();
                 actionList.ActionTargetID = PTarget->id;
@@ -1452,63 +1459,41 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.reaction = REACTION_NONE;
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 actionTarget.animation = PAbility->getAnimationID();
-                actionTarget.messageID = PAbility->getMessage();
+                actionTarget.messageID = 0;
+                actionTarget.param = 0;
 
                 if (PTarget->isSuperJumped)
                 {
+                    actionTarget.animation = ANIMATION_NONE;
                     actionTarget.messageID = 0;
-                    continue;
                 }
-
-                if (msg == 0) {
-                    msg = PAbility->getMessage();
-                }
-                else {
-                    msg = PAbility->getAoEMsg();
-                }
-
-                if (actionTarget.param < 0)
+                else
                 {
-                    msg = ability::GetAbsorbMessage(msg);
-                    actionTarget.param = -actionTarget.param;
+                    int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+
+                    // If a script set messageID directly, use that;
+                    // otherwise, use the ability's message id.
+                    if (actionTarget.messageID == 0)
+                    {
+                        actionTarget.messageID = first ? PAbility->getMessage() : PAbility->getAoEMsg();
+                    }
+
+                    // Display a generic message for the caster if no message is set.
+                    if (first && actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
+
+                    actionTarget.param = value;
+
+                    if (value < 0)
+                    {
+                        actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
+                        actionTarget.param = -value;
+                    }
+
+                    state.ApplyEnmity();
                 }
 
-                actionTarget.messageID = msg;
-                actionTarget.param = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+                first = false;
             }
-        }
-        else
-        {
-            actionList_t& actionList = action.getNewActionList();
-            actionList.ActionTargetID = PTarget->id;
-            actionTarget_t& actionTarget = actionList.getNewActionTarget();
-            actionTarget.reaction = REACTION_NONE;
-            actionTarget.speceffect = SPECEFFECT_RECOIL;
-            actionTarget.animation = PAbility->getAnimationID();
-            actionTarget.param = 0;
-            auto prevMsg = actionTarget.messageID;
-
-            if (PTarget->isSuperJumped)
-            {
-                actionTarget.animation = ANIMATION_NONE;
-                actionTarget.messageID = 0;
-            }
-            else
-            {
-                int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
-                if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
-                if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
-                actionTarget.param = value;
-
-                if (value < 0)
-                {
-                    actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
-                    actionTarget.param = -value;
-                }
-
-                state.ApplyEnmity();
-            }
-
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
