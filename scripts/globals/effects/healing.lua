@@ -63,7 +63,9 @@ function onEffectTick(target, effect)
             end
 
             target:addHP(healHP)
-            target:updateEnmityFromCure(target, healHP)
+			if target:getHPP() < 100 then
+				target:updateEnmityFromCure(target, healHP)
+			end
             target:addMP(12 + ((healtime - 2) * (1 + target:getMod(tpz.mod.CLEAR_MIND))) + target:getMod(tpz.mod.MPHEAL))
         end
     end
