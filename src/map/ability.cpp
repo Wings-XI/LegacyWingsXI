@@ -245,6 +245,16 @@ void CAbility::setMessage(uint16 message)
 uint16 CAbility::getAoEMsg()
 {
     switch (m_message) {
+        case 116: // Warcry
+            return 285; // Player's attacks are enhanced
+        case 131: // Holy Circle
+            return 286; // Player is fortified against undead
+        case 134: // Arcane Circle
+            return 287; // Player is fortified against arcana
+        case 148: // Warding Circle
+            return 149; // Player is fortified against demons
+        case 150: // Ancient Circle
+            return 151; // Player is fortified against dragons
         case 185:
             return 264;
         case 186:
@@ -271,6 +281,8 @@ uint16 CAbility::getAoEMsg()
             return 278;
         case 284:
             return 284; //already the aoe message
+        case 319:
+            return 280; // Not verified, using this for Rampart
         case 370:
             return 404;
         case 362:
@@ -291,7 +303,8 @@ uint16 CAbility::getAoEMsg()
         case 437:
         case 439:
             return m_message + 1;
-
+        case 441: // Mantra, Killer Instinct
+            return 421;
 
         default:
             return m_message;
