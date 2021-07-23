@@ -15,7 +15,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DOOM
-    -- Setting the Power to be greater than the default 10 to indicate a difference
+    -- Setting the Power to be greater than the default 10 to make this effect not-removeable
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 11, 3, 30))
 
     return typeEffect
