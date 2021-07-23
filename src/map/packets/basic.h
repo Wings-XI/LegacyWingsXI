@@ -61,7 +61,8 @@ public:
 
     bool recyclePacket = true; // if this packet is dropped by the prio algorithm, should it try again next network cycle?
     bool selectedForThisNetworkCycle = false; // toggled once this is selected by the prio algorithm to be shipped this network cycle
-    bool overflowDropImmunity = false; // character's reserve packet list can reach up to 600 packets. this will give immunity to dropping past that
+    bool overflowDropImmunity = false; // character's reserve packet list can reach up to 500 packets. this will give immunity to dropping past that
+    int priorityNumOverride = 0xFF;
 
     // prioritization parameters
     uint8 packetUpdateMask = 0;
