@@ -291,8 +291,8 @@ public:
     uint8             GetGender();                  // узнаем пол персонажа
 
     void              clearPacketList();            // отчистка PacketList
-    void              pushPacket(CBasicPacket*);    // добавление копии пакета в PacketList
-    void              pushPacket(std::unique_ptr<CBasicPacket>);    // push packet to packet list
+    void              pushPacket(CBasicPacket*, int priorityNumOverride = 0xFF);    // добавление копии пакета в PacketList
+    void              pushPacket(std::unique_ptr<CBasicPacket>, int priorityNumOverride = 0xFF);    // push packet to packet list
     bool			  isPacketListEmpty();          // проверка размера PacketList
     CBasicPacket*	  popPacket();                  // получение первого пакета из PacketList
     PacketList_t      getPacketList();              // returns a COPY of packet list
@@ -397,7 +397,7 @@ public:
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
-
+    bool              m_packetLimiterEnabled;       // on zone in, we take off packet limiter so we can send the massive amount of info of the char loading in
     time_t            m_lastPacketTime;             // Last time a packet was received from the player
 
     bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?

@@ -237,6 +237,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_lastPacketTime = time(NULL);
+    m_packetLimiterEnabled = false;
 
     m_distanceLastCheckTime = m_lastPacketTime;
     m_distanceFromLastCheck = 0.0;
@@ -290,11 +291,14 @@ void CCharEntity::clearPacketList()
     }
 }
 
-void CCharEntity::pushPacket(CBasicPacket* packet)
+void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
 {
     TracyZoneScoped;
     TracyZoneIString(GetName());
     TracyZoneHex16(packet->id());
+
+    if (priorityNumOverride != 0xFF)
+        packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
@@ -445,7 +449,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     PacketList.push_back(packet);
 }
 
-void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet)
+void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet, int priorityNumOverride)
 {
     pushPacket(packet.release());
 }
