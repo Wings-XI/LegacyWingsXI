@@ -59,7 +59,7 @@ mobList[zone].waveDefeatRequirements[1] = { } -- always leave this empty
 -- mobList[zone][SMB+1  ].randomChildrenList = 1 -- example
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
-randomChildrenList = 
+randomChildrenList[zone] = 
 {
     [1] =
     {
@@ -70,7 +70,7 @@ randomChildrenList =
 
 -- NPC list, only really need to add NPCs that need to be spawned at the start
 -- example: [5151] = { id = 5151, spawnAtStart = true },
-npcList = 
+npcList[zone] = 
 {
     
 }

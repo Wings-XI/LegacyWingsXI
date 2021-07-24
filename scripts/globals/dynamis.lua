@@ -36,7 +36,7 @@ dynamis.entryInfo =
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         csBit = 1,
-        csRegisterGlass = 684,
+        csRegisterGlass = 184,
         csSand = 686,
         csWin = 698,
         csDyna = 685,
