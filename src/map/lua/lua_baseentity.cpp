@@ -15404,7 +15404,7 @@ inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
 *  Function: getStealItem()
 *  Purpose : Used to return the Item ID of a mob's item which can be stolen
 *  Example : steamItem = target:getStealItem()
-*  Notes   : Used only in Thief quest and Maat
+*  Notes   : 
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getStealItem(lua_State *L)

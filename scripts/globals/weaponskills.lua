@@ -37,7 +37,7 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     end
 
     local missChance = math.random()
-    --testEntity:PrintToPlayer(string.format("acc was %i",hitrate*100))
+    -- testEntity:PrintToPlayer(string.format("acc was %i",hitrate*100))
     if ((missChance <= hitrate) -- See if we hit the target
     or calcParams.guaranteedHit
     or (calcParams.melee and math.random() < attacker:getMod(tpz.mod.ZANSHIN)/100))

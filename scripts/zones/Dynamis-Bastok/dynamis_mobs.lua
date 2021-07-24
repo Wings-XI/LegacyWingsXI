@@ -13,7 +13,7 @@ require("scripts/globals/zone")
 local zone = tpz.zone.DYNAMIS_BASTOK
 local DMB = 17539072 -- dynamis mob base, where zone's mob targetid = 0
 local SMB = 17539472 -- statue mob base to allow mobID represented as format SMB + db where db is the dynamisbums.com identifier
--- drop id for statues = 3200, drop id for mobs = 3201. try to keep on this trend for future droplists (i,e, sandy 3202 stats, 3203 mobs, etc.)
+-- drop id for statues = 3200, drop id for mobs = 3201
 
 mobList = mobList or { }
 randomChildrenList = randomChildrenList or { }
@@ -1536,16 +1536,6 @@ mobList[zone][SMB+531].randomChildrenList = 1
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
 randomChildrenList[zone] = 
 {
---[[
-[17539076] = { id =  DMB+4   }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539110] = { id =  DMB+38  }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539177] = { id =  DMB+105 }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539197] = { id =  DMB+125 }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539213] = { id =  DMB+141 }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539237] = { id =  DMB+165 }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539247] = { id =  DMB+175 }, --Vanguard_Beasttender	Vanguard Beasttender
-[17539284] = { id =  DMB+212 }, --Vanguard_Beasttender	Vanguard Beasttender
-]]
     [1] = -- all jobs except BST (the main list)
     {
         17539075,

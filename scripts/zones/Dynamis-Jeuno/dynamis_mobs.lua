@@ -13,6 +13,7 @@ require("scripts/globals/zone")
 local zone = tpz.zone.DYNAMIS_JEUNO
 local DMB = 17547264 -- dynamis mob base, where zone's mob targetid = 0
 local SMB = 17547664 -- statue mob base to allow mobID represented as format SMB + db where db is the dynamisbums.com identifier
+-- drop id for statues = 3206, drop id for mobs = 3207
 
 mobList = mobList or { }
 randomChildrenList = randomChildrenList or { }
