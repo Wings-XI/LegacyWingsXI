@@ -3158,6 +3158,8 @@ INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Pyuu_The_Spatemaker', 1162, 770);
 INSERT INTO `mob_skill_lists` VALUES('Yal-un_Eke', 1163, 567);
 INSERT INTO `mob_skill_lists` VALUES('Bugbear_Muscleman', 1164, 361);
+INSERT INTO `mob_skill_lists` VALUES('Cop_Warders', 1165, 561);
+INSERT INTO `mob_skill_lists` VALUES('Cop_Warders', 1165, 562);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
