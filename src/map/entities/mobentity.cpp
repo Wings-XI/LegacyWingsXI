@@ -1434,7 +1434,7 @@ void CMobEntity::OnDeathTimer()
         PAI->Despawn();
 }
 
-void CMobEntity::OnDespawn(CDespawnState&)
+void CMobEntity::OnDespawn()
 {
     FadeOut();
     m_SpawnTime = time_point::min();

@@ -387,7 +387,7 @@ bool CTrustEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
     return CMobEntity::ValidTarget(PInitiator, targetFlags);
 }
 
-void CTrustEntity::OnDespawn(CDespawnState&)
+void CTrustEntity::OnDespawn()
 {
     if (GetHPP())
     {

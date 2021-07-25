@@ -27,5 +27,5 @@ function onMobRoam(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setMobLevel(math.random(83,85))
+    dynamis.setMobStats(mob)
 end

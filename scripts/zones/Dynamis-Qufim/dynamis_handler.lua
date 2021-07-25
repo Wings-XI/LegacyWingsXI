@@ -61,7 +61,7 @@ function onDynamisCleanup()
         entity = GetEntityByID(i)
         if entity ~= nil then
             if entity:isMob() then
-                DespawnMob(i)
+                DespawnMob(i, 0)
             elseif entity:isNPC() then
                 entity:setStatus(tpz.status.DISAPPEAR)
             end
