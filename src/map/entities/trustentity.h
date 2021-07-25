@@ -55,7 +55,7 @@ public:
     void OnAbility(CAbilityState&, action_t&) override;
     void OnRangedAttack(CRangeState&, action_t&) override;
     bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
-    void OnDespawn(CDespawnState&) override;
+    void OnDespawn() override;
 
     void OnCastFinished(CMagicState& state, action_t& action) override;
     void OnMobSkillFinished(CMobSkillState& state, action_t& action) override;
