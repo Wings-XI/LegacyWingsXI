@@ -14,7 +14,11 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    mob:spawnPet()
+    mob:entityAnimationPacket("casm")
+    mob:timer(3000, function(mob)
+        mob:entityAnimationPacket("shsm")
+        mob:spawnPet()
+    end)
 
     skill:setMsg(tpz.msg.basic.NONE)
 

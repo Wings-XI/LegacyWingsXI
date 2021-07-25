@@ -699,7 +699,7 @@ INSERT INTO `mob_skills` VALUES(1013, 714, 'perfect_dodge', 0, 7.0, 2000, 0, 1, 
 INSERT INTO `mob_skills` VALUES(1014, 715, 'invincible', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1015, 716, 'blood_weapon', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1016, 717, 'familiar', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1017, 718, 'call_beast', 0, 7.0, 2000, 0, 1, 4, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1017, 0, 'call_beast', 0, 7.0, 2000, 0, 1, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1018, 719, 'soul_voice', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1019, 720, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1020, 721, 'meikyo_shisui', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
