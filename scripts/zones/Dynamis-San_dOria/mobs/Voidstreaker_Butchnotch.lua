@@ -27,5 +27,11 @@ function onMobRoam(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setMobLevel(math.random(86,87))
+    dynamis.setNMStats(mob)
+    local params = { }
+    params.specials = { }
+    params.specials.gakure = { }
+    params.specials.gakure.id = tpz.jsa.MIJIN_GAKURE;
+    params.specials.gakure.hpp = math.random(25,35)
+    tpz.mix.jobSpecial.config(mob, params)
 end
