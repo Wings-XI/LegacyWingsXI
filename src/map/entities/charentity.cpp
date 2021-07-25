@@ -313,16 +313,16 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
     }
 
     bool packetUpdatesPosition = false;
-    uint16 entityID = 0;
+    uint32 entityID = 0;
 
     if (packet->getType() == 0x0E)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
-        entityID = ref<uint16>(packet->getData(), 0x04);
+        entityID = ref<uint32>(packet->getData(), 0x04);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x0E && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            if ((*it)->getType() == 0x0E && ref<uint32>((*it)->getData(), 0x04) == entityID)
             { // match found, already an update queued for this entity
                 if (packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                 {
@@ -366,11 +366,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
-        entityID = ref<uint16>(packet->getData(), 0x04);
+        entityID = ref<uint32>(packet->getData(), 0x04);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x0D && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            if ((*it)->getType() == 0x0D && ref<uint32>((*it)->getData(), 0x04) == entityID)
             { // match found, already an update queued for this character
                 if ((*it)->packetUpdateMask | UPDATE_LOOK)
                 {
@@ -409,11 +409,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
 
     if (packet->getType() == 0x37)
     { // there can only be one of me. decide which one has the most up-to-date information to send.
-        entityID = ref<uint16>(packet->getData(), 0x24);
+        entityID = ref<uint32>(packet->getData(), 0x24);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x37 && ref<uint16>((*it)->getData(), 0x24) == entityID)
+            if ((*it)->getType() == 0x37 && ref<uint32>((*it)->getData(), 0x24) == entityID)
             { // match found, already an update queued for this character
                 // my information is more up-to-date.
                 delete (*it);
@@ -429,11 +429,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
 
     if (packetUpdatesPosition || packet->getType() == 0x5B)
     { // remove any position packets we have queued (0x5B)
-        entityID = entityID ? entityID : ref<uint16>(packet->getData(), 0x10);
+        entityID = entityID ? entityID : ref<uint32>(packet->getData(), 0x10);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x5B && ref<uint16>((*it)->getData(), 0x10) == entityID)
+            if ((*it)->getType() == 0x5B && ref<uint32>((*it)->getData(), 0x10) == entityID)
             {
                 delete (*it);
                 it = PacketList.erase(it);
