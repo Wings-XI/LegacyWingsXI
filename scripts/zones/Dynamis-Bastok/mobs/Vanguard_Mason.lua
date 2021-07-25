@@ -25,3 +25,7 @@ end
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
 end
+
+function onMobSpawn(mob)
+    dynamis.setMobStats(mob)
+end

@@ -34,4 +34,6 @@ function onUseAbility(player, target, ability)
     
     target:delStatusEffect(tpz.effect.DEFENSE_BOOST)
     target:addStatusEffect(tpz.effect.DEFENSE_BOOST, power+10000, 3, duration, 0, player:getMerit(tpz.merit.IRON_WILL))
+
+    return tpz.effect.DEFENSE_BOOST
 end

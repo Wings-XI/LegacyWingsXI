@@ -1068,7 +1068,15 @@ namespace luautils
             {
                 if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
                 {
-                    PMob->SetDespawnTime(std::chrono::seconds(lua_tointeger(L, 2)));
+                    uint32 timer = lua_tointeger(L, 2);
+                    if (!timer) // pass arg as 0 to instantly despawn the mob
+                    {
+                        PMob->OnDespawn();
+                    }
+                    else
+                    {
+                        PMob->SetDespawnTime(std::chrono::seconds(timer));
+                    }
                 }
                 else
                 {

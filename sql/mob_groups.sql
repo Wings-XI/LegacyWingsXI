@@ -2867,7 +2867,7 @@ INSERT INTO `mob_groups` VALUES (30,1952,61,'Hilltroll_Ranger',330,0,1309,0,0,79
 INSERT INTO `mob_groups` VALUES (31,4031,61,'Troll_Speculator',0,128,0,0,0,80,80,0);
 INSERT INTO `mob_groups` VALUES (32,2253,61,'King_Apkallu',330,0,1447,0,0,78,80,0);
 INSERT INTO `mob_groups` VALUES (33,5331,61,'Orichalcumshell',330,0,2668,0,0,88,89,0);
-INSERT INTO `mob_groups` VALUES (34,5843,61,'Ignamoth',0,32,3026,0,0,84,84,0);
+INSERT INTO `mob_groups` VALUES (34,5843,61,'Ignamoth',0,32,3026,16500,0,84,84,0);
 INSERT INTO `mob_groups` VALUES (35,5332,61,'Scoriaceous_Eruca',330,0,419,0,0,88,89,0);
 INSERT INTO `mob_groups` VALUES (36,894,61,'Dahak',1800,0,0,0,0,81,82,0);
 INSERT INTO `mob_groups` VALUES (37,680,61,'Cerberus',172800,0,446,50000,0,85,85,0);

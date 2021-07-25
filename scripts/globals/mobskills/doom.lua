@@ -2,6 +2,7 @@
 -- Doom
 --
 -- Description: Inflicts Doom upon an enemy.
+--              Used by Yagudo NMs in Dynamis
 -- Type: Magical (Dark)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")

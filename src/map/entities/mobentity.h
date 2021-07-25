@@ -175,7 +175,7 @@ public:
     virtual void OnDisengage(CAttackState&) override;
     virtual void OnDeathTimer() override;
 
-    virtual void OnDespawn(CDespawnState&) override;
+    virtual void OnDespawn() override;
 
     virtual void Spawn() override;
     virtual void FadeOut() override;

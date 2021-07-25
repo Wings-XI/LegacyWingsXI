@@ -18,6 +18,4 @@ function onUseAbility(player, target, ability)
     local boost = (target:getBaseHP() + target:getMod(tpz.mod.HP)) * player:getMerit(tpz.merit.MANTRA)/100
     
     target:addStatusEffect(tpz.effect.MAX_HP_BOOST, math.floor(boost), 0, 180, 0, 0, 1)
-
-    return tpz.effect.MANTRA
 end

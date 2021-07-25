@@ -154,15 +154,15 @@ int32 FLnotify(CCharEntity* PChar, bool logoff, bool force)
             {
                 if (logoff)
                 {
-                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""));
+                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""), -1);
                     line = "Notification: " + listedname + " has logged out.";
-                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, line, ""));
+                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, line, ""), -1);
                 }
                 else
                 {
-                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""));
+                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""), -1);
                     line = "Notification: " + listedname + " has logged in.";
-                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, line, ""));
+                    targChar->pushPacket(new CChatMessagePacket(targChar, (CHAT_MESSAGE_TYPE)channel, line, ""), -1);
                 }
             }
             else
@@ -204,15 +204,15 @@ int32 FLnotifyCrossCluster(CCharEntity* PChar, bool logoff, std::string listedch
     std::string line;
     if (logoff)
     {
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""), -1);
         line = "Notification: " + listedcharname + " has logged out.";
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""), -1);
     }
     else
     {
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""), -1);
         line = "Notification: " + listedcharname + " has logged in.";
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""), -1);
     }
 
     return 1;
@@ -248,9 +248,9 @@ int32 FLsetNote(CCharEntity* PChar, uint8 sChannel, std::string listedcharname, 
 
 	if (Sql_NumRows(SqlHandle) == 0)
 	{
-		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		//line = "Player does not exist: " + removecharname;
-		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		//return 1;
 	}
 
@@ -275,9 +275,9 @@ int32 FLsetNote(CCharEntity* PChar, uint8 sChannel, std::string listedcharname, 
 	}
 	if (Sql_NumRows(SqlHandle) == 0)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		line = "Player is not on your friend list: " + listedcharnamenew;
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		return 1;
 	}
 
@@ -291,17 +291,17 @@ int32 FLsetNote(CCharEntity* PChar, uint8 sChannel, std::string listedcharname, 
 
 	if (!removed)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 		line = "Friend note successfully updated for: " + listedcharnamenew;
 		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
-		if (truncated) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "(Friend note was truncated to 16 characters)", "")); }
+		if (truncated) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "(Friend note was truncated to 16 characters)", ""), -1); }
 		return 1;
 	}
 	if (removed)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 		line = "Friend note removed for: " + listedcharnamenew;
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		return 1;
 	}
 
@@ -317,13 +317,13 @@ int32 FLsetNotifs(CCharEntity* PChar, uint8 sChannel, uint8 notifs)
 	if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLsetNotifs) SQL ERROR...\n"); return 1; }
 
 	std::string line;
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 	line = "Notifications set to: ";
 	if (notifs == 0) { line += "OFF"; }
 	if (notifs == 1) { line += "LOGOUTS ONLY"; }
 	if (notifs == 2) { line += "LOGINS ONLY"; }
 	if (notifs == 3) { line += "ON"; }
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 	return 1;
 }
 
@@ -335,11 +335,11 @@ int32 FLsetSize(CCharEntity* PChar, uint8 sChannel, uint8 size)
 	if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLsetNotifs) SQL ERROR...\n"); return 2; }
 
 	std::string line;
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 	line = "List size set to: ";
 	if (size == 3) { line += "FULL"; }
 	if (size == 2) { line += "COMPACT"; }
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
 	return 1;
 }
@@ -352,7 +352,7 @@ int32 FLsetChannel(CCharEntity* PChar, uint8 channel)
 	if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLsetNotifs) SQL ERROR...\n"); return 1; }
 
 	std::string line;
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, "== FLIST MESSAGE ==", ""), -1);
 	line = "Channel set to: ";
 	if (channel == 13) { line += "SAY"; }
 	if (channel == 14) { line += "SHOUT"; }
@@ -360,7 +360,7 @@ int32 FLsetChannel(CCharEntity* PChar, uint8 channel)
 	if (channel == 16) { line += "LS1"; }
 	if (channel == 28) { line += "LS2"; }
 	if (channel == 29) { line += "SYSTEM (DEFAULT)"; }
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)channel, line, ""), -1);
 	return 1;
 }
 
@@ -383,12 +383,12 @@ int32 FLhide(CCharEntity* PChar, uint8 sChannel, bool hide, bool silent)
 		if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLhide)(1)(1) SQL ERROR...\n"); return 1; }
 		ret = Sql_Query(SqlHandle, "UPDATE flist SET status = -1 WHERE listedchar = %u;", PChar->id);
 		if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLhide)(1)(2) SQL ERROR...\n"); return 1; }
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your status has been set to hidden.", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You will show up as OFFLINE on your friends' lists.", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your friends will not be notified when you login or logout.", ""));
-		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*A logout notification was sent out now.", "")); }
-		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*(Use '!flist hide silent' to avoid this)", "")); }
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your status has been set to hidden.", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You will show up as OFFLINE on your friends' lists.", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your friends will not be notified when you login or logout.", ""), -1);
+		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*A logout notification was sent out now.", ""), -1); }
+		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*(Use '!flist hide silent' to avoid this)", ""), -1); }
 
 		return 1;
 	}
@@ -404,12 +404,12 @@ int32 FLhide(CCharEntity* PChar, uint8 sChannel, bool hide, bool silent)
 		if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLhide)(2)(2) SQL ERROR...\n"); return 1; }
 		ret = Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), PChar->id);
 		if (ret == SQL_ERROR) { ShowWarning(CL_WHITE"flistutils (FLhide)(2)(3) SQL ERROR...\n"); return 1; }
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your status has been set to visible.", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You will show up as ONLINE on your friends' lists.", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your friends will be notified when you login or logout.", ""));
-		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*A login notification was sent out now.", "")); }
-		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*(Use '!flist unhide silent' to avoid this)", "")); }
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your status has been set to visible.", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You will show up as ONLINE on your friends' lists.", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Your friends will be notified when you login or logout.", ""), -1);
+		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*A login notification was sent out now.", ""), -1); }
+		if (!silent) { PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "*(Use '!flist unhide silent' to avoid this)", ""), -1); }
 
 		return 1;
 	}
@@ -432,9 +432,9 @@ int32 FLremove(CCharEntity* PChar, std::string removecharname, uint8 sChannel)
 
 	if (Sql_NumRows(SqlHandle) == 0)
 	{
-		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		//line = "Player does not exist: " + removecharname;
-		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		//PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		//return 1;
 	}
 
@@ -459,9 +459,9 @@ int32 FLremove(CCharEntity* PChar, std::string removecharname, uint8 sChannel)
 	}
 	if (Sql_NumRows(SqlHandle) == 0)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		line = "Player is not on your friend list: " + removecharnamenew;
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		return 1;
 	}
 
@@ -472,9 +472,9 @@ int32 FLremove(CCharEntity* PChar, std::string removecharname, uint8 sChannel)
 		return -1;
 	}
 
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 	line = "Friend successfully removed: " + removecharnamenew;
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
 	return 1;
 
@@ -493,8 +493,8 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 
 	if (Sql_NumRows(SqlHandle) >= 48)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You have reached the maximum friend count (48)!", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You have reached the maximum friend count (48)!", ""), -1);
 		return 1;
 	}
 
@@ -509,9 +509,9 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 
 	if (Sql_NumRows(SqlHandle) == 0)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		line = "Player does not exist: " + addcharname;
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		return 1;
 	}
 
@@ -526,8 +526,8 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 
 	if (addcharid == PChar->id)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You cannot add yourself to your friend list!", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You cannot add yourself to your friend list!", ""), -1);
 		return 1;
 	}
 
@@ -541,9 +541,9 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 
 	if (Sql_NumRows(SqlHandle) != 0)
 	{
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
 		line = "Friend is already on your list: " + addcharnamenew;
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		return 1;
 	}
 
@@ -551,6 +551,7 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 	if (sVisible == 0) { status = -1; } // we are invisible/hidden
 
 	ret = Sql_Query(SqlHandle, "SELECT * FROM flist WHERE callingchar = %u AND listedchar = %u;", addcharid, PChar->id); // flipped around, we are checking their flist
+    bool theyAddedMeAlready = false;
 
 	if (ret == SQL_ERROR)
 	{
@@ -560,7 +561,8 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 
 	if (Sql_NumRows(SqlHandle) != 0) // they have us added already!!
 	{
-		ret = Sql_Query(SqlHandle, "UPDATE flist SET status = %i WHERE callingchar = %u AND listedchar = %u;", status, addcharid, PChar->id); // inserting our status into their flist
+        theyAddedMeAlready = true;
+        ret = Sql_Query(SqlHandle, "UPDATE flist SET status = %i WHERE callingchar = %u AND listedchar = %u;", status, addcharid, PChar->id); // inserting our status into their flist
 	}
 
 	int32 theirvisible = FLgetSettingByID(addcharid,2);
@@ -584,9 +586,15 @@ int32 FLadd(CCharEntity* PChar, std::string addcharname, uint8 sChannel, uint8 s
 		return -1;
 	}
 
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
 	line = "Friend successfully added: " + addcharnamenew;
-	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+	PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
+    if (!theyAddedMeAlready)
+    {
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "NOTE: this person has not yet added you back yet!", ""), -1);
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "In order to see their status on your list,", ""), -1);
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "you must ask them to add you as a friend.", ""), -1);
+    }
 	return 1;
 }
 
@@ -601,20 +609,20 @@ int32 FLprintList(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 	{
 																		headerText = "                                    FRIEND LIST: ";
 		headerText += std::to_string(numOnline) + " / " + std::to_string(numTotal);
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, headerText, ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "===========================================================================", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, headerText, ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "===========================================================================", ""), -1);
 		FLpopulate(PChar, sChannel, sSize);
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "===========================================================================", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "===========================================================================", ""), -1);
 	}
 
 	if (sSize == 2) // compact
 	{
 																		headerText = "                  FRIEND LIST: ";
 		headerText += std::to_string(numOnline) + " / " + std::to_string(numTotal);
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, headerText, ""));
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "=============================================", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, headerText, ""), -1);
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "=============================================", ""), -1);
 		FLpopulate(PChar, sChannel, sSize);
-		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "=============================================", ""));
+		PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "=============================================", ""), -1);
 	}
 
 	int32 ret = Sql_Query(SqlHandle, "UPDATE flist_settings SET lastcall = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), PChar->id);
@@ -717,7 +725,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 				line += FLgetZone(zone,sSize);
 				if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); line += "*"; } // if we have a note
 			}
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
@@ -742,7 +750,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 				line += FLgetZone(zone, sSize);
 				if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); } // if we have a note
 			}
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
@@ -772,7 +780,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 				line += "["; line += FLgetLastOnline(lastonline); line += "]";
 				if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); line += "*"; } // if we have a note
 			}
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
@@ -791,7 +799,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 				line += "["; line += FLgetLastOnline(lastonline); line += "]";
 				if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); } // if we have a note
 			}
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
@@ -813,7 +821,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 			line += (const char*)Sql_GetData(SqlHandle, 2); line += " - ";
 			line += "OFFLINE";
 			if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); line += "*"; } // if we have a note
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
@@ -825,7 +833,7 @@ void FLpopulate(CCharEntity* PChar, uint8 sChannel, uint8 sSize)
 			line += (const char*)Sql_GetData(SqlHandle, 2); line += " - ";
 			line += "OFFLINE";
 			if ((std::string)((const char*)Sql_GetData(SqlHandle, 3)) != "actualempty") { line += " - *"; line += (const char*)Sql_GetData(SqlHandle, 3); } // if we have a note
-			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+			PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 		}
 	}
 
