@@ -3,12 +3,8 @@
 --   NM: Steam Cleaner
 -----------------------------------
 
-function onMobSpawn(mob)
-    DespawnMob(mob:getID(), 120)
-end
-
-function onMobDisengage(mob)
-    DespawnMob(mob:getID(), 120)
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
 function onMobDeath(mob, player, isKiller)
