@@ -17,11 +17,26 @@ function onMobFight(mob, target)
     -- TODO: Casting animation for before summons. When he spawns them isn't exactly retail accurate.
     -- Defenders can also still spawn the Aura Gears while sleeping, etc.
     -- Maximum number of pets Defender can spawn is 5
-    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not auraGear:isSpawned() then
-        auraGear:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-        auraGear:spawn()
-        auraGear:updateEnmity(target)
-        mob:setLocalVar("petCount", petCount + 1)
+    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not auraGear:isSpawned() and mob:getLocalVar("summoning") == 0 then
+        mob:setLocalVar("summoning", 1)
+        mob:SetAutoAttackEnabled(false)
+        mob:SetMagicCastingEnabled(false)
+        mob:SetMobAbilityEnabled(false)
+        mob:entityAnimationPacket("casm")
+
+        mob:timer(3000, function(mob)
+            local petCount = mob:getLocalVar("petCount")
+            mob:SetAutoAttackEnabled(true)
+            mob:SetMagicCastingEnabled(true)
+            mob:SetMobAbilityEnabled(true)
+            mob:entityAnimationPacket("shsm")
+            local auraGear = GetMobByID(mob:getID() + 1)
+            auraGear:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+            auraGear:spawn()
+            auraGear:updateEnmity(mob:getTarget())
+            mob:setLocalVar("petCount", petCount + 1)
+            mob:setLocalVar("summoning", 0)
+        end)
     end
 
     -- make sure pet has a target

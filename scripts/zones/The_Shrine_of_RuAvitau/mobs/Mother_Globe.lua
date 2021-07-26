@@ -64,38 +64,32 @@ function onMobRoam(mob)
                 switch (petId): caseof {
                     [17506397] = function() 
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                     [17506398] = function() 
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                     [17506399] = function() 
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                     [17506400] = function() 
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                     [17506401] = function() 
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                     [17506402] = function() 
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                        spawnPetRoaming(mob, pet, pPet)
                     end,
                 }
                 mob:setLocalVar("SlaveRecast", now)
@@ -129,38 +123,27 @@ function onMobFight(mob, target)
                 switch (petId): caseof {
                     [17506397] = function() 
                         pet:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                     [17506398] = function() 
-                        pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos() + 2, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                     [17506399] = function() 
-                        pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos() + 3, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                     [17506400] = function() 
-                        pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos() + 4, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                     [17506401] = function() 
-                        pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos() + 5, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                     [17506402] = function() 
-                        pPet = GetMobByID(petId - 1)    
                         pet:setSpawn(mob:getXPos() + 6, mob:getYPos(), mob:getZPos())
-                        pet:spawn()
-                        pet:updateEnmity(target)
+                        spawnPetInBattle(mob, pet)
                     end,
                 }
                 mob:setLocalVar("SlaveRecast", now)
@@ -190,4 +173,32 @@ function onMobDespawn(mob)
     local respawn = math.random(10800, 21600)
     mob:setRespawnTime(respawn) -- 3 to 6 hours
     SetServerVariable("MG_Respawn", (os.time() + respawn))
+end
+
+function spawnPetInBattle(mob, pet)
+    mob:entityAnimationPacket("casm")
+    mob:SetAutoAttackEnabled(false)
+    mob:SetMagicCastingEnabled(false)
+    mob:SetMobAbilityEnabled(false)
+    mob:timer(3000, function(mob)
+        mob:entityAnimationPacket("shsm")
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMagicCastingEnabled(true)
+        mob:SetMobAbilityEnabled(true)
+        pet:spawn()
+        pet:updateEnmity(mob:getTarget())
+    end)
+end
+
+function spawnPetRoaming(mob, pet, pPet)
+    mob:entityAnimationPacket("casm")
+    mob:timer(3000, function(mob)
+        mob:entityAnimationPacket("shsm")
+        pet:spawn()
+        if pPet == nil then
+            pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15) 
+        else
+            pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+        end
+    end)
 end

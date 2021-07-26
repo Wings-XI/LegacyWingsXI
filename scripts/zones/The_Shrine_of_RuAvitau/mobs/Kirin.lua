@@ -30,10 +30,6 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobFight( mob, target )
-    if (mob:getLocalVar("AbilitiesUsed") == 0) then
-        mob:setLocalVar("SwapToMagic", math.random(4, 8))
-    end
-
     -- spawn gods
     local numAdds = mob:getLocalVar("numAdds")
     if (mob:getBattleTime() / 180 == numAdds) then
@@ -44,12 +40,15 @@ function onMobFight( mob, target )
             end
         end
         if (#godsRemaining > 0) then
-            local g = godsRemaining[math.random(#godsRemaining)]
-            local god = SpawnMob(ID.mob.KIRIN + g)
-            god:updateEnmity(target)
-            god:setPos(mob:getXPos(), mob:getYPos(), mob:getZPos())
-            mob:setLocalVar("add"..g, 1)
             mob:setLocalVar("numAdds", numAdds + 1)
+            mob:entityAnimationPacket("casm")
+            mob:SetAutoAttackEnabled(false)
+            mob:SetMagicCastingEnabled(false)
+            mob:SetMobAbilityEnabled(false)
+            mob:timer(3000, function(mob)
+                mob:entityAnimationPacket("shsm")
+                spawnGod(mob)
+            end)
         end
     end
 
@@ -62,16 +61,9 @@ function onMobFight( mob, target )
     end
 end
 
-function onMobSkillCheck(target, mob, skill)
-    if (mob:getLocalVar("AbilitiesUsed") >= mob:getLocalVar("SwapToMagic")) then
-        mob:setLocalVar("AbilitiesUsed", 0)
-        return 1
-    end
-    return 0
-end
 
 function onMobWeaponSkill(target, mob, skill, act)
-    mob:setLocalVar("AbilitiesUsed", mob:getLocalVar("AbilitiesUsed") + 1)
+
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -86,4 +78,21 @@ function onMobDespawn( mob )
     for i = ID.mob.KIRIN + 1, ID.mob.KIRIN + 4 do
         DespawnMob(i)
     end
+end
+
+function spawnGod(mob, target)
+    local godsRemaining = {}
+    for i = 1, 4 do
+       if (mob:getLocalVar("add"..i) == 0) then
+           table.insert(godsRemaining, i)
+       end
+    end
+    local g = godsRemaining[math.random(#godsRemaining)]
+    local god = SpawnMob(ID.mob.KIRIN + g)
+    god:updateEnmity(mob:getTarget())
+    god:setPos(mob:getXPos(), mob:getYPos(), mob:getZPos())
+    mob:setLocalVar("add"..g, 1)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetMobAbilityEnabled(true)
 end
