@@ -380,8 +380,8 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                 else {
                 PChar->SetDeathTimestamp((uint32)time(nullptr) - secondsSinceDeath);
                 PChar->Die(CCharEntity::death_duration - std::chrono::seconds(secondsSinceDeath));
+                }
             }
-        }
         }
 
         fmtQuery = "SELECT pos_prevzone FROM chars WHERE charid = %u";
@@ -390,7 +390,7 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (PChar->getZone() == Sql_GetUIntData(SqlHandle, 0))
                 PChar->loc.zoning = true;
-            }
+        }
         PChar->status = STATUS_NORMAL;
     }
     else
@@ -885,6 +885,12 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x03: // spellcast
         {
             auto spellID = static_cast<SpellID>(data.ref<uint16>(0x0C));
+            uint8 currentAnimation = PChar->animation;
+            if (currentAnimation != ANIMATION_NONE && currentAnimation != ANIMATION_ATTACK)
+            {
+                ShowExploit(CL_YELLOW "SmallPacket0x009: Player %s trying to cast a spell from invalid state\n" CL_RESET, PChar->GetName());
+                return;
+            }
             PChar->PAI->Cast(TargID, spellID);
         }
         break;
@@ -917,6 +923,12 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x07: // weaponskill
         {
             uint16 WSkillID = data.ref<uint16>(0x0C);
+            uint8 currentAnimation = PChar->animation;
+            if (currentAnimation != ANIMATION_ATTACK)
+            {
+                ShowExploit(CL_YELLOW "SmallPacket0x009: Player %s trying to use a Weapon Skill from invalid state\n" CL_RESET, PChar->GetName());
+                return;
+            }
             PChar->PAI->WeaponSkill(TargID, WSkillID);
         }
         break;
@@ -1043,7 +1055,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                     {
                         CDigObject DigObject = CDigObject(PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, now, PChar->id);
                         PDigAreaContainer->AddDigObject(DigObject);
-                }
+                    }
                 }
             }
             else
@@ -1999,7 +2011,7 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
         else
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Report bugs on Topaz bugtracker if server admin confirms the
     bug occurs on stock Topaz."));
-        }
+    }
     */
     return;
 }
@@ -2710,19 +2722,19 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     const char* Query = "SELECT itemid, price, stack FROM auction_house WHERE seller = %u and sale=0 ORDER BY id ASC;";
 
-                int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
+                    int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
 
                     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle))
-                {
-                    while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
                     {
-                        AuctionHistory_t ah;
-                        ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
-                        ah.price  = (uint32)Sql_GetUIntData(SqlHandle, 1);
-                        ah.stack  = (uint8)Sql_GetIntData(SqlHandle, 2);
-                        ah.status = 0;
-                            ah.delisted = false;
-                            PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
+                        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                        {
+                            AuctionHistory_t ah;
+                            ah.itemid = (uint16)Sql_GetIntData(SqlHandle, 0);
+                            ah.price  = (uint32)Sql_GetUIntData(SqlHandle, 1);
+                            ah.stack  = (uint8)Sql_GetIntData(SqlHandle, 2);
+                            ah.status = 0;
+                                ah.delisted = false;
+                                PChar->AuctionPlayerContainer->m_ah_history.push_back(ah);
                         }
                     }
 
@@ -3294,7 +3306,7 @@ void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PCh
             // and may transport them back to an undesired location (e.g. an
             // empty battlefield).
             PChar->m_hasTractor = 0;
-    }
+        }
     }
     PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
     return;
@@ -3709,7 +3721,7 @@ void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PCh
                     ShowDebug(CL_CYAN "Sent party invite packet to %s\n" CL_RESET, PInvitee->GetName());
                     if (PChar->PParty && PChar->PParty->GetSyncTarget())
                         PInvitee->pushPacket(new CMessageStandardPacket(PInvitee, 0, 0, MsgStd::LevelSyncWarning));
-                    }
+                }
                 else
                 {
                     ShowDebug(CL_CYAN "Building invite packet to send to lobby server from %s to (%d)\n" CL_RESET, PChar->GetName(), charid);
@@ -3742,7 +3754,7 @@ void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PCh
                     CBaseEntity* PEntity = PChar->GetEntity(targid, TYPE_PC);
                     if (PEntity && PEntity->id == charid)
                         PInvitee = (CCharEntity*)PEntity;
-                    }
+                }
                 else
                 {
                     PInvitee = zoneutils::GetChar(charid);
@@ -4351,10 +4363,10 @@ void SmallPacket0x083(map_session_data_t* const PSession, CCharEntity* const PCh
                     Sql_Query(SqlHandle,
                               "INSERT INTO char_vars SET charid = %u, varname = 'DabihShopBought', value = %i ON DUPLICATE KEY UPDATE value = value + %i;",
                               PChar->id, quantity, quantity);
+                }
             }
         }
     }
-}
     return;
 }
 
@@ -5087,32 +5099,32 @@ void SmallPacket0x0BE(map_session_data_t* const PSession, CCharEntity* const PCh
                     }
                     if (tookEffect)
                     {
-                    PChar->pushPacket(new CMenuMeritPacket(PChar));
-                    PChar->pushPacket(new CMeritPointsCategoriesPacket(PChar, merit));
+                        PChar->pushPacket(new CMenuMeritPacket(PChar));
+                        PChar->pushPacket(new CMeritPointsCategoriesPacket(PChar, merit));
 
-                    charutils::SaveCharExp(PChar, PChar->GetMJob());
-                    PChar->PMeritPoints->SaveMeritPoints(PChar->id);
+                        charutils::SaveCharExp(PChar, PChar->GetMJob());
+                        PChar->PMeritPoints->SaveMeritPoints(PChar->id);
 
-                    charutils::BuildingCharSkillsTable(PChar);
-                    charutils::CalculateStats(PChar);
-                    charutils::CheckValidEquipment(PChar);
-                    charutils::BuildingCharAbilityTable(PChar);
-                    charutils::BuildingCharTraitsTable(PChar);
+                        charutils::BuildingCharSkillsTable(PChar);
+                        charutils::CalculateStats(PChar);
+                        charutils::CheckValidEquipment(PChar);
+                        charutils::BuildingCharAbilityTable(PChar);
+                        charutils::BuildingCharTraitsTable(PChar);
 
-                    PChar->UpdateHealth();
-                    PChar->addHP(PChar->GetMaxHP());
-                    PChar->addMP(PChar->GetMaxMP());
-                    PChar->pushPacket(new CCharUpdatePacket(PChar));
-                    PChar->pushPacket(new CCharStatsPacket(PChar));
-                    PChar->pushPacket(new CCharSkillsPacket(PChar));
-                    PChar->pushPacket(new CCharRecastPacket(PChar));
-                    PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-                    PChar->pushPacket(new CCharJobExtraPacket(PChar, true));
-                    PChar->pushPacket(new CCharJobExtraPacket(PChar, true));
-                    PChar->pushPacket(new CCharSyncPacket(PChar));
+                        PChar->UpdateHealth();
+                        PChar->addHP(PChar->GetMaxHP());
+                        PChar->addMP(PChar->GetMaxMP());
+                        PChar->pushPacket(new CCharUpdatePacket(PChar));
+                        PChar->pushPacket(new CCharStatsPacket(PChar));
+                        PChar->pushPacket(new CCharSkillsPacket(PChar));
+                        PChar->pushPacket(new CCharRecastPacket(PChar));
+                        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+                        PChar->pushPacket(new CCharJobExtraPacket(PChar, true));
+                        PChar->pushPacket(new CCharJobExtraPacket(PChar, true));
+                        PChar->pushPacket(new CCharSyncPacket(PChar));
+                    }
                 }
             }
-        }
         }
         break;
     }
@@ -6401,8 +6413,8 @@ void SmallPacket0x0FD(map_session_data_t* const PSession, CCharEntity* const PCh
                                                               MSGBASIC_GARDENING_CRYSTAL_USED));
                 else
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_GARDENING_CRYSTAL_NONE));
-                }
             }
+        }
         if (PItem->getStage() > FLOWERPOT_STAGE_SECOND_SPROUTS_CRYSTAL)
         {
             if (PItem->getCommonCrystalFeed() != FLOWERPOT_ELEMENT_NONE)
@@ -6410,7 +6422,7 @@ void SmallPacket0x0FD(map_session_data_t* const PSession, CCharEntity* const PCh
                                                           MSGBASIC_GARDENING_CRYSTAL_USED));
             else
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_GARDENING_CRYSTAL_NONE));
-            }
+        }
 
         if (!PItem->wasExamined())
         {
@@ -7245,8 +7257,8 @@ void SmallPacket0x117(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
     PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
-        return;
-    }
+    return;
+}
 
 /************************************************************************
  *                                                                       *
