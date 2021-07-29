@@ -36,7 +36,7 @@ dynamis.entryInfo =
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         csBit = 1,
-        csRegisterGlass = 684,
+        csRegisterGlass = 184,
         csSand = 686,
         csWin = 698,
         csDyna = 685,
@@ -145,7 +145,7 @@ dynamis.entryInfo =
         enterPos = {100, -8, 131, 47, 39},
         reqs = function(player)
             return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                  (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
+                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
         end,
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
@@ -163,7 +163,7 @@ dynamis.entryInfo =
         enterPos = {155, -1, -169, 170, 40},
         reqs = function(player)
             return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                  (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
+                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
         end,
     },
     [tpz.zone.QUFIM_ISLAND] =
@@ -181,7 +181,7 @@ dynamis.entryInfo =
         enterPos = {-19, -17, 104, 253, 41},
         reqs = function(player)
             return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                  (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
+                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
         end,
     },
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
@@ -202,7 +202,7 @@ dynamis.entryInfo =
                    player:hasKeyItem(tpz.ki.DYNAMIS_BUBURIMU_SLIVER) and
                    player:hasKeyItem(tpz.ki.DYNAMIS_QUFIM_SLIVER) and
                    player:hasKeyItem(tpz.ki.DYNAMIS_VALKURM_SLIVER) and
-                  (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
+                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
         end,
     },
 }
@@ -396,13 +396,13 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         else
-            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 1 or 0,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
         end
     elseif npcUtil.tradeHas(trade, dynamis.perpetual, true, false) then -- perpetual hourglass, attempting to enter a registered instance or start a new one
         local hgValid = player:checkHourglassValid(trade:getItem(0), dynamis.entryInfo[playerZoneID].enterPos[5])
         if hgValid > 0 then -- 0 = can't enter (wrong glass or didn't wait 71 hours since last dynamis), 1 = entering, 2 = re-entering (weakness)
             player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
-            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,1 ,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         elseif remaining > 0 then
@@ -592,7 +592,7 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
     local i = 1
     while specificChildrenList ~= nil and specificChildrenList[i] ~= nil do
         local child = GetMobByID(specificChildrenList[i])
-        if mobList[specificChildrenList[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*2-1, mob:getYPos(), mob:getZPos()+math.random()*2-1, mob:getRotPos()) end
+        if mobList[specificChildrenList[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
         SpawnMob(specificChildrenList[i]):updateEnmity(target)
         i = i + 1
     end
@@ -610,7 +610,7 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
             local home = child:getSpawnPos()
             local randomSpawn = false
             if home.x == 1 and home.y == 1 and home.z == 1 then
-                child:setSpawn(mob:getXPos()+math.random()*2-1, mob:getYPos(), mob:getZPos()+math.random()*2-1, mob:getRotPos())
+                child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
                 randomSpawn = true
             end
             SpawnMob(randomChildrenList[roll]):updateEnmity(target)
@@ -725,6 +725,175 @@ dynamis.qmOnTrigger = function(player, npc)
     else
         printf("[dynamis.qmOnTrigger] called on npc %i (%s) in zone %i that does not have a QM group in its IDs.", npcId, npc:getName(), zoneId)
     end
+end
+
+dynamis.setMobStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+    
+    mob:setMobLevel(math.random(82,84))
+    mob:setMod(tpz.mod.STR, -10)
+    mob:setMod(tpz.mod.VIT, -10)
+    mob:setMod(tpz.mod.RATTP, -50)
+    mob:setMod(tpz.mod.ATTP, -50)
+    mob:setMod(tpz.mod.DEFP, -20)
+    
+    if     job == tpz.job.WAR then
+        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
+    elseif job == tpz.job.MNK then
+        mob:addMod(tpz.mod.VIT, 20)
+    elseif job == tpz.job.WHM then
+        mob:addMod(tpz.mod.MND, 20)
+        mob:addMod(tpz.mod.DEFP, -10)
+    elseif job == tpz.job.BLM then
+        mob:addMod(tpz.mod.SLEEPRES, 40)
+        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
+        mob:addMod(tpz.mod.DEFP, -10)
+    elseif job == tpz.job.RDM then
+        mob:addMod(tpz.mod.FASTCAST, 25)
+    elseif job == tpz.job.THF then
+        mob:addMod(tpz.mod.AGI, 20)
+        mob:addMod(tpz.mod.DEFP, -5)
+    elseif job == tpz.job.PLD then
+        mob:addMod(tpz.mod.DEFP, 10)
+        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
+        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
+    elseif job == tpz.job.DRK then
+        mob:addMod(tpz.mod.ATTP, 10)
+        mob:addMod(tpz.mod.RATTP, 10)
+    elseif job == tpz.job.BST then
+        mob:addMod(tpz.mod.CHR, 20)
+    elseif job == tpz.job.BRD then
+        mob:addMod(tpz.mod.LULLABYRES, 40)
+        mob:addMod(tpz.mod.LULLABYRES, 15)
+        mob:addMod(tpz.mod.DEFP, -5)
+    elseif job == tpz.job.RNG then
+        mob:addMod(tpz.mod.RACC, 20)
+        mob:addMod(tpz.mod.DEFP, -5)
+    elseif job == tpz.job.SAM then
+        mob:addMod(tpz.mod.STORETP, 40)
+    elseif job == tpz.job.NIN then
+        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
+        mob:addMod(tpz.mod.RATTP, -25)
+    elseif job == tpz.job.DRG then
+        mob:addMod(tpz.mod.ACC, 20)
+    elseif job == tpz.job.SMN then
+        mob:addMod(tpz.mod.REFRESH, 3)
+        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
+        mob:addMod(tpz.mod.DEFP, -10)
+    end
+end
+
+dynamis.setNMStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+    
+    mob:setMobLevel(math.random(85,86))
+    mob:setMod(tpz.mod.STR, -10)
+    mob:setMod(tpz.mod.VIT, -10)
+    mob:setMod(tpz.mod.RATTP, -25)
+    mob:setMod(tpz.mod.ATTP, -25)
+    mob:setMod(tpz.mod.DEFP, -10)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
+    
+    if     job == tpz.job.WAR then
+        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
+    elseif job == tpz.job.MNK then
+        mob:addMod(tpz.mod.VIT, 20)
+    elseif job == tpz.job.WHM then
+        mob:addMod(tpz.mod.MND, 20)
+    elseif job == tpz.job.BLM then
+        mob:addMod(tpz.mod.SLEEPRES, 40)
+        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
+    elseif job == tpz.job.RDM then
+        mob:addMod(tpz.mod.FASTCAST, 25)
+    elseif job == tpz.job.THF then
+        mob:addMod(tpz.mod.AGI, 20)
+    elseif job == tpz.job.PLD then
+        mob:addMod(tpz.mod.DEFP, 10)
+        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
+        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
+    elseif job == tpz.job.DRK then
+        mob:addMod(tpz.mod.ATTP, 10)
+        mob:addMod(tpz.mod.RATTP, 10)
+    elseif job == tpz.job.BST then
+        mob:addMod(tpz.mod.CHR, 20)
+    elseif job == tpz.job.BRD then
+        mob:addMod(tpz.mod.LULLABYRES, 40)
+        mob:addMod(tpz.mod.LULLABYRES, 15)
+    elseif job == tpz.job.RNG then
+        mob:addMod(tpz.mod.RACC, 20)
+    elseif job == tpz.job.SAM then
+        mob:addMod(tpz.mod.STORETP, 40)
+    elseif job == tpz.job.NIN then
+        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
+        mob:addMod(tpz.mod.STR, -10)
+    elseif job == tpz.job.DRG then
+        mob:addMod(tpz.mod.ACC, 20)
+    elseif job == tpz.job.SMN then
+        mob:addMod(tpz.mod.REFRESH, 3)
+        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
+    end
+    
+end
+
+dynamis.setStatueStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+    
+    mob:setMobLevel(math.random(82,84))
+    mob:setMod(tpz.mod.STR, -10)
+    mob:setMod(tpz.mod.VIT, -10)
+    mob:setMod(tpz.mod.RATTP, -60)
+    mob:setMod(tpz.mod.ATTP, -60)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
+    
+end
+
+dynamis.setMegaBossStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+    
+    mob:setMobLevel(88)
+    mob:setMod(tpz.mod.STR, -10)
+    mob:setMod(tpz.mod.VIT, -10)
+    mob:setMod(tpz.mod.RATTP, -25)
+    mob:setMod(tpz.mod.ATTP, -25)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 25)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 25)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 25)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 25)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 33)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 33)
+    mob:setMod(tpz.mod.RESBUILD_BIND, 33)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 33)
+    
+end
+
+dynamis.setPetStats = function(mob)
+    local zone = mob:getZoneID()
+    
+    mob:setMobLevel(80)
+    mob:setMod(tpz.mod.STR, -10)
+    mob:setMod(tpz.mod.VIT, -10)
+    mob:setMod(tpz.mod.RATTP, -50)
+    mob:setMod(tpz.mod.ATTP, -50)
+    mob:setMod(tpz.mod.DEFP, -25)
+    
 end
 
 --------------------------------------------------

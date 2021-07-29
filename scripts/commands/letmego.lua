@@ -33,4 +33,6 @@ function onTrigger(player)
     player:delStatusEffect(tpz.effect.BIO)
     player:delStatusEffect(tpz.effect.DIA)
     player:delStatusEffect(tpz.effect.AMNESIA)
+    player:delStatusEffect(tpz.effect.CHARM_I)
+    player:delStatusEffect(tpz.effect.CHARM_II)
 end

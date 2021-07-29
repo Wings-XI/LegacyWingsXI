@@ -16,11 +16,13 @@ end
 function onTrigger(player, npc)
     local gotItAllProg = player:getCharVar("gotitallCS")
     if gotItAllProg == 1 then
-        player:startEvent(537)
+        player:startEvent(522)
     elseif gotItAllProg == 2 then
         player:startEvent(536)
     elseif gotItAllProg == 3 then
         player:startEvent(524)
+    elseif gotItAllProg == 4 or gotItAllProg == 5 or gotItAllProg == 6 then
+        player:startEvent(537)
     elseif player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.GOT_IT_ALL) == QUEST_COMPLETED then
         player:startEvent(531)
     else
@@ -32,7 +34,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 537 then
+    if csid == 522 then
         player:setCharVar("gotitallCS", 2)
     elseif csid == 524 then
         player:addKeyItem(tpz.ki.VIAL_OF_LUMINOUS_WATER)

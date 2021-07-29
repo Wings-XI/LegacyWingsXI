@@ -29,7 +29,7 @@ local instances = {
 -- check requirements for registrant and allies
 -- TODO: As instances are added to this control, add their Reqs
 -----------------------------------------------
-function checkReqs(player, instanceId, isInitiator)
+function instanceCheckReqs(player, instanceId, isInitiator)
     local registerRequirements = {
         
         [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) ) end, -- A Manifest Problem (WotG Mission-Quest)
@@ -59,7 +59,7 @@ function VerfyInstanceForPlayer(player, instanceId, isInitiator)
     end
     for k, instance in pairs(possibleInstances) do
         if instanceId == instance[2] then 
-            return checkReqs(player, instanceId, isInitiator)
+            return instanceCheckReqs(player, instanceId, isInitiator)
         end
     end
 

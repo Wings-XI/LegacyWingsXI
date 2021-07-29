@@ -197,7 +197,6 @@ typedef std::vector<EntityID_t> BazaarList_t;
 class CCharEntity : public CBattleEntity
 {
 public:
-
     jobs_t					jobs;							// доступрые профессии персонажа
     keyitems_t				keys;							// таблица ключевых предметов
     event_t					m_event;						// структура для запуска событый
@@ -292,13 +291,15 @@ public:
     uint8             GetGender();                  // узнаем пол персонажа
 
     void              clearPacketList();            // отчистка PacketList
-    void              pushPacket(CBasicPacket*);    // добавление копии пакета в PacketList
-    void              pushPacket(std::unique_ptr<CBasicPacket>);    // push packet to packet list
+    void              pushPacket(CBasicPacket*, int priorityNumOverride = 0xFF);    // добавление копии пакета в PacketList
+    void              pushPacket(std::unique_ptr<CBasicPacket>, int priorityNumOverride = 0xFF);    // push packet to packet list
     bool			  isPacketListEmpty();          // проверка размера PacketList
     CBasicPacket*	  popPacket();                  // получение первого пакета из PacketList
     PacketList_t      getPacketList();              // returns a COPY of packet list
+    PacketList_t*     getPacketListPtr();           // by pointer instead
+    std::mutex*       getPacketListMutexPtr();      // always use this when doing stuff with getPacketListPtr
     size_t            getPacketCount();
-    void              erasePackets(uint8 num);      // erase num elements from front of packet list
+    void              erasePackets(uint16 num);      // erase num elements from front of packet list
     virtual void      HandleErrorMessage(std::unique_ptr<CBasicPacket>&) override;
 
     CLinkshell*       PLinkshell1;                  // linkshell, в которой общается персонаж
@@ -396,7 +397,7 @@ public:
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
-
+    bool              m_packetLimiterEnabled;       // on zone in, we take off packet limiter so we can send the massive amount of info of the char loading in
     time_t            m_lastPacketTime;             // Last time a packet was received from the player
 
     bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?
@@ -498,7 +499,7 @@ private:
     bool            m_isBlockingAid;
     bool			m_reloadParty;
 
-    PacketList_t      PacketList;					// the list of packets to be sent to the character during the next network cycle
+    PacketList_t    PacketList;					// the list of packets to be sent to the character during the next network cycle
 
     std::mutex      m_PacketListMutex;
 };

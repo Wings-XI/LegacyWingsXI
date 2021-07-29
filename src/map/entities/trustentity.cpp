@@ -57,7 +57,7 @@ void CTrustEntity::PostTick()
     CBattleEntity::PostTick();
     if (loc.zone && updatemask && status != STATUS_DISAPPEAR)
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
+        loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         if (PMaster && PMaster->PParty && updatemask & UPDATE_HP)
         {
@@ -387,7 +387,7 @@ bool CTrustEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
     return CMobEntity::ValidTarget(PInitiator, targetFlags);
 }
 
-void CTrustEntity::OnDespawn(CDespawnState&)
+void CTrustEntity::OnDespawn()
 {
     if (GetHPP())
     {

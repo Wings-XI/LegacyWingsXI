@@ -69,7 +69,7 @@ void Transport_Ship::setName(uint32 value)
 
 void TransportZone_Town::updateShip()
 {
-    this->ship.dock.zone->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(this->ship.npc, ENTITY_UPDATE, UPDATE_COMBAT));
+    this->ship.dock.zone->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(this->ship.npc, ENTITY_UPDATE, UPDATE_ALL_MOB));
 }
 
 void TransportZone_Town::openDoor(bool sendPacket)
@@ -77,7 +77,7 @@ void TransportZone_Town::openDoor(bool sendPacket)
     this->npcDoor->animation = ANIMATION_OPEN_DOOR;
 
     if (sendPacket)
-        this->ship.dock.zone->PushPacket(this->npcDoor, CHAR_INRANGE, new CEntityUpdatePacket(this->npcDoor, ENTITY_UPDATE, UPDATE_COMBAT));
+        this->ship.dock.zone->PushPacket(this->npcDoor, CHAR_INRANGE, new CEntityUpdatePacket(this->npcDoor, ENTITY_UPDATE, UPDATE_ALL_MOB));
 }
 
 void TransportZone_Town::closeDoor(bool sendPacket)
@@ -85,7 +85,7 @@ void TransportZone_Town::closeDoor(bool sendPacket)
     this->npcDoor->animation = ANIMATION_CLOSE_DOOR;
 
     if (sendPacket)
-        this->ship.dock.zone->PushPacket(this->npcDoor, CHAR_INRANGE, new CEntityUpdatePacket(this->npcDoor, ENTITY_UPDATE, UPDATE_COMBAT));
+        this->ship.dock.zone->PushPacket(this->npcDoor, CHAR_INRANGE, new CEntityUpdatePacket(this->npcDoor, ENTITY_UPDATE, UPDATE_ALL_MOB));
 }
 
 void TransportZone_Town::depart()
@@ -119,7 +119,7 @@ void CTransportHandler::InitializeTransport()
                             boundary, zone, anim_arrive, anim_depart, time_offset, time_interval, \
                             time_waiting, time_anim_arrive, time_anim_depart FROM transport LEFT JOIN \
                             zone_settings ON ((transport >> 12) & 0xFFF) = zoneid WHERE \
-                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -180,7 +180,7 @@ void CTransportHandler::InitializeTransport()
     fmtQuery = "SELECT zone, time_offset, time_interval, time_waiting, time_anim_arrive, time_anim_depart \
                 FROM transport LEFT JOIN \
                 zone_settings ON zone = zoneid WHERE \
-                IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE)";
+                IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0)";
 
     ret = Sql_Query(SqlHandle, fmtQuery, map_ip.s_addr, address, map_port);
 
@@ -505,7 +505,7 @@ void CTransportHandler::startElevator(Elevator_t * elevator)
 
     ref<uint32>(&elevator->Elevator->name[0], 4) = CVanaTime::getInstance()->getVanaTime();
 
-    zoneutils::GetZone(elevator->zoneID)->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(elevator->Elevator, ENTITY_UPDATE, UPDATE_COMBAT));
+    zoneutils::GetZone(elevator->zoneID)->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(elevator->Elevator, ENTITY_UPDATE, UPDATE_ALL_MOB));
 }
 
 /************************************************************************

@@ -432,7 +432,7 @@ function onTrack(npc)
                             npc:setLocalVar("lockToggle", 1)
                         end
                     else
-                        npc:setLocalVar("runTimer", os.time() + math.random(30,40))
+                        npc:setLocalVar("runTimer", os.time() + math.random(15,25))
                         npc:showText(npc,ID.text.EXCALIACE_RUN)
                         npc:setLocalVar("runStart", 1)
                         npc:speed(100)

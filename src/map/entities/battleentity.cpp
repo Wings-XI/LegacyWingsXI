@@ -1996,7 +1996,7 @@ void CBattleEntity::TryHitInterrupt(CBattleEntity* PAttacker)
         PAI->GetCurrentState()->TryInterrupt(PAttacker);
 }
 
-void CBattleEntity::OnDespawn(CDespawnState&)
+void CBattleEntity::OnDespawn()
 {
     FadeOut();
     //#event despawn

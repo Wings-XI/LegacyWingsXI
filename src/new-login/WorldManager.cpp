@@ -73,7 +73,8 @@ WorldManager::WORLD_ENTRY* WorldManager::GetWorldByID(uint32_t dwWorldID)
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     auto pWorldEnt = mmapWorldList.find(dwWorldID);
     if (pWorldEnt == mmapWorldList.end()) {
         LOG_ERROR("World ID not found in list.");
@@ -95,7 +96,8 @@ uint32_t WorldManager::GetWorldIDByName(const char* szWorldName)
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     for (auto it = mmapWorldList.begin(); it != mmapWorldList.end(); it++) {
         if (strcmp(it->second.szWorldName, szWorldName) == 0) {
             return it->first;
@@ -121,7 +123,7 @@ std::shared_ptr<uint8_t> WorldManager::GetAdminWorldsPacket()
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     return mbufWorldsPacketAdmin;
 }
 
@@ -131,7 +133,7 @@ uint32_t WorldManager::GetAdminWorldsPacketSize()
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     return mdwWorldsPacketAdminSize;
 }
 
@@ -141,7 +143,7 @@ std::shared_ptr<uint8_t> WorldManager::GetUserWorldsPacket()
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     return mbufWorldsPacketUser;
 }
 
@@ -151,7 +153,7 @@ uint32_t WorldManager::GetUserWorldsPacketSize()
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     return mdwWorldsPacketUserSize;
 }
 
@@ -163,7 +165,7 @@ void WorldManager::LoadWorlds()
         return;
     }
 
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
 
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
@@ -303,7 +305,8 @@ void WorldManager::SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMess
         LOG_INFO("World list not loaded yet, trying to load now.");
         LoadWorlds();
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     auto WorldEnt = mmapWorldList.find(dwWorldID);
     if (WorldEnt == mmapWorldList.end()) {
         LOG_ERROR("World ID not found in list.");

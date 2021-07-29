@@ -374,8 +374,8 @@ INSERT INTO `mob_pools` VALUES(310, 'Azer', 'Azer', 56, 0x0000180100000000000000
 INSERT INTO `mob_pools` VALUES(311, 'Azima', 'Azima', 149, 0x01000c02b510b920b930b9404750236100700080, 4, 4, 12, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 2, 0, 0, 149);
 INSERT INTO `mob_pools` VALUES(312, 'Azo', 'Azo', 235, 0x0000360100000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 236);
 INSERT INTO `mob_pools` VALUES(313, 'Azoth_Apsaras', 'Azoth_Apsaras', 197, 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 197);
-INSERT INTO `mob_pools` VALUES(314, 'Azren_Kuba', 'Azren_Kuba', 227, 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 1, 32, 0, 0, 6, 1155, 0, 0, 28, 0, 0, 227);
-INSERT INTO `mob_pools` VALUES(315, 'Azren_Kuguza', 'Azren_Kuguza', 227, 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 32, 0, 0, 7, 1155, 0, 0, 0, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(314, 'Azren_Kuba', 'Azren_Kuba', 227, 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 0, 32, 0, 0, 6, 1155, 0, 0, 28, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(315, 'Azren_Kuguza', 'Azren_Kuguza', 227, 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 32, 0, 0, 7, 1155, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(316, 'Ba', 'Ba', 55, 0x0000bc0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 1, 0, 0, 0, 0, 129, 0, 0, 0, 0, 0, 55);
 INSERT INTO `mob_pools` VALUES(317, 'Baa_Dava_the_Bibliophage', 'Baa_Dava_the_Bibliophage', 360, 0x00003c0400000000000000000000000000000000, 15, 15, 12, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 30, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(318, 'Baas_Avatar', 'Baas_Avatar', 34, 0x00001e0300000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 0, 1, 8, 0, 32, 0, 155, 0, 0, 0, 0, 0, 34);
@@ -423,7 +423,7 @@ INSERT INTO `mob_pools` VALUES(359, 'Bathybic_Kulshedra', 'Bathybic_Kulshedra', 
 INSERT INTO `mob_pools` VALUES(360, 'Batteilant_Bhoot', 'Batteilant_Bhoot', 52, 0x0000710100000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 7, 131, 0, 0, 28, 0, 0, 52);
 INSERT INTO `mob_pools` VALUES(361, 'Battering_Bugard', 'Battering_Bugard', 58, 0x0000470500000000000000000000000000000000, 1, 1, 6, 300, 100, 0, 1, 1, 0, 0, 0, 0, 8, 129, 0, 0, 0, 0, 0, 58);
 INSERT INTO `mob_pools` VALUES(362, 'Battering_Ram', 'Battering_Ram', 208, 0x0000580100000000000000000000000000000000, 1, 1, 7, 320, 100, 0, 1, 0, 0, 0, 0, 0, 821, 129, 0, 0, 0, 0, 0, 208);
-INSERT INTO `mob_pools` VALUES(363, 'Battlechoir_Gitchfotch', 'Battlechoir_Gitchfotch', 334, 0x0000190400000000000000000000000000000000, 10, 1, 4, 240, 100, 0, 1, 1, 1, 2, 0, 32, 7, 159, 0, 0, 6, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(363, 'Battlechoir_Gitchfotch', 'Battlechoir_Gitchfotch', 334, 0x0000190400000000000000000000000000000000, 10, 1, 4, 240, 100, 0, 1, 1, 1, 2, 0, 32, 7, 159, 0, 0, 6, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(364, 'Battleclad_Chariot', 'Battleclad_Chariot', 63, 0x0000200700000000000000000000000000000000, 1, 1, 6, 320, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63);
 INSERT INTO `mob_pools` VALUES(365, 'Battledressed_Chariot', 'Battledressed_Chariot', 63, 0x0000200700000000000000000000000000000000, 1, 1, 6, 320, 100, 0, 1, 0, 1, 2, 0, 0, 415, 133, 16, 0, 0, 0, 0, 63);
 INSERT INTO `mob_pools` VALUES(366, 'Battlemaster_Vatgit', 'Battlemaster_Vatgit', 334, 0x0000f40700000000000000000000000000000000, 1, 1, 2, 220, 100, 0, 1, 1, 1, 0, 0, 32, 0, 2205, 0, 0, 0, 0, 0, 334);
@@ -1109,7 +1109,7 @@ INSERT INTO `mob_pools` VALUES(1045, 'Dire_Gargouille', 'Dire_Gargouille', 118, 
 INSERT INTO `mob_pools` VALUES(1046, 'Dirtyhanded_Gochakzuk', 'Dirtyhanded_Gochakzuk', 334, 0x0000190400000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 2, 0, 32, 265, 157, 0, 0, 2, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(1047, 'Dirt_Eater', 'Dirt_Eater', 258, 0x0000a90100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 310, 129, 0, 0, 9, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(1048, 'Disassembler', 'Disassembler', 0, 0x0000000000000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_pools` VALUES(1049, 'Disaster_Idol', 'Disaster_Idol', 85, 0x0000300100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 0, 2, 0, 0, 27, 135, 0, 0, 2, 0, 0, 85);
+INSERT INTO `mob_pools` VALUES(1049, 'Disaster_Idol', 'Disaster_Idol', 85, 0x0000300100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 0, 2, 241, 0, 27, 135, 0, 0, 2, 0, 0, 85);
 INSERT INTO `mob_pools` VALUES(1050, 'Disfaurit_B_D_Aurphe', 'Disfaurit_B_D_Aurphe', 222, 0x0000270200000000000000000000000000000000, 6, 6, 10, 360, 100, 0, 1, 1, 1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 898);
 INSERT INTO `mob_pools` VALUES(1051, 'Dismemberment_Grappler', 'Dismemberment_Grappler', 334, 0x0000000800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 7, 129, 0, 0, 0, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(1052, 'Distilix_Stickytoes', 'Distilix_Stickytoes', 373, 0x0000410400000000000000000000000000000000, 3, 3, 11, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 1183, 0, 0, 1, 0, 0, 373);
@@ -1523,7 +1523,7 @@ INSERT INTO `mob_pools` VALUES(1459, 'Gardsvor', 'Gardsvor', 235, 0x000038010000
 INSERT INTO `mob_pools` VALUES(1460, 'Garfurlar_the_Rabid', 'Garfurlar_the_Rabid', 246, 0x0600ac0600000000000000000000000000000000, 5, 5, 4, 230, 100, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 246);
 INSERT INTO `mob_pools` VALUES(1461, 'Gargantua', 'Gargantua', 135, 0x0000b00100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 135);
 INSERT INTO `mob_pools` VALUES(1462, 'Gargouille', 'Gargouille', 118, 0x0000b10800000000000000000000000000000000, 1, 6, 3, 240, 100, 0, 0, 0, 1, 0, 0, 0, 471, 643, 0, 0, 0, 0, 0, 118);
-INSERT INTO `mob_pools` VALUES(1463, 'Gargoyle', 'Gargoyle', 85, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 0, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 85);
+INSERT INTO `mob_pools` VALUES(1463, 'Gargoyle', 'Gargoyle', 85, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 0, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 5003);
 INSERT INTO `mob_pools` VALUES(1464, 'Gargoyle-Iota', 'Gargoyle-Iota', 83, 0x0000310100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 8177, 133, 0, 0, 4, 0, 0, 83);
 INSERT INTO `mob_pools` VALUES(1465, 'Gargoyle-Kappa', 'Gargoyle-Kappa', 83, 0x0000310100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 936, 133, 0, 0, 4, 0, 0, 83);
 INSERT INTO `mob_pools` VALUES(1466, 'Gargoyle-Lambda', 'Gargoyle-Lambda', 84, 0x0000310100000000000000000000000000000000, 7, 5, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 4, 0, 0, 84);
@@ -3232,7 +3232,7 @@ INSERT INTO `mob_pools` VALUES(3168, 'Polar_Hare', 'Polar_Hare', 404, 0x00000e01
 INSERT INTO `mob_pools` VALUES(3169, 'Polevik', 'Polevik', 101, 0x0000b70100000000000000000000000000000000, 5, 4, 3, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 131, 0, 0, 13, 0, 0, 101);
 INSERT INTO `mob_pools` VALUES(3170, 'Poltergeist', 'Poltergeist', 110, 0x0000c30100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 0, 0, 0, 795, 131, 0, 0, 0, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(3171, 'Polybotes', 'Polybotes', 126, 0x0000800200000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 1, 2, 0, 32, 2132, 157, 0, 0, 0, 0, 0, 126);
-INSERT INTO `mob_pools` VALUES(3172, 'Ponderer', 'Ponderer', 241, 0x0000680400000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 2, 0, 0, 765, 135, 0, 0, 0, 0, 0, 241);
+INSERT INTO `mob_pools` VALUES(3172, 'Ponderer', 'Ponderer', 241, 0x0000680400000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 2, 0, 0, 765, 135, 0, 0, 0, 0, 0, 706);
 INSERT INTO `mob_pools` VALUES(3173, 'Pond_Amoeban', 'Pond_Amoeban', 5, 0x00005c0900000000000000000000000000000000, 4, 8, 12, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 5);
 INSERT INTO `mob_pools` VALUES(3174, 'Pond_Sahagin', 'Pond_Sahagin', 213, 0x0000130500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 0, 0, 0, 238, 129, 0, 0, 0, 0, 0, 213);
 INSERT INTO `mob_pools` VALUES(3175, 'Poo_Yozo_the_Babbler', 'Poo_Yozo_the_Babbler', 360, 0x0000480200000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 360);
@@ -3400,7 +3400,7 @@ INSERT INTO `mob_pools` VALUES(3336, 'Razorjaw_Pugil', 'Razorjaw_Pugil', 197, 0x
 INSERT INTO `mob_pools` VALUES(3337, 'Ra_Dha_Scarscute', 'Ra_Dha_Scarscute', 202, 0x0000470800000000000000000000000000000000, 1, 1, 2, 265, 100, 0, 1, 0, 1, 2, 0, 32, 311, 157, 0, 0, 0, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(3338, 'Reactionary_Rampart', 'Reactionary_Rampart', 209, 0x00001a0700000000000000000000000000000000, 1, 1, 7, 320, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 209);
 INSERT INTO `mob_pools` VALUES(3339, 'Reacton', 'Reacton', 300, 0x00001a0100000000000000000000000000000000, 4, 4, 12, 220, 100, 0, 1, 0, 0, 2, 25, 0, 0, 3, 0, 0, 2, 0, 0, 300);
-INSERT INTO `mob_pools` VALUES(3340, 'Reapertongue_Gadgquok', 'Reapertongue_Gadgquok', 334, 0x0000190400000000000000000000000000000000, 15, 15, 4, 240, 100, 0, 1, 0, 1, 2, 0, 32, 339, 159, 0, 0, 141, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(3340, 'Reapertongue_Gadgquok', 'Reapertongue_Gadgquok', 334, 0x0000190400000000000000000000000000000000, 15, 15, 4, 240, 100, 0, 1, 0, 1, 2, 0, 32, 339, 159, 0, 0, 141, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(3341, 'Reaper_Clan_Warmachine', 'Reaper_Clan_Warmachine', 190, 0x0000ac0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 190);
 INSERT INTO `mob_pools` VALUES(3342, 'Recluse_Spider', 'Recluse_Spider', 235, 0x0000360100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 180, 643, 0, 0, 0, 0, 0, 236);
 INSERT INTO `mob_pools` VALUES(3343, 'Red_Kisser', 'Red_Kisser', 172, 0x0000140100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 290, 131, 0, 0, 0, 0, 0, 172);
@@ -3658,11 +3658,11 @@ INSERT INTO `mob_pools` VALUES(3594, 'Shewriwhile', 'Shewriwhile', 91, 0x0000a70
 INSERT INTO `mob_pools` VALUES(3595, 'Shielded_Chariot', 'Shielded_Chariot', 63, 0x0000200700000000000000000000000000000000, 1, 1, 5, 320, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 63);
 INSERT INTO `mob_pools` VALUES(3596, 'Shieldtrap', 'Shieldtrap', 114, 0x0000410500000000000000000000000000000000, 5, 5, 2, 200, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 3, 0, 0, 114);
 INSERT INTO `mob_pools` VALUES(3597, 'Shii', 'Shii', 143, 0x00006c0100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 143);
-INSERT INTO `mob_pools` VALUES(3598, 'Shikaree_X', 'Shikaree_X', 151, 0x05006b0100000000000000000000000000000000, 9, 13, 2, 240, 100, 0, 0, 0, 1, 2, 0, 32, 2290, 537, 0, 0, 0, 0, 0, 1153);
+INSERT INTO `mob_pools` VALUES(3598, 'Shikaree_X', 'Shikaree_X', 151, 0x05006b0100000000000000000000000000000000, 9, 13, 2, 240, 100, 0, 0, 0, 1, 2, 0, 32, 2290, 537, 0, 0, 455, 1, 0, 1155);
 INSERT INTO `mob_pools` VALUES(3599, 'Shikaree_Xs_Rabbit', 'Shikaree_Xs_Rabbit', 206, 0x00000d0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 206);
-INSERT INTO `mob_pools` VALUES(3600, 'Shikaree_Y', 'Shikaree_Y', 151, 0x05006a0100000000000000000000000000000000, 8, 8, 1, 240, 100, 0, 1, 0, 1, 0, 0, 32, 719, 539, 0, 0, 5, 0, 0, 1154);
-INSERT INTO `mob_pools` VALUES(3601, 'Shikaree_Z', 'Shikaree_Z', 151, 0x0500690100000000000000000000000000000000, 14, 3, 8, 240, 100, 0, 0, 0, 1, 2, 0, 32, 298, 541, 0, 0, 0, 0, 0, 1155);
-INSERT INTO `mob_pools` VALUES(3602, 'Shikaree_Zs_Wyvern', 'Shikaree_Zs_Wyvern', 193, 0x0000180000000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 714);
+INSERT INTO `mob_pools` VALUES(3600, 'Shikaree_Y', 'Shikaree_Y', 151, 0x05006a0100000000000000000000000000000000, 8, 8, 1, 480, 100, 0, 1, 0, 1, 0, 0, 32, 719, 539, 0, 0, 456, 1, 0, 1156);
+INSERT INTO `mob_pools` VALUES(3601, 'Shikaree_Z', 'Shikaree_Z', 151, 0x0500690100000000000000000000000000000000, 14, 3, 8, 400, 100, 0, 0, 0, 1, 2, 0, 32, 298, 541, 0, 0, 457, 1, 0, 1157);
+INSERT INTO `mob_pools` VALUES(3602, 'Shikaree_Zs_Wyvern', 'Shikaree_Zs_Wyvern', 193, 0x0000180000000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5002);
 INSERT INTO `mob_pools` VALUES(3603, 'Shikigami_Weapon', 'Shikigami_Weapon', 502, 0x0000de0100000000000000000000000000000000, 5, 1, 11, 220, 100, 0, 1, 0, 0, 2, 16, 0, 296, 645, 0, 0, 42, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(3604, 'Shinryu', 'Shinryu', 475, 0x00003f0900000000000000000000000000000000, 1, 4, 12, 240, 100, 0, 1, 1, 0, 2, 0, 0, 3, 409, 5, 0, 0, 0, 0, 475);
 INSERT INTO `mob_pools` VALUES(3605, 'Ship_Wight', 'Ship_Wight', 227, 0x0000400200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 0, 0, 0, 0, 0, 0, 343, 643, 0, 0, 28, 0, 0, 227);
@@ -3744,7 +3744,7 @@ INSERT INTO `mob_pools` VALUES(3680, 'Smothered_Schmidt', 'Smothered_Schmidt', 1
 INSERT INTO `mob_pools` VALUES(3681, 'Sniper_Pugil', 'Sniper_Pugil', 197, 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 16, 0, 0, 108, 135, 0, 0, 0, 0, 0, 197);
 INSERT INTO `mob_pools` VALUES(3682, 'Snipper_fished', 'Snipper', 77, 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 0, 4, 0, 0, 3913, 131, 0, 0, 0, 0, 0, 77);
 INSERT INTO `mob_pools` VALUES(3683, 'Snoll', 'Snoll', 232, 0x0000160100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 3513, 131, 0, 0, 0, 0, 0, 232);
-INSERT INTO `mob_pools` VALUES(3684, 'Snoll_Tzar', 'Snoll_Tzar', 232, 0x00001b0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 2, 1, 0, 639, 135, 0, 0, 0, 0, 0, 232);
+INSERT INTO `mob_pools` VALUES(3684, 'Snoll_Tzar', 'Snoll_Tzar', 232, 0x00001b0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 2, 1, 0, 639, 135, 0, 0, 0, 0, 0, 1158);
 INSERT INTO `mob_pools` VALUES(3685, 'Snowball', 'Snowball', 232, 0x0000160100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 237, 643, 0, 0, 0, 0, 0, 232);
 INSERT INTO `mob_pools` VALUES(3686, 'Snowflake', 'Snowflake', 232, 0x0000160100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 232);
 INSERT INTO `mob_pools` VALUES(3687, 'Snow_Devil', 'Snow_Devil', 232, 0x0000160100000000000000000000000000000000, 1, 4, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 1309, 133, 0, 0, 0, 0, 0, 232);
@@ -3765,7 +3765,7 @@ INSERT INTO `mob_pools` VALUES(3701, 'Son_of_Anansi', 'Son_of_Anansi', 235, 0x00
 INSERT INTO `mob_pools` VALUES(3702, 'Soo_Jopo_the_Fiendking', 'Soo_Jopo_the_Fiendking', 360, 0x0000390400000000000000000000000000000000, 9, 9, 5, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(3703, 'Soo_Luma_the_Ascended', 'Soo_Luma_the_Ascended', 360, 0x0000410800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(3704, 'Soulflayer', 'Soulflayer', 233, 0x0000ef0600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 404, 129, 0, 0, 28, 0, 0, 233);
-INSERT INTO `mob_pools` VALUES(3705, 'Soulsender_Fugbrag', 'Soulsender_Fugbrag', 334, 0x0000190400000000000000000000000000000000, 10, 1, 4, 240, 100, 0, 1, 1, 1, 2, 0, 32, 431, 159, 0, 0, 6, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(3705, 'Soulsender_Fugbrag', 'Soulsender_Fugbrag', 334, 0x0000190400000000000000000000000000000000, 10, 1, 4, 240, 100, 0, 1, 1, 1, 2, 0, 32, 431, 159, 0, 0, 6, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(3706, 'Soulstealer_Skullnix', 'Soulstealer_Skullnix', 133, 0x0000f90100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 133);
 INSERT INTO `mob_pools` VALUES(3707, 'Soul_Stinger', 'Soul_Stinger', 48, 0x0000100100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 238, 131, 0, 0, 0, 0, 0, 48);
 INSERT INTO `mob_pools` VALUES(3708, 'Southern_Piranu', 'Southern_Piranu', 191, 0x0000c10600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 80, 133, 0, 0, 0, 0, 0, 191);
@@ -4303,7 +4303,7 @@ INSERT INTO `mob_pools` VALUES(4239, 'Viscount_Morax', 'Viscount_Morax', 358, 0x
 INSERT INTO `mob_pools` VALUES(4240, 'Viscous_Clot', 'Viscous_Clot', 66, 0x0000260100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 66);
 INSERT INTO `mob_pools` VALUES(4241, 'Quicktrix_Hexhands', 'Quicktrix_Hexhands', 327, 0x00003e0400000000000000000000000000000000, 5, 13, 3, 240, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 3, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(4242, 'Vodyanoi', 'Vodyanoi', 86, 0x0000400100000000000000000000000000000000, 8, 8, 5, 270, 100, 0, 1, 0, 0, 2, 0, 32, 342, 155, 0, 0, 5, 0, 0, 86);
-INSERT INTO `mob_pools` VALUES(4243, 'Voidstreaker_Butchnotch', 'Voidstreaker_Butchnotch', 334, 0x0000160400000000000000000000000000000000, 13, 1, 9, 240, 100, 0, 1, 0, 1, 2, 0, 32, 7, 159, 0, 0, 7, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(4243, 'Voidstreaker_Butchnotch', 'Voidstreaker_Butchnotch', 334, 0x0000160400000000000000000000000000000000, 13, 1, 9, 240, 100, 0, 1, 0, 1, 2, 0, 32, 7, 159, 0, 0, 7, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(4244, 'Volcanic_Bats', 'Volcanic_Bats', 47, 0x0000040100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 0, 0, 64, 291, 643, 0, 0, 0, 0, 0, 47);
 INSERT INTO `mob_pools` VALUES(4245, 'Volcanic_Bomb', 'Volcanic_Bomb', 56, 0x0000180100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1, 643, 0, 0, 0, 0, 0, 56);
 INSERT INTO `mob_pools` VALUES(4246, 'Volcanic_Gas', 'Volcanic_Gas', 56, 0x0000190100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 289, 131, 0, 0, 0, 0, 0, 56);
@@ -4351,9 +4351,9 @@ INSERT INTO `mob_pools` VALUES(4287, 'Waraxe_Beak', 'Waraxe_Beak', 70, 0x0000200
 INSERT INTO `mob_pools` VALUES(4288, 'Warbler', 'Warbler', 61, 0x0000dd0700000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 879);
 INSERT INTO `mob_pools` VALUES(4289, 'Warchief_Tombstone', 'Warchief_Tombstone', 93, 0x0000200400000000000000000000000000000000, 5, 5, 11, 240, 100, 0, 1, 0, 1, 2, 1023, 0, 1813, 129, 0, 0, 3, 0, 0, 93);
 INSERT INTO `mob_pools` VALUES(4290, 'Warchief_Vatgit', 'Warchief_Vatgit', 334, 0x0000680200000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 344, 157, 0, 0, 0, 0, 0, 334);
-INSERT INTO `mob_pools` VALUES(4291, 'Warder_Aglaia', 'Warder_Aglaia', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 7106, 645, 0, 0, 0, 0, 0, 235);
-INSERT INTO `mob_pools` VALUES(4292, 'Warder_Euphrosyne', 'Warder_Euphrosyne', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 1104, 645, 0, 0, 0, 0, 0, 235);
-INSERT INTO `mob_pools` VALUES(4293, 'Warder_Thalia', 'Warder_Thalia', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 1422, 645, 0, 0, 0, 0, 0, 235);
+INSERT INTO `mob_pools` VALUES(4291, 'Warder_Aglaia', 'Warder_Aglaia', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 7106, 645, 0, 0, 0, 0, 0, 1165);
+INSERT INTO `mob_pools` VALUES(4292, 'Warder_Euphrosyne', 'Warder_Euphrosyne', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 1104, 645, 0, 0, 0, 0, 0, 1165);
+INSERT INTO `mob_pools` VALUES(4293, 'Warder_Thalia', 'Warder_Thalia', 234, 0x00000a0300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 34, 0, 0, 1422, 645, 0, 0, 0, 0, 0, 1165);
 INSERT INTO `mob_pools` VALUES(4294, 'Warlord_Rojgnoj', 'Warlord_Rojgnoj', 334, 0x0000f30300000000000000000000000000000000, 7, 7, 3, 240, 100, 0, 0, 0, 1, 2, 0, 32, 1338, 159, 0, 0, 4, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(4295, 'Wartkin', 'Wartkin', 196, 0x0000140700000000000000000000000000000000, 4, 4, 7, 150, 100, 0, 0, 0, 1, 8, 0, 0, 0, 3, 0, 0, 2, 0, 0, 196);
 INSERT INTO `mob_pools` VALUES(4296, 'War_Ajattara', 'War_Ajattara', 266, 0x0000c50800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 266);
@@ -4447,7 +4447,7 @@ INSERT INTO `mob_pools` VALUES(4383, 'Wuur_the_Sandcomber', 'Wuur_the_Sandcomber
 INSERT INTO `mob_pools` VALUES(4384, 'Wuu_Qoho_the_Razorclaw', 'Wuu_Qoho_the_Razorclaw', 360, 0x0000390400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 661, 159, 0, 0, 0, 0, 0, 710);
 INSERT INTO `mob_pools` VALUES(4385, 'Wyrm', 'Wyrm', 262, 0x00000f0300000000000000000000000000000000, 1, 1, 7, 240, 125, 1024, 1, 1, 1, 18, 0, 0, 311, 131, 0, 0, 0, 0, 0, 262);
 INSERT INTO `mob_pools` VALUES(4386, 'Wyrmfly', 'Wyrmfly', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 113);
-INSERT INTO `mob_pools` VALUES(4387, 'Wyrmgnasher_Bjakdek', 'Wyrmgnasher_Bjakdek', 334, 0x0000180400000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 0, 1, 2, 0, 32, 180, 159, 0, 0, 0, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(4387, 'Wyrmgnasher_Bjakdek', 'Wyrmgnasher_Bjakdek', 334, 0x0000180400000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 0, 1, 2, 0, 32, 180, 159, 0, 0, 0, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(4388, 'Wyrmwix_Snakespecs', 'Wyrmwix_Snakespecs', 373, 0x00003f0400000000000000000000000000000000, 14, 14, 3, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(4389, 'Wyvern', 'Wyvern', 266, 0x00008e0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 13, 0, 0, 0, 3, 0, 0, 0, 0, 0, 266);
 INSERT INTO `mob_pools` VALUES(4390, 'Wyvernpoacher_Drachlox', 'Wyvernpoacher_Drachlox', 133, 0x0000f30100000000000000000000000000000000, 11, 11, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 377, 155, 0, 0, 0, 0, 0, 133);
@@ -5218,7 +5218,7 @@ INSERT INTO `mob_pools` VALUES(5154, 'Orcish_Veteran_S', 'Orcish_Veteran_S', 189
 INSERT INTO `mob_pools` VALUES(5155, 'Gnoletrap', 'Gnoletrap', 114, 0x0000410500000000000000000000000000000000, 1, 1, 8, 200, 100, 0, 0, 0, 0, 0, 0, 0, 1, 129, 0, 0, 0, 0, 0, 114);
 INSERT INTO `mob_pools` VALUES(5156, 'Diremite', 'Diremite', 81, 0x0000490500000000000000000000000000000000, 8, 8, 5, 210, 100, 0, 1, 1, 0, 2, 0, 0, 131, 643, 0, 0, 0, 0, 0, 81);
 INSERT INTO `mob_pools` VALUES(5157, 'Diremite_Dominator', 'Diremite_Dominator', 81, 0x0000490500000000000000000000000000000000, 8, 8, 5, 210, 100, 0, 1, 1, 0, 2, 0, 0, 142, 645, 0, 0, 0, 0, 0, 81);
-INSERT INTO `mob_pools` VALUES(5158, 'Gargoyle', 'Gargoyle', 85, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 1, 0, 34, 0, 0, 7, 131, 0, 0, 0, 0, 0, 85);
+INSERT INTO `mob_pools` VALUES(5158, 'Gargoyle', 'Gargoyle', 85, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 1, 0, 34, 0, 0, 7, 131, 0, 0, 0, 0, 0, 5003);
 INSERT INTO `mob_pools` VALUES(5159, 'Modron', 'Modron', 245, 0x0000870100000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 3, 0, 0, 2, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(5160, 'Modronsdruid', 'Modronsdruid', 245, 0x00008b0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 671, 0, 0, 0, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(5161, 'Ogbunabali', 'Ogbunabali', 26, 0x0000a60800000000000000000000000000000000, 12, 12, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 7, 1183, 1, 0, 0, 0, 0, 26);
@@ -6114,11 +6114,11 @@ INSERT INTO `mob_pools` VALUES(6077, 'Deathwatch_Beetle', 'Deathwatch_Beetle', 4
 INSERT INTO `mob_pools` VALUES(6078, 'Praetorian_Guard_CCXX', 'Praetorian_Guard_CCXX', 25, 0x0000ef0400000000000000000000000000000000, 1, 1, 5, 265, 100, 0, 1, 1, 1, 18, 7, 0, 1243, 133, 0, 0, 0, 0, 256, 25);
 INSERT INTO `mob_pools` VALUES(6079, 'Praetorian_Guard_CXLVIII', 'Praetorian_Guard_CXLVIII', 25, 0x0000fc0400000000000000000000000000000000, 11, 11, 2, 265, 100, 0, 1, 1, 1, 18, 7, 0, 185, 133, 0, 0, 0, 0, 0, 25);
 INSERT INTO `mob_pools` VALUES(6080, 'Praetorian_Guard_LXXIII', 'Praetorian_Guard_LXXIII', 25, 0x0000010500000000000000000000000000000000, 4, 4, 12, 265, 100, 0, 1, 1, 1, 18, 7, 0, 291, 133, 0, 0, 2, 0, 256, 25);
-INSERT INTO `mob_pools` VALUES(6081, 'Bladeburner_Rokgevok', 'Bladeburner_Rokgevok', 334, 0x0000170400000000000000000000000000000000, 4, 1, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 34, 159, 0, 0, 2, 0, 0, 334);
-INSERT INTO `mob_pools` VALUES(6082, 'Steelshank_Kratzvatz', 'Steelshank_Kratzvatz', 334, 0x0000180400000000000000000000000000000000, 7, 9, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 245, 159, 0, 0, 4, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(6081, 'Bladeburner_Rokgevok', 'Bladeburner_Rokgevok', 334, 0x0000170400000000000000000000000000000000, 4, 1, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 34, 159, 0, 0, 2, 0, 0, 1166);
+INSERT INTO `mob_pools` VALUES(6082, 'Steelshank_Kratzvatz', 'Steelshank_Kratzvatz', 334, 0x0000180400000000000000000000000000000000, 7, 9, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 245, 159, 0, 0, 4, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(6083, 'Kratzvatzs_Hecteyes', 'Kratzvatzs_Hecteyes', 139, 0x0000800100000000000000000000000000000000, 4, 4, 12, 280, 100, 0, 1, 0, 1, 8, 0, 32, 865, 155, 0, 0, 10, 0, 0, 139);
-INSERT INTO `mob_pools` VALUES(6084, 'Bloodfist_Voshgrosh', 'Bloodfist_Voshgrosh', 334, 0x0000160400000000000000000000000000000000, 8, 2, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 7, 159, 0, 0, 5, 0, 0, 334);
-INSERT INTO `mob_pools` VALUES(6085, 'Spellspear_Djokvukk', 'Spellspear_Djokvukk', 334, 0x0000180400000000000000000000000000000000, 14, 5, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 1195, 159, 0, 0, 3, 0, 0, 334);
+INSERT INTO `mob_pools` VALUES(6084, 'Bloodfist_Voshgrosh', 'Bloodfist_Voshgrosh', 334, 0x0000160400000000000000000000000000000000, 8, 2, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 7, 159, 0, 0, 5, 0, 0, 1166);
+INSERT INTO `mob_pools` VALUES(6085, 'Spellspear_Djokvukk', 'Spellspear_Djokvukk', 334, 0x0000180400000000000000000000000000000000, 14, 5, 8, 240, 100, 0, 1, 1, 1, 2, 0, 32, 1195, 159, 0, 0, 3, 0, 0, 1166);
 INSERT INTO `mob_pools` VALUES(6086, 'Djokvukks_Wyvern', 'Djokvukks_Wyvern', 193, 0x0000f90200000000000000000000000000000000, 14, 14, 7, 200, 100, 0, 1, 0, 1, 8, 0, 32, 0, 155, 0, 0, 0, 0, 0, 714);
 INSERT INTO `mob_pools` VALUES(6087, 'Arch_Overlord_Tombstone', 'Arch_Overlord_Tombstone', 93, 0x0000210400000000000000000000000000000000, 5, 4, 11, 240, 100, 0, 1, 1, 1, 2, 1023, 0, 6144, 129, 5, 0, 49, 0, 0, 93);
 INSERT INTO `mob_pools` VALUES(6088, 'AaNyu_Dismantler', 'AaNyu_Dismantler', 337, 0x00001d0400000000000000000000000000000000, 8, 8, 4, 240, 100, 0, 1, 1, 1, 2, 0, 32, 661, 159, 0, 0, 5, 0, 0, 705);

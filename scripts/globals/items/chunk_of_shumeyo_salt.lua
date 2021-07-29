@@ -11,15 +11,17 @@ require("scripts/globals/player")
 
 local ID = require("scripts/zones/Bearclaw_Pinnacle/IDs")
 
-function onItemCheck(target)
+function onItemCheck(target, param, player)
+    local result = 0
 	local id = target:getID()
-    
-    -- only can use this item on snoll tzar
-	if id ~= 16801793 then
-        return tpz.msg.basic.ITEM_UNABLE_TO_USE
+
+	if id ~= 16801793 then -- snoll tzar
+        result = tpz.msg.basic.ITEM_UNABLE_TO_USE
+    elseif target:checkDistance(player) > 10 then
+        result = tpz.msg.basic.TOO_FAR_AWAY
     end
 
-    return 0
+    return result
 end
 
 function onItemUse(target, player)

@@ -652,7 +652,7 @@ public:
     virtual void OnDeathTimer();
     virtual void OnRaise() {}
     virtual void TryHitInterrupt(CBattleEntity* PAttacker);
-    virtual void OnDespawn(CDespawnState&);
+    virtual void OnDespawn();
 
     void SetBattleStartTime(time_point);
     duration GetBattleTime();

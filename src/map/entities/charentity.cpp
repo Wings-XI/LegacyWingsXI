@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -237,6 +237,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_lastPacketTime = time(NULL);
+    m_packetLimiterEnabled = false;
 
     m_distanceLastCheckTime = m_lastPacketTime;
     m_distanceFromLastCheck = 0.0;
@@ -290,11 +291,14 @@ void CCharEntity::clearPacketList()
     }
 }
 
-void CCharEntity::pushPacket(CBasicPacket* packet)
+void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
 {
     TracyZoneScoped;
     TracyZoneIString(GetName());
     TracyZoneHex16(packet->id());
+
+    if (priorityNumOverride != 0xFF)
+        packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
@@ -307,40 +311,145 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
         pktsize -= 0x18;
         memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
     }
+
+    bool packetUpdatesPosition = false;
+    uint32 entityID = 0;
+
     if (packet->getType() == 0x0E)
-    {
-        // Entity update. To prevent spamming we will check whether the vector
-        // already has a packet updating the same entity, in which case we will
-        // merge them into a single packet.
-        CEntityUpdatePacket* thisPacket = dynamic_cast<CEntityUpdatePacket*>(packet);
-        if (thisPacket)
+    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+        packetUpdatesPosition = true;
+        entityID = ref<uint32>(packet->getData(), 0x04);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
         {
-            int num_packets = PacketList.size();
-            for (int i = 0; i < num_packets; i++)
-            {
-                auto currentPacket = PacketList[i];
-                if (currentPacket->getType() == 0x0E)
+            if ((*it)->getType() == 0x0E && ref<uint32>((*it)->getData(), 0x04) == entityID)
+            { // match found, already an update queued for this entity
+                if (packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                 {
-                    auto currentPacket = PacketList[i];
-                    CEntityUpdatePacket* currentEntityPacket = dynamic_cast<CEntityUpdatePacket*>(currentPacket);
-                    if ((currentEntityPacket) &&
-                        (currentEntityPacket->getEntityId() == thisPacket->getEntityId()) &&
-                        (currentEntityPacket->getTargId() == thisPacket->getTargId()))
+                    if ((*it)->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                     {
-                        // PEntity stored in the current packet is assumed to still be valid.
-                        ShowDebug("Merging two entity update packets into a single packet.\n");
-                        currentEntityPacket->merge(thisPacket);
+                        if ((*it)->packetUpdateMask | UPDATE_LOOK && !(packet->packetUpdateMask | UPDATE_LOOK))
+                        {
+                            // wait to update their look before pushing any new updates.
+                            delete packet;
+                            return;
+                        }
+                        // i am the newer packet with more up-to-date information so i supercede this one
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                    else
+                    {
+                        // there is a pending update to spawn or despawn this entity, let's wait for that to go through
+                        // before trying to send any update information about it
                         delete packet;
                         return;
                     }
                 }
+                else
+                {
+                    // i am updating spawn/despawn of the mob. no matter what i run into, i supercede it
+                    delete (*it);
+                    it = PacketList.erase(it);
+                    break;
+                }
+                
+            }
+            else
+            {
+                it++;
             }
         }
     }
+
+    if (packet->getType() == 0x0D)
+    { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
+        packetUpdatesPosition = true;
+        entityID = ref<uint32>(packet->getData(), 0x04);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x0D && ref<uint32>((*it)->getData(), 0x04) == entityID)
+            { // match found, already an update queued for this character
+                if ((*it)->packetUpdateMask | UPDATE_LOOK)
+                {
+                    if (packet->packetUpdateMask | UPDATE_LOOK)
+                    {
+                        // i update look as well, and my information is more up-to-date.
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                    else
+                    {
+                        // all my info is more up-to-date but i don't update look, i steal yours.
+                        memcpy(packet->getData() + 0x48, (*it)->getData() + 0x48, 0x12);
+                        packet->packetUpdateMask |= UPDATE_LOOK;
+                        ref<uint8>(packet->getData(), 0x0A) |= UPDATE_LOOK;
+                        delete (*it);
+                        it = PacketList.erase(it);
+                        break;
+                    }
+                }
+                else
+                {
+                    // my information is more up-to-date.
+                    delete (*it);
+                    it = PacketList.erase(it);
+                    break;
+                }
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    if (packet->getType() == 0x37)
+    { // there can only be one of me. decide which one has the most up-to-date information to send.
+        entityID = ref<uint32>(packet->getData(), 0x24);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x37 && ref<uint32>((*it)->getData(), 0x24) == entityID)
+            { // match found, already an update queued for this character
+                // my information is more up-to-date.
+                delete (*it);
+                it = PacketList.erase(it);
+                break;
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    if (packetUpdatesPosition || packet->getType() == 0x5B)
+    { // remove any position packets we have queued (0x5B)
+        entityID = entityID ? entityID : ref<uint32>(packet->getData(), 0x10);
+        auto it = PacketList.cbegin();
+        while (it != PacketList.cend())
+        {
+            if ((*it)->getType() == 0x5B && ref<uint32>((*it)->getData(), 0x10) == entityID)
+            {
+                delete (*it);
+                it = PacketList.erase(it);
+                break;
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
     PacketList.push_back(packet);
 }
 
-void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet)
+void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet, int priorityNumOverride)
 {
     pushPacket(packet.release());
 }
@@ -359,13 +468,23 @@ PacketList_t CCharEntity::getPacketList()
     return PacketList;
 }
 
+PacketList_t* CCharEntity::getPacketListPtr()
+{
+    return &PacketList;
+}
+
+std::mutex* CCharEntity::getPacketListMutexPtr()
+{
+    return &m_PacketListMutex;
+}
+
 size_t CCharEntity::getPacketCount()
 {
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
     return PacketList.size();
 }
 
-void CCharEntity::erasePackets(uint8 num)
+void CCharEntity::erasePackets(uint16 num)
 {
     for (auto i = 0; i < num; i++)
     {
@@ -684,6 +803,11 @@ void CCharEntity::PostTick()
     }
     if (updatemask)
     {
+        if (!m_EffectsChanged)
+        {
+            pushPacket(new CCharUpdatePacket(this));
+            pushPacket(new CCharSyncPacket(this));
+        }
         if (loc.zone && !m_isGMHidden)
         {
             loc.zone->PushPacket(this, CHAR_INRANGE, new CCharPacket(this, ENTITY_UPDATE, updatemask));
@@ -702,9 +826,6 @@ void CCharEntity::PostTick()
                 }
             });
         }
-        // Do not send an update packet when only the position has change
-        if (updatemask ^ UPDATE_POS)
-        pushPacket(new CCharUpdatePacket(this));
         updatemask = 0;
     }
 }
@@ -1317,17 +1438,24 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 }
             }
         }
-        //#TODO: make this generic enough to not require an if
-        else if (PAbility->isAoE() && this->PParty != nullptr)
+        else
         {
-            PAI->TargetFind->reset();
+            std::vector<CBattleEntity*> targets = { PTarget };
+            auto& PTargets = targets;
+            bool first = true;
 
-            float distance = PAbility->getRange();
+            if (PAbility->isAoE() && this->PParty != nullptr)
+            {
+                PAI->TargetFind->reset();
 
-            PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+                float distance = PAbility->getRange();
 
-            uint16 msg = 0;
-            for (auto&& PTarget : PAI->TargetFind->m_targets)
+                PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+
+                PTargets = PAI->TargetFind->m_targets;
+            }
+
+            for (auto&& PTarget : PTargets)
             {
                 actionList_t& actionList = action.getNewActionList();
                 actionList.ActionTargetID = PTarget->id;
@@ -1335,63 +1463,41 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.reaction = REACTION_NONE;
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 actionTarget.animation = PAbility->getAnimationID();
-                actionTarget.messageID = PAbility->getMessage();
+                actionTarget.messageID = 0;
+                actionTarget.param = 0;
 
                 if (PTarget->isSuperJumped)
                 {
+                    actionTarget.animation = ANIMATION_NONE;
                     actionTarget.messageID = 0;
-                    continue;
                 }
-
-                if (msg == 0) {
-                    msg = PAbility->getMessage();
-                }
-                else {
-                    msg = PAbility->getAoEMsg();
-                }
-
-                if (actionTarget.param < 0)
+                else
                 {
-                    msg = ability::GetAbsorbMessage(msg);
-                    actionTarget.param = -actionTarget.param;
+                    int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+
+                    // If a script set messageID directly, use that;
+                    // otherwise, use the ability's message id.
+                    if (actionTarget.messageID == 0)
+                    {
+                        actionTarget.messageID = first ? PAbility->getMessage() : PAbility->getAoEMsg();
+                    }
+
+                    // Display a generic message for the caster if no message is set.
+                    if (first && actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
+
+                    actionTarget.param = value;
+
+                    if (value < 0)
+                    {
+                        actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
+                        actionTarget.param = -value;
+                    }
+
+                    state.ApplyEnmity();
                 }
 
-                actionTarget.messageID = msg;
-                actionTarget.param = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+                first = false;
             }
-        }
-        else
-        {
-            actionList_t& actionList = action.getNewActionList();
-            actionList.ActionTargetID = PTarget->id;
-            actionTarget_t& actionTarget = actionList.getNewActionTarget();
-            actionTarget.reaction = REACTION_NONE;
-            actionTarget.speceffect = SPECEFFECT_RECOIL;
-            actionTarget.animation = PAbility->getAnimationID();
-            actionTarget.param = 0;
-            auto prevMsg = actionTarget.messageID;
-
-            if (PTarget->isSuperJumped)
-            {
-                actionTarget.animation = ANIMATION_NONE;
-                actionTarget.messageID = 0;
-            }
-            else
-            {
-                int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
-                if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
-                if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
-                actionTarget.param = value;
-
-                if (value < 0)
-                {
-                    actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
-                    actionTarget.param = -value;
-                }
-
-                state.ApplyEnmity();
-            }
-
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 

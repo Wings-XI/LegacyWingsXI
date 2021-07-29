@@ -8,10 +8,14 @@ require("scripts/globals/msg")
 require("scripts/globals/status")
 
 function onItemCheck(target)
+    local result = 0
+    
 	if target:getSystem() ~= 12 then -- empty
-        return tpz.msg.basic.ITEM_UNABLE_TO_USE
-    end
-    return 0
+        result tpz.msg.basic.ITEM_UNABLE_TO_USE
+    elseif target:checkDistance(player) > 10 then
+        result = tpz.msg.basic.TOO_FAR_AWAY
+
+    return result
 end
 
 function onItemUse(target)

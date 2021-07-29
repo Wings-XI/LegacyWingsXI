@@ -283,6 +283,7 @@ void LoginSession::LoadCharacterList()
             Database::RealEscapeString(strDBPrefix).c_str(),
             Database::RealEscapeString(strDBPrefix).c_str(),
             contentIdsStr.c_str());
+        LOCK_DB;
         LOCK_PWORLDDB(it->second.pWorldDBConnection);
         mariadb::result_set_ref pWorldResultSet = it->second.pWorldDBConnection->GetDatabase()->query(strWorldSqlFinalQuery);
         while (pWorldResultSet->next()) {
@@ -345,7 +346,7 @@ void LoginSession::LoadCharacterList()
                     pWorldResultSet->get_unsigned32(1));
             }
             //LOG_DEBUG0("SQL: %s", strSqlFinalQuery.c_str());
-            LOCK_DB;
+            //LOCK_DB;
             DB->execute(strSqlFinalQuery);
         }
     }
@@ -533,7 +534,8 @@ uint32_t LoginSession::GenerateNewCharID(uint8_t cWorldID)
         LOG_ERROR("Character ID already reserved for this session: %d.", mdwReservedCharID);
         throw std::runtime_error("Character ID already reserved.");
     }
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     uint32_t dwNewCharID = WorldManager::GetInstance()->GetNewCharIDForWorld(cWorldID);
     mdwReservedCharID = dwNewCharID;
     mcReservedCharWorld = cWorldID;
