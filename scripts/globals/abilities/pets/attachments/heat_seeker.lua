@@ -24,6 +24,7 @@ function onEquip(pet)
                 end
                 if amount ~= 0 then
                     pet:addMod(tpz.mod.ACC, amount)
+                    pet:addMod(tpz.mod.RACC, amount)
                 end
             else
                 amount = -1 * dt
@@ -32,6 +33,7 @@ function onEquip(pet)
                 end
                 if amount ~= 0 then
                     pet:delMod(tpz.mod.ACC, -amount)
+                    pet:delMod(tpz.mod.RACC, -amount)
                 end
             end
             if amount ~= 0 then
@@ -43,6 +45,7 @@ function onEquip(pet)
     pet:addListener("DISENGAGE", "AUTO_HEAT_SEEKER_DISENGAGE", function(pet)
         if pet:getLocalVar("heatseeker") > 0 then
             pet:delMod(tpz.mod.ACC, pet:getLocalVar("heatseeker"))
+            pet:delMod(tpz.mod.RACC, pet:getLocalVar("heatseeker"))
             pet:setLocalVar("heatseeker", 0)
         end
         pet:setLocalVar("heatseekertick", 0)
