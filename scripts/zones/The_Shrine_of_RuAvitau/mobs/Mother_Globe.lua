@@ -180,25 +180,30 @@ function spawnPetInBattle(mob, pet)
     mob:SetAutoAttackEnabled(false)
     mob:SetMagicCastingEnabled(false)
     mob:SetMobAbilityEnabled(false)
+
     mob:timer(3000, function(mob)
-        mob:entityAnimationPacket("shsm")
-        mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-        mob:SetMobAbilityEnabled(true)
-        pet:spawn()
-        pet:updateEnmity(mob:getTarget())
+        if mob:isAlive() then
+            mob:entityAnimationPacket("shsm")
+            mob:SetAutoAttackEnabled(true)
+            mob:SetMagicCastingEnabled(true)
+            mob:SetMobAbilityEnabled(true)
+            pet:spawn()
+            pet:updateEnmity(mob:getTarget())
+        end
     end)
 end
 
 function spawnPetRoaming(mob, pet, pPet)
     mob:entityAnimationPacket("casm")
     mob:timer(3000, function(mob)
-        mob:entityAnimationPacket("shsm")
-        pet:spawn()
-        if pPet == nil then
-            pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15) 
-        else
-            pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+        if mob:isAlive() then
+            mob:entityAnimationPacket("shsm")
+            pet:spawn()
+            if pPet == nil then
+                pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15) 
+            else
+                pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+            end
         end
     end)
 end

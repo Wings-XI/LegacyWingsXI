@@ -46,8 +46,10 @@ function onMobFight( mob, target )
             mob:SetMagicCastingEnabled(false)
             mob:SetMobAbilityEnabled(false)
             mob:timer(3000, function(mob)
-                mob:entityAnimationPacket("shsm")
-                spawnGod(mob)
+                if mob:isAlive() then
+                    mob:entityAnimationPacket("shsm")
+                    spawnGod(mob)
+                end
             end)
         end
     end
