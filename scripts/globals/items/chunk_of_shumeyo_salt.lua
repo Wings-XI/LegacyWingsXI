@@ -32,9 +32,5 @@ function onItemUse(target, player)
         target:setLocalVar("cooldown", os.time() + math.random(15, 20))
         target:setLocalVar("salty", 1)
         target:setLocalVar("melt", 1)    
-        -- reset user's enmity
-        target:resetEnmity(player)
     end
-    -- else 
-    -- no effect... retail doesnt have a message but item is still consumed
 end

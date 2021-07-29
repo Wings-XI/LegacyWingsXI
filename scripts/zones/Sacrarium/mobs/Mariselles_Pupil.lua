@@ -27,12 +27,12 @@ local function Teleport(mob, hideDuration)
     end
 
     mob:timer(hideDuration, function(mob)
-        mob:hideName(false)
-        mob:untargetable(false)
-        mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-        mob:SetMobAbilityEnabled(true)
-        mob:SetMobSkillAttack(true)
+    mob:hideName(false)
+    mob:untargetable(false)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMobSkillAttack(true)
 
         if mob:isDead() then
             return
@@ -42,10 +42,10 @@ local function Teleport(mob, hideDuration)
     end)
 end
 
+function onMobSpawn(mob)
+end
+
 function onMobFight(mob, target)
-    mob:setMobMod(tpz.mobMod.TELEPORT_TYPE, 1)
-    mob:setMobMod(tpz.mobMod.SPAWN_LEASH, 1)
-    mob:setMobMod(tpz.mobMod.TELEPORT_CD, 1)
 
     -- Setting up potential tele locations in each room that can be referenced later
     SW = --Southwest room
@@ -121,36 +121,43 @@ function onMobFight(mob, target)
         {100.0483, -2, 116.4553}
     }
 
+    
     local teleTime = mob:getLocalVar("teleTime")
-
-    if mob:getBattleTime() - teleTime > 30 and mob:getBattleTime() > 3 then             
-        if GetServerVariable("Old_Prof_Spawn_Location") == 2 then
+    if mob:getBattleTime() - teleTime > 30 and mob:getBattleTime() > 3 then     
+        local profLocation = GetNPCByID(16892155):getLocalVar("profLocation")     
+        if profLocation == 2 then
             randPos1 = NE[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 3 then
+            mob:setSpawn(randPos1)
+        elseif profLocation == 3 then
             randPos1 = NM[math.random((1), (9))]
             Teleport(mob, 2000)
-            mob:setPos(randPos1, 0)        
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 4 then
+            mob:setPos(randPos1, 0)
+            mob:setSpawn(randPos1)       
+        elseif profLocation == 4 then
             randPos1 = NW[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 5 then 
+            mob:setSpawn(randPos1)
+        elseif profLocation == 5 then 
             randPos1 = SE[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 6 then
+            mob:setSpawn(randPos1)
+        elseif profLocation == 6 then
             randPos1 = SM[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
+            mob:setSpawn(randPos1)
         else
             randPos1 = SW[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
+            mob:setSpawn(randPos1)
         end      
         mob:setLocalVar("teleTime", mob:getBattleTime())
-    end          
+    end   
 end
 
 function onMobDisengage(mob)
@@ -161,4 +168,27 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn( mob )
+end
+
+function onMobRoam(mob)
+    local profLocation = GetNPCByID(16892155):getLocalVar("profLocation")
+    if profLocation == 2 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 101.169, -3.111, 127.279}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 3 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 61.168, -3.111, 127.288}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 4 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 21.169, -3.111, 127.279}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 5 then 
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 101.170, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 6 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 101.170, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+    else
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 21.769, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+    end
 end

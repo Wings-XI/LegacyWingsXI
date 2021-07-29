@@ -40,14 +40,6 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         bool bIpExempt = false;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
-        // Check IP address block before everything so we don't have
-        // to do extra work.
-        if (IsIPAddressBlocked()) {
-            LOG_DEBUG1("IP address of the user is blocked.");
-            mLastError = AUTH_IP_BLOCKED;
-            LogAccess(0, AUTH_OP_LOGIN, false, false);
-            return 0;
-        }
         std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
@@ -89,6 +81,10 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         else if ((dwStatus != 1) || (dwPrivileges & ACCT_PRIV_ENABLED) == 0) {
             LOG_DEBUG1("Account %s is disabled.", pszUsername);
             mLastError = AUTH_ACCOUNT_DISABLED;
+        }
+        else if (IsIPAddressBlocked()) {
+            LOG_DEBUG1("IP address of the user is blocked.");
+            mLastError = AUTH_IP_BLOCKED;
         }
         if (mLastError == AUTH_SUCCESS && Config->GetConfigUInt("maintenance_mode") != 0) {
             if ((dwPrivileges & ACCT_PRIV_MAINT_MODE_ACCESS) == 0) {
