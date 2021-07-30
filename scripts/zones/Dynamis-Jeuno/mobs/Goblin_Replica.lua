@@ -8,6 +8,7 @@ require("scripts/globals/dynamis")
 local zone = 188
 
 function onMobSpawn(mob)
+    if mob:getID() == 17547957 then mob:speed(0) end -- statue 293 cannot be pulled out of palace
     require("scripts/zones/Dynamis-Jeuno/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)

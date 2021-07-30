@@ -100,8 +100,16 @@ void CMobSkillState::SpendCost()
 {
     if (m_PSkill->isTpSkill())
     {
-        m_spentTP = m_PEntity->health.tp;
-        m_PEntity->health.tp = 0;
+        if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI))
+        {
+            m_spentTP = 1000;
+            m_PEntity->health.tp = m_PEntity->health.tp < 1000 ? 0 : m_PEntity->health.tp - 1000;
+        }
+        else
+        {
+            m_spentTP = m_PEntity->health.tp;
+            m_PEntity->health.tp = 0;
+        }
     }
 }
 
