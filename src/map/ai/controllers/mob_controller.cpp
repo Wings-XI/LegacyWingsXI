@@ -1089,7 +1089,7 @@ bool CMobController::Engage(uint16 targid)
         { // dyna SMN: summon my avatar immediately
             m_LastMagicTime = m_Tick;
             m_LastSpecialTime = m_Tick;
-            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells())
+            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells() && !PMob->PPet)
             {
                 if (auto spellID = PMob->SpellContainer->GetBuffSpell())
                     CastSpell(spellID.value());
