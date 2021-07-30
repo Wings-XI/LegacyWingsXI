@@ -400,6 +400,8 @@ function canDetectorSummonSC(mob)
 end
 
 function spawnCaretaker(mob, caretaker, target)
+    local petCount = mob:getLocalVar("petCount")
+
     caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
     caretaker:spawn()
     caretaker:updateEnmity(target)
@@ -407,9 +409,10 @@ function spawnCaretaker(mob, caretaker, target)
 end
 
 function spawnSteamCleaner(mob, target)
+    local petCount = mob:getLocalVar("petCount")
     local now = os.time()
     local sc = GetMobByID(ID.mob.STEAM_CLEANER)
-    if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 10) then
+    if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 20) then
        if not sc:isSpawned() then
           sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
           sc:spawn()
