@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -5733,13 +5733,6 @@ namespace battleutils
         }
         else if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
         {
-            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PIANISSIMO))
-            {
-                if (PSpell->getAOE() == SPELLAOE_PIANISSIMO)
-                {
-                    cast = base / 2;
-                }
-            }
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTINGALE))
             {
                 //if (PEntity->objtype == TYPE_PC &&
