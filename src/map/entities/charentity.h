@@ -398,6 +398,7 @@ public:
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
     bool              m_packetLimiterEnabled;       // on zone in, we take off packet limiter so we can send the massive amount of info of the char loading in
+    time_point        m_objectCreationTime;         // used to measure when to turn off the packet limiter
     time_t            m_lastPacketTime;             // Last time a packet was received from the player
 
     bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?
