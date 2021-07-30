@@ -2323,8 +2323,6 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
         *buffsize += PSmallPacket->length();
         //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
-        if (PSmallPacket->getType() == 0x1D && !PChar->m_packetLimiterEnabled)
-            PChar->m_packetLimiterEnabled = true; // inventory finish packet means we can turn on the limiter
         packetList.pop_front();
     }
 
@@ -2351,6 +2349,9 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
             }
         }
     }
+
+    if (!PChar->m_packetLimiterEnabled && std::chrono::system_clock::now() - PChar->m_objectCreationTime > 45s)
+        PChar->m_packetLimiterEnabled = true;
     
     if (packetsRemaining > 500 && PChar->m_packetLimiterEnabled)
     {

@@ -238,6 +238,7 @@ CCharEntity::CCharEntity()
     m_needTellFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
+    m_objectCreationTime = std::chrono::system_clock::now();
 
     m_distanceLastCheckTime = m_lastPacketTime;
     m_distanceFromLastCheck = 0.0;
