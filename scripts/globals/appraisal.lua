@@ -1272,8 +1272,12 @@ tpz.appraisalUtil.appraisalItems =
 }
 
 
-tpz.appraisalUtil.appraiseItem = function(player, npc, trade, gil, appraisalCsid)    
+tpz.appraisalUtil.appraiseItem = function(player, npc, trade, gil, appraisalCsid, dialogs)
     if player:getGil() >= gil then
+        if npcUtil.tradeHas(trade, { {4101, 2} }, true, false) then
+            player:messageSpecial(dialogs[2])
+            return
+        end
         for _, v in pairs(tpz.appraisalUtil.questionMarkItems) do            
             if npcUtil.tradeHasExactly(trade, v) then
                 local tradeID = trade:getItemId()
@@ -1282,12 +1286,15 @@ tpz.appraisalUtil.appraiseItem = function(player, npc, trade, gil, appraisalCsid
                 local item  = itemPick(player, info, appraisalID)
 
                 if item ~= 0 then
+                    player:delGil(gil)
                     player:startEvent(appraisalCsid, 1, item)
                     player:setLocalVar("Appraisal", item) -- anticheat
                 end
                 break
             end
         end
+    else
+        player:messageSpecial(dialogs[1])
     end
 end
 
