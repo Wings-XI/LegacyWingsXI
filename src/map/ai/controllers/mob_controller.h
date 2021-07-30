@@ -48,6 +48,9 @@ public:
     void TapDeclaimTime();
     virtual bool Cast(uint16 targid, SpellID spellid) override;
 
+    bool DeaggroEntity(CBattleEntity* PEntity);
+    bool DeaggroAll();
+
 protected:
     virtual bool TryDeaggro();
 
@@ -90,6 +93,9 @@ private:
 
     bool m_firstSpell{ true };
     time_point m_LastRoamScript {time_point::min()};
+
+    std::vector<CBattleEntity*> m_forcedDeaggroEntities;
+    bool m_forceDeaggroAll;
 };
 
 #endif // _AI_CONTROLLER_H

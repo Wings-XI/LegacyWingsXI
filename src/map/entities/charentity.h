@@ -197,7 +197,6 @@ typedef std::vector<EntityID_t> BazaarList_t;
 class CCharEntity : public CBattleEntity
 {
 public:
-
     jobs_t					jobs;							// доступрые профессии персонажа
     keyitems_t				keys;							// таблица ключевых предметов
     event_t					m_event;						// структура для запуска событый
@@ -205,9 +204,11 @@ public:
 
     nameflags_t				nameflags;						// флаги перед именем персонажа
     nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
+    uint64                  chatFilterFlags;                // Chat Filters
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
+    bool                    m_disconnecting;                // Player is currently disconnecting from the server
 
     profile_t				profile;						// профиль персонажа (все, что связывает города и персонажа)
     expChain_t				expChain;						// Exp Chains
@@ -290,13 +291,15 @@ public:
     uint8             GetGender();                  // узнаем пол персонажа
 
     void              clearPacketList();            // отчистка PacketList
-    void              pushPacket(CBasicPacket*);    // добавление копии пакета в PacketList
-    void              pushPacket(std::unique_ptr<CBasicPacket>);    // push packet to packet list
+    void              pushPacket(CBasicPacket*, int priorityNumOverride = 0xFF);    // добавление копии пакета в PacketList
+    void              pushPacket(std::unique_ptr<CBasicPacket>, int priorityNumOverride = 0xFF);    // push packet to packet list
     bool			  isPacketListEmpty();          // проверка размера PacketList
     CBasicPacket*	  popPacket();                  // получение первого пакета из PacketList
     PacketList_t      getPacketList();              // returns a COPY of packet list
+    PacketList_t*     getPacketListPtr();           // by pointer instead
+    std::mutex*       getPacketListMutexPtr();      // always use this when doing stuff with getPacketListPtr
     size_t            getPacketCount();
-    void              erasePackets(uint8 num);      // erase num elements from front of packet list
+    void              erasePackets(uint16 num);      // erase num elements from front of packet list
     virtual void      HandleErrorMessage(std::unique_ptr<CBasicPacket>&) override;
 
     CLinkshell*       PLinkshell1;                  // linkshell, в которой общается персонаж
@@ -341,10 +344,12 @@ public:
 
     uint8			  m_hasTractor;					// checks if player has tractor already
     uint8			  m_hasRaise;					// checks if player has raise already
+    bool              m_resendRaise;                // force resending raise menu
     uint8             m_hasAutoTarget;              // возможность использования AutoTarget функции
     position_t		  m_StartActionPos;				// позиция начала действия (использование предмета, начало стрельбы, позиция tractor)
 
     time_point        m_lastDig;
+    position_t        m_lastDigPosition;
 
     uint32			  m_PlayTime;
     uint32			  m_SaveTime;
@@ -375,6 +380,8 @@ public:
     bool              getBlockingAid();
     void              setBlockingAid(bool isBlockingAid);
 
+    void              RefreshSpawns();
+
     bool              m_EquipSwap;					// true if equipment was recently changed
     bool              m_EffectsChanged;
     time_point        m_LastSynthTime;
@@ -390,8 +397,11 @@ public:
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
-
+    bool              m_packetLimiterEnabled;       // on zone in, we take off packet limiter so we can send the massive amount of info of the char loading in
     time_t            m_lastPacketTime;             // Last time a packet was received from the player
+
+    bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?
+    bool              isYellSpamFiltered() const;   // Does the user have "all yell/shout messages deemed spam" filtered?
 
     int16 addTP(int16 tp) override;
     int32 addHP(int32 hp) override;
@@ -419,6 +429,7 @@ public:
     virtual void delTrait(CTrait*) override;
 
     bool IsMobOwner(CBattleEntity* PTarget);
+    bool IsPartiedWith(CCharEntity* PTarget);
     virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
     virtual bool CanUseSpell(CSpell*) override;
 
@@ -488,7 +499,7 @@ private:
     bool            m_isBlockingAid;
     bool			m_reloadParty;
 
-    PacketList_t      PacketList;					// the list of packets to be sent to the character during the next network cycle
+    PacketList_t    PacketList;					// the list of packets to be sent to the character during the next network cycle
 
     std::mutex      m_PacketListMutex;
 };

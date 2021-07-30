@@ -29,7 +29,7 @@ function onTrigger(player, npc)
         local prog = player:getCharVar("QuestMakingHeadlines_var")
 
         if not testflag(tonumber(prog), 16) and testflag(tonumber(prog), 8) then
-            player:messageSpecial(7208, 1, tpz.ki.WINDURST_WOODS_SCOOP) -- Confirm Story
+            player:messageSpecial(7263, 1, tpz.ki.WINDURST_WOODS_SCOOP) -- Confirm Story
             player:setCharVar("QuestMakingHeadlines_var", prog+16)
         else
             player:startEvent(44) -- "The door is firmly shut"

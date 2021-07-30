@@ -1,13 +1,12 @@
 ---------------------------------------------
 -- Chthonian Ray
--- Only used by Eldertaur
--- Description: Inflicts Doom to enemies within a fan-shaped area originating from the caster..
+-- Only used by Mindertaur
+-- Description: Inflicts Doom to enemies with a gaze attack.  The doom effect from this move cannot be removed.
 -- Type: Magical (Dark)
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/status")
 require("scripts/globals/settings")
-local ID = require("scripts/zones/Bearclaw_Pinnacle/IDs")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -16,14 +15,8 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DOOM
-    local battlefield = mob:getBattlefield()
-    local players = battlefield:getPlayers()
-
-    for _, player in pairs(players) do
-        if (target:isFacing(mob)) then
-            player:addStatusEffect(typeEffect, 10, 3, 15)
-        end
-    end
+    -- Setting the Power to be greater than the default 10 to make this effect not-removeable
+    skill:setMsg(MobGazeMove(mob, target, typeEffect, 11, 3, 30))
 
     return typeEffect
 end

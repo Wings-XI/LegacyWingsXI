@@ -59,6 +59,7 @@ class CParty
 public:
     CParty(CBattleEntity* PEntity);
 	CParty(uint32 id);
+    ~CParty();
 
     uint32 GetPartyID();                                // узнаем уникальный ID группы
     uint16 GetMemberFlags(CBattleEntity* PEntity);      // получаем список флагов персонажа
@@ -88,6 +89,7 @@ public:
     void SetPartyNumber(uint8 number);
 
     uint32 GetTimeLastMemberJoined();
+    uint32 GetRealNumberOfPeople();
     bool HasTrusts();
 
     void PushPacket(uint32 senderID, uint16 ZoneID, CBasicPacket* packet);		// отправляем пакет всем членам группы, за исключением PPartyMember

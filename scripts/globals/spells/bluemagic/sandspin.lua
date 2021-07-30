@@ -23,12 +23,12 @@ end
 
 function onSpellCast(caster, target, spell)
     local params = {}
-    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.eco = ECO_AMORPH
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.EARTH
-    params.multiplier = 1.0
-    params.tMultiplier = 1.0
-    params.duppercap = 13
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.3 or 0.8
+    params.tMultiplier = 0.9
+    params.duppercap = 10
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
@@ -36,25 +36,20 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.2
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     local params = {}
-
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-
     params.attribute = tpz.mod.INT
-
     params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = nil
 
-    params.bonus = 1.0
+    local resist = applyResistanceEffect(caster, target, spell, params)
 
-    local resist = applyResistance(caster, target, spell, params)
-
-    if (damage > 0 and resist > 0.0625) then
-        if (target:canGainStatusEffect(tpz.effect.ACCURACY_DOWN)) then
-            target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 20, 3, 60)
-        end
+    if resist >= 0.5 and target:canGainStatusEffect(tpz.effect.ACCURACY_DOWN) then
+        target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 10, 3, 30*resist)
     end
 
     return damage

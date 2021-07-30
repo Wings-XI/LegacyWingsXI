@@ -83,6 +83,21 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
     else if (strConfigName == "login_ip") {
         return "0.0.0.0";
     }
+    else if (strConfigName == "ssl_enabled") {
+        return "0";
+    }
+    else if (strConfigName == "ssl_certificate_file") {
+        return "";
+    }
+    else if (strConfigName == "ssl_private_key_file") {
+        return "";
+    }
+    else if (strConfigName == "ssl_auth_port") {
+        return "54331";
+    }
+    else if (strConfigName == "ssl_data_port") {
+        return "54330";
+    }
     else if (strConfigName == "password_hash_secret") {
         // Secret to add to password hashes, change this to something random
         return "";

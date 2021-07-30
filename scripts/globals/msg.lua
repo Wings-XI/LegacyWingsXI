@@ -107,6 +107,7 @@ tpz.msg.basic =
     SELF_HEAL_SECONDARY    = 263, -- <target> recovers <amount> HP.
     AOE_REGAIN_HP          = 357, -- <target> regains <amount> HP.
     AOE_REGAIN_MP          = 358, -- <target> regains <amount> MP.
+    AOE_INCREASE_TP        = 537, -- <target>'s TP increases to <amount>%.
     SKILL_ERASE            = 159, -- <user> uses <skill> <target>'s <status> effect disappears!
     DAMAGE                 = 185, -- player uses, target takes 10 damage. DEFAULT
     DAMAGE_SECONDARY       = 264,
@@ -135,6 +136,7 @@ tpz.msg.basic =
     JA_NO_EFFECT_2         = 323, -- <user> uses <ability>. No effect on <target>. (2 line msg)
     JA_MISS                = 158, -- <user> uses <ability>, but misses. (no name included)
     JA_MISS_2              = 324, -- <user> uses <ability>, but misses <target>. (includes target name)
+    JA_DAMAGE_AND_STUN     = 522, -- <user> uses <ability>.  <target> takes <damage> and is stunned. (2 line msg)
 
     -- Misc other unsorted (sort me)
     FALL_TO_GROUND         = 20,  -- <name> falls to the ground.

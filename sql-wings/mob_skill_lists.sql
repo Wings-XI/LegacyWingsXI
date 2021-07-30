@@ -881,6 +881,7 @@ INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2163);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2164);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2165);
 INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2166);
+INSERT INTO `mob_skill_lists` VALUES('Rafflesia', 207, 2167);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 265);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 266);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 267);
@@ -1332,8 +1333,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,499); -- back_swish
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,500); -- mow
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,501); -- frightful_roar
 INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,503); -- unblessed_armor
-INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,1359); -- Chthonian_Ray
-INSERT INTO `mob_skill_lists` VALUES ('Eldertaur',317,1360); -- apocalyptic_ray
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,498); -- triclip
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,499); -- back_swish
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,500); -- mow
@@ -1412,7 +1411,6 @@ INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrc', 334, 606);
 INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrc', 334, 607);
 INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrc', 334, 608);
 INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrc', 334, 609);
-INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrc', 334, 1066);
 INSERT INTO `mob_skill_lists` VALUES('Maat', 335, 1028);
 INSERT INTO `mob_skill_lists` VALUES('Maat', 335, 1033);
 INSERT INTO `mob_skill_lists` VALUES('Maat', 335, 1034);
@@ -2133,7 +2131,6 @@ INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1245);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1248);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1251);
 INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1252);
-INSERT INTO `mob_skill_lists` VALUES('Thinker_NM', 706, 1271);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1229);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1232);
 INSERT INTO `mob_skill_lists` VALUES('Craver_NM', 707, 1233);
@@ -3133,7 +3130,7 @@ INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2316);
 INSERT INTO `mob_skill_lists` VALUES('Ulbrecht', 1147, 2317);
 INSERT INTO `mob_skill_lists` VALUES('Mind_Hoarder', 1149, 524);
 INSERT INTO `mob_skill_lists` VALUES('Flockbock', 1150, 269);
-INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 675);
+INSERT INTO `mob_skill_lists` VALUES('Ullikummi', 1151, 3868);
 INSERT INTO `mob_skill_lists` VALUES('Picolaton', 1152, 926);
 INSERT INTO `mob_skill_lists` VALUES('Olgoi-Khorkhoi', 1153, 426);
 INSERT INTO `mob_skill_lists` VALUES('Ratatoskr', 1154, 323);
@@ -3157,6 +3154,34 @@ INSERT INTO `mob_skill_lists` VALUES('Goblintrap', 1160, 434);
 INSERT INTO `mob_skill_lists` VALUES('Draketrader_Zlodgodd', 1161, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Pyuu_The_Spatemaker', 1162, 770);
 INSERT INTO `mob_skill_lists` VALUES('Yal-un_Eke', 1163, 567);
+INSERT INTO `mob_skill_lists` VALUES('Bugbear_Muscleman', 1164, 361);
+INSERT INTO `mob_skill_lists` VALUES('Cop_Warders', 1165, 561);
+INSERT INTO `mob_skill_lists` VALUES('Cop_Warders', 1165, 562);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 605);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 606);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 607);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 608);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 609);
+INSERT INTO `mob_skill_lists` VALUES('WarlordRojgnojOrcNM', 1166, 1066);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1923);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1924);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1920);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1921);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1922);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1923);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1924);
+INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,2361);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 900);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 901);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 902);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 903);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 904);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 905);
+INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 896);
+INSERT INTO `mob_skill_lists` VALUES('Psoxja_Gargoyle', 5003, 538);
 --
 -- Indexes for dumped tables
 --

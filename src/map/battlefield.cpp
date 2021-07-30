@@ -66,6 +66,12 @@ CBattlefield::CBattlefield(uint16 id, CZone* PZone, uint8 area, CCharEntity* PIn
     m_Tick = m_StartTime;
     m_LastPromptTime = 0s;
     m_RegisteredPlayers.emplace(PInitiator->id);
+    m_Token = tpzrand::GetRandomNumber(1, 0x0FFFFFFF);
+    m_HasCoords = false;
+    m_PosX = 0;
+    m_PosY = 0;
+    m_PosZ = 0;
+    m_PosR = 0;
 }
 
 CBattlefield::~CBattlefield()
@@ -156,6 +162,18 @@ duration CBattlefield::GetRemainingTime() const
 duration CBattlefield::GetLastTimeUpdate() const
 {
     return m_LastPromptTime;
+}
+
+/********************************************************************\
+ * Get the unique token of this battlefield. This random int32      *
+ * generated on battlefield initiation is used to determine whether *
+ * a player is relogging into the same battlefield following a      *
+ * disconnection vs. whether the battlefield has already concluded  *
+ * and the area is being reused by a different battlefield.         *
+\********************************************************************/
+int32 CBattlefield::GetToken() const
+{
+    return m_Token;
 }
 
 uint64_t CBattlefield::GetLocalVar(const std::string& name) const
@@ -273,6 +291,55 @@ bool CBattlefield::IsOccupied() const
     return m_EnteredPlayers.size() > 0;
 }
 
+int32 delayedTimerPacket(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
+    charutils::SendTimerPacket(PChar, PChar->PBattlefield->GetRemainingTime());
+    return 0;
+}
+
+/********************************************************************\
+ * Reinsert a player that was disconnected ***and is still on the   *
+ * entered players list.***                                         *
+\********************************************************************/
+bool CBattlefield::ReinsertPlayer(CCharEntity* PChar)
+{
+    TPZ_DEBUG_BREAK_IF(PChar == nullptr);
+
+    PChar->PBattlefield = this;
+
+    int32 player_token = charutils::GetCharVar(PChar->id, "BattlefieldToken");
+    int32 player_enter_token = charutils::GetCharVar(PChar->id, "BattlefieldEnterToken");
+    if (player_token != m_Token || player_enter_token != m_Token) {
+        // Refuse to reinsert if tokens don't match
+        return false;
+    }
+
+    bool player_found = false;
+    for (const auto id : m_EnteredPlayers) {
+        if (id == PChar->id) {
+            player_found = true;
+            break;
+        }
+    }
+    if (!player_found) {
+        // Player was not previously registered
+        return false;
+    }
+
+    // Need to reapply all restrictions since the player might
+    // have lost them on disconnection.
+    ApplyLevelRestrictions(PChar);
+    PChar->ClearTrusts();
+    luautils::OnBattlefieldEnter(PChar, this);
+    // Client needs some time before it'll accept timer packets
+    std::string taskName = "sendTimerPlayer" + std::to_string(PChar->id);
+    CTaskMgr::getInstance()->RemoveTask(taskName.c_str());
+    CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask(taskName.c_str(),
+        server_clock::now() + std::chrono::seconds(5), PChar, CTaskMgr::TASK_ONCE, delayedTimerPacket));
+    return true;
+}
+
 bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOBCONDITION conditions, bool ally)
 {
     TPZ_DEBUG_BREAK_IF(PEntity == nullptr);
@@ -285,16 +352,33 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
         if (GetPlayerCount() < GetMaxParticipants())
         {
             CCharEntity* PChar = static_cast<CCharEntity*>(PEntity);
+            // This function is actually called twice - Once when you get registered to the
+            // battlefield (the entire party is registered once the first player goes in),
+            // in which case enter is false, and a second time when the player actually
+            // enters, in which case enter is true.
             if (enter)
             {
+                // BattlefieldEnterToken will be identical to BattlefieldToken once
+                // the player enters. This is basically needed in order to know
+                // (following a disconnection) whether the player was inside the
+                // BC or just waiting outside.
+                charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", m_Token);
                 ApplyLevelRestrictions(PChar);
-                m_EnteredPlayers.emplace(PEntity->id);
+                if (!IsEntered(PChar)) {
+                    m_EnteredPlayers.emplace(PEntity->id);
+                }
                 PChar->ClearTrusts();
                 luautils::OnBattlefieldEnter(PChar, this);
                 charutils::SendTimerPacket(PChar, GetRemainingTime());
             }
             else if (!IsRegistered(PChar))
             {
+                // Associate the player with the current battlefield using a
+                // token in the database. This way if they disconnect and reconnect
+                // we'll be able to tell whether the same battlefield is still
+                // going (allowed to rejoin) or whether it's already been
+                // concluded (will be removed from the area).
+                charutils::SetCharVar(PChar->id, "BattlefieldToken", m_Token);
                 m_RegisteredPlayers.emplace(PEntity->id);
                 luautils::OnBattlefieldRegister(PChar, this);
                 return true;
@@ -417,6 +501,11 @@ bool CBattlefield::IsRegistered(CCharEntity* PChar)
     return PChar && m_RegisteredPlayers.find(PChar->id) != m_RegisteredPlayers.end();
 }
 
+bool CBattlefield::IsEntered(CCharEntity* PChar)
+{
+    return PChar && m_EnteredPlayers.find(PChar->id) != m_EnteredPlayers.end();
+}
+
 bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 {
     // player's already zoned, we dont need to do anything
@@ -432,10 +521,21 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         if (m_LevelCap)
             PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
 
-        m_EnteredPlayers.erase(m_EnteredPlayers.find(PEntity->id));
 
-        if (leavecode != BATTLEFIELD_LEAVE_CODE_WARPDC)
+        if (leavecode != BATTLEFIELD_LEAVE_CODE_WARPDC || (!PChar->m_disconnecting)) {
+            // If they disconnect leave them inside in case they reconect while
+            // the battle is still ongoing. If they warp out it's their fault.
+            // AFAIK other than GM commands reconnecting after DC is the
+            // only case where you'll be "zoning" directly into a battlefield
+            // area. If another case is found it should be added here as well. I can't
+            // this of a more proper way of doing this. \(o_o)/
+            charutils::SetCharVar(PChar->id, "BattlefieldEnterToken", 0);
+            m_EnteredPlayers.erase(m_EnteredPlayers.find(PEntity->id));
+        }
+        if (leavecode != BATTLEFIELD_LEAVE_CODE_WARPDC) {
+            charutils::SetCharVar(PChar->id, "BattlefieldToken", 0);
             m_RegisteredPlayers.erase(m_RegisteredPlayers.find(PEntity->id));
+        }
 
         if (leavecode != 255)
         {
@@ -573,14 +673,14 @@ void CBattlefield::Cleanup()
         if (PChar)
         {
             PChar->ForAlliance([this, PChar, id, &tempOutsidePlayers](CBattleEntity* PMember)
+            {
+                if ((PMember->getZone() == PChar->getZone()) &&
+                    (this->m_EnteredPlayers.find(PMember->id) == this->m_EnteredPlayers.end()) &&
+                    (tempOutsidePlayers.find(PMember->id) == tempOutsidePlayers.end()))
                 {
-                    if ((PMember->getZone() == PChar->getZone()) &&
-                        (this->m_EnteredPlayers.find(PMember->id) == this->m_EnteredPlayers.end()) &&
-                        (tempOutsidePlayers.find(PMember->id) == tempOutsidePlayers.end()))
-                    {
-                        tempOutsidePlayers.insert(PMember->id);
-                    }
-                });
+                    tempOutsidePlayers.insert(PMember->id);
+                }
+            });
         }
     }
     for (auto id : tempPlayers)
@@ -653,6 +753,14 @@ bool CBattlefield::LoadMobs()
             if (PMob)
             {
                 this->InsertEntity(PMob, true, static_cast<BATTLEFIELDMOBCONDITION>(condition));
+                if (PMob->PEnmityContainer->GetEnmityList()->size()) {
+                    // Had issues with mob hate not being reset, causing the battlefield handler
+                    // to think the battlefield is locked, which in turn can lead to players
+                    // being split between battlefields. I couldn't figure how this happens in
+                    // the first place so as a safeguard just add a check when a new battlefield
+                    // is loaded and clear any such remaining hate.
+                    PMob->PEnmityContainer->Clear();
+                }
             }
             else
             {

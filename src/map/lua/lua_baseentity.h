@@ -288,6 +288,7 @@ public:
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level
     int32 getSubLvl(lua_State*);            // Get Entity Sub Job Level
     int32 getJobLevel(lua_State*);          // Gets character job level for specified JOBTYPE
+    int32 getHighestJobLevel(lua_State*);   // Gets the highest level the player has on any job
     int32 setLevel(lua_State*);             // sets the character's level
     int32 setsLevel(lua_State*);            // sets the character's level
     int32 levelCap(lua_State*);             // genkai
@@ -744,6 +745,8 @@ public:
     int32 trySkillUp(lua_State* L);
     int32 addRoamFlag(lua_State* L);
     int32 delRoamFlag(lua_State* L);
+    int32 deaggroPlayer(lua_State* L);
+    int32 deaggroAll(lua_State* L);
 
     // Helpdesk functions courtesy of Setzor from Eden
     int32 sendHelpDeskMsg(lua_State*);      // Send a Help Desk (GM) Message to character

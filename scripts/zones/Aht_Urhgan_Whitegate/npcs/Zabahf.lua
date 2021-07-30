@@ -2,7 +2,7 @@
 -- Area: Aht Urhgan Whitegate
 --  NPC: Zabahf
 -- Type: Standard NPC
--- !pos -90.070 -1 10.140 50
+--  !pos -90.070 -1 10.140 50
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/quests")
@@ -17,11 +17,15 @@ function onTrigger(player, npc)
         player:startEvent(533)
     elseif gotItAllProg == 2 then
         player:startEvent(523)
+    elseif gotItAllProg == 4 then
+        player:startEvent(533)
     elseif gotItAllProg == 5 then
         player:startEvent(538)
     elseif gotItAllProg == 6 then
         player:startEvent(540)
     elseif gotItAllProg == 7 then
+        player:startEvent(535)
+    elseif gotItAllProg == 8 then
         player:startEvent(535)
     elseif player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.GOT_IT_ALL) == QUEST_COMPLETED then
         player:startEvent(530)

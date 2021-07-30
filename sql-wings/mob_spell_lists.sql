@@ -3833,6 +3833,108 @@ INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 361, 1, 255); -- 
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 357, 1, 255); -- slowga
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 171, 1, 255); -- water III
 INSERT INTO `mob_spell_lists` VALUES('Nepionic_Bladmall', 451, 200, 1, 255); -- waterga II
+-- CoP 5-3L Past Sins (Mineshaft 2716 Fight) -- Chekochuk Spell List (Used three different FFXI Captures) 
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 146, 1, 255); -- Fire III
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 156, 1, 255); -- Aero III
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 171, 1, 255); -- Water III
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 195, 1, 255); -- Thundaga II
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 204, 1, 255); -- Flare
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 210, 1, 255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 212, 1, 255); -- Burst
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 214, 1, 255); -- Flood
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 231, 1, 255); -- Bio II
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 235, 1, 255); -- Burn
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 236, 1, 255); -- Frost
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 240, 1, 255); -- Drown
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 245, 1, 255); -- Drain
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 247, 1, 255); -- Aspir
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 249, 1, 255); -- Blaze Spikes
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 252, 1, 255); -- Stun
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 253, 1, 255); -- Sleep
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 258, 1, 255); -- Bind
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 259, 1, 255); -- Sleep II
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 273, 1, 255); -- Sleepga
+INSERT INTO `mob_spell_lists` VALUES('Chekochuk', 452, 274, 1, 255); -- Sleepga II
+-- CoP 5-3L Past Sins (Mineshaft 2716 Fight) -- Movamuq Spell List (Used three different FFXI Captures)
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 5, 1, 255); -- Cure V
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 14, 1, 255); -- Poisona
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 15, 1, 255); -- Paralyna
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 21, 1, 255); -- Holy
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 24, 1, 255); -- Dia II
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 29, 1, 255); -- Banish II
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 34, 1, 255); -- Diaga II
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 39, 1, 255); -- Banishga II
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 45, 1, 255); -- Protect III
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 46, 1, 255); -- Protect IV
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 50, 1, 255); -- Shell III
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 53, 1, 255); -- Blink
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 54, 1, 255); -- Stoneskin
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 55, 1, 255); -- Aquaveil
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 56, 1, 255); -- Slow
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 57, 1, 255); -- Haste
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 58, 1, 255); -- Paralyze
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 59, 1, 255); -- Silence
+INSERT INTO `mob_spell_lists` VALUES('Movamuq', 453, 112, 1, 255); -- Flash
+-- CoP 5-3L Past Sins (Mineshaft 2716 Fight) -- Trikotrak Spell List (Used three different FFXI Captures)
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 4, 1, 255); -- Cure IV
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 24, 1, 255); -- Dia II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 34, 1, 255); -- Diaga II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 50, 1, 255); -- Shell III
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 53, 1, 255); -- Blink
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 54, 1, 255); -- Stoneskin
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 55, 1, 255); -- Aquaveil
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 56, 1, 255); -- Slow
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 57, 1, 255); -- Haste
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 105, 1, 255); -- Enwater
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 108, 1, 255); -- Regen
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 145, 1, 255); -- Fire II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 150, 1, 255); -- Blizzard II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 155, 1, 255); -- Aero II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 160, 1, 255); -- Stone II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 165, 1, 255); -- Thunder II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 170, 1, 255); -- Water II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 216, 1, 255); -- Gravity
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 221, 1, 255); -- Poison II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 231, 1, 255); -- Bio II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 253, 1, 255); -- Sleep
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 258, 1, 255); -- Bind
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 259, 1, 255); -- Sleep II
+INSERT INTO `mob_spell_lists` VALUES('Trikotrak', 454, 260, 1, 255); -- Dispel
+-- CoP 5-3L Head Wind (Boneyard Gulley) -- Shikaree X (Used Capture from FFXI Captures Discord)
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 344, 1, 255); -- Hojo: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 347, 1, 255); -- Kurayami: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 338, 1, 255); -- Utsusemi: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 320, 1, 255); -- Katon: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 323, 1, 255); -- Hyoton: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 326, 1, 255); -- Huton: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 329, 1, 255); -- Doton: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 332, 1, 255); -- Raiton: Ichi
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_X', 455, 335, 1, 255); -- Suiton: Ichi
+-- CoP 5-3L Head Wind (Boneyard Gulley) -- Shikaree Y (Used Capture from FFXI Captures Discord)
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 28, 1, 255); -- Banish
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 38, 1, 255); -- Banisga
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 53, 1, 255); -- Blink
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 23, 1, 255); -- Dia
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 33, 1, 255); -- Diaga
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 14, 1, 255); -- Poisona
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 15, 1, 255); -- Paralyna
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Y', 456, 55, 1, 255); -- Aquaveil
+-- CoP 5-3L Head Wind (Boneyard Gulley) -- Shikaree Z (Used Capture from FFXI Captures Discord)
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 159, 1, 255); -- Stone
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 169, 1, 255); -- Water
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 154, 1, 255); -- Aero
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 144, 1, 255); -- Fire
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 149, 1, 255); -- Blizzard
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 164, 1, 255); -- Thunder
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 220, 1, 255); -- Poison
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 265, 1, 255); -- Poisonga
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 247, 1, 255); -- Aspir
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 245, 1, 255); -- Drain
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 266, 1, 255); -- Absorb-STR
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 267, 1, 255); -- Absorb-DEX
+INSERT INTO `mob_spell_lists` VALUES('Shikaree_Z', 457, 275, 1, 255); -- Absorb-TP
 --
 -- Indexes for dumped tables
 --

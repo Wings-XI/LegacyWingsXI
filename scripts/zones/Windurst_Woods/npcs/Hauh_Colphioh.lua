@@ -45,7 +45,7 @@ local items = {
     },
     [1] = {
         id = 13946, -- Magnifying Spectacles
-        rank = 6,
+        rank = 5,
         cost = 70000
     },
     [2] = {
@@ -57,26 +57,6 @@ local items = {
         id = 198, -- Gilt Tapestry
         rank = 9,
         cost = 150000
-    },
-    [4] = {
-        id = 337, -- Weaver's Signboard
-        rank = 9,
-        cost = 200000
-    },
-    [5] = {
-        id = 15822, -- Tailor's Ring
-        rank = 6,
-        cost = 80000
-    },
-    [6] = {
-        id = 3665, -- Spinning Wheel
-        rank = 7,
-        cost = 50000
-    },
-    [7] = {
-        id = 3327, -- Weavers' Emblem
-        rank = 9,
-        cost = 15000
     }
 }
 

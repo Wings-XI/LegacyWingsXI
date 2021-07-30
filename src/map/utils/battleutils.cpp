@@ -968,10 +968,10 @@ namespace battleutils
         }
 
         PTarget->SetLocalVar(("RESBUILD_PERCENT_" + std::to_string((int)mod)).c_str(), buildPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
-        ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
-        ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
-        ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> mod: %u\n", (int)mod);
+        //ShowDebug("CalculateResistanceBuildPercent -> delta: %u\n", delta);
+        //ShowDebug("CalculateResistanceBuildPercent -> resultPercent: %u\n", resultPercent);
+        //ShowDebug("CalculateResistanceBuildPercent -> buildPercent: %u\n", buildPercent);
 
         return resultPercent;
     }
@@ -2185,12 +2185,12 @@ namespace battleutils
 
                     //if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
-                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
                     break;
 
                 case TYPE_PET:
-                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
                     break;
                 case TYPE_PC:
                     if (PAttacker->objtype == TYPE_MOB)
@@ -2313,7 +2313,7 @@ namespace battleutils
                 case TYPE_MOB:
                     //if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
-                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                        ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
                     if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
                     {
@@ -2323,7 +2323,7 @@ namespace battleutils
                     break;
 
                 case TYPE_PET:
-                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT));
+                    ((CPetEntity*)PDefender)->loc.zone->PushPacket(PDefender, CHAR_INRANGE, new CEntityUpdatePacket(PDefender, ENTITY_UPDATE, UPDATE_ALL_MOB));
                     break;
 
                 default:
@@ -3553,6 +3553,10 @@ namespace battleutils
             {
                 PPlayer->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
                 PPlayer->updatemask |= UPDATE_HP;
+            }
+            else if (PPlayer->isSitting())
+            {
+                PPlayer->animation = ANIMATION_NONE;
             }
         }
     }
@@ -5162,6 +5166,18 @@ namespace battleutils
             else
                 return SPELLAOE_NONE;
         }
+        if (PSpell->getAOE() == SPELLAOE_CONVERGENCE)
+        {
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_RADIAL;
+        }
+        if (PSpell->getAOE() == SPELLAOE_CONAL_CONVERGENCE)
+        {
+            if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_CONVERGENCE))
+                return SPELLAOE_NONE;
+            return SPELLAOE_CONAL;
+        }
 
         return PSpell->getAOE();
     }
@@ -5355,7 +5371,7 @@ namespace battleutils
                 }
                 else
                 {
-                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_POS));
+                    PMember->loc.zone->PushPacket(PMember, CHAR_INRANGE, new CEntityUpdatePacket(PMember, ENTITY_UPDATE, UPDATE_ALL_MOB));
                 }
 
                 luautils::OnMobDrawIn(PMob, PMember);

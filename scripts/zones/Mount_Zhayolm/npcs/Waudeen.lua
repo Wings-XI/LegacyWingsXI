@@ -36,11 +36,11 @@ function onTrigger(player, npc)
     -- ASSAULT
     elseif toauMission >= tpz.mission.id.toau.PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
+        
         if player:hasKeyItem(tpz.ki.LEBROS_ASSAULT_ORDERS) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             player:startEvent(209, 50, IPpoint)
         else
             player:startEvent(6)
-            -- player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
         end
 
     -- DEFAULT DIALOG

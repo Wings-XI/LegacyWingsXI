@@ -4917,6 +4917,7 @@ INSERT INTO `item_mods` VALUES (11464,1,24);
 INSERT INTO `item_mods` VALUES (11464,5,25);
 INSERT INTO `item_mods` VALUES (11464,12,5);
 INSERT INTO `item_mods` VALUES (11464,13,5);
+INSERT INTO `item_mods` VALUES (11464,936,2);
 INSERT INTO `item_mods` VALUES (11465,1,24);
 INSERT INTO `item_mods` VALUES (11465,2,15);
 INSERT INTO `item_mods` VALUES (11465,10,3);
@@ -16822,6 +16823,7 @@ INSERT INTO `item_mods` VALUES (15265,1,23);
 INSERT INTO `item_mods` VALUES (15265,5,20);
 INSERT INTO `item_mods` VALUES (15265,12,3);
 INSERT INTO `item_mods` VALUES (15265,13,3);
+INSERT INTO `item_mods` VALUES (15265,936,2);
 INSERT INTO `item_mods` VALUES (15266,1,22);
 INSERT INTO `item_mods` VALUES (15266,2,8);
 INSERT INTO `item_mods` VALUES (15266,8,2);
@@ -18382,7 +18384,8 @@ INSERT INTO `item_mods` VALUES (15746,1,14);      -- Dancer's Shoes (male): DEF 
 INSERT INTO `item_mods` VALUES (15746,2,7);       -- HP +7
 INSERT INTO `item_mods` VALUES (15746,23,5);      -- Attack +5
 INSERT INTO `item_mods` VALUES (15746,68,5);      -- Evasion +5
-INSERT INTO `item_mods` VALUES (15746,492,25);    -- Jig duration +25%
+INSERT INTO `item_mods` VALUES (15746,492,25);    -- Chocobo Jig duration +25%
+INSERT INTO `item_mods` VALUES (15746,502,100);   -- Spectral Jig duration +100%
 INSERT INTO `item_mods` VALUES (15747,1,14);      -- Dancer's Shoes (female): DEF 14
 INSERT INTO `item_mods` VALUES (15747,2,7);       -- HP +7
 INSERT INTO `item_mods` VALUES (15747,23,5);      -- Attack +5
@@ -52156,6 +52159,7 @@ INSERT INTO `item_mods` VALUES (16857,431,1);     -- wind spear additional effec
 INSERT INTO `item_mods` VALUES (17549,431,1);     -- wind staff additional effect
 INSERT INTO `item_mods` VALUES (16542,431,1);     -- wing sword additional effect
 INSERT INTO `item_mods` VALUES (17637,431,1);     -- wing sword +1 additional effect
+INSERT INTO `item_mods` VALUES (16556,431,1);     -- bloody blade additional effect
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -8,6 +8,7 @@ import distutils.spawn
 from git import Repo
 import mysql.connector
 import colorama
+import subprocess
 from colorama import Fore, Style
 from mysql.connector import Error, errorcode
 from migrations import spell_blobs_to_spell_table
@@ -25,6 +26,7 @@ from migrations import extend_mission_log
 from migrations import eminence_blob
 from migrations import char_timestamp
 from migrations import currency_columns
+from migrations import chat_filters
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -42,6 +44,7 @@ migrations = [
     eminence_blob,
     char_timestamp,
     currency_columns,
+    chat_filters,
 ]
 # These are the default 'protected' files
 player_data = [
@@ -101,20 +104,20 @@ if os.name == 'nt':
     exe = '.exe'
 else:
     exe = ''
-log_errors = ' 2>>error.log'
+error_log_file="error.log"
 colorama.init(autoreset=True)
 
 # Redirect errors through this to hide annoying password warning
 def fetch_errors():
     try:
-        with open('error.log') as f:
+        with open(error_log_file) as f:
             while True:
                 line = f.readline()
                 if not line: break
                 if 'Using a password on the command line interface can be insecure.' in line:
                     continue
                 print(Fore.RED + line)
-        os.remove('error.log')
+        os.remove(error_log_file)
     except:
         return
 
@@ -262,9 +265,10 @@ def write_version(silent=False):
         print(Fore.RED + 'Error writing version.')
 
 def import_file(file):
-    updatecmd = '"' + mysql_bin + 'mysql' + exe + '" -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database
     print('Importing ' + file + '...')
-    os.system(updatecmd + ' < ../sql-wings/' + file + log_errors)
+    with open("../sql-wings/"+file, "r") as sqlfile:
+        with open(error_log_file, "w") as errorlog:
+            subprocess.run([mysql_bin + 'mysql' + exe, "-h", host, "-P", str(port), "-u", login, "-p"+password, database], stdin=sqlfile, stderr=errorlog)
     fetch_errors()
 
 def connect():
@@ -285,8 +289,8 @@ def connect():
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
             print(Fore.RED + 'Database ' + database + ' does not exist.')
             if input('Would you like to create new database: ' + database + '? [y/N] ').lower() == 'y':
-                create_command = '"' + mysql_bin + 'mysqladmin' + exe + '" -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' CREATE ' + database
-                os.system(create_command + log_errors)
+                with open(error_log_file, "w") as errorlog:
+                    subprocess.run([mysql_bin + 'mysqladmin' + exe, "-h", host, "-P", str(port), "-u", login, "-p"+password, "CREATE", database], stderr=errorlog)
                 fetch_errors()
                 setup_db()
                 connect()
@@ -310,20 +314,19 @@ def setup_db():
 
 def backup_db(silent=False,lite=False):
     if silent or input('Would you like to backup your database? [y/N] ').lower() == 'y':
+        dumpcmd = [mysql_bin + 'mysqldump' + exe, '--hex-blob', '--add-drop-trigger', '-h', host, '-P', str(port), '-u', login, '-p' + password, database]
         if lite:
-            tables = ' '
             for table in player_data:
-                tables += table[:-4] + ' '
-            dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                tables + '> ../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-lite.sql'
+                dumpcmd.append(table[:-4])
+            outputfile = '../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-lite.sql'
         else:
             if current_version:
-                dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                    ' > ../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-' + current_version + '.sql'
+                outputfile = '../sql-wings/backups/' + database + '-' + time.strftime('%Y%m%d-%H%M%S') + '-' + current_version + '.sql'
             else:
-                dumpcmd = '"' + mysql_bin + 'mysqldump' + exe + '" --hex-blob --add-drop-trigger -h ' + host + ' -P ' + str(port) + ' -u ' + login + ' -p' + password + ' ' + database +\
-                    ' > ../sql-wings/backups/' + database + time.strftime('%Y%m%d-%H%M%S') + '-full.sql'
-        os.system(dumpcmd + log_errors)
+                outputfile = '../sql-wings/backups/' + database + time.strftime('%Y%m%d-%H%M%S') + '-full.sql'
+        with open(outputfile, "w") as outputsql:
+            with open(error_log_file, "w") as errorlog:
+                subprocess.run(dumpcmd, stdout=outputsql, stderr=errorlog)
         fetch_errors()
         print(Fore.GREEN + 'Database saved!')
         time.sleep(0.5)

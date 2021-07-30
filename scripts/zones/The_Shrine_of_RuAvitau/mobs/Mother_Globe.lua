@@ -32,6 +32,10 @@ local path =
     859, -99, -539,
 }
 
+function onPath(mob)
+    tpz.path.patrol(mob, path)
+end
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
@@ -42,10 +46,6 @@ function onMobSpawn(mob)
     mob:setLocalVar("Initial_SlaveTimer", now)
     mob:setLocalVar("SlaveRecast", now)
     onMobRoam(mob)
-end
-
-function onPath(mob)
-    tpz.path.patrol(mob, path)
 end
 
 function onMobRoam(mob)
@@ -111,30 +111,61 @@ function onMobRoam(mob)
 end
 
 function onMobFight(mob, target)
-    -- Keep pets linked
-    for i = ID.mob.MOTHER_GLOBE.SLAVE_START, ID.mob.MOTHER_GLOBE.SLAVE_END do
-        local pet = GetMobByID(i)
-        if pet:getCurrentAction() == tpz.act.ROAMING then
-            pet:updateEnmity(target)
-        end
+    local now = os.time()
+    local slaves = mob:getLocalVar("SlavesSpawned")
+    local slaveRecast = mob:getLocalVar("SlaveRecast")
+    if slaves > 6 then
+        mob:setLocalVar("SlavesSpawned", 0)
     end
 
-    -- Summons a single orb every 30 seconds.  Needs to be last, so other code runs.
-    -- TODO: Should have a SMN casting effect for ~3-5 seconds while calling.
-    if mob:getLocalVar("SlavesSpawned") < 6 then
-        if mob:hasStatusEffect(tpz.effect.SHOCK_SPIKES) == false then
-            mob:addStatusEffectEx(tpz.effect.SHOCK_SPIKES, 0, 60, 0, 0) -- ~60 damage
-        end
-
-        if mob:getBattleTime() % 30 == 0 and mob:getBattleTime() > 3 then
-            for i = ID.mob.MOTHER_GLOBE.SLAVE_START, ID.mob.MOTHER_GLOBE.SLAVE_END do
-                local pet = GetMobByID(i)
-                if not pet:isSpawned() then
-                    pet:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-                    pet:spawn()
-                    pet:updateEnmity(target)
-                    return
-                end
+        -- Summons a single orb every 30 seconds.  Needs to be last, so other code runs.
+        -- TODO: Should have a SMN casting effect for ~3-5 seconds while calling.
+    if slaves < 6 and (now >= mob:getLocalVar("Initial_SlaveTimer")) then
+        for i = ID.mob.MOTHER_GLOBE.SLAVE_START, ID.mob.MOTHER_GLOBE.SLAVE_END do
+            local pet = GetMobByID(i)
+            if not pet:isSpawned() and (now > slaveRecast + 30) then
+                local pPet = nil
+                local petId = pet:getID()
+                switch (petId): caseof {
+                    [17506397] = function() 
+                        pet:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                    [17506398] = function() 
+                        pPet = GetMobByID(petId - 1)
+                        pet:setSpawn(mob:getXPos() + 2, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                    [17506399] = function() 
+                        pPet = GetMobByID(petId - 1)
+                        pet:setSpawn(mob:getXPos() + 3, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                    [17506400] = function() 
+                        pPet = GetMobByID(petId - 1)
+                        pet:setSpawn(mob:getXPos() + 4, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                    [17506401] = function() 
+                        pPet = GetMobByID(petId - 1)
+                        pet:setSpawn(mob:getXPos() + 5, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                    [17506402] = function() 
+                        pPet = GetMobByID(petId - 1)    
+                        pet:setSpawn(mob:getXPos() + 6, mob:getYPos(), mob:getZPos())
+                        pet:spawn()
+                        pet:updateEnmity(target)
+                    end,
+                }
+                mob:setLocalVar("SlaveRecast", now)
+                mob:setLocalVar("SlavesSpawned", mob:getLocalVar("SlavesSpawned") + 1)
+                break
             end
         end
     end
@@ -156,5 +187,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(10800, 21600)) -- 3 to 6 hours
+    local respawn = math.random(10800, 21600)
+    mob:setRespawnTime(respawn) -- 3 to 6 hours
+    SetServerVariable("MG_Respawn", (os.time() + respawn))
 end

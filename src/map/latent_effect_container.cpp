@@ -98,6 +98,49 @@ bool CLatentEffectContainer::DelLatentEffect(LATENT conditionID, uint16 conditio
 *  the conditions are met.												*
 *																		*
 ************************************************************************/
+void CLatentEffectContainer::CheckAllLatents()
+{
+    CheckLatentsZone();
+    CheckLatentsDay();
+    CheckLatentsWeekDay();
+    CheckLatentsHours();
+    CheckLatentsTime();
+    CheckLatentsMoonPhase();
+    CheckLatentsWeather();
+    CheckLatentsEquip(SLOT_AMMO);
+    CheckLatentsEquip(SLOT_RANGED);
+    CheckLatentsEquip(SLOT_SUB);
+    CheckLatentsEquip(SLOT_MAIN);
+    CheckLatentsEquip(SLOT_HEAD);
+    CheckLatentsEquip(SLOT_NECK);
+    CheckLatentsEquip(SLOT_EAR1);
+    CheckLatentsEquip(SLOT_EAR2);
+    CheckLatentsEquip(SLOT_RING2);
+    CheckLatentsEquip(SLOT_RING1);
+    CheckLatentsEquip(SLOT_HANDS);
+    CheckLatentsEquip(SLOT_BODY);
+    CheckLatentsEquip(SLOT_BACK);
+    CheckLatentsEquip(SLOT_WAIST);
+    CheckLatentsEquip(SLOT_LEGS);
+    CheckLatentsEquip(SLOT_FEET);
+    CheckLatentsFoodEffect();
+    CheckLatentsJobLevel();
+    CheckLatentsSubJob();
+    CheckLatentsPartyAvatar();
+    CheckLatentsPartyJobs();
+    CheckLatentsPetType();
+    CheckLatentsRollSong();
+    CheckLatentsStatusEffect();
+    CheckLatentsTargetChange();
+    CheckLatentsWeaponBreak(SLOT_MAIN);
+    CheckLatentsWeaponBreak(SLOT_SUB);
+    CheckLatentsWeaponBreak(SLOT_RANGED);
+    CheckLatentsWeaponBreak(SLOT_AMMO);
+    CheckLatentsHP();
+    CheckLatentsMP();
+    CheckLatentsTP();
+}
+
 void CLatentEffectContainer::CheckLatentsHP()
 {
     //TODO: hook into this from anywhere HP changes
@@ -560,6 +603,27 @@ void CLatentEffectContainer::CheckLatentsPetType()
             break;
         default:
             break;
+        }
+        return false;
+    });
+}
+
+/************************************************************************
+ *																		*
+ *  Checks all latents that are affected by sub job and     			*
+ *  activates them if the conditions are met.							*
+ *																		*
+ ************************************************************************/
+void CLatentEffectContainer::CheckLatentsSubJob()
+{
+    ProcessLatentEffects([this](CLatentEffect& latentEffect) {
+        switch (latentEffect.GetConditionsID())
+        {
+            case LATENT_SUBJOB:
+                return ProcessLatentEffect(latentEffect);
+                break;
+            default:
+                break;
         }
         return false;
     });

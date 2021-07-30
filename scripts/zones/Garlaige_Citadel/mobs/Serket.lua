@@ -11,16 +11,12 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 end
 
-function onMobSpawn(mob)
-    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
-    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
-end
-
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.SERKET_BREAKER)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
     mob:addMod(tpz.mod.DEF, -20)
     mob:addMod(tpz.mod.ACC, 20)

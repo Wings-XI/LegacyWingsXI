@@ -61,6 +61,7 @@ namespace zoneutils
     uint64       GetZoneIPP(uint16 zoneid);                                         // returns IPP for zone ID
     bool         IsResidentialArea(CCharEntity*);                                   // returns whether or not the area is a residential zone
     ZONETYPE     GetZoneType(uint16 ZoneID);                                        // returns the zone ID of a given zone directly from DB
+    bool         IsZoneEnabled(uint16 ZoneID);                                      // returns whether the zone is valid and enabled on the server
 };
 
 #endif

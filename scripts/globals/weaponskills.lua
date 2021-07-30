@@ -338,22 +338,21 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     local slashres = target:getMod(tpz.mod.SLASHRES)
     local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
 
-    -- Calculate reductions
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
-        if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
+        if attack.weaponType == tpz.skill.HAND_TO_HAND then
             if hthres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * hthres / 1000
             end
-        elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
+        elseif attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM then
             if pierceres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * pierceres / 1000
             end
-        elseif (attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF) then
+        elseif attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF then
             if impactres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
             else
@@ -367,33 +366,6 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
             end
         end
     end
-
-    --[[
-    // Circle Effects
-    if (m_victim->objtype == TYPE_MOB && m_damage > 0)
-    {
-        uint16 circlemult = 0;
-        switch (m_victim->m_EcoSystem)
-        {
-        case SYSTEM_AMORPH:   circlemult = m_attacker->getMod(Mod::AMORPH_CIRCLE); break;
-        case SYSTEM_AQUAN:    circlemult = m_attacker->getMod(Mod::AQUAN_CIRCLE); break;
-        case SYSTEM_ARCANA:   circlemult = m_attacker->getMod(Mod::ARCANA_CIRCLE); break;
-        case SYSTEM_BEAST:    circlemult = m_attacker->getMod(Mod::BEAST_CIRCLE); break;
-        case SYSTEM_BIRD:     circlemult = m_attacker->getMod(Mod::BIRD_CIRCLE); break;
-        case SYSTEM_DEMON:    circlemult = m_attacker->getMod(Mod::DEMON_CIRCLE); break;
-        case SYSTEM_DRAGON:   circlemult = m_attacker->getMod(Mod::DRAGON_CIRCLE); break;
-        case SYSTEM_LIZARD:   circlemult = m_attacker->getMod(Mod::LIZARD_CIRCLE); break;
-        case SYSTEM_LUMINION: circlemult = m_attacker->getMod(Mod::LUMINION_CIRCLE); break;
-        case SYSTEM_LUMORIAN: circlemult = m_attacker->getMod(Mod::LUMORIAN_CIRCLE); break;
-        case SYSTEM_PLANTOID: circlemult = m_attacker->getMod(Mod::PLANTOID_CIRCLE); break;
-        case SYSTEM_UNDEAD:   circlemult = m_attacker->getMod(Mod::UNDEAD_CIRCLE); break;
-        case SYSTEM_VERMIN:   circlemult = m_attacker->getMod(Mod::VERMIN_CIRCLE); break;
-        default: break;
-        }
-        circlemult += 100;
-        m_damage = m_damage * circlemult / 100;
-    }
-    ]]
 
     -- Circle Effects
     if target:isMob() and finaldmg > 0 then
@@ -424,10 +396,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     end
 
     if wsParams.useAutoTPFormula == nil or wsParams.useAutoTPFormula == false then
-        finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.0 -- Add server bonus
+        finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.0
     end
 
-    finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg = finaldmg * WEAPON_SKILL_POWER
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
@@ -498,7 +470,7 @@ end
         finaldmg = finaldmg * pierceres / 1000
     end
 
-    finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg = finaldmg * WEAPON_SKILL_POWER
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     attacker:delStatusEffect(tpz.effect.FLASHY_SHOT)

@@ -21,9 +21,9 @@ local MaxFishLevelDifferenceToHook = 100
 local FishTablePoolWeight = 60
 
 local FishDefaultPoolWeight = 110
-local ItemDefaultPoolWeight = 20
-local MobDefaultPoolWeight = 15
-local NoCatchDefaultPoolWeight = 30
+local ItemDefaultPoolWeight = 10
+local MobDefaultPoolWeight = 10
+local NoCatchDefaultPoolWeight = 15
 
 local MaxDiscernmentChance = 70
 
@@ -658,6 +658,50 @@ function calcBigFishStats(minLength, maxLength)
     return Lm, Pz, EpicCatch
 end
 
+function isFatigued(player)
+
+    -- CPP side always increments count so need to reset
+    -- it even if fatigue is disabled. Besides, it can
+    -- help spot botters.
+    local player_jst = player:getCharVar("FishingNextJST")
+    local now_jst = JstMidnight()
+    if now_jst > player_jst then
+        -- Midnight rollover, reset fatigue
+        player:setCharVar("FishingNextJST", now_jst)
+        player:setCharVar("FishingCaughtSinceJST", 0)
+        player:setCharVar("FishingAttemptsFatigue", 0)
+        -- No need to check further
+        -- player:PrintToPlayer("Fatigue: JST rollover reset")
+        return false
+    end
+    
+    if FISHING_FATIGUE == 0 and FISHING_FATIGUE_NEW_PLAYERS == 0 then
+        -- Fatigue completely disabled
+        -- player:PrintToPlayer("Fatigue is disabled")
+        return false
+    end
+    
+    local max_fish = FISHING_FATIGUE
+    if player:getHighestJobLevel() < FISHING_NEW_PLAYER_MIN_LV or player:getTimeCreated() + FISHING_NEW_PLAYER_DAYS * 86400 > os.time() then
+        -- player:PrintToPlayer("Fatigue: Player is a new player")
+        max_fish = FISHING_FATIGUE_NEW_PLAYERS
+    end
+    if max_fish == 0 then
+        -- Player not subject to fatigue
+        -- player:PrintToPlayer("Player is not subject to fatigue")
+        return false
+    end
+    
+    -- player:PrintToPlayer(string.format("Caught since midnight: %i", player:getCharVar("FishingCaughtSinceJST")))
+    if player:getCharVar("FishingCaughtSinceJST") >= max_fish then
+        -- Fatigued
+        player:addCharVar("FishingAttemptsFatigue", 1)
+        return true
+    end
+    
+    return false
+end
+
 function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, areaid, areaname, zoneType, zoneDifficulty, fishingToken)
     local Caught = 0
     local CatchID = 0
@@ -731,7 +775,6 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     
     local FishingDebugEnabled = player:getLocalVar("FishingDebug")
 
-
     -- Get Fish and Item Lists
 
     if fishlist ~= nil and #fishlist > 0 then
@@ -745,14 +788,14 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
 
     -- Area Type Pool Weight Bonus/Penalties
     if zoneType == 1 then               -- city
-        ItemWeightAdd = 20
-        NoCatchWeightAdd = 20
+        ItemWeightAdd = 15
+        NoCatchWeightAdd = 15
     elseif zoneType == 2 then           -- outdoors
         FishWeightAdd = 20
-        ItemWeightAdd = 10
-        MobWeightAdd = 10
+        ItemWeightAdd = 5
+        MobWeightAdd = 5
     elseif zoneType == 3 then           -- dungeon
-        MobWeightAdd = 40
+        MobWeightAdd = 20
     end
 
     -- Calculate Pool Weight modifiers
@@ -760,6 +803,11 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         FishWeight = FishDefaultPoolWeight
         FishWeight = FishWeight * WeatherModifier
         FishWeight = math.floor(FishWeight + (FishWeight * (MoonModifier - 1))) + FishWeightAdd
+    end
+
+    -- Fishermans Apron reduce items
+    if player:getEquipID(tpz.slot.BODY) == fishing.gear.FISHERMANS_APRON then
+        ItemDefaultPoolWeight = 5
     end
 
     if #ItemPool > 0 then
@@ -770,8 +818,8 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         MobWeight = MobDefaultPoolWeight + math.floor(MoonModifier * 20) + MobWeightQuestBonus + MobWeightAdd
     end
 
-    NoCatchWeight = NoCatchDefaultPoolWeight + math.floor(math.random(40, 60) * (MoonModifier - 1))
-    NoCatchWeight = NoCatchWeight + (zoneDifficulty * math.random(40,60)) + NoCatchWeightAdd
+    NoCatchWeight = NoCatchDefaultPoolWeight + (20 * (MoonModifier - 1))
+    NoCatchWeight = NoCatchWeight + (zoneDifficulty * 20) + NoCatchWeightAdd
 
     if #FishPool == 0 then
         NoCatchWeight = NoCatchWeight + FishDefaultPoolWeight
@@ -807,7 +855,17 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     end
 
     -- Selection time
-    if #FishPool > 0 and PoolSelect < FishWeight then
+    if player:getCharVar("FishingDenied") ~= 0 or player:getCharVar("FishingBot") ~= 0 then
+        if FishingDebugEnabled ~= 0 then
+            player:PrintToPlayer("Fishing is denied, catching nothing")
+        end
+        HookType = fishing.hookType.NONE
+    elseif isFatigued(player) then
+        if FishingDebugEnabled ~= 0 then
+            player:PrintToPlayer("Player is fatigued, catching nothing")
+        end
+        HookType = fishing.hookType.NONE
+    elseif #FishPool > 0 and PoolSelect < FishWeight then
         local FishSelect = math.random(1, FishPoolWeight)
         for k, fish in pairs(FishPool) do
             PoolWeight = PoolWeight + fish["weight"]

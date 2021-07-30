@@ -31,8 +31,13 @@
 
 CCharPacket::CCharPacket(CCharEntity * PChar, ENTITYUPDATE type, uint8 updatemask)
 {
+    updatemask = updatemask | UPDATE_LOOK ? UPDATE_ALL_CHAR : UPDATE_ALL_MOB;
+
     this->type = 0x0D;
     this->size = 0x3A;
+
+    this->packetUpdateMask = updatemask;
+    this->packetEntityUpdateType = type;
 
     ref<uint32>(0x04) = PChar->id;
     ref<uint16>(0x08) = PChar->targid;

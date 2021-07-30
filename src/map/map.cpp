@@ -32,6 +32,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <stdlib.h>
 #include <string.h>
 #include <thread>
+#include <random>
 
 #include "alliance.h"
 #include "ability.h"
@@ -64,9 +65,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "lua/luautils.h"
 
+#include "packets/action.h"
 #include "packets/basic.h"
+#include "packets/char.h"
 #include "packets/char_update.h"
+#include "packets/entity_update.h"
 #include "message.h"
+
+#include "entities/trustentity.h"
 
 #include "utils/flistutils.h"
 #include "pruned_session.h"
@@ -88,8 +94,9 @@ void operator delete(void* ptr) noexcept
 
 const char* MAP_CONF_FILENAME = nullptr;
 
-int8*  g_PBuff = nullptr;                // глобальный буфер обмена пакетами
-int8*  PTempBuff = nullptr;                // временный  буфер обмена пакетами
+int8*  g_PBuff = nullptr;                // global packet clipboard
+int8*  PTempBuff = nullptr;              // temporary packet clipboard
+int8*  PTempBuff2 = nullptr;             // another temporary packet clipboard
 
 thread_local Sql_t* SqlHandle = nullptr;
 
@@ -389,6 +396,7 @@ int32 do_init(int32 argc, char** argv)
 
     g_PBuff = new int8[map_config.buffer_size + 20];
     PTempBuff = new int8[map_config.buffer_size + 20];
+    PTempBuff2 = new int8[map_config.buffer_size + 20];
 
     PacketGuard::Init();
 
@@ -410,6 +418,8 @@ void do_final(int code)
     g_PBuff = nullptr;
     delete[] PTempBuff;
     PTempBuff = nullptr;
+    delete[] PTempBuff2;
+    PTempBuff2 = nullptr;
 
     itemutils::FreeItemList();
     battleutils::FreeWeaponSkillsList();
@@ -807,9 +817,8 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
 
         if (PacketSize[SmallPD_Type] == SmallPD_Size || PacketSize[SmallPD_Type] == 0) // Tests incoming packets for the correct size prior to processing
         {
-            // Google Translate:
-            // if the code of the current package is less than or equal to the last received
-            // or more global then ignore the package
+            // if the sequence of the current packet is less than or equal to the last received
+            // or more than global then ignore the packet
 
             if ((ref<uint16>(SmallPD_ptr, 2) <= map_session_data->client_packet_id) ||
                 (ref<uint16>(SmallPD_ptr, 2) > SmallPD_Code))
@@ -875,100 +884,1547 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
 }
 
 /************************************************************************
+ *                                                                       *
+ * generate packetlist within size constraints for bigpacket(send_parse) *
+ *                                                                       *
+ ************************************************************************/
+
+PacketList_t generate_priority_packet_list(CCharEntity* PChar)
+{
+    auto getBufferSize = [](PacketList_t list) {
+        size_t size = FFXI_HEADER_SIZE; // include header here
+        while (!list.empty())
+        {
+            size += list.front()->length();
+            list.pop_front();
+        }
+        return (uint32)size;
+    };
+    auto getCompressedBufferSize = [](PacketList_t list) {
+        PacketList_t listcopy = list;
+        size_t size = 0;
+        while (!list.empty())
+        {
+            memcpy(PTempBuff + size, list.front()->getData(), list.front()->length());
+            size += list.front()->length();
+            list.pop_front();
+        }
+        TPZ_DEBUG_BREAK_IF(size > map_config.buffer_size); // should never happen with the help of logic short-circuiting
+        //ShowDebug("Doing zlib_compress with size %u...\n", size);
+        int32 zlibBits = zlib_compress(PTempBuff, (uint32)size, PTempBuff2, map_config.buffer_size);
+        if (zlibBits == -1)
+            return (uint32)0xFFFFFFFF;
+        return (uint32)zlib_compressed_size(zlibBits);
+    };
+
+    PacketList_t priorityList;
+    if (!PChar || !PChar->getPacketCount())
+        return priorityList;
+    priorityList = PChar->getPacketList();
+    PacketList_t charPacketList = priorityList;
+    
+    if (getBufferSize(priorityList) < map_config.buffer_size && getCompressedBufferSize(priorityList) + 4 < 1200 - FFXI_HEADER_SIZE - 16)
+    { // no prioritization needed. optimization: just return the list. for some reason 1300 can make us go over limit, so being conservative.
+        // finalization: all packets in priorityList will be sent, so do cleanup for what will be recycled and what will not
+        for (auto it = priorityList.begin(); it != priorityList.end(); it++)
+            (*it)->selectedForThisNetworkCycle = true;
+        return priorityList;
+    }
+
+    bool isOrdered = false;
+    auto orderPacketList = [&isOrdered, &PChar](PacketList_t list) {
+        if (isOrdered)
+            return list;
+
+        PacketList_t orderedList;
+        // front = least priority (higher value)
+        // back = highest priority (lower value)
+
+        // order matters on some packet types. they are placed before priority0 and will retain order
+        // these deque are simply interims for the pointers. they do not manage the memory to the pointed objects.
+        std::deque<CBasicPacket*> ordered;
+        // for non-ordered, they will be randomized so that entities update somewhat uniformly
+        std::deque<CBasicPacket*> priority0;   // char's own actions
+        std::deque<CBasicPacket*> priority1;   // actions performed on char by enemies/party/alliance, tells/party chat
+        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities, party list updates
+        std::deque<CBasicPacket*> priority3;   // positional updates of party/alliance (chance to hop to prio1)
+        std::deque<CBasicPacket*> priority4;   // actions performed on party/alliance by enemies
+        std::deque<CBasicPacket*> priority5;   // 
+        std::deque<CBasicPacket*> priority6;   // linkshell chat
+        std::deque<CBasicPacket*> priority7;   // position updates for mob entities (chance to hop to prio3, if ANIMATION_ATTACK and dist high enough, go prio2)
+        std::deque<CBasicPacket*> priority8;   // non-partied players actions performed on you
+        std::deque<CBasicPacket*> priority9;   // position updates for non-party players (chance to hop to prio5)
+        std::deque<CBasicPacket*> priority10;  // non-partied players actions performed on party/alliance
+        std::deque<CBasicPacket*> priority11;  // enemy actions on non-party targets
+        std::deque<CBasicPacket*> priority12;  // non-partied players actions performed on anything else
+        std::deque<CBasicPacket*> priority13;  // unsorted, default to lowest prio. remember to add new packets to the prioritization algorithm.
+
+        CBaseEntity* PCursorTarget = PChar->GetEntity(PChar->m_TargID); // selecting someone with the cursor will give them highest priority
+        uint32 CursorTargetID = PCursorTarget ? PCursorTarget->id : 0xFFFFFFFF;
+        uint32 CursorTargetPetID = PCursorTarget && (PCursorTarget->objtype == TYPE_PC || PCursorTarget->objtype == TYPE_MOB) && ((CBattleEntity*)PCursorTarget)->PPet
+                                        ? ((CBattleEntity*)PCursorTarget)->PPet->id : 0xFFFFFFFF;
+
+        while (!list.empty())
+        {
+            CBasicPacket* PSmallPacket = list.front();
+            if (!PSmallPacket)
+            {
+                list.pop_front();
+                continue;
+            }
+            int priorityNum = 13;
+
+            if (PSmallPacket->priorityNumOverride != 0xFF)
+            {
+                priorityNum = PSmallPacket->priorityNumOverride;
+            }
+            else
+            {
+                //ShowDebug("Packet Type is 0x%02hx and first 9 bits of data is 0x%03hx\n", PSmallPacket->getType(), ref<uint16>(PSmallPacket->getData(), 0) & 0x01FF);
+                switch (PSmallPacket->getType()) // let's assume first 8 bits is packet id
+                {
+                    case 0x28: // action
+                    {
+                        uint32 OwnerID = ref<uint32>(PSmallPacket->getData(), 0x05);
+                        if (OwnerID == PChar->id || (PChar->PPet && PChar->PPet->id == OwnerID))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+
+                        if (OwnerID == CursorTargetID || OwnerID == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+
+                        // who all does this action target? let's extract the IDs.
+                        // numtargs = uint8 0x09
+                        // targ[index] = 150bits + 123bits * index
+                        std::vector<uint32> AffectedIDs;
+                        uint8 numtargs = ref<uint8>(PSmallPacket->getData(), 0x09);
+                        uint8 i = 0;
+
+                        while (i < numtargs)
+                        {
+                            uint32 location_in_bits = 150 + 123 * i;
+                            uint32 location_in_bytes = location_in_bits / 8;
+                            uint32 bit_offset = location_in_bits - (location_in_bytes * 8);
+                            uint32 targ = (ref<uint64>(PSmallPacket->getData(), location_in_bytes) >> bit_offset) & 0x00000000FFFFFFFF;
+                            AffectedIDs.push_back(targ);
+                            i++;
+                        }
+
+                        priorityNum = 12;
+
+                        for (auto i = AffectedIDs.begin(); i != AffectedIDs.end(); i++)
+                        {
+                            CBaseEntity* PTarget = zoneutils::GetEntity(*i);
+                            PTarget = PTarget ? PTarget : zoneutils::GetChar(*i);
+                            CBaseEntity* POwner = zoneutils::GetEntity(OwnerID);
+                            POwner = POwner ? POwner : zoneutils::GetChar(OwnerID);
+                            if (!PTarget || !POwner)
+                                continue;
+                            if ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster)
+                            {
+                                POwner = ((CBattleEntity*)POwner)->PMaster; // same priority as my master
+                            }
+                            if ((PTarget->objtype == TYPE_MOB || PTarget->objtype == TYPE_PET) && ((CBattleEntity*)PTarget)->PMaster)
+                            {
+                                PTarget = ((CBattleEntity*)PTarget)->PMaster; // same priority as my master
+                            }
+
+                            if (PTarget->id == CursorTargetID || PTarget->id == CursorTargetPetID)
+                            {
+                                priorityNum = 1;
+                                PSmallPacket->priorityNumOverride = 1;
+                                break;
+                            }
+
+                            if (PTarget->id == PChar->id)
+                            {
+                                if (POwner->objtype != TYPE_PC || ((CCharEntity*)POwner)->IsPartiedWith(PChar))
+                                {
+                                    priorityNum = 1;
+                                    PSmallPacket->priorityNumOverride = 1;
+                                    break;
+                                }
+                                else // action on me is from player that is outside my party
+                                {
+                                    priorityNum = std::min(8, priorityNum);
+                                    continue;
+                                }
+                            }
+                            // past this point, the action is not me and the action is not performed on me
+
+                            if (POwner->objtype == TYPE_PC && ((CCharEntity*)POwner)->IsPartiedWith(PChar))
+                            {
+                                priorityNum = std::min(2, priorityNum);
+                                continue;
+                            }
+
+                            if (PTarget->objtype == TYPE_PC && ((CCharEntity*)POwner)->IsPartiedWith(PChar))
+                            {
+                                if (POwner->objtype != TYPE_PC)
+                                {
+                                    priorityNum = std::min(4, priorityNum);
+                                    continue;
+                                }
+                                else // we just checked party-on-party actions, so the owner of the action *must* be a player outside the party
+                                {
+                                    priorityNum = std::min(10, priorityNum);
+                                    continue;
+                                }
+                            }
+                            // past this point, the action has nothing to do with me or my party
+
+                            if (POwner->objtype != TYPE_PC)
+                            {
+                                priorityNum = std::min(11, priorityNum);
+                                continue;
+                            }
+                            priorityNum = std::min(12, priorityNum);
+                        }
+
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnMOBList.size() + PChar->SpawnPCList.size() + PChar->SpawnPETList.size() +
+                                                             PChar->SpawnTRUSTList.size())/5 + 4) && AffectedIDs.size() < 2)
+                        {
+                            priorityNum = std::min(2, priorityNum);
+                        }
+
+                        break;
+                    }
+                    case 0x2D: // message combat
+                    {
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        CBaseEntity* PTarget = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        PTarget = PTarget ? PTarget : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        POwner = (POwner->objtype == TYPE_PET || POwner->objtype == TYPE_MOB) && ((CBattleEntity*)POwner)->PMaster
+                                     ? ((CBattleEntity*)POwner)->PMaster
+                                     : POwner; // inheret my master's prio
+                        PTarget = (PTarget->objtype == TYPE_PET || PTarget->objtype == TYPE_MOB) && ((CBattleEntity*)PTarget)->PMaster
+                                      ? ((CBattleEntity*)POwner)->PMaster
+                                      : PTarget; // inheret my master's prio
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id) || POwner->id == CursorTargetID ||
+                            POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (!PTarget)
+                        {
+                            priorityNum = 11;
+                            PSmallPacket->priorityNumOverride = 11;
+                            break;
+                        }
+                        if (PTarget->id == PChar->id || (PChar->PPet && PTarget->id == PChar->PPet->id) || PTarget->id == CursorTargetID ||
+                            PTarget->id == CursorTargetPetID)
+                        {
+                            priorityNum = 1;
+                            PSmallPacket->priorityNumOverride = 1;
+                            break;
+                        }
+                        if (POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        if (PTarget->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)PTarget))
+                        {
+                            priorityNum = 4;
+                            PSmallPacket->priorityNumOverride = 4;
+                            break;
+                        }
+                        if (POwner->objtype == TYPE_PC)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            break;
+                        }
+                        priorityNum = 11;
+                        PSmallPacket->priorityNumOverride = 11;
+                        break;
+                    }
+                    case 0x70: // message synthesis result
+                    {
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x1A));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        priorityNum = 12; // PC outside our pt
+                        PSmallPacket->priorityNumOverride = 12;
+                        break;
+                    }
+                    case 0x38: // animation
+                    {
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if ((POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner)) ||
+                            ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster &&
+                             ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)((CBattleEntity*)POwner)->PMaster))))
+                        { // animation user is my party member or a party member's pet
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        if (POwner->objtype == TYPE_MOB ||
+                            (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
+                        {
+                            CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
+                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
+                            { // mob is targeting me or my pet
+                                priorityNum = 1;
+                                PSmallPacket->priorityNumOverride = 1;
+                                break;
+                            }
+                            if (POwner->animation == ANIMATION_ATTACK &&
+                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
+                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
+                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
+                            { // mob is targeting my party member or a party member's pet
+                                priorityNum = 4;
+                                PSmallPacket->priorityNumOverride = 4;
+                                break;
+                            }
+                            priorityNum = 11;
+                            PSmallPacket->priorityNumOverride = 11;
+                            break;
+                        }
+                        priorityNum = 12; // probably is PC outside our pt
+                        PSmallPacket->priorityNumOverride = 12;
+                        break;
+                    }
+                    case 0x3A: // animation independant
+                    {
+                        // seems to just be anim packet, but can have a target entity
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if ((POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner)) ||
+                            ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster &&
+                             ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)((CBattleEntity*)POwner)->PMaster))))
+                        { // animation user is my party member or a party member's pet
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        CBaseEntity* PTarget = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        PTarget = PTarget ? PTarget : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        if (PTarget && PTarget->id != POwner->id)
+                        {
+                            if (PTarget->id == PChar->id || (PChar->PPet && PTarget->id == PChar->PPet->id) || PTarget->id == CursorTargetID ||
+                                PTarget->id == CursorTargetPetID)
+                            { // animation is targeting me or my pet
+                                priorityNum = 1;
+                                PSmallPacket->priorityNumOverride = 1;
+                                break;
+                            }
+                            if ((PTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PTarget))) ||
+                                ((PTarget->objtype == TYPE_MOB || PTarget->objtype == TYPE_PET) && ((CBattleEntity*)PTarget)->PMaster &&
+                                 ((CBattleEntity*)PTarget)->PMaster->objtype == TYPE_PC &&
+                                 PChar->IsPartiedWith((CCharEntity*)(((CBattleEntity*)PTarget)->PMaster))))
+                            { // animation is targeting my party member or a party member's pet
+                                priorityNum = 4;
+                                PSmallPacket->priorityNumOverride = 4;
+                                break;
+                            }
+                            priorityNum = 11;
+                            PSmallPacket->priorityNumOverride = 11;
+                            break;
+                        }
+                        priorityNum = 12;
+                        PSmallPacket->priorityNumOverride = 12;
+                        break;
+                    }
+                    case 0x30: // animation synthesis
+                    {
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        priorityNum = 12; // PC outside our pt
+                        PSmallPacket->priorityNumOverride = 12;
+                        break;
+                    }
+                    case 0x39: // visual
+                    {
+                        // if i'm not mistaken, this is very similar to anim packet
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if ((POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner)) ||
+                            ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster &&
+                             ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)((CBattleEntity*)POwner)->PMaster))))
+                        { // animation user is my party member or a party member's pet
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        if (POwner->objtype == TYPE_MOB ||
+                            (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
+                        {
+                            CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
+                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
+                            { // mob is targeting me or my pet
+                                priorityNum = 1;
+                                PSmallPacket->priorityNumOverride = 1;
+                                break;
+                            }
+                            if (POwner->animation == ANIMATION_ATTACK &&
+                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
+                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
+                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
+                            { // mob is targeting my party member or a party member's pet
+                                priorityNum = 4;
+                                PSmallPacket->priorityNumOverride = 4;
+                                break;
+                            }
+                            priorityNum = 11;
+                            PSmallPacket->priorityNumOverride = 11;
+                            break;
+                        }
+                        if (POwner->objtype == TYPE_PC)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            break;
+                        }
+                    }
+                    case 0X0E: // entity update
+                    {
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && PChar->PPet->id == POwner->id))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (PSmallPacket->packetEntityUpdateType != ENTITY_NONE && PSmallPacket->packetEntityUpdateType != ENTITY_UPDATE)
+                        { // high prio of despawn/spawn no matter who they are.
+                            priorityNum = 1;
+                            PSmallPacket->priorityNumOverride = 1;
+                            break;
+                        }
+
+                        if ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster)
+                            POwner = ((CBattleEntity*)POwner)->PMaster; // inherit my master's prio
+
+                        if (PSmallPacket->packetUpdateMask == UPDATE_POS || PSmallPacket->packetUpdateMask == UPDATE_HP ||
+                            PSmallPacket->packetUpdateMask == (UPDATE_POS | UPDATE_HP))
+                        {
+                            if (POwner->objtype == TYPE_PC)
+                            {
+                                if (PChar->IsPartiedWith((CCharEntity*)POwner))
+                                {
+                                    if (!tpzrand::GetRandomNumber(0, 6))
+                                        priorityNum = 1;
+                                    else
+                                        priorityNum = 3;
+                                    break;
+                                }
+                                if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())))
+                                    priorityNum = 2;
+                                else
+                                    priorityNum = 9;
+                                break;
+                            }
+                            else
+                            {
+                                if ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && POwner->animation == ANIMATION_ATTACK)
+                                {
+                                    CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
+                                    PMobTarget = PMobTarget->PMaster ? PMobTarget->PMaster : PMobTarget; // inherit my master's prio
+                                    if (PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)PMobTarget))
+                                    {
+                                        if (distanceSquared(POwner->loc.p, PChar->loc.p) < 30 * 30)
+                                        {
+                                            priorityNum = 2;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            priorityNum = 4;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!tpzrand::GetRandomNumber(0, ((int)PChar->SpawnMOBList.size()) / 2 + 2))
+                                    {
+                                        priorityNum = 2;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        priorityNum = 6; // one level past the default since it is in attack_animation
+                                        break;
+                                    }
+                                }
+                                // not attacking, or this is an NPC
+                                if (!tpzrand::GetRandomNumber(0, ((int)PChar->SpawnMOBList.size()) / 2 + 2))
+                                {
+                                    priorityNum = 3;
+                                    break;
+                                }
+                                else
+                                {
+                                    priorityNum = 7;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // only updatemask options left are claim update and name update. we really want to know about these!!
+                        priorityNum = 2;
+                        break;
+                    }
+                    case 0x0D: // char packet
+                    {
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id)
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+
+                        if (PSmallPacket->packetEntityUpdateType != ENTITY_NONE && PSmallPacket->packetEntityUpdateType != ENTITY_UPDATE)
+                        { // high prio of despawn/spawn no matter who they are.
+                            priorityNum = 1;
+                            PSmallPacket->priorityNumOverride = 1;
+                            break;
+                        }
+
+                        if (PSmallPacket->packetUpdateMask == UPDATE_POS)
+                        {
+                            if (PChar->IsPartiedWith(POwner))
+                            {
+                                if (!tpzrand::GetRandomNumber(0, 6))
+                                    priorityNum = 1;
+                                else
+                                    priorityNum = 3;
+                                break;
+                            }
+                            if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                                priorityNum = 2;
+                            else
+                                priorityNum = 9;
+                            break;
+                        }
+                        if (PSmallPacket->packetUpdateMask == UPDATE_LOOK || PSmallPacket->packetUpdateMask == (UPDATE_LOOK | UPDATE_POS))
+                        {
+                            if (PChar->IsPartiedWith(POwner))
+                            {
+                                if (!tpzrand::GetRandomNumber(0, 6))
+                                    priorityNum = 1;
+                                else
+                                    priorityNum = 3;
+                                break;
+                            }
+                            if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                                priorityNum = 2;
+                            else
+                                priorityNum = 9;
+                            break;
+                        }
+
+                        // all that's left is if we are updating something important like their hp, animation, name, nameflags, speed, invisibility, etc.
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                        }
+                        else
+                        {
+                            if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                                priorityNum = 2;
+                            else
+                                priorityNum = 8;
+                        }
+                        break;
+                    }
+                    case 0x37: // char update packet
+                    {
+                        // this packet is very similar to char packet, but without an updatemask. thankfully, positions are not updated here so it's nbd
+                        // update information: HP bar, some nameflags, snk/invis particles, speed, anim, LS1 colour, mount ID, homepoint timer (if self)
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x24));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id)
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                        {
+                            priorityNum = 2;
+                            break;
+                        }
+                        priorityNum = 12;
+                        break;
+                    }
+                    case 0x67: // char sync
+                    {
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        if (!POwner)
+                        {
+                            // apparently this is also the same packet ID for trust sync. let's make sure it's not a trust before we give up
+                            CBaseEntity* PTrust = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x08));
+                            if (PTrust && PTrust->objtype == TYPE_TRUST)
+                            {
+                                priorityNum = 2; // same prio as party list updates.
+                                PSmallPacket->priorityNumOverride = 2;
+                                break;
+                            }
+
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+
+                        if (POwner->id == PChar->id)
+                        {
+                            priorityNum = -1; // sent in response to self-information request packet. order matters
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+
+                        if (POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+
+                        if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                        {
+                            priorityNum = 2;
+                            break;
+                        }
+
+                        priorityNum = 12;
+                        break;
+                    }
+                    case 0x5A: // emote
+                    {
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        CBaseEntity* PTarget = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x08));
+                        PTarget = PTarget ? PTarget : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x08));
+
+                        if (!POwner || !PTarget)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+
+                        if (POwner->id == PChar->id || POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+
+                        if (PTarget->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)PTarget))
+                        {
+                            priorityNum = 10;
+                            PSmallPacket->priorityNumOverride = 10;
+                            break;
+                        }
+
+                        priorityNum = 12;
+                        PSmallPacket->priorityNumOverride = 12;
+                        PSmallPacket->recyclePacket = false;
+                        break;
+                    }
+                    case 0xDF: // party list HP/MP/TP update
+                    {
+                        uint32 OwnerID = ref<uint32>(PSmallPacket->getData(), 0x04);
+
+                        if (OwnerID == PChar->id)
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+
+                        if (OwnerID == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                        break;
+                    }
+                    case 0x17: // chat message
+                    {
+                        // sender's ID is not included in the packet so we'll just be prioritizing mostly by channel
+                        CHAT_MESSAGE_TYPE MessageType = (CHAT_MESSAGE_TYPE)(ref<uint8>(PSmallPacket->getData(), 0x04));
+                        if ((ref<uint8>(PSmallPacket->getData(), 0x05) && MessageType != CHAT_MESSAGE_TYPE::MESSAGE_YELL) ||
+                            MessageType == CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1)
+                        { // non-yell GM message or global system messages get higher priority
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+                        if (MessageType == CHAT_MESSAGE_TYPE::MESSAGE_TELL || MessageType == CHAT_MESSAGE_TYPE::MESSAGE_PARTY)
+                        {
+                            priorityNum = 1;
+                            PSmallPacket->priorityNumOverride = 1;
+                            break;
+                        }
+                        if (MessageType == CHAT_MESSAGE_TYPE::MESSAGE_LINKSHELL || MessageType == CHAT_MESSAGE_TYPE::MESSAGE_LINKSHELL2)
+                        {
+                            priorityNum = 6;
+                            PSmallPacket->priorityNumOverride = 6;
+                            break;
+                        }
+                        priorityNum = 12; // chat message in a public channel. we can safely discard it if it doesn't make it thru prio... string data can get big.
+                        PSmallPacket->priorityNumOverride = 12;
+                        PSmallPacket->recyclePacket = false;
+                        break;
+                    }
+                    case 0x5B: // position
+                    {
+                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x10));
+                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x10));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        POwner = (POwner->objtype == TYPE_PC || POwner->objtype == TYPE_MOB) && ((CBattleEntity*)POwner)->PMaster
+                                     ? ((CBattleEntity*)POwner)->PMaster
+                                     : POwner; // inherit my master's prio
+                        if (POwner->objtype == TYPE_PC)
+                        {
+                            if (PChar->IsPartiedWith((CCharEntity*)POwner))
+                            {
+                                if (!tpzrand::GetRandomNumber(0, 9))
+                                    priorityNum = 2;
+                                else
+                                    priorityNum = 3;
+                                break;
+                            }
+                            else
+                            {
+                                if (!tpzrand::GetRandomNumber(0, (int)(PChar->SpawnPCList.size())/2 + 2))
+                                    priorityNum = 2;
+                                else
+                                    priorityNum = 9;
+                                break;
+                            }
+                        }
+                        if ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && POwner->animation == ANIMATION_ATTACK)
+                        {
+                            CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
+                            PMobTarget = PMobTarget->PMaster ? PMobTarget->PMaster : PMobTarget; // inherit my master's prio
+                            if (PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)PMobTarget))
+                            {
+                                if (distanceSquared(POwner->loc.p, PChar->loc.p) > 30 * 30)
+                                {
+                                    priorityNum = 2;
+                                    break;
+                                }
+                                else
+                                {
+                                    priorityNum = 4;
+                                    break;
+                                }
+                            }
+
+                            if (!tpzrand::GetRandomNumber(0, ((int)PChar->SpawnMOBList.size()) / 2 + 2))
+                            {
+                                priorityNum = 2;
+                                break;
+                            }
+                            else
+                            {
+                                priorityNum = 6; // one level past the default since it is in attack_animation
+                                break;
+                            }
+                        }
+                        // not attacking, or this is an NPC
+                        if (!tpzrand::GetRandomNumber(0, ((int)PChar->SpawnMOBList.size()) / 2 + 2))
+                        {
+                            priorityNum = 3;
+                            break;
+                        }
+                        else
+                        {
+                            priorityNum = 7;
+                            break;
+                        }
+                    }
+                    case 0x4F: // DL data
+                    case 0x41: // stop DL data
+                    case 0x0B: // server ip
+                    case 0x0A: // zone in. note: there are multiple packet.cpp files with this type number
+                    case 0x08: // zones visited
+                    case 0x4D: // servmes
+                    case 0xF6: // widescan packets (status: finished MUST be last)
+                    case 0xF4: // widescan packets (status: finished MUST be last)
+                    case 0x59: // gold world pass
+                    case 0x1F: // inventory packets
+                    case 0x1D: // inventory packets
+                    case 0x20: // inventory packets
+                    case 0x1E: // inventory packets
+                    case 0x1C: // inventory packets
+                    case 0xE0: // inventory packets
+                    case 0x56: // KI/quest log
+                    case 0x55: // KI/quest log
+                    case 0x18: // currency update
+                    case 0x63: // map marker update (non-PC) / merit packet / status effects (self)
+                    case 0x8C: // merit categories
+                    case 0x71: // campaign
+                    case 0x5E: // conquest
+                    case 0xAA: // spells
+                    case 0xAE: // mounts
+                    case 0xAC: // abilities
+                    case 0x50: // equip
+                    case 0x16: // equipset
+                    case 0xB4: // menu config
+                    case 0x1B: // jobs
+                    case 0x51: // self-appearance
+                    case 0x19: // recast
+                    case 0x61: // stats (self)
+                    case 0x62: // skills
+                    {
+                        // order matters for these.
+                        // if the game client is crashing on specific packets, they should be added to this list.
+                        priorityNum = -1;
+                        PSmallPacket->priorityNumOverride = -1;
+                        break;
+                    }
+                    case 0x4C: // AH
+                    case 0x09: // message standard
+                    case 0x29: // message basic
+                    case 0x2A: // message special
+                    case 0x53: // message system
+                    case 0x36: // message text
+                    case 0x6F: // message synthesis
+                    case 0x05: // bazaar item
+                    case 0x06: // bazaar purchase
+                    case 0x42: // blacklist
+                    case 0xC9: // check
+                    case 0x44: // job extra
+                    case 0x4B: // delivery box
+                    case 0x77: // entity enable list
+                    case 0x32: // event
+                    case 0x33: // event string
+                    case 0x5C: // event update
+                    case 0x5D: // event string update
+                    case 0x15: // fishing
+                    case 0xFA: // furniture interact
+                    case 0x86: // guild menu
+                    case 0x83: // guild menu buy
+                    case 0x82: // guild menu buy update
+                    case 0x85: // guild menu sell
+                    case 0x84: // guild menu sell update
+                    case 0xB5: // help desk
+                    case 0xBF: // instance entry
+                    case 0x48: // linkshell concierge
+                    case 0x58: // lock on
+                    case 0x2E: // mog menu
+                    case 0xF9: // raise/tractor menu
+                    case 0xDC: // party invite
+                    case 0xE1: // party search
+                    case 0x68: // synchronize pet with owner
+                    case 0x52: // event release
+                    case 0x3D: // shop appraise
+                    case 0x3F: // shop buy
+                    case 0x3C: // shop items
+                    case 0x3E: // shop menu
+                    case 0x31: // synth suggestion
+                    case 0x75: // battlefield timer
+                    case 0xF5: // widescan track
+                    case 0x65: // self-position (on zone-in or on event finish)
+                    {
+                        // these packets go straight to the character about their own actions/stats so they are prio0
+                        priorityNum = 0;
+                        PSmallPacket->priorityNumOverride = 0;
+                        break;
+                    }
+                    case 0xD2: // treasure pool find item
+                    case 0xD3: // treasure pool lot item
+                    {
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                    }
+                    case 0xCA:
+                    {
+                        // bazaar message can be a ton of text and not super important, so let's consider it below mob entitity position update
+                        // if it's my message though, order matters as this is part of the player information request
+                        // sadly, id is not saved on the packet data. gotta check the names.
+                        bool isMatch = true;
+                        char* myNamePtr = (char*)(PChar->GetName());
+                        char* bazaarNamePtr = (char*)(PSmallPacket->getData() + 0x80);
+                        uint16 i = 0;
+                        while (isMatch && myNamePtr[i] != '\0' && bazaarNamePtr[i] != '\0')
+                        {
+                            if (myNamePtr[i] != bazaarNamePtr[i])
+                                isMatch = false;
+                            i++;
+                        }
+                        if (isMatch)
+                        {
+                            priorityNum = -1;
+                            PSmallPacket->priorityNumOverride = -1;
+                            break;
+                        }
+                        priorityNum = 8;
+                        PSmallPacket->priorityNumOverride = 8;
+                        break;
+                    }
+                    case 0x07:
+                    {
+                        // exits your bazaar
+                        priorityNum = 6;
+                        PSmallPacket->priorityNumOverride = 6;
+                        break;
+                    }
+                    case 0x27:
+                    case 0x43:
+                    {
+                        if (PSmallPacket->getType() == 0x27 && PSmallPacket->getSize() != 0x38)
+                        {
+                            // message name. i'm assuming this is scripted for ally NPCs in battlefields to say stuff, so setting same as linkshell chat message
+                            // prio (not super important)
+                            priorityNum = 6;
+                            PSmallPacket->priorityNumOverride = 6;
+                            break;
+                        }
+                        // catching fish/monster/item. if it's me, prio0. otherwise, lower prio.
+                        if (PChar->id == ref<uint32>(PSmallPacket->getData(), 0x04) || CursorTargetID == ref<uint32>(PSmallPacket->getData(), 0x04))
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                        }
+                        else
+                        {
+                            priorityNum = 8;
+                            PSmallPacket->priorityNumOverride = 8;
+                        }
+                        break;
+                    }
+                    case 0x5F:
+                    {
+                        // music change packet, it's tiny.
+                        priorityNum = 1;
+                        PSmallPacket->priorityNumOverride = 1;
+                        break;
+                    }
+                    case 0x2F:
+                    {
+                        // chocobo digging packet
+                        CCharEntity* POwner = zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
+                        if (!POwner)
+                        {
+                            priorityNum = 12;
+                            PSmallPacket->priorityNumOverride = 12;
+                            PSmallPacket->recyclePacket = false;
+                            break;
+                        }
+                        if (POwner->id == PChar->id || POwner->id == CursorTargetID)
+                        {
+                            priorityNum = 0;
+                            PSmallPacket->priorityNumOverride = 0;
+                            break;
+                        }
+                        if (PChar->IsPartiedWith(POwner))
+                        {
+                            priorityNum = 2;
+                            PSmallPacket->priorityNumOverride = 2;
+                            break;
+                        }
+
+                        priorityNum = 12;
+                        PSmallPacket->priorityNumOverride = 12;
+                        PSmallPacket->recyclePacket = false; // do we really care if other more important stuff is happening
+                        break;
+                    }
+                    case 0xB6:
+                    {
+                        // GM message packet, same prio as GM chat messages.
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                        break;
+                    }
+                    case 0xCC:
+                    {
+                        // lsmes packet. same prio as ls chat message
+                        priorityNum = 6;
+                        PSmallPacket->priorityNumOverride = 6;
+                        break;
+                    }
+                    case 0xC8:
+                    {
+                        // party list reload packet. fixed size
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                        break;
+                    }
+                    case 0x76:
+                    case 0xDD:
+                    {
+                        // party effect icons update
+                        // this is a fairly large packet; sadly no way to optimize its prio since the client doesn't send a packet notifying server of /focustarget
+
+                        // and: party member update packet (job,hp,mp,etc)
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                        break;
+                    }
+                    case 0xA0:
+                    {
+                        // party map positions
+                        priorityNum = 3;
+                        PSmallPacket->priorityNumOverride = 3;
+                        break;
+                    }
+                    case 0x22:
+                    case 0x25:
+                    case 0x21:
+                    case 0x23:
+                    {
+                        // trade-type packets are tiny and infrequent so we can just assign high prio without worry
+                        priorityNum = 1;
+                        PSmallPacket->priorityNumOverride = 1;
+                        break;
+                    }
+                    case 0x057:
+                    {
+                        // weather update. same prio as party list updates.
+                        priorityNum = 2;
+                        PSmallPacket->priorityNumOverride = 2;
+                        break;
+                    }
+                    default:
+                    {
+                        // couldn't find the packet. let's search again but assume first 9 bits is packet id
+                        switch (ref<uint16>(PSmallPacket->getData(), 0) & 0x01FF)
+                        {
+                            case 0x110: // RoE quest log/sparks update
+                            case 0x111: // RoE quest log/sparks update
+                            case 0x112: // RoE quest log/sparks update
+                            case 0x113: // currency update
+                            case 0x10E: // release special
+                            {
+                                priorityNum = -1; // order matters
+                                PSmallPacket->priorityNumOverride = -1;
+                                break;
+                            }
+                            case 0x11E:
+                            {
+                                // jump packet. no idea what extra means so just gonna make this low prio.
+                                priorityNum = 12;
+                                PSmallPacket->priorityNumOverride = 12;
+                                PSmallPacket->recyclePacket = false;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            switch (priorityNum)
+            {
+                case -1:
+                    ordered.push_back(PSmallPacket);
+                    break;
+                case 0:
+                    priority0.push_back(PSmallPacket);
+                    break;
+                case 1:
+                    priority1.push_back(PSmallPacket);
+                    break;
+                case 2:
+                    priority2.push_back(PSmallPacket);
+                    break;
+                case 3:
+                    priority3.push_back(PSmallPacket);
+                    break;
+                case 4:
+                    priority4.push_back(PSmallPacket);
+                    break;
+                case 5:
+                    priority5.push_back(PSmallPacket);
+                    break;
+                case 6:
+                    priority6.push_back(PSmallPacket);
+                    break;
+                case 7:
+                    priority7.push_back(PSmallPacket);
+                    break;
+                case 8:
+                    priority8.push_back(PSmallPacket);
+                    break;
+                case 9:
+                    priority9.push_back(PSmallPacket);
+                    break;
+                case 10:
+                    priority10.push_back(PSmallPacket);
+                    break;
+                case 11:
+                    priority11.push_back(PSmallPacket);
+                    break;
+                case 12:
+                    priority12.push_back(PSmallPacket);
+                    break;
+                default:
+                    priority13.push_back(PSmallPacket);
+                    break;
+            }
+
+            list.pop_front();
+        }
+
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::shuffle(priority0.begin(), priority0.end(), g);
+        std::shuffle(priority1.begin(), priority1.end(), g);
+        std::shuffle(priority2.begin(), priority2.end(), g);
+        std::shuffle(priority3.begin(), priority3.end(), g);
+        std::shuffle(priority4.begin(), priority4.end(), g);
+        std::shuffle(priority5.begin(), priority5.end(), g);
+        std::shuffle(priority6.begin(), priority6.end(), g);
+        std::shuffle(priority7.begin(), priority7.end(), g);
+        std::shuffle(priority8.begin(), priority8.end(), g);
+        std::shuffle(priority9.begin(), priority9.end(), g);
+        std::shuffle(priority10.begin(), priority10.end(), g);
+        std::shuffle(priority11.begin(), priority11.end(), g);
+        std::shuffle(priority12.begin(), priority12.end(), g);
+        std::shuffle(priority13.begin(), priority13.end(), g);
+        
+
+        // highest priority = front
+        // lowest priority = back
+        while (!ordered.empty())
+        {
+            orderedList.push_back(ordered.front());
+            ordered.pop_front();
+        }
+        while (!priority0.empty())
+        {
+            orderedList.push_back(priority0.front());
+            priority0.pop_front();
+        }
+        while (!priority1.empty())
+        {
+            orderedList.push_back(priority1.front());
+            priority1.pop_front();
+        }
+        while (!priority2.empty())
+        {
+            orderedList.push_back(priority2.front());
+            priority2.pop_front();
+        }
+        while (!priority3.empty())
+        {
+            orderedList.push_back(priority3.front());
+            priority3.pop_front();
+        }
+        while (!priority4.empty())
+        {
+            orderedList.push_back(priority4.front());
+            priority4.pop_front();
+        }
+        while (!priority5.empty())
+        {
+            orderedList.push_back(priority5.front());
+            priority5.pop_front();
+        }
+        while (!priority6.empty())
+        {
+            orderedList.push_back(priority6.front());
+            priority6.pop_front();
+        }
+        while (!priority7.empty())
+        {
+            orderedList.push_back(priority7.front());
+            priority7.pop_front();
+        }
+        while (!priority8.empty())
+        {
+            orderedList.push_back(priority8.front());
+            priority8.pop_front();
+        }
+        while (!priority9.empty())
+        {
+            orderedList.push_back(priority9.front());
+            priority9.pop_front();
+        }
+        while (!priority10.empty())
+        {
+            orderedList.push_back(priority10.front());
+            priority10.pop_front();
+        }
+        while (!priority11.empty())
+        {
+            orderedList.push_back(priority11.front());
+            priority11.pop_front();
+        }
+        while (!priority12.empty())
+        {
+            orderedList.push_back(priority12.front());
+            priority12.pop_front();
+        }
+        while (!priority13.empty())
+        {
+            orderedList.push_back(priority13.front());
+            priority13.pop_front();
+        }
+        
+        isOrdered = true;
+        return orderedList;
+    };
+    
+    uint32 bufferSize = getBufferSize(priorityList);
+    if (bufferSize >= map_config.buffer_size)
+    {
+        priorityList = orderPacketList(priorityList);
+        while (bufferSize >= map_config.buffer_size && !priorityList.empty())
+        {
+            bufferSize -= priorityList.back()->length();
+            priorityList.pop_back();
+        }
+    }
+
+    uint32 compressedBufferSize = getCompressedBufferSize(priorityList);
+    compressedBufferSize = getCompressedBufferSize(priorityList);
+    if (compressedBufferSize + 4 >= 1200 - FFXI_HEADER_SIZE - 16)
+    { // 16 bytes ensures there is room for the md5 hash later on in send_parse. 4 bytes ensures there is room for compressed-size stamp on master packet in send_parse.
+        priorityList = orderPacketList(priorityList);
+        while (compressedBufferSize + 4 >= 1200 - FFXI_HEADER_SIZE - 16)
+        {
+            priorityList.pop_back();
+            compressedBufferSize = getCompressedBufferSize(priorityList);
+        } // not too woried about processing optimization here since, from my testing, buffersize hits 1750 before compressedbuffersize hits 1200 in 99.99% of scenarios
+    }
+
+    // finalization: all packets in priorityList will be sent, so do cleanup for what will be recycled and what will not
+    for (auto it = priorityList.begin(); it != priorityList.end(); it++)
+        (*it)->selectedForThisNetworkCycle = true;
+    
+    // pointed objects will be deleted after the while loop that follows this function call in send_parse
+    // will delete if object is selected for this cycle or if it wasn't selected + its recycle flag is turned off
+    
+    return priorityList;
+}
+
+/************************************************************************
 *                                                                       *
-*  main function is building big packet                                 *
+*  main function is building big packet (master packet)                 *
 *                                                                       *
 ************************************************************************/
 
 int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_data_t* map_session_data)
 {
-    // Модификация заголовка исходящего пакета
-    // Суть преобразований:
-    //  - отправить клиенту номер последнего полученного от него пакета
-    //  - присвоить исходящему пакету номер последнего отправленного клиенту пакета +1
-    //  - записать текущее время отправки пакета
+    // start the header of the outgoing master packet:
+    ref<uint16>(buff, 0x00) = map_session_data->server_packet_id; // notify the client of the sequence number of the last packet we received from it
+    ref<uint16>(buff, 0x02) = map_session_data->client_packet_id; // assign the sequence number to the outgoing master packet as the last sequence number sent +1
+    ref<uint32>(buff, 0x08) = (uint32)time(nullptr); // write the current time of sending the packet
 
-    ref<uint16>(buff, 0) = map_session_data->server_packet_id;
-    ref<uint16>(buff, 2) = map_session_data->client_packet_id;
-
-    // сохранение текущего времени (32 BIT!)
-    ref<uint32>(buff, 8) = (uint32)time(nullptr);
-
-    // собираем большой пакет, состоящий из нескольких маленьких
-    CCharEntity *PChar = map_session_data->PChar;
+    // construct master packet (A.K.A. bigpacket) from the smallpackets
+    // every network cycle to the client, we give it one master packet
+    // which it will unfold to read the smallpackets in sequence
+    CCharEntity* PChar = map_session_data->PChar;
     CBasicPacket* PSmallPacket;
-    uint32 PacketSize = UINT32_MAX;
-    auto PacketCount = PChar->getPacketCount();
-    uint8 packets = 0;
+    uint32 PacketSizeBits = 0xFFFFFFFF;
+    uint32 PacketSizeBytes = 0xFFFFFFFF;
+    uint16 DebugSendPacketCount = 0;
 
-    do {
-        do {
-            *buffsize = FFXI_HEADER_SIZE;
-            PacketList_t packetList = PChar->getPacketList();
-            packets = 0;
+    *buffsize = FFXI_HEADER_SIZE;
+    uint32 packetsBeforePrio = PChar->getPacketCount();
+    
+    PacketList_t packetList = generate_priority_packet_list(PChar);
+    uint32 packetsAfterPrio = packetList.size();
 
-            while (!packetList.empty() && *buffsize + packetList.front()->length() < map_config.buffer_size &&
-                packets < PacketCount)
-            {
-                PSmallPacket = packetList.front();
+    while (!packetList.empty())
+    {
+        PSmallPacket = packetList.front();
+        PSmallPacket->sequence(map_session_data->server_packet_id);
+        memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
+        *buffsize += PSmallPacket->length();
+        //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
+        if (PSmallPacket->getType() == 0x1D && !PChar->m_packetLimiterEnabled)
+            PChar->m_packetLimiterEnabled = true; // inventory finish packet means we can turn on the limiter
+        packetList.pop_front();
+    }
 
-                PSmallPacket->sequence(map_session_data->server_packet_id);
-                memcpy(buff + *buffsize, *PSmallPacket, PSmallPacket->length());
+    uint16 packetsRemaining = PChar->getPacketCount();
+    std::mutex* ptr = (PChar->getPacketListMutexPtr());
+    std::lock_guard lk(*ptr);
 
-                *buffsize += PSmallPacket->length();
-                packetList.pop_front();
-                packets++;
-            }
+    if (packetsBeforePrio)
+    {
+        // delete the packets we just copied into the buffer as well as any of the non-used objects that are toggled to not recycle to the next network cycle
 
-            PacketCount /= 2;
-
-            //Сжимаем данные без учета заголовка
-            //Возвращаемый размер в 8 раз больше реальных данных
-            PacketSize = zlib_compress(buff + FFXI_HEADER_SIZE, (uint32)(*buffsize - FFXI_HEADER_SIZE), PTempBuff, map_config.buffer_size);
-
-            // handle compression error
-            if (PacketSize == static_cast<uint32>(-1))
-            {
-                continue;
-            }
-
-            ref<uint32>(PTempBuff, zlib_compressed_size(PacketSize)) = PacketSize;
-
-            PacketSize = (uint32)zlib_compressed_size(PacketSize) + 4;
-
-        } while (PacketCount > 0 && PacketSize > 1300 - FFXI_HEADER_SIZE - 16); //max size for client to accept
-
-        if (PacketSize == static_cast<uint32>(-1))
+        PacketList_t* PPacketList = PChar->getPacketListPtr();
+        auto it = PPacketList->cbegin();
+        while (it != PPacketList->cend())
         {
-            if (PChar->getPacketCount() > 0)
+            if ((*it)->selectedForThisNetworkCycle == true || (*it)->recyclePacket == false)
             {
-                PChar->erasePackets(1);
-                PacketCount = PChar->getPacketCount();
+                delete (*it);
+                it = PPacketList->erase(it);
             }
             else
             {
-                *buffsize = 0;
-                return -1;
+                it++;
             }
         }
-    } while (PacketSize == static_cast<uint32>(-1));
-    PChar->erasePackets(packets);
-
-    //Запись размера данных без учета заголовка
-    uint8 hash[16];
-    md5((uint8*)PTempBuff, hash, PacketSize);
-    memcpy(PTempBuff + PacketSize, hash, 16);
-    PacketSize += 16;
-
-    if (PacketSize > map_config.buffer_size + 20)
+    }
+    
+    if (packetsRemaining > 500 && PChar->m_packetLimiterEnabled)
     {
-        ShowFatalError(CL_RED"%Memory manager: PTempBuff is overflowed (%u)\n" CL_RESET, PacketSize);
+        uint32 packetsToDrop = packetsRemaining - 500;
+
+        PacketList_t* PPacketList = PChar->getPacketListPtr();
+        auto it = PPacketList->cbegin();
+        while (it != PPacketList->cend() && packetsToDrop)
+        {
+            if ((*it)->overflowDropImmunity == false)
+            {
+                delete (*it);
+                it = PPacketList->erase(it);
+            }
+            else
+            {
+                it++;
+            }
+            packetsToDrop--;
+        }
     }
 
-    //making total packet
-    memcpy(buff + FFXI_HEADER_SIZE, PTempBuff, PacketSize);
+    if (*buffsize > map_config.buffer_size)
+    {
+        ShowFatalError("generate_priority_packet_list failed to detect buffer overflow error for character %s on sequence %u! Size was %u\n",
+            PChar->GetName(), map_session_data->server_packet_id, *buffsize);
+        return -1;
+    }
 
-    uint32 CypherSize = (PacketSize / 4)&-2;
+    // Compress the data excluding the header
+    PacketSizeBits = zlib_compress(buff + FFXI_HEADER_SIZE, (uint32)(*buffsize - FFXI_HEADER_SIZE), PTempBuff, map_config.buffer_size);
+    if (PacketSizeBits == static_cast<uint32>(-1))
+    {
+        ShowFatalError("generate_priority_packet_list failed to detect a zlib compression error for character %s on sequence %u!\n",
+            PChar->GetName(), map_session_data->server_packet_id);
+        return -1;
+    }
+    PacketSizeBytes = (uint32)zlib_compressed_size(PacketSizeBits);
+    if (PacketSizeBytes + 4 > 1300 - FFXI_HEADER_SIZE - 16)
+    {
+        ShowFatalError("generate_priority_packet_list failed to detect COMPRESSED buffer overflow error for character %s on sequence %u! Size was %u\n",
+            PChar->GetName(), map_session_data->server_packet_id, PacketSizeBytes);
+        return -1;
+    } // size was 1265
+
+    // 1800 buffer limit is on the uncompressed list of smallpackets (default, cant be changed with map_config.buffer_size)
+    // 1300 buffer limit is on the compressed list of smallpackets + compressed size indicator(4chars) + md5 hash(16chars)
+    /*
+    ShowDebug("SEQUENCE %u: Attempting to send %u/%u packets to character %s (size %u/%u buffer bytes, %u/1300 compressed).\n",
+              map_session_data->server_packet_id, packetsAfterPrio, packetsBeforePrio, PChar->GetName(), (uint16)*buffsize,
+              map_config.buffer_size, PacketSizeBytes + 20);
+    */
+    
+    ref<uint32>(PTempBuff, (size_t)PacketSizeBytes) = PacketSizeBits; // client wants to know size in bits
+
+    PacketSizeBytes += 4;
+    PacketSizeBits += 32;
+
+    // append MD5 hash to buffer
+    uint8 hash[16];
+    md5((uint8*)PTempBuff, hash, PacketSizeBytes);
+    memcpy(PTempBuff + PacketSizeBytes, hash, 16);
+    PacketSizeBytes += 16;
+
+    if (PacketSizeBytes > map_config.buffer_size + 20)
+    {
+        ShowFatalError(CL_RED"%Memory manager: PTempBuff is overflowed (%u)\n" CL_RESET, PacketSize);
+        return -1;
+    }
+
+    // making total packet. we made the header already so let's copy the PTempBuff (headerless buffer) in to complete our packet. then encipher.
+    memcpy(buff + FFXI_HEADER_SIZE, PTempBuff, PacketSizeBytes);
+
+    uint32 CypherSize = (PacketSizeBytes / 4) & -2;
 
     blowfish_t* pbfkey = &map_session_data->blowfish;
 
@@ -977,14 +2433,12 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         blowfish_encipher((uint32*)(buff)+j + 7, (uint32*)(buff)+j + 8, pbfkey->P, pbfkey->S[0]);
     }
 
-    // контролируем размер отправляемого пакета. в случае,
-    // если его размер превышает 1400 байт (размер данных + 42 байта IP заголовок),
-    // то клиент игнорирует пакет и возвращает сообщение о его потере
+    // if master packet size (after compress) exceeds 1400 bytes (data size + 42 bytes IP header),
+    // then the client ignores the packet and returns a message about its loss
+    // server doesn't handle a response to such a message as it shouldn't happen
+    // since we are limiting to 1300 bytes just to be safe
 
-    // в случае возникновения подобной ситуации выводим предупреждующее сообщение и
-    // уменьшаем размер BuffMaxSize с шагом в 4 байта до ее устранения (вручную)
-
-    *buffsize = PacketSize + FFXI_HEADER_SIZE;
+    *buffsize = PacketSizeBytes + FFXI_HEADER_SIZE;
 
     return 0;
 }
@@ -1007,6 +2461,7 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         //clear accounts_sessions if character is logging out (not when zoning)
         if (map_session_data->shuttingDown == 1)
         {
+            map_session_data->PChar->m_disconnecting = true;
             Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u", map_session_data->PChar->id);
             // flist stuff
             if (FLgetSetting(map_session_data->PChar, 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), map_session_data->PChar->id); }
@@ -1108,6 +2563,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                     }
                     else
                     {
+                        map_session_data->PChar->m_disconnecting = true;
                         map_session_data->PChar->StatusEffectContainer->SaveStatusEffects(true);
                         Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u;", map_session_data->PChar->id);
 
@@ -1256,7 +2712,7 @@ int32 map_config_default()
     map_config.subjob_ratio = 1;
     map_config.include_mob_sj = false;
     map_config.vana_hours_per_pos_update = 1;
-    map_config.zone_sleep_timer = 120;
+    map_config.zone_sleep_timer = 240;
     map_config.zone_crash_recovery_min_players = 3;
     map_config.nm_stat_multiplier = 1.0f;
     map_config.mob_stat_multiplier = 1.0f;
@@ -1302,6 +2758,7 @@ int32 map_config_default()
     map_config.daily_tally_amount = 10;
     map_config.daily_tally_limit = 50000;
     map_config.mission_storage_recovery = false;
+    map_config.helpdesk_enabled = false;
     return 0;
 }
 
@@ -1821,6 +3278,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "mission_storage_recovery") == 0)
         {
         map_config.mission_storage_recovery = atoi(w2);
+        }
+        else if (strcmp(w1, "helpdesk_enabled") == 0)
+        {
+        map_config.helpdesk_enabled = atoi(w2);
         }
         else
         {

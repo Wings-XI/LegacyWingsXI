@@ -40,6 +40,14 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         bool bIpExempt = false;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
+        // Check IP address block before everything so we don't have
+        // to do extra work.
+        if (IsIPAddressBlocked()) {
+            LOG_DEBUG1("IP address of the user is blocked.");
+            mLastError = AUTH_IP_BLOCKED;
+            LogAccess(0, AUTH_OP_LOGIN, false, false);
+            return 0;
+        }
         std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
@@ -129,6 +137,14 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
         mLastError = AUTH_SUCCESS;
         if (Config->GetConfigUInt("disable_user_registrations") != 0) {
             mLastError = AUTH_BOOTLOADER_SIGNUP_DISABLED;
+            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
+            return 0;
+        }
+        // Check IP address block before everything so we don't have
+        // to do extra work.
+        if (IsIPAddressBlocked()) {
+            LOG_DEBUG1("IP address of the user is blocked.");
+            mLastError = AUTH_IP_BLOCKED;
             LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
             return 0;
         }
@@ -358,4 +374,26 @@ bool Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOpera
         (bResult ? 1 : 0));
     DB->query(strSqlFinalQuery);
     return bResult;
+}
+
+bool Authentication::IsIPAddressBlocked()
+{
+    LOG_DEBUG0("Called.");
+    GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
+
+    LOCK_DB;
+    DBConnection DB = Database::GetDatabase();
+    std::string strSqlQueryFmt;
+    std::string strSqlFinalQuery;
+    std::string strClientIP = inet_ntoa(mpConnection->GetConnectionDetails().BindDetails.sin_addr);
+    strSqlQueryFmt = "SELECT network_address FROM %sblocked_ranges WHERE (INET_ATON(network_address) & INET_ATON(subnet_mask)) = (INET_ATON(\"%s\") & INET_ATON(subnet_mask)) LIMIT 1;";
+    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+        Database::RealEscapeString(strClientIP).c_str());
+    mariadb::result_set_ref pBlockedResult = DB->query(strSqlFinalQuery);
+    if (pBlockedResult && pBlockedResult->row_count() != 0) {
+        // Another account already logged in from this IP address
+        return true;
+    }
+    return false;
 }

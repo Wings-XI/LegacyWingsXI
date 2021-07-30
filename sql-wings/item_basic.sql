@@ -15104,7 +15104,7 @@ INSERT INTO `item_basic` VALUES(17878, 0, 'jug_of_lucky_carrot_broth', 'l._carro
 INSERT INTO `item_basic` VALUES(17879, 0, 'jug_of_curdled_plasma_broth', 'c._plasma_broth', 12, 2052, 66, 0, 153);
 INSERT INTO `item_basic` VALUES(17880, 0, 'jug_of_seedbed_soil', 'seedbed_soil', 12, 2052, 48, 0, 108);
 INSERT INTO `item_basic` VALUES(17881, 0, 'jug_of_deepbed_soil', 'deepbed_soil', 12, 2052, 66, 0, 65);
-INSERT INTO `item_basic` VALUES(17882, 0, 'jug_of_alchemists_water', 'alchemist_water', 12, 2052, 48, 0, 82);
+INSERT INTO `item_basic` VALUES(17882, 0, 'jug_of_alchemists_water', 'alchemist_water', 12, 2052, 48, 0, 350);
 INSERT INTO `item_basic` VALUES(17883, 0, 'jug_of_mellow_bird_broth', 'mlw._bird_broth', 12, 2052, 66, 0, 189);
 INSERT INTO `item_basic` VALUES(17884, 0, 'jug_of_sun_water', 'sun_water', 12, 2052, 48, 0, 1358);
 INSERT INTO `item_basic` VALUES(17885, 0, 'jug_of_grasshopper_broth', 'grass._broth', 12, 2052, 48, 0, 172);
@@ -18301,8 +18301,8 @@ INSERT INTO `item_basic` VALUES(21919, 0, 'ajja_katana', 'ajja_katana', 1, 63552
 INSERT INTO `item_basic` VALUES(21920, 0, 'eletta_katana', 'eletta_katana', 1, 63552, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(21921, 0, 'kaja_katana', 'kaja_katana', 1, 63552, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(21922, 0, 'gokotai', 'gokotai', 1, 63552, 0, 1, 0);
-INSERT INTO `item_basic` VALUES(21923, 0, 'debahocho', 'debahocho', 1, 2084, 9, 0, 0);
-INSERT INTO `item_basic` VALUES(21924, 0, 'debahocho_+1', 'debahocho_+1', 1, 2080, 9, 0, 0);
+INSERT INTO `item_basic` VALUES(21923, 0, 'debahocho', 'debahocho', 1, 2084, 0, 0, 0);
+INSERT INTO `item_basic` VALUES(21924, 0, 'debahocho_+1', 'debahocho_+1', 1, 2080, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21954, 0, 'amanomurakumo', 'amanomurakumo', 1, 63552, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21955, 0, 'kogarasumaru', 'kogarasumaru', 1, 63552, 0, 0, 0);
 INSERT INTO `item_basic` VALUES(21956, 0, 'masamune', 'masamune', 1, 63552, 0, 0, 0);

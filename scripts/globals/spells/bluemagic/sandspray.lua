@@ -23,20 +23,20 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.BLINDNESS
-    local dINT = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
     local params = {}
+    params.eco = ECO_NONE
     params.diff = nil
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = tpz.effect.BLINDNESS
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = 120 * resist
-    local power = 25
-
-    if (resist > 0.5) then -- Do it!
-        if (target:addStatusEffect(typeEffect, power, 0, duration)) then
+    local duration = math.ceil(120 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    
+    if target:hasStatusEffect(tpz.effect.BLINDNESS) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    elseif resist >= 0.5 then
+        if target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, duration*resist) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -45,5 +45,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.BLINDNESS
 end

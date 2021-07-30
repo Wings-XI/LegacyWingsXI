@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `login_log`;
 CREATE TABLE `login_log` (
   `login_time` datetime NOT NULL DEFAULT current_timestamp(),
   `account_id` int(10) UNSIGNED NOT NULL,
-  `client_ip` varchar(20) NOT NULL,
+  `client_ip` varchar(64) NOT NULL,
   `operation` smallint(6) UNSIGNED NOT NULL DEFAULT 1,
   `source` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `result` tinyint(3) UNSIGNED NOT NULL

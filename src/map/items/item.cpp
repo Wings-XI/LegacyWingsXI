@@ -346,3 +346,26 @@ bool CItem::isSent()
 {
     return m_sent;
 }
+
+/************************************************************************
+*                                                                       *
+*  Appraisal                                                             *
+*                                                                       *
+************************************************************************/
+
+uint8 CItem::getAppraisalID()
+{
+    if ((CItem::getID() >= 2190 && CItem::getID() <= 2196) || (CItem::getID() >= 2276 && CItem::getID() <= 2286)) // Only return ID if it's an appraisable item
+    {
+        return m_extra[0x16];
+    }
+    return 0;
+}
+
+void CItem::setAppraisalID(uint8 appID)
+{
+    if ((CItem::getID() >= 2190 && CItem::getID() <= 2196) || (CItem::getID() >= 2276 && CItem::getID() <= 2286)) // Only set ID if it's an appraisable item
+    {
+        m_extra[0x16] = appID;
+    }
+}

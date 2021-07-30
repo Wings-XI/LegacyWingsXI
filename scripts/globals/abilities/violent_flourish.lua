@@ -44,34 +44,25 @@ end
 
 function onUseAbility(player, target, ability, action)
     local hit = 4
-    --get fstr
-    local fstr = fSTR(player:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT), player:getWeaponDmgRank())
 
     local params = {}
-    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
+    params.numHits = 1
+    local ftp = 1
+    params.ftp100 = ftp params.ftp200 = ftp params.ftp300 = ftp
+    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
+    params.canCrit = true
+    params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
+    local atkmulti = 1
+    params.atk100 = atkmulti params.atk200 = atkmulti params.atk300 = atkmulti
+    params.hitsHigh = false
+    params.useOAXTimes = false
 
-    --apply WSC
-    local weaponDamage = player:getWeaponDmg()
+    local taChar = player:getTrickAttackChar(target)
+    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
 
-    if (player:getWeaponSkillType(tpz.slot.MAIN) == 1) then
-        local h2hSkill = ((player:getSkillLevel(1) * 0.11) + 3)
-        weaponDamage = player:getWeaponDmg()-3
-
-        weaponDamage = weaponDamage + h2hSkill
-    end
-
-    local base = weaponDamage + fstr
-    local cratio, ccritratio = cMeleeRatio(player, target, params, 0, 0)
-    local isSneakValid = player:hasStatusEffect(tpz.effect.SNEAK_ATTACK)
-    if (isSneakValid and not player:isBehind(target)) then
-        isSneakValid = false
-    end
-    local pdif = generatePdif (cratio[1], cratio[2], true)
-    local hitrate = getHitRate(player, target, true)
-
-    if (math.random() <= hitrate or isSneakValid) then
+    if (tpHits + extraHits > 0) then
         hit = 3
-        dmg = base * pdif
 
         local spell = getSpell(252)
         local params = {}
@@ -79,23 +70,21 @@ function onUseAbility(player, target, ability, action)
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
         params.bonus = 50 - target:getMod(tpz.mod.STUNRES) + player:getMod(tpz.mod.VFLOURISH_MACC)
         local resist = applyResistance(player, target, spell, params)
-
+        
         if resist > 0.25 then
             target:addStatusEffect(tpz.effect.STUN, 1, 0, 2)
             tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
+            action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE_AND_STUN)
         else
-            ability:setMsg(tpz.msg.basic.JA_DAMAGE)
+            action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE)
         end
-
-        dmg = utils.stoneskin(target, dmg)
-        target:takeDamage(dmg, player, tpz.attackType.PHYSICAL, player:getWeaponDamageType(tpz.slot.MAIN))
-        target:updateEnmityFromDamage(player, dmg)
 
         action:animation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(tpz.slot.MAIN)))
         action:speceffect(target:getID(), hit)
-        return dmg
+        return damage
     else
-        ability:setMsg(tpz.msg.basic.JA_MISS)
+        action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
+        action:speceffect(target:getID(), 0)
         return 0
     end
 end

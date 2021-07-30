@@ -12,6 +12,7 @@
 -- Magic Bursts on: Detonation, Fragmentation, and Light
 -- Combos: Conserve MP
 -----------------------------------------
+require("scripts/globals/bluemagic")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -22,20 +23,18 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local typeEffect = tpz.effect.SILENCE
-    local dINT = (caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local params = {}
-    params.diff = nil
+    params.eco = ECO_BEAST
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
-    params.effect = typeEffect
+    params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.effect = tpz.effect.SILENCE
     
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
-    if (resist > 0.5) then -- Do it!
-        if (target:isFacing(caster)) then
-            if (target:addStatusEffect(typeEffect, 1, 0, duration)) then
+    if resist >= 0.5 then
+        if target:isFacing(caster) then
+            if target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration*resist) then
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             else
                 spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
@@ -47,5 +46,5 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
 
-    return typeEffect
+    return tpz.effect.SILENCE
 end

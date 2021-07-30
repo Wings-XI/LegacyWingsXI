@@ -119,7 +119,7 @@ void CDynamisHandler::ExpireDynamis()
 
 void CDynamisHandler::CleanupDynamis()
 {
-    ShowDebug("CleanupDynamis: %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>");
+    //ShowDebug("CleanupDynamis: %s\n", m_PZone ? m_PZone->GetName() : (const int8*)"<null>");
     m_expirationRoutine = true;
     ClearPlayerRegistry();
     EjectAllPlayers(true);

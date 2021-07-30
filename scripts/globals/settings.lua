@@ -124,7 +124,6 @@ PRISMATIC_HOURGLASS_COST = 50000    -- Cost of the prismatic hourglass for Dynam
 CURRENCY_EXCHANGE_RATE   = 100      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
 RELIC_2ND_UPGRADE_WAIT_TIME = 7200  -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
 RELIC_3RD_UPGRADE_WAIT_TIME = 3600  -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
-FREE_COP_DYNAMIS = 0 -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
 
 -- QUEST/MISSION SPECIFIC SETTINGS
 AF1_QUEST_LEVEL = 40    -- Minimum level to start AF1 quest
@@ -150,6 +149,12 @@ USE_OLD_MAGIC_DAMAGE = true -- true/false. if true, uses older magic damage form
 NM_MAGIC_STACK = 5 -- NM stacked magical damage redcution per cast/BP, percentage.
 NM_MAGIC_STACK_CAP = 60 -- NM stacked magical damage reduction cap, percentage.
 NM_MAGIC_STACK_WINDOW = 5000 -- Time (in miliseconds) for the NM stacked magical damage reduction window.
+
+-- FISHING
+FISHING_FATIGUE = 1000 -- Max number of fish allowed per day (set to zero to disable)
+FISHING_FATIGUE_NEW_PLAYERS = 36 -- Max number of fish allowed per day for new players (set to zero to disable)
+FISHING_NEW_PLAYER_DAYS = 3 -- How many days the character need to exist before it's no longer considered new
+FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to not be considered new
 
 -- CELEBRATIONS
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
@@ -179,3 +184,6 @@ LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her ow
 
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
+
+-- ASSAULTS
+IS_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take assault and door to let you enter in assault area

@@ -48,8 +48,12 @@ function onTrigger(player, npc)
                 player:startEvent(204, ring[1], ring[2], ring[3])
             elseif (ringsTaken > 1 and (currentDay - dateObtained) >= 28) then -- Wait time is >= 28 days, not 26
                 player:startEvent(204, ring[1], ring[2], ring[3])
+            else
+                return -1
             end
         end
+    else
+        return -1
     end
 end
 

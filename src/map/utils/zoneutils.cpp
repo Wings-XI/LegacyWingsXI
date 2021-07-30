@@ -276,7 +276,7 @@ void LoadNPCList()
           widescan \
         FROM npc_list INNER JOIN zone_settings \
         ON (npcid & 0xFFF000) >> 12 = zone_settings.zoneid \
-        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -370,7 +370,7 @@ void LoadMOBList()
             INNER JOIN mob_spawn_points ON mob_groups.groupid = mob_spawn_points.groupid \
             INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyid \
             INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
-            WHERE ((NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0)) OR (mobid IN (SELECT mobid FROM fishing_mob))) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
+            WHERE ((NOT (pos_x = 0 AND pos_y = 0 AND pos_z = 0)) OR (mobid IN (SELECT mobid FROM fishing_mob))) AND IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0) \
             AND mob_groups.zoneid = ((mobid >> 12) & 0xFFF);";
 
     char address[INET_ADDRSTRLEN];
@@ -606,7 +606,7 @@ void LoadMOBList()
         LEFT JOIN mob_spawn_points ON mob_pets.mob_mobid = mob_spawn_points.mobid \
         LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid \
         INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
-        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) \
+        WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0) \
         AND mob_groups.zoneid = ((mobid >> 12) & 0xFFF);";
 
     ret = Sql_Query(SqlHandle, PetQuery, map_ip.s_addr, address, map_port);
@@ -703,7 +703,7 @@ void LoadZoneList()
     g_PTrigger = new CNpcEntity();  // нужно в конструкторе CNpcEntity задавать модель по умолчанию
 
     std::vector<uint16> zones;
-    const char* query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+    const char* query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, zoneip != 0 AND zoneport != 0);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -744,7 +744,7 @@ void LoadZoneList()
 
 /************************************************************************
 *                                                                       *
-*  Узнаем текущий регион по номеру зоны                                 *
+*  Returns the current Region by Zone Enum                              *
 *                                                                       *
 ************************************************************************/
 
@@ -1045,13 +1045,66 @@ REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 
 /************************************************************************
 *                                                                       *
-*                                                                       *
+*   Returns the current Continent by Region Enum                        *
 *                                                                       *
 ************************************************************************/
 
 CONTINENTTYPE GetCurrentContinent(uint16 ZoneID)
 {
-    return GetCurrentRegion(ZoneID) != REGION_UNKNOWN ? THE_MIDDLE_LANDS : OTHER_AREAS;
+    CONTINENTTYPE continentID;
+    switch (GetCurrentRegion(ZoneID))
+    {
+        case REGION_RONFAURE:
+        case REGION_ZULKHEIM:
+        case REGION_NORVALLEN:
+        case REGION_GUSTABERG:
+        case REGION_DERFLAND:
+        case REGION_SARUTABARUTA:
+        case REGION_KOLSHUSHU:
+        case REGION_ARAGONEU:
+        case REGION_FAUREGANDI:
+        case REGION_VALDEAUNIA:
+        case REGION_QUFIMISLAND:
+        case REGION_LITELOR:
+        case REGION_KUZOTZ:
+        case REGION_VOLLBOW:
+        case REGION_ELSHIMOLOWLANDS:
+        case REGION_ELSHIMOUPLANDS:
+        case REGION_TULIA:
+        case REGION_MOVALPOLOS:
+        case REGION_TAVNAZIA:
+        case REGION_SANDORIA:
+        case REGION_BASTOK:
+        case REGION_WINDURST:
+        case REGION_JEUNO:
+        case REGION_DYNAMIS:
+        case REGION_TAVNAZIAN_MARQ:
+        case REGION_PROMYVION:
+        case REGION_LUMORIA:
+        case REGION_LIMBUS:
+            continentID = THE_MIDDLE_LANDS;
+            break;
+        case REGION_WEST_AHT_URHGAN:
+        case REGION_MAMOOL_JA_SAVAGE:
+        case REGION_HALVUNG:
+        case REGION_ARRAPAGO:
+        case REGION_ALZADAAL:
+            continentID = THE_ARADJIAH_CONTINENT;
+            break;
+        case REGION_RONFAURE_FRONT:
+        case REGION_NORVALLEN_FRONT:
+        case REGION_GUSTABERG_FRONT:
+        case REGION_DERFLAND_FRONT:
+        case REGION_SARUTA_FRONT:
+        case REGION_ARAGONEAU_FRONT:
+        case REGION_FAUREGANDI_FRONT:
+        case REGION_VALDEAUNIA_FRONT:
+            continentID = THE_SHADOWREIGN_ERA;
+            break;
+        default:
+            continentID = OTHER_AREAS;
+    }
+    return continentID;
 }
 
 int GetWeatherElement(WEATHER weather)
@@ -1156,6 +1209,18 @@ ZONETYPE GetZoneType(uint16 ZoneID)
         return (ZONETYPE)Sql_GetUIntData(SqlHandle, 0);
     }
     return ZONETYPE_NONE;
+}
+
+bool IsZoneEnabled(uint16 ZoneID)
+{
+    CZone* zone = GetZone(ZoneID);
+    if (zone) {
+        return ((zone->GetIP() != 0) && (zone->GetPort() != 0));
+    }
+    else {
+        uint64 ipp = GetZoneIPP(ZoneID);
+        return (((ipp & 0xFFFFFFFF) != 0) && ((ipp >> 32) != 0));
+    }
 }
 
 }; // namespace zoneutils

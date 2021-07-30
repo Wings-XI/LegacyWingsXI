@@ -7,6 +7,7 @@
 
 #include "../new-common/Debugging.h"
 #include "../new-common/Database.h"
+#include "../new-common/SSLConnection.h"
 #include "LoginGlobalConfig.h"
 #include "WorldManager.h"
 #include "LoginServer.h"
@@ -61,8 +62,17 @@ int main(int argc, char* argv[])
     SessionTracker::GetInstance();
 
     LoginServer LoginServerInstance;
-    // Authentication server
-    LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("auth_port"));
+    uint32_t dwSSLSettings = Config->GetConfigUInt("ssl_enabled");
+    if (dwSSLSettings != 2) {
+        // Authentication server
+        LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("auth_port"));
+    }
+    if (dwSSLSettings == 1 || dwSSLSettings == 2) {
+        SSLConnection::InitSSL();
+        LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_AUTH, Config->GetConfigUInt("ssl_auth_port"), (const char*)0, true);
+        // Commented out since it puts too much stress on the server.
+        // LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("ssl_data_port"), (const char*)0, true);
+    }
     // Key management and character list server (communicates with the bootloader)
     LoginServerInstance.AddBind(ProtocolFactory::PROTOCOL_DATA, Config->GetConfigUInt("data_port"));
     // Lobby server (communicates with the game client). Port not configurable because it's
@@ -85,6 +95,9 @@ int main(int argc, char* argv[])
 
     LoginServerInstance.Shutdown();
     SessionTracker::GetInstance()->Destroy();
+    if (dwSSLSettings == 1 || dwSSLSettings == 2) {
+        SSLConnection::CleanupSSL();
+    }
     DB->Destroy();
     WorldMgr->Destroy();
     Config->Destroy();

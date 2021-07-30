@@ -62,7 +62,6 @@ typedef struct _MAP_MQ_MESSAGE_HEADER
 
 namespace message
 {
-    std::recursive_mutex send_mutex;
     std::queue<std::shared_ptr<uint8>> message_queue;
     uint64 own_identity;
     std::shared_ptr<MQConnection> g_mqconnection = nullptr;
@@ -229,7 +228,9 @@ namespace message
     {
         while (!message_queue.empty())
         {
-            std::lock_guard<std::recursive_mutex> lk(send_mutex);
+            g_mqconnection->IncrementHighPriorityThreadsWaiting();
+            std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+            g_mqconnection->DecrementHighPriorityThreadsWaiting();
             std::shared_ptr<uint8> msgptr = message_queue.front();
             uint8* msg = msgptr.get();
             message_queue.pop();
@@ -358,8 +359,8 @@ namespace message
                 {
                     PZone->ForEachChar([&packet, &extra, packet_size](CCharEntity* PChar)
                     {
-                        // don't push to sender
-                        if (PChar->id != ref<uint32>((uint8*)extra, 0))
+                        // don't push to the sender or anyone with yell filtered
+                        if (PChar->id != ref<uint32>((uint8*)extra, 0) && !PChar->isYellFiltered())
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
                             memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
@@ -1007,7 +1008,9 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
-        std::lock_guard<std::recursive_mutex> lk(send_mutex);
+        g_mqconnection->IncrementHighPriorityThreadsWaiting();
+        std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+        g_mqconnection->DecrementHighPriorityThreadsWaiting();
         uint8 stub;
 
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
@@ -1042,7 +1045,7 @@ namespace message
             // Seems that packet must be a valid pointer no matter what, so just set it
             // to a stub location and set length to zero and hopefully nothing else
             // will crash.
-            packet ? *packet : &stub,
+            packet ? (uint8 *)*packet : &stub,
             packet ? packet->length() : 0,
             true);
         // And of course send to ZMQ for other servers

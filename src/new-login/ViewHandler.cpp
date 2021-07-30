@@ -371,7 +371,8 @@ void ViewHandler::HandleLoginRequest(const LOGIN_REQUEST_PACKET* pRequestPacket)
     LOG_DEBUG0("Content ID: %u, Character ID: %u.", pCurrentChar->dwContentID, pCurrentChar->dwCharacterID);
     LOG_DEBUG0("Accessing world database of world %u.", pCurrentChar->cWorldID);
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pCurrentChar->cWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pCurrentChar->cWorldID);
     LOCK_PWORLDDB(WorldDB);
@@ -604,6 +605,8 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
         return;
     }
     // Verify that the character name is not already taken
+    // LOCK_WORLDMGR;
+    LOCK_DB;
     LOG_DEBUG0("Accessing map server database.");
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(dwWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(dwWorldID);
@@ -773,6 +776,8 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
         LOG_DEBUG0("Accessing map server database.");
         std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pNewChar->cWorldID);
         const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pNewChar->cWorldID);
+        // LOCK_WORLDMGR;
+        LOCK_DB;
         LOCK_PWORLDDB(WorldDB);
         DBConnection WorldDBObj = WorldDB->GetDatabase();
         // Double check that they're not banned
@@ -937,7 +942,7 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
     ConfirmRequest.Header.dwCharacterID = pNewChar->dwCharacterID;
     mpSession->InvalidateCharacterList();
     // Notify the world server in case it wants to do something too
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     WorldManager::GetInstance()->SendMessageToWorld(pNewChar->cWorldID, reinterpret_cast<uint8_t*>(&ConfirmRequest), sizeof(ConfirmRequest));
     LOG_INFO("Character %s (%d) successfully created.", pNewChar->szCharName, pNewChar->dwCharacterID);
     mParser.SendDone();
@@ -1231,7 +1236,7 @@ void ViewHandler::DeleteCharacter(const DELETE_REQUEST_PACKET* pRequestPacket)
     DeleteRequest.dwContentID = pRequestPacket->dwContentID;
     DeleteRequest.dwCharacterID = dwCharacterID;
     mpSession->InvalidateCharacterList();
-    LOCK_WORLDMGR;
+    // LOCK_WORLDMGR;
     WorldManager::GetInstance()->SendMessageToWorld(cWorldID, reinterpret_cast<uint8_t*>(&DeleteRequest), sizeof(DeleteRequest));
     LOG_INFO("Character %d successfully created.", DeleteRequest.dwCharacterID);
     mParser.SendDone();

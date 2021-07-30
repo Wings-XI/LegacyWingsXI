@@ -89,6 +89,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../treasure_pool.h"
 #include "../mob_modifier.h"
 #include "../roe.h"
+#include "../anticheat.h"
 
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
@@ -714,6 +715,8 @@ namespace charutils
 
             HP = Sql_GetIntData(SqlHandle, 3);
             MP = Sql_GetIntData(SqlHandle, 4);
+            PChar->health.zoneinhp = HP;
+            PChar->health.zoneinmp = MP;
 
             PChar->profile.mhflag = (uint8)Sql_GetIntData(SqlHandle, 5);
             PChar->profile.title = (uint16)Sql_GetIntData(SqlHandle, 6);
@@ -846,7 +849,8 @@ namespace charutils
             "SELECT "
             "gmlevel, "    // 0
             "mentor, "     // 1
-            "nnameflags "  // 2
+            "nnameflags, "  // 2
+            "chatfilters " // 3
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -859,6 +863,7 @@ namespace charutils
             PChar->m_GMlevel = (uint8)Sql_GetUIntData(SqlHandle, 0);
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
+            PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
         }
 
         charutils::LoadInventory(PChar);
@@ -877,9 +882,11 @@ namespace charutils
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
 
         charutils::LoadEquip(PChar);
+        luautils::CheckForGearSet(PChar);
+        PChar->PLatentEffectContainer->CheckAllLatents();
+        PChar->UpdateHealth();
         PChar->health.hp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxHP() : HP;
         PChar->health.mp = zoneutils::IsResidentialArea(PChar) ? PChar->GetMaxMP() : MP;
-        PChar->UpdateHealth();
         PChar->m_event.EventID = luautils::OnZoneIn(PChar);
         luautils::OnGameIn(PChar, zoning == 1);
     }
@@ -2198,6 +2205,11 @@ namespace charutils
                     PChar->mainlook.sub = PChar->look.sub;
                 break;
             case SLOT_RANGED:
+                 if (hasValidStyle(PChar, PItem, appearance))
+                    PChar->mainlook.ranged = appearanceModel;
+                else
+                    PChar->mainlook.ranged = PChar->look.ranged;
+                break;
             case SLOT_AMMO:
                 // Appears as though these aren't implemented by SE.
                 break;
@@ -3865,6 +3877,24 @@ namespace charutils
                         // Astral Candescence and Imperial Defense Rating when besieged is added.
                         exp *= 1.10f; // 10% bonus XP because we assume Astral Candescence is active.
                     }
+                    else if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && region >= 33 && region <= 40)
+                    {
+                        switch (pcinzone)
+                        {
+                            case 1: exp *= 1.00f; break;
+                            case 2: exp *= 0.75f; break;
+                            case 3: exp *= 0.55f; break;
+                            case 4: exp *= 0.45f; break;
+                            case 5: exp *= 0.39f; break;
+                            case 6: exp *= 0.35f; break;
+                            default: exp *= (1.8f / pcinzone); break;
+                        }
+                        // Sigil bonus for parties under 6
+                        if (pcinzone < 6)
+                        {
+                            exp *= 1.20f; // 20% bonus XP
+                        }
+                    }
                     else
                     {
                         switch (pcinzone)
@@ -5102,6 +5132,19 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Save the char's chat filter flags                                    *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveChatFilterFlags(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET chatfilters = %llu WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->chatFilterFlags, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Saves character nation changes                                       *
     *                                                                       *
     ************************************************************************/
@@ -5871,6 +5914,14 @@ namespace charutils
     {
         if (type == 2)
         {
+            if (((ipp & 0xFFFFFFFF) == 0) || ((ipp >> 32) == 0)) {
+                // Do not send people to invalid or disabled zones
+                if (PChar->status == STATUS_DISAPPEAR) {
+                    PChar->status = STATUS_NORMAL;
+                }
+                PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
+                return;
+            }
             Sql_Query(SqlHandle, "UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
                 (uint32)ipp, (uint32)(ipp >> 32), PChar->id);
 
@@ -5927,6 +5978,14 @@ namespace charutils
         PChar->updatemask |= UPDATE_HP;
 
         PChar->clearPacketList();
+
+        uint32 inJail = charutils::GetCharVar(PChar->id, "InJail");
+        if (inJail) {
+            ShowExploit("charutils::HomePoint Player tried to blood warp out of jail");
+            PChar->loc.destination = ZONE_MORDION_GAOL;
+            anticheat::JailChar(PChar, inJail);
+        }
+
         SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
     }
 
@@ -6311,24 +6370,30 @@ void ReceiveHelpDeskMessage(CCharEntity* PChar, CBasicPacket data)
     {
         if (PChar->m_GMCall.isCall)
         {
-            const char* fmtQuery = "INSERT INTO server_gmcalls (charid,charname,accid,zoneid,pos_x,pos_y,pos_z,version,message,harassment,stuck,blocked) "
-                                   "VALUES(%u,'%s',%u,%u,%.3f,%.3f,%.3f,'%s','%s',%u,%u,%u)";
+            if (map_config.helpdesk_enabled) {
+                const char* fmtQuery = "INSERT INTO server_gmcalls (charid,charname,accid,zoneid,pos_x,pos_y,pos_z,version,message,harassment,stuck,blocked) "
+                    "VALUES(%u,'%s',%u,%u,%.3f,%.3f,%.3f,'%s','%s',%u,%u,%u)";
 
-            std::string message;
-            message.reserve(strlen(PChar->m_GMCall.message.c_str()) * 2 + 1);
-            Sql_EscapeString(SqlHandle, message.data(), PChar->m_GMCall.message.c_str());
+                std::string message;
+                message.reserve(strlen(PChar->m_GMCall.message.c_str()) * 2 + 1);
+                Sql_EscapeString(SqlHandle, message.data(), PChar->m_GMCall.message.c_str());
 
-            // Send the ticket to all online GMs
-            std::string broadcast((const char*)PChar->GetName());
-            broadcast.append(" placed a GM ticket: ");
-            broadcast.append(PChar->m_GMCall.message);
-            message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)broadcast.c_str()));
+                // Send the ticket to all online GMs
+                std::string broadcast((const char*)PChar->GetName());
+                broadcast.append(" placed a GM ticket: ");
+                broadcast.append(PChar->m_GMCall.message);
+                message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)broadcast.c_str()));
 
-            if (Sql_Query(SqlHandle, fmtQuery, PChar->id, PChar->name.c_str(), PChar->m_accountId, PChar->getZone(), PChar->GetXPos(), PChar->GetYPos(), PChar->GetZPos(),
-                          PChar->m_GMCall.version.c_str(), message.data(), PChar->m_GMCall.harassment ? 1 : 0, PChar->m_GMCall.stuck ? 1 : 0,
-                          PChar->m_GMCall.blocked ? 1 : 0) == SQL_ERROR)
-            {
-                ShowError("cmdhandler::call: Failed to log GM call.\n");
+                if (Sql_Query(SqlHandle, fmtQuery, PChar->id, PChar->name.c_str(), PChar->m_accountId, PChar->getZone(), PChar->GetXPos(), PChar->GetYPos(), PChar->GetZPos(),
+                    PChar->m_GMCall.version.c_str(), message.data(), PChar->m_GMCall.harassment ? 1 : 0, PChar->m_GMCall.stuck ? 1 : 0,
+                    PChar->m_GMCall.blocked ? 1 : 0) == SQL_ERROR)
+                {
+                    ShowError("cmdhandler::call: Failed to log GM call.\n");
+                }
+            }
+            else {
+                std::string disabled_msg("The helpdesk function is currently disabled. Please use Discord to submit a ticket.");
+                message::send(MSG_NEW_TICKET, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, (const char*)disabled_msg.c_str()));
             }
         }
     }
@@ -6390,6 +6455,16 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
             PZone->m_DynamisHandler->EjectPlayer(PChar, false);
     }
     return valid;
+}
+
+int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
+    if (PChar->isDead() && PChar->m_hasRaise) {
+        // Death state handler will resend the menu on next tick
+        PChar->m_resendRaise = true;
+    }
+    return 0;
 }
 
 }; // namespace charutils

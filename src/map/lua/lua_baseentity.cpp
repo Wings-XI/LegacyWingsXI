@@ -236,8 +236,7 @@ inline int32 CLuaBaseEntity::showText(lua_State *L)
 
             PBaseEntity->loc.zone->PushPacket(
                 PBaseEntity,
-                CHAR_INRANGE,
-                new CEntityUpdatePacket(PBaseEntity, ENTITY_UPDATE, UPDATE_POS));
+                CHAR_INRANGE, new CEntityUpdatePacket(PBaseEntity, ENTITYUPDATE::ENTITY_UPDATE, UPDATE_ALL_MOB));
         }
 
         uint32 param0 = 0;
@@ -1787,7 +1786,7 @@ inline int32 CLuaBaseEntity::clearTargID(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
     m_PBaseEntity->m_TargID = 0;
-    m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_POS));
+    m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
     return 0;
 }
 
@@ -2060,12 +2059,12 @@ inline int32 CLuaBaseEntity::openDoor(lua_State *L)
         uint32 OpenTime = (!lua_isnil(L, 1) && lua_isnumber(L, 1)) ? (uint32)lua_tointeger(L, 1) * 1000 : 7000;
 
         m_PBaseEntity->animation = ANIMATION_OPEN_DOOR;
-        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_COMBAT));
+        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         m_PBaseEntity->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(OpenTime), false, [](CBaseEntity* PNpc)
         {
             PNpc->animation = ANIMATION_CLOSE_DOOR;
-            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
+            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_ALL_MOB));
         }));
     }
     return 0;
@@ -2087,12 +2086,12 @@ inline int32 CLuaBaseEntity::closeDoor(lua_State *L)
     {
         uint32 CloseTime = (!lua_isnil(L, 1) && lua_isnumber(L, 1)) ? (uint32)lua_tointeger(L, 1) * 1000 : 7000;
         m_PBaseEntity->animation = ANIMATION_CLOSE_DOOR;
-        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_COMBAT));
+        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
         m_PBaseEntity->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(CloseTime), false, [](CBaseEntity* PNpc)
         {
             PNpc->animation = ANIMATION_OPEN_DOOR;
-            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
+            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_ALL_MOB));
         }));
     }
     return 0;
@@ -2201,7 +2200,7 @@ inline int32 CLuaBaseEntity::showNPC(lua_State *L)
     uint32 OpenTime = (!lua_isnil(L, 1) && lua_isnumber(L, 1)) ? (uint32)lua_tointeger(L, 1) * 1000 : 15000;
 
     m_PBaseEntity->status = STATUS_NORMAL;
-    m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_COMBAT));
+    m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
     m_PBaseEntity->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(OpenTime), false, [](CBaseEntity* PNpc)
     {
@@ -2234,7 +2233,7 @@ inline int32 CLuaBaseEntity::hideNPC(lua_State *L)
         m_PBaseEntity->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(OpenTime), false, [](CBaseEntity* PNpc)
         {
             PNpc->status = STATUS_NORMAL;
-            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
+            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_ALL_MOB));
         }));
     }
     return 0;
@@ -2259,7 +2258,7 @@ inline int32 CLuaBaseEntity::updateNPCHideTime(lua_State *L)
         m_PBaseEntity->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(OpenTime), false, [](CBaseEntity* PNpc)
         {
             PNpc->status = STATUS_NORMAL;
-            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
+            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_ALL_MOB));
         }));
     }
     return 0;
@@ -2834,7 +2833,7 @@ inline int32 CLuaBaseEntity::updateToEntireZone(lua_State* L)
         PNpc->name[8] = 8;
     }
 
-    PNpc->loc.zone->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
+    PNpc->loc.zone->PushPacket(nullptr, CHAR_INZONE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_ALL_MOB));
     return 1;
 }
 /************************************************************************
@@ -3001,10 +3000,13 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
     {
         if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
         {
-            if ((uint16)lua_tointeger(L, 5) >= MAX_ZONEID)
+            uint16 dest_zone = lua_tointeger(L, 5);
+            if (dest_zone >= MAX_ZONEID || !zoneutils::IsZoneEnabled(dest_zone)) {
+                ((CCharEntity*)m_PBaseEntity)->pushPacket(new CMessageSystemPacket(0, 0, 2));
                 return 0;
+            }
 
-            ((CCharEntity*)m_PBaseEntity)->loc.destination = (uint16)lua_tointeger(L, 5);
+            ((CCharEntity*)m_PBaseEntity)->loc.destination = dest_zone;
             ((CCharEntity*)m_PBaseEntity)->status = STATUS_DISAPPEAR;
             ((CCharEntity*)m_PBaseEntity)->loc.boundary = 0;
             ((CCharEntity*)m_PBaseEntity)->m_moghouseID = 0;
@@ -3759,6 +3761,15 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     }
                     lua_pop(L, 2);
                 }
+                
+                lua_getfield(L, 1, "appraisal");
+                uint8 appraisalId = (uint8)lua_tointeger(L, -1);
+                if (appraisalId > 0)
+                {
+                    PItem->setAppraisalID(appraisalId);
+                }
+                lua_pop(L, 1);
+
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
                 if (SlotID == ERROR_SLOTID)
                     break;
@@ -5168,7 +5179,7 @@ inline int32 CLuaBaseEntity::AnimationSub(lua_State *L)
             }
             else
             {
-                m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_COMBAT));
+                m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
             }
         }
         return 0;
@@ -5630,7 +5641,7 @@ inline int32 CLuaBaseEntity::speed(lua_State *L)
             }
             else
             {
-                m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_POS));
+                m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_UPDATE, UPDATE_ALL_MOB));
             }
         }
         return 0;
@@ -5901,7 +5912,7 @@ inline int32 CLuaBaseEntity::getSubLvl(lua_State *L)
 
 /************************************************************************
 *  Function: getJobLevel()
-*  Purpose : Return the levle of job specified by JOBTYPE
+*  Purpose : Return the level of job specified by JOBTYPE
 *  Example : player:getJobLevel(BRD)
 *  Notes   :
 ************************************************************************/
@@ -5918,6 +5929,32 @@ inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     lua_pushinteger(L, PChar->jobs.job[JobID]);
+
+    return 1;
+}
+
+
+/************************************************************************
+*  Function: getHighestJobLevel()
+*  Purpose : Return highest level the player has on any job
+*  Example : player:getHighestJobLevel()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint8 max_lv = 0;
+    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+        if (PChar->jobs.job[i] > max_lv) {
+            max_lv = PChar->jobs.job[i];
+        }
+    }
+
+    lua_pushinteger(L, max_lv);
 
     return 1;
 }
@@ -15367,7 +15404,7 @@ inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
 *  Function: getStealItem()
 *  Purpose : Used to return the Item ID of a mob's item which can be stolen
 *  Example : steamItem = target:getStealItem()
-*  Notes   : Used only in Thief quest and Maat
+*  Notes   : 
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getStealItem(lua_State *L)
@@ -15577,9 +15614,9 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
 
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help add' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help add' for more info.", ""), -1);
             return 2;
         }
     }
@@ -15596,9 +15633,9 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
 
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help remove' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a player name!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help remove' for more info.", ""), -1);
             return 1;
         }
     }
@@ -15676,15 +15713,15 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
         }
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a channel identifier!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help channel' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a channel identifier!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help channel' for more info.", ""), -1);
             return 2;
         }
 
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
         line = "Unrecognized channel: " + arg2;
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
         return 2;
     }
@@ -15709,15 +15746,15 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
         }
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a size!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help size' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a size!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help size' for more info.", ""), -1);
             return 2;
         }
 
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
         line = "Unrecognized size: " + arg2;
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
         return 2;
     }
@@ -15754,19 +15791,19 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
         }
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
             line = "Current notification status: ";
             if (sNotifs == 0) { line += "OFF"; }
             if (sNotifs == 1) { line += "LOGOUTS ONLY"; }
             if (sNotifs == 2) { line += "LOGINS ONLY"; }
             if (sNotifs == 3) { line += "ON"; }
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
             return 1;
         }
 
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
         line = "Unrecognized notification setting: " + arg2;
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
         return 2;
     }
@@ -15777,17 +15814,17 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
     {
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a friend name!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a friend name!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""), -1);
             return 2;
         }
 
         if (arg3 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a note!", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "You must specify a note!", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help note' for more info.", ""), -1);
             return 2;
         }
 
@@ -15807,149 +15844,149 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
     {
         if (arg2 == FLNULL)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command List }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Use '!flist help [command]' for more info }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist add", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist remove", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist hide", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist unhide", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist channel", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist size", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist notifs", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist note", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist help", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command List }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Use '!flist help [command]' for more info }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist add", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist remove", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist hide", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist unhide", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist channel", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist size", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist notifs", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist note", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  !flist help", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "add")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist add [playername] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds the specified player to your friend list.", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player must have added you to their list in order", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  for you to see their status on your list.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist add [playername] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds the specified player to your friend list.", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player must have added you to their list in order", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  for you to see their status on your list.", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "remove" || arg2 == "delete")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist remove [playername] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Removes the specified player from your friend list.", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player will no longer see your status on their list", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you add them again with '!flist add'.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist remove [playername] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Removes the specified player from your friend list.", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  The player will no longer see your status on their list", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you add them again with '!flist add'.", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "hide" || arg2 == "invisible")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist hide [silent] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'hidden' so that you show up as", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'offline' to your friends. On triggering this command,", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged out. If you do not want this notification be sent,", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist hide silent'. You can enable hide upon login", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  by entering a '?' character before your username in the", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Ashita bootloader.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist hide [silent] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'hidden' so that you show up as", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'offline' to your friends. On triggering this command,", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged out. If you do not want this notification be sent,", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist hide silent'. You can enable hide upon login", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  by entering a '?' character before your username in the", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Wings bootloader.", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "unhide" || arg2 == "visible")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist unhide [silent] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'visible' so that you show up as", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'online' to your friends. On triggering this command,", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged in. If you do not want this notification be sent,", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist unhide silent'.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist unhide [silent] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets your status to 'visible' so that you show up as", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  'online' to your friends. On triggering this command,", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friends will receive a notification that you just", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  logged in. If you do not want this notification be sent,", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  use '!flist unhide silent'.", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "channel")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist channel [param] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the chat channel for all FLIST MESSAGES. Valid channels:", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SAY", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SHOUT", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    PARTY", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS1", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS2", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SYSTEM", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist channel [param] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the chat channel for all FLIST MESSAGES. Valid channels:", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SAY", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SHOUT", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    PARTY", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS1", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LS2", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    SYSTEM", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "size" || arg2 == "window")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist size [param] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the size of the friend list when it is printed in your log.", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Valid size paramaters:", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    FULL", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    COMPACT", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist size [param] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Sets the size of the friend list when it is printed in your log.", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Valid size paramaters:", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    FULL", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    COMPACT", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "notifs" || arg2 == "notif" || arg2 == "notifications" || arg2 == "notification")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist notifs [param] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Login and logout notifications are sent to all of your friends", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you are in the 'hidden' status and sent to you as long as", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friend is not in the 'hidden' status. You can customize", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  what notifications you receive with the following paramters:", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    ON", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGINS", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGOUTS", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    OFF", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist notifs [param] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Login and logout notifications are sent to all of your friends", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  unless you are in the 'hidden' status and sent to you as long as", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  your friend is not in the 'hidden' status. You can customize", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  what notifications you receive with the following paramters:", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    ON", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGINS", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    LOGOUTS", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "    OFF", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "note")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist note [friend] [text] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds a custom note to the specified friend which is displayed", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  when you load your friend list.", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist note [friend] [text] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Adds a custom note to the specified friend which is displayed", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  when you load your friend list.", ""), -1);
 
             return 1;
         }
 
         if (arg2 == "help")
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist help [command] }", ""));
-            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Yo dawg, I heard you needed a help menu for your help menu...", ""));
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE ==", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "{ Command: !flist help [command] }", ""), -1);
+            PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "  Yo dawg, I heard you needed a help menu for your help menu...", ""), -1);
 
             return 1;
         }
 
 
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
         line = "Help section not recognized: " + arg2;
-        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
+        PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
 
         return 1;
     }
 
 
 
-    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""));
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "== FLIST MESSAGE (ERROR) ==", ""), -1);
     line = "Unrecognized argument: " + arg1;
-    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""));
-    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help' for a list of commands.", ""));
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, line, ""), -1);
+    PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help' for a list of commands.", ""), -1);
     return 2;
 
 }
@@ -16317,6 +16354,57 @@ int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
         PEntity->m_roamFlags -= ((uint16)lua_tointeger(L, 1));
 
     return 0;
+}
+
+/************************************************************************
+*  Function: deaggroPlayer
+*  Purpose : Removes enmity for a specific player
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroPlayer(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    int8* charName = (int8*)lua_tolstring(L, 1, nullptr);
+    if (!charName) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CCharEntity* PChar = zoneutils::GetCharByName(charName);
+    if (!PChar) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroEntity(PChar));
+    return 1;
+}
+
+/************************************************************************
+*  Function: deaggroAll
+*  Purpose : Completely clears the mob's enmity list
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::deaggroAll(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    lua_pushboolean(L, static_cast<CMobController*>(PMob->PAI->GetController())->DeaggroAll());
+    return 1;
 }
 
 /************************************************************************
@@ -17584,6 +17672,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMainLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSubLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getJobLevel),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getHighestJobLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setsLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,levelCap),
@@ -18047,6 +18136,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delRoamFlag),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,deaggroAll),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendHelpDeskMsg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeTicket),

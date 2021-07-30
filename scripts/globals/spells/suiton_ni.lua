@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
 
     params.resistBonus = bonusAcc
 
-    params.mabBonus = bonusMab
+    params.bonusmab = bonusMab
 
     dmg = doNinjutsuNuke(caster, target, spell, params)
     handleNinjutsuDebuff(caster, target, spell, 30, duration, tpz.mod.THUNDERRES)

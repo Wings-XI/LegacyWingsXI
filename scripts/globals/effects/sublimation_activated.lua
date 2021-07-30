@@ -24,7 +24,7 @@ function onEffectTick(target, effect)
 
     local store = effect:getPower() + basemp + bonus
 
-    local limit = math.floor((target:getBaseHP() + target:getMod(tpz.mod.HP) + target:getMerit(tpz.merit.MAX_HP)) / 4) +
+    local limit = math.floor((target:getBaseHP() + target:getMod(tpz.mod.HP)) / 4) +
         target:getMerit(tpz.merit.MAX_SUBLIMATION)
 
     if not (target:getHPP() < 51 ) then
