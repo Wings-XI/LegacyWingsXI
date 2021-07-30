@@ -1431,6 +1431,7 @@ INSERT INTO `item_latents` VALUES(19113, 165, 7, 59, 14);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 368);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 369);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 370);
+INSERT INTO `item_latents` VALUES(19123, 73, 5, 7, 1000);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 3);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 4);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 5);
