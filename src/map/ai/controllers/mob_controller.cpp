@@ -866,17 +866,16 @@ void CMobController::DoRoamTick(time_point tick)
                 {
                     // walk back to spawn if too far away
 
-                    // limit total path to just 10 or
+                    // limit total path to just 20 or
                     // else we'll move straight back to spawn
-                    PMob->PAI->PathFind->LimitDistance(10.0f);
+                    PMob->PAI->PathFind->LimitDistance(20.0f);
 
                     FollowRoamPath();
 
                     // move back every 5 seconds
                     m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
                 }
-                else if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) &&
-                    !map_config.mob_no_despawn)
+                else if (PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
                 {
                     PMob->PAI->Despawn();
                     return;
@@ -1129,6 +1128,12 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     TracyZoneScoped;
     TracyZoneIString(PMob->GetName());
     TracyZoneIString(PTarget->GetName());
+
+    // Don't aggro I just uncharmed a few seconds ago
+    if (m_Tick < PMob->m_UncharmTime + 7s)
+    {
+        return false;
+    }
 
     // Don't aggro I'm neutral
     if ((PMob->getMobMod(MOBMOD_ALWAYS_AGGRO) == 0 && !PMob->m_Aggro) || PMob->m_neutral || PMob->isDead())
