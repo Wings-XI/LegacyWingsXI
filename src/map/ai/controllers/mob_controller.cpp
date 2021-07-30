@@ -504,12 +504,15 @@ bool CMobController::CanCastSpells()
         }
     }
 
-    // mob has no mp and does not have manafont
-    if (PMob->GetMJob() != JOB_NIN && PMob->GetMJob() != JOB_BRD && PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
+    // mob has no mp and does not have manafont Exclude NIN and BRD
+   // mob has no mp and does not have manafont Exclude NIN and BRD
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetSJob() != JOB_NIN && 
+    PMob->GetMJob() != JOB_BRD && PMob->GetSJob() != JOB_BRD && 
+    PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
     }
-
+	
     return IsMagicCastingEnabled();
 }
 

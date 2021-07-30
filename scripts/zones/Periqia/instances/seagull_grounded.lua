@@ -49,7 +49,7 @@ function onInstanceProgressUpdate(instance, progress)
 end
 
 function onInstanceComplete(instance)
-    onAssaultComplete(instance, 8, 8, ID.text, ID.npc)
+    onAssaultComplete(instance, 5, 11, ID.text, ID.npc)
 end
 
 function onEventUpdate(player, csid, option)

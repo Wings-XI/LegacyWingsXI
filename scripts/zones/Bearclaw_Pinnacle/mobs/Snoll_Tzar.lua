@@ -21,6 +21,8 @@ function onMobFight(mob, player, target)
     local salty = mob:getLocalVar("salty")
     local melting = mob:getLocalVar("melt")
 
+    mob:setDamage(130)
+
     -- handle salt usage
     if melting == 1 then
         player:messageText(player, ID.text.BEGINS_TO_MELT)
@@ -38,17 +40,21 @@ function onMobFight(mob, player, target)
         mob:setLocalVar("delayed", 0)
         mob:AnimationSub(5) 
         mob:setLocalVar("changeTime", mob:getBattleTime())
+        mob:setDamage(140)
     -- bigger  
     elseif (delay < os.time() and mob:AnimationSub() == 5 and mob:getBattleTime() - changeTime > 11) then
         player:messageText(player, ID.text.LARGE_STEAM) -- approx. midway point - give warning
         mob:setLocalVar("delayed", 0)
         mob:AnimationSub(6)
         mob:setLocalVar("changeTime", mob:getBattleTime())
+        mob:setDamage(150)
+
     -- biggest
     elseif (delay < os.time() and mob:AnimationSub() == 6 and mob:getBattleTime() - changeTime > 11) then
         mob:setLocalVar("delayed", 0)
         mob:AnimationSub(7)
         mob:setLocalVar("changeTime", mob:getBattleTime())
+        mob:setDamage(160)
     -- self-destruct   
     elseif (delay < os.time() and mob:AnimationSub() == 7 and mob:getBattleTime() - changeTime > 12) then
         mob:useMobAbility(1644)

@@ -14,7 +14,6 @@ require("scripts/globals/zone")
 -----------------------------------
 
 local zone = tpz.zone.DYNAMIS_BEAUCEDINE
-nmsKilled = 0
 
 function onDynamisTick(timeRemaining)
     -- haven't had a reason to use this yet, for now this function is disabled for optimization purposes (a lua callback every server tick!!)
@@ -32,7 +31,6 @@ function onDynamisNewInstance()
     if npcList == nil then print("npcList was nil") end
     if npcList[zone] == nil then print("npcList[zone] was nil") end
     
-    nmsKilled = 0
     while i <= iEnd do
         entity = GetEntityByID(i)
         if entity ~= nil and entity:isNPC() then entity:setStatus(tpz.status.DISAPPEAR) end
@@ -63,7 +61,7 @@ function onDynamisCleanup()
         entity = GetEntityByID(i)
         if entity ~= nil then
             if entity:isMob() then
-                DespawnMob(i)
+                DespawnMob(i, 0)
             elseif entity:isNPC() then
                 entity:setStatus(tpz.status.DISAPPEAR)
             end

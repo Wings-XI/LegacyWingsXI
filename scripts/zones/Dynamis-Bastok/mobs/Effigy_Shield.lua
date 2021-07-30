@@ -30,5 +30,5 @@ end
 function onMobSpawn(mob)
     -- these have the same mob pools as the normal mobs, but need to be stronger and have the skillset for Wrath of Ghu'Dha
     mob:setSkillList(705)
-    mob:setLevel(math.random(81,82)) -- this is last because it also recalculates stats
+    dynamis.setNMStats(mob)
 end

@@ -46,7 +46,7 @@ bool CDespawnState::Update(time_point tick)
 {
     if (tick > GetEntryTime() + 3s && !IsCompleted() && !(static_cast<CMobEntity*>(m_PEntity)->m_Behaviour & BEHAVIOUR_NO_DESPAWN))
     {
-        static_cast<CMobEntity*>(m_PEntity)->OnDespawn(*this);
+        static_cast<CMobEntity*>(m_PEntity)->OnDespawn();
         Complete();
     }
     return IsCompleted();

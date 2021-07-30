@@ -31,6 +31,7 @@ zones[tpz.zone.CAEDARVA_MIRE] =
         CANNOT_ENTER             = 7463, -- You cannot enter at this time. Please wait a while before trying again.
         AREA_FULL                = 7464, -- This area is fully occupied. You were unable to enter.
         MEMBER_NO_REQS           = 7468, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
+        PARTY_MIN_REQS           = 7471,	-- Your party does not meet the minimum required number of ≺Numeric Parameter 0≻ members. Unable to enter area.
         MEMBER_TOO_FAR           = 7472, -- One or more party members are too far away from the entrance. Unable to enter area.
         JAZARAATS_HEADSTONE      = 7524, -- The name Sir Jazaraat is engraved on the headstone...
         SEAPRINCES_TOMBSTONE     = 8048, -- It appears to be the grave of a great soul to an age long past.

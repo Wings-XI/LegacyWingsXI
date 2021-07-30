@@ -240,7 +240,7 @@ uint8 calcSynthResult(CCharEntity* PChar)
         {
             double synthDiff = getSynthDifficulty(PChar, skillID);
 
-            if (synthDiff >= 0)
+            if (synthDiff > 0)
             {
                 hqtier = -1;
                 break;
@@ -366,11 +366,11 @@ uint8 calcSynthResult(CCharEntity* PChar)
                 chance = std::clamp(chance, 0., 0.500);
         }
 
-        #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
-        ShowDebug(CL_CYAN"HQ Tier: %i HQ Chance: %g Random: %g SkillID: %u\n" CL_RESET, hqtier, chance, random, skillID);
-        #endif
-
         random = tpzrand::GetRandomNumber(1.);
+
+        #ifdef _TPZ_SYNTH_DEBUG_MESSAGES_
+        ShowDebug(CL_CYAN"HQ Tier: %i HQ Chance: %g Random: %g\n" CL_RESET, hqtier, chance, random);
+        #endif
 
         if(random < chance && canHQ) // we try for HQ
         {

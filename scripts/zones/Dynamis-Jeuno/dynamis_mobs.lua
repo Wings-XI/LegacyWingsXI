@@ -13,12 +13,11 @@ require("scripts/globals/zone")
 local zone = tpz.zone.DYNAMIS_JEUNO
 local DMB = 17547264 -- dynamis mob base, where zone's mob targetid = 0
 local SMB = 17547664 -- statue mob base to allow mobID represented as format SMB + db where db is the dynamisbums.com identifier
+-- drop id for statues = 3206, drop id for mobs = 3207
 
 mobList = mobList or { }
 randomChildrenList = randomChildrenList or { }
 npcList = npcList or { }
-megaBoss = 17547265
-numNMS = 4
 
 mobList[zone] =
 {
@@ -1416,277 +1415,141 @@ mobList[zone][SMB+504].randomChildrenCount = 5
 
 -- set my random children list i will pick from
 -- todo: tune this as desired
-mobList[zone][SMB+1  ].randomChildrenList = 2
-mobList[zone][SMB+4  ].randomChildrenList = 2
-mobList[zone][SMB+7  ].randomChildrenList = 2
-mobList[zone][SMB+10 ].randomChildrenList = 2
-mobList[zone][SMB+13 ].randomChildrenList = 2
-mobList[zone][SMB+16 ].randomChildrenList = 2
-mobList[zone][SMB+18 ].randomChildrenList = 2
-mobList[zone][SMB+21 ].randomChildrenList = 2
-mobList[zone][SMB+24 ].randomChildrenList = 2
-mobList[zone][SMB+28 ].randomChildrenList = 2
-mobList[zone][SMB+33 ].randomChildrenList = 2
-mobList[zone][SMB+38 ].randomChildrenList = 2
-mobList[zone][SMB+41 ].randomChildrenList = 2
-mobList[zone][SMB+47 ].randomChildrenList = 2
-mobList[zone][SMB+50 ].randomChildrenList = 2
-mobList[zone][SMB+53 ].randomChildrenList = 2
-mobList[zone][SMB+58 ].randomChildrenList = 2
-mobList[zone][SMB+63 ].randomChildrenList = 2
-mobList[zone][SMB+68 ].randomChildrenList = 2
-mobList[zone][SMB+71 ].randomChildrenList = 2
-mobList[zone][SMB+76 ].randomChildrenList = 2
-mobList[zone][SMB+78 ].randomChildrenList = 2
-mobList[zone][SMB+80 ].randomChildrenList = 2
-mobList[zone][SMB+82 ].randomChildrenList = 2
-mobList[zone][SMB+88 ].randomChildrenList = 2
-mobList[zone][SMB+91 ].randomChildrenList = 2
-mobList[zone][SMB+96 ].randomChildrenList = 2
-mobList[zone][SMB+99 ].randomChildrenList = 2
-mobList[zone][SMB+105].randomChildrenList = 2
-mobList[zone][SMB+109].randomChildrenList = 2
-mobList[zone][SMB+112].randomChildrenList = 2
-mobList[zone][SMB+114].randomChildrenList = 2
-mobList[zone][SMB+118].randomChildrenList = 2
-mobList[zone][SMB+121].randomChildrenList = 2
-mobList[zone][SMB+129].randomChildrenList = 2
-mobList[zone][SMB+131].randomChildrenList = 2
-mobList[zone][SMB+134].randomChildrenList = 2
-mobList[zone][SMB+138].randomChildrenList = 2
-mobList[zone][SMB+141].randomChildrenList = 2
-mobList[zone][SMB+145].randomChildrenList = 2
-mobList[zone][SMB+147].randomChildrenList = 2
-mobList[zone][SMB+150].randomChildrenList = 2
-mobList[zone][SMB+157].randomChildrenList = 2
-mobList[zone][SMB+159].randomChildrenList = 2
-mobList[zone][SMB+161].randomChildrenList = 2
-mobList[zone][SMB+163].randomChildrenList = 2
-mobList[zone][SMB+166].randomChildrenList = 2
-mobList[zone][SMB+170].randomChildrenList = 2
-mobList[zone][SMB+174].randomChildrenList = 2
-mobList[zone][SMB+177].randomChildrenList = 2
-mobList[zone][SMB+181].randomChildrenList = 2
-mobList[zone][SMB+183].randomChildrenList = 2
-mobList[zone][SMB+185].randomChildrenList = 2
-mobList[zone][SMB+188].randomChildrenList = 2
-mobList[zone][SMB+195].randomChildrenList = 2
-mobList[zone][SMB+202].randomChildrenList = 2
-mobList[zone][SMB+205].randomChildrenList = 2
-mobList[zone][SMB+211].randomChildrenList = 2
-mobList[zone][SMB+213].randomChildrenList = 2
-mobList[zone][SMB+216].randomChildrenList = 2
-mobList[zone][SMB+218].randomChildrenList = 2
-mobList[zone][SMB+225].randomChildrenList = 2
-mobList[zone][SMB+227].randomChildrenList = 2
-mobList[zone][SMB+229].randomChildrenList = 2
-mobList[zone][SMB+232].randomChildrenList = 2
-mobList[zone][SMB+234].randomChildrenList = 2
-mobList[zone][SMB+241].randomChildrenList = 2
-mobList[zone][SMB+244].randomChildrenList = 2
-mobList[zone][SMB+247].randomChildrenList = 2
-mobList[zone][SMB+251].randomChildrenList = 2
-mobList[zone][SMB+253].randomChildrenList = 2
-mobList[zone][SMB+255].randomChildrenList = 2
-mobList[zone][SMB+258].randomChildrenList = 2
-mobList[zone][SMB+260].randomChildrenList = 2
-mobList[zone][SMB+263].randomChildrenList = 2
-mobList[zone][SMB+265].randomChildrenList = 2
-mobList[zone][SMB+267].randomChildrenList = 2
-mobList[zone][SMB+269].randomChildrenList = 2
-mobList[zone][SMB+273].randomChildrenList = 2
-mobList[zone][SMB+276].randomChildrenList = 2
-mobList[zone][SMB+281].randomChildrenList = 2
-mobList[zone][SMB+283].randomChildrenList = 2
-mobList[zone][SMB+285].randomChildrenList = 2
-mobList[zone][SMB+289].randomChildrenList = 2
-mobList[zone][SMB+294].randomChildrenList = 2
-mobList[zone][SMB+296].randomChildrenList = 2
-mobList[zone][SMB+298].randomChildrenList = 2
-mobList[zone][SMB+300].randomChildrenList = 2
-mobList[zone][SMB+302].randomChildrenList = 2
-mobList[zone][SMB+304].randomChildrenList = 2
-mobList[zone][SMB+306].randomChildrenList = 2
-mobList[zone][SMB+308].randomChildrenList = 2
-mobList[zone][SMB+310].randomChildrenList = 2
-mobList[zone][SMB+316].randomChildrenList = 2
-mobList[zone][SMB+323].randomChildrenList = 2
-mobList[zone][SMB+330].randomChildrenList = 2
-mobList[zone][SMB+336].randomChildrenList = 2
-mobList[zone][SMB+342].randomChildrenList = 2
-mobList[zone][SMB+348].randomChildrenList = 2
-mobList[zone][SMB+356].randomChildrenList = 2
-mobList[zone][SMB+364].randomChildrenList = 2
-mobList[zone][SMB+367].randomChildrenList = 2
-mobList[zone][SMB+370].randomChildrenList = 2
-mobList[zone][SMB+373].randomChildrenList = 2
-mobList[zone][SMB+376].randomChildrenList = 2
-mobList[zone][SMB+381].randomChildrenList = 2
-mobList[zone][SMB+384].randomChildrenList = 2
-mobList[zone][SMB+387].randomChildrenList = 2
-mobList[zone][SMB+390].randomChildrenList = 2
-mobList[zone][SMB+397].randomChildrenList = 2
-mobList[zone][SMB+402].randomChildrenList = 2
-mobList[zone][SMB+407].randomChildrenList = 2
-mobList[zone][SMB+411].randomChildrenList = 2
-mobList[zone][SMB+416].randomChildrenList = 2
-mobList[zone][SMB+423].randomChildrenList = 2
-mobList[zone][SMB+430].randomChildrenList = 2
-mobList[zone][SMB+433].randomChildrenList = 2
-mobList[zone][SMB+437].randomChildrenList = 2
-mobList[zone][SMB+440].randomChildrenList = 2
-mobList[zone][SMB+444].randomChildrenList = 2
-mobList[zone][SMB+448].randomChildrenList = 2
-mobList[zone][SMB+452].randomChildrenList = 2
-mobList[zone][SMB+456].randomChildrenList = 2
-mobList[zone][SMB+464].randomChildrenList = 2
-mobList[zone][SMB+471].randomChildrenList = 2
-mobList[zone][SMB+479].randomChildrenList = 2
-mobList[zone][SMB+485].randomChildrenList = 2
-mobList[zone][SMB+491].randomChildrenList = 2
-mobList[zone][SMB+499].randomChildrenList = 2
-mobList[zone][SMB+504].randomChildrenList = 2
+mobList[zone][SMB+1  ].randomChildrenList = 1
+mobList[zone][SMB+4  ].randomChildrenList = 1
+mobList[zone][SMB+7  ].randomChildrenList = 1
+mobList[zone][SMB+10 ].randomChildrenList = 1
+mobList[zone][SMB+13 ].randomChildrenList = 1
+mobList[zone][SMB+16 ].randomChildrenList = 1
+mobList[zone][SMB+18 ].randomChildrenList = 1
+mobList[zone][SMB+21 ].randomChildrenList = 1
+mobList[zone][SMB+24 ].randomChildrenList = 1
+mobList[zone][SMB+28 ].randomChildrenList = 1
+mobList[zone][SMB+33 ].randomChildrenList = 1
+mobList[zone][SMB+38 ].randomChildrenList = 1
+mobList[zone][SMB+41 ].randomChildrenList = 1
+mobList[zone][SMB+47 ].randomChildrenList = 1
+mobList[zone][SMB+50 ].randomChildrenList = 1
+mobList[zone][SMB+53 ].randomChildrenList = 1
+mobList[zone][SMB+58 ].randomChildrenList = 1
+mobList[zone][SMB+63 ].randomChildrenList = 1
+mobList[zone][SMB+68 ].randomChildrenList = 1
+mobList[zone][SMB+71 ].randomChildrenList = 1
+mobList[zone][SMB+76 ].randomChildrenList = 1
+mobList[zone][SMB+78 ].randomChildrenList = 1
+mobList[zone][SMB+80 ].randomChildrenList = 1
+mobList[zone][SMB+82 ].randomChildrenList = 1
+mobList[zone][SMB+88 ].randomChildrenList = 1
+mobList[zone][SMB+91 ].randomChildrenList = 1
+mobList[zone][SMB+96 ].randomChildrenList = 1
+mobList[zone][SMB+99 ].randomChildrenList = 1
+mobList[zone][SMB+105].randomChildrenList = 1
+mobList[zone][SMB+109].randomChildrenList = 1
+mobList[zone][SMB+112].randomChildrenList = 1
+mobList[zone][SMB+114].randomChildrenList = 1
+mobList[zone][SMB+118].randomChildrenList = 1
+mobList[zone][SMB+121].randomChildrenList = 1
+mobList[zone][SMB+129].randomChildrenList = 1
+mobList[zone][SMB+131].randomChildrenList = 1
+mobList[zone][SMB+134].randomChildrenList = 1
+mobList[zone][SMB+138].randomChildrenList = 1
+mobList[zone][SMB+141].randomChildrenList = 1
+mobList[zone][SMB+145].randomChildrenList = 1
+mobList[zone][SMB+147].randomChildrenList = 1
+mobList[zone][SMB+150].randomChildrenList = 1
+mobList[zone][SMB+157].randomChildrenList = 1
+mobList[zone][SMB+159].randomChildrenList = 1
+mobList[zone][SMB+161].randomChildrenList = 1
+mobList[zone][SMB+163].randomChildrenList = 1
+mobList[zone][SMB+166].randomChildrenList = 1
+mobList[zone][SMB+170].randomChildrenList = 1
+mobList[zone][SMB+174].randomChildrenList = 1
+mobList[zone][SMB+177].randomChildrenList = 1
+mobList[zone][SMB+181].randomChildrenList = 1
+mobList[zone][SMB+183].randomChildrenList = 1
+mobList[zone][SMB+185].randomChildrenList = 1
+mobList[zone][SMB+188].randomChildrenList = 1
+mobList[zone][SMB+195].randomChildrenList = 1
+mobList[zone][SMB+202].randomChildrenList = 1
+mobList[zone][SMB+205].randomChildrenList = 1
+mobList[zone][SMB+211].randomChildrenList = 1
+mobList[zone][SMB+213].randomChildrenList = 1
+mobList[zone][SMB+216].randomChildrenList = 1
+mobList[zone][SMB+218].randomChildrenList = 1
+mobList[zone][SMB+225].randomChildrenList = 1
+mobList[zone][SMB+227].randomChildrenList = 1
+mobList[zone][SMB+229].randomChildrenList = 1
+mobList[zone][SMB+232].randomChildrenList = 1
+mobList[zone][SMB+234].randomChildrenList = 1
+mobList[zone][SMB+241].randomChildrenList = 1
+mobList[zone][SMB+244].randomChildrenList = 1
+mobList[zone][SMB+247].randomChildrenList = 1
+mobList[zone][SMB+251].randomChildrenList = 1
+mobList[zone][SMB+253].randomChildrenList = 1
+mobList[zone][SMB+255].randomChildrenList = 1
+mobList[zone][SMB+258].randomChildrenList = 1
+mobList[zone][SMB+260].randomChildrenList = 1
+mobList[zone][SMB+263].randomChildrenList = 1
+mobList[zone][SMB+265].randomChildrenList = 1
+mobList[zone][SMB+267].randomChildrenList = 1
+mobList[zone][SMB+269].randomChildrenList = 1
+mobList[zone][SMB+273].randomChildrenList = 1
+mobList[zone][SMB+276].randomChildrenList = 1
+mobList[zone][SMB+281].randomChildrenList = 1
+mobList[zone][SMB+283].randomChildrenList = 1
+mobList[zone][SMB+285].randomChildrenList = 1
+mobList[zone][SMB+289].randomChildrenList = 1
+mobList[zone][SMB+294].randomChildrenList = 1
+mobList[zone][SMB+296].randomChildrenList = 1
+mobList[zone][SMB+298].randomChildrenList = 1
+mobList[zone][SMB+300].randomChildrenList = 1
+mobList[zone][SMB+302].randomChildrenList = 1
+mobList[zone][SMB+304].randomChildrenList = 1
+mobList[zone][SMB+306].randomChildrenList = 1
+mobList[zone][SMB+308].randomChildrenList = 1
+mobList[zone][SMB+310].randomChildrenList = 1
+mobList[zone][SMB+316].randomChildrenList = 1
+mobList[zone][SMB+323].randomChildrenList = 1
+mobList[zone][SMB+330].randomChildrenList = 1
+mobList[zone][SMB+336].randomChildrenList = 1
+mobList[zone][SMB+342].randomChildrenList = 1
+mobList[zone][SMB+348].randomChildrenList = 1
+mobList[zone][SMB+356].randomChildrenList = 1
+mobList[zone][SMB+364].randomChildrenList = 1
+mobList[zone][SMB+367].randomChildrenList = 1
+mobList[zone][SMB+370].randomChildrenList = 1
+mobList[zone][SMB+373].randomChildrenList = 1
+mobList[zone][SMB+376].randomChildrenList = 1
+mobList[zone][SMB+381].randomChildrenList = 1
+mobList[zone][SMB+384].randomChildrenList = 1
+mobList[zone][SMB+387].randomChildrenList = 1
+mobList[zone][SMB+390].randomChildrenList = 1
+mobList[zone][SMB+397].randomChildrenList = 1
+mobList[zone][SMB+402].randomChildrenList = 1
+mobList[zone][SMB+407].randomChildrenList = 1
+mobList[zone][SMB+411].randomChildrenList = 1
+mobList[zone][SMB+416].randomChildrenList = 1
+mobList[zone][SMB+423].randomChildrenList = 1
+mobList[zone][SMB+430].randomChildrenList = 1
+mobList[zone][SMB+433].randomChildrenList = 1
+mobList[zone][SMB+437].randomChildrenList = 1
+mobList[zone][SMB+440].randomChildrenList = 1
+mobList[zone][SMB+444].randomChildrenList = 1
+mobList[zone][SMB+448].randomChildrenList = 1
+mobList[zone][SMB+452].randomChildrenList = 1
+mobList[zone][SMB+456].randomChildrenList = 1
+mobList[zone][SMB+464].randomChildrenList = 1
+mobList[zone][SMB+471].randomChildrenList = 1
+mobList[zone][SMB+479].randomChildrenList = 1
+mobList[zone][SMB+485].randomChildrenList = 1
+mobList[zone][SMB+491].randomChildrenList = 1
+mobList[zone][SMB+499].randomChildrenList = 1
+mobList[zone][SMB+504].randomChildrenList = 1
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
 randomChildrenList[zone] =
 {
-    [1] = -- all jobs except BST (the main list)
-    {
-        DMB+2  , -- Vanguard_Smithy
-        DMB+3  , -- Vanguard_Welldigger
-        DMB+6  , -- Vanguard_Shaman
-        DMB+7  , -- Vanguard_Enchanter
-        DMB+10 , -- Vanguard_Tinkerer
-        DMB+11 , -- Vanguard_Armorer
-        DMB+12 , -- Vanguard_Hitman
-        DMB+14 , -- Vanguard_Pitfighter
-        DMB+15 , -- Vanguard_Alchemist
-        DMB+16 , -- Vanguard_Maestro
-        DMB+17 , -- Vanguard_Tinkerer
-        DMB+18 , -- Vanguard_Dragontamer
-        DMB+20 , -- Vanguard_Enchanter
-        DMB+21 , -- Vanguard_Ambusher
-        DMB+22 , -- Vanguard_Necromancer
-        DMB+24 , -- Vanguard_Ronin
-        DMB+25 , -- Vanguard_Armorer
-        DMB+26 , -- Vanguard_Hitman
-        DMB+28 , -- Vanguard_Armorer
-        DMB+29 , -- Vanguard_Hitman
-        DMB+40 , -- Vanguard_Smithy
-        DMB+41 , -- Vanguard_Welldigger
-        DMB+42 , -- Vanguard_Ambusher
-        DMB+43 , -- Vanguard_Armorer
-        DMB+44 , -- Vanguard_Alchemist
-        DMB+45 , -- Vanguard_Welldigger
-        DMB+46 , -- Vanguard_Enchanter
-        DMB+50 , -- Vanguard_Smithy
-        DMB+51 , -- Vanguard_Pitfighter
-        DMB+52 , -- Vanguard_Ronin
-        DMB+53 , -- Vanguard_Necromancer
-        DMB+55 , -- Vanguard_Alchemist
-        DMB+56 , -- Vanguard_Shaman
-        DMB+57 , -- Vanguard_Enchanter
-        DMB+61 , -- Vanguard_Welldigger
-        DMB+62 , -- Vanguard_Maestro
-        DMB+63 , -- Vanguard_Necromancer
-        DMB+66 , -- Vanguard_Ronin
-        DMB+67 , -- Vanguard_Maestro
-        DMB+68 , -- Vanguard_Dragontamer
-        DMB+70 , -- Vanguard_Alchemist
-        DMB+71 , -- Vanguard_Shaman
-        DMB+72 , -- Vanguard_Enchanter
-        DMB+75 , -- Vanguard_Welldigger
-        DMB+76 , -- Vanguard_Ambusher
-        DMB+79 , -- Vanguard_Pitfighter
-        DMB+80 , -- Vanguard_Enchanter
-        DMB+81 , -- Vanguard_Maestro
-        DMB+82 , -- Vanguard_Ambusher
-        DMB+83 , -- Vanguard_Ambusher
-        DMB+84 , -- Vanguard_Dragontamer
-        DMB+86 , -- Vanguard_Pitfighter
-        DMB+87 , -- Vanguard_Alchemist
-        DMB+88 , -- Vanguard_Tinkerer
-        DMB+89 , -- Vanguard_Armorer
-        DMB+90 , -- Vanguard_Hitman
-        DMB+93 , -- Vanguard_Smithy
-        DMB+94 , -- Vanguard_Shaman
-        DMB+95 , -- Vanguard_Maestro
-        DMB+96 , -- Vanguard_Welldigger
-        DMB+97 , -- Vanguard_Tinkerer
-        DMB+98 , -- Vanguard_Ambusher
-        DMB+99 , -- Vanguard_Smithy
-        DMB+100, -- Vanguard_Armorer
-        DMB+103, -- Vanguard_Ronin
-        DMB+104, -- Vanguard_Hitman
-        DMB+107, -- Vanguard_Armorer
-        DMB+108, -- Vanguard_Shaman
-        DMB+109, -- Vanguard_Necromancer
-        DMB+111, -- Vanguard_Pitfighter
-        DMB+112, -- Vanguard_Tinkerer
-        DMB+115, -- Vanguard_Smithy
-        DMB+116, -- Vanguard_Alchemist
-        DMB+119, -- Vanguard_Ronin
-        DMB+120, -- Vanguard_Hitman
-        DMB+121, -- Vanguard_Alchemist
-        DMB+122, -- Vanguard_Maestro
-        DMB+134, -- Vanguard_Smithy
-        DMB+135, -- Vanguard_Pitfighter
-        DMB+136, -- Vanguard_Welldigger
-        DMB+137, -- Vanguard_Alchemist
-        DMB+139, -- Vanguard_Smithy
-        DMB+140, -- Vanguard_Pitfighter
-        DMB+141, -- Vanguard_Welldigger
-        DMB+142, -- Vanguard_Shaman
-        DMB+144, -- Vanguard_Smithy
-        DMB+145, -- Vanguard_Pitfighter
-        DMB+146, -- Vanguard_Welldigger
-        DMB+147, -- Vanguard_Enchanter
-        DMB+148, -- Vanguard_Alchemist
-        DMB+149, -- Vanguard_Shaman
-        DMB+150, -- Vanguard_Smithy
-        DMB+151, -- Vanguard_Pitfighter
-        DMB+152, -- Vanguard_Alchemist
-        DMB+153, -- Vanguard_Shaman
-        DMB+154, -- Vanguard_Enchanter
-        DMB+155, -- Vanguard_Welldigger
-        DMB+161, -- Vanguard_Tinkerer
-        DMB+162, -- Vanguard_Dragontamer
-        DMB+166, -- Vanguard_Maestro
-        DMB+167, -- Vanguard_Ronin
-        DMB+168, -- Vanguard_Armorer
-        DMB+169, -- Vanguard_Maestro
-        DMB+170, -- Vanguard_Tinkerer
-        DMB+171, -- Vanguard_Ronin
-        DMB+172, -- Vanguard_Necromancer
-        DMB+177, -- Vanguard_Tinkerer
-        DMB+178, -- Vanguard_Ronin
-        DMB+179, -- Vanguard_Necromancer
-        DMB+181, -- Vanguard_Maestro
-        DMB+182, -- Vanguard_Ronin
-        DMB+183, -- Vanguard_Armorer
-        DMB+184, -- Vanguard_Maestro
-        DMB+185, -- Vanguard_Tinkerer
-        DMB+188, -- Vanguard_Dragontamer
-        DMB+195, -- Vanguard_Ambusher
-        DMB+196, -- Vanguard_Hitman
-        DMB+197, -- Vanguard_Ambusher
-        DMB+198, -- Vanguard_Hitman
-        DMB+199, -- Vanguard_Ambusher
-        DMB+200, -- Vanguard_Hitman
-        DMB+201, -- Vanguard_Ambusher
-        DMB+202, -- Vanguard_Hitman
-        DMB+205, -- Vanguard_Smithy
-        DMB+206, -- Vanguard_Pitfighter
-        DMB+207, -- Vanguard_Welldigger
-        DMB+211, -- Vanguard_Alchemist
-        DMB+212, -- Vanguard_Shaman
-        DMB+213, -- Vanguard_Enchanter
-        DMB+217, -- Vanguard_Armorer
-        DMB+218, -- Vanguard_Tinkerer
-        DMB+225, -- Vanguard_Ambusher
-        DMB+227, -- Vanguard_Hitman
-    },
-    [2] = -- all jobs including BST and their slimes
+    [1] = -- all non-statue mobs
     {
         DMB+2  , -- Vanguard_Smithy
         DMB+3  , -- Vanguard_Welldigger

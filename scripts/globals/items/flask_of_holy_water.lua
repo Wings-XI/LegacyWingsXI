@@ -16,7 +16,7 @@ function onItemUse(target)
     local bane = target:getStatusEffect(tpz.effect.BANE)
     local power = 33 + target:getMod(tpz.mod.ENHANCES_HOLYWATER)
 
-    if (target:hasStatusEffect(tpz.effect.DOOM) and power > math.random(1, 100)) then
+    if (target:hasStatusEffect(tpz.effect.DOOM) and target:getStatusEffect(tpz.effect.DOOM):getPower()<=10 and power > math.random(1, 100)) then
         target:delStatusEffect(tpz.effect.DOOM)
         target:messageBasic(tpz.msg.basic.NARROWLY_ESCAPE)
     elseif (curse ~= nil and curse2 ~= nil and bane ~= nil) then

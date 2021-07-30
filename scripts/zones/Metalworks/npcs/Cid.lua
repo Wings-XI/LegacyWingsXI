@@ -61,7 +61,8 @@ function onTrigger(player, npc)
     elseif (currentCOPMission == tpz.mission.id.cop.FIRE_IN_THE_EYES_OF_MEN and player:getCharVar("PromathiaStatus")==1) then
         player:startEvent(857) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 0) then
-        player:startEvent(856) -- COP event
+        --player:startEvent(856) -- COP event
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
     elseif (currentCOPMission == tpz.mission.id.cop.THREE_PATHS and LouverancePath == 6 ) then
         player:startEvent(852) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THREE_PATHS and LouverancePath == 9 ) then
@@ -100,8 +101,7 @@ function onTrigger(player, npc)
     elseif (currentCOPMission == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") > 8) then
         player:startEvent(850) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ENDURING_TUMULT_OF_WAR and player:getCharVar("PromathiaStatus")==1) then
-        --player:startEvent(849) -- COP event -- (Current Devblock)
-        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:startEvent(849)
     elseif (currentCOPMission == tpz.mission.id.cop.THE_CALL_OF_THE_WYRMKING and player:getCharVar("PromathiaStatus")==1) then
         player:startEvent(845) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ROAD_FORKS and player:getCharVar("EMERALD_WATERS_Status")== 7 and player:getCharVar("MEMORIES_OF_A_MAIDEN_Status")== 12) then --two paths are finished ?

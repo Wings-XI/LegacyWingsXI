@@ -307,7 +307,6 @@ INSERT INTO `mob_skills` VALUES(499, 852, 'back_swish', 4, 10.0, 2000, 1800, 4, 
 INSERT INTO `mob_skills` VALUES(500, 853, 'mow', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(501, 854, 'frightful_roar', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(502, 855, 'mortal_ray', 0, 10.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(503, 856, 'unblessed_armor', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(510, 254, 'berserk', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(511, 253, 'self-destruct', 1, 20.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
@@ -349,6 +348,7 @@ INSERT INTO `mob_skills` VALUES(557, 301, 'level_5_petrify', 1, 15.0, 2000, 1500
 INSERT INTO `mob_skills` VALUES(559, 303, 'soul_drain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(560, 304, 'hecatomb_wave', 4, 10.0, 2000, 2200, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(561, 971, 'electromagnetic_field', 1, 10.0, 2000, 1800, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(562, 972, 'reactive_armor', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(563, 307, 'demonic_howl', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(567, 866, 'sling_bomb', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(568, 867, 'formation_attack', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -885,6 +885,7 @@ INSERT INTO `mob_skills` VALUES(1355, 1006, 'spine_lash', 4, 12.0, 2000, 1000, 4
 INSERT INTO `mob_skills` VALUES(1356, 1007, 'voiceless_storm', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1357, 1008, 'tidal_dive', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1358, 1009, 'plasma_charge', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(1360, 855, 'apocalyptic_ray', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1365, 1043, 'tail_thrust', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1366, 1044, 'temporal_shift', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
@@ -1136,10 +1137,10 @@ INSERT INTO `mob_skills` VALUES(1931, 1296, 'eagle_eye_shot', 0, 25.0, 2000, 0, 
 INSERT INTO `mob_skills` VALUES(1932, 1297, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1933, 432, 'azure_lore', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1936, 1299, 'shibaraku', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1940, 1304, 'chimera_ripper', 0, 7.0, 2000, 1, 4, 0, 0, 0, 7, 6, 0);
+INSERT INTO `mob_skills` VALUES(1940, 1304, 'chimera_ripper', 0, 7.0, 2000, 1, 4, 0, 0, 0, 6, 7, 0);
 INSERT INTO `mob_skills` VALUES(1941, 1305, 'string_clipper', 0, 7.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
 INSERT INTO `mob_skills` VALUES(1942, 1303, 'arcuballista', 0, 15.0, 2000, 1, 4, 0, 0, 0, 3, 1, 0);
-INSERT INTO `mob_skills` VALUES(1943, 1306, 'slapstick', 0, 7.0, 2000, 1, 4, 0, 0, 0, 8, 0, 0);
+INSERT INTO `mob_skills` VALUES(1943, 1306, 'slapstick', 0, 7.0, 2000, 1, 4, 0, 0, 0, 5, 8, 0);
 INSERT INTO `mob_skills` VALUES(1944, 1307, 'shield_bash', 0, 7.0, 2000, 0, 4, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1945, 1219, 'provoke', 0, 7.0, 2000, 0, 4, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1946, 435, 'shock_absorber', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
@@ -1201,8 +1202,8 @@ INSERT INTO `mob_skills` VALUES(2060, 1403, 'brainjack', 0, 10.0, 2000, 1000, 4,
 INSERT INTO `mob_skills` VALUES(2061, 1378, 'restoral', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2062, 1376, 'restoral', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2065, 1404, 'cannibal_blade', 0, 15.0, 2000, 1, 4, 0, 150, 0, 2, 5, 0);
-INSERT INTO `mob_skills` VALUES(2066, 1405, 'daze', 0, 15.0, 2000, 1, 4, 0, 150, 0, 1, 8, 0);
-INSERT INTO `mob_skills` VALUES(2067, 1406, 'knockout', 0, 7.0, 2000, 1, 4, 0, 145, 0, 4, 6, 0);
+INSERT INTO `mob_skills` VALUES(2066, 1405, 'daze', 0, 15.0, 2000, 1, 4, 0, 150, 0, 8, 1, 0);
+INSERT INTO `mob_skills` VALUES(2067, 1406, 'knockout', 0, 7.0, 2000, 1, 4, 0, 145, 0, 6, 4, 0);
 INSERT INTO `mob_skills` VALUES(2068, 439, 'economizer', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2070, 1411, 'dismemberment', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2071, 1412, 'dire_straight', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);

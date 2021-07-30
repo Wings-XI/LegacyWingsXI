@@ -20,11 +20,16 @@ zones[tpz.zone.MOUNT_ZHAYOLM] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
+        MOVE_CLOSER             = 7309, -- You must move closer.
+        IMPERIAL_CONTROL        = 7310, -- This gate guards an area under Imperial control.
+        STAGING_POINT_HALVUNG   = 7313, -- Halvung Staging Point.
+        CANNOT_LEAVE            = 7320, -- You cannot leave this area while in the possession of <assault>
         RESPONSE                = 7329, -- There is no response...
         MINING_IS_POSSIBLE_HERE = 7418, -- Mining is possible here if you have <item>.
         CANNOT_ENTER            = 7477, -- You cannot enter at this time. Please wait a while before trying again.
         AREA_FULL               = 7478, -- This area is fully occupied. You were unable to enter.
         MEMBER_NO_REQS          = 7482, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
+        PARTY_MIN_REQS          = 7485,	-- Your party does not meet the minimum required number of ≺Numeric Parameter 0≻ members. Unable to enter area.
         MEMBER_TOO_FAR          = 7486, -- One or more party members are too far away from the entrance. Unable to enter area.
         SHED_LEAVES             = 7548, -- The ground is strewn with shed leaves...
         DETACHED_PART           = 7533, -- There is a detached part here...
@@ -43,6 +48,17 @@ zones[tpz.zone.MOUNT_ZHAYOLM] =
         {
             [17027421] = 17027423, -- -567.6 -15.35 252.201
             [17027422] = 17027423, -- -544.3 -14.8 262.992
+        },
+        EVOLVING_WAMOURA_PRINCES =
+        {
+            17027197, 
+            17027200,
+            17027341,
+            17027346,
+            17027417, 
+            17027419,
+            17027425,
+            17027428,
         },
         CERBERUS              = 17027458,
         BRASS_BORER           = 17027471,

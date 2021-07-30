@@ -5,6 +5,8 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/status")
+require("scripts/globals/pathfind")
+require("scripts/globals/regimes")
 -----------------------------------
 
 local function Teleport(mob, hideDuration)
@@ -28,12 +30,12 @@ local function Teleport(mob, hideDuration)
     end
 
     mob:timer(hideDuration, function(mob)
-        mob:hideName(false)
-        mob:untargetable(false)
-        mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-        mob:SetMobAbilityEnabled(true)
-        mob:SetMobSkillAttack(true)
+    mob:hideName(false)
+    mob:untargetable(false)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMobSkillAttack(true)
 
         if mob:isDead() then
             return
@@ -44,6 +46,7 @@ local function Teleport(mob, hideDuration)
 end
 
 function onMobSpawn(mob)
+    GetNPCByID(16892155):setLocalVar("profLocation", GetServerVariable("old_prof_spawn_location"))
 end
 
 function onMobFight(mob, target)
@@ -124,7 +127,7 @@ function onMobFight(mob, target)
         {100.0483, -2, 116.4553}
     }
     -- TODO: Casting animation for summons. When he spawns them isn't retail accurate.
-    if (mob:getBattleTime() % 30 < 3 and mob:getBattleTime() > 3) then
+    if (mob:getBattleTime() % 30 < 3 and mob:getBattleTime() > 3) then       
         local X = mob:getXPos()
         local Y = mob:getYPos()
         local Z = mob:getZPos()
@@ -133,45 +136,68 @@ function onMobFight(mob, target)
             local m = GetMobByID(i)
             if not m:isSpawned() then
                 m:spawn()
-                m:updateEnmity(target)
                 m:setPos(X + 1, Y, Z + 1) -- Set pupil x and z position +1 from Mariselle
-                m:setMobMod(tpz.mobMod.TELEPORT_TYPE, 0)
-                m:setMobMod(tpz.mobMod.SPAWN_LEASH, 0)
+                m:updateEnmity(target)
                 return
             end
         end
     end
 
-    local teleTime = mob:getLocalVar("teleTime")
+    for i = OP_Mariselle+1, OP_Mariselle+2 do
+        local m = GetMobByID(i)
+        if m:isSpawned() then
+            m:updateEnmity(target)
+        end
+    end
 
-    if mob:getBattleTime() - teleTime > 30 and mob:getBattleTime() > 59 then        
-        if GetServerVariable("Old_Prof_Spawn_Location") == 2 then
+
+
+    local teleTime = mob:getLocalVar("teleTime")
+    if mob:getBattleTime() - teleTime > 30 and mob:getBattleTime() > 59 then    
+        local profLocation = GetNPCByID(16892155):getLocalVar("profLocation") 
+        if profLocation == 2 then
             randPos1 = NE[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 3 then
+            mob:setSpawn(randPos1)
+        elseif profLocation == 3 then
             randPos1 = NM[math.random((1), (9))]
             Teleport(mob, 2000)
-            mob:setPos(randPos1, 0)     
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 4 then
+            mob:setPos(randPos1, 0)  
+            mob:setSpawn(randPos1)   
+        elseif profLocation == 4 then
             randPos1 = NW[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 5 then 
+            mob:setSpawn(randPos1)
+        elseif profLocation == 5 then 
             randPos1 = SE[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
-        elseif GetServerVariable("Old_Prof_Spawn_Location") == 6 then
+            mob:setSpawn(randPos1)
+        elseif profLocation == 6 then
             randPos1 = SM[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
+            mob:setSpawn(randPos1)
         else
             randPos1 = SW[math.random((1), (9))]
             Teleport(mob, 2000)
             mob:setPos(randPos1, 0)
+            mob:setSpawn(randPos1)
         end
         mob:setLocalVar("teleTime", mob:getBattleTime())
     end          
+
+    if mob:checkDistance(mob:getTarget()) > 55 then     -- If players wander too far from professor and his teleport room he deaggros
+        mob:disengage()
+        mob:resetEnmity(target)
+        for i = OP_Mariselle+1, OP_Mariselle+2 do
+            local m = GetMobByID(i)
+                m:disengage()
+                m:resetEnmity(target) 
+        end  
+    end
 end
 
 function onMobDisengage(mob)
@@ -198,3 +224,28 @@ function onMobDespawn( mob )
     local rand = math.random((2), (7))
     SetServerVariable("Old_Prof_Spawn_Location", rand)
 end
+
+function onMobRoam(mob)
+    local profLocation = GetNPCByID(16892155):getLocalVar("profLocation")
+    if profLocation == 2 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 102.669, -3.111, 127.279}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 3 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 62.668, -3.111, 127.288}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 4 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 22.669, -3.111, 127.279}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 5 then 
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 102.670, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+    elseif profLocation == 6 then
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 102.670, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+    else
+        posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), 22.669, -3.111, -127.318}
+        tpz.path.patrol(mob, posPath)
+
+    end
+end
+

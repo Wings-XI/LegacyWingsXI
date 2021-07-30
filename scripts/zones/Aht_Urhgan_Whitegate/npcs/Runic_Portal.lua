@@ -15,10 +15,39 @@ end
 
 function onTrigger(player, npc)
     local hasAssault, keyitem = tpz.besieged.hasAssaultOrders(player)
+    local offset2 = nil
+    local hasRunicPortal = nil
+    switch (hasAssault): caseof
+    {
+        [120] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 1)
+        end,
+        [121] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 3)
+        end,
+        [122] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 4)
+        end,
+        [123] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 2)
+        end,
+        [124] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 5)
+        end,
+        --[[[125] = function ()
+            hasRunicPortal = tpz.besieged.hasRunicPortal(player, 6)
+        end,]]
+    }
 
     if hasAssault > 0 then
-        player:messageSpecial(ID.text.RUNIC_PORTAL + 9, keyitem)
-        player:startEvent(hasAssault)
+        if hasRunicPortal then
+            player:messageSpecial(ID.text.CONFIRM_ORDER, keyitem)
+            player:startEvent(hasAssault)
+        else
+            offset2 = hasAssault - 120
+            player:messageSpecial(ID.text.CONFIRM_ORDER, keyitem)
+            player:messageSpecial(ID.text.ACCESS_AZOUPH + offset2)
+        end
     else
         local hasPermit = player:hasKeyItem(tpz.ki.RUNIC_PORTAL_USE_PERMIT)
         local runicPortals = player:getTeleport(tpz.teleport.type.RUNIC_PORTAL)
@@ -65,7 +94,6 @@ function onEventFinish(player, csid, option)
             end,]]
         }
     end
-
     if offset then
         tpz.teleport.to(player, tpz.teleport.id.AZOUPH_SP + offset)
     end

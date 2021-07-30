@@ -33,7 +33,7 @@ function onTrigger(player, mobId)
     end
 
     -- despawn mob
-    DespawnMob(targ:getID())
+    DespawnMob(targ:getID(), 0)
     player:PrintToPlayer(string.format("Despawned %s %i.", targ:getName(), targ:getID()))
 
 end

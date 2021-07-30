@@ -237,6 +237,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_lastPacketTime = time(NULL);
+    m_packetLimiterEnabled = false;
 
     m_distanceLastCheckTime = m_lastPacketTime;
     m_distanceFromLastCheck = 0.0;
@@ -290,11 +291,14 @@ void CCharEntity::clearPacketList()
     }
 }
 
-void CCharEntity::pushPacket(CBasicPacket* packet)
+void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
 {
     TracyZoneScoped;
     TracyZoneIString(GetName());
     TracyZoneHex16(packet->id());
+
+    if (priorityNumOverride != 0xFF)
+        packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
@@ -309,16 +313,16 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     }
 
     bool packetUpdatesPosition = false;
-    uint16 entityID = 0;
+    uint32 entityID = 0;
 
     if (packet->getType() == 0x0E)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
-        entityID = ref<uint16>(packet->getData(), 0x04);
+        entityID = ref<uint32>(packet->getData(), 0x04);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x0E && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            if ((*it)->getType() == 0x0E && ref<uint32>((*it)->getData(), 0x04) == entityID)
             { // match found, already an update queued for this entity
                 if (packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_NONE || packet->packetEntityUpdateType == ENTITYUPDATE::ENTITY_UPDATE)
                 {
@@ -362,11 +366,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
-        entityID = ref<uint16>(packet->getData(), 0x04);
+        entityID = ref<uint32>(packet->getData(), 0x04);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x0D && ref<uint16>((*it)->getData(), 0x04) == entityID)
+            if ((*it)->getType() == 0x0D && ref<uint32>((*it)->getData(), 0x04) == entityID)
             { // match found, already an update queued for this character
                 if ((*it)->packetUpdateMask | UPDATE_LOOK)
                 {
@@ -405,11 +409,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
 
     if (packet->getType() == 0x37)
     { // there can only be one of me. decide which one has the most up-to-date information to send.
-        entityID = ref<uint16>(packet->getData(), 0x24);
+        entityID = ref<uint32>(packet->getData(), 0x24);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x37 && ref<uint16>((*it)->getData(), 0x24) == entityID)
+            if ((*it)->getType() == 0x37 && ref<uint32>((*it)->getData(), 0x24) == entityID)
             { // match found, already an update queued for this character
                 // my information is more up-to-date.
                 delete (*it);
@@ -425,11 +429,11 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
 
     if (packetUpdatesPosition || packet->getType() == 0x5B)
     { // remove any position packets we have queued (0x5B)
-        entityID = entityID ? entityID : ref<uint16>(packet->getData(), 0x10);
+        entityID = entityID ? entityID : ref<uint32>(packet->getData(), 0x10);
         auto it = PacketList.cbegin();
         while (it != PacketList.cend())
         {
-            if ((*it)->getType() == 0x5B && ref<uint16>((*it)->getData(), 0x10) == entityID)
+            if ((*it)->getType() == 0x5B && ref<uint32>((*it)->getData(), 0x10) == entityID)
             {
                 delete (*it);
                 it = PacketList.erase(it);
@@ -445,7 +449,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet)
     PacketList.push_back(packet);
 }
 
-void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet)
+void CCharEntity::pushPacket(std::unique_ptr<CBasicPacket> packet, int priorityNumOverride)
 {
     pushPacket(packet.release());
 }
@@ -1434,17 +1438,24 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 }
             }
         }
-        //#TODO: make this generic enough to not require an if
-        else if (PAbility->isAoE() && this->PParty != nullptr)
+        else
         {
-            PAI->TargetFind->reset();
+            std::vector<CBattleEntity*> targets = { PTarget };
+            auto& PTargets = targets;
+            bool first = true;
 
-            float distance = PAbility->getRange();
+            if (PAbility->isAoE() && this->PParty != nullptr)
+            {
+                PAI->TargetFind->reset();
 
-            PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+                float distance = PAbility->getRange();
 
-            uint16 msg = 0;
-            for (auto&& PTarget : PAI->TargetFind->m_targets)
+                PAI->TargetFind->findWithinArea(this, AOERADIUS_ATTACKER, distance);
+
+                PTargets = PAI->TargetFind->m_targets;
+            }
+
+            for (auto&& PTarget : PTargets)
             {
                 actionList_t& actionList = action.getNewActionList();
                 actionList.ActionTargetID = PTarget->id;
@@ -1452,63 +1463,41 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionTarget.reaction = REACTION_NONE;
                 actionTarget.speceffect = SPECEFFECT_NONE;
                 actionTarget.animation = PAbility->getAnimationID();
-                actionTarget.messageID = PAbility->getMessage();
+                actionTarget.messageID = 0;
+                actionTarget.param = 0;
 
                 if (PTarget->isSuperJumped)
                 {
+                    actionTarget.animation = ANIMATION_NONE;
                     actionTarget.messageID = 0;
-                    continue;
                 }
-
-                if (msg == 0) {
-                    msg = PAbility->getMessage();
-                }
-                else {
-                    msg = PAbility->getAoEMsg();
-                }
-
-                if (actionTarget.param < 0)
+                else
                 {
-                    msg = ability::GetAbsorbMessage(msg);
-                    actionTarget.param = -actionTarget.param;
+                    int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+
+                    // If a script set messageID directly, use that;
+                    // otherwise, use the ability's message id.
+                    if (actionTarget.messageID == 0)
+                    {
+                        actionTarget.messageID = first ? PAbility->getMessage() : PAbility->getAoEMsg();
+                    }
+
+                    // Display a generic message for the caster if no message is set.
+                    if (first && actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
+
+                    actionTarget.param = value;
+
+                    if (value < 0)
+                    {
+                        actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
+                        actionTarget.param = -value;
+                    }
+
+                    state.ApplyEnmity();
                 }
 
-                actionTarget.messageID = msg;
-                actionTarget.param = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+                first = false;
             }
-        }
-        else
-        {
-            actionList_t& actionList = action.getNewActionList();
-            actionList.ActionTargetID = PTarget->id;
-            actionTarget_t& actionTarget = actionList.getNewActionTarget();
-            actionTarget.reaction = REACTION_NONE;
-            actionTarget.speceffect = SPECEFFECT_RECOIL;
-            actionTarget.animation = PAbility->getAnimationID();
-            actionTarget.param = 0;
-            auto prevMsg = actionTarget.messageID;
-
-            if (PTarget->isSuperJumped)
-            {
-                actionTarget.animation = ANIMATION_NONE;
-                actionTarget.messageID = 0;
-            }
-            else
-            {
-                int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
-                if (prevMsg == actionTarget.messageID) actionTarget.messageID = PAbility->getMessage();
-                if (actionTarget.messageID == 0) actionTarget.messageID = MSGBASIC_USES_JA;
-                actionTarget.param = value;
-
-                if (value < 0)
-                {
-                    actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
-                    actionTarget.param = -value;
-                }
-
-                state.ApplyEnmity();
-            }
-
         }
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
