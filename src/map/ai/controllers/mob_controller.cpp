@@ -611,6 +611,10 @@ void CMobController::DoCombatTick(time_point tick)
     {
         return;
     }
+    else if (PMob->health.tp >= 1000 && PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI) && MobSkill())
+    {
+        return;
+    }
     else if (m_Tick >= m_LastMobSkillTime && tpzrand::GetRandomNumber(1, 10000) <= PMob->TPUseChance() && MobSkill())
     {
         return;
@@ -1081,13 +1085,25 @@ bool CMobController::Engage(uint16 targid)
     {
         m_firstSpell = true;
 
+        if (PMob->isInDynamis() && PMob->GetMJob() == JOB_SMN)
+        { // dyna SMN: summon my avatar immediately
+            m_LastMagicTime = m_Tick;
+            m_LastSpecialTime = m_Tick;
+            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells())
+            {
+                if (auto spellID = PMob->SpellContainer->GetBuffSpell())
+                    CastSpell(spellID.value());
+            }
+            return ret;
+        }
+
         // Don't cast magic or use special ability right away
-        if(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
+        if (PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
         {
             m_LastMagicTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + tpzrand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
         }
 
-        if(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
+        if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
         {
             m_LastSpecialTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) + tpzrand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY)));
         }
