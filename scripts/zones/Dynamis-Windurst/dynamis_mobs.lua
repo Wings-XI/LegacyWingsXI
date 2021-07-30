@@ -1149,299 +1149,304 @@ mobList[zone].waveDefeatRequirements[7] = { DMB+1 } -- Final Boss spawns wave 7 
 mobList[zone].waveDefeatRequirements[8] = { SMB+296 } -- pops 302/306 when defeated
 mobList[zone].waveDefeatRequirements[9] = { SMB+347 } -- pops 353/354/357 on bridge when defeated
 mobList[zone].waveDefeatRequirements[10] = { SMB+234 } -- pops 227/231 under bridge when defeated
+mobList[zone].waveDefeatRequirements[11] = { SMB+187 } -- pops 176/179 under bridge when defeated
 
 -- set which waves this monster will spawn on (can be multiple)
 -- wave 1 is spawned on the creation of the dynamis instance
-mobList[zone][SMB+1  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+4  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+7  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+14 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+13 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+10 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+16 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+19 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+25 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+30 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+31 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+38 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+65 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+88 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+95 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+62 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+59 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+56 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+50 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+47 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+44 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+41 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+84 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+79 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+76 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+104].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+99 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+109].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+119].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+131].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+126].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+152].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+141].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+145].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+147].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+169].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+165].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+171].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+172].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+182].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+187].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+196].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+190].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+194].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+192].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+234].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+217].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+198].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+216].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+211].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+205].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+238].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+241].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+248].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+254].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+311].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+269].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+257].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+262].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+292].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+277].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+296].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+352].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+349].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+348].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+347].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+374].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+381].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+385].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+377].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+389].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+405].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+401].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+396].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+323].waves = { nil, 2 ,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+322].waves = { nil, 2 ,nil,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+325].waves = { nil,nil, 3 ,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+326].waves = { nil,nil, 3 ,nil,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+328].waves = { nil,nil,nil, 4 ,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+329].waves = { nil,nil,nil, 4 ,nil,nil,nil,nil,nil,nil }
-mobList[zone][SMB+337].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil }
-mobList[zone][SMB+341].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil }
-mobList[zone][SMB+344].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil }
-mobList[zone][DMB+1  ].waves = { nil,nil,nil,nil,nil, 6 ,nil,nil,nil,nil }
-mobList[zone][SMB+374].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+381].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+385].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+377].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+389].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+405].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+401].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+396].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+424].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+414].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+410].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+420].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+427].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+431].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+436].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+441].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+446].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+454].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+478].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+473].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+467].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+461].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+485].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+491].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+497].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil }
-mobList[zone][SMB+302].waves = { nil,nil,nil,nil,nil,nil,nil, 8 ,nil,nil }
-mobList[zone][SMB+306].waves = { nil,nil,nil,nil,nil,nil,nil, 8 ,nil,nil }
-mobList[zone][SMB+353].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil }
-mobList[zone][SMB+354].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil }
-mobList[zone][SMB+357].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil }
-mobList[zone][SMB+227].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil, 10 }
-mobList[zone][SMB+231].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil, 10 }
+mobList[zone][SMB+1  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+4  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+7  ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+14 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+13 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+10 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+16 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+19 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+25 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+30 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+31 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+38 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+65 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+88 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+95 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+62 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+59 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+56 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+50 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+47 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+44 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+41 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+84 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+79 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+76 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+104].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+99 ].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+109].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+119].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+131].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+136].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+138].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+140].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+126].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+152].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+141].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+145].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+147].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+169].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+165].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+171].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+172].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+182].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+187].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+196].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+190].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+194].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+192].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+234].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+217].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+198].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+216].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+211].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+205].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+238].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+241].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+248].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+254].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+311].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+269].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+257].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+262].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+292].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+277].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+296].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+352].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+349].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+348].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+347].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+374].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+381].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+385].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+377].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+389].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+405].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+401].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+396].waves = {  1 ,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+323].waves = { nil, 2 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+322].waves = { nil, 2 ,nil,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+325].waves = { nil,nil, 3 ,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+326].waves = { nil,nil, 3 ,nil,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+328].waves = { nil,nil,nil, 4 ,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+329].waves = { nil,nil,nil, 4 ,nil,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+337].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+341].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil,nil }
+mobList[zone][SMB+344].waves = { nil,nil,nil,nil, 5 ,nil,nil,nil,nil,nil,nil }
+mobList[zone][DMB+1  ].waves = { nil,nil,nil,nil,nil, 6 ,nil,nil,nil,nil,nil }
+mobList[zone][SMB+374].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+381].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+385].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+377].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+389].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+405].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+401].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+396].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+424].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+414].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+410].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+420].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+427].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+431].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+436].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+441].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+446].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+454].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+478].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+473].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+467].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+461].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+485].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+491].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+497].waves = { nil,nil,nil,nil,nil,nil, 7 ,nil,nil,nil,nil }
+mobList[zone][SMB+302].waves = { nil,nil,nil,nil,nil,nil,nil, 8 ,nil,nil,nil }
+mobList[zone][SMB+306].waves = { nil,nil,nil,nil,nil,nil,nil, 8 ,nil,nil,nil }
+mobList[zone][SMB+353].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil,nil }
+mobList[zone][SMB+354].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil,nil }
+mobList[zone][SMB+357].waves = { nil,nil,nil,nil,nil,nil,nil,nil, 9 ,nil,nil }
+mobList[zone][SMB+227].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil, 10,nil }
+mobList[zone][SMB+231].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil, 10,nil }
+mobList[zone][SMB+176].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil,nil, 11 }
+mobList[zone][SMB+179].waves = { nil,nil,nil,nil,nil,nil,nil,nil,nil,nil, 11 }
 
--- set what mobIDs i will spawn when i engage (such as NMs or other statues)
+-- set what mobIDs i will spawn when i engage (such as NMs or other statues) boolean value = forceLink enabled yes/no (default no if unspecified)
 mobList[zone][SMB+88 ].specificChildren = { SMB+91, SMB+93 }
 mobList[zone][SMB+95 ].specificChildren = { SMB+69 }
 mobList[zone][SMB+119].specificChildren = { SMB+114 }
-mobList[zone][SMB+131].specificChildren = { SMB+132, SMB+134, SMB+136, SMB+138, SMB+140 }
+mobList[zone][SMB+131].specificChildren = { true, SMB+132, SMB+134 }
 mobList[zone][SMB+152].specificChildren = { SMB+156 }
-mobList[zone][SMB+169].specificChildren = { DMB+189, SMB+159, SMB+163, SMB+164, SMB+166 }
-mobList[zone][SMB+187].specificChildren = { SMB+176, SMB+179 } 
+mobList[zone][SMB+169].specificChildren = { true, DMB+189, SMB+159, SMB+163, SMB+166, false, SMB+164 }
 mobList[zone][SMB+217].specificChildren = { SMB+219 } 
 mobList[zone][SMB+219].specificChildren = { SMB+221 }
 mobList[zone][SMB+221].specificChildren = { SMB+224 }
-mobList[zone][SMB+198].specificChildren = { DMB+126 }
+mobList[zone][SMB+198].specificChildren = { true, DMB+126 }
 mobList[zone][SMB+241].specificChildren = { SMB+242 }
 mobList[zone][SMB+238].specificChildren = { SMB+239 }
-mobList[zone][SMB+277].specificChildren = { SMB+284, SMB+282 }
-mobList[zone][SMB+248].specificChildren = { DMB+207, SMB+244, SMB+251, SMB+255 }
+mobList[zone][SMB+277].specificChildren = { true, SMB+284, SMB+282 }
+mobList[zone][SMB+248].specificChildren = { true, DMB+207, SMB+244, SMB+251, SMB+255 }
 mobList[zone][SMB+311].specificChildren = { SMB+315, SMB+317, SMB+319 }
-mobList[zone][SMB+257].specificChildren = { SMB+261, SMB+260 }
+mobList[zone][SMB+257].specificChildren = { true, SMB+261, SMB+260 }
 mobList[zone][SMB+262].specificChildren = { SMB+267 }
 mobList[zone][SMB+269].specificChildren = { SMB+274, SMB+276 }
 mobList[zone][SMB+292].specificChildren = { SMB+286, SMB+289 }
-mobList[zone][SMB+337].specificChildren = { DMB+177, SMB+331, SMB+334}
-mobList[zone][DMB+1  ].specificChildren = { DMB+2, DMB+3, SMB+367, SMB+363, SMB+372, SMB+373 }
+mobList[zone][SMB+337].specificChildren = { true, DMB+177, SMB+331, SMB+334}
+mobList[zone][DMB+1  ].specificChildren = { true, DMB+2, DMB+3, SMB+367, SMB+363, SMB+372, SMB+373 }
 
 -- set how many random children i will spawn when i engage
-mobList[zone][SMB+1  ].randomChildrenCount = 4
-mobList[zone][SMB+4  ].randomChildrenCount = 3
-mobList[zone][SMB+7  ].randomChildrenCount = 3
-mobList[zone][SMB+14 ].randomChildrenCount = 3
-mobList[zone][SMB+13 ].randomChildrenCount = 3
+mobList[zone][SMB+1  ].randomChildrenCount = 2
+mobList[zone][SMB+4  ].randomChildrenCount = 2
+mobList[zone][SMB+7  ].randomChildrenCount = 2
+mobList[zone][SMB+14 ].randomChildrenCount = 1
+mobList[zone][SMB+13 ].randomChildrenCount = 0
 mobList[zone][SMB+10 ].randomChildrenCount = 2
-mobList[zone][SMB+16 ].randomChildrenCount = 3
+mobList[zone][SMB+16 ].randomChildrenCount = 2
 mobList[zone][SMB+19 ].randomChildrenCount = 3
-mobList[zone][SMB+25 ].randomChildrenCount = 3
-mobList[zone][SMB+30 ].randomChildrenCount = 4
-mobList[zone][SMB+31 ].randomChildrenCount = 3
-mobList[zone][SMB+41 ].randomChildrenCount = 3
-mobList[zone][SMB+44 ].randomChildrenCount = 3
-mobList[zone][SMB+47 ].randomChildrenCount = 3
-mobList[zone][SMB+38 ].randomChildrenCount = 3
+mobList[zone][SMB+25 ].randomChildrenCount = 4
+mobList[zone][SMB+30 ].randomChildrenCount = 0
+mobList[zone][SMB+31 ].randomChildrenCount = 4
+mobList[zone][SMB+41 ].randomChildrenCount = 2
+mobList[zone][SMB+44 ].randomChildrenCount = 2
+mobList[zone][SMB+47 ].randomChildrenCount = 2
+mobList[zone][SMB+38 ].randomChildrenCount = 2
 mobList[zone][SMB+50 ].randomChildrenCount = 3
 mobList[zone][SMB+65 ].randomChildrenCount = 3
-mobList[zone][SMB+91 ].randomChildrenCount = 3
-mobList[zone][SMB+93 ].randomChildrenCount = 3
-mobList[zone][SMB+88 ].randomChildrenCount = 3
+mobList[zone][SMB+91 ].randomChildrenCount = 1
+mobList[zone][SMB+93 ].randomChildrenCount = 1
+mobList[zone][SMB+88 ].randomChildrenCount = 2
 mobList[zone][SMB+95 ].randomChildrenCount = 3
 mobList[zone][SMB+69 ].randomChildrenCount = 3
-mobList[zone][SMB+56 ].randomChildrenCount = 3
-mobList[zone][SMB+59 ].randomChildrenCount = 3
-mobList[zone][SMB+62 ].randomChildrenCount = 3
+mobList[zone][SMB+56 ].randomChildrenCount = 2
+mobList[zone][SMB+59 ].randomChildrenCount = 2
+mobList[zone][SMB+62 ].randomChildrenCount = 2
 mobList[zone][SMB+84 ].randomChildrenCount = 3
-mobList[zone][SMB+79 ].randomChildrenCount = 3
-mobList[zone][SMB+76 ].randomChildrenCount = 3
+mobList[zone][SMB+79 ].randomChildrenCount = 4
+mobList[zone][SMB+76 ].randomChildrenCount = 2
 mobList[zone][SMB+99 ].randomChildrenCount = 4
 mobList[zone][SMB+104].randomChildrenCount = 4
 mobList[zone][SMB+109].randomChildrenCount = 3
 mobList[zone][SMB+114].randomChildrenCount = 3
 mobList[zone][SMB+119].randomChildrenCount = 3
-mobList[zone][SMB+126].randomChildrenCount = 3
-mobList[zone][SMB+131].randomChildrenCount = 2
-mobList[zone][SMB+132].randomChildrenCount = 2
-mobList[zone][SMB+134].randomChildrenCount = 2
-mobList[zone][SMB+136].randomChildrenCount = 2
-mobList[zone][SMB+138].randomChildrenCount = 2
-mobList[zone][SMB+140].randomChildrenCount = 1
+mobList[zone][SMB+126].randomChildrenCount = 2
+mobList[zone][SMB+131].randomChildrenCount = 0
+mobList[zone][SMB+132].randomChildrenCount = 1
+mobList[zone][SMB+134].randomChildrenCount = 1
+mobList[zone][SMB+136].randomChildrenCount = 1
+mobList[zone][SMB+138].randomChildrenCount = 1
+mobList[zone][SMB+140].randomChildrenCount = 0
 mobList[zone][SMB+152].randomChildrenCount = 3
-mobList[zone][SMB+156].randomChildrenCount = 3
-mobList[zone][SMB+141].randomChildrenCount = 3
-mobList[zone][SMB+145].randomChildrenCount = 3
-mobList[zone][SMB+147].randomChildrenCount = 3
-mobList[zone][SMB+164].randomChildrenCount = 3
+mobList[zone][SMB+156].randomChildrenCount = 2
+mobList[zone][SMB+141].randomChildrenCount = 2
+mobList[zone][SMB+145].randomChildrenCount = 1
+mobList[zone][SMB+147].randomChildrenCount = 4
+mobList[zone][SMB+164].randomChildrenCount = 0
 mobList[zone][SMB+166].randomChildrenCount = 2
-mobList[zone][SMB+163].randomChildrenCount = 2
-mobList[zone][SMB+169].randomChildrenCount = 3
+mobList[zone][SMB+163].randomChildrenCount = 0
+mobList[zone][SMB+169].randomChildrenCount = 0
 mobList[zone][SMB+159].randomChildrenCount = 2
-mobList[zone][SMB+171].randomChildrenCount = 2
+mobList[zone][SMB+171].randomChildrenCount = 0
 mobList[zone][SMB+172].randomChildrenCount = 3
-mobList[zone][SMB+176].randomChildrenCount = 3
-mobList[zone][SMB+182].randomChildrenCount = 3
-mobList[zone][SMB+179].randomChildrenCount = 3
-mobList[zone][SMB+187].randomChildrenCount = 3
-mobList[zone][SMB+165].randomChildrenCount = 3
-mobList[zone][SMB+194].randomChildrenCount = 2
-mobList[zone][SMB+190].randomChildrenCount = 2
-mobList[zone][SMB+196].randomChildrenCount = 2
-mobList[zone][SMB+192].randomChildrenCount = 2
-mobList[zone][SMB+227].randomChildrenCount = 3
-mobList[zone][SMB+231].randomChildrenCount = 3
-mobList[zone][SMB+217].randomChildrenCount = 2
-mobList[zone][SMB+219].randomChildrenCount = 2
-mobList[zone][SMB+221].randomChildrenCount = 2
+mobList[zone][SMB+176].randomChildrenCount = 2
+mobList[zone][SMB+182].randomChildrenCount = 4
+mobList[zone][SMB+179].randomChildrenCount = 2
+mobList[zone][SMB+187].randomChildrenCount = 1
+mobList[zone][SMB+165].randomChildrenCount = 0
+mobList[zone][SMB+194].randomChildrenCount = 1
+mobList[zone][SMB+190].randomChildrenCount = 1
+mobList[zone][SMB+196].randomChildrenCount = 1
+mobList[zone][SMB+192].randomChildrenCount = 1
+mobList[zone][SMB+227].randomChildrenCount = 2
+mobList[zone][SMB+231].randomChildrenCount = 2
+mobList[zone][SMB+217].randomChildrenCount = 1
+mobList[zone][SMB+219].randomChildrenCount = 1
+mobList[zone][SMB+221].randomChildrenCount = 1
 mobList[zone][SMB+224].randomChildrenCount = 2
-mobList[zone][SMB+234].randomChildrenCount = 4
-mobList[zone][SMB+198].randomChildrenCount = 3
+mobList[zone][SMB+234].randomChildrenCount = 3
+mobList[zone][SMB+198].randomChildrenCount = 2
 mobList[zone][SMB+205].randomChildrenCount = 3
-mobList[zone][SMB+211].randomChildrenCount = 3
-mobList[zone][SMB+216].randomChildrenCount = 3
-mobList[zone][SMB+242].randomChildrenCount = 2
-mobList[zone][SMB+238].randomChildrenCount = 2
-mobList[zone][SMB+241].randomChildrenCount = 2
-mobList[zone][SMB+239].randomChildrenCount = 2
+mobList[zone][SMB+211].randomChildrenCount = 2
+mobList[zone][SMB+216].randomChildrenCount = 0
+mobList[zone][SMB+242].randomChildrenCount = 1
+mobList[zone][SMB+238].randomChildrenCount = 0
+mobList[zone][SMB+241].randomChildrenCount = 0
+mobList[zone][SMB+239].randomChildrenCount = 1
 mobList[zone][SMB+251].randomChildrenCount = 2
 mobList[zone][SMB+248].randomChildrenCount = 2
 mobList[zone][SMB+244].randomChildrenCount = 2
-mobList[zone][SMB+255].randomChildrenCount = 2
-mobList[zone][SMB+254].randomChildrenCount = 3
-mobList[zone][SMB+276].randomChildrenCount = 3
-mobList[zone][SMB+274].randomChildrenCount = 3
-mobList[zone][SMB+319].randomChildrenCount = 2
-mobList[zone][SMB+317].randomChildrenCount = 2
-mobList[zone][SMB+315].randomChildrenCount = 2
+mobList[zone][SMB+255].randomChildrenCount = 1
+mobList[zone][SMB+254].randomChildrenCount = 0
+mobList[zone][SMB+276].randomChildrenCount = 0
+mobList[zone][SMB+274].randomChildrenCount = 1
+mobList[zone][SMB+319].randomChildrenCount = 1
+mobList[zone][SMB+317].randomChildrenCount = 1
+mobList[zone][SMB+315].randomChildrenCount = 1
 mobList[zone][SMB+311].randomChildrenCount = 3
 mobList[zone][SMB+269].randomChildrenCount = 3
-mobList[zone][SMB+261].randomChildrenCount = 3
-mobList[zone][SMB+257].randomChildrenCount = 3
-mobList[zone][SMB+260].randomChildrenCount = 3
-mobList[zone][SMB+262].randomChildrenCount = 1
-mobList[zone][SMB+286].randomChildrenCount = 3
+mobList[zone][SMB+261].randomChildrenCount = 0
+mobList[zone][SMB+257].randomChildrenCount = 2
+mobList[zone][SMB+260].randomChildrenCount = 0
+mobList[zone][SMB+262].randomChildrenCount = 3
+mobList[zone][SMB+286].randomChildrenCount = 2
 mobList[zone][SMB+292].randomChildrenCount = 3
-mobList[zone][SMB+289].randomChildrenCount = 3
+mobList[zone][SMB+289].randomChildrenCount = 2
 mobList[zone][SMB+277].randomChildrenCount = 3
-mobList[zone][SMB+282].randomChildrenCount = 2
-mobList[zone][SMB+284].randomChildrenCount = 2
+mobList[zone][SMB+282].randomChildrenCount = 1
+mobList[zone][SMB+284].randomChildrenCount = 1
 mobList[zone][SMB+267].randomChildrenCount = 1
 mobList[zone][SMB+306].randomChildrenCount = 3
 mobList[zone][SMB+302].randomChildrenCount = 3
-mobList[zone][SMB+296].randomChildrenCount = 3
-mobList[zone][SMB+352].randomChildrenCount = 2
-mobList[zone][SMB+349].randomChildrenCount = 2
-mobList[zone][SMB+348].randomChildrenCount = 2
-mobList[zone][SMB+347].randomChildrenCount = 3
-mobList[zone][SMB+353].randomChildrenCount = 2
-mobList[zone][SMB+354].randomChildrenCount = 2
-mobList[zone][SMB+357].randomChildrenCount = 2
-mobList[zone][SMB+329].randomChildrenCount = 2
-mobList[zone][SMB+328].randomChildrenCount = 2
-mobList[zone][SMB+326].randomChildrenCount = 2
-mobList[zone][SMB+322].randomChildrenCount = 2
-mobList[zone][SMB+323].randomChildrenCount = 2
-mobList[zone][SMB+325].randomChildrenCount = 2
-mobList[zone][SMB+341].randomChildrenCount = 4
-mobList[zone][SMB+344].randomChildrenCount = 4
-mobList[zone][SMB+337].randomChildrenCount = 3
-mobList[zone][SMB+331].randomChildrenCount = 3
-mobList[zone][SMB+334].randomChildrenCount = 3
-mobList[zone][DMB+1  ].randomChildrenCount = 0
-mobList[zone][SMB+372].randomChildrenCount = 1
-mobList[zone][SMB+367].randomChildrenCount = 2
-mobList[zone][SMB+363].randomChildrenCount = 2
-mobList[zone][SMB+373].randomChildrenCount = 1
-mobList[zone][SMB+374].randomChildrenCount = 3
+mobList[zone][SMB+296].randomChildrenCount = 5
+mobList[zone][SMB+352].randomChildrenCount = 0
+mobList[zone][SMB+349].randomChildrenCount = 1
+mobList[zone][SMB+348].randomChildrenCount = 0
+mobList[zone][SMB+347].randomChildrenCount = 0
+mobList[zone][SMB+353].randomChildrenCount = 0
+mobList[zone][SMB+354].randomChildrenCount = 1
+mobList[zone][SMB+357].randomChildrenCount = 0
+mobList[zone][SMB+329].randomChildrenCount = 1
+mobList[zone][SMB+328].randomChildrenCount = 0
+mobList[zone][SMB+326].randomChildrenCount = 1
+mobList[zone][SMB+322].randomChildrenCount = 0
+mobList[zone][SMB+323].randomChildrenCount = 1
+mobList[zone][SMB+325].randomChildrenCount = 0
+mobList[zone][SMB+341].randomChildrenCount = 2
+mobList[zone][SMB+344].randomChildrenCount = 2
+mobList[zone][SMB+337].randomChildrenCount = 2
+mobList[zone][SMB+331].randomChildrenCount = 2
+mobList[zone][SMB+334].randomChildrenCount = 2
+mobList[zone][DMB+1  ].randomChildrenCount = 2
+mobList[zone][SMB+372].randomChildrenCount = 0
+mobList[zone][SMB+367].randomChildrenCount = 3
+mobList[zone][SMB+363].randomChildrenCount = 3
+mobList[zone][SMB+373].randomChildrenCount = 0
+mobList[zone][SMB+374].randomChildrenCount = 2
 mobList[zone][SMB+377].randomChildrenCount = 3
-mobList[zone][SMB+385].randomChildrenCount = 3
+mobList[zone][SMB+385].randomChildrenCount = 2
 mobList[zone][SMB+381].randomChildrenCount = 3
-mobList[zone][SMB+389].randomChildrenCount = 3
+mobList[zone][SMB+389].randomChildrenCount = 5
 mobList[zone][SMB+405].randomChildrenCount = 3
 mobList[zone][SMB+401].randomChildrenCount = 3
 mobList[zone][SMB+396].randomChildrenCount = 3
 mobList[zone][SMB+424].randomChildrenCount = 2
-mobList[zone][SMB+414].randomChildrenCount = 2
-mobList[zone][SMB+410].randomChildrenCount = 2
+mobList[zone][SMB+414].randomChildrenCount = 4
+mobList[zone][SMB+410].randomChildrenCount = 3
 mobList[zone][SMB+420].randomChildrenCount = 2
 mobList[zone][SMB+427].randomChildrenCount = 3
 mobList[zone][SMB+431].randomChildrenCount = 3
-mobList[zone][SMB+436].randomChildrenCount = 3
-mobList[zone][SMB+441].randomChildrenCount = 3
-mobList[zone][SMB+446].randomChildrenCount = 3
-mobList[zone][SMB+454].randomChildrenCount = 3
-mobList[zone][SMB+478].randomChildrenCount = 3
-mobList[zone][SMB+473].randomChildrenCount = 3
+mobList[zone][SMB+436].randomChildrenCount = 4
+mobList[zone][SMB+441].randomChildrenCount = 4
+mobList[zone][SMB+446].randomChildrenCount = 5
+mobList[zone][SMB+454].randomChildrenCount = 5
+mobList[zone][SMB+478].randomChildrenCount = 5
+mobList[zone][SMB+473].randomChildrenCount = 4
 mobList[zone][SMB+467].randomChildrenCount = 3
-mobList[zone][SMB+461].randomChildrenCount = 3
-mobList[zone][SMB+485].randomChildrenCount = 3
+mobList[zone][SMB+461].randomChildrenCount = 4
+mobList[zone][SMB+485].randomChildrenCount = 5
 mobList[zone][SMB+497].randomChildrenCount = 5
 mobList[zone][SMB+491].randomChildrenCount = 5
 
@@ -1456,57 +1461,57 @@ mobList[zone][SMB+16 ].randomChildrenList = 1
 mobList[zone][SMB+19 ].randomChildrenList = 1
 mobList[zone][SMB+25 ].randomChildrenList = 1
 mobList[zone][SMB+30 ].randomChildrenList = 1
-mobList[zone][SMB+31 ].randomChildrenList = 1
-mobList[zone][SMB+41 ].randomChildrenList = 1
-mobList[zone][SMB+44 ].randomChildrenList = 1
-mobList[zone][SMB+47 ].randomChildrenList = 1
-mobList[zone][SMB+38 ].randomChildrenList = 1
-mobList[zone][SMB+50 ].randomChildrenList = 1
-mobList[zone][SMB+65 ].randomChildrenList = 1
-mobList[zone][SMB+91 ].randomChildrenList = 1
-mobList[zone][SMB+93 ].randomChildrenList = 1
-mobList[zone][SMB+88 ].randomChildrenList = 1
-mobList[zone][SMB+95 ].randomChildrenList = 1
-mobList[zone][SMB+69 ].randomChildrenList = 1
-mobList[zone][SMB+56 ].randomChildrenList = 1
-mobList[zone][SMB+59 ].randomChildrenList = 1
-mobList[zone][SMB+62 ].randomChildrenList = 1
-mobList[zone][SMB+84 ].randomChildrenList = 1
-mobList[zone][SMB+79 ].randomChildrenList = 1
-mobList[zone][SMB+76 ].randomChildrenList = 1
+mobList[zone][SMB+31 ].randomChildrenList = 2
+mobList[zone][SMB+41 ].randomChildrenList = 2
+mobList[zone][SMB+44 ].randomChildrenList = 2
+mobList[zone][SMB+47 ].randomChildrenList = 2
+mobList[zone][SMB+38 ].randomChildrenList = 2
+mobList[zone][SMB+50 ].randomChildrenList = 2
+mobList[zone][SMB+65 ].randomChildrenList = 2
+mobList[zone][SMB+91 ].randomChildrenList = 2
+mobList[zone][SMB+93 ].randomChildrenList = 2
+mobList[zone][SMB+88 ].randomChildrenList = 2
+mobList[zone][SMB+95 ].randomChildrenList = 2
+mobList[zone][SMB+69 ].randomChildrenList = 2
+mobList[zone][SMB+56 ].randomChildrenList = 2
+mobList[zone][SMB+59 ].randomChildrenList = 2
+mobList[zone][SMB+62 ].randomChildrenList = 3
+mobList[zone][SMB+84 ].randomChildrenList = 2
+mobList[zone][SMB+79 ].randomChildrenList = 2
+mobList[zone][SMB+76 ].randomChildrenList = 2
 mobList[zone][SMB+99 ].randomChildrenList = 2
 mobList[zone][SMB+104].randomChildrenList = 2
 mobList[zone][SMB+109].randomChildrenList = 2
 mobList[zone][SMB+114].randomChildrenList = 2
 mobList[zone][SMB+119].randomChildrenList = 2
-mobList[zone][SMB+126].randomChildrenList = 2
+mobList[zone][SMB+126].randomChildrenList = 5
 mobList[zone][SMB+131].randomChildrenList = 2
 mobList[zone][SMB+132].randomChildrenList = 2
 mobList[zone][SMB+134].randomChildrenList = 2
 mobList[zone][SMB+136].randomChildrenList = 2
 mobList[zone][SMB+138].randomChildrenList = 2
 mobList[zone][SMB+140].randomChildrenList = 2
-mobList[zone][SMB+152].randomChildrenList = 2
-mobList[zone][SMB+156].randomChildrenList = 2
-mobList[zone][SMB+141].randomChildrenList = 2
-mobList[zone][SMB+145].randomChildrenList = 2
-mobList[zone][SMB+147].randomChildrenList = 2
-mobList[zone][SMB+164].randomChildrenList = 2
-mobList[zone][SMB+166].randomChildrenList = 2
-mobList[zone][SMB+163].randomChildrenList = 2
-mobList[zone][SMB+169].randomChildrenList = 2
-mobList[zone][SMB+159].randomChildrenList = 2
-mobList[zone][SMB+171].randomChildrenList = 2
-mobList[zone][SMB+172].randomChildrenList = 2
-mobList[zone][SMB+176].randomChildrenList = 2
-mobList[zone][SMB+182].randomChildrenList = 2
-mobList[zone][SMB+179].randomChildrenList = 2
-mobList[zone][SMB+187].randomChildrenList = 2
-mobList[zone][SMB+165].randomChildrenList = 2
-mobList[zone][SMB+194].randomChildrenList = 2
-mobList[zone][SMB+190].randomChildrenList = 2
-mobList[zone][SMB+196].randomChildrenList = 2
-mobList[zone][SMB+192].randomChildrenList = 2
+mobList[zone][SMB+152].randomChildrenList = 1
+mobList[zone][SMB+156].randomChildrenList = 3
+mobList[zone][SMB+141].randomChildrenList = 1
+mobList[zone][SMB+145].randomChildrenList = 1
+mobList[zone][SMB+147].randomChildrenList = 1
+mobList[zone][SMB+164].randomChildrenList = 1
+mobList[zone][SMB+166].randomChildrenList = 1
+mobList[zone][SMB+163].randomChildrenList = 1
+mobList[zone][SMB+169].randomChildrenList = 1
+mobList[zone][SMB+159].randomChildrenList = 1
+mobList[zone][SMB+171].randomChildrenList = 1
+mobList[zone][SMB+172].randomChildrenList = 1
+mobList[zone][SMB+176].randomChildrenList = 1
+mobList[zone][SMB+182].randomChildrenList = 1
+mobList[zone][SMB+179].randomChildrenList = 1
+mobList[zone][SMB+187].randomChildrenList = 1
+mobList[zone][SMB+165].randomChildrenList = 1
+mobList[zone][SMB+194].randomChildrenList = 1
+mobList[zone][SMB+190].randomChildrenList = 1
+mobList[zone][SMB+196].randomChildrenList = 1
+mobList[zone][SMB+192].randomChildrenList = 1
 mobList[zone][SMB+227].randomChildrenList = 1
 mobList[zone][SMB+231].randomChildrenList = 1
 mobList[zone][SMB+217].randomChildrenList = 1
@@ -1514,10 +1519,10 @@ mobList[zone][SMB+219].randomChildrenList = 1
 mobList[zone][SMB+221].randomChildrenList = 1
 mobList[zone][SMB+224].randomChildrenList = 1
 mobList[zone][SMB+234].randomChildrenList = 1
-mobList[zone][SMB+198].randomChildrenList = 1
-mobList[zone][SMB+205].randomChildrenList = 1
-mobList[zone][SMB+211].randomChildrenList = 1
-mobList[zone][SMB+216].randomChildrenList = 1
+mobList[zone][SMB+198].randomChildrenList = 4
+mobList[zone][SMB+205].randomChildrenList = 4
+mobList[zone][SMB+211].randomChildrenList = 4
+mobList[zone][SMB+216].randomChildrenList = 4
 mobList[zone][SMB+242].randomChildrenList = 1
 mobList[zone][SMB+238].randomChildrenList = 1
 mobList[zone][SMB+241].randomChildrenList = 1
@@ -1548,13 +1553,13 @@ mobList[zone][SMB+267].randomChildrenList = 1
 mobList[zone][SMB+306].randomChildrenList = 1
 mobList[zone][SMB+302].randomChildrenList = 1
 mobList[zone][SMB+296].randomChildrenList = 1
-mobList[zone][SMB+352].randomChildrenList = 1
-mobList[zone][SMB+349].randomChildrenList = 1
-mobList[zone][SMB+348].randomChildrenList = 1
-mobList[zone][SMB+347].randomChildrenList = 1
-mobList[zone][SMB+353].randomChildrenList = 1
-mobList[zone][SMB+354].randomChildrenList = 1
-mobList[zone][SMB+357].randomChildrenList = 1
+mobList[zone][SMB+352].randomChildrenList = 2
+mobList[zone][SMB+349].randomChildrenList = 2
+mobList[zone][SMB+348].randomChildrenList = 2
+mobList[zone][SMB+347].randomChildrenList = 2
+mobList[zone][SMB+353].randomChildrenList = 2
+mobList[zone][SMB+354].randomChildrenList = 5
+mobList[zone][SMB+357].randomChildrenList = 2
 mobList[zone][SMB+329].randomChildrenList = 1
 mobList[zone][SMB+328].randomChildrenList = 1
 mobList[zone][SMB+326].randomChildrenList = 1
@@ -1562,40 +1567,40 @@ mobList[zone][SMB+322].randomChildrenList = 1
 mobList[zone][SMB+323].randomChildrenList = 1
 mobList[zone][SMB+325].randomChildrenList = 1
 mobList[zone][SMB+341].randomChildrenList = 1
-mobList[zone][SMB+344].randomChildrenList = 1
+mobList[zone][SMB+344].randomChildrenList = 3
 mobList[zone][SMB+337].randomChildrenList = 1
 mobList[zone][SMB+331].randomChildrenList = 1
 mobList[zone][SMB+334].randomChildrenList = 1
-mobList[zone][DMB+1  ].randomChildrenList = 1
-mobList[zone][SMB+372].randomChildrenList = 1
-mobList[zone][SMB+367].randomChildrenList = 1
-mobList[zone][SMB+363].randomChildrenList = 1
-mobList[zone][SMB+373].randomChildrenList = 1
-mobList[zone][SMB+374].randomChildrenList = 1
-mobList[zone][SMB+377].randomChildrenList = 1
-mobList[zone][SMB+385].randomChildrenList = 1
-mobList[zone][SMB+381].randomChildrenList = 1
-mobList[zone][SMB+389].randomChildrenList = 1
-mobList[zone][SMB+405].randomChildrenList = 1
-mobList[zone][SMB+401].randomChildrenList = 1
-mobList[zone][SMB+396].randomChildrenList = 1
-mobList[zone][SMB+424].randomChildrenList = 1
-mobList[zone][SMB+414].randomChildrenList = 1
-mobList[zone][SMB+410].randomChildrenList = 1
-mobList[zone][SMB+420].randomChildrenList = 1
-mobList[zone][SMB+427].randomChildrenList = 1
-mobList[zone][SMB+431].randomChildrenList = 1
-mobList[zone][SMB+436].randomChildrenList = 1
-mobList[zone][SMB+441].randomChildrenList = 1
-mobList[zone][SMB+446].randomChildrenList = 1
-mobList[zone][SMB+454].randomChildrenList = 1
-mobList[zone][SMB+478].randomChildrenList = 1
-mobList[zone][SMB+473].randomChildrenList = 1
-mobList[zone][SMB+467].randomChildrenList = 1
-mobList[zone][SMB+461].randomChildrenList = 1
-mobList[zone][SMB+485].randomChildrenList = 1
-mobList[zone][SMB+497].randomChildrenList = 1
-mobList[zone][SMB+491].randomChildrenList = 1
+mobList[zone][DMB+1  ].randomChildrenList = 2
+mobList[zone][SMB+372].randomChildrenList = 2
+mobList[zone][SMB+367].randomChildrenList = 2
+mobList[zone][SMB+363].randomChildrenList = 2
+mobList[zone][SMB+373].randomChildrenList = 2
+mobList[zone][SMB+374].randomChildrenList = 2
+mobList[zone][SMB+377].randomChildrenList = 2
+mobList[zone][SMB+385].randomChildrenList = 2
+mobList[zone][SMB+381].randomChildrenList = 2
+mobList[zone][SMB+389].randomChildrenList = 2
+mobList[zone][SMB+405].randomChildrenList = 2
+mobList[zone][SMB+401].randomChildrenList = 2
+mobList[zone][SMB+396].randomChildrenList = 2
+mobList[zone][SMB+424].randomChildrenList = 2
+mobList[zone][SMB+414].randomChildrenList = 2
+mobList[zone][SMB+410].randomChildrenList = 2
+mobList[zone][SMB+420].randomChildrenList = 2
+mobList[zone][SMB+427].randomChildrenList = 2
+mobList[zone][SMB+431].randomChildrenList = 2
+mobList[zone][SMB+436].randomChildrenList = 2
+mobList[zone][SMB+441].randomChildrenList = 2
+mobList[zone][SMB+446].randomChildrenList = 2
+mobList[zone][SMB+454].randomChildrenList = 2
+mobList[zone][SMB+478].randomChildrenList = 2
+mobList[zone][SMB+473].randomChildrenList = 2
+mobList[zone][SMB+467].randomChildrenList = 2
+mobList[zone][SMB+461].randomChildrenList = 2
+mobList[zone][SMB+485].randomChildrenList = 2
+mobList[zone][SMB+497].randomChildrenList = 2
+mobList[zone][SMB+491].randomChildrenList = 2
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
 randomChildrenList[zone] = 
@@ -1824,7 +1829,7 @@ randomChildrenList[zone] =
         17543456, --Vanguard_Salvager
         17543457, --Vanguard_Persecutor
         17543458, --Vanguard_Assassin
-        17543459, --Vanguard_Oracle
+        17543459  --Vanguard_Oracle
     },    
     [2] = -- all jobs including BST (crows use silencega)
     {
@@ -2060,7 +2065,89 @@ randomChildrenList[zone] =
         17543456, --Vanguard_Salvager
         17543457, --Vanguard_Persecutor
         17543458, --Vanguard_Assassin
+        17543459  --Vanguard_Oracle
+    },
+    
+    [3] = -- NINs only
+    {
+        17543189, --Vanguard_Assassin
+        17543191, --Vanguard_Assassin
+        17543208, --Vanguard_Assassin
+        17543221, --Vanguard_Assassin
+        17543245, --Vanguard_Assassin
+        17543249, --Vanguard_Assassin
+        17543279, --Vanguard_Assassin
+        17543303, --Vanguard_Assassin
+        17543309, --Vanguard_Assassin
+        17543334, --Vanguard_Assassin
+        17543341, --Vanguard_Assassin
+        17543347, --Vanguard_Assassin
+        17543364, --Vanguard_Assassin
+        17543371, --Vanguard_Assassin
+        17543391, --Vanguard_Assassin
+        17543408, --Vanguard_Assassin
+        17543418, --Vanguard_Assassin
+        17543428, --Vanguard_Assassin
+        17543437, --Vanguard_Assassin
+        17543438, --Vanguard_Assassin
+        17543439, --Vanguard_Assassin
+        17543458  --Vanguard_Assassin
+    },
+    
+    [4] = -- SMN and WHM only, for SMN house
+    {
+        17543173, --Vanguard_Priest
+        17543177, --Vanguard_Priest
+        17543199, --Vanguard_Priest
+        17543219, --Vanguard_Priest
+        17543253, --Vanguard_Priest
+        17543262, --Vanguard_Priest
+        17543304, --Vanguard_Priest
+        17543316, --Vanguard_Priest
+        17543321, --Vanguard_Priest
+        17543343, --Vanguard_Priest
+        17543355, --Vanguard_Priest
+        17543373, --Vanguard_Priest
+        17543379, --Vanguard_Priest
+        17543389, --Vanguard_Priest
+        17543397, --Vanguard_Priest
+        17543449, --Vanguard_Priest
+        17543196, --Vanguard_Oracle
+        17543196, --Vanguard_Oracle
+        17543216, --Vanguard_Oracle
+        17543216, --Vanguard_Oracle
+        17543272, --Vanguard_Oracle
+        17543272, --Vanguard_Oracle
+        17543286, --Vanguard_Oracle
+        17543286, --Vanguard_Oracle
+        17543299, --Vanguard_Oracle
+        17543299, --Vanguard_Oracle
+        17543337, --Vanguard_Oracle
+        17543337, --Vanguard_Oracle
+        17543351, --Vanguard_Oracle
+        17543351, --Vanguard_Oracle
+        17543424, --Vanguard_Oracle
+        17543424, --Vanguard_Oracle
+        17543442, --Vanguard_Oracle
+        17543442, --Vanguard_Oracle
+        17543444, --Vanguard_Oracle
+        17543444, --Vanguard_Oracle
         17543459, --Vanguard_Oracle
+        17543459  --Vanguard_Oracle
+    },
+    
+    [5] = -- BSTs only
+    {
+        17543186, --Vanguard_Ogresoother
+        17543203, --Vanguard_Ogresoother
+        17543235, --Vanguard_Ogresoother
+        17543239, --Vanguard_Ogresoother
+        17543274, --Vanguard_Ogresoother
+        17543310, --Vanguard_Ogresoother
+        17543332, --Vanguard_Ogresoother
+        17543367, --Vanguard_Ogresoother
+        17543385, --Vanguard_Ogresoother
+        17543406  --Vanguard_Ogresoother
     }
 }
 

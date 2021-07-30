@@ -1018,6 +1018,7 @@ namespace petutils
                     PMob->PEnmityContainer->Clear();
                     PMob->m_OwnerID.clean();
                     PMob->updatemask |= UPDATE_STATUS;
+                    PMob->m_UncharmTime = std::chrono::system_clock::now();
                 }
 
             }
