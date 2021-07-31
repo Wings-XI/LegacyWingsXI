@@ -186,6 +186,16 @@ inline int32 CLuaMobSkill::setGuardReaction(lua_State* L)
     return 0;
 }
 
+inline int32 CLuaMobSkill::setKnockback(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    m_PLuaMobSkill->setKnockback((uint8)lua_tointeger(L, -1));
+
+    return 0;
+}
+
 /************************************************************************
 *                                                                       *
 *  declare lua function                                                 *
@@ -208,5 +218,6 @@ Lunar<CLuaMobSkill>::Register_t CLuaMobSkill::methods[] =
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getMobHPP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,setGuardReaction),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,setKnockback),
     {nullptr,nullptr}
 };
