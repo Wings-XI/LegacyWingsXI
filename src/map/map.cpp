@@ -1864,6 +1864,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x19: // recast
                     case 0x61: // stats (self)
                     case 0x62: // skills
+                    case 0x44: // job extra
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -1882,7 +1883,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x06: // bazaar purchase
                     case 0x42: // blacklist
                     case 0xC9: // check
-                    case 0x44: // job extra
                     case 0x4B: // delivery box
                     case 0x77: // entity enable list
                     case 0x32: // event
@@ -2322,7 +2322,7 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         PSmallPacket->sequence(map_session_data->server_packet_id);
         memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
         *buffsize += PSmallPacket->length();
-        //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
+        ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
         packetList.pop_front();
     }
 
@@ -2399,11 +2399,11 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
 
     // 1800 buffer limit is on the uncompressed list of smallpackets (default, cant be changed with map_config.buffer_size)
     // 1300 buffer limit is on the compressed list of smallpackets + compressed size indicator(4chars) + md5 hash(16chars)
-    /*
+    
     ShowDebug("SEQUENCE %u: Attempting to send %u/%u packets to character %s (size %u/%u buffer bytes, %u/1300 compressed).\n",
               map_session_data->server_packet_id, packetsAfterPrio, packetsBeforePrio, PChar->GetName(), (uint16)*buffsize,
               map_config.buffer_size, PacketSizeBytes + 20);
-    */
+    
     
     ref<uint32>(PTempBuff, (size_t)PacketSizeBytes) = PacketSizeBits; // client wants to know size in bits
 
