@@ -54,7 +54,7 @@ function onTrigger(player, npc)
         player:startEvent(wsQuestEvent)
     elseif (currentCOPMission == tpz.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus")==3 and player:getCharVar("Promathia_kill_day")~=currentday and player:getCharVar("COP_tenzen_story")== 0 ) then
         player:startEvent(897) -- COP event
-    elseif (currentCOPMission == tpz.mission.id.cop.CALM_BEFORE_THE_STORM and player:hasKeyItem(tpz.ki.LETTERS_FROM_ULMIA_AND_PRISHE) == false and player:getCharVar("COP_Dalham_KILL") == 2 and player:getCharVar("COP_Boggelmann_KILL") == 2 and player:getCharVar("Cryptonberry_Executor_KILL")==2) then
+    elseif (currentCOPMission == tpz.mission.id.cop.CALM_BEFORE_THE_STORM and player:hasKeyItem(tpz.ki.LETTERS_FROM_ULMIA_AND_PRISHE) == false and player:getCharVar("COP_Dalham_KILL") == 2 and player:getCharVar("COP_Boggelmann_KILL") == 2 and player:getCharVar("Cryptonberry_Executor_KILL") == 2) then
         player:startEvent(892) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.FIRE_IN_THE_EYES_OF_MEN and player:getCharVar("PromathiaStatus")==2 and player:getCharVar("Promathia_CID_timer")~=VanadielDayOfTheYear()) then
         player:startEvent(890) -- COP event
