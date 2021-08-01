@@ -8,6 +8,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 50)
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
@@ -29,7 +30,7 @@ function onMobFight(mob, target)
     -- The mob gains a huge boost when it 2hours to attack speed and attack.
     -- It forces the minions to 2hour as well. Wiki says 50% but all videos show 60%.
     if (mob:getLocalVar("BracerMode") == 0) then
-        if (mob:getHPP() < math.random(50, 60)) then
+        if mob:getHPP() < 50 then
             -- Go into bracer mode
             mob:setLocalVar("BracerMode", 1)
             mob:AnimationSub(2)
@@ -42,6 +43,7 @@ function onMobFight(mob, target)
                 local minion = GetMobByID(mob:getID() + i)
                 if (minion:getCurrentAction() ~= tpz.act.NONE) then
                     minion:useMobAbility(3411 + i) -- Chainspell or Benediction
+                    mob:AnimationSub(2) -- bracelets mode is engaged when ANY of the aern hit 49 or below.
                 end
             end
         end
