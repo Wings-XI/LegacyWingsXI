@@ -23,6 +23,8 @@ function onMobSpawn(mob)
     mob:AnimationSub(1) -- Reset the subanim - otherwise it will respawn with bracers on. Note that Aerns are never actually supposed to be in subanim 0.
 end
 
+-- AEREC WAS HERE
+
 function onMobFight(mob, target)
     -- The mob gains a huge boost when it 2hours to attack speed and attack.
     -- It forces the minions to 2hour as well. Wiki says 50% but all videos show 60%.
