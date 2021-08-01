@@ -3184,6 +3184,7 @@ INSERT INTO `mob_skill_lists` VALUES('Dalham', 1168, 461);
 INSERT INTO `mob_skill_lists` VALUES('Dalham', 1168, 462);
 INSERT INTO `mob_skill_lists` VALUES('Dalham', 1168, 463);
 INSERT INTO `mob_skill_lists` VALUES('Dalham', 1168, 626);
+INSERT INTO `mob_skill_lists` VALUES('Tenzen_Ranged', 1169, 1396);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
 INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
