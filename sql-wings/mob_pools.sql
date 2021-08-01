@@ -592,7 +592,7 @@ INSERT INTO `mob_pools` VALUES(528, 'Bres', 'Bres', 359, 0x050083080000000000000
 INSERT INTO `mob_pools` VALUES(529, 'Brewnix_Bittypupils', 'Brewnix_Bittypupils', 373, 0x0000410400000000000000000000000000000000, 3, 3, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 2608, 159, 0, 0, 1, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(530, 'Briareus', 'Briareus', 126, 0x0000e30200000000000000000000000000000000, 12, 17, 10, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 811);
 INSERT INTO `mob_pools` VALUES(531, 'Brigandish_Blade', 'Brigandish_Blade', 110, 0x0000c30100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7749, 645, 0, 0, 0, 0, 0, 110);
-INSERT INTO `mob_pools` VALUES(532, 'Bright-handed_Kunberry', 'Bright-handed_Kunberry', 243, 0x0000990400000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 5288, 157, 0, 0, 0, 0, 0, 243);
+INSERT INTO `mob_pools` VALUES(532, 'Bright-handed_Kunberry', 'Bright-handed_Kunberry', 243, 0x0000990400000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 5288, 157, 0, 0, 0, 0, 0, 244);
 INSERT INTO `mob_pools` VALUES(533, 'Brine_Crab', 'Brine_Crab', 0, 0x0000000000000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(534, 'Brittle_Rock', 'Brittle_Rock', 236, 0x00002c0600000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 2, 0, 2, 1, 131, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(535, 'Broken_Troll_Soldier_mnk', 'Broken_Troll_Soldier_mnk', 246, 0x0600b00600000000000000000000000000000000, 2, 2, 7, 280, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 246);
