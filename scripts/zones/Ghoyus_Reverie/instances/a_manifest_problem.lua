@@ -34,7 +34,6 @@ function afterInstanceRegister(player)
 end
 
 function onInstanceCreated(instance)
-    cleanUpInstance(instance)
     for mobID = ID.mob.MANIFEST_PROBLEM_START, ID.mob.MANIFEST_PROBLEM_END, 1
     do
         SpawnMob(mobID, instance)
@@ -42,21 +41,24 @@ function onInstanceCreated(instance)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
-    if instance:getStage()==0 or instance:getStage()==1 then
-        -- During stage 0 and 1 - respawn mobs infinitely
+    if instance:getStage() == 0 and elapsed > 900000 then -- Force a change stage to 1 after 15 mins - and send in the yags
+        setInstanceWideAggro(instance)
+        instance:setStage(1)
+    elseif instance:getStage() == 1 then
+        -- During stage 1 - respawn mobs infinitely
         for mobID = ID.mob.MANIFEST_PROBLEM_START, ID.mob.MANIFEST_PROBLEM_END, 1
         do
             local mob = GetMobByID(mobID, instance)
             if not mob:isSpawned() then
                 SpawnMob(mobID, instance)
-                local offset = math.random(-5, 5)
+                local offset = math.random(-10, 10)
                 if not mob:isEngaged() then
                     mob:pathTo(-137.27+offset, 1.0, 201.26+offset)
                 end
                 mob:setSpawn(-137.27+offset, 1.0, 201.26+offset)
             end
         end
-    elseif instance:getStage(3) then
+    elseif instance:getStage() == 3 then
         -- track all mobs alive for win condition
         local mobs = instance:getMobs()
         local win = true
@@ -84,7 +86,7 @@ function onInstanceFailure(instance)
 end
 
 function onInstanceProgressUpdate(instance, progress)
-    if progress > 45 and instance:getStage() == 1 then
+    if progress > 45 and instance:getStage() ~= 2 and instance:getStage() ~= 3 then
         instance:setStage(2) -- Spawn the boss, stop respawn of other yagudos
     end
 end
@@ -140,7 +142,7 @@ function pathAllMobsToCenter(instance, moveLaaYaku)
     local mobs = instance:getMobs()
 
     for i, mob in pairs(mobs) do
-        local offset = math.random(-5, 5)
+        local offset = math.random(-10, 10)
         if mob:getID() ~= ID.mob.LAA_YAKU_THE_AUSTERE or moveLaaYaku then
             if not mob:isEngaged() then
                 mob:pathTo(-137.27+offset, 1.0, 201.26+offset)
@@ -162,5 +164,16 @@ function cleanUpInstance(instance)
     resetMobSpawns(instance)
     instance:setStage(0)
     instance:setProgress(0)
+end
+
+function setInstanceWideAggro(instance)
+    local chars = instance:getChars()
+
+    local mobs = instance:getMobs()
+    for i, mob in pairs(mobs) do
+        if mob and mob:isAlive() and mob:getID() ~= ID.mob.LAA_YAKU_THE_AUSTERE then
+            mob:updateEnmity(chars[math.random(#chars)]) -- technically can target a dead player.  Only called if players have been idle for 15mins
+        end
+    end
 end
 
