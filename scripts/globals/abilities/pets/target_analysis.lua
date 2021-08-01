@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Ultimate Terror
+-- Target Analysis
 --
 -- Description: AoE Absorb All with randomness
 -- Type: Magical
@@ -10,8 +10,20 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    -- skillList  54 = Omega
+    -- skillList 727 = Proto-Omega
+    -- skillList 728 = Ultima
+    -- skillList 729 = Proto-Ultima
+    local skillList = mob:getMobMod(tpz.mobMod.SKILL_LIST)
+    local mobhp = mob:getHPP()
+
+    if ((skillList == 54 and mobhp > 25) or (skillList == 727 and mob:AnimationSub() == 1)) then
+        return 0
+    else
+        return 1
+    end
 end
+
 
 function onMobWeaponSkill(target, mob, skill)  
 
