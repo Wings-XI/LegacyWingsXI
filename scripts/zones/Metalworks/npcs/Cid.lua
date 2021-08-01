@@ -28,6 +28,12 @@ end
 function onTrade(player, npc, trade)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
+    if player:getCharVar("chips") == 1 then
+        if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
+            player:startEvent(883,1693,1692,1694)
+        end    
+    end
+
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
     elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:getCharVar("MissionStatus") == 1) then
@@ -175,6 +181,15 @@ function onEventFinish(player, csid, option)
         checkThreePaths(player)
     elseif (csid == 852) then
         player:setCharVar("COP_Louverance_s_Path", 7)
+    elseif csid == 883 then
+        if player:hasItem(5268) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 5268)
+        else
+            player:tradeComplete(trade)
+            player:addItem(5268)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 5268)
+            player:completeQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
+        end
     elseif (csid == 850) then
         player:setCharVar("PromathiaStatus", 0)
         player:completeMission(COP, tpz.mission.id.cop.DESIRES_OF_EMPTINESS)
