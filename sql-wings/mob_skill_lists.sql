@@ -3187,6 +3187,12 @@ INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 904);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 905);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 896);
 INSERT INTO `mob_skill_lists` VALUES('Psoxja_Gargoyle', 5003, 538);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1232);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1233);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1234);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1274);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1275);
+INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1276);
 --
 -- Indexes for dumped tables
 --
