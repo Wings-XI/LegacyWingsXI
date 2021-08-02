@@ -4,12 +4,17 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/magic")
+require("scripts/globals/pathfind")
 -----------------------------------
 
 function onMobInitialize(mob)
     mob:addMod(tpz.mod.ACC, 50)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
+function onMobSpawn(mob)
+	mob:delRoamFlag(512)
 end
 
 function onAdditionalEffect(mob, target, damage)
