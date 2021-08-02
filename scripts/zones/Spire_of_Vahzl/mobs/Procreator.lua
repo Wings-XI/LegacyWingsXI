@@ -2,6 +2,8 @@
 -- Area: Spire of Vahzl
 --  Mob: Procreator
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 
 function onMobInitialize(mob)
 end

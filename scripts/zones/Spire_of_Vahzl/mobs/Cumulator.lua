@@ -2,6 +2,8 @@
 -- Area: Spire of Vahzl
 --  Mob: Cumulator
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 
 function onMobInitialize(mob)
 end

@@ -2,6 +2,8 @@
 -- Area: Spire of Vahzl
 --  Mob: Agonizer
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 
 function onMobInitialize(mob)
 end
