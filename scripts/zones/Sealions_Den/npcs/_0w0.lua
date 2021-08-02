@@ -21,10 +21,9 @@ function onTrigger(player, npc)
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 2 then
         EventTriggerBCNM(player, npc)
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.THE_WARRIOR_S_PATH and player:getCharVar("PromathiaStatus") == 0 then
-        --EventTriggerBCNM(player, npc)
-        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)   
-    --elseif (player:getCurrentMission(COP) > tpz.mission.id.cop.THE_WARRIOR_S_PATH) then
-        --player:startEvent(12)
+        --EventTriggerBCNM(player, npc)  
+    elseif (player:getCurrentMission(COP) > tpz.mission.id.cop.THE_WARRIOR_S_PATH) then
+        player:startEvent(12)
     end
 end
 

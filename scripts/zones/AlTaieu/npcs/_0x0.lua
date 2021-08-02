@@ -20,7 +20,8 @@ function onTrigger(player, npc)
     end
 
     if (player:getCurrentMission(COP) == tpz.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") == 1) then
-        player:startEvent(164)
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.", 29)
+        --player:startEvent(164)
     elseif (player:getCurrentMission(COP) > tpz.mission.id.cop.GARDEN_OF_ANTIQUITY or (player:getCurrentMission(COP) == tpz.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") == 3)) then
         player:startEvent(100) -- Teleport inside
     else
