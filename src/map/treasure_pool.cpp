@@ -28,6 +28,7 @@
 
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
+#include "utils/chatfilter.h"
 #include "dynamis_handler.h"
 #include "treasure_pool.h"
 #include "recast_container.h"
@@ -308,9 +309,12 @@ void CTreasurePool::LotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     }
 
     //Player lots Item for XXX message
+    CChatFilter chatFilter(PChar, CHATFILTER_LOT_RESULTS);
+
     for (uint32 i = 0; i < members.size(); ++i)
     {
-        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, Lot));
+        bool filtered = chatFilter.isFiltered(members[i]);
+        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, Lot, filtered));
     }
 
     //if all lotters have lotted, evaluate immediately.
@@ -358,10 +362,14 @@ void CTreasurePool::PassItem(CCharEntity* PChar, uint8 SlotID)
     }
 
     uint16 PassedLot = 65535; // passed mask is FF FF
+
     //Player lots Item for XXX message
+    CChatFilter chatFilter(PChar, CHATFILTER_LOT_RESULTS);
+
     for (uint32 i = 0; i < members.size(); ++i)
     {
-        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, PassedLot));
+        bool filtered = chatFilter.isFiltered(members[i]);
+        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, PassedLot, filtered));
     }
 
     //if all lotters have lotted, evaluate immediately.
