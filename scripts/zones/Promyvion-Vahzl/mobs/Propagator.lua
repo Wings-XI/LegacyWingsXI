@@ -3,10 +3,12 @@
 --   NM: Propagator
 -----------------------------------
 require("scripts/globals/missions")
+require("scripts/globals/pathfind")
 -----------------------------------
 
 function onMobSpawn(mob)
     mob:setLocalVar("maxBabies", 2)
+	mob:delRoamFlag(512)
 end
 
 function onMobDeath(mob, player, isKiller)
