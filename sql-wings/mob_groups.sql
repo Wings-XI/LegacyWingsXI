@@ -1067,7 +1067,7 @@ INSERT INTO `mob_groups` VALUES(26, 2215, 35, 'Kf_ghrah_whm', 0, 128, 0, 9000, 0
 INSERT INTO `mob_groups` VALUES(27, 4659, 35, 'Kf_ghrah_blm', 0, 128, 0, 9000, 0, 77, 77, 0);
 INSERT INTO `mob_groups` VALUES(28, 4660, 35, 'Ix_aern_drk', 0, 128, 2844, 21000, 0, 82, 87, 0);
 INSERT INTO `mob_groups` VALUES(29, 5549, 35, 'Qn_aern_rng', 0, 128, 0, 0, 0, 80, 82, 0);
-INSERT INTO `mob_groups` VALUES(30, 2130, 35, 'Jailer_of_Faith', 0, 128, 1396, 18000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(30, 2130, 35, 'Jailer_of_Faith', 0, 128, 1396, 20000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(31, 2112, 35, 'Ix_aern_drg', 0, 128, 2843, 21000, 0, 82, 87, 0);
 INSERT INTO `mob_groups` VALUES(32, 5536, 35, 'Ix_aern_drgs_Wynav', 0, 128, 0, 0, 0, 78, 79, 0);
 INSERT INTO `mob_groups` VALUES(1, 3205, 36, 'Promathia', 0, 128, 0, 8000, 0, 80, 80, 0);
