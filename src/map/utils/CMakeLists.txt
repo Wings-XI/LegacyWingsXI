@@ -11,6 +11,8 @@ set(SOURCES
     blueutils.h
     charutils.cpp
     charutils.h
+    chatfilter.cpp
+    chatfilter.h
     fishingutils.cpp
     fishingutils.h
 	flistutils.cpp

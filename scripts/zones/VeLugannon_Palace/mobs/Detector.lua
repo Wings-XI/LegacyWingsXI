@@ -350,14 +350,16 @@ function onMobFight(mob, target)
     -- Summons a Caretaker every 15 seconds.
     -- TODO: Casting animation for before summons. When he spawns them isn't exactly retail accurate.
     --       Should be ~10s to start cast, and another ~5 to finish.
-    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() and canDetectorSummonSC(mob) then
-        if spawnSteamCleaner(mob, target) then 
-            return
-        elseif mob:getLocalVar("iSpawnedSC") and not sc:isSpawned() then -- If this specific detector spawned SC - dont spawn caretakers until SC is dead
-            spawnCaretaker(mob, caretaker, target)
+    if mob:getLocalVar("summoning") == 0 then
+        if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() and canDetectorSummonSC(mob) then
+            if spawnSteamCleaner(mob) then 
+                return
+            elseif mob:getLocalVar("iSpawnedSC") and not sc:isSpawned() then -- If this specific detector spawned SC - dont spawn caretakers until SC is dead
+                spawnCaretaker(mob)
+            end
+        elseif petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
+            spawnCaretaker(mob)
         end
-    elseif petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
-        spawnCaretaker(mob, caretaker, target)
     end
 
     -- make sure pet has a target
@@ -399,23 +401,57 @@ function canDetectorSummonSC(mob)
     return canSummonSC    
 end
 
-function spawnCaretaker(mob, caretaker, target)
-    caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-    caretaker:spawn()
-    caretaker:updateEnmity(target)
-    mob:setLocalVar("petCount", petCount + 1)
+function spawnCaretaker(mob)
+    mob:setLocalVar("summoning", 1)
+    mob:entityAnimationPacket("casm")
+    mob:SetAutoAttackEnabled(false)
+    mob:SetMagicCastingEnabled(false)
+    mob:SetMobAbilityEnabled(false)
+
+    mob:timer(3000, function(mob)
+        if mob:isAlive() then
+            local caretaker = GetMobByID(mob:getID() + 1)
+            local petCount = mob:getLocalVar("petCount")
+            caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+            mob:entityAnimationPacket("shsm")
+            caretaker:spawn()
+            caretaker:updateEnmity(mob:getTarget())
+            mob:setLocalVar("petCount", petCount + 1)
+            mob:setLocalVar("summoning", 0)
+            mob:SetAutoAttackEnabled(true)
+            mob:SetMagicCastingEnabled(true)
+            mob:SetMobAbilityEnabled(true)
+        end
+    end)
 end
 
-function spawnSteamCleaner(mob, target)
+function spawnSteamCleaner(mob)
     local now = os.time()
     local sc = GetMobByID(ID.mob.STEAM_CLEANER)
-    if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 10) then
+    if now >= GetServerVariable("SteamCleaner_Respawn") and (math.random(100) < 20) then
        if not sc:isSpawned() then
-          sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-          sc:spawn()
-          sc:updateEnmity(target)
-          mob:setLocalVar("iSpawnedSC", 1)
-          mob:setLocalVar("petCount", petCount + 1)
+          mob:setLocalVar("summoning", 1)
+          mob:entityAnimationPacket("casm")
+          mob:SetAutoAttackEnabled(false)
+          mob:SetMagicCastingEnabled(false)
+          mob:SetMobAbilityEnabled(false)
+
+          mob:timer(3000, function(mob)
+              if mob:isAlive() then
+                  local sc = GetMobByID(ID.mob.STEAM_CLEANER)
+                  local petCount = mob:getLocalVar("petCount")
+                  mob:entityAnimationPacket("shsm")
+                  sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+                  sc:spawn()
+                  sc:updateEnmity(mob:getTarget())
+                  mob:setLocalVar("iSpawnedSC", 1)
+                  mob:setLocalVar("petCount", petCount + 1)
+                  mob:setLocalVar("summoning", 0)
+                  mob:SetAutoAttackEnabled(true)
+                  mob:SetMagicCastingEnabled(true)
+                  mob:SetMobAbilityEnabled(true)
+              end
+          end)
           return true
        end
     end

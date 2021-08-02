@@ -5415,6 +5415,9 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
 
+    auto oldMenuConfigFlags = PChar->menuConfigFlags.flags;
+    auto oldChatFilterFlags = PChar->chatFilterFlags;
+
     // Extract the system filter bits and update MenuConfig
     const uint8 systemFilterMask = (NFLAG_SYSTEM_FILTER_H | NFLAG_SYSTEM_FILTER_L) >> 8;
     PChar->menuConfigFlags.byte2 &= ~systemFilterMask;
@@ -5424,8 +5427,16 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
 
     PChar->search.language = data.ref<uint8>(0x24);
 
-    charutils::SaveMenuConfigFlags(PChar);
-    charutils::SaveChatFilterFlags(PChar);
+    if (oldMenuConfigFlags != PChar->menuConfigFlags.flags)
+    {
+        charutils::SaveMenuConfigFlags(PChar);
+    }
+
+    if (oldChatFilterFlags != PChar->chatFilterFlags)
+    {
+        charutils::SaveChatFilterFlags(PChar);
+    }
+
     PChar->pushPacket(new CMenuConfigPacket(PChar));
     return;
 }
@@ -5439,6 +5450,9 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
+
+    auto oldMenuConfigFlags = PChar->menuConfigFlags.flags;
+
     switch (data.ref<uint32>(0x04))
     {
         case NFLAG_INVITE:
@@ -5524,7 +5538,11 @@ void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PCh
     }
 
     charutils::SaveCharStats(PChar);
-    charutils::SaveMenuConfigFlags(PChar);
+    if (oldMenuConfigFlags != PChar->menuConfigFlags.flags)
+    {
+        charutils::SaveMenuConfigFlags(PChar);
+    }
+
     PChar->pushPacket(new CMenuConfigPacket(PChar));
     PChar->pushPacket(new CCharUpdatePacket(PChar));
     PChar->pushPacket(new CCharSyncPacket(PChar));

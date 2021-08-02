@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = applyResistanceEffect(caster, target, spell, params)
     
-    if not target:isFacing(caster) then
+    if not target:isFacing(caster) or target:hasImmunity(16384) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     elseif resist >= 0.5 then
         if target:addStatusEffect(tpz.effect.TERROR, 1, 0, math.ceil(5*resist)) then

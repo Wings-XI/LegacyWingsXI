@@ -1864,6 +1864,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x19: // recast
                     case 0x61: // stats (self)
                     case 0x62: // skills
+                    case 0x44: // job extra
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -1882,7 +1883,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x06: // bazaar purchase
                     case 0x42: // blacklist
                     case 0xC9: // check
-                    case 0x44: // job extra
                     case 0x4B: // delivery box
                     case 0x77: // entity enable list
                     case 0x32: // event

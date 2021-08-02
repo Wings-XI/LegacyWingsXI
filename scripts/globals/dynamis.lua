@@ -1,6 +1,7 @@
 ------------------------------------
 -- Dynamis
 ------------------------------------
+require("scripts/mixins/job_special")
 require("scripts/globals/battlefield")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
@@ -40,7 +41,7 @@ dynamis.entryInfo =
         csSand = 686,
         csWin = 698,
         csDyna = 685,
-        enabled = false,
+        enabled = true,
         winVar = "DynaSandoria_Win",
         hasEnteredVar = "DynaSandoria_HasEntered",
         hasSeenWinCSVar = "DynaSandoria_HasSeenWinCS",
@@ -55,7 +56,7 @@ dynamis.entryInfo =
         csSand = 203,
         csWin = 215,
         csDyna = 201,
-        enabled = false,
+        enabled = true,
         winVar = "DynaBastok_Win",
         hasEnteredVar = "DynaBastok_HasEntered",
         hasSeenWinCSVar = "DynaBastok_HasSeenWinCS",
@@ -70,7 +71,7 @@ dynamis.entryInfo =
         csSand = 455,
         csWin = 465,
         csDyna = 452,
-        enabled = false,
+        enabled = true,
         winVar = "DynaWindurst_Win",
         hasEnteredVar = "DynaWindurst_HasEntered",
         hasSeenWinCSVar = "DynaWindurst_HasSeenWinCS",
@@ -85,7 +86,7 @@ dynamis.entryInfo =
         csSand = 10016,
         csWin = 10026,
         csDyna = 10012,
-        enabled = false,
+        enabled = true,
         winVar = "DynaJeuno_Win",
         hasEnteredVar = "DynaJeuno_HasEntered",
         hasSeenWinCSVar = "DynaJeuno_HasSeenWinCS",
@@ -589,11 +590,16 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         specificChildrenList = mobList[mobID].specificChildren
     end
     
+    local forceLink = false
     local i = 1
     while specificChildrenList ~= nil and specificChildrenList[i] ~= nil do
-        local child = GetMobByID(specificChildrenList[i])
-        if mobList[specificChildrenList[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
-        SpawnMob(specificChildrenList[i]):updateEnmity(target)
+        if type(specificChildrenList[i]) == "boolean" then forceLink = specificChildrenList[i]
+        else
+            local child = GetMobByID(specificChildrenList[i])
+            if mobList[specificChildrenList[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
+            SpawnMob(specificChildrenList[i])
+            if forceLink == true then child:updateEnmity(target) end
+        end
         i = i + 1
     end
     i = 1
@@ -740,47 +746,127 @@ dynamis.setMobStats = function(mob)
     
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MIGHTY_STRIKES
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.MNK then
         mob:addMod(tpz.mod.VIT, 20)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.HUNDRED_FISTS
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.WHM then
         mob:addMod(tpz.mod.MND, 20)
         mob:addMod(tpz.mod.DEFP, -10)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.BENEDICTION
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BLM then
         mob:addMod(tpz.mod.SLEEPRES, 40)
         mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
         mob:addMod(tpz.mod.DEFP, -10)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MANAFONT
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RDM then
-        mob:addMod(tpz.mod.FASTCAST, 25)
+        mob:addMod(tpz.mod.UFASTCAST, 25)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.CHAINSPELL
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.THF then
+        mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
         mob:addMod(tpz.mod.AGI, 20)
-        mob:addMod(tpz.mod.DEFP, -5)
+        mob:addMod(tpz.mod.DEFP, -8)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.PERFECT_DODGE
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.PLD then
         mob:addMod(tpz.mod.DEFP, 10)
         mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
         mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.INVINCIBLE
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRK then
         mob:addMod(tpz.mod.ATTP, 10)
         mob:addMod(tpz.mod.RATTP, 10)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.BLOOD_WEAPON
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BST then
         mob:addMod(tpz.mod.CHR, 20)
     elseif job == tpz.job.BRD then
         mob:addMod(tpz.mod.LULLABYRES, 40)
         mob:addMod(tpz.mod.LULLABYRES, 15)
         mob:addMod(tpz.mod.DEFP, -5)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.SOUL_VOICE
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RNG then
         mob:addMod(tpz.mod.RACC, 20)
         mob:addMod(tpz.mod.DEFP, -5)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = familyEES[mob:getFamily()]
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.SAM then
         mob:addMod(tpz.mod.STORETP, 40)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MEIKYO_SHISUI
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.NIN then
         mob:addMod(tpz.mod.BINDRESTRAIT, 30)
         mob:addMod(tpz.mod.RATTP, -25)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MIJIN_GAKURE
+        params.specials.skill.hpp = math.random(25,35)
+        tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRG then
         mob:addMod(tpz.mod.ACC, 20)
     elseif job == tpz.job.SMN then
+        mob:addMod(tpz.mod.UFASTCAST, 90)
         mob:addMod(tpz.mod.REFRESH, 3)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
         mob:addMod(tpz.mod.DEFP, -10)
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.ASTRAL_FLOW
+        params.specials.skill.hpp = math.random(20,70)
+        tpz.mix.jobSpecial.config(mob, params)
     end
 end
 
@@ -838,6 +924,7 @@ dynamis.setNMStats = function(mob)
     elseif job == tpz.job.DRG then
         mob:addMod(tpz.mod.ACC, 20)
     elseif job == tpz.job.SMN then
+        mob:addMod(tpz.mod.UFASTCAST, 90)
         mob:addMod(tpz.mod.REFRESH, 3)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
     end
@@ -861,6 +948,7 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
     mob:setMod(tpz.mod.RESBUILD_BIND, 25)
     mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
+    mob:setMod(tpz.mod.DMGMAGIC, -10)
     
 end
 
