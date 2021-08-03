@@ -28,6 +28,12 @@ end
 function onTrade(player, npc, trade)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
+    if player:getCharVar("chips") == 1 then
+        if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
+            player:startEvent(883,1693,1692,1694)
+        end    
+    end
+
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
     elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:getCharVar("MissionStatus") == 1) then
@@ -54,7 +60,7 @@ function onTrigger(player, npc)
         player:startEvent(wsQuestEvent)
     elseif (currentCOPMission == tpz.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus")==3 and player:getCharVar("Promathia_kill_day")~=currentday and player:getCharVar("COP_tenzen_story")== 0 ) then
         player:startEvent(897) -- COP event
-    elseif (currentCOPMission == tpz.mission.id.cop.CALM_BEFORE_THE_STORM and player:hasKeyItem(tpz.ki.LETTERS_FROM_ULMIA_AND_PRISHE) == false and player:getCharVar("COP_Dalham_KILL") == 2 and player:getCharVar("COP_Boggelmann_KILL") == 2 and player:getCharVar("Cryptonberry_Executor_KILL")==2) then
+    elseif (currentCOPMission == tpz.mission.id.cop.CALM_BEFORE_THE_STORM and player:hasKeyItem(tpz.ki.LETTERS_FROM_ULMIA_AND_PRISHE) == false and player:getCharVar("COP_Dalham_KILL") == 2 and player:getCharVar("COP_Boggelmann_KILL") == 2 and player:getCharVar("Cryptonberry_Executor_KILL") == 2) then
         player:startEvent(892) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.FIRE_IN_THE_EYES_OF_MEN and player:getCharVar("PromathiaStatus")==2 and player:getCharVar("Promathia_CID_timer")~=VanadielDayOfTheYear()) then
         player:startEvent(890) -- COP event
@@ -175,6 +181,15 @@ function onEventFinish(player, csid, option)
         checkThreePaths(player)
     elseif (csid == 852) then
         player:setCharVar("COP_Louverance_s_Path", 7)
+    elseif csid == 883 then
+        if player:hasItem(5268) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 5268)
+        else
+            player:tradeComplete(trade)
+            player:addItem(5268)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 5268)
+            player:completeQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
+        end
     elseif (csid == 850) then
         player:setCharVar("PromathiaStatus", 0)
         player:completeMission(COP, tpz.mission.id.cop.DESIRES_OF_EMPTINESS)

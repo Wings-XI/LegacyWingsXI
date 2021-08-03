@@ -19,6 +19,10 @@ zones[tpz.zone.SEALIONS_DEN] =
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         ORB_MESSAGE_OFFSET      = 7364, -- There is a crack in the <item>. It no longer contains a monster.
         CONQUEST_BASE           = 7420, -- Tallying conquest results...
+        TENZEN_MSG_OFFSET       = 7910, -- 
+        MAKKI_CHUBUKKI_OFFSET   = 7915, --
+        KUKKI_CHEBUKKI_OFFSET   = 7921, --
+        CHERUKIKI_OFFSET        = 7927, --
     },
     mob =
     {
@@ -28,6 +32,26 @@ zones[tpz.zone.SEALIONS_DEN] =
     npc =
     {
         AIRSHIP_DOOR_OFFSET = 16908420,
+    },
+    aWarriorsPath = {
+        [1] = {
+            TENZEN_ID         = 16908310,
+            MAKKI_SHAKKI_ID   = 16908311,
+            KUKKI_CHEBUKKI_ID = 16908312,
+            CHERUKKI_ID       = 16908313,
+        },
+        [2] = {
+            TENZEN_ID         = 16908314,
+            MAKKI_SHAKKI_ID   = 16908315,
+            KUKKI_CHEBUKKI_ID = 16908316,
+            CHERUKKI_ID       = 16908317,
+        },
+        [3] = {
+            TENZEN_ID         = 16908318,
+            MAKKI_SHAKKI_ID   = 16908319,
+            KUKKI_CHEBUKKI_ID = 16908320,
+            CHERUKKI_ID       = 16908321,
+        }
     },
 }
 
