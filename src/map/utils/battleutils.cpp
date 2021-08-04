@@ -2986,9 +2986,6 @@ namespace battleutils
 
     bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PEnmityHolder)
     {
-        if (PEnmityHolder->objtype != TYPE_MOB)
-            PEnmityHolder = nullptr;
-
         //utsus always overwrites blink, so if utsus>0 then we know theres no blink.
         uint16 Shadow = PDefender->getMod(Mod::UTSUSEMI);
         Mod modShadow = Mod::UTSUSEMI;
@@ -3006,11 +3003,8 @@ namespace battleutils
         if (Shadow > 0)
         {
             PDefender->setModifier(modShadow, --Shadow);
-            if (PEnmityHolder)
-            {
-                int8 enmityDown = -(PDefender->GetMLevel() / 2);
-                ((CMobEntity*)PEnmityHolder)->PEnmityContainer->UpdateEnmity(PDefender, enmityDown, enmityDown, false, false);
-            }
+            if (PEnmityHolder && PEnmityHolder->objtype == TYPE_MOB)
+                ((CMobEntity*)PEnmityHolder)->PEnmityContainer->UpdateEnmity(PDefender, modShadow == Mod::UTSUSEMI ? -25 : -50, 0, false, false);
 
             if (Shadow == 0)
             {
