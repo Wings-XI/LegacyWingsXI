@@ -9,91 +9,39 @@ require("scripts/globals/pathfind")
 require("scripts/globals/utils")
 -----------------------------------
 
-local checkpoint = 0
+local path = 
+        {   772.07, 0, 460.7,
+            779.99, 0, 441.699,
+            780.24, 0, 420.06,
+            750.6, 0, 417.98,
+            737.54, 0, 411.4,
+            725.09, 0, 420.48,
+            701.36, 0, 420.28,
+            700.17, 0, 438.98,
+            699.93, 0, 460.13,
+            601.05, 0, 460.05,
+            540.02, 0, 460.51,
+            539.97, -1, 424.34
+        }
 
 function onSpawn(npc)
     npc:initNpcAi()
-    npc:speed(20)
+    npc:speed(18)
     npc:setPos(796.97, -1, 459.97)
-    onPath(npc)
-    npc:hideNPC()
+    npc:hideNPC(5000)
+    GetNPCByID(16916928):setLocalVar("checkpoint", 0) 
+    GetNPCByID(16916928):setLocalVar("quasiStatus", 0)
     local started = npc:setLocalVar("started", 1)
-    GetNPCByID(16916928):setLocalVar("checkpoint", 1) 
-    npc:pathTo(772.07, 0, 460.7)
     local checkpoint = GetNPCByID(16916928):getLocalVar("checkpoint")
+    npc:pathTo(772.07, 0, 460.7)
 end
+
 
 
 function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc) 
-
-    started = npc:getLocalVar("started")
-
-    if started == 1 then
-        npc:wait(5000)
-        player:showText(npc, 7365)
-        npc:setLocalVar("started", 0)
-    else
-        local checkpoint = GetNPCByID(16916928):getLocalVar("checkpoint")
-        npc:initNpcAi()
-        if checkpoint == 0 then
-            npc:pathTo(772.07, 0, 460.7)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 1)
-            onPath(npc)
-        elseif checkpoint == 1 then
-            npc:pathTo(779.99, 0, 441.699)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 2)
-            onPath(npc)
-        elseif checkpoint == 2 then
-            npc:pathTo(780.24, 0, 420.06)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 3)
-            onPath(npc)
-        elseif checkpoint == 3 then
-            npc:pathTo(750.6, 0, 417.98)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 4)
-            onPath(npc)
-        elseif checkpoint == 4 then
-            npc:pathTo(737.54, 0, 411.4)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 5)
-            onPath(npc)
-        elseif checkpoint == 5 then
-            npc:pathTo(725.09, 0, 420.48)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 6)
-            onPath(npc)
-        elseif checkpoint == 6 then
-            npc:pathTo(701.36, 0, 420.28)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 7)
-            onPath(npc)
-        elseif checkpoint == 7 then
-            npc:pathTo(700.17, 0, 438.98)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 8)
-            onPath(npc)
-        elseif checkpoint == 8 then
-            npc:pathTo(699.93, 0, 460.13)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 9)
-            onPath(npc)
-        elseif checkpoint == 9 then
-            npc:pathTo(601.05, 0, 460.05)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 10)
-            onPath(npc)
-        elseif checkpoint == 10 then
-            npc:pathTo(540.02, 0, 460.51)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 11)
-            onPath(npc)
-        elseif checkpoint == 11 then
-            npc:pathTo(539.97, -1, 424.34)
-            GetNPCByID(16916928):setLocalVar("checkpoint", 12)
-            onPath(npc)
-        elseif checkpoint == 12 then
-            npc:pathTo(539.97, -1, 424.34)
-            onPath(npc)
-        end
-
-        player:showText(npc, 7366)
-        npc:setLocalVar("started", 1)
-    end
 end
 
 function onEventUpdate(player, csid, option)
@@ -107,17 +55,6 @@ function onPath(npc, player)
     local quasiStatus = GetNPCByID(16916928):getLocalVar("quasiStatus")
     local checkpoint = GetNPCByID(16916928):getLocalVar("checkpoint")
 
-    if checkpoint == 9 and npc:checkDistance(700.17, 0, 438.98) < 1 then
-        if quasiStatus == 1 then
-            GetNPCByID(16916872):openDoor(15)
-        end
-    end
-
-    if checkpoint == 11 and (npc:checkDistance(601.05, 0, 460.05) < 1) then
-        if quasiStatus == 1 then
-            GetNPCByID(16916873):openDoor(13)
-        end
-    end
     if checkpoint == 0 and npc:checkDistance(796.97, -1, 459.97) == 0 then
         npc:pathTo(772.07, 0, 460.7)  
         GetNPCByID(16916928):setLocalVar("checkpoint", 1)
@@ -162,19 +99,18 @@ function onPath(npc, player)
         GetNPCByID(16916928):setLocalVar("checkpoint", 12)
     elseif checkpoint == 12 and npc:checkDistance(539.97, -1, 424.34) == 0 then
         GetNPCByID(16916928):setLocalVar("checkpoint", 0)
-        npc:showText(npc, 7358)
-        npc:showText(npc, 7361)
         npc:hideNPC(7000)
-        npc:initNpcAi()
         npc:setPos(796.97, -1, 459.97)
-        onPath(npc)
         if quasiStatus == 1 then
             GetNPCByID(16916870):openDoor(25)
             GetNPCByID(16916928):setLocalVar("quasiStatus", 0) 
-        end   
+            npc:showText(npc, 7358)
+            npc:showText(npc, 7361)
+        end
+        npc:pathTo(772.07, 0, 460.7)   
     end
 
     if quasiStatus == 0 then
-        npc:updateNPCHideTime(500)
+        npc:updateNPCHideTime(25000)
     end
 end

@@ -24,11 +24,12 @@ local path =
 
 function onSpawn(npc)
     npc:initNpcAi()
-    npc:setPos(tpz.path.first(path))
-    npc:speed(25)
-    onPath(npc)
-    npc:hideNPC()
+    npc:setPos(-260, -1.5, 423.5)
+    npc:speed(18)
+    npc:hideNPC(5000)
+    GetNPCByID(16916928):setLocalVar("quasiStatus", 0)
     local started = npc:setLocalVar("started", 1)
+    npc:pathTo(-260.0403, -1, 496.08862)
 end
 
 
@@ -63,35 +64,21 @@ function onPath(npc, player)
 
     local quasiStatus = GetNPCByID(16916927):getLocalVar("quasiStatus")
 
-    if npc:checkDistance(-260.22, -1, 497.0349) < 5 then
-        npc:speed(15)
-    end
-
-    if npc:checkDistance(-260.0403, -1, 496.08862) < 0.5 and quasiStatus == 1  then
-        GetNPCByID(16916869):openDoor(15)
+    if npc:checkDistance(-260.0403, -1, 496.08862) == 0 then
         npc:hideNPC(7000)
-        npc:initNpcAi()
-        npc:setPos(tpz.path.first(path))
-        onPath(npc)
-        print(quasiStatus)
-        --player:showText(npc, 7358)
-        --player:showText(npc, 7361)
-        print("success")
-        GetNPCByID(16916927):setLocalVar("quasiStatus", 0)         
-    elseif npc:checkDistance(-260.0403, -1, 496.08862) < 0.5 then
-        npc:initNpcAi()
-        npc:setPos(tpz.path.first(path))
-        onPath(npc)
+        npc:setPos(-260, -1.5, 423.5)
+        if quasiStatus == 1 then
+            npc:showText(npc, 7358)
+            npc:showText(npc, 7361)
+            GetNPCByID(16916869):openDoor(25)
+            GetNPCByID(16916927):setLocalVar("quasiStatus", 0) 
+        end
+        npc:pathTo(-260.0403, -1, 496.08862)   
     end
 
 
     if quasiStatus == 0 then
-        npc:updateNPCHideTime(500)
-        --print(quasiStatus)
+        npc:updateNPCHideTime(25000)
+        print("update1")
     end
-
-
-
-    tpz.path.patrol(npc, path)
-
 end
