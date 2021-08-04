@@ -397,13 +397,13 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         else
-            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 1 or 0,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
         end
     elseif npcUtil.tradeHas(trade, dynamis.perpetual, true, false) then -- perpetual hourglass, attempting to enter a registered instance or start a new one
         local hgValid = player:checkHourglassValid(trade:getItem(0), dynamis.entryInfo[playerZoneID].enterPos[5])
         if hgValid > 0 then -- 0 = can't enter (wrong glass or didn't wait 71 hours since last dynamis), 1 = entering, 2 = re-entering (weakness)
             player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
-            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,1 ,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         elseif remaining > 0 then
@@ -750,7 +750,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.MIGHTY_STRIKES
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.MNK then
         mob:addMod(tpz.mod.VIT, 20)
@@ -758,7 +758,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.HUNDRED_FISTS
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,70)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.WHM then
         mob:addMod(tpz.mod.MND, 20)
@@ -767,7 +767,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.BENEDICTION
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(40,60)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BLM then
         mob:addMod(tpz.mod.SLEEPRES, 40)
@@ -777,7 +777,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.MANAFONT
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RDM then
         mob:addMod(tpz.mod.UFASTCAST, 25)
@@ -785,7 +785,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.CHAINSPELL
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.THF then
         mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
@@ -795,7 +795,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.PERFECT_DODGE
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.PLD then
         mob:addMod(tpz.mod.DEFP, 10)
@@ -805,7 +805,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.INVINCIBLE
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRK then
         mob:addMod(tpz.mod.ATTP, 10)
@@ -814,7 +814,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.BLOOD_WEAPON
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BST then
         mob:addMod(tpz.mod.CHR, 20)
@@ -826,7 +826,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.SOUL_VOICE
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RNG then
         mob:addMod(tpz.mod.RACC, 20)
@@ -835,7 +835,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = familyEES[mob:getFamily()]
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.SAM then
         mob:addMod(tpz.mod.STORETP, 40)
@@ -843,7 +843,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.MEIKYO_SHISUI
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.NIN then
         mob:addMod(tpz.mod.BINDRESTRAIT, 30)
@@ -865,7 +865,7 @@ dynamis.setMobStats = function(mob)
         params.specials = { }
         params.specials.skill = { }
         params.specials.skill.id = tpz.jsa.ASTRAL_FLOW
-        params.specials.skill.hpp = math.random(20,70)
+        params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     end
 end

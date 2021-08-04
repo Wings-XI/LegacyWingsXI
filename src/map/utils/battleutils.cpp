@@ -360,7 +360,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return std::clamp((int)level * 108 / 100, 8, 95);
+        return std::clamp((int)level * 106 / 100, 8, 90);
     }
 
     int16 GetEnmityModCure(int16 level)
