@@ -42,13 +42,15 @@ void CNotorietyContainer::add(CBattleEntity* entity)
     m_Lookup.insert(entity);
 }
 
-void CNotorietyContainer::remove(CBattleEntity* entity)
+bool CNotorietyContainer::remove(CBattleEntity* entity)
 {
     auto entity_itr = m_Lookup.find(entity);
     if (entity_itr != m_Lookup.end())
     {
         m_Lookup.erase(*entity_itr);
+        return true;
     }
+    return false;
 }
 
 bool CNotorietyContainer::hasEnmity()
@@ -78,6 +80,26 @@ bool CNotorietyContainer::hasEnmity()
     }
 
     return !m_Lookup.empty();
+}
+
+void CNotorietyContainer::clearAllEnmity()
+{
+    if (hasEnmity())
+    {
+        // the mob's enmity container is actually what clears itself off our notoriety list
+        // this means our iterator can change outside this loop so let's constantly reset the loop to begin iterator
+        auto it = begin();
+        while (it != end())
+        {
+            CBattleEntity* PMob = *it;
+            if (PMob && PMob->objtype == TYPE_MOB && ((CMobEntity*)PMob)->PEnmityContainer)
+            {
+                if (!((CMobEntity*)PMob)->PEnmityContainer->Clear(m_POwner->id))
+                    remove(PMob); // they couldn't remove themselves from my list for some reason, so let's do it here.
+            }
+            it = begin();
+        }
+    }
 }
 
 std::size_t CNotorietyContainer::size()
