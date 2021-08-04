@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -31,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "entities/mobentity.h"
 #include "packets/entity_update.h"
 #include "status_effect_container.h"
+#include "mob_modifier.h"
 #include "utils/battleutils.h"
 #include "utils/zoneutils.h"
 
@@ -55,9 +56,10 @@ CEnmityContainer::~CEnmityContainer()
 *                                                                       *
 ************************************************************************/
 
-void CEnmityContainer::Clear(uint32 EntityID)
+bool CEnmityContainer::Clear(uint32 EntityID, bool updateNotoriety)
 {
     TracyZoneScoped;
+    bool removedFromNotorietyList = false;
     if (EntityID == 0)
     {
         for (const auto& entry : m_EnmityList)
@@ -69,18 +71,20 @@ void CEnmityContainer::Clear(uint32 EntityID)
             }
         }
         m_EnmityList.clear();
-        return;
+        return false;
     }
     else
     {
         if (const auto& enmity_obj = m_EnmityList.find(EntityID);
             enmity_obj != m_EnmityList.end() && enmity_obj->second.PEnmityOwner && enmity_obj->second.PEnmityOwner->PNotorietyContainer)
         {
-            enmity_obj->second.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
+            if (updateNotoriety)
+                removedFromNotorietyList = enmity_obj->second.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
         }
         m_EnmityList.erase(EntityID);
     }
     m_tameable = true;
+    return removedFromNotorietyList;
 }
 
 void CEnmityContainer::LogoutReset(uint32 EntityID)
@@ -238,7 +242,7 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
     if (isCureV)
     {
         CE = (int32)(400.f * bonus * tranquilHeartReduction);
-        VE = (int32)(800.f * bonus * tranquilHeartReduction);
+        VE = (int32)(700.f * bonus * tranquilHeartReduction);
     }
     else
     {
@@ -353,8 +357,9 @@ void CEnmityContainer::SetVE(CBattleEntity* PEntity, const int32 amount)
 void CEnmityContainer::UpdateEnmityFromDamage(CBattleEntity* PEntity, int32 Damage)
 {
     TracyZoneScoped;
-    Damage = (Damage < 1 ? 1 : Damage);
-    int16 damageMod = battleutils::GetEnmityModDamage(m_EnmityHolder->GetMLevel());
+    Damage = Damage < 1 ? 1 : Damage;
+    int16 damageMod = battleutils::GetEnmityModDamage(m_EnmityHolder->GetMLevel()) * 100 /
+        (m_EnmityHolder->getMobMod(MOBMOD_DAMAGE_ENMITY_PERC) != 0 ? m_EnmityHolder->getMobMod(MOBMOD_DAMAGE_ENMITY_PERC) : 100);
 
     int32 CE = (int32)(80.f / damageMod * Damage);
     int32 VE = (int32)(240.f / damageMod * Damage);
@@ -450,8 +455,7 @@ void CEnmityContainer::DecayEnmity()
 
 bool CEnmityContainer::IsWithinEnmityRange(CBattleEntity* PEntity) const
 {
-    float maxRange = square(m_EnmityHolder->m_Type == MOBTYPE_NOTORIOUS ? 28.f : 25.f);
-    return distanceSquared(m_EnmityHolder->loc.p, PEntity->loc.p) <= maxRange;
+    return distanceSquared(m_EnmityHolder->loc.p, PEntity->loc.p) < 40*40;
 }
 
 int16 CEnmityContainer::GetHighestTH() const

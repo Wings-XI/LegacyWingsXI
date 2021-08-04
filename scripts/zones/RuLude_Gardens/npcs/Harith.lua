@@ -70,19 +70,23 @@ end
 
 function onEventFinish(player, csid, option)
 
+    local objecttrade = player:getCharVar("harithreward")
     if (csid == 110 or csid == 109) then
-        local objecttrade = player:getCharVar("harithreward")
-
+                
+        if (player:getFreeSlotsCount() == 0 or player:hasItem(objecttrade) == true) then 
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, objecttrade)
+        else
         player:tradeComplete()
         player:addItem(objecttrade)
         player:messageSpecial(ID.text.ITEM_OBTAINED, objecttrade)
         player:setCharVar("harithreward", 0)
-        if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES) == QUEST_ACCEPTED) then
-            player:addFame(JEUNO, 30)
-            player:completeQuest(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES)
-        else
+            if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES) == QUEST_ACCEPTED) then
+                player:addFame(JEUNO, 30)
+                player:completeQuest(JEUNO, tpz.quest.id.jeuno.EMPTY_MEMORIES)
+            else
             player:addFame(JEUNO, 5)
+            end
         end
     end
-
 end
+
