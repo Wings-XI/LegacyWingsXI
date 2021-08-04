@@ -55,9 +55,10 @@ CEnmityContainer::~CEnmityContainer()
 *                                                                       *
 ************************************************************************/
 
-void CEnmityContainer::Clear(uint32 EntityID)
+bool CEnmityContainer::Clear(uint32 EntityID)
 {
     TracyZoneScoped;
+    bool removedFromNotorietyList = false;
     if (EntityID == 0)
     {
         for (const auto& entry : m_EnmityList)
@@ -69,18 +70,19 @@ void CEnmityContainer::Clear(uint32 EntityID)
             }
         }
         m_EnmityList.clear();
-        return;
+        return false;
     }
     else
     {
         if (const auto& enmity_obj = m_EnmityList.find(EntityID);
             enmity_obj != m_EnmityList.end() && enmity_obj->second.PEnmityOwner && enmity_obj->second.PEnmityOwner->PNotorietyContainer)
         {
-            enmity_obj->second.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
+            removedFromNotorietyList = enmity_obj->second.PEnmityOwner->PNotorietyContainer->remove(m_EnmityHolder);
         }
         m_EnmityList.erase(EntityID);
     }
     m_tameable = true;
+    return removedFromNotorietyList;
 }
 
 void CEnmityContainer::LogoutReset(uint32 EntityID)
@@ -450,8 +452,7 @@ void CEnmityContainer::DecayEnmity()
 
 bool CEnmityContainer::IsWithinEnmityRange(CBattleEntity* PEntity) const
 {
-    float maxRange = square(m_EnmityHolder->m_Type == MOBTYPE_NOTORIOUS ? 28.f : 25.f);
-    return distanceSquared(m_EnmityHolder->loc.p, PEntity->loc.p) <= maxRange;
+    return distanceSquared(m_EnmityHolder->loc.p, PEntity->loc.p) < 40*40;
 }
 
 int16 CEnmityContainer::GetHighestTH() const

@@ -51,7 +51,7 @@ public:
     CBattleEntity* GetHighestEnmity();          // Decays VE and gets target with highest enmity
 
     float   CalculateEnmityBonus(CBattleEntity* PEntity);
-    void    Clear(uint32 EntityID = 0);         // Removes Entries from list
+    bool    Clear(uint32 EntityID = 0);         // Removes Entries from list. return value = successfully removed myself from their notoriety list
     void    LogoutReset(uint32 EntityID);       // Sets entry to inactive
     void    AddBaseEnmity(CBattleEntity* PEntity);
     void    UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, bool withMaster = false, bool tameable = false);
