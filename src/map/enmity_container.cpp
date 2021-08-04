@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -241,8 +241,8 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
 
     if (isCureV)
     {
-        CE = (int32)(400.f * bonus * tranquilHeartReduction);
-        VE = (int32)(800.f * bonus * tranquilHeartReduction);
+        CE = (int32)(150.f * bonus * tranquilHeartReduction);
+        VE = (int32)(700.f * bonus * tranquilHeartReduction);
     }
     else
     {
