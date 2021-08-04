@@ -27,7 +27,6 @@ function onMobEngaged(mob, target)
     mobID = ID.mob.PALLAS
     local pallas = GetMobByID(mobID)
     if pallas and pallas:isAlive() then
-        printf("Get mad pallas")
         pallas:updateEnmity(target)
     end
     
