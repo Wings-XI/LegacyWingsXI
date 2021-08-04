@@ -43,12 +43,14 @@ function onMobFight(mob, target)
     if mob:getHPP() < twohourthreshold and twohourtrigger == 0 then -- first meikyo shisui usage 75-85%
         mob:AnimationSub(0)
         mob:useMobAbility(730)
+        mob:setTP(0)
         mob:setLocalVar("meikyo", 1)
         mob:setLocalVar("step", 1)
         mob:setLocalVar("twohourtrigger", 1) -- prevent tenzen from using second meikyo while first one is active
         mob:setLocalVar("twohourthreshold", math.random(45, 55)) -- set next meikyo hpp threshold
     elseif mob:getHPP() < twohourthreshold and twohourtrigger == 2 then -- second meikyo shisui usage 45-55%
         mob:useMobAbility(730)
+        mob:setTP(0)
         mob:setLocalVar("meikyo", 1)
         mob:setLocalVar("step", 1)
         mob:setLocalVar("twohourtrigger", 3)
