@@ -238,6 +238,7 @@ CCharEntity::CCharEntity()
     m_needTellFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
+    m_objectCreationTime = std::chrono::system_clock::now();
 
     m_distanceLastCheckTime = m_lastPacketTime;
     m_distanceFromLastCheck = 0.0;
@@ -363,6 +364,8 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         }
     }
 
+    //attempt to fix equipset client disconnect by temporarily disabling this to see if it works
+    /*
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -445,6 +448,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
+    */
 
     PacketList.push_back(packet);
 }

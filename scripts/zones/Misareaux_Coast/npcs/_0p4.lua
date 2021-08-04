@@ -2,6 +2,7 @@
 -- Area: Misareaux Coast
 --  NPC: Storage Compartment
 --  COP spawn Boggelmann.
+-- !pos -312.532 -32.441 184.485
 -----------------------------------
 local ID = require("scripts/zones/Misareaux_Coast/IDs")
 require("scripts/globals/keyitems")

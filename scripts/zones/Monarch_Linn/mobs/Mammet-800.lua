@@ -49,24 +49,23 @@ function changeForm(mob)
     if (mob:AnimationSub() == newform) then
         newform = 3
     end
-    -- setDamage works beautifully, but setDelay doesn't seem to be working.  Increased DMG turned off.
     if (newform == 0) then -- Hand Form, ~3s delay
         mob:SetMagicCastingEnabled(false)
-        mob:setDelay(2400)
-        mob:setDamage(40)
+        mob:setDelay(3000)
+        mob:setDamage(110)
     elseif (newform == 1) then -- Sword Form, ~2s delay
         mob:SetMagicCastingEnabled(false)
-        mob:setDelay(1500)
-        mob:setDamage(40)
+        mob:setDelay(2000)
+        mob:setDamage(150)
     elseif (newform == 2) then -- Polearm Form, ~3-3.5s delay
         mob:SetMagicCastingEnabled(false)
-        mob:setDelay(3250)
-        mob:setDamage(75)
+        mob:setDelay(3500)
+        mob:setDamage(175)
     elseif (newform == 3) then -- Staff Form, ~4s delay, ~10 seconds between spell ends and next cast
         mob:setMobMod(tpz.mobMod.MAGIC_COOL, 10)
         mob:SetMagicCastingEnabled(true)
-        mob:setDelay(3700)
-        mob:setDamage(40)
+        mob:setDelay(4000)
+        mob:setDamage(90)
     end
     mob:AnimationSub(newform)
     mob:setLocalVar('changeTime', mob:getBattleTime())

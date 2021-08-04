@@ -16,6 +16,14 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.7
+
+    -- Ullikummi applies knockback with Heavy Strike
+    if mob:getID() == 17506418 then
+        skill:setKnockback(1)
+    else
+        skill:setKnockback(0)
+    end
+
 	if math.random()*100 < target:getGuardRate(mob) then
 		skill:setMsg(tpz.msg.basic.SKILL_MISS)
 		target:trySkillUp(mob, tpz.skill.GUARD, numhits)

@@ -17366,6 +17366,7 @@ INSERT INTO `item_mods` VALUES (15464,68,7);
 INSERT INTO `item_mods` VALUES (15465,1,7);
 INSERT INTO `item_mods` VALUES (15465,27,4);
 INSERT INTO `item_mods` VALUES (15465,68,9);
+INSERT INTO `item_mods` VALUES (15465,166,50);
 INSERT INTO `item_mods` VALUES (15466,1,7);
 INSERT INTO `item_mods` VALUES (15466,5,30);
 INSERT INTO `item_mods` VALUES (15466,14,9);
@@ -20264,6 +20265,7 @@ INSERT INTO `item_mods` VALUES (16821,110,10);
 INSERT INTO `item_mods` VALUES (16822,5,10);
 INSERT INTO `item_mods` VALUES (16822,12,5);
 INSERT INTO `item_mods` VALUES (16826,431,1);
+INSERT INTO `item_mods` VALUES (16827,431,1);
 INSERT INTO `item_mods` VALUES (16829,5,10);
 INSERT INTO `item_mods` VALUES (16829,12,1);
 INSERT INTO `item_mods` VALUES (16829,13,1);
@@ -21658,6 +21660,7 @@ INSERT INTO `item_mods` VALUES (17964,48,5);      -- Barkborer: Weapon Skill Acc
 INSERT INTO `item_mods` VALUES (17964,229,7);     -- Enhances Plantoid Killer effect +7
 INSERT INTO `item_mods` VALUES (17965,55,5);
 INSERT INTO `item_mods` VALUES (17965,56,5);
+INSERT INTO `item_mods` VALUES (17965,431,1);
 INSERT INTO `item_mods` VALUES (17966,366,4);
 INSERT INTO `item_mods` VALUES (17967,26,4);
 INSERT INTO `item_mods` VALUES (17968,24,3);

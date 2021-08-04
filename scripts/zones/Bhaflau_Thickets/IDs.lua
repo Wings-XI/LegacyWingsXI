@@ -31,6 +31,7 @@ zones[tpz.zone.BHAFLAU_THICKETS] =
         CANNOT_ENTER                = 7584, -- You cannot enter at this time. Please wait a while before trying again.
         AREA_FULL                   = 7585, -- This area is fully occupied. You were unable to enter.
         MEMBER_NO_REQS              = 7589, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
+        PARTY_MIN_REQS           	= 7592,	-- Your party does not meet the minimum required number of ≺Numeric Parameter 0≻ members. Unable to enter area.
         MEMBER_TOO_FAR              = 7593, -- One or more party members are too far away from the entrance. Unable to enter area.
         HOMEPOINT_SET               = 7692, -- Home point set!
     },

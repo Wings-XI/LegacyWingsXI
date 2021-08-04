@@ -61,6 +61,7 @@ end
 function onEventFinish(player, csid, option)
     if csid == 206 then
         player:setCharVar("PromathiaStatus", 10)
+        player:addExp(1500)
     end
 end
 

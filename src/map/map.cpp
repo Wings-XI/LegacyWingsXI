@@ -1864,6 +1864,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x19: // recast
                     case 0x61: // stats (self)
                     case 0x62: // skills
+                    case 0x44: // job extra
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -1882,7 +1883,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x06: // bazaar purchase
                     case 0x42: // blacklist
                     case 0xC9: // check
-                    case 0x44: // job extra
                     case 0x4B: // delivery box
                     case 0x77: // entity enable list
                     case 0x32: // event
@@ -2323,8 +2323,6 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
         *buffsize += PSmallPacket->length();
         //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
-        if (PSmallPacket->getType() == 0x1D && !PChar->m_packetLimiterEnabled)
-            PChar->m_packetLimiterEnabled = true; // inventory finish packet means we can turn on the limiter
         packetList.pop_front();
     }
 
@@ -2351,6 +2349,9 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
             }
         }
     }
+
+    if (!PChar->m_packetLimiterEnabled && std::chrono::system_clock::now() - PChar->m_objectCreationTime > 45s)
+        PChar->m_packetLimiterEnabled = true;
     
     if (packetsRemaining > 500 && PChar->m_packetLimiterEnabled)
     {
