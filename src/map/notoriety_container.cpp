@@ -82,22 +82,27 @@ bool CNotorietyContainer::hasEnmity()
     return !m_Lookup.empty();
 }
 
-void CNotorietyContainer::clearAllEnmity()
+void CNotorietyContainer::clearAllEnmityForAttackers()
 {
     if (hasEnmity())
     {
-        // the mob's enmity container is actually what clears itself off our notoriety list
-        // this means our iterator can change outside this loop so let's constantly reset the loop to begin iterator
-        auto it = begin();
-        while (it != end())
+        std::vector<CBattleEntity*> toRemove;
+        for (CBattleEntity* entry : *this)
         {
-            CBattleEntity* PMob = *it;
-            if (PMob && PMob->objtype == TYPE_MOB && ((CMobEntity*)PMob)->PEnmityContainer)
+            if (auto* mob = dynamic_cast<CMobEntity*>(entry))
             {
-                if (!((CMobEntity*)PMob)->PEnmityContainer->Clear(m_POwner->id))
-                    remove(PMob); // they couldn't remove themselves from my list for some reason, so let's do it here.
+                if (mob->PEnmityContainer->GetHighestEnmity() == m_POwner ||
+                    (mob->animation == ANIMATION_ATTACK && mob->GetBattleTargetID() == m_POwner->targid))
+                {
+                    mob->PEnmityContainer->Clear(m_POwner->id, false);
+                    toRemove.emplace_back(entry);
+                }
             }
-            it = begin();
+        }
+
+        for (CBattleEntity* entry : toRemove)
+        {
+            remove(entry);
         }
     }
 }

@@ -2048,7 +2048,7 @@ void CCharEntity::Die()
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
     if (this->PNotorietyContainer)
-        this->PNotorietyContainer->clearAllEnmity();
+        this->PNotorietyContainer->clearAllEnmityForAttackers();
 
     setBlockingAid(false);
 

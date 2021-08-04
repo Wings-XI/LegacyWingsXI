@@ -1131,7 +1131,7 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     PChar->SpawnTRUSTList.clear();
 
     if (PChar->PNotorietyContainer)
-        PChar->PNotorietyContainer->clearAllEnmity();
+        PChar->PNotorietyContainer->clearAllEnmityForAttackers();
 
     if (PChar->PParty && PChar->loc.destination != 0 && PChar->m_moghouseID == 0)
     {
