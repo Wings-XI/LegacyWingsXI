@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -360,7 +360,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return level * 31 / 50 + 6;
+        return std::clamp((int)level * 108 / 100, 8, 95);
     }
 
     int16 GetEnmityModCure(int16 level)
