@@ -84,8 +84,12 @@ function onEventFinish(player, csid, option)
         end
     
     elseif csid == 169 then
-        player:setCharVar("Chips",1)
-        player:addQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
+        if option == 0 then
+            player:setCharVar("Chips", 1)
+            player:addQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
+        else
+            player:setCharVar("Chips", 0)
+        end
     
     elseif csid == 52 then
         player:confirmTrade()
