@@ -59,6 +59,13 @@ function onMobFight(mob, target)
     if mob:getHPP() < 20 then
         mob:setMod(tpz.mod.REGAIN, 500)
     end
+
+
+    if mob:getLocalVar("nuclearWaste") == 1 then
+        local ability = math.random(1262,1267)
+        mob:useMobAbility(ability)
+        mob:setLocalVar("nuclearWaste", 0)
+    end
     
 end
 
