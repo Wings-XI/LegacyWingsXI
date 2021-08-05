@@ -15,6 +15,7 @@ end
 
 function onMobSpawn(mob)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+    mob:setMod(tpz.mod.COUNTER, 25)
 end
 
 function onMobFight(mob, target)
