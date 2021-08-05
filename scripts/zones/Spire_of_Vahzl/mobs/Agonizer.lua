@@ -2,6 +2,8 @@
 -- Area: Spire of Vahzl
 --  Mob: Agonizer
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 
 function onMobInitialize(mob)
 end
@@ -10,6 +12,7 @@ function onMobSpawn(mob)
 	mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
     mob:setMobMod(tpz.mobMod.NO_LINK, 1)
+	mob:delRoamFlag(512)
 end
 
 function onMobEngaged(mob, target)

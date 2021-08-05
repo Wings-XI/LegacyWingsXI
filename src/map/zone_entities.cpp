@@ -49,6 +49,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "utils/battlefieldutils.h"
 #include "utils/battleutils.h"
+#include "utils/chatfilter.h"
 #include "utils/charutils.h"
 #include "utils/petutils.h"
 #include "utils/zoneutils.h"
@@ -892,6 +893,9 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
         }
     }
 
+    // Get the possible ways this message can be filtered by the user.
+    CChatFilter chatFilter((CCharEntity*)PEntity, packet);
+
     if (!m_charList.empty())
     {
         switch (message_type)
@@ -899,7 +903,7 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
             case CHAR_INRANGE_SELF:
             {
                 TracyZoneCString("CHAR_INRANGE_SELF");
-                if (PEntity->objtype == TYPE_PC)
+                if (PEntity->objtype == TYPE_PC && !chatFilter.isFiltered((CCharEntity*)PEntity))
                 {
                     ((CCharEntity*)PEntity)->pushPacket(new CBasicPacket(*packet));
                 }
@@ -914,7 +918,7 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
                 for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
                 {
                     CCharEntity* PCurrentChar = (CCharEntity*)it->second;
-                    if (PEntity != PCurrentChar)
+                    if (PEntity != PCurrentChar && !chatFilter.isFiltered(PCurrentChar))
                     {
                         if (distanceSquared(PEntity->loc.p, PCurrentChar->loc.p) < checkDistanceSq &&
                             ((PEntity->objtype != TYPE_PC) || (((CCharEntity*)PEntity)->m_moghouseID == PCurrentChar->m_moghouseID)))
@@ -984,7 +988,7 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
                 for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
                 {
                     CCharEntity* PCurrentChar = (CCharEntity*)it->second;
-                    if (PEntity != PCurrentChar)
+                    if (PEntity != PCurrentChar && !chatFilter.isFiltered(PCurrentChar))
                     {
                         if (distanceSquared(PEntity->loc.p, PCurrentChar->loc.p) < 180.0f * 180.0f &&
                             ((PEntity->objtype != TYPE_PC) || (((CCharEntity*)PEntity)->m_moghouseID == PCurrentChar->m_moghouseID)))
@@ -1004,7 +1008,7 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
 
                     if (PCurrentChar->m_moghouseID == 0)
                     {
-                        if (PEntity != PCurrentChar)
+                        if (PEntity != PCurrentChar && !chatFilter.isFiltered(PCurrentChar))
                         {
                             PCurrentChar->pushPacket(new CBasicPacket(*packet));
                         }

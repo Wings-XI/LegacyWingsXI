@@ -3,12 +3,17 @@
 --   NM: Ponderer
 -----------------------------------
 require("scripts/globals/missions")
+require("scripts/globals/pathfind")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
     if player:getCurrentMission(COP) == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") == 5 then
         player:setCharVar("PromathiaStatus", 6)
     end
+end
+
+function onMobSpawn(mob)
+	mob:delRoamFlag(512)
 end
 
 function onMobFight(mob, target)

@@ -16,12 +16,15 @@ end
 function onTrigger(player, npc)
     if player:getCurrentMission(COP) == tpz.mission.id.cop.SLANDEROUS_UTTERINGS and player:getCharVar("PromathiaStatus") == 1 then
         player:startEvent(13)
+    elseif player:getCurrentMission(COP) == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 1 then
+        player:startEvent(31)
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 2 then
-        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.", 29)
-    -- elseif EventTriggerBCNM(player, npc) then
-        -- return
-    -- elseif (player:getCurrentMission(COP) > tpz.mission.id.cop.THE_WARRIOR_S_PATH) then
-        -- player:startEvent(12)
+        EventTriggerBCNM(player, npc)
+    elseif player:getCurrentMission(COP) == tpz.mission.id.cop.THE_WARRIOR_S_PATH and player:getCharVar("PromathiaStatus") == 0 then
+        --EventTriggerBCNM(player, npc)
+        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+    elseif (player:getCurrentMission(COP) > tpz.mission.id.cop.THE_WARRIOR_S_PATH) then
+        player:startEvent(12)
     end
 end
 
@@ -39,6 +42,8 @@ function onEventFinish(player, csid, option)
     end
     if (csid == 12 and option == 1) then
         toPalaceEntrance(player)
+    elseif (csid == 31) then
+        player:setCharVar("PromathiaStatus", 2)
     elseif (csid == 13) then
         player:setCharVar("PromathiaStatus", 0)
         player:completeMission(COP, tpz.mission.id.cop.SLANDEROUS_UTTERINGS)

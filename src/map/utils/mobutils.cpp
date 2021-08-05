@@ -499,10 +499,12 @@ void CalculateStats(CMobEntity * PMob)
         SetupEventMob(PMob);
     }
 
-    if (PMob->CanStealGil())
+    if(PMob->CanStealGil())
     {
         PMob->ResetGilPurse();
     }
+
+    PMob->m_Type& MOBTYPE_NOTORIOUS ? PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 110) : PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 100);
 
     // family-specific changes here, thank you Jimmay
     switch (PMob->m_Family)

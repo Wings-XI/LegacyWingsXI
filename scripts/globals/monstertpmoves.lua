@@ -169,15 +169,8 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     local hitslanded = 0
 
     local chance = math.random()
-
-    -- first hit has a higher chance to land
-    local firstHitChance = hitrate * 1.5
-
-    if (tpeffect==TP_RANGED) then
-        firstHitChance = hitrate * 1.2
-    end
-
-    firstHitChance = utils.clamp(firstHitChance, 35, 95)
+    
+    local firstHitChance = hitrate
 
     if ((chance*100) <= firstHitChance) then
         pdif = math.random((minRatio*1000), (maxRatio*1000)) --generate random PDIF

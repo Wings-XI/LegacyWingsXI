@@ -22,6 +22,12 @@ function onUseAbility(player, target, ability)
     elseif minDuration > 5 then
         minDuration = 5
     end
+
+    if target:hasImmunity(16384) then
+        ability:setMsg(tpz.msg.basic.TP_NO_EFFECT)
+        return tpz.effect.TERROR
+    end
+
     --print(string.format("feral howl chance = %u",chance))
     if not target:hasStatusEffect(tpz.effect.TERROR) and not target:hasStatusEffect(tpz.effect.STUN) and math.random() < chance/100 then
         target:addStatusEffect(tpz.effect.TERROR,1,0,math.random(minDuration,10))

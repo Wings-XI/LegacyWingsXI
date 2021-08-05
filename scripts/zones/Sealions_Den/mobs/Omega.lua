@@ -13,12 +13,31 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
 end
 
+function onMobSpawn(mob)
+    mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+    mob:setMod(tpz.mod.COUNTER, 25)
+end
+
 function onMobFight(mob, target)
     -- Gains regain at under 25% HP
     if mob:getHPP() < 25 and not mob:hasStatusEffect(tpz.effect.REGAIN) then
         mob:addStatusEffect(tpz.effect.REGAIN, 5, 3, 0)
         mob:getStatusEffect(tpz.effect.REGAIN):setFlag(tpz.effectFlag.DEATH)
     end
+ 
+    if mob:getHPP() < 60 then
+        mob:setDelay(3000)
+    end
+
+    if mob:getHPP() < 25 then
+        mob:setDelay(2500)
+    end
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+
+	return 1531
+
 end
 
 function onAdditionalEffect(mob, target, damage)

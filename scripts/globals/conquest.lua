@@ -236,6 +236,7 @@ local overseerOffsets =
         {offset =  0, nation = tpz.nation.SANDORIA}, -- Quanteilleron, R.K.
         {offset =  7, nation = tpz.nation.SANDORIA}, -- Prunilla, R.K.
         {offset =  3, nation = tpz.nation.SANDORIA}, -- flag
+        {offset = 11, nation = tpz.nation.SANDORIA}, -- flag
         {offset = 12, nation = tpz.nation.SANDORIA}, -- flag
         {offset =  1, nation = tpz.nation.BASTOK},   -- Tsunashige, I.M.
         {offset =  8, nation = tpz.nation.BASTOK},   -- Fighting Ant, I.M.

@@ -58,6 +58,8 @@
 #include "trustentity.h"
 #include "../ability.h"
 #include "../battlefield.h"
+#include "../enmity_container.h"
+#include "../notoriety_container.h"
 #include "../instance.h"
 #include "../conquest_system.h"
 #include "../spell.h"
@@ -364,6 +366,8 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         }
     }
 
+    //attempt to fix equipset client disconnect by temporarily disabling this to see if it works
+    /*
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -446,6 +450,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
+    */
 
     PacketList.push_back(packet);
 }
@@ -2042,6 +2047,8 @@ void CCharEntity::Die()
     battleutils::RelinquishClaim(this);
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
+    if (this->PNotorietyContainer)
+        this->PNotorietyContainer->clearAllEnmityForAttackers();
 
     setBlockingAid(false);
 

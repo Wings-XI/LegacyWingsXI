@@ -22,10 +22,6 @@ function onMobWeaponSkill(target, mob, skill)
         dmg = math.floor(dmg / 16)
     end
 
-    if mob:isInDynamis() then -- dynamis mobs will kill themselves, other mobs might not
-        mob:setHP(0)
-    end
-
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
 
     return dmg
