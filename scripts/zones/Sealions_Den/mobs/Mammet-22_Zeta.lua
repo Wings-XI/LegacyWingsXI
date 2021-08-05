@@ -11,6 +11,13 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.SLEEPRES, 95)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 50)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 50)
+    mob:setLocalVar("onDeath", 0)
+end
+
 function changeForm(mob)
     local newform = math.random(0, 2)
     if (mob:AnimationSub() == newform) then
@@ -58,6 +65,11 @@ function onMobDeath(mob, player, isKiller)
     -- find mob offset for given battlefield instance
     local inst = mob:getBattlefield():getArea()
     local instOffset = ID.mob.ONE_TO_BE_FEARED_OFFSET + (7 * (inst - 1))
+    local onDeath = mob:getLocalVar("onDeath")
+
+    if mob:getLocalVar("onDeath") == 1 then
+        return
+    end
 
     -- if all five mammets in this instance are dead, start event
     local allMammetsDead = true
@@ -71,6 +83,9 @@ function onMobDeath(mob, player, isKiller)
         player:release() -- prevents event collision if player kills multiple remaining mammets with an AOE move/spell
         player:startEvent(11)
     end
+
+    mob:setLocalVar("onDeath", 1)
+
 end
 
 function onEventFinish(player, csid, option)
