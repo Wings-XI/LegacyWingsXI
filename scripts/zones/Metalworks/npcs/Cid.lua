@@ -28,6 +28,12 @@ end
 function onTrade(player, npc, trade)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
+    if player:getCharVar("chips") == 1 then
+        if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
+            player:startEvent(883,1693,1692,1694)
+        end    
+    end
+
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
     elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:getCharVar("MissionStatus") == 1) then
@@ -61,8 +67,7 @@ function onTrigger(player, npc)
     elseif (currentCOPMission == tpz.mission.id.cop.FIRE_IN_THE_EYES_OF_MEN and player:getCharVar("PromathiaStatus")==1) then
         player:startEvent(857) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.ONE_TO_BE_FEARED and player:getCharVar("PromathiaStatus") == 0) then
-        --player:startEvent(856) -- COP event
-        player:PrintToPlayer("CoP progress has been disabled at this point pending further development.",29)
+        player:startEvent(856) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THREE_PATHS and LouverancePath == 6 ) then
         player:startEvent(852) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THREE_PATHS and LouverancePath == 9 ) then
@@ -101,7 +106,7 @@ function onTrigger(player, npc)
     elseif (currentCOPMission == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") > 8) then
         player:startEvent(850) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ENDURING_TUMULT_OF_WAR and player:getCharVar("PromathiaStatus")==1) then
-        player:startEvent(849)
+        player:startEvent(849) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_CALL_OF_THE_WYRMKING and player:getCharVar("PromathiaStatus")==1) then
         player:startEvent(845) -- COP event
     elseif (currentCOPMission == tpz.mission.id.cop.THE_ROAD_FORKS and player:getCharVar("EMERALD_WATERS_Status")== 7 and player:getCharVar("MEMORIES_OF_A_MAIDEN_Status")== 12) then --two paths are finished ?
@@ -175,6 +180,15 @@ function onEventFinish(player, csid, option)
         checkThreePaths(player)
     elseif (csid == 852) then
         player:setCharVar("COP_Louverance_s_Path", 7)
+    elseif csid == 883 then
+        if player:hasItem(5268) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 5268)
+        else
+            player:tradeComplete(trade)
+            player:addItem(5268)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 5268)
+            player:completeQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
+        end
     elseif (csid == 850) then
         player:setCharVar("PromathiaStatus", 0)
         player:completeMission(COP, tpz.mission.id.cop.DESIRES_OF_EMPTINESS)

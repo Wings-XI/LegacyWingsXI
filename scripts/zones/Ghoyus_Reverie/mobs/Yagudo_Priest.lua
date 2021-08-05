@@ -16,18 +16,14 @@ function onMobInitialize(mob)
     mob:setTrueDetection(1)
     mob:addListener("TAKE_DAMAGE", "PRIEST_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         if amount >= mob:getHP() then
-
             local random = math.random(1, 100)
 
             if random <= 5 then
-                mob:setUnkillable(true)
-                mob:setLocalVar("Regain", 1)
+                forceTPMove(mob, 1)
             elseif random <= 10 then
-                mob:setUnkillable(true)
-                mob:setLocalVar("Regain", 2)
+                forceTPMove(mob, 2)
             elseif random <= 15 then
-                mob:setUnkillable(true)
-                mob:setLocalVar("Regain", 3)
+                forceTPMove(mob, 3)
             end
         end
     end)
@@ -39,13 +35,18 @@ end
 function onMobFight(mob)
     -- Due to what I believe to be a timing issue - the ability will not always trigger in the listener
     -- To ensure at least once delivery of a tp move - set ability usage in onFight
-    -- Due to animation delay and the quick killing of the mob on skill usage - ability will not double trigger
     if mob:getLocalVar("Regain") == 1 then
          mob:useMobAbility(1124) -- restore hp for those within 25 yalms
     elseif mob:getLocalVar("Regain") == 2 then
          mob:useMobAbility(1125) -- restore mp for those within 25 yalms
     elseif mob:getLocalVar("Regain") == 3 then
          mob:useMobAbility(1126) -- restore tp for those within 25 yalms
+    end
+
+    -- trigger stage 1 on aggro as well
+    local instance = mob:getInstance()
+    if instance:getStage() == 0 then
+        instance:setStage(1)
     end
 end
 
@@ -54,6 +55,9 @@ function onMobWeaponSkill(target, mob, skill)
         mob:setUnkillable(false)
         mob:setLocalVar("Regain", 0)
         mob:setHP(0)
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMagicCastingEnabled(true)
+        mob:SetMobAbilityEnabled(true)
     end
 end
 
@@ -64,4 +68,12 @@ function onMobDespawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+end
+
+function forceTPMove(mob, move)
+    mob:setUnkillable(true)
+    mob:SetAutoAttackEnabled(false)
+    mob:SetMagicCastingEnabled(false)
+    mob:SetMobAbilityEnabled(false)
+    mob:setLocalVar("Regain", move)
 end

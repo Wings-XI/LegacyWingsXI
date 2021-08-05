@@ -37,10 +37,11 @@ public:
     std::set<CBattleEntity*>::iterator end();
 
     void add(CBattleEntity* entity);
-    void remove(CBattleEntity* entity);
+    bool remove(CBattleEntity* entity);
     std::size_t size();
 
     bool hasEnmity();
+    void clearAllEnmityForAttackers(); // clears all enmity for all mobs that are actively targeting me
 
 private:
     using BattleEntitySet = std::set<CBattleEntity*>;

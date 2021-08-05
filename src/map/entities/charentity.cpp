@@ -58,6 +58,8 @@
 #include "trustentity.h"
 #include "../ability.h"
 #include "../battlefield.h"
+#include "../enmity_container.h"
+#include "../notoriety_container.h"
 #include "../instance.h"
 #include "../conquest_system.h"
 #include "../spell.h"
@@ -2045,6 +2047,8 @@ void CCharEntity::Die()
     battleutils::RelinquishClaim(this);
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
+    if (this->PNotorietyContainer)
+        this->PNotorietyContainer->clearAllEnmityForAttackers();
 
     setBlockingAid(false);
 
