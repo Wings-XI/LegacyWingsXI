@@ -861,12 +861,6 @@ dynamis.setMobStats = function(mob)
         mob:addMod(tpz.mod.REFRESH, 3)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
         mob:addMod(tpz.mod.DEFP, -10)
-        local params = { }
-        params.specials = { }
-        params.specials.skill = { }
-        params.specials.skill.id = tpz.jsa.ASTRAL_FLOW
-        params.specials.skill.hpp = math.random(55,75)
-        tpz.mix.jobSpecial.config(mob, params)
     end
 end
 
