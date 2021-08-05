@@ -1391,6 +1391,7 @@ INSERT INTO `mob_spell_lists` VALUES('Sekhmet', 137, 59, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Sekhmet', 137, 56, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Faith', 138, 162, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Faith', 138, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Faith', 138, 211, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Faith', 138, 357, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Faith', 138, 365, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Sarameya', 139, 146, 1, 255);
@@ -3967,6 +3968,12 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 31, 1, 255); -- Banish IV
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 40, 1, 255); -- Banishga III
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 112, 1, 255); -- Flash
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 232, 1, 255); -- Bio III
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 274, 1, 255); -- Sleepga II
 --
 -- Indexes for dumped tables
 --
