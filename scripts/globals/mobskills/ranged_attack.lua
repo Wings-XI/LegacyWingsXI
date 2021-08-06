@@ -5,6 +5,7 @@
 
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/zone")
 require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------------
@@ -30,6 +31,11 @@ function onMobWeaponSkill(target, mob, skill)
 
     if msg ~= tpz.msg.basic.SHADOW_ABSORB then
         target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+    end
+    
+    local family = mob:getFamily()
+    if family == 200 or family == 201 or family == 202 or family == 337 or family == 408 then
+        skill:setAnim(1556)
     end
 
     return dmg

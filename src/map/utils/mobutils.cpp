@@ -205,7 +205,7 @@ void CalculateStats(CMobEntity * PMob)
 
     if(!PMob->HPmodifier)
     {
-        float hpScale = PMob->getMobMod(MOBMOD_HP_SCALE) != 0 ? (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f : PMob->HPscale;
+        float hpScale = PMob->getMobMod(MOBMOD_HP_SCALE) ? (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f : PMob->HPscale;
 
         float growth;
 
@@ -229,7 +229,7 @@ void CalculateStats(CMobEntity * PMob)
     }
     else
     {
-        PMob->health.maxhp = PMob->HPmodifier;
+        PMob->health.maxhp = PMob->HPmodifier * (PMob->getMobMod(MOBMOD_HP_SCALE) ? (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f : 1.0f);
     }
 
     if(isNM)
