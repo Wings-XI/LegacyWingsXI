@@ -1776,7 +1776,8 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 {
     TPZ_DEBUG_BREAK_IF(PBattleTarget == nullptr);
 
-    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
+    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC ||
+        (PBattleTarget->loc.zone && PBattleTarget->loc.zone->GetType() == ZONETYPE_DYNAMIS))
     {
         return true;
     }
