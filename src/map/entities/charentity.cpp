@@ -365,9 +365,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-
-    //attempt to fix equipset client disconnect by temporarily disabling this to see if it works
-    /*
+    
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -450,7 +448,6 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-    */
 
     PacketList.push_back(packet);
 }
