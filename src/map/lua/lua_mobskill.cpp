@@ -70,7 +70,7 @@ inline int32 CLuaMobSkill::setAnim(lua_State* L)
     //if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
         animid = (uint16)lua_tointeger(L, 1);
 
-    ShowDebug("setting skillid %i to animation %i, old animation was %i\n", m_PLuaMobSkill->getID(), animid, m_PLuaMobSkill->getAnimationID());
+    //ShowDebug("setting skillid %i to animation %i, old animation was %i\n", m_PLuaMobSkill->getID(), animid, m_PLuaMobSkill->getAnimationID());
     m_PLuaMobSkill->setAnimationID(animid);
 
     return 0;
