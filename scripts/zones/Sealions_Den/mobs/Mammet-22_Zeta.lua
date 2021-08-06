@@ -80,7 +80,6 @@ function onMobDeath(mob, player, isKiller)
         end
     end
     if allMammetsDead then
-        player:release() -- prevents event collision if player kills multiple remaining mammets with an AOE move/spell
         player:startEvent(11)
     end
 
