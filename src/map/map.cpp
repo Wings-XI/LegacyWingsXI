@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1419,6 +1419,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                         { // high prio of despawn/spawn no matter who they are.
                             priorityNum = 1;
                             PSmallPacket->priorityNumOverride = 1;
+                            PSmallPacket->overflowDropImmunity = true;
                             break;
                         }
 
@@ -1520,6 +1521,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                         { // high prio of despawn/spawn no matter who they are.
                             priorityNum = 1;
                             PSmallPacket->priorityNumOverride = 1;
+                            PSmallPacket->overflowDropImmunity = true;
                             break;
                         }
 
