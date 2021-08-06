@@ -16,7 +16,8 @@ g_mixins.warriors_path_taru = function(mob)
         local ID = zones[mob:getZoneID()]
         local randOffset = math.random(1, 3) -- each taru most commonly uses text offset +1-3 for during fight
         local animationchance = math.random()
-        if battletime - changetime >= 5 then -- every 5 seconds the taru's will say something and use a random animation
+        local battlefield = mob:getBattlefield()
+        if battletime - changetime >= 5 and battlefield:getLocalVar("fireworks") == 0 then -- every 5 seconds the taru's will say something and use a random animation
             if cheru == 1 then
                 mob:showText(mob, ID.text.CHERUKIKI_OFFSET + randOffset)
                 if animationchance < 0.166 then    
