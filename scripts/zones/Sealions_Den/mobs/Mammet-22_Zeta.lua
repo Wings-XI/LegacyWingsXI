@@ -48,7 +48,6 @@ end
 
 function onMobFight(mob, target)
     local form = mob:AnimationSub()
-
     -- Mammets seem to be able to change to any given form, per YouTube videos
     -- Added a random chance to change forms every 3 seconds if 60 seconds have passed, just to make things less formulaic.
         -- May be able to change forms more often.  Witnessed one at ~50 seconds, most were 60-80.
@@ -58,7 +57,6 @@ function onMobFight(mob, target)
         and not mob:hasStatusEffect(tpz.effect.FOOD)) then
         changeForm(mob)
     end
-
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -66,11 +64,9 @@ function onMobDeath(mob, player, isKiller)
     local inst = mob:getBattlefield():getArea()
     local instOffset = ID.mob.ONE_TO_BE_FEARED_OFFSET + (7 * (inst - 1))
     local onDeath = mob:getLocalVar("onDeath")
-
     if mob:getLocalVar("onDeath") == 1 then
         return
     end
-
     -- if all five mammets in this instance are dead, start event
     local allMammetsDead = true
     for i = instOffset + 0, instOffset + 4 do
@@ -80,11 +76,11 @@ function onMobDeath(mob, player, isKiller)
         end
     end
     if allMammetsDead then
-        player:startEvent(11)
+        for _, player in ipairs(mob:getBattlefield():getPlayers()) do
+            player:startEvent(11)
+        end
     end
-
     mob:setLocalVar("onDeath", 1)
-
 end
 
 function onEventFinish(player, csid, option)
@@ -97,14 +93,6 @@ function onEventFinish(player, csid, option)
         player:setMP(player:getMaxMP())
         player:setTP(0)
         player:setLocalVar("[OTBF]cs", 1)
-
-        -- move player to instance
-        if inst == 1 then
-            player:setPos(-779, -103, -80)
-        elseif inst == 2 then
-            player:setPos(-140, -23, -440)
-        elseif inst == 3 then
-            player:setPos(499, 56, -802)
-        end
+        battlefield:setLocalVar("event1", 1)
     end
 end
