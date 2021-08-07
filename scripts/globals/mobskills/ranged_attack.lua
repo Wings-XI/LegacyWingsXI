@@ -32,5 +32,9 @@ function onMobWeaponSkill(target, mob, skill)
         target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
     end
 
+    if mob:getFamily() == 3 and msg ~= tpz.msg.basic.SHADOW_ABSORB then
+        skill:setMsg(352)
+    end
+
     return dmg
 end
