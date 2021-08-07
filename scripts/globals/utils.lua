@@ -178,14 +178,15 @@ function utils.thirdeye(target)
 
     if prevAnt < 7 then
         --anticipated!
-        if seigan == nil or prevAnt == 6 or math.random()*100 > 100-prevAnt*15 then
+        if seigan == nil or prevAnt == 6 or math.random()*100 <= 100-(prevAnt+1)*15 then
 			target:delStatusEffect(tpz.effect.THIRD_EYE)
 		else
 			teye:setPower(prevAnt + 1)
 		end
         return true
     else
-		target:delStatusEffect(tpz.effect.THIRD_EYE)
+		target:delStatusEffect(tpz.effect.THIRD_EYE) -- how did we get here?  the previous clause checks for prevAnt == 6
+        return true
 	end
 
     return false
