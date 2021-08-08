@@ -3974,6 +3974,61 @@ INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 112, 1, 255); -- Flash
 INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 232, 1, 255); -- Bio III
 INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 254, 1, 255); -- Blind
 INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 232, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 245, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 247, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 252, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 260, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 269, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 270, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 271, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 272, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 273, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Dark', 462, 274, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 21, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 24, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 30, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 34, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 51, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 53, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 108, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Light', 463, 112, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 101, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 206, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 236, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 250, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Ice', 464, 258, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 53, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 59, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 102, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 216, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Wind', 465, 237, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Earth', 466, 54, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Earth', 466, 103, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Earth', 466, 163, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Earth', 466, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Earth', 466, 238, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 104, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 196, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 212, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 239, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Lightning', 467, 251, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 55, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 173, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 214, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Water', 468, 240, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 469, 147, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 469, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 469, 204, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 469, 235, 1, 255);
 --
 -- Indexes for dumped tables
 --

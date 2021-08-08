@@ -15,7 +15,6 @@ function onMobSpawn(mob)
     mob:AnimationSub(0)
     onPath(mob)
     mob:SetAutoAttackEnabled(true)
-    mob:SetMagicCastingEnabled(true)
     mob:SetMobAbilityEnabled(true)
 end
 
@@ -85,18 +84,16 @@ end
 
 function chargeOptic(mob)
     mob:SetAutoAttackEnabled(false)
-    mob:SetMagicCastingEnabled(false)
     mob:SetMobAbilityEnabled(false)
 
     if mob:getLocalVar("opticInduration") ~= 1 then
-        mob:timer(3500, function(mob)
+        mob:timer(5000, function(mob)
             mob:useMobAbility(1464)
         end)
     elseif mob:getLocalVar("opticInduration") == 1 then
         mob:useMobAbility(1465)
         mob:setLocalVar("opticInduration", 0)
         mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
         mob:SetMobAbilityEnabled(true)
     end
 end
