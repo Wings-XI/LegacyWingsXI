@@ -62,3 +62,21 @@ def login_dbname():
 	if dbname == None:
 		read_login_conf()
 	return dbname
+
+def run_login_sql_file(file, cur):
+	logindb = login_dbname()
+	try:
+		with open(file, "r") as sqlfile:
+			cur.execute("select database()")
+			dbname = cur.fetchone()
+
+			# run the sql on the login database
+			sql = sqlfile.read()
+			cur.execute("use {}".format(logindb))
+			for result in cur.execute(sql, multi=True):
+				pass # iterate through all the statements in the file
+
+			# switch back to normal database
+			cur.execute("use {}".format(dbname[0]))
+	except mysql.connector.Error as err:
+		print("Something went wrong with file {}: {}".format(file, err))
