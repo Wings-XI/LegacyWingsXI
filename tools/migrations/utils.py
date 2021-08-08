@@ -1,5 +1,7 @@
 import re
 
+dbname = None
+
 hex2bin = {
     "0" : "0000",
     "1" : "0001",
@@ -37,3 +39,26 @@ def blob_to_binary(blob):
 
     # Join everything together in one big 1/0 string
     return "".join(split_spells)
+
+
+def read_login_conf():
+	global dbname
+	dbname = None
+	try:
+		with open("../conf/login.conf") as f:
+			while True:
+				line = f.readline()
+				if not line: break
+				match = re.match(r'^\s*db_database\s*=\s*(\S+)', line)
+				if match:
+					dbname = match.group(1)
+		if dbname == None:
+			print('Error fetching login database.\nCheck ../conf/login.conf.\n')
+	except err:
+		print('Error fetching login database from ../conf/login.conf: {}\n'.format(err))
+
+def login_dbname():
+	global dbname
+	if dbname == None:
+		read_login_conf()
+	return dbname

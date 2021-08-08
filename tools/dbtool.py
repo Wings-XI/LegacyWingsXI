@@ -27,6 +27,7 @@ from migrations import eminence_blob
 from migrations import char_timestamp
 from migrations import currency_columns
 from migrations import chat_filters
+from migrations import ip_exempt
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -45,6 +46,7 @@ migrations = [
     char_timestamp,
     currency_columns,
     chat_filters,
+    ip_exempt,
 ]
 # These are the default 'protected' files
 player_data = [
