@@ -211,7 +211,7 @@ def fetch_files(express=False):
             sql_diffs = repo.commit(current_version).diff(release_version,paths='sql-wings/')
             if len(sql_diffs) > 0:
                 for diff in sql_diffs:
-                    import_files.append(diff.a_path[4:])
+                    import_files.append(diff.a_path[10:])
                 express_enabled = True
             else:
                 express_enabled = False
