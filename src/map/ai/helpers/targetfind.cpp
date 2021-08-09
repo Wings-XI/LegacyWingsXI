@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -349,20 +349,20 @@ CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 
 bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 {
-    if (m_PBattleEntity->objtype != TYPE_PC || PTarget->objtype == TYPE_PC)
+    if ((m_PBattleEntity->objtype != TYPE_PC && m_PBattleEntity->objtype != TYPE_PET) || PTarget->objtype == TYPE_PC)
     {
-        // always true for mobs, npcs, pets
+        // always true for mobs, npcs
         return true;
     }
 
-    if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == m_PBattleEntity->id)
+    if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == m_PBattleEntity->id || PTarget->m_OwnerID.id == findMaster(m_PBattleEntity)->id)
     {
         return true;
     }
 
     bool found = false;
 
-    m_PBattleEntity->ForAlliance([&found, &PTarget](CBattleEntity* PMember){
+    findMaster(m_PBattleEntity)->ForAlliance([&found, &PTarget](CBattleEntity* PMember) {
         if (PMember->id == PTarget->m_OwnerID.id)
         {
             found = true;
