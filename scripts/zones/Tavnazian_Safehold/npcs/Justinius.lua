@@ -104,6 +104,7 @@ function onEventFinish(player, csid, option)
         end
     elseif csid == 574 or (csid == 573 and option == 1) then
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MONARCH_LINN_PATROL_PERMIT)
+        player:addKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT)
         player:setCharVar("UninvitedGuestsStatus", 1) -- accepted
     elseif csid == 575 then
         if player:getCharVar("UninvitedGuestsStatus") == 3 then
