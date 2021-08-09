@@ -12,11 +12,17 @@ function onMobSpawn(mob)
     local x = mob:getXPos()
     local y = mob:getYPos()
     local z = mob:getZPos()
-    mob:useMobAbility(626)
+    mob:useMobAbility(626) -- 2hr animation since wynavs aren't spawned via CallWyvern Ability
     for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do
         local wynav = GetMobByID(i)
         wynav:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
         wynav:spawn()
+    end
+end
+
+function onMobEngaged(mob, target)
+    for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do -- Wynavs share hate with Ix'DRG
+        GetMobByID(i):updateEnmity(target)
     end
 end
 
@@ -43,21 +49,15 @@ function onMobFight(mob, target)
     if mob:AnimationSub() <= 1 and (battleTime - changeTime > 60) then -- goes into bracer mode for 30 seconds, every 60 seconds.
         mob:AnimationSub(2) -- bracer mode
         mob:setMod(tpz.mod.DELAY, 1000) -- increase speed in bracer mode
-        mob:addMod(tpz.mod.ATTP, 10)
+        mob:addMod(tpz.mod.ATTP, 25)
         mob:setLocalVar("changeTime", battleTime)
     elseif mob:AnimationSub() == 2 and (battleTime - changeTime > 30) then
         mob:AnimationSub(1)
         mob:setMod(tpz.mod.DELAY, 0) -- back to normal attack speed
-        mob:delMod(tpz.mod.ATTP, 10)
+        mob:delMod(tpz.mod.ATTP, 25)
         mob:setLocalVar("changeTime", battleTime)
     end
 
-end
-
-function onMobEngaged(mob, target)
-    for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do -- Wynavs share hate with Ix'DRG
-        GetMobByID(i):updateEnmity(target)
-    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
