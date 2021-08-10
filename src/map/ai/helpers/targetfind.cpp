@@ -339,6 +339,7 @@ void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
     }
 }
 
+// Given a CBattleEntitiy - returns the master of the CBattleEntity.  If no master is found, returns the CBattleEntity passed as a param
 CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 {
     if (PTarget->PMaster != nullptr){
@@ -349,9 +350,9 @@ CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 
 bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 {
-    if ((m_PBattleEntity->objtype != TYPE_PC && m_PBattleEntity->objtype != TYPE_PET) || PTarget->objtype == TYPE_PC)
+    if (findMaster(m_PBattleEntity)->objtype != TYPE_PC || findMaster(PTarget)->objtype == TYPE_PC)
     {
-        // always true for mobs, npcs
+        // always true for mobs, npcs - not true for PCs or PC's pets
         return true;
     }
 
