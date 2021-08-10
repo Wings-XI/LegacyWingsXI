@@ -74,7 +74,7 @@ end
 
 function onZoneWeatherChange(weather)
     local ToxicTamlyn = GetMobByID(ID.mob.TOXIC_TAMLYN)
-    local TamlynRe = GetServerVariable("KVRespawn")
+    local TamlynRe = GetServerVariable("TamlynRespawn")
 
     if weather ~= tpz.weather.RAIN or weather ~= tpz.weather.SQUALL then
         DisallowRespawn(ToxicTamlyn:getID(), true)
