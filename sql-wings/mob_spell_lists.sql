@@ -3757,7 +3757,6 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 250, 1, 255); -- ice spi
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 252, 1, 255); -- stun
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 253, 1, 255); -- sleep
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 274, 1, 255); -- sleepga ii
-INSERT INTO `mob_spell_lists` VALUES('Toxic_Tamlyn', 438, 231, 1, 255);
 
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 146, 62, 67);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 151, 64, 68);
@@ -3968,6 +3967,8 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Toxic_Tamlyn', 460, 231, 1, 255);
+
 --
 -- Indexes for dumped tables
 --
