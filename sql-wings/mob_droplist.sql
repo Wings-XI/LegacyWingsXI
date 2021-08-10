@@ -16300,6 +16300,7 @@ INSERT INTO `mob_droplist` VALUES(3169, 0, 0, 1000, 1181, 61);
 INSERT INTO `mob_droplist` VALUES(3169, 0, 0, 1000, 1237, 184);
 INSERT INTO `mob_droplist` VALUES(3170, 0, 0, 1000, 1052, 41);
 INSERT INTO `mob_droplist` VALUES(3171, 0, 0, 1000, 2850, 59);
+INSERT INTO `mob_droplist` VALUES(3172, 0, 0, 1000, 2855, 350);
 
 -- 3200s are dynamis drops
 INSERT INTO `mob_droplist` VALUES(3200, 0, 0, 1000, 1456, 10); -- dyna bastok statue drops
@@ -16436,6 +16437,7 @@ INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18338, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18344, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1520, 4);
+
 
 
 --
