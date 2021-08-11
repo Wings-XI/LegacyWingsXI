@@ -66,6 +66,16 @@ local items = {
         id = 134, -- Emeralda
         rank = 9,
         cost = 150000
+    },
+    [4] = {
+        id = 342, -- Alchemist's Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] = {
+        id = 15825, -- Alchemist's Ring
+        rank = 6,
+        cost = 80000
     }
 }
 
