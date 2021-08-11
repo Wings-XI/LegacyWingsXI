@@ -56,16 +56,11 @@ function onMobFight(mob, target)
     end
 
     respawnPets(mob)
+    engagePets(target) --Testimonials say that pets cannot be sac'd away - if idle will re-pick up hate if palls has hate
 end
 
 function onMobEngaged(mob, target)
-     for mobID = ID.mob.PALLAS+1, ID.mob.PALLAS+3, 1
-     do
-        local pet = GetMobByID(mobID)
-        if pet and pet:isAlive() then
-            pet:updateEnmity(target)
-        end
-     end
+     engagePets(target)
 end
 
 
@@ -117,6 +112,16 @@ function familiarPets()
             pet:addMod(tpz.mod.ACC, 20)
             pet:addMod(tpz.mod.EVA, 10)
             pet:addMod(tpz.mod.DEFP, 10)
+        end
+     end
+end
+
+function engagePets(target)
+    for mobID = ID.mob.PALLAS+1, ID.mob.PALLAS+3, 1
+     do
+        local pet = GetMobByID(mobID)
+        if pet and pet:isAlive() and not pet:isEngaged() then
+            pet:updateEnmity(target)
         end
      end
 end
