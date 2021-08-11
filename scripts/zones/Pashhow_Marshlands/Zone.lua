@@ -75,17 +75,13 @@ end
 function onZoneWeatherChange(weather)
     local ToxicTamlyn = ID.mob.TOXIC_TAMLYN
     local TamlynRe = GetServerVariable("TamlynRespawn")
-    print(weather)
 
     if weather == tpz.weather.RAIN or weather == tpz.weather.SQUALL then
         DisallowRespawn(ToxicTamlyn, false)
-        print("Its rainy")
         if os.time() > TamlynRe then
-            print("Lets spawn Tamlyn")
             SpawnMob(ToxicTamlyn)
         end
     elseif weather ~= tpz.weather.RAIN or weather ~= tpz.weather.SQUALL then
         DisallowRespawn(ToxicTamlyn, true)
-        print("Not rain")
     end
 end
