@@ -74,8 +74,9 @@ function respawnPets(mob)
                 do
                     local pet = GetMobByID(mobID)
                     if pet and not pet:isAlive() and not pet:isSpawned() then
-                        offset = math.random(1, 5)
-                        pet:setSpawn(mob:getXPos() + offset, mob:getYPos(), mob:getZPos() + offset)
+                        offsetX = math.random(1, 5)
+                        offsetY = math.random(1, 5)
+                        pet:setSpawn(mob:getXPos() + offsetX, mob:getYPos(), mob:getZPos() + offsetY)
                         SpawnMob(mobID)
                         if mob:getTarget() then
                             pet:updateEnmity(mob:getTarget())
