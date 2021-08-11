@@ -41,7 +41,7 @@ public:
     std::size_t size();
 
     bool hasEnmity();
-    void clearAllEnmity();
+    void clearAllEnmityForAttackers(); // clears all enmity for all mobs that are actively targeting me
 
 private:
     using BattleEntitySet = std::set<CBattleEntity*>;

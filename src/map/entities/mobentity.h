@@ -271,6 +271,9 @@ public:
 
     void DropItems(CCharEntity* PChar);
 
+    std::unordered_map<int, int16> m_mobModStat;
+    std::unordered_map<int, int16> m_mobModStatSave;
+
 protected:
 
     void DistributeRewards();
@@ -279,8 +282,7 @@ protected:
 private:
 
     time_point    m_DespawnTimer {time_point::min()};  // Despawn Timer to despawn mob after set duration
-    std::unordered_map<int, int16>     m_mobModStat;
-    std::unordered_map<int, int16>     m_mobModStatSave;
+    
     static constexpr float roam_home_distance {80.f};
 };
 

@@ -48,7 +48,7 @@ enum MOBMODIFIER : int
     MOBMOD_SEVERE_SPELL_CHANCE = 13, // % chance to use a severe spell like death or impact
     MOBMOD_SKILL_LIST          = 14, // uses given mob skill list
     MOBMOD_MUG_GIL             = 15, // amount gil carried for mugging
-    // 16 Available for use
+    MOBMOD_DAMAGE_ENMITY_PERC  = 16, // percent modifier of how much enmity damaging attacks/skills/spells will generate, default 100%, default for NMs 110%
     MOBMOD_NO_DESPAWN          = 17, // do not despawn when too far from spawn. Gob Diggers have this.
     MOBMOD_VAR                 = 18, // temp var for whatever. Gets cleared on spawn
     // 19 Available for use

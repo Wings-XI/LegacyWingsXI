@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -879,7 +879,7 @@ void CMobController::DoRoamTick(time_point tick)
                     // move back every 5 seconds
                     m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
                 }
-                else if (PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
+                else if (!PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
                 {
                     PMob->PAI->Despawn();
                     return;
@@ -1088,7 +1088,7 @@ bool CMobController::Engage(uint16 targid)
         { // dyna SMN: summon my avatar immediately
             m_LastMagicTime = m_Tick;
             m_LastSpecialTime = m_Tick;
-            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells() && !PMob->PPet)
+            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells() && (!PMob->PPet || PMob->PPet->isDead()))
             {
                 if (auto spellID = PMob->SpellContainer->GetBuffSpell())
                     CastSpell(spellID.value());

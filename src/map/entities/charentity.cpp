@@ -365,9 +365,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-
-    //attempt to fix equipset client disconnect by temporarily disabling this to see if it works
-    /*
+    
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -450,7 +448,6 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-    */
 
     PacketList.push_back(packet);
 }
@@ -1779,7 +1776,8 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 {
     TPZ_DEBUG_BREAK_IF(PBattleTarget == nullptr);
 
-    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
+    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC ||
+        (PBattleTarget->loc.zone && PBattleTarget->loc.zone->GetType() == ZONETYPE_DYNAMIS))
     {
         return true;
     }
@@ -2048,7 +2046,7 @@ void CCharEntity::Die()
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
     if (this->PNotorietyContainer)
-        this->PNotorietyContainer->clearAllEnmity();
+        this->PNotorietyContainer->clearAllEnmityForAttackers();
 
     setBlockingAid(false);
 

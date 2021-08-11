@@ -264,7 +264,8 @@ CWeaponSkill* CPlayerController::getLastWeaponSkill()
 bool CPlayerController::CanUseAbility(uint16 targid, uint16 abilityid)
 {
     auto PChar = static_cast<CCharEntity*>(POwner);
-    auto PAbility = ability::GetAbility(abilityid);
+    std::unique_ptr<CAbility> uniquePAbility = std::make_unique<CAbility>(*ability::GetAbility(abilityid));
+    auto PAbility = uniquePAbility.get();
     
     if (PChar->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
     {

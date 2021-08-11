@@ -64,6 +64,7 @@
 #include "../item_container.h"
 #include "../items/item_weapon.h"
 #include "../packets/pet_sync.h"
+#include "../packets/char_recast.h"
 #include "../packets/char_sync.h"
 #include "../packets/position.h"
 #include "../packets/lock_on.h"
@@ -360,7 +361,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return std::clamp((int)level * 108 / 100, 8, 95);
+        return std::clamp((int)level * 106 / 100, 8, 90);
     }
 
     int16 GetEnmityModCure(int16 level)
@@ -5434,12 +5435,14 @@ namespace battleutils
                     }
                 }
                 PTarget->health.tp = 1000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 4:
                 // Restores all Job Abilities (does not restore One Hour Abilities), 300% TP Restore
                 PTarget->PRecastContainer->ResetAbilities();
                 PTarget->health.tp = 3000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 5:
@@ -5461,6 +5464,7 @@ namespace battleutils
                 if (PTarget->health.maxmp > 0 && (PTarget->health.mp < (PTarget->health.maxmp / 2)))
                 {
                     PTarget->health.mp = PTarget->health.maxmp / 2;
+                    PTarget->updatemask |= UPDATE_HP;
                 }
                 break;
 
@@ -5476,6 +5480,13 @@ namespace battleutils
                 }
                 PTarget->addMP(PTarget->health.maxmp);
                 break;
+        }
+
+        if (PCaster != PTarget)
+        {
+            // Update target's recast state; caster's will be handled
+            // back up in CCharEntity::OnAbility.
+            PTarget->pushPacket(new CCharRecastPacket(PTarget));
         }
     }
 

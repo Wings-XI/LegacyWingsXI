@@ -86,9 +86,9 @@ INSERT INTO `abilities` VALUES(42, 'flee', 6, 25, 1, 300, 62, 126, 0, 9, 2000, 0
 INSERT INTO `abilities` VALUES(43, 'hide', 6, 45, 1, 300, 63, 0, 0, 10, 2000, 0, 6, 20.0, 0, 0, 0, 706, 0, NULL);
 INSERT INTO `abilities` VALUES(44, 'sneak_attack', 6, 15, 1, 60, 64, 0, 0, 17, 2000, 0, 6, 20.0, 0, 1, 0, 708, 0, NULL);
 INSERT INTO `abilities` VALUES(45, 'mug', 6, 35, 4, 900, 65, 129, 0, 183, 2000, 0, 3, 4.4, 0, 1, 300, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(46, 'shield_bash', 7, 15, 4, 300, 73, 0, 0, 185, 2000, 0, 3, 4.4, 0, 450, 900, 768, 0, NULL);
+INSERT INTO `abilities` VALUES(46, 'shield_bash', 7, 15, 4, 300, 73, 0, 0, 185, 2000, 0, 3, 4.4, 0, 1, 900, 768, 0, NULL);
 INSERT INTO `abilities` VALUES(47, 'holy_circle', 7, 5, 1, 600, 74, 131, 0, 29, 2000, 0, 6, 20.0, 1, 1, 20, 770, 0, NULL);
-INSERT INTO `abilities` VALUES(48, 'sentinel', 7, 30, 1, 300, 75, 0, 0, 11, 2000, 0, 6, 20.0, 0, 1, 900, 772, 0, NULL);
+INSERT INTO `abilities` VALUES(48, 'sentinel', 7, 30, 1, 300, 75, 0, 0, 11, 2000, 0, 6, 20.0, 0, 1, 1800, 772, 0, NULL);
 INSERT INTO `abilities` VALUES(49, 'souleater', 8, 30, 1, 360, 85, 0, 0, 20, 2000, 0, 6, 20.0, 0, 1, 1300, 832, 0, NULL);
 INSERT INTO `abilities` VALUES(50, 'arcane_circle', 8, 5, 1, 600, 86, 134, 0, 30, 2000, 0, 6, 20.0, 1, 1, 20, 834, 0, NULL);
 INSERT INTO `abilities` VALUES(51, 'last_resort', 8, 15, 1, 300, 87, 0, 0, 12, 2000, 0, 6, 20.0, 0, 1, 1300, 836, 0, NULL);
@@ -114,12 +114,12 @@ INSERT INTO `abilities` VALUES(70, 'heel', 9, 10, 1, 5, 101, 0, 0, 83, 2000, 0, 
 INSERT INTO `abilities` VALUES(71, 'leave', 9, 35, 1, 10, 101, 0, 0, 83, 2000, 0, 6, 18.0, 0, 1, 300, 0, 192, NULL);
 INSERT INTO `abilities` VALUES(72, 'sic', 9, 25, 1, 120, 102, 0, 0, 83, 2000, 0, 6, 18.0, 0, 0, 0, 902, 128, NULL);
 INSERT INTO `abilities` VALUES(73, 'stay', 9, 15, 1, 5, 101, 0, 0, 83, 2000, 0, 6, 18.0, 0, 1, 300, 0, 192, NULL);
-INSERT INTO `abilities` VALUES(74, 'divine_seal', 3, 15, 1, 600, 26, 0, 0, 81, 2000, 0, 6, 20.0, 0, 0, 80, 512, 0, NULL);
-INSERT INTO `abilities` VALUES(75, 'elemental_seal', 4, 15, 1, 600, 38, 0, 0, 80, 2000, 0, 6, 20.0, 0, 0, 80, 576, 0, NULL);
+INSERT INTO `abilities` VALUES(74, 'divine_seal', 3, 15, 1, 600, 26, 0, 0, 81, 2000, 0, 6, 20.0, 0, 1, 80, 512, 0, NULL);
+INSERT INTO `abilities` VALUES(75, 'elemental_seal', 4, 15, 1, 600, 38, 0, 0, 80, 2000, 0, 6, 20.0, 0, 1, 80, 576, 0, NULL);
 INSERT INTO `abilities` VALUES(76, 'trick_attack', 6, 30, 1, 60, 66, 0, 0, 82, 2000, 0, 6, 20.0, 0, 1, 0, 710, 0, NULL);
 INSERT INTO `abilities` VALUES(77, 'weapon_bash', 8, 20, 4, 300, 88, 110, 0, 201, 2000, 0, 3, 4.4, 0, 1, 900, 840, 0, NULL);
 INSERT INTO `abilities` VALUES(78, 'reward', 9, 12, 257, 90, 103, 102, 0, 84, 2000, 0, 6, 18.0, 0, 0, 0, 898, 0, NULL);
-INSERT INTO `abilities` VALUES(79, 'cover', 7, 35, 2, 180, 76, 0, 0, 86, 2000, 0, 6, 20.0, 0, 1, 300, 0, 0, NULL);
+INSERT INTO `abilities` VALUES(79, 'cover', 7, 35, 2, 180, 76, 0, 0, 86, 2000, 0, 6, 20.0, 0, 1, 0, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(80, 'spirit_link', 14, 25, 1, 180, 162, 0, 0, 94, 2000, 0, 6, 20.0, 0, 0, 0, 1224, 4, NULL);
 INSERT INTO `abilities` VALUES(82, 'chi_blast', 2, 41, 4, 180, 18, 110, 0, 92, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(83, 'convert', 5, 40, 1, 600, 49, 0, 0, 88, 2000, 0, 6, 20.0, 0, 1, 80, 640, 0, NULL);
@@ -131,7 +131,7 @@ INSERT INTO `abilities` VALUES(88, 'assault', 15, 1, 4, 5, 170, 0, 0, 94, 2000, 
 INSERT INTO `abilities` VALUES(89, 'retreat', 15, 1, 1, 5, 171, 0, 0, 94, 2000, 0, 6, 20.0, 0, -10, 0, 0, 256, NULL);
 INSERT INTO `abilities` VALUES(90, 'release', 15, 1, 1, 5, 172, 0, 0, 94, 2000, 0, 6, 20.0, 0, -10, 0, 0, 256, NULL);
 INSERT INTO `abilities` VALUES(91, 'blood_pact_rage', 15, 1, 1, 60, 173, 0, 0, 0, 2000, 0, 6, 20.0, 0, 1, 300, 0, 256, NULL);
-INSERT INTO `abilities` VALUES(92, 'rampart', 7, 62, 1, 300, 77, 319, 0, 91, 2000, 0, 6, 20.0, 1, 320, 320, 776, 0, NULL);
+INSERT INTO `abilities` VALUES(92, 'rampart', 7, 62, 1, 300, 77, 319, 0, 91, 2000, 0, 6, 20.0, 1, 1, 300, 776, 0, NULL);
 INSERT INTO `abilities` VALUES(93, 'azure_lore', 16, 0, 1, 7200, 0, 0, 0, 142, 2000, 0, 6, 20.0, 0, 1, 300, 0, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(94, 'chain_affinity', 16, 40, 1, 120, 181, 0, 0, 140, 2000, 0, 6, 20.0, 0, 1, 300, 1344, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(95, 'burst_affinity', 16, 25, 1, 120, 182, 0, 0, 141, 2000, 0, 6, 20.0, 0, 1, 300, 1346, 0, 'TOAU');
@@ -170,8 +170,8 @@ INSERT INTO `abilities` VALUES(127, 'wind_shot', 17, 40, 4, 1, 195, 110, 0, 127,
 INSERT INTO `abilities` VALUES(128, 'earth_shot', 17, 40, 4, 1, 195, 110, 0, 128, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(129, 'thunder_shot', 17, 40, 4, 1, 195, 110, 0, 129, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(130, 'water_shot', 17, 40, 4, 1, 195, 110, 0, 130, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
-INSERT INTO `abilities` VALUES(131, 'light_shot', 17, 40, 4, 1, 195, 0, 0, 123, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
-INSERT INTO `abilities` VALUES(132, 'dark_shot', 17, 40, 4, 1, 195, 0, 0, 124, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
+INSERT INTO `abilities` VALUES(131, 'light_shot', 17, 40, 4, 1, 195, 0, 0, 123, 2000, 0, 6, 18.0, 0, 1, 0, 1410, 0, 'TOAU');
+INSERT INTO `abilities` VALUES(132, 'dark_shot', 17, 40, 4, 1, 195, 0, 0, 124, 2000, 0, 6, 18.0, 0, 1, 0, 1410, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(133, 'random_deal', 17, 50, 1, 1200, 196, 0, 0, 131, 2000, 0, 6, 20.0, 1, 1, 300, 1414, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(135, 'overdrive', 18, 0, 1, 7200, 0, 0, 0, 143, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(136, 'activate', 18, 1, 1, 1200, 205, 0, 0, 83, 2000, 0, 6, 20.0, 0, 1, 80, 1478, 0, 'TOAU');
@@ -195,8 +195,8 @@ INSERT INTO `abilities` VALUES(153, 'martyr', 3, 75, 2, 1350, 27, 102, 0, 157, 2
 INSERT INTO `abilities` VALUES(154, 'devotion', 3, 75, 2, 1350, 28, 451, 0, 158, 2000, 0, 6, 10.0, 0, 1, 300, 2178, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(155, 'assassins_charge', 6, 75, 1, 1050, 67, 0, 0, 160, 2000, 0, 6, 20.0, 0, 1, 300, 2368, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(156, 'feint', 6, 75, 1, 720, 68, 0, 0, 159, 2000, 0, 6, 20.0, 0, 1, 300, 2370, 1, 'TOAU');
-INSERT INTO `abilities` VALUES(157, 'fealty', 7, 75, 1, 1350, 78, 0, 0, 148, 2000, 0, 6, 20.0, 0, 60, 300, 2432, 1, 'TOAU');
-INSERT INTO `abilities` VALUES(158, 'chivalry', 7, 75, 1, 1350, 79, 451, 0, 149, 2000, 0, 6, 20.0, 0, 60, 300, 2434, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(157, 'fealty', 7, 75, 1, 1350, 78, 0, 0, 148, 2000, 0, 6, 20.0, 0, 1, 300, 2432, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(158, 'chivalry', 7, 75, 1, 1350, 79, 451, 0, 149, 2000, 0, 6, 20.0, 0, 1, 300, 2434, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(159, 'dark_seal', 8, 75, 1, 1050, 89, 0, 0, 144, 2000, 0, 6, 20.0, 0, 1, 300, 2496, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(160, 'diabolic_eye', 8, 75, 1, 1050, 90, 0, 0, 145, 2000, 0, 6, 20.0, 0, 1, 300, 2498, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(161, 'feral_howl', 9, 75, 4, 300, 105, 0, 0, 146, 2000, 0, 6, 20.0, 0, 1, 600, 2560, 1, 'TOAU');
@@ -252,7 +252,7 @@ INSERT INTO `abilities` VALUES(210, 'tabula_rasa', 20, 0, 1, 7200, 0, 0, 0, 190,
 INSERT INTO `abilities` VALUES(211, 'light_arts', 20, 10, 1, 60, 228, 0, 0, 171, 2000, 0, 6, 20.0, 0, 1, 80, 1600, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(212, 'dark_arts', 20, 10, 1, 60, 232, 0, 0, 176, 2000, 0, 6, 20.0, 0, 1, 80, 1600, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(213, 'flourishes_ii', 19, 40, 1, 0, 0, 0, 0, 0, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(214, 'modus_veritas', 20, 65, 4, 600, 230, 0, 0, 188, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(214, 'modus_veritas', 20, 65, 4, 600, 230, 0, 0, 188, 2000, 0, 6, 20.0, 0, 1, 300, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(215, 'penury', 20, 10, 1, 1, 231, 0, 0, 172, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
 INSERT INTO `abilities` VALUES(216, 'celerity', 20, 25, 1, 1, 231, 0, 0, 173, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
 INSERT INTO `abilities` VALUES(217, 'rapture', 20, 55, 1, 1, 231, 0, 0, 174, 2000, 0, 6, 20.0, 0, 1, 80, 0, 16, 'WOTG');
@@ -267,7 +267,7 @@ INSERT INTO `abilities` VALUES(225, 'snarl', 9, 45, 257, 30, 107, 0, 0, 87, 2000
 INSERT INTO `abilities` VALUES(226, 'retaliation', 1, 60, 1, 180, 8, 0, 0, 185, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(227, 'footwork', 2, 65, 1, 300, 21, 0, 0, 197, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(228, 'despoil', 6, 77, 4, 300, 61, 125, 0, 181, 2000, 0, 3, 4.4, 0, 1, 300, 0, 0, 'ABYSSEA');
-INSERT INTO `abilities` VALUES(229, 'pianissimo', 10, 45, 1, 15, 112, 0, 0, 194, 2000, 0, 6, 20.0, 0, 1, 60, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(229, 'pianissimo', 10, 45, 1, 15, 112, 0, 0, 194, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(230, 'sekkanoki', 12, 60, 1, 300, 140, 0, 0, 199, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(232, 'elemental_siphon', 15, 50, 1, 300, 175, 451, 0, 201, 2000, 0, 6, 20.0, 0, 1, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(233, 'sublimation', 20, 35, 1, 30, 234, 0, 0, 189, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'WOTG');

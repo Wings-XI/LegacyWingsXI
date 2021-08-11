@@ -31,6 +31,10 @@ function onEventUpdate(player, csid, option)
             SpawnMob(ultimaId)
             battlefield:setLocalVar("phaseChange", 0)
         end
+    else 
+        if EventFinishBCNM(player, csid, option) then
+            return
+        end
     end
 end
 
