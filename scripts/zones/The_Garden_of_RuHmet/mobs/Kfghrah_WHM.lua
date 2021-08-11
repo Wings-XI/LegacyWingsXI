@@ -3,7 +3,7 @@
 --  Mob: Kf'ghrah WHM
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/globals/magic") -- no spells are currently set due to lack of info
+require("scripts/globals/magic")
 -----------------------------------
 
 function onMobSpawn(mob)
