@@ -871,7 +871,7 @@ INSERT INTO `mob_skills` VALUES(1319, 977, 'epoxy_spread', 1, 10.0, 2000, 1800, 
 INSERT INTO `mob_skills` VALUES(1322, 14, 'gerjis_grip', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1326, 988, 'final_retribution', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1329, 990, 'gala_macabre', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1330, 1074, 'hoof_volley', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1330, 910, 'hoof_volley', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1336, 289, 'frenzied_rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1338, 234, 'infernal_pestilence', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1347, 998, 'dual_strike', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
@@ -1696,6 +1696,8 @@ INSERT INTO `mob_skills` VALUES(2498, 1695, 'altanas_favor', 1, 12.0, 2000, 1000
 INSERT INTO `mob_skills` VALUES(2464, 1685, 'reraise_ii', 0, 18.0, 2000, 1000, 2, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2460, 1684, 'raise_ii', 0, 18.0, 2000, 1000, 34, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3868, 419, 'heavy_strike', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(3917, 913, 'choke_breath', 4, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(3918, 914, 'fantod', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
