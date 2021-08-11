@@ -26,6 +26,17 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
+    local battlefield = mob:getBattlefield()
+    local battletime = mob:getBattleTime()
+    local changetime = mob:getLocalVar("changetime")
+    if battlefield:getLocalVar("fireworks") == 1 then
+        if battletime - changetime >= 3 then
+            mob:SetMagicCastingEnabled(false)
+            mob:entityAnimationPacket("ffr2")
+            mob:AnimationSub(2)
+            mob:setLocalVar("changetime", mob:getBattleTime())
+        end
+    end
 end
 
 function onMobDisengage(mob, target)

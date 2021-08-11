@@ -5,7 +5,7 @@
 --  Type: Physical
 --  Utsusemi/Blink absorb: 1 shadow
 --  Range: Melee
---  Notes: Only used by unarmed Mamool Ja of the warrior class (THF, NIN, BLU, BST, DRG).
+--  Notes: Only used by unarmed Mamool Ja.
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -13,7 +13,11 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if (mob:getMainJob() == tpz.job.NIN or mob:AnimationSub() == 1) then
+        return 0
+    else 
+        return 1
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
