@@ -2842,7 +2842,7 @@ INSERT INTO `mob_groups` VALUES(2290, 2189, 68, 'Karababa', 0, 0, 0, 0, 0, 0, 0,
 INSERT INTO `mob_groups` VALUES(2306, 3327, 68, 'Raubahn', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(2307, 3332, 68, 'Razfahd', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(2310, 4493, 68, 'Zazarg', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(1, 2401, 69, 'Leujaoam_Worm', 0, 128, 0, 0, 9999, 77, 78, 0);
+INSERT INTO `mob_groups` VALUES(1, 2401, 69, 'Leujaoam_Worm', 0, 128, 0, 5160, 9999, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(2, 3259, 69, 'Qiqirn_Miner', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3, 2671, 69, 'Mineral_Eater', 0, 128, 0, 0, 9999, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(4, 2065, 69, 'Imp', 0, 128, 0, 0, 0, 75, 79, 0);
