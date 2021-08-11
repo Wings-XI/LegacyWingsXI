@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -64,6 +64,7 @@
 #include "../item_container.h"
 #include "../items/item_weapon.h"
 #include "../packets/pet_sync.h"
+#include "../packets/char_recast.h"
 #include "../packets/char_sync.h"
 #include "../packets/position.h"
 #include "../packets/lock_on.h"
@@ -360,7 +361,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return level * 31 / 50 + 6;
+        return std::clamp((int)level * 106 / 100, 8, 90);
     }
 
     int16 GetEnmityModCure(int16 level)
@@ -2986,9 +2987,6 @@ namespace battleutils
 
     bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PEnmityHolder)
     {
-        if (PEnmityHolder->objtype != TYPE_MOB)
-            PEnmityHolder = nullptr;
-
         //utsus always overwrites blink, so if utsus>0 then we know theres no blink.
         uint16 Shadow = PDefender->getMod(Mod::UTSUSEMI);
         Mod modShadow = Mod::UTSUSEMI;
@@ -3006,11 +3004,8 @@ namespace battleutils
         if (Shadow > 0)
         {
             PDefender->setModifier(modShadow, --Shadow);
-            if (PEnmityHolder)
-            {
-                int8 enmityDown = -(PDefender->GetMLevel() / 2);
-                ((CMobEntity*)PEnmityHolder)->PEnmityContainer->UpdateEnmity(PDefender, enmityDown, enmityDown, false, false);
-            }
+            if (PEnmityHolder && PEnmityHolder->objtype == TYPE_MOB)
+                ((CMobEntity*)PEnmityHolder)->PEnmityContainer->UpdateEnmity(PDefender, modShadow == Mod::UTSUSEMI ? -25 : -50, 0, false, false);
 
             if (Shadow == 0)
             {
@@ -5440,12 +5435,14 @@ namespace battleutils
                     }
                 }
                 PTarget->health.tp = 1000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 4:
                 // Restores all Job Abilities (does not restore One Hour Abilities), 300% TP Restore
                 PTarget->PRecastContainer->ResetAbilities();
                 PTarget->health.tp = 3000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 5:
@@ -5467,6 +5464,7 @@ namespace battleutils
                 if (PTarget->health.maxmp > 0 && (PTarget->health.mp < (PTarget->health.maxmp / 2)))
                 {
                     PTarget->health.mp = PTarget->health.maxmp / 2;
+                    PTarget->updatemask |= UPDATE_HP;
                 }
                 break;
 
@@ -5482,6 +5480,13 @@ namespace battleutils
                 }
                 PTarget->addMP(PTarget->health.maxmp);
                 break;
+        }
+
+        if (PCaster != PTarget)
+        {
+            // Update target's recast state; caster's will be handled
+            // back up in CCharEntity::OnAbility.
+            PTarget->pushPacket(new CCharRecastPacket(PTarget));
         }
     }
 

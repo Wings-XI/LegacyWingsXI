@@ -27,6 +27,8 @@ from migrations import eminence_blob
 from migrations import char_timestamp
 from migrations import currency_columns
 from migrations import chat_filters
+from migrations import ip_exempt
+from migrations import blocked_ranges
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -45,6 +47,8 @@ migrations = [
     char_timestamp,
     currency_columns,
     chat_filters,
+    ip_exempt,
+    blocked_ranges,
 ]
 # These are the default 'protected' files
 player_data = [
@@ -211,7 +215,7 @@ def fetch_files(express=False):
             sql_diffs = repo.commit(current_version).diff(release_version,paths='sql-wings/')
             if len(sql_diffs) > 0:
                 for diff in sql_diffs:
-                    import_files.append(diff.a_path[4:])
+                    import_files.append(diff.a_path[10:])
                 express_enabled = True
             else:
                 express_enabled = False

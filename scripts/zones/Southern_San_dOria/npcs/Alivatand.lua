@@ -52,7 +52,17 @@ local items = {
 	    id = 202, -- Golden Fleece
 	    rank = 9,
 		cost = 150000
-	}
+	},
+    [4] = {
+        id = 339, -- Tanner's Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] = {
+        id = 15823, -- Tanner's Ring
+        rank = 6,
+        cost = 80000
+    }
 }
 
 function onTrade(player, npc, trade)

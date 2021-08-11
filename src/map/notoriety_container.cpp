@@ -42,13 +42,15 @@ void CNotorietyContainer::add(CBattleEntity* entity)
     m_Lookup.insert(entity);
 }
 
-void CNotorietyContainer::remove(CBattleEntity* entity)
+bool CNotorietyContainer::remove(CBattleEntity* entity)
 {
     auto entity_itr = m_Lookup.find(entity);
     if (entity_itr != m_Lookup.end())
     {
         m_Lookup.erase(*entity_itr);
+        return true;
     }
+    return false;
 }
 
 bool CNotorietyContainer::hasEnmity()
@@ -78,6 +80,31 @@ bool CNotorietyContainer::hasEnmity()
     }
 
     return !m_Lookup.empty();
+}
+
+void CNotorietyContainer::clearAllEnmityForAttackers()
+{
+    if (hasEnmity())
+    {
+        std::vector<CBattleEntity*> toRemove;
+        for (CBattleEntity* entry : *this)
+        {
+            if (auto* mob = dynamic_cast<CMobEntity*>(entry))
+            {
+                if (mob->PEnmityContainer->GetHighestEnmity() == m_POwner ||
+                    (mob->animation == ANIMATION_ATTACK && mob->GetBattleTargetID() == m_POwner->targid))
+                {
+                    mob->PEnmityContainer->Clear(m_POwner->id, false);
+                    toRemove.emplace_back(entry);
+                }
+            }
+        }
+
+        for (CBattleEntity* entry : toRemove)
+        {
+            remove(entry);
+        }
+    }
 }
 
 std::size_t CNotorietyContainer::size()

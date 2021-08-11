@@ -14100,6 +14100,31 @@ inline int32 CLuaBaseEntity::setMobLevel(lua_State *L)
     if (auto PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity))
     {
         PMob->SetMLevel((uint8)lua_tointeger(L, 1));
+        PMob->SetSLevel((uint8)lua_tointeger(L, 1));
+        mobutils::CalculateStats(PMob);
+        mobutils::GetAvailableSpells(PMob);
+    }
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: setMaxHPP(val)
+ *  Purpose : set the mob's HPP. this will heal the mob and recalculate all stats, including resetting effects/mods
+ *  Example : mob:setMaxHPP(133) -- 33% boost
+ *  Notes   : monsters only. positive integers only.
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setMaxHPP(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    if (auto PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity))
+    {
+        PMob->m_mobModStatSave[MOBMOD_HP_SCALE] = (uint16)lua_tointeger(L, 1);
         mobutils::CalculateStats(PMob);
         mobutils::GetAvailableSpells(PMob);
     }
@@ -18048,6 +18073,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     // Mob Entity-Specific
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobLevel),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMaxHPP),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSystem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getFamily),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMobType),
