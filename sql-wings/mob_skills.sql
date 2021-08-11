@@ -1049,6 +1049,7 @@ INSERT INTO `mob_skills` VALUES(1731, 1149, 'forceful_blow', 0, 7.0, 2000, 1000,
 INSERT INTO `mob_skills` VALUES(1732, 1150, 'somersault_kick', 0, 7.0, 2000, 1300, 4, 0, 0, 4, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1733, 1151, 'firespit', 0, 25.0, 2000, 1300, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1734, 1152, 'warm-up', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1736, 1154, 'axe_throw', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1738, 1156, 'pw_groundburst', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1743, 1232, 'rock_smash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1744, 1233, 'diamondhide', 1, 16.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
@@ -1122,6 +1123,7 @@ INSERT INTO `mob_skills` VALUES(1835, 1311, 'serpentine_tail', 0, 7.0, 2000, 150
 INSERT INTO `mob_skills` VALUES(1836, 1312, 'nerve_gas', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1837, 1275, 'feeble_bleat', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1838, 1221, 'mine_blast', 1, 10.0, 2000, 1500, 4, 24, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1839, 1147, 'rushing_slash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1901, 505, 'activate', 0, 7.0, 2000, 0, 1, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1903, 915, 'camisado', 0, 10.0, 640, 3000, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1904, 142, 'somnolence', 0, 10.0, 641, 3000, 4, 0, 0, 0, 0, 0, 0);

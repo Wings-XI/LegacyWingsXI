@@ -15,6 +15,13 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    -- If mamool has a axe of a sword (except BLU)
+    if (mob:getMainJob() == tpz.job.BST or mob:getMainJob() == tpz.job.BST) then
+        -- If animationSub is 1, mob has already lost the axe. If zero, still has axe.
+        if mob:AnimationSub() == 1 then
+            return 1
+        end
+    end
     return 0
 end
 

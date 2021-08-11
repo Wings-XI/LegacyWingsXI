@@ -3967,6 +3967,31 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 21, 50, 94);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 30, 65, 94);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 34, 55, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 40, 70, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 46, 63, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 51, 68, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 53, 19, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 54, 28, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 55, 10, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 56, 13, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 57, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 67, 21, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 112, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 321, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 324, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 327, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 330, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 333, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 336, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 338, 12, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 339, 37, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 342, 65, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 345, 48, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 348, 44, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 351, 56, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 54, 28, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 162, 68, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 191, 63, 255);
@@ -3976,7 +4001,6 @@ INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 258, 7, 255);
 --
 -- Indexes for dumped tables
 --
-
 --
 -- Indexes for table `mob_spell_lists`
 --
