@@ -3967,6 +3967,12 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 54, 28, 255);
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 162, 68, 255);
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 191, 63, 255);
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 210, 54, 255);
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 238, 18, 255);
+INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 258, 7, 255);
 --
 -- Indexes for dumped tables
 --

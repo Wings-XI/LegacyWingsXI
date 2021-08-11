@@ -2461,7 +2461,7 @@ INSERT INTO `mob_pools` VALUES(2397, 'Lesser_Gaylas', 'Lesser_Gaylas', 47, 0x000
 INSERT INTO `mob_pools` VALUES(2398, 'Lesser_Manticore', 'Lesser_Manticore', 179, 0x0000920100000000000000000000000000000000, 1, 1, 7, 360, 100, 0, 1, 0, 0, 0, 0, 0, 523, 129, 0, 0, 0, 0, 0, 179);
 INSERT INTO `mob_pools` VALUES(2399, 'Lesser_Roc', 'Lesser_Roc', 125, 0x0000500100000000000000000000000000000000, 1, 3, 11, 240, 100, 0, 0, 0, 1, 0, 0, 0, 394, 131, 0, 0, 0, 0, 0, 125);
 INSERT INTO `mob_pools` VALUES(2400, 'Lesser_Wivre', 'Lesser_Wivre', 257, 0x0000b90800000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 0, 0, 0, 0, 448, 131, 0, 0, 0, 0, 0, 257);
-INSERT INTO `mob_pools` VALUES(2401, 'Leujaoam_Worm', 'Leujaoam_Worm', 258, 0x0000aa0100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 1, 131, 0, 0, 9, 0, 64, 258);
+INSERT INTO `mob_pools` VALUES(2401, 'Leujaoam_Worm', 'Leujaoam_Worm', 258, 0x0000aa0100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 1, 131, 0, 0, 462, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(2402, 'Leviathan_Prime', 'Leviathan_Prime', 40, 0x00001b0300000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 1, 1, 18, 0, 0, 0, 3, 0, 0, 0, 0, 0, 40);
 INSERT INTO `mob_pools` VALUES(2403, 'Lewenhart', 'Lewenhart', 149, 0x01000d0100100b20063003400850a46000700000, 10, 10, 11, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 6, 0, 0, 149);
 INSERT INTO `mob_pools` VALUES(2404, 'Ley_Clionid', 'Ley_Clionid', 65, 0x00004c0900000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 135, 0, 0, 2, 0, 0, 65);
