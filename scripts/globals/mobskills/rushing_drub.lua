@@ -12,7 +12,12 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    -- If animationSub is 1, mob has already lost the staff. If zero, still has staff.
+    if mob:AnimationSub() == 1 then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)

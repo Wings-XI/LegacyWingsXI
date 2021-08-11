@@ -3968,12 +3968,31 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 31, 1, 255); -- Banish IV
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 40, 1, 255); -- Banishga III
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 460, 112, 1, 255); -- Flash
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 232, 1, 255); -- Bio III
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 254, 1, 255); -- Blind
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 461, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 21, 50, 94);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 30, 65, 94);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 34, 55, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 40, 70, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 46, 63, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 51, 68, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 53, 19, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 54, 28, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 55, 10, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 56, 13, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 57, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 67, 21, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaMageImperialAgentRescue', 460, 112, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 321, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 324, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 327, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 330, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 333, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 336, 40, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 338, 12, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 339, 37, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 342, 65, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 345, 48, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 348, 44, 255);
+INSERT INTO `mob_spell_lists` VALUES('MamoolJaNINImperialAgentRescue', 461, 351, 56, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 54, 28, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 162, 68, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 191, 63, 255);
@@ -4035,10 +4054,15 @@ INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 147, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 176, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 204, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 235, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 31, 1, 255); -- Banish IV
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 40, 1, 255); -- Banishga III
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 112, 1, 255); -- Flash
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 232, 1, 255); -- Bio III
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 274, 1, 255); -- Sleepga II
 --
 -- Indexes for dumped tables
 --
-
 --
 -- Indexes for table `mob_spell_lists`
 --
