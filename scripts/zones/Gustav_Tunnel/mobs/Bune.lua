@@ -18,7 +18,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-	local respawn = math.random(75600, 86400) -- 21h to 24h
+    local respawn = math.random(75600, 86400) -- 21h to 24h
     mob:setRespawnTime(respawn)
-	SetServerVariable("BuneRespawn",(os.time() + respawn))
+    SetServerVariable("BuneRespawn",(os.time() + respawn))
 end
