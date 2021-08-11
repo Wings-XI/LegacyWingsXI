@@ -23,6 +23,9 @@ end
 
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 213)
+end
+
+function onMobDespawn(mob)
     DisallowRespawn(mob:getID(), true)
     SetServerVariable("TamlynRespawn",(os.time() + 3600))
 end
