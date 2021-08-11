@@ -712,7 +712,7 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         expression = ((float)m_POwner->health.hp / m_POwner->health.modhp) * 100 >= latentEffect.GetConditionsValue() && m_POwner->health.tp < 1000;
         break;
     case LATENT_MP_UNDER_PERCENT:
-        expression = ((float)m_POwner->health.mp / m_POwner->health.modmp) * 100 <= latentEffect.GetConditionsValue();
+        expression = m_POwner->health.modmp && ((float)m_POwner->health.mp / m_POwner->health.modmp) * 100 <= latentEffect.GetConditionsValue();
         break;
     case LATENT_MP_UNDER:
         expression = m_POwner->health.mp <= latentEffect.GetConditionsValue();
