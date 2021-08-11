@@ -27,6 +27,9 @@ function onTrigger(player, npc)
     end
 
     if (rank > 0 and IS_ASSAULT_ACTIVATED == 1) then
+        if (rank > MAX_ASSAULT_PROMOTION_ALLOWED) then
+            rank = MAX_ASSAULT_PROMOTION_ALLOWED
+        end
         player:startEvent(277, rank, haveimperialIDtag, assaultPoints, player:getCurrentAssault())
     else
         player:startEvent(283) -- no rank

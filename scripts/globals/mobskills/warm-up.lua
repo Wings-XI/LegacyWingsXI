@@ -10,13 +10,7 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- only brown-skinned mamool should use this move
-    local mobSkin = mob:getModelId()
-    if (mobSkin == 1639 or mobSkin == 1619) then
-        return 0
-    else
-        return 1
-    end
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)

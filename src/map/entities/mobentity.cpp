@@ -537,7 +537,7 @@ void CMobEntity::DoAutoTarget()
                     {
                         CBattleEntity* PMob = (CBattleEntity*)PPotentialTarget.second;
                         CBattleEntity* PMobTarget = (CBattleEntity*)(PMob->GetEntity(PMob->GetBattleTargetID()));
-                        
+
                         if ((PMob->objtype == TYPE_MOB || PMob->objtype == TYPE_PET) &&
                             PMob->animation == ANIMATION_ATTACK &&
                             PMob->allegiance == ALLEGIANCE_MOB &&
@@ -783,6 +783,17 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 {
     auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    int32 wsTargetID = luautils::OnMobSkillFinished((CBaseEntity*)this, (CBaseEntity*)PTarget, (CMobSkill*)PSkill); // change WS target if needed
+    if (wsTargetID != 0)
+    {
+        auto newTarget = GetEntity(wsTargetID);
+        if (newTarget != nullptr)
+        {
+            PTarget = static_cast<CBattleEntity*>(newTarget);
+        }
+    }
+
     bool cover = false;
 
     if ((!PTarget) || (!PSkill))

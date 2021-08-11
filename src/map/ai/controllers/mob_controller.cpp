@@ -239,7 +239,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     {
         return false;
     }
-    
+
     if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
     {
         return false;
@@ -512,7 +512,7 @@ bool CMobController::CanCastSpells()
     {
         return false;
     }
-	
+
     return IsMagicCastingEnabled();
 }
 
@@ -1124,7 +1124,7 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
             if (memberHate > hate) {
                 hate = memberHate;
             }
-        }    
+        }
     });
     return hate;
 }
