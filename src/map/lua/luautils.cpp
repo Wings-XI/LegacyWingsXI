@@ -3713,10 +3713,10 @@ namespace luautils
         return retVal;
     }
 
-    int32 OnMobSkillFinished(CBaseEntity* PMob, CBaseEntity* PTarget, CMobSkill* PMobSkill)
+    int32 onMobSkillFinished(CBaseEntity* PMob, CBaseEntity* PTarget, CMobSkill* PMobSkill)
     {
         lua_prepscript("scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
-        if (prepFile(File, "OnMobSkillFinished"))
+        if (prepFile(File, "onMobSkillFinished"))
         {
             return 0;
         }
@@ -3732,7 +3732,7 @@ namespace luautils
 
         if (lua_pcall(LuaHandle, 3, 1, 0))
         {
-            ShowError("luautils::OnMobSkillFinished (%s): %s\n", PMobSkill->getName(), lua_tostring(LuaHandle, -1));
+            ShowError("luautils::onMobSkillFinished (%s): %s\n", PMobSkill->getName(), lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return 0;
         }
