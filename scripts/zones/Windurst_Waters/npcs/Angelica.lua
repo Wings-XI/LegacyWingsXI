@@ -47,8 +47,8 @@ function onTrigger(player, npc)
     local currentBody = player:getEquipID(tpz.slot.BODY)
 
     -- pre-quest CS
-    if aPose == QUEST_AVAILABLE and aPoseProg == 0 and not player:needToZone() and currentBody ~= desiredBody then
-        player:startEvent(87) -- pre-quest CS
+    if aPose == QUEST_AVAILABLE and aPoseProg == 0 and currentBody ~= desiredBody and not player:needToZone() then
+        player:startEvent(91) -- pre-quest CS
 
     -- start quest
     elseif aPose == QUEST_AVAILABLE and aPoseProg == 1 and currentBody ~= desiredBody then
@@ -89,7 +89,7 @@ end
 
 function onEventFinish(player, csid, option)
     -- pre-quest CS
-    if csid == 87 then
+    if csid == 91 then
         player:setCharVar("QuestAPoseByOtherName_prog", 1)
 
     -- start quest
