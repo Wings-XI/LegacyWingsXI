@@ -52,7 +52,7 @@ function onTrigger(player, npc)
 
     -- start quest
     elseif aPose == QUEST_AVAILABLE and aPoseProg == 1 and currentBody ~= desiredBody then
-        player:startEvent(92, 0, 0, 0, desiredBody)
+        player:startEvent(92, 0, desiredBody, 0, desiredBody, desiredBody, desiredBody, desiredBody)
 
     -- check in during quest
     elseif aPose == QUEST_ACCEPTED then
@@ -61,7 +61,8 @@ function onTrigger(player, npc)
             if currentBody == player:getCharVar("QuestAPoseByOtherName_equip") then
                 player:startEvent(96) -- complete quest
             else
-                player:startEvent(93, 0, desiredBody, 0, player:getCharVar("QuestAPoseByOtherName_equip")) -- reminder
+                desiredBody = player:getCharVar("QuestAPoseByOtherName_equip")
+                player:startEvent(93, 0, desiredBody, 0, desiredBody, desiredBody, desiredBody, desiredBody) -- reminder
             end
         else
             player:startEvent(102) -- fail quest
