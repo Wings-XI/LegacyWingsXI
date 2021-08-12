@@ -29,7 +29,7 @@ end
 function onMobDeath(mob, player, isKiller)
 end
 
-function OnMobSkillFinished(mob, target, skill)
+function onMobSkillFinished(mob, target, skill)
     local skillId = skill:getID()
     if skillId == 1733 or skillId == 1923 or skillId == 2361 or skillId == 1736 then
         if (math.random(100) < 80) then
