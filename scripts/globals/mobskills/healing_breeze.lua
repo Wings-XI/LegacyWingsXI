@@ -27,5 +27,5 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 
-    return MobHealMove(mob, mob:getMaxHP() * potency / 100)
+    return MobHealMove(target, target:getMaxHP() * potency / 100)
 end
