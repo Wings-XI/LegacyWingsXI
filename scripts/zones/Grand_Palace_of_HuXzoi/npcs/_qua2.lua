@@ -99,14 +99,15 @@ function onPath(npc, player)
         GetNPCByID(16916928):setLocalVar("checkpoint", 12)
     elseif checkpoint == 12 and npc:checkDistance(539.97, -1, 424.34) == 0 then
         GetNPCByID(16916928):setLocalVar("checkpoint", 0)
-        npc:hideNPC(7000)
-        npc:setPos(796.97, -1, 459.97)
+
         if quasiStatus == 1 then
             GetNPCByID(16916870):openDoor(25)
             GetNPCByID(16916928):setLocalVar("quasiStatus", 0) 
             npc:showText(npc, 7358)
             npc:showText(npc, 7361)
         end
+        npc:hideNPC(7000)
+        npc:setPos(796.97, -1, 459.97)
         npc:pathTo(772.07, 0, 460.7)   
     end
 

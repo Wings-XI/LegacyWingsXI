@@ -16,7 +16,6 @@ function onTrigger(player, npc)
     local quasiStatus = npc:getLocalVar("quasiStatus")
 
     if npc:getLocalVar("quasiStatus") == 0 then
-        GetNPCByID(16916906):speed(18)
         GetNPCByID(16916906):setPos(796.97, -1, 459.97)
         GetNPCByID(16916906):showText(GetNPCByID(16916906), 7356)
         GetNPCByID(16916906):showNPC(500)
