@@ -25,7 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     if (blinded == tpz.msg.basic.SKILL_ENFEEB_IS) then
         typeEffect = tpz.effect.BLINDNESS
-    elseif (bio == tpz.msg.basic.SKILL_ENFEEB_IS) then
+    elseif (silenced == tpz.msg.basic.SKILL_ENFEEB_IS) then
         typeEffect = tpz.effect.SILENCE
     else
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
