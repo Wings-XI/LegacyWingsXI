@@ -73,6 +73,8 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
     m_findFlags = flags;
     m_radius = radius;
     m_zone = m_PBattleEntity->getZone();
+    CZone* PZone = m_zone ? zoneutils::GetZone(m_zone) : nullptr;
+    bool inDynamis = PZone && PZone->GetType() && PZone->GetType() == ZONETYPE_DYNAMIS;
 
     if (radiusType == AOERADIUS_ATTACKER){
         m_PRadiusAround = &m_PBattleEntity->loc.p;
@@ -146,7 +148,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
         }
 
         if (m_findFlags & FINDFLAGS_HIT_ALL ||
-            (m_findType == FIND_MONSTER_PLAYER && ((CMobEntity*)m_PBattleEntity)->CalledForHelp()))
+            (m_findType == FIND_MONSTER_PLAYER && (((CMobEntity*)m_PBattleEntity)->CalledForHelp() || inDynamis)))
         {
             addAllInZone(m_PMasterTarget, withPet);
         }
