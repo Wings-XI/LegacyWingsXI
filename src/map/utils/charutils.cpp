@@ -1376,7 +1376,7 @@ namespace charutils
     {
         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
         {
-            if (PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
+            if (PChar->getStorage(LocID) && PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
             {
                 return true;
             }
