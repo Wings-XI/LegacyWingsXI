@@ -55,7 +55,8 @@ g_mixins.families.euvhi = function(mob)
         mob:setLocalVar("MagicalDamage", 0)
         mob:setLocalVar("RangedDamage", 0)
         mob:setLocalVar("BreathDamage", 0)
-        mob:AnimationSub(2)
+        mob:setLocalVar("[euvhi]changeTime", 0)
+        mob:AnimationSub(math.random(1, 2))
     end)
 
     mob:addListener("ROAM_TICK", "EUVHI_RTICK", function(mob)
@@ -80,12 +81,11 @@ g_mixins.families.euvhi = function(mob)
             -- TODO: Initial DOT Damage will count as "Magical Damage", need to track dot ticks.
         end
         
-        local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
-        local physicalPercent =  mob:getLocalVar("PhysicalDamage") / sum * 100
-        local magicalPercent =  mob:getLocalVar("MagicalDamage") / sum * 100
-        local rangedPercent =  mob:getLocalVar("RangedDamage") / sum * 100
-        local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
-
+        -- local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
+        -- local physicalPercent =  mob:getLocalVar("PhysicalDamage") / sum * 100
+        -- local magicalPercent =  mob:getLocalVar("MagicalDamage") / sum * 100
+        -- local rangedPercent =  mob:getLocalVar("RangedDamage") / sum * 100
+        -- local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
         --useful debug output
         -- printf(string.format("Physical %d %d Magical %d %d w Ranged %d %d Breath %d %d",
         -- mob:getLocalVar("PhysicalDamage"), physicalPercent, mob:getLocalVar("MagicalDamage"), magicalPercent, mob:getLocalVar("RangedDamage"), rangedPercent, mob:getLocalVar("BreathDamage"), breathPercent))
@@ -94,11 +94,6 @@ g_mixins.families.euvhi = function(mob)
 
     mob:addListener("COMBAT_TICK", "EUVHI_CTICK", function(mob)
         local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
-        local physicalPercent = mob:getLocalVar("PhysicalDamage") / sum * 100
-        local magicalPercent = mob:getLocalVar("MagicalDamage") / sum * 100
-        local rangedPercent =  mob:getLocalVar("RangedDamage") / sum * 100
-        local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
-
         if mob:AnimationSub() == 2 and sum > 500 then
             closeFlower(mob)
         elseif mob:AnimationSub() <= 1 and mob:getBattleTime() > mob:getLocalVar("[euvhi]changeTime") then
