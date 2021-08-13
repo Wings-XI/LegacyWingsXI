@@ -15,7 +15,7 @@ end
 function onTrigger(player, npc)
     local notes = player:getCurrency("allied_notes")
     local freelances = 99 -- Faking it for now
-    local unknown = 12 -- Faking it for now
+    local avilableCiphers = 0 -- 4 = Valaineral, 8 = Adelheid
     local medalRank = getMedalRank(player)
     local bonusEffects = 0 -- 1 = regen, 2 = refresh, 4 = meal duration, 8 = exp loss reduction, 15 = all
     local timeStamp = 0 -- getSigilTimeStamp(player)
@@ -29,7 +29,7 @@ function onTrigger(player, npc)
     if (medalRank == 0) then
         player:startEvent(14)
     else
-        player:startEvent(13, 0, notes, freelances, unknown, medalRank, bonusEffects, timeStamp, 0)
+        player:startEvent(13, 0, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)
     end
 
 end
