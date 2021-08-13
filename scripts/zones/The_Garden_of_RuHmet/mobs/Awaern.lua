@@ -4,6 +4,7 @@
 -- Note: PH for Ix'Aern DRK and DRG
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -14,6 +15,31 @@ function onMobSpawn(mob)
         local groups = ID.mob.AWAERN_DRG_GROUPS
         IxAernDRG_PH = groups[math.random(1, #groups)] + math.random(0, 2) -- The 4th mobid in each group is a pet. F that son
         SetServerVariable("[SEA]IxAernDRG_PH", IxAernDRG_PH)
+    end
+end
+
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
+end
+
+function onMobFight(mob, target)
+    local battleTime = mob:getBattleTime()
+    local changeTime = mob:getLocalVar("changeTime")
+
+    if mob:getHPP() < 100 then
+        if mob:AnimationSub() == 0 then -- bracers trigger initially upon taking damage
+            mob:AnimationSub(2)
+            mob:addMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        elseif mob:AnimationSub() == 2 and battleTime - changeTime >= 30 then -- bracer mode lasts 30 seconds
+            mob:AnimationSub(1)
+            mob:delMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        elseif mob:AnimationSub() == 1 and battleTime - changeTime >= 120 then -- bracemode 2 minute cooldown
+            mob:AnimationSub(2)
+            mob:addMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        end
     end
 end
 

@@ -21,10 +21,10 @@ zones[tpz.zone.THE_GARDEN_OF_RUHMET] =
         CONQUEST_BASE           = 7439, -- Tallying conquest results...
         NO_NEED_INVESTIGATE     = 7618, -- There is no need to investigate further.
         PORTAL_SEALED           = 7647, -- The portal is firmly sealed by a mysterious energy.
-        UNKNOWN_PRESENCE        = 7755, -- You sense some unknown presence...
-        NONE_HOSTILE            = 7756, -- You sense some unknown presence, but it does not seem hostile.
-        MENACING_CREATURES      = 7757, -- Menacing creatures appear out of nowhere!
-        SHEER_ANIMOSITY         = 7758, -- <name> is enveloped in sheer animosity!
+        UNKNOWN_PRESENCE        = 7754, -- You sense some unknown presence...
+        NONE_HOSTILE            = 7755, -- You sense some unknown presence, but it does not seem hostile.
+        MENACING_CREATURES      = 7756, -- Menacing creatures appear out of nowhere!
+        SHEER_ANIMOSITY         = 7757, -- <name> is enveloped in sheer animosity!
         HOMEPOINT_SET           = 7763, -- Home point set!
     },
     mob =
@@ -48,6 +48,8 @@ zones[tpz.zone.THE_GARDEN_OF_RUHMET] =
         IXAERN_DRK          = 16921018,
         JAILER_OF_FAITH     = 16921021,
         IXAERN_DRG          = 16921022,
+        WYNAV_START         = 16921023,
+        WYNAV_END           = 16921025,
     },
     npc =
     {

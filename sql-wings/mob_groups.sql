@@ -1012,6 +1012,8 @@ INSERT INTO `mob_groups` VALUES(54, 3422, 33, 'Ru_phuabo', 0, 128, 0, 0, 0, 67, 
 INSERT INTO `mob_groups` VALUES(55, 3270, 33, 'Qn_hpemde', 0, 128, 0, 0, 0, 67, 67, 0);
 INSERT INTO `mob_groups` VALUES(56, 21, 33, 'Absolute_Virtue', 0, 128, 3, 66000, 0, 92, 92, 0);
 INSERT INTO `mob_groups` VALUES(14116, 5341, 33, 'Ul_aern_whm', 960, 0, 2514, 0, 5000, 70, 73, 0);
+INSERT INTO `mob_groups` VALUES(57, 6194, 33, 'Ul_xzomit_parent', 960, 0, 2517, 0, 0, 68, 71, 0);
+INSERT INTO `mob_groups` VALUES(58, 6195, 33, 'Om_xzomit_parent', 960, 0, 1856, 0, 0, 72, 76, 0);
 INSERT INTO `mob_groups` VALUES(1, 1241, 34, 'Eo_ghrah', 960, 0, 777, 0, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(2, 1242, 34, 'Eo_zdei', 960, 0, 778, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(3, 1240, 34, 'Eo_euvhi', 960, 0, 776, 0, 0, 74, 77, 0);
@@ -1034,7 +1036,7 @@ INSERT INTO `mob_groups` VALUES(19, 55, 34, 'Aerns_Euvhi', 0, 128, 0, 0, 0, 63, 
 INSERT INTO `mob_groups` VALUES(20, 5365, 34, 'Eo_aern_drk', 960, 0, 775, 0, 9999, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(21, 5363, 34, 'Eo_aern_rdm', 960, 0, 775, 0, 9999, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(22, 2113, 34, 'Ix_ghrah', 0, 128, 0, 9000, 0, 76, 76, 0);
-INSERT INTO `mob_groups` VALUES(23, 2136, 34, 'Jailer_of_Temperance', 0, 32, 1402, 22000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(23, 2136, 34, 'Jailer_of_Temperance', 0, 32, 1402, 25000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(24, 4661, 34, 'Ix_aern_mnk', 0, 128, 2845, 11000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(25, 3269, 34, 'Qn_aern_rdm', 0, 128, 0, 0, 0, 77, 77, 0);
 INSERT INTO `mob_groups` VALUES(26, 4651, 34, 'Qn_aern_whm', 0, 128, 0, 0, 0, 77, 77, 0);
@@ -1062,13 +1064,13 @@ INSERT INTO `mob_groups` VALUES(21, 301, 35, 'Aw_zdei', 960, 0, 0, 0, 0, 80, 83,
 INSERT INTO `mob_groups` VALUES(22, 5353, 35, 'Eo_aern_drg', 0, 128, 775, 0, 0, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(23, 5357, 35, 'Eo_aern_pld', 960, 0, 775, 0, 9999, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(24, 2114, 35, 'Ix_zdei', 0, 128, 0, 6500, 0, 78, 78, 0);
-INSERT INTO `mob_groups` VALUES(25, 2131, 35, 'Jailer_of_Fortitude', 0, 128, 1397, 25000, 0, 79, 80, 0);
+INSERT INTO `mob_groups` VALUES(25, 2131, 35, 'Jailer_of_Fortitude', 0, 128, 1397, 20000, 0, 79, 80, 0);
 INSERT INTO `mob_groups` VALUES(26, 2215, 35, 'Kf_ghrah_whm', 0, 128, 0, 9000, 0, 77, 77, 0);
 INSERT INTO `mob_groups` VALUES(27, 4659, 35, 'Kf_ghrah_blm', 0, 128, 0, 9000, 0, 77, 77, 0);
-INSERT INTO `mob_groups` VALUES(28, 4660, 35, 'Ix_aern_drk', 0, 128, 2844, 21000, 0, 82, 87, 0);
+INSERT INTO `mob_groups` VALUES(28, 4660, 35, 'Ix_aern_drk', 0, 128, 2844, 13000, 0, 82, 87, 0);
 INSERT INTO `mob_groups` VALUES(29, 5549, 35, 'Qn_aern_rng', 0, 128, 0, 0, 0, 80, 82, 0);
-INSERT INTO `mob_groups` VALUES(30, 2130, 35, 'Jailer_of_Faith', 0, 128, 1396, 18000, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(31, 2112, 35, 'Ix_aern_drg', 0, 128, 2843, 21000, 0, 82, 87, 0);
+INSERT INTO `mob_groups` VALUES(30, 2130, 35, 'Jailer_of_Faith', 0, 128, 1396, 20000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(31, 2112, 35, 'Ix_aern_drg', 0, 128, 2843, 14500, 0, 82, 87, 0);
 INSERT INTO `mob_groups` VALUES(32, 5536, 35, 'Ix_aern_drgs_Wynav', 0, 128, 0, 0, 0, 78, 79, 0);
 INSERT INTO `mob_groups` VALUES(1, 3205, 36, 'Promathia', 0, 128, 0, 8000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(2, 5106, 36, 'Promathia', 0, 128, 0, 0, 12000, 80, 80, 0);

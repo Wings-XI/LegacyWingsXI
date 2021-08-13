@@ -898,8 +898,10 @@ INSERT INTO `mob_skills` VALUES(1370, 1022, 'vitriolic_barrage', 1, 10.0, 2000, 
 INSERT INTO `mob_skills` VALUES(1371, 1023, 'primal_drill', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1372, 1024, 'concussive_oscillation', 1, 15.0, 2000, 1500, 4, 0, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1373, 1025, 'ion_shower', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1374, 1026, 'torrential_torment', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1375, 1027, 'asthenic_fog', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1376, 1028, 'luminous_drape', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1377, 1029, 'fluorescence', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1378, 1010, 'wing_thrust', 0, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1379, 1011, 'auroral_wind', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1380, 1012, 'impact_stream', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -935,8 +937,9 @@ INSERT INTO `mob_skills` VALUES(1449, 1072, 'stupor_spores', 1, 15.0, 2000, 1000
 INSERT INTO `mob_skills` VALUES(1450, 1067, 'viscid_nectar', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1451, 1073, 'morning_glory', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1452, 1068, 'axial_bloom', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1453, 1069, 'nutrient_aborption', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1453, 1069, 'nutrient_absorption', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1463, 1074, 'reactor_cool', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1464, 1075, 'zdei_charge', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1465, 1076, 'optic_induration', 4, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1466, 1077, 'static_filament', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1467, 1078, 'decayed_filament', 4, 8.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
