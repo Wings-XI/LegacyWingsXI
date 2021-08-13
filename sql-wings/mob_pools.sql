@@ -4709,7 +4709,7 @@ INSERT INTO `mob_pools` VALUES(4645, 'Ifrit_Prime', 'Ifrit_Prime', 322, 0x000019
 INSERT INTO `mob_pools` VALUES(4646, 'Leviathan_Prime', 'Leviathan_Prime', 323, 0x00001b0300000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 1, 1, 18, 1, 0, 0, 3, 0, 0, 0, 0, 0, 323);
 INSERT INTO `mob_pools` VALUES(4647, 'Garuda_Prime', 'Garuda_Prime', 324, 0x00001c0300000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 1, 1, 18, 1, 0, 0, 3, 0, 0, 0, 0, 0, 324);
 INSERT INTO `mob_pools` VALUES(4648, 'Fenrir_Prime', 'Fenrir_Prime', 325, 0x0000180300000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 1, 1, 18, 0, 32, 1417, 155, 0, 0, 0, 0, 0, 325);
-INSERT INTO `mob_pools` VALUES(4649, 'Vanguard_Dragontamer', 'Vanguard_Dragontamer', 327, 0x00003f0400000000000000000000000000000000, 14, 14, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 360);
+INSERT INTO `mob_pools` VALUES(4649, 'Vanguard_Dragontamer', 'Vanguard_Dragontamer', 327, 0x00003f0400000000000000000000000000000000, 14, 14, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 327);
 INSERT INTO `mob_pools` VALUES(4650, 'Fomor_Thief', 'Fomor_Thief', 359, 0x0500520700000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 6, 131, 0, 0, 0, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(4651, 'Qn_aern_whm', 'Qn_aern_whm', 3, 0x0000610500000000000000000000000000000000, 3, 3, 4, 240, 100, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 439);
 INSERT INTO `mob_pools` VALUES(4652, 'FeywealdSaplin', 'FeywealdSaplin', 216, 0x0000880100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 449, 129, 0, 0, 0, 0, 0, 216);
