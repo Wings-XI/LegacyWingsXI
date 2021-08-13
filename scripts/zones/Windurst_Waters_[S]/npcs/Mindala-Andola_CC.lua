@@ -7,6 +7,7 @@
 local ID = require("scripts/zones/Windurst_Waters_[S]/IDs")
 require("scripts/globals/campaign")
 require("scripts/globals/status")
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -52,12 +53,8 @@ function onEventFinish(player, csid, option)
         if option >= 2 and option <= 2050 then -- player bought item
         -- currently only "ribbons" rank coded.
             item, price = getWindurstNotesItem(option)
-            if player:getFreeSlotsCount() >= 1 then
+            if (npcUtil.giveItem(player, item)) then
                 player:delCurrency("allied_notes", price)
-                player:addItem(item)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, item)
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
             end
 
         -- Please, don't change this elseif without knowing ALL the option results first.
