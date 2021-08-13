@@ -480,11 +480,12 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pClientFeatQuery = "SELECT client_version, features FROM accounts_sessions WHERE charid = %u";
+            const char* pClientFeatQuery = "SELECT client_version, features, expansions FROM accounts_sessions WHERE charid = %u";
             ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
                 PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
+                PChar->m_accountExpansions = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 2));
             }
             PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
             PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));

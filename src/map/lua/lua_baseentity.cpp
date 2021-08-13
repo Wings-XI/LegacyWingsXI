@@ -3569,6 +3569,87 @@ inline int32 CLuaBaseEntity::bringPlayer(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getPlayerExpansions()
+*  Purpose : Get the bitmask of registered expansions for a player
+*  Example : player:getPlayerExpansions()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getPlayerExpansions(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    return ((CCharEntity*)m_PBaseEntity)->m_accountExpansions;
+}
+
+/************************************************************************
+*  Function: playerHasExpansion()
+*  Purpose : Check whether a player has a specific expansion registered
+*  Example : player:playerHasExpansion(2) or player:playerHasExpansion("COP")
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::playerHasExpansion(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    uint32 expansion_id = 0;
+    if (lua_isnumber(L, 1)) {
+        expansion_id = (uint32)lua_tointeger(L, 1);
+    }
+    else if (lua_isstring(L, 1)) {
+        std::string expansion_name(lua_tostring(L, 1));
+        size_t exp_len = expansion_name.length();
+        std::string expansion_name_up;
+        for (size_t i = 0; i < exp_len; i++) {
+            expansion_name_up += std::toupper(expansion_name[i]);
+        }
+        if (expansion_name_up == "ROZ") {
+            expansion_id = 1;
+        }
+        else if (expansion_name_up == "COP") {
+            expansion_id = 2;
+        }
+        else if (expansion_name_up == "TOAU") {
+            expansion_id = 3;
+        }
+        else if (expansion_name_up == "WOTG") {
+            expansion_id = 4;
+        }
+        else if (expansion_name_up == "ACP") {
+            expansion_id = 5;
+        }
+        else if (expansion_name_up == "AMK") {
+            expansion_id = 6;
+        }
+        else if (expansion_name_up == "ASA") {
+            expansion_id = 7;
+        }
+        else if (expansion_name_up == "ABYSSEAV" || expansion_name_up == "ABYSSEA") {
+            expansion_id = 8;
+        }
+        else if (expansion_name_up == "ABYSSEAS") {
+            expansion_id = 9;
+        }
+        else if (expansion_name_up == "ABYSSEAH") {
+            expansion_id = 10;
+        }
+        else if (expansion_name_up == "SOA") {
+            expansion_id = 11;
+        }
+    }
+    if (expansion_id == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    lua_pushboolean(L, (((CCharEntity*)m_PBaseEntity)->m_accountExpansions & (1 << expansion_id)) != 0);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getEquipID()
 *  Purpose : Returns the Item ID for an item
 *  Example : player:getEquipID(SLOT_MAIN)
@@ -17752,6 +17833,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,bringPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayerExpansions),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,playerHasExpansion),
 
     // Items
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEquipID),

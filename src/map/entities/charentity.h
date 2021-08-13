@@ -391,6 +391,7 @@ public:
 
     uint32            m_accountId;
     uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
+    uint32            m_accountExpansions;          // Expansions that the account has access to
     std::string       m_clientVersion;
     bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets
     bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
