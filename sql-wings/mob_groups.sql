@@ -1012,8 +1012,8 @@ INSERT INTO `mob_groups` VALUES(54, 3422, 33, 'Ru_phuabo', 0, 128, 0, 0, 0, 67, 
 INSERT INTO `mob_groups` VALUES(55, 3270, 33, 'Qn_hpemde', 0, 128, 0, 0, 0, 67, 67, 0);
 INSERT INTO `mob_groups` VALUES(56, 21, 33, 'Absolute_Virtue', 0, 128, 3, 66000, 0, 92, 92, 0);
 INSERT INTO `mob_groups` VALUES(14116, 5341, 33, 'Ul_aern_whm', 960, 0, 2514, 0, 5000, 70, 73, 0);
-INSERT INTO `mob_groups` VALUES(57, 6193, 33, 'Ul_xzomit_parent', 960, 0, 2517, 0, 0, 68, 71, 0);
-INSERT INTO `mob_groups` VALUES(58, 6194, 33, 'Om_xzomit_parent', 960, 0, 1856, 0, 0, 72, 76, 0);
+INSERT INTO `mob_groups` VALUES(57, 6194, 33, 'Ul_xzomit_parent', 960, 0, 2517, 0, 0, 68, 71, 0);
+INSERT INTO `mob_groups` VALUES(58, 6195, 33, 'Om_xzomit_parent', 960, 0, 1856, 0, 0, 72, 76, 0);
 INSERT INTO `mob_groups` VALUES(1, 1241, 34, 'Eo_ghrah', 960, 0, 777, 0, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(2, 1242, 34, 'Eo_zdei', 960, 0, 778, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(3, 1240, 34, 'Eo_euvhi', 960, 0, 776, 0, 0, 74, 77, 0);
