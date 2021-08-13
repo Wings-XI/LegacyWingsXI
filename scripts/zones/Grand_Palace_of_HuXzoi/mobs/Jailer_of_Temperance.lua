@@ -39,6 +39,10 @@ function onMobSpawn(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
+end
+
 function onMobFight(mob)
     -- Forms: 0 = Pot  1 = Pot  2 = Poles  3 = Rings
     local randomTime = math.random(30, 180)
