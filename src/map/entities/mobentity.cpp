@@ -784,7 +784,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
-    int32 wsTargetID = luautils::OnMobSkillFinished((CBaseEntity*)this, (CBaseEntity*)PTarget, (CMobSkill*)PSkill); // change WS target if needed
+    int32 wsTargetID = luautils::onMobSkillFinished((CBaseEntity*)this, (CBaseEntity*)PTarget, (CMobSkill*)PSkill); // change WS target if needed
     if (wsTargetID != 0)
     {
         auto newTarget = GetEntity(wsTargetID);

@@ -4054,12 +4054,13 @@ INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 147, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 176, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 204, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ghrah_Fire', 470, 235, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 31, 1, 255); -- Banish IV
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 40, 1, 255); -- Banishga III
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 112, 1, 255); -- Flash
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 232, 1, 255); -- Bio III
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 254, 1, 255); -- Blind
-INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 31, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 40, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_WHM', 471, 112, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 232, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 254, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 274, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Toxic_Tamlyn', 473, 231, 1, 255);
 --
 -- Indexes for dumped tables
 --

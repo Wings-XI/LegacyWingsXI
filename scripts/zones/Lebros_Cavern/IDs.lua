@@ -20,6 +20,7 @@ zones[tpz.zone.LEBROS_CAVERN] =
         NOT_HAVE_ENOUGH_GIL        = 6394, -- You do not have enough gil.
         ITEMS_OBTAINED             = 6397, -- You obtain <number> <item>
         MINE_COUNTDOWN             = 6980, -- <number>...
+        PLAYER_OBTAINS_TEM_ITEM    = 7209, -- <Player> obtains the temporary item: <item>!
         TEMP_ITEM                  = 7210, -- Obtained temporary item: <item>!
         PLAYER_OBTAINS_ITEM        = 7211, -- <name> obtains <item>!
         ASSAULT_START_OFFSET       = 7346, -- NO TEXT
