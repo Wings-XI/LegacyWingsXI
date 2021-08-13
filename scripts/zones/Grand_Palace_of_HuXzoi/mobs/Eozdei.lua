@@ -27,6 +27,10 @@ function onPath(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
+end
+
 function onMobFight(mob)
 
     local randomTime = math.random(15, 45)

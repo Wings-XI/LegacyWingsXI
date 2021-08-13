@@ -67,6 +67,10 @@ function onMobRoam(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
+end
+
 function onMobFight(mob, target)
 
     local changeTime = mob:getLocalVar("changeTime")
@@ -75,16 +79,14 @@ function onMobFight(mob, target)
         mob:AnimationSub(mob:getLocalVar("form2"))
         mob:setAggressive(1)
         mob:setLocalVar("changeTime", mob:getBattleTime())
+        if mob:AnimationSub() == 2 then
+            mob:addMod(tpz.mod.ATTP, 50) -- spider form hits harder
+        end
     elseif (mob:AnimationSub() == mob:getLocalVar("form2") and mob:getBattleTime() - changeTime > 60) then
         mob:AnimationSub(0)
         mob:setAggressive(0)
+        mob:delMod(tpz.mod.ATTP, 0)
         mob:setLocalVar("changeTime", mob:getBattleTime())
-    end
-
-    if mob:AnimationSub() == 2 then
-        mob:setMod(tpz.mod.ATTP, 50) -- spider form hits harder
-    else
-        mob:setMod(tpz.mod.ATTP, 0)
     end
 end
 
