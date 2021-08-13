@@ -22,16 +22,16 @@ function onMobInitialize(mob)
         else
             -- ignore Untyped Damage
         end
-        
-        local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
-        local physicalPercent = mob:getLocalVar("PhysicalDamage") / sum * 100
-        local magicalPercent = mob:getLocalVar("MagicalDamage") / sum * 100
-        local rangedPercent = mob:getLocalVar("RangedDamage") / sum * 100
-        local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
 
-        --useful debug output
-        printf(string.format("Physical %d %d Magical %d %d w Ranged %d %d Breath %d %d",
-        mob:getLocalVar("PhysicalDamage"), physicalPercent, mob:getLocalVar("MagicalDamage"), magicalPercent, mob:getLocalVar("RangedDamage"), rangedPercent, mob:getLocalVar("BreathDamage"), breathPercent))
+        -- local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
+        -- local physicalPercent = mob:getLocalVar("PhysicalDamage") / sum * 100
+        -- local magicalPercent = mob:getLocalVar("MagicalDamage") / sum * 100
+        -- local rangedPercent = mob:getLocalVar("RangedDamage") / sum * 100
+        -- local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
+
+        -- --useful debug output
+        -- printf(string.format("Physical %d %d Magical %d %d w Ranged %d %d Breath %d %d",
+        -- mob:getLocalVar("PhysicalDamage"), physicalPercent, mob:getLocalVar("MagicalDamage"), magicalPercent, mob:getLocalVar("RangedDamage"), rangedPercent, mob:getLocalVar("BreathDamage"), breathPercent))
 
     end)
 end
@@ -97,6 +97,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DEF, 400)
 end
 
+function onMobEngaged(mob, target)
+    mob:setLocalVar("[faith]changeTime", 0)
+end
+
 function onMonsterMagicPrepare(mob, target)
     local rnd = math.random()
     if rnd < 0.5 and mob:hasStatusEffect(tpz.effect.MANAFONT) == true then -- quake II replaces existing earth damage spells during manafont
@@ -115,11 +119,6 @@ end
 function onMobFight(mob)
     mob:addListener("COMBAT_TICK", "FAITH_CTICK", function(mob)    
         local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
-        local physicalPercent = mob:getLocalVar("PhysicalDamage") / sum * 100
-        local magicalPercent = mob:getLocalVar("MagicalDamage") / sum * 100
-        local rangedPercent = mob:getLocalVar("RangedDamage") / sum * 100
-        local breathPercent = mob:getLocalVar("BreathDamage") / sum * 100
-
         if mob:AnimationSub() == 2 and sum > 1500 then -- Faith will close flower upon taking 1500 damage combined.
             closeFlower(mob)
         elseif mob:AnimationSub() <= 1 and mob:getBattleTime() > mob:getLocalVar("[faith]changeTime") then
@@ -127,7 +126,6 @@ function onMobFight(mob)
         else
             -- if no dmg taken - dont trigger a change
         end
-
     end)
 end
 

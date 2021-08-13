@@ -29,7 +29,7 @@ function onMobInitialize(mob)
                 targetid = target:getShortID()
             end
             mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
-            mob:timer(9000, function(mob)
+            mob:timer(9000, function(mob, targetid, timesReraised)
                 mob:setHP(mob:getMaxHP())
                 mob:AnimationSub(3)
                 mob:resetAI()

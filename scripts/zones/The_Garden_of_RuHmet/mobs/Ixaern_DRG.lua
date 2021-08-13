@@ -21,19 +21,31 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
     for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do -- Wynavs share hate with Ix'DRG
         GetMobByID(i):updateEnmity(target)
     end
 end
 
 function onMobFight(mob, target)
+    local isBusy = false
+    local act = mob:getCurrentAction()
+    if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH then
+        isBusy = true
+    elseif mob:getStatusEffect(tpz.effect.STUN) ~= nil or mob:getStatusEffect(tpz.effect.PETRIFICATION) ~= nil
+    or mob:getStatusEffect(tpz.effect.TERROR) ~= nil or mob:getStatusEffect(tpz.effect.SLEEP) ~= nil
+    or mob:getStatusEffect(tpz.effect.SLEEP_II) ~= nil or mob:getStatusEffect(tpz.effect.AMNESIA) ~= nil
+    or mob:getStatusEffect(tpz.effect.LULLABY) ~= nil then
+        isBusy = true
+    end
+    
     local mobId = mob:getID()
     local x = mob:getXPos()
     local y = mob:getYPos()
     local z = mob:getZPos()
     for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do
         local wynav = GetMobByID(i)
-        if not wynav:isSpawned() then
+        if not wynav:isSpawned() and not isBusy then
             local repopWynavs = wynav:getLocalVar("repop") -- see Wynav script
             if mob:getBattleTime() - repopWynavs > 10 then
                 wynav:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))

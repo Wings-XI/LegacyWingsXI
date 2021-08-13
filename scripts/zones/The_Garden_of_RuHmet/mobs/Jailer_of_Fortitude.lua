@@ -16,6 +16,10 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
+    mob:setLocalVar("delay", 0)
+    mob:setLocalVar("LAST_CAST", 0)
+    mob:setLocalVar("COPY_SPELL", 0)
+    mob:setLocalVar("twoHourCd", 0)
     local mobId = mob:getID()
     for i = mobId + 1, mobId + 2 do -- Kf'ghrah share hate with Jailer of Fortitude
         GetMobByID(i):updateEnmity(target)
@@ -70,7 +74,6 @@ function onMagicHit(caster, target, spell)
         -- Handle mimicked spells -- TODO:Fortitude should not mimmick Enfeebling Spells, currently unable to filter them out.
         target:setLocalVar("COPY_SPELL", spell:getID())
         target:setLocalVar("LAST_CAST", target:getBattleTime())
-        target:setLocalVar("reflectTime", target:getBattleTime())
         target:AnimationSub(1)
     end
 
