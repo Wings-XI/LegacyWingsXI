@@ -24,6 +24,7 @@ function onMobSpawn(mob)
     mob:AnimationSub(1) -- Reset the subanim - otherwise it will respawn with bracers on. Note that Aerns are never actually supposed to be in subanim 0.
     mob:setLocalVar("BracerMode", 0)
     mob:setLocalVar("canTwoHour", 1)
+    mob:setLocalVar("canBracer", 1)
 end
 
 function onMobEngaged(mob, target)
@@ -59,38 +60,54 @@ function onMobFight(mob, target)
             end
 
             if (minion:getCurrentAction() ~= tpz.act.NONE) then
-                minion:useMobAbility(692 + abil) -- Chainspell or Benediction
+                if minion:isSpawned() then
+                    minion:useMobAbility(692 + abil) -- Chainspell or Benediction
+                end
             end
         end
     end
     
     if (mob:getLocalVar("BracerMode") == 1) then --Go into bracer mode
+        if mob:getLocalVar("canBracer") == 1 then
+            mob:AnimationSub(2)
+            mob:addMod(tpz.mod.ATT, 200)
 
-        mob:AnimationSub(2)
-        mob:addMod(tpz.mod.ATT, 200)
+            if not mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) and (mob:getBattleTime() - mob:getLocalVar("delay") > 3) then
+                mob:setMod(tpz.mod.DELAY, 1700)
+            end
 
-        if not mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) and (mob:getBattleTime() - mob:getLocalVar("delay") > 3) then
-            mob:setMod(tpz.mod.DELAY, 1700)
-        end
-
-        for i = 1, 2 do -- put pets in braclet mode
-            local minion = GetMobByID(mob:getID() + i)
-            minion:AnimationSub(2)     
-            minion:addMod(tpz.mod.ATT, 200) 
-            mob:setMod(tpz.mod.DELAY, 2100)  
+            local mobID = mob:getID()
+            for i = mobID+1, mobID+2 do
+                local m = GetMobByID(i)
+                if m:isSpawned() then
+                    m:AnimationSub(2)     
+                    m:addMod(tpz.mod.ATT, 200) 
+                    m:setMod(tpz.mod.DELAY, 2100) 
+                end
+            end
+            mob:setLocalVar("canBracer", 0)
         end  
     end
-
 end
 
 function onMobDeath(mob, player, isKiller)
-    DespawnMob(mob:getID()+1)
-    DespawnMob(mob:getID()+2)
+    local mobID = mob:getID()
+    for i = mobID+1, mobID+2 do
+        local m = GetMobByID(i)
+        if m:isSpawned() then
+            DespawnMob(i)
+        end
+    end
 end
 
 function onMobDespawn(mob)
-    DespawnMob(mob:getID()+1)
-    DespawnMob(mob:getID()+2)
+    local mobID = mob:getID()
+    for i = mobID+1, mobID+2 do
+        local m = GetMobByID(i)
+        if m:isSpawned() then
+            DespawnMob(i)
+        end
+    end
 
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     if (math.random(0, 1) == 1) then
