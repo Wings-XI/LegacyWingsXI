@@ -3998,6 +3998,8 @@ INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 191, 63, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 210, 54, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 238, 18, 255);
 INSERT INTO `mob_spell_lists` VALUES('LeujaoamWorm', 462, 258, 7, 255);
+
+INSERT INTO `mob_spell_lists` VALUES('Toxic_Tamlyn', 465, 231, 1, 255);
 --
 -- Indexes for dumped tables
 --

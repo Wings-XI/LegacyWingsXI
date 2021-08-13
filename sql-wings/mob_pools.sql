@@ -573,7 +573,7 @@ INSERT INTO `mob_pools` VALUES(509, 'Boreal_Coeurl', 'Boreal_Coeurl', 71, 0x0000
 INSERT INTO `mob_pools` VALUES(510, 'Boreal_Hound', 'Boreal_Hound', 142, 0x00006c0100000000000000000000000000000000, 8, 4, 3, 220, 100, 0, 1, 1, 0, 2, 0, 0, 7, 133, 0, 0, 100, 0, 0, 142);
 INSERT INTO `mob_pools` VALUES(511, 'Boreal_Tiger', 'Boreal_Tiger', 242, 0x0000340100000000000000000000000000000000, 1, 4, 7, 220, 100, 0, 1, 1, 1, 2, 0, 0, 7, 133, 0, 0, 101, 0, 0, 242);
 INSERT INTO `mob_pools` VALUES(512, 'Borer_Beetle', 'Borer_Beetle', 49, 0x0000980100000000000000000000000000000000, 7, 7, 8, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1676, 131, 0, 0, 0, 0, 0, 49);
-INSERT INTO `mob_pools` VALUES(513, 'Boroka', 'Boroka', 141, 0x0000550500000000000000000000000000000000, 10, 10, 2, 240, 100, 0, 1, 1, 0, 2, 0, 32, 1247, 159, 0, 0, 6, 0, 0, 141);
+INSERT INTO `mob_pools` VALUES(513, 'Boroka', 'Boroka', 141, 0x0000550500000000000000000000000000000000, 10, 10, 2, 240, 100, 0, 1, 1, 0, 2, 4, 32, 1247, 159, 0, 0, 6, 0, 0, 141);
 INSERT INTO `mob_pools` VALUES(514, 'Bouncing_Ball', 'Bouncing_Ball', 172, 0x0000140100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 172);
 INSERT INTO `mob_pools` VALUES(515, 'Boyahda_Sapling', 'Boyahda_Sapling', 216, 0x0000880100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 151, 133, 0, 0, 0, 0, 0, 216);
 INSERT INTO `mob_pools` VALUES(516, 'Bo_Dho_Hundredfist', 'Bo_Dho_Hundredfist', 202, 0x00006b0800000000000000000000000000000000, 8, 8, 5, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 202);
@@ -644,7 +644,7 @@ INSERT INTO `mob_pools` VALUES(580, 'Bull_[Herd2]', 'Bull_[Herd2]', 226, 0x00005
 INSERT INTO `mob_pools` VALUES(581, 'Bull_[Herd3]', 'Bull_[Herd3]', 226, 0x0000540100000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 226);
 INSERT INTO `mob_pools` VALUES(582, 'Bulwark_Bat', 'Bulwark_Bat', 46, 0x0000000100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 241, 643, 0, 0, 0, 0, 0, 46);
 INSERT INTO `mob_pools` VALUES(583, 'Bumblebee', 'Bumblebee', 48, 0x0000110100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 0, 0, 0, 0, 472, 641, 0, 0, 0, 0, 0, 48);
-INSERT INTO `mob_pools` VALUES(584, 'Bune', 'Bune', 266, 0x00008e0100000000000000000000000000000000, 7, 7, 7, 240, 100, 0, 1, 0, 1, 2, 0, 32, 118, 157, 0, 0, 4, 0, 0, 266);
+INSERT INTO `mob_pools` VALUES(584, 'Bune', 'Bune', 266, 0x00008e0100000000000000000000000000000000, 7, 7, 7, 240, 100, 0, 1, 0, 1, 2, 0, 32, 118, 157, 0, 0, 0, 0, 0, 266);
 INSERT INTO `mob_pools` VALUES(585, 'Burned_Bergmann', 'Burned_Bergmann', 121, 0x0000700100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 28, 0, 0, 121);
 INSERT INTO `mob_pools` VALUES(586, 'Burrow_Antlion', 'Burrow_Antlion', 357, 0x0000440500000000000000000000000000000000, 1, 1, 3, 240, 100, 512, 1, 0, 1, 0, 0, 0, 6, 2179, 0, 0, 0, 0, 128, 357);
 INSERT INTO `mob_pools` VALUES(587, 'Burstrox_Powderpate', 'Burstrox_Powderpate', 133, 0x0000670500000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 7, 159, 0, 0, 283, 0, 0, 981);
@@ -6226,6 +6226,7 @@ INSERT INTO `mob_pools` VALUES(6189, 'Pyuu_The_Spatemaker', 'Pyuu_The_Spatemaker
 INSERT INTO `mob_pools` VALUES(6190, 'Yal-un_Eke', 'Yal-un_Eke', 68, 0x0000220100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 0, 32, 456, 1181, 0, 0, 0, 1, 0, 1163);
 INSERT INTO `mob_pools` VALUES(6191, 'Vasiliceratops', 'Vasiliceratops', 257, 0x0000b90800000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 7, 32, 1, 131, 0, 0, 0, 0, 0, 257);
 INSERT INTO `mob_pools` VALUES(6192, 'Death_Jacket', 'Death_Jacket', 48, 0x0000100100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 0, 5, 0, 19, 643, 8, 0, 0, 0, 0, 48);
+INSERT INTO `mob_pools` VALUES(6193, 'Toxic_Tamlyn', 'Toxic_Tamlyn', 186, 0x00007c0100000000000000000000000000000000, 1, 4, 7, 200, 100, 0, 1, 0, 0, 2, 18, 0, 349, 1667, 0, 0, 465, 0, 0, 186);
 --
 -- Indexes for dumped tables
 --

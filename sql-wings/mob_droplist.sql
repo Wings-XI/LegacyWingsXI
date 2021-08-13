@@ -10268,7 +10268,7 @@ INSERT INTO `mob_droplist` VALUES(1965, 2, 0, 1000, 5568, 0);
 INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 644, 30);
 INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 12362, 190);
 INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 17649, 810);
-INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 17928, 280);
+INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 17928, 1000);
 INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 1432, 970);
 INSERT INTO `mob_droplist` VALUES(1966, 0, 0, 1000, 645, 50);
 INSERT INTO `mob_droplist` VALUES(1966, 2, 0, 1000, 656, 0);
@@ -16301,6 +16301,7 @@ INSERT INTO `mob_droplist` VALUES(3169, 0, 0, 1000, 1237, 184);
 INSERT INTO `mob_droplist` VALUES(3170, 0, 0, 1000, 1052, 41);
 INSERT INTO `mob_droplist` VALUES(3171, 0, 0, 1000, 2850, 59);
 INSERT INTO `mob_droplist` VALUES(3172, 0, 0, 1000, 19124, 198);
+INSERT INTO `mob_droplist` VALUES(3173, 0, 0, 1000, 2855, 350);
 
 
 -- 3200s are dynamis drops
@@ -16438,6 +16439,7 @@ INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18338, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18344, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1520, 4);
+
 
 
 --
