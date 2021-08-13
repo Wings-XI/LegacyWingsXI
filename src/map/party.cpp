@@ -609,20 +609,6 @@ void CParty::AddMember(uint32 id)
         ref<uint32>(data, 0) = m_PartyID;
         ref<uint32>(data, 4) = id;
         message::send(MSG_PT_RELOAD, data, sizeof data, nullptr);
-
-        /*if (PChar->nameflags.flags & FLAG_INVITE)
-        {
-            PChar->nameflags.flags ^= FLAG_INVITE;
-            PChar->updatemask |= UPDATE_HP;
-
-            charutils::SaveCharStats(PChar);
-
-            PChar->status = STATUS_UPDATE;
-            PChar->pushPacket(new CMenuConfigPacket(PChar));
-            PChar->pushPacket(new CCharUpdatePacket(PChar));
-            PChar->pushPacket(new CCharSyncPacket(PChar));
-        }
-        PChar->PTreasurePool->UpdatePool(PChar);*/
     }
 }
 
@@ -888,7 +874,7 @@ void CParty::ReloadTreasurePool(CCharEntity* PChar)
 {
     TPZ_DEBUG_BREAK_IF(PChar == nullptr);
 
-    if (PChar->PTreasurePool != nullptr && PChar->PTreasurePool->GetPoolType() == TREASUREPOOL_ZONE)
+    if (PChar->PTreasurePool && PChar->PTreasurePool->GetPoolType() == TREASUREPOOL_ZONE)
         return;
 
 
