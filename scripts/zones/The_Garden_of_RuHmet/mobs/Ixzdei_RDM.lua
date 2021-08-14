@@ -28,6 +28,7 @@ function onMobEngaged(mob, target)
         [16921012] = function() mob:pathTo(417.964, 0.000, 426.938) end,
     }
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setLocalVar("changeTime", 0)
     local firstCast = { 216, 221, 232, 258, 59, 25 } -- gravity, poison II, bio III, bind, silence, dia III
     mob:castSpell(firstCast[math.random(#firstCast)]) -- casts a random enfeebling spell upon engaging
 end
