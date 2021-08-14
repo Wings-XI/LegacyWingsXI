@@ -36,6 +36,7 @@ function onMobEngaged(mob, target)
         [16921014] = function() mob:pathTo(417.937, 0.000, 413.019) end,
     }
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setLocalVar("changeTime", 0)
     local firstCast = { 144, 149, 154, 164, 169 } -- fire, blizzard, aero, thunder, water
     mob:castSpell(firstCast[math.random(#firstCast)]) -- casts a random weak elemental spell upon engaging
 end
