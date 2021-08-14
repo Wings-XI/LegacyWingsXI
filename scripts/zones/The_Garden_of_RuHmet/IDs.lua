@@ -19,6 +19,7 @@ zones[tpz.zone.THE_GARDEN_OF_RUHMET] =
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         ORB_MESSAGE_OFFSET      = 7364, -- There is a crack in the <item>. It no longer contains a monster.
         CONQUEST_BASE           = 7439, -- Tallying conquest results...
+        PORTAL_WONT_OPEN        = 7612, -- The portal won't open from this side.
         NO_NEED_INVESTIGATE     = 7618, -- There is no need to investigate further.
         PORTAL_SEALED           = 7647, -- The portal is firmly sealed by a mysterious energy.
         UNKNOWN_PRESENCE        = 7754, -- You sense some unknown presence...
@@ -42,6 +43,10 @@ zones[tpz.zone.THE_GARDEN_OF_RUHMET] =
             16920646, -- SW
             16920651, -- NW
         },
+        IXZDEI_RDM_1        = 16921011,
+        IXZDEI_RDM_2        = 16921012,
+        IXZDEI_BLM_1        = 16921013,
+        IXZDEI_BLM_2        = 16921014,
         JAILER_OF_FORTITUDE = 16921015,
         KFGHRAH_WHM         = 16921016,
         KFGHRAH_BLM         = 16921017,

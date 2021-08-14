@@ -2174,7 +2174,7 @@ INSERT INTO `mob_pools` VALUES(2110, 'Ivory_Lizard', 'Ivory_Lizard', 174, 0x0000
 INSERT INTO `mob_pools` VALUES(2111, 'Ixtab', 'Ixtab', 121, 0x0000700100000000000000000000000000000000, 1, 4, 6, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 28, 0, 0, 121);
 INSERT INTO `mob_pools` VALUES(2112, 'Ix_aern_drg', 'Ix_aern_drg', 3, 0x0000600500000000000000000000000000000000, 14, 14, 8, 200, 100, 0, 1, 0, 1, 2, 2053, 0, 0, 0, 0, 0, 0, 0, 0, 440);
 INSERT INTO `mob_pools` VALUES(2113, 'Ix_ghrah', 'Ix_ghrah', 122, 0x0600910400000000000000000000000000000000, 1, 1, 7, 220, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 122);
-INSERT INTO `mob_pools` VALUES(2114, 'Ix_zdei', 'Ix_zdei', 272, 0x0000860400000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 1, 0, 2, 16, 0, 0, 0, 0, 0, 2, 0, 0, 272);
+INSERT INTO `mob_pools` VALUES(2114, 'Ix_zdei_blm', 'Ix_zdei', 272, 0x0000860400000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 1, 1, 2, 16, 0, 0, 1153, 0, 0, 474, 0, 0, 272);
 INSERT INTO `mob_pools` VALUES(2115, 'Jabbrox_Grannyguise', 'Jabbrox_Grannyguise', 373, 0x00003f0400000000000000000000000000000000, 5, 5, 3, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 3, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(2116, 'Jabkix_Pigeonpecs', 'Jabkix_Pigeonpecs', 373, 0x00003e0400000000000000000000000000000000, 5, 5, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 3, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(2117, 'Jackpot', 'Jackpot', 175, 0x00009c0100000000000000000000000000000000, 1, 1, 0, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1934, 133, 0, 0, 36, 0, 0, 175);
@@ -6229,6 +6229,7 @@ INSERT INTO `mob_pools` VALUES(6192, 'Death_Jacket', 'Death_Jacket', 48, 0x00001
 INSERT INTO `mob_pools` VALUES(6193, 'Toxic_Tamlyn', 'Toxic_Tamlyn', 186, 0x00007c0100000000000000000000000000000000, 1, 4, 7, 200, 100, 0, 1, 0, 0, 2, 18, 0, 349, 1667, 0, 0, 473, 0, 0, 186);
 INSERT INTO `mob_pools` VALUES(6194, 'Ul_xzomit_parent', 'Ul_xzomit', 269, 0x0000100200000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 0, 0, 1, 0, 0, 0, 0, 1157, 0, 0, 0, 0, 0, 269);
 INSERT INTO `mob_pools` VALUES(6195, 'Om_xzomit_parent', 'Om_xzomit', 269, 0x0000100200000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 0, 0, 1, 0, 0, 0, 0, 1157, 0, 0, 0, 0, 0, 269);
+INSERT INTO `mob_pools` VALUES(6196, 'Ix_zdei_rdm', 'Ix_zdei', 272, 0x0000860400000000000000000000000000000000, 5, 5, 7, 240, 100, 0, 1, 1, 1, 2, 16, 0, 0, 1157, 0, 0, 475, 0, 0, 272);
 --
 -- Indexes for dumped tables
 --

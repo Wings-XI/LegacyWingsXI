@@ -4061,6 +4061,19 @@ INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 232, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 254, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Kf_Ghrah_BLM', 472, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Toxic_Tamlyn', 473, 231, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 147, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 152, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 260, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 254, 1, 255);
 --
 -- Indexes for dumped tables
 --
