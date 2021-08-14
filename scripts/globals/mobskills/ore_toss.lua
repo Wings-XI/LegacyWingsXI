@@ -18,9 +18,15 @@ function onMobSkillCheck(target,mob,skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    
     local numhits = 1
     local accmod = 1
     local dmgmod = 3 + math.random()
+    if (skill:getID()==1123) then
+        -- Skill ID is Ore Toss used by Dynamis Quadavs as a ranged attack.
+        -- against a 298 defense character - dmgmod of 1 produces hits of low 100s to high 100s by Masons in Bastok.
+        dmgmod = 1
+    end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.BLUNT, MOBPARAM_1_SHADOW)
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.BLUNT)
