@@ -17,8 +17,8 @@ function onTrigger(player, npc)
         if not player:hasKeyItem(tpz.ki.BLUE_BRACELET) then
             if not GetMobByID(ID.mob.GARGOYLE_IOTA):isSpawned() and not GetMobByID(ID.mob.GARGOYLE_KAPPA):isSpawned() then
                 if player:getCharVar("Gargoyles_Killed") == 1 then
-                    player:addKeyItem(tpz.ki.BLUE_BRACELET)
-                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLUE_BRACELET)
+                    --player:addKeyItem(tpz.ki.BLUE_BRACELET)
+                    --player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLUE_BRACELET)
                     player:setCharVar("Gargoyles_Killed", 0)
                 else
                     npc:messageName(ID.text.TRAP_ACTIVATED, player)
