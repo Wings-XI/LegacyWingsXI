@@ -80,7 +80,13 @@ end
 
 function onCastStarting(mob, spell)
     if spell:getID() == 181 then -- blizzaga iii
-        spell:castTime(spell:castTime()/2) -- really fast cast (2x)
+        spell:castTime(spell:castTime()/4) -- really fast cast (2x)
+    elseif spell:getID() == 362 then -- bindga
+        spell:castTime(0)
+    elseif spell:getID() == 356 then -- paralyga
+        spell:castTime(spell:castTime()/6)
+    elseif spell:getID() == 250 then --ice spikes
+        spell:castTime(0)
     end
 end
 
