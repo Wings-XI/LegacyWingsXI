@@ -23,8 +23,8 @@ function onTrigger(player, npc)
                 else--]]
                     npc:messageName(ID.text.TRAP_ACTIVATED, player)
                     GetNPCByID(16814499):setAnimation(9)
-                    SpawnMob(ID.mob.GARGOYLE_IOTA)--:updateClaim(player)
-                    SpawnMob(ID.mob.GARGOYLE_KAPPA)--:updateClaim(player)
+                    SpawnMob(ID.mob.GARGOYLE_IOTA):updateClaim(player)
+                    SpawnMob(ID.mob.GARGOYLE_KAPPA):updateClaim(player)
                 --[[end
             else
                 player:messageSpecial(ID.text.COMPARTMENT_LOCKED)
