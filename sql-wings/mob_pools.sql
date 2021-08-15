@@ -1524,8 +1524,8 @@ INSERT INTO `mob_pools` VALUES(1460, 'Garfurlar_the_Rabid', 'Garfurlar_the_Rabid
 INSERT INTO `mob_pools` VALUES(1461, 'Gargantua', 'Gargantua', 135, 0x0000b00100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 135);
 INSERT INTO `mob_pools` VALUES(1462, 'Gargouille', 'Gargouille', 118, 0x0000b10800000000000000000000000000000000, 1, 6, 3, 240, 100, 0, 0, 0, 1, 0, 0, 0, 471, 643, 0, 0, 0, 0, 0, 118);
 INSERT INTO `mob_pools` VALUES(1463, 'Gargoyle', 'Gargoyle', 85, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 0, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 5003);
-INSERT INTO `mob_pools` VALUES(1464, 'Gargoyle-Iota', 'Gargoyle-Iota', 83, 0x0000310100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 8177, 133, 0, 0, 4, 0, 0, 83);
-INSERT INTO `mob_pools` VALUES(1465, 'Gargoyle-Kappa', 'Gargoyle-Kappa', 83, 0x0000310100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 936, 133, 0, 0, 4, 0, 0, 83);
+INSERT INTO `mob_pools` VALUES(1464, 'Gargoyle-Iota', 'Gargoyle-Iota', 83, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 8177, 133, 0, 0, 4, 0, 0, 83);
+INSERT INTO `mob_pools` VALUES(1465, 'Gargoyle-Kappa', 'Gargoyle-Kappa', 83, 0x0000310100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 936, 133, 0, 0, 4, 0, 0, 83);
 INSERT INTO `mob_pools` VALUES(1466, 'Gargoyle-Lambda', 'Gargoyle-Lambda', 84, 0x0000310100000000000000000000000000000000, 7, 5, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 4, 0, 0, 84);
 INSERT INTO `mob_pools` VALUES(1467, 'Gargoyle-Mu', 'Gargoyle-Mu', 84, 0x0000310100000000000000000000000000000000, 7, 5, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 1577, 133, 0, 0, 4, 0, 0, 84);
 INSERT INTO `mob_pools` VALUES(1468, 'Garharlor_the_Unruly', 'Garharlor_the_Unruly', 246, 0x0600ab0600000000000000000000000000000000, 11, 11, 5, 230, 100, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 246);

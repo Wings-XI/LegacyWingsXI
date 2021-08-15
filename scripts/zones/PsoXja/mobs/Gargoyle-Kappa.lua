@@ -7,14 +7,19 @@ require("scripts/globals/status")
 local ID = require("scripts/zones/PsoXja/IDs")
 
 function onMobInitialize(mob)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:addStatusEffect(tpz.effect.INVINCIBLE, 1, 0, 0)
+    mob:timer(30000, function(mob)
+        if mob:isAlive() and mob:hasStatusEffect(tpz.effect.INVINCIBLE) then
+            mob:delStatusEffect(tpz.effect.INVINCIBLE)
+        else
+            mob:addStatusEffect(tpz.effect.INVINCIBLE, 1, 0, 0)
+        end
+    end)
 end
 
-function onMobFight( mob, target )
-    local hpp = mob:getHPP()
-
-    --if hpp <= 80 and hpp > 60  then
-    --    mob:deleteStatusEffect(tpz.effect.INVINCIBLE, 1, 0, 0)
+function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
