@@ -11,7 +11,7 @@ function onMobInitialize(mob)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:setMod(tpz.mod.BINDRES, 30)
     mob:setMod(tpz.mod.GRAVITYRES, 30)
-    mob:addStatusEffect(tpz.effect.MAGIC_SHIELD, 1, 0, 0)
+    mob:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, 1, 0, 0)
 end
 
 function onMobFight(mob, target)
@@ -33,10 +33,7 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if
-        GetMobByID(ID.mob.GARGOYLE_IOTA):isDead() and
-        GetMobByID(ID.mob.GARGOYLE_KAPPA):isDead() and
-        player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS) == QUEST_ACCEPTED
+    if GetMobByID(ID.mob.GARGOYLE_LAMBDA):isDead() and player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS) == QUEST_ACCEPTED
     then
         player:setCharVar("Gargoyles_Killed", 1)
         GetNPCByID(16814502):setAnimation(8)
@@ -48,8 +45,8 @@ function onMobDisengage(mob)
 end
 
 function onMobEngaged(mob, target)
-    if not GetMobByID(ID.mob.GARGOYLE_KAPPA):isDead() then
-    GetMobByID(ID.mob.GARGOYLE_KAPPA):updateEnmity(target)
+    if not GetMobByID(ID.mob.GARGOYLE_LAMBDA):isDead() then
+    GetMobByID(ID.mob.GARGOYLE_LAMBDA):updateEnmity(target)
     end
 end
 
