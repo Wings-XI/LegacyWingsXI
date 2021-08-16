@@ -88,9 +88,9 @@ INSERT INTO `zone_settings` VALUES(35, 3, '127.0.0.1', 54230, 'The_Garden_of_RuH
 INSERT INTO `zone_settings` VALUES(36, 4, '127.0.0.1', 54230, 'Empyreal_Paradox', 0, 0, 224, 224, 0, 0.00, 1169, 6);
 INSERT INTO `zone_settings` VALUES(37, 5, '127.0.0.1', 54230, 'Temenos', 0, 0, 218, 219, 0, 0.00, 1168, 6);
 INSERT INTO `zone_settings` VALUES(38, 5, '127.0.0.1', 54230, 'Apollyon', 0, 0, 218, 219, 0, 0.00, 1168, 6);
-INSERT INTO `zone_settings` VALUES(39, 5, '127.0.0.1', 54230, 'Dynamis-Valkurm', 121, 121, 121, 121, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(40, 5, '127.0.0.1', 54230, 'Dynamis-Buburimu', 121, 121, 121, 121, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(41, 5, '127.0.0.1', 54230, 'Dynamis-Qufim', 121, 121, 121, 121, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(39, 5, '127.0.0.1', 54230, 'Dynamis-Valkurm', 121, 121, 121, 121, 0, 0.00, 1432, 6);
+INSERT INTO `zone_settings` VALUES(40, 5, '127.0.0.1', 54230, 'Dynamis-Buburimu', 121, 121, 121, 121, 0, 0.00, 1432, 6);
+INSERT INTO `zone_settings` VALUES(41, 5, '127.0.0.1', 54230, 'Dynamis-Qufim', 121, 121, 121, 121, 0, 0.00, 1432, 6);
 INSERT INTO `zone_settings` VALUES(42, 5, '127.0.0.1', 54230, 'Dynamis-Tavnazia', 121, 121, 121, 121, 0, 0.00, 1424, 6);
 INSERT INTO `zone_settings` VALUES(43, 2, '0.0.0.0', 0, 'Diorama_Abdhaljs-Ghelsba', 0, 0, 218, 219, 0, 0.00, 1176, 6);
 INSERT INTO `zone_settings` VALUES(44, 2, '127.0.0.1', 54230, 'Abdhaljs_Isle-Purgonorgo', 0, 0, 226, 226, 40, 0.00, 1176, 6);
@@ -183,8 +183,8 @@ INSERT INTO `zone_settings` VALUES(130, 2, '127.0.0.1', 54230, 'RuAun_Gardens', 
 INSERT INTO `zone_settings` VALUES(131, 3, '127.0.0.1', 54230, 'Mordion_Gaol', 0, 0, 0, 0, 0, 0.00, 1024, 6);
 INSERT INTO `zone_settings` VALUES(132, 2, '0.0.0.0', 0, 'Abyssea-La_Theine', 51, 51, 52, 52, 0, 0.00, 1178, 6);
 INSERT INTO `zone_settings` VALUES(133, 0, '0.0.0.0', 0, '133', 0, 0, 0, 0, 0, 0.00, 1024, 6);
-INSERT INTO `zone_settings` VALUES(134, 5, '127.0.0.1', 54230, 'Dynamis-Beaucedine', 121, 121, 121, 121, 0, 0.00, 1424, 6);
-INSERT INTO `zone_settings` VALUES(135, 5, '127.0.0.1', 54230, 'Dynamis-Xarcabard', 119, 119, 119, 119, 0, 0.00, 1424, 6);
+INSERT INTO `zone_settings` VALUES(134, 5, '127.0.0.1', 54230, 'Dynamis-Beaucedine', 121, 121, 121, 121, 0, 0.00, 1432, 6);
+INSERT INTO `zone_settings` VALUES(135, 5, '127.0.0.1', 54230, 'Dynamis-Xarcabard', 119, 119, 119, 119, 0, 0.00, 1432, 6);
 INSERT INTO `zone_settings` VALUES(136, 2, '127.0.0.1', 54230, 'Beaucedine_Glacier_[S]', 0, 0, 101, 215, 0, 0.00, 1180, 6);
 INSERT INTO `zone_settings` VALUES(137, 2, '127.0.0.1', 54230, 'Xarcabard_[S]', 42, 42, 101, 215, 0, 0.00, 1180, 6);
 INSERT INTO `zone_settings` VALUES(138, 3, '127.0.0.1', 54230, 'Castle_Zvahl_Baileys_[S]', 43, 43, 101, 215, 0, 0.00, 1169, 6);
