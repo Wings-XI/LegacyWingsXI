@@ -42,6 +42,8 @@ zones[tpz.zone.PSOXJA] =
         GARGOYLE_OFFSET         = 16814081,
         GARGOYLE_IOTA           = 16814231,
         GARGOYLE_KAPPA          = 16814232,
+        GARGOYLE_LAMBDA         = 16814233,
+        GARGOYLE_MU             = 16814234,
         NUNYUNUWI               = 16814361,
         GOLDEN_TONGUED_CULBERRY = 16814432,
     },

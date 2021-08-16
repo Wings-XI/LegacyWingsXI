@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Pso'Xja
---  Mob: Gargoyle-Kappa
+--  Mob: Gargoyle-Lambda
 -----------------------------------
 
 require("scripts/globals/status")
@@ -11,7 +11,7 @@ function onMobInitialize(mob)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:setMod(tpz.mod.BINDRES, 30)
     mob:setMod(tpz.mod.GRAVITYRES, 30)
-    mob:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, 1, 0, 0)
+    mob:addStatusEffect(tpz.effect.MAGIC_SHIELD, 1, 0, 0)
 end
 
 function onMobFight(mob, target)
@@ -39,7 +39,7 @@ function onMobDeath(mob, player, isKiller)
         player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS) == QUEST_ACCEPTED
     then
         player:setCharVar("Gargoyles_Killed", 1)
-        GetNPCByID(16814499):setAnimation(8)
+        GetNPCByID(16814502):setAnimation(8)
     end
 end
 
@@ -48,12 +48,11 @@ function onMobDisengage(mob)
 end
 
 function onMobEngaged(mob, target)
-    if not GetMobByID(ID.mob.GARGOYLE_IOTA):isDead() then
-    GetMobByID(ID.mob.GARGOYLE_IOTA):updateEnmity(target)
+    if not GetMobByID(ID.mob.GARGOYLE_KAPPA):isDead() then
+    GetMobByID(ID.mob.GARGOYLE_KAPPA):updateEnmity(target)
     end
 end
 
-
 function onMobDespawn(mob)
-    GetNPCByID(16814499):setAnimation(8)
+    GetNPCByID(16814502):setAnimation(8)
 end

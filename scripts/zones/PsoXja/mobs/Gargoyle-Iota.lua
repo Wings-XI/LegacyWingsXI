@@ -44,7 +44,6 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDisengage(mob)
-    GetNPCByID(16814499):setAnimation(8)
     DespawnMob(mob:getID(), 30)
 end
 
@@ -55,4 +54,5 @@ function onMobEngaged(mob, target)
 end
 
 function onMobDespawn(mob)
+    GetNPCByID(16814499):setAnimation(8)
 end
