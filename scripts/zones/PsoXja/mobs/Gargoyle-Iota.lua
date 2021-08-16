@@ -43,5 +43,16 @@ function onMobDeath(mob, player, isKiller)
     end
 end
 
+function onMobDisengage(mob)
+    GetNPCByID(16814499):setAnimation(8)
+    DespawnMob(mob:getID(), 30)
+end
+
+function onMobEngaged(mob, target)
+    if not GetMobByID(ID.mob.GARGOYLE_KAPPA):isDead() then
+    GetMobByID(ID.mob.GARGOYLE_KAPPA):updateEnmity(target)
+    end
+end
+
 function onMobDespawn(mob)
 end
