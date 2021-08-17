@@ -7,7 +7,11 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(7230)
+    if player:getZPos() > 440 then
+        npc:openDoor()
+    else
+        player:messageSpecial(7230)
+    end
 end
 
 function onEventUpdate(player, csid, option)
