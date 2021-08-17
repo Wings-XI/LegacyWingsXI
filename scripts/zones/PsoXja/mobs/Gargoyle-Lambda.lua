@@ -23,10 +23,12 @@ function onMobFight(mob, target)
             mob:delStatusEffectSilent(tpz.effect.PHYSICAL_SHIELD)
             mob:addStatusEffect(tpz.effect.MAGIC_SHIELD, 1, 0, 0)
             mob:useMobAbility(604)
+            mob:setSpellList(463)
         else
             mob:delStatusEffectSilent(tpz.effect.MAGIC_SHIELD)
             mob:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, 1, 0, 0)
             mob:useMobAbility(603)
+            mob:setSpellList(464)
         end
         mob:setLocalVar("switchTime", mob:getBattleTime())
     end
