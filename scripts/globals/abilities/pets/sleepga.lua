@@ -16,7 +16,7 @@ end
 function onPetAbility(target, pet, skill)
 
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
-        skill:setMsg(tpz.msg.basic.JA_MISS_2)
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return tpz.effect.SLEEP_I
     end
 
@@ -35,7 +35,7 @@ function onPetAbility(target, pet, skill)
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         end
     else
-        skill:setMsg(tpz.msg.basic.JA_MISS_2)
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
     
     return tpz.effect.SLEEP_I

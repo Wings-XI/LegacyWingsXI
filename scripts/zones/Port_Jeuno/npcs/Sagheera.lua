@@ -388,9 +388,9 @@ function onEventFinish(player, csid, option)
     -- purchase cosmocleanse
     elseif csid == 310 and option == 3 then
         local cosmoTime = getCosmoCleanseTime(player)
-        if cosmoTime == COSMO_READY and player:delGil(15000) then
-            npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
-        end
+        -- if cosmoTime == COSMO_READY and player:delGil(15000) then
+        --     npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
+        -- end
 
     -- purchase item using ancient beastcoins
     elseif csid == 310 and abcShop[option] then

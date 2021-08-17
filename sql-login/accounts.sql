@@ -41,7 +41,7 @@ CREATE TABLE `accounts` (
   `features` int(10) UNSIGNED NOT NULL DEFAULT 12,
   `status` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
   `privileges` int(10) UNSIGNED NOT NULL DEFAULT 1,
-  `ip_exempt` tinyint(4) NOT NULL DEFAULT 0
+  `ip_exempt` smallint(3) unsigned NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

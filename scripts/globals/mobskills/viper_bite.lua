@@ -14,7 +14,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, skill:getID())
     
     local numhits = 1
     local accmod = 1

@@ -1258,19 +1258,28 @@ local treasureInfo =
 -- local functions
 -------------------------------------------------
 
-local function doMove(npc, x, y, z)
-    return function(entity)
-        entity:setPos(x, y, z, 0)
-    end
-end
+local function doMove(npc, mimicSpawned, x, y, z)
+    npc:entityAnimationPacket("kesu")
 
-local function moveChest(npc, zoneId, chestType, mimicSpawned)
-    local points = treasureInfo[chestType].zone[zoneId].points
-    local point = points[math.random(#points)]
     if not mimicSpawned then
         npc:hideNPC(5)
     end
-    npc:queue(3000, doMove(npc, unpack(point)))
+
+    npc:setPos(x, y, z, 0)
+end
+
+local function moveChest(npc, zoneId, chestType, mimicSpawned, illusion)
+    local points = treasureInfo[chestType].zone[zoneId].points
+    local point = points[math.random(#points)]
+
+    if illusion then
+        doMove(npc, mimicSpawned, unpack(point))
+    else
+        npc:entityAnimationPacket("open")
+        npc:queue(5000, function(npc)
+            doMove(npc, mimicSpawned, unpack(point))
+        end)
+    end
 end
 
 local function spawnMimic(player, npc)
@@ -1457,7 +1466,7 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
     -- illusion: do not consume tool, and relocate chest after short delay
     if os.time() < illusionCooldown then
         player:messageSpecial(msgBase + 6)
-        moveChest(npc, zoneId, chestType)
+        moveChest(npc, zoneId, chestType, false, true)
         return
     end
 

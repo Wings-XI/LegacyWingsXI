@@ -6,14 +6,17 @@
 require("scripts/globals/settings")
 require("scripts/globals/msg")
 require("scripts/globals/status")
+require("scripts/globals/player")
+-----------------------------------------
 
-function onItemCheck(target)
+function onItemCheck(target, param, player)
     local result = 0
     
 	if target:getSystem() ~= 12 then -- empty
-        result tpz.msg.basic.ITEM_UNABLE_TO_USE
+        result = tpz.msg.basic.ITEM_UNABLE_TO_USE
     elseif target:checkDistance(player) > 10 then
         result = tpz.msg.basic.TOO_FAR_AWAY
+    end
 
     return result
 end

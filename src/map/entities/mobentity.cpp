@@ -86,6 +86,7 @@ CMobEntity::CMobEntity()
     m_Behaviour = BEHAVIOUR_NONE;
     m_SpawnType = SPAWNTYPE_NORMAL;
     m_SpawnTime = time_point::min();
+    m_UncharmTime = std::chrono::system_clock::now() - 5min;
     m_AutoClaimed = false;
     m_EcoSystem = SYSTEM_UNCLASSIFIED;
     m_Element = 0;
@@ -266,10 +267,9 @@ void CMobEntity::ResetGilPurse()
 
 bool CMobEntity::CanRoamHome()
 {
-    if ((speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) || getMobMod(MOBMOD_NO_MOVE) > 0) return false;
+    if ((speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) || getMobMod(MOBMOD_NO_MOVE)) return false;
 
-    if (getMobMod(MOBMOD_NO_DESPAWN) != 0 ||
-        map_config.mob_no_despawn)
+    if (getMobMod(MOBMOD_NO_DESPAWN) || map_config.mob_no_despawn || std::chrono::system_clock::now() > m_UncharmTime + 20s)
     {
         return true;
     }
@@ -537,7 +537,7 @@ void CMobEntity::DoAutoTarget()
                     {
                         CBattleEntity* PMob = (CBattleEntity*)PPotentialTarget.second;
                         CBattleEntity* PMobTarget = (CBattleEntity*)(PMob->GetEntity(PMob->GetBattleTargetID()));
-                        
+
                         if ((PMob->objtype == TYPE_MOB || PMob->objtype == TYPE_PET) &&
                             PMob->animation == ANIMATION_ATTACK &&
                             PMob->allegiance == ALLEGIANCE_MOB &&
@@ -783,6 +783,17 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 {
     auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    int32 wsTargetID = luautils::onMobSkillFinished((CBaseEntity*)this, (CBaseEntity*)PTarget, (CMobSkill*)PSkill); // change WS target if needed
+    if (wsTargetID != 0)
+    {
+        auto newTarget = GetEntity(wsTargetID);
+        if (newTarget != nullptr)
+        {
+            PTarget = static_cast<CBattleEntity*>(newTarget);
+        }
+    }
+
     bool cover = false;
 
     if ((!PTarget) || (!PSkill))

@@ -670,15 +670,11 @@ uint16 CBattleEntity::ATT()
     auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
     if (weapon && weapon->isTwoHanded())
     {
-        ATT += (STR() * 3) / 4;
-    }
-    else if (weapon && weapon->isHandToHand())
-    {
-        ATT += (STR() * 5) / 8;
+        ATT += STR() * 3 / 4;
     }
     else
     {
-        ATT += (STR() * 3) / 4;
+        ATT += STR() / 2;
     }
 
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
@@ -725,7 +721,7 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
     uint16 skill_level = GetSkill(skill);
     if (skill == SKILL_AUTOMATON_RANGED)
         skill_level = PMaster->GetSkill(skill) + bonusSkill;
-    int32 ATT = 8 + skill_level + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
+    int32 ATT = 8 + skill_level + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
 
     // apply ranged distance variation
     if ((this->objtype == TYPE_PC || // im a PC
@@ -764,7 +760,7 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     }
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += (AGI() * 3) / 4;
+    acc += AGI() / 2;
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
 
@@ -812,11 +808,11 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         ACC = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
         if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]); weapon && weapon->isTwoHanded() == true)
         {
-            ACC += (int16)(DEX() * 0.75);
+            ACC += DEX() * 3 / 4;
         }
         else
         {
-            ACC += (int16)(DEX() * 0.75);
+            ACC += DEX() / 2;
         }
         ACC = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
         auto PChar = dynamic_cast<CCharEntity *>(this);

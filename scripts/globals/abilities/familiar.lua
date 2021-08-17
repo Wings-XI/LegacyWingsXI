@@ -19,13 +19,13 @@ function onAbilityCheck(player, target, ability)
     elseif pet:getLocalVar("ReceivedFamiliar") == 1 then
         return tpz.msg.basic.NO_EFFECT_ON_PET, 0
     else
-        pet:setLocalVar("ReceivedFamiliar", 1)
         return 0, 0
     end
 end
 
 function onUseAbility(player, target, ability)
     local pet = player:getPet()
+	pet:setLocalVar("ReceivedFamiliar", 1)
     local seconds = math.random(1600,1800)
     
     -- pets powers increase!

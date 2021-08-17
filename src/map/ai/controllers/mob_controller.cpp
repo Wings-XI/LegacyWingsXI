@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -239,7 +239,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     {
         return false;
     }
-    
+
     if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
     {
         return false;
@@ -512,7 +512,7 @@ bool CMobController::CanCastSpells()
     {
         return false;
     }
-	
+
     return IsMagicCastingEnabled();
 }
 
@@ -608,6 +608,10 @@ void CMobController::DoCombatTick(time_point tick)
         return;
     }
     else if (IsSpellReady(currentDistance) && TryCastSpell())
+    {
+        return;
+    }
+    else if (PMob->health.tp >= 1000 && PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI) && MobSkill())
     {
         return;
     }
@@ -866,17 +870,16 @@ void CMobController::DoRoamTick(time_point tick)
                 {
                     // walk back to spawn if too far away
 
-                    // limit total path to just 10 or
+                    // limit total path to just 20 or
                     // else we'll move straight back to spawn
-                    PMob->PAI->PathFind->LimitDistance(10.0f);
+                    PMob->PAI->PathFind->LimitDistance(20.0f);
 
                     FollowRoamPath();
 
                     // move back every 5 seconds
                     m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
                 }
-                else if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) &&
-                    !map_config.mob_no_despawn)
+                else if (!PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
                 {
                     PMob->PAI->Despawn();
                     return;
@@ -1081,13 +1084,25 @@ bool CMobController::Engage(uint16 targid)
     {
         m_firstSpell = true;
 
+        if (PMob->isInDynamis() && PMob->GetMJob() == JOB_SMN)
+        { // dyna SMN: summon my avatar immediately
+            m_LastMagicTime = m_Tick;
+            m_LastSpecialTime = m_Tick;
+            if (CanCastSpells() && PMob->SpellContainer->HasBuffSpells() && (!PMob->PPet || PMob->PPet->isDead()))
+            {
+                if (auto spellID = PMob->SpellContainer->GetBuffSpell())
+                    CastSpell(spellID.value());
+            }
+            return ret;
+        }
+
         // Don't cast magic or use special ability right away
-        if(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
+        if (PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
         {
             m_LastMagicTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + tpzrand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
         }
 
-        if(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
+        if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
         {
             m_LastSpecialTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) + tpzrand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY)));
         }
@@ -1109,7 +1124,7 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
             if (memberHate > hate) {
                 hate = memberHate;
             }
-        }    
+        }
     });
     return hate;
 }
@@ -1129,6 +1144,12 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     TracyZoneScoped;
     TracyZoneIString(PMob->GetName());
     TracyZoneIString(PTarget->GetName());
+
+    // Don't aggro I just uncharmed a few seconds ago
+    if (m_Tick < PMob->m_UncharmTime + 7s)
+    {
+        return false;
+    }
 
     // Don't aggro I'm neutral
     if ((PMob->getMobMod(MOBMOD_ALWAYS_AGGRO) == 0 && !PMob->m_Aggro) || PMob->m_neutral || PMob->isDead())

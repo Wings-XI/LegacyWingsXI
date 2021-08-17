@@ -7,6 +7,23 @@ require("scripts/globals/missions")
 -----------------------------------
 
 function onBattlefieldTick(battlefield, tick)
+
+    if battlefield:getLocalVar("event1") == 1 then
+
+        for _, player in ipairs(battlefield:getPlayers()) do
+            local inst = battlefield:getArea()
+            if inst == 1 then
+                player:setPos(-779, -103, -80)
+            elseif inst == 2 then
+                player:setPos(-140, -23, -440)
+            elseif inst == 3 then
+                player:setPos(499, 56, -802)
+            end
+        end
+
+        battlefield:setLocalVar("event1", 0)
+    end
+
     tpz.battlefield.onBattlefieldTick(battlefield, tick)
 end
 

@@ -65,53 +65,52 @@ function utils.stoneskin(target, dmg)
 end
 
 function utils.takeShadows(target, dmg, shadowbehav, mob)
-    if (shadowbehav == nil) then
+    if shadowbehav == nil then
         shadowbehav = 1
     end
     
-    local enmityLoss = 0 - math.floor(target:getMainLvl() / 2)
-    if mob == nil then
-        enmityLoss = 0
-    end
     --print(string.format("enmityLoss is %i",enmityLoss))
-
+    
     local targShadows = target:getMod(tpz.mod.UTSUSEMI)
     local shadowType = tpz.mod.UTSUSEMI
 
-    if (targShadows == 0) then --try blink, as utsusemi always overwrites blink this is okay
+    if targShadows == 0 then --try blink, as utsusemi always overwrites blink this is okay
         targShadows = target:getMod(tpz.mod.BLINK)
         shadowType = tpz.mod.BLINK
     end
+    
+    local enmityLoss = shadowType == tpz.mod.UTSUSEMI and -25 or -50
+    if mob == nil or mob:isMob() == false then enmityLoss = 0 end
 
     if (targShadows > 0) then
     --Blink has a VERY high chance of blocking tp moves, so im assuming its 100% because its easier!
 
-        if (targShadows >= shadowbehav) then --no damage, just suck the shadows
+        if targShadows >= shadowbehav then --no damage, just suck the shadows
 
             local shadowsLeft = targShadows - shadowbehav
 
             target:setMod(shadowType, shadowsLeft)
 
-            if (shadowsLeft > 0 and shadowType == tpz.mod.UTSUSEMI) then --update icon
+            if shadowsLeft > 0 and shadowType == tpz.mod.UTSUSEMI then --update icon
                 effect = target:getStatusEffect(tpz.effect.COPY_IMAGE)
-                if (effect ~= nil) then
-                    if (shadowsLeft == 1) then
+                if effect ~= nil then
+                    if shadowsLeft == 1 then
                         effect:setIcon(tpz.effect.COPY_IMAGE)
-                    elseif (shadowsLeft == 2) then
+                    elseif shadowsLeft == 2 then
                         effect:setIcon(tpz.effect.COPY_IMAGE_2)
-                    elseif (shadowsLeft == 3) then
+                    elseif shadowsLeft == 3 then
                         effect:setIcon(tpz.effect.COPY_IMAGE_3)
                     end
                 end
             end
             -- remove icon
-            if (shadowsLeft <= 0) then
+            if shadowsLeft <= 0 then
                 target:delStatusEffect(tpz.effect.COPY_IMAGE)
                 target:delStatusEffect(tpz.effect.BLINK)
             end
             
             if enmityLoss < 0 then
-                mob:addEnmity(target, enmityLoss*(targShadows-shadowsLeft), enmityLoss*(targShadows-shadowsLeft))
+                mob:addEnmity(target, enmityLoss*(targShadows-shadowsLeft), 0)
                 --print(string.format("taking away enmity of value %i",enmityLoss*(targShadows-shadowsLeft)))
             end
 
@@ -179,14 +178,15 @@ function utils.thirdeye(target)
 
     if prevAnt < 7 then
         --anticipated!
-        if seigan == nil or prevAnt == 6 or math.random()*100 > 100-prevAnt*15 then
+        if seigan == nil or prevAnt == 6 or math.random()*100 > 100-(prevAnt+1)*15 then
 			target:delStatusEffect(tpz.effect.THIRD_EYE)
 		else
 			teye:setPower(prevAnt + 1)
 		end
         return true
     else
-		target:delStatusEffect(tpz.effect.THIRD_EYE)
+		target:delStatusEffect(tpz.effect.THIRD_EYE) -- how did we get here?  the previous clause checks for prevAnt == 6
+        return true
 	end
 
     return false

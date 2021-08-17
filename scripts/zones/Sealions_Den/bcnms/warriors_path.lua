@@ -8,6 +8,10 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onBattlefieldTick(battlefield, tick)
+    if battlefield:getLocalVar("gameover") - battlefield:getRemainingTime() >= 10 then -- loss condition with enough delay that the full cosmic elucidation animation can go off
+        battlefield:lose()
+        return
+    end
     tpz.battlefield.onBattlefieldTick(battlefield, tick)
 end
 

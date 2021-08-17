@@ -1518,7 +1518,7 @@ namespace luautils
         if (PEntity->objtype != TYPE_PC)
             return;
         CCharEntity* PChar = (CCharEntity*)PEntity;
-        
+
         PChar->StatusEffectContainer->UpdateStatusIcons();
         PChar->PLatentEffectContainer->CheckAllLatents();
         PChar->m_EquipSwap = true;
@@ -1574,15 +1574,15 @@ namespace luautils
             filename = std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua";
         }
 
-        //player may be entering because of an earlier event (event that changes position)
-        // these should probably not call another event from onRegionEnter (use onEventFinish instead)
-        if (PChar->m_event.EventID == -1)
-            PChar->m_event.Script = filename;
-
         if (prepFile((int8*)filename.c_str(), "onRegionEnter"))
         {
             return -1;
         }
+
+        //player may be entering because of an earlier event (event that changes position)
+        // these should probably not call another event from onRegionEnter (use onEventFinish instead)
+        if (PChar->m_event.EventID == -1)
+            PChar->m_event.Script = filename;
 
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
@@ -1616,14 +1616,14 @@ namespace luautils
             filename = std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua";
         }
 
-        //player may be leaving because of an earlier event (event that changes position)
-        if (PChar->m_event.EventID == -1)
-            PChar->m_event.Script = filename;
-
         if (prepFile((int8*)filename.c_str(), "onRegionLeave"))
         {
             return -1;
         }
+
+        //player may be leaving because of an earlier event (event that changes position)
+        if (PChar->m_event.EventID == -1)
+            PChar->m_event.Script = filename;
 
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
@@ -1651,11 +1651,6 @@ namespace luautils
         TracyZoneScoped;
         lua_prepscript("scripts/zones/%s/npcs/%s.lua", PChar->loc.zone->GetName(), PNpc->GetName());
 
-        PChar->m_event.reset();
-        PChar->m_event.Target = PNpc;
-        PChar->m_event.Script.insert(0, (const char*)File);
-        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BOOST);
-
         lua_pushnil(LuaHandle);
         lua_setglobal(LuaHandle, "onTrigger");
 
@@ -1682,13 +1677,21 @@ namespace luautils
             return -1;
         }
 
+        auto prevEvent = PChar->m_event;
+        PChar->m_event.reset();
+        PChar->m_event.Target = PNpc;
+        PChar->m_event.Script.insert(0, (const char*)File);
+        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BOOST);
+
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
 
         CLuaBaseEntity LuaBaseEntityTarg(PNpc);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntityTarg);
 
-        if (lua_pcall(LuaHandle, 2, 1, 0))
+        ret = lua_pcall(LuaHandle, 2, 1, 0);
+        if (PChar->m_event.EventID == -1) PChar->m_event = prevEvent;
+        if (ret)
         {
             ShowError("luautils::onTrigger: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -1869,14 +1872,15 @@ namespace luautils
         TracyZoneScoped;
         lua_prepscript("scripts/zones/%s/npcs/%s.lua", PChar->loc.zone->GetName(), PNpc->GetName());
 
-        PChar->m_event.reset();
-        PChar->m_event.Target = PNpc;
-        PChar->m_event.Script.insert(0, (const char*)File);
-
         if (prepFile(File, "onTrade"))
         {
             return -1;
         }
+
+        auto prevEvent = PChar->m_event;
+        PChar->m_event.reset();
+        PChar->m_event.Target = PNpc;
+        PChar->m_event.Script.insert(0, (const char*)File);
 
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
@@ -1887,7 +1891,9 @@ namespace luautils
         CLuaTradeContainer LuaTradeContainer(PChar->TradeContainer);
         Lunar<CLuaTradeContainer>::push(LuaHandle, &LuaTradeContainer);
 
-        if (lua_pcall(LuaHandle, 3, 0, 0))
+        auto ret = lua_pcall(LuaHandle, 3, 0, 0);
+        if (PChar->m_event.EventID == -1) PChar->m_event = prevEvent;
+        if (ret)
         {
             ShowError("luautils::onTrade: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -2990,22 +2996,29 @@ namespace luautils
         PMob->objtype == TYPE_PET ? snprintf((char*)File, sizeof(File), "scripts/globals/pets/%s.lua", static_cast<CPetEntity*>(PMob)->GetScriptName().c_str()) :
             snprintf((char*)File, sizeof(File), "scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
 
-        if (PTarget->objtype == TYPE_PC)
-        {
-            ((CCharEntity*)PTarget)->m_event.reset();
-            ((CCharEntity*)PTarget)->m_event.Target = PMob;
-            ((CCharEntity*)PTarget)->m_event.Script.insert(0, (const char*)File);
-        }
-
         if (prepFile(File, "onMobEngaged"))
         {
             return -1;
         }
 
+        event_t prevEvent;
+        if (PTarget->objtype == TYPE_PC)
+        {
+            prevEvent = ((CCharEntity*)PTarget)->m_event;
+            ((CCharEntity*)PTarget)->m_event.reset();
+            ((CCharEntity*)PTarget)->m_event.Target = PMob;
+            ((CCharEntity*)PTarget)->m_event.Script.insert(0, (const char*)File);
+        }
+
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaKillerEntity);
 
-        if (lua_pcall(LuaHandle, 2, 0, 0))
+        auto ret = lua_pcall(LuaHandle, 2, 0, 0);
+        if (PTarget->objtype == TYPE_PC)
+        {
+            if (((CCharEntity*)PTarget)->m_event.EventID == -1) ((CCharEntity*)PTarget)->m_event = prevEvent;
+        }
+        if (ret)
         {
             ShowError("luautils::onMobEngaged: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -3058,22 +3071,29 @@ namespace luautils
 
         lua_prepscript("scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
 
-        if (PTarget->objtype == TYPE_PC)
-        {
-            ((CCharEntity*)PTarget)->m_event.reset();
-            ((CCharEntity*)PTarget)->m_event.Target = PMob;
-            ((CCharEntity*)PTarget)->m_event.Script.insert(0, (const char*)File);
-        }
-
         if (prepFile(File, "onMobDrawIn"))
         {
             return -1;
         }
 
+        event_t prevEvent;
+        if (PTarget->objtype == TYPE_PC)
+        {
+            prevEvent = ((CCharEntity*)PTarget)->m_event;
+            ((CCharEntity*)PTarget)->m_event.reset();
+            ((CCharEntity*)PTarget)->m_event.Target = PMob;
+            ((CCharEntity*)PTarget)->m_event.Script.insert(0, (const char*)File);
+        }
+
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaKillerEntity);
 
-        if (lua_pcall(LuaHandle, 2, 0, 0))
+        auto ret = lua_pcall(LuaHandle, 2, 0, 0);
+        if (PTarget->objtype == TYPE_PC)
+        {
+            if (((CCharEntity*)PTarget)->m_event.EventID == -1) ((CCharEntity*)PTarget)->m_event = prevEvent;
+        }
+        if (ret)
         {
             ShowError("luautils::onMobDrawIn: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -3213,14 +3233,6 @@ namespace luautils
                 CCharEntity* PMember = (CCharEntity*)PPartyMember;
                 if (PMember->getZone() == PChar->getZone())
                 {
-                    CLuaBaseEntity LuaMobEntity(PMob);
-                    CLuaBaseEntity LuaAllyEntity(PMember);
-                    bool isKiller = PMember == PChar;
-
-                    PMember->m_event.reset();
-                    PMember->m_event.Target = PMob;
-                    PMember->m_event.Script.insert(0, (const char*)File);
-
                     if (luaL_loadfile(LuaHandle, (const char*)File) || lua_pcall(LuaHandle, 0, 0, 0))
                     {
                         lua_pop(LuaHandle, 1);
@@ -3235,6 +3247,15 @@ namespace luautils
                         return;
                     }
 
+                    CLuaBaseEntity LuaMobEntity(PMob);
+                    CLuaBaseEntity LuaAllyEntity(PMember);
+                    bool isKiller = PMember == PChar;
+
+                    auto prevEvent = PMember->m_event;
+                    PMember->m_event.reset();
+                    PMember->m_event.Target = PMob;
+                    PMember->m_event.Script.insert(0, (const char*)File);
+
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
                     if (PMember)
                     {
@@ -3247,7 +3268,9 @@ namespace luautils
                         lua_pushnil(LuaHandle);
                     }
 
-                    if (lua_pcall(LuaHandle, 3, 0, 0))
+                    auto ret = lua_pcall(LuaHandle, 3, 0, 0);
+                    if (PMember->m_event.EventID == -1) PMember->m_event = prevEvent;
+                    if (ret)
                     {
                         ShowError("luautils::onMobDeath: %s\n", lua_tostring(LuaHandle, -1));
                         lua_pop(LuaHandle, 1);
@@ -3686,6 +3709,35 @@ namespace luautils
             return 0;
         }
         int32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (uint16)lua_tonumber(LuaHandle, -1) : 0);
+        lua_pop(LuaHandle, 1);
+        return retVal;
+    }
+
+    int32 onMobSkillFinished(CBaseEntity* PMob, CBaseEntity* PTarget, CMobSkill* PMobSkill)
+    {
+        lua_prepscript("scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
+        if (prepFile(File, "onMobSkillFinished"))
+        {
+            return 0;
+        }
+
+        CLuaBaseEntity LuaMobEntity(PMob);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
+
+        CLuaBaseEntity LuaBaseEntity(PTarget);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
+
+        CLuaMobSkill LuaMobSkill(PMobSkill);
+        Lunar<CLuaMobSkill>::push(LuaHandle, &LuaMobSkill);
+
+        if (lua_pcall(LuaHandle, 3, 1, 0))
+        {
+            ShowError("luautils::onMobSkillFinished (%s): %s\n", PMobSkill->getName(), lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return 0;
+        }
+
+        uint32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0);
         lua_pop(LuaHandle, 1);
         return retVal;
     }
@@ -4477,11 +4529,14 @@ namespace luautils
 
         lua_pushinteger(LuaHandle, LeaveCode);
 
+        auto prevEvent = PChar->m_event;
         PChar->m_event.reset();
         PChar->m_event.Target = PChar;
         PChar->m_event.Script.insert(0, (const char*)File);
 
-        if (lua_pcall(LuaHandle, 3, 0, 0))
+        auto ret = lua_pcall(LuaHandle, 3, 0, 0);
+        if (PChar->m_event.EventID == -1) PChar->m_event = prevEvent;
+        if (ret)
         {
             ShowError("luautils::onBattlefieldLeave: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
@@ -5019,7 +5074,7 @@ namespace luautils
         lua_pushinteger(L, daily::SelectItem(player, (uint8)lua_tointeger(L, 2)));
         return 1;
     }
-    
+
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID)
     {
         lua_prepscript("scripts/globals/player.lua");

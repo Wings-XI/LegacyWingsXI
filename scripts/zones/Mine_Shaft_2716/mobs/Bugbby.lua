@@ -3,25 +3,27 @@
 -- CoP Mission 5-3 (A Century of Hardship)
 -- NM: Bugbby
 -----------------------------------
-local ID = require("scripts/zones/Mine_Shaft_2716/IDs")
 mixins = {require("scripts/mixins/job_special")}
+local ID = require("scripts/zones/Mine_Shaft_2716/IDs")
 require("scripts/globals/status")
 -----------------------------------
 
-function onMobSpawn(mob)
-    mob:addMod(tpz.mod.DOUBLE_ATTACK, 100)
-    mob:addMod(tpz.mod.TRIPLE_ATTACK, 30)   
+function onMobInitialize(mob)
+    mob:setMod(tpz.mod.ATTP, -50)
+end
 
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = tpz.jsa.MIGHTY_STRIKES, cooldown = 300}, -- 5min cooldown
+            {id = tpz.jsa.MIGHTY_STRIKES, cooldown = 300, hpp = math.random(85, 95)}, -- 5min cooldown
         },
     })
+    mob:addMod(tpz.mod.DOUBLE_ATTACK, 100)
+    mob:addMod(tpz.mod.TRIPLE_ATTACK, 30)
 end
 
 function onMobEngaged(mob, target)
-    mob:resetLocalVars()
 end
 
 function onMobFight(mob, target)

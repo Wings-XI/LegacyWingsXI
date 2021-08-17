@@ -37,17 +37,9 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         uint32_t dwStatus = 0;
         uint32_t dwPrivileges = 0;
         bool bUserExists = false;
-        bool bIpExempt = false;
+        uint32_t dwIpExempt = 0;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
-        // Check IP address block before everything so we don't have
-        // to do extra work.
-        if (IsIPAddressBlocked()) {
-            LOG_DEBUG1("IP address of the user is blocked.");
-            mLastError = AUTH_IP_BLOCKED;
-            LogAccess(0, AUTH_OP_LOGIN, false, false);
-            return 0;
-        }
         std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
@@ -68,7 +60,7 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             strSalt = pAccountsFound->get_string(2);
             dwStatus = pAccountsFound->get_unsigned16(3);
             dwPrivileges = pAccountsFound->get_unsigned32(4);
-            bIpExempt = pAccountsFound->get_boolean(5);
+            dwIpExempt = pAccountsFound->get_unsigned16(5);
         }
         mLastError = AUTH_SUCCESS;
         // Hash the entered password even if the user does not exist. This prevents valid username
@@ -90,13 +82,17 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             LOG_DEBUG1("Account %s is disabled.", pszUsername);
             mLastError = AUTH_ACCOUNT_DISABLED;
         }
+        else if (((dwIpExempt & 0x02) == 0) && (IsIPAddressBlocked())) {
+            LOG_DEBUG1("IP address of the user is blocked.");
+            mLastError = AUTH_IP_BLOCKED;
+        }
         if (mLastError == AUTH_SUCCESS && Config->GetConfigUInt("maintenance_mode") != 0) {
             if ((dwPrivileges & ACCT_PRIV_MAINT_MODE_ACCESS) == 0) {
                 LOG_DEBUG1("Account %s does not have maintenance mode access.", pszUsername);
                 mLastError = AUTH_MAINTENANCE_MODE;
             }
         }
-        if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, bIpExempt)) {
+        if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, ((dwIpExempt & 0x01) != 0))) {
             if (mLastError == AUTH_SUCCESS) {
                 LOG_DEBUG1("Another account shares IP with %s.", pszUsername);
                 mLastError = AUTH_ANOTHER_ACCOUNT_SHARES_IP;
@@ -351,7 +347,7 @@ bool Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOpera
     std::string strSqlFinalQuery;
     std::string strClientIP = inet_ntoa(mpConnection->GetConnectionDetails().BindDetails.sin_addr);
     if (bResult && !bIPExempt && Config->GetConfigUInt("one_account_per_ip")) {
-        strSqlQueryFmt = "SELECT account_id FROM %slogin_log, %saccounts WHERE %slogin_log.account_id = %saccounts.id AND client_ip = '%s' AND account_id != %d AND account_id != 0 AND result != 0 AND login_time >= NOW() - INTERVAL 1 MONTH AND ip_exempt = 0 LIMIT 1;";
+        strSqlQueryFmt = "SELECT account_id FROM %slogin_log, %saccounts WHERE %slogin_log.account_id = %saccounts.id AND client_ip = '%s' AND account_id != %d AND account_id != 0 AND result != 0 AND login_time >= NOW() - INTERVAL 1 MONTH AND ((ip_exempt & 0x01) = 0) LIMIT 1;";
         strSqlFinalQuery = FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),

@@ -28,6 +28,7 @@
 
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
+#include "utils/chatfilter.h"
 #include "dynamis_handler.h"
 #include "treasure_pool.h"
 #include "recast_container.h"
@@ -68,6 +69,25 @@ TREASUREPOOLTYPE CTreasurePool::GetPoolType()
 }
 
 /************************************************************************
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
+
+bool CTreasurePool::hasMember(CCharEntity* PChar)
+{
+    TPZ_DEBUG_BREAK_IF(PChar == nullptr);
+    TPZ_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
+
+    for (auto it = members.begin(); it != members.end(); it++)
+    {
+        if ((*it)->id == PChar->id)
+            return true;
+    }
+    return false;
+}
+
+/************************************************************************
 *                                                                       *
 *                                                                       *
 *                                                                       *
@@ -78,12 +98,16 @@ void CTreasurePool::AddMember(CCharEntity* PChar)
     TPZ_DEBUG_BREAK_IF(PChar == nullptr);
     TPZ_DEBUG_BREAK_IF(PChar->PTreasurePool != this);
 
+    if (this->hasMember(PChar))
+        return;
+
     members.push_back(PChar);
 
     if (m_TreasurePoolType == TREASUREPOOL_SOLO && members.size() > 1)
     {
         m_TreasurePoolType = TREASUREPOOL_PARTY;
-    }else if (m_TreasurePoolType == TREASUREPOOL_PARTY && members.size() > 6)
+    }
+    else if (m_TreasurePoolType == TREASUREPOOL_PARTY && members.size() > 6)
     {
         m_TreasurePoolType = TREASUREPOOL_ALLIANCE;
     }
@@ -308,9 +332,12 @@ void CTreasurePool::LotItem(CCharEntity* PChar, uint8 SlotID, uint16 Lot)
     }
 
     //Player lots Item for XXX message
+    CChatFilter chatFilter(PChar, CHATFILTER_LOT_RESULTS);
+
     for (uint32 i = 0; i < members.size(); ++i)
     {
-        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, Lot));
+        bool filtered = chatFilter.isFiltered(members[i]);
+        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, Lot, filtered));
     }
 
     //if all lotters have lotted, evaluate immediately.
@@ -358,10 +385,14 @@ void CTreasurePool::PassItem(CCharEntity* PChar, uint8 SlotID)
     }
 
     uint16 PassedLot = 65535; // passed mask is FF FF
+
     //Player lots Item for XXX message
+    CChatFilter chatFilter(PChar, CHATFILTER_LOT_RESULTS);
+
     for (uint32 i = 0; i < members.size(); ++i)
     {
-        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, PassedLot));
+        bool filtered = chatFilter.isFiltered(members[i]);
+        members[i]->pushPacket(new CTreasureLotItemPacket(highestLotter, highestLot, PChar, SlotID, PassedLot, filtered));
     }
 
     //if all lotters have lotted, evaluate immediately.
@@ -486,7 +517,7 @@ void CTreasurePool::CheckTreasureItem(time_point tick, uint8 SlotID, CCharEntity
             std::vector<CCharEntity*> candidates;
             for (uint8 i = 0; i < members.size(); ++i)
             {
-                if (charutils::HasItem(members[i], m_PoolItems[SlotID].ID) && itemutils::GetItem(m_PoolItems[SlotID].ID)->getFlag() & ITEM_FLAG_RARE)
+                if (itemutils::GetItem(m_PoolItems[SlotID].ID)->getFlag() & ITEM_FLAG_RARE && charutils::HasItem(members[i], m_PoolItems[SlotID].ID))
                     continue;
 
                 if (members[i]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && !HasPassedItem(members[i], SlotID))

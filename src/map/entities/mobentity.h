@@ -228,6 +228,7 @@ public:
     uint16    m_Behaviour;                // mob behaviour
     SPAWNTYPE m_SpawnType;                // condition for mob to spawn
     time_point m_SpawnTime;               // exact time the mob spawned
+    time_point m_UncharmTime;             // time when the mob uncharmed
     bool      m_AutoClaimed;              // mob spawned in an already claimed state (disable cheating detection)
 
     int8      m_battlefieldID;            // battlefield belonging to
@@ -270,6 +271,9 @@ public:
 
     void DropItems(CCharEntity* PChar);
 
+    std::unordered_map<int, int16> m_mobModStat;
+    std::unordered_map<int, int16> m_mobModStatSave;
+
 protected:
 
     void DistributeRewards();
@@ -278,8 +282,7 @@ protected:
 private:
 
     time_point    m_DespawnTimer {time_point::min()};  // Despawn Timer to despawn mob after set duration
-    std::unordered_map<int, int16>     m_mobModStat;
-    std::unordered_map<int, int16>     m_mobModStatSave;
+    
     static constexpr float roam_home_distance {80.f};
 };
 

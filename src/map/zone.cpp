@@ -186,7 +186,7 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_zoneType = ZONETYPE_NONE;
     m_regionID = RegionID;
     m_continentID = ContinentID;
-    m_TreasurePool = 0;
+    m_TreasurePool = nullptr;
     m_BattlefieldHandler = nullptr;
     m_Weather = WEATHER_NONE;
     m_WeatherChangeTime = 0;
@@ -1129,6 +1129,9 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     PChar->SpawnMOBList.clear();
     PChar->SpawnPETList.clear();
     PChar->SpawnTRUSTList.clear();
+
+    if (PChar->PNotorietyContainer)
+        PChar->PNotorietyContainer->clearAllEnmityForAttackers();
 
     if (PChar->PParty && PChar->loc.destination != 0 && PChar->m_moghouseID == 0)
     {

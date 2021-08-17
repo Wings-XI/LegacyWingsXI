@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -889,7 +889,7 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
  *                                                                       *
  ************************************************************************/
 
-PacketList_t generate_priority_packet_list(CCharEntity* PChar)
+PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_t* map_session_data)
 {
     auto getBufferSize = [](PacketList_t list) {
         size_t size = FFXI_HEADER_SIZE; // include header here
@@ -900,19 +900,22 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
         }
         return (uint32)size;
     };
-    auto getCompressedBufferSize = [](PacketList_t list) {
+    auto getCompressedBufferSize = [&map_session_data](PacketList_t list) {
         PacketList_t listcopy = list;
         size_t size = 0;
+        CBasicPacket* PSmallPacket;
         while (!list.empty())
         {
-            memcpy(PTempBuff + size, list.front()->getData(), list.front()->length());
-            size += list.front()->length();
+            PSmallPacket = list.front();
+            PSmallPacket->sequence(map_session_data->server_packet_id);
+            memcpy(PTempBuff + size, PSmallPacket->getData(), PSmallPacket->length());
+            size += PSmallPacket->length();
             list.pop_front();
         }
         TPZ_DEBUG_BREAK_IF(size > map_config.buffer_size); // should never happen with the help of logic short-circuiting
         //ShowDebug("Doing zlib_compress with size %u...\n", size);
         int32 zlibBits = zlib_compress(PTempBuff, (uint32)size, PTempBuff2, map_config.buffer_size);
-        if (zlibBits == -1)
+        if (zlibBits == static_cast<uint32>(-1))
             return (uint32)0xFFFFFFFF;
         return (uint32)zlib_compressed_size(zlibBits);
     };
@@ -923,8 +926,8 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
     priorityList = PChar->getPacketList();
     PacketList_t charPacketList = priorityList;
     
-    if (getBufferSize(priorityList) < map_config.buffer_size && getCompressedBufferSize(priorityList) + 4 < 1200 - FFXI_HEADER_SIZE - 16)
-    { // no prioritization needed. optimization: just return the list. for some reason 1300 can make us go over limit, so being conservative.
+    if (getBufferSize(priorityList) < map_config.buffer_size && getCompressedBufferSize(priorityList) + 4 <= 1300 - FFXI_HEADER_SIZE - 16)
+    { // no prioritization needed. optimization: just return the list.
         // finalization: all packets in priorityList will be sent, so do cleanup for what will be recycled and what will not
         for (auto it = priorityList.begin(); it != priorityList.end(); it++)
             (*it)->selectedForThisNetworkCycle = true;
@@ -1416,6 +1419,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                         { // high prio of despawn/spawn no matter who they are.
                             priorityNum = 1;
                             PSmallPacket->priorityNumOverride = 1;
+                            PSmallPacket->overflowDropImmunity = true;
                             break;
                         }
 
@@ -1517,6 +1521,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                         { // high prio of despawn/spawn no matter who they are.
                             priorityNum = 1;
                             PSmallPacket->priorityNumOverride = 1;
+                            PSmallPacket->overflowDropImmunity = true;
                             break;
                         }
 
@@ -1864,6 +1869,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x19: // recast
                     case 0x61: // stats (self)
                     case 0x62: // skills
+                    case 0x44: // job extra
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -1882,7 +1888,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                     case 0x06: // bazaar purchase
                     case 0x42: // blacklist
                     case 0xC9: // check
-                    case 0x44: // job extra
                     case 0x4B: // delivery box
                     case 0x77: // entity enable list
                     case 0x32: // event
@@ -2103,6 +2108,9 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
                 }
             }
 
+            if (priorityNum == -1 || priorityNum == 0)
+                PSmallPacket->overflowDropImmunity = true;
+
             switch (priorityNum)
             {
                 case -1:
@@ -2267,15 +2275,16 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar)
     }
 
     uint32 compressedBufferSize = getCompressedBufferSize(priorityList);
-    compressedBufferSize = getCompressedBufferSize(priorityList);
-    if (compressedBufferSize + 4 >= 1200 - FFXI_HEADER_SIZE - 16)
+    if (compressedBufferSize + 4 > 1300 - FFXI_HEADER_SIZE - 16)
     { // 16 bytes ensures there is room for the md5 hash later on in send_parse. 4 bytes ensures there is room for compressed-size stamp on master packet in send_parse.
         priorityList = orderPacketList(priorityList);
-        while (compressedBufferSize + 4 >= 1200 - FFXI_HEADER_SIZE - 16)
+        while (compressedBufferSize + 4 > 1300 - FFXI_HEADER_SIZE - 16)
         {
             priorityList.pop_back();
+            if (!priorityList.empty())
+                priorityList.pop_back(); // compression is CPU expensive, let's pop two at a time
             compressedBufferSize = getCompressedBufferSize(priorityList);
-        } // not too woried about processing optimization here since, from my testing, buffersize hits 1750 before compressedbuffersize hits 1200 in 99.99% of scenarios
+        }
     }
 
     // finalization: all packets in priorityList will be sent, so do cleanup for what will be recycled and what will not
@@ -2310,22 +2319,79 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
     uint32 PacketSizeBytes = 0xFFFFFFFF;
     uint16 DebugSendPacketCount = 0;
 
-    *buffsize = FFXI_HEADER_SIZE;
     uint32 packetsBeforePrio = PChar->getPacketCount();
-    
-    PacketList_t packetList = generate_priority_packet_list(PChar);
-    uint32 packetsAfterPrio = packetList.size();
+    uint32 packetsAfterPrio = 0;
+    PacketList_t packetList = generate_priority_packet_list(PChar, map_session_data);
+    PacketList_t packetListBackup = packetList;
 
-    while (!packetList.empty())
+    while (true)
     {
-        PSmallPacket = packetList.front();
-        PSmallPacket->sequence(map_session_data->server_packet_id);
-        memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
-        *buffsize += PSmallPacket->length();
-        //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
-        if (PSmallPacket->getType() == 0x1D && !PChar->m_packetLimiterEnabled)
-            PChar->m_packetLimiterEnabled = true; // inventory finish packet means we can turn on the limiter
-        packetList.pop_front();
+        *buffsize = FFXI_HEADER_SIZE;
+        packetsAfterPrio = packetList.size();
+
+        while (!packetList.empty())
+        {
+            PSmallPacket = packetList.front();
+            PSmallPacket->sequence(map_session_data->server_packet_id);
+            memcpy(buff + *buffsize, PSmallPacket->getData(), PSmallPacket->length());
+            *buffsize += PSmallPacket->length();
+            //ShowDebug("Preparing packet of ID 0x%02hx...\n", PSmallPacket->getType());
+            packetList.pop_front();
+        }
+
+        // error checking on buffer sizes. generate_priority_packet_list makes mistakes sometimes, not sure why.
+
+        if (*buffsize > map_config.buffer_size)
+        {
+            ShowFatalError("generate_priority_packet_list failed to detect buffer overflow error for character %s on sequence %u! Size was %u\n",
+                           PChar->GetName(), map_session_data->server_packet_id, *buffsize);
+            // pop and retry is all we can do
+            packetListBackup.back()->selectedForThisNetworkCycle = false;
+            packetListBackup.pop_back();
+            if (!packetListBackup.empty())
+            {
+                packetListBackup.back()->selectedForThisNetworkCycle = false;
+                packetListBackup.pop_back();
+            }
+            packetList = packetListBackup;
+            continue;
+        }
+
+        // Compress the data excluding the header
+        PacketSizeBits = zlib_compress(buff + FFXI_HEADER_SIZE, (uint32)(*buffsize - FFXI_HEADER_SIZE), PTempBuff, map_config.buffer_size);
+        if (PacketSizeBits == static_cast<uint32>(-1))
+        {
+            ShowFatalError("generate_priority_packet_list failed to detect a zlib compression error for character %s on sequence %u!\n", PChar->GetName(),
+                           map_session_data->server_packet_id);
+            // pop and retry is all we can do
+            packetListBackup.back()->selectedForThisNetworkCycle = false;
+            packetListBackup.pop_back();
+            if (!packetListBackup.empty())
+            {
+                packetListBackup.back()->selectedForThisNetworkCycle = false;
+                packetListBackup.pop_back();
+            }
+            packetList = packetListBackup;
+            continue;
+        }
+
+        PacketSizeBytes = (uint32)zlib_compressed_size(PacketSizeBits);
+        if (PacketSizeBytes + 4 > 1300 - FFXI_HEADER_SIZE - 16) // max for PacketSizeBytes is 1252
+        {
+            ShowFatalError("generate_priority_packet_list failed to detect COMPRESSED buffer overflow error for character %s on sequence %u! Size was %u\n",
+                           PChar->GetName(), map_session_data->server_packet_id, PacketSizeBytes);
+            // pop and retry is all we can do
+            packetListBackup.back()->selectedForThisNetworkCycle = false;
+            packetListBackup.pop_back();
+            if (!packetListBackup.empty())
+            {
+                packetListBackup.back()->selectedForThisNetworkCycle = false;
+                packetListBackup.pop_back();
+            }
+            packetList = packetListBackup;
+            continue;
+        }
+        break;
     }
 
     uint16 packetsRemaining = PChar->getPacketCount();
@@ -2334,7 +2400,7 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
 
     if (packetsBeforePrio)
     {
-        // delete the packets we just copied into the buffer as well as any of the non-used objects that are toggled to not recycle to the next network cycle
+        // delete the packets we just copied into the buffer as well as any that are toggled to not recycle to the next network cycle
 
         PacketList_t* PPacketList = PChar->getPacketListPtr();
         auto it = PPacketList->cbegin();
@@ -2344,6 +2410,31 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
             {
                 delete (*it);
                 it = PPacketList->erase(it);
+                packetsRemaining--;
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
+    if (!PChar->m_packetLimiterEnabled && std::chrono::system_clock::now() - PChar->m_objectCreationTime > 45s)
+        PChar->m_packetLimiterEnabled = true;
+    
+    if (PChar->m_packetLimiterEnabled)
+    {
+        // delete packets over the limiter
+
+        PacketList_t* PPacketList = PChar->getPacketListPtr();
+        auto it = PPacketList->cbegin();
+        while (packetsRemaining > 500 && it != PPacketList->cend())
+        {
+            if ((*it)->overflowDropImmunity == false)
+            {
+                delete (*it);
+                it = PPacketList->erase(it);
+                packetsRemaining--;
             }
             else
             {
@@ -2352,54 +2443,15 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
         }
     }
     
-    if (packetsRemaining > 500 && PChar->m_packetLimiterEnabled)
-    {
-        uint32 packetsToDrop = packetsRemaining - 500;
-
-        PacketList_t* PPacketList = PChar->getPacketListPtr();
-        auto it = PPacketList->cbegin();
-        while (it != PPacketList->cend() && packetsToDrop)
-        {
-            if ((*it)->overflowDropImmunity == false)
-            {
-                delete (*it);
-                it = PPacketList->erase(it);
-            }
-            else
-            {
-                it++;
-            }
-            packetsToDrop--;
-        }
-    }
-
-    if (*buffsize > map_config.buffer_size)
-    {
-        ShowFatalError("generate_priority_packet_list failed to detect buffer overflow error for character %s on sequence %u! Size was %u\n",
-            PChar->GetName(), map_session_data->server_packet_id, *buffsize);
-        return -1;
-    }
-
-    // Compress the data excluding the header
-    PacketSizeBits = zlib_compress(buff + FFXI_HEADER_SIZE, (uint32)(*buffsize - FFXI_HEADER_SIZE), PTempBuff, map_config.buffer_size);
-    if (PacketSizeBits == static_cast<uint32>(-1))
-    {
-        ShowFatalError("generate_priority_packet_list failed to detect a zlib compression error for character %s on sequence %u!\n",
-            PChar->GetName(), map_session_data->server_packet_id);
-        return -1;
-    }
-    PacketSizeBytes = (uint32)zlib_compressed_size(PacketSizeBits);
-    if (PacketSizeBytes + 4 > 1300 - FFXI_HEADER_SIZE - 16)
-    {
-        ShowFatalError("generate_priority_packet_list failed to detect COMPRESSED buffer overflow error for character %s on sequence %u! Size was %u\n",
-            PChar->GetName(), map_session_data->server_packet_id, PacketSizeBytes);
-        return -1;
-    } // size was 1265
-
-    // 1800 buffer limit is on the uncompressed list of smallpackets (default, cant be changed with map_config.buffer_size)
+    // 1800 buffer limit is on the uncompressed list of smallpackets (default, can be changed with map_config.buffer_size)
     // 1300 buffer limit is on the compressed list of smallpackets + compressed size indicator(4chars) + md5 hash(16chars)
+    // if master packet size (after compress) exceeds 1400 bytes (payload + 42 bytes IP header),
+    // then the client ignores the packet and returns a message about its loss
+    // server doesn't handle a response to such a message as it shouldn't happen
+    // since we are limiting to 1300 bytes just to be safe
+
     /*
-    ShowDebug("SEQUENCE %u: Attempting to send %u/%u packets to character %s (size %u/%u buffer bytes, %u/1300 compressed).\n",
+    ShowDebug("SEQUENCE %u: Sending %u/%u packets to character %s (size %u/%u buffer, %u/1300 compressed).\n",
               map_session_data->server_packet_id, packetsAfterPrio, packetsBeforePrio, PChar->GetName(), (uint16)*buffsize,
               map_config.buffer_size, PacketSizeBytes + 20);
     */
@@ -2432,11 +2484,6 @@ int32 send_parse(int8 *buff, size_t* buffsize, sockaddr_in* from, map_session_da
     {
         blowfish_encipher((uint32*)(buff)+j + 7, (uint32*)(buff)+j + 8, pbfkey->P, pbfkey->S[0]);
     }
-
-    // if master packet size (after compress) exceeds 1400 bytes (data size + 42 bytes IP header),
-    // then the client ignores the packet and returns a message about its loss
-    // server doesn't handle a response to such a message as it shouldn't happen
-    // since we are limiting to 1300 bytes just to be safe
 
     *buffsize = PacketSizeBytes + FFXI_HEADER_SIZE;
 

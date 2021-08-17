@@ -62,6 +62,18 @@ local items =
         id = 142, -- Drogaroga's Fang
         rank = 9,
         cost = 150000
+    },
+    [4] =
+    {
+        id = 336, -- Boneworker's Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] =
+    {
+        id = 15824, -- Bonecrafter's Ring
+        rank = 6,
+        cost = 80000
     }
 }
 

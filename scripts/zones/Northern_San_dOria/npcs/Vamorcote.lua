@@ -26,7 +26,7 @@ function onTrigger(player, npc)
 
     if (theSettingSun == QUEST_AVAILABLE  and
         player:getFameLevel(SANDORIA) >= 5 and
-        player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.BLACKMAIL) ~= QUEST_COMPLETED)
+        player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.BLACKMAIL) == QUEST_COMPLETED)
     then
         player:startEvent(654, 0, 535, 535) --The quest is offered to the player.
     elseif (theSettingSun == QUEST_ACCEPTED) then

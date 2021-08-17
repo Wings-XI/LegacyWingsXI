@@ -32,6 +32,6 @@ function onMobSpawn(mob)
     params.specials = { }
     params.specials.gakure = { }
     params.specials.gakure.id = tpz.jsa.MIJIN_GAKURE;
-    params.specials.gakure.hpp = math.random(25,35)
+    params.specials.gakure.hpp = math.random(20,30)
     tpz.mix.jobSpecial.config(mob, params)
 end
