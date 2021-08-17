@@ -7,7 +7,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:showText(npc, 7230)
+    player:messageSpecial(7230)
 end
 
 function onEventUpdate(player, csid, option)

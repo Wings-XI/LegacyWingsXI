@@ -18,7 +18,7 @@ function onTrigger(player, npc)
     if npc:getLocalVar("quasiStatus") == 0 then
         GetNPCByID(16916906):setPos(796.97, -1, 459.97)
         GetNPCByID(16916906):showText(GetNPCByID(16916906), 7356)
-        GetNPCByID(16916906):showNPC(500)
+        GetNPCByID(16916906):showNPC(2000)
         GetNPCByID(16916906):pathTo(772.07, 0, 460.7) 
         npc:setLocalVar("quasiStatus", 1)
         npc:setLocalVar("checkpoint", 1)

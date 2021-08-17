@@ -11,14 +11,118 @@ function onMobSpawn(mob)
     if (mob:getMod(tpz.mod.PIERCERES)) then mob:setMod(tpz.mod.PIERCERES, 1000); end
     if (mob:getMod(tpz.mod.IMPACTRES)) then mob:setMod(tpz.mod.IMPACTRES, 1000); end
     if (mob:getMod(tpz.mod.HTHRES)) then mob:setMod(tpz.mod.HTHRES, 1000); end
+
+    mob:setLocalVar("twoHourPer", 50)
+    mob:setLocalVar("canTwoHour", 0)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 20)
+
+    local skin = math.random(1161, 1168)
+    local mobSkin = mob:getModelId()
+    mob:setModelId(skin)
+    if skin == 1161 then -- Fire
+        mob:setSpellList(470)
+        mob:setMod(tpz.mod.ICERES, 27)
+        mob:setMod(tpz.mod.WATERRES, -27)
+    elseif skin == 1162 then --Ice
+        mob:setSpellList(465)
+        mob:setMod(tpz.mod.WINDRES, 27)
+        mob:setMod(tpz.mod.FIRERES, -27)
+    elseif skin == 1163 then -- Wind
+        mob:setSpellList(466)
+        mob:setMod(tpz.mod.ICERES, -27)
+        mob:setMod(tpz.mod.EARTHRES, 27)
+    elseif skin == 1164 then --Earth
+        mob:setSpellList(467)
+        mob:setMod(tpz.mod.THUNDERRES, 27)
+        mob:setMod(tpz.mod.WINDRES, -27)
+    elseif skin == 1165 then --Lightning
+        mob:setSpellList(468)
+        mob:setMod(tpz.mod.WATERRES, 27)
+        mob:setMod(tpz.mod.EARTHRES, -27)
+    elseif skin == 1166 then -- Water
+        mob:setSpellList(469)
+        mob:setMod(tpz.mod.THUNDERRES, -27)
+        mob:setMod(tpz.mod.FIRERES, 27)
+    elseif skin == 1167 then --Light
+        mob:setSpellList(464)
+        mob:setMod(tpz.mod.LIGHTRES, 27)
+        mob:setMod(tpz.mod.DARKRES, -27)
+    elseif skin == 1168 then --Dark
+        mob:setSpellList(463)
+        mob:setMod(tpz.mod.DARKRES, 27)
+        mob:setMod(tpz.mod.LIGHTRES, -27)
+    end
 end
 
 function onMobFight(mob, target)
     local changeTime = mob:getLocalVar("changeTime")
+    local canTwoHour = mob:getLocalVar("canTwoHour")
+    local delay = mob:getLocalVar("delay")
+    local state = mob:getLocalVar("state")
+    local twoHourPer = mob:getLocalVar("twoHourPer")
 
-    if (mob:getBattleTime() - changeTime > 60) then
-        mob:AnimationSub(math.random(0, 3))
+    if (mob:getBattleTime() - changeTime > 30) then
+        mob:setLocalVar("state", math.random(0, 3))
+        mob:AnimationSub(state)
         mob:setLocalVar("changeTime", mob:getBattleTime())
+    end
+
+
+    if mob:getLocalVar("canTwoHour") == 0 and mob:getHPP() < twoHourPer then
+        if mob:getLocalVar("state") == 1 then
+            mob:useMobAbility(694) --invincible
+        elseif mob:getLocalVar("state") == 2 then
+            mob:useMobAbility(688) -- mighty strikes
+        elseif mob:getLocalVar("state") == 0 then
+            mob:useMobAbility(691) -- manafont
+            local skin = mob:getModelId()
+            if skin == 1161 then -- Fire
+                mob:setSpellList(483)
+            elseif skin == 1162 then --Ice
+                mob:setSpellList(478)
+            elseif skin == 1163 then -- Wind
+                mob:setSpellList(479)
+            elseif skin == 1164 then --Earth
+                mob:setSpellList(480)
+            elseif skin == 1165 then --Lightning
+                mob:setSpellList(481)
+            elseif skin == 1166 then -- Water
+                mob:setSpellList(482)
+            elseif skin == 1167 then --Light
+                mob:setSpellList(477)
+            elseif skin == 1168 then --Dark
+                mob:setSpellList(476)
+            end
+            mob:setLocalVar("delay", mob:getBattleTime())
+            mob:setMobMod(tpz.mobMod.MAGIC_COOL, 0)
+        elseif mob:getLocalVar("state") == 3 then
+            mob:useMobAbility(693) -- perfect dodge
+        end
+        mob:setLocalVar("canTwoHour", 1)
+    end
+
+    if not mob:hasStatusEffect(tpz.effect.MANAFONT) and mob:getLocalVar("canTwoHour") == 1 and (mob:getBattleTime() - mob:getLocalVar("delay") > 15) and mob:getLocalVar("checker2") == 0 then
+        local skin = mob:getModelId()
+        if skin == 1161 then -- Fire
+            mob:setSpellList(470)
+        elseif skin == 1162 then --Ice
+            mob:setSpellList(465)
+        elseif skin == 1163 then -- Wind
+            mob:setSpellList(466)
+        elseif skin == 1164 then --Earth
+            mob:setSpellList(467)
+        elseif skin == 1165 then --Lightning
+            mob:setSpellList(468)
+        elseif skin == 1166 then -- Water
+            mob:setSpellList(469)
+        elseif skin == 1167 then --Light
+            mob:setSpellList(464)
+        elseif skin == 1168 then --Dark
+            mob:setSpellList(463)
+        end
+
+        mob:setLocalVar("checker2", 1)
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 30)
     end
 end
 

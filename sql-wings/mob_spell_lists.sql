@@ -3967,6 +3967,21 @@ INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 247, 1, 255); -- Aspir
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 258, 1, 255); -- Bind
 INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 459, 274, 1, 255); -- Sleepga II
+-- IxGragh Spell sets for element + manafont
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 476, 274, 1, 255); -- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 477, 40, 1, 255); -- banishga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah2', 478, 181, 1, 255); -- blizzaga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah3', 479, 186, 1, 255); -- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah4', 480, 191 , 1, 255); -- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah5', 481, 196, 1, 255); -- thundaga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 482, 201, 1, 255); -- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah1', 483, 176, 1, 255); -- firaga_iii
+
+
+
+
+
+
 --
 -- Indexes for dumped tables
 --
