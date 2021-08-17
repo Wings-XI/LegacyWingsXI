@@ -4075,7 +4075,7 @@ INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 260, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 254, 1, 255);
 -- IxGragh Spell sets for element + manafont
-INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 484, 274, 1, 255); -- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 476, 274, 1, 255); -- sleepga_ii
 INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 477, 40, 1, 255); -- banishga_iii
 INSERT INTO `mob_spell_lists` VALUES ('ixghrah2', 478, 181, 1, 255); -- blizzaga_iii
 INSERT INTO `mob_spell_lists` VALUES ('ixghrah3', 479, 186, 1, 255); -- aeroga_iii

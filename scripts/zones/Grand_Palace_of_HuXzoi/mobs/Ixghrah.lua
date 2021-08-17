@@ -91,7 +91,7 @@ function onMobFight(mob, target)
             elseif skin == 1167 then --Light
                 mob:setSpellList(477)
             elseif skin == 1168 then --Dark
-                mob:setSpellList(484)
+                mob:setSpellList(476)
             end
             mob:setLocalVar("delay", mob:getBattleTime())
             mob:setMobMod(tpz.mobMod.MAGIC_COOL, 0)
