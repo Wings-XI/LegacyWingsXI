@@ -69,6 +69,7 @@ function onInstanceTimeUpdate(instance, elapsed)
         end
         
         if win then
+            instance:setStage(4) -- prevent possible double instance complete
             instance:complete()
         end
     end
@@ -77,7 +78,6 @@ end
 
 function onInstanceFailure(instance)
     -- intentionally no localVar status update on failure
-    cleanUpInstance(instance)
 
     local chars = instance:getChars()
     for i, v in pairs(chars) do
@@ -108,7 +108,6 @@ function onInstanceStageChange(instance, stage)
 end
 
 function onInstanceComplete(instance)
-    cleanUpInstance(instance)
 
     local chars = instance:getChars()
 
@@ -136,6 +135,11 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+     if csid == 10001 then -- A Manifest Problem
+        player:setPos(-136.89, -68.25, 101.99, 0, 96) -- Send back to Fort_Karugo-Narugo_[S] on failure or non-mission completion
+    elseif csid == 10000 then
+        player:setPos(332.595, -4.816, -16.181, 90, 95) -- Send to West_Sarutabaruta_[S] on success and mission completion
+    end
 end
 
 function pathAllMobsToCenter(instance, moveLaaYaku)
@@ -150,20 +154,6 @@ function pathAllMobsToCenter(instance, moveLaaYaku)
             mob:setSpawn(-137.27+offset, 1.0, 201.26+offset)
         end
     end
-end
-
-function resetMobSpawns(instance)
-    local mobs = instance:getMobs()
-    for i, mob in pairs(mobs) do
-        mobID = mob:getID()
-        mob:setSpawn(originalSpawns[mobID].x, originalSpawns[mobID].z, originalSpawns[mobID].y)
-    end
-end
-
-function cleanUpInstance(instance)
-    resetMobSpawns(instance)
-    instance:setStage(0)
-    instance:setProgress(0)
 end
 
 function setInstanceWideAggro(instance)

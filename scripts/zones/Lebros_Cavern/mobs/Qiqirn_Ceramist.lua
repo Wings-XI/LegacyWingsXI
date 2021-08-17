@@ -10,8 +10,13 @@ end
 
 function onMobDeath(mob, player, firstCall)
     if math.random(0, 100) >= 70 and firstCall then
+        local instance = player:getInstance()
+        local chars = instance:getChars()
+        
         player:addTempItem(5331, 1, 0, 0, 0, 0, 0, 0, 0, 0)
-        player:messageSpecial(ID.text.TEMP_ITEM, 5331)
+        for _, v in pairs(chars) do
+            v:messageName(ID.text.PLAYER_OBTAINS_TEM_ITEM, player, 5331)
+        end
     end
 end
 

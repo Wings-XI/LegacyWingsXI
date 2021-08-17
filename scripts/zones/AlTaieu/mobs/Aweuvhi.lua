@@ -3,6 +3,7 @@
 --  Mob: Aw'euvhi
 -----------------------------------
 local ID = require("scripts/zones/AlTaieu/IDs")
+mixins = {require("scripts/mixins/families/euvhi")}
 require("scripts/globals/keyitems")
 -----------------------------------
 

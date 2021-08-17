@@ -16,33 +16,36 @@ require("scripts/globals/msg")
 function onAbilityCheck(player, target, ability)
     if (player:getAnimation() ~= 1) then
         return tpz.msg.basic.REQUIRES_COMBAT, 0
+    elseif
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)
+    then
+        return 0, 0
     else
-        if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
-            player:delStatusEffect(tpz.effect.FINISHING_MOVE_1)
-            return 0, 0
-        elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
-            player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_2)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_1, 1, 0, 7200)
-            return 0, 0
-        elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
-            player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_3)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_2, 1, 0, 7200)
-            return 0, 0
-        elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
-            player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_4)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_3, 1, 0, 7200)
-            return 0, 0
-        elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-            player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_5)
-            player:addStatusEffect(tpz.effect.FINISHING_MOVE_4, 1, 0, 7200)
-            return 0, 0
-        else
-            return tpz.msg.basic.NO_FINISHINGMOVES, 0
-        end
+        return tpz.msg.basic.NO_FINISHINGMOVES, 0
     end
 end
 
 function onUseAbility(player, target, ability, action)
+
+    if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
+        player:delStatusEffect(tpz.effect.FINISHING_MOVE_1)
+    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
+        player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_2)
+        player:addStatusEffect(tpz.effect.FINISHING_MOVE_1, 1, 0, 7200)
+    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
+        player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_3)
+        player:addStatusEffect(tpz.effect.FINISHING_MOVE_2, 1, 0, 7200)
+    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
+        player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_4)
+        player:addStatusEffect(tpz.effect.FINISHING_MOVE_3, 1, 0, 7200)
+    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
+        player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_5)
+        player:addStatusEffect(tpz.effect.FINISHING_MOVE_4, 1, 0, 7200)
+    end
 
     local isSneakValid = player:hasStatusEffect(tpz.effect.SNEAK_ATTACK)
     if (isSneakValid and not player:isBehind(target)) then

@@ -56,7 +56,17 @@ local items = {
 	    id = 137, -- Cordon Bleu Set
 		rank = 9,
 		cost = 150000
-	}
+	},
+    [4] = {
+        id = 338, -- Culinarian's Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] = {
+        id = 15826, -- Chef's Ring
+        rank = 6,
+        cost = 80000
+    }
 }
 
 function onTrade(player, npc, trade)

@@ -61,7 +61,17 @@ local items = {
 	    id = 151, -- Fool's Gold
 		rank = 9,
 		cost = 150000
-	}
+	},
+    [4] = {
+        id = 335, -- Goldsmithing signpost
+        rank = 9,
+        cost = 200000
+    },
+    [5] = { -- Goldsmithing ring
+        id = 15821,
+        rank = 6,
+        cost = 80000
+    }
 }
 
 function onTrade(player, npc, trade)

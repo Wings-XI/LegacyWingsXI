@@ -9,7 +9,12 @@ require("scripts/globals/conquest")
 
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
-    GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
+	local bunere = GetServerVariable("BuneRespawn")
+	if os.time() < bunere then
+		GetMobByID(ID.mob.BUNE):setRespawnTime(bunere - os.time())
+	else
+		SpawnMob(ID.mob.BUNE)
+	end
 end
 
 function onConquestUpdate(zone, updatetype)

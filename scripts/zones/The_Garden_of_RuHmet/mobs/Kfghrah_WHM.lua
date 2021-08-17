@@ -3,7 +3,7 @@
 --  Mob: Kf'ghrah WHM
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/globals/magic") -- no spells are currently set due to lack of info
+require("scripts/globals/magic")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -11,6 +11,7 @@ function onMobSpawn(mob)
     mob:AnimationSub(0)
     mob:setLocalVar("roamTime", os.time())
     mob:setModelId(1167) -- light
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 60)
 end
 
 function onMobRoam(mob)
@@ -26,6 +27,17 @@ function onMobRoam(mob)
     end
 end
 
+function onMonsterMagicPrepare(mob, target)
+    local rnd = math.random()
+    if rnd < 0.2 then
+        return 40 -- banishga III
+    elseif rnd < 0.6 then
+        return 31 -- banish IV
+    else
+        return 112 -- flash
+    end
+end
+
 function onMobFight(mob, target)
     local changeTime = mob:getLocalVar("changeTime")
     local battleForm
@@ -37,6 +49,11 @@ function onMobFight(mob, target)
         end
         mob:AnimationSub(battleForm)
         mob:setLocalVar("changeTime", mob:getBattleTime())
+        if mob:AnimationSub() == 0 then
+            mob:SetMagicCastingEnabled(true) -- will only cast magic in ball form
+        else
+            mob:SetMagicCastingEnabled(false)
+        end
     end
 end
 

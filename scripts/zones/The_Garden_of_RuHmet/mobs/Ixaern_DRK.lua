@@ -13,9 +13,14 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
+local aernA = 16921019
+local aernB = 16921020
+
 function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
     mob:addListener("DEATH", "AERN_DEATH", function(mob)
         local timesReraised = mob:getLocalVar("AERN_RERAISES")
+
         if(math.random (1, 10) < 10) then
             -- reraise
             local target = mob:getTarget()
@@ -24,7 +29,7 @@ function onMobInitialize(mob)
                 targetid = target:getShortID()
             end
             mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
-            mob:timer(9000, function(mob)
+            mob:timer(9000, function(mob, targetid, timesReraised)
                 mob:setHP(mob:getMaxHP())
                 mob:AnimationSub(3)
                 mob:resetAI()
@@ -39,9 +44,10 @@ function onMobInitialize(mob)
         else
             -- death
             mob:setMobMod(tpz.mobMod.NO_DROPS, 0)
-            DespawnMob(QnAernA)
-            DespawnMob(QnAernB)
+            DespawnMob(aernA)
+            DespawnMob(aernB)
         end
+
     end)
     mob:addListener("AERN_RERAISE", "IX_DRK_RERAISE", function(mob, timesReraised)
         mob:setLocalVar("AERN_RERAISES", timesReraised + 1)
@@ -51,16 +57,27 @@ function onMobInitialize(mob)
     end)
 end
 
+function onMobEngaged(mob, target)
+    local mobID = mob:getID()
+    for i = mobID+1, mobID+2 do
+        local m = GetMobByID(i)
+        if m:isSpawned() then
+            m:updateEnmity(target)
+        end
+    end
+end
+
 function onMobSpawn(mob)
     mob:AnimationSub(1)
 
     tpz.mix.jobSpecial.config(mob, {
-        specials =
-        {
+        delay = 60,
+        specials = 
+        { 
             {
                 id = tpz.jsa.BLOOD_WEAPON_IXDRK,
-                hpp = math.random(90, 95),
-                cooldown = 120,
+                hpp = 100,
+                cooldown = 180,
                 endCode = function(mob)
                     mob:SetMagicCastingEnabled(false)
                     mob:timer(30000, function(mob)
@@ -77,4 +94,11 @@ end
 
 function onMobDespawn(mob)
     mob:setLocalVar("AERN_RERAISES", 0)
+
+    local mobId = mob:getID()
+    for i = mobId + 1, mobId + 2 do
+        if GetMobByID(i):isSpawned() then
+            DespawnMob(i)
+        end
+    end
 end
