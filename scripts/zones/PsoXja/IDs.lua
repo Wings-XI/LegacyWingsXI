@@ -29,6 +29,7 @@ zones[tpz.zone.PSOXJA] =
         DISCOVER_DISARM_SUCCESS = 7243, -- <name> discovers a trap connected to the door and succeeds in disarming it!
         TRAP_ACTIVATED          = 7245, -- <name> examines the stone compartment. A trap connected to it has been activated!
         COMPARTMENT_LOCKED      = 7246, -- The stone compartment is tightly locked...
+        DOOR_SHUT               = 7248, -- The door is shut tightly.
         CHEST_UNLOCKED          = 7463, -- You unlock the chest!
         BROKEN_KNIFE            = 7471, -- A broken knife blade can be seen among the rubble...
         HOMEPOINT_SET           = 7476, -- Home point set!

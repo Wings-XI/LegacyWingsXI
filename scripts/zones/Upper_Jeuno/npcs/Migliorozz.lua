@@ -23,10 +23,10 @@ end
 
 function onTrigger(player, npc)
     local questStatus = player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS)
-    local keyItem = player:getCharVar("QuestAReputationInRuins_ki")
+    local keyItem = player:getCharVar("AReputationInRuins_ki")
     if keyItem == 0 then
         keyItem = math.random(possiblekeyItems.PHOENIX_PEARL, possiblekeyItems.PHOENIX_ARMLET)
-        player:setCharVar("QuestAReputationInRuins_ki", keyItem)
+        player:setCharVar("AReputationInRuins_ki", keyItem)
     end
 
     -- start quest
@@ -35,7 +35,15 @@ function onTrigger(player, npc)
 
     -- check in during quest
     elseif questStatus == QUEST_ACCEPTED then
-        player:startEvent(10021, 0, keyItem)
+        if player:getCharVar("AReputationInRuins_CanComplete") == 1 then
+            player:startEvent(10020)
+        else
+            player:startEvent(10021, 0, keyItem)
+        end
+
+    -- quest completed
+    elseif questStatus == QUEST_COMPLETED then
+        player:startEvent(10022)
 
     -- default dialog
     else
@@ -47,9 +55,9 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    local keyItem = player:getCharVar("AReputationInRuins_ki")
     -- start quest
     if csid == 10019 and option == 4 then
-        local keyItem = player:getCharVar("QuestAReputationInRuins_ki")
         player:addQuest(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS)
         if keyItem == possiblekeyItems.PHOENIX_PEARL then
             player:addKeyItem(tpz.ki.PHOENIX_PEARL)
@@ -58,5 +66,12 @@ function onEventFinish(player, csid, option)
             player:addKeyItem(tpz.ki.PHOENIX_ARMLET)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PHOENIX_ARMLET)
         end
+    --completed quest
+    elseif csid == 10020 then
+        player:setCharVar("AReputationInRuins_CanComplete", 0)
+        player:setCharVar("AReputationInRuins_ki", 0)
+        player:completeQuest(JEUNO, tpz.quest.id.jeuno.A_REPUTATION_IN_RUINS)
+        player:addGil(3500)
+        player:messageSpecial(ID.text.GIL_OBTAINED, 3500)
     end
 end
