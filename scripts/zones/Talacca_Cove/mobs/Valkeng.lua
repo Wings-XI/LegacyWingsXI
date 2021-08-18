@@ -11,18 +11,10 @@ local valoredgeFrameModelId = 1983
 local sharpshotFrameModelId = 1990
 local stormwalkerFrameModelId = 1994
 
-local function messageAllPlayersInBattlefield(mob, messageId, percent)
-    local battlefield = mob:getBattlefield()
-    local players = battlefield:getPlayers()
-    for _, member in pairs(players) do
-        member:messageSpecial(messageId, percent)
-    end
-end
-
 local function changeToValoredge(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == valoredgeFrameModelId) then
         local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MELEE_KEEP_FRAME, percent)
+        mob:showText(mob, ID.text.VALKENG_MELEE_KEEP_FRAME, percent)
         if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
             mob:addMod(tpz.mod.DELAY, 200) -- Speed up attack rate
@@ -31,7 +23,7 @@ local function changeToValoredge(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MELEE_CHANGE_FRAME, percent)
+    mob:showText(mob, ID.text.VALKENG_MELEE_CHANGE_FRAME, percent)
     mob:setModelId(valoredgeFrameModelId)
     mob:setLocalVar("CurrentFrame", valoredgeFrameModelId)
     mob:sendUpdateToZoneCharsInRange()
@@ -49,7 +41,7 @@ end
 local function changeToStormwaker(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == stormwalkerFrameModelId) then
         local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MAGIC_KEEP_FRAME, percent)
+        mob:showText(mob, ID.text.VALKENG_MAGIC_KEEP_FRAME, percent)
         if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
                 mob:delMobMod(tpz.mobMod.MAGIC_COOL, 1) -- Speed up magic casting
@@ -59,7 +51,7 @@ local function changeToStormwaker(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MAGIC_CHANGE_FRAME, percent)
+    mob:showText(mob, ID.text.VALKENG_MAGIC_CHANGE_FRAME, percent)
     mob:setModelId(stormwalkerFrameModelId)
     mob:setLocalVar("CurrentFrame", stormwalkerFrameModelId)
     mob:sendUpdateToZoneCharsInRange()
@@ -80,8 +72,8 @@ end
 local function changeToSharpshot(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == sharpshotFrameModelId) then
     local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_RANGED_KEEP_FRAME, percent)
-         if (consecutiveManeuvers < 5) then
+        mob:showText(mob, ID.text.VALKENG_RANGED_KEEP_FRAME, percent)
+        if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
             mob:delMobMod(tpz.mobMod.SPECIAL_COOL, 2)  -- Speed Up Ranged attacks
         end
@@ -89,7 +81,7 @@ local function changeToSharpshot(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_RANGED_CHANGE_FRAME, percent)
+    mob:showText(mob, ID.text.VALKENG_RANGED_CHANGE_FRAME, percent)
     mob:setModelId(sharpshotFrameModelId)
     mob:setLocalVar("CurrentFrame", sharpshotFrameModelId)
     mob:sendUpdateToZoneCharsInRange()
