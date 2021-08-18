@@ -1178,6 +1178,7 @@ INSERT INTO `mob_skills` VALUES(1999, 362, 'hiden_sokyaku', 0, 7.0, 2000, 1500, 
 INSERT INTO `mob_skills` VALUES(2000, 363, 'shiko_no_mitate', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2001, 364, 'happobarai', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2002, 354, 'rinpyotosha', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2018, 1365, 'valkengs_dance', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2021, 438, 'eraser', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2022, 1367, 'tenebrous_mist', 1, 13.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2023, 1368, 'thunderstrike', 1, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
