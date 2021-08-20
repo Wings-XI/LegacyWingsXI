@@ -15,34 +15,35 @@ function onMobSpawn(mob)
     mob:setLocalVar("twoHourPer", 50)
     mob:setLocalVar("canTwoHour", 0)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 20)
+    mob:setModelId(1167)
 
-    local skin = math.random(1161, 1168)
-    local mobSkin = mob:getModelId()
-    mob:setModelId(skin)
+    local DayOfTheWeek = VanadielDayOfTheWeek()
+    mob:setLocalVar("skin", DayOfTheWeek + 1161)
+
     if skin == 1161 then -- Fire
         mob:setSpellList(470)
         mob:setMod(tpz.mod.ICERES, 27)
         mob:setMod(tpz.mod.WATERRES, -27)
-    elseif skin == 1162 then --Ice
-        mob:setSpellList(465)
-        mob:setMod(tpz.mod.WINDRES, 27)
-        mob:setMod(tpz.mod.FIRERES, -27)
-    elseif skin == 1163 then -- Wind
-        mob:setSpellList(466)
-        mob:setMod(tpz.mod.ICERES, -27)
-        mob:setMod(tpz.mod.EARTHRES, 27)
-    elseif skin == 1164 then --Earth
+    elseif skin == 1162 then --Earth
         mob:setSpellList(467)
         mob:setMod(tpz.mod.THUNDERRES, 27)
         mob:setMod(tpz.mod.WINDRES, -27)
-    elseif skin == 1165 then --Lightning
-        mob:setSpellList(468)
-        mob:setMod(tpz.mod.WATERRES, 27)
-        mob:setMod(tpz.mod.EARTHRES, -27)
-    elseif skin == 1166 then -- Water
+    elseif skin == 1163 then -- Water
         mob:setSpellList(469)
         mob:setMod(tpz.mod.THUNDERRES, -27)
         mob:setMod(tpz.mod.FIRERES, 27)
+    elseif skin == 1164 then -- Wind
+        mob:setSpellList(466)
+        mob:setMod(tpz.mod.ICERES, -27)
+        mob:setMod(tpz.mod.EARTHRES, 27)
+    elseif skin == 1165 then --Ice
+        mob:setSpellList(465)
+        mob:setMod(tpz.mod.WINDRES, 27)
+        mob:setMod(tpz.mod.FIRERES, -27)
+    elseif skin == 1166 then --Lightning
+        mob:setSpellList(468)
+        mob:setMod(tpz.mod.WATERRES, 27)
+        mob:setMod(tpz.mod.EARTHRES, -27)
     elseif skin == 1167 then --Light
         mob:setSpellList(464)
         mob:setMod(tpz.mod.LIGHTRES, 27)
@@ -75,19 +76,19 @@ function onMobFight(mob, target)
             mob:useMobAbility(688) -- mighty strikes
         elseif mob:getLocalVar("state") == 0 then
             mob:useMobAbility(691) -- manafont
-            local skin = mob:getModelId()
+            local skin = mob:getLocalVar("skin")
             if skin == 1161 then -- Fire
                 mob:setSpellList(483)
-            elseif skin == 1162 then --Ice
-                mob:setSpellList(478)
-            elseif skin == 1163 then -- Wind
-                mob:setSpellList(479)
-            elseif skin == 1164 then --Earth
+            elseif skin == 1162 then --Earth
                 mob:setSpellList(480)
-            elseif skin == 1165 then --Lightning
-                mob:setSpellList(481)
-            elseif skin == 1166 then -- Water
+            elseif skin == 1163 then -- Water
                 mob:setSpellList(482)
+            elseif skin == 1164 then -- Wind
+                mob:setSpellList(479)
+            elseif skin == 1165 then --Ice
+                mob:setSpellList(478)
+            elseif skin == 1166 then --Lightning
+                mob:setSpellList(481)
             elseif skin == 1167 then --Light
                 mob:setSpellList(477)
             elseif skin == 1168 then --Dark
@@ -102,19 +103,19 @@ function onMobFight(mob, target)
     end
 
     if not mob:hasStatusEffect(tpz.effect.MANAFONT) and mob:getLocalVar("canTwoHour") == 1 and (mob:getBattleTime() - mob:getLocalVar("delay") > 15) and mob:getLocalVar("checker2") == 0 then
-        local skin = mob:getModelId()
+        local skin = mob:getLocalVar("skin")
         if skin == 1161 then -- Fire
             mob:setSpellList(470)
-        elseif skin == 1162 then --Ice
-            mob:setSpellList(465)
-        elseif skin == 1163 then -- Wind
-            mob:setSpellList(466)
-        elseif skin == 1164 then --Earth
+        elseif skin == 1162 then --Earth
             mob:setSpellList(467)
-        elseif skin == 1165 then --Lightning
-            mob:setSpellList(468)
-        elseif skin == 1166 then -- Water
+        elseif skin == 1163 then -- Water
             mob:setSpellList(469)
+        elseif skin == 1164 then -- Wind
+            mob:setSpellList(466)
+        elseif skin == 1165 then --Ice
+            mob:setSpellList(465)
+        elseif skin == 1166 then --Lightning
+            mob:setSpellList(468)
         elseif skin == 1167 then --Light
             mob:setSpellList(464)
         elseif skin == 1168 then --Dark
