@@ -14,19 +14,27 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
     mob:setMobMod(tpz.mobMod.MUG_GIL, -1)
     mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
-    mob:setTrueDetection(1)
+    mob:setMobMod(tpz.mobMod.ROAM_DISTANCE, 1) -- This does not seem to actually restrict move distsnce on roam - underlying code attempts to restrict but can often miss
+    mob:setMobMod(tpz.mobMod.ROAM_TURNS, 1)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
 end
 
 function onMobRoam(mob)
 end
 
 function onMobFight(mob)
+    -- remove aggro pause if players are fighting a mob
+    local instance = mob:getInstance()
+    if instance:getStage() == 0 then
+        instance:setStage(1)
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
 end
 
 function onMobDespawn(mob)
+
 end
 
 function onMobDeath(mob, player, isKiller)

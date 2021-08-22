@@ -42,8 +42,8 @@ function onEventUpdate(player, csid, option, target)
 end
 
 function onEventFinish(player, csid, option, target)
-    --printf("onfinish CSID: %u", csid)
-    --printf("onFinish RESULT: %u", option)
+    --printf("Door onfinish CSID: %u", csid)
+    --printf("Door onFinish RESULT: %u", option)
     if csid == 3 and option == 4 then
         player:setPos(0, 0, 0, 0, 93)
     end

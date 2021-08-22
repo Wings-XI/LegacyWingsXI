@@ -16,12 +16,15 @@ end
 function onZoneIn(player, prevZone)
     local cs = -1
 
-    if prevZone == tpz.zone.GRAUBERG_S then
-        if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED then
-            local lightInTheDarknessProgress = player:getCharVar("LightInTheDarkness")
+    
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED then
+        local lightInTheDarknessProgress = player:getCharVar("LightInTheDarkness")
+        if prevZone == tpz.zone.GRAUBERG_S then
             if lightInTheDarknessProgress == 4 then
                 cs = 901
-            elseif lightInTheDarknessProgress == 9 then
+            end
+        elseif prevZone == tpz.zone.RUHOTZ_SILVERMINES then
+            if lightInTheDarknessProgress == 9 then
                 cs = 902
             end
         end

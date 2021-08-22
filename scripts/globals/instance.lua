@@ -24,7 +24,7 @@ local instances = {
     },
     [tpz.zone.PASHHOW_MARSHLANDS_S] =
     {
-        --{ 0,   90,    0},   -- A Manifest Problem (WotG Mission-Quest)
+        --{ 0,   90,    0},   -- Light in the Darkness (WotG Mission-Quest)
     },
 }
 
