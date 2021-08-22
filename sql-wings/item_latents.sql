@@ -738,7 +738,7 @@ INSERT INTO `item_latents` VALUES(15516, 26, -16, 52, 8);
 INSERT INTO `item_latents` VALUES(15519, 370, 1, 58, 0);
 INSERT INTO `item_latents` VALUES(15520, 68, 7, 58, 0);
 INSERT INTO `item_latents` VALUES(15530, 368, 10, 10, 0);
-INSERT INTO `item_latents` VALUES(15530, 370, -50, 10, 0);
+INSERT INTO `item_latents` VALUES(15530, 404, 50, 10, 0);
 INSERT INTO `item_latents` VALUES(15532, 369, -3, 56, 2);
 INSERT INTO `item_latents` VALUES(15532, 370, 1, 56, 2);
 INSERT INTO `item_latents` VALUES(15543, 8, 1, 51, 45);
