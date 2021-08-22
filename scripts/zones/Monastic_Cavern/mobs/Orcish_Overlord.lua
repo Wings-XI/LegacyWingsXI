@@ -16,6 +16,13 @@ function onMobInitialize(mob)
     end
 end
 
+function onMobSpawn(mob)
+    if mob:getID() == ID.mob.ORCISH_OVERLORD then
+    mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
+    mob:addMod(tpz.mod.ACC, 24) -- Base 306 for a total of 330
+    end
+end
+
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.ORCISH_OVERLORD_ENGAGE)
 end

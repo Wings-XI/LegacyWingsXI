@@ -6,7 +6,20 @@
 local ID = require("scripts/zones/Monastic_Cavern/IDs")
 mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 -----------------------------------
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.HP_DRAIN, {chance = 35, power = math.random(10, 100)})
+end
+
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 90)
+    mob:setMod(tpz.mod.PARALYZERESTRAIT, 75)
+    mob:setMod(tpz.mod.SILENCERESTRAIT, 75)
+    mob:setMod(tpz.mod.MAIN_DMG_RATING, 85)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
 
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.ORC_KING_ENGAGE)

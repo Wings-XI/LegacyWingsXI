@@ -14,10 +14,19 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.4
+    if mob:getID() == 17391803 then -- Overlord_Bakgodek
+        accmod = 1.5
+        dmgmod = 2.7
+    end
+
+	if math.random()*100 < target:getGuardRate(mob) then
+		skill:setMsg(tpz.msg.basic.SKILL_MISS)
+		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
+		return 0
+	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.H2H, info.hitslanded)
 
