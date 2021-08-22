@@ -33,6 +33,7 @@ function onMobWeaponSkill(target, mob, skill)
         if (target:getStatusEffect(typeEffect) == nil) then
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
             target:addStatusEffect(typeEffect, power, tic, duration)
+            mob:resetEnmity(target)
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         end

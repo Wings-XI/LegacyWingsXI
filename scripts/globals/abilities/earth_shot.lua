@@ -31,7 +31,7 @@ function onUseAbility(player, target, ability, action)
     dmg = adjustForTarget(target, dmg, tpz.magic.ele.EARTH)
 
     params.targetTPMult = 0 -- Quick Draw does not feed TP
-    dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.EARTH, tpz.slot.RANGED, 1, 0, 0, 0, action, nil)
+    dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.EARTH, tpz.slot.RANGED, 0, 0, 0, 0, action, nil)
 
     if dmg > 0 then
         local effects = {}

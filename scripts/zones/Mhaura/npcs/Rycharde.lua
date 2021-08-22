@@ -33,7 +33,7 @@ require("scripts/globals/keyitems")
 --   player:startEvent(90)-- fifth quest The Clue
 --   player:startEvent(91)-- fifth quest The Clue asked again
 --   player:startEvent(92)-- fifth quest completed
---   player:startEvent(93)-- fifth quest not enogh
+--   player:startEvent(93)-- fifth quest not enough
 --   player:startEvent(94)-- sixth quest The Basics
 --   player:startEvent(95)-- sixth quest not done yet
 --   player:startEvent(96)-- sixth quest completed
@@ -49,7 +49,7 @@ function onTrade(player, npc, trade)
         if (DhalmelMeat  == true and count == 2) then
             player:startEvent(74) -- completed ok
         elseif (DhalmelMeat  == true and count == 1) then
-            player:startEvent(73) -- that's not enogh!
+            player:startEvent(73) -- that's not enough!
         end
 
     elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.WAY_OF_THE_COOK) == QUEST_ACCEPTED) then
@@ -84,11 +84,11 @@ function onTrade(player, npc, trade)
         if (DhalmelMeat  == true and count > 3) then
             player:startEvent(92)
         elseif (DhalmelMeat  == true) then
-            player:startEvent(93) -- that's not enogh!
+            player:startEvent(93) -- that's not enough!
         end
 
     elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_BASICS) == QUEST_ACCEPTED) then
-        local BackedPototo  = trade:hasItemQty(4436, 1) --4436 - baked_popoto
+        local BackedPototo  = trade:hasItemQty(619, 1) --619 - popoto
         if (BackedPototo  == true) then
             player:startEvent(96)
         end
@@ -100,7 +100,7 @@ function onTrigger(player, npc)
 ------------------------------------ QUEST RYCHARDE_THE_CHEF-----------------------------------------
 if (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.RYCHARDE_THE_CHEF)==QUEST_AVAILABLE) then
     QuestStatus = player:getCharVar("QuestRychardetheChef_var")
-    if (QuestStatus == 2 ) then  -- seconnd stage one quest
+    if (QuestStatus == 2 ) then  -- second stage one quest
         player:startEvent(70, 4359) -- ask if player would do quest
     elseif (QuestStatus == 3 ) then
         player:startEvent(71, 4359) -- said no, ask again if player would do quest
@@ -111,7 +111,7 @@ elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.RYCHARDE_
     player:startEvent(72) -- not done yet huh?
 --------------------------------------------- quest WAY_OF_THE_COOK
 elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.WAY_OF_THE_COOK)==QUEST_AVAILABLE and player:getFameLevel(WINDURST)>2) then    -- quest WAY_OF_THE_COOK
-    if (player:getCharVar("QuestRychardeTCCompDay_var")+ 7 < VanadielDayOfTheYear() or player:getCharVar("QuestRychardeTCCompYear_var") < VanadielYear()) then  --8 days or so after the completition of the last quest ... and required fame
+    if (player:getCharVar("QuestRychardeTCCompDay_var")+ 7 < VanadielDayOfTheYear() or player:getCharVar("QuestRychardeTCCompYear_var") < VanadielYear()) then  --8 days or so after the completion of the last quest ... and required fame
         player:startEvent(76, 4359, 912)-- second quest WAY_OF_THE_COOK
     else
         player:startEvent(75) -- nothing to do
@@ -172,7 +172,7 @@ elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_BASIC
     if (player:getCharVar("QuestTheClueCompDay_var")+7 < VanadielDayOfTheYear() or player:getCharVar("QuestTheClueCompYear_var") < VanadielYear()) then
         player:startEvent(94)-- sixth quest The Basics
     else
-        player:startEvent(75) -- nothing to do standar dialog
+        player:startEvent(75) -- nothing to do standard dialog
     end
 elseif (player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_BASICS)==QUEST_ACCEPTED) then
     player:startEvent(95)-- sixth quest not done yet
@@ -223,7 +223,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("QuestRychardeTCDayStarted_var", 0)
         player:setCharVar("QuestRychardeTCCompDay_var", 0)
         player:setCharVar("QuestRychardeTCCompYear_var", 0)
-        player:setCharVar("QuestWayofTCCompDay_var", VanadielDayOfTheYear()) -- completition day of WAY_OF_THE_COOK
+        player:setCharVar("QuestWayofTCCompDay_var", VanadielDayOfTheYear()) -- completion day of WAY_OF_THE_COOK
         player:setCharVar("QuestWayofTCCompYear_var", VanadielYear())
         player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.WAY_OF_THE_COOK)
     elseif (csid == 81) then  --end quest 2 WAY_OF_THE_COOK
@@ -236,7 +236,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("QuestRychardeTCDayStarted_var", 0)
         player:setCharVar("QuestRychardeTCCompDay_var", 0)
         player:setCharVar("QuestRychardeTCCompYear_var", 0)
-        player:setCharVar("QuestWayofTCCompDay_var", VanadielDayOfTheYear()) -- completition day of WAY_OF_THE_COOK
+        player:setCharVar("QuestWayofTCCompDay_var", VanadielDayOfTheYear()) -- completion day of WAY_OF_THE_COOK
         player:setCharVar("QuestWayofTCCompYear_var", VanadielYear())
         player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.WAY_OF_THE_COOK)
     elseif (csid == 82) then  -- accept quest 3 UNENDING_CHASE
@@ -288,9 +288,9 @@ function onEventFinish(player, csid, option)
         player:addGil(GIL_RATE*3000)
         player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE*3000)
         player:setCharVar("QuestTheClueStatus_var", 0)
-        player:setCharVar("QuestExpertiseCompDay_var", 0) -- completition day of expertice quest
+        player:setCharVar("QuestExpertiseCompDay_var", 0) -- completion day of expertise quest
         player:setCharVar("QuestExpertiseCompYear_var", 0)
-        player:setCharVar("QuestTheClueCompDay_var", VanadielDayOfTheYear()) -- completition day of THE CLUE
+        player:setCharVar("QuestTheClueCompDay_var", VanadielDayOfTheYear()) -- completion day of THE CLUE
         player:setCharVar("QuestTheClueCompYear_var", VanadielYear())
         player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_CLUE)
     elseif (csid == 94) then  --accept quest the basics
@@ -308,8 +308,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 133)
         else
             player:addItem(133)
-            player.messageSpecial(ID.text.ITEM_OBTAINED, 133)
-            player:setCharVar("QuestTheClueCompDay_var", 0) -- completition day of THE CLUE
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 133)
+            player:setCharVar("QuestTheClueCompDay_var", 0) -- completion day of THE CLUE
             player:setCharVar("QuestTheClueCompYear_var", 0)
             player:setCharVar("QuestTheBasicsComentary_var", 1)
             player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_BASICS)
@@ -317,4 +317,3 @@ function onEventFinish(player, csid, option)
     elseif (csid == 97) then  --end commentary quest the basics
         player:setCharVar("QuestTheBasicsComentary_var", 0)
     end
-end
