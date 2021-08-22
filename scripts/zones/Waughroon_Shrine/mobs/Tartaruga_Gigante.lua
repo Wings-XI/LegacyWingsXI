@@ -7,7 +7,7 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/utils")
 -----------------------------------
--- AnimationSub 0 = outside shell AnimationSub 1 = inside shell AnimaitonSub 2 = inside > outside shell slowly
+
 function onMobSpawn(mob)
     mob:AnimationSub(2)
     mob:SetMobAbilityEnabled(true)
@@ -39,6 +39,8 @@ function onMobFight(mob, target)
 end
 
 function intoShell(mob)
+    mob:delStatusEffect(tpz.effect.SILENCE)
+    mob:delStatusEffectsByFlag(tpz.effectFlag.ERASABLE)
     mob:SetMobAbilityEnabled(false)
     mob:setLocalVar("HPP", mob:getHPP()) -- record HP% going into shell
     mob:AnimationSub(1)
@@ -47,7 +49,6 @@ function intoShell(mob)
     mob:SetMagicCastingEnabled(true)
     mob:addMod(tpz.mod.DMGPHYS, -50)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.STANDBACK))
--- immunities slow, bind, sleep, poison, jettatura
 end
 
 function outOfShell(mob)

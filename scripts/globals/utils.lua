@@ -538,8 +538,8 @@ function utils.getTargetDistance(entityA, entityB)
     return math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
 end
 
- -- checks if mob is in any stage of using a mobskill or casting a spell or under the status effects listed below
- -- prevents multiple abilities/actions to be called at the same time
+ -- checks if mob is in any stage of using an ability or casting a spell or under the status effects listed below
+ -- prevents multiple abilities/actions to be called at the same time or while mob is unable to act.
 function utils.canUseAbility(mob)
     local act = mob:getCurrentAction()
     if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH
