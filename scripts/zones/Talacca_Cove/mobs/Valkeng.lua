@@ -132,7 +132,7 @@ function onMobWeaponSkill(target, mob, skill)
         mob:setTP(0)
     end
 
-    if(skill:getID()==1621) then
+    if(skill:getID()==2018) then
         mob:timer(2000, function(mob)
             if mob:isAlive() then
                 mob:setModelId(mob:getLocalVar("CurrentFrame"))
