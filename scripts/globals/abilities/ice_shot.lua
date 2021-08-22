@@ -30,7 +30,7 @@ function onUseAbility(player, target, ability, action)
     dmg = dmg * applyResistanceAbility(player, target, tpz.magic.ele.ICE, tpz.skill.NONE, bonusAcc)
     dmg = adjustForTarget(target, dmg, tpz.magic.ele.ICE)
     params.targetTPMult = 0 -- Quick Draw does not feed TP
-    dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.ICE, tpz.slot.RANGED, 1, 0, 0, 0, action, nil)
+    dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.ICE, tpz.slot.RANGED, 0, 0, 0, 0, action, nil)
     if dmg > 0 then
         local effects = {}
         local frost = target:getStatusEffect(tpz.effect.FROST)
