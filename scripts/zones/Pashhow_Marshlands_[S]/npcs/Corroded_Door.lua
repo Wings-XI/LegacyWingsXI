@@ -2,7 +2,7 @@
 -- Area: Pashhow Marshlands [S]
 --  NPC: Corroded Door
 -- Type: WOTG Mission-Quest - Light In The Darkness
--- !pos -385.602, 21.970, 456.359 90
+-- !pos -385.602 21.970 456.359 90
 -----------------------------------
 local ID = require("scripts/zones/Pashhow_Marshlands_[S]/IDs")
 require("scripts/globals/keyitems")

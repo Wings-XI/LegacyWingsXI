@@ -4,6 +4,7 @@
 -- Type: Quest
 -- !pos -309.6 -12 -44
 -----------------------------------
+local ID = require("scripts/zones/Bastok_Markets_[S]/IDs")
 require("scripts/globals/quests")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")

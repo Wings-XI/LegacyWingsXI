@@ -29,10 +29,11 @@ function onTrigger(player, npc)
             player:startEvent(161)
         end
     elseif (player:getCurrentMission(WOTG) == tpz.mission.id.wotg.CAIT_SITH or player:hasCompletedMission(WOTG, tpz.mission.id.wotg.CAIT_SITH)) and
-           (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_COMPLETED) then
+           (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_COMPLETED) and
+           (not player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_COMPLETED) then
         if (lightInTheDarknessProgress == 10) then 
             player:startEvent(27) -- Completion CS
-        elseif (lightInTheDarknessProgress > 1) then 
+        elseif (lightInTheDarknessProgress >= 1) then 
             player:startEvent(17) -- Ponders how an assassin got by
         else -- no progress 
             player:startEvent(16) -- initial CS
@@ -51,8 +52,8 @@ function onEventFinish(player, csid, option)
     elseif (csid == 160) then
         player:setCharVar("FiresOfDiscProg", 6)
     elseif (csid == 16) then
+        player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS)
         player:setCharVar("LightInTheDarkness", 1)
-        npcUtil.addQuest(player, CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS)
     elseif (csid == 27) then
         npcUtil.completeQuest(player, CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS, {item=655, var="LightInTheDarkness"})
     end
