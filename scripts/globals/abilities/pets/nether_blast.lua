@@ -59,11 +59,11 @@ function onPetAbility(target, pet, skill)
     end
 
     local dayElement = VanadielDayElement()
-    if (dayElement == tpz.magic.dayStrong[ele]) then
+    if (dayElement == ele) then
         if (math.random() < 0.33) then
             dayWeatherBonus = dayWeatherBonus + 0.10
         end
-    elseif (dayElement == tpz.magic.dayWeak[ele]) then
+    elseif (dayElement == tpz.magic.elementDescendant[ele]) then
         if (math.random() < 0.33) then
             dayWeatherBonus = dayWeatherBonus - 0.10
         end
