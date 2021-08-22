@@ -19,8 +19,10 @@ zones[tpz.zone.PASHHOW_MARSHLANDS_S] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET  = 7146, -- You can't fish here.
-        THERE_IS_NO_REPONSE     = 7672, -- There is no response...
+        THERE_IS_NO_REPONSE     = 7866, -- There is no response...
         ALREADY_OBTAINED_TELE   = 7691, -- You already possess the gate crystal for this telepoint.
+        CANNOT_ENTER            = 7875, -- You cannot enter at this time. Please wait a moment and try again.
+        PARTY_REQUIREMENTS_FAILED = 7881, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
         COMMON_SENSE_SURVIVAL   = 9071, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
