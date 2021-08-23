@@ -65,11 +65,6 @@ function utils.stoneskin(target, dmg)
 end
 
 function utils.takeShadows(target, dmg, shadowbehav, mob)
-    if shadowbehav == nil then
-        shadowbehav = 1
-    end
-    
-    --print(string.format("enmityLoss is %i",enmityLoss))
     
     local targShadows = target:getMod(tpz.mod.UTSUSEMI)
     local shadowType = tpz.mod.UTSUSEMI
@@ -82,7 +77,7 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
     local enmityLoss = shadowType == tpz.mod.UTSUSEMI and -25 or -50
     if mob == nil or mob:isMob() == false then enmityLoss = 0 end
 
-    if (targShadows > 0) then
+    if targShadows > 0 then
     --Blink has a VERY high chance of blocking tp moves, so im assuming its 100% because its easier!
 
         if targShadows >= shadowbehav then --no damage, just suck the shadows
@@ -114,8 +109,8 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
                 --print(string.format("taking away enmity of value %i",enmityLoss*(targShadows-shadowsLeft)))
             end
 
-            return 0
-        else --less shadows than this move will take, remove all and factor damage down
+            return 0, shadowbehav
+        else --less shadows than this move will take, remove all and factor damage down. TODO: this is going to be inaccurate due to separate hit damage from WSC, blocks, etc
             target:delStatusEffect(tpz.effect.COPY_IMAGE)
             target:delStatusEffect(tpz.effect.BLINK)
             
@@ -124,11 +119,12 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
                 --print(string.format("taking away enmity of value %i",enmityLoss*targShadows))
             end
             
-            return dmg * ((shadowbehav-targShadows)/shadowbehav)
+            return dmg * ((shadowbehav-targShadows)/shadowbehav), targShadows
         end
     end
 
-    return dmg
+    return dmg, 0
+    -- return values: newDMG, numShadowsUsed
 end
 
 function utils.conalDamageAdjustment(attacker, target, skill, max_damage, minimum_percentage)
