@@ -80,7 +80,7 @@ end
 
 function onCastStarting(mob, spell)
     if spell:getID() == 181 then -- blizzaga iii
-        spell:castTime(spell:castTime()/4) -- really fast cast (2x)
+        spell:castTime(spell:castTime()/4) -- really fast cast (4x)
     elseif spell:getID() == 362 then -- bindga
         spell:castTime(0)
     elseif spell:getID() == 356 then -- paralyga
