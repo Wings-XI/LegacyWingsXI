@@ -14,7 +14,7 @@ function onMobSpawn(mob)
     mob:addListener("WEAPONSKILL_TAKE", "DILAPIDATED_GATE_WEAPONSKILL_TAKE", function(target, skillId)
         if skillId == 1733 or skillId == 1923 then -- firespit
             target:setLocalVar("hits", target:getLocalVar("hits") + 1)
-        elseif skillId == 2361 then -- Stave Toss
+        elseif skillId == 2361 or skillId == 1736 then -- Stave Toss / Axe Throw
             target:setLocalVar("hits", target:getLocalVar("hits") + 4)
         end
         if target:getLocalVar("hits") >= 4 then

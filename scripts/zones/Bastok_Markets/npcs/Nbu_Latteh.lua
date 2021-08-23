@@ -17,13 +17,16 @@ end
 function onTrigger(player, npc)
     local pFame = player:getFameLevel(BASTOK)
     local momTheAdventurer = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.MOM_THE_ADVENTURER)
+    local signPostMarksTheSpot = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_SIGNPOST_MARKS_THE_SPOT)
     local questStatus = player:getCharVar("MomTheAdventurer_Event")
 
     if (player:needToZone()) then
         player:startEvent(127) -- chat about my work
-    elseif (pFame < 2 and momTheAdventurer ~= QUEST_ACCEPTED and questStatus == 0) then
+    elseif momTheAdventurer == QUEST_AVAILABLE then
+        -- Allow player to start quest regardless of fame
         player:startEvent(230)
     elseif (momTheAdventurer >= QUEST_ACCEPTED and questStatus == 2) then
+        -- Quest is accepted or completed, and questStatus indicates it's in progress (if repeated)
         if (player:seenKeyItem(tpz.ki.LETTER_FROM_ROH_LATTEH)) then
             player:startEvent(234)
         elseif (player:hasKeyItem(tpz.ki.LETTER_FROM_ROH_LATTEH)) then
@@ -31,8 +34,13 @@ function onTrigger(player, npc)
         else
             player:startEvent(231)
         end
-    elseif (pFame >= 2 and player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_SIGNPOST_MARKS_THE_SPOT) == QUEST_AVAILABLE) then
+    elseif (pFame >= 2 and signPostMarksTheSpot == QUEST_AVAILABLE and momTheAdventurer == QUEST_COMPLETED and questStatus == 0) then
+        -- If player can start next quest, do that.
+        -- Note: momTheAdventurer must be completed AND questStatus must be 0 to handle the case where the quest is repeated at fame 1 and the players fame increases to 2 after accepting
         player:startEvent(235)
+    elseif (pFame < 2 and momTheAdventurer ~= QUEST_ACCEPTED and questStatus == 0) then
+        -- Player may repeat until they reach fame level 2, at which point they will be offered "The Signpost Marks the Spot"
+        player:startEvent(230)
     else
         player:startEvent(127)
     end

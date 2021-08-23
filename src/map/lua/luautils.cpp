@@ -1518,7 +1518,7 @@ namespace luautils
         if (PEntity->objtype != TYPE_PC)
             return;
         CCharEntity* PChar = (CCharEntity*)PEntity;
-        
+
         PChar->StatusEffectContainer->UpdateStatusIcons();
         PChar->PLatentEffectContainer->CheckAllLatents();
         PChar->m_EquipSwap = true;
@@ -3713,6 +3713,35 @@ namespace luautils
         return retVal;
     }
 
+    int32 onMobSkillFinished(CBaseEntity* PMob, CBaseEntity* PTarget, CMobSkill* PMobSkill)
+    {
+        lua_prepscript("scripts/zones/%s/mobs/%s.lua", PMob->loc.zone->GetName(), PMob->GetName());
+        if (prepFile(File, "onMobSkillFinished"))
+        {
+            return 0;
+        }
+
+        CLuaBaseEntity LuaMobEntity(PMob);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
+
+        CLuaBaseEntity LuaBaseEntity(PTarget);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
+
+        CLuaMobSkill LuaMobSkill(PMobSkill);
+        Lunar<CLuaMobSkill>::push(LuaHandle, &LuaMobSkill);
+
+        if (lua_pcall(LuaHandle, 3, 1, 0))
+        {
+            ShowError("luautils::onMobSkillFinished (%s): %s\n", PMobSkill->getName(), lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return 0;
+        }
+
+        uint32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0);
+        lua_pop(LuaHandle, 1);
+        return retVal;
+    }
+
     /***********************************************************************
     *                                                                       *
     *                                                                       *
@@ -5045,7 +5074,7 @@ namespace luautils
         lua_pushinteger(L, daily::SelectItem(player, (uint8)lua_tointeger(L, 2)));
         return 1;
     }
-    
+
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID)
     {
         lua_prepscript("scripts/globals/player.lua");

@@ -28,7 +28,7 @@ zones[tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] =
         TIME_REMAINING_MINUTES  = 7512, -- ime remaining: <number> [minute/minutes] (Earth time).
         TIME_REMAINING_SECONDS  = 7513, -- ime remaining: <number> [second/seconds] (Earth time).
         PARTY_FALLEN            = 7515, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
-        BRUJEEL_TEXT            = 7525, -- Am I glad to see you!
+        BRUJEEL_TEXT            = 7524, -- Am I glad to see you!
     },
 
     mob =
@@ -37,8 +37,7 @@ zones[tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] =
         {
             MOBS_START =
             {
-                17047553, 17047554, 17047556, 17047557, 17047559, 17047560, 17047561, 17047563, 17047564, 17047565, 17047566,   -- Mamool
-                17047555, 17047558, 17047562,                                                                                   -- pets
+                17047553, 17047554, 17047556, 17047557, 17047559, 17047560, 17047561, 17047563, 17047564, 17047565, 17047566,   -- Mamool                                                                           -- pets
                 GATE_1 = 17047567, GATE_2 = 17047568, GATE_3 = 17047569,
             },
             GATES      =

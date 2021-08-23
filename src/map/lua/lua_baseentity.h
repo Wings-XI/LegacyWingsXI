@@ -743,6 +743,9 @@ public:
     int32 addCharmTime(lua_State* L);
     int32 tryInterruptSpell(lua_State* L);
     int32 getGuardRate(lua_State* L);
+    int32 getParryRate(lua_State* L);
+    int32 getBlockRate(lua_State* L);
+    int32 getBlockedDamage(lua_State* L);
     int32 trySkillUp(lua_State* L);
     int32 addRoamFlag(lua_State* L);
     int32 delRoamFlag(lua_State* L);

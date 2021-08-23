@@ -170,7 +170,7 @@ void CAlliance::delParty(CParty* party)
     {
         auto* member = dynamic_cast<CCharEntity*>(entry);
         member->DropBattlefieldIfOutside();
-        if (member != nullptr && member->PTreasurePool != nullptr && member->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
+        if (member && member->PTreasurePool && member->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
         {
             member->PTreasurePool->DelMember(member);
         }
@@ -181,18 +181,21 @@ void CAlliance::delParty(CParty* party)
     {
         auto* PChar = dynamic_cast<CCharEntity*>(party->members.at(0));
 
-        PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
-        PChar->PTreasurePool->AddMember(PChar);
-        PChar->PTreasurePool->UpdatePool(PChar);
-
-        for (uint8 i = 0; i < party->members.size(); ++i)
+        if (PChar->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
         {
-            auto* PMember = dynamic_cast<CCharEntity*>(party->members.at(i));
-            if (PChar != PMember)
+            PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
+            PChar->PTreasurePool->AddMember(PChar);
+            PChar->PTreasurePool->UpdatePool(PChar);
+
+            for (uint8 i = 0; i < party->members.size(); ++i)
             {
-                PMember->PTreasurePool = PChar->PTreasurePool;
-                PChar->PTreasurePool->AddMember(PMember);
-                PChar->PTreasurePool->UpdatePool(PMember);
+                auto* PMember = dynamic_cast<CCharEntity*>(party->members.at(i));
+                if (PChar != PMember)
+                {
+                    PMember->PTreasurePool = PChar->PTreasurePool;
+                    PChar->PTreasurePool->AddMember(PMember);
+                    PChar->PTreasurePool->UpdatePool(PMember);
+                }
             }
         }
     }

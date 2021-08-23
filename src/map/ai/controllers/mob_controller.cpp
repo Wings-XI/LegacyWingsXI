@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -239,7 +239,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     {
         return false;
     }
-    
+
     if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
     {
         return false;
@@ -512,7 +512,7 @@ bool CMobController::CanCastSpells()
     {
         return false;
     }
-	
+
     return IsMagicCastingEnabled();
 }
 
@@ -879,7 +879,7 @@ void CMobController::DoRoamTick(time_point tick)
                     // move back every 5 seconds
                     m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
                 }
-                else if (PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
+                else if (!PMob->getMobMod(MOBMOD_NO_DESPAWN) && !map_config.mob_no_despawn)
                 {
                     PMob->PAI->Despawn();
                     return;
@@ -1124,7 +1124,7 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
             if (memberHate > hate) {
                 hate = memberHate;
             }
-        }    
+        }
     });
     return hate;
 }
