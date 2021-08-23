@@ -43,8 +43,35 @@ TP_RANGED = 4
 BOMB_TOSS_HPP = 1
 
 function MobRangedMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect)
-    -- this will eventually contian ranged attack code
-    return MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, TP_RANGED)
+    -- this will eventually contain ranged attack code
+    return MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, TP_RANGED, 1, 1, 1)
+end
+
+function tryParryBlockGuard(mob, target, tpeffect, minRatio, maxRatio, dmg)
+    
+    -- return value is newDMG, hitLanded
+    -- hitLanded is basically for the purpose of if the attack should be considered for shadowbeh later, and also tp generation for defender
+    
+    local pdif = math.random((minRatio*1000),(maxRatio*1000))/1000
+    
+    if tpeffect ~= TP_RANGED then
+        if math.random()*100 < target:getParryRate(mob) then
+            target:trySkillUp(mob, tpz.skill.PARRY, 1)
+            --target:PrintToPlayer("Successfully parried a TP move swing!")
+            return 0, false
+        elseif math.random()*100 < target:getBlockRate(mob) then
+            target:trySkillUp(mob, tpz.skill.SHIELD, 1)
+            --target:PrintToPlayer("Successfully blocked a TP move swing!")
+            return target:getBlockedDamage(dmg*pdif), true
+        elseif math.random()*100 < target:getGuardRate(mob) then
+            target:trySkillUp(mob, tpz.skill.GUARD, 1)
+            --target:PrintToPlayer("Successfully guarded a TP move swing!")
+            pdif = pdif - 1
+            if pdif < 0 then return 0, false end
+        end
+    end
+    
+    return dmg*pdif, true
 end
 
 -- PHYSICAL MOVE FUNCTION
@@ -62,148 +89,100 @@ end
 -- if TP_DMG_VARIES -> three values are
 
 function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod)
-    local returninfo = {}
-
-    --get dstr (bias to monsters, so no fSTR)
-    local dstr = mob:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)
-    if (dstr < -10) then
-        dstr = -10
-    end
-
-    if (dstr > 10) then
-        dstr = 10
-    end
-
-    local lvluser = mob:getMainLvl()
-    local lvltarget = target:getMainLvl()
+    --dstr scaling per 2 diff is a bit high (should be per 4 diff) but it works out pretty well since the weapon damage of mobs on p.servers is a bit too high (about twice as high)
+    --i.e. level 75 mobs have weapons that have 100 base damage.
+    --for this reason, going to cap the dstr lower/upper bounds as if it was a rank5 wep (doubled the bounds though since the scaling is twice as aggressive)
+    local dstr = math.floor((mob:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)) / 2)
+    if dstr < -10 then dstr = -10
+    elseif dstr > 26 then dstr = 26 end
+    
     local acc = mob:getACC()
     local eva = target:getEVA()
-    if (target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23)) then -- Yonin evasion boost if mob is facing target
+    if target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23) then -- Yonin evasion boost if mob is facing target
         eva = eva + target:getStatusEffect(tpz.effect.YONIN):getPower()
     end
 
     --apply WSC
     local base = mob:getWeaponDmg() + dstr --todo: change to include WSC
-    if (base < 1) then
-        base = 1
-    end
+    if base < 1 then base = 1 end
 
-    --work out and cap ratio
-    if (offcratiomod == nil) then -- default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
-        offcratiomod = mob:getStat(tpz.mod.ATT)
-        -- print ("Nothing passed, defaulting to attack")
-    end
-    local ratio = offcratiomod/target:getStat(tpz.mod.DEF)
-
-    local lvldiff = lvluser - lvltarget
-    if lvldiff < 0 then
-        lvldiff = 0
-    end
-
-    ratio = ratio + lvldiff * 0.05
+    --work out and cap ratio. default to attack. Pretty much every physical mobskill will use this, Cannonball being the exception.
+    if offcratiomod == nil then offcratiomod = mob:getStat(tpz.mod.ATT) end
+    local lvldiff = mob:getMainLvl() - target:getMainLvl()
+    if lvldiff < 0 then lvldiff = 0 end
+    local ratio = offcratiomod/target:getStat(tpz.mod.DEF) + lvldiff * 0.05
     ratio = utils.clamp(ratio, 0, 4)
-
+    
     --work out hit rate for mobs (bias towards them)
-    local hitrate = (acc*accmod) - eva + (lvldiff*2) + 75
-
-    -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate)
+    local hitrate = 75 + acc*accmod - eva + lvldiff*2
     hitrate = utils.clamp(hitrate, 20, 95)
+    -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate)
+    
+    local hitdamage = (base + lvldiff) * dmgmod
 
-    --work out the base damage for a single hit
-    local hitdamage = base + lvldiff
-    if (hitdamage < 1) then
-        hitdamage = 1
-    end
-
-    hitdamage = hitdamage * dmgmod
-
-    if (tpeffect == TP_DMG_VARIES) then
-        hitdamage = hitdamage * MobTPMod(skill:getTP() / 10)
-    end
+    if tpeffect == TP_DMG_VARIES then hitdamage = hitdamage * MobTPMod(skill:getTP() / 10) end
 
     --work out min and max cRatio
     local maxRatio = 1
     local minRatio = 0
 
-    if (ratio < 0.5) then
+    if ratio < 0.5 then
         maxRatio = ratio + 0.5
-    elseif ((0.5 <= ratio) and (ratio <= 0.7)) then
+    elseif 0.5 <= ratio and ratio <= 0.7 then
         maxRatio = 1
-    elseif ((0.7 < ratio) and (ratio <= 1.2)) then
+    elseif 0.7 < ratio and ratio <= 1.2 then
         maxRatio = ratio + 0.3
-    elseif ((1.2 < ratio) and (ratio <= 1.5)) then
+    elseif 1.2 < ratio and ratio <= 1.5 then
         maxRatio = (ratio * 0.25) + ratio
-    elseif ((1.5 < ratio) and (ratio <= 2.625)) then
+    elseif 1.5 < ratio and ratio <= 2.625 then
         maxRatio = ratio + 0.375
-    elseif ((2.625 < ratio) and (ratio <= 3.25)) then
+    elseif 2.625 < ratio and ratio <= 3.25 then
         maxRatio = 3
     else
         maxRatio = ratio
     end
 
 
-    if (ratio < 0.38) then
-        minRatio =  0
-    elseif ((0.38 <= ratio) and (ratio <= 1.25)) then
-        minRatio = ratio * (1176 / 1024) - (448 / 1024)
-    elseif ((1.25 < ratio) and (ratio <= 1.51)) then
+    if ratio < 0.38 then
+        minRatio = 0
+    elseif 0.38 <= ratio and ratio <= 1.25 then
+        minRatio = ratio * 1176 / 1024 - (448 / 1024)
+    elseif 1.25 < ratio and ratio <= 1.51 then
         minRatio = 1
-    elseif ((1.51 < ratio) and (ratio <= 2.44)) then
-        minRatio = ratio * (1176 / 1024) - (775 / 1024)
+    elseif 1.51 < ratio and ratio <= 2.44 then
+        minRatio = ratio * 1176 / 1024 - (775 / 1024)
     else
         minRatio = ratio - 0.375
     end
 
     --apply ftp (assumes 1~3 scalar linear mod)
-    if (tpeffect==TP_DMG_BONUS) then
-        hitdamage = hitdamage * fTP(skill:getTP(), mtp000, mtp150, mtp300)
-    end
-
-    --Applying pDIF
-    local pdif = 0
+    if tpeffect == TP_DMG_BONUS then hitdamage = hitdamage * fTP(skill:getTP(), mtp000, mtp150, mtp300) end
 
     -- start the hits
-    local hitchance = math.random()
     local finaldmg = 0
-    local hitsdone = 1
+    local hitsdone = 0
     local hitslanded = 0
+    local swingDamage = 0
+    local swingLanded = false
 
-    local chance = math.random()
-    
-    local firstHitChance = hitrate
-
-    if ((chance*100) <= firstHitChance) then
-        pdif = math.random((minRatio*1000), (maxRatio*1000)) --generate random PDIF
-        pdif = pdif/1000 --multiplier set.
-        finaldmg = finaldmg + hitdamage * pdif
-        hitslanded = hitslanded + 1
-    end
-    while (hitsdone < numberofhits) do
-        chance = math.random()
-        if ((chance*100)<=hitrate) then --it hit
-            pdif = math.random((minRatio*1000), (maxRatio*1000)) --generate random PDIF
-            pdif = pdif/1000 --multiplier set.
-            finaldmg = finaldmg + hitdamage * pdif
-            hitslanded = hitslanded + 1
+    while hitsdone < numberofhits do
+        if math.random()*100 <= hitrate then -- it hit
+            --target:PrintToPlayer("swing prehit!")
+            swingDamage, swingLanded = tryParryBlockGuard(mob, target, tpeffect, minRatio, maxRatio, hitdamage)
+            swingDamage = swingDamage - target:getMod(tpz.mod.PHALANX)
+            if swingDamage > 0 then finaldmg = finaldmg + swingDamage end
+            if swingLanded then hitslanded = hitslanded + 1 end
         end
         hitsdone = hitsdone + 1
     end
 
-    -- printf("final: %f, hits: %f, acc: %f", finaldmg, hitslanded, hitrate)
-    -- printf("ratio: %f, min: %f, max: %f, pdif, %f hitdmg: %f", ratio, minRatio, maxRatio, pdif, hitdamage)
-
-    -- if an attack landed it must do at least 1 damage
-    if (hitslanded >= 1 and finaldmg < 1) then
-        finaldmg = 1
-    end
-
     -- all hits missed
-    if (hitslanded == 0 or finaldmg == 0) then
+    if hitslanded == 0 then
         finaldmg = 0
-        hitslanded = 0
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
-
+    
+    local returninfo = {}
     returninfo.dmg = finaldmg
     returninfo.hitslanded = hitslanded
 
@@ -484,36 +463,33 @@ end
 function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav) -- shadowbehav encodes the HITS LANDED if the shadowbehav is not WIPE or IGNORE
 
     -- physical attack missed, skip rest
-    if (skill:hasMissMsg()) then
-        return 0
-    end
-
-    --handle pd
-    if ( target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) ) and attackType==tpz.attackType.PHYSICAL then
+    if skill:hasMissMsg() then return 0 end
+    
+    if ( target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) ) and attackType == tpz.attackType.PHYSICAL then
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return 0
     end
 
-    -- set message to damage
-    -- this is for AoE because its only set once
+    -- set message to damage. this is for AoE because its only set once
     skill:setMsg(tpz.msg.basic.DAMAGE)
 
     --Handle shadows depending on shadow behaviour / attackType
-    if (shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS) then --remove 'shadowbehav' shadows.
+    local numShadowsUsed = 0
+    if shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then --remove 'shadowbehav' shadows.
 
-        if (skill:isAoE() or skill:isConal()) then
+        if skill:isAoE() or skill:isConal() then
             shadowbehav = MobTakeAoEShadow(mob, target, shadowbehav)
         end
-
-        dmg = utils.takeShadows(target, dmg, shadowbehav, mob)
-
-        -- dealt zero damage, so shadows took hit
-        if (dmg == 0) then
+        
+        if shadowbehav == nil then shadowbehav = 1 end
+        dmg, numShadowsUsed = utils.takeShadows(target, dmg, shadowbehav, mob)
+        
+        if numShadowsUsed == shadowbehav then
             skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
             return shadowbehav
         end
 
-    elseif (shadowbehav == MOBPARAM_WIPE_SHADOWS) then --take em all!
+    elseif shadowbehav == MOBPARAM_WIPE_SHADOWS then --take em all!
         target:delStatusEffect(tpz.effect.COPY_IMAGE)
         target:delStatusEffect(tpz.effect.BLINK)
         target:delStatusEffect(tpz.effect.THIRD_EYE)
@@ -551,65 +527,71 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
         dmg = target:physicalDmgTaken(dmg, damageType)
         if not target:isPC() then
-                local hthres = target:getMod(tpz.mod.HTHRES)
-                local pierceres = target:getMod(tpz.mod.PIERCERES)
-                local impactres = target:getMod(tpz.mod.IMPACTRES)
-                local slashres = target:getMod(tpz.mod.SLASHRES)
-                local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
-                
-                if damageType == tpz.damageType.HTH then
-                    if hthres < 1000 then
-                        dmg = dmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
-                    else
-                        dmg = dmg * hthres / 1000
-                    end
-                elseif damageType == tpz.damageType.PIERCING then
-                    if pierceres < 1000 then
-                        dmg = dmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
-                    else
-                        dmg = dmg * pierceres / 1000
-                    end
-                elseif damageType == tpz.damageType.BLUNT then
-                    if impactres < 1000 then
-                        dmg = dmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
-                    else
-                        dmg = dmg * impactres / 1000
-                    end
+            local hthres = target:getMod(tpz.mod.HTHRES)
+            local pierceres = target:getMod(tpz.mod.PIERCERES)
+            local impactres = target:getMod(tpz.mod.IMPACTRES)
+            local slashres = target:getMod(tpz.mod.SLASHRES)
+            local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
+            
+            if damageType == tpz.damageType.HTH then
+                if hthres < 1000 then
+                    dmg = dmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
                 else
-                    if slashres < 1000 then
-                        dmg = dmg * (1 - ((1 - slashres / 1000) * (1 - spdefdown/100)))
-                    else
-                        dmg = dmg * slashres / 1000
-                    end
+                    dmg = dmg * hthres / 1000
                 end
+            elseif damageType == tpz.damageType.PIERCING then
+                if pierceres < 1000 then
+                    dmg = dmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
+                else
+                    dmg = dmg * pierceres / 1000
+                end
+            elseif damageType == tpz.damageType.BLUNT then
+                if impactres < 1000 then
+                    dmg = dmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
+                else
+                    dmg = dmg * impactres / 1000
+                end
+            else
+                if slashres < 1000 then
+                    dmg = dmg * (1 - ((1 - slashres / 1000) * (1 - spdefdown/100)))
+                else
+                    dmg = dmg * slashres / 1000
+                end
+            end
         end
 
-    elseif (attackType == tpz.attackType.MAGICAL) then
+    elseif attackType == tpz.attackType.MAGICAL then
 
         dmg = target:magicDmgTaken(dmg)
 
-    elseif (attackType == tpz.attackType.BREATH) then
+    elseif attackType == tpz.attackType.BREATH then
 
         dmg = target:breathDmgTaken(dmg)
 
-    elseif (attackType == tpz.attackType.RANGED) then
+    elseif attackType == tpz.attackType.RANGED then
 
         dmg = target:rangedDmgTaken(dmg)
 
     end
 
-    --handling phalanx
-    dmg = dmg - target:getMod(tpz.mod.PHALANX)
-
-    if (dmg < 0) then
-        return 0
+    --phalanx was handled on a per-hit basis for physical attacks already
+    if attackType ~= tpz.attackType.PHYSICAL and attackType ~= tpz.attackType.RANGED then
+        dmg = dmg - target:getMod(tpz.mod.PHALANX)
     end
+    if dmg < 0 then return 0 end
 
     dmg = utils.stoneskin(target, dmg)
 
-    if (dmg > 0) then
+    if dmg > 0 then
         target:updateEnmityFromDamage(mob, dmg)
         target:handleAfflatusMiseryDamage(dmg)
+        if attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED then
+            local numHits = 1
+            if shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then
+                numHits = shadowbehav - numShadowsUsed
+            end
+            target:addTP(10*numHits)
+        end
     end
 
     return dmg
@@ -809,7 +791,7 @@ function MobTakeAoEShadow(mob, target, maxs)
     
     if math.random() < chance then
         maxs = maxs - 1
-        if (maxs < 1) then
+        if maxs < 1 then
             maxs = 1
         end
     end
@@ -819,23 +801,19 @@ end
 
 function MobTPMod(tp)
     -- increase damage based on tp
-    if (tp >= 3000) then
-        return 2
-    elseif (tp >= 2000) then
-        return 1.5
-    end
-    return 1
+    if tp >= 3000 then return 2
+    elseif tp >= 2000 then return 1.5
+    else return 1 end
 end
 
 function fTP(tp, ftp1, ftp2, ftp3)
-    if (tp < 1000) then
-        tp = 1000
-    end
-    if (tp >= 1000 and tp < 1500) then
-        return ftp1 + ( ((ftp2-ftp1)/500) * (tp-1000))
-    elseif (tp >= 1500 and tp <= 3000) then
+    if tp < 1000 then tp = 1000 end
+    
+    if tp >= 1000 and tp < 1500 then
+        return ftp1 + ((ftp2-ftp1)/500) * (tp-1000)
+    elseif tp >= 1500 and tp <= 3000 then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + ( ((ftp3-ftp2)/1500) * (tp-1500))
+        return ftp2 + ((ftp3-ftp2)/1500) * (tp-1500)
     end
     return 1 -- no ftp mod
 end

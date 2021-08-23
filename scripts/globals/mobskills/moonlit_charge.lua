@@ -17,11 +17,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 4
 
     local totaldamage = 0
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
     local damage = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
     totaldamage = MobFinalAdjustments(damage.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
     target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, 30)
