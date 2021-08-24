@@ -362,114 +362,114 @@ local loot =
         },
     },
 
-    -- KSNM Horns of War
+    -- KSNM Horns of War - Based on latest update to wiki
     [11] =
     {
         {
-            {itemid = 1441, droprate = 169},  -- Libation Abjuration
-            {itemid = 17939, droprate = 268}, -- Kriegsbeil
-            {itemid = 17823, droprate = 99},  -- Shinsoku
-            {itemid = 18173, droprate = 85},  -- Nokizaru Shuriken
-            {itemid = 17694, droprate = 70},  -- Guespiere
-            {itemid = 17464, droprate = 85},  -- Purgatory Mace
-            {itemid = 18351, droprate = 225}, -- Meteor Cesti
+            {itemid = 1441, droprate = 158},  -- Libation Abjuration
+            {itemid = 17939, droprate = 263}, -- Kriegsbeil
+            {itemid = 17823, droprate = 92},  -- Shinsoku
+            {itemid = 18173, droprate = 79},  -- Nokizaru Shuriken
+            {itemid = 17694, droprate = 66},  -- Guespiere
+            {itemid = 17464, droprate = 105},  -- Purgatory Mace
+            {itemid = 18351, droprate = 237}, -- Meteor Cesti
         },
         {
-            {itemid = 1442, droprate = 169},  -- Oblation Abjuration
-            {itemid = 17789, droprate = 14},  -- Unsho
-            {itemid = 17838, droprate = 239}, -- Harlequins Horn
-            {itemid = 18088, droprate = 85},  -- Dreizack
-            {itemid = 18211, droprate = 254}, -- Gawains Axe
-            {itemid = 17578, droprate = 183}, -- Zen Pole
-            {itemid = 17695, droprate = 70},  -- Bayards Sword
+            {itemid = 1442, droprate = 171},  -- Oblation Abjuration
+            {itemid = 17789, droprate = 13},  -- Unsho
+            {itemid = 17838, droprate = 237}, -- Harlequins Horn
+            {itemid = 18088, droprate = 79},  -- Dreizack
+            {itemid = 18211, droprate = 250}, -- Gawains Axe
+            {itemid = 17578, droprate = 197}, -- Zen Pole
+            {itemid = 17695, droprate = 66},  -- Bayards Sword
         },
         {
-            {itemid = 703, droprate = 563},   -- Petrified Log
-            {itemid = 1446, droprate = 296},  -- Lacquer Tree Log
-            {itemid = 831, droprate = 14},    -- Square Of Shining Cloth
-            {itemid = 722, droprate = 141},   -- Divine Log
+            {itemid = 703, droprate = 560},   -- Petrified Log
+            {itemid = 1446, droprate = 293},  -- Lacquer Tree Log
+            {itemid = 831, droprate = 27},    -- Square Of Shining Cloth
+            {itemid = 722, droprate = 133},   -- Divine Log
         },
         {
-            {itemid = 860, droprate = 535},   -- Behemoth Hide
-            {itemid = 883, droprate = 366},   -- Behemoth Horn
-            {itemid = 17108, droprate = 48},  -- Healing Staff
+            {itemid = 860, droprate = 526},   -- Behemoth Hide
+            {itemid = 883, droprate = 382},   -- Behemoth Horn
+            {itemid = 17108, droprate = 53},  -- Healing Staff
         },
         {
-            {itemid = 902, droprate = 99},    -- Demon Horn
-            {itemid = 703, droprate = 70},    -- Petrified Log
-            {itemid = 1132, droprate = 70},   -- Square Of Raxa
-            {itemid = 830, droprate = 28},    -- Square Of Rainbow Cloth
-            {itemid = 4173, droprate = 113},  -- Hi-reraiser
-            {itemid = 703, droprate = 211},   -- Petrified Log
-            {itemid = 942, droprate = 141},   -- Philosophers Stone
-            {itemid = 737, droprate = 56},    -- Chunk Of Gold Ore
-            {itemid = 644, droprate = 85},    -- Chunk Of Mythril Ore
-            {itemid = 887, droprate = 70},    -- Coral Fragment
-            {itemid = 700, droprate = 85},    -- Mahogany Log
-            {itemid = 866, droprate = 42},    -- Handful Of Wyvern Scales
-            {itemid = 645, droprate = 42},    -- Chunk Of Darksteel Ore
-            {itemid = 895, droprate = 70},    -- Ram Horn
-            {itemid = 702, droprate = 85},    -- Ebony Log
-            {itemid = 4172, droprate = 28},   -- Reraiser
-            {itemid = 738, droprate = 42},    -- Chunk Of Platinum Ore
-            {itemid = 4174, droprate = 42},   -- Vile Elixir
-            {itemid = 4175, droprate = 7},    -- Vile Elixir +1
+            {itemid = 902, droprate = 105},    -- Demon Horn
+            {itemid = 703, droprate = 66},    -- Petrified Log
+            {itemid = 1132, droprate = 66},   -- Square Of Raxa
+            {itemid = 830, droprate = 26},    -- Square Of Rainbow Cloth
+            {itemid = 4173, droprate = 118},  -- Hi-reraiser
+            {itemid = 703, droprate = 197},   -- Petrified Log
+            {itemid = 942, droprate = 132},   -- Philosophers Stone
+            {itemid = 737, droprate = 66},    -- Chunk Of Gold Ore
+            {itemid = 644, droprate = 79},    -- Chunk Of Mythril Ore
+            {itemid = 887, droprate = 66},    -- Coral Fragment
+            {itemid = 700, droprate = 79},    -- Mahogany Log
+            {itemid = 866, droprate = 39},    -- Handful Of Wyvern Scales
+            {itemid = 645, droprate = 39},    -- Chunk Of Darksteel Ore
+            {itemid = 895, droprate = 66},    -- Ram Horn
+            {itemid = 702, droprate = 92},    -- Ebony Log
+            {itemid = 4172, droprate = 26},   -- Reraiser
+            {itemid = 738, droprate = 39},    -- Chunk Of Platinum Ore
+            {itemid = 4174, droprate = 39},   -- Vile Elixir
+            {itemid = 4175, droprate = 1},    -- Vile Elixir +1
         },
         {
-            {itemid = 1527, droprate = 208},  -- Behemoth Tongue
-            {itemid = 883, droprate = 296},   -- Behemoth Horn
-            {itemid = 4199, droprate = 155},  -- Strength Potion
-            {itemid = 4201, droprate = 70},   -- Dexterity Potion
-            {itemid = 4205, droprate = 141},  -- Agility Potion
-            {itemid = 4203, droprate = 113},  -- Vitality Potion
+            {itemid = 1527, droprate = 193},  -- Behemoth Tongue
+            {itemid = 883, droprate = 316},   -- Behemoth Horn
+            {itemid = 4199, droprate = 145},  -- Strength Potion
+            {itemid = 4201, droprate = 66},   -- Dexterity Potion
+            {itemid = 4205, droprate = 132},  -- Agility Potion
+            {itemid = 4203, droprate = 132},  -- Vitality Potion
         },
         {
             {itemid = 3341, droprate = 1000}, -- Beastly Shank
         },
         {
-            {itemid = 4209, droprate = 169},  -- Mind Potion
-            {itemid = 4207, droprate = 70},   -- Intelligence Potion
-            {itemid = 4211, droprate = 113},  -- Charisma Potion
-            {itemid = 4213, droprate = 155},  -- Icarus Wing
-            {itemid = 17840, droprate = 254}, -- Angel Lyre
-            {itemid = 785, droprate = 99},    -- Emerald
-            {itemid = 804, droprate = 42},    -- Spinel
-            {itemid = 786, droprate = 56},    -- Ruby
-            {itemid = 787, droprate = 28},    -- Diamond
+            {itemid = 4209, droprate = 171},  -- Mind Potion
+            {itemid = 4207, droprate = 79},   -- Intelligence Potion
+            {itemid = 4211, droprate = 105},  -- Charisma Potion
+            {itemid = 4213, droprate = 171},  -- Icarus Wing
+            {itemid = 17840, droprate = 237}, -- Angel Lyre
+            {itemid = 785, droprate = 105},    -- Emerald
+            {itemid = 804, droprate = 39},    -- Spinel
+            {itemid = 786, droprate = 53},    -- Ruby
+            {itemid = 787, droprate = 26},    -- Diamond
         },
         {
-            {itemid = 4135, droprate = 296},  -- Hi-ether +3
-            {itemid = 4119, droprate = 225},  -- Hi-potion +3
+            {itemid = 4135, droprate = 289},  -- Hi-ether +3
+            {itemid = 4119, droprate = 237},  -- Hi-potion +3
             {itemid = 4173, droprate = 197},  -- Hi-reraiser
-            {itemid = 4175, droprate = 282},  -- Vile Elixir +1
+            {itemid = 4175, droprate = 276},  -- Vile Elixir +1
         },
         {
-            {itemid = 887, droprate = 141},   -- Coral Fragment
-            {itemid = 1132, droprate = 14},   -- Square Of Raxa
-            {itemid = 902, droprate = 113},   -- Demon Horn
-            {itemid = 737, droprate = 28},    -- Chunk Of Gold Ore
-            {itemid = 644, droprate = 85},    -- Chunk Of Mythril Ore
-            {itemid = 4174, droprate = 56},   -- Vile Elixir
-            {itemid = 895, droprate = 28},    -- Ram Horn
-            {itemid = 703, droprate = 296},   -- Petrified Log
-            {itemid = 738, droprate = 14},    -- Chunk Of Platinum Ore
-            {itemid = 700, droprate = 56},    -- Mahogany Log
-            {itemid = 866, droprate = 70},    -- Handful Of Wyvern Scales
-            {itemid = 1465, droprate = 42},   -- Slab Of Granite
-            {itemid = 645, droprate = 42},    -- Chunk Of Darksteel Ore
-            {itemid = 702, droprate = 42},    -- Ebony Log
-            {itemid = 4173, droprate = 42},   -- Hi-reraiser
-            {itemid = 823, droprate = 113},   -- Spool Of Gold Thread
-            {itemid = 830, droprate = 28},    -- Square Of Rainbow Cloth
+            {itemid = 887, droprate = 132},   -- Coral Fragment
+            {itemid = 1132, droprate = 13},   -- Square Of Raxa
+            {itemid = 902, droprate = 105},   -- Demon Horn
+            {itemid = 737, droprate = 26},    -- Chunk Of Gold Ore
+            {itemid = 644, droprate = 79},    -- Chunk Of Mythril Ore
+            {itemid = 4174, droprate = 53},   -- Vile Elixir
+            {itemid = 895, droprate = 26},    -- Ram Horn
+            {itemid = 703, droprate = 289},   -- Petrified Log
+            {itemid = 738, droprate = 13},    -- Chunk Of Platinum Ore
+            {itemid = 700, droprate = 53},    -- Mahogany Log
+            {itemid = 866, droprate = 66},    -- Handful Of Wyvern Scales
+            {itemid = 1465, droprate = 39},   -- Slab Of Granite
+            {itemid = 645, droprate = 39},    -- Chunk Of Darksteel Ore
+            {itemid = 702, droprate = 39},    -- Ebony Log
+            {itemid = 4173, droprate = 39},   -- Hi-reraiser
+            {itemid = 823, droprate = 105},   -- Spool Of Gold Thread
+            {itemid = 830, droprate = 26},    -- Square Of Rainbow Cloth
         },
         {
-            {itemid = 1132, droprate = 127},  -- Square Of Raxa
-            {itemid = 837, droprate = 56},    -- Spool Of Malboro Fiber
-            {itemid = 942, droprate = 225},   -- Philosophers Stone
-            {itemid = 844, droprate = 423},   -- Phoenix Feather
-            {itemid = 836, droprate = 70},    -- Square Of Damascene Cloth
-            {itemid = 658, droprate = 42},    -- Damascus Ingot
-            {itemid = 1110, droprate = 85},   -- Vial Of Black Beetle Blood
+            {itemid = 1132, droprate = 118},  -- Square Of Raxa
+            {itemid = 837, droprate = 53},    -- Spool Of Malboro Fiber
+            {itemid = 942, droprate = 224},   -- Philosophers Stone
+            {itemid = 844, droprate = 408},   -- Phoenix Feather
+            {itemid = 836, droprate = 66},    -- Square Of Damascene Cloth
+            {itemid = 658, droprate = 53},    -- Damascus Ingot
+            {itemid = 1110, droprate = 105},   -- Vial Of Black Beetle Blood
         },
     },
 
