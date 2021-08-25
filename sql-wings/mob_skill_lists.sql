@@ -3223,6 +3223,12 @@ INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1234);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1274);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1275);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1276);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 652);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 653);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 483);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 2209);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 1336);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 480);
 --
 -- Indexes for dumped tables
 --
