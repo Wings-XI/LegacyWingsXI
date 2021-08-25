@@ -10,7 +10,7 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.HP_DRAIN, {chance = 35, power = math.random(10, 100)})
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.HP_DRAIN, {chance = 35, power = math.random(95, 135)})
 end
 
 function onMobSpawn(mob)
