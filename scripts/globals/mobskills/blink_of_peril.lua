@@ -37,6 +37,7 @@ function onMobWeaponSkill(target, mob, skill)
         mob:resetEnmity(target)
         return dmg
     else
-        return tpz.msg.basic.SKILL_NO_EFFECT
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return 0
     end
 end
