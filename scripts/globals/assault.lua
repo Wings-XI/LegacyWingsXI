@@ -95,7 +95,7 @@ function onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csi
     local beginnings = player:getQuestStatus(tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.BEGINNINGS)
 
     -- IMMORTAL SENTRIES
-    if toauMission == IMMORTAL_SENTRIES then
+    if toauMission == tpz.mission.id.toau.IMMORTAL_SENTRIES then
         if player:hasKeyItem(tpz.ki.SUPPLIES_PACKAGE) then
             player:startEvent(csid1)
         elseif player:getCharVar("AhtUrganStatus") == 1 then
@@ -111,7 +111,7 @@ function onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csi
         end;
 
     -- ASSAULT
-    elseif toauMission >= PRESIDENT_SALAHEEM then
+    elseif toauMission >= tpz.mission.id.toau.PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
         if player:getCharVar("assaultEntered") == 0 and player:hasKeyItem(orders) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             player:startEvent(csid5, 50, IPpoint)
