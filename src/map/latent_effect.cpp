@@ -102,6 +102,23 @@ void CLatentEffect::SetModPower(int16 power)
     m_ModPower = power;
 }
 
+Mod CLatentEffect::GetModForPetLatentMod(Mod petModLatent)
+{
+    Mod modifier = Mod::NONE;
+
+    switch (petModLatent)
+    {
+        case Mod::PET_ACC_LATENT:
+            modifier = Mod::ACC;
+            break;
+        case Mod::PET_ATT_LATENT:
+            modifier = Mod::ATT;
+            break;
+    }
+
+    return modifier;
+}
+
 bool CLatentEffect::Activate()
 {
     if (!IsActivated())
@@ -113,6 +130,10 @@ bool CLatentEffect::Activate()
             CItemWeapon* weapon = (CItemWeapon*)PChar->getEquip((SLOTTYPE)GetSlot());
 
             weapon->addModifier(CModifier(GetModValue(), GetModPower()));
+        }
+        else if (GetModValue() == Mod::PET_ATT_LATENT || GetModValue() == Mod::PET_ACC_LATENT)
+        {
+            m_POwner->addPetModifier(GetModForPetLatentMod(GetModValue()), PetModType::All, GetModPower());
         }
         else
         {
@@ -157,6 +178,10 @@ bool CLatentEffect::Deactivate()
                 }
             }
 
+        }
+        else if (GetModValue() == Mod::PET_ATT_LATENT || GetModValue() == Mod::PET_ACC_LATENT)
+        {
+            m_POwner->delPetModifier(GetModForPetLatentMod(GetModValue()), PetModType::All, GetModPower());
         }
         else
         {
