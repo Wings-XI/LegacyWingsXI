@@ -49,5 +49,5 @@ function onSpellCast(caster,target,spell)
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 
-    return tsp.effect.DIRGE
+    return tpz.effect.DIRGE
 end
