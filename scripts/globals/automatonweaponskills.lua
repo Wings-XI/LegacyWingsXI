@@ -56,8 +56,8 @@ function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, actio
     calcParams.bonusWSmods = math.max(attacker:getMainLvl() - target:getMainLvl(), 0)
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = flameHolderFTP or 0
-    calcParams.bonusAcc = 0 + attacker:getMod(tpz.mod.WSACC)
-    calcParams.hitRate = getAutoHitRate(attacker, target, false, calcParams.bonusAcc, calcParams.melee)
+    calcParams.bonusAcc = (wsParams.accBonus or 0) + attacker:getMod(tpz.mod.WSACC)
+    calcParams.hitRate = getAutoHitRate(attacker, target, true, calcParams.bonusAcc, calcParams.melee)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
@@ -114,30 +114,29 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
         ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.RANGED),
         ['damageType'] = attacker:getWeaponDamageType(tpz.slot.RANGED)
     }
-    local calcParams =
-    {
-        weaponDamage = {wsParams.weaponDamage or attacker:getRangedDmg()},
-        fSTR = utils.clamp(attacker:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT), -10, 10),
-        cratio = cratio,
-        ccritratio = ccritratio,
-        accStat = attacker:getRACC(),
-        melee = false,
-        mustMiss = false,
-        sneakApplicable = false,
-        trickApplicable = false,
-        assassinApplicable = false,
-        mightyStrikesApplicable = false,
-        forcedFirstCrit = false,
-        extraOffhandHit = false,
-        flourishEffect = false,
-        alpha = 1,
-        bonusWSmods = math.max(attacker:getMainLvl() - target:getMainLvl(), 0),
-        bonusTP = wsParams.bonusTP or 0,
-        bonusfTP = flameHolderFTP or 0,
-        bonusAcc = 0 + attacker:getMod(tpz.mod.WSACC)
-    }
-    calcParams.hitRate = getAutoHitRate(attacker, target, false, calcParams.bonusAcc, calcParams.melee)
+    local calcParams =  {}
+    calcParams.weaponDamage = {wsParams.weaponDamage or attacker:getRangedDmg()}
 
+    calcParams.fSTR = utils.clamp(attacker:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT), -10, 10)
+    calcParams.cratio = cratio
+    calcParams.ccritratio = ccritratio
+    calcParams.accStat = attacker:getRACC()
+    calcParams.melee = false
+    calcParams.mustMiss = false
+    calcParams.sneakApplicable = false
+    calcParams.trickApplicable = false
+    calcParams.assassinApplicable = false
+    calcParams.mightyStrikesApplicable = false
+    calcParams.forcedFirstCrit = false
+    calcParams.extraOffhandHit = false
+    calcParams.flourishEffect = false
+    calcParams.alpha = 1
+    calcParams.bonusWSmods = math.max(attacker:getMainLvl() - target:getMainLvl(), 0)
+    calcParams.bonusTP = wsParams.bonusTP or 0
+    calcParams.bonusfTP = flameHolderFTP or 0
+    calcParams.bonusAcc = (wsParams.accBonus or 0) + attacker:getMod(tpz.mod.WSACC)
+    calcParams.hitRate = getAutoHitRate(attacker, target, true, calcParams.bonusAcc, calcParams.melee)
+    
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = calcParams.finalDmg
