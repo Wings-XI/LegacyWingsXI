@@ -2,7 +2,7 @@
 -- Area: Valley of Sorrows
 --  NPC: qm1 (???)
 -- Spawns Adamantoise or Aspidochelone
--- !pos 0 0 -37 59
+-- !pos 1.128 0 -37.856
 -----------------------------------
 local ID = require("scripts/zones/Valley_of_Sorrows/IDs")
 require("scripts/globals/npc_util")
@@ -18,7 +18,7 @@ end
 
 function onTrade(player, npc, trade)
     if not GetMobByID(ID.mob.ADAMANTOISE):isSpawned() and not GetMobByID(ID.mob.ASPIDOCHELONE):isSpawned() then
-        if LandKingSystem_NQ ~= 0 and npcUtil.tradeHas(trade, 3343) and npcUtil.popFromQM(player, npc, ID.mob.ADAMANTOISE) then
+        if LandKingSystem_NQ ~= 0 and npcUtil.tradeHas(trade, 3343) and npcUtil.popFromQM(player, npc, ID.mob.ADAMANTOISE, {claim=true, hide=300, look=true, radius=1}) then
             player:confirmTrade()
         elseif LandKingSystem_HQ ~= 0 and npcUtil.tradeHas(trade, 3344) and npcUtil.popFromQM(player, npc, ID.mob.ASPIDOCHELONE) then
             player:confirmTrade()
