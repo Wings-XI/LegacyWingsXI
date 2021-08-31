@@ -16,7 +16,7 @@ function onAbilityCheck(player, target, ability)
     if helix ~= nil then
         return 0, 0
     else
-        return 155 -- For now: You cannot perform that action on the specified target.  
+        return 547 -- This ability can only be used on targets under the effect of a helix.
     end
 end
 
