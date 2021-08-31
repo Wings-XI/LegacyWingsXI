@@ -12,7 +12,12 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+    local helix = target:getStatusEffect(tpz.effect.HELIX)
+    if helix ~= nil then
+        return 0, 0
+    else
+        return 155 -- For now: You cannot perform that action on the specified target.  
+    end
 end
 
 function onUseAbility(player, target, ability)
