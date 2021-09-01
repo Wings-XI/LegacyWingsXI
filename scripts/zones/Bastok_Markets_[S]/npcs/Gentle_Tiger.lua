@@ -85,10 +85,8 @@ end
 
 function playerNeedsToZoneOrWaitADay(player)
     if (player:needToZone() == true or player:getCharVar("WotG_Bastok_DayWait") == VanadielDayOfTheYear()) then
-    printf("true")
         return true
     else
-    printf("false")
         return false
     end
 end
