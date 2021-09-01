@@ -3223,6 +3223,13 @@ INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1234);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1274);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1275);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1276);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2202);
 --
 -- Indexes for dumped tables
 --
