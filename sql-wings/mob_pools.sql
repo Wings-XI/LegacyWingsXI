@@ -2877,7 +2877,7 @@ INSERT INTO `mob_pools` VALUES(2813, 'Naul', 'Naul', 260, 0x00004f09000000000000
 INSERT INTO `mob_pools` VALUES(2814, 'NaHya_Floodmaker', 'NaHya_Floodmaker', 337, 0x00001d0400000000000000000000000000000000, 5, 5, 3, 265, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 3, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(2815, 'Na_Qba_Chirurgeon', 'Na_Qba_Chirurgeon', 202, 0x00009c0200000000000000000000000000000000, 3, 3, 3, 265, 100, 0, 1, 0, 1, 18, 0, 32, 0, 159, 0, 0, 1, 0, 256, 202);
 INSERT INTO `mob_pools` VALUES(2816, 'Nebiross_Avatar', 'Nebiross_Avatar', 34, 0x00001c0300000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 0, 0, 1, 8, 0, 0, 0, 3, 0, 0, 0, 0, 0, 34);
-INSERT INTO `mob_pools` VALUES(2817, 'Necroplasm', 'Necroplasm', 86, 0x0000400100000000000000000000000000000000, 1, 1, 3, 270, 100, 0, 1, 0, 0, 2, 0, 0, 7, 131, 0, 0, 0, 0, 0, 86);
+INSERT INTO `mob_pools` VALUES(2817, 'Necroplasm', 'Necroplasm', 86, 0x0000400100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 131, 0, 0, 0, 0, 0, 86);
 INSERT INTO `mob_pools` VALUES(2818, 'Nee_Huxa_the_Judgmental', 'Nee_Huxa_the_Judgmental', 360, 0x00003a0400000000000000000000000000000000, 8, 8, 10, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(2819, 'Nehebkau', 'Nehebkau', 210, 0x00003d0100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 902);
 INSERT INTO `mob_pools` VALUES(2820, 'Neman', 'Neman', 55, 0x0000bc0100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 16, 0, 0, 0, 3, 0, 0, 0, 0, 0, 55);
