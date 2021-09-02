@@ -32,7 +32,7 @@ function onMobWeaponSkillPrepare(mob, target)
         end
      end
 
-     return 2201
+     return 0
 end
 
 function onMobRoam(mob)

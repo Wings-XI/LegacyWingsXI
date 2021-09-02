@@ -35,5 +35,9 @@ function onMobWeaponSkill(target, mob, skill)
         defDownTypeEffect:unsetFlag(tpz.effectFlag.DISPELABLE)
     end
 
+    -- Mob haste is capped? Since it appears so - push delay changes for the duration of the buff to get to 2s per swing
+    mob:addMod(tpz.mod.DELAY, 1750)
+    mob:timer(60000, function(mob) if (mob) then mob:delMod(tpz.mod.DELAY, 1750)end end)
+
     return hasteTypeEffect
 end
