@@ -19,7 +19,7 @@ local skillToAbsorb =
 
 function onMobSpawn(mob)  
     -- Add Gravity resist based off of https://www.bg-wiki.com/ffxi/Kam%27lanaut "Gravity is difficult to land without Elemental Seal".
-    mob:addMod(tpz.mod.GRAVITYRESTRAIT, 50)
+    mob:addMod(tpz.mod.GRAVITYRES, 70)
 end
 
 function onMobEngaged(mob, target)
