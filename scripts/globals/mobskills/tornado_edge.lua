@@ -14,14 +14,24 @@ function onMobSkillCheck(target,mob,skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local numhits = 1
+    local numhits = 3
     local accmod = 1
     local dmgmod = 2.0
     local info = MobPhysicalMove(mob,target,skill,numhits,accmod,dmgmod,TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg,mob,skill,target,tpz.attackType.PHYSICAL,tpz.damageType.BLUNT,info.hitslanded)
 
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.MAX_HP_DOWN, 0, 0, 60)
-    MobStatusEffectMove(mob, target, tpz.effect.WEIGHT, 50, 0, 30)
+    if (info.hitslanded > 0) then
+        MobStatusEffectMove(mob, target, tpz.effect.MAX_HP_DOWN, 50, 0, 60)
+    end
+
+    if (info.hitslanded > 1) then
+        MobStatusEffectMove(mob, target, tpz.effect.MAX_MP_DOWN, 50, 0, 60)
+    end
+
+    if (info.hitslanded > 2) then
+        MobStatusEffectMove(mob, target, tpz.effect.MAX_TP_DOWN, 2000, 0, 60)
+    end
+    
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
 

@@ -452,19 +452,22 @@ struct apAction_t
 
 };
 
-/************************************************************************
-*																		*
-*  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64			*
-*																		*
-************************************************************************/
+/*************************************************************************
+*																		 *
+*  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64          *
+*  TP is stored according to the same principle as skill, i.e. 6.4% = 64 *
+*																		 *
+*************************************************************************/
 
 struct health_t
 {
-    int16   tp;                 // текущее значение
-    int32   hp, mp;             // текущие значения
-    int32   maxhp, maxmp;       // максимальные значения
-    int32   modhp, modmp;       // модифицированные максимальные значения
-    int32   zoneinhp, zoneinmp; // HP and MP from previous zone
+    int16   tp;                  // текущее значение // present value
+    int16   maxtp;               // максимальные значения // maximum values
+    int16   modtp;               // модифицированные максимальные значения // modified maximum values
+    int32   hp, mp;              // текущие значения // present value
+    int32   maxhp, maxmp;        // максимальные значения // maximum values
+    int32   modhp, modmp;        // модифицированные максимальные значения // modified maximum values
+    int32   zoneinhp, zoneinmp;  // HP and MP from previous zone
 };
 
 typedef std::vector<apAction_t> ActionList_t;
