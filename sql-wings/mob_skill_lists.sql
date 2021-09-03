@@ -3230,6 +3230,13 @@ INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 608);
 INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 609);
 INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2201);
 INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2202);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5006, 2263);
 --
 -- Indexes for dumped tables
 --

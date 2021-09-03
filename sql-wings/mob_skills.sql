@@ -1310,6 +1310,7 @@ INSERT INTO `mob_skills` VALUES(2252, 1298, 'eagle_eye_shot', 0, 25.0, 2000, 0, 
 INSERT INTO `mob_skills` VALUES(2256, 432, 'astral_flow_pet', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2257, 432, 'azure_lore', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2261, 187, 'tabula_rasa', 0, 7.0, 2000, 1, 1, 3, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2263, 1626, 'tornado_edge', 4, 20.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2269, 1300, 'kamaitachi', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2299, 1486, 'bone_crusher', 0, 7.0, 2000, 1, 4, 0, 245, 0, 12, 0, 0);
 INSERT INTO `mob_skills` VALUES(2300, 1487, 'armor_piercer', 0, 15.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0);
