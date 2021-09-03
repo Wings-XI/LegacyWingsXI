@@ -3851,7 +3851,7 @@ INSERT INTO `mob_groups` VALUES(31, 1688, 82, 'Goblin_Mine', 0, 128, 0, 0, 0, 75
 INSERT INTO `mob_groups` VALUES(32, 3645, 82, 'Skeleton_Esquire', 0, 128, 701, 0, 0, 71, 73, 0);
 INSERT INTO `mob_groups` VALUES(33, 3745, 82, 'Sprite', 300, 256, 2001, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(34, 1339, 82, 'Fingerfilcher_Dradzad', 0, 128, 0, 6500, 0, 62, 64, 0);
-INSERT INTO `mob_groups` VALUES(35, 755, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0, 9200, 0, 74, 75, 0);
+INSERT INTO `mob_groups` VALUES(35, 6200, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0, 9200, 0, 74, 75, 0);
 INSERT INTO `mob_groups` VALUES(36, 1262, 82, 'Eurytos', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(37, 5153, 82, 'Kholomodumo', 0, 128, 0, 0, 9999, 93, 94, 0);
 INSERT INTO `mob_groups` VALUES(3096, 18, 82, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);

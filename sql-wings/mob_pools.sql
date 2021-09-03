@@ -815,7 +815,7 @@ INSERT INTO `mob_pools` VALUES(751, 'Coastal_Opo-opo', 'Coastal_Opo-opo', 188, 0
 INSERT INTO `mob_pools` VALUES(752, 'Coastal_Sahagin', 'Coastal_Sahagin', 213, 0x0000370500000000000000000000000000000000, 10, 10, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 205, 133, 0, 0, 6, 0, 0, 213);
 INSERT INTO `mob_pools` VALUES(753, 'Cobalt_Quadav', 'Cobalt_Quadav', 202, 0x0000910200000000000000000000000000000000, 7, 7, 4, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 4, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(754, 'Cobalt_Sentinel', 'Cobalt_Sentinel', 28, 0x0600b90700000000000000000000000000000000, 3, 3, 11, 320, 100, 0, 0, 0, 1, 0, 0, 0, 9, 133, 0, 0, 1, 0, 0, 28);
-INSERT INTO `mob_pools` VALUES(755, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
+INSERT INTO `mob_pools` VALUES(755, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(756, 'Cobra_Mercenary', 'Cobra_Mercenary', 151, 0x01000f078910102010306e401050646026700000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 1, 515, 0, 0, 0, 0, 0, 151);
 INSERT INTO `mob_pools` VALUES(757, 'Coccinelle', 'Coccinelle', 170, 0x0000e20700000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 170);
 INSERT INTO `mob_pools` VALUES(758, 'Cockatrice', 'Cockatrice', 70, 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 238, 643, 0, 0, 0, 0, 0, 70);
@@ -6230,6 +6230,10 @@ INSERT INTO `mob_pools` VALUES(6193, 'Toxic_Tamlyn', 'Toxic_Tamlyn', 186, 0x0000
 INSERT INTO `mob_pools` VALUES(6194, 'Ul_xzomit_parent', 'Ul_xzomit', 269, 0x0000100200000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 0, 0, 1, 0, 0, 0, 0, 1157, 0, 0, 0, 0, 0, 269);
 INSERT INTO `mob_pools` VALUES(6195, 'Om_xzomit_parent', 'Om_xzomit', 269, 0x0000100200000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 0, 0, 1, 0, 0, 0, 0, 1157, 0, 0, 0, 0, 0, 269);
 INSERT INTO `mob_pools` VALUES(6196, 'Ix_zdei_rdm', 'Ix_zdei', 272, 0x0000860400000000000000000000000000000000, 5, 5, 7, 240, 100, 0, 1, 1, 1, 2, 16, 0, 0, 1157, 0, 0, 475, 0, 0, 272);
+
+
+
+INSERT INTO `mob_pools` VALUES(6200, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
 --
 -- Indexes for dumped tables
 --
