@@ -1183,6 +1183,7 @@ function doElementalNuke(caster, spell, target, spellParams)
     local V = 0
     local M = 0
     local hasMultipleTargetReduction = spellParams.hasMultipleTargetReduction
+    local resistBonus = spellParams.resistBonus
 
     if USE_OLD_MAGIC_DAMAGE and spellParams.V ~= nil and spellParams.M ~= nil then
         V = spellParams.V -- Base value
@@ -1202,7 +1203,6 @@ function doElementalNuke(caster, spell, target, spellParams)
         if DMG > cap then DMG = cap end
 
     else
-        local resistBonus = spellParams.resistBonus
         local mDMG = caster:getMod(tpz.mod.MAGIC_DAMAGE)
 
         -- D = floor[ mDMG + V + (dINT × M) ]
@@ -1294,7 +1294,7 @@ function doNuke(caster, target, spell, params)
     local resist = applyResistance(caster, target, spell, params)
     dmg = dmg*resist
     
-    if skill == tpz.skill.NINJUTSU then
+    if spell:getSkillType() == tpz.skill.NINJUTSU then
         if caster:getMainJob() == tpz.job.NIN then -- NIN main gets a bonus to their ninjutsu nukes
             local ninSkillBonus = 100
             if spell:getID() % 3 == 2 then -- ichi nuke spell ids are 320, 323, 326, 329, 332, and 335
