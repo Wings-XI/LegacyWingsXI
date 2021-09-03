@@ -895,7 +895,11 @@ enum class Mod
     EMPTY_CIRCLE = 1235,
     HUMANOID_CIRCLE = 1236,
     LUMORIAN_CIRCLE = 1237,
-    LUMINION_CIRCLE = 1238
+    LUMINION_CIRCLE = 1238,
+
+    // These mods should not be directly set.  These are used to apply pet mods via latent effects
+    PET_ATT_LATENT = 970, // Pet Attack bonus used for latents
+    PET_ACC_LATENT = 971 // Pet Acc bonus used for latents
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
