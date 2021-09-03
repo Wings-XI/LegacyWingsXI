@@ -974,6 +974,7 @@ tpz.mod =
     SLASHRES                  = 49, -- Slash Resistance
     PIERCERES                 = 50, -- Piercing Resistance
     IMPACTRES                 = 51, -- Impact Resistance
+    HTHRES                    = 52, -- Hand-To-Hand Resistance
     H2HRES                    = 52, -- Hand-To-Hand Resistance
 
     -- Damage Reduction to Elements
@@ -1016,6 +1017,7 @@ tpz.mod =
     INHIBIT_TP                = 488, -- Inhibits TP Gain (percent)
 
     -- Working Skills (weapon combat skills)
+    HTH                       = 80, -- Hand To Hand Skill
     H2H                       = 80, -- Hand To Hand Skill
     DAGGER                    = 81, -- Dagger Skill
     SWORD                     = 82, -- Sword Skill
@@ -2382,6 +2384,7 @@ tpz.damageType =
     PIERCING  = 1,
     SLASHING  = 2,
     BLUNT     = 3,
+    HTH       = 4,
     H2H       = 4,
     ELEMENTAL = 5,
     FIRE      = 6,
