@@ -131,7 +131,7 @@ bool CLatentEffect::Activate()
 
             weapon->addModifier(CModifier(GetModValue(), GetModPower()));
         }
-        else if (GetModValue() == Mod::PET_ATT_LATENT || GetModValue() == Mod::PET_ACC_LATENT)
+        else if (GetModForPetLatentMod(GetModValue()) != Mod::NONE)
         {
             m_POwner->addPetModifier(GetModForPetLatentMod(GetModValue()), PetModType::All, GetModPower());
         }
@@ -179,7 +179,7 @@ bool CLatentEffect::Deactivate()
             }
 
         }
-        else if (GetModValue() == Mod::PET_ATT_LATENT || GetModValue() == Mod::PET_ACC_LATENT)
+        else if (GetModForPetLatentMod(GetModValue()) != Mod::NONE)
         {
             m_POwner->delPetModifier(GetModForPetLatentMod(GetModValue()), PetModType::All, GetModPower());
         }
