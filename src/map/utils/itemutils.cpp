@@ -550,7 +550,7 @@ namespace itemutils
 
         PUnarmedH2HItem = new CItemWeapon(0);
 
-        PUnarmedH2HItem->setDmgType(DAMAGE_HTH);
+        PUnarmedH2HItem->setDmgType(DAMAGE_H2H);
         PUnarmedH2HItem->setSkillType(SKILL_HAND_TO_HAND);
         PUnarmedH2HItem->setDamage(3);
     }
