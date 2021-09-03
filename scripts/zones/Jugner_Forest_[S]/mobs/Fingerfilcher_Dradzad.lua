@@ -20,19 +20,18 @@ end
 function onMobWeaponSkillPrepare(mob, target)
      local hasteEffect = mob:getStatusEffect(tpz.effect.HASTE)
      local counterstanceEffect = tpz.effect.COUNTERSTANCE
+     local returnVal = 0
 
      if (mob:getHPP() <= 33) then
         -- at low HP, prefer to buff if not buffed
         if (hasteEffect == nil) then
-            return 2202
+            returnVal = 2202
         elseif (counterstanceEffect == nil) then
-            return 2201
-        else
-           return 0
+            returnVal = 2201
         end
      end
 
-     return 0
+     return returnVal
 end
 
 function onMobRoam(mob)
