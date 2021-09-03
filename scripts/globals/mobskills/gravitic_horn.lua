@@ -36,7 +36,7 @@ function onMobWeaponSkill(target, mob, skill)
     -- we still need final adjustments to handle stoneskin etc though
     damage = MobFinalAdjustments(damage, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
 
-    target:takeDamage(finalDamage, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
+    target:takeDamage(damage, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
     mob:resetEnmity(target)
-    return finalDamage
+    return damage
 end

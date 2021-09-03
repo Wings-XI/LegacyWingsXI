@@ -24,7 +24,7 @@ end
 
 function onSpellCast(caster, target, spell)
     if target:isMob() and target:getID() == 17649730 then
-        ability:setMsg(tpz.msg.basic.NO_EFFECT)
+        spell:setMsg(tpz.msg.basic.NO_EFFECT)
         return
     end
     local dCHR = (caster:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR))
