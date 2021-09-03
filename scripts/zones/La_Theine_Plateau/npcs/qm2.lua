@@ -2,6 +2,7 @@
 -- Area: La Theine Plateau
 --  NPC: ??? (qm2)
 --  Involved in Quest: HITTING_THE_MARQUISATE (THF AF3)
+-- !pos -72.990 54.599 -443.126
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/titles")
@@ -15,7 +16,7 @@ function onTrade(player, npc, trade)
 
     if (trade:hasItemQty(605, 1) and trade:getItemCount() == 1) then -- Trade pickaxe
         if (hittingTheMarquisateNanaaCS == 1) then
-            player:startEvent(119)
+            player:startEvent(119, 0, 0, player:getNation(), 605)
         end
     end
 end
