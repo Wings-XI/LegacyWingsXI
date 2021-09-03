@@ -6233,7 +6233,8 @@ INSERT INTO `mob_pools` VALUES(6196, 'Ix_zdei_rdm', 'Ix_zdei', 272, 0x0000860400
 
 
 
-INSERT INTO `mob_pools` VALUES(6200, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
+
+INSERT INTO `mob_pools` VALUES(6201, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
 --
 -- Indexes for dumped tables
 --
