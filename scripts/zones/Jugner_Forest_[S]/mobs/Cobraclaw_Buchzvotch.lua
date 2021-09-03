@@ -4,6 +4,7 @@
 -- Wrath of the Griffon Fight
 -----------------------------------
 require("scripts/globals/quests")
+require("scripts/globals/status")
 -----------------------------------
 -- No specific resists
 -- Uses Tornado Edge at a higher frequency at lower HP
