@@ -70,7 +70,7 @@ function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, actio
     if not wsParams.formless then
         --finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
         if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.HTHRES) / 1000
+            finaldmg = finaldmg * target:getMod(tpz.mod.H2HRES) / 1000
         elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
             finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
         elseif (attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF) then
@@ -272,7 +272,7 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         pdifcrit[1] = pdifmin * (100 + critbonus) / 100
         pdifcrit[2] = pdifmax * (100 + critbonus) / 100
         ]]
-        
+
         pdifmax = cratio * 1.25
         pdifmin = pdifmax * 0.675 + 1/6
         if pdifmax > 2.75 then
@@ -281,16 +281,16 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         if pdifmin > pdifmax - 0.1 then
             pdifmin = pdifmax - 0.1
         end
-        
+
         pdif[1] = pdifmin
         pdif[2] = pdifmax
-        
+
         local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = (pdifmin + 1) * (100 + critbonus) / 100
         pdifcrit[2] = (pdifmax + 1) * (100 + critbonus) / 100
-        
-        
+
+
     else
         --[[
         -- max
@@ -325,16 +325,16 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         pdifcrit[1] = pdifmin * (100 + critbonus) / 100
         pdifcrit[2] = pdifmax * (100 + critbonus) / 100
         ]]
-        
+
         pdifmax = cratio * 1.25
         pdifmin = pdifmax * 0.675 + 1/6
         if pdifmin > pdifmax - 0.1 then
             pdifmin = pdifmax - 0.1
         end
-        
+
         pdif[1] = pdifmin
         pdif[2] = pdifmax
-        
+
         local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = (pdifmin + 1) * (100 + critbonus) / 100

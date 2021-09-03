@@ -47,10 +47,10 @@ MND_BASED = 3
 
 function GetTargetEcosystem(target)
 	local sys = target:getSystem()
-	
+
     -- honestly just taking the topaz enum standard and converting it an easier enum standard
     -- this makes it very easy to explain the strengths/weaknesses (in the next function)
-    
+
 	if sys == 6 then return 1
 	elseif sys == 14 then return 2
 	elseif sys == 20 then return 3
@@ -64,13 +64,13 @@ function GetTargetEcosystem(target)
 	elseif sys == 9 then return 11
 	elseif sys == 15 then return 12
 	elseif sys == 16 then return 13 end
-	
+
 	return 0
-	
+
 end
 
 function GetMonsterCorrelation(eco,targeco)
-    
+
     -- see top of document for the five ecosystem groups
     -- they work as a rotating rock-paper-scissors system for each group
     -- 1 beats 2 beats 3 beats 4 beats 1
@@ -78,7 +78,7 @@ function GetMonsterCorrelation(eco,targeco)
     -- 8/9 beat each other. 10/11 beat each other. 12/13 beat each other.
     -- https://ffxiclopedia.fandom.com/wiki/Category:Bestiary
     -- return value ... -1 = negative correlation, 0 = neutral, 1 = positive correlation
-    
+
 	if eco == 1 then
 		if targeco == 2 then return  1 end
 		if targeco == 4 then return -1 end
@@ -113,25 +113,25 @@ function GetMonsterCorrelation(eco,targeco)
 	elseif eco == 13 and targeco == 12 then
 		return 1
 	end
-	
+
 	return 0
-	
+
 end
 
 function BluePhysicalSpell(caster, target, spell, params)
     local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
-    
+
     -- http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
-    
+
     local D =  math.floor((caster:getSkillLevel(tpz.skill.BLUE_MAGIC) * 0.11)) * 2 + 3
     if D > params.duppercap then D = params.duppercap end
-    
+
     local fStr = BluefSTR(caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT))
     local WSC = BlueGetWsc(caster, params) -- ex. params.str_wsc of 0.2 = 20% STR added to base dmg
     if caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then WSC = WSC * 2 end
     local multiplier = params.multiplier -- a.k.a. ftp0
     print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
-    
+
     -- monster correlation affects fTP mults
     local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
     if params.eco ~= nil and target:isMob() then
@@ -155,10 +155,10 @@ function BluePhysicalSpell(caster, target, spell, params)
 
         multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
     end
-    
+
     local finalD = math.floor(D + fStr + WSC) * multiplier
     --GetPlayerByID(1):PrintToPlayer(string.format("finalD = (D + fSTR + WSC) * mult ... %u = (%u + %u + %u) * %f",finalD,D,fStr,WSC,multiplier))
-    
+
     --print(params.offcratiomod)
     if params.offcratiomod == nil then -- cannonball uses def (cannonball.lua)
         -- https://forum.square-enix.com/ffxi/threads/43706-Aug-12-2014-%28JST%29-Version-Update
@@ -183,15 +183,15 @@ function BluePhysicalSpell(caster, target, spell, params)
         -- https://ffxiclopedia.fandom.com/wiki/Talk:Physical_Potency need to go to talk page because the main page is saying only +accuracy and nobody ever fixed it
     end
     params.offcratiomod = params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100
-    
+
     params.bonusacc = params.bonusacc == nil and 0 or params.bonusacc
     params.critchance = params.critchance == nil and 0 or utils.clamp(params.critchance + caster:getStat(tpz.mod.DEX)/2 - target:getStat(tpz.mod.AGI)/2, 5, 65) / 100
-    
+
     local cratio = BluecRatio(params.offcratiomod / target:getStat(tpz.mod.DEF), caster:getMainLvl(), target:getMainLvl(), params.attackType == tpz.attackType.RANGED)
     local hitrate = BlueGetHitRate(caster, target, true, params.bonusacc)
-    
+
     -- print("pdifmin "..cratio[1].." pdifmax "..cratio[2])
-    
+
     -------------------------
     --     Attack Loop     --
     -------------------------
@@ -200,13 +200,13 @@ function BluePhysicalSpell(caster, target, spell, params)
     local finaldmg = 0
     local isSneakValid = caster:hasStatusEffect(tpz.effect.SNEAK_ATTACK) and spell:isAoE() == 0 and params.attackType ~= tpz.attackType.RANGED and (caster:isBehind(target) or caster:hasStatusEffect(tpz.effect.HIDE))
     local taChar = (caster:hasStatusEffect(tpz.effect.TRICK_ATTACK) == true and spell:isAoE() == 0 and params.attackType ~= tpz.attackType.RANGED) and caster:getTrickAttackChar(target) or nil
-    
+
     while hitsdone < params.numhits do
         if isSneakValid or math.random() < hitrate then
             local pdif = math.random((cratio[1]*1000), (cratio[2]*1000))
             local DBonusFromSA = 0
             pdif = pdif/1000
-            
+
             if isSneakValid or math.random() < params.critchance then
                 pdif = pdif + 0.7 -- force crit
                 if isSneakValid and caster:getMainJob() == tpz.job.THF then
@@ -216,7 +216,7 @@ function BluePhysicalSpell(caster, target, spell, params)
             if taChar and caster:getMainJob() == tpz.job.THF and hitsdone == 0 then
                 DBonusFromSA = DBonusFromSA + caster:getStat(tpz.mod.AGI) * (1 + caster:getMod(tpz.mod.TRICK_ATK_AGI)/100) * (100+(caster:getMod(tpz.mod.AUGMENTS_TA)))/100
             end
-            
+
             if hitsdone == 0 then -- only the first hit benefits from multiplier
                 finaldmg = finaldmg + (finalD + DBonusFromSA) * pdif
             else
@@ -235,18 +235,18 @@ function BluePhysicalSpell(caster, target, spell, params)
     end
     caster:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
     --GetPlayerByID(1):PrintToPlayer(string.format("landed %u/%u hits ... hitrate was %u%% ... critchance was %u%%",hitslanded,hitsdone,hitrate*100,params.critchance*100))
-    
-    local hthres = target:getMod(tpz.mod.HTHRES)
+
+    local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
     local impactres = target:getMod(tpz.mod.IMPACTRES)
     local slashres = target:getMod(tpz.mod.SLASHRES)
     local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
-    
-    if params.damageType == tpz.damageType.HTH then
-        if hthres < 1000 then
-            finaldmg = finaldmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+
+    if params.damageType == tpz.damageType.H2H then
+        if h2hres < 1000 then
+            finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
         else
-            finaldmg = finaldmg * hthres / 1000
+            finaldmg = finaldmg * h2hres / 1000
         end
     elseif params.damageType == tpz.damageType.PIERCING then
         if pierceres < 1000 then
@@ -267,7 +267,7 @@ function BluePhysicalSpell(caster, target, spell, params)
             finaldmg = finaldmg * slashres / 1000
         end
     end
-    
+
     -- Circle Effects
     if target:isMob() and finaldmg > 0 then
         local ecoC = target:getSystem()
@@ -295,9 +295,9 @@ function BluePhysicalSpell(caster, target, spell, params)
 
         finaldmg = math.floor(finaldmg * circlemult / 100)
     end
-    
+
     finaldmg = BlueApplyTargetDamageReductions(target, finaldmg)
-    
+
     if finaldmg > 0 then target:addTPFromSpell(caster, hitslanded) end
 
     return finaldmg, hitslanded, taChar
@@ -305,16 +305,16 @@ end
 
 function BlueMagicalSpell(caster, target, spell, params, statMod)
     local BLUlvl = caster:getMainJob() == tpz.job.BLU and caster:getMainLvl() or caster:getSubLvl()
-    
+
     local D = BLUlvl + 2
     if params.D ~= nil then D = params.D end -- breath attacks calculate their own D.
 
     if D > params.duppercap then D = params.duppercap end
-    
+
     local ST = BlueGetWsc(caster, params) -- Wiki: ST is the same as WSC, magical Blue mage spells are much like magical WS
-    
+
     if caster:hasStatusEffect(tpz.effect.BURST_AFFINITY) then ST = ST * 2 end
-    
+
     local convergence = caster:getStatusEffect(tpz.effect.CONVERGENCE)
     local convergenceBonus = convergence == nil and 1 or 1 + convergence:getPower()/100
     --print(string.format("cbonus = %f",convergenceBonus))
@@ -341,19 +341,19 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     rparams.bonus = rparams.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local res = applyResistance(caster, target, spell, rparams)
     D = math.floor(D * res)
-    
+
     params.bonusmab = params.bonusmab == nil and 0 or params.bonusmab
-    
+
     if params.eco ~= nil and target:isMob() then
         local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
         if correl > 0 then params.bonusmab = 25 + caster:getMerit(tpz.merit.MONSTER_CORRELATION)
         elseif correl < 0 then params.bonusmab = -25 end
         --print(string.format("monster family correl bonus MAB was %i",params.bonusmab))
     end
-    
+
     D = math.floor(addBonuses(caster, spell, target, D, params))
     D = BlueApplyTargetDamageReductions(target, D)
-    
+
     if params.attackType == tpz.attackType.BREATH  then
         local head = caster:getEquipID(tpz.slot.HEAD)
         if head == 16150 or head == 11465 then D = math.floor(D*1.1) end -- saurian helm and Mirage Keffiyeh
@@ -368,7 +368,7 @@ end
 function BlueApplyTargetDamageReductions(target, dmg)
     dmg = dmg * BLUE_POWER
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
-    
+
     if dmg < 0 then dmg = 0 end
 
     -- handling stoneskin
@@ -378,7 +378,7 @@ function BlueApplyTargetDamageReductions(target, dmg)
 end
 
 function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
-    
+
     local attackType = params.attackType or tpz.attackType.NONE
     local damageType = params.damageType or tpz.damageType.NONE
     if attackType == tpz.attackType.MAGICAL or attackType == tpz.attackType.SPECIAL or attackType == tpz.attackType.BREATH then
@@ -422,7 +422,7 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isRanged)
     ratio = ratio * levelcor
     ratio = utils.clamp(ratio, 0, 4.0)
     --print(string.format("blue cratio = %f",ratio))
-    
+
     local pdifmin = 0
     local pdifmax = 0
 
@@ -438,10 +438,10 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isRanged)
     if pdifmin > pdifmax - 0.1 then
         pdifmin = pdifmax - 0.1
     end
-    
+
     --print(pdifmin)
     --print(pdifmax)
-    
+
     local cratio = {}
     cratio[1] = pdifmin
     cratio[2] = pdifmax
@@ -467,7 +467,7 @@ end
 
 function BluefSTR(dSTR)
     local fSTR2 = 0
-    
+
     if     dSTR >= 12  then fSTR2 = (dSTR+4)/2
     elseif dSTR >= 6   then fSTR2 = (dSTR+6)/2
     elseif dSTR >= 1   then fSTR2 = (dSTR+7)/2
@@ -476,7 +476,7 @@ function BluefSTR(dSTR)
     elseif dSTR >= -15 then fSTR2 = (dSTR+10)/2
     elseif dSTR >= -21 then fSTR2 = (dSTR+12)/2
     else                    fSTR2 = (dSTR+13)/2 end
-    
+
     if fSTR2 > 12 then fSTR2 = 12 end -- dSTR caps once you have more than 20 STR than the mob's VIT (equivalent to having a weapon rank 4)
     if fSTR2 < -4 then fSTR2 = -4 end -- and the lower bound will be met at 20 STR *under* the mob's VIT
     return math.floor(fSTR2)
@@ -485,7 +485,7 @@ end
 function BlueGetHitRate(attacker, target, capHitRate, bonusacc)
     local acc = attacker:getACC() + attacker:getMerit(tpz.merit.PHYSICAL_POTENCY) + (attacker:getMainLvl()-target:getMainLvl())*4 + bonusacc
     local eva = target:getEVA()
-        
+
     local hitrate = 75 + (acc-eva)/2
     hitrate = hitrate/100
 

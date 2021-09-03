@@ -81,7 +81,7 @@ CBattleEntity::CBattleEntity()
 
     m_modStat[Mod::SLASHRES] = 1000;
     m_modStat[Mod::PIERCERES] = 1000;
-    m_modStat[Mod::HTHRES] = 1000;
+    m_modStat[Mod::H2HRES] = 1000;
     m_modStat[Mod::IMPACTRES] = 1000;
 
     m_Immunity = 0;

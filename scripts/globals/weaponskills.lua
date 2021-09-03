@@ -332,7 +332,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
 
-    local hthres = target:getMod(tpz.mod.HTHRES)
+    local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
     local impactres = target:getMod(tpz.mod.IMPACTRES)
     local slashres = target:getMod(tpz.mod.SLASHRES)
@@ -341,10 +341,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
         if attack.weaponType == tpz.skill.HAND_TO_HAND then
-            if hthres < 1000 then
-                finaldmg = finaldmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+            if h2hres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
             else
-                finaldmg = finaldmg * hthres / 1000
+                finaldmg = finaldmg * h2hres / 1000
             end
         elseif attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM then
             if pierceres < 1000 then
@@ -898,7 +898,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     cratio = cratio * levelcor
     cratio = utils.clamp(cratio, 0, 4.0)
     --print(string.format("cratio = %f",cratio))
-    
+
     local pdifmin = 0
     local pdifmax = 0
 
