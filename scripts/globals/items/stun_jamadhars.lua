@@ -1,6 +1,6 @@
 -----------------------------------------
--- ID: 16431
--- Item: Stun Claws
+-- ID: 16432
+-- Item: Stun Jamadhars
 -- Additional Effect: Stun
 -----------------------------------------
 require("scripts/globals/status")
