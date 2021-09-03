@@ -48,7 +48,7 @@ function getSandOriaNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14581, price = 15000}, -- Iron Ram Chainmain
         [274] = {id = 15005, price = 10500}, -- Iron Ram Mufflers
@@ -91,7 +91,7 @@ function getBastokNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14582, price = 15000}, -- Fourth Cuirass
         [274] = {id = 15006, price = 10500}, -- Fourth Gauntlets
@@ -134,7 +134,7 @@ function getWindurstNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14583, price = 15000}, -- Cobra Coat
         [274] = {id = 15007, price = 10500}, -- Cobra Cuffs
