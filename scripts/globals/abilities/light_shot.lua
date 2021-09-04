@@ -3,6 +3,7 @@
 -- Consumes a Light Card to enhance light-based debuffs. Additional effect: Light-based Sleep
 -- Dia Effect: Defense Down Effect +5% and DoT + 1
 -----------------------------------
+require("scripts/globals/ability")
 require("scripts/globals/magic")
 require("scripts/globals/status")
 -----------------------------------
@@ -24,7 +25,7 @@ function onUseAbility(player, target, ability)
     local duration = 60
     local bonusAcc = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI)) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC) - 23
     local resist = applyResistanceAbility(player, target, tpz.magic.ele.LIGHT, tpz.skill.NONE, bonusAcc)
-
+    target:updateClaim(player)
     if resist < 0.5 then
         ability:setMsg(tpz.msg.basic.JA_MISS_2) -- resist message
         return tpz.effect.SLEEP_I
@@ -66,6 +67,5 @@ function onUseAbility(player, target, ability)
     end
 
     local del = player:delItem(2182, 1) or player:delItem(2974, 1)
-    target:updateClaim(player)
     return tpz.effect.SLEEP_I
 end
