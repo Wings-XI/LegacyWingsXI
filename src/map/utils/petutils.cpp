@@ -102,7 +102,7 @@ struct Pet_t
     // resists
     int16 slashres;
     int16 pierceres;
-    int16 hthres;
+    int16 h2hres;
     int16 impactres;
 
     int16 firedef;
@@ -217,7 +217,7 @@ namespace petutils
                 // resistances
                 Pet->slashres = (uint16)(Sql_GetFloatData(SqlHandle, 27) * 1000);
                 Pet->pierceres = (uint16)(Sql_GetFloatData(SqlHandle, 28) * 1000);
-                Pet->hthres = (uint16)(Sql_GetFloatData(SqlHandle, 29) * 1000);
+                Pet->h2hres = (uint16)(Sql_GetFloatData(SqlHandle, 29) * 1000);
                 Pet->impactres = (uint16)(Sql_GetFloatData(SqlHandle, 30) * 1000);
 
                 Pet->firedef = 0;
@@ -958,7 +958,7 @@ namespace petutils
 
         PPet->setModifier(Mod::SLASHRES, petData->slashres);
         PPet->setModifier(Mod::PIERCERES, petData->pierceres);
-        PPet->setModifier(Mod::HTHRES, petData->hthres);
+        PPet->setModifier(Mod::H2HRES, petData->h2hres);
         PPet->setModifier(Mod::IMPACTRES, petData->impactres);
 
         PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages

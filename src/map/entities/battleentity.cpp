@@ -82,7 +82,7 @@ CBattleEntity::CBattleEntity()
 
     m_modStat[Mod::SLASHRES] = 1000;
     m_modStat[Mod::PIERCERES] = 1000;
-    m_modStat[Mod::HTHRES] = 1000;
+    m_modStat[Mod::H2HRES] = 1000;
     m_modStat[Mod::IMPACTRES] = 1000;
 
     m_Immunity = 0;
@@ -235,7 +235,7 @@ uint8 CBattleEntity::GetSpeed()
 
     float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
     float modifiedSpeed = static_cast<float>(startingSpeed) * modAmount;
-    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed);
+    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed < 0 ? 0 : modifiedSpeed);
 
     return std::clamp<uint8>(outputSpeed, std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max());
 }

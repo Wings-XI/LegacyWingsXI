@@ -423,7 +423,7 @@ INSERT INTO `mob_skills` VALUES(665, 409, 'grand_slam', 1, 15.0, 2000, 2200, 4, 
 INSERT INTO `mob_skills` VALUES(666, 410, 'power_attack', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(667, 411, 'power_attack_weapon', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(668, 412, 'kick_back', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(669, 413, 'implosion', 1, 60.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(669, 413, 'implosion', 1, 30.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(671, 415, 'umbra_smash', 1, 12.0, 3000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(672, 416, 'giga_slash', 1, 12.0, 3000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(673, 417, 'dark_nova', 1, 12.0, 3000, 2000, 4, 0, 0, 0, 0, 0, 0);

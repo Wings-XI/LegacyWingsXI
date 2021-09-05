@@ -529,17 +529,17 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
         dmg = target:physicalDmgTaken(dmg, damageType)
         if not target:isPC() then
-            local hthres = target:getMod(tpz.mod.HTHRES)
+            local h2hres = target:getMod(tpz.mod.H2HRES)
             local pierceres = target:getMod(tpz.mod.PIERCERES)
             local impactres = target:getMod(tpz.mod.IMPACTRES)
             local slashres = target:getMod(tpz.mod.SLASHRES)
             local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
             
-            if damageType == tpz.damageType.HTH then
-                if hthres < 1000 then
-                    dmg = dmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+            if damageType == tpz.damageType.H2H then
+                if h2hres < 1000 then
+                    dmg = dmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
                 else
-                    dmg = dmg * hthres / 1000
+                    dmg = dmg * h2hres / 1000
                 end
             elseif damageType == tpz.damageType.PIERCING then
                 if pierceres < 1000 then

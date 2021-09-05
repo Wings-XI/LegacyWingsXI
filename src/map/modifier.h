@@ -98,6 +98,7 @@ enum class Mod
     PIERCERES                 = 50, // Piercing Resistance
     IMPACTRES                 = 51, // Impact Resistance
     HTHRES                    = 52, // Hand-To-Hand Resistance
+    H2HRES                    = 52, // Hand-To-Hand Resistance
 
     // Damage Reduction to Elements
     // Value is stored as a percentage of damage reduction (to within 1000)
@@ -116,7 +117,7 @@ enum class Mod
     SDT_WIND                  = 1056, // % Specific Damage Taken Wind
     SDT_EARTH                 = 1057, // % Specific Damage Taken Earth
     SDT_THUNDER               = 1058, // % Specific Damage Taken Thunder
-    SDT_WATER                 = 1059, // % Specific Damage Taken Water 
+    SDT_WATER                 = 1059, // % Specific Damage Taken Water
     SDT_LIGHT                 = 1060, // % Specific Damage Taken Light
     SDT_DARK                  = 1061, // % Specific Damage Taken Dark
 
@@ -140,6 +141,7 @@ enum class Mod
 
     // Working Skills (weapon combat skills)
     HTH                       = 80, // Hand To Hand Skill
+    H2H                       = 80, // Hand To Hand Skill
     DAGGER                    = 81, // Dagger Skill
     SWORD                     = 82, // Sword Skill
     GSWORD                    = 83, // Great Sword Skill
@@ -897,11 +899,15 @@ enum class Mod
     EMPTY_CIRCLE = 1235,
     HUMANOID_CIRCLE = 1236,
     LUMORIAN_CIRCLE = 1237,
-    LUMINION_CIRCLE = 1238
+    LUMINION_CIRCLE = 1238,
+
+    // These mods should not be directly set.  These are used to apply pet mods via latent effects
+    PET_ATT_LATENT = 970, // Pet Attack bonus used for latents
+    PET_ACC_LATENT = 971 // Pet Acc bonus used for latents
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
-    
+
     // super jump taking up 988
 };
 

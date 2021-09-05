@@ -2064,7 +2064,7 @@ namespace battleutils
                     case DAMAGE_PIERCING: resmult = (float)(PDefender->getMod(Mod::PIERCERES)) / 1000.0f; break;
                     case DAMAGE_SLASHING: resmult = (float)(PDefender->getMod(Mod::SLASHRES)) / 1000.0f; break;
                     case DAMAGE_IMPACT:   resmult = (float)(PDefender->getMod(Mod::IMPACTRES)) / 1000.0f; break;
-                    case DAMAGE_HTH:      resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f; break;
+                    case DAMAGE_H2H:      resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f; break;
                     default:
                     break;
                 }
@@ -2076,7 +2076,7 @@ namespace battleutils
             }
             else
             {
-                float resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f;
+                float resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f;
                 if (resmult < 1.0f)
                 {
                     resmult = 1.0f - ((1.0f - resmult) * (1.0f - (((float)(PDefender->getMod(Mod::SPDEF_DOWN))) / 100.0f)));
