@@ -1501,7 +1501,7 @@ INSERT INTO `mob_pools` VALUES(1437, 'Funereal_Apkallu', 'Funereal_Apkallu', 27,
 INSERT INTO `mob_pools` VALUES(1438, 'Fungus_Beetle', 'Fungus_Beetle', 49, 0x0000980100000000000000000000000000000000, 7, 7, 3, 240, 100, 0, 0, 0, 1, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 49);
 INSERT INTO `mob_pools` VALUES(1439, 'Funnel_Antlion', 'Funnel_Antlion', 357, 0x0000440500000000000000000000000000000000, 1, 8, 3, 240, 100, 512, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 357);
 INSERT INTO `mob_pools` VALUES(1440, 'Funnel_Bats', 'Funnel_Bats', 47, 0x0000040100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 0, 0, 64, 133, 643, 0, 0, 0, 0, 0, 47);
-INSERT INTO `mob_pools` VALUES(1441, 'Furies', 'Furies', 47, 0x0000040100000000000000000000000000000000, 6, 8, 3, 240, 100, 0, 1, 0, 1, 16, 0, 0, 0, 3, 0, 0, 60, 0, 0, 47);
+INSERT INTO `mob_pools` VALUES(1441, 'Furies', 'Furies', 47, 0x0000040100000000000000000000000000000000, 6, 8, 3, 240, 100, 0, 1, 0, 1, 16, 0, 0, 0, 3, 0, 0, 60, 0, 0, 5005);
 INSERT INTO `mob_pools` VALUES(1442, 'Fusty_Gnole', 'Fusty_Gnole', 132, 0x0000f10700000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 0, 0, 1, 0, 0, 0, 184, 131, 0, 0, 0, 0, 0, 132);
 INSERT INTO `mob_pools` VALUES(1443, 'Fyuu_the_Seabellow', 'Fyuu_the_Seabellow', 213, 0x00003a0500000000000000000000000000000000, 10, 10, 5, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 6, 0, 0, 213);
 INSERT INTO `mob_pools` VALUES(1444, 'Gabblox_Magpietongue', 'Gabblox_Magpietongue', 373, 0x00003f0400000000000000000000000000000000, 5, 5, 3, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 3, 0, 0, 373);
