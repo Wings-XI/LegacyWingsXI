@@ -38,15 +38,15 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 and player:getCurrentMission(player:getNation()) == tpz.mission.id.nation.SHADOW_LORD and player:getCharVar("MissionStatus") == 3 then
+        -- Prevent players who already completed from receiving again after switching nations
         if player:getCurrentMission(ZILART) ~= tpz.mission.id.zilart.THE_NEW_FRONTIER and not player:hasCompletedMission(ZILART, tpz.mission.id.zilart.THE_NEW_FRONTIER) then
-            -- Don't add missions we already completed. Players who change nation will hit this.
             player:addMission(ZILART, tpz.mission.id.zilart.THE_NEW_FRONTIER)
         end
+        player:addKeyItem(tpz.ki.SHADOW_FRAGMENT)
+        player:setCharVar("MissionStatus", 4)
         player:startEvent(7)
     elseif csid == 7 then
-        player:addKeyItem(tpz.ki.SHADOW_FRAGMENT)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SHADOW_FRAGMENT)
-        player:setCharVar("MissionStatus", 4)
         player:setPos(378, -12, -20, 125, 161)
     end
 end

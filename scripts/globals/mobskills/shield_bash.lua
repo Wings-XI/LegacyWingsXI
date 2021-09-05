@@ -21,15 +21,10 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 1
     local dmgmod = 1
-    local shieldBashDamageMod = mob:getMod(tpz.mod.SHIELD_BASH);
-    if (shieldBashDamageMod > 0) then
+    local shieldBashDamageMod = mob:getMod(tpz.mod.SHIELD_BASH)
+    if shieldBashDamageMod > 0 then
         dmgmod = shieldBashDamageMod
     end
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 2, 2, 2)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
 

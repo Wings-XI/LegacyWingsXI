@@ -6,7 +6,7 @@ require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobSpawn(mob)
-    mob:setMod(tpz.mod.HTHRES, 1500)
+    mob:setMod(tpz.mod.H2HRES, 1500)
     mob:setMod(tpz.mod.IMPACTRES, 1500)
     mob:setMod(tpz.mod.PIERCERES, 0)
 end

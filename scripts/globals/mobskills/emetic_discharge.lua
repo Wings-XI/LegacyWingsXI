@@ -25,11 +25,13 @@ function onMobWeaponSkill(target, mob, skill)
                         tpz.effect.EVASION_DOWN, tpz.effect.DEFENSE_DOWN, tpz.effect.MAGIC_ACC_DOWN, tpz.effect.MAGIC_ATK_DOWN, tpz.effect.MAGIC_EVASION_DOWN,
                         tpz.effect.MAGIC_DEF_DOWN, tpz.effect.MAX_TP_DOWN, tpz.effect.MAX_MP_DOWN, tpz.effect.MAX_HP_DOWN}
 
-    local dmg = utils.takeShadows(target, 1, math.random(2, 3)) --removes 2-3 shadows
-    --if removed more shadows than were up or there weren't any
-    if (dmg > 0) then
+    local dmg = 0
+    local numShadowsUsed = 0
+    local numHits = math.random(2, 3)
+    dmg, numShadowsUsed = utils.takeShadows(target, 100, numHits)
+    if numShadowsUsed < numHits then -- at least one hit made it thru shadows
         for i, effect in ipairs(removables) do
-            if (mob:hasStatusEffect(effect)) then
+            if mob:hasStatusEffect(effect) then
                 local statusEffect = mob:getStatusEffect(effect)
                 target:addStatusEffect(effect, statusEffect:getPower(), statusEffect:getTickCount(), statusEffect:getDuration())
                 mob:delStatusEffect(effect)
@@ -37,6 +39,6 @@ function onMobWeaponSkill(target, mob, skill)
         end
     end
 
-    skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT) -- no effect
+    skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     return 0
 end

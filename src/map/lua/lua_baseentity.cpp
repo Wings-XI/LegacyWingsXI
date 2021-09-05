@@ -5044,9 +5044,37 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
     {
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
+        // Look "size" is look type. If the look type is one that uses pc models
+        // with equipment(equipped or chocobo), switch it to "standard" (model id-based).
+        // restoreNpcLook can be used to restore the original db look.
+        if (m_PBaseEntity->look.size == MODEL_EQUIPED || m_PBaseEntity->look.size == MODEL_CHOCOBO)
+        {
+            m_PBaseEntity->look.size = MODEL_STANDARD;
+        }
+
         m_PBaseEntity->SetModelId((uint16)lua_tointeger(L, 1));
     }
     m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: restoreNpcLook()
+*  Purpose : Restores the NPC's Look back to the original
+*  Example : npc:restoreNpcLook
+*  Notes   : Ignored on all other entity types
+************************************************************************/
+
+inline int32 CLuaBaseEntity::restoreNpcLook(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype == TYPE_NPC)
+    {
+        memcpy(&m_PBaseEntity->look, &m_PBaseEntity->mainlook, sizeof(m_PBaseEntity->look));
+        m_PBaseEntity->updatemask |= UPDATE_LOOK;
+    }
 
     return 0;
 }
@@ -16280,8 +16308,8 @@ inline int32 CLuaBaseEntity::tryInterruptSpell(lua_State* L)
 }
 
 /************************************************************************
-*  Function:
-*  Purpose :
+*  Function: getGuardRate
+*  Purpose : finds guard rate, returns 0% if the attacker cannot guard
 *  Example : target:getGuardRate(attacker)
 *  Notes   : 
 ************************************************************************/
@@ -16300,7 +16328,8 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
         return 1;
     }
 
-    if (PDefender && PAttacker)
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+        facing(PDefender->loc.p, PAttacker->loc.p, 64))
         lua_pushinteger(L, battleutils::GetGuardRate(PAttacker, PDefender));
     else
         lua_pushinteger(L, 0);
@@ -16309,8 +16338,114 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
 }
 
 /************************************************************************
-*  Function:
-*  Purpose :
+ *  Function: getParryRate
+ *  Purpose : finds parry rate, returns 0% if the attacker cannot parry
+ *  Example : target:getParryRate(attacker)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getParryRate(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PDefender->objtype != TYPE_PC)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+        facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        lua_pushinteger(L, battleutils::GetParryRate(PAttacker, PDefender));
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: getBlockRate
+ *  Purpose : finds block rate, returns 0% if the attacker cannot block
+ *  Example : target:getBlockRate(attacker)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getBlockRate(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PDefender->objtype != TYPE_PC)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+    else
+    {
+        CCharEntity* PChar = (CCharEntity*)PDefender;
+        if (!PChar->m_Weapons[SLOT_SUB] || !PChar->m_Weapons[SLOT_SUB]->IsShield())
+        {
+            lua_pushinteger(L, 0);
+            return 1;
+        }
+    }
+
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        lua_pushinteger(L, battleutils::GetBlockRate(PAttacker, PDefender));
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: getBlockedDamage
+ *  Purpose : in the case of a successful block checked with getBlockRate, this returns the new damage
+ *  Example : target:getBlockedDamage(dmg)
+ *  Notes   : it is required that the dmg parameter is passed in
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getBlockedDamage(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    int32 damage = (int32)lua_tointeger(L, 1);
+    if (!PDefender || PDefender->objtype != TYPE_PC || !PDefender->m_Weapons[SLOT_SUB] || !PDefender->m_Weapons[SLOT_SUB]->IsShield())
+    {
+        lua_pushinteger(L, damage);
+        return 1;
+    }
+    
+    uint8 absorb = std::clamp<uint8>(PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() + (uint8)(PDefender->getMod(Mod::SHIELD_DEF_BONUS)), (uint8)0, (uint8)100);
+
+    // Shield Mastery
+    if (damage - PDefender->getMod(Mod::PHALANX) > 0 && charutils::hasTrait((CCharEntity*)PDefender, TRAIT_SHIELD_MASTERY))
+    {
+        // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
+        PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
+    }
+
+    lua_pushinteger(L, damage * (100 - absorb) / 100);
+    return 1;
+}
+
+/************************************************************************
+*  Function: trySkillUp
+*  Purpose : if the target mob is sufficient level, will try to skill up
 *  Example : player:trySkillUp(mob, tpz.skill.SWORD, 2)
 *  Notes   : third argument is amount of hits landed
 ************************************************************************/
@@ -16323,7 +16458,7 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
     CBattleEntity* PMob = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
 
-    if (PChar->objtype != TYPE_PC)
+    if (!PChar || !PMob || PChar->objtype != TYPE_PC)
         return 0;
 
     uint8 skill = 1;
@@ -16334,7 +16469,7 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
     if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
         tries = (uint8)lua_tointeger(L, 3);
 
-    while (tries != 0 && PChar && PMob)
+    while (tries)
     {
         charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
         tries--;
@@ -17648,6 +17783,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,restoreNpcLook),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),
 
@@ -18160,6 +18296,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCharmTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tryInterruptSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGuardRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getParryRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBlockRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBlockedDamage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,trySkillUp),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),
