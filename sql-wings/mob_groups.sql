@@ -10429,8 +10429,8 @@ INSERT INTO `mob_groups` VALUES(1, 237, 180, 'Ark_Angel_HM', 0, 128, 0, 10000, 1
 INSERT INTO `mob_groups` VALUES(2, 238, 180, 'Ark_Angel_MR', 0, 128, 0, 10000, 1000, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(3, 240, 180, 'Ark_Angels_Tiger', 0, 128, 0, 2500, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(4, 239, 180, 'Ark_Angels_Mandragora', 0, 128, 0, 2500, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(5, 235, 180, 'Ark_Angel_EV', 0, 128, 0, 10000, 1000, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(6, 242, 180, 'Ark_Angel_TT', 0, 128, 0, 10000, 1000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(5, 235, 180, 'Ark_Angel_EV', 0, 128, 0, 10000, 15000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(6, 242, 180, 'Ark_Angel_TT', 0, 128, 0, 10000, 15000, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(7, 236, 180, 'Ark_Angel_GK', 0, 128, 0, 10000, 1000, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(8, 241, 180, 'Ark_Angels_Wyvern', 0, 128, 0, 2500, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(1, 1158, 181, 'Eald_narche', 0, 128, 0, 2000, 5000, 75, 75, 0);
