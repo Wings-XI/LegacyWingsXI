@@ -5044,9 +5044,37 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
     {
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
+        // Look "size" is look type. If the look type is one that uses pc models
+        // with equipment(equipped or chocobo), switch it to "standard" (model id-based).
+        // restoreNpcLook can be used to restore the original db look.
+        if (m_PBaseEntity->look.size == MODEL_EQUIPED || m_PBaseEntity->look.size == MODEL_CHOCOBO)
+        {
+            m_PBaseEntity->look.size = MODEL_STANDARD;
+        }
+
         m_PBaseEntity->SetModelId((uint16)lua_tointeger(L, 1));
     }
     m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: restoreNpcLook()
+*  Purpose : Restores the NPC's Look back to the original
+*  Example : npc:restoreNpcLook
+*  Notes   : Ignored on all other entity types
+************************************************************************/
+
+inline int32 CLuaBaseEntity::restoreNpcLook(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype == TYPE_NPC)
+    {
+        memcpy(&m_PBaseEntity->look, &m_PBaseEntity->mainlook, sizeof(m_PBaseEntity->look));
+        m_PBaseEntity->updatemask |= UPDATE_LOOK;
+    }
 
     return 0;
 }
@@ -17755,6 +17783,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,restoreNpcLook),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),
 

@@ -1309,8 +1309,7 @@ bool CAutomatonController::TryTPMove()
         for (auto skillid : FamilySkills)
         {
             auto PSkill = battleutils::GetMobSkill(skillid);
-            if (PSkill && PAutomaton->GetSkill(skilltype) >= PSkill->getParam() && PSkill->getParam() != -1 &&
-                distance(PAutomaton->loc.p, PTarget->loc.p) < PSkill->getRadius())
+            if (PSkill && PAutomaton->GetSkill(skilltype) >= PSkill->getParam() && PSkill->getParam() != -1)
             {
                 validSkills.push_back(PSkill);
             }
@@ -1340,7 +1339,7 @@ bool CAutomatonController::TryTPMove()
 
                 for (auto PSkill : validSkills)
                 {
-                    if (PSkill->getParam() > currentSkill)
+                    if (PSkill->getParam() >= currentSkill)
                     {
                         std::list<SKILLCHAIN_ELEMENT> skillProperties;
                         skillProperties.push_back((SKILLCHAIN_ELEMENT)PSkill->getPrimarySkillchain());
@@ -1357,12 +1356,12 @@ bool CAutomatonController::TryTPMove()
             }
         }
 
-        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY)))
+        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY) && !PAutomaton->PMaster->PAI->IsCurrentState<CWeaponSkillState>()))
         {
             for (auto PSkill : validSkills)
             {
                 int8 maneuvers = luautils::OnMobAutomatonSkillCheck(PTarget, PAutomaton, PSkill);
-                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() > currentSkill)))
+                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() >= currentSkill)))
                 {
                     currentManeuvers = maneuvers;
                     currentSkill = PSkill->getParam();
@@ -1375,7 +1374,7 @@ bool CAutomatonController::TryTPMove()
         if (currentManeuvers == -1)
             return false;
 
-        if (PWSkill)
+        if (PWSkill && distance(PAutomaton->loc.p, PTarget->loc.p) < PWSkill->getRadius())
             return MobSkill(PTarget->targid, PWSkill->getID());
     }
     return false;
