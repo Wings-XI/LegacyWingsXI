@@ -1076,6 +1076,8 @@ namespace fishingutils
             PChar->animation = ANIMATION_NEW_FISHING_START;
             PChar->updatemask |= UPDATE_HP;
 
+            PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
+
             PChar->pushPacket(new CCharUpdatePacket(PChar));
             PChar->pushPacket(new CCharSyncPacket(PChar));
         }

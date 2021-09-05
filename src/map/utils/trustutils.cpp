@@ -84,7 +84,7 @@ struct Trust_t
     // resists
     int16 slashres;
     int16 pierceres;
-    int16 hthres;
+    int16 h2hres;
     int16 impactres;
 
     int16 firedef;
@@ -217,7 +217,7 @@ void BuildTrust(uint32 TrustID)
             // resistances
             trust->slashres  = (uint16)(Sql_GetFloatData(SqlHandle, 30) * 1000);
             trust->pierceres = (uint16)(Sql_GetFloatData(SqlHandle, 31) * 1000);
-            trust->hthres    = (uint16)(Sql_GetFloatData(SqlHandle, 32) * 1000);
+            trust->h2hres    = (uint16)(Sql_GetFloatData(SqlHandle, 32) * 1000);
             trust->impactres = (uint16)(Sql_GetFloatData(SqlHandle, 33) * 1000);
 
             trust->firedef    = 0;
