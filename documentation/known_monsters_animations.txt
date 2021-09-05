@@ -1363,7 +1363,7 @@
  1362    Frog Cheer
  1363    ??? Animation
  1364    ??? Animation
- 1365    ??? Animation
+ 1365    Valkeng Dance between frame change Animation
  1366    ??? Animation
  1367    Tenebrous Mist
  1368    Thunderstrike

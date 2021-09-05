@@ -14538,7 +14538,7 @@ INSERT INTO `item_basic` VALUES(17311, 0, 'dart_+1', 'dart_+1', 99, 2052, 15, 0,
 INSERT INTO `item_basic` VALUES(17312, 0, 'iron_bullet', 'iron_bullet', 99, 2052, 15, 0, 34);
 INSERT INTO `item_basic` VALUES(17313, 0, 'grenade', 'grenade', 12, 2052, 15, 0, 1040);
 INSERT INTO `item_basic` VALUES(17314, 0, 'quake_grenade', 'quake_grenade', 12, 2052, 15, 0, 410);
-INSERT INTO `item_basic` VALUES(17315, 0, 'riot_grenade', 'riot_grenade', 12, 2052, 15, 0, 2190);
+INSERT INTO `item_basic` VALUES(17315, 0, 'riot_grenade', 'riot_grenade', 12, 2052, 15, 0, 613);
 INSERT INTO `item_basic` VALUES(17316, 0, 'bomb_arm', 'bomb_arm', 12, 2052, 15, 0, 150);
 INSERT INTO `item_basic` VALUES(17317, 0, 'gold_arrow', 'gold_arrow', 99, 2052, 15, 0, 10);
 INSERT INTO `item_basic` VALUES(17318, 0, 'wooden_arrow', 'wooden_arrow', 99, 2052, 15, 0, 1);

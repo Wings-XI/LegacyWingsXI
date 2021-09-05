@@ -31,7 +31,7 @@ function onPetAbility(target, automaton, skill, master, action)
 
     local slowPower = automaton:getMod(tpz.mod.AUTO_SHIELD_BASH_SLOW)
     if slowPower > 0 and math.random() < 0.7 then
-        local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,0,bonus)
+        local resist = applyResistanceAbility(automaton, target, tpz.magic.element.EARTH, 0, bonus)
         local duration = 20
         if slowPower == 12 then
             duration = math.random(20, 35)

@@ -398,7 +398,7 @@ INSERT INTO `mob_family_system` VALUES(333, 'PetSuzaku', 8, 'Bird', 3, 60, 130, 
 INSERT INTO `mob_family_system` VALUES(334, 'OrcNM', 7, 'Beastmen', 1, 40, 108, 100, 3, 3, 4, 4, 7, 4, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.5, 1.3, 1.3, 1, 257, 0);
 INSERT INTO `mob_family_system` VALUES(335, 'Maat', 13, 'Humanoid', 0, 40, 90, 110, 4, 3, 4, 4, 3, 3, 3, 1, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 3, 0);
 INSERT INTO `mob_family_system` VALUES(336, 'ZM4-Tonberry', 7, 'Beastmen', 1, 40, 91, 140, 3, 1, 5, 2, 1, 5, 4, 3, 3, 3, 2, 1, 1, 1, 1, 1.15, 1.5, 1.15, 1, 1.3, 0.85, 0.5, 1, 7, 1, 0);
-INSERT INTO `mob_family_system` VALUES(337, 'QuadavNM', 7, 'Beastmen', 0, 40, 120, 110, 2, 3, 4, 4, 4, 5, 3, 3, 2, 3, 3, 1, 1.25, 1, 1, 1, 1.3, 1.3, 1.3, 1.5, 1, 1.3, 1.3, 6, 258, 0);
+INSERT INTO `mob_family_system` VALUES(337, 'QuadavNM', 7, 'Beastmen', 0, 40, 120, 110, 2, 3, 4, 4, 4, 5, 3, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.5, 1, 1.3, 1.3, 6, 258, 0);
 INSERT INTO `mob_family_system` VALUES(338, 'Twitherym', 20, 'Vermin', 0, 40, 92, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1.25, 1, 1, 1, 1.25, 0.875, 1, 1, 1, 1, 1, 3, 1, 1);
 INSERT INTO `mob_family_system` VALUES(339, 'Chapuli', 20, 'Vermin', 1, 40, 105, 120, 3, 3, 4, 3, 3, 6, 5, 3, 5, 3, 3, 1, 1, 1, 1, 1, 1.25, 1, 1, 1.25, 1, 1.125, 1.25, 4, 1, 1);
 INSERT INTO `mob_family_system` VALUES(340, 'Mantis', 20, 'Vermin', 1, 40, 105, 120, 3, 3, 4, 3, 3, 6, 5, 3, 5, 3, 3, 1, 1, 1, 1, 1, 1.25, 1, 1, 1.25, 1, 1.125, 1.25, 4, 1, 0);
@@ -421,7 +421,7 @@ INSERT INTO `mob_family_system` VALUES(356, 'ArkAngel-TT', 13, 'Humanoid', 0, 40
 INSERT INTO `mob_family_system` VALUES(357, 'Ambush_Antlion', 20, 'Vermin', 1, 40, 125, 125, 4, 4, 4, 4, 4, 4, 4, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1.3, 0.6, 1, 1, 1.5, 0.6, 8, 2, 0);
 INSERT INTO `mob_family_system` VALUES(358, 'Kindred', 9, 'Demon', 0, 70, 110, 140, 2, 2, 4, 4, 1, 2, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.3, 1, 8, 257, 0);
 INSERT INTO `mob_family_system` VALUES(359, 'Fomor', 19, 'Undead', 0, 40, 105, 90, 3, 5, 4, 5, 2, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 0.5, 1, 1, 1, 1, 1.3, 0.5, 8, 6, 0);
-INSERT INTO `mob_family_system` VALUES(360, 'YagudoNM', 7, 'Beastmen', 0, 40, 85, 120, 3, 3, 3, 3, 4, 5, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.3, 0.7, 0.7, 1, 0.3, 0.3, 1, 3, 1, 0);
+INSERT INTO `mob_family_system` VALUES(360, 'YagudoNM', 7, 'Beastmen', 0, 40, 85, 120, 3, 3, 3, 3, 4, 5, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.3, 0.7, 0.7, 1, 0.3, 1, 1, 3, 1, 0);
 INSERT INTO `mob_family_system` VALUES(361, 'DynamisLord', 18, 'Unclassified', 1, 40, 120, 140, 1, 1, 1, 1, 1, 1, 1, 3, 1, 3, 1, 1, 1, 1, 1, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.7, 8, 1, 0);
 INSERT INTO `mob_family_system` VALUES(362, 'SabotenderFlorido', 17, 'Plantoid', 0, 50, 100, 90, 3, 5, 5, 3, 5, 5, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.25, 1, 1, 1, 0.5, 0.875, 1.25, 6, 0, 0);
 INSERT INTO `mob_family_system` VALUES(363, 'Automaton_Harlequin', 18, 'Unclassified', 0, 40, 115, 100, 6, 6, 4, 6, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 0, 0, 0);
