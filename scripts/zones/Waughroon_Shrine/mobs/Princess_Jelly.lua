@@ -29,6 +29,8 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MP_BASE, 300)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 30)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100) -- immune to sleep
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:speed(2)
 end
 
