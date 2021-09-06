@@ -18,6 +18,8 @@ function onZoneIn(player, prevZone)
     end
     if player:getCurrentMission(WOTG) == tpz.mission.id.wotg.A_TIMESWEPT_BUTTERFLY and prevZone == tpz.zone.JUGNER_FOREST_S then
         cs = 1
+    elseif player:getCurrentMission(WOTG) == tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK and player:getCharVar("PurpleTheNewBlackProgress") == 2 then
+        cs = 6
     end
     return cs
 end
@@ -32,5 +34,8 @@ function onEventFinish(player, csid, option)
     if csid == 1 then
         player:completeMission(WOTG, tpz.mission.id.wotg.A_TIMESWEPT_BUTTERFLY)
         player:addMission(WOTG, tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK)
+    elseif csid == 6 then
+        player:completeMission(WOTG, tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK)
+        player:addMission(WOTG, tpz.mission.id.wotg.IN_THE_NAME_OF_THE_FATHER)
     end
 end
