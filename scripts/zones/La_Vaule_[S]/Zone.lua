@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/La_Vaule_[S]/IDs")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
+require("scripts/globals/titles")
 -----------------------------------
 
 function onInitialize(zone)
@@ -36,6 +37,8 @@ function onEventFinish(player, csid, option)
         player:addMission(WOTG, tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK)
     elseif csid == 6 then
         player:completeMission(WOTG, tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK)
-        player:addMission(WOTG, tpz.mission.id.wotg.IN_THE_NAME_OF_THE_FATHER)
+        player:setCharVar("PurpleTheNewBlackProgress", 0)
+        player:addTitle(tpz.title.TRAVERSER_OF_TIME)
+        player:addMission(WOTG, tpz.mission.id.wotg.IN_THE_NAME_OF_THE_FATHER) 
     end
 end
