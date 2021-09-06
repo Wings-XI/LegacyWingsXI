@@ -12,10 +12,8 @@ function onAdditionalEffect(player,target,damage)
     local chance = 50
 
     if (math.random(0,99) >= chance) then
-        printf("NO\n")
         return 0,0,0
     else
-        printf("YES\n")
         local dmg = math.random(14,16)
         local params = {}
         params.bonusmab = 0
