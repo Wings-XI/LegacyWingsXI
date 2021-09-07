@@ -273,7 +273,7 @@ local battlefields = {
     [tpz.zone.WAUGHROON_SHRINE] =
     {
         { 0,   64,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,   65, 1131},   -- The Worm's Turn (BS40)
+        { 1,   65, 1131},   -- The Worm's Turn (BS40)
      -- { 2,   66, 1130},   -- Grimshell Shocktroopers (BS60)
         { 3,   67,    0},   -- On My Way (Basty 7-2)
         { 4,   68, 1166},   -- A Thief in Norg!? (Quest)
