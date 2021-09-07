@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Chamber of Oracles
---  Mob: Radiant Wyvern
+--  Mob: Blizzard Wyvern
 -- KSNM: Eye of the Storm
 -----------------------------------
 require("scripts/globals/status")

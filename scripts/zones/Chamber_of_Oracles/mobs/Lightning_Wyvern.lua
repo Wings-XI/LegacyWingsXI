@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Chamber of Oracles
---  Mob: Radiant Wyvern
+--  Mob: Lightning Wyvern
 -- KSNM: Eye of the Storm
 -----------------------------------
 require("scripts/globals/status")
@@ -21,3 +21,4 @@ end
 
 function onMobDeath(mob, player, isKiller)
 end
+
