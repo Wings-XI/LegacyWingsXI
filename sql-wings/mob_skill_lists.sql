@@ -3223,12 +3223,30 @@ INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1234);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1274);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1275);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1276);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 652);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 653);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 483);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 2209);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 1336);
-INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5005, 480);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 393);  -- new skill list for NM bat trios to include turbulence and slipstream
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 395);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1157);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1158);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2202);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 2263);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 652);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 653);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
 --
 -- Indexes for dumped tables
 --
