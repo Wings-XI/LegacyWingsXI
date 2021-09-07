@@ -1,6 +1,6 @@
 -----------------------------------
 --
--- Dynamis-Bastok
+-- Dynamis-Beaucedine
 --
 -----------------------------------
 require("scripts/globals/status")

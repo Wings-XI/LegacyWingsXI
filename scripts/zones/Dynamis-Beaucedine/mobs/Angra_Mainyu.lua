@@ -79,6 +79,11 @@ function onMobEngaged(mob, target)
     end
 end
 
+
+function onMobDisengage(mob)
+    mob:setLocalVar("teleTime", 0)
+end    
+
 function onMobFight(mob, target)
 
     local mobId = mob:getID()
@@ -120,7 +125,6 @@ end
 
 function onMonsterMagicPrepare(mob, target)
     if mob:getHPP() <= 25 then
-        print("magic Check")
         return 367 -- Death
     else
         -- Can cast Blindga, Death, Graviga, Silencega, and Sleepga II.

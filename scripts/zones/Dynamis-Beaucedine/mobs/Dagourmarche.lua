@@ -44,12 +44,12 @@ function onMobSpawn(mob)
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-	local charm = 710
-	if math.random() < 0.2 then
-		return charm
-	else
-		return 0
-	end
+    local charm = 710
+    if math.random() < 0.2 then
+        return charm
+    else
+        return 0
+    end
 end
 
 function onMobEngaged(mob, target)

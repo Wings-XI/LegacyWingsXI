@@ -9,7 +9,7 @@ require("scripts/globals/dynamis")
 function onTrigger(player, npc)
     if player:hasKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA) == false then
         player:addKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA)
-        local ID = require("scripts/zones/Dynamis-Bastok/IDs")
+        local ID = require("scripts/zones/Dynamis-Beaucedine/IDs")
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.HYDRA_CORPS_INSIGNIA)
     end
 end
