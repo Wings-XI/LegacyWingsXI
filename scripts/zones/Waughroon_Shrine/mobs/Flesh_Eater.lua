@@ -23,7 +23,7 @@ function onMonsterMagicPrepare(mob, target)
 	elseif rnd < 0.9 then
         return 258 -- Bind
     else
-        return 159 -- Stone
+        return 160 -- Stone II
     end
 end
 
