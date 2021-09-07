@@ -1639,9 +1639,9 @@ bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPack
             if (!PMob->speed || !(PMob->PAI->PathFind->IsFollowingPath() || PMob->PAI->PathFind->IsFollowingScriptedPath()))
                 return false; // i must be chasing and not bound
 
-            float bonusRange = 4;
+            float bonusRange = 3;
             if (PTarget->speed >= PMob->speed)
-                bonusRange = PMob->speed / PTarget->speed * 4;
+                bonusRange = PMob->speed / PTarget->speed * 3;
 
             // attempt to hit a running target, increase range slightly
             if (std::chrono::system_clock::now() > PMob->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < GetMeleeRange() + bonusRange)
@@ -1649,11 +1649,11 @@ bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPack
                 std::chrono::duration delay = std::chrono::milliseconds(PMob->GetWeaponDelay(false));
                 if (PMob->m_Type & MOBTYPE_NOTORIOUS || PMob->m_Type & MOBTYPE_BATTLEFIELD || PMob->m_Type & MOBTYPE_EVENT)
                 {
-                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*2, delay.count()*4));
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*2, delay.count()*3));
                 }
                 else
                 {
-                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*7));
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*5));
                 }
                 PMob->m_NextSlidingHit = std::chrono::system_clock::now() + delay;
                 return true;

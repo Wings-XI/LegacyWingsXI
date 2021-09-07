@@ -1401,9 +1401,9 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
             if (!this->speed || !(this->PAI->PathFind->IsFollowingPath() || this->PAI->PathFind->IsFollowingScriptedPath()))
                 return false; // i must be chasing or not bound
 
-            float bonusRange = 4;
+            float bonusRange = 2;
             if (PTarget->speed >= this->speed)
-                bonusRange = this->speed / PTarget->speed * 4;
+                bonusRange = this->speed / PTarget->speed * 2;
             
             // attempt to hit a running target, increase range slightly
             if (std::chrono::system_clock::now() > this->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < attack_range + bonusRange)
@@ -1415,7 +1415,7 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
                 }
                 else
                 {
-                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*7));
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*6));
                 }
                 this->m_NextSlidingHit = std::chrono::system_clock::now() + delay;
                 return true;
