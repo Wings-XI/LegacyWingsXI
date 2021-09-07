@@ -3223,6 +3223,10 @@ INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1234);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1274);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1275);
 INSERT INTO `mob_skill_lists` VALUES('Delver', 5004, 1276);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 393);  -- new skill list for NM bat trios to include turbulence and slipstream
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 395);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1157);
+INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1158);
 --
 -- Indexes for dumped tables
 --

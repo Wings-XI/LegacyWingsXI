@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_UNDEAD
     params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.HTH
+    params.damageType = tpz.damageType.H2H
     params.scattr = SC_COMPRESSION
     params.spellLevel = 40
     params.numhits = 1
@@ -50,7 +50,7 @@ function onSpellCast(caster, target, spell)
     damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
-    
+
     params = {}
     params.eco = ECO_UNDEAD
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)

@@ -2,6 +2,7 @@
 -- Area: Kuftal Tunnel
 --   NM: Phantom Worm
 -----------------------------------
+local ID = require("scripts/zones/Kuftal_Tunnel/IDs")
 require("scripts/globals/hunts")
 require("scripts/globals/mobs")
 -----------------------------------

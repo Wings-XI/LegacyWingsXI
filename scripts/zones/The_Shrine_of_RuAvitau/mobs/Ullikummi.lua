@@ -2,6 +2,7 @@
 -- Area: The Shrine of Ru'Avitau
 --  Mob: Ullikummi
 -----------------------------------
+local ID = require("scripts/zones/The_Shrine_of_RuAvitau/IDs")
 require("scripts/globals/status")
 require("scripts/globals/mobs")
 -----------------------------------

@@ -20,7 +20,7 @@ require("scripts/globals/zone")
 local instances = {
     [tpz.zone.FORT_KARUGO_NARUGO_S] =
     {
-        --{ 0,   96,    0},   -- A Manifest Problem (WotG Mission-Quest)
+        { 0,   96,    0},   -- A Manifest Problem (WotG Mission-Quest)
     },
 }
 

@@ -81,7 +81,7 @@ CBattleEntity::CBattleEntity()
 
     m_modStat[Mod::SLASHRES] = 1000;
     m_modStat[Mod::PIERCERES] = 1000;
-    m_modStat[Mod::HTHRES] = 1000;
+    m_modStat[Mod::H2HRES] = 1000;
     m_modStat[Mod::IMPACTRES] = 1000;
 
     m_Immunity = 0;
@@ -231,7 +231,7 @@ uint8 CBattleEntity::GetSpeed()
 
     float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
     float modifiedSpeed = static_cast<float>(startingSpeed) * modAmount;
-    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed);
+    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed < 0 ? 0 : modifiedSpeed);
 
     return std::clamp<uint8>(outputSpeed, std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max());
 }
@@ -1627,10 +1627,46 @@ bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPack
         PAI->Disengage();
         return false;
     }
-    if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > GetMeleeRange() ||
-        !PAI->GetController()->IsAutoAttackEnabled())
+    if (this->objtype == TYPE_MOB)
     {
-        return false;
+        CMobEntity* PMob = (CMobEntity*)this;
+        if (!PAI->GetController()->IsAutoAttackEnabled())
+        {
+            return false;
+        }
+        else if (distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize > GetMeleeRange())
+        {
+            if (!PMob->speed || !(PMob->PAI->PathFind->IsFollowingPath() || PMob->PAI->PathFind->IsFollowingScriptedPath()))
+                return false; // i must be chasing and not bound
+
+            float bonusRange = 4;
+            if (PTarget->speed >= PMob->speed)
+                bonusRange = PMob->speed / PTarget->speed * 4;
+
+            // attempt to hit a running target, increase range slightly
+            if (std::chrono::system_clock::now() > PMob->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < GetMeleeRange() + bonusRange)
+            {
+                std::chrono::duration delay = std::chrono::milliseconds(PMob->GetWeaponDelay(false));
+                if (PMob->m_Type & MOBTYPE_NOTORIOUS || PMob->m_Type & MOBTYPE_BATTLEFIELD || PMob->m_Type & MOBTYPE_EVENT)
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*2, delay.count()*4));
+                }
+                else
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*7));
+                }
+                PMob->m_NextSlidingHit = std::chrono::system_clock::now() + delay;
+                return true;
+            }
+            return false;
+        }
+    }
+    else
+    {
+        if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > GetMeleeRange() || !PAI->GetController()->IsAutoAttackEnabled())
+        {
+            return false;
+        }
     }
     return true;
 }
