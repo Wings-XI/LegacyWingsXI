@@ -326,6 +326,7 @@ void LoadNPCList()
                 PNpc->widescan = (uint8)Sql_GetIntData(SqlHandle, 17);
 
                 memcpy(&PNpc->look, Sql_GetData(SqlHandle, 14), 20);
+                memcpy(&PNpc->mainlook, &PNpc->look, 20);
 
                 GetZone(ZoneID)->InsertNPC(PNpc);
             }
