@@ -16,8 +16,6 @@ function onMobSkillCheck(target, mob, skill)
     -- if not in Paladin form, then ignore.
     if ((mob:getFamily() == 122 or mob:getFamily() == 123 or mob:getFamily() == 124) and mob:AnimationSub() ~= 1) then
         return 1
-    elseif (mob:getPool() ~= 4249) then
-        mob:messageBasic(tpz.msg.basic.READIES_WS, 0, 40)
     end
 
     return 0
@@ -31,11 +29,6 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 4
     local accmod = 1
     local dmgmod = 1.25
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_CRIT_VARIES, 1.1, 1.2, 1.3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 

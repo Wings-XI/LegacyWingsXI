@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Ordelle's Caves
 --  NPC: Rojaireaut
--- Type: Standard NPC
+-- Type: Quest NPC
 -- !pos -91.781 -0.545 587.944 193
 -----------------------------------
 require("scripts/globals/keyitems")
@@ -31,7 +31,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 51 and option == 1 then
-        player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 25, 0, 0)
+        player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 20, 0, 0)
     elseif csid == 54 then
         player:delStatusEffect(tpz.effect.LEVEL_RESTRICTION)
         player:setCharVar("EcoStatus", 3)

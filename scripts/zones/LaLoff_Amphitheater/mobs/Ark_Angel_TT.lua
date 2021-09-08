@@ -20,7 +20,6 @@ function onMobSpawn(mob)
                 id = tpz.jsa.MANAFONT,
                 endCode = function(mob) -- "Uses Manafont and ... Will cast Sleepga followed by Meteor."
                     mob:castSpell(273) -- sleepga
-                    mob:castSpell(218) -- meteor
                 end,
             },
         },

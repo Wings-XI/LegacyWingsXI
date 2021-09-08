@@ -186,7 +186,7 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_zoneType = ZONETYPE_NONE;
     m_regionID = RegionID;
     m_continentID = ContinentID;
-    m_TreasurePool = 0;
+    m_TreasurePool = nullptr;
     m_BattlefieldHandler = nullptr;
     m_Weather = WEATHER_NONE;
     m_WeatherChangeTime = 0;

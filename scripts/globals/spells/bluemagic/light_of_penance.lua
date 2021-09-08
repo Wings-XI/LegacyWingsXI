@@ -38,11 +38,11 @@ function onSpellCast(caster, target, spell)
     
     params.effect = tpz.effect.BLINDNESS
     local blindResist = applyResistanceEffect(caster, target, spell, params)
-    local blindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+    local blindDuration = math.ceil(30 * blindResist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
     
     params.effect = tpz.effect.BIND
     local bindResist = applyResistanceEffect(caster, target, spell, params)
-    local bindDuration = math.ceil(30 * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
+    local bindDuration = math.ceil(30 * bindResist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
     
     if blindResist >= 0.5 then
         target:delTP(100*blindResist)

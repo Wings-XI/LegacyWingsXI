@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/Bastok_Markets_[S]/IDs")
 require("scripts/globals/campaign")
 require("scripts/globals/status")
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -14,7 +15,7 @@ end
 function onTrigger(player, npc)
     local notes = player:getCurrency("allied_notes")
     local freelances = 99 -- Faking it for now
-    local unknown = 12 -- Faking it for now
+    local avilableCiphers = 0 -- 4 = Valaineral, 8 = Adelheid
     local medalRank = getMedalRank(player)
     local bonusEffects = 0 -- 1 = regen, 2 = refresh, 4 = meal duration, 8 = exp loss reduction, 15 = all
     local timeStamp = 0 -- getSigilTimeStamp(player)
@@ -28,7 +29,7 @@ function onTrigger(player, npc)
     if (medalRank == 0) then
         player:startEvent(14)
     else
-        player:startEvent(13, 0, notes, freelances, unknown, medalRank, bonusEffects, timeStamp, 0)
+        player:startEvent(13, 0, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)
     end
 
 end
@@ -37,7 +38,7 @@ function onEventUpdate(player, csid, option)
     local itemid = 0
     local canEquip = 2 -- Faking it for now.
     -- 0 = Wrong job, 1 = wrong level, 2 = Everything is in order, 3 or greater = menu exits...
-    if (csid == 13 and option >= 2 and option <= 2050) then
+    if (csid == 13 and option >= 2 and option <= 2562) then
         itemid = getBastokNotesItem(option)
         player:updateEvent(0, 0, 0, 0, 0, 0, 0, canEquip) -- canEquip(player, itemid));  <- works for sanction NPC, wtf?
     end
@@ -47,15 +48,11 @@ function onEventFinish(player, csid, option)
     local medalRank = getMedalRank(player)
     if (csid == 13) then
         -- Note: the event itself already verifies the player has enough AN, so no check needed here.
-        if (option >= 2 and option <= 2050) then -- player bought item
+        if (option >= 2 and option <= 2562) then -- player bought item
         -- currently only "ribbons" rank coded.
             item, price = getBastokNotesItem(option)
-            if (player:getFreeSlotsCount() >= 1) then
+            if (npcUtil.giveItem(player, item)) then
                 player:delCurrency("allied_notes", price)
-                player:addItem(item)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, item)
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
             end
 
         -- Please, don't change this elseif without knowing ALL the option results first.

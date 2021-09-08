@@ -24,7 +24,7 @@ function onPetAbility(target, automaton, skill, master, action)
         acc200 = 0.0,
         acc300 = 0.0,
         str_wsc = 0.0,
-        dex_wsc = 0.0,
+        dex_wsc = 1.0,
         vit_wsc = 0.0,
         agi_wsc = 0.0,
         int_wsc = 0.0,
@@ -33,7 +33,7 @@ function onPetAbility(target, automaton, skill, master, action)
     }
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.dex_wsc = 1.0
+        params.dex_wsc = 0.6
         params.ftp100 = 6.0
         params.ftp200 = 8.5
         params.ftp300 = 11.0

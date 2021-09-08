@@ -1,12 +1,22 @@
 -----------------------------------
 -- Area: Throne Room
 -- NPC:  Ore Door
+-- !pos -437 -167 -239 240
 -------------------------------------
 
 require("scripts/globals/bcnm")
+require("scripts/globals/missions")
 
 function onTrade(player, npc, trade)
     TradeBCNM(player, npc, trade)
+end
+
+function onTrigger(player, npc)
+
+    if (EventTriggerBCNM(player, npc)) then
+        return 1
+    end
+
 end
 
 function onEventUpdate(player, csid, option, extras)

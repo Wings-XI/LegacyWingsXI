@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 2
     local accmod = 1
     local dmgmod = 1
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, 0, 1, 2, 3)
+    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.NONE, info.hitslanded)
     local typeEffect = tpz.effect.SILENCE
 

@@ -12,16 +12,20 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-  if (mob:getFamily() == 316) then
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 1805) then
-        return 0
-    else
-        return 1
+    
+    if mob:getFamily() == 316 then
+        if mob:getModelId() == 1805 then
+            return 0
+        else
+            return 1
+        end
     end
-  end
-    return 0
+    
+    if target:isBehind(mob, 48) then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)

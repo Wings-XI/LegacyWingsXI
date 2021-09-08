@@ -6,7 +6,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 1500)
-    mob:setMod(tpz.mod.HTHRES, 0)
+    mob:setMod(tpz.mod.H2HRES, 0)
     mob:setMod(tpz.mod.IMPACTRES, 0)
 end
 
@@ -26,7 +26,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
             GetNPCByID(ID.npc.APOLLYON_SE_CRATE[1]+1):setStatus(tpz.status.NORMAL)
         elseif killCount == 8 then
             GetNPCByID(ID.npc.APOLLYON_SE_CRATE[1]+2):setPos(mobX, mobY, mobZ)
-            GetNPCByID(ID.npc.APOLLYON_SE_CRATE[1]+2):setStatus(tpz.status.NORMAL)        
+            GetNPCByID(ID.npc.APOLLYON_SE_CRATE[1]+2):setStatus(tpz.status.NORMAL)
         end
     end
 end

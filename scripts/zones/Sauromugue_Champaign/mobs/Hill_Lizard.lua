@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Sauromugue Champaign
 --  Mob: Hill Lizard
+-- Note: PH for Bashe
 -----------------------------------
 local ID = require("scripts/zones/Sauromugue_Champaign/IDs")
 require("scripts/globals/regimes")

@@ -71,3 +71,17 @@ function onEventFinish( player, csid, option)
         player:setPos(578, 25, -376, 126)
     end
 end
+
+function onZoneWeatherChange(weather)
+    local ToxicTamlyn = ID.mob.TOXIC_TAMLYN
+    local TamlynRe = GetServerVariable("TamlynRespawn")
+
+    if weather == tpz.weather.RAIN or weather == tpz.weather.SQUALL then
+        DisallowRespawn(ToxicTamlyn, false)
+        if os.time() > TamlynRe then
+            SpawnMob(ToxicTamlyn)
+        end
+    elseif weather ~= tpz.weather.RAIN or weather ~= tpz.weather.SQUALL then
+        DisallowRespawn(ToxicTamlyn, true)
+    end
+end

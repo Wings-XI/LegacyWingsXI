@@ -51,6 +51,7 @@ zones[tpz.zone.PASHHOW_MARSHLANDS] =
             [17224014] = 17224019, -- -351.884 24.014 513.531
         },
         BOWHO_WARMONGER       = 17224104,
+        TOXIC_TAMLYN          = 17223982,
     },
     npc =
     {

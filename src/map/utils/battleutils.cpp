@@ -64,6 +64,7 @@
 #include "../item_container.h"
 #include "../items/item_weapon.h"
 #include "../packets/pet_sync.h"
+#include "../packets/char_recast.h"
 #include "../packets/char_sync.h"
 #include "../packets/position.h"
 #include "../packets/lock_on.h"
@@ -2063,7 +2064,7 @@ namespace battleutils
                     case DAMAGE_PIERCING: resmult = (float)(PDefender->getMod(Mod::PIERCERES)) / 1000.0f; break;
                     case DAMAGE_SLASHING: resmult = (float)(PDefender->getMod(Mod::SLASHRES)) / 1000.0f; break;
                     case DAMAGE_IMPACT:   resmult = (float)(PDefender->getMod(Mod::IMPACTRES)) / 1000.0f; break;
-                    case DAMAGE_HTH:      resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f; break;
+                    case DAMAGE_H2H:      resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f; break;
                     default:
                     break;
                 }
@@ -2075,7 +2076,7 @@ namespace battleutils
             }
             else
             {
-                float resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f;
+                float resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f;
                 if (resmult < 1.0f)
                 {
                     resmult = 1.0f - ((1.0f - resmult) * (1.0f - (((float)(PDefender->getMod(Mod::SPDEF_DOWN))) / 100.0f)));
@@ -5434,12 +5435,14 @@ namespace battleutils
                     }
                 }
                 PTarget->health.tp = 1000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 4:
                 // Restores all Job Abilities (does not restore One Hour Abilities), 300% TP Restore
                 PTarget->PRecastContainer->ResetAbilities();
                 PTarget->health.tp = 3000;
+                PTarget->updatemask |= UPDATE_HP;
                 break;
 
             case 5:
@@ -5461,6 +5464,7 @@ namespace battleutils
                 if (PTarget->health.maxmp > 0 && (PTarget->health.mp < (PTarget->health.maxmp / 2)))
                 {
                     PTarget->health.mp = PTarget->health.maxmp / 2;
+                    PTarget->updatemask |= UPDATE_HP;
                 }
                 break;
 
@@ -5476,6 +5480,13 @@ namespace battleutils
                 }
                 PTarget->addMP(PTarget->health.maxmp);
                 break;
+        }
+
+        if (PCaster != PTarget)
+        {
+            // Update target's recast state; caster's will be handled
+            // back up in CCharEntity::OnAbility.
+            PTarget->pushPacket(new CCharRecastPacket(PTarget));
         }
     }
 

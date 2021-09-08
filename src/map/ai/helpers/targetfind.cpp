@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -73,6 +73,8 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
     m_findFlags = flags;
     m_radius = radius;
     m_zone = m_PBattleEntity->getZone();
+    CZone* PZone = m_zone ? zoneutils::GetZone(m_zone) : nullptr;
+    bool inDynamis = PZone && PZone->GetType() && PZone->GetType() == ZONETYPE_DYNAMIS;
 
     if (radiusType == AOERADIUS_ATTACKER){
         m_PRadiusAround = &m_PBattleEntity->loc.p;
@@ -146,7 +148,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
         }
 
         if (m_findFlags & FINDFLAGS_HIT_ALL ||
-            (m_findType == FIND_MONSTER_PLAYER && ((CMobEntity*)m_PBattleEntity)->CalledForHelp()))
+            (m_findType == FIND_MONSTER_PLAYER && (((CMobEntity*)m_PBattleEntity)->CalledForHelp() || inDynamis)))
         {
             addAllInZone(m_PMasterTarget, withPet);
         }
@@ -339,6 +341,7 @@ void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
     }
 }
 
+// Given a CBattleEntitiy - returns the master of the CBattleEntity.  If no master is found, returns the CBattleEntity passed as a param
 CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 {
     if (PTarget->PMaster != nullptr){
@@ -349,20 +352,20 @@ CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 
 bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 {
-    if (m_PBattleEntity->objtype != TYPE_PC || PTarget->objtype == TYPE_PC)
+    if (findMaster(m_PBattleEntity)->objtype != TYPE_PC || findMaster(PTarget)->objtype == TYPE_PC)
     {
-        // always true for mobs, npcs, pets
+        // always true for mobs, npcs - not true for PCs or PC's pets
         return true;
     }
 
-    if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == m_PBattleEntity->id)
+    if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == m_PBattleEntity->id || PTarget->m_OwnerID.id == findMaster(m_PBattleEntity)->id)
     {
         return true;
     }
 
     bool found = false;
 
-    m_PBattleEntity->ForAlliance([&found, &PTarget](CBattleEntity* PMember){
+    findMaster(m_PBattleEntity)->ForAlliance([&found, &PTarget](CBattleEntity* PMember) {
         if (PMember->id == PTarget->m_OwnerID.id)
         {
             found = true;

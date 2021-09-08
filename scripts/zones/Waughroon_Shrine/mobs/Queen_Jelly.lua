@@ -16,6 +16,8 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
 
     mob:setMod(tpz.mod.SPELLINTERRUPT, 25)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100) -- immune to sleep
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
 
 end
 

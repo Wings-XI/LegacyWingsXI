@@ -56,6 +56,16 @@ local items = {
         id = 153, -- Mastersmith Anvil
         rank = 9,
         cost = 150000
+    },
+    [4] = { 
+        id = 334, -- Smiths Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] = { -- Smithing ring
+        id = 15820,
+        rank = 6,
+        cost = 80000
     }
 }
 

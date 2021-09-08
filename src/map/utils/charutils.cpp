@@ -1376,7 +1376,7 @@ namespace charutils
     {
         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
         {
-            if (PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
+            if (PChar->getStorage(LocID) && PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
             {
                 return true;
             }
@@ -5940,7 +5940,7 @@ namespace charutils
 
             Sql_Query(SqlHandle, Query,
                 PChar->loc.destination,
-                (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->loc.prevzone : PChar->getZone(),
+                (PChar->m_moghouseID || PChar->loc.destination != PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone,
                 PChar->loc.p.rotation,
                 PChar->loc.p.x,
                 PChar->loc.p.y,
