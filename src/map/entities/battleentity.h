@@ -538,7 +538,7 @@ public:
     void            UpdateHealth();             // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
     float           GetStoreTPMultiplier();
-    int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons
+    int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons in milliseconds
     uint8           GetMeleeRange();                //returns the distance considered to be within melee range of the entity
     int16			GetRangedWeaponDelay(bool tp);	//returns delay of ranged weapon + ammo where applicable
     int16			GetAmmoDelay();			        //returns delay of ammo (for cooldown between shots)

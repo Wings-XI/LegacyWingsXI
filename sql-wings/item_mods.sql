@@ -23690,6 +23690,7 @@ INSERT INTO `item_mods` VALUES (19113,68,8);
 INSERT INTO `item_mods` VALUES (19113,227,2);
 INSERT INTO `item_mods` VALUES (19114,2,8);
 INSERT INTO `item_mods` VALUES (19114,10,2);
+INSERT INTO `item_mods` VALUES (19114,431,1);     -- Galkan Dagger additional effect
 INSERT INTO `item_mods` VALUES (19119,26,6);
 INSERT INTO `item_mods` VALUES (19120,14,2);
 INSERT INTO `item_mods` VALUES (19121,23,3);
@@ -52163,6 +52164,7 @@ INSERT INTO `item_mods` VALUES (17549,431,1);     -- wind staff additional effec
 INSERT INTO `item_mods` VALUES (16542,431,1);     -- wing sword additional effect
 INSERT INTO `item_mods` VALUES (17637,431,1);     -- wing sword +1 additional effect
 INSERT INTO `item_mods` VALUES (16556,431,1);     -- bloody blade additional effect
+
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;

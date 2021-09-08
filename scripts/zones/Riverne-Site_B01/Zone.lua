@@ -10,7 +10,6 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.BOROKA)
     local serre = GetServerVariable("BorokaRespawn")
 	if os.time() < serre then
 		GetMobByID(ID.mob.BOROKA):setRespawnTime(serre - os.time())
