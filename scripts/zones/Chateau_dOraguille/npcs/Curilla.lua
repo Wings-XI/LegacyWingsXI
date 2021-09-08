@@ -60,6 +60,13 @@ function onTrigger(player, npc)
     local envelopedInDarkness = player:getQuestStatus(SANDORIA, sandyQuests.ENVELOPED_IN_DARKNESS)
     local peaceForTheSpirit = player:getQuestStatus(SANDORIA, sandyQuests.PEACE_FOR_THE_SPIRIT)
     local Rank3 = player:getRank() >= 3 and 1 or 0
+    local randomizeTheGeneralsSecret = false
+
+    if (theGeneralSecret == QUEST_ACCEPTED and (not player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL))) then
+        -- we only want to randomize the default reminder text from The General's Secret
+        -- this could be made not-random and oscillate instead -but that would require a playerVar and trigger an additional r/w for each interaction
+        randomizeTheGeneralsSecret = true
+    end
 
     -- Trust: San d'Oria (Curilla)
     if
@@ -78,12 +85,14 @@ function onTrigger(player, npc)
         player:startEvent(562)
 
     -- "The General's Secret"
-    -- [Blocks everything further down]
-    elseif theGeneralSecret == QUEST_ACCEPTED then
-        if player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL) then
-            player:startEvent(54)
-        else
-            player:startEvent(53)
+    -- [Blocks everything further down] -- randomized to 50/50 block or pass through
+    elseif (randomizeTheGeneralsSecret and math.random(0, 1) == 1) then
+        if theGeneralSecret == QUEST_ACCEPTED then
+            if player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL) then
+                player:startEvent(54)
+            else
+                player:startEvent(53)
+            end
         end
     elseif theGeneralSecret == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) > 1 then
         player:startEvent(55) -- Start

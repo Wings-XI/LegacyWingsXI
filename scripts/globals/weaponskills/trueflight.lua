@@ -30,6 +30,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.chr_wsc = 0.0
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.MARKSMANSHIP
+    params.canCrit = false
     params.includemab = true
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
@@ -40,7 +41,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     -- Apply aftermath
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.RANGED, tpz.aftermath.type.MYTHIC)
 
-    local damage, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
 	if damage > 0 then player:trySkillUp(target, tpz.skill.MARKSMANSHIP, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage

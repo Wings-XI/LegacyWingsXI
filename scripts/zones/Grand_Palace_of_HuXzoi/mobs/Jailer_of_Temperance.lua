@@ -26,7 +26,7 @@ function onMobSpawn(mob)
     mob:SetMobAbilityEnabled(true)
     mob:AnimationSub(0) -- Change animation to pot
     -- Set the damage resists
-    mob:setMod(tpz.mod.HTHRES, 1000)
+    mob:setMod(tpz.mod.H2HRES, 1000)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 0)
     mob:setMod(tpz.mod.IMPACTRES, 1000)
@@ -61,13 +61,13 @@ function onMobFight(mob)
 
         -- We changed to Poles. Make it only take piercing.
         if (aniChange == 2) then
-            mob:setMod(tpz.mod.HTHRES, 0)
+            mob:setMod(tpz.mod.H2HRES, 0)
             mob:setMod(tpz.mod.SLASHRES, 0)
             mob:setMod(tpz.mod.PIERCERES, 1000)
             mob:setMod(tpz.mod.IMPACTRES, 0)
             mob:setLocalVar("changeTime", mob:getBattleTime())
         else -- We changed to Rings. Make it only take slashing.
-            mob:setMod(tpz.mod.HTHRES, 0)
+            mob:setMod(tpz.mod.H2HRES, 0)
             mob:setMod(tpz.mod.SLASHRES, 1000)
             mob:setMod(tpz.mod.PIERCERES, 0)
             mob:setMod(tpz.mod.IMPACTRES, 0)
@@ -80,14 +80,14 @@ function onMobFight(mob)
         -- Changing to Pot, only take Blunt damage
         if (aniChange == 0) then
             mob:AnimationSub(0)
-            mob:setMod(tpz.mod.HTHRES, 1000)
+            mob:setMod(tpz.mod.H2HRES, 1000)
             mob:setMod(tpz.mod.SLASHRES, 0)
             mob:setMod(tpz.mod.PIERCERES, 0)
             mob:setMod(tpz.mod.IMPACTRES, 1000)
             mob:setLocalVar("changeTime", mob:getBattleTime())
         else -- Going to Rings, only take slashing
             mob:AnimationSub(3)
-            mob:setMod(tpz.mod.HTHRES, 0)
+            mob:setMod(tpz.mod.H2HRES, 0)
             mob:setMod(tpz.mod.SLASHRES, 1000)
             mob:setMod(tpz.mod.PIERCERES, 0)
             mob:setMod(tpz.mod.IMPACTRES, 0)
@@ -100,13 +100,13 @@ function onMobFight(mob)
 
         -- We're changing to pot form, only take blunt damage.
         if (aniChange == 0 or aniChange == 1) then
-            mob:setMod(tpz.mod.HTHRES, 1000)
+            mob:setMod(tpz.mod.H2HRES, 1000)
             mob:setMod(tpz.mod.SLASHRES, 0)
             mob:setMod(tpz.mod.PIERCERES, 0)
             mob:setMod(tpz.mod.IMPACTRES, 1000)
             mob:setLocalVar("changeTime", mob:getBattleTime())
         else -- Changing to poles, only take piercing
-            mob:setMod(tpz.mod.HTHRES, 0)
+            mob:setMod(tpz.mod.H2HRES, 0)
             mob:setMod(tpz.mod.SLASHRES, 0)
             mob:setMod(tpz.mod.PIERCERES, 1000)
             mob:setMod(tpz.mod.IMPACTRES, 0)
