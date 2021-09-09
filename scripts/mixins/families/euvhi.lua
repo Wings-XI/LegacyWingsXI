@@ -55,6 +55,8 @@ g_mixins.families.euvhi = function(mob)
         mob:setLocalVar("MagicalDamage", 0)
         mob:setLocalVar("RangedDamage", 0)
         mob:setLocalVar("BreathDamage", 0)
+        -- make sure flowers aren't opening and closing at the same time while roaming
+        mob:setLocalVar("roamTime", os.time() + math.random(1, 10))
         mob:AnimationSub(math.random(0, 2))
     end)
 
@@ -70,8 +72,15 @@ g_mixins.families.euvhi = function(mob)
     end)
 
     mob:addListener("ROAM_TICK", "EUVHI_RTICK", function(mob)
-        if mob:AnimationSub() == 1 then
-            mob:AnimationSub(0) -- no stem while roaming and closed
+        local roamTime = mob:getLocalVar("roamTime")
+        if mob:AnimationSub() == 0 and os.time() - roamTime > 60 then
+            mob:AnimationSub(2)
+            mob:setLocalVar("roamTime", os.time())
+            mob:setAggressive(1)
+        elseif mob:AnimationSub() == 2 and os.time() - roamTime > 60 then
+            mob:AnimationSub(0)
+            mob:setAggressive(0)
+            mob:setLocalVar("roamTime", os.time())
         end
         if mob:getHPP() == 100 then
             mob:setLocalVar("PhysicalDamage", 0)
