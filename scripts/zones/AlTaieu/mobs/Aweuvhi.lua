@@ -1,9 +1,9 @@
 -----------------------------------
 -- Area: AlTaieu
 --  Mob: Aw'euvhi
+-- Euvhi's in Al'Taieu do not open/close like those inside Ru'Hmet or Hu'Xzoi.
 -----------------------------------
 local ID = require("scripts/zones/AlTaieu/IDs")
-mixins = {require("scripts/mixins/families/euvhi")}
 require("scripts/globals/keyitems")
 -----------------------------------
 

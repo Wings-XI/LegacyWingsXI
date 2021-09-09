@@ -1,4 +1,4 @@
-    -- Forms: 0 = Closed  1 = Closed  2 = Open 3 = Closed
+    -- Forms: 0 = Closed (no stem)  1 = Closed (stem)  2 = Open 3 = Open (closes while melee)
     -- According to http://wiki.ffxiclopedia.org/wiki/Category:Euvhi
     -- When in an open state, damage taken by the Euvhi is doubled. Inflicting a large amount of damage to an Euvhi in an open state will cause it to close.
     -- TODO: Initial DOT Damage will count as "Magical Damage", need to track dot ticks.
@@ -55,18 +55,24 @@ g_mixins.families.euvhi = function(mob)
         mob:setLocalVar("MagicalDamage", 0)
         mob:setLocalVar("RangedDamage", 0)
         mob:setLocalVar("BreathDamage", 0)
-        mob:AnimationSub(math.random(1, 2))
+        mob:AnimationSub(math.random(0, 2))
     end)
 
     mob:addListener("ENGAGE", "EUVHI_ENGAGE", function(mob)
+        if mob:AnimationSub() == 0 then
+            mob:AnimationSub(1) -- stem will appear after engaging target
+        end
         mob:setLocalVar("PhysicalDamage", 0)
         mob:setLocalVar("MagicalDamage", 0)
         mob:setLocalVar("RangedDamage", 0)
         mob:setLocalVar("BreathDamage", 0)
-        mob:setLocalVar("[euvhi]changeTime", 0)
+        mob:setLocalVar("[euvhi]changeTime", math.random(15, 30)) -- wait 15-30 seconds to open flower after engaging
     end)
 
     mob:addListener("ROAM_TICK", "EUVHI_RTICK", function(mob)
+        if mob:AnimationSub() == 1 then
+            mob:AnimationSub(0) -- no stem while roaming and closed
+        end
         if mob:getHPP() == 100 then
             mob:setLocalVar("PhysicalDamage", 0)
             mob:setLocalVar("MagicalDamage", 0)
@@ -87,7 +93,7 @@ g_mixins.families.euvhi = function(mob)
         else
             -- TODO: Initial DOT Damage will count as "Magical Damage", need to track dot ticks.
         end
-        
+
         -- local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
         -- local physicalPercent =  mob:getLocalVar("PhysicalDamage") / sum * 100
         -- local magicalPercent =  mob:getLocalVar("MagicalDamage") / sum * 100
@@ -103,7 +109,7 @@ g_mixins.families.euvhi = function(mob)
         local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
         if mob:AnimationSub() == 2 and sum > 500 then
             closeFlower(mob)
-        elseif mob:AnimationSub() <= 1 and mob:getBattleTime() > mob:getLocalVar("[euvhi]changeTime") then
+        elseif mob:AnimationSub() == 1 and mob:getBattleTime() > mob:getLocalVar("[euvhi]changeTime") then
             openFlower(mob)
         else
             -- if no dmg taken - dont trigger a change
