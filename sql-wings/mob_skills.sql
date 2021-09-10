@@ -945,8 +945,8 @@ INSERT INTO `mob_skills` VALUES(1463, 1074, 'reactor_cool', 0, 7.0, 2000, 1500, 
 INSERT INTO `mob_skills` VALUES(1464, 1075, 'zdei_charge', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1465, 1076, 'optic_induration', 4, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1466, 1077, 'static_filament', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1467, 1078, 'decayed_filament', 4, 8.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1468, 1079, 'reactor_overheat', 4, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1467, 1078, 'decayed_filament', 1, 8.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1468, 1079, 'reactor_overheat', 4, 8.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1469, 1080, 'reactor_overload', 1, 8.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1485, 1091, 'hundred_fists', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1486, 1092, 'benediction', 1, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
