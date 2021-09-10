@@ -6,10 +6,10 @@
 require("scripts/globals/dynamis")
 -----------------------------------
 
-function onTrade(player, npc, trade)
-    dynamis.qmOnTrade(player, npc, trade)
-end
-
 function onTrigger(player, npc)
-    dynamis.qmOnTrigger(player, npc)
+    if player:hasKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA) == false then
+        player:addKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA)
+        local ID = require("scripts/zones/Dynamis-Beaucedine/IDs")
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.HYDRA_CORPS_INSIGNIA)
+    end
 end
