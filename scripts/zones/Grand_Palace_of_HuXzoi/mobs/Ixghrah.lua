@@ -10,7 +10,7 @@ function onMobSpawn(mob)
     if (mob:getMod(tpz.mod.SLASHRES)) then mob:setMod(tpz.mod.SLASHRES, 1000); end
     if (mob:getMod(tpz.mod.PIERCERES)) then mob:setMod(tpz.mod.PIERCERES, 1000); end
     if (mob:getMod(tpz.mod.IMPACTRES)) then mob:setMod(tpz.mod.IMPACTRES, 1000); end
-    if (mob:getMod(tpz.mod.HTHRES)) then mob:setMod(tpz.mod.HTHRES, 1000); end
+    if (mob:getMod(tpz.mod.H2HRES)) then mob:setMod(tpz.mod.H2HRES, 1000); end
 
     mob:setLocalVar("twoHourPer", 50)
     mob:setLocalVar("canTwoHour", 0)
