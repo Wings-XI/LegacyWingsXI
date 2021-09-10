@@ -31,7 +31,7 @@ local battlefields = {
         { 0,  672,    0},   -- Head Wind (PM5-3 U2)
      -- { 1,  673,    0},   -- Like the Wind (ENM) -- TODO: mob constantly runs during battle
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
-     -- { 3,  675,    0},   -- Shell We Dance? (ENM)
+        { 3,  675,    0},   -- Shell We Dance? (ENM)
      -- { 4,  676,    0},   -- Totentanz (ENM)
      -- { 5,  677,    0},   -- Tango with a Tracker (Quest)
      -- { 6,  678,    0},   -- Requiem of Sin (Quest)
@@ -273,7 +273,7 @@ local battlefields = {
     [tpz.zone.WAUGHROON_SHRINE] =
     {
         { 0,   64,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,   65, 1131},   -- The Worm's Turn (BS40)
+        { 1,   65, 1131},   -- The Worm's Turn (BS40)
      -- { 2,   66, 1130},   -- Grimshell Shocktroopers (BS60)
         { 3,   67,    0},   -- On My Way (Basty 7-2)
         { 4,   68, 1166},   -- A Thief in Norg!? (Quest)
@@ -375,7 +375,7 @@ local battlefields = {
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
      -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
-     -- { 6,  198, 1178},   -- Eye of the Storm (KS30)
+        { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
@@ -413,7 +413,7 @@ local battlefields = {
         { 2,  290,    0},   -- Ark Angels 3 (ZM14)
         { 3,  291,    0},   -- Ark Angels 4 (ZM14)
         { 4,  292,    0},   -- Ark Angels 5 (ZM14)
-        { 5,  293, 1550},   -- Divine Might (ZM14)
+     -- { 5,  293, 1550},   -- Divine Might (ZM14)
      -- { 6,    ?,    0},   -- *Ark Angels 1 (HTMBF)
      -- { 7,    ?,    0},   -- *Ark Angels 2 (HTMBF)
      -- { 8,    ?,    0},   -- *Ark Angels 3 (HTMBF)

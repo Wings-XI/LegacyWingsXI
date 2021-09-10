@@ -1151,7 +1151,7 @@ INSERT INTO `mob_skills` VALUES(1933, 432, 'azure_lore', 0, 7.0, 2000, 1500, 1, 
 INSERT INTO `mob_skills` VALUES(1936, 1299, 'shibaraku', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1940, 1304, 'chimera_ripper', 0, 7.0, 2000, 1, 4, 0, 0, 0, 6, 7, 0);
 INSERT INTO `mob_skills` VALUES(1941, 1305, 'string_clipper', 0, 7.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
-INSERT INTO `mob_skills` VALUES(1942, 1303, 'arcuballista', 0, 15.0, 2000, 1, 4, 0, 0, 0, 3, 1, 0);
+INSERT INTO `mob_skills` VALUES(1942, 1303, 'arcuballista', 0, 21.0, 2000, 1, 4, 0, 0, 0, 3, 1, 0);
 INSERT INTO `mob_skills` VALUES(1943, 1306, 'slapstick', 0, 7.0, 2000, 1, 4, 0, 0, 0, 5, 8, 0);
 INSERT INTO `mob_skills` VALUES(1944, 1307, 'shield_bash', 0, 7.0, 2000, 0, 4, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1945, 1219, 'provoke', 0, 7.0, 2000, 0, 4, 4, 0, 0, 0, 0, 0);
@@ -1215,7 +1215,7 @@ INSERT INTO `mob_skills` VALUES(2060, 1403, 'brainjack', 0, 10.0, 2000, 1000, 4,
 INSERT INTO `mob_skills` VALUES(2061, 1378, 'restoral', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2062, 1376, 'restoral', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2065, 1404, 'cannibal_blade', 0, 15.0, 2000, 1, 4, 0, 150, 0, 2, 5, 0);
-INSERT INTO `mob_skills` VALUES(2066, 1405, 'daze', 0, 15.0, 2000, 1, 4, 0, 150, 0, 8, 1, 0);
+INSERT INTO `mob_skills` VALUES(2066, 1405, 'daze', 0, 21.0, 2000, 1, 4, 0, 150, 0, 8, 1, 0);
 INSERT INTO `mob_skills` VALUES(2067, 1406, 'knockout', 0, 7.0, 2000, 1, 4, 0, 145, 0, 6, 4, 0);
 INSERT INTO `mob_skills` VALUES(2068, 439, 'economizer', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2070, 1411, 'dismemberment', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
@@ -1312,7 +1312,7 @@ INSERT INTO `mob_skills` VALUES(2257, 432, 'azure_lore', 0, 18.0, 2000, 0, 1, 0,
 INSERT INTO `mob_skills` VALUES(2261, 187, 'tabula_rasa', 0, 7.0, 2000, 1, 1, 3, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2269, 1300, 'kamaitachi', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2299, 1486, 'bone_crusher', 0, 7.0, 2000, 1, 4, 0, 245, 0, 12, 0, 0);
-INSERT INTO `mob_skills` VALUES(2300, 1487, 'armor_piercer', 0, 15.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0);
+INSERT INTO `mob_skills` VALUES(2300, 1487, 'armor_piercer', 0, 21.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0);
 INSERT INTO `mob_skills` VALUES(2301, 1488, 'magic_mortar', 0, 10.0, 2000, 1, 4, 0, 225, 0, 11, 3, 0);
 INSERT INTO `mob_skills` VALUES(2303, 176, 'dark_arts', 0, 7.0, 2000, 1, 1, 1, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2314, 177, 'parsimony', 0, 7.0, 2000, 1, 1, 1, 0, 0, 0, 0, 0);
