@@ -34,7 +34,6 @@ function onInstanceZoneIn(player, instance)
 end
 
 function onInstanceCreated(instance)
-    printf("onInstanceCreated\n")
     for i = 0, 9 do
         SpawnMob(ID.mob.SAPPHIRINE_QUADAV_OFFSET + i, instance)
     end
@@ -44,8 +43,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    printf("litd onfinish CSID: %u", csid)
-    printf("litd onFinish RESULT: %u", option)
     if csid == 10001 or csid == 10000 then 
         player:setPos(-385.705, 23.938, 460.703, 192, 90)
     end
@@ -97,7 +94,6 @@ function onInstanceComplete(instance)
     for i, v in pairs(chars) do
         -- 5 is the first attempt, 8 is retry attempts
         if (v:getCharVar("LightInTheDarkness") == 5 or v:getCharVar("LightInTheDarkness") == 8) then
-            printf("moving to 9\n")
             v:setCharVar("LightInTheDarkness", 9)
             v:startEvent(10000, 300, 500, 41555, 1299) -- can't seem to get this to work manually with GM commands?
         else
