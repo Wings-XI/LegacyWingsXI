@@ -18,13 +18,13 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.BUFF_CHANCE, 30)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 
+    mob:setMod(tpz.mod.MDEF, 100) -- 385 * 1.32/2 = 254 nether blast
     mob:setMod(tpz.mod.DEF, 500)
     mob:setMod(tpz.mod.MATT, 75)
     mob:setMod(tpz.mod.INT, 4)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
-
-    mob:setMod(tpz.mod.DMGMAGIC,-50)
 end
 
 function onMobFight(mob, target)
@@ -34,7 +34,7 @@ function onMobFight(mob, target)
             mob:addStatusEffect(tpz.effect.ATTACK_BOOST, 75, 0, 0)
             mob:getStatusEffect(tpz.effect.ATTACK_BOOST):setFlag(tpz.effectFlag.DEATH)
         end
-    -- Deletes Effect if regens back up due to a wipe  
+    -- Deletes Effect if regens back up due to a wipe
     else
         if mob:hasStatusEffect(tpz.effect.ATTACK_BOOST) == true then
             mob:delStatusEffect(tpz.effect.ATTACK_BOOST)
@@ -80,13 +80,17 @@ end
 function onMobDisengage(mob)
     mob:setLocalVar("changeTime", 0)
     mob:setLocalVar("twohourTime", 0)
-    mob:setLocalVar("changeHP", 0)   
+    mob:setLocalVar("changeHP", 0)
 end
 
 function onCastStarting(mob, spell)
     if spell:getID() == 176 then -- firaga iii
         spell:castTime(spell:castTime()/2) -- really fast cast (2x)
     end
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, {power = math.random(45, 90), chance = 10})
 end
 
 function onMobDeath(mob, player, isKiller)
