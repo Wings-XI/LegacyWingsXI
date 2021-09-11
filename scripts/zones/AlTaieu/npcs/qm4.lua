@@ -3,7 +3,7 @@
 --  NPC: ??? (Jailer of Love and Absolute Virtue Spawn)
 -- Allows players to spawn the Jailer of Love by trading the Fourth Virtue, Fifth Virtue and Sixth Virtue to a ???.
 -- Allows players to spawn Absolute Virtue by killing Jailer of Love.
--- !pos , 431 -0 -603
+-- !pos 431 -0 -603
 -----------------------------------
 local ID = require("scripts/zones/AlTaieu/IDs")
 -----------------------------------
@@ -26,6 +26,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    player:startEvent(203)
 end
 
 function onEventUpdate(player, csid, option)
