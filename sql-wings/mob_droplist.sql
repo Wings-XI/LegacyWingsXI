@@ -1550,9 +1550,9 @@ INSERT INTO `mob_droplist` VALUES(250, 0, 0, 1000, 894, 100);
 INSERT INTO `mob_droplist` VALUES(250, 0, 0, 1000, 1029, 60);
 INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 860, 960);
 INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 860, 480);
-INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 3342, 100);
-INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 16869, 220);
-INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 17294, 140);
+INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 3342, 128);
+INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 16869, 282);
+INSERT INTO `mob_droplist` VALUES(251, 0, 0, 1000, 17294, 131);
 INSERT INTO `mob_droplist` VALUES(252, 0, 0, 1000, 914, 20);
 INSERT INTO `mob_droplist` VALUES(252, 0, 0, 1000, 2917, 100);
 INSERT INTO `mob_droplist` VALUES(253, 0, 0, 1000, 18246, 1000);
@@ -13432,14 +13432,14 @@ INSERT INTO `mob_droplist` VALUES(2558, 0, 0, 1000, 15133, 10);
 INSERT INTO `mob_droplist` VALUES(2558, 0, 0, 1000, 15139, 10);
 INSERT INTO `mob_droplist` VALUES(2558, 0, 0, 1000, 16346, 10);
 INSERT INTO `mob_droplist` VALUES(2558, 0, 0, 1000, 16362, 10);
-INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1449, 150);
+INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1449, 70);
 INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1450, 10);
-INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1452, 150);
+INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1452, 140);
 INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1453, 10);
-INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1455, 150);
+INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1455, 70);
 INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1456, 10);
 INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 4249, 1000);
-INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1589, 350);
+INSERT INTO `mob_droplist` VALUES(2559, 0, 0, 1000, 1589, 350); -- necropsyche
 INSERT INTO `mob_droplist` VALUES(2560, 2, 0, 1000, 1449, 0);
 INSERT INTO `mob_droplist` VALUES(2560, 2, 0, 1000, 1452, 0);
 INSERT INTO `mob_droplist` VALUES(2560, 2, 0, 1000, 1455, 0);
@@ -16442,8 +16442,8 @@ INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18338, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 1, 1, 15, 18344, 52);
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3207, 0, 0, 1000, 1520, 4);
----- Dynamis Beauc
-INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1450, 3); -- goblin stat drops
+
+INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1450, 3); -- dyna beaucedine goblin stat drops
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1453, 3);
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1456, 3);
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 748, 10);
@@ -16451,29 +16451,29 @@ INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 749, 25);
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1470, 20);
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 1474, 40);
 INSERT INTO `mob_droplist` VALUES(3208, 0, 0, 1000, 4248, 50);
-INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 1450, 10); -- yag stat drops
+INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 1450, 10); -- dyna beaucedine yag stat drops
 INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 748, 10);
 INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 749, 25);
 INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 1470, 20);
 INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 1474, 40);
 INSERT INTO `mob_droplist` VALUES(3209, 0, 0, 1000, 4248, 50);
-INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 1453, 10); -- orc stat drops
+INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 1453, 10); -- dyna beaucedine orc stat drops
 INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 748, 10);
 INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 749, 25);
 INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 1470, 20);
 INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 1474, 40);
 INSERT INTO `mob_droplist` VALUES(3210, 0, 0, 1000, 4248, 50);
-INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 1456, 10); -- quad stat drops
+INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 1456, 10); -- dyna beaucedine quad stat drops
 INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 748, 10);
 INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 749, 25);
 INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 1470, 20);
 INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 1474, 40);
 INSERT INTO `mob_droplist` VALUES(3211, 0, 0, 1000, 4248, 50);
-INSERT INTO `mob_droplist` VALUES(3212, 0, 0, 1000, 1450, 3); -- eye drops
+INSERT INTO `mob_droplist` VALUES(3212, 0, 0, 1000, 1450, 3); -- dyna beaucedine eye drops
 INSERT INTO `mob_droplist` VALUES(3212, 0, 0, 1000, 1453, 3);
 INSERT INTO `mob_droplist` VALUES(3212, 0, 0, 1000, 1456, 3);
 INSERT INTO `mob_droplist` VALUES(3212, 0, 0, 1000, 4248, 50);
-INSERT INTO `mob_droplist` VALUES(3213, 1, 1, 15, 11292, 53); --goblin drops
+INSERT INTO `mob_droplist` VALUES(3213, 1, 1, 15, 11292, 53); -- dyna beaucedine goblin drops
 INSERT INTO `mob_droplist` VALUES(3213, 1, 1, 15, 11295, 53);
 INSERT INTO `mob_droplist` VALUES(3213, 1, 1, 15, 11298, 53);
 INSERT INTO `mob_droplist` VALUES(3213, 1, 1, 15, 11307, 53);
@@ -16507,7 +16507,7 @@ INSERT INTO `mob_droplist` VALUES(3213, 0, 0, 1000, 1455, 55);
 INSERT INTO `mob_droplist` VALUES(3213, 2, 0, 1000, 1455, 0);
 INSERT INTO `mob_droplist` VALUES(3213, 2, 0, 1000, 1449, 0);
 INSERT INTO `mob_droplist` VALUES(3213, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(3214, 1, 1, 15, 11292, 53); --yag
+INSERT INTO `mob_droplist` VALUES(3214, 1, 1, 15, 11292, 53); -- dyna beaucedine yagudo mobs
 INSERT INTO `mob_droplist` VALUES(3214, 1, 1, 15, 11295, 53);
 INSERT INTO `mob_droplist` VALUES(3214, 1, 1, 15, 11298, 53);
 INSERT INTO `mob_droplist` VALUES(3214, 1, 1, 15, 11307, 53);
@@ -16535,7 +16535,7 @@ INSERT INTO `mob_droplist` VALUES(3214, 0, 0, 1000, 1449, 150);
 INSERT INTO `mob_droplist` VALUES(3214, 0, 0, 1000, 1449, 150);
 INSERT INTO `mob_droplist` VALUES(3214, 0, 0, 1000, 1449, 150);
 INSERT INTO `mob_droplist` VALUES(3214, 2, 0, 1000, 1449, 0);
-INSERT INTO `mob_droplist` VALUES(3215, 1, 1, 15, 11292, 53); --orc
+INSERT INTO `mob_droplist` VALUES(3215, 1, 1, 15, 11292, 53); -- dyna beaucedine orc mobs
 INSERT INTO `mob_droplist` VALUES(3215, 1, 1, 15, 11295, 53);
 INSERT INTO `mob_droplist` VALUES(3215, 1, 1, 15, 11298, 53);
 INSERT INTO `mob_droplist` VALUES(3215, 1, 1, 15, 11307, 53);
@@ -16563,7 +16563,7 @@ INSERT INTO `mob_droplist` VALUES(3215, 0, 0, 1000, 1516, 4);
 INSERT INTO `mob_droplist` VALUES(3215, 0, 0, 1000, 1517, 4);
 INSERT INTO `mob_droplist` VALUES(3215, 0, 0, 1000, 1519, 4);
 INSERT INTO `mob_droplist` VALUES(3215, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(3216, 1, 1, 15, 11292, 53); --quad
+INSERT INTO `mob_droplist` VALUES(3216, 1, 1, 15, 11292, 53); -- dyna beaucedine quadav mobs
 INSERT INTO `mob_droplist` VALUES(3216, 1, 1, 15, 11295, 53);
 INSERT INTO `mob_droplist` VALUES(3216, 1, 1, 15, 11298, 53);
 INSERT INTO `mob_droplist` VALUES(3216, 1, 1, 15, 11307, 53);
@@ -16590,7 +16590,7 @@ INSERT INTO `mob_droplist` VALUES(3216, 0, 0, 1000, 1470, 5);
 INSERT INTO `mob_droplist` VALUES(3216, 0, 0, 1000, 1469, 4);
 INSERT INTO `mob_droplist` VALUES(3216, 0, 0, 1000, 1521, 4);
 INSERT INTO `mob_droplist` VALUES(3216, 2, 0, 1000, 1455, 0);
-INSERT INTO `mob_droplist` VALUES(3217, 1, 1, 15, 11292, 53); --hydra
+INSERT INTO `mob_droplist` VALUES(3217, 1, 1, 15, 11292, 53); -- dyna beaucedine hydra mobs
 INSERT INTO `mob_droplist` VALUES(3217, 1, 1, 15, 11295, 53);
 INSERT INTO `mob_droplist` VALUES(3217, 1, 1, 15, 11298, 53);
 INSERT INTO `mob_droplist` VALUES(3217, 1, 1, 15, 11307, 53);
@@ -16622,10 +16622,51 @@ INSERT INTO `mob_droplist` VALUES(3217, 0, 0, 1000, 1455, 55);
 INSERT INTO `mob_droplist` VALUES(3217, 2, 0, 1000, 1455, 0);
 INSERT INTO `mob_droplist` VALUES(3217, 2, 0, 1000, 1449, 0);
 INSERT INTO `mob_droplist` VALUES(3217, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(3218, 0, 0, 1000, 1450, 3); -- eye
+INSERT INTO `mob_droplist` VALUES(3218, 0, 0, 1000, 1450, 3); -- dyna beaucedine eye mobs
 INSERT INTO `mob_droplist` VALUES(3218, 0, 0, 1000, 1453, 3);
 INSERT INTO `mob_droplist` VALUES(3218, 0, 0, 1000, 1456, 3);
 INSERT INTO `mob_droplist` VALUES(3218, 0, 0, 1000, 4248, 50);
+
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 748, 20); -- dyna xarc eye drops
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 749, 40);
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 1450, 3);
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 1453, 3);
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 1456, 3);
+INSERT INTO `mob_droplist` VALUES(3219, 0, 0, 1000, 4248, 100);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1449, 55); -- dyna xarc mob drops
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1449, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1449, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 2, 0, 1000, 1449, 0);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1452, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1452, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1452, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 2, 0, 1000, 1452, 0);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1455, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1455, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1455, 55);
+INSERT INTO `mob_droplist` VALUES(3220, 2, 0, 1000, 1455, 0);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 11305, 53); -- AF
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 11465, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 11468, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 11471, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 11480, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15073, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15075, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15076, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15079, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15083, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15085, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15086, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15087, 53);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15093, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15097, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15104, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15107, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15110, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15114, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 15, 15126, 52);
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1470, 5); -- mats
+INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1474, 4);
 INSERT INTO `mob_droplist` VALUES(3221, 0, 0, 1000, 16031, 200);
 
 
