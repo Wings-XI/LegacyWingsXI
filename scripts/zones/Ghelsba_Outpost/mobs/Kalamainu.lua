@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Ghelsba Outpost
---  Mob: Kalamainu 
+--  Mob: Kalamainu
 -- BCNM: Petrifying Pair
 -----------------------------------
 
