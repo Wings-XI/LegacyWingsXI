@@ -1036,7 +1036,7 @@ INSERT INTO `mob_groups` VALUES(18, 5358, 34, 'Eo_aern_sam', 960, 0, 775, 0, 0, 
 INSERT INTO `mob_groups` VALUES(19, 55, 34, 'Aerns_Euvhi', 0, 128, 0, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(20, 5365, 34, 'Eo_aern_drk', 960, 0, 775, 0, 9999, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(21, 5363, 34, 'Eo_aern_rdm', 960, 0, 775, 0, 9999, 79, 82, 0);
-INSERT INTO `mob_groups` VALUES(22, 2113, 34, 'Ix_ghrah', 0, 128, 0, 9000, 0, 76, 76, 0);
+INSERT INTO `mob_groups` VALUES(22, 2113, 34, 'Ix_ghrah', 0, 128, 0, 9000, 15000, 76, 76, 0);
 INSERT INTO `mob_groups` VALUES(23, 2136, 34, 'Jailer_of_Temperance', 0, 32, 1402, 25000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(24, 4661, 34, 'Ix_aern_mnk', 0, 128, 2845, 11000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(25, 3269, 34, 'Qn_aern_rdm', 0, 128, 0, 0, 0, 77, 77, 0);

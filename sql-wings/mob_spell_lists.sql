@@ -4074,6 +4074,15 @@ INSERT INTO `mob_spell_lists` VALUES('Ixzdei_BLM', 474, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 260, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ixzdei_RDM', 475, 254, 1, 255);
+-- IxGragh Spell sets for element + manafont
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 476, 274, 1, 255); -- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 477, 40, 1, 255); -- banishga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah2', 478, 181, 1, 255); -- blizzaga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah3', 479, 186, 1, 255); -- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah4', 480, 191 , 1, 255); -- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah5', 481, 196, 1, 255); -- thundaga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah6', 482, 201, 1, 255); -- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES ('ixghrah1', 483, 176, 1, 255); -- firaga_iii
 --
 -- Indexes for dumped tables
 --

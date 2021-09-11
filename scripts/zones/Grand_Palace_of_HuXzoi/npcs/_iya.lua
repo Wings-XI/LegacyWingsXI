@@ -18,8 +18,10 @@ function onTrigger(player, npc)
     elseif player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
         player:getCharVar('ApocalypseNigh') == 2 then
         player:startEvent(4)
-    else
+    elseif player:getCurrentMission(COP) >= tpz.mission.id.cop.WHEN_ANGELS_FALL then
         player:startEvent(52)
+    else
+        player:messageSpecial(7230)
     end
     return 1
 end
