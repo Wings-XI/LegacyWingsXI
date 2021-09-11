@@ -66,7 +66,7 @@ function onMobWeaponSkill(target, mob, skill)
         mob:setSpellList(140)
         mob:setLocalVar("spellTime", os.time() + 60)
     end
-    
+
     local aerialCollisionCounter = mob:getLocalVar("aerialCollisionCounter")
     local aerialCollisionMax = mob:getLocalVar("aerialCollisionMax")
     if skill:getID() == 1353 then
