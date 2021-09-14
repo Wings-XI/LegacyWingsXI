@@ -669,7 +669,7 @@ inline bool resistanceComparator(const std::pair<SpellID, int16>& firstElem, con
 bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 {
     float spellRange = spell::GetSpell(SpellID::Stone)->getRange(); // Using Stone as reference
-    if (distanceSquared(PAutomaton->loc.p, PTarget->loc.p) < spellRange*spellRange && !PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
+    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)) || distanceSquared(PAutomaton->loc.p, PTarget->loc.p) >= spellRange*spellRange)
         return false;
 
     std::vector<SpellID> castPriority;
@@ -757,7 +757,7 @@ bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
 {
     float spellRange = spell::GetSpell(SpellID::Dia)->getRange(); // Using Dia as reference
-    if (distanceSquared(PAutomaton->loc.p, PTarget->loc.p) < spellRange*spellRange && !PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
+    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)) || distanceSquared(PAutomaton->loc.p, PTarget->loc.p) >= spellRange*spellRange)
         return false;
 
     std::vector<SpellID> castPriority;
