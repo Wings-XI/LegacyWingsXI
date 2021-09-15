@@ -252,6 +252,8 @@ local path =
         [67] = {-485, -10, -75}, -- END Mission Complete
     },
 }
+local ONPATH_SPEED = 40
+local RUNAWAY_SPEED = 60
 
 --# ajouter boucle de check pour le démarage
 
@@ -261,7 +263,12 @@ function onSpawn(npc)
     npc:setLocalVar("middleRoomsOption", math.random(4,5))
     npc:setLocalVar("bottomRoomsOption", math.random(6,7))
     npc:setLocalVar("lowerForkOption", math.random(8,9))
-    npc:setLocalVar("pathProgressMask", 0)
+    npc:setLocalVar("pathProgressMask", 0) -- 0 = Incomplete  1 = Complete
+        -- bit 0: Mission Start [1]
+        -- bit 1: Top Rooms Option Completed [2]
+        -- bit 2: Middle Rooms Option Completed [4]
+        -- bit 3: Bottom Rooms Option Completed [8]
+        -- bit 4: Lower Fork Option Completed (Mission PASS) [16] **Currently NOT Used**
     npc:setLocalVar("npcChatMessage", 0)
     npc:setLocalVar("chatMessage", 0)
     npc:setLocalVar("runMessage", 0)
@@ -276,14 +283,7 @@ function onTrack(npc)
     local missionActive = npc:getLocalVar("missionActive")
     local pathLeg = npc:getLocalVar("pathLeg")
     local pathPoint = npc:getLocalVar("pathPoint")
-    pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0
     local pathProgressMask = npc:getLocalVar("pathProgressMask")
-        -- 0 = Incomplete  1 = Complete
-        -- bit 0: Mission Start [1]
-        -- bit 1: Top Rooms Option Completed [2]
-        -- bit 2: Middle Rooms Option Completed [4]
-        -- bit 3: Bottom Rooms Option Completed [8]
-        -- bit 4: Lower Fork Option Completed (Mission PASS) [16] **Currently NOT Used**
     local topRoomsOption = npc:getLocalVar("topRoomsOption")
     local middleRoomsOption = npc:getLocalVar("middleRoomsOption")
     local bottomRoomsOption = npc:getLocalVar("bottomRoomsOption")
@@ -302,6 +302,7 @@ function onTrack(npc)
     local rangeStop = false
     local rangeFollow = false
 
+    pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0
     if pathProgressMask > 0 and missionActive == 1 then
         -- Check for nearby mobs
         for _, enemy in pairs(mobs) do
@@ -313,7 +314,6 @@ function onTrack(npc)
                     npc:setLocalVar("runStart", 1)
                     if enemy:isEngaged() then
                         npc:showText(npc,ID.text.EXCALIACE_CRAB2)
-                        break
                     else
                         if enemy:getFamily() == 77 then -- crab
                             if pathProgressMask == 7 then
@@ -325,17 +325,13 @@ function onTrack(npc)
                             end
                             npc:setLocalVar("pathLeg", 1)
                             npc:showText(npc,ID.text.EXCALIACE_CRAB1)
-                            npc:speed(60)
-                            break
                         elseif enemy:getFamily() == 197 then -- pugil
-                            npc:speed(75)
                             npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER1)
-                            break
                         elseif enemy:getFamily() == 86 then -- doomed
-                            npc:speed(100)
                             npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER2)
-                            break
                         end
+
+                        npc:speed(RUNAWAY_SPEED)
                     end
                 end
             end
@@ -364,15 +360,13 @@ function onTrack(npc)
                             npc:setLocalVar("runStart", 0)
                             npc:setLocalVar("chatMessage", 1)
                             npc:setLocalVar("npcChatMessage", 0)
-                            npc:speed(40)
-                            break
                         else
                             npc:showText(npc,ID.text.EXCALIACE_TOO_CLOSE)
                             npc:setLocalVar("chatMessage", 1)
                             npc:setLocalVar("npcChatMessage", 0)
-                            npc:speed(40)
-                            break
                         end
+
+                        npc:speed(ONPATH_SPEED)
                     end
                 elseif rangeClose then
                     if runStart == 0 then
@@ -380,10 +374,9 @@ function onTrack(npc)
                         npc:setLocalVar("moveStatus", 0)
                         if chatMessage == 0 then
                             npc:showText(npc,ID.text.EXCALIACE_TOO_CLOSE)
-                            npc:speed(40)
+                            npc:speed(ONPATH_SPEED)
                             npc:setLocalVar("chatMessage", 1)
                             npc:setLocalVar("npcChatMessage", 0)
-                            break
                         end
                     end
                 else
@@ -407,7 +400,6 @@ function onTrack(npc)
                 npc:setLocalVar("missionActive", 1)
                 npc:setLocalVar("moveLock", 1)
                 npc:setLocalVar("constantMove", 1)
-                    break
             end
         end
     end
@@ -435,7 +427,7 @@ function onTrack(npc)
                         npc:setLocalVar("runTimer", os.time() + math.random(15,25))
                         npc:showText(npc,ID.text.EXCALIACE_RUN)
                         npc:setLocalVar("runStart", 1)
-                        npc:speed(100)
+                        npc:speed(RUNAWAY_SPEED)
                     end
                 end
             end
@@ -530,7 +522,7 @@ function onTrack(npc)
                     npc:setLocalVar("moveLock", 0) -- stop Movement and condition checks
                     instance:setProgress(1)
                 end
- -- else moveStatus == 1 (Running)
+            -- else moveStatus == 1 (Running)
             else
                 if npc:atPoint(path[1][1]) then
                 -- npc reached the escape point - FAIL mission
@@ -552,7 +544,7 @@ function onTrack(npc)
                     npc:setLocalVar("pathPoint", #path[1])
                 end
             end
- -- npc not at assigned point yet so move there
+        -- npc not at assigned point yet so move there
         else
             npc:pathThrough(path[pathLeg][pathPoint])
         end
