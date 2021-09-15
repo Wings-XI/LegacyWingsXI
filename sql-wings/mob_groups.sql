@@ -2434,9 +2434,9 @@ INSERT INTO `mob_groups` VALUES(1913, 2207, 55, 'Kelp_Kulshedra', 0, 0, 0, 0, 0,
 INSERT INTO `mob_groups` VALUES(1914, 2208, 55, 'Kelp_Pugil', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1922, 3250, 55, 'Qiqirn_Diver', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1924, 3327, 55, 'Raubahn', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(1, 254, 56, 'Arrapago_Crab', 0, 128, 0, 0, 0, 77, 78, 0);
-INSERT INTO `mob_groups` VALUES(2, 942, 56, 'Debaucher', 0, 128, 0, 0, 0, 77, 78, 0);
-INSERT INTO `mob_groups` VALUES(3, 3119, 56, 'Periqia_Pugil', 0, 128, 0, 0, 0, 77, 78, 0);
+INSERT INTO `mob_groups` VALUES(1, 254, 56, 'Arrapago_Crab', 0, 128, 0, 5241, 0, 77, 78, 0);
+INSERT INTO `mob_groups` VALUES(2, 942, 56, 'Debaucher', 0, 128, 0, 6862, 0, 77, 78, 0);
+INSERT INTO `mob_groups` VALUES(3, 3119, 56, 'Periqia_Pugil', 0, 128, 0, 4923, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(4, 3236, 56, 'Putrid_Immortal_Guard', 0, 128, 0, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(5, 360, 56, 'Batteilant_Bhoot', 0, 128, 0, 0, 9999, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(6, 905, 56, 'Darkling_Draugar', 0, 128, 0, 0, 9999, 77, 78, 0);
