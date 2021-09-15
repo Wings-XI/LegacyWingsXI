@@ -456,9 +456,7 @@ namespace petutils
         PMob->stats.CHR = (uint16)((fCHR + mCHR) * 0.9f);
 
         uint32 id = PMob->m_PetID;
-        PMob->m_dmgType = DAMAGE_SLASHING;
-        if (id == 32 || id == 25 || id == 38 || id == 28 || id == 21 || id == 36) // funguar familiar and the 3 mandragora pets and the 2 sheep pets
-            PMob->m_dmgType = DAMAGE_IMPACT;
+        PMob->m_dmgType = DAMAGE_IMPACT; // all jugs at level 75 cap do blunt/impact damage. https://ffxiclopedia.fandom.com/wiki/Category:Familiars
 
         /*
         if (PetID == 21) // SHEEP FAMILIAR
