@@ -30,6 +30,7 @@
 
 #include "../conquest_system.h"
 #include "../map.h"
+#include "../entities/battleentity.h"
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
 #include "zoneutils.h"
@@ -444,6 +445,29 @@ void LoadMOBList()
 
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setMaxHit(1);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setSkillType(Sql_GetIntData(SqlHandle, 17));
+                DAMAGETYPE damageType = DAMAGE_NONE;
+                switch (((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->getSkillType()) {
+                    // Combat Skills
+                    case SKILLTYPE::SKILL_NONE: damageType = (DAMAGETYPE)0; break;
+                    case SKILLTYPE::SKILL_HAND_TO_HAND: damageType = (DAMAGETYPE)4; break;
+                    case SKILLTYPE::SKILL_DAGGER: damageType = (DAMAGETYPE)1; break;
+                    case SKILLTYPE::SKILL_SWORD: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_GREAT_SWORD: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_AXE: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_GREAT_AXE: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_SCYTHE: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_POLEARM: damageType = (DAMAGETYPE)1; break;
+                    case SKILLTYPE::SKILL_KATANA: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_GREAT_KATANA: damageType = (DAMAGETYPE)2; break;
+                    case SKILLTYPE::SKILL_CLUB: damageType = (DAMAGETYPE)3; break;
+                    case SKILLTYPE::SKILL_STAFF: damageType = (DAMAGETYPE)3; break;
+                    case SKILLTYPE::SKILL_ARCHERY: damageType = (DAMAGETYPE)1; break;
+                    case SKILLTYPE::SKILL_MARKSMANSHIP: damageType = (DAMAGETYPE)1; break;
+                    case SKILLTYPE::SKILL_THROWING: damageType = (DAMAGETYPE)1; break;
+                    default: break;
+                }
+                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(damageType);
+                
                 PMob->m_dmgMult = Sql_GetUIntData(SqlHandle, 18);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
