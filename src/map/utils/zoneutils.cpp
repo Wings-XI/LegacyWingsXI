@@ -448,22 +448,32 @@ void LoadMOBList()
                 DAMAGETYPE damageType = DAMAGE_NONE;
                 switch (((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->getSkillType()) {
                     // Combat Skills
-                    case SKILLTYPE::SKILL_NONE: damageType = (DAMAGETYPE)0; break;
-                    case SKILLTYPE::SKILL_HAND_TO_HAND: damageType = (DAMAGETYPE)4; break;
-                    case SKILLTYPE::SKILL_DAGGER: damageType = (DAMAGETYPE)1; break;
-                    case SKILLTYPE::SKILL_SWORD: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_GREAT_SWORD: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_AXE: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_GREAT_AXE: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_SCYTHE: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_POLEARM: damageType = (DAMAGETYPE)1; break;
-                    case SKILLTYPE::SKILL_KATANA: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_GREAT_KATANA: damageType = (DAMAGETYPE)2; break;
-                    case SKILLTYPE::SKILL_CLUB: damageType = (DAMAGETYPE)3; break;
-                    case SKILLTYPE::SKILL_STAFF: damageType = (DAMAGETYPE)3; break;
-                    case SKILLTYPE::SKILL_ARCHERY: damageType = (DAMAGETYPE)1; break;
-                    case SKILLTYPE::SKILL_MARKSMANSHIP: damageType = (DAMAGETYPE)1; break;
-                    case SKILLTYPE::SKILL_THROWING: damageType = (DAMAGETYPE)1; break;
+                    case SKILLTYPE::SKILL_NONE: 
+                        damageType = (DAMAGETYPE)0; 
+                        break;
+                    case SKILLTYPE::SKILL_ARCHERY:
+                    case SKILLTYPE::SKILL_MARKSMANSHIP:
+                    case SKILLTYPE::SKILL_THROWING:
+                    case SKILLTYPE::SKILL_DAGGER: 
+                    case SKILLTYPE::SKILL_POLEARM: 
+                        damageType = (DAMAGETYPE)1; 
+                        break;
+                    case SKILLTYPE::SKILL_SWORD:
+                    case SKILLTYPE::SKILL_GREAT_SWORD:
+                    case SKILLTYPE::SKILL_AXE:
+                    case SKILLTYPE::SKILL_GREAT_AXE: 
+                    case SKILLTYPE::SKILL_SCYTHE: 
+                    case SKILLTYPE::SKILL_KATANA:
+                    case SKILLTYPE::SKILL_GREAT_KATANA: 
+                        damageType = (DAMAGETYPE)2; 
+                        break;
+                    case SKILLTYPE::SKILL_CLUB: 
+                    case SKILLTYPE::SKILL_STAFF: 
+                        damageType = (DAMAGETYPE)3; 
+                        break;
+                    case SKILLTYPE::SKILL_HAND_TO_HAND: 
+                        damageType = (DAMAGETYPE)4; 
+                        break;
                     default: break;
                 }
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(damageType);
