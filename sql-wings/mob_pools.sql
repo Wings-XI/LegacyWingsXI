@@ -3135,7 +3135,7 @@ INSERT INTO `mob_pools` VALUES(3071, 'Ouzelum', 'Ouzelum', 125, 0x00005301000000
 INSERT INTO `mob_pools` VALUES(3072, 'Overgrown_Ivy', 'Overgrown_Ivy', 186, 0x00007c0100000000000000000000000000000000, 2, 2, 7, 360, 100, 0, 1, 0, 0, 0, 0, 0, 1261, 1155, 0, 0, 0, 0, 0, 186);
 INSERT INTO `mob_pools` VALUES(3073, 'Overgrown_Rose', 'Overgrown_Rose', 186, 0x00007c0100000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 0, 0, 0, 0, 349, 1667, 0, 0, 0, 0, 0, 186);
 INSERT INTO `mob_pools` VALUES(3074, 'Overking_Apkallu', 'Overking_Apkallu', 27, 0x0000bb0600000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27);
-INSERT INTO `mob_pools` VALUES(3075, 'Overlord_Bakgodek', 'Overlord_Bakgodek', 334, 0x0000f30300000000000000000000000000000000, 7, 7, 3, 240, 125, 0, 1, 1, 1, 2, 0, 32, 1709, 1181, 0, 0, 4, 0, 0, 189);
+INSERT INTO `mob_pools` VALUES(3075, 'Overlord_Bakgodek', 'Overlord_Bakgodek', 334, 0x0000f30300000000000000000000000000000000, 7, 7, 3, 240, 125, 0, 1, 1, 1, 2, 0, 32, 1709, 1183, 0, 0, 4, 0, 0, 189);
 INSERT INTO `mob_pools` VALUES(3076, 'Overlords_Tombstone', 'Overlords_Tombstone', 93, 0x0000210400000000000000000000000000000000, 5, 4, 11, 240, 100, 0, 1, 1, 1, 2, 1023, 0, 0, 1153, 5, 0, 49, 0, 0, 93);
 INSERT INTO `mob_pools` VALUES(3077, 'Overseer', 'Overseer', 0, 0x0000000000000000000000000000000000000000, 1, 1, 4, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(3078, 'Over_Weapon', 'Over_Weapon', 110, 0x0000c30100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 0, 0, 0, 5829, 1669, 0, 0, 0, 0, 0, 110);
