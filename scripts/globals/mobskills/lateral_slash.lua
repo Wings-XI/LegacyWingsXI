@@ -7,11 +7,9 @@
 --  Range: Melee
 --  Notes: Reduces defense by 75%.  Can be removed with Monk Job Ability Counterstance.
 ---------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -19,6 +17,10 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    if mob:getFamily() == 83 or mob:getFamily() == 84 or mob:getFamily() == 271 then -- Dolls for "A Reputation In Ruins" quest, only need the animation
+        skill:setMsg(tpz.msg.NONE)
+        return 0
+    end
 
     local numhits = 1
     local accmod = 2

@@ -2,46 +2,58 @@
 -- Area: Dynamis - Xarcabard
 --  Mob: Animated Dagger
 -----------------------------------
+mixins = {require("scripts/mixins/families/animated_weapons")};
+require("scripts/globals/dynamis")
 require("scripts/globals/status")
 local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 -----------------------------------
 
+local zone = 135
+
+function onMobSpawn(mob)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    local mobID = mob:getID()
+    dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+end
+
 function onMobEngaged(mob, target)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    randomChildrenListArg = nil
+    if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
+    dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+end
 
-    if (mob:AnimationSub() == 3) then
-        SetDropRate(103, 1572, 1000)
+function onMonsterMagicPrepare(mob, target)
+    local warp = mob:getLocalVar("warp")
+    local rnd = math.random()
+    if warp == 1 then
+        return 261 -- warp
+    elseif rnd < 0.5 then
+        return 186 -- aeroga iii
+    elseif rnd < 0.75 then
+        return 112 -- flash
     else
-        SetDropRate(103, 1572, 0)
+        return 226 -- poisonga ii
     end
-
-    target:showText(mob, ID.text.ANIMATED_DAGGER_DIALOG)
-
-    SpawnMob(17330306):updateEnmity(target)
-    SpawnMob(17330307):updateEnmity(target)
-    SpawnMob(17330308):updateEnmity(target)
-    SpawnMob(17330316):updateEnmity(target)
-    SpawnMob(17330317):updateEnmity(target)
-    SpawnMob(17330318):updateEnmity(target)
-
 end
 
 function onMobFight(mob, target)
-    -- TODO: add battle dialog
 end
 
-function onMobDisengage(mob)
-    mob:showText(mob, ID.text.ANIMATED_DAGGER_DIALOG+2)
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-
-    player:showText(mob, ID.text.ANIMATED_DAGGER_DIALOG+1)
-
-    DespawnMob(17330306)
-    DespawnMob(17330307)
-    DespawnMob(17330308)
-    DespawnMob(17330316)
-    DespawnMob(17330317)
-    DespawnMob(17330318)
-
+    local instance = mob:getInstance()
+    DespawnMob(17330306, instance)
+    DespawnMob(17330307, instance)
+    DespawnMob(17330308, instance)
+    DespawnMob(17330316, instance)
+    DespawnMob(17330317, instance)
+    DespawnMob(17330318, instance)
 end

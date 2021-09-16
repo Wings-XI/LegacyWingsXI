@@ -15,6 +15,7 @@ function onTrigger(player, npc)
     local copStat = player:getCharVar("PromathiaStatus")
 
     if (cop == tpz.mission.id.cop.A_FATE_DECIDED and copStat == 1 and not GetMobByID(ID.mob.IXGHRAH):isSpawned()) then
+        player:messageSpecial(7351)
         SpawnMob(ID.mob.IXGHRAH):updateClaim(player)
     elseif (cop == tpz.mission.id.cop.A_FATE_DECIDED and copStat == 2) then
         player:startEvent(3)
