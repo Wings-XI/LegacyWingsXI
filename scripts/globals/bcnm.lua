@@ -31,7 +31,7 @@ local battlefields = {
         { 0,  672,    0},   -- Head Wind (PM5-3 U2)
      -- { 1,  673,    0},   -- Like the Wind (ENM) -- TODO: mob constantly runs during battle
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
-     -- { 3,  675,    0},   -- Shell We Dance? (ENM)
+        { 3,  675,    0},   -- Shell We Dance? (ENM)
      -- { 4,  676,    0},   -- Totentanz (ENM)
      -- { 5,  677,    0},   -- Tango with a Tracker (Quest)
      -- { 6,  678,    0},   -- Requiem of Sin (Quest)
@@ -241,7 +241,7 @@ local battlefields = {
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
      -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
      -- {10,   10, 1552},   -- Dropping Like Flies (BS30)
-     -- {11,   11, 1553},   -- Horns of War (KS99) -- TODO: Chlevnik is unscripted
+     -- {11,   11, 1553},   -- Horns of War (KS99) 
         {12,   12, 1131},   -- Under Observation (BS40)
      -- {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
@@ -413,7 +413,7 @@ local battlefields = {
         { 2,  290,    0},   -- Ark Angels 3 (ZM14)
         { 3,  291,    0},   -- Ark Angels 4 (ZM14)
         { 4,  292,    0},   -- Ark Angels 5 (ZM14)
-        { 5,  293, 1550},   -- Divine Might (ZM14)
+     -- { 5,  293, 1550},   -- Divine Might (ZM14)
      -- { 6,    ?,    0},   -- *Ark Angels 1 (HTMBF)
      -- { 7,    ?,    0},   -- *Ark Angels 2 (HTMBF)
      -- { 8,    ?,    0},   -- *Ark Angels 3 (HTMBF)

@@ -27,6 +27,7 @@
 
 #include "entities/battleentity.h"
 #include "utils/charutils.h"
+#include "utils/zoneutils.h"
 #include "conquest_system.h"
 #include "utils/jailutils.h"
 #include "map.h"
@@ -180,8 +181,11 @@ void CAlliance::delParty(CParty* party)
     if (!party->members.empty())
     {
         auto* PChar = dynamic_cast<CCharEntity*>(party->members.at(0));
+        CZone* PZone = zoneutils::GetZone(PChar->getZone());
+        if (!PZone)
+            return;
 
-        if (PChar->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
+        if (!(PZone->m_miscMask & MISC_TREASURE))
         {
             PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
             PChar->PTreasurePool->AddMember(PChar);
