@@ -9073,7 +9073,7 @@ INSERT INTO `mob_groups` VALUES(22, 2997, 149, 'Orcish_Bowshooter', 960, 0, 1875
 INSERT INTO `mob_groups` VALUES(23, 3014, 149, 'Orcish_Footsoldier', 960, 0, 1906, 0, 0, 43, 47, 0);
 INSERT INTO `mob_groups` VALUES(24, 3015, 149, 'Orcish_Gladiator', 960, 0, 1911, 0, 0, 44, 48, 0);
 INSERT INTO `mob_groups` VALUES(25, 3039, 149, 'Orcish_Trooper', 960, 0, 1944, 0, 0, 45, 49, 0);
-INSERT INTO `mob_groups` VALUES(26, 3162, 149, 'Poisonhand_Gnadgad', 0, 32, 2008, 0, 0, 39, 40, 0);
+INSERT INTO `mob_groups` VALUES(26, 3162, 149, 'Poisonhand_Gnadgad', 0, 32, 2008, 3500, 0, 39, 40, 0);
 INSERT INTO `mob_groups` VALUES(27, 927, 149, 'Davoi_Wasp', 792, 0, 576, 0, 0, 30, 33, 0);
 INSERT INTO `mob_groups` VALUES(28, 1486, 149, 'Geezard', 960, 0, 943, 0, 0, 34, 37, 0);
 INSERT INTO `mob_groups` VALUES(29, 3041, 149, 'Orcish_Veteran', 960, 0, 1948, 0, 0, 52, 56, 0);
