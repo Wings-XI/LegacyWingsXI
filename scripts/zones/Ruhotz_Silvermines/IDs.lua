@@ -32,6 +32,7 @@ zones[tpz.zone.RUHOTZ_SILVERMINES] =
     mob =
     {
         ULBRECHT = 17158191,
+        SAPPHIRINE_QUADAV_OFFSET = 17158192,
     },
     npc =
     {
