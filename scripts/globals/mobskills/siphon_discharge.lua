@@ -1,6 +1,5 @@
 ---------------------------------------------
---  Syphon Discharge
---
+--  Siphon Discharge
 --  Family: Xzomit
 --  Type: Breath
 --  Can be dispelled: N/A
@@ -8,11 +7,9 @@
 --  Range: Unknown cone
 --  Notes: Water Damage Knockback.
 ---------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
     return 0

@@ -9,6 +9,7 @@ require("scripts/globals/magic")
 -----------------------------------
 
 function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25) -- builds resistance to gravity quickly
     mob:addListener("TAKE_DAMAGE", "FAITH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         if attackType == tpz.attackType.PHYSICAL then

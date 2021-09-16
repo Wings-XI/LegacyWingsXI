@@ -226,7 +226,7 @@ INSERT INTO `mob_pool_mods` VALUES(2401, 28, 43, 0);
 INSERT INTO `mob_pool_mods` VALUES(2401, 407, 50, 0);
 INSERT INTO `mob_pool_mods` VALUES(2401, 11, 16, 1);
 
---SELECT * FROM mob_pool_mods WHERE poolid =2401;
+-- SELECT * FROM mob_pool_mods WHERE poolid =2401;
 --
 -- Indexes for dumped tables
 --
