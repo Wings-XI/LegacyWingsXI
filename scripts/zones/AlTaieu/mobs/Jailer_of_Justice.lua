@@ -62,10 +62,6 @@ function familiarXzomits()
     for i = ID.mob.QN_XZOMIT_START, ID.mob.QN_XZOMIT_END do
         local pet = GetMobByID(i)
         if pet and pet:isAlive() then
-            pet:addMod(tpz.mod.ATTP, 15)
-            pet:addMod(tpz.mod.ACC, 20)
-            pet:addMod(tpz.mod.EVA, 10)
-            pet:addMod(tpz.mod.DEFP, 10)
             pet:timer(1500, function(pet)
                 pet:useMobAbility(786) -- lateral slash
             end)
