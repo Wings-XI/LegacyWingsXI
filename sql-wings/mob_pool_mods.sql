@@ -221,9 +221,9 @@ INSERT INTO `mob_pool_mods` VALUES(6187, 1, 2000, 1);
 INSERT INTO `mob_pool_mods` VALUES(6187, 2, 13640, 1);
 INSERT INTO `mob_pool_mods` VALUES(6188, 1, 10000, 1);
 INSERT INTO `mob_pool_mods` VALUES(6188, 2, 30000, 1);
-INSERT INTO `mob_pool_mods` VALUES(2401, 1, 90, 0);
-INSERT INTO `mob_pool_mods` VALUES(2401, 28, 43, 0);
-INSERT INTO `mob_pool_mods` VALUES(2401, 407, 50, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 10, 20, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 28, 42, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 407, 40, 0);
 INSERT INTO `mob_pool_mods` VALUES(2401, 11, 16, 1);
 
 -- SELECT * FROM mob_pool_mods WHERE poolid =2401;
