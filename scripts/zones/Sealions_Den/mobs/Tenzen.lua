@@ -8,6 +8,7 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DEF, 350)
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 10)

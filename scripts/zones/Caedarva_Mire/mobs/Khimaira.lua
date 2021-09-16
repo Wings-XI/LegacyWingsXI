@@ -7,7 +7,7 @@ require("scripts/globals/toau")
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 -----------------------------------
 
-function onMobInitialize(mob)   
+function onMobInitialize(mob)
     tpz.toau.mobSpecialHook("KHIMAIRA", mob, 1, function(mob)
         if mob:AnimationSub() == 0 then
             mob:AnimationSub(1)
@@ -24,7 +24,7 @@ end
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
-    mob:setMod(tpz.mod.MDEF, 30)
+    mob:setMod(tpz.mod.MDEF, 100) -- 385 * 1.32/2 = 254 nether blast
     mob:setMod(tpz.mod.STATUSRES, 50)
     mob:setMod(tpz.mod.PARALYZERES, 50)
     mob:setMod(tpz.mod.STUNRES, -75)

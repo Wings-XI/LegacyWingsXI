@@ -1,15 +1,16 @@
 -----------------------------------
 -- Area: Dynamis-Xarcabard
 --  NPC: ??? (qm0)
--- Note: Spawns Dynamis Lord / Arch Dynamis Lord
+-- Note: Grants Win KI after killing Dynamis Lord
 -----------------------------------
 require("scripts/globals/dynamis")
+require("scripts/globals/keyitems")
 -----------------------------------
 
-function onTrade(player, npc, trade)
-    dynamis.qmOnTrade(player, npc, trade)
-end
-
 function onTrigger(player, npc)
-    dynamis.qmOnTrigger(player, npc)
+    if player:hasKeyItem(tpz.ki.HYDRA_CORPS_BATTLE_STANDARD) == false then
+        player:addKeyItem(tpz.ki.HYDRA_CORPS_BATTLE_STANDARD)
+        local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.HYDRA_CORPS_BATTLE_STANDARD)
+    end
 end

@@ -8,12 +8,31 @@ mixins =
     require("scripts/mixins/job_special")
 }
 local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
-require("scripts/globals/mobs")
+require("scripts/globals/dynamis")
+-- require("scripts/globals/mobs")
 -----------------------------------
 
+local zone = 135
+
 function onMobDeath(mob, player, isKiller)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
+    dynamis.statueOnDeath(mob, player, isKiller)
+    dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 
-function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.COUNT_ZAEBOS_PH, 10, 1200) -- 20 minutes
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
+end
+
+-- function onMobDespawn(mob)
+--     tpz.mob.phOnDespawn(mob, ID.mob.COUNT_ZAEBOS_PH, 10, 1200) -- 20 minutes
+-- end
+
+function onMobSpawn(mob)
+    dynamis.setMobStats(mob)
 end
