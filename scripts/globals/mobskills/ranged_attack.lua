@@ -11,6 +11,10 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    if mob:getFamily() == 176 and mob:getMainJob() == tpz.job.NIN then -- Mamool ja NIN dont use ranged attack
+        return 1
+    end
+
     return 0
 end
 
