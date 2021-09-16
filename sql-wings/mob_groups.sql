@@ -1015,7 +1015,7 @@ INSERT INTO `mob_groups` VALUES(57, 6194, 33, 'Ul_xzomit_parent', 960, 0, 2517, 
 INSERT INTO `mob_groups` VALUES(58, 6195, 33, 'Om_xzomit_parent', 960, 0, 1856, 0, 0, 72, 76, 0);
 INSERT INTO `mob_groups` VALUES(59, 5341, 33, 'Ul_aern_whm', 960, 0, 2514, 0, 5000, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(60, 5136, 33, 'Ul_aern_brd', 960, 0, 2514, 0, 0, 70, 73, 0);
-INSERT INTO `mob_groups` VALUES(61, 6202, 33, 'Qn_xzomit_jol', 0, 128, 0, 0, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(61, 6197, 33, 'Qn_xzomit_jol', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(1, 1241, 34, 'Eo_ghrah', 960, 0, 777, 0, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(2, 1242, 34, 'Eo_zdei', 960, 0, 778, 0, 0, 77, 78, 0);
 INSERT INTO `mob_groups` VALUES(3, 1240, 34, 'Eo_euvhi', 960, 0, 776, 0, 0, 74, 77, 0);
@@ -5495,7 +5495,7 @@ INSERT INTO `mob_groups` VALUES(4649, 3277, 93, 'Quadav_Turret', 0, 0, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(4650, 3352, 93, 'Republican_Infantry', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4651, 3353, 93, 'Republic_Garrison', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4652, 6198, 93, 'Sapphire_Quadav', 0, 128, 0, 2500, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(4653, 6197, 93, 'Sapphirine_Quadav', 0, 128, 0, 2100, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(4653, 6202, 93, 'Sapphirine_Quadav', 0, 128, 0, 2100, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4654, 3769, 93, 'Steel_Quadav', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4655, 3823, 93, 'Swarmspawn', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(4656, 3986, 93, 'Trained_Bat', 0, 0, 0, 0, 0, 0, 0, 0);
