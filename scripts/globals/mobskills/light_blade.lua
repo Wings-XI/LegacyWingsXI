@@ -2,7 +2,7 @@
 --  Light Blade
 --  Description: Deals very high physical damage to a single player.
 --  Type: Ranged
---  Damage decreases the farther away the target is from him.
+--  Damage decreases the farther away the target is from Kam'lanaut.
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -16,7 +16,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 1
-    local dmgmod = 8
+    local dmgmod = 7
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.SLASHING, info.hitslanded)
     -- TODO: There's no MOBPARAM_RANGED, but MOBPARAM doesn't appear to do anything?

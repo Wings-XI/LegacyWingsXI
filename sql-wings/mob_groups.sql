@@ -10413,7 +10413,7 @@ INSERT INTO `mob_groups` VALUES(34, 4715, 178, 'BaiHu', 0, 128, 0, 0, 5000, 98, 
 INSERT INTO `mob_groups` VALUES(35, 4714, 178, 'QingLong', 0, 128, 0, 0, 5000, 98, 99, 0);
 INSERT INTO `mob_groups` VALUES(36, 4713, 178, 'ZhuQue', 0, 128, 0, 0, 5000, 98, 99, 0);
 INSERT INTO `mob_groups` VALUES(37, 4712, 178, 'XuanWu', 0, 128, 0, 0, 5000, 98, 99, 0);
-INSERT INTO `mob_groups` VALUES(1, 2184, 179, 'Kam_lanaut', 0, 128, 0, 15000, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(1, 2184, 179, 'Kam_lanaut', 0, 128, 0, 12000, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2, 4006, 179, 'Trion', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3, 4249, 179, 'Volker', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4, 75, 179, 'Ajido-Marujido', 0, 128, 0, 0, 0, 60, 60, 0);
