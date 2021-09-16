@@ -46,6 +46,33 @@ zones[tpz.zone.WINDURST_WALLS] =
     },
     npc =
     {
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17756373] = 17756373,  -- Sunbreeze Festival Fireworks
+            [17756374] = 17756374,  -- Sunbreeze Festival Tree
+            [17756375] = 17756375,  -- Sunbreeze Festival Tree
+            [17756376] = 17756376,  -- Sunbreeze Festival Tree
+            [17756377] = 17756377,  -- Sunbreeze Festival Tree
+            [17756378] = 17756378,  -- Sunbreeze Festival Tree
+            [17756379] = 17756379,  -- Sunbreeze Festival Tree
+            [17756380] = 17756380,  -- Sunbreeze Festival Tree
+            [17756381] = 17756381,  -- Sunbreeze Festival Tree
+            [17756382] = 17756382,  -- Sunbreeze Festival Tree
+            [17756383] = 17756383,  -- Sunbreeze Festival Tree
+            [17756384] = 17756384,  -- Sunbreeze Festival Tree
+        },
+        STARLIGHT_DECORATIONS = {
+            [17756387] = 17756387,  -- Starlight Festival Tree
+            [17756388] = 17756388,  -- Starlight Festival Tree
+            [17756389] = 17756389,  -- Starlight Festival Tree
+            [17756390] = 17756390,  -- Starlight Festival Tree
+            [17756391] = 17756391,  -- Starlight Festival Tree
+            [17756392] = 17756392,  -- Starlight Festival Tree
+            [17756393] = 17756393,  -- Starlight Festival Tree
+            [17756394] = 17756394,  -- Starlight Festival Tree
+            [17756395] = 17756395,  -- Starlight Festival Tree
+            [17756396] = 17756396,  -- Starlight Festival Tree
+            [17756397] = 17756397,  -- Starlight Festival Tree
+        },
     },
 }
 

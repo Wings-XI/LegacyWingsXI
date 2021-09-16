@@ -15,7 +15,9 @@ function onInitialize(zone)
     -- Check if we are on Windurst Mission 1-3
     zone:registerRegion(1, 23, -12, -208, 31, -8, -197)
 
-    applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenDecorations(zone:getID())
+   applyHalloweenRoaming(zone:getID())
 end
 
 function onZoneIn(player, prevZone)
