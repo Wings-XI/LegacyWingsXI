@@ -2824,7 +2824,7 @@ INSERT INTO `mob_pools` VALUES(2760, 'Mountain_Scolopendrid', 'Mountain_Scolopen
 INSERT INTO `mob_pools` VALUES(2761, 'Mountain_Worm', 'Mountain_Worm', 258, 0x0000a80100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 336, 133, 0, 0, 9, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(2762, 'Mourioche', 'Mourioche', 178, 0x00002c0100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 0, 0, 1, 0, 0, 0, 4863, 131, 0, 0, 0, 0, 0, 178);
 INSERT INTO `mob_pools` VALUES(2763, 'Mouse_Bat', 'Mouse_Bat', 46, 0x0000000100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 1, 0, 0, 0, 382, 641, 0, 0, 0, 0, 0, 46);
-INSERT INTO `mob_pools` VALUES(2764, 'Mousse', 'Mousse', 229, 0x0000240100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 229);
+INSERT INTO `mob_pools` VALUES(2764, 'Mousse', 'Mousse', 229, 0x0000240100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 229);
 INSERT INTO `mob_pools` VALUES(2765, 'Mouu_the_Waverider', 'Mouu_the_Waverider', 213, 0x0000200500000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 712);
 INSERT INTO `mob_pools` VALUES(2766, 'Movamuq', 'Movamuq', 184, 0x0000b00200000000000000000000000000000000, 3, 3, 3, 240, 100, 0, 1, 0, 1, 2, 1, 32, 19, 155, 0, 0, 1, 0, 0, 453);
 INSERT INTO `mob_pools` VALUES(2767, 'Moxnix_Nightgoggle', 'Moxnix_Nightgoggle', 133, 0x0000f30100000000000000000000000000000000, 11, 11, 2, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 133);
