@@ -22,6 +22,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    player:startEvent(200)
 end
 
 function onEventUpdate(player, csid, option)

@@ -85,6 +85,7 @@ private:
 
     CAutomatonEntity* PAutomaton;
 
+    bool m_firstTick;
     duration m_actionCooldown{ 3s };
     duration m_rangedCooldown;
     static constexpr int m_RangedAbility{ 1949 };
