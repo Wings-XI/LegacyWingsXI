@@ -373,8 +373,8 @@ INSERT INTO `mob_skills` VALUES(599, 885, 'arctic_impact', 1, 15.0, 2000, 2000, 
 INSERT INTO `mob_skills` VALUES(600, 886, 'cold_wave', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(601, 887, 'hiemal_storm', 4, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(602, 888, 'hypothermal_combustion', 1, 20.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(603, 432, 'lateral_slash', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(604, 433, 'throat_stab', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(603, 432, 'lateral_slash', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0); -- Not the actual skill used by tonberries.  This triggers a 2 hour dust cloud animation
+INSERT INTO `mob_skills` VALUES(604, 433, 'throat_stab', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0); -- Not the actual skill used by tonberries.  This triggers a 2 hour dust cloud animation
 INSERT INTO `mob_skills` VALUES(605, 349, 'aerial_wheel', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(606, 350, 'shoulder_attack', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(607, 351, 'slam_dunk', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1327,6 +1327,7 @@ INSERT INTO `mob_skills` VALUES(2199, 1587, 'cyclonic_turmoil', 1, 15.0, 2000, 1
 INSERT INTO `mob_skills` VALUES(2200, 1588, 'cyclonic_torrent', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2201, 1555, 'orcish_counterstance', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2202, 1556, 'berserker_dance', 0, 7.0, 3000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2209, 1607, 'blink_of_peril', 0, 7.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2210, 1603, 'petal_pirouette', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2216, 1597, 'nocturnal_combustion', 1, 20.0, 2000, 500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2217, 1598, 'berserk', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
