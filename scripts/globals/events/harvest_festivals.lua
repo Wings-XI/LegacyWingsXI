@@ -36,9 +36,10 @@ function halloweenItemsCheck(player)
     local pumpkinHead2 = 15176
     local trickStaff = 17565
     local trickStaff2 = 17587
+    local pitchfork = 18102
 
     reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2}
-
+    -- To Do: Move Pitchforks into seperate questline involving the bomb decorations in future events. --
     -- Checks for HQ Upgrade
     for ri = 1, #reward_list do
         if (headSlot == reward_list[ri] or mainHand == reward_list[ri]) then
@@ -50,6 +51,8 @@ function halloweenItemsCheck(player)
                 reward =  17566 -- Treat Staff
             elseif (mainHand == trickStaff2 and player:hasItem(17588) == false) then
                 reward = 17588 -- Treat Staff II
+            elseif (mainHand == pitchfork and player:hasItem(18103) == false) then
+                reward = 18103 -- Pitchfork +1
             end
             return reward
         end
