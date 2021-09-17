@@ -210,7 +210,7 @@ local battlefields = {
     [tpz.zone.LA_VAULE_S] =
     {
      -- { 0,    ?,    0},   -- Splitting Heirs (S)
-     -- { 1,    ?,    0},   -- Purple, The New Black
+     -- { 1,    1500,    0},   -- Purple, The New Black
      -- { 2,    ?,    0},   -- The Blood-bathed Crown
     },
 
@@ -694,6 +694,7 @@ function checkReqs(player, npc, bfid, registrant)
         [1304] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 2nd Floor
         [1305] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 3rd Floor
         [1306] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 4th Floor
+        [1500] = function() return ( player:getCurrentMission(WOTG) == tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK and player:getCharVar('PurpleTheNewBlackProgress') == 1     ) end, -- Purple, The New Black
     }
 
     -- requirements to enter a battlefield already registered by a party member
