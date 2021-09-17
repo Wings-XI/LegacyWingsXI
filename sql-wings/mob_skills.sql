@@ -1325,6 +1325,7 @@ INSERT INTO `mob_skills` VALUES(2197, 1585, 'autumn_breeze', 0, 7.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(2198, 1586, 'winter_breeze', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2199, 1587, 'cyclonic_turmoil', 1, 15.0, 2000, 1800, 4, 0, 0, 5, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2200, 1588, 'cyclonic_torrent', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2209, 1607, 'blink_of_peril', 0, 7.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2210, 1603, 'petal_pirouette', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2216, 1597, 'nocturnal_combustion', 1, 20.0, 2000, 500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2217, 1598, 'berserk', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
