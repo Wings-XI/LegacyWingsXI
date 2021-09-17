@@ -7167,7 +7167,7 @@ INSERT INTO `mob_groups` VALUES(24, 5891, 114, 'Sabotender_Corrido', 7200, 0, 30
 INSERT INTO `mob_groups` VALUES(25, 1709, 114, 'Goblin_Robber', 300, 0, 1145, 0, 0, 45, 49, 0);
 INSERT INTO `mob_groups` VALUES(26, 676, 114, 'Centurio_XII-I', 0, 128, 444, 0, 0, 56, 56, 0);
 INSERT INTO `mob_groups` VALUES(27, 1701, 114, 'Goblin_Poacher', 300, 0, 1140, 0, 0, 45, 49, 0);
-INSERT INTO `mob_groups` VALUES(28, 1138, 114, 'Dune_Widow', 0, 32, 720, 0, 0, 45, 47, 0);
+INSERT INTO `mob_groups` VALUES(28, 1138, 114, 'Dune_Widow', 0, 32, 720, 4400, 0, 45, 47, 0);
 INSERT INTO `mob_groups` VALUES(29, 1705, 114, 'Goblin_Reaper', 300, 0, 1142, 0, 0, 45, 49, 0);
 INSERT INTO `mob_groups` VALUES(30, 1741, 114, 'Goblin_Trader', 300, 0, 1180, 0, 0, 45, 49, 0);
 INSERT INTO `mob_groups` VALUES(31, 1732, 114, 'Goblins_Spider', 0, 128, 0, 0, 0, 38, 40, 0);
@@ -9483,7 +9483,7 @@ INSERT INTO `mob_groups` VALUES(7, 786, 159, 'Cook_Nalberry', 0, 128, 0, 0, 0, 7
 INSERT INTO `mob_groups` VALUES(8, 785, 159, 'Cook_Minberry', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(9, 784, 159, 'Cook_Fulberry', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(10, 3971, 159, 'Tonberrys_Elemental', 0, 128, 0, 0, 0, 43, 55, 0);
-INSERT INTO `mob_groups` VALUES(11, 3970, 159, 'Tonberrys_Avatar', 0, 128, 0, 0, 0, 43, 55, 0);
+INSERT INTO `mob_groups` VALUES(11, 3970, 159, 'Tonberrys_Avatar', 0, 128, 0, 0, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(12, 3872, 159, 'Temple_Guardian', 300, 0, 0, 0, 0, 65, 65, 0);
 INSERT INTO `mob_groups` VALUES(13, 2888, 159, 'Nio-A', 0, 128, 0, 8000, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(14, 2889, 159, 'Nio-Hum', 0, 128, 0, 8000, 0, 70, 70, 0);
