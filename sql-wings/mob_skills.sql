@@ -363,7 +363,7 @@ INSERT INTO `mob_skills` VALUES(583, 327, 'beatdown', 0, 7.0, 2000, 1500, 4, 0, 
 INSERT INTO `mob_skills` VALUES(584, 328, 'uppercut', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(586, 330, 'blank_gaze', 0, 7.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(587, 331, 'antiphase', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(588, 107, 'death_trap', 1, 30.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(588, 398, 'death_trap', 1, 30.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(590, 334, 'goblin_rush', 0, 6.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(591, 335, 'bomb_toss', 2, 13.5, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(592, 336, 'bomb_toss_suicide', 1, 13.5, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);

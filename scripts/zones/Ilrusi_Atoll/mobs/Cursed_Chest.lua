@@ -8,11 +8,10 @@ require("scripts/globals/assault")
 -----------------------------------
 
 function onMobSpawn(mob)
-    printf("onMobSpawn")
+    mob:hideName(true)
     mob:setMobMod(tpz.mobMod.SOUND_RANGE, 2)
     mob:setStatus(tpz.status.NORMAL)
-    --mob:hideName(true)
-    -- mob:setLocalVar("despawn", 0)
+    mob:addMod(tpz.mod.MAIN_DMG_RATING, 20)
 end
 
 function onMobEngaged(mob, target)
@@ -53,4 +52,8 @@ function onMobDespawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+    local instance = mob:getInstance()
+    local npc = GetNPCByID(mob:getID(), instance)
+
+    npc:hideNPC(1800) -- hide so the NPC for the rest of the assault
 end
