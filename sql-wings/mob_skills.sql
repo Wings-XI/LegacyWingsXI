@@ -373,8 +373,8 @@ INSERT INTO `mob_skills` VALUES(599, 885, 'arctic_impact', 1, 15.0, 2000, 2000, 
 INSERT INTO `mob_skills` VALUES(600, 886, 'cold_wave', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(601, 887, 'hiemal_storm', 4, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(602, 888, 'hypothermal_combustion', 1, 20.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(603, 432, 'lateral_slash', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(604, 433, 'throat_stab', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(603, 432, 'lateral_slash', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0); -- Not the actual skill used by tonberries.  This triggers a 2 hour dust cloud animation
+INSERT INTO `mob_skills` VALUES(604, 433, 'throat_stab', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0); -- Not the actual skill used by tonberries.  This triggers a 2 hour dust cloud animation
 INSERT INTO `mob_skills` VALUES(605, 349, 'aerial_wheel', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(606, 350, 'shoulder_attack', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(607, 351, 'slam_dunk', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -541,7 +541,7 @@ INSERT INTO `mob_skills` VALUES(825, 497, 'wind_blade2', 0, 7.0, 2000, 0, 1, 0, 
 INSERT INTO `mob_skills` VALUES(826, 498, 'earth_blade', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(827, 499, 'lightning_blade', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(828, 500, 'water_blade', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(829, 501, 'great_wheel', 1, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(829, 501, 'great_wheel', 1, 7.0, 2000, 2000, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(830, 502, 'light_blade', 0, 30.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(831, 513, 'moonlit_charge', 0, 10.0, 512, 3000, 4, 0, 0, 7, 2, 0, 0);
 INSERT INTO `mob_skills` VALUES(832, 514, 'crescent_fang', 0, 10.0, 513, 3000, 4, 0, 0, 0, 0, 0, 0);
@@ -1325,6 +1325,9 @@ INSERT INTO `mob_skills` VALUES(2197, 1585, 'autumn_breeze', 0, 7.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(2198, 1586, 'winter_breeze', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2199, 1587, 'cyclonic_turmoil', 1, 15.0, 2000, 1800, 4, 0, 0, 5, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2200, 1588, 'cyclonic_torrent', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2201, 1555, 'orcish_counterstance', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2202, 1556, 'berserker_dance', 0, 7.0, 3000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2209, 1607, 'blink_of_peril', 0, 7.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2210, 1603, 'petal_pirouette', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2216, 1597, 'nocturnal_combustion', 1, 20.0, 2000, 500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2217, 1598, 'berserk', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
@@ -1337,6 +1340,7 @@ INSERT INTO `mob_skills` VALUES(2252, 1298, 'eagle_eye_shot', 0, 25.0, 2000, 0, 
 INSERT INTO `mob_skills` VALUES(2256, 432, 'astral_flow_pet', 0, 7.0, 2000, 0, 1, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2257, 432, 'azure_lore', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2261, 187, 'tabula_rasa', 0, 7.0, 2000, 1, 1, 3, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2263, 1626, 'tornado_edge', 4, 20.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2269, 1300, 'kamaitachi', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2299, 1486, 'bone_crusher', 0, 7.0, 2000, 1, 4, 0, 245, 0, 12, 0, 0);
 INSERT INTO `mob_skills` VALUES(2300, 1487, 'armor_piercer', 0, 21.0, 2000, 1, 4, 0, 245, 0, 9, 0, 0);

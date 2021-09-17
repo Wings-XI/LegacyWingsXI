@@ -22,6 +22,8 @@ zones[tpz.zone.JUGNER_FOREST_S] =
         LOGGING_IS_POSSIBLE_HERE = 7069, -- Logging is possible here if you have <item>.
         FISHING_MESSAGE_OFFSET   = 7362, -- You can't fish here.
         ALREADY_OBTAINED_TELE    = 7698, -- You already possess the gate crystal for this telepoint.
+        VOKBROKGREG_THREE_TIMES  = 7799, -- Vokbrokgreg! Vokbrokgreg! Vokbrokgreg
+        VOKBROKGREG              = 7871, -- Vokbrokgreg!
         COMMON_SENSE_SURVIVAL    = 9500, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =

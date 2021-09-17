@@ -65,6 +65,7 @@ zones[tpz.zone.BASTOK_MINES] =
         VIRNAGE_DIALOG_1               = 10982, -- They stayed in a citadel on the Sauromugue Champaign. The paint may be there still! I have heard people here say you are a great adventurer. Please, help the Goddess in Her hour of need!
         VIRNAGE_DIALOG_2               = 10988, -- Hand my letter to Eperdur in the San d'Oria Cathedral to claim your reward.
         CONQUEST                       = 11111, -- You've earned conquest points!
+        FESTIVE_MOOGLE_DIALOG          = 14441, -- Welcome, kupo!
         GALDEO_OPEN_DIALOG             = 11471, -- Come! Take a look at all the wonderful goods from Li'Telor.
         AULAVIA_OPEN_DIALOG            = 11472, -- May I interest you in some specialty goods from Vollbow?
         AULAVIA_CLOSED_DIALOG          = 11473, -- I'm trying to start a business selling goods from Vollbow, but it's not easy getting stuff from areas that aren't under Bastokan control.
@@ -97,11 +98,41 @@ zones[tpz.zone.BASTOK_MINES] =
     {
         HALLOWEEN_SKINS =
         {
-            [17735742] = 41, -- Faustin
-            [17735744] = 43, -- Mille
-            [17735747] = 42, -- Aulavia
-            [17735795] = 40, -- Proud Beard
-            [17735818] = 44, -- Emaliveulaux
+            [17735742] = 365, -- Faustin | Hound
+            [17735744] = 644, -- Mille | Quadav
+            [17735747] = 368, -- Aulavia | Ghost
+            [17735795] = 535, -- Proud Beard | Shade
+            [17735818] = 564, -- Emaliveulaux | Skeleton
+        },
+        HALLOWEEN_DECORATIONS = {
+            [17735939] = 17735939,  -- Halloween Decorations
+            [17735940] = 17735940,  -- Halloween Decorations
+            [17735941] = 17735941,  -- Halloween Decorations
+            [17735962] = 17735962,  -- Event Moogle Stall
+            [17735961] = 17735961,  -- Festive Moogle
+        },
+        STARLIGHT_DECORATIONS = {
+            [17735951] = 17735951,  -- Starlight Festival Planter
+            [17735952] = 17735952,  -- Starlight Festival Planter
+            [17735953] = 17735953,  -- Starlight Festival Planter
+            [17735954] = 17735954,  -- Starlight Festival Planter
+            [17735955] = 17735955,  -- Starlight Festival Planter
+            [17735956] = 17735956,  -- Starlight Festival Planter
+        },
+        EGG_HUNT_DECORATIONS = {
+            [17735921] = 17735921,  -- Egg Hunt Egg-stravaganza Pole
+            [17735922] = 17735922,  -- Egg Hunt Egg-stravaganza Pole
+            [17735923] = 17735923,  -- Egg Hunt Egg-stravaganza Pole
+            [17735924] = 17735924,  -- Egg Hunt Egg-stravaganza Pole
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17735938] = 17735938,  -- Sunbreeze Festival Fireworks
+        },
+        NEW_YEARS_DECORATIONS = {
+            [17735934] = 17735934,  -- New Years Standing Tree
+            [17735935] = 17735935,  -- New Years Standing Tree
+            [17735936] = 17735936,  -- New Years Standing Tree
+            [17735937] = 17735937,  -- New Years Standing Tree
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

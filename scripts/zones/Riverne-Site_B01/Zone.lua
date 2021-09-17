@@ -11,9 +11,10 @@ require("scripts/globals/status")
 
 function onInitialize(zone)
     local serre = GetServerVariable("BorokaRespawn")
+    local boroka = GetMobByID(ID.mob.BOROKA)
 	if os.time() < serre then
 		GetMobByID(ID.mob.BOROKA):setRespawnTime(serre - os.time())
-	else
+    elseif not boroka:isSpawned()
 		SpawnMob(ID.mob.BOROKA)
 	end
 

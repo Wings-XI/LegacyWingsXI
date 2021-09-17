@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Caedarva Mire
--- Door: Runic Seal
+-- Door: Runic Seal (Periqia)
 -- !pos -353 -3 -20 79
 -----------------------------------
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
@@ -16,7 +16,7 @@ function onTrigger(player, npc)
         player:setCharVar("ShadesOfVengeance", 1)
         player:startEvent(143, 79, -6, 0, 99, 3, 0)
     else
-        onAssaultTrigger(player, npc, 143, tpz.ki.PERIQIA_ASSAULT_ORDERS, 0)
+        onAssaultTrigger(player, npc, 143, tpz.ki.PERIQIA_ASSAULT_ORDERS, 3)
     end
 end
 

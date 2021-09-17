@@ -6,6 +6,8 @@
 local ID = require("scripts/zones/Windurst_Waters_[S]/IDs")
 require("scripts/globals/chocobo")
 require("scripts/globals/npc_util")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
 -----------------------------------
 
 function onInitialize(zone)
@@ -20,7 +22,9 @@ function onZoneIn(player, prevZone)
         player:setPos(157 + math.random(1, 5), -5, -62, 192)
     end
 
-    if player:getCharVar("ManifestProblem") == 5 then
+    if (not player:hasKeyItem(tpz.ki.INKY_BLACK_YAGUDO_FEATHER)) and (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.THE_TIGRESS_STIRS) == QUEST_AVAILABLE) then
+        cs = 130 -- windy wotg intro CS
+    elseif player:getCharVar("ManifestProblem") == 5 then
        cs = 153
     end
 
@@ -40,6 +44,9 @@ function onEventFinish(player, csid, option)
         player:startEvent(232)
     elseif csid == 232 then
         player:startEvent(233)
+    elseif csid == 130 then
+        player:addKeyItem(tpz.ki.INKY_BLACK_YAGUDO_FEATHER)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.INKY_BLACK_YAGUDO_FEATHER)
     elseif csid == 233 then
         npcUtil.completeQuest(player, CRYSTAL_WAR, tpz.quest.id.crystalWar.A_MANIFEST_PROBLEM, {item=5708, title=tpz.title.FRIEND_OF_LEHKO_HABHOKA, var="ManifestProblem"})
     end

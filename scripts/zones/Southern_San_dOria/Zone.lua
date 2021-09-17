@@ -15,7 +15,8 @@ require("scripts/globals/zone")
 function onInitialize(zone)
     zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
     quests.ffr.initZone(zone) -- register regions 2 through 6
-    applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenDecorations(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 
