@@ -66,10 +66,10 @@ function onRegionEnter(player, region)
     -- if all levers are down, open gate for 30 seconds
     GetNPCByID(ID.npc.BANISHING_GATE_OFFSET + regionId):setAnimation(tpz.anim.OPEN_DOOR)
     if (
-            GetNPCByID(gateId + 1):getAnimation() == tpz.anim.OPEN_DOOR and
-            GetNPCByID(gateId + 2):getAnimation() == tpz.anim.OPEN_DOOR and
-            GetNPCByID(gateId + 3):getAnimation() == tpz.anim.OPEN_DOOR and
-            GetNPCByID(gateId + 4):getAnimation() == tpz.anim.OPEN_DOOR
+        GetNPCByID(gateId + 1):getAnimation() == tpz.anim.OPEN_DOOR and
+        GetNPCByID(gateId + 2):getAnimation() == tpz.anim.OPEN_DOOR and
+        GetNPCByID(gateId + 3):getAnimation() == tpz.anim.OPEN_DOOR and
+        GetNPCByID(gateId + 4):getAnimation() == tpz.anim.OPEN_DOOR
     ) then
         if gate:getLocalVar("isOpen") == 0 then
 
