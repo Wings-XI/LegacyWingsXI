@@ -276,13 +276,55 @@ function onSpawn(npc)
     npc:setLocalVar("pathPoint", 1)
 end
 
+function checkForNearbyMobs(npc, mobs)
+    local pathProgressMask = npc:getLocalVar("pathProgressMask")
+    -- TODODEMOS not sure if that var is really usefull
+    -- should have a boolean runway and ignore all condition
+    -- if npc:runaway == 1 then skip this method
+    local npcChatMessage = npc:getLocalVar("npcChatMessage") -- 0 = No Msg Sent, 1 = Msg Sent
+
+    for _, enemy in pairs(mobs) do
+        if npc:checkDistance(enemy) < 12 and enemy:isSpawned() then
+            if npcChatMessage == 0 then
+                npc:setLocalVar("runTimer", os.time() + math.random(20,40))
+                npc:setLocalVar("npcChatMessage", 1)
+                npc:setLocalVar("moveStatus", 1)
+                npc:setLocalVar("runStart", 1)
+                if enemy:isEngaged() then
+                    npc:showText(npc,ID.text.EXCALIACE_CRAB2)
+                else
+                    -- TODODEMOS is that a good idea, if someone bring a debaucher, waht happen ?
+                    -- Should save last checkpoint ? or not save anything like  pugil/Debaucher
+                    if enemy:getFamily() == 77 then -- crab
+                        if pathProgressMask == 7 then
+                            npc:setLocalVar("pathPoint", 38) -- save checkpoint Bottom Rooms Option
+                        elseif pathProgressMask == 3 then
+                            npc:setLocalVar("pathPoint", 34)-- save checkpoint Middle Rooms Option
+                        elseif pathProgressMask == 1 then
+                            npc:setLocalVar("pathPoint", 30) -- save checkpoint Top Rooms Option
+                        end
+                        npc:setLocalVar("pathLeg", 1)
+                        npc:showText(npc,ID.text.EXCALIACE_CRAB1)
+                    elseif enemy:getFamily() == 197 then -- pugil
+                        npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER1)
+                    elseif enemy:getFamily() == 86 then -- doomed
+                        npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER2)
+                    end
+
+                    npc:speed(RUNAWAY_SPEED)
+                end
+            end
+        end
+    end
+end
+
 function onTrack(npc)
     local instance = npc:getInstance()
     local chars = instance:getChars()
     local mobs = instance:getMobs()
     local missionActive = npc:getLocalVar("missionActive")
     local pathLeg = npc:getLocalVar("pathLeg")
-    local pathPoint = npc:getLocalVar("pathPoint")
+    local pathPoint = npc:getLocalVar("pathPoint") -- TODODEMOS Save of the checkpoint before running away
     local pathProgressMask = npc:getLocalVar("pathProgressMask")
     local topRoomsOption = npc:getLocalVar("topRoomsOption")
     local middleRoomsOption = npc:getLocalVar("middleRoomsOption")
@@ -303,39 +345,11 @@ function onTrack(npc)
     local rangeFollow = false
 
     pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0
+
     if pathProgressMask > 0 and missionActive == 1 then
         -- Check for nearby mobs
-        for _, enemy in pairs(mobs) do
-            if npc:checkDistance(enemy) < 12 and enemy:isSpawned() then
-                if npcChatMessage == 0 then
-                    npc:setLocalVar("runTimer", os.time() + math.random(20,40))
-                    npc:setLocalVar("npcChatMessage", 1)
-                    npc:setLocalVar("moveStatus", 1)
-                    npc:setLocalVar("runStart", 1)
-                    if enemy:isEngaged() then
-                        npc:showText(npc,ID.text.EXCALIACE_CRAB2)
-                    else
-                        if enemy:getFamily() == 77 then -- crab
-                            if pathProgressMask == 7 then
-                                npc:setLocalVar("pathPoint", 38)
-                            elseif pathProgressMask == 3 then
-                                npc:setLocalVar("pathPoint", 34)
-                            elseif pathProgressMask == 1 then
-                                npc:setLocalVar("pathPoint", 30)
-                            end
-                            npc:setLocalVar("pathLeg", 1)
-                            npc:showText(npc,ID.text.EXCALIACE_CRAB1)
-                        elseif enemy:getFamily() == 197 then -- pugil
-                            npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER1)
-                        elseif enemy:getFamily() == 86 then -- doomed
-                            npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER2)
-                        end
+        checkForNearbyMobs(mob)
 
-                        npc:speed(RUNAWAY_SPEED)
-                    end
-                end
-            end
-        end
 
         -- Check for nearby players
         for _, player in pairs(chars) do
