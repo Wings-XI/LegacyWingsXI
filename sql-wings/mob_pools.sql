@@ -6236,7 +6236,6 @@ INSERT INTO `mob_pools` VALUES(6199, 'War_Lynx', 'War_Lynx', 71, 0x0000c60800000
 INSERT INTO `mob_pools` VALUES(6200, 'Bashe', 'Bashe', 174, 0x0000480100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 139, 8, 0, 0, 1, 0, 174);
 INSERT INTO `mob_pools` VALUES(6201, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
 INSERT INTO `mob_pools` VALUES(6202, 'Sapphirine_Quadav_LITD', 'Sapphire_Quadav', 202, 0x00009F0200000000000000000000000000000000, 3, 3, 5, 265, 100, 0, 1, 1, 1, 2, 0, 0, 301, 131, 0, 0, 1, 0, 0, 202);
-
 --
 -- Indexes for dumped tables
 --

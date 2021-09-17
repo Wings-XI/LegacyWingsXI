@@ -33,8 +33,14 @@ function onTrigger(player, npc)
         elseif (lightInTheDarknessProgress == 4 or lightInTheDarknessProgress == 8) then
             player:startEvent(24)
         end
+    elseif (player:getCharVar("BurdenOfSuspicion") == 4) then
+        player:startEvent(37)
     else
-        player:startEvent(29)
+        if (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.BURDEN_OF_SUSPICION) == QUEST_COMPLETED) then
+            player:startEvent(38)
+        else
+            player:startEvent(29)
+        end
     end
 end
 
@@ -54,6 +60,10 @@ function onEventFinish(player, csid, option)
             player:setCharVar("LightInTheDarkness", 4)
         else
             player:setCharVar("LightInTheDarkness", 8) -- using 8 here to avoid a re-trigger of the Pashow S CS
+        end
+    elseif (csid == 37) then
+        if (npcUtil.giveItem(player, 4145)) then
+            player:setCharVar("BurdenOfSuspicion", 0)
         end
     end
 end
