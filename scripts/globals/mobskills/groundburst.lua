@@ -7,15 +7,18 @@
 --  Range: Unknown radial
 --  Notes: Only used by notorious monsters, and from any Mamool Ja in besieged.
 ---------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    -- TODO add the inBesieged condition
+    if mob:isMobType(MOBTYPE_NOTORIOUS) then
+        return 0
+    end
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

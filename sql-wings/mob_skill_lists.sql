@@ -741,11 +741,17 @@ INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 522);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 523);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 524);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 525);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1731);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1732);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1733);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1734);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1839);
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1731); -- forceful_blow
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1732); -- somersault_kick
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1733); -- firespit
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1734); -- warm-up
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1735); -- javelin_throw
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1736); -- axe_throw
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1737); -- vorpal_blade
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1738); -- groundburst
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1839); -- rushing_slash
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1840); -- rushing_stab
+-- MamoolJaKnight
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 300);
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 301);
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 302);
@@ -3207,23 +3213,13 @@ INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1210);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1211);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1215);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1216);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1731);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1732);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1733);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1734);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1839);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1736);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1923);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1924);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1920);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1921);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1922);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1923);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1924);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,2361);
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1923); -- firespit
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1924); -- warm-up
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1926); -- groundburst
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 2361); -- stave_toss
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 900);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 901);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 902);
