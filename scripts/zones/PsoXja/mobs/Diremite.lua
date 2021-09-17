@@ -13,7 +13,8 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.GYRE_CARLIN_PH, 15, math.random(900, 1800)) -- 15-30 minute cooldown.
+    -- wiki reports of NM having its window re-open in 30mins.  At a 15% spawn chance that is unlikely to observe
+    tpz.mob.phOnDespawn(mob, ID.mob.GYRE_CARLIN_PH, 30, math.random(1800)) -- 30 minute cooldown.
     if mob:getID() == 16814330 then -- PH for Gyre Carlin shifts between 3 rooms
         local position = GyreCarlinPlaceholderSpawnPoints[math.random(0,2)]
         mob:setSpawn(position.x, position.z, position.y)
