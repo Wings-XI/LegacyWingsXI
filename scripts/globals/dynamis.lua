@@ -961,6 +961,7 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
    
     mob:setMod(tpz.mod.DMGMAGIC, -10)
+    mob:setTrueDetection(1)
     
 end
 
@@ -1001,6 +1002,7 @@ dynamis.setPetStats = function(mob)
     mob:setMod(tpz.mod.RATTP, -20)
     mob:setMod(tpz.mod.ATTP, -20)
     mob:setMod(tpz.mod.DEFP, -5)
+    mob:setTrueDetection(1)
     
 end
 
