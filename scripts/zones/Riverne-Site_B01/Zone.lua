@@ -14,7 +14,7 @@ function onInitialize(zone)
     local boroka = GetMobByID(ID.mob.BOROKA)
 	if os.time() < serre then
 		GetMobByID(ID.mob.BOROKA):setRespawnTime(serre - os.time())
-    elseif not boroka:isSpawned()
+    elseif not boroka:isSpawned() then
 		SpawnMob(ID.mob.BOROKA)
 	end
 
