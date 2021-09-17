@@ -38,7 +38,7 @@ function halloweenItemsCheck(player)
     local trickStaff2 = 17587
     local pitchfork = 18102
 
-    reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2}
+    reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2, pitchfork}
     -- To Do: Move Pitchforks into seperate questline involving the bomb decorations in future events. --
     -- Checks for HQ Upgrade
     for ri = 1, #reward_list do
