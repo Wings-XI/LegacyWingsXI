@@ -14,8 +14,9 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
-
     applyHalloweenNpcCostumes(zone:getID())
+    applyHalloweenDecorations(zone:getID())
+    applyHalloweenRoaming(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 

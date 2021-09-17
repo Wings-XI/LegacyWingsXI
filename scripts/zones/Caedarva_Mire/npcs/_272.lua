@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Caedarva Mire
--- Door: Runic Seal
+-- Door: Runic Seal (Leujaoam Sanctum)
 -- !pos 486 -23 -500 79
 -----------------------------------
 local ID = require("scripts/zones/Caedarva_Mire/IDs")

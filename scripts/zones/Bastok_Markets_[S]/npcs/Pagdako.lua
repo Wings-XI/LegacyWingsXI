@@ -18,6 +18,13 @@ function onTrigger(player, npc)
         else
             player:startEvent(123)
         end
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
+        local lightInTheDarknessProgress = player:getCharVar("LightInTheDarkness")
+        if (lightInTheDarknessProgress == 1) then
+            player:startEvent(19)
+        else
+            player:startEvent(20)
+        end
     else
         player:startEvent(106)
     end
@@ -30,5 +37,7 @@ end
 function onEventFinish(player, csid, option)
     if (csid == 122) then
         player:setCharVar("FiresOfDiscProg", 1)
+    elseif (csid == 19) then
+        player:setCharVar("LightInTheDarkness", 2)
     end
 end

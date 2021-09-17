@@ -38,6 +38,8 @@ function onTrigger(player, npc)
         elseif (player:getCharVar("FiresOfDiscProg") == 6) then
             player:startEvent(164)
         end
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
+        player:startEvent(18)
     elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_COMPLETED) then
         player:startEvent(165)
     else

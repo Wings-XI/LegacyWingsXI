@@ -22,6 +22,10 @@ local instances = {
     {
         { 0,   96,    0},   -- A Manifest Problem (WotG Mission-Quest)
     },
+    [tpz.zone.PASHHOW_MARSHLANDS_S] =
+    {
+        --{ 0,   90,    0},   -- Light in the Darkness (WotG Mission-Quest)
+    },
 }
 
 
@@ -31,13 +35,14 @@ local instances = {
 -----------------------------------------------
 function instanceCheckReqs(player, instanceId, isInitiator)
     local registerRequirements = {
-        
+        [  90] = function() return ( player:hasKeyItem(tpz.ki.MINE_SHAFT_KEY) and (player:getCharVar("LightInTheDarkness") == 5 or player:getCharVar("LightInTheDarkness") == 8) ) end, -- Light in the Darkness (WotG Mission-Quest)
         [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) ) end, -- A Manifest Problem (WotG Mission-Quest)
     }
 
    -- Requirements to enter a battlefield already registered by a party member
     local enterRequirements = {
-        [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) or player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.A_MANIFEST_PROBLEM) == QUEST_COMPLETED ) end, -- A Manifest Problem (WotG Mission-Quest)
+        [  90] = function() return ((player:hasKeyItem(tpz.ki.MINE_SHAFT_KEY) and (player:getCharVar("LightInTheDarkness") == 5 or player:getCharVar("LightInTheDarkness") == 8)) or player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_COMPLETED ) end, -- Light in the Darkness (WotG Mission-Quest)
+        [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) or player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.A_MANIFEST_PROBLEM) == QUEST_COMPLETED ) end, -- A Manifest Problem (WotG Mission-Quest)        
     }
 
     local requirement = (isInitiator == true) and registerRequirements[instanceId] or enterRequirements[instanceId]
