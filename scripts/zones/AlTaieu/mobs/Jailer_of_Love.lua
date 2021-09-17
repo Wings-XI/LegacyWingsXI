@@ -42,7 +42,6 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGEN, 260)
     mob:setMod(tpz.mod.MATT, 50)
     mob:setMod(tpz.mod.INT, 4)
-    mob:setMod(tpz.mod.MDEF, 25)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -118,7 +117,7 @@ function onMobFight(mob, target)
     elseif currentAbsorb == 465 then -- light
         mob:setSpellList(484)
     end
-    
+
     -- spawn minions in 2.5 minute intervals
     if os.time() > mob:getLocalVar("pop_pets") and utils.canUseAbility(mob) == true then
         mob:setLocalVar("pop_pets", os.time() + 150)
@@ -135,6 +134,9 @@ function onMobFight(mob, target)
             mob:timer(3000, function(mob, target)
                 if mob:isAlive() then
                     mob:entityAnimationPacket("shsm")
+                    mob:SetAutoAttackEnabled(true)
+                    mob:SetMagicCastingEnabled(true)
+                    mob:SetMobAbilityEnabled(true)
                     spawnSharks(mob)
                 end
             end)

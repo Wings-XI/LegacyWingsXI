@@ -12,7 +12,8 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
-    applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenDecorations(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 

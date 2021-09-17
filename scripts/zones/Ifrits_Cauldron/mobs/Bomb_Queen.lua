@@ -19,7 +19,7 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
-    -- every ~20 seconds after first pet, a new pet will spawn around queen's position.
+    -- every ~30 seconds after first pet, a new pet will spawn around queen's position.
     -- 49.5% (198/400) chance for Prince/Princess. 1% (4/400) chance for Bomb Bastard.
     if os.time() > mob:getLocalVar("petCooldown") then
         local petId = mob:getID() + 1 + math.floor(math.random(0, 399) / 99)
@@ -31,7 +31,7 @@ function onMobFight(mob, target)
             pet:spawn()
             pet:updateEnmity(target)
 
-            mob:setLocalVar("petCooldown", os.time() + 20)
+            mob:setLocalVar("petCooldown", os.time() + 30)
         end
     end
 end
