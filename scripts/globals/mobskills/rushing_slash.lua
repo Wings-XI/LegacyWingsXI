@@ -5,24 +5,22 @@
 --  Type: Physical
 --  Utsusemi/Blink absorb: 4 shadows
 --  Range: Melee
---  Notes: Only used by Mamool Ja with slashing weapons.
+--  Notes: Only used by Mamool Ja with slashing weapons (THF and BST).
 ---------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- If mamool has a axe of a sword (except BLU)
     if mob:getMainJob() == tpz.job.BST or mob:getMainJob() == tpz.job.THF then
-        -- If animationSub is 1, mob has already lost the axe. If zero, still has axe.
-        if mob:AnimationSub() == 1 then
-            return 1
+        -- If animationSub is 1, the mob has already lost his weapeon and cant do this TP attack.
+        if mob:AnimationSub() == 0 then
+            return 0
         end
     end
-    return 0
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
