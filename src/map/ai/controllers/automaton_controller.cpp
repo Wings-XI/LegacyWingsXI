@@ -42,7 +42,7 @@ CAutomatonController::CAutomatonController(CAutomatonEntity* PPet)
 {
     PPet->setInitialBurden();
     setCooldowns();
-     m_firstTick = true; // Default to first tick after deploying
+     m_firstTick = true; // Default to first tick after activating
     if (isRanged())
     {
         PAutomaton->m_Behaviour |= BEHAVIOUR_STANDBACK;
@@ -1367,18 +1367,15 @@ bool CAutomatonController::TryTPMove()
         if (attemptChain)
         {
             CStatusEffect* PSCEffect = PTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
-            if (PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now())
+            if (PSCEffect && PSCEffect->GetStartTime() + 1s < m_Tick)
             {
                 std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
-                if (PSCEffect->GetStartTime() + 3s < m_Tick)
-                {
                     if (uint16 power = PSCEffect->GetPower())
                     {
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power & 0xF));
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power >> 4 & 0xF));
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power >> 8));
                     }
-                }
 
                 for (auto PSkill : validSkills)
                 {

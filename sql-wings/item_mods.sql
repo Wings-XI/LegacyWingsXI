@@ -52164,6 +52164,12 @@ INSERT INTO `item_mods` VALUES (17549,431,1);     -- wind staff additional effec
 INSERT INTO `item_mods` VALUES (16542,431,1);     -- wing sword additional effect
 INSERT INTO `item_mods` VALUES (17637,431,1);     -- wing sword +1 additional effect
 INSERT INTO `item_mods` VALUES (16556,431,1);     -- bloody blade additional effect
+INSERT INTO `item_mods` VALUES (16506,431,1);     -- Stun Kukri
+INSERT INTO `item_mods` VALUES (17614,431,1);     -- Stun Kukri +1
+INSERT INTO `item_mods` VALUES (16432,431,1);     -- Stun Jamadhars
+INSERT INTO `item_mods` VALUES (17484,431,1);     -- Stun Jamadhars +1
+INSERT INTO `item_mods` VALUES (16503,431,1);     -- Stun Knife
+INSERT INTO `item_mods` VALUES (17600,431,1);     -- Stun Knife +1
 
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;

@@ -11,10 +11,6 @@ require("scripts/globals/status")
 require("scripts/globals/zone")
 -----------------------------------
 
-function afterInstanceRegister(player)
-    afterAssaultRegister(player, 5345, ID.text, ID.mob)
-end
-
 function onInstanceCreated(instance)
     printf("1")
     if math.random(1,100) >= 50 then
@@ -28,6 +24,12 @@ function onInstanceCreated(instance)
     end
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-330, -10, -262, 128)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-330, -10, -265, 128)
+
+    spawnMobInAssault(instance, ID.mob)
+end
+
+function afterInstanceRegister(player)
+    afterAssaultRegister(player, 5345, ID.text, ID.mob)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
