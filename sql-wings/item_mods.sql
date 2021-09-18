@@ -52177,6 +52177,7 @@ INSERT INTO `item_mods` VALUES (14320,1182,5);    -- Enhances Tame Success Rate 
 INSERT INTO `item_mods` VALUES (15645,1182,5);    -- Enhances Tame Success Rate for Khimaira Kecks
 INSERT INTO `item_mods` VALUES (15646,1182,5);    -- Enhances Tame Success Rate for Stout Kecks
 
+
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
