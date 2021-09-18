@@ -43,10 +43,12 @@ end
 
 function onMobDeath(mob, player, isKiller)
     local yang = GetMobByID(17330184)
-    if yang:isAlive() == true then
-        mob:showText(mob, ID.text.YING_DIALOG)
-    else
-        mob:showText(mob, ID.text.YING_DIALOG +2)
+    if isKiller then
+        if yang:isAlive() == true then
+            mob:showText(mob, ID.text.YING_DIALOG)
+        else
+            mob:showText(mob, ID.text.YING_DIALOG +2)
+        end
     end
 end
 

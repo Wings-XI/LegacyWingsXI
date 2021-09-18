@@ -25,10 +25,10 @@ function onMobSpawn(mob)
         between = 60,
         specials =
         {
-            {id = tpz.jsa.HUNDRED_FISTS, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +16) end},
+            {id = tpz.jsa.HUNDRED_FISTS, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +11) end},
             {id = tpz.jsa.MIGHTY_STRIKES, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +14) end},
-            {id = tpz.jsa.BLOOD_WEAPON, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +15) end},
-            {id = tpz.jsa.CHAINSPELL, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +17) end},
+            {id = tpz.jsa.BLOOD_WEAPON, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +12) end},
+            {id = tpz.jsa.CHAINSPELL, hpp = 95, begCode = function(mob) mob:messageText(mob, ID.text.DYNAMIS_LORD_DIALOG +13) end},
         },
     })
 end
@@ -79,7 +79,7 @@ function onMobWeaponSkillPrepare(mob, target)
     -- each has two animations per skill, one jumping (insta death) the other standing on the ground.
     if mob:getHPP() <= 25 then
         if math.random() < 0.25 then
-            return 1135 
+            return 1135
         elseif math.random() < 0.50 then
             return 1133
         elseif math.random() < 0.75 then
@@ -87,6 +87,12 @@ function onMobWeaponSkillPrepare(mob, target)
         else
             return 1132
         end
+    end
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    if skill:getID() == 1135 then
+        mob:showText(mob, ID.text.DYNAMIS_LORD_DIALOG +1)
     end
 end
 
