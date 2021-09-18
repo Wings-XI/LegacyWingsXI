@@ -797,6 +797,31 @@ INSERT INTO `instance_entities` VALUES(79, 17006763);
 
 -- Seeing Blood Red
 INSERT INTO `instance_entities` VALUES(89, 17158191);
+
+-- Light In The Darkness
+INSERT INTO `instance_entities` VALUES (90, 17158192);
+INSERT INTO `instance_entities` VALUES (90, 17158193);
+INSERT INTO `instance_entities` VALUES (90, 17158194);
+INSERT INTO `instance_entities` VALUES (90, 17158195);
+INSERT INTO `instance_entities` VALUES (90, 17158196);
+INSERT INTO `instance_entities` VALUES (90, 17158197);
+INSERT INTO `instance_entities` VALUES (90, 17158198);
+INSERT INTO `instance_entities` VALUES (90, 17158199);
+INSERT INTO `instance_entities` VALUES (90, 17158200);
+INSERT INTO `instance_entities` VALUES (90, 17158201); -- Saphrire Quad
+INSERT INTO `instance_entities` VALUES (90, 17158387);
+INSERT INTO `instance_entities` VALUES (90, 17158388);
+INSERT INTO `instance_entities` VALUES (90, 17158389);
+INSERT INTO `instance_entities` VALUES (90, 17158390);
+INSERT INTO `instance_entities` VALUES (90, 17158391);
+INSERT INTO `instance_entities` VALUES (90, 17158392);
+INSERT INTO `instance_entities` VALUES (90, 17158393);
+INSERT INTO `instance_entities` VALUES (90, 17158394);
+INSERT INTO `instance_entities` VALUES (90, 17158395);
+INSERT INTO `instance_entities` VALUES (90, 17158396);
+INSERT INTO `instance_entities` VALUES (90, 17158397);
+
+-- A Manifest Problem
 INSERT INTO `instance_entities` VALUES(96, 17305662); -- Laa_Yaku_the_Austere
 INSERT INTO `instance_entities` VALUES(96, 17305921); -- Door
 INSERT INTO `instance_entities` VALUES(96, 17305647);

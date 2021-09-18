@@ -254,10 +254,8 @@ function afterAssaultRegister(player, fireFlies, textTable, mobTable)
     local assaultID = player:getCurrentAssault()
     --local cap = instance:getLevelCap()
     local cap = 0 -- TODO: need to correct this!
-    for _, v in pairs(mobTable[assaultID].MOBS_START) do
-        SpawnMob(v, instance)
-    end
 
+    player:setLocalVar("AssaultCompletedMessage", 0)
     player:messageSpecial(textTable.ASSAULT_START_OFFSET + assaultID, assaultID)
     player:messageSpecial(textTable.TIME_TO_COMPLETE, instance:getTimeLimit())
     player:addTempItem(fireFlies)
@@ -303,11 +301,14 @@ end
 -- onAssaultComplete( instance, X, Z, textTable, npcTable)
 -- Annonce to players that Rune of Release has appeared at a position
 -- -------------------------------------------------------------------
-function onAssaultComplete(instance, X, Z, textTable, npcTable) -- Recherche textTable et npcTable
+function onAssaultComplete(instance, X, Z, textTable, npcTable)
     local chars = instance:getChars()
 
     for _,v in pairs(chars) do
-        v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
+        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then 
+            v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
+            v:setLocalVar("AssaultCompletedMessage", 1)
+        end
     end
 
     instance:getEntity(bit.band(npcTable.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
@@ -475,5 +476,17 @@ function assaultChestTrigger(player, npc, qItemTable, regItemTable, textTable)
                 end
             end
         end
+    end
+end
+
+-- -------------------------------------------------------------------
+-- spawnMobInAssault(instance, mobTable)
+-- Spawn the mob of the assault
+-- -------------------------------------------------------------------
+function spawnMobInAssault(instance, mobTable)
+    local assaultID = instance:getID()
+
+    for _, v in pairs(mobTable[assaultID].MOBS_START) do
+        SpawnMob(v, instance)
     end
 end

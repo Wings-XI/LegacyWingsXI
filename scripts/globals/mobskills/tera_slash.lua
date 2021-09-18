@@ -7,10 +7,10 @@
 --  Range: Unknown cone
 --  Notes:
 ---------------------------------------------
-local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
+require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -27,7 +27,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_IGNORE_SHADOWS)
 
     if mob:getHPP() <= 25 and skill:getID() == 1135 then
-        mob:showText(mob, ID.text.DYNAMIS_LORD_DIALOG +18)
         skill:setMsg(tpz.msg.basic.FALL_TO_GROUND)
         target:setHP(0) -- insta death
         return 0

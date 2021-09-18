@@ -11,7 +11,9 @@ local ID = require("scripts/zones/Bastok_Markets/IDs")
 -----------------------------------
 
 function onInitialize(zone)
-    applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenDecorations(zone:getID())
+   applyHalloweenRoaming(zone:getID())
 end
 
 function onZoneIn(player, prevZone)

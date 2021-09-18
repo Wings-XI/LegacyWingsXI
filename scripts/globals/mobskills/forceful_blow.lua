@@ -6,18 +6,19 @@
 --  Utsusemi/Blink absorb: 1 shadow
 --  Range: Melee
 --  Notes: Only used by unarmed Mamool Ja.
+--
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
+
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getMainJob() == tpz.job.NIN or mob:AnimationSub() == 1) then
+    if mob:getMainJob() == tpz.job.NIN or (mob:getMainJob() ~= tpz.job.NIN and mob:AnimationSub() == 1) then
         return 0
-    else 
-        return 1
     end
+    
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

@@ -16737,7 +16737,9 @@ inline int32 CLuaBaseEntity::checkHourglassValid(lua_State* L)
 
         if (token == itemToken || token == 0)
         {
-            if (now > glassReservationStart && now < glassReservationStart + 15min)
+            // Note - the inital 15mins gives players time to actually enter the dynamis instance. Unlike retail we dont start the timer/dyna instance until a player actually enters
+            // The +1min buffer on DynamisExpiry is just to prevent any kind of race condition.  No race conditions were observed during testing.
+            if (now > glassReservationStart && (now < glassReservationStart + 15min || now + 1min < (std::chrono::seconds)CDynamisHandler::DynamisGetExpiryTimepoint(zoneid)))
             {
                 if (now > DynaReservationStart + 71h)
                 {

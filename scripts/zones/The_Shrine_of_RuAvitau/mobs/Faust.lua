@@ -50,6 +50,7 @@ function onMobDisengage(mob)
     mob:setLocalVar("state", 0)
     mob:setMobMod(tpz.mobMod.SKILL_LIST, 0)
     mob:delMod(tpz.mod.REGAIN, 3000)
+    mob:setTP(0)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -59,4 +60,5 @@ function onMobDespawn(mob)
     local respawn = math.random(10800, 21600)
     mob:setRespawnTime(respawn) -- 3 to 6 hours
     SetServerVariable("Faust_Respawn", (os.time() + respawn))
+    mob:setTP(0)
 end

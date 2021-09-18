@@ -58,4 +58,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    if csid == 101 or csid == 102 then
+        player:setPos(0, 0, 0, 0, 54)
+    end
 end
