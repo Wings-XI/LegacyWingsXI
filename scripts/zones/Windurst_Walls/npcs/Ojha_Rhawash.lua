@@ -8,9 +8,11 @@
 local ID = require("scripts/zones/Windurst_Walls/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/quests")
-
+require("scripts/globals/events/starlight_festivals")
+----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 
 count = trade:getItemCount()
 gil = trade:getGil()

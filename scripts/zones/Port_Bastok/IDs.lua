@@ -71,6 +71,12 @@ zones[tpz.zone.PORT_BASTOK] =
         CLOUD_BAD_COUNT             = 9216, -- Well, don't just stand there like an idiot! I can't do any bundlin' until you fork over a set of 99 tools and <item>! And I ain't doin' no more than seven sets at one time, so don't even try it!
         CLOUD_GOOD_TRADE            = 9220, -- Here, take 'em and scram. And don't say I ain't never did nothin' for you!
         CLOUD_BAD_ITEM              = 9221, -- What the hell is this junk!? Why don't you try bringin' what I asked for before I shove one of my sandals up your...nose!
+        FESTIVE_MOOGLE_DIALOG       = 9230, -- Come one, come all, kupo!
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU              = 9161, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS              = 9164, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN             = 9168, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN     = 9169, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {
@@ -106,6 +112,8 @@ zones[tpz.zone.PORT_BASTOK] =
             [17744151] = 17744151,  -- Starlight Festival Planter
             [17744152] = 17744152,  -- Starlight Festival Planter
             [17744153] = 17744153,  -- Starlight Festival Planter
+            [17743981] = 17743981,  -- Event Moogle Stall
+            [17743985] = 17743985,  -- Festive Moogle
         },
         DOLL_FESTIVAL_DECORATIONS = {
             [17744060] = 17744060,  -- Doll Festival Stage

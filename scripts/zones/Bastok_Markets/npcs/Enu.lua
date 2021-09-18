@@ -7,9 +7,11 @@
 local ID = require("scripts/zones/Bastok_Markets/IDs")
 require("scripts/globals/quests")
 require("scripts/globals/world")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     if (trade:hasItemQty(1192, 1) and trade:getItemCount() == 1) then -- Quest: Wish Upon a Star - Trade Fallen Star
         if (player:getCharVar("WishUponAStar_Status") == 3) then
             if (player:getWeather() == tpz.weather.NONE and  (VanadielTOTD() == tpz.time.NIGHT or VanadielTOTD() == tpz.time.MIDNIGHT)) then

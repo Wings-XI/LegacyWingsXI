@@ -40,6 +40,11 @@ zones[tpz.zone.WINDURST_WALLS] =
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 9085, -- Players who have not reached level <number> are prohibited from entering Dynamis.
         DYNA_NPC_DEFAULT_MESSAGE       = 9097, -- The strands of grass here have been tied together.
         TEAR_IN_FABRIC_OF_SPACE        = 10818, -- There appears to be a tear in the fabric of space...
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 9522, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 9525, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 9529, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 9530, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {

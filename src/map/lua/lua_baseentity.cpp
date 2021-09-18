@@ -6367,7 +6367,7 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
 
     uint8 fameArea = (uint8)lua_tointeger(L, -1);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         uint16 fame = 0;
         float fameMultiplier = map_config.fame_multiplier;
@@ -6404,6 +6404,10 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
             case 15: // Adoulin
                 fame = (uint16)(PChar->profile.fame[14] * fameMultiplier);
                 break;
+            // Other
+            case 16: //Holiday Fame (Starlight Festival)
+                fame = (uint16)(PChar->profile.fame[fameArea]);
+                break;
         }
         lua_pushinteger(L, fame);
     }
@@ -6438,7 +6442,7 @@ inline int32 CLuaBaseEntity::addFame(lua_State *L)
     uint8 fameArea = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
     uint16 fame = (uint16)lua_tointeger(L, 2);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
@@ -6474,6 +6478,9 @@ inline int32 CLuaBaseEntity::addFame(lua_State *L)
             case 15: // Adoulin
                 PChar->profile.fame[14] += fame;
                 break;
+            case 16: //Holiday Fame (Starlight Festival)
+                PChar->profile.fame[fameArea] += fame;
+                break;
         }
         charutils::SaveFame(PChar);
     }
@@ -6507,7 +6514,7 @@ inline int32 CLuaBaseEntity::setFame(lua_State *L)
     uint8 fameArea = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
     uint16 fame = (uint16)lua_tointeger(L, 2);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         switch (fameArea)
         {
@@ -6541,6 +6548,9 @@ inline int32 CLuaBaseEntity::setFame(lua_State *L)
             case 15: // Adoulin
                 ((CCharEntity*)m_PBaseEntity)->profile.fame[14] = fame;
                 break;
+            case 16: //Holiday Fame (Starlight Festival)
+                ((CCharEntity*)m_PBaseEntity)->profile.fame[fameArea] = fame;
+                break;
         }
         charutils::SaveFame((CCharEntity*)m_PBaseEntity);
     }
@@ -6572,7 +6582,7 @@ inline int32 CLuaBaseEntity::getFameLevel(lua_State *L)
 
     uint8 fameArea = (uint8)lua_tointeger(L, -1);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         this->getFame(L);
         uint16 fame = (uint16)lua_tointeger(L, -1);

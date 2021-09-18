@@ -3,7 +3,11 @@
 --  NPC: Rothais
 -- Involved in Quest: Gourmet
 -----------------------------------
+local ID = require("scripts/zones/Bastok_Markets/IDs")
+require("scripts/globals/events/starlight_festivals")
+----------------------------------
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)
