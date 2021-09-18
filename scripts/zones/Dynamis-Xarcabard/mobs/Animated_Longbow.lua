@@ -11,7 +11,6 @@ local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 local zone = 135
 
 function onMobSpawn(mob)
-    mob:SetMobSkillAttack(7)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)

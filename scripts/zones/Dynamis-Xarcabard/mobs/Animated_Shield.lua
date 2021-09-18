@@ -14,12 +14,8 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
-end
-
-function onMobSpawn(mob)
-    mob:setMod(tpz.mod.SHIELD_BASH, 8) -- Sets a dmg multiplier for shield_bash
+    mob:setMod(tpz.mod.SHIELD_BASH, 8) -- Sets a dmg multiplier for shield bash
     mob:setMod(tpz.mod.DMGMAGIC, -50)
-    mob:resetLocalVars()
 end
 
 function onMobEngaged(mob, target)
@@ -46,12 +42,6 @@ function onMonsterMagicPrepare(mob, target)
 end
 
 function onMobFight(mob, target)
-end
-
-function onCastStarting(mob, spell)
-    if spell:getID() == 261 then
-        mob:setLocalVar("warp", 0)
-    end
 end
 
 function onMobRoamAction(mob)
