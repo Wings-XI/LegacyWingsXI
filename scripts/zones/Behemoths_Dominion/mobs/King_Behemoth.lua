@@ -21,20 +21,39 @@ function onMobSpawn(mob)
     end
     
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 35)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.ATT, -50)
-    --mob:addMod(tpz.mod.ATTP, 35)
     mob:setMod(tpz.mod.RESBUILD_GRAVITY, 10)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 99)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
+    mob:setMod(tpz.mod.MDEF, -20)
 end
 
 function onAdditionalEffect(mob, target, damage)
     local params = {}
     params.chance = 20
-    params.duration = 5
+    params.duration = math.random(4, 8) -- Based on captures
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.STUN, params)
+end
+
+function onMobFight(mob, target)
+    if mob:getHPP() >= 50 then
+        mob:setMod(tpz.mod.REGAIN, 160)
+     elseif mob:getHPP() < 50 and mob:getHPP() > 25 then
+         mob:setMod(tpz.mod.REGAIN, 100)
+    else
+        mob:setMod(tpz.mod.REGAIN, 80)
+    end
+    
+    local delay = mob:getLocalVar("delay")
+        if (delay > 98) then -- Use Meteor every 40s, based on capture
+                mob:castSpell(218) -- meteor
+                mob:setLocalVar("delay", 0)
+            else
+                mob:setLocalVar("delay", delay+1)
+        end
 end
 
 function onSpellPrecast(mob, spell)
@@ -43,15 +62,7 @@ function onSpellPrecast(mob, spell)
         spell:setFlag(tpz.magic.spellFlag.HIT_ALL)
         spell:setRadius(30)
         spell:setAnimation(280)
-        spell:setMPCost(1)
-    end
-end
-
-function onMobWeaponSkill(target, mob, skill)
-    if skill:getID() == 629 and math.random() < 0.7 then -- thunderbolt
-        --mob:queue(100, function(mob)
-        mob:castSpell()
-        --end)
+        spell:setMPCost(0)
     end
 end
 

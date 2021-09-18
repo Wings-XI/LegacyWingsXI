@@ -100,7 +100,7 @@ dynamis.entryInfo =
         csRegisterGlass = 118,
         csWin = 134,
         csDyna = 119,
-        enabled = false,
+        enabled = true,
         winVar = "DynaBeaucedine_Win",
         hasEnteredVar = "DynaBeaucedine_HasEntered",
         hasSeenWinCSVar = "DynaBeaucedine_HasSeenWinCS",
@@ -120,7 +120,7 @@ dynamis.entryInfo =
         csRegisterGlass = 15,
         csWin = 32,
         csDyna = 16,
-        enabled = false,
+        enabled = true,
         winVar = "DynaXarcabard_Win",
         hasEnteredVar = "DynaXarcabard_HasEntered",
         hasSeenWinCSVar = "DynaXarcabard_HasSeenWinCS",
@@ -277,7 +277,7 @@ dynamis.dynaInfo =
         hasSeenWinCSVar = "DynaBeaucedine_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_INSIGNIA,
         winTitle = tpz.title.DYNAMIS_BEAUCEDINE_INTERLOPER,
-        entryPos = {-284.751, -39.923, -422.948, 235, tpz.zone.RULUDE_GARDENS},
+        entryPos = {-284.751, -39.923, -422.948, 235, tpz.zone.DYNAMIS_BEAUCEDINE},
         ejectPos = {-284.751, -39.923, -422.948, 235, tpz.zone.BEAUCEDINE_GLACIER},
     },
     [tpz.zone.BEAUCEDINE_GLACIER] = 
@@ -742,6 +742,7 @@ dynamis.setMobStats = function(mob)
     mob:setMod(tpz.mod.STR, -30)
     mob:setMod(tpz.mod.VIT, -15)
     mob:setMod(tpz.mod.DEFP, 10)
+    mob:setTrueDetection(1)
     
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
@@ -889,6 +890,8 @@ dynamis.setNMStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
     mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
+
+    mob:setTrueDetection(1)
     
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
@@ -985,6 +988,7 @@ dynamis.setMegaBossStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
     mob:setMod(tpz.mod.RESBUILD_STUN, 8)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
+    mob:setTrueDetection(1)
     
 end
 

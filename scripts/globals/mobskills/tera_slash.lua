@@ -7,11 +7,10 @@
 --  Range: Unknown cone
 --  Notes:
 ---------------------------------------------
-
+local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -27,8 +26,14 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 1.5, 2)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_IGNORE_SHADOWS)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
-    return dmg
-
+    if mob:getHPP() <= 25 and skill:getID() == 1135 then
+        mob:showText(mob, ID.text.DYNAMIS_LORD_DIALOG +18)
+        skill:setMsg(tpz.msg.basic.FALL_TO_GROUND)
+        target:setHP(0) -- insta death
+        return 0
+    else
+        target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
+        if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+        return dmg
+    end
 end

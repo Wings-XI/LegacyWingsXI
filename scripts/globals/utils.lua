@@ -65,7 +65,7 @@ function utils.stoneskin(target, dmg)
 end
 
 function utils.takeShadows(target, dmg, shadowbehav, mob)
-    
+
     local targShadows = target:getMod(tpz.mod.UTSUSEMI)
     local shadowType = tpz.mod.UTSUSEMI
 
@@ -73,7 +73,7 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
         targShadows = target:getMod(tpz.mod.BLINK)
         shadowType = tpz.mod.BLINK
     end
-    
+
     local enmityLoss = shadowType == tpz.mod.UTSUSEMI and -25 or -50
     if mob == nil or mob:isMob() == false then enmityLoss = 0 end
 
@@ -103,7 +103,7 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
                 target:delStatusEffect(tpz.effect.COPY_IMAGE)
                 target:delStatusEffect(tpz.effect.BLINK)
             end
-            
+
             if enmityLoss < 0 then
                 mob:addEnmity(target, enmityLoss*(targShadows-shadowsLeft), 0)
                 --print(string.format("taking away enmity of value %i",enmityLoss*(targShadows-shadowsLeft)))
@@ -113,12 +113,12 @@ function utils.takeShadows(target, dmg, shadowbehav, mob)
         else --less shadows than this move will take, remove all and factor damage down. TODO: this is going to be inaccurate due to separate hit damage from WSC, blocks, etc
             target:delStatusEffect(tpz.effect.COPY_IMAGE)
             target:delStatusEffect(tpz.effect.BLINK)
-            
+
             if enmityLoss < 0 then
                 mob:addEnmity(target, enmityLoss*targShadows, enmityLoss*targShadows)
                 --print(string.format("taking away enmity of value %i",enmityLoss*targShadows))
             end
-            
+
             return dmg * ((shadowbehav-targShadows)/shadowbehav), targShadows
         end
     end
@@ -533,4 +533,18 @@ function utils.getTargetDistance(entityA, entityB)
 
     return math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
 end
- 
+
+ -- checks if mob is in any stage of using a mobskill or casting a spell or under the status effects listed below
+ -- prevents multiple abilities/actions to be called at the same time
+function utils.canUseAbility(mob)
+    local act = mob:getCurrentAction()
+    if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH
+    or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or mob:getStatusEffect(tpz.effect.STUN) ~= nil
+    or mob:getStatusEffect(tpz.effect.PETRIFICATION) ~= nil or mob:getStatusEffect(tpz.effect.TERROR) ~= nil
+    or mob:getStatusEffect(tpz.effect.SLEEP) ~= nil or mob:getStatusEffect(tpz.effect.SLEEP_II) ~= nil
+    or mob:getStatusEffect(tpz.effect.AMNESIA) ~= nil or mob:getStatusEffect(tpz.effect.LULLABY) ~= nil then
+        return false
+    end
+
+    return true
+end
