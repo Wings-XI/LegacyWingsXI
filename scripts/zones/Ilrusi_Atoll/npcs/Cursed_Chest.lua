@@ -9,15 +9,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.CHEST)
-
     local npcID = npc:getID()
-    --local npcPOS = npc:getpos()
     local instance = npc:getInstance()
     local figureheadChest = instance:getProgress()
     local npcPOS = instance:getEntity(bit.band(npcID, 0xFFF), tpz.objType.NPC):getPos()
 
-    if (npcID == figureheadChest) then
+    if npcID == figureheadChest then
         player:messageSpecial(ID.text.GOLDEN)
         npc:entityAnimationPacket("open")
         instance:setProgress(1)
@@ -33,10 +30,4 @@ function onTrigger(player, npc)
         mob_coffer:setPos(npcPOS.x, npcPOS.y, npcPOS.z, npcPOS.rot)
         mob_coffer:updateClaim(player)
     end
-end
-
-function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
 end
