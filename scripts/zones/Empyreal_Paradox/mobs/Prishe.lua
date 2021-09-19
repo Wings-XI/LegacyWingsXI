@@ -8,7 +8,12 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:addMod(tpz.mod.REGAIN, 30)
+end
+
+function onMobSpawn(mob)
+    mob:addMod(tpz.mod.REGAIN, 100)
+    mob:addMod(tpz.mod.UDMGMAGIC, -40)
+    mob:addMod(tpz.mod.UDMGPHYS, -70)
 end
 
 function onMobRoam(mob)
@@ -40,10 +45,10 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-    if mob:getLocalVar("Raise") == 1 then
-        mob:messageText(mob, ID.text.PRISHE_TEXT + 3)
+    if mob:getLocalVar("Raise") == 1 and mob:getHPP() > 0 then
+        mob:setLocalVar("DeathText", 0)
+        mob:stun(300)
         mob:setLocalVar("Raise", 0)
-        mob:stun(3000)
     elseif mob:getHPP() < 70 and mob:getLocalVar("HF") == 0 then
         mob:useMobAbility(tpz.jsa.HUNDRED_FISTS_PRISHE)
         mob:messageText(mob, ID.text.PRISHE_TEXT + 6)
@@ -57,5 +62,9 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:messageText(mob, ID.text.PRISHE_TEXT + 2)
+    if mob:getHPP() == 0 and mob:getLocalVar("DeathText") == 0 then
+        mob:messageText(mob, ID.text.PRISHE_TEXT + 3)
+        mob:messageText(mob, ID.text.PRISHE_TEXT + 2)
+        mob:setLocalVar("DeathText", 1)
+    end
 end
