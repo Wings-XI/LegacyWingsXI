@@ -24,10 +24,38 @@ function onBattlefieldInitialise(battlefield)
     local selhteus = battlefield:insertEntity(14167, true, true)
     selhteus:setSpawn(pos.x + 10, pos.y, pos.z - 17.5, 172)
     selhteus:spawn()
+
+    local bfTick = battlefield:getLocalVar("bfTick")
 end
 
 function onBattlefieldTick(battlefield, tick)
     tpz.battlefield.onBattlefieldTick(battlefield, tick)
+
+
+    if battlefield:getLocalVar("bfTick") == 3 then
+
+        local playerCount = 0
+        local counter = 0
+
+        for _, player in ipairs(battlefield:getPlayers()) do
+            playerCount = playerCount + 1
+        end
+
+        for _, player in ipairs(battlefield:getPlayers()) do
+
+            if player:getHPP() == 0 then
+                counter = counter + 1
+            end
+            if counter == playerCount then
+                battlefield:lose()
+            end
+        end
+
+        battlefield:setLocalVar("bfTick", 0)
+
+    end
+
+    battlefield:setLocalVar("bfTick", battlefield:getLocalVar("bfTick") + 1)
 end
 
 function onBattlefieldRegister(player, battlefield)
