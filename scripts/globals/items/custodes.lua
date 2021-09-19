@@ -11,13 +11,13 @@ require("scripts/globals/msg")
 function onAdditionalEffect(player, target, damage)
     local chance = 5
 
-    if (VanadielDayOfTheWeek() == tpz.day.ICEDAY) then
+    if VanadielDayOfTheWeek() == tpz.day.ICEDAY then
         chance = chance+6
     end
 
-    if (player:getWeather() == WEATHER_ICE) then
+    if player:getWeather() == tpz.WEATHER.SNOW then
         chance = chance+4
-    elseif (player:getWeather() == tpz.weather.BLIZZARDS) then
+    elseif player:getWeather() == tpz.weather.BLIZZARDS then
         chance = chance+6
     end
 

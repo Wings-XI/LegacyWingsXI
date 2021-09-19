@@ -15,7 +15,7 @@ require("scripts/globals/shop")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    local exoticDelacacies = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.EXOTIC_DELICACIES)
+    local exoticDelicacies = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.EXOTIC_DELICACIES)
 
     -- ALL THE WAY TO THE BANK
     if (player:hasKeyItem(tpz.ki.TARUTARU_SAUCE_INVOICE) and npcUtil.tradeHas( trade, {{"gil", 5600}} )) then
@@ -25,7 +25,7 @@ function onTrade(player, npc, trade)
         end
 
     -- EXOTIC DELICACIES
-    elseif (exoticDelacacies == QUEST_ACCEPTED) then
+    elseif (exoticDelicacies == QUEST_ACCEPTED) then
         if (npcUtil.tradeHas( trade, {3916, 5949, {5954, 2}} )) then
             player:startEvent(2861)
         elseif (npcUtil.tradeHas(trade, 5974) or npcUtil.tradeHas(trade, 5975)) then
@@ -36,7 +36,7 @@ end
 
 function onTrigger(player, npc)
     local theWeatherspoonWar = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.THE_WEATHERSPOON_WAR)
-    local exoticDelacacies = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.EXOTIC_DELICACIES)
+    local exoticDelicacies = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.EXOTIC_DELICACIES)
 
     -- THE WEATHERSPOON WAR
     if (theWeatherspoonWar == QUEST_ACCEPTED and player:getCharVar("Weatherspoon_War_Status") == 6) then
@@ -44,7 +44,7 @@ function onTrigger(player, npc)
 
     -- EXOTIC DELICACIES
     -- Flapano offers his quest every other time the player talks to him
-    elseif (exoticDelacacies ~= QUEST_COMPLETED and player:getCharVar("Flapano_Odd_Even") == 0) then
+    elseif (exoticDelicacies ~= QUEST_COMPLETED and player:getCharVar("Flapano_Odd_Even") == 0) then
         if (exoticDelicacies == QUEST_AVAILABLE) then
             player:startEvent(2860)
         elseif (exoticDelicacies == QUEST_ACCEPTED) then
