@@ -37,7 +37,7 @@ function onMobWeaponSkill(target, mob, skill)
     target:AnimationSub(3)
 
     -- Cannot be resisted
-    target:addStatusEffect(tpz.effect.STUN, 0, 0, 20)
+    target:addStatusEffect(tpz.effect.TERROR, 0, 0, 20)
 
     target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end

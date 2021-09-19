@@ -10,6 +10,7 @@ require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/chocobo")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
@@ -17,6 +18,7 @@ function onInitialize(zone)
     applyHalloweenNpcCostumes(zone:getID())
     applyHalloweenDecorations(zone:getID())
     applyHalloweenRoaming(zone:getID())
+    applyStarlightDecorations(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 

@@ -9,10 +9,12 @@ require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
     quests.ffr.initZone(zone) -- register regions 1 through 5
+    applyStarlightDecorations(zone:getID())
 end
 
 function onZoneIn(player,prevZone)

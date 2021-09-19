@@ -2035,10 +2035,7 @@ namespace battleutils
 
             if ((PAttacker->objtype == TYPE_PET || (PAttacker->objtype == TYPE_MOB && PAttacker->isCharmed)) && PAttacker->PMaster->objtype == TYPE_PC)
             {
-                if (PAttacker->objtype == TYPE_MOB)
-                    damageType = DAMAGE_SLASHING;
-                else
-                    damageType = PAttacker->m_dmgType == (DAMAGETYPE)0 ? DAMAGE_SLASHING : PAttacker->m_dmgType;
+                damageType = PAttacker->m_dmgType == (DAMAGETYPE)0 ? DAMAGE_SLASHING : PAttacker->m_dmgType;
             }
 
             if (isRanged)

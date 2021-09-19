@@ -117,6 +117,22 @@ zones[tpz.zone.NORTHERN_SAN_DORIA] =
         VILLION_MESSAGE          = 13372, -- Villion looks over curiously for a moment.
         RETRIEVE_DIALOG_ID       = 18112, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL    = 18444, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU           = 13377, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS           = 13380, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN          = 13384, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN  = 13385, -- You've brought barrelfuls of joy to the children of Vana'diel!
+        STARLIGHT_CARD_1         = 13512, -- It's time once again for the Starlight Celebration!≺Prompt≻
+        STARLIGHT_CARD_2         = 17787, -- Kupo ho ho! Merry Starlight! As with past celebrations, we've prepared a veritable mountain of presents for all adventurers, kupo.≺Prompt≻
+        STARLIGHT_CARD_3         = 17795, -- We'd also appreciate your help in distributing cards, kupo. All you're required to do is deliver this card to the addressee. We're counting on you!≺Prompt≻
+        STARLIGHT_CARD_4         = 17791, -- If you happen to forget who the card's recipient is, just show it to me, kupo.≺Prompt≻
+        STARLIGHT_CARD_5         = 17790, -- You're truly a role model for all adventurers, kupo! Now then, we'd like you to take this card and give it to a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer.≺Prompt≻
+        STARLIGHT_CARD_6         = 17783, -- Happy delivering, kupo!≺Prompt≻
+        STARLIGHT_CARD_CHECK     = 17792, -- Let' see... This addressee of this card is a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer, kupo.≺Prompt≻
+        STARLIGHT_CARD_RED       = 13519, -- Oh, I just remembered! I think that the cards are all addressed to people who are wearing red...≺Prompt≻
+        STARLIGHT_CARD_WRONG     = 17793, -- Are you trying to pull a fast one, kupo!? This card isn't yours to give, nor is it addressed to you, so please take it back to where you found it.≺Prompt≻
+        STARLIGHT_CARD_CONFIRM   = 17785, -- Here's a little something for your kindness.≺Prompt≻
+        STARLIGHT_FAME_DIALOG    = 13536, -- ≺Multiple Choice (Parameter 1)≻[You haven't brought any happiness to the children!/You've done some good./You've done fairly well./You've made the children very happy!/You've brought lots of smiles!/You have the children bursting with glee!/The children love you!] ≺Multiple Choice (Parameter 1)≻[What a disappointment./You just need to give a little extra effort!/Keep it up!/You make a good smilebringer./Excellent work!/Stupendous job!/Even I think you're great!]≺Prompt≻
     },
     mob =
     {
@@ -177,6 +193,10 @@ zones[tpz.zone.NORTHERN_SAN_DORIA] =
             [17723803] = 17723803,  -- Starlight Tree
             [17723804] = 17723804,  -- Starlight Tree
             [17723805] = 17723805,  -- Starlight Tree
+            [17723812] = 17723812,  -- Event Moogle Stall
+            [17723811] = 17723811,  -- Festive Moogle
+            [17723784] = 17723784,  -- Charmealaut
+            [17723557] = 17723557,  -- Event Moogle
         },
         DOLL_FESTIVAL_DECORATIONS = {
             [17723681] = 17723681,  -- Doll Festival Stage
