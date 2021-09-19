@@ -9,9 +9,11 @@ require("scripts/globals/titles")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 local ID = require("scripts/zones/Windurst_Waters/IDs")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 
     if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_4") == 1) then
         if (trade:hasItemQty(1127, 1) and trade:getItemCount() == 1) then -- Trade Kindred seal

@@ -79,6 +79,11 @@ zones[tpz.zone.PORT_SAN_DORIA] =
         MIENE_MESSAGE                  = 8428, -- Miene looks over curiously for a moment.
         PORTAURE_MESSAGE               = 8429, -- Portaure looks over curiously for a moment.
         AUVARE_MESSAGE                 = 8430, -- Auvare looks over curiously for a moment.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 8583, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 8586, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 8590, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 8591, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {

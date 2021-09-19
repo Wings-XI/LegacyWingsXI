@@ -4,8 +4,12 @@
 -- Optional Involvement in Quest: A Squire's Test II
 -- !pos -11 1 -94 230
 -------------------------------------
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
+require("scripts/globals/events/starlight_festivals")
+-------------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

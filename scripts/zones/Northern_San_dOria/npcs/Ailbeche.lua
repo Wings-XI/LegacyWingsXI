@@ -10,6 +10,7 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -26,6 +27,9 @@ function onTrade(player, npc, trade)
             player:startEvent(47) -- During Quest "A Boy's Dream" (trading odontotyrannus)
         end
     end
+
+    onStarlightSmilebringersTrade(player, trade, npc)
+
 end
 
 function onTrigger(player, npc)

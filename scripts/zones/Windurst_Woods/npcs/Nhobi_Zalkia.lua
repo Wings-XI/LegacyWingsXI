@@ -8,9 +8,11 @@ local ID = require("scripts/zones/Windurst_Woods/IDs")
 require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/shop")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     onHalloweenTrade(player, trade, npc)
 end
 
