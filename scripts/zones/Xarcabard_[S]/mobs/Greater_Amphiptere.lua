@@ -64,5 +64,4 @@ function onMobRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:setRespawnTime(3600)
 end
