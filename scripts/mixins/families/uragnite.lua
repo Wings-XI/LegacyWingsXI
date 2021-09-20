@@ -64,8 +64,6 @@ local function shellTimer(mob)
 
     if os.time() > timeToShell and bit.band(mob:AnimationSub(), 1) == 0 and mob:isFollowingPath() == false and mob:isMobType(MOBTYPE_BATTLEFIELD) == false then
         enterShell(mob)
-        local id = mob:getID()
-        print("Shell Timer Triggered"..id)
 
         local timeInShell = math.random(mob:getLocalVar("[uragnite]timeInShellMin"), mob:getLocalVar("[uragnite]timeInShellMax"))
         local shellRandom = timeInShell + (os.time() + math.random(40,60))
@@ -116,7 +114,6 @@ g_mixins.families.uragnite = function(mob)
         local newHP = mob:getHP() - amount
 
         if mobHPP < 100 and math.floor( mobHPP / 10) > math.floor (newHP / (mob:getMaxHP() / 10)) and bit.band(mob:AnimationSub(), 1) == 0 then
-            print("Damage triggered shell")
             enterShell(mob)
             mob:useMobAbility(1572) -- Going into shell caused by damage always triggers venom shell
 
