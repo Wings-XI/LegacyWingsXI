@@ -7189,7 +7189,7 @@ INSERT INTO `mob_groups` VALUES(46, 781, 114, 'Contantican_Warrior', 0, 128, 0, 
 INSERT INTO `mob_groups` VALUES(47, 778, 114, 'Contantican_Black_Mage', 0, 128, 0, 0, 0, 55, 55, 0);
 INSERT INTO `mob_groups` VALUES(48, 779, 114, 'Contantican_Paladin', 0, 128, 0, 0, 0, 55, 55, 0);
 INSERT INTO `mob_groups` VALUES(49, 780, 114, 'Contantican_Ranger', 0, 128, 0, 0, 0, 55, 55, 0);
-INSERT INTO `mob_groups` VALUES(50, 595, 114, 'Cactrot_Rapido', 172800, 128, 395, 0, 0, 80, 81, 0);
+INSERT INTO `mob_groups` VALUES(50, 595, 114, 'Cactrot_Rapido', 172800, 128, 395, 10000, 0, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(51, 1896, 114, 'Hastatus_XIII-LXXV', 0, 128, 0, 0, 0, 50, 55, 0);
 INSERT INTO `mob_groups` VALUES(52, 1897, 114, 'Hastatus_XIII-XCVI', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(53, 3439, 114, 'Sagittarius_XIII-XXVI', 0, 128, 0, 0, 0, 50, 55, 0);
