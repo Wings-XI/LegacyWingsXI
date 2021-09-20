@@ -16,6 +16,13 @@ function onMobInitialize(mob)
     end
 end
 
+function onMobSpawn(mob)
+    if mob:getID() == ID.mob.ORCISH_OVERLORD then
+    mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
+    mob:addMod(tpz.mod.ACC, 24) -- Base 306 for a total of 330
+    end
+end
+
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.ORCISH_OVERLORD_ENGAGE)
 end
@@ -37,14 +44,20 @@ function onMobDespawn(mob)
         local popNow = (math.random(1, 5) == 3 or kills > 6)
 
         if os.time() > ToD and popNow then
+            SetServerVariable("Overlord_Bakgodek_UP", 1)
             DisallowRespawn(nqId, true)
             DisallowRespawn(hqId, false)
             UpdateNMSpawnPoint(hqId)
-            GetMobByID(hqId):setRespawnTime(math.random(75600, 86400))
+            local respawn = (75600 + ((math.random(0, 6)) * 1800)) -- 21 - 24 hours with half hour windows
+            GetMobByID(hqId):setRespawnTime(respawn)
+            SetServerVariable("Overlord_Bakgodek_Respawn",(os.time() + respawn))
         else
             UpdateNMSpawnPoint(nqId)
-            mob:setRespawnTime(math.random(75600, 86400))
+            local respawn = (75600 + ((math.random(0, 6)) * 1800)) -- 21 - 24 hours with half hour windows
+            mob:setRespawnTime(respawn)
+            SetServerVariable("Orcish_Overlord_Respawn",(os.time() + respawn))
             SetServerVariable("[PH]Overlord_Bakgodek", kills + 1)
+
         end
     end
 end

@@ -85,6 +85,20 @@ zones[tpz.zone.PORT_SAN_DORIA] =
     },
     npc =
     {
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17727636] = 17727636,  -- Doll Festival Cherry Blossom
+            [17727637] = 17727637,  -- Doll Festival Cherry Blossom
+            [17727638] = 17727638,  -- Doll Festival Cherry Blossom
+            [17727639] = 17727639,  -- Doll Festival Cherry Blossom
+            [17727640] = 17727640,  -- Doll Festival Cherry Blossom
+            [17727641] = 17727641,  -- Doll Festival Cherry Blossom
+            [17727642] = 17727642,  -- Doll Festival Cherry Blossom
+            [17727643] = 17727643,  -- Doll Festival Cherry Blossom
+            [17727644] = 17727644,  -- Doll Festival Cherry Blossom
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17727645] = 17727645,  -- Sunbreeze Festival Fireworks
+        },
     },
 }
 

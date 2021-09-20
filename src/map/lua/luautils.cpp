@@ -5011,7 +5011,8 @@ namespace luautils
         };
 
         return searchLuaFileForFunction(PChar->m_event.Script) ||
-            (PChar->PInstance && searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" + (const char*)PChar->PInstance->GetName())) ||
+               (PChar->PInstance && searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" +
+                                                             (const char*)PChar->PInstance->GetName() + std::string(".lua"))) ||
             (searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua"));
     }
 

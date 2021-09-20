@@ -27,7 +27,11 @@ function onMobWeaponSkill(target, mob, skill)
 
     -- curse LAST so you don't die
     local typeEffect = tpz.effect.CURSE_I
-    MobStatusEffectMove(mob, target, typeEffect, 25, 0, 420)
-
+    local mobID = mob:getID()
+    if (mobID == 17125681 or mobID == 17125682 or mobID == 17125683) then -- Galarhigg curses 80% for 30mins  ToDo: find a better alternative than hardcoding each mob
+        MobStatusEffectMove(mob, target, typeEffect, 80, 0, 1800)
+    else
+        MobStatusEffectMove(mob, target, typeEffect, 25, 0, 420)
+    end
     return dmg
 end

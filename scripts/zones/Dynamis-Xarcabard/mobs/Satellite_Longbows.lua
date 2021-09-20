@@ -11,9 +11,5 @@ function onMobSpawn(mob)
     mob:AnimationSub(math.random(5, 6))
 end
 
-function onMobFight(mob, target)
-    mob:SetMobSkillAttack(1171)
-end
-
 function onMobDeath(mob, isKiller, player)
 end

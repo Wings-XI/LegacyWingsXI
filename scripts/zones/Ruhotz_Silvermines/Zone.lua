@@ -15,6 +15,16 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onInstanceZoneIn(player, instance)
+    if (instance:getID() == 90) then
+        local lightInTheDarknessProgress = player:getCharVar("LightInTheDarkness")
+        if (lightInTheDarknessProgress == 5 or lightInTheDarknessProgress == 8) then
+            player:startEvent(4)
+        end
+    end
+end
+    
+
 function onRegionEnter(player, region)
 end
 
@@ -22,7 +32,4 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 10000 or csid == 10001 then -- SCH AF3 battle
-        player:setPos(0, 0, 0, 0, 89) -- Send back to Grauberg [S]
-    end
 end

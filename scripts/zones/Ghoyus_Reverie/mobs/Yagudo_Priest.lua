@@ -7,6 +7,7 @@ require("scripts/globals/instance")
 
 function onMobInitialize(mob)
     mob:setMod(tpz.mod.SLEEPRESTRAIT, 100) -- immune to sleep
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:setMod(tpz.mod.ATT, -100) -- mobs are very weak
     mob:setMod(tpz.mod.RATT, -100) 
     mob:setMod(tpz.mod.MATT, -90)
