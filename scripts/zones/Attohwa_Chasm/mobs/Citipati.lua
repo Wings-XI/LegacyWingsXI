@@ -4,10 +4,39 @@
 -----------------------------------
 require("scripts/globals/hunts")
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.TRIPLE_ATTACK, 20)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
+end
+
+function onMobRoam(mob)
+    local totd = VanadielTOTD()
+
+    if totd ~= 1 and totd ~= 7 then -- Despawn Citipati if its day
+        DespawnMob(mob:getID())
+    end
+end
+
+function onMobDisengage(mob)
+    local totd = VanadielTOTD()
+
+    if totd ~= 1 and totd ~= 7 then -- Despawn Citipati if its day
+        DespawnMob(mob:getID())
+    end
 end
 
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 278)
+end
+
+function onMobDespawn(mob)
+    local Citipati = GetMobByID(ID.mob.CITIPATI)
+    
+    UpdateNMSpawnPoint(mob:getID())
+    SetServerVariable("CitipatiRespawn",(os.time() + 10800))
+    DisallowRespawn(Citipati:getID(), true)
 end
