@@ -41,10 +41,9 @@ local loot =
             {itemid =  4621, droprate =  500}, -- scroll_of_raise_ii
         },
         {
-            {itemid =     0, droprate =  950}, -- nothing
-            {itemid =  4175, droprate =   50}, -- vile_elixir_+1
+            {itemid = 65535, droprate = 1000, amount = 18000},  -- gil
         },
-        {           --31 vs 35
+        {
             {itemid =   702, droprate =  235}, -- ebony_log
             {itemid =   654, droprate =  235}, -- darksteel_ingot 
             {itemid =   652, droprate =  240}, -- steel_ingot
@@ -52,7 +51,8 @@ local loot =
             {itemid =   836, droprate =   50}, -- Square Of Damascene Cloth https://ffxiclopedia.fandom.com/wiki/Damascene_Cloth?oldid=1032161 and somepage
         },
         {
-            {itemid =   751, droprate =  600}, -- platinum_beastcoin
+            {itemid =   751, droprate =  550}, -- platinum_beastcoin
+            {itemid =  4175, droprate =   50}, -- vile_elixir_+1
             {itemid =  1260, droprate =   50}, -- Chunk Of Water Ore
             {itemid =  1257, droprate =   50}, -- Chunk Of Wind Ore
             {itemid =  1256, droprate =   50}, -- Chunk Of Ice Ore
