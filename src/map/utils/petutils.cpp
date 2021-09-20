@@ -1282,8 +1282,9 @@ namespace petutils
         // only increase time for charmed mobs
         if (PPet->objtype == TYPE_MOB && PPet->isCharmed)
         {
-            // increase charm duration
-            // 30 mins - 1-5 mins
+            // set initial charm time
+            PPet->charmTime = server_clock::now();
+            // add 30 minutes to charm time, then subtract 1-5 minutes
             PPet->charmTime += 30min - std::chrono::milliseconds(tpzrand::GetRandomNumber(300000u));
         }
 
@@ -1295,13 +1296,6 @@ namespace petutils
         PPet->health.maxhp += boost;
         PPet->health.hp += boost;
         PPet->UpdateHealth();
-
-        // boost stats by 10%
-        PPet->addModifier(Mod::ATTP, (int16)(rate * 100.0f));
-        PPet->addModifier(Mod::ACC, (int16)(rate * 100.0f));
-        PPet->addModifier(Mod::EVA, (int16)(rate * 100.0f));
-        PPet->addModifier(Mod::DEFP, (int16)(rate * 100.0f));
-
     }
 
     void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone, CBattleEntity* PCastTarget)
