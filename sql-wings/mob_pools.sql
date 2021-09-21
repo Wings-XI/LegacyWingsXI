@@ -1860,7 +1860,7 @@ INSERT INTO `mob_pools` VALUES(1796, 'Grave_Bat', 'Grave_Bat', 46, 0x00000001000
 INSERT INTO `mob_pools` VALUES(1797, 'Grave_Digger', 'Grave_Digger', 74, 0x0000530500000000000000000000000000000000, 4, 4, 12, 290, 100, 0, 1, 1, 1, 18, 0, 0, 2639, 135, 0, 0, 2, 0, 256, 74);
 INSERT INTO `mob_pools` VALUES(1798, 'Grav_iton', 'Grav_iton', 282, 0x0000d70400000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 18, 1, 32, 0, 0, 0, 0, 0, 0, 0, 282);
 INSERT INTO `mob_pools` VALUES(1799, 'Greatclaw', 'Greatclaw', 77, 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 77);
-INSERT INTO `mob_pools` VALUES(1800, 'Greater_Amphiptere', 'Greater_Amphiptere', 6, 0x0000ae0800000000000000000000000000000000, 1, 1, 0, 240, 100, 0, 1, 1, 0, 2, 0, 0, 1, 131, 1, 1, 0, 0, 1024, 6);
+INSERT INTO `mob_pools` VALUES(1800, 'Greater_Amphiptere', 'Greater_Amphiptere', 6, 0x0000ae0800000000000000000000000000000000, 1, 1, 0, 240, 100, 0, 1, 1, 0, 2, 0, 0, 1, 2177, 1, 1, 0, 0, 1024, 6);
 INSERT INTO `mob_pools` VALUES(1801, 'Greater_Cockatrice', 'Greater_Cockatrice', 70, 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 164, 643, 0, 0, 0, 0, 0, 70);
 INSERT INTO `mob_pools` VALUES(1802, 'Greater_Colibri', 'Greater_Colibri', 72, 0x0000b80600000000000000000000000000000000, 5, 5, 2, 200, 100, 0, 0, 0, 1, 0, 0, 0, 240, 133, 0, 0, 0, 0, 0, 72);
 INSERT INTO `mob_pools` VALUES(1803, 'Greater_Gayla', 'Greater_Gayla', 46, 0x0000000100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 503, 643, 0, 0, 0, 0, 0, 46);
