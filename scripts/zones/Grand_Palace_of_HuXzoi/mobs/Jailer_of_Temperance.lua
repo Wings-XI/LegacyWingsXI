@@ -14,7 +14,7 @@ function onMobSpawn(mob)
         specials =
         {
             {
-                id = tpz.jsa.MEIKYO_SHISUI, 
+                id = tpz.jsa.MEIKYO_SHISUI,
                 hpp = math.random(65, 75),
                 endCode = function(mob)
                     mob:setLocalVar("twoHour", 1)
@@ -135,15 +135,6 @@ function onMobWeaponSkill(target, mob, skill)
             mob:setLocalVar("opticInduration", 1)
             chargeOptic(mob)
         end
-
-    elseif id == 1465 and charge == 0 then
-        mob:timer(3000, function(mob)
-            mob:useMobAbility(1465) -- JoT will use another Optic Induration shortly after using the first one.
-            mob:setLocalVar("charge", 1)
-            mob:timer(2000, function(mob)
-                mob:setLocalVar("charge", 0)
-            end)
-        end)
     end
 end
 

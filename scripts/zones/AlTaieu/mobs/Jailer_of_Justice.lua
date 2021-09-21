@@ -25,10 +25,10 @@ function onMobFight(mob, target)
     local popTime = mob:getLocalVar("lastPetPop")
     -- ffxiclopedia says 30 sec, bgwiki says 1-2 min..
     -- confirmed retail capture spawns xzomits every 30 seconds..
-    if (os.time() - popTime > 30) then
+    if os.time() - popTime > 30 then
         local alreadyPopped = false
         for xzomit = ID.mob.QN_XZOMIT_START, ID.mob.QN_XZOMIT_END do
-            if (alreadyPopped == true) then
+            if alreadyPopped == true then
                 break
             else
                 if not GetMobByID(xzomit):isSpawned() and utils.canUseAbility(mob) == true then
@@ -37,6 +37,13 @@ function onMobFight(mob, target)
                     alreadyPopped = true
                 end
             end
+        end
+    end
+
+    for i = ID.mob.QN_XZOMIT_START, ID.mob.QN_XZOMIT_END do
+        local pet = GetMobByID(i)
+        if pet:isSpawned() and pet:getCurrentAction() == tpz.act.ROAMING then
+            pet:updateEnmity(target)
         end
     end
 
