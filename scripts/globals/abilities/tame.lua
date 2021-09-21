@@ -16,19 +16,16 @@ end
 function onUseAbility(player, target, ability)
     if player:getPet() ~= nil then
         ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
-        target:addEnmity(player, 1, 0)
         return 0
     end
     if target:getMobMod(tpz.mobMod.CHARMABLE) == 0 then
         ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
-        target:addEnmity(player, 1, 0)
         return 0
     end
     local dStat = player:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT) + player:getMod(tpz.mod.TAME_SUCCESS_RATE)
     local resist = applyResistanceAbility(player, target, tpz.magic.ele.NONE, tpz.skill.NONE, dStat)
     if resist <= 0.25 then
         ability:setMsg(tpz.msg.basic.JA_MISS_2)
-        target:addEnmity(player, 1, 0)
         return 0
     else
         if target:isEngaged() then
@@ -36,12 +33,10 @@ function onUseAbility(player, target, ability)
             for _, enmity in ipairs(enmitylist) do
                 if enmity.active and enmity.entity:getID() ~= player:getID() then
                     ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
-                    target:addEnmity(player, 1, 0)
                     return 0
                 elseif enmity.entity:getID() == player:getID() then
                     if not enmity.tameable then
                         ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
-                        target:addEnmity(player, 1, 0)
                         return 0
                     end
                 end
