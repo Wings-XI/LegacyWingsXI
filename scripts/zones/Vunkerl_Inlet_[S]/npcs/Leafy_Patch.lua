@@ -34,7 +34,7 @@ function onEventFinish(player, csid, option)
             player:addKeyItem(tpz.ki.VUNKERL_HERB)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.VUNKERL_HERB)
             player:setCharVar("BoyAndTheBeast", 3)
-        else
+        elseif (option == 0) then
             player:addKeyItem(tpz.ki.VUNKERL_HERB)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.VUNKERL_HERB)
             player:setCharVar("BoyAndTheBeast", 4)

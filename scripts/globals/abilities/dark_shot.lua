@@ -24,7 +24,7 @@ function onUseAbility(player, target, ability)
     local duration = 60
     local bonusAcc = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI)) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC) - 23
     local resist = applyResistanceAbility(player, target, tpz.magic.ele.DARK, tpz.skill.NONE, bonusAcc)
-
+    target:updateClaim(player)
     if resist < 0.25 then
         ability:setMsg(tpz.msg.basic.JA_MISS_2) -- resist message
         return 0
@@ -72,6 +72,5 @@ function onUseAbility(player, target, ability)
     end
 
     local del = player:delItem(2183, 1) or player:delItem(2974, 1)
-    target:updateClaim(player)
     return dispelledEffect
 end

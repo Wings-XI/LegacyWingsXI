@@ -67,6 +67,7 @@ CBattleEntity::CBattleEntity()
     memset(&stats, 0, sizeof(stats));
     memset(&health, 0, sizeof(health));
     health.maxhp = 1;
+    health.maxtp = 3000;
 
     memset(&WorkingSkills, 0, sizeof(WorkingSkills));
 
@@ -150,11 +151,12 @@ bool CBattleEntity::isSitting()
     return (animation == ANIMATION_HEALING || animation == ANIMATION_SIT || (animation >= ANIMATION_SITCHAIR_0 && animation <= ANIMATION_SITCHAIR_10));
 }
 
-/************************************************************************
-*                                                                       *
-*  Пересчитываем максимальные значения hp и mp с учетом модификаторов   *
-*                                                                       *
-************************************************************************/
+/*************************************************************************************
+*                                                                                    *
+*  Пересчитываем максимальные значения hp и mp с учетом модификаторов                *
+*  We recalculate the maximum values ​​of hp and mp taking into account the modifiers  *
+*                                                                                    *
+**************************************************************************************/
 
 void CBattleEntity::UpdateHealth()
 {
@@ -162,6 +164,7 @@ void CBattleEntity::UpdateHealth()
 
     health.modmp = std::max(0, ((health.maxmp) * (100 + getMod(Mod::MPP)) / 100) + std::min<int16>((health.maxmp * m_modStat[Mod::FOOD_MPP] / 100), m_modStat[Mod::FOOD_MP_CAP]) + getMod(Mod::MP));
     health.modhp = std::max(1, ((health.maxhp) * (100 + getMod(Mod::HPP)) / 100) + std::min<int16>((health.maxhp * m_modStat[Mod::FOOD_HPP] / 100), m_modStat[Mod::FOOD_HP_CAP]) + getMod(Mod::HP));
+    health.modtp = health.maxtp + getMod(Mod::MAX_TP);
 
     dif = (health.modmp - 0) < dif ? (health.modmp - 0) : dif;
     dif = (health.modhp - 1) < -dif ? -(health.modhp - 1) : dif;
@@ -177,6 +180,7 @@ void CBattleEntity::UpdateHealth()
 
     health.hp = std::clamp(health.hp, 0, health.modhp);
     health.mp = std::clamp(health.mp, 0, health.modmp);
+    health.tp = std::clamp((int)health.tp, 0, (int)health.modtp);
 
     updatemask |= UPDATE_HP;
 }
@@ -538,7 +542,8 @@ int16 CBattleEntity::addTP(int16 tp)
     {
         updatemask |= UPDATE_HP;
     }
-    int16 cap = std::clamp(health.tp + tp, 0, 3000);
+    
+    int16 cap = std::clamp(health.tp + tp, 0, (int)health.modtp);
     tp = health.tp - cap;
     health.tp = cap;
     return abs(tp);

@@ -89,11 +89,84 @@ zones[tpz.zone.WINDURST_WOODS] =
     {
         HALLOWEEN_SKINS =
         {
-            [17764400] = 55, -- Meriri
-            [17764401] = 54, -- Kuzah Hpirohpon
-            [17764462] = 58, -- Taraihi-Perunhi
-            [17764464] = 56, -- Nhobi Zalkia
-            [17764465] = 57, -- Millerovieunet
+            [17764400] = 644, -- Meriri | Quadav
+            [17764401] = 580, -- Kuzah Hpirohpon | Yagudo
+            [17764462] = 368, -- Taraihi-Perunhi | Ghost
+            [17764464] = 535, -- Nhobi Zalkia | Shade
+            [17764465] = 612, -- Millerovieunet | Orc
+        },
+        HALLOWEEN_DECORATIONS = {
+            [17764742] = 17764742,  -- Halloween Decoration
+            [17764743] = 17764743,  -- Halloween Decoration
+            [17764744] = 17764744,  -- Halloween Decoration
+        },
+        EGG_HUNT_DECORATIONS = {
+            [17764686] = 17764686,  -- Egg Hunt Egg-stravaganza Pole
+            [17764687] = 17764687,  -- Egg Hunt Egg-stravaganza Pole
+            [17764688] = 17764688,  -- Egg Hunt Egg-stravaganza Pole
+            [17764689] = 17764689,  -- Egg Hunt Egg-stravaganza Pole
+        },
+        STARLIGHT_DECORATIONS = {
+            [17764751] = 17764751,  -- Starlight Festival Center Tree
+            [17764752] = 17764752,  -- Starlight Festival Tree
+            [17764753] = 17764753,  -- Starlight Festival Tree
+            [17764754] = 17764754,  -- Starlight Festival Tree
+            [17764755] = 17764755,  -- Starlight Festival Tree
+            [17764756] = 17764756,  -- Starlight Festival Tree
+            [17764757] = 17764757,  -- Starlight Festival Tree
+            [17764758] = 17764758,  -- Starlight Festival Tree
+            [17764759] = 17764759,  -- Starlight Festival Tree
+            [17764760] = 17764760,  -- Starlight Festival Tree
+            [17764761] = 17764761,  -- Starlight Festival Tree
+            [17764762] = 17764762,  -- Starlight Festival Tree
+            [17764763] = 17764763,  -- Starlight Festival Tree
+        },
+        DOLL_FESTIVAL_DECORATIONS = {
+            [17764670] = 17764670,  -- Doll Festival Stage
+            [17764671] = 17764671,  -- Doll Festival Umbrella and Stand
+            [17764672] = 17764672,  -- Doll Festival Umbrella and Stand
+            [17764673] = 17764673,  -- Doll Festival Umbrella and Stand
+            [17764674] = 17764674,  -- Doll Festival Umbrella and Stand
+            [17764675] = 17764675,  -- Doll Festival Cherry Blossom
+            [17764676] = 17764676,  -- Doll Festival Cherry Blossom
+            [17764677] = 17764677,  -- Doll Festival Cherry Blossom
+            [17764678] = 17764678,  -- Doll Festival Cherry Blossom
+            [17764679] = 17764679,  -- Doll Festival Cherry Blossom Petals
+            [17764680] = 17764680,  -- Doll Festival Cherry Blossom Petals
+            [17764681] = 17764681,  -- Doll Festival Cherry Blossom Petals
+            [17764682] = 17764682,  -- Doll Festival Cherry Blossom Petals
+            [17764683] = 17764683,  -- Doll Festival Cherry Blossom Petals
+            [17764684] = 17764684,  -- Doll Festival Cherry Blossom Petals
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17764707] = 17764707,  -- Sunbreeze Festival Dancer
+            [17764708] = 17764708,  -- Sunbreeze Festival Dancer
+            [17764709] = 17764709,  -- Sunbreeze Festival Dancer
+            [17764710] = 17764710,  -- Sunbreeze Festival Dancer
+            [17764711] = 17764711,  -- Sunbreeze Festival Center Tree
+            [17764741] = 17764741,  -- Sunbreeze Festival Fireworks
+	        [17764712] = 17764712,  -- Sunbreeze Festival Tree
+            [17764713] = 17764713,  -- Sunbreeze Festival Tree
+            [17764714] = 17764714,  -- Sunbreeze Festival Tree
+            [17764715] = 17764715,  -- Sunbreeze Festival Tree
+            [17764716] = 17764716,  -- Sunbreeze Festival Tree
+            [17764717] = 17764717,  -- Sunbreeze Festival Tree
+            [17764718] = 17764718,  -- Sunbreeze Festival Tree
+            [17764719] = 17764719,  -- Sunbreeze Festival Tree
+            [17764720] = 17764720,  -- Sunbreeze Festival Tree
+            [17764721] = 17764721,  -- Sunbreeze Festival Tree
+            [17764722] = 17764722,  -- Sunbreeze Festival Tree
+            [17764723] = 17764723,  -- Sunbreeze Festival Tree
+        },
+        NEW_YEARS_DECORATIONS = {
+            [17764620] = 17764620,  -- New Year Festival Planter
+            [17764621] = 17764621,  -- New Year Festival Planter
+            [17764622] = 17764622,  -- New Year Festival Planter
+            [17764623] = 17764623,  -- New Year Festival Planter
+            [17764699] = 17764699,  -- New Years Standing Tree
+            [17764700] = 17764700,  -- New Years Standing Tree
+            [17764701] = 17764701,  -- New Years Standing Tree
+            [17764702] = 17764702,  -- New Years Standing Tree
         },
     },
 }

@@ -741,11 +741,17 @@ INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 522);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 523);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 524);
 INSERT INTO `mob_skill_lists` VALUES('MagicPot', 175, 525);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1731);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1732);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1733);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1734);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJa', 176, 1839);
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1731); -- forceful_blow
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1732); -- somersault_kick
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1733); -- firespit
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1734); -- warm-up
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1735); -- javelin_throw
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1736); -- axe_throw
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1737); -- vorpal_blade
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1738); -- groundburst
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1839); -- rushing_slash
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaFighter', 176, 1840); -- rushing_stab
+-- MamoolJaKnight
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 300);
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 301);
 INSERT INTO `mob_skill_lists` VALUES('Mandragora', 178, 302);
@@ -1495,12 +1501,6 @@ INSERT INTO `mob_skill_lists` VALUES('Iron_Giant', 350, 2624);
 INSERT INTO `mob_skill_lists` VALUES('Iron_Giant', 350, 2625);
 INSERT INTO `mob_skill_lists` VALUES('Iron_Giant', 350, 2626);
 INSERT INTO `mob_skill_lists` VALUES('Iron_Giant', 350, 2627);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 823);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 824);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 825);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 826);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 827);
-INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 828);
 INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 829);
 INSERT INTO `mob_skill_lists` VALUES('Kam_lanaut', 351, 830);
 INSERT INTO `mob_skill_lists` VALUES('ArkAngel-EV', 352, 933);
@@ -3213,23 +3213,13 @@ INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1210);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1211);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1215);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1216);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1731);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1732);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1733);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1734);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1839);
-INSERT INTO `mob_skill_lists` VALUES('MamoolJaBSTImperialAgentRescue', 4999, 1736);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1920);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1921);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1922);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1923);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMage',5000,1924);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1920);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1921);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1922);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1923);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,1924);
-INSERT INTO `mob_skill_lists` VALUES ('MamoolJaMageImperialAgentRescue',5001,2361);
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1923); -- firespit
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1924); -- warm-up
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1926); -- groundburst
+INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 2361); -- stave_toss
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 900);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 901);
 INSERT INTO `mob_skill_lists` VALUES('ShikareeWyv', 5002, 902);
@@ -3248,6 +3238,26 @@ INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 393);  -- new skill
 INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 395);
 INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1157);
 INSERT INTO `mob_skill_lists` VALUES('Bats_Expansion', 5005, 1158);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_BerserkerDance', 5006, 2202);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 605);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 606);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 607);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 608);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 609);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 2201);
+INSERT INTO `mob_skill_lists` VALUES('WotG_OrcNM_TornadoEdge', 5007, 2263);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 652);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 653);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
+INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
 --
 -- Indexes for dumped tables
 --

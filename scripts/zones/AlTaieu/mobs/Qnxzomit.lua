@@ -11,7 +11,7 @@ function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = tpz.jsa.MIJIN_GAKURE, hpp = math.random(15, 35)},
+            {id = tpz.jsa.MIJIN_GAKURE, hpp = math.random(25, 35)},
         },
     })
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
