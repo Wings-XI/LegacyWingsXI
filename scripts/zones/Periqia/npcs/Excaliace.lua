@@ -261,10 +261,6 @@ local STOP_SPEED = 0
 
 function onSpawn(npc)
     npc:initNpcAi()
-    npc:setLocalVar("topRoomsOption", math.random(2,3))
-    npc:setLocalVar("middleRoomsOption", math.random(4,5))
-    npc:setLocalVar("bottomRoomsOption", math.random(6,7))
-    npc:setLocalVar("lowerForkOption", math.random(8,9))
     npc:setLocalVar("pathProgressMask", 0) -- 0 = Incomplete  1 = Complete
         -- bit 0: Mission Start [1]
         -- bit 1: Top Rooms Option Completed [2]
@@ -276,11 +272,16 @@ function onSpawn(npc)
     npc:setLocalVar("runTimeCheck", os.time())
     npc:setLocalVar("pathPoint", 1)
     -- TODODEMOS add  new var
-    npc:setLocalVar("moveStatus", 0)  -- 0 = Walking Forward, 1 = Running Back, 2 = Stop
+    npc:setLocalVar("moveStatus", 0)  -- 0 = Walking Forward, 1 = Running Back, 2 = Stop, 3 = short break while running forward
     npc:setLocalVar("missionStarted", 0) -- boolean to know if the escort of the npc start yet or not
     npc:setLocalVar("pathLeg", 0) -- Legs of the path (first level of the path table)
     npc:setLocalVar("pathPoint", 1) -- points of the path (second level of the path table)
+    npc:setLocalVar("topRoomsOption", math.random(2,3)) -- 2 top left room, 3 top right room
+    npc:setLocalVar("middleRoomsOption", math.random(4,5)) -- 4 middle left room, 5 middle right room
+    npc:setLocalVar("bottomRoomsOption", math.random(6,7)) -- 6 bottom left room, 7 bottom right room
+    npc:setLocalVar("lowerForkOption", math.random(8,9)) -- 8 lower fork left, 9 lower fork right
     npc:setLocalVar("nextCharsNearbyCheckTime", os.time())
+    npc:setLocalVar("crabRoomDone", 0) -- flag use to know if npc already explore a crab room (to not redo it)
 end
 
 -- function checkForNearbyMobs(npc, mobs)
@@ -291,8 +292,9 @@ end
 --     local moveStatus = npc:getLocalVar("moveStatus")
 
 --     for _, enemy in pairs(mobs) do
---         if npc:checkDistance(enemy) < 12 and enemy:isSpawned() then
---             if moveStatus ~= 1 then
+--local pathLeg = npc:getLocalVar("pathLeg")
+--         if npc:checkDistance(enemy) < 12 and enemy:isSpawned()  and pathLeg ~= 0 then then 
+--             if moveStatus ~= 1 then -- if npc is stop and a mob come near it run away or not ?
 --                 npc:setLocalVar("runTimer", os.time() + math.random(20,40))
 --                 npc:setLocalVar("moveStatus", 1)
 --                 npc:setLocalVar("runStart", 1)
@@ -326,6 +328,7 @@ end
 
 function checkForNearbyPlayers(npc, chars)
     local nextCharsNearbyCheckTime = npc:getLocalVar("nextCharsNearbyCheckTime") -- time when the next checkForNearbyPlayers can happen
+    local pathLeg = npc:getLocalVar("pathLeg")
 
     if nextCharsNearbyCheckTime <= os.time() then
         local rangeFacing = false  -- a player is facing him and is less than 5 and excaliace is facing this player
@@ -360,7 +363,7 @@ function checkForNearbyPlayers(npc, chars)
                 npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + 4)
             end
 
-        elseif rangeFollow == false and moveStatus ~= 1 then
+        elseif rangeFollow == false and moveStatus ~= 1 and pathLeg ~= 0 then
             npc:showText(npc,ID.text.EXCALIACE_RUN)
             npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + math.random(20,30))
             npc:setLocalVar("moveStatus", 1)
@@ -373,40 +376,126 @@ function checkForNearbyPlayers(npc, chars)
     end
  end
 
-function followPathForward(npc)
+function defineNextLegAndPointWhenMovingForwardAndMoveToIt(npc)
+    local topRoomsOption = npc:getLocalVar("topRoomsOption")
+    local middleRoomsOption = npc:getLocalVar("middleRoomsOption")
+    local bottomRoomsOption = npc:getLocalVar("bottomRoomsOption")
+    local lowerForkOption = npc:getLocalVar("lowerForkOption")
+    local crabRoomDone = npc:getLocalVar("crabRoomDone")
+    local pathLeg = npc:getLocalVar("pathLeg")
+    local pathPoint = npc:getLocalVar("pathPoint")
 
-
-    if npc:atPoint(path[0][#path[0]]) then --and bit.band(pathProgressMask, bit.lshift(1,0)) == 0 then
-        npc:setLocalVar("pathLeg", 1)
-        npc:setLocalVar("pathPoint", 19)
-    elseif npc:atPoint(path[1][30])then
-        -- add wait for each of those step
-        npc:setLocalVar("pathLeg", topRoomsOption)
-        npc:setLocalVar("pathPoint", 1)
+    if npc:atPoint(path[0][#path[0]]) then -- leave the start path to join the main path
+        pathLeg = 1
+        pathPoint = 20 -- TODEMOS REMOVE COMMENT -- added 1 to point
+    elseif npc:atPoint(path[1][30]) and crabRoomDone < 1 then -- in between the 2 top crab room will chose the value of topRoomsOption
+        pathLeg = topRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
     elseif npc:atPoint(path[topRoomsOption][7]) then
-        npc:setLocalVar("pathLeg", 1)
-        npc:setLocalVar("pathPoint", 30)
-    elseif npc:atPoint(path[1][34]) then
-        npc:setLocalVar("pathLeg", middleRoomsOption)
-        npc:setLocalVar("pathPoint", 1)
+        pathLeg = 1
+        pathPoint = 30
+        npc:setLocalVar("crabRoomDone", 1)
+    elseif npc:atPoint(path[1][34]) and crabRoomDone < 2 then
+        pathLeg = middleRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
     elseif npc:atPoint(path[middleRoomsOption][7]) then
-        npc:setLocalVar("pathLeg", 1)
-        npc:setLocalVar("pathPoint", 34)
-    elseif npc:atPoint(path[1][38]) then
-        npc:setLocalVar("pathLeg", bottomRoomsOption)
-        npc:setLocalVar("pathPoint", 1)
+        pathLeg = 1
+        pathPoint = 34
+        npc:setLocalVar("crabRoomDone", 2)
+    elseif npc:atPoint(path[1][38]) and crabRoomDone < 3 then
+        pathLeg = bottomRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
     elseif npc:atPoint(path[bottomRoomsOption][7]) then
-        npc:setLocalVar("pathLeg", 1)
-        npc:setLocalVar("pathPoint", 38)
+        pathLeg = 1
+        pathPoint = 38
+        npc:setLocalVar("crabRoomDone", 3)
     elseif npc:atPoint(path[1][#path[1]]) then
-        npc:setLocalVar("pathLeg", lowerForkOption)
-        npc:setLocalVar("pathPoint", 1)
+        pathLeg = lowerForkOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
     elseif npc:atPoint(path[lowerForkOption][#path[lowerForkOption]]) then
         npc:showText(npc,ID.text.EXCALIACE_END1)
         npc:showText(npc,ID.text.EXCALIACE_END2)
         npc:setLocalVar("missionActive", 3) -- End Mission
     end
+
+    pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0 or more than tab range
+    npc:pathThrough(path[pathLeg][pathPoint]) -- move to next pathpoint
+    npc:setLocalVar("pathLeg", pathLeg) -- save new pathLeg
+    npc:setLocalVar("pathPoint", pathPoint) -- save new PathPoint
 end
+
+function defineNextLegAndPointWhenRunningAwayAndMoveToIt(npc)
+    local topRoomsOption = npc:getLocalVar("topRoomsOption")
+    local middleRoomsOption = npc:getLocalVar("middleRoomsOption")
+    local bottomRoomsOption = npc:getLocalVar("bottomRoomsOption")
+    local lowerForkOption = npc:getLocalVar("lowerForkOption")
+    local crabRoomDone = npc:getLocalVar("crabRoomDone")
+    local pathLeg = npc:getLocalVar("pathLeg")
+    local pathPoint = npc:getLocalVar("pathPoint")
+
+    if npc:atPoint(path[0][#path[0]]) then -- leave the start path to join the main path
+        pathLeg = 1
+        pathPoint = 20 -- TODEMOS REMOVE COMMENT -- added 1 to point
+    elseif npc:atPoint(path[1][30]) and crabRoomDone < 1 then -- in between the 2 top crab room will chose the value of topRoomsOption
+        pathLeg = topRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
+    elseif npc:atPoint(path[topRoomsOption][7]) then
+        pathLeg = 1
+        pathPoint = 30
+        npc:setLocalVar("crabRoomDone", 1)
+    elseif npc:atPoint(path[1][34]) and crabRoomDone < 2 then
+        pathLeg = middleRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
+    elseif npc:atPoint(path[middleRoomsOption][7]) then
+        pathLeg = 1
+        pathPoint = 34
+        npc:setLocalVar("crabRoomDone", 2)
+    elseif npc:atPoint(path[1][38]) and crabRoomDone < 3 then
+        pathLeg = bottomRoomsOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+        npc:speed(STOP_SPEED)
+        npc:timer(math.random(10000,15000), function(npc) 
+            npc:speed(ONPATH_SPEED)
+        end)
+    elseif npc:atPoint(path[bottomRoomsOption][7]) then
+        pathLeg = 1
+        pathPoint = 38
+        npc:setLocalVar("crabRoomDone", 3)
+    elseif npc:atPoint(path[1][#path[1]]) then
+        pathLeg = lowerForkOption
+        pathPoint = 2 -- TODEMOS REMOVE COMMENT -- added 1 to point
+    elseif npc:atPoint(path[lowerForkOption][#path[lowerForkOption]]) then
+        npc:showText(npc,ID.text.EXCALIACE_END1)
+        npc:showText(npc,ID.text.EXCALIACE_END2)
+        npc:setLocalVar("missionActive", 3) -- End Mission
+    end
+
+    pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0 or more than tab range
+    npc:pathThrough(path[pathLeg][pathPoint]) -- move to next pathpoint
+    npc:setLocalVar("pathLeg", pathLeg) -- save new pathLeg
+    npc:setLocalVar("pathPoint", pathPoint) -- save new PathPoint
+end
+
 
 function onTrack(npc)
     local instance = npc:getInstance()
@@ -416,36 +505,6 @@ function onTrack(npc)
     local moveStatus = npc:getLocalVar("moveStatus") 
     local pathLeg = npc:getLocalVar("pathLeg")
     local pathPoint = npc:getLocalVar("pathPoint")
-    local topRoomsOption = npc:getLocalVar("topRoomsOption")
-    local middleRoomsOption = npc:getLocalVar("middleRoomsOption")
-    local bottomRoomsOption = npc:getLocalVar("bottomRoomsOption")
-    local lowerForkOption = npc:getLocalVar("lowerForkOption")
-    
-    -- local missionActive = npc:getLocalVar("missionActive")
-    -- local pathLeg = npc:getLocalVar("pathLeg")
-    -- local pathPoint = npc:getLocalVar("pathPoint") -- TODODEMOS Save of the checkpoint before running away
-    -- local pathProgressMask = npc:getLocalVar("pathProgressMask")
-    
-
-    -- local lowerForkOption = npc:getLocalVar("lowerForkOption")
-    -- local chatMessage = npc:getLocalVar("chatMessage") -- 0 = No Msg Sent, 1 = Msg Sent
-    -- local moveStatus = npc:getLocalVar("moveStatus") -- 0 = Walking Forward, 1 = Running Back
-    -- local runTimeCheck = npc:getLocalVar("runTimeCheck")
-    -- local moveLock = npc:getLocalVar("moveLock") -- 0 = npc canNOT move, 1 = npc can move
-    -- local lockToggle = npc:getLocalVar("lockToggle")
-    -- local runTimer = npc:getLocalVar("runTimer")
-    -- local runStart = npc:getLocalVar("runStart")
-    -- local constantMove = npc:getLocalVar("constantMove") -- 0 = npc canNOT move, 1 = npc can move
-    -- local rangeClose = false
-    -- local rangeStop = false
-    -- local rangeFollow = false
-
-    -- -- -- check if player or mobs nearby (run away or stop)
-    -- -- if pathProgressMask > 0 and missionActive == 1 then
-    -- --     checkForNearbyMobs(npc, mobs)
-    -- --     checkForNearbyPlayers(npc, chars)
-    -- -- end
-
 
     if missionStarted == 0 then     -- Start the Escort Mission
         for _, players in pairs(chars) do
@@ -456,28 +515,15 @@ function onTrack(npc)
             end
         end
     else
-        --checkForNearbyPlayers(npc, chars)
-
-        pathPoint = utils.clamp(pathPoint, 1, #path[pathLeg]) -- pathPoint cannot be 0
+        -- checkForNearbyMobs(npc, mobs)
+        -- checkForNearbyPlayers(npc, chars)
 
         if moveStatus == 0 then -- moving forward
-            if npc:atPoint(path[pathLeg][pathPoint]) then -- if the npc reach it s current pos on the path
-
-                followPathForward(npc)
-                npc:setLocalVar("pathPoint", pathPoint+1)
-                local pathLeg = npc:getLocalVar("pathLeg")
-                local pathPoint = npc:getLocalVar("pathPoint")
-
-                -- TODO change of legs and reset point
-
-                -- Move to point
-
-                printf("Leg:%i Point:%i",pathLeg, pathPoint)
-
-
-                npc:pathThrough(path[pathLeg][pathPoint])
+            if npc:atPoint(path[pathLeg][pathPoint]) then -- if the npc reach the defined pos on the path
+                defineNextLegAndPointWhenMovingForwardAndMoveToIt
             end
         elseif moveStatus == 1 then -- run away
+            defineNextLegAndPointWhenRunningAwayAndMoveToIt
             if npc:atPoint(path[pathLeg][pathPoint]) then
                 npc:setLocalVar("pathPoint", pathPoint-1)
             -- TODO change of legs and reset point
@@ -487,7 +533,7 @@ function onTrack(npc)
                 local pathPoint = npc:getLocalVar("pathPoint")
                 npc:pathThrough(path[pathLeg][pathPoint])
             end
-        else -- if not moving
+        else
             -- do nothing ?
         end
 
