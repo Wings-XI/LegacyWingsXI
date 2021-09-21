@@ -9529,7 +9529,8 @@ INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4618, 26);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4719, 211);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 4741, 368);
 INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 13804, 342);
-INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 1313, 50); -- Could not find a source for drop %, set to 5% as a conservative guess.
+INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 1313, 30); -- Lowering as most sources indicate a much lower drop rate than 5% (Placing as 3% based on ZAM conversations.)
+INSERT INTO `mob_droplist` VALUES(1825, 0, 0, 1000, 1313, 20); -- Added additional pool based on a confirmed ZAM post for Pahh.
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 100);
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 50);
 INSERT INTO `mob_droplist` VALUES(1826, 0, 0, 1000, 3170, 30);
@@ -10316,6 +10317,7 @@ INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 4443, 80);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 4514, 80);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 16882, 100);
 INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 1313, 50); -- Could not find a source for drop %, set to 5% as a conservative guess.
+INSERT INTO `mob_droplist` VALUES(1973, 0, 0, 1000, 1313, 50); -- Added additional pool based on multiple confirmed ZAM posts.
 INSERT INTO `mob_droplist` VALUES(1974, 0, 0, 1000, 14021, 40);
 INSERT INTO `mob_droplist` VALUES(1974, 0, 0, 1000, 16173, 200);
 INSERT INTO `mob_droplist` VALUES(1975, 0, 0, 1000, 497, 800);
@@ -13641,6 +13643,7 @@ INSERT INTO `mob_droplist` VALUES(2588, 0, 0, 1000, 4360, 80);
 INSERT INTO `mob_droplist` VALUES(2588, 0, 0, 1000, 4443, 80);
 INSERT INTO `mob_droplist` VALUES(2588, 0, 0, 1000, 4484, 80);
 INSERT INTO `mob_droplist` VALUES(2588, 0, 0, 1000, 13875, 100);
+INSERT INTO `mob_droplist` VALUES(2588, 0, 0, 1000, 1313, 20); -- Added as 2% due to inconclusive evidence related to the drop rate. All sources indicate very rare.
 INSERT INTO `mob_droplist` VALUES(2589, 0, 0, 1000, 920, 650);
 INSERT INTO `mob_droplist` VALUES(2589, 0, 0, 1000, 1446, 30);
 INSERT INTO `mob_droplist` VALUES(2589, 0, 0, 1000, 4598, 80);
@@ -14049,6 +14052,7 @@ INSERT INTO `mob_droplist` VALUES(2673, 0, 0, 1000, 4443, 80);
 INSERT INTO `mob_droplist` VALUES(2673, 0, 0, 1000, 4484, 80);
 INSERT INTO `mob_droplist` VALUES(2673, 0, 0, 1000, 4514, 80);
 INSERT INTO `mob_droplist` VALUES(2673, 0, 0, 1000, 17504, 100);
+INSERT INTO `mob_droplist` VALUES(2673, 0, 0, 1000, 1313, 70); -- Adding based on confirmed ZAM posts and indicates a higher than normal drop rate, setting at 7%
 INSERT INTO `mob_droplist` VALUES(2674, 0, 0, 1000, 529, 60);
 INSERT INTO `mob_droplist` VALUES(2674, 2, 0, 1000, 825, 0);
 INSERT INTO `mob_droplist` VALUES(2674, 0, 0, 1000, 825, 1000);
@@ -14950,6 +14954,8 @@ INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 4360, 80);
 INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 4443, 80);
 INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 4514, 80);
 INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 16884, 100);
+INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 1313, 50); -- Added Siren's Hair at 5% Based on Sources (Known to be rare rough estimates show 5%)
+INSERT INTO `mob_droplist` VALUES(2813, 0, 0, 1000, 1313, 50); -- Added Siren's Hair at 5% Based on Sources (Double Drop Included Due to Screenshot)
 INSERT INTO `mob_droplist` VALUES(2814, 0, 0, 1000, 2229, 100);
 INSERT INTO `mob_droplist` VALUES(2814, 0, 0, 1000, 3504, 100);
 INSERT INTO `mob_droplist` VALUES(2814, 0, 0, 1000, 3541, 100);
