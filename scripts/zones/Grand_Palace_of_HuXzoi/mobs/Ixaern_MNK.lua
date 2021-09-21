@@ -9,6 +9,9 @@ require("scripts/globals/status")
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
+    mob:setMod(tpz.mod.DEF, 550)
+    mob:setMod(tpz.mod.DMGMAGIC, 65)
+
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
@@ -30,14 +33,14 @@ end
 function onMobEngaged(mob, target)
     for i = 1, 2 do -- pets reaggro if attacked from completely idle
         local minion = GetMobByID(mob:getID() + i)
-        minion:updateEnmity(target)      
-    end  
+        minion:updateEnmity(target)
+    end
 end
 
 function onMobFight(mob, target)
     -- The mob gains a huge boost when it 2hours to attack speed and attack.
     -- It forces the minions to 2hour as well. Wiki says 50% but all videos show 60%.
-    
+
     if mob:getHPP() < 50 or GetMobByID(16916816):getHPP() < 50 or GetMobByID(16916817):getHPP() < 50 then -- If any of the three mobs gets below 50% then all three gain bracelets
         mob:setLocalVar("BracerMode", 1)
         mob:setLocalVar("delay", mob:getBattleTime())
@@ -51,7 +54,7 @@ function onMobFight(mob, target)
         for i = 1, 2 do
             local minion = GetMobByID(mob:getID() + i)
 
-            local abil = 0 
+            local abil = 0
 
             if i == 1 then
                 abil = 0
@@ -66,7 +69,7 @@ function onMobFight(mob, target)
             end
         end
     end
-    
+
     if (mob:getLocalVar("BracerMode") == 1) then --Go into bracer mode
         if mob:getLocalVar("canBracer") == 1 then
             mob:AnimationSub(2)
@@ -80,13 +83,13 @@ function onMobFight(mob, target)
             for i = mobID+1, mobID+2 do
                 local m = GetMobByID(i)
                 if m:isSpawned() then
-                    m:AnimationSub(2)     
-                    m:addMod(tpz.mod.ATT, 200) 
-                    m:setMod(tpz.mod.DELAY, 2100) 
+                    m:AnimationSub(2)
+                    m:addMod(tpz.mod.ATT, 200)
+                    m:setMod(tpz.mod.DELAY, 2100)
                 end
             end
             mob:setLocalVar("canBracer", 0)
-        end  
+        end
     end
 end
 
