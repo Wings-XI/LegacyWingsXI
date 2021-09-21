@@ -265,7 +265,6 @@ local digInfo =
         {  880, 166, digReq.NONE    },
         {  864,  96, digReq.NONE    },
         {  893,  26, digReq.NONE    },
-        {  737,  17, digReq.NONE    },
         {  869, 110, digReq.NONE    },
         {17395, 111, digReq.NONE    },
         {  888, 215, digReq.NONE    },
@@ -293,16 +292,16 @@ local digInfo =
     },
     [tpz.zone.JUGNER_FOREST] = -- 104
     {
-        { 4504, 152, digReq.NONE    },
-        {  688, 182, digReq.NONE    },
-        {  697,  83, digReq.NONE    },
+        { 4504, 145, digReq.NONE    },
+        {  688, 110, digReq.NONE    },
+        {  697,  93, digReq.NONE    },
         { 4386,   3, digReq.NONE    },
-        {17396, 129, digReq.NONE    },
-        {  691, 144, digReq.NONE    },
-        {  918,   8, digReq.NONE    },
-        {  699,  76, digReq.NONE    },
-        { 4447,  38, digReq.NONE    },
-        {  695,  45, digReq.NONE    },
+        {17396, 152, digReq.NONE    },
+        {  691, 138, digReq.NONE    },
+        {  918,  17, digReq.NONE    },
+        {  699,  59, digReq.NONE    },
+        { 4447,  28, digReq.NONE    },
+        {  695,   9, digReq.NONE    },
         { 4096, 100, digReq.NONE    }, -- all crystals
         { 1255,  10, digReq.NONE    }, -- all ores
         {  690,  15, digReq.BORE    },
@@ -345,13 +344,13 @@ local digInfo =
     },
     [tpz.zone.NORTH_GUSTABERG] = -- 106
     {
-        {  880, 226, digReq.NONE    },
-        {17396, 264, digReq.NONE    },
-        {17296, 176, digReq.NONE    },
+        {  880, 176, digReq.NONE    },
+        {17396, 297, digReq.NONE    },
+        {17296, 202, digReq.NONE    },
         {  847,  75, digReq.NONE    },
-        {  864,  59, digReq.NONE    },
-        {  846,  75, digReq.NONE    },
-        {  869, 170, digReq.NONE    },
+        {  864,  45, digReq.NONE    },
+        {  846, 108, digReq.NONE    },
+        {  869, 149, digReq.NONE    },
         {  868,  83, digReq.NONE    },
         {  749,  63, digReq.NONE    },
         {  644,  60, digReq.NONE    },
@@ -379,6 +378,7 @@ local digInfo =
         {  749,  32, digReq.NONE    },
         {  847,  23, digReq.NONE    },
         {  644,   5, digReq.NONE    },
+        {  776,   3, digReq.NONE    }
         { 4096, 100, digReq.NONE    }, -- all crystals
         { 1255,  10, digReq.NONE    }, -- all ores
         { 4545,   5, digReq.BURROW  },
@@ -421,7 +421,7 @@ local digInfo =
     {
         {  846, 216, digReq.NONE    },
         {17296, 210, digReq.NONE    },
-        {  869, 198, digReq.NONE    },
+        {  869, 188, digReq.NONE    },
         {  736,  72, digReq.NONE    },
         {  695, 102, digReq.NONE    },
         { 4448,  48, digReq.NONE    },
@@ -471,7 +471,7 @@ local digInfo =
     },
     [tpz.zone.EASTERN_ALTEPA_DESERT] = -- 114
     {
-        {  880, 167, digReq.NONE    },
+        {  880, 176, digReq.NONE    },
         {  893,  88, digReq.NONE    },
         {17296, 135, digReq.NONE    },
         {  736,  52, digReq.NONE    },
@@ -524,16 +524,16 @@ local digInfo =
     },
     [tpz.zone.EAST_SARUTABARUTA] = -- 116
     {
-        {  689, 132, digReq.NONE    },
-        {  938,  79, digReq.NONE    },
-        {17296, 132, digReq.NONE    },
-        {  847, 100, digReq.NONE    },
-        {  846,  53, digReq.NONE    },
-        {  833, 100, digReq.NONE    },
-        {  841,  53, digReq.NONE    },
-        {  834,  26, digReq.NONE    },
-        {  772,  50, digReq.NONE    },
-        {  701,  50, digReq.NONE    },
+        {  689, 236, digReq.NONE    },
+        {  938, 125, digReq.NONE    },
+        {17296, 181, digReq.NONE    },
+        {  847,  14, digReq.NONE    },
+        {  846,  69, digReq.NONE    },
+        {  833,   8, digReq.NONE    },
+        {  841,  69, digReq.NONE    },
+        {  834,  14, digReq.NONE    },
+        {  772,  14, digReq.NONE    },
+        {  701,   8, digReq.NONE    },
         {  702,   3, digReq.NONE    },
         { 4096, 100, digReq.NONE    }, -- all crystals
         { 1255,  10, digReq.NONE    }, -- all ores
@@ -560,7 +560,6 @@ local digInfo =
         {  888, 175, digReq.NONE    },
         {  641, 100, digReq.NONE    },
         {  841,  45, digReq.NONE    },
-        {  843,   4, digReq.NONE    },
         { 4096, 100, digReq.NONE    }, -- all crystals
         { 1255,  10, digReq.NONE    }, -- all ores
         {  656, 148, digReq.BURROW  },
@@ -651,11 +650,9 @@ local digInfo =
         {  880, 126, digReq.NONE    },
         {  768, 130, digReq.NONE    },
         {  748,  55, digReq.NONE    },
-        {  737,  17, digReq.NONE    },
         {  846,  91, digReq.NONE    },
         {  643,  75, digReq.NONE    },
         {  869,  87, digReq.NONE    },
-        {  642,  58, digReq.NONE    },
         {17296, 168, digReq.NONE    },
         {  106,  32, digReq.NONE    },
         {  773,  50, digReq.NONE    },
