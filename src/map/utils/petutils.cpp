@@ -395,6 +395,13 @@ namespace petutils
 
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
 
+        // Add Double Attack trait if level 25 or above Warrior job
+        // TODO: Load job traits for pets rather than add them manually
+        if (PMob->GetMJob() == JOB_WAR && PMob->GetMLevel() >= 25)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 10);
+        }
+        
         //reduce weapon delay of MNK
         if (PMob->GetMJob() == JOB_MNK)
         {
@@ -513,38 +520,38 @@ namespace petutils
                 break;
             case 36: // LULLABY MELODIA
                 PMob->addModifier(Mod::LIZARD_KILLER, 10);
-                def = GetJugMod(PMob, 41, 55, Mod::DEF, 180, 260); eva = GetJugMod(PMob, 41, 55, Mod::EVA, 140, 190);
-                acc = GetJugMod(PMob, 41, 55, Mod::ACC, 147, 202); att = GetJugMod(PMob, 41, 55, Mod::ATT, 166, 225);
+                def = GetJugMod(PMob, 41, 75, Mod::DEF, 180, 384); eva = GetJugMod(PMob, 41, 75, Mod::EVA, 140, 286);
+                acc = GetJugMod(PMob, 41, 75, Mod::ACC, 147, 301); att = GetJugMod(PMob, 41, 75, Mod::ATT, 166, 313);
                 break;
             case 37: // KEENEARED STEFFI
                 PMob->addModifier(Mod::LIZARD_KILLER, 10);
-                def = GetJugMod(PMob, 41, 55, Mod::DEF, 176, 250); eva = GetJugMod(PMob, 41, 55, Mod::EVA, 132, 179);
-                acc = GetJugMod(PMob, 41, 55, Mod::ACC, 143, 193); att = GetJugMod(PMob, 41, 55, Mod::ATT, 157, 211);
+                def = GetJugMod(PMob, 41, 75, Mod::DEF, 176, 366); eva = GetJugMod(PMob, 41, 75, Mod::EVA, 132, 283);
+                acc = GetJugMod(PMob, 41, 75, Mod::ACC, 143, 302); att = GetJugMod(PMob, 41, 75, Mod::ATT, 157, 311);
                 break;
             case 38: // FLOWERPOT BEN
                 PMob->addModifier(Mod::BEAST_KILLER, 10);
-                def = GetJugMod(PMob, 49, 63, Mod::DEF, 208, 305); eva = GetJugMod(PMob, 49, 63, Mod::EVA, 161, 232);
-                acc = GetJugMod(PMob, 49, 63, Mod::ACC, 175, 248); att = GetJugMod(PMob, 49, 63, Mod::ATT, 180, 251);
+                def = GetJugMod(PMob, 49, 75, Mod::DEF, 208, 364); eva = GetJugMod(PMob, 49, 75, Mod::EVA, 161, 280);
+                acc = GetJugMod(PMob, 49, 75, Mod::ACC, 175, 300); att = GetJugMod(PMob, 49, 75, Mod::ATT, 180, 302);
                 break;
             case 39: // SABER SIRAVARDE
                 PMob->addModifier(Mod::LIZARD_KILLER, 10);
-                def = GetJugMod(PMob, 49, 63, Mod::DEF, 207, 307); eva = GetJugMod(PMob, 49, 63, Mod::EVA, 164, 231);
-                acc = GetJugMod(PMob, 49, 63, Mod::ACC, 174, 247); att = GetJugMod(PMob, 49, 63, Mod::ATT, 189, 267);
+                def = GetJugMod(PMob, 49, 75, Mod::DEF, 207, 381); eva = GetJugMod(PMob, 49, 75, Mod::EVA, 164, 288);
+                acc = GetJugMod(PMob, 49, 75, Mod::ACC, 174, 309); att = GetJugMod(PMob, 49, 75, Mod::ATT, 189, 334);
                 break;
             case 40: // COLDBLOOD COMO
                 PMob->addModifier(Mod::VERMIN_KILLER, 10);
-                def = GetJugMod(PMob, 51, 65, Mod::DEF, 206, 316); eva = GetJugMod(PMob, 51, 65, Mod::EVA, 166, 242);
-                acc = GetJugMod(PMob, 51, 65, Mod::ACC, 176, 258); att = GetJugMod(PMob, 51, 65, Mod::ATT, 198, 290);
+                def = GetJugMod(PMob, 51, 75, Mod::DEF, 206, 383); eva = GetJugMod(PMob, 51, 75, Mod::EVA, 166, 296);
+                acc = GetJugMod(PMob, 51, 75, Mod::ACC, 176, 307); att = GetJugMod(PMob, 51, 75, Mod::ATT, 198, 326);
                 break;
             case 41: // SHELLBUSTER OROB
                 PMob->addModifier(Mod::PLANTOID_KILLER, 10);
-                def = GetJugMod(PMob, 51, 65, Mod::DEF, 209, 320); eva = GetJugMod(PMob, 51, 65, Mod::EVA, 168, 244);
-                acc = GetJugMod(PMob, 51, 65, Mod::ACC, 174, 256); att = GetJugMod(PMob, 51, 65, Mod::ATT, 196, 288);
+                def = GetJugMod(PMob, 51, 75, Mod::DEF, 209, 389); eva = GetJugMod(PMob, 51, 75, Mod::EVA, 168, 298);
+                acc = GetJugMod(PMob, 51, 75, Mod::ACC, 174, 308); att = GetJugMod(PMob, 51, 75, Mod::ATT, 196, 324);
                 break;
             case 42: // VORACIOUS AUDREY
                 PMob->addModifier(Mod::BEAST_KILLER, 10);
-                def = GetJugMod(PMob, 51, 65, Mod::DEF, 208, 320); eva = GetJugMod(PMob, 51, 65, Mod::EVA, 167, 242);
-                acc = GetJugMod(PMob, 51, 65, Mod::ACC, 174, 256); att = GetJugMod(PMob, 51, 65, Mod::ATT, 195, 290);
+                def = GetJugMod(PMob, 51, 75, Mod::DEF, 208, 392); eva = GetJugMod(PMob, 51, 75, Mod::EVA, 167, 299);
+                acc = GetJugMod(PMob, 51, 75, Mod::ACC, 174, 309); att = GetJugMod(PMob, 51, 75, Mod::ATT, 195, 321);
                 break;
             case 43: // AMBUSHER ALLIE
                 PMob->addModifier(Mod::VERMIN_KILLER, 10);
