@@ -10,10 +10,12 @@ require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
     zone:registerRegion(1, -2, -17, 140, 2, -16, 142)
+    applyStarlightDecorations(zone:getID())
 end
 
 function onZoneIn(player, prevZone)

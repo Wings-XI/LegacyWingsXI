@@ -109,10 +109,6 @@ function familiarPets()
             removeSleepEffects(pet) -- Pets wake and are unsleepable after famiilar.  Only effects the active pets
             pet:setMod(tpz.mod.SLEEPRESTRAIT, 100)
             pet:setMod(tpz.mod.LULLABYRESTRAIT, 100)
-            pet:addMod(tpz.mod.ATTP, 15) -- Normal Familiar Mods minus the HP - since there is no way to heal the pets
-            pet:addMod(tpz.mod.ACC, 20)
-            pet:addMod(tpz.mod.EVA, 10)
-            pet:addMod(tpz.mod.DEFP, 10)
         end
      end
 end

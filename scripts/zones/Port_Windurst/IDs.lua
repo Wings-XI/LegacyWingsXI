@@ -72,6 +72,11 @@ zones[tpz.zone.PORT_WINDURST] =
         ALIZABE_COP_NOT_COMPLETED       = 12876, -- It won't be long before I set up shop right here in this very place. And once I start, there won't be no stoppin' me!
         RETRIEVE_DIALOG_ID              = 15881, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL           = 16281, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                  = 12914, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                  = 12917, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                 = 12921, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN         = 12922, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {

@@ -10,9 +10,11 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/utils")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

@@ -10,13 +10,15 @@ require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/chocobo")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
     zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
     quests.ffr.initZone(zone) -- register regions 2 through 6
-   applyHalloweenNpcCostumes(zone:getID())
-   applyHalloweenDecorations(zone:getID())
+    applyHalloweenNpcCostumes(zone:getID())
+    applyHalloweenDecorations(zone:getID())
+    applyStarlightDecorations(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 

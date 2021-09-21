@@ -52170,6 +52170,12 @@ INSERT INTO `item_mods` VALUES (16432,431,1);     -- Stun Jamadhars
 INSERT INTO `item_mods` VALUES (17484,431,1);     -- Stun Jamadhars +1
 INSERT INTO `item_mods` VALUES (16503,431,1);     -- Stun Knife
 INSERT INTO `item_mods` VALUES (17600,431,1);     -- Stun Knife +1
+INSERT INTO `item_mods` VALUES (12517,1182,5);    -- Enhances Tame Success Rate for Beast Helm
+INSERT INTO `item_mods` VALUES (15233,1182,5);    -- Enhances Tame Success Rate for Beast Helm +1
+INSERT INTO `item_mods` VALUES (14319,1182,5);    -- Enhances Tame Success Rate for Bison Kecks
+INSERT INTO `item_mods` VALUES (14320,1182,5);    -- Enhances Tame Success Rate for Brave's Kecks
+INSERT INTO `item_mods` VALUES (15645,1182,5);    -- Enhances Tame Success Rate for Khimaira Kecks
+INSERT INTO `item_mods` VALUES (15646,1182,5);    -- Enhances Tame Success Rate for Stout Kecks
 
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;

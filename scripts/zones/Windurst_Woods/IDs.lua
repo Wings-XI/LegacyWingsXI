@@ -81,6 +81,21 @@ zones[tpz.zone.WINDURST_WOODS] =
         LS_CONCIERGE_REGISTERED1     = 14233, -- Your registration is officially complete.
         LS_CONCIERGE_REGISTERED2     = 14234, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
         LS_CONCIERGE_ALREADY_LISTED  = 14235, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU               = 9985, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS               = 9988, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN              = 9992, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN      = 9993, -- You've brought barrelfuls of joy to the children of Vana'diel!
+        STARLIGHT_CARD_1             = 10117, -- It's time once again for the Starlight Celebration!≺Prompt≻
+        STARLIGHT_CARD_2             = 13419, -- Kupo ho ho! Merry Starlight! As with past celebrations, we've prepared a veritable mountain of presents for all adventurers, kupo.≺Prompt≻
+        STARLIGHT_CARD_3             = 13451, -- We'd also appreciate your help in distributing cards, kupo. All you're required to do is deliver this card to the addressee. We're counting on you!≺Prompt≻
+        STARLIGHT_CARD_4             = 13447, -- If you happen to forget who the card's recipient is, just show it to me, kupo.≺Prompt≻
+        STARLIGHT_CARD_5             = 13446, -- You're truly a role model for all adventurers, kupo! Now then, we'd like you to take this card and give it to a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer.≺Prompt≻
+        STARLIGHT_CARD_6             = 13439, -- Happy delivering, kupo!≺Prompt≻
+        STARLIGHT_CARD_CHECK         = 13448, -- Let' see... This addressee of this card is a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer, kupo.≺Prompt≻
+        STARLIGHT_CARD_RED           = 10124, -- Oh, I just remembered! I think that the cards are all addressed to people who are wearing red...≺Prompt≻
+        STARLIGHT_CARD_WRONG         = 13449, -- Are you trying to pull a fast one, kupo!? This card isn't yours to give, nor is it addressed to you, so please take it back to where you found it.≺Prompt≻
+        STARLIGHT_CARD_CONFIRM       = 13441, -- Here's a little something for your kindness.≺Prompt≻
     },
     mob =
     {
@@ -120,6 +135,7 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764761] = 17764761,  -- Starlight Festival Tree
             [17764762] = 17764762,  -- Starlight Festival Tree
             [17764763] = 17764763,  -- Starlight Festival Tree
+            [17764563] = 17764563,  -- Event Moogle
         },
         DOLL_FESTIVAL_DECORATIONS = {
             [17764670] = 17764670,  -- Doll Festival Stage

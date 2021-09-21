@@ -10,9 +10,11 @@ require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     local reapstatus = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.REAP_WHAT_YOU_SOW)
     if (reapstatus >= 1 and trade:getItemCount() == 1 and trade:getGil() == 0) then
         if (trade:hasItemQty(4565, 1) == true) then
