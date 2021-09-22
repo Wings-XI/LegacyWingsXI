@@ -3561,7 +3561,7 @@ INSERT INTO `mob_pools` VALUES(3497, 'Scavenging_Hound', 'Scavenging_Hound', 143
 INSERT INTO `mob_pools` VALUES(3498, 'Schnitter', 'Schnitter', 227, 0x00003c0200000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(3499, 'Schwertleite', 'Schwertleite', 359, 0x05004f0700000000000000000000000000000000, 12, 5, 8, 240, 100, 0, 1, 0, 1, 8, 0, 0, 0, 3, 0, 0, 0, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(3500, 'Scimitar_Scorpion', 'Scimitar_Scorpion', 217, 0x00001c0100000000000000000000000000000000, 1, 1, 7, 280, 100, 0, 1, 0, 0, 0, 0, 0, 1889, 131, 0, 0, 0, 0, 0, 217);
-INSERT INTO `mob_pools` VALUES(3501, 'Scitalis', 'Scitalis', 266, 0x0000c50800000000000000000000000000000000, 1, 1, 7, 220, 100, 0, 1, 0, 0, 2, 0, 32, 5119, 157, 0, 0, 0, 0, 0, 266);
+INSERT INTO `mob_pools` VALUES(3501, 'Scitalis', 'Scitalis', 266, 0x0000c50800000000000000000000000000000000, 1, 1, 7, 220, 100, 0, 1, 0, 0, 2, 642, 32, 5119, 157, 0, 0, 0, 0, 0, 266);
 INSERT INTO `mob_pools` VALUES(3502, 'Scolopendra', 'Scolopendra', 218, 0x0000610100000000000000000000000000000000, 2, 2, 7, 360, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 218);
 INSERT INTO `mob_pools` VALUES(3503, 'Scolopendrid', 'Scolopendrid', 217, 0x0000c30800000000000000000000000000000000, 1, 1, 7, 280, 100, 0, 1, 0, 1, 0, 0, 0, 557, 131, 0, 0, 0, 0, 0, 217);
 INSERT INTO `mob_pools` VALUES(3504, 'Scorpion_Caster', 'Scorpion_Caster', 153, 0x01000d0512101420143014401450e36027701b80, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 153);
