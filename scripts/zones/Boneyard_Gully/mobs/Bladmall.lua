@@ -13,6 +13,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEFP, 50)
     mob:addMod(tpz.mod.MDEF, 20)
     mob:addMod(tpz.mod.ATTP, 30)
+    mob:setMobMod(tpz.mobMod.HP_STANDBACK, 1)
 end
 
 function onMobFight(mob,target)
