@@ -65,7 +65,7 @@ function onMobFight(mob, target)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, {power = math.random(45, 90), chance = 10})
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, {power = math.random(45, 90), chance = 100})
 end
 
 function onMobWeaponSkill(target, mob, skill, action)
