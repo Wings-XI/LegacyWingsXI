@@ -174,13 +174,13 @@ void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float a
     m_conal = true;
 
     m_APoint = &m_PBattleEntity->loc.p;
-    m_APoint->rotation += extraRotation; // typically used for "aoe behind me" instead of "aoe in front of me" (an addition of 128) example: Behe's Kick Out
+    //m_APoint->rotation += extraRotation; typically used for "aoe behind me" instead of "aoe in front of me" (an addition of 128) example: Behe's Kick Out - Disabled to prevent the mob from actually rotating.
 
     uint8 halfAngle = static_cast<uint8>((angle * (256.0f / 360.0f)) / 2.0f);
 
     // Confirmation on the center of cones is still needed for mob skills; player skills seem to be facing angle
     // uint8 angleToTarget = worldAngle(m_PBattleEntity->loc.p, PTarget->loc.p);
-    uint8 angleToTarget = m_APoint->rotation;
+    uint8 angleToTarget = m_APoint->rotation + extraRotation;
     
     // "Left" and "Right" are like the entity's face - "left" means "turning to the left" NOT "left when looking overhead"
     // Remember that rotation increases when turning to the right, and decreases when turning to the left

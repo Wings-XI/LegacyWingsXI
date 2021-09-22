@@ -10,6 +10,8 @@ require("scripts/globals/status")
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
     mob:setMod(tpz.mod.DMGMAGIC, -50)
+    mob:setMod(tpz.mod.DEF, 550)
+
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")

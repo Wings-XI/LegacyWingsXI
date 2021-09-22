@@ -304,9 +304,9 @@ INSERT INTO `mob_groups` VALUES(9, 247, 8, 'Armored_Hunter', 0, 128, 0, 6000, 0,
 INSERT INTO `mob_groups` VALUES(10, 3301, 8, 'Race_Runner', 0, 128, 0, 7000, 2000, 75, 75, 0);
 -- ENM Shell We Dance? - BONEYARD_GULLY
 INSERT INTO `mob_groups` VALUES(11, 3099, 8, 'Parata', 0, 128, 0, 11000, 0, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(12, 444, 8, 'Bladmall', 0, 128, 0, 8000, 2000, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(13, 2833, 8, 'Nepionic_Parata', 0, 128, 0, 1000, 0, 73, 73, 0);
-INSERT INTO `mob_groups` VALUES(14, 2832, 8, 'Nepionic_Bladmall', 0, 128, 1000, 1000, 0, 73, 73, 0);
+INSERT INTO `mob_groups` VALUES(12, 444, 8, 'Bladmall', 0, 128, 0, 9000, 10000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(13, 2833, 8, 'Nepionic_Parata', 0, 128, 0, 2000, 0, 73, 73, 0);
+INSERT INTO `mob_groups` VALUES(14, 2832, 8, 'Nepionic_Bladmall', 0, 128, 0, 2000, 0, 73, 73, 0);
 INSERT INTO `mob_groups` VALUES(15, 1860, 8, 'Gwyn_Ap_Knudd', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(16, 598, 8, 'Cadaver_Warrior', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(17, 599, 8, 'Cadaver_Witch', 0, 128, 0, 0, 0, 75, 75, 0);
@@ -9879,10 +9879,10 @@ INSERT INTO `mob_groups` VALUES(4, 5345, 168, 'Maat', 0, 128, 0, 2300, 0, 70, 70
 INSERT INTO `mob_groups` VALUES(5, 5403, 168, 'Maat', 0, 128, 0, 2300, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(6, 5404, 168, 'Maat', 0, 128, 0, 2300, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(7, 2463, 168, 'Maats_Wyvern', 0, 128, 0, 0, 0, 56, 56, 0);
-INSERT INTO `mob_groups` VALUES(8, 3527, 168, 'Secutor_XI-XXXII', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(9, 3357, 168, 'Retiarius_XI-XIX', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(10, 1989, 168, 'Hoplomachus_XI-XXVI', 0, 128, 0, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(11, 675, 168, 'Centurio_XI-I', 0, 128, 0, 0, 0, 60, 60, 0);
+INSERT INTO `mob_groups` VALUES(8, 3527, 168, 'Secutor_XI-XXXII', 0, 128, 0, 3900, 0, 64, 65, 0);
+INSERT INTO `mob_groups` VALUES(9, 3357, 168, 'Retiarius_XI-XIX', 0, 128, 0, 3900, 0, 64, 65, 0);
+INSERT INTO `mob_groups` VALUES(10, 1989, 168, 'Hoplomachus_XI-XXVI', 0, 128, 0, 3900, 0, 64, 65, 0);
+INSERT INTO `mob_groups` VALUES(11, 675, 168, 'Centurio_XI-I', 0, 128, 0, 3900, 0, 64, 65, 0);
 INSERT INTO `mob_groups` VALUES(13, 3429, 168, 'Sabotender_Campeon', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(14, 3427, 168, 'Sabotender_Amante', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(15, 3303, 168, 'Radiant_Wyvern', 0, 128, 0, 0, 0, 75, 76, 0);
