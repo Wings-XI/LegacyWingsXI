@@ -6,7 +6,6 @@
 require("scripts/globals/hunts")
 require("scripts/globals/status")
 require("scripts/globals/mobs")
-
 ------------------------------
 
 function onMobSpawn(mob, player, isKiller)
@@ -17,7 +16,7 @@ function onMobSpawn(mob, player, isKiller)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENAERO, {power = math.random(120, 130), chance = 10})
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENAERO, {power = math.random(120, 130), chance = 100})
 end
 
 function onMobDeath(mob, player, isKiller)
