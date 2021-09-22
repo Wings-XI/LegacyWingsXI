@@ -184,6 +184,15 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764701] = 17764701,  -- New Years Standing Tree
             [17764702] = 17764702,  -- New Years Standing Tree
         },
+        CIRCUS = {
+            [17764527] = 17719426, -- Mokop-Sankop
+            [17764528] = 17719427, -- Cheh Raihah
+            [17764525] = 17719424, -- Valeriano
+            [17764529] = 17719428, -- Nalta
+            [17764526] = 17719425, -- Dahjal
+            [17764582] = 17719535, -- Ominous Cloud
+            [17764581] = 17719534, -- Nokkhi Jinjahl
+        },
     },
 }
 

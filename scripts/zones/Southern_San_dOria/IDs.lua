@@ -231,6 +231,15 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
             [17719724] = 17719724,  -- New Years Standing Tree
             [17719728] = 17719728,  -- New Years Standing Tree
         },
+        CIRCUS = {
+            [17719426] = 17719426, -- Mokop-Sankop
+            [17719427] = 17719427, -- Cheh Raihah
+            [17719424] = 17719424, -- Valeriano
+            [17719428] = 17719428, -- Nalta
+            [17719425] = 17719425, -- Dahjal
+            [17719535] = 17719535, -- Ominous Cloud
+            [17719534] = 17719534, -- Nokkhi Jinjahl
+        },
         LUSIANE  = 17719350,
         ARPETION = 17719409,
     },

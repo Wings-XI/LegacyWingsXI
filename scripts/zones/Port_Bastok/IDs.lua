@@ -169,6 +169,15 @@ zones[tpz.zone.PORT_BASTOK] =
             [17744108] = 17744108,  -- Sunbreeze Festival Planter
             [17744125] = 17744125,  -- Sunbreeze Festival Fireworks
         },
+        CIRCUS = {
+            [17743968] = 17743968, -- Mokop-Sankop
+            [17743969] = 17743969, -- Cheh Raihah
+            [17743966] = 17743966, -- Valeriano
+            [17743970] = 17743970,-- Nalta
+            [17743967] = 17743967, -- Dahjal
+            [17744022] = 17744022, -- Ominous Cloud
+            [17744021] = 17744021, -- Nokkhi Jinjahl
+        },
     },
 }
 
