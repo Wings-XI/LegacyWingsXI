@@ -51,14 +51,15 @@ function onPetAbility(target, automaton, skill, master, action)
     end
 
 
-    local damage = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
+    local damage, criticalHit, tpHits, extraHits = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
 
     if damage > 0 then
         local chance = 0.033 * skill:getTP()
         if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
             target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
         end
+        master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, tpHits+extraHits)
+        target:tryInterruptSpell(automaton, tpHits+extraHits)
     end
-
     return damage
 end
