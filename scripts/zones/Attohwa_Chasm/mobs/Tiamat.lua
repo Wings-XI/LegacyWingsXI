@@ -4,6 +4,8 @@
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/status")
+require("scripts/globals/mobs")
+
 mixins = {require("scripts/mixins/families/wyrm_wakeup")}
 -----------------------------------
 
@@ -90,7 +92,7 @@ function onCastStarting(mob, spell)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, {power = math.random(45, 90), chance = 100})
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE, {power = math.random(45, 90), chance = 10})
 end
 
 function onMobDeath(mob, player, isKiller)

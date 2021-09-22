@@ -4,6 +4,8 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
+
 local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 -----------------------------------
 
@@ -65,7 +67,7 @@ function onMobFight(mob, target)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, {power = math.random(45, 90), chance = 100})
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, {power = math.random(45, 90), chance = 10})
 end
 
 function onMobWeaponSkill(target, mob, skill, action)
