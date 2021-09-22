@@ -413,48 +413,44 @@ namespace petutils
         }
         
         // Enables Monk swinging twice
-        // Adds Martial Arts and Counter traits. 
+        // Adds Counter trait. 
         // TODO: These are temporary fixes until job traits, cmbSkill, and weapon checks properly implemented for pets.
-        if (PMob->GetMJob() == JOB_MNK && lvl >= 75)
+        
+        if (PMob->GetMJob() == JOB_MNK)
         {
-            //((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
             PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
             PMob->addModifier(Mod::COUNTER, 8);
+        }
+        
+        // Adds Martial Arts trait.
+        
+        if (PMob->GetMJob() == JOB_MNK && lvl >= 75)
+        {
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(300 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(300 * 1000 / 60);
         }
         else if (PMob->GetMJob() == JOB_MNK && lvl >= 61)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(320 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(320 * 1000 / 60);
         }
         else if (PMob->GetMJob() == JOB_MNK && lvl >= 46)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(340 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(340 * 1000 / 60);
         }
         else if (PMob->GetMJob() == JOB_MNK && lvl >= 31)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(360 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(360 * 1000 / 60);
         }
         else if (PMob->GetMJob() == JOB_MNK && lvl >= 16)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(380 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(380 * 1000 / 60);
         }
         else if (PMob->GetMJob() == JOB_MNK && lvl >= 1)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(400 * 1000 / 60);
             ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(400 * 1000 / 60);
         }
