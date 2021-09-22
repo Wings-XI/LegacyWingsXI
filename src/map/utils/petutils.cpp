@@ -310,13 +310,23 @@ namespace petutils
     uint16 GetJugMod(CPetEntity * PMob, uint8 lvlMin, uint8 lvlMax, Mod mod, uint16 modMin, uint16 modMax)
     {
         uint8 lvl = PMob->GetMLevel();
+        auto weapon = dynamic_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_MAIN]);
         uint16 statAdjust;
 
         switch (mod) {
             case Mod::DEF: statAdjust = 8 + PMob->VIT() / 2; break;
             case Mod::EVA: statAdjust = PMob->GetSkill(SKILL_EVASION) + PMob->AGI() / 2; break;
             case Mod::ACC: statAdjust = PMob->DEX() / 2; break;
-            case Mod::ATT: statAdjust = 8 + PMob->STR() / 2; break;
+            case Mod::ATT:
+                if (weapon && weapon->isTwoHanded())
+                {
+                    statAdjust = 8 + (PMob->STR() * 3) / 4;
+                }
+                else
+                {
+                    statAdjust = 8 + PMob->STR() / 2;
+                }
+                break;
             default: break;
         }
 
@@ -397,18 +407,56 @@ namespace petutils
 
         // Add Double Attack trait if level 25 or above Warrior job
         // TODO: Load job traits for pets rather than add them manually
-        if (PMob->GetMJob() == JOB_WAR && PMob->GetMLevel() >= 25)
+        if (PMob->GetMJob() == JOB_WAR && lvl >= 25)
         {
             PMob->addModifier(Mod::DOUBLE_ATTACK, 10);
         }
         
-        //reduce weapon delay of MNK
-        if (PMob->GetMJob() == JOB_MNK)
+        // Enables Monk swinging twice
+        // Adds Martial Arts and Counter traits. 
+        // TODO: These are temporary fixes until job traits, cmbSkill, and weapon checks properly implemented for pets.
+        if (PMob->GetMJob() == JOB_MNK && lvl >= 75)
         {
             //((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
             PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(480 * 1500 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(480 * 1500 / 60);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(300 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(300 * 1000 / 60);
+        }
+        else if (PMob->GetMJob() == JOB_MNK && lvl >= 61)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(320 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(320 * 1000 / 60);
+        }
+        else if (PMob->GetMJob() == JOB_MNK && lvl >= 46)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(340 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(340 * 1000 / 60);
+        }
+        else if (PMob->GetMJob() == JOB_MNK && lvl >= 31)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(360 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(360 * 1000 / 60);
+        }
+        else if (PMob->GetMJob() == JOB_MNK && lvl >= 16)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(380 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(380 * 1000 / 60);
+        }
+        else if (PMob->GetMJob() == JOB_MNK && lvl >= 1)
+        {
+            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            PMob->addModifier(Mod::COUNTER, 8);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(400 * 1000 / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(400 * 1000 / 60);
         }
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
