@@ -80,7 +80,7 @@ function onEventUpdate(player, csid, option, target)
 end
 
 function onEventFinish(player, csid, option)
-    if (csid == 221 and option == 4) or csid == 90 then
+    if (csid == 221 and option == 4) then
         player:setPos(0, 0, 0, 0, 60)
     end
 end
@@ -95,7 +95,7 @@ function onInstanceCreated(player, target, instance)
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
                     v:setInstance(instance)
-                    v:startEvent(90) -- wrong csid, yet better than nothing
+                    v:startEvent(222, 6)
                 end
             end
         end
