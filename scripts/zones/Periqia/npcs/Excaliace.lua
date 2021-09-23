@@ -312,6 +312,7 @@ function checkForNearbyPlayers(npc, chars)
             if npc:checkDistance(player) < 12 then -- check if at least 1 player is around the npc
                 rangeFollow = true
             end
+            -- TODODEMOS While he's on the move, just stay right on his heels, between 3'-5'. You can't /follow him, but you can lock target on him and auto-run.
         end
 
         local moveStatus = npc:getLocalVar("moveStatus")
@@ -324,6 +325,7 @@ function checkForNearbyPlayers(npc, chars)
                 npc:timer(2000, function(npc) npc:showText(npc,ID.text.EXCALIACE_TIRED) end)
                 npc:timer(6000, function(npc) npc:showText(npc,ID.text.EXCALIACE_CAUGHT) end)
                 npc:timer(stopDuration * 1000, function(npc)
+                    -- add here the moving foward method
                     npc:setLocalVar("moveStatus", 0)
                     npc:speed(ONPATH_SPEED)
                 end)
@@ -337,6 +339,7 @@ function checkForNearbyPlayers(npc, chars)
             end
 
         elseif rangeFollow == false and moveStatus ~= 1 and pathLeg ~= 0 then
+            -- TODODEMOS If he sees a monster or you stay more than 10' away from him for about 10 seconds, he will run back
             npc:showText(npc,ID.text.EXCALIACE_RUN)
             npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + math.random(20,30))
             npc:setLocalVar("moveStatus", 1)
