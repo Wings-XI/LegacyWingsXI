@@ -276,33 +276,22 @@ function checkForNearbyMobs(npc, mobs)
 
     for _, enemy in pairs(mobs) do
         if npc:checkDistance(enemy) < 12 and enemy:isSpawned() and pathLeg ~= 0 then 
-            if moveStatus ~= 1 then -- if npc is stop and a mob come near it run away or not ?
-                --npc:setLocalVar("runTimer", os.time() + math.random(20,40))
-                
-                npc:setLocalVar("runStart", 1)
+            if moveStatus ~= 1 then -- if npc is stop and a mob come near it run away or not ?             
                 if enemy:isEngaged() then
-                    npc:showText(npc,ID.text.EXCALIACE_MOB_ENGAGED)
+                    npc:showText(npc,ID.text.EXCALIACE_MOB_ENGAGED) -- Over to you.
+                    npc:speed(ONPATH_SPEED)
                 else
-                    -- TODODEMOS is that a good idea, if someone bring a debaucher, waht happen ?
-                    -- Should save last checkpoint ? or not save anything like  pugil/Debaucher
                     if enemy:getFamily() == 77 then -- crab
-                        -- if pathProgressMask == 7 then
-                        --     npc:setLocalVar("pathPoint", 38) -- save checkpoint Bottom Rooms Option
-                        -- elseif pathProgressMask == 3 then
-                        --     npc:setLocalVar("pathPoint", 34)-- save checkpoint Middle Rooms Option
-                        -- elseif pathProgressMask == 1 then
-                        --     npc:setLocalVar("pathPoint", 30) -- save checkpoint Top Rooms Option
-                        -- end
-                        -- npc:setLocalVar("pathLeg", 1)
-                        npc:showText(npc,ID.text.EXCALIACE_CRAB1)
+                        npc:showText(npc,ID.text.EXCALIACE_CRAB1) -- What's this guy up to?
                     elseif enemy:getFamily() == 197 then -- pugil
-                        npc:showText(npc,ID.text.EXCALIACE_PUGIL1)
+                        npc:showText(npc,ID.text.EXCALIACE_PUGIL1) -- Wh-what the...!?
                     elseif enemy:getFamily() == 86 then -- doomed
-                        npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER1)
+                        npc:showText(npc,ID.text.EXCALIACE_DEBAUCHER1) -- H-help!!!
                     end
+                    npc:speed(RUNAWAY_SPEED)
                 end
+                npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + math.random(20,30))
                 npc:setLocalVar("moveStatus", 1)
-                npc:speed(RUNAWAY_SPEED)
             end
         end
     end
@@ -328,11 +317,13 @@ function checkForNearbyPlayers(npc, chars)
         local moveStatus = npc:getLocalVar("moveStatus")
         if rangeFacing == true then
             if moveStatus == 1 then
+                local stopDuration = math.random(30,40)
+
                 npc:speed(STOP_SPEED)
-                npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + 15)
+                npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + stopDuration)
                 npc:timer(2000, function(npc) npc:showText(npc,ID.text.EXCALIACE_TIRED) end)
                 npc:timer(6000, function(npc) npc:showText(npc,ID.text.EXCALIACE_CAUGHT) end)
-                npc:timer(8000, function(npc)
+                npc:timer(stopDuration * 1000, function(npc)
                     npc:setLocalVar("moveStatus", 0)
                     npc:speed(ONPATH_SPEED)
                 end)
