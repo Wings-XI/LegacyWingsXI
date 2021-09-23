@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Hypnotic Sway
--- Description: Inflicts amnesia conal
+-- Description: Inflicts amnesia gaze
 -- Type: Enfeebling
 -- Utsusemi/Blink absorb: Ignores shadows
 ---------------------------------------------
