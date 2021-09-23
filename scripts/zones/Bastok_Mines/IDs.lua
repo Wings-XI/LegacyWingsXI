@@ -112,22 +112,26 @@ zones[tpz.zone.BASTOK_MINES] =
     },
     npc =
     {
-        HALLOWEEN_SKINS =
-        {
+        HALLOWEEN_SKINS = {
+
             [17735742] = 365, -- Faustin | Hound
             [17735744] = 644, -- Mille | Quadav
             [17735747] = 368, -- Aulavia | Ghost
             [17735795] = 535, -- Proud Beard | Shade
             [17735818] = 564, -- Emaliveulaux | Skeleton
+            
         },
         HALLOWEEN_DECORATIONS = {
+
             [17735939] = 17735939,  -- Halloween Decorations
             [17735940] = 17735940,  -- Halloween Decorations
             [17735941] = 17735941,  -- Halloween Decorations
             [17735962] = 17735962,  -- Event Moogle Stall
             [17735961] = 17735961,  -- Festive Moogle
+
         },
         STARLIGHT_DECORATIONS = {
+
             [17735951] = 17735951,  -- Starlight Festival Planter
             [17735952] = 17735952,  -- Starlight Festival Planter
             [17735953] = 17735953,  -- Starlight Festival Planter
@@ -136,21 +140,28 @@ zones[tpz.zone.BASTOK_MINES] =
             [17735956] = 17735956,  -- Starlight Festival Planter
             [17735950] = 17735950,  -- Christina
             [17735777] = 17735777,  -- Event Moogle
+
         },
         EGG_HUNT_DECORATIONS = {
+
             [17735921] = 17735921,  -- Egg Hunt Egg-stravaganza Pole
             [17735922] = 17735922,  -- Egg Hunt Egg-stravaganza Pole
             [17735923] = 17735923,  -- Egg Hunt Egg-stravaganza Pole
             [17735924] = 17735924,  -- Egg Hunt Egg-stravaganza Pole
+
         },
         SUNBREEZE_FESTIVAL_DECORATIONS = {
+
             [17735938] = 17735938,  -- Sunbreeze Festival Fireworks
+
         },
         NEW_YEARS_DECORATIONS = {
+
             [17735934] = 17735934,  -- New Years Standing Tree
             [17735935] = 17735935,  -- New Years Standing Tree
             [17735936] = 17735936,  -- New Years Standing Tree
             [17735937] = 17735937,  -- New Years Standing Tree
+            
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

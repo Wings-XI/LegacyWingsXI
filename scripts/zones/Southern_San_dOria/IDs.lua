@@ -133,26 +133,33 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         HALLOWEEN_SKINS =
         {
+
             [17719303] = 580, -- Machielle | Yagudo
             [17719304] = 564, -- Corua | Skeleton
             [17719305] = 368, -- Phamelise | Ghost
             [17719306] = 531, -- Apairemant | Dark Stalker
             [17719493] = 612, -- Pourette | Orc
+
         },
         HALLOWEEN_DECORATIONS = {
+
             [17719784] = 17719784,  -- Halloween Decoration
             [17719785] = 17719785,  -- Halloween Decoration
             [17719786] = 17719786,  -- Halloween Decoration
+            
         },
         EGG_HUNT_DECORATIONS = {
+
             [17719708] = 17719708,  -- Egg Hunt Egg-stravaganza Standing Tree
             [17719709] = 17719709,  -- Egg Hunt Egg-stravaganza Standing Tree
             [17719710] = 17719710,  -- Egg Hunt Egg-stravaganza Pole
             [17719711] = 17719711,  -- Egg Hunt Egg-stravaganza Pole
             [17719712] = 17719712,  -- Egg Hunt Egg-stravaganza Pole
-            [17719713] = 17719713,  -- Egg Hunt Egg-stravaganza Pole  
+            [17719713] = 17719713,  -- Egg Hunt Egg-stravaganza Pole
+
         },
         STARLIGHT_DECORATIONS = {
+
             [17719795] = 17719795,  -- Starlight Festival Tree
             [17719796] = 17719796,  -- Starlight Festival Tree
             [17719797] = 17719797,  -- Starlight Festival Tree
@@ -185,14 +192,18 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
             [17719824] = 17719824,  -- Starlight Festival Tree
             [17719825] = 17719825,  -- Starlight Festival Tree
             [17719478] = 17719478,  -- Event Moogle
+
         },
         DOLL_FESTIVAL_DECORATIONS = {
+
             [17719702] = 17719702,  -- Doll Festival Stage
             [17719703] = 17719703,  -- Doll Festival Umbrella and Stand
             [17719704] = 17719704,  -- Doll Festival Umbrella and Stand
             [17719705] = 17719705,  -- Doll Festival Umbrella and Stand
+
         },
         SUNBREEZE_FESTIVAL_DECORATIONS = {
+
             [17719783] = 17719783,  -- Sunbreeze Festival Fireworks
 	        [17719729] = 17719729,  -- Sunbreeze Festival Tree
             [17719730] = 17719730,  -- Sunbreeze Festival Tree
@@ -222,16 +233,20 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
             [17719754] = 17719754,  -- Sunbreeze Festival Tree
             [17719759] = 17719759,  -- Sunbreeze Festival Tree
             [17719760] = 17719760,  -- Sunbreeze Festival Tree
+
         },
         NEW_YEARS_DECORATIONS = {
+
             [17719653] = 17719653,  -- New Year Festival Planter
             [17719654] = 17719654,  -- New Year Festival Planter
             [17719655] = 17719655,  -- New Year Festival Planter
             [17719656] = 17719656,  -- New Year Festival Planter
             [17719724] = 17719724,  -- New Years Standing Tree
             [17719728] = 17719728,  -- New Years Standing Tree
+
         },
         CIRCUS = {
+
             [17719426] = 17719426, -- Mokop-Sankop
             [17719427] = 17719427, -- Cheh Raihah
             [17719424] = 17719424, -- Valeriano
@@ -239,6 +254,7 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
             [17719425] = 17719425, -- Dahjal
             [17719535] = 17719535, -- Ominous Cloud
             [17719534] = 17719534, -- Nokkhi Jinjahl
+
         },
         LUSIANE  = 17719350,
         ARPETION = 17719409,

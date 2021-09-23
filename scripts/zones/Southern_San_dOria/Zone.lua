@@ -67,7 +67,6 @@ function onConquestUpdate(zone, updatetype)
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(tpz.status.NORMAL)
-                    local npcstatus = npc:getStatus()
                 end
             end
         end
@@ -78,7 +77,6 @@ function onConquestUpdate(zone, updatetype)
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(tpz.status.DISAPPEAR)
-                    local npcstatus = npc:getStatus()
                 end
             end
         end
