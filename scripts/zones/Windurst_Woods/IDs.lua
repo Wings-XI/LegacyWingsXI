@@ -111,23 +111,21 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764465] = 612, -- Millerovieunet | Orc
 
         },
-        HALLOWEEN_DECORATIONS = {
-
+        HALLOWEEN_DECORATIONS = 
+        {
             [17764742] = 17764742,  -- Halloween Decoration
             [17764743] = 17764743,  -- Halloween Decoration
             [17764744] = 17764744,  -- Halloween Decoration
-
         },
-        EGG_HUNT_DECORATIONS = {
-
+        EGG_HUNT_DECORATIONS = 
+        {
             [17764686] = 17764686,  -- Egg Hunt Egg-stravaganza Pole
             [17764687] = 17764687,  -- Egg Hunt Egg-stravaganza Pole
             [17764688] = 17764688,  -- Egg Hunt Egg-stravaganza Pole
             [17764689] = 17764689,  -- Egg Hunt Egg-stravaganza Pole
-
         },
-        STARLIGHT_DECORATIONS = {
-
+        STARLIGHT_DECORATIONS = 
+        {
             [17764751] = 17764751,  -- Starlight Festival Center Tree
             [17764752] = 17764752,  -- Starlight Festival Tree
             [17764753] = 17764753,  -- Starlight Festival Tree
@@ -142,10 +140,9 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764762] = 17764762,  -- Starlight Festival Tree
             [17764763] = 17764763,  -- Starlight Festival Tree
             [17764563] = 17764563,  -- Event Moogle
-
         },
-        DOLL_FESTIVAL_DECORATIONS = {
-
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
             [17764670] = 17764670,  -- Doll Festival Stage
             [17764671] = 17764671,  -- Doll Festival Umbrella and Stand
             [17764672] = 17764672,  -- Doll Festival Umbrella and Stand
@@ -161,10 +158,9 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764682] = 17764682,  -- Doll Festival Cherry Blossom Petals
             [17764683] = 17764683,  -- Doll Festival Cherry Blossom Petals
             [17764684] = 17764684,  -- Doll Festival Cherry Blossom Petals
-
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = {
-
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
             [17764707] = 17764707,  -- Sunbreeze Festival Dancer
             [17764708] = 17764708,  -- Sunbreeze Festival Dancer
             [17764709] = 17764709,  -- Sunbreeze Festival Dancer
@@ -183,10 +179,9 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764721] = 17764721,  -- Sunbreeze Festival Tree
             [17764722] = 17764722,  -- Sunbreeze Festival Tree
             [17764723] = 17764723,  -- Sunbreeze Festival Tree
-
         },
-        NEW_YEARS_DECORATIONS = {
-
+        NEW_YEARS_DECORATIONS = 
+        {
             [17764620] = 17764620,  -- New Year Festival Planter
             [17764621] = 17764621,  -- New Year Festival Planter
             [17764622] = 17764622,  -- New Year Festival Planter
@@ -195,10 +190,9 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764700] = 17764700,  -- New Years Standing Tree
             [17764701] = 17764701,  -- New Years Standing Tree
             [17764702] = 17764702,  -- New Years Standing Tree
-
         },
-        CIRCUS = {
-
+        CIRCUS = 
+        {
             [17764527] = 17719426, -- Mokop-Sankop
             [17764528] = 17719427, -- Cheh Raihah
             [17764525] = 17719424, -- Valeriano
@@ -206,7 +200,6 @@ zones[tpz.zone.WINDURST_WOODS] =
             [17764526] = 17719425, -- Dahjal
             [17764582] = 17719535, -- Ominous Cloud
             [17764581] = 17719534, -- Nokkhi Jinjahl
-            
         },
     },
 }

@@ -99,17 +99,16 @@ zones[tpz.zone.BASTOK_MARKETS] =
         {
             [17739805] = 368, -- Olwyn | Ghost
         },
-        HALLOWEEN_DECORATIONS = {
-
+        HALLOWEEN_DECORATIONS = 
+        {
             [17740095] = 17740095,  -- Halloween Decorations
             [17740096] = 17740096,  -- Halloween Decorations
             [17740097] = 17740097,  -- Halloween Decorations
             [17740098] = 17740098,  -- Halloween Decorations
             [17740099] = 17740099,  -- Halloween Decorations
-            
         },
-        HALLOWEEN_ROAMING = {
-
+        HALLOWEEN_ROAMING = 
+        {
             [17739895] = 17739895,  -- Trick Shadow 
             [17739896] = 17739896,  -- Trick Specter 
             [17739897] = 17739897,  -- Trick Shade 
@@ -120,20 +119,18 @@ zones[tpz.zone.BASTOK_MARKETS] =
             [17739902] = 17739902,  -- Trick Wight 
             [17739903] = 17739903,  -- Trick Bones 
             [17739904] = 17739904,  -- Trick Ghast       
-
         },
-        EGG_HUNT_DECORATIONS = {
-
+        EGG_HUNT_DECORATIONS = 
+        {
             [17740009] = 17740009,  -- Egg Hunt Egg-stravaganza Pole
             [17740010] = 17740010,  -- Egg Hunt Egg-stravaganza Pole
             [17740011] = 17740011,  -- Egg Hunt Egg-stravaganza Pole
             [17740012] = 17740012,  -- Egg Hunt Egg-stravaganza Pole
             [17740013] = 17740013,  -- Egg Hunt Egg-stravaganza Pole
             [17740014] = 17740014,  -- Egg Hunt Egg-stravaganza Pole
-
         },
-        STARLIGHT_DECORATIONS = {
-
+        STARLIGHT_DECORATIONS = 
+        {
             [17740105] = 17740105,  -- Starlight Festival Center Fountain
             [17740106] = 17740106,  -- Starlight Festival Planter
             [17740107] = 17740107,  -- Starlight Festival Planter
@@ -163,10 +160,9 @@ zones[tpz.zone.BASTOK_MARKETS] =
             [17740143] = 17740143,  -- Starlight Festival Planter
             [17740149] = 17740149,  -- Starlight Festival Planter
             [17739880] = 17739880,  -- Event Moogle
-
         },
-        DOLL_FESTIVAL_DECORATIONS = {
-
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
             [17739979] = 17739979,  -- Doll Festival Stage
             [17739980] = 17739980,  -- Doll Festival Umbrella and Stand
             [17739981] = 17739981,  -- Doll Festival Umbrella and Stand
@@ -195,10 +191,9 @@ zones[tpz.zone.BASTOK_MARKETS] =
             [17740004] = 17740004,  -- Doll Festival Cherry Blossom Petals
             [17740005] = 17740005,  -- Doll Festival Cherry Blossom Petals
             [17740006] = 17740006,  -- Doll Festival Cherry Blossom Petals
-
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = {
-
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
             [17740035] = 17740035,  -- Sunbreeze Festival Dancer
             [17740036] = 17740036,  -- Sunbreeze Festival Dancer
             [17740037] = 17740037,  -- Sunbreeze Festival Dancer
@@ -240,10 +235,9 @@ zones[tpz.zone.BASTOK_MARKETS] =
             [17740073] = 17740073,  -- Sunbreeze Festival Planter
             [17740090] = 17740090,  -- Sunbreeze Festival Fireworks
             [17740091] = 17740091,  -- Sunbreeze Festival Fireworks
-
         },
-        NEW_YEARS_DECORATIONS = {
-
+        NEW_YEARS_DECORATIONS = 
+        {
             [17740015] = 17740015,  -- New Years Standing Tree
             [17740025] = 17740025,  -- New Years Standing Tree
             [17740026] = 17740026,  -- New Years Standing Tree
@@ -257,7 +251,6 @@ zones[tpz.zone.BASTOK_MARKETS] =
             [17739969] = 17739969,  -- New Years Planter
             [17739970] = 17739970,  -- New Years Planter
             [17739971] = 17739971,  -- New Years Planter
-            
         },
     },
 }
