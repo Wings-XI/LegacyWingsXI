@@ -15,8 +15,7 @@ function onMobSkillCheck(target, mob, skill)
     -- If animationSub is 1, the mob has already lost his weapeon and cant do this TP attack.
     if mob:AnimationSub() == 0 then
         return 0
-    else
-    
+    end
     return 1
 end
 
