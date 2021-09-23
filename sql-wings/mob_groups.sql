@@ -357,9 +357,9 @@ INSERT INTO `mob_groups` VALUES(43, 2750, 9, 'Morozko', 960, 0, 30, 0, 0, 65, 66
 INSERT INTO `mob_groups` VALUES(44, 5548, 9, 'Labyrinth_Lizard', 960, 0, 1473, 0, 0, 52, 58, 0);
 INSERT INTO `mob_groups` VALUES(45, 3689, 9, 'Snow_Lizard', 960, 0, 2289, 0, 0, 63, 64, 0);
 INSERT INTO `mob_groups` VALUES(46, 913, 9, 'Dark_Elemental', 960, 4, 568, 0, 0, 84, 86, 0);
-INSERT INTO `mob_groups` VALUES(47, 1464, 9, 'Gargoyle-Iota', 0, 128, 0, 0, 0, 52, 52, 0);
-INSERT INTO `mob_groups` VALUES(48, 1465, 9, 'Gargoyle-Kappa', 0, 128, 0, 0, 0, 52, 52, 0);
-INSERT INTO `mob_groups` VALUES(49, 1466, 9, 'Gargoyle-Lambda', 0, 128, 0, 0, 0, 53, 53, 0);
+INSERT INTO `mob_groups` VALUES(47, 1464, 9, 'Gargoyle-Iota', 0, 128, 0, 0, 0, 54, 54, 0);
+INSERT INTO `mob_groups` VALUES(48, 1465, 9, 'Gargoyle-Kappa', 0, 128, 0, 0, 0, 54, 54, 0);
+INSERT INTO `mob_groups` VALUES(49, 1466, 9, 'Gargoyle-Lambda', 0, 128, 0, 0, 0, 54, 54, 0);
 INSERT INTO `mob_groups` VALUES(50, 1467, 9, 'Gargoyle-Mu', 0, 128, 0, 0, 0, 54, 54, 0);
 INSERT INTO `mob_groups` VALUES(51, 1463, 9, 'Gargoyle', 960, 0, 932, 0, 0, 53, 57, 0);
 INSERT INTO `mob_groups` VALUES(52, 3992, 9, 'Treasure_Chest', 0, 128, 0, 0, 0, 55, 60, 0);
