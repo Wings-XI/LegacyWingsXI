@@ -108,4 +108,3 @@ function onMobDespawn(mob)
     mob:setRespawnTime(respawn)
 	SetServerVariable("JormRespawn",(os.time() + respawn))
 end
-

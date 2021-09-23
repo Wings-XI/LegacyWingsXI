@@ -94,4 +94,3 @@ function onMobDespawn(mob)
     mob:setRespawnTime(respawn)
 	SetServerVariable("VrtraRespawn",(os.time() + respawn))
 end
-
