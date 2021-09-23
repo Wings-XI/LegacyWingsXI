@@ -42,6 +42,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGEN, 260)
     mob:setMod(tpz.mod.MATT, 50)
     mob:setMod(tpz.mod.INT, 4)
+    mob:setMod(tpz.mod.DMGMAGIC, -50) -- starts the fight with -50% magic damage taken, reduced to 25% after regen is taken off.
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -51,7 +52,6 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    mob:resetLocalVars()
     mob:hideName(false)
     mob:untargetable(false)
     mob:AnimationSub(2)
@@ -89,6 +89,7 @@ function onMobFight(mob, target)
     if mob:getLocalVar("JoL_Regen_Reduction") == 0 and mob:getLocalVar("JoL_Qn_xzomit_Killed") >= 9 and mob:getLocalVar("JoL_Qn_hpemde_Killed") >= 9 then
         mob:setLocalVar("JoL_Regen_Reduction", 1)
         mob:delMod(tpz.mod.REGEN, 260)
+        mob:setMod(tpz.mod.DMGMAGIC, -25) -- magic damage taken reduced from 50% to 25% after killing nine xzomits and hpemdes
     end
 
     -- every 2 minutes JoL will change the element it absorbs/casts spells this change happens after a two hour animation

@@ -4830,7 +4830,7 @@ INSERT INTO `mob_groups` VALUES(27, 1085, 89, 'Doom_Soldier', 300, 1, 677, 0, 0,
 INSERT INTO `mob_groups` VALUES(28, 1793, 89, 'Grauberg_Hippogryph', 300, 0, 1219, 0, 0, 72, 75, 0);
 INSERT INTO `mob_groups` VALUES(29, 4869, 89, 'Kotan-kor_Kamuy', 0, 32, 2950, 13000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(30, 74, 89, 'Ajattara', 300, 0, 42, 0, 0, 79, 83, 0);
-INSERT INTO `mob_groups` VALUES(31, 3501, 89, 'Scitalis', 0, 32, 2182, 0, 0, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(31, 3501, 89, 'Scitalis', 0, 32, 2182, 10000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(32, 3617, 89, 'Sidhe', 300, 0, 2001, 0, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(33, 74, 89, 'Ajattara', 300, 0, 0, 10000, 9999, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(34, 523, 89, 'Brasscap', 300, 0, 346, 0, 0, 59, 61, 0);
