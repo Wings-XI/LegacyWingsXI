@@ -5,7 +5,6 @@
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/mobs")
-
 local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 -----------------------------------
 
