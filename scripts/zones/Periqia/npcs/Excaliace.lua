@@ -277,7 +277,7 @@ function checkForNearbyMobs(npc, mobs)
 
     for _, enemy in pairs(mobs) do
         if npc:checkDistance(enemy) < 12 and enemy:isSpawned() and pathLeg ~= 0 then 
-            if moveStatus ~= 1 then -- if npc is stop and a mob come near it run away or not ?             
+            if moveStatus ~= 1 then          
                 if enemy:isEngaged() then
                     npc:showText(npc,ID.text.EXCALIACE_MOB_ENGAGED) -- Over to you.
                     npc:speed(ONPATH_SPEED)
@@ -299,7 +299,7 @@ function checkForNearbyMobs(npc, mobs)
 end
 
 function checkForNearbyPlayers(npc, chars)
-    local nextCharsNearbyCheckTime = npc:getLocalVar("nextCharsNearbyCheckTime") -- time when the next checkForNearbyPlayers can happen
+    local nextCharsNearbyCheckTime = npc:getLocalVar("nextCharsNearbyCheckTime")
     local pathLeg = npc:getLocalVar("pathLeg")
     local instance = npc:getInstance()
 
@@ -314,24 +314,11 @@ function checkForNearbyPlayers(npc, chars)
             if npc:checkDistance(player) < 10 then -- check if at least 1 player is around the npc
                 rangeFollow = true
             end
-            -- TODODEMOS While he's on the move, just stay right on his heels, between 3'-5'. You can't /follow him, but you can lock target on him and auto-run.
         end
 
         local moveStatus = npc:getLocalVar("moveStatus")
         if rangeFacing == true then
-            if moveStatus == 1 then
-                local stopDuration = math.random(10,10) -- TODODEMOS changeit to 30, 40
-
-                npc:speed(STOP_SPEED)
-                npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + stopDuration +2)
-                npc:timer(2000, function(npc) npc:showText(npc,ID.text.EXCALIACE_TIRED) end)
-                npc:timer(6000, function(npc) npc:showText(npc,ID.text.EXCALIACE_CAUGHT) end)
-                npc:timer(stopDuration * 1000, function(npc)
-                    defineNextLegAndPointWhenMovingForwardAndMoveToIt(npc)
-                    npc:setLocalVar("moveStatus", 0)
-                    npc:speed(ONPATH_SPEED)
-                end)
-            elseif moveStatus == 0 then
+            if moveStatus == 0 then
                 npc:speed(STOP_SPEED)
                 npc:setLocalVar("moveStatus", 2)
                 npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + 8)
@@ -341,15 +328,26 @@ function checkForNearbyPlayers(npc, chars)
             end
 
         elseif rangeFollow == false and moveStatus ~= 1 and pathLeg ~= 0 then
-            -- TODODEMOS If he sees a monster or you stay more than 10' away from him for about 10 seconds, he will run back
             npc:showText(npc,ID.text.EXCALIACE_RUN)
-            npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + math.random(20,30))
+            npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + math.random(30,40))
             npc:setLocalVar("moveStatus", 1)
             npc:speed(RUNAWAY_SPEED)
         elseif rangeFollow == true and moveStatus == 2 then
             npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + 4)
             npc:setLocalVar("moveStatus", 0)
             npc:speed(ONPATH_SPEED)
+        elseif rangeFollow == true and moveStatus == 1 then
+            local stopDuration = math.random(30,40)
+
+            npc:speed(STOP_SPEED)
+            npc:setLocalVar("nextCharsNearbyCheckTime", os.time() + stopDuration +2)
+            npc:timer(2000, function(npc) npc:showText(npc,ID.text.EXCALIACE_TIRED) end)
+            npc:timer(4000, function(npc) npc:showText(npc,ID.text.EXCALIACE_CAUGHT) end)
+            npc:timer(stopDuration * 1000, function(npc)
+                defineNextLegAndPointWhenMovingForwardAndMoveToIt(npc)
+                npc:setLocalVar("moveStatus", 0)
+                npc:speed(ONPATH_SPEED)
+            end)
         end
     end
 end
@@ -377,7 +375,7 @@ function defineNextLegAndPointWhenMovingForwardAndMoveToIt(npc)
     if npc:atPoint(path[0][#path[0]]) then -- leave the start path to join the main path
         pathLeg = 1
         pathPoint = 20
-    elseif npc:atPoint(path[1][30]) and crabRoomDone < 1 then -- in between the 2 top crab room will chose the value of topRoomsOption
+    elseif npc:atPoint(path[1][30]) and crabRoomDone < 1 then
         pathLeg = topRoomsOption
         pathPoint = 2
         takeABreakWhileMovingForward(npc)
@@ -477,7 +475,7 @@ function onTrack(npc)
         checkForNearbyPlayers(npc, chars)
 
         if moveStatus == 0 then -- moving forward
-            if npc:atPoint(path[pathLeg][pathPoint]) then -- if the npc reach the defined pos on the path
+            if npc:atPoint(path[pathLeg][pathPoint]) then
                 defineNextLegAndPointWhenMovingForwardAndMoveToIt(npc)
             end
         elseif moveStatus == 1 then -- run away
