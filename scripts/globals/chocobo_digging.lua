@@ -378,7 +378,7 @@ local digInfo =
         {  749,  32, digReq.NONE    },
         {  847,  23, digReq.NONE    },
         {  644,   5, digReq.NONE    },
-        {  776,   3, digReq.NONE    }
+        {  776,   3, digReq.NONE    },
         { 4096, 100, digReq.NONE    }, -- all crystals
         { 1255,  10, digReq.NONE    }, -- all ores
         { 4545,   5, digReq.BURROW  },
@@ -821,7 +821,7 @@ Craftsman 	21000
 Artisan 	27000
 Adept 		33000
 Veteran 	39000
-Expert 		---- 
+Expert 		----
 ]]
 
 local function calculateSkillUp(player)
@@ -829,7 +829,7 @@ local function calculateSkillUp(player)
     local maxSkill = utils.clamp((skillRank + 1) * 100, 0, 1000) -- if im at 0 i max at 100, if im at 1 i max at 200
     local realSkill = player:getCharSkillLevel(tpz.skill.DIG)
 	local digsNeeded = 40000
-	
+
 	if     skillRank == 0 then digsNeeded =  1600
 	elseif skillRank == 1 then digsNeeded =  3600
 	elseif skillRank == 2 then digsNeeded =  6000
@@ -841,7 +841,7 @@ local function calculateSkillUp(player)
 	elseif skillRank == 8 then digsNeeded = 33000
 	elseif skillRank == 9 then digsNeeded = 39000
 	else return end
-	
+
     if math.random(1, digsNeeded/100) == 1 then
 		player:setSkillLevel(tpz.skill.DIG, realSkill + 1)
 
@@ -924,7 +924,7 @@ tpz.chocoboDig.start = function(player)
     local moon = VanadielMoonPhase()/100
     if moon < 0.5 then moon = 1 - moon end -- new moon to full moon linear V-shaped progression: 100%/90%/80%/70%/60%/50%/60%/70%/80%/90%/100%
     local skillmodifier = 0.5 + (skillRank / 20) -- 50% at amateur, 55% at recruit, 60% at initiate, and so on, to 100% at expert
-    
+
     if roll > (DIGGING_RATE * moon * skillmodifier) then -- base digging rate is 85% and it is multiplied by the moon and skill modifiers
         player:messageText(player, text.FIND_NOTHING)
         player:setLocalVar('[DIG]LastDigTime',os.time())
