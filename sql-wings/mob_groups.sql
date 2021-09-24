@@ -171,8 +171,8 @@ INSERT INTO `mob_groups` VALUES(44, 3848, 4, 'Tartarus_Eft', 300, 0, 2379, 0, 0,
 INSERT INTO `mob_groups` VALUES(45, 1969, 4, 'Hobgoblin_Angler', 300, 0, 1324, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(46, 3384, 4, 'Rohemolipaud', 0, 128, 0, 0, 0, 55, 56, 0);
 INSERT INTO `mob_groups` VALUES(47, 895, 4, 'Dalham', 0, 128, 0, 14000, 0, 72, 72, 0);
-INSERT INTO `mob_groups` VALUES(48, 3591, 4, 'Shen', 0, 128, 2835, 50000, 0, 84, 86, 0);
-INSERT INTO `mob_groups` VALUES(49, 3592, 4, 'Shens_Filtrate', 0, 128, 0, 0, 0, 74, 76, 0);
+INSERT INTO `mob_groups` VALUES(48, 3591, 4, 'Shen', 0, 128, 2835, 20000, 10000, 84, 86, 0);
+INSERT INTO `mob_groups` VALUES(49, 3592, 4, 'Shens_Filtrate', 0, 128, 0, 2300, 0, 74, 76, 0);
 INSERT INTO `mob_groups` VALUES(50, 4669, 4, 'Bismarck', 0, 128, 0, 0, 9999, 95, 98, 0);
 INSERT INTO `mob_groups` VALUES(1, 4204, 5, 'Variable_Hare', 300, 0, 2565, 0, 0, 58, 61, 0);
 INSERT INTO `mob_groups` VALUES(2, 4079, 5, 'Uleguerand_Tiger', 300, 0, 2512, 0, 0, 60, 63, 0);

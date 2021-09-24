@@ -4130,6 +4130,10 @@ INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 249, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 266, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 357, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shen', 498, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shen', 498, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shen', 498, 240, 1, 255);
+
 --
 -- Indexes for dumped tables
 --
