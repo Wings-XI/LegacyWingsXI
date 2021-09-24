@@ -2479,6 +2479,7 @@ namespace charutils
 
         SLOTTYPE slot = (SLOTTYPE)0;
         uint16 itemid = 0;
+        uint16 lastitemid = 0;
         CONTAINER_ID loc = LOC_INVENTORY;
         uint8 slotid = 0;
 
@@ -2491,43 +2492,31 @@ namespace charutils
             loc = LOC_INVENTORY;
             slotid = ERROR_SLOTID;
 
-            if (slotid == ERROR_SLOTID)
+            auto performSearch = [&](CONTAINER_ID LOC_Container)
             {
-                slotid = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemid);
-                loc = LOC_INVENTORY;
-            }
+                if (slotid == ERROR_SLOTID)
+                {
+                    slotid = PChar->getStorage(LOC_Container)->SearchItem(itemid);
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE)->SearchItem(itemid);
-                loc = LOC_WARDROBE;
-            }
+                    if (itemid == lastitemid)
+                    {
+                        slotid = PChar->getStorage(LOC_Container)->SearchItem(itemid, slotid + 1);
+                    }
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE2)->SearchItem(itemid);
-                loc = LOC_WARDROBE2;
-            }
+                    if (slotid != ERROR_SLOTID)
+                    {
+                        EquipItem(PChar, slotid, slot, LOC_Container);
+                    }
+                }
+            };
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE3)->SearchItem(itemid);
-                loc = LOC_WARDROBE3;
-            }
+            performSearch(LOC_INVENTORY);
+            performSearch(LOC_WARDROBE);
+            performSearch(LOC_WARDROBE2);
+            performSearch(LOC_WARDROBE3);
+            performSearch(LOC_WARDROBE4);
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE4)->SearchItem(itemid);
-                loc = LOC_WARDROBE4;
-            }
-
-            if (slotid == ERROR_SLOTID)
-            {
-                continue;
-            }
-
-            EquipItem(PChar, slotid, slot, loc);
-
+            lastitemid = itemid;
         }
 
         CheckUnarmedWeapon(PChar);
