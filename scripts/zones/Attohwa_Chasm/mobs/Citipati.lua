@@ -3,10 +3,7 @@
 --  Mob: Citipati
 -----------------------------------
 require("scripts/globals/hunts")
-
-function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-end
+local ID = require("scripts/zones/Attohwa_Chasm/IDs")
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.TRIPLE_ATTACK, 20)
@@ -34,9 +31,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    local Citipati = GetMobByID(ID.mob.CITIPATI)
-    
     UpdateNMSpawnPoint(mob:getID())
     SetServerVariable("CitipatiRespawn",(os.time() + 10800))
-    DisallowRespawn(Citipati:getID(), true)
+    DisallowRespawn(mob:getID(), true)
 end
