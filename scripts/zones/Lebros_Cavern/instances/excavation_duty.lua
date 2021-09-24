@@ -41,7 +41,3 @@ end
 
 function onEventUpdate(player, csid, option)
 end
-
-function onEventFinish(player, csid, option)
-    assaultOnEventFinish(player, 102, tpz.zone.MOUNT_ZHAYOLM)
-end
