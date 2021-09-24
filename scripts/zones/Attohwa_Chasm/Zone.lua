@@ -65,6 +65,16 @@ function onInitialize(zone)
         SpawnMob(Xolotl:getID())
     end
 
+    local citire = GetServerVariable("CitipatiRespawn")
+    local Citipati = GetMobByID(ID.mob.CITIPATI)
+    UpdateNMSpawnPoint(ID.mob.CITIPATI)
+    DisallowRespawn(Citipati:getID(), true)
+    if os.time() < citire then
+        GetMobByID(ID.mob.CITIPATI):setRespawnTime(citire - os.time())
+    elseif hour < 4 or hour >= 20 then
+        DisallowRespawn(Citipati:getID(), false)
+    end
+
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
 end
 
@@ -106,7 +116,6 @@ function onRegionLeave(player, region)
 end
 
 function onGameHour()
-    UpdateNMSpawnPoint(ID.mob.XOLOTL)
     local xolre = GetServerVariable("XolotlRespawn")
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
@@ -125,6 +134,17 @@ function onGameHour()
         SpawnMob(Xolotl:getID())
     else
         DisallowRespawn(Xolotl:getID(), true)
+    end
+
+    local citire = GetServerVariable("CitipatiRespawn")
+    local Citipati = GetMobByID(ID.mob.CITIPATI)
+
+    if (totd == 1 or totd == 7) and (citire - os.time() < 140) then -- If respawn is less than one in game hour, allow Citipati to spawn
+        DisallowRespawn(Citipati:getID(), false)
+    elseif (totd == 1 or totd == 7) and citire < os.time() then -- If Citipati's respawn window has passed, allow him to spawn.
+        DisallowRespawn(Citipati:getID(), false)
+    else
+        DisallowRespawn(Citipati:getID(), true)
     end
 end
 
