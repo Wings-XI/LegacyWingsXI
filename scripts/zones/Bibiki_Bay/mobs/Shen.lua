@@ -42,7 +42,7 @@ function onMobSpawn(mob)
     local shellTimer = os.time() + 60
     mob:setLocalVar("[Shen]noShellSkillList", 251)
     mob:setLocalVar("[Shen]inShellSkillList", 1170)
-    mob:setLocalVar("[Shen]noShellSpellList", 251)
+    mob:setLocalVar("[Shen]noShellSpellList", 499)
     mob:setLocalVar("[Shen]timeInShellMin", 50)
     mob:setLocalVar("[Shen]timeInShellMax", 70)
     mob:setLocalVar("[Shen]inShellRegen", 100)
