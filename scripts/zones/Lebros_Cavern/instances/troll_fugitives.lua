@@ -27,7 +27,7 @@ function onInstanceCreated(instance)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
-    updateInstanceTime(instance, elapsed, Lebros.text)
+    updateInstanceTime(instance, elapsed, ID.text)
 end
 
 function onInstanceFailure(instance)

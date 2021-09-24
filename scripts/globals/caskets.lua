@@ -97,7 +97,7 @@ local function timeElapsedCheck(npc)
     if npc:getLocalVar("[caskets]SPAWNTIME") then
         spawnTime = npc:getLocalVar("[caskets]SPAWNTIME")
     end
-    
+
     local lastSpawned = os.time() - spawnTime
 
     timeTable = convertTime(lastSpawned)
@@ -709,7 +709,7 @@ tpz.caskets.onTrigger = function(player, npc)
     ------------------------------------------------------------------
     -- Locked chest var's
     ------------------------------------------------------------------
-    local attemptsAllowed   = npc:getLocalVar("[caskets]ATTEMPTS", attempts)
+    local attemptsAllowed   = npc:getLocalVar("[caskets]ATTEMPTS")
     local failedAtempts     = npc:getLocalVar("[caskets]FAILED_ATEMPTS")
     local remainingAttempts = attemptsAllowed - failedAtempts
 

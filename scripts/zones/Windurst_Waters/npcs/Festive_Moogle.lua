@@ -35,10 +35,10 @@ function onTrigger(player, npc)
         }
 
     player:showText(npc, ID.text.FESTIVE_MOOGLE_DIALOG)
-    tpz.shop.general(player, stock, WINDURST_WATERS)
-    
+    tpz.shop.general(player, stock, WINDURST)
+
     else
-   
+
     player:showText(npc, ID.text.THANK_YOU)
 
     end

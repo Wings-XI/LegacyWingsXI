@@ -30,6 +30,9 @@ function onTrigger(player, npc)
 
     if medalRank == 0 then
         player:startEvent(14)
+    elseif player:getCampaignAllegiance() == 3 then
+        -- Event Option 3 Denotes Windurst Allegience --
+        player:startEvent(13, 3, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)
     else
         player:startEvent(13, 0, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)
     end
@@ -51,10 +54,20 @@ function onEventFinish(player, csid, option)
     if csid == 13 then
         -- Note: the event itself already verifies the player has enough AN, so no check needed here.
         if option >= 2 and option <= 2562 then -- player bought item
-        -- currently only "ribbons" rank coded.
-            item, price = getWindurstNotesItem(option)
-            if (npcUtil.giveItem(player, item)) then
-                player:delCurrency("allied_notes", price)
+            if player:getCampaignAllegiance() == 3 then
+            -- Pricing for Those Allied with Windurst --
+            -- currently only "ribbons" rank coded.
+                item, price = getWindurstNotesItemAllegience(option)
+                if (npcUtil.giveItem(player, item)) then
+                    player:delCurrency("allied_notes", price)
+                end
+            else
+            -- Pricing For Everyone Else -- 
+            -- currently only "ribbons" rank coded.
+                item, price = getWindurstNotesItem(option)
+                if (npcUtil.giveItem(player, item)) then
+                    player:delCurrency("allied_notes", price)
+                end
             end
 
         -- Please, don't change this elseif without knowing ALL the option results first.
