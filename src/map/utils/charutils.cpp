@@ -3019,8 +3019,8 @@ namespace charutils
                         if (charge)
                         {
                             chargeTime = charge->chargeTime - PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
-                            if (PAbility->getID() > 655 && PAbility->getID() < 751)
-                                chargeTime -= PChar->PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, PChar) / 4;
+                            // if (PAbility->getID() > 655 && PAbility->getID() < 751)
+                            //     chargeTime -= PChar->PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, PChar) / 4;
                             maxCharges = charge->maxCharges;
                         }
                         if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
