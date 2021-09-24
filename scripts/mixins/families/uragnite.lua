@@ -58,6 +58,23 @@ local function exitShell(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 end
 
+local function shellTimer(mob)
+    -- Uragnites go into their shell every 40-60 seconds
+    local timeToShell = mob:getLocalVar("[uragnite]shellTimer")
+
+    if os.time() > timeToShell and bit.band(mob:AnimationSub(), 1) == 0 and mob:isFollowingPath() == false and mob:isMobType(MOBTYPE_BATTLEFIELD) == false then
+        enterShell(mob)
+
+        local timeInShell = math.random(mob:getLocalVar("[uragnite]timeInShellMin"), mob:getLocalVar("[uragnite]timeInShellMax"))
+        local shellRandom = timeInShell + (os.time() + math.random(40,60))
+        mob:setLocalVar("[uragnite]shellTimer", shellRandom)
+
+        mob:timer(timeInShell * 1000, function(mob)
+            exitShell(mob)
+        end)
+    end
+end
+
 tpz.mix.uragnite.config = function(mob, params)
     if params.inShellSkillList and type(params.inShellSkillList) == "number" then
         mob:setLocalVar("[uragnite]inShellSkillList", params.inShellSkillList)
@@ -89,19 +106,30 @@ g_mixins.families.uragnite = function(mob)
         mob:setLocalVar("[uragnite]chanceToShell", 15)
         mob:setLocalVar("[uragnite]timeInShellMin", 20)
         mob:setLocalVar("[uragnite]timeInShellMax", 30)
-        mob:setLocalVar("[uragnite]inShellRegen", 50)
+        mob:setLocalVar("[uragnite]inShellRegen", 22)
     end)
 
     mob:addListener("TAKE_DAMAGE", "URAGNITE_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        if attackType == tpz.attackType.PHYSICAL then
-            if math.random(100) <= mob:getLocalVar("[uragnite]chanceToShell") and bit.band(mob:AnimationSub(), 1) == 0 then
-                enterShell(mob)
-                local timeInShell = math.random(mob:getLocalVar("[uragnite]timeInShellMin"), mob:getLocalVar("[uragnite]timeInShellMax"))
-                mob:timer(timeInShell * 1000, function(mob)
-                    exitShell(mob)
-                end)
-            end
+        local mobHPP = mob:getHPP()
+        local newHP = mob:getHP() - amount
+
+        if mobHPP < 100 and math.floor( mobHPP / 10) > math.floor (newHP / (mob:getMaxHP() / 10)) and bit.band(mob:AnimationSub(), 1) == 0 then
+            enterShell(mob)
+            mob:useMobAbility(1572) -- Going into shell caused by damage always triggers venom shell
+
+            local timeInShell = math.random(mob:getLocalVar("[uragnite]timeInShellMin"), mob:getLocalVar("[uragnite]timeInShellMax"))
+            mob:timer(timeInShell * 1000, function(mob)
+                exitShell(mob)
+            end)
         end
+    end)
+
+    mob:addListener("ROAM_TICK", "URAGNITE_ROAM_TIMER", function(mob)
+        shellTimer(mob)
+    end)
+
+    mob:addListener("COMBAT_TICK", "URAGNITE_COMBAT_TIMER",  function(mob)
+        shellTimer(mob)
     end)
 end
 

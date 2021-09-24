@@ -83,7 +83,8 @@ zones[tpz.zone.PORT_BASTOK] =
     },
     npc =
     {
-        STARLIGHT_DECORATIONS = {
+        STARLIGHT_DECORATIONS =
+        {
             [17744126] = 17744126,  -- Starlight Festival Fountain
             [17744127] = 17744127,  -- Starlight Festival Fountain
             [17744128] = 17744128,  -- Starlight Festival Planter
@@ -115,7 +116,8 @@ zones[tpz.zone.PORT_BASTOK] =
             [17743981] = 17743981,  -- Event Moogle Stall
             [17743985] = 17743985,  -- Festive Moogle
         },
-        DOLL_FESTIVAL_DECORATIONS = {
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
             [17744060] = 17744060,  -- Doll Festival Stage
             [17744061] = 17744061,  -- Doll Festival Umbrella and Stand
             [17744062] = 17744062,  -- Doll Festival Umbrella and Stand
@@ -138,7 +140,8 @@ zones[tpz.zone.PORT_BASTOK] =
             [17744079] = 17744079,  -- Doll Festival Cherry Blossom Petals
             [17744080] = 17744080,  -- Doll Festival Cherry Blossom Petals
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = {
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
             [17744081] = 17744081,  -- Sunbreeze Festival Fountain
             [17744082] = 17744082,  -- Sunbreeze Festival Fountain
             [17744083] = 17744083,  -- Sunbreeze Festival Planter
@@ -168,6 +171,16 @@ zones[tpz.zone.PORT_BASTOK] =
             [17744107] = 17744107,  -- Sunbreeze Festival Planter
             [17744108] = 17744108,  -- Sunbreeze Festival Planter
             [17744125] = 17744125,  -- Sunbreeze Festival Fireworks
+        },
+        CIRCUS = 
+        {
+            [17743968] = 17743968, -- Mokop-Sankop
+            [17743969] = 17743969, -- Cheh Raihah
+            [17743966] = 17743966, -- Valeriano
+            [17743970] = 17743970,-- Nalta
+            [17743967] = 17743967, -- Dahjal
+            [17744022] = 17744022, -- Ominous Cloud
+            [17744021] = 17744021, -- Nokkhi Jinjahl
         },
     },
 }

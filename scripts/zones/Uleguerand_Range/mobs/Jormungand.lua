@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 mixins = {require("scripts/mixins/families/wyrm_wakeup")}
 
 function onMobSpawn(mob)
@@ -106,4 +107,3 @@ function onMobDespawn(mob)
     mob:setRespawnTime(respawn)
 	SetServerVariable("JormRespawn",(os.time() + respawn))
 end
-

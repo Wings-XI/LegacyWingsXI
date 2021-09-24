@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 -----------------------------------
 
@@ -92,4 +93,3 @@ function onMobDespawn(mob)
     mob:setRespawnTime(respawn)
 	SetServerVariable("VrtraRespawn",(os.time() + respawn))
 end
-
