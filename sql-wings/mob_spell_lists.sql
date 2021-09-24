@@ -4132,6 +4132,9 @@ INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 266, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 357, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 498, 59, 1, 255); --silence
 INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 499, 251, 1, 255); --shock spikes
+INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 240, 1, 255);
 --
 -- Indexes for dumped tables
 --
