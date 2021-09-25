@@ -707,10 +707,10 @@ INSERT INTO `mob_skill_lists` VALUES('Kindred', 169, 559);
 INSERT INTO `mob_skill_lists` VALUES('Kindred', 169, 560);
 INSERT INTO `mob_skill_lists` VALUES('Kindred', 169, 563);
 INSERT INTO `mob_skill_lists` VALUES('Kindred', 169, 1148);
-INSERT INTO `mob_skill_lists` VALUES('Ladybug', 170, 2178);
-INSERT INTO `mob_skill_lists` VALUES('Ladybug', 170, 2179);
-INSERT INTO `mob_skill_lists` VALUES('Ladybug', 170, 2180);
-INSERT INTO `mob_skill_lists` VALUES('Ladybug', 170, 2181);
+INSERT INTO `mob_skill_lists` VALUES('Ladybug_Day', 170, 2178);
+INSERT INTO `mob_skill_lists` VALUES('Ladybug_Day', 170, 2179);
+INSERT INTO `mob_skill_lists` VALUES('Ladybug_Day', 170, 2180);
+INSERT INTO `mob_skill_lists` VALUES('Ladybug_Day', 170, 2181);
 INSERT INTO `mob_skill_lists` VALUES('Lamiae', 171, 1752);
 INSERT INTO `mob_skill_lists` VALUES('Lamiae', 171, 1753);
 INSERT INTO `mob_skill_lists` VALUES('Lamiae', 171, 1754);
@@ -3213,6 +3213,7 @@ INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1210);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1211);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1215);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1216);
+INSERT INTO `mob_skill_lists` VALUES('Ladybug_Night', 1176, 2178);
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
@@ -3258,6 +3259,7 @@ INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
+
 --
 -- Indexes for dumped tables
 --
