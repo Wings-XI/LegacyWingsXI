@@ -59,7 +59,7 @@ function onEventFinish(player, csid, option)
 
     -- HEADSTONE PILGRIMAGE
     if (csid == 200 and option == 1) then
-        SpawnMob(ID.mob.ANCIENT_WEAPON):updateClaim(player)
-        SpawnMob(ID.mob.LEGENDARY_WEAPON):updateClaim(player)
+        SpawnMob(ID.mob.ANCIENT_WEAPON)
+        SpawnMob(ID.mob.LEGENDARY_WEAPON)
     end
 end
