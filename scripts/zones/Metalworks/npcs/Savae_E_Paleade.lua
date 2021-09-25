@@ -10,8 +10,10 @@ local ID = require("scripts/zones/Metalworks/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-
-    if (player:getCurrentMission(SANDORIA) == tpz.mission.id.sandoria.JOURNEY_TO_BASTOK and player:getCharVar("MissionStatus") == 5) then
+    -- Players are consistently contacting GMs about not being able to trade in Mythril Sand
+    -- Either there is a flaw in the variable logic that randomly impacts players or players miss one of the seemingly optional CSs
+    -- This will either reduce the number of GM tickets or have no effect, signifying we need a deeper dive on root cause
+    if (player:getCurrentMission(SANDORIA) == tpz.mission.id.sandoria.JOURNEY_TO_BASTOK and (player:getCharVar("MissionStatus") <= 5 and player:getCharVar("MissionStatus") >= 3)) then
         if (trade:hasItemQty(599, 1) and trade:getItemCount() == 1) then -- Trade Mythril Sand
             player:startEvent(205)
         end

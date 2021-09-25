@@ -71,9 +71,10 @@ function onEventFinish(player, csid, option)
         player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS)
         player:setCharVar("LightInTheDarkness", 1)
     elseif (csid == 27) then
-        npcUtil.completeQuest(player, CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS, {item=655, var="LightInTheDarkness"})
-        player:needToZone(true)
-        player:setCharVar("WotG_Bastok_DayWait", VanadielDayOfTheYear())
+        if (npcUtil.completeQuest(player, CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS, {item=655, var="LightInTheDarkness"})) then
+            player:needToZone(true)
+            player:setCharVar("WotG_Bastok_DayWait", VanadielDayOfTheYear())
+        end
     elseif (csid == 30) then
         player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.BURDEN_OF_SUSPICION)
         player:setCharVar("BurdenOfSuspicion", 1)

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -16479,10 +16479,22 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
     if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
         tries = (uint8)lua_tointeger(L, 3);
 
-    while (tries)
+    if (PChar->PPet && PChar->PPet->objtype == TYPE_PET && static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PETTYPE_AUTOMATON && PChar->PPet->WorkingSkills.skill[skill])
     {
-        charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
-        tries--;
+        while (tries && PChar->PPet)
+        {
+            puppetutils::TrySkillUP((CAutomatonEntity*)PChar->PPet, (SKILLTYPE)skill, PMob->GetMLevel());
+            tries--;
+        }
+    }
+
+    else
+    {
+        while (tries)
+        {
+            charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
+            tries--;
+        }
     }
 
     return 0;

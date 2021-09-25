@@ -86,14 +86,16 @@ zones[tpz.zone.WINDURST_WATERS] =
     },
     npc =
     {
-        HALLOWEEN_SKINS = {
+        HALLOWEEN_SKINS = 
+        {
             [17752097] = 564, -- Ensasa | Skeleton
             [17752098] = 368, -- Upih Khachla | Ghost
             [17752101] = 365, -- Ness Rugetomal | Hound
             [17752102] = 612, -- Maqu Molpih | Orc
             [17752103] = 535, -- Ahyeekih | Shade
         },
-        HALLOWEEN_DECORATIONS = {
+        HALLOWEEN_DECORATIONS = 
+        {
             [17752460] = 17752460,  -- Halloween Decoration
             [17752461] = 17752461,  -- Halloween Decoration
             [17752462] = 17752462,  -- Halloween Decoration
@@ -101,7 +103,8 @@ zones[tpz.zone.WINDURST_WATERS] =
             [17752504] = 17752504,  -- Event Moogle Stall
             [17752228] = 17752228,  -- Festive Moogle
         },
-        HALLOWEEN_ROAMING = {
+        HALLOWEEN_ROAMING = 
+        {
             [17752291] = 17752291,  -- Trick Shadow 
             [17752292] = 17752292,  -- Trick Specter 
             [17752293] = 17752293,  -- Trick Shade 
@@ -111,15 +114,17 @@ zones[tpz.zone.WINDURST_WATERS] =
             [17752297] = 17752297,  -- Trick Skeleton
             [17752298] = 17752298,  -- Trick Wight
             [17752299] = 17752299,  -- Trick Bones
-            [17752300] = 17752300,  -- Trick Ghast           
+            [17752300] = 17752300,  -- Trick Ghast   
         },
-        EGG_HUNT_DECORATIONS = {
+        EGG_HUNT_DECORATIONS = 
+        {
             [17752414] = 17752414,  -- Egg Hunt Egg-stravaganza Pole
             [17752415] = 17752415,  -- Egg Hunt Egg-stravaganza Pole
             [17752416] = 17752416,  -- Egg Hunt Egg-stravaganza Pole
             [17752417] = 17752417,  -- Egg Hunt Egg-stravaganza Pole
         },
-        STARLIGHT_DECORATIONS = {
+        STARLIGHT_DECORATIONS = 
+        {
             [17752471] = 17752471,  -- Starlight Festival Tree
             [17752472] = 17752472,  -- Starlight Festival Tree
             [17752473] = 17752473,  -- Starlight Festival Tree
@@ -145,7 +150,8 @@ zones[tpz.zone.WINDURST_WATERS] =
             [17752253] = 17752253,  -- Event Moogle
             [17752514] = 17752514,  -- Atagei-Portagei
         },
-        DOLL_FESTIVAL_DECORATIONS = {
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
             [17752383] = 17752383,  -- Doll Festival Stage
             [17752384] = 17752384,  -- Doll Festival Umbrella and Stand
             [17752385] = 17752385,  -- Doll Festival Umbrella and Stand
@@ -177,13 +183,15 @@ zones[tpz.zone.WINDURST_WATERS] =
             [17752411] = 17752411,  -- Doll Festival Cherry Blossom Petals
             [17752412] = 17752412,  -- Doll Festival Cherry Blossom Petals
         },
-        NEW_YEARS_DECORATIONS = {
+        NEW_YEARS_DECORATIONS = 
+        {
             [17752428] = 17752428,  -- New Years Standing Tree
             [17752429] = 17752429,  -- New Years Standing Tree
             [17752430] = 17752430,  -- New Years Standing Tree
             [17752431] = 17752431,  -- New Years Standing Tree
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = {
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {  
             [17752436] = 17752436,  -- Sunbreeze Festival Tree
             [17752437] = 17752437,  -- Sunbreeze Festival Tree
             [17752438] = 17752438,  -- Sunbreeze Festival Tree
@@ -203,7 +211,7 @@ zones[tpz.zone.WINDURST_WATERS] =
             [17752452] = 17752452,  -- Sunbreeze Festival Tree
             [17752453] = 17752453,  -- Sunbreeze Festival Tree
             [17752454] = 17752454,  -- Sunbreeze Festival Tree
-            [17752455] = 17752455,  -- Sunbreeze Festival Tree
+            [17752455] = 17752455,  -- Sunbreeze Festival Tree 
         },
         LELEROON_GREEN_DOOR = 17752333,
     },
