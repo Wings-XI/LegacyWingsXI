@@ -32,7 +32,7 @@ function onMobEngaged(mob, target)
     mob:hideName(false)
     mob:untargetable(false)
     mob:AnimationSub(6)
-    mob:resetLocalVars()
+    mob:setLocalVar("spellTime", 0)
 end
 
 function onMobFight(mob, target)
