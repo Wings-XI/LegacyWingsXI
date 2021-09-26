@@ -11298,8 +11298,8 @@ INSERT INTO `mob_groups` VALUES(28, 1922, 200, 'Hellmine', 960, 0, 1295, 0, 0, 5
 INSERT INTO `mob_groups` VALUES(29, 1922, 200, 'Hellmine', 960, 0, 1295, 0, 0, 59, 62, 0);
 INSERT INTO `mob_groups` VALUES(30, 3078, 200, 'Over_Weapon', 960, 0, 1968, 0, 0, 59, 62, 0);
 INSERT INTO `mob_groups` VALUES(31, 4207, 200, 'Vault_Weapon', 960, 0, 2566, 0, 0, 59, 62, 0);
-INSERT INTO `mob_groups` VALUES(32, 1289, 200, 'Fallen_Major', 300, 0, 813, 0, 0, 59, 62, 0);
-INSERT INTO `mob_groups` VALUES(33, 1288, 200, 'Fallen_Mage', 300, 0, 812, 0, 0, 59, 62, 0);
+INSERT INTO `mob_groups` VALUES(32, 1289, 200, 'Fallen_Major', 960, 0, 813, 0, 0, 59, 62, 0);
+INSERT INTO `mob_groups` VALUES(33, 1288, 200, 'Fallen_Mage', 960, 0, 812, 0, 0, 59, 62, 0);
 INSERT INTO `mob_groups` VALUES(34, 5841, 200, 'Hovering_Hotpot', 0, 32, 3010, 7000, 9999, 58, 60, 0);
 INSERT INTO `mob_groups` VALUES(36, 1440, 200, 'Funnel_Bats', 924, 0, 919, 0, 0, 51, 55, 0);
 INSERT INTO `mob_groups` VALUES(37, 1831, 200, 'Guardian_Statue', 0, 128, 1245, 0, 0, 61, 61, 0);
