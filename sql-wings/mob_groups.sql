@@ -961,7 +961,7 @@ INSERT INTO `mob_groups` VALUES(3, 5348, 33, 'Ul_aern_blm', 960, 0, 2514, 0, 500
 INSERT INTO `mob_groups` VALUES(4, 5340, 33, 'Ul_aern_rdm', 960, 0, 2514, 0, 5000, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(5, 4085, 33, 'Ul_Aern_nin', 960, 0, 2514, 0, 0, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(6, 5349, 33, 'Ul_aern_rng', 960, 0, 2514, 0, 0, 70, 73, 0);
-INSERT INTO `mob_groups` VALUES(7, 4088, 33, 'Ul_xzomit', 960, 0, 2517, 0, 0, 68, 71, 0);
+INSERT INTO `mob_groups` VALUES(7, 4088, 33, 'Ul_xzomit_baby', 960, 0, 2517, 0, 0, 68, 71, 0);
 INSERT INTO `mob_groups` VALUES(8, 4086, 33, 'Ul_hpemde', 960, 0, 2515, 0, 0, 68, 72, 0);
 INSERT INTO `mob_groups` VALUES(9, 4087, 33, 'Ul_phuabo', 960, 0, 2516, 0, 0, 75, 76, 0);
 INSERT INTO `mob_groups` VALUES(10, 5350, 33, 'Ul_aern_mnk', 960, 0, 2514, 0, 0, 70, 73, 0);
@@ -978,7 +978,7 @@ INSERT INTO `mob_groups` VALUES(20, 5327, 33, 'Om_aern_bst', 960, 0, 1853, 0, 0,
 INSERT INTO `mob_groups` VALUES(21, 5329, 33, 'Om_aern_drg', 960, 0, 1853, 0, 0, 75, 78, 0);
 INSERT INTO `mob_groups` VALUES(22, 5337, 33, 'Om_aern_smn', 960, 0, 1853, 0, 5000, 75, 78, 0);
 INSERT INTO `mob_groups` VALUES(23, 2976, 33, 'Om_hpemde', 960, 0, 1854, 0, 0, 73, 77, 0);
-INSERT INTO `mob_groups` VALUES(24, 2978, 33, 'Om_xzomit', 960, 0, 1856, 0, 0, 72, 76, 0);
+INSERT INTO `mob_groups` VALUES(24, 2978, 33, 'Om_xzomit_baby', 960, 0, 1856, 0, 0, 72, 76, 0);
 INSERT INTO `mob_groups` VALUES(25, 2975, 33, 'Om_aern_nin', 960, 0, 1853, 0, 0, 75, 78, 0);
 INSERT INTO `mob_groups` VALUES(26, 5325, 33, 'Om_aern_pld', 960, 0, 1853, 0, 5000, 75, 78, 0);
 INSERT INTO `mob_groups` VALUES(27, 5330, 33, 'Om_aern_drk', 960, 0, 1853, 0, 5000, 75, 78, 0);
@@ -1011,7 +1011,7 @@ INSERT INTO `mob_groups` VALUES(53, 2134, 33, 'Jailer_of_Love', 0, 128, 1400, 57
 INSERT INTO `mob_groups` VALUES(54, 3422, 33, 'Ru_phuabo', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(55, 3270, 33, 'Qn_hpemde', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(56, 21, 33, 'Absolute_Virtue', 0, 128, 3, 66000, 0, 92, 92, 0);
-INSERT INTO `mob_groups` VALUES(57, 6194, 33, 'Ul_xzomit_parent', 960, 0, 2517, 0, 0, 68, 71, 0);
+INSERT INTO `mob_groups` VALUES(57, 6194, 33, 'Ul_xzomit_parent', 960, 0, 3222, 0, 0, 68, 71, 0);
 INSERT INTO `mob_groups` VALUES(58, 6195, 33, 'Om_xzomit_parent', 960, 0, 1856, 0, 0, 72, 76, 0);
 INSERT INTO `mob_groups` VALUES(59, 5341, 33, 'Ul_aern_whm', 960, 0, 2514, 0, 5000, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(60, 5136, 33, 'Ul_aern_brd', 960, 0, 2514, 0, 0, 70, 73, 0);

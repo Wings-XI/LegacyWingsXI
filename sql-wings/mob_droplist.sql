@@ -12862,24 +12862,9 @@ INSERT INTO `mob_droplist` VALUES(2516, 0, 0, 1000, 1783, 20);
 INSERT INTO `mob_droplist` VALUES(2516, 0, 0, 1000, 1784, 170);
 INSERT INTO `mob_droplist` VALUES(2516, 0, 0, 1000, 1784, 90);
 INSERT INTO `mob_droplist` VALUES(2516, 0, 0, 1000, 1852, 60);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 1855, 280);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 1855, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4104, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4104, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4105, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4105, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4106, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4106, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4107, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4107, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4108, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4108, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4109, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4109, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4110, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4110, 10);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4111, 100);
-INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 4111, 10);
+INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 1783, 5); -- Luminian Tissue UlXzomit baby 0.5%
+INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 1785, 11); -- Xzomit Organ UlXzomit baby 1.1%
+INSERT INTO `mob_droplist` VALUES(2517, 0, 0, 1000, 1855, 16); -- HQ Xzomit Organ UlXzomit baby 1.6%
 INSERT INTO `mob_droplist` VALUES(2518, 0, 0, 1000, 1783, 50);
 INSERT INTO `mob_droplist` VALUES(2518, 0, 0, 1000, 1788, 410);
 INSERT INTO `mob_droplist` VALUES(2519, 0, 0, 1000, 891, 100);
@@ -16670,6 +16655,17 @@ INSERT INTO `mob_droplist` VALUES(3220, 1, 1, 12, 15126, 66);
 INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3220, 0, 0, 1000, 1474, 4);
 INSERT INTO `mob_droplist` VALUES(3221, 0, 0, 1000, 16031, 200);
+INSERT INTO `mob_droplist` VALUES(3222, 0, 0, 1000, 1783, 58); -- Luminian Tissue UlXzomit parent 5.8% base
+INSERT INTO `mob_droplist` VALUES(3222, 0, 0, 1000, 1785, 1000); -- Xzomit Organ UlXzomit parent 100% drop rate
+INSERT INTO `mob_droplist` VALUES(3222, 0, 0, 1000, 1855, 80); -- HQ Xzomit Organ UlXzomit parent 8% base
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4104, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4105, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4106, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4107, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4108, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4109, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4110, 125);
+INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
 
 
 
