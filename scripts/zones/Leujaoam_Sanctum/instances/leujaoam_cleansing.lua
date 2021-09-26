@@ -31,7 +31,7 @@ end
 
 function onInstanceProgressUpdate(instance, progress)
     if (instance:getProgress() >= 15) then
-        instance:complete()
+        instance:fail()
     end
 end
 
@@ -40,8 +40,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    assaultOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end
