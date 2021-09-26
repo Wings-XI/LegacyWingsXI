@@ -62,6 +62,7 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+    local instance = mob:getInstance()
     DespawnMob(mob:getID() +1, instance) -- despawn bomb
 end
 

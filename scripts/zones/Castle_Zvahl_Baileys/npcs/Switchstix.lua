@@ -255,6 +255,7 @@ function onTrigger(player, npc)
             end
         end
     elseif currentRelic ~= 0 and relicWait == 0 and relics[currentRelic][stageNumber] ~= 4 then
+        local relic = relics[relicId]
         -- Need currency to start timer
         player:startEvent(12, currentRelic, relic[currencyType], relic[currencyAmount], 0, 0, 0, 0, relic[csParam])
     elseif relicId == nil or relicConquest > os.time() then

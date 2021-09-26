@@ -189,4 +189,4 @@ UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being telepor
 
 -- ASSAULTS
 IS_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take assault and door to let you enter in assault area
-MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from Naja (1 = PSC, 2 = PFC, 3 = SP, ...)
+MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)

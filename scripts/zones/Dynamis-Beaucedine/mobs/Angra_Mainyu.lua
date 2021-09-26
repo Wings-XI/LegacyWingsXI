@@ -82,13 +82,13 @@ end
 
 function onMobDisengage(mob)
     mob:setLocalVar("teleTime", 0)
-end    
+end
 
 function onMobFight(mob, target)
 
     local mobId = mob:getID()
 
-    teles = 
+    teles =
     {
     {279.4038, 20, 535.4518},
     {312.6868, 20.5267, 511.9843},
@@ -109,7 +109,9 @@ function onMobFight(mob, target)
         for i = mobId + 1, mobId + 4 do
             local pet = GetMobByID(i)
             if pet:isSpawned() and mob:getHPP() <= 99 then
-                pet:updateEnmity(target)
+                pet:disengage()
+                pet:resetEnmity(target)
+                pet:updateEnmity(mob:getTarget())
             end
         end
         mob:setLocalVar("teleTime", mob:getBattleTime())

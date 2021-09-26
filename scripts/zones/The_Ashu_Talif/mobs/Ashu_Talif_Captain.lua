@@ -23,13 +23,13 @@ function onMobFight(mob, target)
 
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         -- Vulcan Shot
-        if(skillId == 254) then
+        if skillID == 254 then
             mob:showText(mob, ID.text.FOR_EPHRAMAD)
             mob:timer(3000, function(mob)
                 mob:showText(mob, ID.text.TROUBLESOME_SQUABS)
             end)
         -- Circle Blade
-        elseif(skillId == 938) then
+        elseif skillID == 938 then
             mob:showText(mob, ID.text.FOR_THE_BLACK_COFFIN)
         end
     end)

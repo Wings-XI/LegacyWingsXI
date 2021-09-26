@@ -15,7 +15,7 @@ function error(player, msg)
 end
 
 function onTrigger(player, targ)
-    
+
     -- validate target
     if (targ == nil) then
         targ = player:getCursorTarget()
@@ -31,5 +31,5 @@ function onTrigger(player, targ)
         end
     end
 
-    player:PrintToPlayer(string.format("%s's pixie hate: %u", targ:getName(), targ:getPixieHate(varName)))
+    player:PrintToPlayer(string.format("%s's pixie hate: %u", targ:getName(), targ:getPixieHate()))
 end

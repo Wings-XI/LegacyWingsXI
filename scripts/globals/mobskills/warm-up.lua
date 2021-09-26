@@ -16,6 +16,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local power = 40 -- from ffxiclopedia/bg-wiki
+    local mobSkin = mob:getModelId()
 
     if mobSkin == 1618 then
         skill:setMsg(MobBuffMove(mob, tpz.effect.ACCURACY_BOOST, power, 0, 90))
