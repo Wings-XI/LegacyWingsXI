@@ -7215,9 +7215,9 @@ INSERT INTO `mob_groups` VALUES(12, 1737, 115, 'Goblin_Thug', 210, 0, 1170, 0, 0
 INSERT INTO `mob_groups` VALUES(13, 1744, 115, 'Goblin_Weaver', 210, 0, 1185, 0, 0, 3, 3, 0);
 INSERT INTO `mob_groups` VALUES(14, 1659, 115, 'Goblin_Fisher', 210, 0, 1054, 0, 0, 3, 4, 0);
 INSERT INTO `mob_groups` VALUES(15, 2546, 115, 'Mandragora', 210, 0, 1606, 0, 0, 3, 5, 0);
-INSERT INTO `mob_groups` VALUES(16, 4426, 115, 'Yagudo_Initiate', 210, 0, 2716, 0, 0, 4, 5, 0);
-INSERT INTO `mob_groups` VALUES(17, 4405, 115, 'Yagudo_Acolyte', 210, 0, 2692, 0, 0, 4, 5, 0);
-INSERT INTO `mob_groups` VALUES(18, 4448, 115, 'Yagudo_Scribe', 210, 0, 2761, 0, 0, 4, 5, 0);
+INSERT INTO `mob_groups` VALUES(16, 4426, 115, 'Yagudo_Initiate', 210, 0, 2716, 0, 0, 5, 8, 0);
+INSERT INTO `mob_groups` VALUES(17, 4405, 115, 'Yagudo_Acolyte', 210, 0, 2692, 0, 0, 5, 8, 0);
+INSERT INTO `mob_groups` VALUES(18, 4448, 115, 'Yagudo_Scribe', 210, 0, 2761, 0, 0, 5, 8, 0);
 INSERT INTO `mob_groups` VALUES(19, 332, 115, 'Balloon', 210, 8, 216, 0, 0, 8, 10, 0);
 INSERT INTO `mob_groups` VALUES(20, 2472, 115, 'Mad_Fox', 210, 1, 1562, 0, 0, 4, 5, 0);
 INSERT INTO `mob_groups` VALUES(21, 2475, 115, 'Magicked_Bones', 210, 1, 769, 0, 0, 4, 5, 0);
