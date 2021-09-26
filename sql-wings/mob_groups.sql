@@ -930,7 +930,7 @@ INSERT INTO `mob_groups` VALUES(10, 277, 30, 'Atomic_Cluster', 300, 0, 188, 0, 0
 INSERT INTO `mob_groups` VALUES(11, 1355, 30, 'Flamedrake', 300, 0, 841, 0, 0, 47, 49, 0);
 INSERT INTO `mob_groups` VALUES(12, 641, 30, 'Carmine_Dobsonfly', 86400, 0, 418, 1550, 0, 44, 45, 0);
 INSERT INTO `mob_groups` VALUES(13, 1901, 30, 'Hawker', 300, 0, 142, 0, 0, 45, 48, 0);
-INSERT INTO `mob_groups` VALUES(14, 68, 30, 'Aiatar', 0, 32, 35, 0, 0, 44, 45, 0);
+INSERT INTO `mob_groups` VALUES(14, 68, 30, 'Aiatar', 0, 32, 35, 5400, 0, 44, 45, 0);
 INSERT INTO `mob_groups` VALUES(15, 4309, 30, 'Water_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(16, 1160, 30, 'Earth_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(17, 3070, 30, 'Ouryu', 0, 128, 1962, 50000, 0, 85, 85, 0);
