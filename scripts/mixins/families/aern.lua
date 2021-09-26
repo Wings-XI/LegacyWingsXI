@@ -21,13 +21,12 @@ g_mixins.families.aern = function(mob)
                 end
             end
             if curr_reraise < reraises then
-                local dropid = mob:getDropID()
-                mob:setDropID(0)
+                mob:setMobMod(tpz.mobMod.NO_DROPS, 1) -- Aern will not drop any items if reraising, not even seals.
                 local target = mob:getTarget()
                 if target then killer = target end
                 mob:timer(12000, function(mob)
                     mob:setHP(mob:getMaxHP())
-                    mob:setDropID(dropid)
+                    mob:setMobMod(tpz.mobMod.NO_DROPS, 0)
                     mob:AnimationSub(3)
                     mob:setLocalVar("AERN_RERAISES", curr_reraise + 1)
                     mob:resetAI()
