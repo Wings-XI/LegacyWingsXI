@@ -67,6 +67,7 @@ function onRegionEnter(player, region)
             if (player:getCurrentMission(TOAU)== tpz.mission.id.toau.LAND_OF_SACRED_SERPENTS) then
                 player:startEvent(3000, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.A_MERCENARY_LIFE and player:needToZone() == false) then
+                local prevZone = player:getPreviousZone()
                 if (prevZone ~= tpz.zone.AHT_URHGAN_WHITEGATE) then
                     player:startEvent(3050, 3, 3, 3, 3, 3, 3, 3, 3, 0)
                 end

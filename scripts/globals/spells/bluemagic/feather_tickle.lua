@@ -40,5 +40,5 @@ function onSpellCast(caster, target, spell)
         -- caster:PrintToPlayer(string.format("Tickled for %u TP.",power*resist))
     end
 
-    return tp
+    return 0
 end

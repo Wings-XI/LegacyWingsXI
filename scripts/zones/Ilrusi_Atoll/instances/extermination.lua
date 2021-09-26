@@ -29,7 +29,7 @@ function onInstanceCreated(instance)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
-    updateInstanceTime(instance, elapsed, Ilrusi.text)
+    updateInstanceTime(instance, elapsed, ID.text)
 end
 
 function onInstanceFailure(instance)
@@ -57,8 +57,8 @@ function onInstanceComplete(instance)
         v:messageSpecial(ID.text.RUNE_UNLOCKED_POS, 8, 8)
     end
 
-    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setStatus(NORMAL)
-    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setStatus(NORMAL)
+    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setStatus(tpz.status.NORMAL)
+    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setStatus(tpz.status.NORMAL)
 
 end
 

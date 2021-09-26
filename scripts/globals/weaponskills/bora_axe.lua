@@ -37,7 +37,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     local chance = (tp-1000) * applyResistanceAddEffect(player, target, tpz.magic.ele.ICE, 0) > math.random() * 150
-    if (damage > 0 and target:hasStatusEffect(tpz.effect.BIND) == false and change) then
+    if (damage > 0 and target:hasStatusEffect(tpz.effect.BIND) == false and chance) then
         local duration = 20 * applyResistanceAddEffect(player, target, tpz.magic.ele.ICE, 0)
         target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
     end
