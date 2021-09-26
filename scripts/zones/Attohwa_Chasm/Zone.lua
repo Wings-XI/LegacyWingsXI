@@ -137,14 +137,13 @@ function onGameHour()
     end
 
     local citire = GetServerVariable("CitipatiRespawn")
-    local Citipati = GetMobByID(ID.mob.CITIPATI)
 
     if (totd == 1 or totd == 7) and (citire - os.time() < 140) then -- If respawn is less than one in game hour, allow Citipati to spawn
-        DisallowRespawn(Citipati:getID(), false)
+        DisallowRespawn(ID.mob.CITIPATI, false)
     elseif (totd == 1 or totd == 7) and citire < os.time() then -- If Citipati's respawn window has passed, allow him to spawn.
-        DisallowRespawn(Citipati:getID(), false)
+        DisallowRespawn(ID.mob.CITIPATI, false)
     else
-        DisallowRespawn(Citipati:getID(), true)
+        DisallowRespawn(ID.mob.CITIPATI, true)
     end
 end
 
