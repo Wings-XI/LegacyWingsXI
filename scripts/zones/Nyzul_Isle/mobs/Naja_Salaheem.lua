@@ -65,12 +65,12 @@ function onMobRoam(mob)
     -- Advance to Stage 2 area
     if (mob:getLocalVar("Stage") == 2) then
         mob:showText(mob, ID.text.OH_ARE_WE_DONE)
-        mob:pathThrough(stage2Position, PATHFLAG_SCRIPT)
+        mob:pathThrough(stage2Position, tpz.path.flag.SCRIPT)
         mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     -- Advance to Stage 3 area
     elseif (mob:getLocalVar("Stage") == 3) then
         mob:showText(mob, ID.text.NOW_WERE_TALKIN)
-        mob:pathThrough(stage3Position, PATHFLAG_SCRIPT)
+        mob:pathThrough(stage3Position, tpz.path.flag.SCRIPT)
         mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     end
 

@@ -15,7 +15,7 @@ function onTrigger(player, npc)
     local visitant = 0
     local prevtime = player:getCharVar("Abyssea_Time")
     local STONES = tpz.abyssea.getTravStonesTotal(player)
-    local SOJOURN = tpz.abyssea.getAbyssiteTotal(player, SOJOURN)
+    local SOJOURN = tpz.abyssea.getAbyssiteTotal(player, "SOJOURN")
 
     if player:hasStatusEffect(tpz.effect.VISITANT) then
         visitant = 60
