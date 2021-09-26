@@ -12,7 +12,6 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInstanceCreated(instance)
-    printf("1")
     if math.random(1,100) >= 50 then
         instance:getEntity(bit.band(17035306, 0xFFF), tpz.objType.MOB):setSpawn(-304.151, -8.470, -180.556, 250)
     end
