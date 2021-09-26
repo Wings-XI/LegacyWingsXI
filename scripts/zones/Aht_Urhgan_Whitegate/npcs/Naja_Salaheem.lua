@@ -27,11 +27,10 @@ function onTrigger(player, npc)
     -- Assaults
     if (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.PFC_WILDCAT_BADGE) == false and player:getCharVar("PromotionPFC") == 0) then
         player:startEvent(5000, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- PFC rank is available (rank 2)
-    -- no acces to rank 3 for the moment 
-    -- elseif (player:getCharVar("PromotionSP") == 1 and player:hasKeyItem(tpz.ki.DARK_RIDER_HOOFPRINT) == true) then
-    --     player:startEvent(5022, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- get SP rank (rank 3)
-    -- elseif (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.SP_WILDCAT_BADGE) == false and player:getCharVar("PromotionSP") == 0) then
-    --     player:startEvent(5020, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- SP rank is available (rank 3)
+    elseif (player:getCharVar("PromotionSP") == 1 and player:hasKeyItem(tpz.ki.DARK_RIDER_HOOFPRINT) == true) then
+        player:startEvent(5022, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- get SP rank (rank 3)
+    elseif (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.SP_WILDCAT_BADGE) == false and player:getCharVar("PromotionSP") == 0) then
+        player:startEvent(5020, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- SP rank is available (rank 3)
     -- Missions
     elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.IMMORTAL_SENTRIES and player:getCharVar("AhtUrganStatus") == 1) then
         player:startEvent(3002, 0, 0, 0, 0, 0, 0, 0, 0, 0)
