@@ -962,9 +962,9 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
     mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
-    mob:setMod(tpz.mod.MDEF, 115)
 
-    mob:setMod(tpz.mod.DMGMAGIC, -10)
+    mob:setMod(tpz.mod.DMGMAGIC, -50)
+    mob:setMod(tpz.mod.DMGPHYS, -50)
     mob:setTrueDetection(1)
 
 end
