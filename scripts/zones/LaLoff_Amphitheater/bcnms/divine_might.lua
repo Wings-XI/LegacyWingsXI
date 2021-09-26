@@ -56,5 +56,6 @@ function onEventFinish(player, csid, option)
                 player:addMission(ZILART, tpz.mission.id.zilart.THE_SEALED_SHRINE)
                 player:setCharVar("ZilartStatus", 0)
             end
+        end
     end
 end

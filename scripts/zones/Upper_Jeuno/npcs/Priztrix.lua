@@ -37,5 +37,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tpz.mystery.onEventFinish(player, csid, options, events)
+    tpz.mystery.onEventFinish(player, csid, option, events)
 end

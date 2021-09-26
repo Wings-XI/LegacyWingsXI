@@ -1261,44 +1261,54 @@ end
 function handleWSGorgetBelt(attacker)
     local ftpBonus = 0
     local accBonus = 0
-    if (attacker:getObjType() == tpz.objType.PC) then
+    if attacker:getObjType() == tpz.objType.PC then
         -- TODO: Get these out of itemid checks when possible.
-        local elementalGorget = { 15495, 15498, 15500, 15497, 15496, 15499, 15501, 15502 }
+        local elementalGorget = { 15495, 15496, 15497, 15498, 15499, 15500, 15501, 15502 }
         local elementalBelt =   { 11755, 11758, 11760, 11757, 11756, 11759, 11761, 11762 }
         local neck = attacker:getEquipID(tpz.slot.NECK)
         local belt = attacker:getEquipID(tpz.slot.WAIST)
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
-
         for i,v in ipairs(elementalGorget) do
-            if (neck == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
+            if neck == v then
+                if
+                    doesElementMatchWeaponskill(i, SCProp1) or
+                    doesElementMatchWeaponskill(i, SCProp2) or
+                    doesElementMatchWeaponskill(i, SCProp3)
+                then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1
                 end
+
                 break
             end
         end
 
-        if (neck == 27510) then -- Fotia Gorget
+        if neck == 27510 then -- Fotia Gorget
             accBonus = accBonus + 10
             ftpBonus = ftpBonus + 0.1
         end
 
         for i, v in ipairs(elementalBelt) do
-            if (belt == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
+            if belt == v then
+                if
+                    doesElementMatchWeaponskill(i, SCProp1) or
+                    doesElementMatchWeaponskill(i, SCProp2) or
+                    doesElementMatchWeaponskill(i, SCProp3)
+                then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1
                 end
+
                 break
             end
         end
 
-        if (belt == 28420) then -- Fotia Belt
+        if belt == 28420 then -- Fotia Belt
             accBonus = accBonus + 10
             ftpBonus = ftpBonus + 0.1
         end
     end
+
     return ftpBonus, accBonus
 end
 

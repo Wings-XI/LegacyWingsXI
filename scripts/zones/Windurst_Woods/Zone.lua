@@ -53,6 +53,28 @@ end
 
 function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
+    -- Move Troupe Valeriano (Circus) --
+    if getNationRank(tpz.nation.WINDURST) == 1 then
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.NORMAL)
+                end
+            end
+        end
+    else
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.DISAPPEAR)
+                end
+            end
+        end
+    end
 end
 
 function onRegionEnter(player, region)

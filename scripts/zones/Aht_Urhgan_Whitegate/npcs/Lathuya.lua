@@ -30,7 +30,7 @@ local craftingItems = {
         currency = 2186,
         currencyAmt = 4,
         result = 14521
-    }  
+    }
 }
 
 function onTrade(player, npc, trade)
@@ -154,7 +154,7 @@ function onEventFinish(player, csid, option)
         npcUtil.completeQuest(player, AHT_URHGAN, tpz.quest.id.ahtUrhgan.OMENS, {
             item = 15684,
             title = tpz.title.IMMORTAL_LION,
-            var = { OmensProgress }
+            var = { omensProgress }
         })
         player:delKeyItem(tpz.ki.SEALED_IMMORTAL_ENVELOPE)
         player:setCharVar("LastDivinationDay", vanaDay())
@@ -180,7 +180,7 @@ function onEventFinish(player, csid, option)
                 -- Player is finished with Lathuya
                 player:setCharVar("[BLUAF]RestingDay", 0)
             else
-                player:setCharVar("[BLUAF]RestingDay", vanaDay())  
+                player:setCharVar("[BLUAF]RestingDay", vanaDay())
                 player:needToZone(true)
             end
 

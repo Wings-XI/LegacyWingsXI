@@ -9,9 +9,6 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobInitialize(mob)
-end
-
-function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGAIN, 150)
     mob:addMod(tpz.mod.UFASTCAST, 50)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 150)
@@ -26,6 +23,9 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.UDMGMAGIC, -40)
     mob:addMod(tpz.mod.UDMGPHYS, -20)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
+end
+
+function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)

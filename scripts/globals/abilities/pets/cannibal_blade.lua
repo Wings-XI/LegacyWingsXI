@@ -34,6 +34,9 @@ function onPetAbility(target, automaton, skill, master, action)
     end
     
     target:takeDamage(damage, automaton, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-
+    if damage > 0 then
+        master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, 1)
+        target:tryInterruptSpell(automaton, 1)
+    end
     return damage
 end

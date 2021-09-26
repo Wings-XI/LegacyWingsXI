@@ -8,7 +8,6 @@ require("scripts/globals/instance")
 require("scripts/globals/missions")
 require("scripts/globals/assault")
 require("scripts/globals/zone")
-require("scripts/zones/Periqia/mobs/Excaliace")
 -----------------------------------
 
 function onInstanceCreated(instance)
@@ -42,11 +41,9 @@ function onInstanceFailure(instance)
 end
 
 function onInstanceProgressUpdate(instance, progress)
-
-    if progress > 0 then
+    if (instance:getProgress() > 0) then
         instance:complete()
     end
-
 end
 
 function onInstanceComplete(instance)
@@ -54,8 +51,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end

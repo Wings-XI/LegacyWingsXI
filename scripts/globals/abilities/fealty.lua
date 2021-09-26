@@ -14,6 +14,5 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
-    meritRecastReduction(player, tpz.merit.FEALTY, action)
     player:addStatusEffect(tpz.effect.FEALTY, 1, 0, 60)
 end

@@ -946,7 +946,7 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
     mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 15)
+    mob:setMod(tpz.mod.ATTP, 25)
     mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
     mob:setMod(tpz.mod.BINDRESTRAIT, 20)
@@ -963,7 +963,8 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
-    mob:setMod(tpz.mod.DMGMAGIC, -10)
+    mob:setMod(tpz.mod.DMGMAGIC, -50)
+    mob:setMod(tpz.mod.DMGPHYS, -50)
     mob:setTrueDetection(1)
 
 end

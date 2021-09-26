@@ -15,6 +15,7 @@ function onMobSpawn(mob)
         },
     })
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:addStatusEffectEx(tpz.effect.FLEE, 0, 100, 0, 60)
 end
 
 function onMobDeath(mob, player, isKiller)

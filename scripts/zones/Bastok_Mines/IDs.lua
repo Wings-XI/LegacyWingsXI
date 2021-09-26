@@ -120,14 +120,16 @@ zones[tpz.zone.BASTOK_MINES] =
             [17735795] = 535, -- Proud Beard | Shade
             [17735818] = 564, -- Emaliveulaux | Skeleton
         },
-        HALLOWEEN_DECORATIONS = {
+        HALLOWEEN_DECORATIONS =
+        {
             [17735939] = 17735939,  -- Halloween Decorations
             [17735940] = 17735940,  -- Halloween Decorations
             [17735941] = 17735941,  -- Halloween Decorations
             [17735962] = 17735962,  -- Event Moogle Stall
             [17735961] = 17735961,  -- Festive Moogle
         },
-        STARLIGHT_DECORATIONS = {
+        STARLIGHT_DECORATIONS = 
+        {
             [17735951] = 17735951,  -- Starlight Festival Planter
             [17735952] = 17735952,  -- Starlight Festival Planter
             [17735953] = 17735953,  -- Starlight Festival Planter
@@ -137,16 +139,19 @@ zones[tpz.zone.BASTOK_MINES] =
             [17735950] = 17735950,  -- Christina
             [17735777] = 17735777,  -- Event Moogle
         },
-        EGG_HUNT_DECORATIONS = {
+        EGG_HUNT_DECORATIONS = 
+        {
             [17735921] = 17735921,  -- Egg Hunt Egg-stravaganza Pole
             [17735922] = 17735922,  -- Egg Hunt Egg-stravaganza Pole
             [17735923] = 17735923,  -- Egg Hunt Egg-stravaganza Pole
             [17735924] = 17735924,  -- Egg Hunt Egg-stravaganza Pole
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = {
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
             [17735938] = 17735938,  -- Sunbreeze Festival Fireworks
         },
-        NEW_YEARS_DECORATIONS = {
+        NEW_YEARS_DECORATIONS = 
+        {
             [17735934] = 17735934,  -- New Years Standing Tree
             [17735935] = 17735935,  -- New Years Standing Tree
             [17735936] = 17735936,  -- New Years Standing Tree
