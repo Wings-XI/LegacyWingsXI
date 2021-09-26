@@ -35,8 +35,8 @@ SCROLL_FIRE            = 4752
 SCROLL_ABSORB_INT      = 4878
 IMPERIAL_COFFEE        = 5592
 BRASS_RING             = 13465
-PATAS                  = 16419
-HEAVY_CROSSBOW         = 17220
+TIGERFANGS             = 16422
+REPEATING_CROSSBOW     = 17221
 
 function satisfy_attachment(player, new_attachmentStatus, new_attachmentReady)
     player:tradeComplete()
@@ -85,12 +85,12 @@ function onTrade(player, npc, trade)
     local valoredge_items_traded = trade:getItemQty(BRASS_SHEET) == 1
         and trade:getItemQty(WAMOURA_COCOON) == 1
         and trade:getItemQty(IMPERIAL_CERMET) == 1
-        and trade:getItemQty(PATAS) == 1
+        and trade:getItemQty(TIGERFANGS) == 1
 
     local sharpshot_items_traded = trade:getItemQty(ROSEWOOD_LUMBER) == 1
         and trade:getItemQty(KARAKUL_CLOTH) == 1
         and trade:getItemQty(KARAKUL_LEATHER) == 1
-        and trade:getItemQty(HEAVY_CROSSBOW) == 1
+        and trade:getItemQty(REPEATING_CROSSBOW) == 1
 
     local stormwaker_items_traded = trade:getItemQty(GOLD_THREAD) == 1
         and trade:getItemQty(VELVET_CLOTH) == 1
