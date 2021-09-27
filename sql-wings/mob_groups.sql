@@ -11210,7 +11210,7 @@ INSERT INTO `mob_groups` VALUES(30, 2775, 197, 'Mushussu', 960, 0, 1756, 0, 0, 5
 INSERT INTO `mob_groups` VALUES(31, 6175, 197, 'Rumble_Crawler', 960, 0, 3140, 0, 0, 53, 55, 0);
 INSERT INTO `mob_groups` VALUES(32, 4322, 197, 'Wespe', 960, 0, 2644, 0, 0, 55, 57, 0);
 INSERT INTO `mob_groups` VALUES(33, 979, 197, 'Demonic_Tiphia', 0, 32, 610, 0, 0, 60, 60, 0);
-INSERT INTO `mob_groups` VALUES(34, 1099, 197, 'Dragonfly', 960, 0, 697, 0, 0, 55, 58, 0);
+INSERT INTO `mob_groups` VALUES(34, 6203, 197, 'Dragonfly', 960, 0, 697, 0, 0, 55, 58, 0);
 INSERT INTO `mob_groups` VALUES(35, 832, 197, 'Crawler_Hunter', 960, 0, 531, 0, 0, 60, 62, 0);
 INSERT INTO `mob_groups` VALUES(36, 4705, 197, 'Aqrabuamelu', 7200, 0, 2947, 7500, 0, 72, 75, 0);
 INSERT INTO `mob_groups` VALUES(37, 1113, 197, 'Dreadbug', 0, 128, 703, 5000, 0, 52, 52, 0);

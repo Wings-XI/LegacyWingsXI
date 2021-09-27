@@ -1159,7 +1159,7 @@ INSERT INTO `mob_pools` VALUES(1095, 'Dozing_Dorian', 'Dozing_Dorian', 167, 0x00
 INSERT INTO `mob_pools` VALUES(1096, 'Do_Bho_Venomtail', 'Do_Bho_Venomtail', 202, 0x00001f0400000000000000000000000000000000, 5, 4, 6, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(1097, 'Draconic_Draugar', 'Draconic_Draugar', 89, 0x0000e20600000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 89);
 INSERT INTO `mob_pools` VALUES(1098, 'Draco_Lizard', 'Draco_Lizard', 174, 0x0000480100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 174);
-INSERT INTO `mob_pools` VALUES(1099, 'Dragonfly', 'Dragonfly', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 0, 0, 0, 510, 643, 0, 0, 0, 0, 0, 113);
+INSERT INTO `mob_pools` VALUES(1099, 'Dragonfly', 'Dragonfly', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 0, 0, 1, 0, 0, 0, 510, 643, 0, 0, 0, 0, 0, 113);
 INSERT INTO `mob_pools` VALUES(1100, 'Dragonian_Berzerker', 'Dragonian_Berzerker', 87, 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 1, 1, 18, 0, 0, 297, 129, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(1101, 'Dragonian_Minstrel', 'Dragonian_Minstrel', 87, 0x0000a40100000000000000000000000000000000, 10, 10, 12, 240, 100, 0, 1, 1, 1, 18, 0, 0, 3614, 129, 0, 0, 76, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(1102, 'Dragonscaled_Bugaal_Ja', 'Dragonscaled_Bugaal_Ja', 176, 0x06004e0600000000000000000000000000000000, 9, 9, 2, 280, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 176);
@@ -6236,6 +6236,7 @@ INSERT INTO `mob_pools` VALUES(6199, 'War_Lynx', 'War_Lynx', 71, 0x0000c60800000
 INSERT INTO `mob_pools` VALUES(6200, 'Bashe', 'Bashe', 174, 0x0000480100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 139, 8, 0, 0, 1, 0, 174);
 INSERT INTO `mob_pools` VALUES(6201, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
 INSERT INTO `mob_pools` VALUES(6202, 'Sapphirine_Quadav_LITD', 'Sapphire_Quadav', 202, 0x00009F0200000000000000000000000000000000, 3, 3, 5, 265, 100, 0, 1, 1, 1, 2, 0, 0, 301, 131, 0, 0, 1, 0, 0, 202);
+INSERT INTO `mob_pools` VALUES(6203, 'Dragonfly', 'Dragonfly', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 0, 0, 0, 510, 643, 0, 0, 0, 0, 0, 113);
 --
 -- Indexes for dumped tables
 --
