@@ -38,7 +38,7 @@ function onMobDisengage(mob)
     mob:AnimationSub(0)
 end
 
-local function clearTowerVars (player, towerNum)
+local function clearTowerVars(player, towerNum)
     player:setCharVar("Ru_aern_"..towerNum.."-1KILL", 0)
     player:setCharVar("Ru_aern_"..towerNum.."-2KILL", 0)
     player:setCharVar("Ru_aern_"..towerNum.."-3KILL", 0)
