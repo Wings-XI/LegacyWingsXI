@@ -65,6 +65,7 @@ zones[tpz.zone.BASTOK_MINES] =
         VIRNAGE_DIALOG_1               = 10982, -- They stayed in a citadel on the Sauromugue Champaign. The paint may be there still! I have heard people here say you are a great adventurer. Please, help the Goddess in Her hour of need!
         VIRNAGE_DIALOG_2               = 10988, -- Hand my letter to Eperdur in the San d'Oria Cathedral to claim your reward.
         CONQUEST                       = 11111, -- You've earned conquest points!
+        FESTIVE_MOOGLE_DIALOG          = 14441, -- Welcome, kupo!
         GALDEO_OPEN_DIALOG             = 11471, -- Come! Take a look at all the wonderful goods from Li'Telor.
         AULAVIA_OPEN_DIALOG            = 11472, -- May I interest you in some specialty goods from Vollbow?
         AULAVIA_CLOSED_DIALOG          = 11473, -- I'm trying to start a business selling goods from Vollbow, but it's not easy getting stuff from areas that aren't under Bastokan control.
@@ -89,6 +90,22 @@ zones[tpz.zone.BASTOK_MINES] =
         EMALIVEULAUX_CLOSED_DIALOG     = 12243, -- I'd love to sell you goods imported from the island of Tavnazia, but with the area under foreign control, I can't secure my trade routes...
         COMMON_SENSE_SURVIVAL          = 15996, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         TEAR_IN_FABRIC_OF_SPACE        = 16593, -- There appears to be a tear in the fabric of space...
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 12248, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 12251, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 12255, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 12256, -- You've brought barrelfuls of joy to the children of Vana'diel!
+        STARLIGHT_CARD_1               = 12374, -- It's time once again for the Starlight Celebration!≺Prompt≻
+        STARLIGHT_CARD_2               = 15550, -- Kupo ho ho! Merry Starlight! As with past celebrations, we've prepared a veritable mountain of presents for all adventurers, kupo.≺Prompt≻
+        STARLIGHT_CARD_3               = 15591, -- We'd also appreciate your help in distributing cards, kupo. All you're required to do is deliver this card to the addressee. We're counting on you!≺Prompt≻
+        STARLIGHT_CARD_4               = 15587, -- If you happen to forget who the card's recipient is, just show it to me, kupo.≺Prompt≻
+        STARLIGHT_CARD_5               = 15586, -- You're truly a role model for all adventurers, kupo! Now then, we'd like you to take this card and give it to a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer.≺Prompt≻
+        STARLIGHT_CARD_6               = 15571, -- Happy delivering, kupo!≺Prompt≻
+        STARLIGHT_CARD_CHECK           = 15588, -- Let' see... This addressee of this card is a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer, kupo.≺Prompt≻
+        STARLIGHT_CARD_RED             = 12381, -- Oh, I just remembered! I think that the cards are all addressed to people who are wearing red...≺Prompt≻
+        STARLIGHT_CARD_WRONG           = 15589, -- Are you trying to pull a fast one, kupo!? This card isn't yours to give, nor is it addressed to you, so please take it back to where you found it.≺Prompt≻
+        STARLIGHT_CARD_CONFIRM         = 15577, -- Here's a little something for your kindness.≺Prompt≻
+        STARLIGHT_FAME_DIALOG          = 12398, -- ≺Multiple Choice (Parameter 1)≻[You haven't brought any happiness to the children!/You've done some good./You've done fairly well./You've made the children very happy!/You've brought lots of smiles!/You have the children bursting with glee!/The children love you!] ≺Multiple Choice (Parameter 1)≻[What a disappointment./You just need to give a little extra effort!/Keep it up!/You make a good smilebringer./Excellent work!/Stupendous job!/Even I think you're great!]≺Prompt≻
     },
     mob =
     {
@@ -97,11 +114,48 @@ zones[tpz.zone.BASTOK_MINES] =
     {
         HALLOWEEN_SKINS =
         {
-            [17735742] = 41, -- Faustin
-            [17735744] = 43, -- Mille
-            [17735747] = 42, -- Aulavia
-            [17735795] = 40, -- Proud Beard
-            [17735818] = 44, -- Emaliveulaux
+            [17735742] = 365, -- Faustin | Hound
+            [17735744] = 644, -- Mille | Quadav
+            [17735747] = 368, -- Aulavia | Ghost
+            [17735795] = 535, -- Proud Beard | Shade
+            [17735818] = 564, -- Emaliveulaux | Skeleton
+        },
+        HALLOWEEN_DECORATIONS =
+        {
+            [17735939] = 17735939,  -- Halloween Decorations
+            [17735940] = 17735940,  -- Halloween Decorations
+            [17735941] = 17735941,  -- Halloween Decorations
+            [17735962] = 17735962,  -- Event Moogle Stall
+            [17735961] = 17735961,  -- Festive Moogle
+        },
+        STARLIGHT_DECORATIONS = 
+        {
+            [17735951] = 17735951,  -- Starlight Festival Planter
+            [17735952] = 17735952,  -- Starlight Festival Planter
+            [17735953] = 17735953,  -- Starlight Festival Planter
+            [17735954] = 17735954,  -- Starlight Festival Planter
+            [17735955] = 17735955,  -- Starlight Festival Planter
+            [17735956] = 17735956,  -- Starlight Festival Planter
+            [17735950] = 17735950,  -- Christina
+            [17735777] = 17735777,  -- Event Moogle
+        },
+        EGG_HUNT_DECORATIONS = 
+        {
+            [17735921] = 17735921,  -- Egg Hunt Egg-stravaganza Pole
+            [17735922] = 17735922,  -- Egg Hunt Egg-stravaganza Pole
+            [17735923] = 17735923,  -- Egg Hunt Egg-stravaganza Pole
+            [17735924] = 17735924,  -- Egg Hunt Egg-stravaganza Pole
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17735938] = 17735938,  -- Sunbreeze Festival Fireworks
+        },
+        NEW_YEARS_DECORATIONS = 
+        {
+            [17735934] = 17735934,  -- New Years Standing Tree
+            [17735935] = 17735935,  -- New Years Standing Tree
+            [17735936] = 17735936,  -- New Years Standing Tree
+            [17735937] = 17735937,  -- New Years Standing Tree
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

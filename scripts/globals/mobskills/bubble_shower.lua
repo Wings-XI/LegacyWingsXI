@@ -15,15 +15,18 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STR_DOWN
+    local bonus = 0
+    local bubbleCap = 0
 
     MobStatusEffectMove(mob, target, typeEffect, 10, 3, 120)
-
-    local bonus = 0
-    if mob:getID() == 17203216 then -- KA
-        --bonus = -50
-    end
-
-    local dmgmod = MobBreathMove(mob, target, 0.15, 5, tpz.magic.ele.WATER, 200, bonus)
+  
+    if mob:getMaster() then 
+        bubbleCap = 2000
+    else 
+        bubbleCap = 200
+    end 
+    
+    local dmgmod = MobBreathMove(mob, target, 0.15, 5, tpz.magic.ele.WATER, bubbleCap, bonus)
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WATER, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.WATER)

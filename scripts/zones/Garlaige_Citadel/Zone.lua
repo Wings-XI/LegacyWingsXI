@@ -61,6 +61,7 @@ function onRegionEnter(player, region)
     local regionId = region:GetRegionID()
     local leverSet = math.floor(regionId / 9)              -- the set of levers player is standing on (0, 1, 2)
     local gateId = ID.npc.BANISHING_GATE_OFFSET + (9 * leverSet)  -- the ID of the related gate
+    local gate = GetNPCByID(gateId)
 
     -- if all levers are down, open gate for 30 seconds
     GetNPCByID(ID.npc.BANISHING_GATE_OFFSET + regionId):setAnimation(tpz.anim.OPEN_DOOR)
@@ -70,8 +71,30 @@ function onRegionEnter(player, region)
         GetNPCByID(gateId + 3):getAnimation() == tpz.anim.OPEN_DOOR and
         GetNPCByID(gateId + 4):getAnimation() == tpz.anim.OPEN_DOOR
     ) then
-        player:messageSpecial(ID.text.BANISHING_GATES + leverSet)
-        GetNPCByID(gateId):openDoor(60)
+        if gate:getLocalVar("isOpen") == 0 then
+
+            -- set gate opened var to prevent 'opening' an already open gate.
+            gate:setLocalVar("isOpen", 1)
+
+            -- I think different gates might have different durations.
+            local time = 60
+            local zonePlayers = player:getZone():getPlayers()
+            for _, zonePlayer in pairs(zonePlayers) do
+                -- send gate opening text to each player in zone
+                zonePlayer:messageSpecial(ID.text.BANISHING_GATES + leverSet)
+                gate:openDoor(time)
+
+                gate:timer(1000 * time, function(gate)
+                    -- send gate closing text to each player in zone
+                    zonePlayer:messageSpecial(ID.text.BANISHING_GATES_CLOSING + leverSet)
+                end)
+            end
+
+            gate:timer(1000 * time, function(gate)
+                -- set gate closed var to allow this gate to be opened again.
+                gate:setLocalVar("isOpen", 0)
+            end)
+        end
     end
 
 end

@@ -48,8 +48,8 @@ local battlefields = {
     },
 
     [tpz.zone.MINE_SHAFT_2716] =
-    {   
-        { 0,  736,    0},   -- A Century of Hardship (PM5-3 L3) 
+    {
+        { 0,  736,    0},   -- A Century of Hardship (PM5-3 L3)
      -- { 1,  737,    0},   -- Return to the Depths (Quest)
      -- { 2,  738,    0},   -- Bionic Bug (ENM)
      -- { 3,  739,    0},   -- Pulling the Strings (ENM)
@@ -210,7 +210,7 @@ local battlefields = {
     [tpz.zone.LA_VAULE_S] =
     {
      -- { 0,    ?,    0},   -- Splitting Heirs (S)
-     -- { 1,    ?,    0},   -- Purple, The New Black
+     -- { 1,    1500,    0},   -- Purple, The New Black
      -- { 2,    ?,    0},   -- The Blood-bathed Crown
     },
 
@@ -241,7 +241,7 @@ local battlefields = {
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
      -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
      -- {10,   10, 1552},   -- Dropping Like Flies (BS30)
-     -- {11,   11, 1553},   -- Horns of War (KS99) -- TODO: Chlevnik is unscripted
+     -- {11,   11, 1553},   -- Horns of War (KS99) 
         {12,   12, 1131},   -- Under Observation (BS40)
      -- {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
@@ -554,7 +554,7 @@ function checkReqs(player, npc, bfid, registrant)
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
     end
-    
+
     -- requirements to register a battlefield
     local registerReqs =
     {
@@ -666,7 +666,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 965] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Beloved of Atlantes
         [ 966] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT)                                                                                   ) end, -- Quest: Uninvited Guests
         [ 992] = function() return ( cop == mi.cop.ONE_TO_BE_FEARED and copStat == 2                                                                                        ) end, -- PM6-4: One to be Feared
-        [ 993] = function() return ( cop == mi.cop.THE_WARRIOR_S_PATH                                                                                                       ) end, -- PM7-5: The Warrior's Path
+        [ 993] = function() return ( cop == mi.cop.THE_WARRIOR_S_PATH and copStat == 1                                                                                      ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( cop == mi.cop.WHEN_ANGELS_FALL and copStat == 4                                                                                        ) end, -- PM8-3: When Angels Fall
         [1056] = function() return ( cop == mi.cop.DAWN and copStat == 2                                                                                                    ) end, -- PM8-4: Dawn
         [1057] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and player:getCharVar('ApocalypseNigh') == 4        ) end, -- Apocalypse Nigh
@@ -694,6 +694,7 @@ function checkReqs(player, npc, bfid, registrant)
         [1304] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 2nd Floor
         [1305] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 3rd Floor
         [1306] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 4th Floor
+        [1500] = function() return ( player:getCurrentMission(WOTG) == tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK and player:getCharVar('PurpleTheNewBlackProgress') == 1     ) end, -- Purple, The New Black
     }
 
     -- requirements to enter a battlefield already registered by a party member

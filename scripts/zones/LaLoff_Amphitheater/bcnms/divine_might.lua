@@ -30,6 +30,10 @@ function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
         local name, clearTime, partySize = battlefield:getRecord()
         local arg8 = (player:hasCompletedMission(ZILART, tpz.mission.id.zilart.ARK_ANGELS)) and 1 or 0
+        -- run the updates before the event fires to prevent players being stuck in the event of a crash or zoning prematurely
+        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.DIVINE_MIGHT_REPEAT) == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.MOONLIGHT_ORE) then
+            player:setCharVar("DivineMight", 2)
+        end
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 180, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002, 0, 0, 0, 0, 0, battlefield:getArea(), 180)
@@ -52,8 +56,6 @@ function onEventFinish(player, csid, option)
                 player:addMission(ZILART, tpz.mission.id.zilart.THE_SEALED_SHRINE)
                 player:setCharVar("ZilartStatus", 0)
             end
-        elseif player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.DIVINE_MIGHT_REPEAT) == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.MOONLIGHT_ORE) then
-            player:setCharVar("DivineMight", 2)
         end
     end
 end

@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Hypnotic Sway
--- Description: Inflicts amnesia conal
+-- Description: Inflicts amnesia gaze
 -- Type: Enfeebling
 -- Utsusemi/Blink absorb: Ignores shadows
 ---------------------------------------------
@@ -19,6 +19,6 @@ function onMobWeaponSkill(target, mob, skill)
     local power = 1
     local duration = 60
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, duration))
+    skill:setMsg(MobGazeMove(mob, target, typeEffect, power, 0, duration))
     return typeEffect
 end

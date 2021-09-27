@@ -110,6 +110,21 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
         LS_CONCIERGE_REGISTERED2       = 15746, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
         LS_CONCIERGE_ALREADY_LISTED    = 15747, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         TEAR_IN_FABRIC_OF_SPACE        = 16547, -- There appears to be a tear in the fabric of space...
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 9833, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 9836, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 9840, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 9841, -- You've brought barrelfuls of joy to the children of Vana'diel!
+        STARLIGHT_CARD_1               = 10141, -- It's time once again for the Starlight Celebration!≺Prompt≻
+        STARLIGHT_CARD_2               = 13732, -- Kupo ho ho! Merry Starlight! As with past celebrations, we've prepared a veritable mountain of presents for all adventurers, kupo.≺Prompt≻
+        STARLIGHT_CARD_3               = 13762, -- We'd also appreciate your help in distributing cards, kupo. All you're required to do is deliver this card to the addressee. We're counting on you!≺Prompt≻
+        STARLIGHT_CARD_4               = 13758, -- If you happen to forget who the card's recipient is, just show it to me, kupo.≺Prompt≻
+        STARLIGHT_CARD_5               = 13757, -- You're truly a role model for all adventurers, kupo! Now then, we'd like you to take this card and give it to a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer.≺Prompt≻
+        STARLIGHT_CARD_6               = 13742, -- Happy delivering, kupo!≺Prompt≻
+        STARLIGHT_CARD_CHECK           = 13759, -- Let' see... This addressee of this card is a ≺Multiple Choice (Parameter 0)≻[male Hume/female Hume/male Elvaan/female Elvaan/male Tarutaru/female Tarutaru/Mithra/Galka] adventurer, kupo.≺Prompt≻
+        STARLIGHT_CARD_RED             = 10148, -- Oh, I just remembered! I think that the cards are all addressed to people who are wearing red...≺Prompt≻
+        STARLIGHT_CARD_WRONG           = 13760, -- Are you trying to pull a fast one, kupo!? This card isn't yours to give, nor is it addressed to you, so please take it back to where you found it.≺Prompt≻
+        STARLIGHT_CARD_CONFIRM         = 13748, -- Here's a little something for your kindness.≺Prompt≻
     },
     mob =
     {
@@ -118,11 +133,119 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         HALLOWEEN_SKINS =
         {
-            [17719303] = 47, -- Machielle
-            [17719304] = 50, -- Corua
-            [17719305] = 48, -- Phamelise
-            [17719306] = 46, -- Apairemant
-            [17719493] = 49, -- Pourette
+            [17719303] = 580, -- Machielle | Yagudo
+            [17719304] = 564, -- Corua | Skeleton
+            [17719305] = 368, -- Phamelise | Ghost
+            [17719306] = 531, -- Apairemant | Dark Stalker
+            [17719493] = 612, -- Pourette | Orc
+        },
+        HALLOWEEN_DECORATIONS = 
+        {
+            [17719784] = 17719784,  -- Halloween Decoration
+            [17719785] = 17719785,  -- Halloween Decoration
+            [17719786] = 17719786,  -- Halloween Decoration 
+        },
+        EGG_HUNT_DECORATIONS = 
+        {
+            [17719708] = 17719708,  -- Egg Hunt Egg-stravaganza Standing Tree
+            [17719709] = 17719709,  -- Egg Hunt Egg-stravaganza Standing Tree
+            [17719710] = 17719710,  -- Egg Hunt Egg-stravaganza Pole
+            [17719711] = 17719711,  -- Egg Hunt Egg-stravaganza Pole
+            [17719712] = 17719712,  -- Egg Hunt Egg-stravaganza Pole
+            [17719713] = 17719713,  -- Egg Hunt Egg-stravaganza Pole
+        },
+        STARLIGHT_DECORATIONS = 
+        {
+            [17719795] = 17719795,  -- Starlight Festival Tree
+            [17719796] = 17719796,  -- Starlight Festival Tree
+            [17719797] = 17719797,  -- Starlight Festival Tree
+            [17719798] = 17719798,  -- Starlight Festival Tree
+            [17719799] = 17719799,  -- Starlight Festival Tree
+            [17719800] = 17719800,  -- Starlight Festival Tree
+            [17719801] = 17719801,  -- Starlight Festival Tree
+            [17719802] = 17719802,  -- Starlight Festival Tree
+            [17719803] = 17719803,  -- Starlight Festival Tree
+            [17719804] = 17719804,  -- Starlight Festival Tree
+            [17719805] = 17719805,  -- Starlight Festival Tree
+            [17719806] = 17719806,  -- Starlight Festival Tree
+            [17719807] = 17719807,  -- Starlight Festival Tree
+            [17719808] = 17719808,  -- Starlight Festival Tree
+            [17719809] = 17719809,  -- Starlight Festival Tree
+            [17719810] = 17719810,  -- Starlight Festival Tree
+            [17719811] = 17719811,  -- Starlight Festival Tree
+            [17719812] = 17719812,  -- Starlight Festival Tree
+            [17719813] = 17719813,  -- Starlight Festival Tree
+            [17719814] = 17719814,  -- Starlight Festival Tree
+            [17719815] = 17719815,  -- Starlight Festival Tree
+            [17719816] = 17719816,  -- Starlight Festival Tree
+            [17719817] = 17719817,  -- Starlight Festival Tree
+            [17719818] = 17719818,  -- Starlight Festival Tree
+            [17719819] = 17719819,  -- Starlight Festival Tree
+            [17719820] = 17719820,  -- Starlight Festival Tree
+            [17719821] = 17719821,  -- Starlight Festival Tree
+            [17719822] = 17719822,  -- Starlight Festival Tree
+            [17719823] = 17719823,  -- Starlight Festival Tree
+            [17719824] = 17719824,  -- Starlight Festival Tree
+            [17719825] = 17719825,  -- Starlight Festival Tree
+            [17719478] = 17719478,  -- Event Moogle
+        },
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
+            [17719702] = 17719702,  -- Doll Festival Stage
+            [17719703] = 17719703,  -- Doll Festival Umbrella and Stand
+            [17719704] = 17719704,  -- Doll Festival Umbrella and Stand
+            [17719705] = 17719705,  -- Doll Festival Umbrella and Stand
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17719783] = 17719783,  -- Sunbreeze Festival Fireworks
+	        [17719729] = 17719729,  -- Sunbreeze Festival Tree
+            [17719730] = 17719730,  -- Sunbreeze Festival Tree
+            [17719731] = 17719731,  -- Sunbreeze Festival Tree
+            [17719732] = 17719732,  -- Sunbreeze Festival Tree
+            [17719733] = 17719733,  -- Sunbreeze Festival Tree
+            [17719734] = 17719734,  -- Sunbreeze Festival Tree
+            [17719735] = 17719735,  -- Sunbreeze Festival Tree
+            [17719736] = 17719736,  -- Sunbreeze Festival Tree
+            [17719737] = 17719737,  -- Sunbreeze Festival Tree
+            [17719738] = 17719738,  -- Sunbreeze Festival Tree
+            [17719739] = 17719739,  -- Sunbreeze Festival Tree
+            [17719740] = 17719740,  -- Sunbreeze Festival Tree
+            [17719741] = 17719741,  -- Sunbreeze Festival Tree
+            [17719742] = 17719742,  -- Sunbreeze Festival Tree
+            [17719743] = 17719743,  -- Sunbreeze Festival Tree
+            [17719744] = 17719744,  -- Sunbreeze Festival Tree
+            [17719745] = 17719745,  -- Sunbreeze Festival Tree
+            [17719746] = 17719746,  -- Sunbreeze Festival Tree
+            [17719747] = 17719747,  -- Sunbreeze Festival Tree
+            [17719748] = 17719748,  -- Sunbreeze Festival Tree
+            [17719749] = 17719749,  -- Sunbreeze Festival Tree
+            [17719750] = 17719750,  -- Sunbreeze Festival Tree
+            [17719751] = 17719751,  -- Sunbreeze Festival Tree
+            [17719752] = 17719752,  -- Sunbreeze Festival Tree
+            [17719753] = 17719753,  -- Sunbreeze Festival Tree
+            [17719754] = 17719754,  -- Sunbreeze Festival Tree
+            [17719759] = 17719759,  -- Sunbreeze Festival Tree
+            [17719760] = 17719760,  -- Sunbreeze Festival Tree
+        },
+        NEW_YEARS_DECORATIONS = 
+        {
+            [17719653] = 17719653,  -- New Year Festival Planter
+            [17719654] = 17719654,  -- New Year Festival Planter
+            [17719655] = 17719655,  -- New Year Festival Planter
+            [17719656] = 17719656,  -- New Year Festival Planter
+            [17719724] = 17719724,  -- New Years Standing Tree
+            [17719728] = 17719728,  -- New Years Standing Tree
+        },
+        CIRCUS = 
+        {
+            [17719426] = 17719426, -- Mokop-Sankop
+            [17719427] = 17719427, -- Cheh Raihah
+            [17719424] = 17719424, -- Valeriano
+            [17719428] = 17719428, -- Nalta
+            [17719425] = 17719425, -- Dahjal
+            [17719535] = 17719535, -- Ominous Cloud
+            [17719534] = 17719534, -- Nokkhi Jinjahl
         },
         LUSIANE  = 17719350,
         ARPETION = 17719409,

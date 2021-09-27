@@ -160,6 +160,8 @@ FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to n
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
+STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
+STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
 
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
@@ -180,11 +182,11 @@ GOBBIE_BOX_MIN_AGE  = 45 -- Minimum character age in days before a character can
 ARTISAN_MOOGLES_GIVE_SCROLLS = 0 -- Do Artisan Moogles give free instant warp scrolls
 
 -- LINKSHELL CONCIERGE
-LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type  
+LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type
 
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
 -- ASSAULTS
 IS_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take assault and door to let you enter in assault area
-MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from Naja (1 = PSC, 2 = PFC, 3 = SP, ...)
+MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)

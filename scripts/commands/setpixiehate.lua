@@ -15,13 +15,13 @@ function error(player, msg)
 end
 
 function onTrigger(player, value, targ)
-    
+
     -- validate value
     if (value == nil) then
         error(player, "You must provide a value.")
         return
     end
-    
+
     -- validate target
     if (targ == nil) then
         targ = player:getCursorTarget()
@@ -38,5 +38,5 @@ function onTrigger(player, value, targ)
     end
 
     targ:setPixieHate(value)
-    player:PrintToPlayer(string.format("Set %s's pixie hate to: %u", targ:getName(), targ:getPixieHate(varName)))
+    player:PrintToPlayer(string.format("Set %s's pixie hate to: %u", targ:getName(), targ:getPixieHate()))
 end

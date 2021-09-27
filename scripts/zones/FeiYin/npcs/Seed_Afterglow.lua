@@ -35,8 +35,8 @@ function onTrigger(player, npc)
         player:hasKeyItem(tpz.ki.MARK_OF_SEED) or
         player:hasKeyItem(tpz.ki.AZURE_KEY) or
         player:hasKeyItem(tpz.ki.IVORY_KEY) or
-        CurrentDay == player:getCharVar("LastAzureKey") or
-        CurrentDay == player:getCharVar("LastIvoryKey") or
+        currentDay == player:getCharVar("LastAzureKey") or
+        currentDay == player:getCharVar("LastIvoryKey") or
         ACP < tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II
     ) then
         player:messageSpecial(ID.text.SOFTLY_SHIMMERING_LIGHT)

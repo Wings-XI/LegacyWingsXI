@@ -21,6 +21,7 @@ function isHalloweenEnabled()
             option = 4
         end
     end
+
     return option
 end
 
@@ -35,9 +36,10 @@ function halloweenItemsCheck(player)
     local pumpkinHead2 = 15176
     local trickStaff = 17565
     local trickStaff2 = 17587
+    local pitchfork = 18102
 
-    reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2}
-
+    reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2, pitchfork}
+    -- To Do: Move Pitchforks into seperate questline involving the bomb decorations in future events. --
     -- Checks for HQ Upgrade
     for ri = 1, #reward_list do
         if (headSlot == reward_list[ri] or mainHand == reward_list[ri]) then
@@ -49,6 +51,8 @@ function halloweenItemsCheck(player)
                 reward =  17566 -- Treat Staff
             elseif (mainHand == trickStaff2 and player:hasItem(17588) == false) then
                 reward = 17588 -- Treat Staff II
+            elseif (mainHand == pitchfork and player:hasItem(18103) == false) then
+                reward = 18103 -- Pitchfork +1
             end
             return reward
         end
@@ -148,23 +152,12 @@ function onHalloweenTrade(player, trade, npc)
 
                 local AlreadyTradedChk = utils.mask.getBit(harvestFestTreats, itemInList)
                 if (itemReward ~= 0 and player:getFreeSlotsCount() >= 1 and math.random(1, 3) < 2) then -- Math.random added so you have 33% chance on getting item
-
-                    player:messageSpecial(ID.text.HERE_TAKE_THIS)
+                    
+                    player:messageSpecial(ID.text.THANK_YOU_TREAT)
                     player:addItem(itemReward)
                     player:messageSpecial(ID.text.ITEM_OBTAINED, itemReward)
 
-                elseif target:canUseMisc(tpz.zoneMisc.COSTUME) and not AlreadyTradedChk then
-                -- Other neat looking halloween type costumes
-                -- two dragon skins: @420/421
-                -- @422 dancing weapon
-                -- @ 433/432 golem
-                -- 265 dark eye, 266 Giant version
-                -- 290 dark bombs
-                -- 301 dark mandy
-                -- 313 black spiders
-                -- 488 gob
-                -- 531 - 548 shade
-                -- 564/579 skele
+                elseif player:canUseMisc(tpz.zoneMisc.COSTUME) and not AlreadyTradedChk then
 
                     -- Possible costume values:
                     local Yagudo = math.random(580, 607)
@@ -174,36 +167,16 @@ function onHalloweenTrade(player, trade, npc)
                     local Ghost = 368
                     local Hound = 365
                     local Skeleton = 564
+                    local Gob = math.random(484, 511)
+                    local Gigas = math.random(707, 711)
+                    local Demon = math.random(740, 756)
                     local Dark_Stalker = math.random(531, 534)
 
-                    local halloween_costume_list = {Quadav, Orc, Yagudo, Shade, Ghost, Hound, Skeleton, Dark_Stalker}
+                    local halloween_costume_list = {Quadav, Orc, Yagudo, Shade, Ghost, Hound, Skeleton, Dark_Stalker, Gob, Gigas, Demon}
 
                     local costumePicked = halloween_costume_list[math.random(1, #halloween_costume_list)] -- will randomly pick one of the costumes in the list
                     player:addStatusEffect(tpz.effect.COSTUME, costumePicked, 0, 3600)
-
-                    -- pitchForkCostumeList defines the special costumes per zone that can trigger the pitch fork requirement
-                    -- zone, costumeID
-                    local pitchForkCostumeList =
-                    {
-                        234, Shade, Skeleton, -- Bastok mines
-                        235, Hound, Ghost,    -- Bastok Markets
-                        230, Ghost, Skeleton, -- Southern Sandoria
-                        231, Hound, Skeleton, -- Northern Sandoria
-                        241, Ghost, Shade,    -- Windurst Woods
-                        238, Shade, Hound     -- Windurst Woods
-                    }
-
-                    for zi = 1, #pitchForkCostumeList, 3 do
-
-                        if (zone == pitchForkCostumeList[zi] and (costumePicked == pitchForkCostumeList[zi + 1] or zone == pitchForkCostumeList[zi] and costumePicked == pitchForkCostumeList[zi + 2])) then -- Gives special hint for pitch fork costume
-                            player:messageSpecial(ID.text.IF_YOU_WEAR_THIS)
-
-                        elseif (zi == 16) then
-                            player:messageSpecial(ID.text.THANK_YOU_TREAT)
-
-                        end
-
-                    end
+                    player:messageSpecial(ID.text.TRICK_OR_TREAT)
                 else
                     player:messageSpecial(ID.text.THANK_YOU)
                 end
@@ -214,20 +187,52 @@ function onHalloweenTrade(player, trade, npc)
 
                 player:tradeComplete()
 
-                break
             end
         end
     end
 end
 
-function applyHalloweenNpcCostumes(zoneid)
+-- Apply Zone Decorations and Vendors--
+function applyHalloweenDecorations(zoneid)
     if isHalloweenEnabled() ~= 0 then
-        local skins = zones[zoneid].npc.HALLOWEEN_SKINS
-        if skins then
-            for id, skin in pairs(skins) do
+        local decoration = zones[zoneid].npc.HALLOWEEN_DECORATIONS
+        if decoration then
+            for id, decoration in pairs(decoration) do
                 local npc = GetNPCByID(id)
                 if npc then
-                    npc:changeSkin(skin)
+                    npc:setStatus(tpz.status.NORMAL)
+                    local npcstatus = npc:getStatus()
+                end
+            end
+        end
+    end
+end
+
+-- Apply Roaming Monsters--
+function applyHalloweenRoaming(zoneid)
+    if isHalloweenEnabled() ~= 0 then
+        local roam = zones[zoneid].npc.HALLOWEEN_ROAMING
+        if roam then
+            for id, roam in pairs(roam) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.NORMAL)
+                    local npcstatus = npc:getStatus()
+                end
+            end
+        end
+    end
+end
+
+-- Apply NPC Costumes --
+function applyHalloweenNpcCostumes(zoneid)
+    if isHalloweenEnabled() ~= 0 then
+        local skin = zones[zoneid].npc.HALLOWEEN_SKINS
+        if skin then
+            for id, skin in pairs(skin) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setModelId(skin)
                 end
             end
         end

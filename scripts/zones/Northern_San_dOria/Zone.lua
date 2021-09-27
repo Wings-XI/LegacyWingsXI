@@ -13,6 +13,7 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
@@ -22,6 +23,9 @@ function onInitialize(zone)
     quests.ffr.initZone(zone) -- register regions 2 through 6
 
     applyHalloweenNpcCostumes(zone:getID())
+    applyHalloweenDecorations(zone:getID())
+    applyHalloweenRoaming(zone:getID())
+    applyStarlightDecorations(zone:getID())
 end
 
 function onZoneIn(player, prevZone)

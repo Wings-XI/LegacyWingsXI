@@ -4,10 +4,13 @@
 -- Type: Standard NPC
 -- !pos 33.033 0.999 -30.119 230
 -----------------------------------
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
 require("scripts/quests/flyers_for_regine")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     quests.ffr.onTrade(player, npc, trade, 10) -- FLYERS FOR REGINE
 end
 

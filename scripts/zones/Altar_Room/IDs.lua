@@ -35,6 +35,7 @@ zones[tpz.zone.ALTAR_ROOM] =
     },
     npc =
     {
+        STONE_LID = 17399858,
     },
 }
 

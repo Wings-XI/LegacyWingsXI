@@ -460,7 +460,9 @@ function MobBreathMove(mob, target, percent, base, element, cap, bonus)
     return damage
 end
 
-function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav) -- shadowbehav encodes the HITS LANDED if the shadowbehav is not WIPE or IGNORE
+-- param requireNumHits is used to get back how many hits actually landed on the target after shadows/blink/thirdeye
+-- see mobskill tornado edge for an example
+function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, shadowbehav, requireNumHits) -- shadowbehav encodes the HITS LANDED if the shadowbehav is not WIPE or IGNORE
 
     -- physical attack missed, skip rest
     if skill:hasMissMsg() then return 0 end
@@ -582,11 +584,11 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     dmg = utils.stoneskin(target, dmg)
 
+    local numHits = 1
     if dmg > 0 then
         target:updateEnmityFromDamage(mob, dmg)
         target:handleAfflatusMiseryDamage(dmg)
         if attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED then
-            local numHits = 1
             if shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then
                 numHits = shadowbehav - numShadowsUsed
             end
@@ -594,7 +596,15 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         end
     end
 
-    return dmg
+    if (requireNumHits ~= nil) then
+        local returnInfo = {}
+        returnInfo.dmg = dmg
+        returnInfo.hitslanded = numHits
+
+        return returnInfo
+    else
+        return dmg
+    end
 end
 
 -- returns true if mob attack hit

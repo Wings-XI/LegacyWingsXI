@@ -6,6 +6,10 @@
 local ID = require("scripts/zones/AlTaieu/IDs")
 -----------------------------------
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.HP_SCALE, 60)
+end
+
 function onMobSpawn(mob)
     mob:AnimationSub(6) -- Mouth Closed
 end

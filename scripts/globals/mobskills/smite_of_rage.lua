@@ -2,11 +2,9 @@
 -- Smite of Rage
 -- Damage varies with TP.
 ---------------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -14,6 +12,11 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    if mob:getFamily() == 271 then -- Jailer of Love, uses only animation.
+        skill:setMsg(tpz.msg.NONE)
+        return 0
+    end
+
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.7

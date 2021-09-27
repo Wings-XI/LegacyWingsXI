@@ -11,15 +11,17 @@ require("scripts/globals/zone")
 -----------------------------------
 local instance_object = {}
 
-function afterInstanceRegister(player)
-    afterAssaultRegister(player, 5344, ID.text, ID.mob)
-end
-
 function onInstanceCreated(instance)
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(220.000, 1.465, -504.999, 0)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(220.000, 1.619, -502.999, 0)
 
     instance:setProgress(math.random(ID.npc.POT_HATCH, ID.npc.POT_HATCH + 2))
+
+    spawnMobInAssault(instance, ID.mob)
+end
+
+function afterInstanceRegister(player)
+    afterAssaultRegister(player, 5344, ID.text, ID.mob)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
@@ -38,10 +40,6 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    assaultOnEventFinish(player, 102, tpz.zone.BHAFLAU_THICKETS)
 end
 
 return instance_object

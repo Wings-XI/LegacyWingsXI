@@ -93,6 +93,7 @@ function onMobSpawn(mob)
     })
     -- Change animation to open
     mob:AnimationSub(2)
+    mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.FASTCAST, 30) -- taken from timing of spells from multiple captures
     mob:setMod(tpz.mod.DEF, 400)
 end
@@ -104,7 +105,7 @@ end
 function onMonsterMagicPrepare(mob, target)
     local rnd = math.random()
     if rnd < 0.5 and mob:hasStatusEffect(tpz.effect.MANAFONT) == true then -- quake II replaces existing earth damage spells during manafont
-        return 211 -- quake II casted exclusively while Manafont is active. 
+        return 211 -- quake II casted exclusively while Manafont is active.
     elseif rnd < 0.25 then
         return 162 -- stone iv
     elseif rnd < 0.5 then
@@ -117,7 +118,7 @@ function onMonsterMagicPrepare(mob, target)
 end
 
 function onMobFight(mob)
-    mob:addListener("COMBAT_TICK", "FAITH_CTICK", function(mob)    
+    mob:addListener("COMBAT_TICK", "FAITH_CTICK", function(mob)
         local sum = mob:getLocalVar("PhysicalDamage") + mob:getLocalVar("MagicalDamage") + mob:getLocalVar("RangedDamage") + mob:getLocalVar("BreathDamage")
         if mob:AnimationSub() == 2 and sum > 1500 then -- Faith will close flower upon taking 1500 damage combined.
             closeFlower(mob)

@@ -5,19 +5,18 @@
 --  Type: Physical
 --  Utsusemi/Blink absorb: 4 shadows
 --  Range: Melee
---  Notes: Only used by Mamool Ja with staves.
+--  Notes: Only used by Mamool Ja mage with staves.
 ---------------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- If animationSub is 1, mob has already lost the staff. If zero, still has staff.
-    if mob:AnimationSub() == 1 then
-        return 1
-    else
+    -- If animationSub is 1, the mob has already lost his weapeon and cant do this TP attack.
+    if mob:AnimationSub() == 0 then
         return 0
     end
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

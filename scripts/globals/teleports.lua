@@ -75,7 +75,10 @@ local ids =
     SOUTHERN_SAN_DORIA_S  = 61,
     BASTOK_MARKETS_S      = 62,
     WINDURST_WATERS_S     = 63,
-    CAMPAIGN              = 64
+    CAMPAIGN              = 64,
+    BASTOK_STARLIGHT      = 65,
+    SAN_DORIA_STARLIGHT   = 66,
+    WINDURST_STARLIGHT    = 67,
 }
 tpz.teleport.id = ids
 
@@ -141,7 +144,10 @@ local destinations =
     [ids.ZVAHL_KEEP]            = {-555.996,  -70.100,   59.989,   0, 162},
     [ids.SOUTHERN_SAN_DORIA_S]  = { -98.000,    1.000,  -41.000, 224,  80},
     [ids.BASTOK_MARKETS_S]      = {-291.000,  -10.000, -107.000, 212,  87},
-    [ids.WINDURST_WATERS_S]     = { -31.442,   -5.000,  129.202, 128,  94}
+    [ids.WINDURST_WATERS_S]     = { -31.442,   -5.000,  129.202, 128,  94},
+    [ids.BASTOK_STARLIGHT]      = { -344.489,  -10.002,  -182.797, 88, 235},
+    [ids.SAN_DORIA_STARLIGHT]   = { 100.952,  0.999,   -49.758, 31,  230},
+    [ids.WINDURST_STARLIGHT]    = { 103.065,  -5.000,  -48.627, 5,  241},
 }
 
 tpz.teleport.type =

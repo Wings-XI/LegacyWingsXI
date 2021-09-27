@@ -149,8 +149,8 @@ INSERT INTO `mob_family_system` VALUES(79, 'Crawler', 20, 'Vermin', 1, 40, 100, 
 INSERT INTO `mob_family_system` VALUES(80, 'Dhalmel', 6, 'Beast', 1, 40, 110, 120, 3, 4, 4, 5, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1, 1.5, 1, 1.5, 1.3, 1.3, 1.3, 4, 257, 1);
 INSERT INTO `mob_family_system` VALUES(81, 'Diremite', 20, 'Vermin', 1, 40, 86, 90, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1.15, 1.15, 1.5, 1.3, 0.6, 3, 2, 1);
 INSERT INTO `mob_family_system` VALUES(82, 'Djinn', 3, 'Arcana', 0, 40, 70, 140, 6, 3, 6, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.125, 1, 1, 1, 1, 1, 1, 1, 1, 33, 0);
-INSERT INTO `mob_family_system` VALUES(83, 'Doll', 3, 'Arcana', 1, 40, 108, 90, 3, 3, 3, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 2, 33, 0);
-INSERT INTO `mob_family_system` VALUES(84, 'Doll', 3, 'Arcana', 1, 40, 108, 90, 3, 3, 3, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 2, 33, 0);
+INSERT INTO `mob_family_system` VALUES(83, 'Doll', 3, 'Arcana', 1, 40, 108, 90, 3, 3, 3, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 1, 0.7, 0.7, 0.7, 2, 33, 0);
+INSERT INTO `mob_family_system` VALUES(84, 'Doll', 3, 'Arcana', 1, 40, 108, 90, 3, 3, 3, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 1, 0.7, 0.7, 0.7, 2, 33, 0);
 INSERT INTO `mob_family_system` VALUES(85, 'Doll', 3, 'Arcana', 1, 40, 108, 90, 3, 3, 3, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 2, 32, 0);
 INSERT INTO `mob_family_system` VALUES(86, 'Doomed', 19, 'Undead', 2, 40, 110, 120, 3, 3, 3, 4, 3, 6, 5, 3, 3, 3, 3, 1.125, 1, 0.875, 0.875, 1.3, 0.6, 1, 1, 1, 0.7, 1.3, 0.2, 8, 6, 0);
 INSERT INTO `mob_family_system` VALUES(87, 'Dragon', 10, 'Dragon', 2, 30, 125, 90, 2, 3, 3, 3, 3, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 8, 2, 0);
@@ -508,7 +508,7 @@ INSERT INTO `mob_family_system` VALUES(475, 'Shinryu', 10, 'Dragon', 4, 50, 115,
 INSERT INTO `mob_family_system` VALUES(476, 'Prishe', 13, 'Humanoid', 0, 40, 100, 90, 2, 5, 3, 6, 6, 2, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
 INSERT INTO `mob_family_system` VALUES(477, 'Selh\'teus', 13, 'Humanoid', 0, 40, 90, 110, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0.85, 1, 0.7, 1, 0.5, 0.5, 0, 0, 0);
 INSERT INTO `mob_family_system` VALUES(478, 'God', 18, 'Unclassified', 3, 40, 120, 140, 1, 1, 1, 1, 1, 1, 1, 3, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
-INSERT INTO `mob_family_system` VALUES(479, 'King_Behemoth', 6, 'Beast', 4, 40, 110, 90, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 6, 1, 0);
+INSERT INTO `mob_family_system` VALUES(479, 'King_Behemoth', 6, 'Beast', 6, 60, 110, 90, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 6, 1, 0);
 INSERT INTO `mob_family_system` VALUES(480, 'Zeid', 13, 'Humanoid', 0, 40, 120, 100, 3, 4, 1, 5, 5, 4, 6, 3, 3, 3, 3, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 0, 6, 0);
 INSERT INTO `mob_family_system` VALUES(481, 'Ajido-Marujido', 13, 'Humanoid', 0, 40, 70, 140, 6, 4, 5, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 1, 0, 3, 0);
 INSERT INTO `mob_family_system` VALUES(482, 'Volker', 13, 'Humanoid', 0, 40, 90, 110, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 1, 1, 1, 0, 0, 0);

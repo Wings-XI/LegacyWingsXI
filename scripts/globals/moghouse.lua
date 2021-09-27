@@ -8,6 +8,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 ------------------------------------
 -- Mog Locker constants
 ------------------------------------
@@ -85,6 +86,24 @@ function moogleTrigger(player, npc)
                 player:messageSpecial(zones[player:getZoneID()].text.MOG_LOCKER_OFFSET, lockerTs)
             end
         end
+
+        if isStarlightEnabled() ~= 0 then
+            local HolidayTree = player:getCharVar("HolidayTree")
+            local SandOrianTree = player:getCharVar("SandOrianTree")
+            local BastokanTree = player:getCharVar("BastokanTree")
+            local WindurstianTree = player:getCharVar("WindurstianTree")
+            local HatObtained = player:getCharVar("HatObtained")
+            if HolidayTree == 1 and HatObtained ~= 1 then
+                if player:hasItem(15179) == false and SandOrianTree == 1 then
+                    player:startEvent(30017, 0, 0, 0, 86)
+                elseif player:hasItem(15179) == false and BastokanTree == 1 then
+                    player:startEvent(30017, 0, 0, 0, 115)
+                elseif player:hasItem(15179) == false and WindurstianTree == 1 then
+                    player:startEvent(30017, 0, 0, 0, 116)
+                end
+            end
+        end
+
 
         local homeNationFameLevel = player:getFameLevel(player:getNation())
         local giveMoogleABreak = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.GIVE_A_MOOGLE_A_BREAK)
@@ -203,6 +222,12 @@ function moogleEventFinish(player, csid, option)
             player:changeContainerSize(tpz.inv.MOGSAFE, 10)
             player:addTitle(tpz.title.MOGS_LOVING_MASTER)
             player:setCharVar("MogSafeProgress", 0)
+        elseif csid == 30017 then
+            local zone = player:getZoneName()
+            local ID = zones[player:getZoneID()]
+            player:addItem(15179)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 15179)
+            player:setCharVar("HatObtained", 1)
         end
 
         return true

@@ -44,6 +44,8 @@ enum class Mod
     MND                       = 13, // Mind
     CHR                       = 14, // Charisma
 
+    MAX_TP                    = 969, // Modifies a battle entity's maximum tp
+
     // Elemental Defenses
     // 128 = 128 / 256 = 50% reduction
     FIREDEF                   = 15, // Fire Defense

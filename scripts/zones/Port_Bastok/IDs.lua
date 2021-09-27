@@ -71,12 +71,117 @@ zones[tpz.zone.PORT_BASTOK] =
         CLOUD_BAD_COUNT             = 9216, -- Well, don't just stand there like an idiot! I can't do any bundlin' until you fork over a set of 99 tools and <item>! And I ain't doin' no more than seven sets at one time, so don't even try it!
         CLOUD_GOOD_TRADE            = 9220, -- Here, take 'em and scram. And don't say I ain't never did nothin' for you!
         CLOUD_BAD_ITEM              = 9221, -- What the hell is this junk!? Why don't you try bringin' what I asked for before I shove one of my sandals up your...nose!
+        FESTIVE_MOOGLE_DIALOG       = 9230, -- Come one, come all, kupo!
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU              = 9161, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS              = 9164, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN             = 9168, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN     = 9169, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {
     },
     npc =
     {
+        STARLIGHT_DECORATIONS =
+        {
+            [17744126] = 17744126,  -- Starlight Festival Fountain
+            [17744127] = 17744127,  -- Starlight Festival Fountain
+            [17744128] = 17744128,  -- Starlight Festival Planter
+            [17744129] = 17744129,  -- Starlight Festival Planter
+            [17744130] = 17744130,  -- Starlight Festival Planter
+            [17744131] = 17744131,  -- Starlight Festival Planter
+            [17744132] = 17744132,  -- Starlight Festival Planter
+            [17744133] = 17744133,  -- Starlight Festival Planter
+            [17744134] = 17744134,  -- Starlight Festival Planter
+            [17744135] = 17744135,  -- Starlight Festival Planter
+            [17744136] = 17744136,  -- Starlight Festival Planter
+            [17744137] = 17744137,  -- Starlight Festival Planter
+            [17744138] = 17744138,  -- Starlight Festival Planter
+            [17744139] = 17744139,  -- Starlight Festival Planter
+            [17744140] = 17744140,  -- Starlight Festival Planter
+            [17744141] = 17744141,  -- Starlight Festival Planter
+            [17744142] = 17744142,  -- Starlight Festival Planter
+            [17744143] = 17744143,  -- Starlight Festival Planter
+            [17744144] = 17744144,  -- Starlight Festival Planter
+            [17744145] = 17744145,  -- Starlight Festival Planter
+            [17744146] = 17744146,  -- Starlight Festival Planter
+            [17744147] = 17744147,  -- Starlight Festival Planter
+            [17744148] = 17744148,  -- Starlight Festival Planter
+            [17744149] = 17744149,  -- Starlight Festival Planter
+            [17744150] = 17744150,  -- Starlight Festival Planter
+            [17744151] = 17744151,  -- Starlight Festival Planter
+            [17744152] = 17744152,  -- Starlight Festival Planter
+            [17744153] = 17744153,  -- Starlight Festival Planter
+            [17743981] = 17743981,  -- Event Moogle Stall
+            [17743985] = 17743985,  -- Festive Moogle
+        },
+        DOLL_FESTIVAL_DECORATIONS = 
+        {
+            [17744060] = 17744060,  -- Doll Festival Stage
+            [17744061] = 17744061,  -- Doll Festival Umbrella and Stand
+            [17744062] = 17744062,  -- Doll Festival Umbrella and Stand
+            [17744063] = 17744063,  -- Doll Festival Umbrella and Stand
+            [17744064] = 17744064,  -- Doll Festival Umbrella and Stand
+            [17744065] = 17744065,  -- Doll Festival Cherry Blossom
+            [17744066] = 17744066,  -- Doll Festival Cherry Blossom
+            [17744067] = 17744067,  -- Doll Festival Cherry Blossom
+            [17744068] = 17744068,  -- Doll Festival Cherry Blossom
+            [17744069] = 17744069,  -- Doll Festival Cherry Blossom
+            [17744070] = 17744070,  -- Doll Festival Cherry Blossom
+            [17744071] = 17744071,  -- Doll Festival Cherry Blossom
+            [17744072] = 17744072,  -- Doll Festival Cherry Blossom
+            [17744073] = 17744073,  -- Doll Festival Cherry Blossom Petals
+            [17744074] = 17744074,  -- Doll Festival Cherry Blossom Petals
+            [17744075] = 17744075,  -- Doll Festival Cherry Blossom Petals
+            [17744076] = 17744076,  -- Doll Festival Cherry Blossom Petals
+            [17744077] = 17744077,  -- Doll Festival Cherry Blossom Petals
+            [17744078] = 17744078,  -- Doll Festival Cherry Blossom Petals
+            [17744079] = 17744079,  -- Doll Festival Cherry Blossom Petals
+            [17744080] = 17744080,  -- Doll Festival Cherry Blossom Petals
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17744081] = 17744081,  -- Sunbreeze Festival Fountain
+            [17744082] = 17744082,  -- Sunbreeze Festival Fountain
+            [17744083] = 17744083,  -- Sunbreeze Festival Planter
+            [17744084] = 17744084,  -- Sunbreeze Festival Planter
+            [17744085] = 17744085,  -- Sunbreeze Festival Planter
+            [17744086] = 17744086,  -- Sunbreeze Festival Planter
+            [17744087] = 17744087,  -- Sunbreeze Festival Planter
+            [17744088] = 17744088,  -- Sunbreeze Festival Planter
+            [17744089] = 17744089,  -- Sunbreeze Festival Planter
+            [17744090] = 17744090,  -- Sunbreeze Festival Planter
+            [17744091] = 17744091,  -- Sunbreeze Festival Planter
+            [17744092] = 17744092,  -- Sunbreeze Festival Planter
+            [17744093] = 17744093,  -- Sunbreeze Festival Planter
+            [17744094] = 17744094,  -- Sunbreeze Festival Planter
+            [17744095] = 17744095,  -- Sunbreeze Festival Planter
+            [17744096] = 17744096,  -- Sunbreeze Festival Planter
+            [17744097] = 17744097,  -- Sunbreeze Festival Planter
+            [17744098] = 17744098,  -- Sunbreeze Festival Planter
+            [17744099] = 17744099,  -- Sunbreeze Festival Planter
+            [17744100] = 17744100,  -- Sunbreeze Festival Planter
+            [17744101] = 17744101,  -- Sunbreeze Festival Planter
+            [17744102] = 17744102,  -- Sunbreeze Festival Planter
+            [17744103] = 17744103,  -- Sunbreeze Festival Planter
+            [17744104] = 17744104,  -- Sunbreeze Festival Planter
+            [17744105] = 17744105,  -- Sunbreeze Festival Planter
+            [17744106] = 17744106,  -- Sunbreeze Festival Planter
+            [17744107] = 17744107,  -- Sunbreeze Festival Planter
+            [17744108] = 17744108,  -- Sunbreeze Festival Planter
+            [17744125] = 17744125,  -- Sunbreeze Festival Fireworks
+        },
+        CIRCUS = 
+        {
+            [17743968] = 17743968, -- Mokop-Sankop
+            [17743969] = 17743969, -- Cheh Raihah
+            [17743966] = 17743966, -- Valeriano
+            [17743970] = 17743970,-- Nalta
+            [17743967] = 17743967, -- Dahjal
+            [17744022] = 17744022, -- Ominous Cloud
+            [17744021] = 17744021, -- Nokkhi Jinjahl
+        },
     },
 }
 

@@ -9,8 +9,13 @@ require("scripts/globals/treasure")
 -----------------------------------
 
 function onInitialize(zone)
+    local profblixre = GetServerVariable("MysticmakerRespawn")
     UpdateNMSpawnPoint(ID.mob.MYSTICMAKER_PROFBLIX)
-    GetMobByID(ID.mob.MYSTICMAKER_PROFBLIX):setRespawnTime(math.random(900, 10800))
+    if os.time() < profblixre then
+        GetMobByID(ID.mob.MYSTICMAKER_PROFBLIX):setRespawnTime(profblixre - os.time())
+    else
+        GetMobByID(ID.mob.MYSTICMAKER_PROFBLIX):setRespawnTime(300)
+    end
 
     tpz.treasure.initZone(zone)
 end

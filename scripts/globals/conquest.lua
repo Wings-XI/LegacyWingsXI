@@ -1243,6 +1243,14 @@ tpz.conquest.teleporterOnTrigger = function(player, teleporterNation, teleporter
     player:startEvent(teleporterEvent, sandyRegions, bastokRegions, windyRegions, beastmenRegions, 0, nationBits, player:getMainLvl(), allowedTeleports)
 end
 
+tpz.conquest.teleporterOnEventUpdateNoFee = function(player, csid, option, teleporterEvent)
+    if csid == teleporterEvent then
+        local region = option - 1073741829
+        local fee = 0
+        player:updateEvent(player:getGil(), fee, 0, fee, player:getCP())
+    end
+end
+
 tpz.conquest.teleporterOnEventUpdate = function(player, csid, option, teleporterEvent)
     if csid == teleporterEvent then
         local region = option - 1073741829
@@ -1281,6 +1289,7 @@ tpz.conquest.teleporterOnEventFinish = function(player, csid, option, teleporter
             end
             ]]
         --end
+
     end
 end
 

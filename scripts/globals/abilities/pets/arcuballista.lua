@@ -39,7 +39,10 @@ function onPetAbility(target, automaton, skill, master, action)
         params.ftp300 = 13.0
     end
 
-    local damage = doAutoRangedWeaponskill(automaton, target, 0, params, skill:getTP(), true, skill, action)
-
+    local damage, criticalHit, tpHits, extraHits = doAutoRangedWeaponskill(automaton, target, 0, params, skill:getTP(), true, skill, action)
+    if damage > 0 then
+        master:trySkillUp(target, tpz.skill.AUTOMATON_RANGED, tpHits+extraHits)
+        target:tryInterruptSpell(automaton, tpHits+extraHits)
+    end
     return damage
 end

@@ -40,12 +40,44 @@ zones[tpz.zone.WINDURST_WALLS] =
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 9085, -- Players who have not reached level <number> are prohibited from entering Dynamis.
         DYNA_NPC_DEFAULT_MESSAGE       = 9097, -- The strands of grass here have been tied together.
         TEAR_IN_FABRIC_OF_SPACE        = 10818, -- There appears to be a tear in the fabric of space...
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 9522, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 9525, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 9529, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 9530, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {
     },
     npc =
     {
+        SUNBREEZE_FESTIVAL_DECORATIONS = {
+            [17756373] = 17756373,  -- Sunbreeze Festival Fireworks
+            [17756374] = 17756374,  -- Sunbreeze Festival Tree
+            [17756375] = 17756375,  -- Sunbreeze Festival Tree
+            [17756376] = 17756376,  -- Sunbreeze Festival Tree
+            [17756377] = 17756377,  -- Sunbreeze Festival Tree
+            [17756378] = 17756378,  -- Sunbreeze Festival Tree
+            [17756379] = 17756379,  -- Sunbreeze Festival Tree
+            [17756380] = 17756380,  -- Sunbreeze Festival Tree
+            [17756381] = 17756381,  -- Sunbreeze Festival Tree
+            [17756382] = 17756382,  -- Sunbreeze Festival Tree
+            [17756383] = 17756383,  -- Sunbreeze Festival Tree
+            [17756384] = 17756384,  -- Sunbreeze Festival Tree
+        },
+        STARLIGHT_DECORATIONS = {
+            [17756387] = 17756387,  -- Starlight Festival Tree
+            [17756388] = 17756388,  -- Starlight Festival Tree
+            [17756389] = 17756389,  -- Starlight Festival Tree
+            [17756390] = 17756390,  -- Starlight Festival Tree
+            [17756391] = 17756391,  -- Starlight Festival Tree
+            [17756392] = 17756392,  -- Starlight Festival Tree
+            [17756393] = 17756393,  -- Starlight Festival Tree
+            [17756394] = 17756394,  -- Starlight Festival Tree
+            [17756395] = 17756395,  -- Starlight Festival Tree
+            [17756396] = 17756396,  -- Starlight Festival Tree
+            [17756397] = 17756397,  -- Starlight Festival Tree
+        },
     },
 }
 

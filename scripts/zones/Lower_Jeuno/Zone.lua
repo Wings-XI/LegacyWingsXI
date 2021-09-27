@@ -6,12 +6,12 @@
 local ID = require("scripts/zones/Lower_Jeuno/IDs")
 require("scripts/zones/Lower_Jeuno/globals")
 require("scripts/globals/conquest")
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/pathfind")
-require("scripts/globals/settings")
 require("scripts/globals/chocobo")
-require("scripts/globals/status")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
@@ -21,15 +21,6 @@ end
 
 function onZoneIn(player, prevZone)
     local cs = -1
-
-    local month = tonumber(os.date("%m"))
-    local day = tonumber(os.date("%d"))
-    -- Retail start/end dates vary, I am going with Dec 5th through Jan 5th.
-    if (month == 12 and day >= 5) or (month == 1 and day <= 5) then
-        player:ChangeMusic(0, 239)
-        player:ChangeMusic(1, 239)
-        -- No need for an 'else' to change it back outside these dates as a re-zone will handle that.
-    end
 
     if player:getCurrentMission(COP) == tpz.mission.id.cop.TENDING_AGED_WOUNDS and player:getCharVar("PromathiaStatus") == 0 then
         player:setCharVar("PromathiaStatus", 1)
@@ -44,6 +35,13 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function afterZoneIn(player)
+    if isStarlightEnabled() ~= 0 then
+        player:ChangeMusic(0,239)
+        player:ChangeMusic(1,239)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

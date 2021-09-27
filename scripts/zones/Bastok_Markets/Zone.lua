@@ -7,11 +7,15 @@ require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
 local ID = require("scripts/zones/Bastok_Markets/IDs")
 -----------------------------------
 
 function onInitialize(zone)
-    applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenNpcCostumes(zone:getID())
+   applyHalloweenDecorations(zone:getID())
+   applyHalloweenRoaming(zone:getID())
+   applyStarlightDecorations(zone:getID())
 end
 
 function onZoneIn(player, prevZone)

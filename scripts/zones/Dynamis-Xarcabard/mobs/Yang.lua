@@ -2,6 +2,8 @@
 -- Area: Dynamis - Xarcabard
 --   NM: Yang
 -----------------------------------
+local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
+require("scripts/globals/dynamis")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -10,7 +12,7 @@ end
 
 function onMobSpawn(mob)
     local dynaLord = GetMobByID(17330177)
-    if (dynaLord:getLocalVar("physImmune") < 2) then -- both dragons have not been killed initially
+    if dynaLord:getLocalVar("physImmune") < 2 then -- both dragons have not been killed initially
         dynaLord:setMod(tpz.mod.UDMGPHYS, -100)
         dynaLord:setMod(tpz.mod.UDMGRANGE, -100)
         dynaLord:setLocalVar("physImmune", 0)
@@ -20,28 +22,45 @@ function onMobSpawn(mob)
     end
 end
 
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
+end
+
 function onMobFight(mob, target)
-    local YingID = 17330183
-    local YingToD = mob:getLocalVar("YingToD")
+    local ying = GetMobByID(17330183)
+    local yingToD = mob:getLocalVar("yingToD")
     -- Repop Ying every 30 seconds if Yang is up and Ying is not.
-    if (GetMobAction(YingID) == tpz.act.NONE and os.time() > YingToD+30) then
-        GetMobByID(YingID):setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
-        SpawnMob(YingID):updateEnmity(target)
+    if not ying:isSpawned() and os.time() > yingToD + 30 then
+        ying:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
+        ying:spawn()
+        ying:updateEnmity(target)
     end
 end
 
 function onMobDeath(mob, player, isKiller)
+    local ying = GetMobByID(17330183)
+    if isKiller then
+        if ying:isAlive() == true then
+            mob:showText(mob, ID.text.YANG_DIALOG)
+        else
+            mob:showText(mob, ID.text.YANG_DIALOG +2)
+        end
+    end
 end
 
 function onMobDespawn(mob)
-    local Ying = GetMobByID(17330183)
+    local ying = GetMobByID(17330183)
     local dynaLord = GetMobByID(17330177)
     -- localVars clear on death, so setting it on its partner
-    Ying:setLocalVar("YangToD", os.time())
-    if (dynaLord:getLocalVar("physImmune") == 0) then
+    ying:setLocalVar("yangToD", os.time())
+    if dynaLord:getLocalVar("physImmune") == 0 then
         dynaLord:setMod(tpz.mod.UDMGPHYS, 0)
         dynaLord:setMod(tpz.mod.UDMGRANGE, 0)
-        if (dynaLord:getLocalVar("magImmune") == 1) then -- other dragon is also dead
+        if dynaLord:getLocalVar("magImmune") == 1 then -- other dragon is also dead
             dynaLord:setLocalVar("physImmune", 2)
             dynaLord:setLocalVar("magImmune", 2)
         else
