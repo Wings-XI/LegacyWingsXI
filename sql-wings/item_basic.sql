@@ -9682,7 +9682,7 @@ INSERT INTO `item_basic` VALUES(12423, 0, 'darksteel_armet_+1', 'dst._armet_+1',
 INSERT INTO `item_basic` VALUES(12424, 0, 'iron_mask', 'iron_mask', 1, 2084, 17, 0, 1710);
 INSERT INTO `item_basic` VALUES(12425, 0, 'silver_mask', 'silver_mask', 1, 2084, 17, 0, 2892);
 INSERT INTO `item_basic` VALUES(12426, 0, 'banded_helm', 'banded_helm', 1, 2084, 17, 0, 2685);
-INSERT INTO `item_basic` VALUES(12427, 0, 'bascinet', 'bascinet', 1, 2084, 17, 0, 3443);
+INSERT INTO `item_basic` VALUES(12427, 0, 'bascinet', 'bascinet', 1, 2084, 17, 0, 6426);
 INSERT INTO `item_basic` VALUES(12428, 0, 'celata', 'celata', 1, 2084, 17, 0, 3969);
 INSERT INTO `item_basic` VALUES(12429, 0, 'adaman_celata', 'adaman_celata', 1, 63572, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(12430, 0, 'royal_knights_bascinet', 'ryl.kgt._bascinet', 1, 2052, 17, 0, 3210);
