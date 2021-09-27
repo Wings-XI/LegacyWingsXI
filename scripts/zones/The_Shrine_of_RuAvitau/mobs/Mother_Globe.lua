@@ -46,6 +46,14 @@ function onMobSpawn(mob)
     mob:setLocalVar("Initial_SlaveTimer", now)
     mob:setLocalVar("SlaveRecast", now)
     onMobRoam(mob)
+
+    mob:addListener("ENGAGE", "MOTHER_GLOBE_ENGAGE", function(mob, target)
+        for i = ID.mob.MOTHER_GLOBE.SLAVE_START, ID.mob.MOTHER_GLOBE.SLAVE_END do
+            local pet = GetMobByID(i)
+            if pet:isSpawned() then
+                pet:updateEnmity(target)
+            end
+    end)
 end
 
 function onMobRoam(mob)
@@ -173,6 +181,7 @@ function onMobDespawn(mob)
     local respawn = math.random(10800, 21600)
     mob:setRespawnTime(respawn) -- 3 to 6 hours
     SetServerVariable("MG_Respawn", (os.time() + respawn))
+    mob:removeListener("MOTHER_GLOBE_ENGAGE")
 end
 
 function spawnPetInBattle(mob, pet)
