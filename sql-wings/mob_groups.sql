@@ -5667,6 +5667,7 @@ INSERT INTO `mob_groups` VALUES(41, 803, 95, 'Cosmos_Stamen', 0, 0, 0, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(42, 3182, 95, 'Poroggo_Gourmand', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(43, 3187, 95, 'Poroggos_Toady', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(44, 4711, 95, 'Pancimanci', 0, 128, 0, 0, 5000, 95, 96, 0);
+INSERT INTO `mob_groups` VALUES(45, 1731, 95, 'Goblins_Rarab', 0, 128, 0, 0, 0, 51, 54, 0);
 INSERT INTO `mob_groups` VALUES(4781, 18, 95, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4782, 30, 95, 'Ace_of_Batons', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(4783, 31, 95, 'Ace_of_Coins', 1, 0, 0, 0, 0, 1, 1, 0);
