@@ -5325,8 +5325,8 @@ INSERT INTO `item_basic` VALUES(5649, 0, 'handful_of_roasted_almonds', 'roasted_
 INSERT INTO `item_basic` VALUES(5650, 0, 'pair_of_nopales', 'nopales', 12, 1548, 59, 0, 780);
 INSERT INTO `item_basic` VALUES(5651, 0, 'burdock_root', 'burdock', 12, 1548, 59, 0, 748);
 INSERT INTO `item_basic` VALUES(5652, 0, 'plate_of_anchovies', 'anchovy', 12, 1548, 53, 0, 246);
-INSERT INTO `item_basic` VALUES(5653, 0, 'cherry_muffin', 'cherry_muffin', 12, 1548, 57, 0, 62);
-INSERT INTO `item_basic` VALUES(5654, 0, 'cherry_muffin_+1', 'cherry_muffin_+1', 12, 1548, 57, 0, 91);
+INSERT INTO `item_basic` VALUES(5653, 0, 'cherry_muffin', 'cherry_muffin', 12, 1548, 57, 0, 160);
+INSERT INTO `item_basic` VALUES(5654, 0, 'cherry_muffin_+1', 'cherry_muffin_+1', 12, 1548, 57, 0, 374);
 INSERT INTO `item_basic` VALUES(5655, 0, 'coffeecake_muffin', 'coffee_muffin', 12, 1548, 57, 0, 20);
 INSERT INTO `item_basic` VALUES(5656, 0, 'coffeecake_muffin_+1', 'coff._muffin_+1', 12, 1548, 57, 0, 26);
 INSERT INTO `item_basic` VALUES(5657, 0, 'army_biscuit', 'army_biscuit', 99, 1548, 56, 0, 30);
