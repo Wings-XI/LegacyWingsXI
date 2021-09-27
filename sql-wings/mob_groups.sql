@@ -3536,7 +3536,7 @@ INSERT INTO `mob_groups` VALUES(54, 2144, 79, 'Jazaraat', 0, 128, 0, 0, 0, 67, 7
 INSERT INTO `mob_groups` VALUES(55, 3331, 79, 'Ravin_Raven', 0, 128, 2078, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(56, 2349, 79, 'Lamia_No27', 0, 128, 0, 0, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(57, 2752, 79, 'Moshdahn', 0, 128, 0, 25000, 0, 79, 81, 0);
-INSERT INTO `mob_groups` VALUES(58, 3704, 79, 'Soulflayer', 300, 0, 2030, 0, 0, 82, 83, 0);
+INSERT INTO `mob_groups` VALUES(58, 3704, 79, 'Soulflayer', 300, 0, 2030, 0, 0, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(59, 2220, 79, 'Khimaira', 172800, 128, 1437, 72000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(60, 4221, 79, 'Verdelet', 0, 128, 2575, 22000, 0, 85, 86, 0);
 INSERT INTO `mob_groups` VALUES(61, 4063, 79, 'Tyger', 0, 128, 2508, 48000, 0, 88, 90, 0);
