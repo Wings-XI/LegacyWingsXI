@@ -9694,7 +9694,7 @@ INSERT INTO `item_basic` VALUES(12435, 0, 'coral_visor', 'coral_visor', 1, 2084,
 INSERT INTO `item_basic` VALUES(12436, 0, 'dragon_mask', 'dragon_mask', 1, 2084, 17, 0, 8036);
 INSERT INTO `item_basic` VALUES(12437, 0, 'gavial_mask', 'gavial_mask', 1, 2084, 17, 0, 675);
 INSERT INTO `item_basic` VALUES(12438, 0, 'centurions_visor', 'centurions_visor', 1, 2052, 17, 0, 2181);
-INSERT INTO `item_basic` VALUES(12439, 0, 'bascinet_+1', 'bascinet_+1', 1, 2080, 17, 0, 4303);
+INSERT INTO `item_basic` VALUES(12439, 0, 'bascinet_+1', 'bascinet_+1', 1, 2080, 17, 0, 6600);
 INSERT INTO `item_basic` VALUES(12440, 0, 'leather_bandana', 'leather_bandana', 1, 2084, 17, 0, 110);
 INSERT INTO `item_basic` VALUES(12441, 0, 'lizard_helm', 'lizard_helm', 1, 2084, 17, 0, 178);
 INSERT INTO `item_basic` VALUES(12442, 0, 'studded_bandana', 'studded_bandana', 1, 2084, 17, 0, 1100);
