@@ -7,6 +7,7 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:addStatusEffect(tpz.effect.SHOCK_SPIKES, 10, 0, 0)
     mob:getStatusEffect(tpz.effect.SHOCK_SPIKES):setFlag(tpz.effectFlag.DEATH)

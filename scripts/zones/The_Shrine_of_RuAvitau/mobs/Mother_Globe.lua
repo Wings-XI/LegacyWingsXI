@@ -53,6 +53,7 @@ function onMobSpawn(mob)
             if pet:isSpawned() then
                 pet:updateEnmity(target)
             end
+        end
     end)
 end
 
@@ -70,31 +71,31 @@ function onMobRoam(mob)
                 local pPet = nil
                 local petId = pet:getID()
                 switch (petId): caseof {
-                    [17506397] = function() 
+                    [17506397] = function()
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
                     end,
-                    [17506398] = function() 
+                    [17506398] = function()
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
                     end,
-                    [17506399] = function() 
+                    [17506399] = function()
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
                     end,
-                    [17506400] = function() 
+                    [17506400] = function()
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
                     end,
-                    [17506401] = function() 
+                    [17506401] = function()
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
                     end,
-                    [17506402] = function() 
+                    [17506402] = function()
                         pPet = GetMobByID(petId - 1)
                         pet:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
                         spawnPetRoaming(mob, pet, pPet)
@@ -129,27 +130,27 @@ function onMobFight(mob, target)
                 local pPet = nil
                 local petId = pet:getID()
                 switch (petId): caseof {
-                    [17506397] = function() 
+                    [17506397] = function()
                         pet:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
-                    [17506398] = function() 
+                    [17506398] = function()
                         pet:setSpawn(mob:getXPos() + 2, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
-                    [17506399] = function() 
+                    [17506399] = function()
                         pet:setSpawn(mob:getXPos() + 3, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
-                    [17506400] = function() 
+                    [17506400] = function()
                         pet:setSpawn(mob:getXPos() + 4, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
-                    [17506401] = function() 
+                    [17506401] = function()
                         pet:setSpawn(mob:getXPos() + 5, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
-                    [17506402] = function() 
+                    [17506402] = function()
                         pet:setSpawn(mob:getXPos() + 6, mob:getYPos(), mob:getZPos())
                         spawnPetInBattle(mob, pet)
                     end,
@@ -209,9 +210,9 @@ function spawnPetRoaming(mob, pet, pPet)
             mob:entityAnimationPacket("shsm")
             pet:spawn()
             if pPet == nil then
-                pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15) 
+                pet:pathTo(mob:getXPos() + 0.15, mob:getYPos(), mob:getZPos() + 0.15)
             else
-                pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5) 
+                pet:pathTo(pPet:getXPos() + 0.5, pPet:getYPos(), pPet:getZPos() + 0.5)
             end
         end
     end)
