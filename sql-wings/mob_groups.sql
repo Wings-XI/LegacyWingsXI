@@ -3115,7 +3115,7 @@ INSERT INTO `mob_groups` VALUES(62, 2083, 77, 'Intulo', 0, 128, 906, 0, 0, 75, 8
 INSERT INTO `mob_groups` VALUES(63, 3047, 77, 'Orctrap', 0, 128, 852, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(64, 4124, 77, 'Valkurm_Emperor', 0, 128, 906, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(65, 845, 77, 'Crushed_Krause', 0, 128, 390, 0, 0, 75, 80, 0);
-INSERT INTO `mob_groups` VALUES(66, 3774, 77, 'Stinging_Sophie', 0, 128, 906, 0, 0, 75, 80, 0);
+INSERT INTO `mob_groups` VALUES(66, 3774, 77, 'Stinging_Sophie', 0, 128, 906, 545, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(67, 3550, 77, 'Serpopard_Ishtar', 0, 128, 906, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(68, 4323, 77, 'Western_Shadow', 0, 128, 906, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(69, 462, 77, 'Bloodtear_Baldurf', 0, 128, 303, 0, 0, 75, 80, 0);
