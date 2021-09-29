@@ -4,6 +4,7 @@
 -- Note: Spawns Angra Mainyu / Arch Angra Mainyu
 -----------------------------------
 require("scripts/globals/dynamis")
+require("scripts/globals/keyitems")
 -----------------------------------
 
 function onTrigger(player, npc)
