@@ -1,6 +1,7 @@
 --------------------------------------
 -- Assault Utilities 
 -- desc : Common functions for the assaults
+-- Credit: KnowOne - https://github.com/KnowOne134/DSP-Shared_Collection/blob/main/Assault/assault.lua
 --------------------------------------
 require("scripts/globals/appraisal")
 require("scripts/globals/besieged")

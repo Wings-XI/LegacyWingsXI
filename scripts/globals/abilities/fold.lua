@@ -18,12 +18,8 @@ function onAbilityCheck(player, target, ability)
     end
 end
 
-function onUseAbility(player, target, ability)
+function onUseAbility(player, target, ability, action)
     target:fold()
-    -- local merit = target:getMerit(tpz.merit.FOLD)
-    -- merit = merit - 10
-    -- if (math.random(0, 1) < merit) then
-    --     target:resetRecast(tpz.recast.ABILITY, 193)
-    -- end
+
     return tpz.effect.FOLD
 end

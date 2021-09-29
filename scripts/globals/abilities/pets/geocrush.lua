@@ -20,7 +20,7 @@ function onPetAbility(target, pet, skill)
     local master = pet:getMaster()
     local merits = 0
     if (master ~= nil and master:isPC()) then
-        merits = master:getMerit(tpz.merit.GEOCRUSH)
+        merits = master:getMeritCount(tpz.merit.GEOCRUSH)*40
     end
 
     tp = tp + (merits - 40)

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Appraisal Utilities
 -- desc: Common functionality for Appraisals
+-- Credit: KnowOne - https://github.com/KnowOne134/DSP-Shared_Collection/blob/main/Appraisal/appraisal.lua
 -----------------------------------
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")

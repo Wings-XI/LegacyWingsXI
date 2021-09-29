@@ -7,6 +7,7 @@ require("scripts/globals/monstertpmoves")
 require("scripts/globals/ability")
 
 ---------------------------------------------------
+
 function onAbilityCheck(player, target, ability)
     return 0, 0
 end
@@ -20,7 +21,7 @@ function onUseAbility(pet, target, skill, action)
     -- TODO: 0.1 per merit for augmented AF2 (10663 *w/ augment*)
     local deep = 1
     if (pet:hasStatusEffect(tpz.effect.MAGIC_ATK_BOOST) == true) then
-        deep = deep + 1 + (master:getMerit(tpz.merit.DEEP_BREATHING) - 1) * 0.25
+        deep = deep + 1 + (master:getMerit(tpz.merit.DEEP_BREATHING)/30-1)*0.25
         pet:delStatusEffect(tpz.effect.MAGIC_ATK_BOOST)
     end
     
