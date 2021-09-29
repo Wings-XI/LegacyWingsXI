@@ -6825,7 +6825,7 @@ INSERT INTO `mob_groups` VALUES(24, 103, 107, 'Amber_Quadav', 210, 0, 59, 0, 0, 
 INSERT INTO `mob_groups` VALUES(25, 1659, 107, 'Goblin_Fisher', 210, 0, 1054, 0, 0, 3, 4, 0);
 INSERT INTO `mob_groups` VALUES(26, 3611, 107, 'Shrapnel', 210, 8, 216, 0, 0, 8, 10, 0);
 INSERT INTO `mob_groups` VALUES(27, 5419, 107, 'Tococo', 3600, 0, 2939, 146, 0, 4, 5, 0);
-INSERT INTO `mob_groups` VALUES(28, 2384, 107, 'Leaping_Lizzy', 0, 32, 1504, 0, 0, 10, 11, 0);
+INSERT INTO `mob_groups` VALUES(28, 2384, 107, 'Leaping_Lizzy', 0, 32, 1504, 250, 0, 10, 11, 0);
 INSERT INTO `mob_groups` VALUES(29, 1648, 107, 'Goblin_Digger', 210, 0, 1039, 0, 0, 5, 8, 0);
 INSERT INTO `mob_groups` VALUES(30, 3148, 107, 'Pixie', 300, 256, 2001, 0, 0, 12, 15, 0);
 INSERT INTO `mob_groups` VALUES(31, 1829, 107, 'Grylio', 1, 0, 0, 0, 0, 1, 1, 0);
