@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Geocrush
+-- Meteor Strike
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -20,7 +20,7 @@ function onPetAbility(target, pet, skill)
     local master = pet:getMaster()
     local merits = 0
     if (master ~= nil and master:isPC()) then
-        merits = master:getMerit(tpz.merit.METEOR_STRIKE)
+        merits = master:getMeritCount(tpz.merit.METEOR_STRIKE)*40
     end
 
     tp = tp + (merits - 40)
