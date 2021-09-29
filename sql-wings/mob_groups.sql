@@ -8855,7 +8855,7 @@ INSERT INTO `mob_groups` VALUES(10, 5420, 143, 'Qu_Vho_Deathhurler', 3600, 0, 29
 INSERT INTO `mob_groups` VALUES(11, 4226, 143, 'Veteran_Quadav', 600, 0, 2579, 0, 0, 11, 18, 0);
 INSERT INTO `mob_groups` VALUES(12, 1808, 143, 'Greater_Quadav', 600, 0, 1236, 0, 0, 11, 18, 0);
 INSERT INTO `mob_groups` VALUES(13, 2986, 143, 'Onyx_Quadav', 600, 0, 1865, 0, 0, 11, 18, 0);
-INSERT INTO `mob_groups` VALUES(14, 790, 143, 'Copper_Beetle', 600, 0, 510, 0, 0, 9, 12, 0);
+INSERT INTO `mob_groups` VALUES(14, 790, 143, 'Copper_Beetle', 480, 0, 510, 0, 0, 9, 12, 0);
 INSERT INTO `mob_groups` VALUES(15, 2674, 143, 'Mine_Scorpion', 600, 0, 1699, 0, 0, 14, 16, 0);
 INSERT INTO `mob_groups` VALUES(16, 590, 143, 'Bu_Ghi_Howlblade', 0, 32, 2837, 0, 0, 12, 12, 0);
 INSERT INTO `mob_groups` VALUES(17, 4511, 143, 'Zi_Ghi_Boneeater', 0, 32, 2838, 0, 0, 15, 16, 0);
