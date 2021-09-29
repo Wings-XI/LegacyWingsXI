@@ -22,19 +22,20 @@ function onAbilityCheck(player, target, ability)
     else
         --[[ Apply "Waltz Ability Delay" reduction
             1 modifier = 1 second]]
-        local recastMod = player:getMod(tpz.mod.WALTZ_DELAY)
-        if (recastMod ~= 0) then
-            local newRecast = ability:getRecast() +recastMod
-            ability:setRecast(utils.clamp(newRecast, 0, newRecast))
-        end
-        -- Apply "Fan Dance" Waltz recast reduction
-        if (player:hasStatusEffect(tpz.effect.FAN_DANCE)) then
-            local fanDanceMerits = target:getMerit(tpz.merit.FAN_DANCE)
-            -- Every tier beyond the 1st is -5% recast time
-            if (fanDanceMerits > 5) then
-                ability:setRecast(ability:getRecast() * ((fanDanceMerits -5)/100))
-            end
-        end
+        -- local recastMod = player:getMod(tpz.mod.WALTZ_DELAY)
+        -- if (recastMod ~= 0) then
+        --     local newRecast = ability:getRecast() +recastMod
+        --     ability:setRecast(utils.clamp(newRecast, 0, newRecast))
+        -- end
+        -- OOE Secondary Merit Effect
+        -- -- Apply "Fan Dance" Waltz recast reduction
+        -- if (player:hasStatusEffect(tpz.effect.FAN_DANCE)) then
+        --     local fanDanceMerits = target:getMerit(tpz.merit.FAN_DANCE)
+        --     -- Every tier beyond the 1st is -5% recast time
+        --     if (fanDanceMerits > 5) then
+        --         ability:setRecast(ability:getRecast() * ((fanDanceMerits -5)/100))
+        --     end
+        -- end
         return 0, 0
     end
 end

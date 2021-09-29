@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Geocrush
+-- Wind Blade
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -19,7 +19,7 @@ function onPetAbility(target, pet, skill)
     local master = pet:getMaster()
     local merits = 0
     if (master ~= nil and master:isPC()) then
-        merits = master:getMerit(tpz.merit.WIND_BLADE)
+        merits = master:getMeritCount(tpz.merit.WIND_BLADE)*40
     end
     
     local ele = tpz.damageType.WIND

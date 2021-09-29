@@ -87,7 +87,7 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_B01] =
     {
-        { 0,  896,    0},   -- Storms of Fate (Quest)
+     -- { 0,  896,    0},   -- Storms of Fate (Quest)
      -- { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
     },
 
@@ -231,8 +231,8 @@ local battlefields = {
     [tpz.zone.HORLAIS_PEAK] =
     {
         { 0,    0,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,    1, 1131},   -- Tails of Woe (BS40)
-     -- { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
+        { 1,    1, 1131},   -- Tails of Woe (BS40)
+        { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
         { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
      -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
         { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
@@ -241,7 +241,7 @@ local battlefields = {
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
      -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
      -- {10,   10, 1552},   -- Dropping Like Flies (BS30)
-     -- {11,   11, 1553},   -- Horns of War (KS99) 
+        {11,   11, 1553},   -- Horns of War (KS99)
         {12,   12, 1131},   -- Under Observation (BS40)
      -- {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
@@ -264,8 +264,8 @@ local battlefields = {
     {
         { 0,   32,    0},   -- Save the Children (Sandy 1-3)
         { 1,   33,    0},   -- The Holy Crest (Quest)
-     -- { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
-     -- { 3,   35, 1552},   -- Petrifying Pair (BS30)
+        { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
+        { 3,   35, 1552},   -- Petrifying Pair (BS30)
      -- { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
      -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
@@ -306,7 +306,7 @@ local battlefields = {
     [tpz.zone.BALGAS_DAIS] =
     {
         { 0,   96,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,   97, 1131},   -- Steamed Sprouts (BS40)
+        { 1,   97, 1131},   -- Steamed Sprouts (BS40)
      -- { 2,   98, 1130},   -- Divine Punishers (BS60)
         { 3,   99,    0},   -- Saintly Invitation (Windy 6-2)
         { 4,  100, 1177},   -- Treasure and Tribulations (BS50)
@@ -370,7 +370,7 @@ local battlefields = {
     [tpz.zone.CHAMBER_OF_ORACLES] =
     {
         { 0,  192,    0},   -- Through the Quicksand Caves (ZM6)
-     -- { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
+        { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
         { 2,  194, 1437},   -- Shattering Stars (SAM LB5)
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)

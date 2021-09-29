@@ -122,8 +122,8 @@ DYNA_LEVEL_MIN           = 65       -- Level min for entering in Dynamis
 TIMELESS_HOURGLASS_COST  = 500000   -- Refund for the timeless hourglass for Dynamis.
 PRISMATIC_HOURGLASS_COST = 50000    -- Cost of the prismatic hourglass for Dynamis.
 CURRENCY_EXCHANGE_RATE   = 100      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
-RELIC_2ND_UPGRADE_WAIT_TIME = 7200  -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
-RELIC_3RD_UPGRADE_WAIT_TIME = 3600  -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
+RELIC_2ND_UPGRADE_WAIT_TIME = 604800  -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
+RELIC_3RD_UPGRADE_WAIT_TIME = 295200  -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
 
 -- QUEST/MISSION SPECIFIC SETTINGS
 AF1_QUEST_LEVEL = 40    -- Minimum level to start AF1 quest
