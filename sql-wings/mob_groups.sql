@@ -8863,7 +8863,7 @@ INSERT INTO `mob_groups` VALUES(18, 3300, 143, 'Rabid_Rat', 600, 0, 309, 0, 0, 1
 INSERT INTO `mob_groups` VALUES(19, 3500, 143, 'Scimitar_Scorpion', 480, 0, 2181, 0, 0, 19, 21, 0);
 INSERT INTO `mob_groups` VALUES(20, 2965, 143, 'Old_Quadav', 600, 0, 1849, 0, 0, 21, 23, 0);
 INSERT INTO `mob_groups` VALUES(21, 791, 143, 'Copper_Quadav', 600, 0, 514, 0, 0, 21, 23, 0);
-INSERT INTO `mob_groups` VALUES(22, 5774, 143, 'BeHya_Hundredwall', 0, 32, 3058, 775, 0, 24, 24, 0);
+INSERT INTO `mob_groups` VALUES(22, 5774, 143, 'BeHya_Hundredwall', 0, 32, 3058, 775, 0, 25, 30, 0);
 INSERT INTO `mob_groups` VALUES(23, 525, 143, 'Brass_Quadav', 600, 0, 352, 0, 0, 21, 23, 0);
 INSERT INTO `mob_groups` VALUES(24, 2916, 143, 'No_Mho_Crimsonarmor', 0, 128, 2839, 700, 0, 22, 23, 0);
 INSERT INTO `mob_groups` VALUES(25, 2897, 143, 'Ni_Ghu_Nestfender', 0, 128, 2825, 0, 0, 58, 58, 0);
