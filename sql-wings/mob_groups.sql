@@ -10903,7 +10903,7 @@ INSERT INTO `mob_groups` VALUES(22, 1527, 191, 'Giant_Grub', 300, 0, 967, 0, 0, 
 INSERT INTO `mob_groups` VALUES(21, 1683, 191, 'Goblin_Leecher', 300, 0, 1107, 0, 0, 21, 23, 0);
 INSERT INTO `mob_groups` VALUES(20, 1643, 191, 'Goblin_Butcher', 300, 0, 1034, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(19, 1690, 191, 'Goblin_Mugger', 300, 0, 1119, 0, 0, 21, 23, 0);
-INSERT INTO `mob_groups` VALUES(31, 724, 191, 'Chocoboleech', 0, 128, 470, 0, 0, 24, 25, 0);
+INSERT INTO `mob_groups` VALUES(31, 724, 191, 'Chocoboleech', 0, 128, 470, 1100, 0, 24, 25, 0);
 INSERT INTO `mob_groups` VALUES(32, 5528, 191, 'Fire_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(9557, 1527, 191, 'Giant_Grub', 300, 0, 967, 0, 0, 9, 12, 0);
 INSERT INTO `mob_groups` VALUES(9561, 1666, 191, 'Goblin_Gambler', 300, 0, 1081, 0, 0, 21, 23, 0);
