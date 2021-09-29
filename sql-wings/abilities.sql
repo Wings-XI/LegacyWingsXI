@@ -352,7 +352,7 @@ INSERT INTO `abilities` VALUES(547, 'double_punch', 15, 30, 4, 60, 173, 0, 0, 56
 INSERT INTO `abilities` VALUES(548, 'crimson_howl', 15, 38, 1, 60, 174, 0, 0, 84, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(549, 'fire_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(550, 'flaming_crush', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(551, 'meteor_strike', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2944, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(551, 'meteor_strike', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2944, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(552, 'inferno', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(560, 'rock_throw', 15, 1, 4, 60, 173, 0, 0, 10, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(561, 'stone_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
@@ -361,7 +361,7 @@ INSERT INTO `abilities` VALUES(563, 'megalith_throw', 15, 35, 4, 60, 173, 0, 0, 
 INSERT INTO `abilities` VALUES(564, 'earthen_ward', 15, 46, 1, 60, 174, 0, 0, 92, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(565, 'stone_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(566, 'mountain_buster', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(567, 'geocrush', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2950, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(567, 'geocrush', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2950, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(568, 'earthen_fury', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(576, 'barracuda_dive', 15, 1, 4, 60, 173, 0, 0, 8, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(577, 'water_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
@@ -370,7 +370,7 @@ INSERT INTO `abilities` VALUES(579, 'spring_water', 15, 47, 1, 60, 174, 0, 0, 99
 INSERT INTO `abilities` VALUES(580, 'slowga', 15, 33, 4, 60, 174, 0, 0, 48, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(581, 'water_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(582, 'spinning_dive', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(583, 'grand_fall', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2954, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(583, 'grand_fall', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2954, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(584, 'tidal_wave', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(592, 'claw', 15, 1, 4, 60, 173, 0, 0, 7, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(593, 'aero_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
@@ -379,7 +379,7 @@ INSERT INTO `abilities` VALUES(595, 'hastega', 15, 48, 1, 60, 174, 0, 0, 112, 20
 INSERT INTO `abilities` VALUES(596, 'aerial_armor', 15, 25, 1, 60, 174, 0, 0, 92, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(597, 'aero_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(598, 'predator_claws', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(599, 'wind_blade', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2948, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(599, 'wind_blade', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2948, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(600, 'aerial_blast', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(608, 'axe_kick', 15, 1, 4, 60, 173, 0, 0, 10, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(609, 'blizzard_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
@@ -388,7 +388,7 @@ INSERT INTO `abilities` VALUES(611, 'sleepga', 15, 39, 4, 60, 174, 0, 0, 56, 200
 INSERT INTO `abilities` VALUES(612, 'double_slap', 15, 50, 4, 60, 173, 0, 0, 96, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(613, 'blizzard_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(614, 'rush', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(615, 'heavenly_strike', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2946, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(615, 'heavenly_strike', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2946, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(616, 'diamond_dust', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(624, 'shock_strike', 15, 1, 4, 60, 173, 0, 0, 6, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(625, 'thunder_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
@@ -397,7 +397,7 @@ INSERT INTO `abilities` VALUES(627, 'thunderspark', 15, 19, 4, 60, 173, 0, 0, 38
 INSERT INTO `abilities` VALUES(628, 'lightning_armor', 15, 42, 1, 60, 174, 0, 0, 91, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(629, 'thunder_iv', 15, 60, 4, 60, 173, 0, 0, 118, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(630, 'chaotic_strike', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(631, 'thunderstorm', 15, 75, 4, 100, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2952, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(631, 'thunderstorm', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2952, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(632, 'judgment_bolt', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(639, 'healing_breath_iv', 0, 80, 2, 0, 0, 0, 0, 156, 2000, 1500, 13, 13.0, 0, 0, 0, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(640, 'healing_breath', 0, 1, 2, 0, 0, 0, 0, 128, 2000, 1500, 13, 13.0, 0, 0, 0, 0, 0, NULL);

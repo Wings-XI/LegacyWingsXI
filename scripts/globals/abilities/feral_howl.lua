@@ -15,7 +15,7 @@ end
 
 function onUseAbility(player, target, ability)
     local dCHR = player:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR)
-    local chance = 75 + player:getMerit(tpz.merit.FERAL_HOWL) + player:getMainLvl() - target:getMainLvl() + dCHR
+    local chance = 75 + player:getMainLvl() - target:getMainLvl() + dCHR
     local minDuration = math.floor(dCHR/4)
     if minDuration < 1 then
         minDuration = 1
@@ -36,5 +36,6 @@ function onUseAbility(player, target, ability)
         return target:getID()
     end
     ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
+    print(chance)
     return tpz.effect.TERROR
 end
