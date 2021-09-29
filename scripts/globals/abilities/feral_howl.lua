@@ -36,6 +36,5 @@ function onUseAbility(player, target, ability)
         return target:getID()
     end
     ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
-    print(chance)
     return tpz.effect.TERROR
 end
