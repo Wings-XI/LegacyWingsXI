@@ -4890,7 +4890,7 @@ INSERT INTO `mob_pools` VALUES(4826, 'Apex_Draugar1', 'Apex_Draugar1', 89, 0x000
 INSERT INTO `mob_pools` VALUES(4827, 'Apex_Cyhiraeth', 'Apex_Cyhiraeth', 91, 0x0000310700000000000000000000000000000000, 4, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1, 131, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(4828, 'Apex_Poxhound', 'Apex_Poxhound', 143, 0x00006c0100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 143);
 INSERT INTO `mob_pools` VALUES(4829, 'Apex_Bhoot', 'Apex_Bhoot', 52, 0x0000710100000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 1, 1, 0, 0, 0, 0, 1, 131, 0, 0, 28, 0, 0, 52);
-INSERT INTO `mob_pools` VALUES(4830, 'Teporingo', 'Teporingo', 206, 0x00000d0100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 0, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 206);
+INSERT INTO `mob_pools` VALUES(4830, 'Teporingo', 'Teporingo', 206, 0x00000d0100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 0, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 1177);
 INSERT INTO `mob_pools` VALUES(4831, 'Thoon', 'Thoon', 126, 0x0000c40200000000000000000000000000000000, 11, 11, 11, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 126);
 INSERT INTO `mob_pools` VALUES(4832, 'Ni_Zho_Bladebender', 'Ni''Zho_Bladebender', 201, 0x0000450800000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 2, 1, 32, 0, 0, 0, 0, 0, 0, 0, 201);
 INSERT INTO `mob_pools` VALUES(4833, 'Cryptonberry_Assassin', 'Cryptonberry_Assassin', 243, 0x0000a10400000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 1, 2, 17, 0, 6, 133, 0, 0, 2, 0, 0, 243);

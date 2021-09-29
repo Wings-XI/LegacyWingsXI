@@ -10885,7 +10885,7 @@ INSERT INTO `mob_groups` VALUES(6, 3381, 191, 'Rock_Lizard', 300, 0, 2121, 0, 0,
 INSERT INTO `mob_groups` VALUES(7, 1737, 191, 'Goblin_Thug', 300, 0, 1173, 0, 0, 5, 8, 0);
 INSERT INTO `mob_groups` VALUES(8, 1744, 191, 'Goblin_Weaver', 300, 0, 1187, 0, 0, 5, 8, 0);
 INSERT INTO `mob_groups` VALUES(9, 1965, 191, 'Hoarder_Hare', 300, 0, 1320, 0, 0, 6, 8, 0);
-INSERT INTO `mob_groups` VALUES(10, 4830, 191, 'Teporingo', 0, 32, 3019, 0, 0, 20, 20, 0);
+INSERT INTO `mob_groups` VALUES(10, 4830, 191, 'Teporingo', 0, 32, 3019, 640, 0, 20, 20, 0);
 INSERT INTO `mob_groups` VALUES(11, 1635, 191, 'Goblin_Ambusher', 300, 0, 1020, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(12, 1738, 191, 'Goblin_Tinkerer', 300, 0, 1176, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(13, 1643, 191, 'Goblin_Butcher', 300, 0, 1034, 0, 0, 12, 16, 0);
