@@ -4135,6 +4135,7 @@ INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 499, 251, 1, 255); -
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 201, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 172, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 240, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Zi_Ghi_Boneeater', 500, 28, 1, 255);
 --
 -- Indexes for dumped tables
 --
