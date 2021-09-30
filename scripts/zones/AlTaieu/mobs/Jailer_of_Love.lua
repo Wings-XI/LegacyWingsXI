@@ -42,6 +42,8 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGEN, 260)
     mob:setMod(tpz.mod.MATT, 50)
     mob:setMod(tpz.mod.INT, 4)
+    mob:setMod(tpz.mod.DEF, 620)
+    mob:setMod(tpz.mod.MDEF, 75)
     mob:setMod(tpz.mod.DMGMAGIC, -50) -- starts the fight with -50% magic damage taken, reduced to 25% after regen is taken off.
     tpz.mix.jobSpecial.config(mob, {
         specials =
