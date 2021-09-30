@@ -1806,7 +1806,7 @@ INSERT INTO `mob_pools` VALUES(1742, 'Goblin_Veterinarian', 'Goblin_Veterinarian
 INSERT INTO `mob_pools` VALUES(1743, 'Goblin_Warlord', 'Goblin_Warlord', 133, 0x0000f50100000000000000000000000000000000, 8, 8, 4, 240, 100, 0, 1, 1, 1, 18, 0, 0, 3069, 133, 0, 0, 5, 0, 256, 133);
 INSERT INTO `mob_pools` VALUES(1744, 'Goblin_Weaver', 'Goblin_Weaver', 133, 0x0000e90100000000000000000000000000000000, 5, 5, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 394, 129, 0, 0, 3, 0, 0, 133);
 INSERT INTO `mob_pools` VALUES(1745, 'Goblin_Welldigger', 'Goblin_Welldigger', 133, 0x0000f60100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 918, 131, 0, 0, 0, 0, 0, 133);
-INSERT INTO `mob_pools` VALUES(1746, 'Goblin_Wolfman', 'Goblin_Wolfman', 133, 0x0000ce0200000000000000000000000000000000, 8, 8, 3, 240, 100, 0, 1, 0, 1, 2, 0, 0, 429, 133, 0, 0, 5, 0, 0, 133);
+INSERT INTO `mob_pools` VALUES(1746, 'Goblin_Wolfman', 'Goblin_Wolfman', 133, 0x0000ce0200000000000000000000000000000000, 8, 8, 3, 240, 160, 0, 1, 0, 1, 2, 1, 0, 429, 133, 0, 0, 501, 0, 0, 1177);
 INSERT INTO `mob_pools` VALUES(1747, 'Goga_Tlugvi', 'Goga_Tlugvi', 245, 0x0000840100000000000000000000000000000000, 2, 2, 7, 360, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(1748, 'Gola_Tlugvi', 'Gola_Tlugvi', 245, 0x00008b0100000000000000000000000000000000, 8, 8, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 5, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(1749, 'Goldcap', 'Goldcap', 116, 0x0000c90800000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 116);
