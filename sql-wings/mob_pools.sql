@@ -626,7 +626,7 @@ INSERT INTO `mob_pools` VALUES(562, 'Bugbear_Matman', 'Bugbear_Matman', 59, 0x00
 INSERT INTO `mob_pools` VALUES(563, 'Bugbear_Muscleman', 'Bugbear_Muscleman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1164);
 INSERT INTO `mob_pools` VALUES(564, 'Bugbear_Porterman', 'Bugbear_Porterman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 59);
 INSERT INTO `mob_pools` VALUES(565, 'Bugbear_Servingman', 'Bugbear_Servingman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59);
-INSERT INTO `mob_pools` VALUES(566, 'Bugbear_Strongman', 'Bugbear_Strongman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59);
+INSERT INTO `mob_pools` VALUES(566, 'Bugbear_Strongman', 'Bugbear_Strongman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 59);
 INSERT INTO `mob_pools` VALUES(567, 'Bugbear_Trashman', 'Bugbear_Trashman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 186, 131, 0, 0, 0, 0, 0, 59);
 INSERT INTO `mob_pools` VALUES(568, 'Bugbear_Watchman', 'Bugbear_Watchman', 59, 0x00004b0500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 7, 133, 0, 0, 0, 0, 0, 59);
 INSERT INTO `mob_pools` VALUES(569, 'Bugboy', 'Bugboy', 59, 0x00004b0500000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 1, 0, 16, 0, 32, 6415, 159, 0, 0, 0, 0, 0, 59);
