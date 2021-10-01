@@ -1,12 +1,11 @@
 -----------------------------------
--- Area: Grand Palace of Hu'Xzoi
---  Mob: Eo'zdei
+-- Area: The Garden of Ru'Hmet
+--  Mob: Qn'zdei
 -- Animation Sub 0 Pot Form
 -- Animation Sub 1 Pot Form (reverse eye position)
 -- Animation Sub 2 Bar Form
 -- Animation Sub 3 Ring Form
 -----------------------------------
-local ID = require("scripts/zones/Grand_Palace_of_HuXzoi/IDs")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -107,17 +106,4 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if isKiller then
-        local mobId = mob:getID()
-        local nm    = GetMobByID(ID.mob.JAILER_OF_TEMPERANCE)
-        local ph    = nm:getLocalVar("ph")
-
-        if ph == mobId and os.time() > nm:getLocalVar("pop") then
-            local pos = mob:getSpawnPos()
-            nm:setSpawn(pos.x, pos.y, pos.z)
-            SpawnMob(ID.mob.JAILER_OF_TEMPERANCE):updateClaim(player)
-            nm:setLocalVar("ph", ph)
-            DisallowRespawn(mobId, true)
-        end
-    end
 end
