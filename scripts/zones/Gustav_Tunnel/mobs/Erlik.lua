@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Gustav Tunnel
 --  Mob: Erlik
--- Note: Place holder Baobhan Sith
+-- Note: PH for Baobhan Sith
 -----------------------------------
 local ID = require("scripts/zones/Gustav_Tunnel/IDs")
 require("scripts/globals/regimes")
@@ -13,5 +13,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.BAOBHAN_SITH_PH, 5, math.random(14400, 28800)) -- 4 to 8 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.BAOBHAN_SITH_PH, 5, 3600) -- 1 hour
 end
