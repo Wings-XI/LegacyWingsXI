@@ -36,40 +36,42 @@ function onMobInitialize(mob)
     end)
 end
 
+-- Jailer of Faith takes 12.5% extra damage while folower is open
 local function openFlower(mob)
     mob:setLocalVar("PhysicalDamage", 0)
     mob:setLocalVar("MagicalDamage", 0)
     mob:setLocalVar("RangedDamage", 0)
     mob:setLocalVar("BreathDamage", 0)
     mob:delMod(tpz.mod.ATTP, 10)
-    mob:setMod(tpz.mod.HTHRES, 2000)
-    mob:setMod(tpz.mod.SLASHRES, 2000)
-    mob:setMod(tpz.mod.PIERCERES, 2000)
-    mob:setMod(tpz.mod.IMPACTRES, 2000)
+    mob:setMod(tpz.mod.HTHRES, 1250)
+    mob:setMod(tpz.mod.SLASHRES, 1250)
+    mob:setMod(tpz.mod.PIERCERES, 1250)
+    mob:setMod(tpz.mod.IMPACTRES, 1250)
     for n = 1, #tpz.magic.resistMod, 1 do
-        mob:setMod(tpz.magic.resistMod[n], 25)
+        mob:setMod(tpz.magic.resistMod[n], 0)
     end
     for n = 1, #tpz.magic.defenseMod, 1 do
-        mob:setMod(tpz.magic.defenseMod[n], -128) -- Jailer of Faith takes 50% more damage from magic
+        mob:setMod(tpz.magic.defenseMod[n], -32) -- 12.5% extra magic damage
     end
     mob:AnimationSub(2)
 end
 
+-- Jailer of Faith takes -25% damage while flower is closed
 local function closeFlower(mob)
     mob:setLocalVar("PhysicalDamage", 0)
     mob:setLocalVar("MagicalDamage", 0)
     mob:setLocalVar("RangedDamage", 0)
     mob:setLocalVar("BreathDamage", 0)
     mob:addMod(tpz.mod.ATTP, 10) -- hits harder while flower is closed
-    mob:setMod(tpz.mod.HTHRES, 1000)
-    mob:setMod(tpz.mod.SLASHRES, 1000)
-    mob:setMod(tpz.mod.PIERCERES, 1000)
-    mob:setMod(tpz.mod.IMPACTRES, 1000)
+    mob:setMod(tpz.mod.HTHRES, 750)
+    mob:setMod(tpz.mod.SLASHRES, 750)
+    mob:setMod(tpz.mod.PIERCERES, 750)
+    mob:setMod(tpz.mod.IMPACTRES, 750)
     for n = 1, #tpz.magic.resistMod, 1 do
         mob:delMod(tpz.magic.resistMod[n], 0)
     end
     for n = 1, #tpz.magic.defenseMod, 1 do
-        mob:setMod(tpz.magic.defenseMod[n], 0)
+        mob:setMod(tpz.magic.defenseMod[n], 64)
     end
     mob:setLocalVar("[faith]changeTime", mob:getBattleTime() + math.random(20, 40))
     mob:AnimationSub(1)
@@ -95,7 +97,7 @@ function onMobSpawn(mob)
     mob:AnimationSub(2)
     mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.FASTCAST, 30) -- taken from timing of spells from multiple captures
-    mob:setMod(tpz.mod.DEF, 400)
+    mob:setMod(tpz.mod.DEF, 450)
 end
 
 function onMobEngaged(mob, target)
