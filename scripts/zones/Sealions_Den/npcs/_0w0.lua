@@ -43,7 +43,7 @@ function onEventFinish(player, csid, option)
         return
     end
     if csid == 12 and option == 1 then
-        toPalaceEntrance(player)
+        player:setPos(-31.8, 0, -618.7, 190, 33)
     elseif csid == 31 then
         player:setCharVar("PromathiaStatus", 2)
     elseif csid == 13 then
