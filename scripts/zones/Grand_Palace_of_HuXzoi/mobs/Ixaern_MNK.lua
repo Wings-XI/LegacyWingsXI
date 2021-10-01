@@ -9,16 +9,16 @@ require("scripts/globals/status")
 
 local function bracerMode(mob, qnAern1, qnAern2)
     mob:useMobAbility(690) -- Hundred Fists
-    qnAern1:useMobAbility(692) -- Chainspell
-    qnAern2:useMobAbility(689) -- Benediction
+    if qnAern1:isAlive() then qnAern1:useMobAbility(692) end -- Chainspell
+    if qnAern2:isAlive() then qnAern2:useMobAbility(689) end -- Benediction
     mob:addMod(tpz.mod.ATT, 200)
 
-    for i = mob:getID() +1, mob:getID() +2 do
-        local m = GetMobByID(i)
-        if m:isSpawned() then
-            m:AnimationSub(2)
-            m:addMod(tpz.mod.ATT, 200)
-            m:setMod(tpz.mod.DELAY, 2100)
+    for i = qnAern1, qnAern2 do
+        local pet = GetMobByID(i)
+        if pet:isSpawned() then
+            pet:AnimationSub(2)
+            pet:addMod(tpz.mod.ATT, 200)
+            pet:setMod(tpz.mod.DELAY, 2100)
         end
     end
     -- slightly delay adding local var to avoid adding bracers to Ix'Mnk while Hundred Fists is still active.
@@ -46,6 +46,7 @@ function onMobSpawn(mob)
 
     mob:AnimationSub(1) -- Reset the subanim - otherwise it will respawn with bracers on. Note that Aerns are never actually supposed to be in subanim 0.
     mob:setLocalVar("BracerMode", 0)
+    mob:setLocalVar("enableBracers", 0)
 end
 
 function onMobEngaged(mob, target)
