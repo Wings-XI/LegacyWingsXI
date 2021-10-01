@@ -2190,7 +2190,7 @@ INSERT INTO `mob_pools` VALUES(2126, 'Jagidbod_of_Clan_Reaper', 'Jagidbod_of_Cla
 INSERT INTO `mob_pools` VALUES(2127, 'Jagidbods_Warmachine', 'Jagidbods_Warmachine', 190, 0x0000ac0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 190);
 INSERT INTO `mob_pools` VALUES(2128, 'Jagil', 'Jagil', 197, 0x00005d0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 238, 131, 0, 0, 0, 0, 0, 709);
 INSERT INTO `mob_pools` VALUES(2129, 'Jaguarundi', 'Jaguarundi', 71, 0x00006f0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71);
-INSERT INTO `mob_pools` VALUES(2130, 'Jailer_of_Faith', 'Jailer_of_Faith', 109, 0x00000e0200000000000000000000000000000000, 4, 4, 12, 200, 125, 0, 1, 1, 0, 2, 652, 0, 59, 135, 0, 1, 138, 0, 0, 109);
+INSERT INTO `mob_pools` VALUES(2130, 'Jailer_of_Faith', 'Jailer_of_Faith', 109, 0x00000e0200000000000000000000000000000000, 4, 4, 12, 200, 125, 0, 1, 1, 0, 2, 668, 0, 59, 135, 0, 1, 138, 0, 0, 109);
 INSERT INTO `mob_pools` VALUES(2131, 'Jailer_of_Fortitude', 'Jailer_of_Fortitude', 124, 0x0600910400000000000000000000000000000000, 7, 7, 3, 220, 125, 0, 1, 1, 0, 2, 16511, 0, 0, 135, 0, 0, 4, 0, 0, 124);
 INSERT INTO `mob_pools` VALUES(2132, 'Jailer_of_Hope', 'Jailer_of_Hope', 194, 0x0000820400000000000000000000000000000000, 1, 4, 7, 220, 125, 0, 1, 1, 0, 2, 8319, 0, 0, 2183, 5, 0, 140, 0, 0, 1171);
 INSERT INTO `mob_pools` VALUES(2133, 'Jailer_of_Justice', 'Jailer_of_Justice', 269, 0x0000110200000000000000000000000000000000, 9, 9, 7, 200, 125, 0, 1, 1, 1, 2, 79, 0, 0, 135, 0, 0, 0, 0, 0, 269);
