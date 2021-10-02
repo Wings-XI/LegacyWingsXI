@@ -455,7 +455,7 @@ INSERT INTO `mob_groups` VALUES(29, 3824, 12, 'Swashstox_Beadblinker', 0, 32, 23
 INSERT INTO `mob_groups` VALUES(30, 2695, 12, 'Moblin_Groundman', 960, 0, 1710, 0, 0, 77, 77, 0);
 INSERT INTO `mob_groups` VALUES(31, 2664, 12, 'Mimic', 0, 128, 1675, 0, 0, 75, 79, 0);
 INSERT INTO `mob_groups` VALUES(32, 2704, 12, 'Moblin_Scalpelman', 960, 0, 1719, 0, 0, 78, 80, 0);
-INSERT INTO `mob_groups` VALUES(33, 1645, 12, 'Goblin_Collector', 0, 128, 1037, 0, 0, 79, 81, 0);
+INSERT INTO `mob_groups` VALUES(33, 1645, 12, 'Goblin_Collector', 0, 128, 1037, 20000, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(34, 562, 12, 'Bugbear_Matman', 0, 128, 375, 20000, 0, 75, 79, 0);
 INSERT INTO `mob_groups` VALUES(35, 1160, 12, 'Earth_Elemental', 960, 4, 733, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(36, 0, 12, 'Sword_Sorcerer_Solisoq', 0, 0, 0, 0, 0, 83, 83, 0);

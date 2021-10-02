@@ -4147,6 +4147,10 @@ INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 270, 39, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 271, 31, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 272, 33, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 275, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 35, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 21, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 40, 45, 255);
+
 --
 -- Indexes for dumped tables
 --

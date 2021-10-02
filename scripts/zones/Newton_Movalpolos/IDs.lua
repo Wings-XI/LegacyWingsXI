@@ -31,6 +31,7 @@ zones[tpz.zone.NEWTON_MOVALPOLOS] =
     {
         MIMIC                = 16826564,
         BUGBEAR_MATMAN       = 16826570,
+        GOBLIN_COLLECTOR     = 16826569,
     },
     npc =
     {
