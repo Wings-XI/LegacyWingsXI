@@ -119,7 +119,7 @@ dynamis.entryInfo =
         csRegisterGlass = 15,
         csWin = 32,
         csDyna = 16,
-        enabled = false,
+        enabled = true,
         winVar = "DynaXarcabard_Win",
         hasEnteredVar = "DynaXarcabard_HasEntered",
         hasSeenWinCSVar = "DynaXarcabard_HasSeenWinCS",
@@ -1007,6 +1007,21 @@ dynamis.setPetStats = function(mob)
     mob:setMod(tpz.mod.ATTP, -20)
     mob:setMod(tpz.mod.DEFP, -5)
     mob:setTrueDetection(1)
+
+end
+
+dynamis.setAnimatedWeaponStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setMobMod(tpz.mobMod.HP_HEAL_CHANCE, 90)
+    mob:setMod(tpz.mod.STUNRESTRAIT, 75)
+    mob:setMod(tpz.mod.PARALYZERESTRAIT, 100)
+    mob:setMod(tpz.mod.SLOWRESTRAIT, 100)
+    mob:setMod(tpz.mod.SILENCERESTRAIT, 100)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
 
 end
 

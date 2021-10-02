@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+    dynamis.setAnimatedWeaponStats(mob)
     mob:setMod(tpz.mod.SHIELD_BASH, 8) -- Sets a dmg multiplier for shield bash
     mob:setMod(tpz.mod.DMGMAGIC, -50)
 end
