@@ -9,6 +9,7 @@ require("scripts/globals/utils")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DEF, 400)
     local mobId = mob:getID()
     local x = mob:getXPos()
     local y = mob:getYPos()
@@ -40,11 +41,10 @@ function onMobFight(mob, target)
             local repopWynavs = wynav:getLocalVar("repop") -- see Wynav script
             if mob:getBattleTime() - repopWynavs > 10 then
                 wynav:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
-                -- mob:useMobAbility(626) -- 2hr animation since wynavs aren't spawned via CallWyvern Ability
+                mob:useMobAbility(626) -- 2hr animation since wynavs aren't spawned via CallWyvern Ability
                 wynav:spawn()
                 wynav:updateEnmity(target)
             end
-            mob:useMobAbility(626) -- 2hr animation since wynavs aren't spawned via CallWyvern Ability
         end
     end
 
