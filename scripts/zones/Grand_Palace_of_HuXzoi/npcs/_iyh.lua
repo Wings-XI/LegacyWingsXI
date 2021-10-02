@@ -7,7 +7,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:getZPos() > 439 then
+    if player:getZPos() > 440 then
         npc:openDoor()
     else
         player:messageSpecial(7230)
