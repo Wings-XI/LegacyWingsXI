@@ -23,7 +23,7 @@ function onTrade(player, npc, trade)
                 player:startEvent(557)
             end
         else
-            player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE, 4731)
+            player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE, 4869)
         end
     end
 

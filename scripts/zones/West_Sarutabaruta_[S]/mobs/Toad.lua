@@ -7,6 +7,10 @@ local ID = require("scripts/zones/West_Sarutabaruta_[S]/IDs")
 require("scripts/globals/mobs")
 -----------------------------------
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 
