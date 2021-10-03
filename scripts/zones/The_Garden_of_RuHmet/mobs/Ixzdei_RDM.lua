@@ -11,8 +11,8 @@ require("scripts/globals/status")
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 60)
-    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 15)
-    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 15)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 12)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 12)
     mob:setMobMod(tpz.mobMod.LINK_RADIUS, 30)
     mob:AnimationSub(0)
     mob:SetAutoAttackEnabled(true)
@@ -99,6 +99,10 @@ function chargeOptic(mob)
         mob:SetAutoAttackEnabled(true)
         mob:SetMobAbilityEnabled(true)
     end
+end
+
+function onMobDisengage(mob)
+    mob:AnimationSub(0)
 end
 
 function onMobDeath(mob, isKiller, player)
