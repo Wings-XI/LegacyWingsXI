@@ -14,12 +14,15 @@ function onMobSpawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
+    if mob:getLocalVar("Killed") == 0 then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+        mob:setLocalVar("Killed", 1)
+    end
 end
 
 function onMonsterMagicPrepare(mob, target)
-    -- Used retail screenshot to determine speels's frequency
+    -- Used retail screenshot to determine spells's frequency
     local rnd = math.random(0,47)
 
     if rnd < 10 then
