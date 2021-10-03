@@ -11,13 +11,15 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:hasKeyItem(tpz.ki.LEUJAOAM_ASSAULT_ORDERS) then
-        player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.LEUJAOAM_ASSAULT_ORDERS)
-    elseif player:getZPos() <= -438 and player:getZPos() >= -440 then
-        player:messageSpecial(ID.text.STAGING_POINT_AZOUPH)
-        player:messageSpecial(ID.text.IMPERIAL_CONTROL)
-        player:startEvent(121)
-    elseif player:getZPos() >= -436.6 and player:getZPos() <= -434 then
+    if player:getZPos() <= -438 and player:getZPos() >= -440 then -- Leave safe zone
+        if player:hasKeyItem(tpz.ki.LEUJAOAM_ASSAULT_ORDERS) then
+            player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.LEUJAOAM_ASSAULT_ORDERS)
+        else
+            player:messageSpecial(ID.text.STAGING_POINT_AZOUPH)
+            player:messageSpecial(ID.text.IMPERIAL_CONTROL)
+            player:startEvent(121)
+        end
+    elseif player:getZPos() >= -436.6 and player:getZPos() <= -434 then -- Enter safe zone
         player:messageSpecial(ID.text.STAGING_POINT_AZOUPH)
         player:messageSpecial(ID.text.IMPERIAL_CONTROL)
         player:startEvent(120)
