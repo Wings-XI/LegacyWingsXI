@@ -1062,7 +1062,7 @@ INSERT INTO `mob_groups` VALUES(17, 5364, 35, 'Eo_aern_smn', 960, 0, 775, 0, 999
 INSERT INTO `mob_groups` VALUES(18, 54, 35, 'Aerns_Elemental', 0, 128, 0, 0, 0, 65, 68, 0);
 INSERT INTO `mob_groups` VALUES(19, 299, 35, 'Aw_euvhi', 960, 0, 199, 0, 0, 78, 82, 0);
 INSERT INTO `mob_groups` VALUES(20, 5365, 35, 'Eo_aern_drk', 960, 0, 775, 0, 9999, 81, 84, 0);
-INSERT INTO `mob_groups` VALUES(21, 301, 35, 'Aw_zdei', 960, 0, 0, 0, 0, 80, 83, 0);
+INSERT INTO `mob_groups` VALUES(21, 301, 35, 'Aw_zdei', 960, 0, 778, 0, 0, 80, 83, 0);
 INSERT INTO `mob_groups` VALUES(22, 5353, 35, 'Eo_aern_drg', 0, 128, 775, 0, 0, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(23, 5357, 35, 'Eo_aern_pld', 960, 0, 775, 0, 9999, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(24, 2114, 35, 'Ix_zdei_blm', 0, 128, 0, 6500, 0, 78, 78, 0);
