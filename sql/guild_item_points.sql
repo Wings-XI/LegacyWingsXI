@@ -1323,8 +1323,6 @@ INSERT INTO `guild_item_points` VALUES (7, 16860, 8, 3150, 18960, 4); -- Holy La
 INSERT INTO `guild_item_points` VALUES (7, 16880, 8, 4275, 18960, 4); -- Holy Lance +1 (4275 / 18960)
 INSERT INTO `guild_item_points` VALUES (7, 16528, 8, 7600, 21600, 5); -- Bloody Rapier (7600 / 21600)
 INSERT INTO `guild_item_points` VALUES (7, 16824, 8, 8550, 21600, 5); -- Carnage Rapier (8550 / 21600)
-INSERT INTO `guild_item_points` VALUES (7, 16432, 8, 7370, 21360, 6); -- Stun Jamadhars (7370 / 21360)
-INSERT INTO `guild_item_points` VALUES (7, 17484, 8, 7537, 21360, 6); -- Stun Jamadhars +1 (7537 / 21360)
 INSERT INTO `guild_item_points` VALUES (7, 17085, 8, 3060, 18960, 7); -- Holy Wand (3060 / 18960)
 INSERT INTO `guild_item_points` VALUES (7, 17434, 8, 3240, 18960, 7); -- Holy Wand +1 (3240 / 18960)
 
