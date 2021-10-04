@@ -87,7 +87,7 @@ g_mixins.animated_weapons = function(mob)
     end)
 
     mob:addListener("MAGIC_START", "ANIMATED_WEAPON_MAGIC_START", function(mob, spell, action)
-        if spell:getID() == 212 then
+        if spell:getID() == 261 then
             mob:setLocalVar("warp", 0) -- don't immediately cast warp again if interrupted
         end
     end)
