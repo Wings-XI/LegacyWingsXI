@@ -28,6 +28,12 @@ function onSpawn (npc)
     onPath(npc)
 end
 
+function onTrade(player, npc, trade)
+    if isHalloweenEnabled() ~= 0 then
+        onHalloweenTrade(player, npc, trade)
+    end
+end
+
 function onPath(npc)
     tpz.path.patrolsimple(npc, path)
 end
