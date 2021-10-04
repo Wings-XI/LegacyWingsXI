@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+    dynamis.setAnimatedWeaponStats(mob)
 end
 
 function onMobEngaged(mob, target)

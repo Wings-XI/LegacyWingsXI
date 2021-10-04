@@ -822,11 +822,11 @@ mobList[zone].zoneID = tpz.zone.DYNAMIS_XARCABARD
 -- set positions for mobs that have placements (x,y,z,rot) and rotation is required
 -- child monsters' positions are optional. if left unset, they are randomly placed closely around their parent monster when the parent mob engages
 mobList[zone][DMB+1  ].pos = { -414.2820, -44.0000, 20.4270, 0   }
-mobList[zone][SMB+1  ].pos = {  409.8430, -0.2763, -173.2542, 6  }
-mobList[zone][SMB+2  ].pos = {  399.5301, 0.4332, -171.8385, 12  }
-mobList[zone][SMB+3  ].pos = {  398.4821, 0.2456, -184.5310, 10  }
-mobList[zone][SMB+4  ].pos = {  410.6354, 0.2569, -182.8695, 253 }
-mobList[zone][SMB+5  ].pos = {  403.8413, 0.9267, -178.5570, 0   }
+mobList[zone][SMB+1  ].pos = {  424.1293, 0.4751, -178.5404, 118 }
+mobList[zone][SMB+2  ].pos = {  411.1541,-0.2269, -172.5790, 47  }
+mobList[zone][SMB+3  ].pos = {  406.5320, 0.2936, -187.7396, 232 }
+mobList[zone][SMB+4  ].pos = {  419.7373, 0.5091, -190.8261, 163 }
+mobList[zone][SMB+5  ].pos = {  414.4022,-0.3546, -182.0117, 0   }
 mobList[zone][SMB+6  ].pos = {  349.2125, 8.2605, -192.8115, 160 }
 mobList[zone][SMB+7  ].pos = {  346.6184, 8.4416, -200.3669, 116 }
 mobList[zone][SMB+8  ].pos = {  360.3178, 7.9544, -204.3077, 33  }
@@ -986,20 +986,20 @@ mobList[zone][DMB+31 ].pos = { 241.9540, -28.4264, 63.3540, 199    } -- animated
 mobList[zone][DMB+32 ].pos = { -100.4566, -15.8000, 138.8280, 128  } -- animated tachi
 mobList[zone][DMB+33 ].pos = { 338.2422, 0.0671, -377.4373, 192    } -- animated hammer
 mobList[zone][DMB+34 ].pos = { 49.1101, -36.2815, 61.7415, 183     } -- animated staff
-mobList[zone][DMB+35 ].pos = {-359.8363, -35.9929, 89.8365, 68     } -- animated longbow
-mobList[zone][DMB+36 ].pos = {-321.6506, -28.0708, -89.3974, 203   } -- animated gun
+mobList[zone][DMB+35 ].pos = {-296.0583, -25.8233, 161.7301, 68    } -- animated longbow
+mobList[zone][DMB+36 ].pos = {-255.5342, -17.6566, -161.5427, 192  } -- animated gun
 mobList[zone][DMB+37 ].pos = { 386.6498, -9.5122, 25.9243, 21      } -- animated horn
 mobList[zone][DMB+38 ].pos = { 90.9604, -24.0000, -375.0468, 218   } -- animated shield
 mobList[zone][DMB+331].pos = {-213.8854, -6.7935, 42.7936, 1       }
-mobList[zone][DMB+332].pos = {-237.2004, -12.0000, 83.3902, 33     }
-mobList[zone][DMB+333].pos = {-244.9406, -12.2606, -1.0052, 7      }
+mobList[zone][DMB+332].pos = {-237.1062, -11.4733, 66.6790, 228    }
+mobList[zone][DMB+333].pos = {-247.0509, -11.9911, -11.5988, 253   }
 mobList[zone][DMB+334].pos = {-235.2860, -11.7157, -87.2030, 0     }
 mobList[zone][DMB+335].pos = {-276.5036, -20.0000, -81.0512, 255   }
-mobList[zone][DMB+336].pos = {-273.0574, -19.2940, 39.3465, 20     }
+mobList[zone][DMB+336].pos = {-268.2993, -18.4545, 33.5037, 45     }
 mobList[zone][DMB+343].pos = {-284.7049, -20.2053, 121.2283, 59    }
-mobList[zone][DMB+344].pos = {-317.0527, -27.8170, 72.3022, 244    }
+mobList[zone][DMB+344].pos = {-317.0527, -27.8170, 72.3022, 21     }
 mobList[zone][DMB+345].pos = {-297.9739, -23.4600, -2.6931, 226    }
-mobList[zone][DMB+352].pos = {-319.0270, -27.7167, -30.2879, 4     }
+mobList[zone][DMB+352].pos = {-308.7357, -26.5187, -37.8035, 226   }
 
 -- instead of standing still, i will patrol across these given points (triplets of x,y,z)
 -- todo: this is not yet functional, this will most likely use dynamis.mobOnRoamAction

@@ -4205,7 +4205,7 @@ INSERT INTO `mob_pools` VALUES(4141, 'Vanguard_Chanter', 'Vanguard_Chanter', 360
 INSERT INTO `mob_pools` VALUES(4142, 'Vanguard_Constable', 'Vanguard_Constable', 337, 0x00001e0400000000000000000000000000000000, 3, 3, 11, 265, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 1, 0, 0, 337);
 INSERT INTO `mob_pools` VALUES(4143, 'Vanguard_Defender', 'Vanguard_Defender', 337, 0x00001d0400000000000000000000000000000000, 7, 7, 4, 265, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 4, 0, 0, 337);
 INSERT INTO `mob_pools` VALUES(4144, 'Vanguard_Dollmaster', 'Vanguard_Dollmaster', 334, 0x0000190400000000000000000000000000000000, 15, 15, 11, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 141, 0, 0, 334);
-INSERT INTO `mob_pools` VALUES(4145, 'Vanguard_Dragon', 'Vanguard_Dragon', 87, 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 87);
+INSERT INTO `mob_pools` VALUES(4145, 'Vanguard_Dragon', 'Vanguard_Dragon', 87, 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 1, 1, 1, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 1179);
 INSERT INTO `mob_pools` VALUES(4146, 'Vanguard_Drakekeeper', 'Vanguard_Drakekeeper', 337, 0x00001d0400000000000000000000000000000000, 14, 14, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 337);
 INSERT INTO `mob_pools` VALUES(4147, 'Vanguard_Enchanter', 'Vanguard_Enchanter', 327, 0x00003f0400000000000000000000000000000000, 5, 5, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 3, 0, 0, 327);
 INSERT INTO `mob_pools` VALUES(4148, 'Vanguard_Exemplar', 'Vanguard_Exemplar', 360, 0x00003a0400000000000000000000000000000000, 7, 7, 10, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 4, 0, 0, 360);

@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+    dynamis.setAnimatedWeaponStats(mob)
 end
 
 function onMobEngaged(mob, target)
@@ -27,7 +28,7 @@ function onMonsterMagicPrepare(mob, target)
     local warp = mob:getLocalVar("warp")
     local rnd = math.random()
     if warp == 1 then
-        -- return 261 -- warp
+        return 261 -- warp
     elseif rnd < 0.25 then
         return 9 -- curaga iii
     elseif not mob:hasStatusEffect(tpz.effect.BLINK) and rnd < 0.5 then
@@ -40,6 +41,7 @@ function onMonsterMagicPrepare(mob, target)
 end
 
 function onMobFight(mob, target)
+    mob:SetMagicCastingEnabled(true)
 end
 
 function onMobRoamAction(mob)
