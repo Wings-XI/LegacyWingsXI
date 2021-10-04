@@ -68,6 +68,7 @@ tpz.msg.basic =
     DEFEATS_TARG            =   6, -- The <player> defeats <target>.
     ALREADY_CLAIMED         =  12, -- Cannot attack. Your target is already claimed.
     FALL_TO_GROUND          =  20, -- <target> falls to the ground.
+    WAIT_LONGER             =  94, -- You must wait longer to perform that action.
     EVADES                  = 282, -- <target> evades.
     CANNOT_ATTACK_TARGET    = 446, -- You cannot attack that target.
     REQUIRES_COMBAT         = 525, -- .. can only be performed during battle.
