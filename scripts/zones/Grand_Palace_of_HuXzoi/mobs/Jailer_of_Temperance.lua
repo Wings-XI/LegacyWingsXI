@@ -22,6 +22,7 @@ function onMobSpawn(mob)
             },
         },
     })
+    mob:setMod(tpz.mod.MDEF, 60)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
     mob:AnimationSub(0) -- Change animation to pot

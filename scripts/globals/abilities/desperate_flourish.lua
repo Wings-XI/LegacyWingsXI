@@ -56,7 +56,7 @@ function onUseAbility(player, target, ability, action)
 
     if (math.random() <= hitrate or isSneakValid) then
 
-        local spell = GetSpell(216)
+        local spell = getSpell(216)
         local params = {}
         params.diff = 0
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
