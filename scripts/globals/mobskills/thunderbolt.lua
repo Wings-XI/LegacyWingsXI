@@ -20,7 +20,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STUN
-    local duration = math.random(8, 14)
+    local duration = math.random(5, 12)
 
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
 

@@ -68,7 +68,7 @@ function onUseAbility(player, target, ability, action)
     if (tpHits + extraHits > 0) then
         hit = 3
 
-        local spell = GetSpell(252)
+        local spell = getSpell(252)
         local params = {}
         params.diff = 0
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)

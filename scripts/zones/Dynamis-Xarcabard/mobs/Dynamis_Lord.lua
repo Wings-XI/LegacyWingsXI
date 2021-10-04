@@ -118,7 +118,6 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:showText(mob, ID.text.DYNAMIS_LORD_DIALOG +2)
     local winQM = GetNPCByID(17330780)
     local pos = mob:getPos()
     winQM:setPos(pos.x,pos.y,pos.z,pos.rot)
@@ -126,6 +125,7 @@ function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.DYNAMIS_XARCABARD_INTERLOPER) -- Clear ??? Title
     player:addTitle(tpz.title.LIFTER_OF_SHADOWS) -- Dyna Lord Title
     if isKiller then
+        mob:showText(mob, ID.text.DYNAMIS_LORD_DIALOG +2)
         DespawnMob(17330183)
         DespawnMob(17330184)
     end
