@@ -22,7 +22,7 @@ function onMobSpawn(mob)
     mob:addListener("TAKE_DAMAGE", "CHLEVNIK_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         if amount >= mob:getHP() then
 
-            forceTPMove(mob, target)
+            forceTPMove(mob)
             
         end
     end)
