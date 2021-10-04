@@ -3215,6 +3215,12 @@ INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1215);
 INSERT INTO `mob_skill_lists` VALUES('SatelliteGuns', 1175, 1216);
 INSERT INTO `mob_skill_lists` VALUES('Ladybug_Night', 1176, 2178);
 INSERT INTO `mob_skill_lists` VALUES('Teporingo', 1177, 258);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 590);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 591);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 1081);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 1082);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 1084);
+INSERT INTO `mob_skill_lists` VALUES('Goblin_NM', 1178, 1086);
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
