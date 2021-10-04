@@ -234,9 +234,10 @@ function onAssaultCreated(player, target, instance, endCS, destinationID)
         if (party ~= nil) then
             for _,v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
+                    v:release()
                     v:setLocalVar("Area", destinationID)
                     v:setInstance(instance)
-                    v:startEvent(endCS, destinationID)
+                    v:timer(3000, function(player) player:startEvent(endCS, destinationID) end)
                 end
             end
         end
