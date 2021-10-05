@@ -9,7 +9,7 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-    mob:setMobMod(tpz.mobMod.EXP_BONUS, -200)
+    mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
     mob:setMobMod(tpz.mobMod.GIL_MIN, -1)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
     mob:setMobMod(tpz.mobMod.MUG_GIL, 0)
