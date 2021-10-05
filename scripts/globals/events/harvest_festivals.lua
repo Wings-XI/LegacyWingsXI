@@ -149,15 +149,14 @@ function onHalloweenTrade(player, trade, npc)
                     harvestFestTreats = player:getCharVar(varName) --  this is the second list
                     itemInList = itemInList - 32
                 end
-
-                local AlreadyTradedChk = utils.mask.getBit(harvestFestTreats, itemInList)
+                
                 if (itemReward ~= 0 and player:getFreeSlotsCount() >= 1 and math.random(1, 3) < 2) then -- Math.random added so you have 33% chance on getting item
                     
                     player:messageSpecial(ID.text.THANK_YOU_TREAT)
                     player:addItem(itemReward)
                     player:messageSpecial(ID.text.ITEM_OBTAINED, itemReward)
 
-                elseif player:canUseMisc(tpz.zoneMisc.COSTUME) and not AlreadyTradedChk then
+                elseif player:canUseMisc(tpz.zoneMisc.COSTUME) then
 
                     -- Possible costume values:
                     local Yagudo = math.random(580, 607)
@@ -179,10 +178,6 @@ function onHalloweenTrade(player, trade, npc)
                     player:messageSpecial(ID.text.TRICK_OR_TREAT)
                 else
                     player:messageSpecial(ID.text.THANK_YOU)
-                end
-
-                if not AlreadyTradedChk then
-                    player:setCharVar(varName, utils.mask.setBit(harvestFestTreats, itemInList, true))
                 end
 
                 player:tradeComplete()

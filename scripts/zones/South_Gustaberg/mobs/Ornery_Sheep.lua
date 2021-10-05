@@ -11,5 +11,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.CARNERO_PH, 5, math.random(300, 3600)) -- 5-60 minutes
+    tpz.mob.phOnDespawn(mob, ID.mob.CARNERO_PH, 5, 1) -- No respawn timer, Carnero can pop back to back
 end

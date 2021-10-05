@@ -8,12 +8,13 @@ require("scripts/globals/status")
 -----------------------------------
 
 local function bracerMode(mob, qnAern1, qnAern2)
+    local mobID = mob:getID()
     mob:useMobAbility(690) -- Hundred Fists
     if qnAern1:isAlive() then qnAern1:useMobAbility(692) end -- Chainspell
     if qnAern2:isAlive() then qnAern2:useMobAbility(689) end -- Benediction
     mob:addMod(tpz.mod.ATT, 200)
 
-    for i = qnAern1, qnAern2 do
+    for i = mobID+1, mobID+2 do
         local pet = GetMobByID(i)
         if pet:isSpawned() then
             pet:AnimationSub(2)

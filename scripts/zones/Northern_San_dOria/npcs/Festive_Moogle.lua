@@ -22,6 +22,9 @@ function onTrigger(player, npc)
             3622, 10000,    -- Jack-o-Pricket
         }
 
+        player:showText(npc, ID.text.FESTIVE_MOOGLE_DIALOG)
+        tpz.shop.general(player, stock, SANDORIA)
+
     elseif Starlight ~= 0 then
         local stock =
         {
@@ -35,13 +38,12 @@ function onTrigger(player, npc)
             87, 10000, -- Kadomatsu
         }
 
-    player:showText(npc, ID.text.FESTIVE_MOOGLE_DIALOG)
-    tpz.shop.general(player, stock, SANDORIA)
+        player:showText(npc, ID.text.FESTIVE_MOOGLE_DIALOG)
+        tpz.shop.general(player, stock, SANDORIA)
 
     else
 
     player:showText(npc, ID.text.THANK_YOU)
-
 
     end
 end
