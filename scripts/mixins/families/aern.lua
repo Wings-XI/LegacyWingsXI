@@ -23,7 +23,6 @@ g_mixins.families.aern = function(mob)
             if curr_reraise < reraises then
                 mob:setMobMod(tpz.mobMod.NO_DROPS, 1) -- Aern will not drop any items if reraising, not even seals.
                 local target = mob:getTarget()
-                if target then killer = target end
                 mob:timer(12000, function(mob)
                     mob:setHP(mob:getMaxHP())
                     mob:setMobMod(tpz.mobMod.NO_DROPS, 0)
@@ -31,9 +30,25 @@ g_mixins.families.aern = function(mob)
                     mob:setLocalVar("AERN_RERAISES", curr_reraise + 1)
                     mob:resetAI()
                     mob:stun(3000)
-                    if mob:checkDistance(killer) < 40 then
+                    if target and target:isAlive() and mob:checkDistance(target) < 40 then
+                        mob:updateClaim(target)
+                        mob:updateEnmity(target)
+                    elseif killer:isAlive() and mob:checkDistance(killer) < 40 then
                         mob:updateClaim(killer)
                         mob:updateEnmity(killer)
+                    else
+                        local partySize = killer:getPartySize()
+                        local i = 1
+                        for _, partyMember in pairs(killer:getAlliance()) do
+                            if partyMember:isAlive() and mob:checkDistance(partyMember) < 40 then
+                                mob:updateClaim(partyMember)
+                                mob:updateEnmity(partyMember)
+                                break
+                            elseif i == partySize then
+                                mob:disengage()
+                            end
+                            i = i + 1
+                        end
                     end
                     mob:triggerListener("AERN_RERAISE", mob, curr_reraise + 1)
                 end)
