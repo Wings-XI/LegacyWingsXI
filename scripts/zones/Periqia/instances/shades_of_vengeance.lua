@@ -48,7 +48,7 @@ function onInstanceComplete(instance)
 
     for i, v in pairs(chars) do
         if (v:getCurrentMission(TOAU) == tpz.mission.id.toau.SHADES_OF_VENGEANCE) then
-            --v:setCharVar("AhtUrganStatus", 1)
+            v:setCharVar("AhtUrganStatus", 1)
         end
 
         v:startEvent(102)
