@@ -7,16 +7,11 @@ require("scripts/globals/dynamis")
 
 local zone = 135
 
-function onMobInitialize(mob)
-    mob:addMod(tpz.mod.MDEF, 150)
-    mob:addMod(tpz.mod.DMGMAGIC, -25)
-end
-
 function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
-    -- dynamis.setStatueStats(mob)
+    dynamis.setEyeStats(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -28,7 +23,7 @@ end
 function onMobRoamAction(mob)
     dynamis.mobOnRoamAction(mob)
 end
--- 
+
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
 end
