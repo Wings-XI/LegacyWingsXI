@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.ATTP, 10)
     mob:addMod(tpz.mod.STUNRESTRAIT, 99)
     mob:addMod(tpz.mod.SLEEPRESTRAIT, 99)
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.MDEF, -20)
@@ -21,7 +22,7 @@ function onMobSpawn(mob)
     mob:addListener("TAKE_DAMAGE", "CHLEVNIK_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         if amount >= mob:getHP() then
 
-            forceTPMove(mob, target)
+            forceTPMove(mob)
             
         end
     end)

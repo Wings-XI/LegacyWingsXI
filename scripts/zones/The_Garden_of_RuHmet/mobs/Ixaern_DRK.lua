@@ -18,39 +18,48 @@ local aernB = 16921020
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
-    mob:addListener("DEATH", "AERN_DEATH", function(mob)
-        local timesReraised = mob:getLocalVar("AERN_RERAISES")
-
-        if(math.random (1, 10) < 10) then
-            -- reraise
-            local target = mob:getTarget()
-            local targetid = 0
-            if target then
-                targetid = target:getShortID()
+    mob:addListener("DEATH", "AERN_DEATH", function(mob, killer)
+        if killer then
+            if(math.random (1, 10) < 10) then
+                -- reraise
+                mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+                local target = mob:getTarget()
+                mob:timer(9000, function(mob)
+                    mob:setHP(mob:getMaxHP())
+                    mob:AnimationSub(3)
+                    mob:resetAI()
+                    mob:stun(3000)
+                    if target and target:isAlive() and mob:checkDistance(target) < 40 then
+                        mob:updateClaim(target)
+                        mob:updateEnmity(target)
+                    elseif killer:isAlive() and mob:checkDistance(killer) < 40 then
+                        mob:updateClaim(killer)
+                        mob:updateEnmity(killer)
+                    else
+                        local partySize = killer:getPartySize()
+                        local i = 1
+                        for _, partyMember in pairs(killer:getAlliance()) do
+                            if partyMember:isAlive() and mob:checkDistance(partyMember) < 40 then
+                                mob:updateClaim(partyMember)
+                                mob:updateEnmity(partyMember)
+                                break
+                            elseif i == partySize then
+                                mob:disengage()
+                            end
+                            i = i + 1
+                        end
+                    end
+                    mob:triggerListener("AERN_RERAISE", mob)
+                end)
+            else
+                -- death
+                mob:setMobMod(tpz.mobMod.NO_DROPS, 0)
+                DespawnMob(aernA)
+                DespawnMob(aernB)
             end
-            mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
-            mob:timer(9000, function(mob, targetid, timesReraised)
-                mob:setHP(mob:getMaxHP())
-                mob:AnimationSub(3)
-                mob:resetAI()
-                mob:stun(3000)
-                local new_target = mob:getEntity(targetid)
-                if new_target and mob:checkDistance(new_target) < 40 then
-                    mob:updateClaim(new_target)
-                    mob:updateEnmity(new_target)
-                end
-                mob:triggerListener("AERN_RERAISE", mob, timesReraised)
-            end)
-        else
-            -- death
-            mob:setMobMod(tpz.mobMod.NO_DROPS, 0)
-            DespawnMob(aernA)
-            DespawnMob(aernB)
-        end
-
+        end    
     end)
-    mob:addListener("AERN_RERAISE", "IX_DRK_RERAISE", function(mob, timesReraised)
-        mob:setLocalVar("AERN_RERAISES", timesReraised + 1)
+    mob:addListener("AERN_RERAISE", "IX_DRK_RERAISE", function(mob)
         mob:timer(5000, function(mob)
             mob:AnimationSub(1)
         end)

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -9511,6 +9511,63 @@ inline int32 CLuaBaseEntity::recalculateAbilitiesTable(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: getPlayersInRange()
+ *  Purpose : Returns a Lua table of players within range of the base entity
+ *  Example : local players = npc:getPlayersInRange(50)
+ *  Notes   : if the passed argument is nil or 0, just returns all players in the zone
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getPlayersInRange(lua_State* L)
+{
+    uint32 dist = 0;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        dist = lua_tointeger(L, 1);
+
+    const uint32 distSquared = dist * dist;
+    int size = 0;
+    std::vector<CCharEntity*> PlayerList;
+
+    zoneutils::GetZone(m_PBaseEntity->getZone())->ForEachChar([&](CCharEntity* PChar) {
+        if (!distSquared)
+        {
+            PlayerList.push_back(PChar);
+            size++;
+        }
+        else // range specified, must be in range.
+        {
+            if (distanceSquared(PChar->loc.p, m_PBaseEntity->loc.p) < distSquared)
+            {
+                PlayerList.push_back(PChar);
+                size++;
+            }
+        }
+    });
+
+    if (!size)
+    {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    lua_createtable(L, size, 0);
+    int i = 1;
+
+    for (auto it = PlayerList.begin(); it != PlayerList.end(); it++)
+    {
+        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, (void*)(*it));
+        lua_pcall(L, 2, 1, 0);
+
+        lua_rawseti(L, -2, i++);
+    }
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: getParty()
 *  Purpose : Returns a Lua table of party member Entity objects
 *  Example : local party = player:getParty()
@@ -18088,6 +18145,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateAbilitiesTable),
 
     // Parties and Alliances
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayersInRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getParty),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyWithTrusts),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartySize),

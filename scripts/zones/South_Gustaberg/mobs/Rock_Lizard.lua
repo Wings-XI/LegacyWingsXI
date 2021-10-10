@@ -13,5 +13,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.LEAPING_LIZZY_PH, 5, 3600) -- 1 hour
+    tpz.mob.phOnDespawn(mob, ID.mob.LEAPING_LIZZY_PH, 9, 1) -- No respawn timer, Leaping Lizzy can pop back to back
 end

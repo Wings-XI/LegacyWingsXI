@@ -34,20 +34,13 @@ g_mixins.animated_weapons = function(mob)
         mob:SetMagicCastingEnabled(true)
         mob:SetAutoAttackEnabled(true)
         mob:SetMobAbilityEnabled(true)
-        mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
-        mob:setMobMod(tpz.mobMod.HP_HEAL_CHANCE, 90) -- can cure below 90%
-        mob:setMod(tpz.mod.PARALYZERESTRAIT, 100)
-        mob:setMod(tpz.mod.SLOWRESTRAIT, 100)
-        mob:setMod(tpz.mod.SILENCERESTRAIT, 100)
-        mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
-        mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
         mob:setLocalVar("dialogOne", 4)
         mob:setLocalVar("dialogTwo", 3)
     end)
 
     mob:addListener("ENGAGE", "ANIMATED_WEAPON_ENGAGE", function(mob, target)
         local ID = zones[mob:getZoneID()]
-        mob:setLocalVar("changeTime", math.random(30, 50)) -- set wait time for Animated Weapon to use Warp.
+        mob:setLocalVar("changeTime", math.random(20, 30)) -- set wait time for Animated Weapon to use Warp.
         mob:showText(mob, defaultDialog[mob:getID()])
     end)
 
@@ -94,7 +87,7 @@ g_mixins.animated_weapons = function(mob)
     end)
 
     mob:addListener("MAGIC_START", "ANIMATED_WEAPON_MAGIC_START", function(mob, spell, action)
-        if spell:getID() == 212 then
+        if spell:getID() == 261 then
             mob:setLocalVar("warp", 0) -- don't immediately cast warp again if interrupted
         end
     end)

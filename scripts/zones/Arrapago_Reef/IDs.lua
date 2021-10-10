@@ -23,6 +23,7 @@ zones[tpz.zone.ARRAPAGO_REEF] =
         MOVE_CLOSER                 = 7309, -- You must move closer.
         IMPERIAL_CONTROL            = 7310, -- This gate guards an area under Imperial control.
         STAGING_POINT_ILRUSI        = 7315, -- Ilrusi Atoll Staging Point.
+        CANNOT_LEAVE                = 7320, -- You cannot leave this area while in the possession of <assault>
         RESPONSE                    = 7329, -- There is no response...
         DOOR_IS_LOCKED              = 7458, -- The door is locked.  You might be able to open it with <item>.
         DOOR_IS_LOCKED2             = 7459, -- The door is locked.  You might be able to open it with <item> or <item>.

@@ -4130,11 +4130,27 @@ INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 249, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 266, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 357, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 498, 59, 1, 255); --silence
-INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 499, 251, 1, 255); --shock spikes
+INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 498, 59, 1, 255); -- silence
+INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 499, 251, 1, 255); -- shock spikes
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 201, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 172, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Shen', 499, 240, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Zi_Ghi_Boneeater', 500, 28, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 245, 10, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 247, 20, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 252, 20, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 266, 43, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 267, 41, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 268, 35, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 269, 37, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 270, 39, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 271, 31, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 272, 33, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 275, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 35, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 21, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 40, 45, 255);
+
 --
 -- Indexes for dumped tables
 --

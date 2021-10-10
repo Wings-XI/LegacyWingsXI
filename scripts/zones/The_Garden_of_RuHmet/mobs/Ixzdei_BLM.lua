@@ -137,7 +137,7 @@ function onMobWeaponSkill(target, mob, skill)
         end
     end
 end
-    
+
 function chargeOptic(mob)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
@@ -152,6 +152,10 @@ function chargeOptic(mob)
         mob:SetAutoAttackEnabled(true)
         mob:SetMobAbilityEnabled(true)
     end
+end
+
+function onMobDisengage(mob)
+    mob:AnimationSub(0)
 end
 
 function onMobDeath(mob, isKiller, player)
