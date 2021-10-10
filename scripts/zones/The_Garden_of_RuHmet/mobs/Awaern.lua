@@ -3,6 +3,7 @@
 --  Mob: Aw'aern
 -- Note: PH for Ix'Aern DRK and DRG
 -----------------------------------
+mixins = {require("scripts/mixins/families/aern")}
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
 require("scripts/globals/status")
 -----------------------------------
