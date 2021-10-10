@@ -592,3 +592,12 @@ std::string escape(std::string const &s)
     }
     return escaped;
 }
+
+char gEmptyString[1] = "";
+const char* nnString(const char* str)
+{
+    if (!str) {
+        return gEmptyString;
+    }
+    return str;
+}
