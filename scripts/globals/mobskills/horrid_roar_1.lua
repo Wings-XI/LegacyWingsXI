@@ -9,7 +9,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if not target:isInfront(mob, 128) then
+    if target:isBehind(mob, 96) then
         return 1
     elseif mob:AnimationSub() == 1 then
         return 1

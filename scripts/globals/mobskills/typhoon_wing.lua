@@ -14,9 +14,9 @@ require("scripts/globals/monstertpmoves")
 function onMobSkillCheck(target, mob, skill)
     if mob:hasStatusEffect(tpz.effect.INVINCIBLE) then
        return 1
-    elseif (mob:AnimationSub() == 1) then
+    elseif mob:AnimationSub() == 1 then
         return 1
-    elseif (target:isBehind(mob, 48) == true) then
+    elseif target:isBehind(mob, 96) then
         return 1
     end
     return 0

@@ -13,9 +13,9 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 1) then
+    if mob:AnimationSub() == 1 then
         return 1
-    elseif (target:isBehind(mob, 48) == true) then
+    elseif target:isBehind(mob, 96) then
         return 1
     end
     return 0
