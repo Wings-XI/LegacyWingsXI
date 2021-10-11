@@ -1301,7 +1301,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
 
-        if (PAbility->getMeritModID() > 0)
+        //Ignore SMN Group 2 Merits specifically until we can long term fix merits that serve dual purpose
+        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631)
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
@@ -1342,11 +1343,6 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
             }
-        }
-
-        if (PAbility->getID() == ABILITY_GEOCRUSH || PAbility->getID() == ABILITY_GRAND_FALL || PAbility->getID() == ABILITY_METEOR_STRIKE || PAbility->getID() == ABILITY_WIND_BLADE || PAbility->getID() == ABILITY_HEAVENLY_STRIKE || PAbility->getID() == ABILITY_THUNDERSTORM)
-        {
-            action.recast = 60;
         }
 
         // remove invisible if aggressive
