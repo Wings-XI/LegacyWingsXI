@@ -1344,6 +1344,11 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
+        if (PAbility->getID() == ABILITY_GEOCRUSH || PAbility->getID() == ABILITY_GRAND_FALL || PAbility->getID() == ABILITY_METEOR_STRIKE || PAbility->getID() == ABILITY_WIND_BLADE || PAbility->getID() == ABILITY_HEAVENLY_STRIKE || PAbility->getID() == ABILITY_THUNDERSTORM)
+        {
+            action.recast = 60;
+        }
+
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
         {
