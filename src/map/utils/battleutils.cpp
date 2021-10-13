@@ -3357,9 +3357,9 @@ namespace battleutils
             case SC_GRAVITATION:
             case SC_DISTORTION:
                 if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
-                    defMod = resistances[element][0];
-                else
                     defMod = resistances[element][1];
+                else
+                    defMod = resistances[element][0];
                 break;
 
                 // Level 3 & 4 skill chains
@@ -3368,12 +3368,12 @@ namespace battleutils
             case SC_DARKNESS:
             case SC_DARKNESS_II:
                 if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
-                    defMod = resistances[element][0];
-                else
                     defMod = resistances[element][1];
-                if (PDefender->getMod(resistances[element][2]) < PDefender->getMod(defMod))
+                else
+                    defMod = resistances[element][0];
+                if (PDefender->getMod(resistances[element][2]) > PDefender->getMod(defMod))
                     defMod = resistances[element][2];
-                if (PDefender->getMod(resistances[element][3]) < PDefender->getMod(defMod))
+                if (PDefender->getMod(resistances[element][3]) > PDefender->getMod(defMod))
                     defMod = resistances[element][3];
                 break;
 
