@@ -93,6 +93,7 @@ void LoadAutomaton(CCharEntity* PChar)
             setHead(PChar,tempEquip.Head);
             setFrame(PChar, tempEquip.Frame);
             LoadAutomatonStats(PChar);
+            PChar->PAutomaton->status = STATUS_NORMAL;
 
             // Always load Optic Fiber and Optic Fiber II first
             for (int i = 0; i < 12; i++)
