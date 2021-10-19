@@ -31,7 +31,7 @@ function onSpellCast(caster, target, spell)
     -- I've never seen the spell cast with under 100 skill, so I could be wrong.
 
     if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
-        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
+        duration = duration + duration * caster:getMeritCount(tpz.merit.DIFFUSION) / 100
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
