@@ -33,6 +33,7 @@ function onMobSpawn(mob)
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
     dynamis.setNMStats(mob)
+    mob:setMaxHPP(325)
 
     params.specials = { }
     params.specials.skill = { }
