@@ -68,7 +68,7 @@ function onEventFinish(player, csid, option)
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delAssaultPoint(0, choice.price) -- Remove from LEUJAOAM_ASSAULT_POINT
+                player:delAssaultPoint(choice.price, 0) -- Remove from LEUJAOAM_ASSAULT_POINT
             end
         end
     end

@@ -70,7 +70,7 @@ function onEventFinish(player, csid, option)
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delAssaultPoint(1, choice.price) -- Remove from MAMOOL_ASSAULT_POINT
+                player:delAssaultPoint(choice.price, 1) -- Remove from MAMOOL_ASSAULT_POINT
             end
         end
     end

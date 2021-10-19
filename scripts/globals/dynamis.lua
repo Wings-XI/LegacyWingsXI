@@ -1025,6 +1025,36 @@ dynamis.setAnimatedWeaponStats = function(mob)
 
 end
 
+dynamis.setEyeStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+
+    mob:setMobLevel(math.random(82,84))
+    mob:setMod(tpz.mod.RATTP, 15)
+    mob:setMod(tpz.mod.ATTP, 25)
+    mob:setMod(tpz.mod.DEF, 420)
+
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
+
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
+    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
+    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
+    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
+    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
+    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
+
+    mob:addMod(tpz.mod.MDEF, 150)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+
+end
+
 --------------------------------------------------
 -- getDynamisMapList
 -- Produces a bitmask for the goblin ancient currency NPCs
