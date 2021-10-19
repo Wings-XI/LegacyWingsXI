@@ -28,7 +28,7 @@ function onSpellCast(caster, target, spell)
     local duration = 60
 
     if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
-        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
+        --duration = duration + duration * caster:getMeritCount(tpz.merit.DIFFUSION) / 100 -- OOE Buff from May 16, 2012 update
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
