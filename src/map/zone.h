@@ -559,6 +559,7 @@ public:
     void            SetWeather(WEATHER weatherCondition);
     void            UpdateWeather();
     void            ExpireDigObjects();
+    uint32          DeleteGhostSessions();                                          // Remove sessions of unknown (possibly disconnected) users
 
     virtual void    SpawnPCs(CCharEntity* PChar);                                   // отображаем персонажей в зоне
     virtual void    SpawnMOBs(CCharEntity* PChar);                                  // отображаем MOBs в зоне
@@ -643,6 +644,7 @@ private:
 
     regionList_t    m_regionList;           // список активных областей зоны
     zoneLineList_t  m_zoneLineList;         // список всех доступных zonelines для зоны
+    std::vector<uint32> m_ghostsPrevIter;
 
     void    LoadZoneLines();                // список zonelines (можно было бы заменить этот метод методом InsertZoneLine)
     void    LoadZoneWeather();              // погода
@@ -650,6 +652,7 @@ private:
     void    LoadNavMesh();                  // Load the zones navmesh. Must exist in scripts/zones/:zone/NavMesh.nav
 
     CTreasurePool*  m_TreasurePool;         // глобальный TreasuerPool
+    CTaskMgr::CTask* m_ZoneClearGhostsTask;
 
     static const uint16 ReducedVerticalAggroZones[];
 protected:
