@@ -142,6 +142,12 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
         // 0 - Mark the char as deleted but do not remove rows
         return "0";
     }
+    else if (strConfigName == "delete_char_cooldown") {
+        // Do not allow deletion of characters created less than
+        // the configured number in minutes. Set to zero to disable
+        // and allow character deletion regardless of time.
+        return "0";
+    }
     else if (strConfigName == "maintenance_mode") {
         // The server is in maintenance mode, only those with special
         // permission can log-in.

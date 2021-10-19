@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -2608,20 +2608,17 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         PChar->status = STATUS_SHUTDOWN;
                         PacketParser[0x00D](map_session_data, PChar, std::move(CBasicPacket()));
                     }
-                    else
-                    {
-                        map_session_data->PChar->m_disconnecting = true;
-                        map_session_data->PChar->StatusEffectContainer->SaveStatusEffects(true);
-                        Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u;", map_session_data->PChar->id);
+                    map_session_data->PChar->m_disconnecting = true;
+                    map_session_data->PChar->StatusEffectContainer->SaveStatusEffects(true);
+                    Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %u;", map_session_data->PChar->id);
 
-                        delete[] map_session_data->server_packet_data;
-                        delete map_session_data->PChar;
-                        delete map_session_data;
-                        map_session_data = nullptr;
+                    delete[] map_session_data->server_packet_data;
+                    delete map_session_data->PChar;
+                    delete map_session_data;
+                    map_session_data = nullptr;
 
-                        map_session_list.erase(it++);
-                        continue;
-                    }
+                    map_session_list.erase(it++);
+                    continue;
                 }
                 else if (map_session_data->shuttingDown == 0)
                 {
