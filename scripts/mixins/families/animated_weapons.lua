@@ -40,7 +40,7 @@ g_mixins.animated_weapons = function(mob)
 
     mob:addListener("ENGAGE", "ANIMATED_WEAPON_ENGAGE", function(mob, target)
         local ID = zones[mob:getZoneID()]
-        mob:setLocalVar("changeTime", math.random(30, 50)) -- set wait time for Animated Weapon to use Warp.
+        mob:setLocalVar("changeTime", math.random(20, 30)) -- set wait time for Animated Weapon to use Warp.
         mob:showText(mob, defaultDialog[mob:getID()])
     end)
 

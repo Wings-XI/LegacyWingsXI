@@ -185,6 +185,9 @@ public:
     int32 gotoPlayer(lua_State*);            // warps self to target player
     int32 bringPlayer(lua_State*);           // warps target to self
 
+    int32 getPlayerExpansions(lua_State*);   // Get the bitmask of registered expansions for a player
+    int32 playerHasExpansion(lua_State*);    // Check whether a player has a specific expansion registered
+
     // Items
     int32 getEquipID(lua_State*);            // Gets the Item Id of the item in specified slot
     int32 getEquippedItem(lua_State *);      // Returns the item object from specified slot

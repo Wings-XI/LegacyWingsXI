@@ -316,6 +316,7 @@ void ViewHandler::HandleLoginRequest(const LOGIN_REQUEST_PACKET* pRequestPacket)
     // Backup the packet, as it will be needed in the second phase
     memcpy(&mLastLoginRequestPacket, pRequestPacket, sizeof(mLastLoginRequestPacket));
 
+    LOCK_DB;
     LOCK_SESSION;
     mpSession->UnreserveCharacter();
     // Notify the world server that a character wants to log in
@@ -372,7 +373,6 @@ void ViewHandler::HandleLoginRequest(const LOGIN_REQUEST_PACKET* pRequestPacket)
     LOG_DEBUG0("Accessing world database of world %u.", pCurrentChar->cWorldID);
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
     // LOCK_WORLDMGR;
-    LOCK_DB;
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(pCurrentChar->cWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(pCurrentChar->cWorldID);
     LOCK_PWORLDDB(WorldDB);
@@ -579,6 +579,7 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
     mpSession->UnreserveCharacter();
     // This will throw if the client attempts to use a content ID not associated with its account
     LOG_DEBUG0("Validating content ID.");
+    GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
     CHARACTER_ENTRY* pNewChar = mpSession->GetCharacterByContentID(pRequestPacket->dwContentID);
     // Do some sanity checks on the content
     if (!pNewChar->bEnabled) {
@@ -595,7 +596,9 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
     LOG_DEBUG0("Looking up world ID.");
     WorldManagerPtr WorldMgr = WorldManager::GetInstance();
     uint32_t dwWorldID = WorldMgr->GetWorldIDByName(pRequestPacket->szWorldName);
+    LOCK_DB;
     LOCK_SESSION;
+    DBConnection DB = Database::GetDatabase();
     // Prevent unprivileged users from creating characters in test worlds by editing
     // the world name in memory.
     LOG_DEBUG0("Verifying privileges.");
@@ -606,7 +609,6 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
     }
     // Verify that the character name is not already taken
     // LOCK_WORLDMGR;
-    LOCK_DB;
     LOG_DEBUG0("Accessing map server database.");
     std::shared_ptr<WorldDBConnection> WorldDB = WorldManager::GetInstance()->GetWorldDBConnection(dwWorldID);
     const char* pcszWorldPrefix = WorldManager::GetInstance()->GetWorldDBPrefix(dwWorldID);
@@ -619,6 +621,26 @@ void ViewHandler::PrepareNewCharacter(const CREATE_REQUEST_PACKET* pRequestPacke
         LOG_INFO("Character name %s is already taken.", pRequestPacket->szCharacterName);
         mParser.SendError(FFXILoginPacket::FFXI_ERROR_NAME_ALREADY_TAKEN);
         throw std::runtime_error("Name already taken.");
+    }
+    // Verify the name is not disallowed
+    strSqlQueryFmt = "SELECT GREATEST((SELECT EXISTS (SELECT name FROM %sdisallowed_names WHERE name = '%s' AND match_type = 1)), (SELECT MAX(INSTR('%s', name)) FROM %sdisallowed_names WHERE match_type = 2));";
+    strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
+        Database::RealEscapeString(pRequestPacket->szCharacterName).c_str(),
+        Database::RealEscapeString(pRequestPacket->szCharacterName).c_str(),
+        Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str());
+    pResultSet = DB->query(strSqlFinalQuery);
+    if (pResultSet->row_count() != 0) {
+        pResultSet->next();
+        int64_t namePos = pResultSet->get_signed64(0);
+        if (namePos != 0) {
+            LOG_INFO("Character name %s is forbidden.", pRequestPacket->szCharacterName);
+            // Not sure there's an error value for that so we'll use
+            // the "name already taken" error because that should
+            // hint the user they need to pick another name.
+            mParser.SendError(FFXILoginPacket::FFXI_ERROR_NAME_ALREADY_TAKEN);
+            throw std::runtime_error("Forbidden name.");
+        }
     }
     // Check if they're banned on that specific server
     LOG_DEBUG0("Checking whether the account is banned.");
@@ -893,10 +915,10 @@ void ViewHandler::ConfirmNewCharacter(const CONFIRM_CREATE_REQUEST_PACKET* pRequ
         }
         WorldDBObj->execute("COMMIT;");
     }
+    LOCK_DB;
     LOCK_SESSION;
     DBConnection DB = Database::GetDatabase();
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
-    LOCK_DB;
     // Update our local copy too
     LOG_DEBUG0("Removing old characters from local cache.");
     strSqlQueryFmt = "DELETE FROM %schars WHERE content_id = %u;";
@@ -988,6 +1010,26 @@ void ViewHandler::DeleteCharacter(const DELETE_REQUEST_PACKET* pRequestPacket)
         // Need to find the specific error
         mParser.SendError(FFXILoginPacket::FFXI_ERROR_MAP_CONNECT_FAILED);
         return;
+    }
+    // Check whether the character has been created too recently
+    // (in order to avoid character create-delete spam)
+    uint32_t deleteCooldown = Config->GetConfigUInt("delete_char_cooldown");
+    if (deleteCooldown != 0) {
+        strSqlQueryFmt = "SELECT TIMESTAMPDIFF(MINUTE, timecreated, NOW()) FROM %schars WHERE charid = %u;";
+        strSqlFinalQuery = FormatString(&strSqlQueryFmt,
+            pcszWorldPrefix,
+            dwCharacterID);
+        mariadb::result_set_ref pResultSet = WorldDB->GetDatabase()->query(strSqlFinalQuery);
+        if (pResultSet->row_count() != 0) {
+            pResultSet->next();
+            int64_t createDiff = pResultSet->get_signed64(0);
+            if (createDiff >= 0 && (unsigned)createDiff < deleteCooldown) {
+                LOG_ERROR("The character has been created too recently and cannot be deleted.");
+                // Probably no specific error in the client so send a generic error
+                mParser.SendError(FFXILoginPacket::FFXI_ERROR_MAP_CONNECT_FAILED);
+                return;
+            }
+        }
     }
     if (bRealDelete) {
         LOG_DEBUG0("Deleting character from local cahce.");

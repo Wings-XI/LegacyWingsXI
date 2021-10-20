@@ -28,10 +28,10 @@ function onSpellCast(caster, target, spell)
     local power = 25
     local duration = 90
 
-    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
-        duration = duration + duration * caster:getMerit(tpz.merit.DIFFUSION) / 100
-        caster:delStatusEffect(tpz.effect.DIFFUSION)
-    end
+     if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+         duration = duration + duration * caster:getMeritCount(tpz.merit.DIFFUSION) / 100
+         caster:delStatusEffect(tpz.effect.DIFFUSION)
+     end
 
     if target:hasStatusEffect(tpz.effect.REGEN) and target:getStatusEffect(tpz.effect.REGEN):getTier() == 1 then
         target:delStatusEffect(tpz.effect.REGEN)
