@@ -1184,6 +1184,34 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         }
         break;
     }
+
+    case LATENT_HOME_NATION:
+    {
+        //player is logging in/zoning
+        if (m_POwner->loc.zone == nullptr)
+        {
+            break;
+        }
+
+        auto region = (REGIONTYPE)latentEffect.GetConditionsValue();
+
+        switch (region)
+        {
+        case REGION_SANDORIA:
+            expression = m_POwner->profile.nation == 0;
+            break;
+        case REGION_BASTOK:
+            expression = m_POwner->profile.nation == 1;
+            break;
+        case REGION_WINDURST:
+            expression = m_POwner->profile.nation == 2;
+            break;
+        default:
+            break;
+        }
+        break;
+    }
+
     case LATENT_MP_OVER:
         expression = m_POwner->health.mp >= latentEffect.GetConditionsValue();
         break;
