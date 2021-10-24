@@ -27,11 +27,12 @@ zones[tpz.zone.QUFIM_ISLAND] =
         NOW_THAT_NIGHT_HAS_FALLEN      = 7329,  -- Now that night has fallen, the flowers bloom with a strange glow.
         CONQUEST                       = 7377,  -- You've earned conquest points!
         AN_EMPTY_LIGHT_SWIRLS          = 7736,  -- An empty light swirls about the cave, eating away at the surroundings...
+        NOTHER_OUT_OF_THE_ORDINARY     = 7738,  -- You find nothing out of the ordinary.
         GIGANTIC_FOOTPRINT             = 7820,  -- There is a gigantic footprint here.
         DYNA_NPC_DEFAULT_MESSAGE       = 7834,  -- You hear a mysterious, floating voice: Bring forth the <item>...
-        CONNECTING_WITH_THE_SERVER     = 7838, -- Connecting with the server. Please wait.
-        UNABLE_TO_CONNECT              = 7839, -- Unable to connect
-        ANOTHER_GROUP                  = 7841, -- Another group of players is currently occupying [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].
+        CONNECTING_WITH_THE_SERVER     = 7838,  -- Connecting with the server. Please wait.
+        UNABLE_TO_CONNECT              = 7839,  -- Unable to connect
+        ANOTHER_GROUP                  = 7841,  -- Another group of players is currently occupying [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].
         INFORMATION_RECORDED           = 7842,
         YOU_CANNOT_ENTER_DYNAMIS       = 7846,  -- You cannot enter Dynamis - [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia] for <number> [day/days] (Vana'diel time).
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 7848,  -- Players who have not reached level <number> are prohibited from entering Dynamis.
@@ -45,6 +46,15 @@ zones[tpz.zone.QUFIM_ISLAND] =
     },
     mob =
     {
+        -- Gatherer of Light (II) (ACP4)
+        SEED_MANDRAGORA =
+        {
+            17293643,
+            17293644,
+            17293645,
+            17293646,
+            17293647,
+        },
         SLIPPERY_SUCKER_PH =
         {
             [17293376] = 17293389,

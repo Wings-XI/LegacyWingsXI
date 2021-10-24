@@ -3225,6 +3225,11 @@ INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 645);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 646);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 647);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 648);
+-- INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2415);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2416);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2417);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2418);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2419);
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
@@ -3270,7 +3275,6 @@ INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
-
 
 --
 -- Indexes for dumped tables

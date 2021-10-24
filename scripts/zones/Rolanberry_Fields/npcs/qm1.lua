@@ -12,15 +12,11 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if
-        not GetMobByID(ID.mob.CHUGLIX_BERRYPAWS):isSpawned() and
-        player:hasKeyItem(tpz.ki.JUG_OF_GREASY_GOBLIN_JUICE) and
-        not player:hasKeyItem(tpz.ki.SEEDSPALL_CAERULUM) and
-        not player:hasKeyItem(tpz.ki.VIRIDIAN_KEY)
-    then
+    if not GetMobByID(ID.mob.CHUGLIX_BERRYPAWS):isSpawned() and player:hasKeyItem(tpz.ki.JUG_OF_GREASY_GOBLIN_JUICE) and not player:hasKeyItem(tpz.ki.SEEDSPALL_CAERULUM) and not player:hasKeyItem(tpz.ki.VIRIDIAN_KEY) then
+        player:messageSpecial(ID.text.FOREBODING)
         SpawnMob(ID.mob.CHUGLIX_BERRYPAWS):updateClaim(player)
     else
-        player:messageSpecial(ID.text.NOTHING_HAPPENS)
+        player:messageSpecial(ID.text.NOTHING_HAPPENS) -- NOTHING_OUT_OF_ORDINARY
     end
 end
 

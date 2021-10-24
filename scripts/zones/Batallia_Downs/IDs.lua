@@ -16,6 +16,7 @@ zones[tpz.zone.BATALLIA_DOWNS] =
         GIL_OBTAINED             = 6411,  -- Obtained <number> gil.
         KEYITEM_OBTAINED         = 6413,  -- Obtained key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY  = 6424,  -- There is nothing out of the ordinary here.
+        FOREBODING               = 6425,  -- You are suddenly overcome with a sense of foreboding...
         FELLOW_MESSAGE_OFFSET    = 6439,  -- I'm ready. I suppose.
         CARRIED_OVER_POINTS      = 7021, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY  = 7022, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>

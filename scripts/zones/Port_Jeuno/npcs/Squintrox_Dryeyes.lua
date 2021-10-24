@@ -35,7 +35,7 @@ function onTrade(player, npc, trade)
     if (ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA ==0) then
         player:showText(npc, ID.text.GET_LOST)
     else    -- Crimson Key: Trade Seedspall's Lux, Luna, Astrum
-        if (ENABLE_ACP == 1 and sLux and sLuna and sAstrum and count == 3 and ACPm >= tpz.mission.id.acp.GATHERER_OF_LIGHT_I and CrimsonKey == false and now ~= LastCrimson) then -- and timer stuff here) then
+        if sLux and sLuna and sAstrum and count == 3 and ACPm >= tpz.mission.id.acp.GATHERER_OF_LIGHT_I and CrimsonKey == false and now ~= LastCrimson then -- and timer stuff here) then
             player:tradeComplete()
             player:addKeyItem(tpz.ki.CRIMSON_KEY)
             player:setCharVar("LastCrimsonKey", os.date("%j"))

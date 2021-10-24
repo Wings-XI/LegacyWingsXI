@@ -387,7 +387,7 @@ tpz.mission.id =
         THOSE_WHO_LURK_IN_SHADOWS_III = 6, -- ± --
         REMEMBER_ME_IN_YOUR_DREAMS    = 7, -- ± --
         BORN_OF_HER_NIGHTMARES        = 8, -- ± --
-        BANISHING_THE_ECHO            = 9,
+        BANISHING_THE_ECHO            = 9, -- ± --
         ODE_OF_LIFE_BESTOWING         = 10,
         A_CRYSTALLINE_PROPHECY_FIN    = 11,
     },
