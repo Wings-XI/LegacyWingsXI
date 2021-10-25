@@ -139,6 +139,7 @@ local optionToAugment =
     },
 }
 
+-- No good data on augments.  Just pulled from each key on: https://ffxiclopedia.fandom.com/wiki/Treasure_Coffer_(Tenshodo)
 local prizes =
 {
     [tpz.ki.CRIMSON_KEY] =
@@ -174,12 +175,12 @@ local prizes =
     },
     [tpz.ki.VIRIDIAN_KEY] =
     {
-        {cutoff =   65, itemId = 13639}, -- Aurora Mantle
-        {cutoff =  142, itemId = 13271}, -- Corsette
-        {cutoff =  237, itemId = 12364}, -- Nymph Shield
-        {cutoff =  356, itemId = 13570}, -- Ram Mantle
-        {cutoff =  457, itemId = 13198}, -- Swordbelt
-        {cutoff =  463, itemId = 13207}, -- Brocade Obi
+        {cutoff =   65, itemId = 13639, augments = {{ 9, 0, 19}, {  1, 0, 19}, { 40, 0,  1}, {771, 0, 6}, {768, 0,  6}, { 34, 2, 3}}}, -- Aurora Mantle
+        {cutoff =  142, itemId = 13271, augments = {{23, 0,  2}, { 31, 0,  1}, {  9, 0, 13}, { 26, 0, 1}, {  1, 0, 12}, { 49, 0, 2}}}, -- Corsette
+        {cutoff =  237, itemId = 12364, augments = {{ 9, 0,  9}, {517, 0,  0}, {516, 0,  0}, {512, 0, 0}, {518, 0,  0}, { 35, 0, 1}}}, -- Nymph Shield
+        {cutoff =  356, itemId = 13570, augments = {{ 5, 0,  5}, { 13, 0, 10}, {515, 0,  0}, {513, 0, 0}, { 23, 0,  3}, { 27, 0, 3}}}, -- Ram Mantle
+        {cutoff =  457, itemId = 13198, augments = {{ 1, 0,  4}, {512, 0,  1}, {513, 0,  1}, {514, 0, 0}, { 24, 0,  2}, { 29, 0, 3}}}, -- Swordbelt
+        {cutoff =  463, itemId = 13207, augments = {{ 1, 0,  3}, {  9, 0, 11}, { 35, 0,  2}, {290, 0, 2}, { 50, 0,  1}, {100, 0, 2}}}, -- Brocade Obi
         {cutoff =  469, itemId =   793}, -- Black Pearl
         {cutoff =  497, itemId =   775}, -- Black Rock
         {cutoff =  515, itemId =   770}, -- Blue Rock
@@ -204,11 +205,11 @@ local prizes =
     },
     [tpz.ki.AMBER_KEY] =
     {
-        {cutoff = 111, itemId = 16263}, -- Beak Necklace
-        {cutoff = 219, itemId = 13207}, -- Brocade Obi
-        {cutoff = 334, itemId = 13091}, -- Carapace Gorget
-        {cutoff = 436, itemId = 13445}, -- Gold Ring
-        {cutoff = 561, itemId = 13593}, -- Raptor Mantle
+        {cutoff = 111, itemId = 16263, augments = {{  9, 0, 12}, { 35, 0,  1}, {516, 0, 1}, {518, 0, 1}, {517, 0, 1}, { 97, 0, 4}, { 39, 0, 1}}}, -- Beak Necklace
+        {cutoff = 219, itemId = 13207, augments = {{  1, 0, 11}, {  9, 0, 11}, { 35, 0, 2}, {290, 0, 2}, { 50, 0, 0}, {100, 0, 2}             }}, -- Brocade Obi
+        {cutoff = 334, itemId = 13091, augments = {{513, 0,  0}, {512, 0,  2}, { 25, 0, 6}, { 29, 0, 6}, {142, 0, 1}, { 24, 0, 3}, {773, 0, 5}}}, -- Carapace Gorget
+        {cutoff = 436, itemId = 13445, augments = {{  9, 0, 13}, {517, 0,  1}, { 35, 0, 2}, { 39, 0, 1}, {516, 0, 1}, {518, 0, 1}             }}, -- Gold Ring
+        {cutoff = 561, itemId = 13593, augments = {{  1, 0, 29}, {513, 0,  1}, {520, 0, 1}, {515, 0, 2}, {514, 0, 2}, { 39, 0, 1}, {772, 0, 5}}}, -- Raptor Mantle
         {cutoff = 564, itemId =   887}, -- Coral Fragment
         {cutoff = 576, itemId =   645}, -- Darksteel Ore
         {cutoff = 599, itemId =   902}, -- Demon Horn
@@ -231,11 +232,11 @@ local prizes =
     },
     [tpz.ki.AZURE_KEY] =
     {
-        {cutoff = 106, itemId = 13597}, -- Beak Mantle
-        {cutoff = 203, itemId = 13092}, -- Coeurl Gorget
-        {cutoff = 305, itemId = 13447}, -- Platinum Ring
-        {cutoff = 386, itemId = 13208}, -- Rainbow Obi
-        {cutoff = 490, itemId = 13125}, -- Torque
+        {cutoff = 106, itemId = 13597, augments = {{512, 0,  1}, {513, 0,  1}, { 26, 0, 5}, { 23, 0, 6}, { 31, 0, 6}, {195, 0, 1}}}, -- Beak Mantle
+        {cutoff = 203, itemId = 13092, augments = {{515, 0,  3}, { 23, 0,  7}, { 27, 0, 7}, { 30, 0, 3}, {195, 0, 1}, {771, 0, 3}}}, -- Coeurl Gorget
+        {cutoff = 305, itemId = 13447, augments = {{  1, 0,  9}, {512, 0,  1}, {513, 0, 1}, {514, 0, 1}, { 26, 0, 2}, { 23, 0, 2}}}, -- Platinum Ring
+        {cutoff = 386, itemId = 13208, augments = {{  9, 0, 19}, {516, 0,  4}, {517, 0, 4}, {518, 0, 4}, { 36, 0, 2}, { 52, 0, 2}}}, -- Rainbow Obi
+        {cutoff = 490, itemId = 13125, augments = {{  5, 0, 13}, {  9, 0, 12}, {515, 0, 2}, {516, 0, 1}, {517, 0, 1}, {518, 0, 1}}}, -- Torque
         {cutoff = 498, itemId =   791}, -- Aquamarine
         {cutoff = 502, itemId =   801}, -- Chrysoberyl
         {cutoff = 536, itemId =   654}, -- Darksteel Ingot
@@ -256,14 +257,14 @@ local prizes =
     },
     [tpz.ki.IVORY_KEY] =
     {
-        {cutoff =   62, itemId = 13357}, -- Angels Earring
-        {cutoff =   70, itemId = 13356}, -- Death Earring
-        {cutoff =  113, itemId = 13353}, -- Diamond Earring
-        {cutoff =  196, itemId = 13351}, -- Emerald Earring
-        {cutoff =  301, itemId = 13352}, -- Ruby Earring
-        {cutoff =  392, itemId = 13355}, -- Sapphire Earring
-        {cutoff =  478, itemId = 13354}, -- Spinel Earring
-        {cutoff =  497, itemId = 13318}, -- Topaz Earring
+        {cutoff =   62, itemId = 13357, augments = {{518, 0, 1}, { 40, 0, 1}, {  1, 0,  9}, {  9, 0, 9}, {105, 0, 1}, {106, 0, 0}, {34, 0, 3}}}, -- Angels Earring
+        {cutoff =   70, itemId = 13356, augments = {{ 33, 0, 3}, { 39, 0, 1}, {  1, 0,  9}, {  9, 0, 9}, {104, 0, 1}, {521, 0, 1}            }}, -- Death Earring
+        {cutoff =  113, itemId = 13353, augments = {{516, 0, 1}, {515, 0, 0}, {133, 0,  1}, {  9, 0, 5}, { 36, 0, 0}, {101, 0, 1}            }}, -- Diamond Earring
+        {cutoff =  196, itemId = 13351, augments = {{515, 0, 1}, { 31, 0, 4}, { 98, 0,  4}, { 27, 0, 2}, {514, 0, 0}, { 30, 0, 1}            }}, -- Emerald Earring
+        {cutoff =  301, itemId = 13352, augments = {{ 25, 0, 4}, {516, 0, 0}, { 97, 0,  4}, { 29, 0, 4}, {512, 0, 1}, { 24, 0, 2}            }}, -- Ruby Earring
+        {cutoff =  392, itemId = 13355, augments = {{ 35, 0, 1}, {517, 0, 1}, {  9, 0,  5}, {100, 0, 1}, {512, 0, 0}, {  5, 0, 6}            }}, -- Sapphire Earring
+        {cutoff =  478, itemId = 13354, augments = {{ 23, 0, 2}, {513, 0, 1}, {517, 0,  0}, { 96, 0, 2}, {142, 0, 0}, {195, 0, 1}, {26, 0, 4}}}, -- Spinel Earring
+        {cutoff =  497, itemId = 13318, augments = {{ 33, 0, 4}, {513, 0, 0}, {  1, 0, 19}, { 99, 0, 4}, {514, 0, 1}, { 32, 0, 2}            }}, -- Topaz Earring
         {cutoff =  546, itemId =  1110}, -- Beetle Blood
         {cutoff =  602, itemId =   823}, -- Gold Thread
         {cutoff =  627, itemId =  1465}, -- Granite
@@ -278,14 +279,14 @@ local prizes =
     },
     [tpz.ki.EBON_KEY] =
     {
-        {cutoff =  31, itemId = 13463}, -- Angels Ring
-        {cutoff =  82, itemId = 13462}, -- Death Ring
-        {cutoff = 174, itemId = 13450}, -- Diamond Ring
-        {cutoff = 225, itemId = 13448}, -- Emerald Ring
-        {cutoff = 296, itemId = 13449}, -- Ruby Ring
-        {cutoff = 357, itemId = 13452}, -- Sapphire Ring
-        {cutoff = 459, itemId = 13451}, -- Spinel Ring
-        {cutoff = 500, itemId = 13453}, -- Topaz Ring
+        {cutoff =  31, itemId = 13463, augments = {{783, 0, 29}, { 40, 0, 1}, {  1, 0, 19}, {518, 0, 0}, { 23, 1, 5}, { 96, 0, 3}                                      }}, -- Angels Ring
+        {cutoff =  82, itemId = 13462, augments = {{782, 0, 29}, {525, 0, 2}, {  9, 0, 19}, { 33, 0, 6}, { 31, 0, 4}, { 39, 0, 0}                                      }}, -- Death Ring
+        {cutoff = 174, itemId = 13450, augments = {{776, 0, 29}, {519, 0, 4}, {  9, 0,  9}, {515, 0, 2}, {516, 0, 0}, {517, 0, 1}                                      }}, -- Diamond Ring
+        {cutoff = 225, itemId = 13448, augments = {{777, 0, 29}, {523, 0, 4}, {  1, 0,  8}, {512, 0, 1}, {514, 0, 2}, {515, 0, 0}                                      }}, -- Emerald Ring
+        {cutoff = 296, itemId = 13449, augments = {{781, 0, 29}, {524, 0, 1}, {  1, 0,  9}, {512, 0, 0}, {513, 0, 1}, {516, 0, 2}                                      }}, -- Ruby Ring
+        {cutoff = 357, itemId = 13452, augments = {{780, 0, 29}, {  9, 0, 9}, {519, 0,  2}, {520, 0, 3}, {517, 0, 0}, {518, 0, 2}                                      }}, -- Sapphire Ring
+        {cutoff = 459, itemId = 13451, augments = {{779, 0, 29}, {  1, 0, 9}, {513, 0,  0}, {521, 0, 0}, {515, 0, 1}, {517, 0, 2}, { 23, 0, 0}, {195, 0, 1}, {96, 0, 1}}}, -- Spinel Ring
+        {cutoff = 500, itemId = 13453, augments = {{778, 0, 29}, {522, 0, 5}, {771, 0,  8}, {  1, 0, 9}, {513, 0, 1}, {514, 0, 0}, {516, 0, 2}                         }}, -- Topaz Ring
         {cutoff = 510, itemId =   655}, -- Adaman Ingot
         {cutoff = 541, itemId =   813}, -- Angelstone
         {cutoff = 561, itemId =   645}, -- Darksteel Ore
@@ -615,9 +616,13 @@ function scenarioArmor(player, option, giveToPlayer)
             table.insert(addAug, augment2[i].power)
         end
 
-        player:addItem(optionToGear[gear].itemid, 1, unpack(addAug))
-        player:messageSpecial(ID.text.ITEM_OBTAINED, optionToGear[gear].itemid)
-        player:delKeyItem(({tpz.ki.PRISMATIC_KEY,tpz.ki.OXBLOOD_KEY,tpz.ki.BEHEMOTH_KEY})[addon])
+        if player:getFreeSlotsCount() == 0 then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, optionToGear[gear].itemid)
+        else
+            player:addItem(optionToGear[gear].itemid, 1, unpack(addAug))
+            player:messageSpecial(ID.text.ITEM_OBTAINED, optionToGear[gear].itemid)
+            player:delKeyItem(({tpz.ki.PRISMATIC_KEY,tpz.ki.OXBLOOD_KEY,tpz.ki.BEHEMOTH_KEY})[addon])
+        end
     else
         -- Convert each augment's power and ID to binary (5 bits for power followed by 11 bits for ID)
         for i = 1, #augment1 do
