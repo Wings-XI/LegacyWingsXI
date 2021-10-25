@@ -20,13 +20,16 @@ end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
+        local now = tonumber(os.date("%j"))
+        local lastIvory = player:getCharVar("LastIvoryKey")
+
         player:addExp(700)
         if player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
             if player:getCurrentMission(ACP) == tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III then
                 player:completeMission(ACP, tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III)
                 player:addMission(ACP, tpz.mission.id.acp.REMEMBER_ME_IN_YOUR_DREAMS)
             end
-            if not player:hasKeyItem(tpz.ki.IVORY_KEY) and player:getCurrentMission(ACP) >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III then
+            if not player:hasKeyItem(tpz.ki.IVORY_KEY) and now ~= lastIvory and player:getCurrentMission(ACP) >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III then
                 player:setCharVar("LastIvoryKey", os.date("%j"))
                 player:addKeyItem(tpz.ki.IVORY_KEY)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.IVORY_KEY)

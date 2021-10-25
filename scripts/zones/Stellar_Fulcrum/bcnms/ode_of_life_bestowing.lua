@@ -21,10 +21,13 @@ end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then -- play end CS. Need time and battle id for record keeping + storage
+        local now = tonumber(os.date("%j"))
+        local lastEbon = player:getCharVar("LastEbonKey")
+
         player:addExp(750)
         if player:hasKeyItem(tpz.ki.OMNIS_STONE) then
             if player:getCurrentMission(ACP) >= tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING then
-                if not player:hasKeyItem(tpz.ki.EBON_KEY) then
+                if not player:hasKeyItem(tpz.ki.EBON_KEY) and now ~= lastEbon then
                     player:setCharVar("LastEbonKey", os.date("%j"))
                     player:addKeyItem(tpz.ki.EBON_KEY)
                     player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.EBON_KEY)

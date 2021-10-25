@@ -44,17 +44,18 @@ function onTrigger(player, npc)
     elseif (needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
         player:messageSpecial(ID.text.YOU_REACH_FOR_THE_LIGHT)
     elseif (ACP >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II and not utils.mask.getBit(progressMask, offset)) then
-        player:setCharVar("SEED_AFTERGLOW_MASK", utils.mask.setBit(progressMask, offset, true))
         intensity = intensity + 1
         if (intensity == 9) then
             player:startEvent(28)
         elseif (not needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
+            player:setCharVar("SEED_AFTERGLOW_MASK", utils.mask.setBit(progressMask, offset, true))
             player:setCharVar("SEED_AFTERGLOW_INTENSITY", intensity)
             player:messageSpecial(ID.text.YOU_REACH_OUT_TO_THE_LIGHT, 0)
             player:addStatusEffectEx(tpz.effect.MARK_OF_SEED, 0, 0, 30, 1800)
             player:needToZone(true)
             player:messageSpecial(ID.text.THE_LIGHT_DWINDLES, 0)
         else
+            player:setCharVar("SEED_AFTERGLOW_MASK", utils.mask.setBit(progressMask, offset, true))
             player:setCharVar("SEED_AFTERGLOW_INTENSITY", intensity)
             player:messageSpecial(ID.text.EVEN_GREATER_INTENSITY, offset)
         end
@@ -69,13 +70,27 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 28 then
-        player:delStatusEffectSilent(tpz.effect.MARK_OF_SEED)
-
         if option == 100 then
-            player:messageSpecial(ID.text.SCINTILLATING_BURST_OF_LIGHT)
-            npcUtil.giveKeyItem(player, tpz.ki.MARK_OF_SEED)
+            if not player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
+                player:messageSpecial(ID.text.SCINTILLATING_BURST_OF_LIGHT)
+                npcUtil.giveKeyItem(player, tpz.ki.MARK_OF_SEED)
+                player:delStatusEffectSilent(tpz.effect.MARK_OF_SEED)
+                player:setCharVar("SEED_AFTERGLOW_TIMER", 0)
+                player:setCharVar("SEED_AFTERGLOW_MASK", 0)
+                player:setCharVar("SEED_AFTERGLOW_INTENSITY", 0)
+            end
         elseif option == 200 then
-            npcUtil.giveKeyItem(player, tpz.ki.AZURE_KEY)
+            local now = tonumber(os.date("%j"))
+            local lastAzure = player:getCharVar("LastAzureKey")
+
+            if not player:hasKeyItem(tpz.ki.AZURE_KEY) and now ~= lastAzure then
+                player:setCharVar("LastAzureKey", os.date("%j"))
+                npcUtil.giveKeyItem(player, tpz.ki.MARK_OF_SEED)
+                player:delStatusEffectSilent(tpz.effect.MARK_OF_SEED)
+                player:setCharVar("SEED_AFTERGLOW_TIMER", 0)
+                player:setCharVar("SEED_AFTERGLOW_MASK", 0)
+                player:setCharVar("SEED_AFTERGLOW_INTENSITY", 0)
+            end
         end
     end
 end
