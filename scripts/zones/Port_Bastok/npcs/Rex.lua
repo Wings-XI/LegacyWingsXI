@@ -5,10 +5,11 @@
 -----------------------------------
 local ID = require("scripts/zones/Port_Bastok/IDs")
 require("scripts/globals/magic_maps")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

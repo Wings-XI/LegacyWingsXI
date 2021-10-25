@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -293,7 +293,7 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         speed /= 2;
     }
 
-    float stepDistance = ((float)speed / 10) / 2;
+    float stepDistance = speed / 24.5f; // 40 ms means 4 units per second, so 1.6 units per step (server tick rate is 2.5/sec)
     float distanceTo = distance(m_PTarget->loc.p, pos);
 
     // face point mob is moving towards

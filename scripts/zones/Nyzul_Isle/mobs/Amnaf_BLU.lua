@@ -43,7 +43,7 @@ function onMobEngaged(mob, target)
     -- Stage AI flags
     local form = mob:getLocalVar("SegmentChanged")
     local form1Gears = mob:getLocalVar("Form1Gears")
-    local form1Gears = mob:getLocalVar("Form2Gears")
+    local form2Gears = mob:getLocalVar("Form2Gears")
 
     -- 4 gears spawn on Stage 1 of the Fight
     if (form1Gears == 0) then
@@ -58,6 +58,7 @@ function onMobEngaged(mob, target)
 
     -- 4 more gears spawn on Stage 2 of the Fight
     if (form == 1 and form2Gears == 0) then
+        local instance = mob:getInstance()
         mob:showText(mob, ID.text.SURRENDER)
         local gear = SpawnMob(ID.mob[58].IMPERIAL_GEAR1, instance)
         gear:updateEnmity(target)

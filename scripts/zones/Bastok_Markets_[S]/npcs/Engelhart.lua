@@ -22,7 +22,8 @@ function onTrigger(player, npc)
         else
             player:startEvent(117)
         end
-    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.BETTER_PART_OF_VALOR) == QUEST_COMPLETED and player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_AVAILABLE) then
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.BETTER_PART_OF_VALOR) == QUEST_COMPLETED and player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_AVAILABLE and
+            playerNeedsToZoneOrWaitADay(player) == false) then
             player:startEvent(120)
     elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_ACCEPTED) then
         if (player:getCharVar("FiresOfDiscProg") < 2) then
@@ -38,8 +39,16 @@ function onTrigger(player, npc)
         elseif (player:getCharVar("FiresOfDiscProg") == 6) then
             player:startEvent(164)
         end
-    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT) == QUEST_COMPLETED) then
-        player:startEvent(165)
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
+        player:startEvent(18)
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
+        player:startEvent(18)
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.BURDEN_OF_SUSPICION) == QUEST_ACCEPTED) then
+        if (player:getCharVar("BurdenOfSuspicion") == 1) then
+            player:startEvent(32)
+        else
+            player:startEvent(33)
+        end
     else
         player:startEvent(104)
     end
@@ -47,6 +56,14 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+end
+
+function playerNeedsToZoneOrWaitADay(player)
+    if (player:needToZone() == true or player:getCharVar("WotG_Bastok_DayWait") == VanadielDayOfTheYear()) then
+        return true
+    else
+        return false
+    end
 end
 
 function onEventFinish(player, csid, option)
@@ -62,6 +79,7 @@ function onEventFinish(player, csid, option)
         player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE*10000)
         player:setCharVar("BetterPartOfValProg", 0)
         player:needToZone(true)
+        player:setCharVar("WotG_Bastok_DayWait", VanadielDayOfTheYear())
     elseif (csid == 120) then
         player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.FIRES_OF_DISCONTENT)
         player:delKeyItem(tpz.ki.WARNING_LETTER)
@@ -74,5 +92,9 @@ function onEventFinish(player, csid, option)
         player:addGil(GIL_RATE*10000)
         player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE*10000)
         player:setCharVar("FiresOfDiscProg", 0)
+        player:needToZone(true)
+        player:setCharVar("WotG_Bastok_DayWait", VanadielDayOfTheYear())
+    elseif (csid == 32) then
+        player:setCharVar("BurdenOfSuspicion", 2)
     end
 end

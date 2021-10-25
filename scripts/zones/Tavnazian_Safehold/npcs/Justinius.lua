@@ -41,6 +41,10 @@ function onTrigger(player, npc)
     elseif player:hasCompletedMission(COP, tpz.mission.id.cop.THE_SAVAGE) and player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.UNINVITED_GUESTS) == QUEST_AVAILABLE then
         player:startEvent(570) -- Intial Uninvited Quest CS
     elseif uninvitedGuests == 1 then
+        if not player:hasKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT) then
+            player:addKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MONARCH_LINN_PATROL_PERMIT)
+        end
         player:startEvent(571) -- Reminds player to go to Monarch Linn
     elseif uninvitedGuests == 2 then 
         player:startEvent(572) -- Uninvited Guests Victory
@@ -104,6 +108,7 @@ function onEventFinish(player, csid, option)
         end
     elseif csid == 574 or (csid == 573 and option == 1) then
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MONARCH_LINN_PATROL_PERMIT)
+        player:addKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT)
         player:setCharVar("UninvitedGuestsStatus", 1) -- accepted
     elseif csid == 575 then
         if player:getCharVar("UninvitedGuestsStatus") == 3 then

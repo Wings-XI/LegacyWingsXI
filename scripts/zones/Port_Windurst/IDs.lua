@@ -72,12 +72,54 @@ zones[tpz.zone.PORT_WINDURST] =
         ALIZABE_COP_NOT_COMPLETED       = 12876, -- It won't be long before I set up shop right here in this very place. And once I start, there won't be no stoppin' me!
         RETRIEVE_DIALOG_ID              = 15881, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL           = 16281, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                  = 12914, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                  = 12917, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                 = 12921, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN         = 12922, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {
     },
     npc =
     {
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17760485] = 17760485,  -- Sunbreeze Festival Fireworks
+            [17760470] = 17760470,  -- Sunbreeze Festival Tree
+            [17760471] = 17760471,  -- Sunbreeze Festival Tree
+            [17760472] = 17760472,  -- Sunbreeze Festival Tree
+            [17760473] = 17760473,  -- Sunbreeze Festival Tree
+            [17760474] = 17760474,  -- Sunbreeze Festival Tree
+            [17760475] = 17760475,  -- Sunbreeze Festival Tree
+            [17760476] = 17760476,  -- Sunbreeze Festival Tree
+            [17760477] = 17760477,  -- Sunbreeze Festival Tree
+            [17760478] = 17760478,  -- Sunbreeze Festival Tree
+            [17760479] = 17760479,  -- Sunbreeze Festival Tree
+            [17760480] = 17760480,  -- Sunbreeze Festival Tree
+            [17760481] = 17760481,  -- Sunbreeze Festival Tree
+            [17760482] = 17760482,  -- Sunbreeze Festival Tree
+            [17760483] = 17760483,  -- Sunbreeze Festival Tree
+            [17760484] = 17760484,  -- Sunbreeze Festival Tree
+        },
+        STARLIGHT_DECORATIONS = 
+        {
+            [17760486] = 17760486,  -- Starlight Festival Tree
+            [17760487] = 17760487,  -- Starlight Festival Tree
+            [17760488] = 17760488,  -- Starlight Festival Tree
+            [17760489] = 17760489,  -- Starlight Festival Tree
+            [17760490] = 17760490,  -- Starlight Festival Tree
+            [17760491] = 17760491,  -- Starlight Festival Tree
+            [17760492] = 17760492,  -- Starlight Festival Tree
+            [17760493] = 17760493,  -- Starlight Festival Tree
+            [17760494] = 17760494,  -- Starlight Festival Tree
+            [17760495] = 17760495,  -- Starlight Festival Tree
+            [17760496] = 17760496,  -- Starlight Festival Tree
+            [17760497] = 17760497,  -- Starlight Festival Tree
+            [17760498] = 17760498,  -- Starlight Festival Tree
+            [17760499] = 17760499,  -- Starlight Festival Tree
+            [17760500] = 17760500,  -- Starlight Festival Tree
+        },
         EXPLORER_MOOGLE = 17760450,
     },
 }

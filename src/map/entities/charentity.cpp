@@ -1301,7 +1301,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
 
-        if (PAbility->getMeritModID() > 0)
+        //Ignore SMN Group 2 Merits specifically until we can long term fix merits that serve dual purpose
+        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631)
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
@@ -1345,11 +1346,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         // remove invisible if aggressive
-        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
+        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
         {
             if (PAbility->getValidTarget() & TARGET_ENEMY) {
                 // aggressive action
-                StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                if (PAbility->getID() != ABILITY_ASSAULT)
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                else 
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK) {
                 // remove invisible only

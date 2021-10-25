@@ -25,7 +25,7 @@ function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_NONE
     params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.HTH
+    params.damageType = tpz.damageType.H2H
     params.scattr = SC_REVERBERATION
     params.spellLevel = 69
     params.numhits = 1
@@ -41,14 +41,14 @@ function onSpellCast(caster, target, spell)
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
-    
+
     local damage = 0
     local hitslanded = 0
     local taChar = nil
     damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
-    
+
     params = {}
     params.eco = ECO_NONE
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
@@ -57,7 +57,7 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    
+
     local duration =  math.ceil(4 * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, math.ceil(duration*resist))

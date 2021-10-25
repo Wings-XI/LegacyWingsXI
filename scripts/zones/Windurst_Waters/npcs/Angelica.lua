@@ -47,12 +47,12 @@ function onTrigger(player, npc)
     local currentBody = player:getEquipID(tpz.slot.BODY)
 
     -- pre-quest CS
-    if aPose == QUEST_AVAILABLE and aPoseProg == 0 and not player:needToZone() and currentBody ~= desiredBody then
-        player:startEvent(87) -- pre-quest CS
+    if aPose == QUEST_AVAILABLE and aPoseProg == 0 and currentBody ~= desiredBody and not player:needToZone() then
+        player:startEvent(91) -- pre-quest CS
 
     -- start quest
     elseif aPose == QUEST_AVAILABLE and aPoseProg == 1 and currentBody ~= desiredBody then
-        player:startEvent(92, 0, 0, 0, desiredBody)
+        player:startEvent(92, 0, desiredBody, 0, desiredBody, desiredBody, desiredBody, desiredBody)
 
     -- check in during quest
     elseif aPose == QUEST_ACCEPTED then
@@ -61,7 +61,8 @@ function onTrigger(player, npc)
             if currentBody == player:getCharVar("QuestAPoseByOtherName_equip") then
                 player:startEvent(96) -- complete quest
             else
-                player:startEvent(93, 0, desiredBody, 0, player:getCharVar("QuestAPoseByOtherName_equip")) -- reminder
+                desiredBody = player:getCharVar("QuestAPoseByOtherName_equip")
+                player:startEvent(93, 0, desiredBody, 0, desiredBody, desiredBody, desiredBody, desiredBody) -- reminder
             end
         else
             player:startEvent(102) -- fail quest
@@ -89,7 +90,7 @@ end
 
 function onEventFinish(player, csid, option)
     -- pre-quest CS
-    if csid == 87 then
+    if csid == 91 then
         player:setCharVar("QuestAPoseByOtherName_prog", 1)
 
     -- start quest

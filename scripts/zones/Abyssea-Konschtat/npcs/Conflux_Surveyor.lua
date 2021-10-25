@@ -15,7 +15,7 @@ function onTrigger(player, npc)
     local visitant = 0
     local prevtime = player:getCharVar("Abyssea_Time")
     local STONES = tpz.abyssea.getTravStonesTotal(player)
-    local SOJOURN = tpz.abyssea.getAbyssiteTotal(player, SOJOURN)
+    local SOJOURN = tpz.abyssea.getAbyssiteTotal(player, "SOJOURN")
 
     if player:hasStatusEffect(tpz.effect.VISITANT) then
         visitant = 60
@@ -28,6 +28,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    --[[
     local SOJOURN = tpz.abyssea.getAbyssiteTotal(player, "SOJOURN")
     local duration = 0
     local prevtime = player:getCharVar("Abyssea_Time") -- Gets reduced by Visitants "on tic".
@@ -76,4 +77,5 @@ function onEventFinish(player, csid, option)
             tpz.abyssea.spendTravStones(player, 4)
         end
     end
+    ]]
 end

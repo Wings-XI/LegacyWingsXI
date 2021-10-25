@@ -44,7 +44,7 @@ function onConquestUpdate(zone, updatetype)
 end
 
 function onZoneIn(player, prevZone)
-    cs = -1
+    local cs = -1
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(643, 0.1, -600)
     end
@@ -53,7 +53,6 @@ end
 
 function onRegionEnter(player,region)
     local regionID = region:GetRegionID()
-    local battlefield = player:getBattlefield()
     switch (regionID): caseof
     {
         [1] = function ()

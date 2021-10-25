@@ -15,7 +15,7 @@ end
 
 function onSpellCast(caster, target, spell)
 
-    target:addStatusEffect(tpz.effect.KLIMAFORM, 1, 0, 180)
+    target:addStatusEffect(tpz.effect.KLIMAFORM, 1, 0, 60)
 
     return tpz.effect.KLIMAFORM
 end

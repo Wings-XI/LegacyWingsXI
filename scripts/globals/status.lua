@@ -923,6 +923,8 @@ tpz.mod =
     MND                       = 13, -- Mind
     CHR                       = 14, -- Charisma
 
+    MAX_TP                    = 969, -- Modifies a battle entity's maximum tp
+
     -- Elemental Defenses
     -- 128 = 128 / 256 = 50% reduction
     FIREDEF                   = 15, -- Fire Defense
@@ -975,6 +977,7 @@ tpz.mod =
     PIERCERES                 = 50, -- Piercing Resistance
     IMPACTRES                 = 51, -- Impact Resistance
     HTHRES                    = 52, -- Hand-To-Hand Resistance
+    H2HRES                    = 52, -- Hand-To-Hand Resistance
 
     -- Damage Reduction to Elements
     -- Value is stored as a percentage of damage reduction (to within 1000)
@@ -1017,6 +1020,7 @@ tpz.mod =
 
     -- Working Skills (weapon combat skills)
     HTH                       = 80, -- Hand To Hand Skill
+    H2H                       = 80, -- Hand To Hand Skill
     DAGGER                    = 81, -- Dagger Skill
     SWORD                     = 82, -- Sword Skill
     GSWORD                    = 83, -- Great Sword Skill
@@ -2383,6 +2387,7 @@ tpz.damageType =
     SLASHING  = 2,
     BLUNT     = 3,
     HTH       = 4,
+    H2H       = 4,
     ELEMENTAL = 5,
     FIRE      = 6,
     ICE       = 7,
@@ -3012,6 +3017,7 @@ tpz.emote =
     DANCE2 = 66,
     DANCE3 = 67,
     DANCE4 = 68,
+    BELL = 73,
     JOB = 74
 }
 

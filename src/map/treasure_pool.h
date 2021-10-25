@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -77,6 +77,7 @@ public:
     void PassItem(CCharEntity* PChar, uint8 SlotID);
     bool HasLottedItem(CCharEntity* PChar, uint8 SlotID);
     bool HasPassedItem(CCharEntity* PChar, uint8 SlotID);
+    bool hasMember(CCharEntity* PChar);
     void AddMember(CCharEntity* PChar);
     void DelMember(CCharEntity* PChar);
     void UpdatePool(CCharEntity* PChar);

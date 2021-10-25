@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: The_Garden_of_RuHmet
 -- NPC:  _0z0
+-- !pos 419.992 0.000 397.858
 -----------------------------------
 
 require("scripts/globals/settings")

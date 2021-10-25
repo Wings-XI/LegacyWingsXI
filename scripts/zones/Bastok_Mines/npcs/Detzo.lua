@@ -8,9 +8,11 @@ require("scripts/globals/titles")
 require("scripts/globals/shop")
 require("scripts/globals/quests")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 
     Rivals = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.RIVALS)
 

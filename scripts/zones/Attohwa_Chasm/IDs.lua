@@ -42,6 +42,7 @@ zones[tpz.zone.ATTOHWA_CHASM] =
         TIAMAT              = 16806227,
         FEELER_ANTLION      = 16806242,
         XOLOTL              = 16806215,
+        CITIPATI            = 16806249,
     },
     npc =
     {

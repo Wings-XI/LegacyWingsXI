@@ -21179,6 +21179,7 @@ INSERT INTO `item_mods` VALUES (17565,2,1);
 INSERT INTO `item_mods` VALUES (17565,5,1);
 INSERT INTO `item_mods` VALUES (17566,2,5);
 INSERT INTO `item_mods` VALUES (17566,5,5);
+INSERT INTO `item_mods` VALUES (17566,431,1);
 INSERT INTO `item_mods` VALUES (17567,2,20);
 INSERT INTO `item_mods` VALUES (17567,5,20);
 INSERT INTO `item_mods` VALUES (17567,12,10);
@@ -22557,7 +22558,7 @@ INSERT INTO `item_mods` VALUES (18605,374,3);
 INSERT INTO `item_mods` VALUES (18606,13,1);
 INSERT INTO `item_mods` VALUES (18606,30,3);
 INSERT INTO `item_mods` VALUES (18607,5,8);
-INSERT INTO `item_mods` VALUES (18607,374,1);
+INSERT INTO `item_mods` VALUES (18607,374,6);     -- Cure potency +6%
 INSERT INTO `item_mods` VALUES (18608,2,5);
 INSERT INTO `item_mods` VALUES (18608,24,14);
 INSERT INTO `item_mods` VALUES (18608,27,-1);
@@ -23690,6 +23691,7 @@ INSERT INTO `item_mods` VALUES (19113,68,8);
 INSERT INTO `item_mods` VALUES (19113,227,2);
 INSERT INTO `item_mods` VALUES (19114,2,8);
 INSERT INTO `item_mods` VALUES (19114,10,2);
+INSERT INTO `item_mods` VALUES (19114,431,1);     -- Galkan Dagger additional effect
 INSERT INTO `item_mods` VALUES (19119,26,6);
 INSERT INTO `item_mods` VALUES (19120,14,2);
 INSERT INTO `item_mods` VALUES (19121,23,3);
@@ -52163,6 +52165,19 @@ INSERT INTO `item_mods` VALUES (17549,431,1);     -- wind staff additional effec
 INSERT INTO `item_mods` VALUES (16542,431,1);     -- wing sword additional effect
 INSERT INTO `item_mods` VALUES (17637,431,1);     -- wing sword +1 additional effect
 INSERT INTO `item_mods` VALUES (16556,431,1);     -- bloody blade additional effect
+INSERT INTO `item_mods` VALUES (16506,431,1);     -- Stun Kukri
+INSERT INTO `item_mods` VALUES (17614,431,1);     -- Stun Kukri +1
+INSERT INTO `item_mods` VALUES (16432,431,1);     -- Stun Jamadhars
+INSERT INTO `item_mods` VALUES (17484,431,1);     -- Stun Jamadhars +1
+INSERT INTO `item_mods` VALUES (16503,431,1);     -- Stun Knife
+INSERT INTO `item_mods` VALUES (17600,431,1);     -- Stun Knife +1
+INSERT INTO `item_mods` VALUES (12517,1182,5);    -- Enhances Tame Success Rate for Beast Helm
+INSERT INTO `item_mods` VALUES (15233,1182,5);    -- Enhances Tame Success Rate for Beast Helm +1
+INSERT INTO `item_mods` VALUES (14319,1182,5);    -- Enhances Tame Success Rate for Bison Kecks
+INSERT INTO `item_mods` VALUES (14320,1182,5);    -- Enhances Tame Success Rate for Brave's Kecks
+INSERT INTO `item_mods` VALUES (15645,1182,5);    -- Enhances Tame Success Rate for Khimaira Kecks
+INSERT INTO `item_mods` VALUES (15646,1182,5);    -- Enhances Tame Success Rate for Stout Kecks
+
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;

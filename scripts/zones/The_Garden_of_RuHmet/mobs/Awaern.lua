@@ -3,7 +3,9 @@
 --  Mob: Aw'aern
 -- Note: PH for Ix'Aern DRK and DRG
 -----------------------------------
+mixins = {require("scripts/mixins/families/aern")}
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -17,27 +19,53 @@ function onMobSpawn(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 0)
+end
+
+function onMobFight(mob, target)
+    local battleTime = mob:getBattleTime()
+    local changeTime = mob:getLocalVar("changeTime")
+
+    if mob:getHPP() < 100 then
+        if mob:AnimationSub() == 0 then -- bracers trigger initially upon taking damage
+            mob:AnimationSub(2)
+            mob:addMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        elseif mob:AnimationSub() == 2 and battleTime - changeTime >= 30 then -- bracer mode lasts 30 seconds
+            mob:AnimationSub(1)
+            mob:delMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        elseif mob:AnimationSub() == 1 and battleTime - changeTime >= 120 then -- bracemode 2 minute cooldown
+            mob:AnimationSub(2)
+            mob:addMod(tpz.mod.ATTP, 30)
+            mob:setLocalVar("changeTime", mob:getBattleTime())
+        end
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
     -- Ix'Aern DRK animosity mechanic
     if (isKiller) then
-        local qm2 = GetNPCByID(ID.npc.IXAERN_DRK_QM)
-        local hatedPlayer = qm2:getLocalVar("hatedPlayer")
-        local isInTime = qm2:getLocalVar("hateTimer") > os.time()
+        local qmDrk = GetNPCByID(ID.npc.QM_IXAERN_DRK)
+        local hatedPlayer = qmDrk:getLocalVar("hatedPlayer")
+        local isInTime = qmDrk:getLocalVar("hateTimer") > os.time()
 
-        if (qm2:getStatus() ~= tpz.status.DISAPPEAR and (hatedPlayer == 0 or not isInTime)) then
+        if (qmDrk:getStatus() ~= tpz.status.DISAPPEAR and (hatedPlayer == 0 or not isInTime)) then
+
             -- if hated player took too long, reset
             if (hatedPlayer ~= 0) then
-                qm2:setLocalVar("hatedPlayer", 0)
-                qm2:setLocalVar("hateTimer", 0)
+                qmDrk:setLocalVar("hatedPlayer", 0)
+                qmDrk:setLocalVar("hateTimer", 0)
             end
 
             -- if aern belongs to QM group, chance for sheer animosity
-            local position = GetNPCByID(ID.npc.IXAERN_DRK_QM):getLocalVar("position")
-            local currentMobID = mob:getID()
-            if (currentMobID >= ID.mob.AWAERN_DRK_GROUPS[position] and currentMobID <= ID.mob.AWAERN_DRK_GROUPS[position] + 2) then
+            local position = GetNPCByID(ID.npc.QM_IXAERN_DRK):getLocalVar("position")
+            local offset = mob:getID() - ID.mob.AWAERN_DRK_GROUPS[position]
+            if offset >= 0 and offset <= 2 then
                 if (math.random(1, 8) == 1) then
-                    qm2:setLocalVar("hatedPlayer", player:getID())
-                    qm2:setLocalVar("hateTimer", os.time() + 600) -- player with animosity has 10 minutes to touch QM
+                    qmDrk:setLocalVar("hatedPlayer", player:getID())
+                    qmDrk:setLocalVar("hateTimer", os.time() + 600) -- player with animosity has 10 minutes to touch QM
                     player:messageSpecial(ID.text.SHEER_ANIMOSITY)
                 end
             end

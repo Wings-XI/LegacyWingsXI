@@ -1009,14 +1009,6 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (!PChar->isMounted())
             {
-                char cheatDesc[128];
-                snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s attempted to dig without being mounted.", PChar->name.c_str());
-                cheatDesc[127] = '\0';
-                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIGBOT, 0, cheatDesc);
-                if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_DIGBOT, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
-                {
-                    PChar->SetLocalVar("DiggingBlocked", 1);
-                }
                 return;
             }
             if (PChar->GetLocalVar("DiggingBlocked")) {
@@ -1524,10 +1516,10 @@ void SmallPacket0x033(map_session_data_t* const PSession, CCharEntity* const PCh
                     {
                         if (charutils::CanTrade(PChar, PTarget) && charutils::CanTrade(PTarget, PChar))
                         {
-                            charutils::DoTrade(PChar, PTarget);
+                            uint32 TradeID = charutils::DoTrade(PChar, PTarget);
                             PTarget->pushPacket(new CTradeActionPacket(PTarget, 9));
 
-                            charutils::DoTrade(PTarget, PChar);
+                            charutils::DoTrade(PTarget, PChar, TradeID);
                             PChar->pushPacket(new CTradeActionPacket(PChar, 9));
                         }
                         else
@@ -2423,8 +2415,13 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             uint8 received_items = 0;
             uint8 slotID         = 0;
+            uint32 itemID        = 0;
+            uint32 itemSubID     = 0;
+            uint32 quantity      = 0;
+            uint32 senderID      = 0;
+            std::string sender;
 
-            int32 ret = Sql_Query(SqlHandle, "SELECT slot FROM delivery_box WHERE charid = %u AND received = 1 AND box = 2 ORDER BY slot ASC;", PChar->id);
+            int32 ret = Sql_Query(SqlHandle, "SELECT slot, itemid, itemsubid, quantity, senderid, sender FROM delivery_box WHERE charid = %u AND received = 1 AND box = 2 ORDER BY slot ASC;", PChar->id);
 
             if (ret != SQL_ERROR)
             {
@@ -2432,11 +2429,17 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (received_items && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
                 {
                     slotID = Sql_GetUIntData(SqlHandle, 0);
+                    itemID = Sql_GetUIntData(SqlHandle, 1);
+                    itemSubID = Sql_GetUIntData(SqlHandle, 2);
+                    quantity = Sql_GetUIntData(SqlHandle, 3);
+                    senderID = Sql_GetUIntData(SqlHandle, 4);
+                    sender = (char*)Sql_GetData(SqlHandle, 5);
                     if (!PChar->UContainer->IsSlotEmpty(slotID))
                     {
                         CItem* PItem = PChar->UContainer->GetItem(slotID);
                         if (PItem->isSent())
                         {
+                            Sql_Query(SqlHandle, "INSERT INTO dbox_log (charid, charname, box, itemid, itemsubid, quantity, senderid, sender, op) VALUES (%u, '%s', 2, %u, %u, %u, %u, '%s', 1);", PChar->id, PChar->name.c_str(), itemID, itemSubID, quantity, senderID, sender.c_str());
                             ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND box = 2 AND slot = %u LIMIT 1;", PChar->id, slotID);
                             if (ret != SQL_ERROR && Sql_AffectedRows(SqlHandle) == 1)
                             {
@@ -2498,6 +2501,7 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
                             if (ret != SQL_ERROR && Sql_AffectedRows(SqlHandle) > 0)
                             {
                                 // Remove original delivery record
+                                Sql_Query(SqlHandle, "INSERT INTO dbox_log (charid, charname, box, itemid, itemsubid, quantity, senderid, sender, op) VALUES (%u, '%s', 1, %u, %u, %u, %u, '%s', 2);", PChar->id, PChar->name.c_str(), PItem->getID(), PItem->getSubID(), PItem->getQuantity(), senderID, senderName.c_str());
                                 ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND slot = %u AND box = 1 LIMIT 1;", PChar->id, slotID);
 
                                 if (ret != SQL_ERROR && Sql_AffectedRows(SqlHandle) > 0)
@@ -2531,8 +2535,23 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
                 bool commit         = false;
                 bool invErr         = false;
+                uint32 itemID       = 0;
+                uint32 itemSubID    = 0;
+                uint32 quantity     = 0;
+                uint32 senderID     = 0;
+                std::string sender;
 
                 CItem* PItem = PChar->UContainer->GetItem(slotID);
+                int32 ret = SQL_ERROR;
+                ret = Sql_Query(SqlHandle, "SELECT itemid, itemsubid, quantity, senderid, sender FROM delivery_box WHERE charid = %u AND slot = %u AND box = %u LIMIT 1", PChar->id, slotID, boxtype);
+                if (ret == SQL_ERROR || Sql_NextRow(SqlHandle) != SQL_SUCCESS) {
+                    return;
+                }
+                itemID = Sql_GetUIntData(SqlHandle, 0);
+                itemSubID = Sql_GetUIntData(SqlHandle, 1);
+                quantity = Sql_GetUIntData(SqlHandle, 2);
+                senderID = Sql_GetUIntData(SqlHandle, 3);
+                sender = (char*)Sql_GetData(SqlHandle, 4);
 
                 // ShowMessage("FreeSlots %u\n", PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount());
                 // ShowMessage("ItemId %u", PItem->getID());
@@ -2545,13 +2564,14 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
 
                 if (Sql_SetAutoCommit(SqlHandle, false) && Sql_TransactionStart(SqlHandle))
                 {
-                    int32 ret = SQL_ERROR;
                     if (boxtype == 0x01)
                     {
+                        Sql_Query(SqlHandle, "INSERT INTO dbox_log (charid, charname, box, itemid, itemsubid, quantity, senderid, sender, op) VALUES (%u, '%s', 1, %u, %u, %u, %u, '%s', 3);", PChar->id, PChar->name.c_str(), itemID, itemSubID, quantity, senderID, sender.c_str());
                         ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND slot = %u AND box = %u LIMIT 1", PChar->id, slotID, boxtype);
                     }
                     else if (boxtype == 0x02)
                     {
+                        Sql_Query(SqlHandle, "INSERT INTO dbox_log (charid, charname, box, itemid, itemsubid, quantity, senderid, sender, op) VALUES (%u, '%s', 2, %u, %u, %u, %u, '%s', 3);", PChar->id, PChar->name.c_str(), itemID, itemSubID, quantity, senderID, sender.c_str());
                         ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND sent = 0 AND slot = %u AND box = %u LIMIT 1", PChar->id,
                                         slotID, boxtype);
                     }
@@ -2590,7 +2610,25 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX && !PChar->UContainer->IsSlotEmpty(slotID))
             {
-                int32 ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND slot = %u AND box = 1 LIMIT 1", PChar->id, slotID);
+                uint32 itemID       = 0;
+                uint32 itemSubID    = 0;
+                uint32 quantity     = 0;
+                uint32 senderID     = 0;
+                std::string sender;
+
+                int32 ret = SQL_ERROR;
+                ret = Sql_Query(SqlHandle, "SELECT itemid, itemsubid, quantity, senderid, sender FROM delivery_box WHERE charid = %u AND slot = %u AND box = 1 LIMIT 1", PChar->id, slotID);
+                if (ret == SQL_ERROR || Sql_NextRow(SqlHandle) != SQL_SUCCESS) {
+                    return;
+                }
+                itemID = Sql_GetUIntData(SqlHandle, 0);
+                itemSubID = Sql_GetUIntData(SqlHandle, 1);
+                quantity = Sql_GetUIntData(SqlHandle, 2);
+                senderID = Sql_GetUIntData(SqlHandle, 3);
+                sender = (char*)Sql_GetData(SqlHandle, 4);
+
+                Sql_Query(SqlHandle, "INSERT INTO dbox_log (charid, charname, box, itemid, itemsubid, quantity, senderid, sender, op) VALUES (%u, '%s', 1, %u, %u, %u, %u, '%s', 4);", PChar->id, PChar->name.c_str(), itemID, itemSubID, quantity, senderID, sender.c_str());
+                ret = Sql_Query(SqlHandle, "DELETE FROM delivery_box WHERE charid = %u AND slot = %u AND box = 1 LIMIT 1", PChar->id, slotID);
 
                 if (ret != SQL_ERROR && Sql_AffectedRows(SqlHandle) != 0)
                 {
@@ -3359,8 +3397,43 @@ void SmallPacket0x05D(map_session_data_t* const PSession, CCharEntity* const PCh
 
     const auto extra = data.ref<uint16>(0x0C);
 
+    // Attempting to use bell emote without a bell.
+    if (EmoteID == Emote::BELL)
+    {
+        auto IsBell = [](uint16 itemId)
+        {
+            // Dream Bell, Dream Bell +1, Lady Bell, Lady Bell +1
+            return (itemId == 18863 || itemId == 18864 || itemId == 18868 || itemId == 18869);
+        };
+
+        // This is the actual observed behavior. Even with a different weapon type equipped,
+        // having a bell in the lockstyle is sufficient. On the other hand, if any other
+        // weapon is lockstyle'd over an equipped bell, the emote will be rejected.
+        // For what it's worth, geomancer bells don't count as a bell for this emote.
+
+        // Look for a bell in the style.
+        auto mainWeapon = PChar->styleItems[SLOT_MAIN];
+        if (mainWeapon == 0)
+        {
+            // Nothing equipped in the style, look at what's actually equipped.
+            mainWeapon = PChar->getEquip(SLOT_MAIN) != nullptr
+                ? PChar->getEquip(SLOT_MAIN)->getID() : 0;
+        }
+
+        if (!IsBell(mainWeapon))
+        {
+            // Bell not found.
+            return;
+        }
+
+        if (extra < 0x06 || extra > 0x1e)
+        {
+            // Invalid note.
+            return;
+        }
+    }
     // Attempting to use locked job emote.
-    if (EmoteID == Emote::JOB && extra && !(PChar->jobs.unlocked & (1 << (extra - 0x1E))))
+    else if (EmoteID == Emote::JOB && extra && !(PChar->jobs.unlocked & (1 << (extra - 0x1E))))
     {
         return;
     }
@@ -6939,6 +7012,13 @@ void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PCh
 
         charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)PriceWithTax);
         charutils::UpdateItem(PTarget, LOC_INVENTORY, 0, Price);
+
+        char buyer_name[16] = { 0 };
+        char seller_name[16] = { 0 };
+        Sql_EscapeStringLen(SqlHandle, buyer_name, PChar->name.c_str(), sizeof(buyer_name) < PChar->name.length() ? sizeof(buyer_name) : PChar->name.length());
+        Sql_EscapeStringLen(SqlHandle, seller_name, PTarget->name.c_str(), sizeof(seller_name) < PTarget->name.length() ? sizeof(seller_name) : PTarget->name.length());
+        const char* Query = "INSERT INTO bazaar_log (seller_id, seller_name, buyer_id, buyer_name, item_id, single_price, quantity, total_sale, tax, total_paid) VALUES (%u, '%s', %u, '%s', %u, %u, %u, %u, %u, %u);";
+        Sql_Query(SqlHandle, Query, PTarget->id, seller_name, PChar->id, buyer_name, PItem->getID(), PBazaarItem->getCharPrice(), Quantity, Price, PriceWithTax-Price, PriceWithTax);
 
         PChar->pushPacket(new CBazaarPurchasePacket(PTarget, true));
 

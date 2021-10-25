@@ -79,12 +79,33 @@ zones[tpz.zone.PORT_SAN_DORIA] =
         MIENE_MESSAGE                  = 8428, -- Miene looks over curiously for a moment.
         PORTAURE_MESSAGE               = 8429, -- Portaure looks over curiously for a moment.
         AUVARE_MESSAGE                 = 8430, -- Auvare looks over curiously for a moment.
+        -- Starlight Celebration Dialog -- 
+        GIFT_THANK_YOU                 = 8583, -- Thank you! Thank you! Thank you!
+        ONLY_TWO_HANDS                 = 8586, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
+        JOY_TO_CHILDREN                = 8590, -- You've brought joy to the children of Vana'diel!
+        BARRELS_JOY_TO_CHILDREN        = 8591, -- You've brought barrelfuls of joy to the children of Vana'diel!
     },
     mob =
     {
     },
     npc =
     {
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17727636] = 17727636,  -- Doll Festival Cherry Blossom
+            [17727637] = 17727637,  -- Doll Festival Cherry Blossom
+            [17727638] = 17727638,  -- Doll Festival Cherry Blossom
+            [17727639] = 17727639,  -- Doll Festival Cherry Blossom
+            [17727640] = 17727640,  -- Doll Festival Cherry Blossom
+            [17727641] = 17727641,  -- Doll Festival Cherry Blossom
+            [17727642] = 17727642,  -- Doll Festival Cherry Blossom
+            [17727643] = 17727643,  -- Doll Festival Cherry Blossom
+            [17727644] = 17727644,  -- Doll Festival Cherry Blossom
+        },
+        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        {
+            [17727645] = 17727645,  -- Sunbreeze Festival Fireworks
+        },
     },
 }
 

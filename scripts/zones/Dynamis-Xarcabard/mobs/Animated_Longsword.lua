@@ -2,46 +2,61 @@
 -- Area: Dynamis - Xarcabard
 --  Mob: Animated Longsword
 -----------------------------------
+mixins = {require("scripts/mixins/families/animated_weapons")};
+require("scripts/globals/dynamis")
 require("scripts/globals/status")
 local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 -----------------------------------
 
+local zone = 135
+
+function onMobSpawn(mob)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    local mobID = mob:getID()
+    dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+    dynamis.setAnimatedWeaponStats(mob)
+end
+
 function onMobEngaged(mob, target)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    randomChildrenListArg = nil
+    if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
+    dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+end
 
-    if (mob:AnimationSub() == 3) then
-        SetDropRate(111, 1573, 1000)
+function onMonsterMagicPrepare(mob, target)
+    local warp = mob:getLocalVar("warp")
+    local rnd = math.random()
+    if warp == 1 then
+        return 261 -- warp
+    elseif rnd < 0.25 then
+        return 4 -- cure iv
+    elseif rnd < 0.5 then
+        return 9 -- curaga III
+    elseif rnd < 0.75 then
+        return 21 -- holy
     else
-        SetDropRate(111, 1573, 0)
+        return 360 -- dispelga
     end
-
-    target:showText(mob, ID.text.ANIMATED_LONGSWORD_DIALOG)
-
-    SpawnMob(17330355):updateEnmity(target)
-    SpawnMob(17330356):updateEnmity(target)
-    SpawnMob(17330357):updateEnmity(target)
-    SpawnMob(17330362):updateEnmity(target)
-    SpawnMob(17330363):updateEnmity(target)
-    SpawnMob(17330364):updateEnmity(target)
-
 end
 
 function onMobFight(mob, target)
-    -- TODO: add battle dialog
 end
 
-function onMobDisengage(mob)
-    mob:showText(mob, ID.text.ANIMATED_LONGSWORD_DIALOG+2)
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-
-    player:showText(mob, ID.text.ANIMATED_LONGSWORD_DIALOG+1)
-
-    DespawnMob(17330355)
-    DespawnMob(17330356)
-    DespawnMob(17330357)
-    DespawnMob(17330362)
-    DespawnMob(17330363)
-    DespawnMob(17330364)
-
+    local instance = mob:getInstance()
+    DespawnMob(17330355, instance)
+    DespawnMob(17330356, instance)
+    DespawnMob(17330357, instance)
+    DespawnMob(17330362, instance)
+    DespawnMob(17330363, instance)
+    DespawnMob(17330364, instance)
 end

@@ -45,6 +45,7 @@ function onEventFinish(player, csid, option)
             ID.mob.LAA_YAKU_THE_AUSTERE,
             ID.mob.POO_YOZO_THE_BABBLER,
         }
+        local npc = GetNPCByID(ID.npc.STONE_LID)
         if npcUtil.popFromQM(player, npc, mobs, {
             hide = 1
         }) then

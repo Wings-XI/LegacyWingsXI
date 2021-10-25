@@ -9,11 +9,13 @@ require("scripts/globals/quests")
 require("scripts/globals/settings")
 require("scripts/globals/wsquest")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 local wsQuest = tpz.wsquest.ground_strike
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
     if wsQuestEvent ~= nil then

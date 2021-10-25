@@ -31,7 +31,7 @@ local battlefields = {
         { 0,  672,    0},   -- Head Wind (PM5-3 U2)
      -- { 1,  673,    0},   -- Like the Wind (ENM) -- TODO: mob constantly runs during battle
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
-     -- { 3,  675,    0},   -- Shell We Dance? (ENM)
+        { 3,  675,    0},   -- Shell We Dance? (ENM)
      -- { 4,  676,    0},   -- Totentanz (ENM)
      -- { 5,  677,    0},   -- Tango with a Tracker (Quest)
      -- { 6,  678,    0},   -- Requiem of Sin (Quest)
@@ -48,8 +48,8 @@ local battlefields = {
     },
 
     [tpz.zone.MINE_SHAFT_2716] =
-    {   
-        { 0,  736,    0},   -- A Century of Hardship (PM5-3 L3) 
+    {
+        { 0,  736,    0},   -- A Century of Hardship (PM5-3 L3)
      -- { 1,  737,    0},   -- Return to the Depths (Quest)
      -- { 2,  738,    0},   -- Bionic Bug (ENM)
      -- { 3,  739,    0},   -- Pulling the Strings (ENM)
@@ -87,7 +87,7 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_B01] =
     {
-        { 0,  896,    0},   -- Storms of Fate (Quest)
+     -- { 0,  896,    0},   -- Storms of Fate (Quest)
      -- { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
     },
 
@@ -210,7 +210,7 @@ local battlefields = {
     [tpz.zone.LA_VAULE_S] =
     {
      -- { 0,    ?,    0},   -- Splitting Heirs (S)
-     -- { 1,    ?,    0},   -- Purple, The New Black
+     -- { 1,    1500,    0},   -- Purple, The New Black
      -- { 2,    ?,    0},   -- The Blood-bathed Crown
     },
 
@@ -231,8 +231,8 @@ local battlefields = {
     [tpz.zone.HORLAIS_PEAK] =
     {
         { 0,    0,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,    1, 1131},   -- Tails of Woe (BS40)
-     -- { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
+        { 1,    1, 1131},   -- Tails of Woe (BS40)
+        { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
         { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
      -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
         { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
@@ -241,7 +241,7 @@ local battlefields = {
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
      -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
      -- {10,   10, 1552},   -- Dropping Like Flies (BS30)
-     -- {11,   11, 1553},   -- Horns of War (KS99) 
+        {11,   11, 1553},   -- Horns of War (KS99)
         {12,   12, 1131},   -- Under Observation (BS40)
      -- {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
@@ -264,8 +264,8 @@ local battlefields = {
     {
         { 0,   32,    0},   -- Save the Children (Sandy 1-3)
         { 1,   33,    0},   -- The Holy Crest (Quest)
-     -- { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
-     -- { 3,   35, 1552},   -- Petrifying Pair (BS30)
+        { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
+        { 3,   35, 1552},   -- Petrifying Pair (BS30)
      -- { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
      -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
@@ -273,7 +273,7 @@ local battlefields = {
     [tpz.zone.WAUGHROON_SHRINE] =
     {
         { 0,   64,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,   65, 1131},   -- The Worm's Turn (BS40)
+        { 1,   65, 1131},   -- The Worm's Turn (BS40)
      -- { 2,   66, 1130},   -- Grimshell Shocktroopers (BS60)
         { 3,   67,    0},   -- On My Way (Basty 7-2)
         { 4,   68, 1166},   -- A Thief in Norg!? (Quest)
@@ -306,7 +306,7 @@ local battlefields = {
     [tpz.zone.BALGAS_DAIS] =
     {
         { 0,   96,    0},   -- The Rank 2 Final Mission (Mission 2-3)
-     -- { 1,   97, 1131},   -- Steamed Sprouts (BS40)
+        { 1,   97, 1131},   -- Steamed Sprouts (BS40)
      -- { 2,   98, 1130},   -- Divine Punishers (BS60)
         { 3,   99,    0},   -- Saintly Invitation (Windy 6-2)
         { 4,  100, 1177},   -- Treasure and Tribulations (BS50)
@@ -370,12 +370,12 @@ local battlefields = {
     [tpz.zone.CHAMBER_OF_ORACLES] =
     {
         { 0,  192,    0},   -- Through the Quicksand Caves (ZM6)
-     -- { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
+        { 1,  193, 1130},   -- Legion XI Comitatensis (BS60)
         { 2,  194, 1437},   -- Shattering Stars (SAM LB5)
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
      -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
-     -- { 6,  198, 1178},   -- Eye of the Storm (KS30)
+        { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
@@ -554,7 +554,7 @@ function checkReqs(player, npc, bfid, registrant)
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
     end
-    
+
     -- requirements to register a battlefield
     local registerReqs =
     {
@@ -666,7 +666,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 965] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Beloved of Atlantes
         [ 966] = function() return ( player:hasKeyItem(tpz.ki.MONARCH_LINN_PATROL_PERMIT)                                                                                   ) end, -- Quest: Uninvited Guests
         [ 992] = function() return ( cop == mi.cop.ONE_TO_BE_FEARED and copStat == 2                                                                                        ) end, -- PM6-4: One to be Feared
-        [ 993] = function() return ( cop == mi.cop.THE_WARRIOR_S_PATH                                                                                                       ) end, -- PM7-5: The Warrior's Path
+        [ 993] = function() return ( cop == mi.cop.THE_WARRIOR_S_PATH and copStat == 1                                                                                      ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( cop == mi.cop.WHEN_ANGELS_FALL and copStat == 4                                                                                        ) end, -- PM8-3: When Angels Fall
         [1056] = function() return ( cop == mi.cop.DAWN and copStat == 2                                                                                                    ) end, -- PM8-4: Dawn
         [1057] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and player:getCharVar('ApocalypseNigh') == 4        ) end, -- Apocalypse Nigh
@@ -694,6 +694,7 @@ function checkReqs(player, npc, bfid, registrant)
         [1304] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 2nd Floor
         [1305] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 3rd Floor
         [1306] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 4th Floor
+        [1500] = function() return ( player:getCurrentMission(WOTG) == tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK and player:getCharVar('PurpleTheNewBlackProgress') == 1     ) end, -- Purple, The New Black
     }
 
     -- requirements to enter a battlefield already registered by a party member

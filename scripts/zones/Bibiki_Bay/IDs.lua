@@ -62,6 +62,7 @@ zones[tpz.zone.BIBIKI_BAY] =
     },
     npc =
     {
+        SHEN_QM = 16793900,
     },
 }
 

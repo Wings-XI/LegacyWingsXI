@@ -11,12 +11,7 @@ require("scripts/globals/status")
 require("scripts/globals/zone")
 -----------------------------------
 
-function afterInstanceRegister(player)
-    afterAssaultRegister(player, 5345, ID.text, ID.mob)
-end
-
 function onInstanceCreated(instance)
-    printf("1")
     if math.random(1,100) >= 50 then
         instance:getEntity(bit.band(17035306, 0xFFF), tpz.objType.MOB):setSpawn(-304.151, -8.470, -180.556, 250)
     end
@@ -28,6 +23,12 @@ function onInstanceCreated(instance)
     end
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-330, -10, -262, 128)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-330, -10, -265, 128)
+
+    spawnMobInAssault(instance, ID.mob)
+end
+
+function afterInstanceRegister(player)
+    afterAssaultRegister(player, 5345, ID.text, ID.mob)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
@@ -49,8 +50,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    assaultOnEventFinish(player, 102, tpz.zone.MOUNT_ZHAYOLM)
 end

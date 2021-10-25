@@ -29,6 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
     local msg = MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
     if (msg == tpz.msg.basic.SKILL_ENFEEB_IS) then
         mob:charm(target)
+        mob:resetEnmity(target)
     end
     skill:setMsg(msg)
 

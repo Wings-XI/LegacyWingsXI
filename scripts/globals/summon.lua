@@ -18,15 +18,15 @@ function getAvatarEcosystemCoefficient(target, ele)
 end
 
 function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmodsubsequent,tpeffect,mtp100,mtp200,mtp300,critmod)
-    
+
     local master = avatar:getMaster()
-    
+
     local returninfo = {}
-    
+
     if critmod == nil then
         critmod = 0
     end
-    
+
     local acc = avatar:getACC()
     local eva = target:getEVA()
     local dmg = avatar:getWeaponDmg()
@@ -35,7 +35,7 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
 
     -- Note: Avatars do not have any level correction. This is why they are so good on Wyrms! // https://kegsay.livejournal.com/tag/smn!
     -- merit 1280 is avatar phys accuracy merit
-    local hitrate = utils.clamp(75 + accmod + getSummoningSkillOverCap(avatar)/2 + master:getMerit(1280)/2.2 + ((acc - eva)/5), 20, 97)    
+    local hitrate = utils.clamp(75 + accmod + getSummoningSkillOverCap(avatar)/2 + master:getMerit(1280)/2.2 + ((acc - eva)/5), 20, 97)
     --master:PrintToPlayer(string.format("hitrate = 75 + %i + %.1f + %.1f + %.1f = %.1f",accmod,getSummoningSkillOverCap(avatar)/2,master:getMerit(1280)/2.2,(acc - eva)/5,hitrate))
 
     -- add on native crit hit rate (guesstimated, it actually follows an exponential curve)
@@ -71,8 +71,8 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
     if minRatio > maxRatio - 0.1 then
         minRatio = maxRatio - 0.1
     end
-    
-    
+
+
     -- start the hits
     local hitsdone = 1
     local hitslanded = 0
@@ -104,9 +104,9 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
     else
         target:wakeUp()
     end
-    
+
     --master:PrintToPlayer(string.format("blood pact hit %i of %i times for pdif %.2f to %.2f at an accuracy of %.2f",hitslanded,numberofhits,minRatio,maxRatio,hitrate))
-    
+
     -- apply ftp bonus
     if tpeffect == TP_DMG_BONUS then
         finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
@@ -214,7 +214,7 @@ function AvatarFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadow
             target:delStatusEffect(tpz.effect.THIRD_EYE)
         end
     end
- 
+
     if target:isNM() and skilltype == tpz.attackType.MAGICAL then
         dmg = dmg - (dmg * target:getMod(tpz.mod.MAGIC_STACKING_MDT) / 100)
         if target:getMod(tpz.mod.MAGIC_STACKING_MDT) == 0 then
@@ -266,9 +266,9 @@ function AvatarFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadow
 
     -- Calculate Blood Pact Damage before stoneskin
     dmg = dmg + dmg * mob:getMod(tpz.mod.BP_DAMAGE) / 100
-    
-    if (skillparam == tpz.damageType.HTH) then
-        dmg = dmg * target:getMod(tpz.mod.HTHRES) / 1000
+
+    if (skillparam == tpz.damageType.H2H) then
+        dmg = dmg * target:getMod(tpz.mod.H2HRES) / 1000
     elseif (skillparam == tpz.damageType.PIERCING) then
         dmg = dmg * target:getMod(tpz.mod.PIERCERES) / 1000
     elseif (skillparam == tpz.damageType.BLUNT) then

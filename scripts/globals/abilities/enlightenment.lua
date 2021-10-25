@@ -18,7 +18,10 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    local merit = (player:getMerit(tpz.merit.ENLIGHTENMENT) - 5)
-    player:addStatusEffect(tpz.effect.ENLIGHTENMENT, merit, 0, 60)
+    player:addStatusEffect(tpz.effect.ENLIGHTENMENT, 0, 0, 60)
+    -- OOE Secondary Merit Buff
+    -- local merit = (player:getMerit(tpz.merit.ENLIGHTENMENT) / 15)
+    -- if merit > 5 then
+    --     player:addStatusEffect(tpz.effect.ENLIGHTENMENT, merit - 5, 0, 60)
     return tpz.effect.ENLIGHTENMENT
 end

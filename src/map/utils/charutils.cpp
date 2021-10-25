@@ -480,11 +480,12 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pClientFeatQuery = "SELECT client_version, features FROM accounts_sessions WHERE charid = %u";
+            const char* pClientFeatQuery = "SELECT client_version, features, expansions FROM accounts_sessions WHERE charid = %u";
             ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
                 PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
+                PChar->m_accountExpansions = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 2));
             }
             PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
             PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
@@ -1376,7 +1377,7 @@ namespace charutils
     {
         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
         {
-            if (PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
+            if (PChar->getStorage(LocID) && PChar->getStorage(LocID)->SearchItem(ItemID) != ERROR_SLOTID)
             {
                 return true;
             }
@@ -1637,7 +1638,7 @@ namespace charutils
     *                                                                       *
     ************************************************************************/
 
-    void DoTrade(CCharEntity* PChar, CCharEntity* PTarget)
+    uint32 DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID)
     {
         ShowDebug(CL_CYAN"%s->%s trade item movement started\n" CL_RESET, PChar->GetName(), PTarget->GetName());
         bool checkHG = false;
@@ -1647,6 +1648,16 @@ namespace charutils
 
             if (PItem != nullptr)
             {
+                // Add to log
+                Sql_Query(SqlHandle, "INSERT INTO trade_log (trade_id, sender_id, sender_name, receiver_id, receiver_name, item_id, stack, quantity) VALUES (%u, %u, '%s', %u, '%s', %u, %u, %u);",
+                    TradeID, PChar->id, PChar->name.c_str(), PTarget->id, PTarget->name.c_str(),
+                    PItem->getID(), (PItem->getStackSize() == 1 && PItem->getReserve() == 1), PItem->getReserve());
+                if (TradeID == 0) {
+                    // First item being traded, set it as the parent
+                    TradeID = Sql_LastInsertId(SqlHandle);
+                    Sql_Query(SqlHandle, "UPDATE trade_log SET trade_id = %u WHERE id = %u;", TradeID, TradeID);
+                }
+
                 if (PItem->getStackSize() == 1 && PItem->getReserve() == 1)
                 {
                     CItem* PNewItem = itemutils::GetItem(PItem);
@@ -1669,8 +1680,11 @@ namespace charutils
                 PChar->UContainer->ClearSlot(slotid);
             }
         }
+
         if (checkHG)
             charutils::VerifyHoldsValidHourglass(PChar);
+
+        return TradeID;
     }
 
     /************************************************************************
@@ -2479,6 +2493,7 @@ namespace charutils
 
         SLOTTYPE slot = (SLOTTYPE)0;
         uint16 itemid = 0;
+        uint16 lastitemid = 0;
         CONTAINER_ID loc = LOC_INVENTORY;
         uint8 slotid = 0;
 
@@ -2491,43 +2506,31 @@ namespace charutils
             loc = LOC_INVENTORY;
             slotid = ERROR_SLOTID;
 
-            if (slotid == ERROR_SLOTID)
+            auto performSearch = [&](CONTAINER_ID LOC_Container)
             {
-                slotid = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemid);
-                loc = LOC_INVENTORY;
-            }
+                if (slotid == ERROR_SLOTID)
+                {
+                    slotid = PChar->getStorage(LOC_Container)->SearchItem(itemid);
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE)->SearchItem(itemid);
-                loc = LOC_WARDROBE;
-            }
+                    if (itemid == lastitemid)
+                    {
+                        slotid = PChar->getStorage(LOC_Container)->SearchItem(itemid, slotid + 1);
+                    }
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE2)->SearchItem(itemid);
-                loc = LOC_WARDROBE2;
-            }
+                    if (slotid != ERROR_SLOTID)
+                    {
+                        EquipItem(PChar, slotid, slot, LOC_Container);
+                    }
+                }
+            };
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE3)->SearchItem(itemid);
-                loc = LOC_WARDROBE3;
-            }
+            performSearch(LOC_INVENTORY);
+            performSearch(LOC_WARDROBE);
+            performSearch(LOC_WARDROBE2);
+            performSearch(LOC_WARDROBE3);
+            performSearch(LOC_WARDROBE4);
 
-            if (slotid == ERROR_SLOTID)
-            {
-                slotid = PChar->getStorage(LOC_WARDROBE4)->SearchItem(itemid);
-                loc = LOC_WARDROBE4;
-            }
-
-            if (slotid == ERROR_SLOTID)
-            {
-                continue;
-            }
-
-            EquipItem(PChar, slotid, slot, loc);
-
+            lastitemid = itemid;
         }
 
         CheckUnarmedWeapon(PChar);
@@ -5940,7 +5943,7 @@ namespace charutils
 
             Sql_Query(SqlHandle, Query,
                 PChar->loc.destination,
-                (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->loc.prevzone : PChar->getZone(),
+                (PChar->m_moghouseID || PChar->loc.destination != PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone,
                 PChar->loc.p.rotation,
                 PChar->loc.p.x,
                 PChar->loc.p.y,

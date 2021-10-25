@@ -13,7 +13,7 @@ end
 
 function onSpellCast(caster, target, spell)
     if (not target:hasStatusEffect(tpz.effect.INVISIBLE)) then
-        target:addStatusEffect(tpz.effect.INVISIBLE, 0, 10, math.floor(420 * SNEAK_INVIS_DURATION_MULTIPLIER))
+        target:addStatusEffect(tpz.effect.INVISIBLE, 0, 10, math.floor(180 * SNEAK_INVIS_DURATION_MULTIPLIER))
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no tpz.effect.

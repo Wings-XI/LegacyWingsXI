@@ -7,6 +7,7 @@
 local ID = require("scripts/zones/Northern_San_dOria/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -18,6 +19,8 @@ function onTrade(player, npc, trade)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SCOWLING_STONE)
         end
     end
+
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

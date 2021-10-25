@@ -50,12 +50,9 @@ function onInstanceComplete(instance)
         v:messageSpecial(ID.text.RUNE_UNLOCKED_POS, 5, 9)
     end
 
-    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setStatus(NORMAL)
-    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setStatus(NORMAL)
+    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setStatus(tpz.status.NORMAL)
+    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setStatus(tpz.status.NORMAL)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
 end

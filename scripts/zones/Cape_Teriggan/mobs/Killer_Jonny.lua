@@ -11,6 +11,10 @@ function onMobInitialize(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 100)
 end
 
+function onMobSpawn(mob)
+    mob:setMaxHPP(math.random(100,103))
+end
+
 function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.POISON, {power = 120})
 end

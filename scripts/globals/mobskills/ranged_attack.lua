@@ -11,6 +11,10 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    if mob:getFamily() == 176 and mob:getMainJob() == tpz.job.NIN then -- Mamool ja NIN dont use ranged attack
+        return 1
+    end
+
     return 0
 end
 
@@ -31,6 +35,10 @@ function onMobWeaponSkill(target, mob, skill)
 
     if msg ~= tpz.msg.basic.SHADOW_ABSORB then
         target:takeDamage(dmg, mob, tpz.attackType.RANGED, tpz.damageType.PIERCING)
+    end
+
+    if mob:getFamily() == 3 and msg ~= tpz.msg.basic.SHADOW_ABSORB then
+        skill:setMsg(352)
     end
 
     return dmg

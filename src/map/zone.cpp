@@ -159,6 +159,17 @@ int32 deleteZoneTimer(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
+int32 removeGhostsTask(time_point tick, CTaskMgr::CTask* PTask)
+{
+    CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
+    if (!PZone) {
+        return 0;
+    }
+    PZone->DeleteGhostSessions();
+
+    return 0;
+}
+
 const uint16 CZone::ReducedVerticalAggroZones[] = {
     ZONE_KING_RANPERRES_TOMB,
     ZONE_BEADEAUX,
@@ -186,7 +197,7 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_zoneType = ZONETYPE_NONE;
     m_regionID = RegionID;
     m_continentID = ContinentID;
-    m_TreasurePool = 0;
+    m_TreasurePool = nullptr;
     m_BattlefieldHandler = nullptr;
     m_Weather = WEATHER_NONE;
     m_WeatherChangeTime = 0;
@@ -211,10 +222,19 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     PDigAreaContainer = nullptr;
     if (GetType() == ZONETYPE_OUTDOORS)
         PDigAreaContainer = new CDigAreaContainer();
+
+    m_ZoneClearGhostsTask = CTaskMgr::getInstance()->AddTask(
+        m_zoneName + "_ghost",
+        server_clock::now(),
+        this,
+        CTaskMgr::TASK_INTERVAL,
+        removeGhostsTask,
+        std::chrono::minutes(1));
 }
 
 CZone::~CZone()
 {
+    CTaskMgr::getInstance()->RemoveTask(m_zoneName + "_ghost");
     delete m_zoneEntities;
     delete PEventHandler;
 }
@@ -1174,6 +1194,61 @@ void CZone::CheckRegions(CCharEntity* PChar)
         }
     }
     PChar->m_InsideRegionID = RegionID;
+}
+
+uint32 CZone::DeleteGhostSessions()
+{
+    std::vector<uint32> ghosts;
+
+    std::string fmtQuery = "SELECT chars.charid, pos_zone FROM chars, accounts_sessions WHERE chars.charid = accounts_sessions.charid AND pos_zone = %u AND server_addr = %u AND server_port = %u AND (last_updated IS NULL OR TIMESTAMPDIFF(MINUTE, last_updated, NOW()) >= 1);";
+
+    int32 ret = Sql_Query(SqlHandle, fmtQuery.c_str(), m_zoneID, m_zoneIP, m_zonePort);
+    uint32 charid = 0;
+    CCharEntity* PChar = NULL;
+    uint32 num_deleted = 0;
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+    {
+        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            charid = Sql_GetUIntData(SqlHandle, 0);
+            PChar = GetCharByID(charid);
+            if (PChar) {
+                m_ghostsPrevIter.erase(std::remove(m_ghostsPrevIter.begin(), m_ghostsPrevIter.end(), charid), m_ghostsPrevIter.end());
+                continue;
+            }
+            // There is a race condition if this runs right when a player is
+            // zoning and we haven't handled the zone-in packet yet, so only
+            // clean up the session if we've seen it a second time.
+            if (std::find(m_ghostsPrevIter.begin(), m_ghostsPrevIter.end(), charid) != m_ghostsPrevIter.end()) {
+                // We know it has been there for at least a minute so clean it up
+                m_ghostsPrevIter.erase(std::remove(m_ghostsPrevIter.begin(), m_ghostsPrevIter.end(), charid), m_ghostsPrevIter.end());
+                ghosts.push_back(charid);
+            }
+            else {
+                // First time encountering it, add to list so we can clean it up next time
+                m_ghostsPrevIter.push_back(charid);
+            }
+        }
+    }
+
+    if (!ghosts.empty()) {
+        bool isFirst = true;
+        fmtQuery = "DELETE FROM accounts_sessions WHERE charid IN (";
+        size_t num_ghosts = ghosts.size();
+        for (size_t i = 0; i < num_ghosts; i++) {
+            if (!isFirst) {
+                fmtQuery += ", ";
+            }
+            isFirst = false;
+            fmtQuery += std::to_string(ghosts[i]);
+            num_deleted++;
+        }
+        fmtQuery += ");";
+        ret = Sql_Query(SqlHandle, fmtQuery.c_str());
+    }
+
+    return num_deleted;
 }
 
 //====================================1=======================

@@ -5,23 +5,17 @@
 -- !pos -693 -1 -62 33
 -----------------------------------
 local ID = require("scripts/zones/AlTaieu/IDs")
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    -- JAILER OF HOPE
-    if (
-        not GetMobByID(ID.mob.JAILER_OF_HOPE):isSpawned() and
-        trade:hasItemQty(1850, 1) and -- first_virtue
-        trade:hasItemQty(1851, 1) and -- deed_of_placidity
-        trade:hasItemQty(1852, 1) and -- high-quality_phuabo_organ
-        trade:getItemCount() == 3
-    ) then
-        player:tradeComplete()
-        SpawnMob(ID.mob.JAILER_OF_HOPE):updateClaim(player)
+    if npcUtil.tradeHas(trade, {1850, 1851, 1852}) and npcUtil.popFromQM(player, npc, ID.mob.JAILER_OF_HOPE, {radius = 1}) then
+        player:confirmTrade()
     end
 end
 
 function onTrigger(player, npc)
+    player:startEvent(200)
 end
 
 function onEventUpdate(player, csid, option)

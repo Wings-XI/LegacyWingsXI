@@ -67,6 +67,7 @@ CBattleEntity::CBattleEntity()
     memset(&stats, 0, sizeof(stats));
     memset(&health, 0, sizeof(health));
     health.maxhp = 1;
+    health.maxtp = 3000;
 
     memset(&WorkingSkills, 0, sizeof(WorkingSkills));
 
@@ -81,7 +82,7 @@ CBattleEntity::CBattleEntity()
 
     m_modStat[Mod::SLASHRES] = 1000;
     m_modStat[Mod::PIERCERES] = 1000;
-    m_modStat[Mod::HTHRES] = 1000;
+    m_modStat[Mod::H2HRES] = 1000;
     m_modStat[Mod::IMPACTRES] = 1000;
 
     m_Immunity = 0;
@@ -150,11 +151,12 @@ bool CBattleEntity::isSitting()
     return (animation == ANIMATION_HEALING || animation == ANIMATION_SIT || (animation >= ANIMATION_SITCHAIR_0 && animation <= ANIMATION_SITCHAIR_10));
 }
 
-/************************************************************************
-*                                                                       *
-*  Пересчитываем максимальные значения hp и mp с учетом модификаторов   *
-*                                                                       *
-************************************************************************/
+/*************************************************************************************
+*                                                                                    *
+*  Пересчитываем максимальные значения hp и mp с учетом модификаторов                *
+*  We recalculate the maximum values ​​of hp and mp taking into account the modifiers  *
+*                                                                                    *
+**************************************************************************************/
 
 void CBattleEntity::UpdateHealth()
 {
@@ -162,6 +164,7 @@ void CBattleEntity::UpdateHealth()
 
     health.modmp = std::max(0, ((health.maxmp) * (100 + getMod(Mod::MPP)) / 100) + std::min<int16>((health.maxmp * m_modStat[Mod::FOOD_MPP] / 100), m_modStat[Mod::FOOD_MP_CAP]) + getMod(Mod::MP));
     health.modhp = std::max(1, ((health.maxhp) * (100 + getMod(Mod::HPP)) / 100) + std::min<int16>((health.maxhp * m_modStat[Mod::FOOD_HPP] / 100), m_modStat[Mod::FOOD_HP_CAP]) + getMod(Mod::HP));
+    health.modtp = health.maxtp + getMod(Mod::MAX_TP);
 
     dif = (health.modmp - 0) < dif ? (health.modmp - 0) : dif;
     dif = (health.modhp - 1) < -dif ? -(health.modhp - 1) : dif;
@@ -177,6 +180,7 @@ void CBattleEntity::UpdateHealth()
 
     health.hp = std::clamp(health.hp, 0, health.modhp);
     health.mp = std::clamp(health.mp, 0, health.modmp);
+    health.tp = std::clamp((int)health.tp, 0, (int)health.modtp);
 
     updatemask |= UPDATE_HP;
 }
@@ -231,7 +235,7 @@ uint8 CBattleEntity::GetSpeed()
 
     float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
     float modifiedSpeed = static_cast<float>(startingSpeed) * modAmount;
-    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed);
+    uint8 outputSpeed = static_cast<uint8>(modifiedSpeed < 0 ? 0 : modifiedSpeed);
 
     return std::clamp<uint8>(outputSpeed, std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max());
 }
@@ -538,7 +542,8 @@ int16 CBattleEntity::addTP(int16 tp)
     {
         updatemask |= UPDATE_HP;
     }
-    int16 cap = std::clamp(health.tp + tp, 0, 3000);
+    
+    int16 cap = std::clamp(health.tp + tp, 0, (int)health.modtp);
     tp = health.tp - cap;
     health.tp = cap;
     return abs(tp);
@@ -670,15 +675,11 @@ uint16 CBattleEntity::ATT()
     auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
     if (weapon && weapon->isTwoHanded())
     {
-        ATT += (STR() * 3) / 4;
-    }
-    else if (weapon && weapon->isHandToHand())
-    {
-        ATT += (STR() * 5) / 8;
+        ATT += STR() * 3 / 4;
     }
     else
     {
-        ATT += (STR() * 3) / 4;
+        ATT += STR() / 2;
     }
 
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
@@ -725,7 +726,7 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
     uint16 skill_level = GetSkill(skill);
     if (skill == SKILL_AUTOMATON_RANGED)
         skill_level = PMaster->GetSkill(skill) + bonusSkill;
-    int32 ATT = 8 + skill_level + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
+    int32 ATT = 8 + skill_level + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
 
     // apply ranged distance variation
     if ((this->objtype == TYPE_PC || // im a PC
@@ -764,7 +765,7 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
     }
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += (AGI() * 3) / 4;
+    acc += AGI() / 2;
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
 
@@ -812,11 +813,11 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         ACC = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
         if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]); weapon && weapon->isTwoHanded() == true)
         {
-            ACC += (int16)(DEX() * 0.75);
+            ACC += DEX() * 3 / 4;
         }
         else
         {
-            ACC += (int16)(DEX() * 0.75);
+            ACC += DEX() / 2;
         }
         ACC = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
         auto PChar = dynamic_cast<CCharEntity *>(this);
@@ -1631,10 +1632,46 @@ bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPack
         PAI->Disengage();
         return false;
     }
-    if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > GetMeleeRange() ||
-        !PAI->GetController()->IsAutoAttackEnabled())
+    if (this->objtype == TYPE_MOB)
     {
-        return false;
+        CMobEntity* PMob = (CMobEntity*)this;
+        if (!PAI->GetController()->IsAutoAttackEnabled())
+        {
+            return false;
+        }
+        else if (distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize > GetMeleeRange())
+        {
+            if (!PMob->speed || !(PMob->PAI->PathFind->IsFollowingPath() || PMob->PAI->PathFind->IsFollowingScriptedPath()))
+                return false; // i must be chasing and not bound
+
+            float bonusRange = 3;
+            if (PTarget->speed >= PMob->speed)
+                bonusRange = PMob->speed / PTarget->speed * 3;
+
+            // attempt to hit a running target, increase range slightly
+            if (std::chrono::system_clock::now() > PMob->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < GetMeleeRange() + bonusRange)
+            {
+                std::chrono::duration delay = std::chrono::milliseconds(PMob->GetWeaponDelay(false));
+                if (PMob->m_Type & MOBTYPE_NOTORIOUS || PMob->m_Type & MOBTYPE_BATTLEFIELD || PMob->m_Type & MOBTYPE_EVENT)
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*2, delay.count()*3));
+                }
+                else
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*5));
+                }
+                PMob->m_NextSlidingHit = std::chrono::system_clock::now() + delay;
+                return true;
+            }
+            return false;
+        }
+    }
+    else
+    {
+        if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > GetMeleeRange() || !PAI->GetController()->IsAutoAttackEnabled())
+        {
+            return false;
+        }
     }
     return true;
 }

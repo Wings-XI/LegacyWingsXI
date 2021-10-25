@@ -761,7 +761,7 @@ end
 function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadowbehav)
     -- physical attack missed, skip rest
     local msg = skill:getMsg()
-    if (msg == 158 or msg == 188 or msg == 31 or msg == 30) then
+    if msg == 158 or msg == 188 or msg == 31 or msg == 30 then
         return 0
     end
 
@@ -777,48 +777,47 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
     skill:setMsg(tpz.msg.basic.USES_JA_TAKE_DAMAGE)
 
     --Handle shadows depending on shadow behaviour / skilltype
-    if (shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS) then --remove 'shadowbehav' shadows.
+    local numShadowsUsed = 0
+    if shadowbehav ~= MOBPARAM_WIPE_SHADOWS and shadowbehav ~= MOBPARAM_IGNORE_SHADOWS then --remove 'shadowbehav' shadows.
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        if shadowbehav == nil then shadowbehav = 1 end
+        dmg, numShadowsUsed = utils.takeShadows(target, dmg, shadowbehav)
 
-        -- dealt zero damage, so shadows took hit
-        if (dmg == 0) then
+        if numShadowsUsed == shadowbehav then
             skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
             return shadowbehav
         end
 
-    elseif (shadowbehav == MOBPARAM_WIPE_SHADOWS) then --take em all!
+    elseif shadowbehav == MOBPARAM_WIPE_SHADOWS then --take em all!
         target:delStatusEffect(tpz.effect.COPY_IMAGE)
         target:delStatusEffect(tpz.effect.BLINK)
         target:delStatusEffect(tpz.effect.THIRD_EYE)
     end
 
     --handle Third Eye using shadowbehav as a guide
-    if (skilltype == tpz.attackType.PHYSICAL and utils.thirdeye(target)) then
+    if skilltype == tpz.attackType.PHYSICAL and utils.thirdeye(target) then
         skill:setMsg(tpz.msg.basic.ANTICIPATE)
         return 0
     end
 
-    if (skilltype == tpz.attackType.PHYSICAL) then
+    if skilltype == tpz.attackType.PHYSICAL then
         dmg = target:physicalDmgTaken(dmg, skillparam)
-    elseif (skilltype == tpz.attackType.MAGICAL) then
+    elseif skilltype == tpz.attackType.MAGICAL then
         dmg = target:magicDmgTaken(dmg)
-    elseif (skilltype == tpz.attackType.BREATH) then
+    elseif skilltype == tpz.attackType.BREATH then
         dmg = target:breathDmgTaken(dmg)
-    elseif (skilltype == tpz.attackType.RANGED) then
+    elseif skilltype == tpz.attackType.RANGED then
         dmg = target:rangedDmgTaken(dmg)
     end
 
     --handling phalanx
     dmg = dmg - target:getMod(tpz.mod.PHALANX)
 
-    if (dmg < 0) then
-        return 0
-    end
+    if dmg < 0 then return 0 end
 
     dmg = utils.stoneskin(target, dmg)
 
-    if (dmg > 0) then
+    if dmg > 0 then
         target:wakeUp()
         target:updateEnmityFromDamage(mob,dmg)
     end

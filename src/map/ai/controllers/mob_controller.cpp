@@ -239,7 +239,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     {
         return false;
     }
-    
+
     if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
     {
         return false;
@@ -512,7 +512,7 @@ bool CMobController::CanCastSpells()
     {
         return false;
     }
-	
+
     return IsMagicCastingEnabled();
 }
 
@@ -1124,7 +1124,7 @@ int32 CMobController::GetFomorHate(CBattleEntity* PTarget)
             if (memberHate > hate) {
                 hate = memberHate;
             }
-        }    
+        }
     });
     return hate;
 }
@@ -1250,6 +1250,11 @@ bool CMobController::Cast(uint16 targid, SpellID spellid)
 bool CMobController::CanMoveForward(float currentDistance)
 {
     TracyZoneScoped;
+    if(PMob->objtype == TYPE_PET && PMob->PMaster && PMob->PMaster->objtype == TYPE_PC && static_cast<CPetEntity*>(PMob)->getPetType() == PETTYPE_AUTOMATON && PMob->m_Behaviour & BEHAVIOUR_STANDBACK && currentDistance < 21)
+    {
+        return false;
+    }
+
     if(PMob->m_Behaviour & BEHAVIOUR_STANDBACK && currentDistance < 20)
     {
         return false;

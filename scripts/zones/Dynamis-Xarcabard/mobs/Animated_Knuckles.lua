@@ -2,46 +2,59 @@
 -- Area: Dynamis - Xarcabard
 --  Mob: Animated Knuckles
 -----------------------------------
+mixins = {require("scripts/mixins/families/animated_weapons")};
+require("scripts/globals/dynamis")
 require("scripts/globals/status")
 local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 -----------------------------------
 
+local zone = 135
+
+function onMobSpawn(mob)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    local mobID = mob:getID()
+    dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil)
+    dynamis.setAnimatedWeaponStats(mob)
+end
+
 function onMobEngaged(mob, target)
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    randomChildrenListArg = nil
+    if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
+    dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+end
 
-    if (mob:AnimationSub() == 3) then
-        SetDropRate(108, 1571, 1000)
+function onMonsterMagicPrepare(mob, target)
+    local warp = mob:getLocalVar("warp")
+    local rnd = math.random()
+    if warp == 1 then
+        return 261 -- warp
+    elseif not mob:hasStatusEffect(tpz.effect.PROTECT) and rnd < 0.25 then
+        return 128 -- protectra iv
+    elseif not mob:hasStatusEffect(tpz.effect.BLAZE_SPIKES) and rnd < 0.50 then
+        return 249 -- blaze spikes
     else
-        SetDropRate(108, 1571, 0)
+        return 358 -- hastega
     end
-
-    target:showText(mob, ID.text.ANIMATED_KNUCKLES_DIALOG)
-
-    SpawnMob(17330309):updateEnmity(target)
-    SpawnMob(17330310):updateEnmity(target)
-    SpawnMob(17330311):updateEnmity(target)
-    SpawnMob(17330319):updateEnmity(target)
-    SpawnMob(17330320):updateEnmity(target)
-    SpawnMob(17330321):updateEnmity(target)
-
 end
 
 function onMobFight(mob, target)
-    -- TODO: add battle dialog
 end
 
-function onMobDisengage(mob)
-    mob:showText(mob, ID.text.ANIMATED_KNUCKLES_DIALOG+2)
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-
-    player:showText(mob, ID.text.ANIMATED_KNUCKLES_DIALOG+1)
-
-    DespawnMob(17330309)
-    DespawnMob(17330310)
-    DespawnMob(17330311)
-    DespawnMob(17330319)
-    DespawnMob(17330320)
-    DespawnMob(17330321)
-
+    local instance = mob:getInstance()
+    DespawnMob(17330309, instance)
+    DespawnMob(17330310, instance)
+    DespawnMob(17330311, instance)
+    DespawnMob(17330319, instance)
+    DespawnMob(17330320, instance)
+    DespawnMob(17330321, instance)
 end

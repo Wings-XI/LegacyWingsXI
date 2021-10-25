@@ -13,8 +13,8 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if (npcUtil.tradeHas(trade, 2163) and player:getCharVar("PromotionPFC") == 1) then -- Rank to PFC
-        player:startEvent(5002, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    if (npcUtil.tradeHas(trade, 2163) and player:getCharVar("PromotionPFC") == 1) then
+        player:startEvent(5002, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- get PFC rank (rank 2)
     end
 end
 
@@ -24,12 +24,14 @@ function onTrigger(player, npc)
     local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
     local needToZone = player:needToZone()
 
+    -- Assaults
     if (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.PFC_WILDCAT_BADGE) == false and player:getCharVar("PromotionPFC") == 0) then
-        player:startEvent(5000, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- PFC rank is available
+        player:startEvent(5000, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- PFC rank is available (rank 2)
     elseif (player:getCharVar("PromotionSP") == 1 and player:hasKeyItem(tpz.ki.DARK_RIDER_HOOFPRINT) == true) then
-        player:startEvent(5022, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- Superior Private rank complete
+        player:startEvent(5022, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- get SP rank (rank 3)
     elseif (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.SP_WILDCAT_BADGE) == false and player:getCharVar("PromotionSP") == 0) then
-        player:startEvent(5020, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- Superior Private rank is available
+        player:startEvent(5020, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- SP rank is available (rank 3)
+    -- Missions
     elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.IMMORTAL_SENTRIES and player:getCharVar("AhtUrganStatus") == 1) then
         player:startEvent(3002, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.PRESIDENT_SALAHEEM and player:getCharVar("AhtUrganStatus") == 1) then

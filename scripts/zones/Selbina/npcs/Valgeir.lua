@@ -74,7 +74,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("QuestExpertiseDayStarted_var", 0)
 
     -- THE BASICS
-    elseif csid == 106 and npcUtil.giveItem(player, 4436) then
+    elseif csid == 106 and npcUtil.giveItem(player, 619) then
         player:setCharVar("QuestTheBacisCommentary_var", 1)
         player:delKeyItem(tpz.ki.MHAURAN_COUSCOUS)
     elseif csid == 107 then

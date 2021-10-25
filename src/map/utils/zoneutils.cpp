@@ -30,6 +30,7 @@
 
 #include "../conquest_system.h"
 #include "../map.h"
+#include "../entities/battleentity.h"
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
 #include "zoneutils.h"
@@ -326,6 +327,7 @@ void LoadNPCList()
                 PNpc->widescan = (uint8)Sql_GetIntData(SqlHandle, 17);
 
                 memcpy(&PNpc->look, Sql_GetData(SqlHandle, 14), 20);
+                memcpy(&PNpc->mainlook, &PNpc->look, 20);
 
                 GetZone(ZoneID)->InsertNPC(PNpc);
             }
@@ -443,6 +445,39 @@ void LoadMOBList()
 
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setMaxHit(1);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setSkillType(Sql_GetIntData(SqlHandle, 17));
+                DAMAGETYPE damageType = DAMAGE_NONE;
+                switch (((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->getSkillType()) {
+                    // Combat Skills
+                    case SKILLTYPE::SKILL_NONE:
+                        damageType = (DAMAGETYPE)0;
+                        break;
+                    case SKILLTYPE::SKILL_ARCHERY:
+                    case SKILLTYPE::SKILL_MARKSMANSHIP:
+                    case SKILLTYPE::SKILL_THROWING:
+                    case SKILLTYPE::SKILL_DAGGER:
+                    case SKILLTYPE::SKILL_POLEARM:
+                        damageType = (DAMAGETYPE)1;
+                        break;
+                    case SKILLTYPE::SKILL_SWORD:
+                    case SKILLTYPE::SKILL_GREAT_SWORD:
+                    case SKILLTYPE::SKILL_AXE:
+                    case SKILLTYPE::SKILL_GREAT_AXE:
+                    case SKILLTYPE::SKILL_SCYTHE:
+                    case SKILLTYPE::SKILL_KATANA:
+                    case SKILLTYPE::SKILL_GREAT_KATANA:
+                        damageType = (DAMAGETYPE)2;
+                        break;
+                    case SKILLTYPE::SKILL_CLUB:
+                    case SKILLTYPE::SKILL_STAFF:
+                        damageType = (DAMAGETYPE)3;
+                        break;
+                    case SKILLTYPE::SKILL_HAND_TO_HAND:
+                        damageType = (DAMAGETYPE)4;
+                        break;
+                    default: break;
+                }
+                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDmgType(damageType);
+
                 PMob->m_dmgMult = Sql_GetUIntData(SqlHandle, 18);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
@@ -484,7 +519,7 @@ void LoadMOBList()
 
                 PMob->setModifier(Mod::SLASHRES, (uint16)(Sql_GetFloatData(SqlHandle, 36) * 1000));
                 PMob->setModifier(Mod::PIERCERES, (uint16)(Sql_GetFloatData(SqlHandle, 37) * 1000));
-                PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlHandle, 38) * 1000));
+                PMob->setModifier(Mod::H2HRES, (uint16)(Sql_GetFloatData(SqlHandle, 38) * 1000));
                 PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlHandle, 39) * 1000));
                 /*
                 PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlHandle, 40) - 1) * -100)); // These are stored as floating percentages

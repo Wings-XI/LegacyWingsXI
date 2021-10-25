@@ -185,6 +185,9 @@ public:
     int32 gotoPlayer(lua_State*);            // warps self to target player
     int32 bringPlayer(lua_State*);           // warps target to self
 
+    int32 getPlayerExpansions(lua_State*);   // Get the bitmask of registered expansions for a player
+    int32 playerHasExpansion(lua_State*);    // Check whether a player has a specific expansion registered
+
     // Items
     int32 getEquipID(lua_State*);            // Gets the Item Id of the item in specified slot
     int32 getEquippedItem(lua_State *);      // Returns the item object from specified slot
@@ -238,6 +241,7 @@ public:
     int32 checkNameFlags(lua_State* L);      // this is check and not get because it tests for a flag, it doesn't return all flags
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
+    int32 restoreNpcLook(lua_State* L);
     int32 costume(lua_State*);               // get or set user costume
     int32 costume2(lua_State*);              // set monstrosity costume
     int32 getAnimation(lua_State*);          // Get Entity Animation
@@ -433,6 +437,7 @@ public:
     int32 recalculateAbilitiesTable(lua_State*);
 
     // Parties and Alliances
+    int32 getPlayersInRange(lua_State* L);
     int32 getParty(lua_State* L);
     int32 getPartyWithTrusts(lua_State* L);
     int32 getPartySize(lua_State* L);               // Get the size of a party in an entity's alliance
@@ -743,6 +748,9 @@ public:
     int32 addCharmTime(lua_State* L);
     int32 tryInterruptSpell(lua_State* L);
     int32 getGuardRate(lua_State* L);
+    int32 getParryRate(lua_State* L);
+    int32 getBlockRate(lua_State* L);
+    int32 getBlockedDamage(lua_State* L);
     int32 trySkillUp(lua_State* L);
     int32 addRoamFlag(lua_State* L);
     int32 delRoamFlag(lua_State* L);

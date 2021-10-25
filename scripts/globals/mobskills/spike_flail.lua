@@ -18,7 +18,7 @@ function onMobSkillCheck(target, mob, skill)
         return 1
     elseif mob:hasStatusEffect(tpz.effect.BLOOD_WEAPON) then
         return 1
-    elseif target:isInfront(mob, 128) then
+    elseif not target:isBehind(mob, 96) then
         return 1
     elseif mob:AnimationSub() == 1 then
         return 1
@@ -30,11 +30,6 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 1
     local accmod = 2
     local dmgmod = math.random(5, 7)
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 2, 3, 4)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)

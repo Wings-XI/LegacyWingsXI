@@ -88,7 +88,7 @@ namespace charutils
     void	BuildingCharTraitsTable(CCharEntity* PChar);
     void    BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID);
 
-    void    DoTrade(CCharEntity* PChar, CCharEntity* PTarget);
+    uint32  DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID = 0);
     bool    CanTrade(CCharEntity* PChar, CCharEntity* PTarget);
 
     void	CheckWeaponSkill(CCharEntity* PChar, uint8 skill);

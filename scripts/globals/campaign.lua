@@ -37,6 +37,7 @@ end
 -- ListName_AN_price[optionID] = cost -- ItemName
 -- -------------------------------------------------------------------
 
+-- Prices for Players not Allied with the Nation --
 function getSandOriaNotesItem(i)
     local SandOria_AN =
     {
@@ -48,7 +49,7 @@ function getSandOriaNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14581, price = 15000}, -- Iron Ram Chainmain
         [274] = {id = 15005, price = 10500}, -- Iron Ram Mufflers
@@ -91,7 +92,7 @@ function getBastokNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14582, price = 15000}, -- Fourth Cuirass
         [274] = {id = 15006, price = 10500}, -- Fourth Gauntlets
@@ -134,7 +135,7 @@ function getWindurstNotesItem(i)
         [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
         [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
         [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
-        [2050] = {id = 10116, price = 2000}, -- Cipher: Valaineral
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
         -- Stars Service
         [18] = {id = 14583, price = 15000}, -- Cobra Coat
         [274] = {id = 15007, price = 10500}, -- Cobra Cuffs
@@ -163,6 +164,138 @@ function getWindurstNotesItem(i)
         -- Medal of Altana
         [82] = {id = 17684, price = 150000}, -- Samudra
         [338] = {id = 11636, price = 75000} -- Mercenary Major Charm
+    }
+    local item = Windurst_AN[i]
+    return item.id, item.price
+end
+
+-- Prices for Players Allied with the Nation --
+function getSandOriaNotesItemAllegience(i)
+    local SandOria_AN =
+    {
+        [2] = {id = 15754, price = 980}, -- Sprinter's Shoes
+        [258] = {id = 5428, price = 10}, -- Scroll of Instant Retrace
+        [514] = {id = 14584, price = 1000}, -- Iron Ram jack coat
+        [770] = {id = 14587, price = 1000}, -- Pilgrim Tunica
+        [1026] = {id = 16172, price = 3000}, -- Iron Ram Shield
+        [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
+        [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
+        [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
+        -- Stars Service
+        [18] = {id = 14581, price = 10000}, -- Iron Ram Chainmain
+        [274] = {id = 15005, price = 7000}, -- Iron Ram Mufflers
+        [530] = {id = 15749, price = 7000}, -- Iron Ram Sollerets
+        [786] = {id = 16141, price = 7000}, -- Iron Ram Helm
+        [1042] = {id = 16312, price = 7000}, -- Iron Ram Breeches
+        -- Emblems Service
+        [34] = {id = 16312, price = 20000}, -- Iron Ram Horn
+        [290] = {id = 16312, price = 20000}, -- Iron Ram Lance
+        [546] = {id = 16312, price = 20000}, -- Iron Ram Pick
+        [802] = {id = 16312, price = 40000}, -- Iron Ram Sallet
+        [1058] = {id = 16312, price = 40000}, -- Iron Ram Dastanas
+        -- Wings Service
+        [50] = {id = 15755, price = 50000}, -- Iron Ram Greaves
+        [306] = {id = 16315, price = 50000}, -- Iron Ram Hose
+        -- Medals Service
+        [66] = {id = 15844, price = 30000}, -- Patronus Ring
+        [322] = {id = 15966, price = 30000}, -- Fox Earring
+        [578] = {id = 15961, price = 30000}, -- Temple Earring
+        [834] = {id = 15934, price = 30000}, -- Crimson Belt
+        [1090] = {id = 19041, price = 30000}, -- Rose Strap
+        [1346] = {id = 15488, price = 75000}, -- Iron Ram Hauberk
+        [1602] = {id = 11356, price = 10000}, -- Royal Guard Livery
+        -- Medal of Altana
+        [82] = {id = 17684, price = 100000}, -- Griffinclaw
+        [338] = {id = 11636, price = 50000} -- Royal Knight Sigil Ring
+    }
+    local item = SandOria_AN[i]
+    return item.id, item.price
+end
+
+function getBastokNotesItemAllegience(i)
+    local Bastok_AN =
+    {
+        [2] = {id = 15754, price = 980}, -- Sprinter's Shoes
+        [258] = {id = 5428, price = 10}, -- Scroll of Instant Retrace
+        [514] = {id = 14585, price = 1000}, -- Fourth Tunica
+        [770] = {id = 14587, price = 1000}, -- Pilgrim Tunica
+        [1026] = {id = 18727, price = 3000}, -- Fourth Gun
+        [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
+        [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
+        [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
+        -- Stars Service
+        [18] = {id = 14582, price = 10000}, -- Fourth Cuirass
+        [274] = {id = 15006, price = 7000}, -- Fourth Gauntlets
+        [530] = {id = 15750, price = 7000}, -- Fourth Sabatons
+        [786] = {id = 16142, price = 7000}, -- Fourth Armet
+        [1042] = {id = 16313, price = 7000}, -- Fourth Cuisses
+        -- Emblems Service
+        [34] = {id = 18494, price = 20000}, -- Fourth Toporok
+        [290] = {id = 18854, price = 20000}, -- Fourth Mace
+        [546] = {id = 18946, price = 20000}, -- Fourth Zaghnal
+        [802] = {id = 16147, price = 40000}, -- Fourth Haube
+        [1058] = {id = 15010, price = 40000}, -- Fourth Hentzes
+        -- Wings Service
+        [50] = {id = 15756, price = 50000}, -- Fourth Schuhs
+        [306] = {id = 16316, price = 50000}, -- Fourth Schoss
+        -- Medals Service
+        [66] = {id = 16291, price = 30000}, -- Shield Collar
+        [322] = {id = 18734, price = 30000}, -- Sturm's Report
+        [578] = {id = 18735, price = 30000}, -- Sonia's Plectrum
+        [834] = {id = 16292, price = 30000}, -- Bull Necklace
+        [1090] = {id = 16258, price = 30000}, -- Arrestor Mantle
+        [1346] = {id = 14589, price = 75000}, -- Fourth Division Brunne
+        [1602] = {id = 11357, price = 10000}, -- Mythril Musketeer Livery
+        -- Medal of Altana
+        [82] = {id = 17685, price = 100000}, -- Lex Talionis
+        [338] = {id = 11545, price = 50000} -- Fourth Mantle
+    }
+    local item = Bastok_AN[i]
+    return item.id, item.price
+end
+
+function getWindurstNotesItemAllegience(i)
+    local Windurst_AN =
+    {
+        [2] = {id = 15754, price = 980}, -- Sprinter's Shoes
+        [258] = {id = 5428, price = 10}, -- Scroll of Instant Retrace
+        [514] = {id = 14586, price = 1500}, -- Cobra Tunica
+        [770] = {id = 14587, price = 1000}, -- Pilgrim Tunica
+        [1026] = {id = 19150, price = 3000}, -- Cobra CLaymore
+        [1282] = {id = 15841, price = 5000}, -- Recall Ring: Jugner
+        [1538] = {id = 15842, price = 5000}, -- Recall Ring: Pashhow
+        [1794] = {id = 15843, price = 5000}, -- Recall Ring: Meriphataud
+        [2562] = {id = 6408, price = 50000}, -- Portable Container
+        -- Stars Service
+        [18] = {id = 14583, price = 10000}, -- Cobra Coat
+        [274] = {id = 15007, price = 7000}, -- Cobra Cuffs
+        [530] = {id = 15751, price = 7000}, -- Cobra Pigaches
+        [786] = {id = 16143, price = 7000}, -- Cobra Hat
+        [1042] = {id = 16314, price = 7000}, -- Cobra Slops
+        -- Emblems Service
+        [34] = {id = 18756, price = 20000}, -- Cobra Unit Baghnakhs
+        [290] = {id = 19100, price = 20000}, -- Cobra Unit Knife
+        [546] = {id = 18728, price = 20000}, -- Cobra Unit Bow
+        [802] = {id = 16149, price = 40000}, -- Cobra Unit Cloche
+        [1058] = {id = 15011, price = 40000}, -- Cobra Unit Mittens
+        -- Wings Service
+        [50] = {id = 15757, price = 50000}, -- Cobra Unit Leggings
+        [306] = {id = 16317, price = 50000}, -- Cobra Unit Subligar
+        [580] = {id = 15758, price = 50000}, -- Cobra Unit Crackows
+        [1001] = {id = 16318, price = 50000}, -- Cobra Unit Trews
+        -- Medals Service
+        [66] = {id = 15935, price = 30000}, -- Capricornian Rope
+        [322] = {id = 15936, price = 30000}, -- Earthly Belt
+        [578] = {id = 16293, price = 30000}, -- Cougar Pendant
+        [834] = {id = 16294, price = 30000}, -- Crocodile Collar
+        [1090] = {id = 19041, price = 30000}, -- Ariesian Grip
+        [1346] = {id = 19042, price = 75000}, -- Cobra Unit Harness
+        [1602] = {id = 11358, price = 10000}, -- Patriarch Protector Livery
+        -- Medal of Altana
+        [82] = {id = 17684, price = 100000}, -- Samudra
+        [338] = {id = 11636, price = 50000} -- Mercenary Major Charm
     }
     local item = Windurst_AN[i]
     return item.id, item.price

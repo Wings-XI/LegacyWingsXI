@@ -362,7 +362,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             {
                 continue;
             }
-            if (visibleResults < 20){
+            if (visibleResults < 40){
                 PlayersList.push_back(PPlayer);
                 visibleResults++;
             }
@@ -463,7 +463,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
         "LEFT JOIN char_profile USING(charid) "
         "WHERE linkshellid1 = %u OR linkshellid2 = %u "
         "ORDER BY charname ASC "
-        "LIMIT 18";
+        "LIMIT 64";
 
     int32 ret = Sql_Query(SqlHandle, fmtQuery, LinkshellID, LinkshellID);
 

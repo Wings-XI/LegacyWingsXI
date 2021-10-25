@@ -229,6 +229,7 @@ public:
     SPAWNTYPE m_SpawnType;                // condition for mob to spawn
     time_point m_SpawnTime;               // exact time the mob spawned
     time_point m_UncharmTime;             // time when the mob uncharmed
+    time_point m_NextSlidingHit;          // next time the mob can perform a sliding hit, which is a hit while chasing a player that is running away
     bool      m_AutoClaimed;              // mob spawned in an already claimed state (disable cheating detection)
 
     int8      m_battlefieldID;            // battlefield belonging to

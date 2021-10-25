@@ -15,7 +15,7 @@ end
 function onPetAbility(target, pet, skill, summoner)
 
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
-        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+        spell:setMsg(tpz.msg.basic.SKILL_MISS)
         return tpz.effect.SLEEP_I
     end
 
@@ -34,14 +34,14 @@ function onPetAbility(target, pet, skill, summoner)
         if summoner ~= nil then
             summoningskill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
         end
-        if target:addStatusEffect(effect, 1, 0, duration * resist, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
+        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration * resist, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
             target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 15, 2)
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         end
     else
-        skill:setMsg(tpz.msg.basic.MAGIC_RESIST)
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
 
     return effect

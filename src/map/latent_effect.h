@@ -123,6 +123,7 @@ public:
     void    SetModPower(int16 power);
     bool    Activate();
     bool    Deactivate();
+    Mod     GetModForPetLatentMod(Mod petModLatent);
 
     CLatentEffect(
          CBattleEntity* owner,

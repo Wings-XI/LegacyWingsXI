@@ -27,6 +27,7 @@
 
 #include "entities/battleentity.h"
 #include "utils/charutils.h"
+#include "utils/zoneutils.h"
 #include "conquest_system.h"
 #include "utils/jailutils.h"
 #include "map.h"
@@ -170,7 +171,7 @@ void CAlliance::delParty(CParty* party)
     {
         auto* member = dynamic_cast<CCharEntity*>(entry);
         member->DropBattlefieldIfOutside();
-        if (member != nullptr && member->PTreasurePool != nullptr && member->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
+        if (member && member->PTreasurePool && member->PTreasurePool->GetPoolType() != TREASUREPOOL_ZONE)
         {
             member->PTreasurePool->DelMember(member);
         }
@@ -180,19 +181,25 @@ void CAlliance::delParty(CParty* party)
     if (!party->members.empty())
     {
         auto* PChar = dynamic_cast<CCharEntity*>(party->members.at(0));
+        CZone* PZone = zoneutils::GetZone(PChar->getZone());
+        if (!PZone)
+            return;
 
-        PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
-        PChar->PTreasurePool->AddMember(PChar);
-        PChar->PTreasurePool->UpdatePool(PChar);
-
-        for (uint8 i = 0; i < party->members.size(); ++i)
+        if (!(PZone->m_miscMask & MISC_TREASURE))
         {
-            auto* PMember = dynamic_cast<CCharEntity*>(party->members.at(i));
-            if (PChar != PMember)
+            PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_PARTY);
+            PChar->PTreasurePool->AddMember(PChar);
+            PChar->PTreasurePool->UpdatePool(PChar);
+
+            for (uint8 i = 0; i < party->members.size(); ++i)
             {
-                PMember->PTreasurePool = PChar->PTreasurePool;
-                PChar->PTreasurePool->AddMember(PMember);
-                PChar->PTreasurePool->UpdatePool(PMember);
+                auto* PMember = dynamic_cast<CCharEntity*>(party->members.at(i));
+                if (PChar != PMember)
+                {
+                    PMember->PTreasurePool = PChar->PTreasurePool;
+                    PChar->PTreasurePool->AddMember(PMember);
+                    PChar->PTreasurePool->UpdatePool(PMember);
+                }
             }
         }
     }

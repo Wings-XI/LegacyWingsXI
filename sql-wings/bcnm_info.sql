@@ -70,7 +70,7 @@ INSERT INTO `bcnm_info` VALUES(18, 139, 'kindergarten_cap', 'nobody', 0, 900, 90
 INSERT INTO `bcnm_info` VALUES(19, 139, 'last_orc-shunned_hero', 'nobody', 0, 1800, 1800, 0, 6, 19, 15, 0);
 INSERT INTO `bcnm_info` VALUES(20, 139, 'beyond_infinity', 'nobody', 0, 600, 600, 0, 6, 0, 6, 0);
 INSERT INTO `bcnm_info` VALUES(32, 140, 'save_the_children', 'nobody', 0, 600, 600, 99, 6, 0, 5, 0);
-INSERT INTO `bcnm_info` VALUES(33, 140, 'holy_crest', 'nobody', 0, 600, 600, 0, 6, 0, 7, 0);
+INSERT INTO `bcnm_info` VALUES(33, 140, 'holy_crest', 'nobody', 0, 600, 900, 0, 6, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(34, 140, 'wings_of_fury', 'nobody', 0, 900, 900, 20, 3, 34, 15, 0);
 INSERT INTO `bcnm_info` VALUES(35, 140, 'petrifying_pair', 'nobody', 0, 900, 900, 30, 3, 35, 15, 0);
 INSERT INTO `bcnm_info` VALUES(36, 140, 'toadal_recall', 'nobody', 0, 1800, 1800, 30, 6, 36, 15, 0);
@@ -294,6 +294,7 @@ INSERT INTO `bcnm_info` VALUES(1304, 37, 'central_temenos_2nd_floor', 'nobody', 
 INSERT INTO `bcnm_info` VALUES(1305, 37, 'central_temenos_3rd_floor', 'nobody', 0, 2700, 2700, 0, 18, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(1306, 37, 'central_temenos_4th_floor', 'nobody', 0, 3600, 3600, 0, 18, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(1307, 37, 'central_temenos_4th_floor_ii', 'nobody', 0, 3600, 3600, 0, 18, 0, 7, 0);
+INSERT INTO `bcnm_info` VALUES(1500, 85, 'purple_the_new_black', 'nobody', 0, 1800, 1800, 0, 6, 0, 5, 1);
 
 --
 -- Indexes for dumped tables

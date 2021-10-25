@@ -1175,6 +1175,10 @@ INSERT INTO `mob_pets` VALUES(17183019, 1, 15);
 INSERT INTO `mob_pets` VALUES(17183021, 1, 15);
 INSERT INTO `mob_pets` VALUES(16986197, 1, 9);
 INSERT INTO `mob_pets` VALUES(17170499, 1, 9);
+INSERT INTO `mob_pets` VALUES(17166431, 1, 9);
+INSERT INTO `mob_pets` VALUES(17166484, 1, 9);
+INSERT INTO `mob_pets` VALUES(17166488, 1, 9);
+INSERT INTO `mob_pets` VALUES(17166579, 1, 9);
 
 --
 -- Indexes for dumped tables

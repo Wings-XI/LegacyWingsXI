@@ -9,25 +9,6 @@ require("scripts/globals/msg")
 local ID = require("scripts/zones/Ghoyus_Reverie/IDs")
 -----------------------------------
 
-local originalSpawns = {
-    [17305647] = {x = -98.596,  z = -0.003, y = 259.135},
-    [17305648] = {x = -178.818, z = 19.781, y = 289.330},
-    [17305649] = {x = -186.184, z = 19.489, y = 304.580},
-    [17305650] = {x = -185.852, z = 19.771, y = 296.871},
-    [17305651] = {x = -168.025, z = 19.885, y = 299.214},
-    [17305652] = {x = -101.171, z = -0.443, y = 268.997},
-    [17305653] = {x = -128.054, z = 11.260, y = 296.860},
-    [17305654] = {x = -184.020, z = 19.937, y = 294.963},
-    [17305655] = {x = -184.384, z = 19.877, y = 294.881},
-    [17305656] = {x = -181.758, z = 19.694, y = 290.683},
-    [17305657] = {x = -99.618, z = -0.327, y = 267.136},
-    [17305658] = {x = -185.527, z = 19.446, y = 300.941},
-    [17305659] = {x = -179.182, z = 19.793, y = 281.985},
-    [17305660] = {x = -185.960, z = 19.698, y = 294.488},
-    [17305661] = {x = -104.173, z = 4.087, y = 291.537},
-    [17305662] = {x = -141.111, z = -0.420, y = 163.878}
-}
-
 function afterInstanceRegister(player)
     local instance = player:getInstance()
     player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
@@ -69,6 +50,7 @@ function onInstanceTimeUpdate(instance, elapsed)
         end
         
         if win then
+            instance:setStage(4) -- prevent possible double instance complete
             instance:complete()
         end
     end
@@ -77,7 +59,6 @@ end
 
 function onInstanceFailure(instance)
     -- intentionally no localVar status update on failure
-    cleanUpInstance(instance)
 
     local chars = instance:getChars()
     for i, v in pairs(chars) do
@@ -108,7 +89,6 @@ function onInstanceStageChange(instance, stage)
 end
 
 function onInstanceComplete(instance)
-    cleanUpInstance(instance)
 
     local chars = instance:getChars()
 
@@ -136,6 +116,11 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+     if csid == 10001 then -- A Manifest Problem
+        player:setPos(-136.89, -68.25, 101.99, 0, 96) -- Send back to Fort_Karugo-Narugo_[S] on failure or non-mission completion
+    elseif csid == 10000 then
+        player:setPos(332.595, -4.816, -16.181, 90, 95) -- Send to West_Sarutabaruta_[S] on success and mission completion
+    end
 end
 
 function pathAllMobsToCenter(instance, moveLaaYaku)
@@ -150,20 +135,6 @@ function pathAllMobsToCenter(instance, moveLaaYaku)
             mob:setSpawn(-137.27+offset, 1.0, 201.26+offset)
         end
     end
-end
-
-function resetMobSpawns(instance)
-    local mobs = instance:getMobs()
-    for i, mob in pairs(mobs) do
-        mobID = mob:getID()
-        mob:setSpawn(originalSpawns[mobID].x, originalSpawns[mobID].z, originalSpawns[mobID].y)
-    end
-end
-
-function cleanUpInstance(instance)
-    resetMobSpawns(instance)
-    instance:setStage(0)
-    instance:setProgress(0)
 end
 
 function setInstanceWideAggro(instance)

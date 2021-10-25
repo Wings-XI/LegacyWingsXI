@@ -8,6 +8,7 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DEF, 350)
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 10)
@@ -43,14 +44,12 @@ function onMobFight(mob, target)
     if mob:getHPP() < twohourthreshold and twohourtrigger == 0 then -- first meikyo shisui usage 75-85%
         mob:AnimationSub(0)
         mob:useMobAbility(730)
-        mob:setTP(0)
         mob:setLocalVar("meikyo", 1)
         mob:setLocalVar("step", 1)
         mob:setLocalVar("twohourtrigger", 1) -- prevent tenzen from using second meikyo while first one is active
         mob:setLocalVar("twohourthreshold", math.random(45, 55)) -- set next meikyo hpp threshold
     elseif mob:getHPP() < twohourthreshold and twohourtrigger == 2 then -- second meikyo shisui usage 45-55%
         mob:useMobAbility(730)
-        mob:setTP(0)
         mob:setLocalVar("meikyo", 1)
         mob:setLocalVar("step", 1)
         mob:setLocalVar("twohourtrigger", 3)
@@ -68,6 +67,7 @@ function onMobFight(mob, target)
         local meikyo = mob:getLocalVar("meikyo")
         local battlefield = mob:getBattlefield()
         if step == 1 and meikyo == 1 then
+            mob:setTP(0)
             mob:setMod(tpz.mod.DELAY, 0)
             mob:AnimationSub(0)
             mob:SetMobSkillAttack(0)
@@ -91,6 +91,7 @@ function onMobFight(mob, target)
                     if mob:getLocalVar("skillchain") > 75 then
                         mob:useMobAbility(1395) -- Tsukikage
                         mob:setLocalVar("step", 5)
+                        battlefield:setLocalVar("fireworks", 1)
                     end
                 end)
             else
@@ -110,7 +111,7 @@ function onMobFight(mob, target)
             mob:timer(3000, function(mob, target)
                 battlefield:setLocalVar("gameover", battlefield:getRemainingTime()) -- initiate loss condition trigger & record the time remaining
                 mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-                mob:showText(target, ID.text.TENZEN_MSG_OFFSET +1)
+                mob:showText(mob, ID.text.TENZEN_MSG_OFFSET +1)
             end)
         end
     end
@@ -151,7 +152,7 @@ function onMobFight(mob, target)
 
     if mob:actionQueueEmpty() == true and not isBusy then
         if mob:getHPP() <= 70 and mob:getLocalVar("riceball") == 0 then
-            if mob:getLocalVar("gameover") ~= 1 then
+            if battlefield:getLocalVar("fireworks") ~= 1 then
                 mob:showText(target, ID.text.TENZEN_MSG_OFFSET +3)
                 mob:useMobAbility(1398)
                 mob:addMod(tpz.mod.ATT, 50)

@@ -2,6 +2,7 @@
 -- Area: Korroloka Tunnel (173)
 --  Mob: Morion Worm
 -----------------------------------
+local ID = require("scripts/zones/Korroloka_Tunnel/IDs")
 require("scripts/globals/status")
 -----------------------------------
 

@@ -56,6 +56,16 @@ local items = {
         id = 28, -- Drawing Desk
         rank = 9,
         cost = 150000
+    },
+    [4] = {
+        id = 341, -- Carpenter's Signboard
+        rank = 9,
+        cost = 200000
+    },
+    [5] = {
+        id = 15819, -- Carpenter's Ring
+        rank = 6,
+        cost = 80000
     }
 }
 

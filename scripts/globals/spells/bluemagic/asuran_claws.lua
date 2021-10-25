@@ -25,7 +25,7 @@ function onSpellCast(caster, target, spell)
     local params = {}
     params.eco = ECO_BEAST
     params.attackType = tpz.attackType.PHYSICAL
-    params.damageType = tpz.damageType.HTH
+    params.damageType = tpz.damageType.H2H
     params.scattr = SC_IMPACTION
     params.spellLevel = 70
     params.numhits = 6

@@ -480,14 +480,14 @@ function npcUtil.tradeHas(trade, items, exact, confirm)
             end
         end
     end
-    
+
     if confirm == true then
         -- confirm items
         for k, v in pairs(neededItems) do
             trade:confirmItem(k, v)
         end
     end
-    
+
     return true
 end
 
@@ -519,7 +519,7 @@ function npcUtil.UpdateNPCSpawnPoint(id, minTime, maxTime, posTable, serverVar)
     serverVar = serverVar or nil -- serverVar is optional
 
     if serverVar then
-        if GetServerVariable(serverVar) <= os.time(t) then
+        if GetServerVariable(serverVar) <= os.time() then
             npc:hideNPC(1) -- hide so the NPC is not "moving" through the zone
             npc:setPos(newPosition.x, newPosition.y, newPosition.z)
         end

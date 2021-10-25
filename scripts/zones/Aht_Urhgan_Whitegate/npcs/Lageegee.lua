@@ -27,6 +27,9 @@ function onTrigger(player, npc)
     end
 
     if (rank > 0 and IS_ASSAULT_ACTIVATED == 1) then
+        if (rank > MAX_ASSAULT_PROMOTION_ALLOWED) then
+            rank = MAX_ASSAULT_PROMOTION_ALLOWED
+        end
         player:startEvent(276, rank, haveimperialIDtag, assaultPoints, player:getCurrentAssault())
     else
         player:startEvent(282) -- no rank
@@ -64,7 +67,7 @@ function onEventFinish(player, csid, option)
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delAssaultPoint(3, choice.price) -- Remove from PERIQIA_ASSAULT_POINT
+                player:delAssaultPoint(choice.price, 3) -- Remove from PERIQIA_ASSAULT_POINT
             end
         end
     end

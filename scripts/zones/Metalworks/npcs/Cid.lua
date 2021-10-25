@@ -31,13 +31,13 @@ function onTrade(player, npc, trade)
     if player:getCharVar("chips") == 1 then
         if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
             player:startEvent(883,1693,1692,1694)
-        end    
+        end
     end
 
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
-    elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:getCharVar("MissionStatus") == 1) then
-        if (trade:getItemQty(613, 1) and trade:getItemCount() == 1) then
+    elseif player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:getCharVar("MissionStatus") == 1 then
+        if trade:hasItemQty(613, 1) and trade:getItemCount() == 1 then
             player:startEvent(506)
         end
     end

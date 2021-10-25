@@ -10,6 +10,14 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onInitialize(zone)
+    local serre = GetServerVariable("BorokaRespawn")
+    local boroka = GetMobByID(ID.mob.BOROKA)
+	if os.time() < serre then
+		GetMobByID(ID.mob.BOROKA):setRespawnTime(serre - os.time())
+    elseif not boroka:isSpawned() then
+		SpawnMob(ID.mob.BOROKA)
+	end
+
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -29,6 +37,7 @@ function afterZoneIn(player)
         player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 50, 0, 0) -- LV50 cap
     end
 end
+
 
 function onRegionEnter(player, region)
 end

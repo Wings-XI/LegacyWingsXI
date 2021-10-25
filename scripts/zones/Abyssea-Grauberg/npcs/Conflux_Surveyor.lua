@@ -11,6 +11,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    --[[
     local visitant = 0
     local prevtime = player:getCharVar("Abyssea_Time")
     local STONES = tpz.abyssea.getTravStonesTotal(player)
@@ -78,4 +79,5 @@ function onEventFinish(player, csid, option)
             tpz.abyssea.spendTravStones(player, 4)
         end
     end
+    ]]
 end
