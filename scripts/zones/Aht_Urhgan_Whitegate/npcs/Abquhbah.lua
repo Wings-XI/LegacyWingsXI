@@ -17,8 +17,10 @@ function onTrigger(player, npc)
         rank = 2
     elseif promotion >= 12 and promotion <= 18 then
         rank = 3
-    elseif promotion >= 19 then
+    elseif promotion >= 19 and promotion <= 24 then
         rank = 4
+    elseif promotion >= 25 then
+        rank = 5
     end
 
     player:startEvent(255, rank)
