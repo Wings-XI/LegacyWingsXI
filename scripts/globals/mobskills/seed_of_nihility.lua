@@ -3,7 +3,7 @@
 --
 --  Description: Deals roughly 20% hp and resets all job abilities not currently on cooldown
 --  Type: Magical
---
+--  Note: Currently doesn't reset all job abilities
 --
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
@@ -16,8 +16,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    -- RESET JOB ABILITIES
-
     local dmgmod = 1
     local basedmg = target:getMaxHP() * math.random(18,25) * .01 -- 18%-25% damage base (higher range due to shell cutting dmg)
     local info = MobMagicalMove(mob, target, skill, basedmg, tpz.magic.ele.NONE, dmgmod, TP_NO_EFFECT)

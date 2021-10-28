@@ -3,7 +3,7 @@
 --
 --  Description: Clones a random target creating a Seed Thrall
 --  Type: 
---
+--  Note: Currently not random and thrall's only use Vorpal Blade
 --
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
@@ -16,12 +16,9 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    -- Target a random person?
-
     local ID = zones[mob:getZoneID()]
     local target = mob:getTarget()
 
-    -- target shouldn't even be a pet
     if target and target:isPet() then
         target = target:getMaster()
     end
@@ -29,9 +26,24 @@ function onMobWeaponSkill(target, mob, skill)
     for i, id in ipairs(ID.mob.SEED_THRALLS) do
         local thrall = GetMobByID(id)
         if not thrall:isSpawned() then
-            -- Update thrall's Appearance, Weapon, Job(?), Level based on target
+            --Update thrall to mimic target
+            local job = target:getMainJob()
+
+            thrall:copyLook(target)
+            thrall:changeJob(job)
+            
+            local wsType = 1
+            if job == tpz.job.RNG then
+                wsType = target:getWeaponSkillType(tpz.slot.RANGED)
+            end
+            if wsType == 1 then
+                target:getWeaponSkillType(tpz.slot.MAIN)
+            end
+            -- Doesn't currently work & need more WS per weapon in each list
+            thrall:setSkillList(2000 + wsType)
 
             thrall:spawn()
+            thrall:delMobMod(tpz.mobMod.HP_STANDBACK, -70)
             if target then
                 thrall:updateEnmity(target)
             end

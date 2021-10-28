@@ -15,6 +15,7 @@ function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
     mob:setMod(tpz.mod.REGAIN, 1500) -- Basic attack is a WS
+    mob:setMod(tpz.mod.EVA, -50)
     mob:setLocalVar("attacks", 0)
 end
 
@@ -50,8 +51,6 @@ function onMobWeaponSkillPrepare(mob, target)
         else
             skillID = ({2416,2417,2418,2419})[math.random(1,4)] -- Access to Seed of Judgement
         end
-        
-        skillID = 2418
     end
 
     return skillID

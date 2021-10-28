@@ -241,6 +241,7 @@ public:
     int32 checkNameFlags(lua_State* L);      // this is check and not get because it tests for a flag, it doesn't return all flags
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
+    int32 copyLook(lua_State* L);
     int32 restoreNpcLook(lua_State* L);
     int32 costume(lua_State*);               // get or set user costume
     int32 costume2(lua_State*);              // set monstrosity costume
@@ -612,6 +613,7 @@ public:
     int32 getWeaponDamageType(lua_State*);       // gets the type of weapon equipped
     int32 getWeaponSkillType(lua_State*);       // gets the type of weapon equipped
     int32 getWeaponSubSkillType(lua_State*);    // gets the subskill of weapon equipped
+    int32 setWeaponSkillType(lua_State*);       // sets the type of weapon equipped
     int32 getWSSkillchainProp(lua_State* L);    // returns weapon skill's skillchain properties (up to 3)
 
     int32 takeWeaponskillDamage(lua_State* L);
