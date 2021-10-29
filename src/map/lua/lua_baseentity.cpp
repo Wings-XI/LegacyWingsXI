@@ -15425,6 +15425,51 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: triggerDrawIn()
+ *  Purpose : Forces a mob to use DrawIn on the mob's current target
+ *  Example : mob:triggerDrawIn(int drawInRange, int maxumumReach, bool includeParty)
+ *  Note    : Params can assume a default value by passing nil
+ *          : e.g. triggerDrawIn(nil, nil, true) to pull in a party/alliance with default range and reach
+ ************************************************************************/
+inline int32 CLuaBaseEntity::triggerDrawIn(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CBattleEntity* PTarget = PMob->GetBattleTarget();
+
+    // Default values
+    uint8 drawInRange = PMob->GetMeleeRange() * 2;
+    uint16 maximumReach = 0xFFFF;
+    bool includeParty = false;
+    float offset = PMob->GetMeleeRange() - 0.2f;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        auto drawInRange{ (uint8)lua_tointeger(L, 1) };
+    }
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        auto maximumReach{ (uint16)lua_tointeger(L, 2) };
+    }
+
+    if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
+    {
+        auto includeParty{ (bool)lua_toboolean(L, 3) };
+    }
+
+    if (PTarget)
+    {
+        // Draw in requires a target
+        battleutils::DrawIn(PTarget, PMob, offset, drawInRange, maximumReach, includeParty);
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: hasTPMoves()
 *  Purpose : Returns true if a Mob has TP moves in its skill list
 *  Example : if (mob:hasTPMoves()) then
@@ -17752,7 +17797,6 @@ inline int32 CLuaBaseEntity::lsConciergeCancel(lua_State *L)
     return 1;
 }
 
-
 //=======================================================//
 
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -18433,6 +18477,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,castSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useJobAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useMobAbility),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,triggerDrawIn),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTPMoves),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,weaknessTrigger),
