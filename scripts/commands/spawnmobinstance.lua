@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
--- func: spawnmob
+-- func: spawnmobinstance
 -- desc: Spawns a mob.
 ---------------------------------------------------------------------------------------------------
 
@@ -11,10 +11,10 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!spawnmob <mob ID> {despawntime} {respawntime}")
+    player:PrintToPlayer("!spawnmobinstance <mob ID>")
 end
 
-function onTrigger(player, mobId, despawntime, respawntime)
+function onTrigger(player, mobId)
 
     -- validate mobId
     if mobId == nil then
@@ -26,24 +26,21 @@ function onTrigger(player, mobId, despawntime, respawntime)
         error(player, "The specified mob ID is out of range.")
         return
     end
-    local targ = GetMobByID(mobId)
-    if targ == nil then
-        error(player, "Invalid mob ID.")
-        return
+
+    local targ
+    local instance = player:getInstance()
+
+    if (instance == nil) then
+        error(player, "Player not inside an instance - use spawnmob.")       
+    else
+        targ = GetMobByID(mobId, instance)
+         if targ == nil then
+            error(player, "Invalid mob ID? Invalid Spawnpoint-group-family linkage? Is the mob in instance_entities?   Either way - didnt find the mob")
+            return
+        end
     end
 
-    -- validate despawntime
-    if despawntime ~= nil and despawntime < 0 then
-        error(player, "Invalid despawn time.")
-        return
-    end
+    SpawnMob( targ:getID(), instance)
 
-    -- validate respawntime
-    if respawntime ~= nil and respawntime < 0 then
-        error(player, "Invalid respawn time.")
-        return
-    end
-
-    SpawnMob( targ:getID(), despawntime, respawntime )
     player:PrintToPlayer( string.format("Spawned %s %s.", targ:getName(), targ:getID()) )
 end
