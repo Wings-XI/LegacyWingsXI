@@ -420,7 +420,7 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)
             break;
         case FRAME_VALOREDGE:
             if (skill == SKILL_AUTOMATON_MELEE)
-                rank = 2;
+                rank = 3;
             break;
         case FRAME_SHARPSHOT:
             if (skill == SKILL_AUTOMATON_MELEE)

@@ -796,19 +796,23 @@ namespace petutils
         default: //case FRAME_HARLEQUIN:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(2, PPet->GetMLevel());
             PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(10, PPet->GetMLevel()));
+            PPet->m_dmgType = DAMAGE_IMPACT;
             break;
         case FRAME_VALOREDGE:
             PPet->m_Weapons[SLOT_SUB]->setShieldSize(3);
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
             PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
+            PPet->m_dmgType = DAMAGE_SLASHING;
             break;
         case FRAME_SHARPSHOT:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(1, PPet->GetMLevel());
             PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(11, PPet->GetMLevel()));
+            PPet->m_dmgType = DAMAGE_IMPACT;
             break;
         case FRAME_STORMWAKER:
             PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(10, PPet->GetMLevel());
             PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(12, PPet->GetMLevel()));
+            PPet->m_dmgType = DAMAGE_IMPACT;
             break;
         }
     }

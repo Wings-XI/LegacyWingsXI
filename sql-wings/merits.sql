@@ -183,7 +183,7 @@ INSERT INTO `merits` VALUES(1412, 'quick_draw_accuracy', 5, 2, 65536, 6, 21);
 INSERT INTO `merits` VALUES(1414, 'random_deal_recast', 5, 40, 65536, 6, 21);
 INSERT INTO `merits` VALUES(1416, 'bust_duration', 5, 10, 65536, 6, 21);
 INSERT INTO `merits` VALUES(1472, 'automaton_skills', 5, 2, 131072, 6, 22);
-INSERT INTO `merits` VALUES(1474, 'maintenance_recast', 5, 3, 131072, 6, 22);
+INSERT INTO `merits` VALUES(1474, 'maintenance_recast', 5, 2, 131072, 6, 22);
 INSERT INTO `merits` VALUES(1476, 'repair_effect', 5, 2, 131072, 6, 22);
 INSERT INTO `merits` VALUES(1478, 'activate_recast', 5, 40, 131072, 6, 22);
 INSERT INTO `merits` VALUES(1480, 'repair_recast', 5, 6, 131072, 6, 22);
