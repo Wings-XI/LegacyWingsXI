@@ -26,10 +26,22 @@ function onTrigger(player, mobId, despawntime, respawntime)
         error(player, "The specified mob ID is out of range.")
         return
     end
-    local targ = GetMobByID(mobId)
-    if targ == nil then
-        error(player, "Invalid mob ID.")
-        return
+
+    local targ
+    local instance = player:getInstance()
+
+    if (instance == nil) then
+        targ = GetMobByID(mobId)
+        if targ == nil then
+            error(player, "Invalid mob ID.")
+            return
+        end
+    else
+        targ = GetMobByID(mobId, instance)
+         if targ == nil then
+            error(player, "Invalid mob ID.")
+            return
+        end
     end
 
     -- validate despawntime
@@ -43,7 +55,10 @@ function onTrigger(player, mobId, despawntime, respawntime)
         error(player, "Invalid respawn time.")
         return
     end
-
-    SpawnMob( targ:getID(), despawntime, respawntime )
+    if (instance == nil) then
+        SpawnMob( targ:getID(), despawntime, respawntime )
+    else
+        SpawnMob( targ:getID(), instance, despawntime, respawntime )
+    end
     player:PrintToPlayer( string.format("Spawned %s %s.", targ:getName(), targ:getID()) )
 end
