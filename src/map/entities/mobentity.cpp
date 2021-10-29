@@ -1108,7 +1108,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         }
         else if (m_THLvl == 4)
         {
-            mult = 0.43f;
+            mult = 0.25f;
             maxRolls = 3;
         }
         else if (m_THLvl >= 5)
