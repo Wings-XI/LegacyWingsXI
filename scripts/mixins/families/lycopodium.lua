@@ -13,7 +13,6 @@ g_mixins.families.lycopodium = function(mob)
     mob:addListener("SPAWN", "LYCOPODIUM_SPAWN", function(mob)
         mob:SetAutoAttackEnabled(false)
         mob:SetMobAbilityEnabled(false)
-        mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
     end)
 
     mob:addListener("ROAM_TICK", "LYCOPODIUM_RTICK", function(mob)
@@ -44,6 +43,12 @@ g_mixins.families.lycopodium = function(mob)
                 mob:disengage()
             end
         end
+    end)
+
+    mob:addListener("TAKE_DAMAGE", "LYCOPODIUM_DAMAGE", function(mob)
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMobAbilityEnabled(true)
+        mob:setLocalVar("[lycopodium]damaged", 1)
     end)
 end
 
