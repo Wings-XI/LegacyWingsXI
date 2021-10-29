@@ -6,11 +6,23 @@
 -----------------------------------
 require("scripts/zones/Aht_Urhgan_Whitegate/Shared")
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
+require("scripts/globals/besieged")
 require("scripts/globals/missions")
 require("scripts/globals/keyitems")
 require("scripts/globals/titles")
 require("scripts/globals/npc_util")
 -----------------------------------
+
+function hasCards(player)
+    local cards = {tpz.ki.RED_INVITATION_CARD, tpz.ki.BLUE_INVITATION_CARD, tpz.ki.GREEN_INVITATION_CARD, tpz.ki.WHITE_INVITATION_CARD}
+
+    for _, v in pairs(cards) do
+        if player:hasKeyItem(v) then
+            return true
+        end
+    end
+    return false
+end
 
 function onTrade(player, npc, trade)
     if (npcUtil.tradeHas(trade, 2163) and player:getCharVar("PromotionPFC") == 1) then
@@ -21,9 +33,12 @@ end
 function onTrigger(player, npc)
 
     local TOAUM3_DAY = player:getCharVar("TOAUM3_STARTDAY")
-    local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
+    local realday    = tonumber(os.date("%j")) -- %M for next minute, %j for next day
     local needToZone = player:needToZone()
-
+    local cards      = {tpz.ki.RED_INVITATION_CARD, tpz.ki.BLUE_INVITATION_CARD, tpz.ki.GREEN_INVITATION_CARD, tpz.ki.WHITE_INVITATION_CARD}
+    local cardTotal  = 0
+    local coinType   = 2184
+    
     -- Assaults
     if (player:getCharVar("AssaultPromotion") >= 25 and player:hasKeyItem(tpz.ki.PFC_WILDCAT_BADGE) == false and player:getCharVar("PromotionPFC") == 0) then
         player:startEvent(5000, 0, 0, 0, 0, 0, 0, 0, 0, 0) -- PFC rank is available (rank 2)
@@ -94,12 +109,35 @@ function onTrigger(player, npc)
         player:startEvent(3150, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.THE_EMPRESS_CROWNED) then
         player:startEvent(3144, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    elseif (player:getCurrentMission(TOAU) == tpz.mission.id.toau.ETERNAL_MERCENARY) then
-        player:startEvent(3154, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    -- Lure of the Wildcat
+    elseif (player:getCurrentMission(TOAU) > tpz.mission.id.toau.IMMORTAL_SENTRIES and hasCards(player) and player:getCharVar("TOAU_WILDCAT_REWARD") == 0) then 
+        for _, v in pairs(cards) do
+            if player:hasKeyItem(v) then
+                cardTotal = cardTotal + 1
+            end
+        end 
+        local coinTotal = cardTotal
+        if cardTotal > 3 then 
+            coinType  = coinType + 2
+            coinTotal = 1
+        end        
+        player:startEvent(74, cardTotal, coinType, coinTotal, 0, 0, 0, 0, 0, 0)
+    -- Lure of the Wildcat (repeat)
+    elseif (player:getCurrentMission(TOAU) > tpz.mission.id.toau.IMMORTAL_SENTRIES and hasCards(player) and player:getCharVar("TOAU_WILDCAT_REWARD") ~= 0) then
+        for _, v in pairs(cards) do
+            if player:hasKeyItem(v) then
+                cardTotal = cardTotal + 1
+            end
+        end 
+        local coinTotal = cardTotal
+        player:startEvent(75, cardTotal, coinType, coinTotal, 0, 0, 0, 0, 0, 0)
+    -- Default Dialogue 
     else
-        player:startEvent(3003, 1, 0, 0, 0, 0, 0, 0, 1, 0) -- go back to work
-
-        -- player:messageSpecial(0)--  need to find correct normal chat CS..
+        if tpz.besieged.getMercenaryRank(player) == 0 then 
+            player:startEvent(3003, 1, 0, 0, 0, 0, 0, 0, 1, 0)
+        else 
+            player:startEvent(3003, tpz.besieged.getMercenaryRank(player), 0, 0, 0, 0, 0, 0, 0, 0)
+        end 
     end
 
 end
@@ -108,9 +146,56 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    local cards     = {tpz.ki.RED_INVITATION_CARD, tpz.ki.BLUE_INVITATION_CARD, tpz.ki.GREEN_INVITATION_CARD, tpz.ki.WHITE_INVITATION_CARD}
+    local cardTotal = 0
+    local coinType  = 2184
+
     if (csid == 73) then
         player:setCharVar("AhtUrganStatus", 2)
         player:setCharVar("TOAUM3_DAY", os.date("%j")) -- %M for next minute, %j for next day
+    elseif (csid == 74 and option == 3) then  -- Lure of the Wildcat reward 
+        for _, v in pairs(cards) do
+            if player:hasKeyItem(v) then
+                cardTotal = cardTotal + 1
+            end
+        end 
+        local coinTotal = cardTotal
+        if cardTotal > 3 then 
+            coinType  = coinType + 2
+            coinTotal = 1
+        end 
+        
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, coinType)
+        else 
+            player:addItem(coinType, coinTotal)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, coinType)
+            player:setCharVar("TOAU_WILDCAT_REWARD", 1)
+            player:addTitle(tpz.title.WILDCAT_PUBLICIST)
+            player:delKeyItem(tpz.ki.RED_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.BLUE_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.GREEN_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.WHITE_INVITATION_CARD)
+        end
+    elseif (csid == 75 and option == 3) then -- Lure of the Wildcat (repeat) reward 
+        for _, v in pairs(cards) do
+            if player:hasKeyItem(v) then
+                cardTotal = cardTotal + 1
+            end
+        end 
+        local coinTotal = cardTotal
+        
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, coinType)
+        else 
+            player:addItem(coinType, coinTotal)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, coinType)
+            player:addTitle(tpz.title.WILDCAT_PUBLICIST)
+            player:delKeyItem(tpz.ki.RED_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.BLUE_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.GREEN_INVITATION_CARD)
+            player:delKeyItem(tpz.ki.WHITE_INVITATION_CARD)
+        end
     elseif (csid == 3002) then
         player:setCharVar("AhtUrganStatus", 0)
         player:completeMission(TOAU, tpz.mission.id.toau.IMMORTAL_SENTRIES)

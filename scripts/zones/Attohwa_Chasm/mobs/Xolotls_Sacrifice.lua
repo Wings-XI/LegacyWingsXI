@@ -4,6 +4,7 @@
 -- Note: Pet for Xolotl
 -----------------------------------
 local ID = require("scripts/zones/Attohwa_Chasm/IDs")
+require("scripts/globals/world")
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -15,7 +16,7 @@ end
 function onMobRoam(mob)
     local totd = VanadielTOTD()
 
-    if totd ~= 1 and totd ~= 7 then
+    if totd ~= tpz.time.NIGHT and totd ~= tpz.time.MIDNIGHT then
         DespawnMob(mob:getID())
     end
 end

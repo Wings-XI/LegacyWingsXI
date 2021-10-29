@@ -722,6 +722,7 @@ public:
     int32 castSpell(lua_State*);            // forces a mob to cast a spell (parameter = spell ID, otherwise picks a spell from its list)
     int32 useJobAbility(lua_State*);        // forces a job ability use (players/pets only)
     int32 useMobAbility(lua_State*);        // forces a mob to use a mobability (parameter = skill ID)
+    int32 triggerDrawIn(lua_State*);        // forces a mob to use Draw In
     int32 hasTPMoves(lua_State*);
 
     int32 weaknessTrigger(lua_State* L);
