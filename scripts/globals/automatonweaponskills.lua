@@ -28,7 +28,7 @@ function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, actio
         ['type'] = tpz.attackType.PHYSICAL,
         ['slot'] = tpz.slot.MAIN,
         ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.MAIN),
-        ['damageType'] = attacker:getWeaponDamageType(tpz.slot.MAIN)
+        ['damageType'] = wsParams.damageType
     }
 
     local calcParams = {}
@@ -57,24 +57,20 @@ function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, actio
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = flameHolderFTP or 0
     calcParams.bonusAcc = (wsParams.accBonus or 0) + attacker:getMod(tpz.mod.WSACC)
+    calcParams.firstHitRateBonus = 50
     calcParams.hitRate = getAutoHitRate(attacker, target, true, calcParams.bonusAcc, calcParams.melee)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = calcParams.finalDmg
 
-    -- Delete statuses that may have been spent by the WS
-    attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
-
     -- Calculate reductions
     if not wsParams.formless then
-        --finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
-        if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.H2HRES) / 1000
-        elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
-        elseif (attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF) then
+        finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
+        if (attack.damageType == tpz.damageType.BLUNT) then
             finaldmg = finaldmg * target:getMod(tpz.mod.IMPACTRES) / 1000
+        elseif (attack.damageType == tpz.damageType.PIERCING) then
+            finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
         else
             finaldmg = finaldmg * target:getMod(tpz.mod.SLASHRES) / 1000
         end
@@ -112,7 +108,7 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
         ['type'] = tpz.attackType.RANGED,
         ['slot'] = tpz.slot.RANGED,
         ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.RANGED),
-        ['damageType'] = attacker:getWeaponDamageType(tpz.slot.RANGED)
+        ['damageType'] = tpz.damageType.PIERCING
     }
     local calcParams =  {}
     calcParams.weaponDamage = {wsParams.weaponDamage or attacker:getRangedDmg()}

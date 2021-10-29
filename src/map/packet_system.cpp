@@ -1404,7 +1404,14 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
         // If either player is crafting, don't allow the trade request
         if (PChar->animation == ANIMATION_SYNTH || PTarget->animation == ANIMATION_SYNTH)
         {
-            ShowDebug(CL_CYAN "%s trade request with %s was blocked.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+            ShowDebug(CL_CYAN "%s trade request with %s was blocked due to synth.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
+            PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
+            return;
+        }
+
+        // Can't initiate trade while in a cutscene without injecting packets
+        if (PChar->m_event.EventID != -1) {
+            ShowError(CL_RED "%s trade request with %s was blocked due to event.\n" CL_RESET, PChar->GetName(), PTarget->GetName());
             PChar->pushPacket(new CMessageStandardPacket(MsgStd::CannotBeProcessed));
             return;
         }
@@ -1456,6 +1463,11 @@ void SmallPacket0x033(map_session_data_t* const PSession, CCharEntity* const PCh
     if (PTarget != nullptr && PChar->TradePending.id == PTarget->id)
     {
         uint16 action = data.ref<uint8>(0x04);
+
+        if (PChar->m_event.EventID != -1) {
+            ShowError(CL_RED "%s sent a trade response packet during a cutscene!\n" CL_RESET, PChar->GetName());
+            return;
+        }
 
         switch (action)
         {
@@ -1572,6 +1584,10 @@ void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PCh
             }
             PCurrentSlotItem->setReserve(0);
             PChar->UContainer->ClearSlot(tradeSlotID);
+        }
+
+        if (PChar->m_event.EventID != -1) {
+            ShowError(CL_RED "SmallPacket0x034: Player %s trying to update trade while an event is active" CL_RESET, PChar->GetName());
         }
 
         CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
@@ -7115,6 +7131,12 @@ void SmallPacket0x10A(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         ShowError(CL_RED "SmallPacket0x10A: Player %s trying to bazaar a RESERVED item! [Item: %i | Slot ID: %i] \n" CL_RESET, PChar->GetName(), PItem->getID(),
                   slotID);
+        return;
+    }
+
+    if (PChar->m_event.EventID != -1) {
+        ShowError(CL_RED "SmallPacket0x10A: Player %s trying to bazaar an item while an event is active! [Item: %i | Slot ID: %i] \n" CL_RESET, PChar->GetName(), PItem->getID(),
+            slotID);
         return;
     }
 
