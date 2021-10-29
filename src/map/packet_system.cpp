@@ -1588,6 +1588,7 @@ void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (PChar->m_event.EventID != -1) {
             ShowError(CL_RED "SmallPacket0x034: Player %s trying to update trade while an event is active" CL_RESET, PChar->GetName());
+            return;
         }
 
         CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
