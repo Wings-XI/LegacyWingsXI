@@ -7,13 +7,12 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
-    -- mob:setMobMod(tpz.mobMod.MAGIC_COOL, 60) -- aproximately every 25 seconds
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_IGNORE_STATIONARY, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 5)
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
     mob:SetAutoAttackEnabled(false)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
     mob:setMod(tpz.mod.REGAIN, 1500) -- Basic attack is a WS
     mob:setMod(tpz.mod.EVA, -50)
     mob:setLocalVar("attacks", 0)
@@ -66,10 +65,12 @@ function onMobSkillFinished(mob, target, skill)
 end
 
 function onMobDeath(mob, player, isKiller)
-    for i, id in ipairs(ID.mob.SEED_THRALLS) do
-        local thrall = GetMobByID(id)
+    local mobID = mob:getID()
+
+    for i = mobID + 1, mobID + 6 do
+        local thrall = GetMobByID(i)
         if thrall:isSpawned() then
-            DespawnMob(id)
+            DespawnMob(i)
         end
     end
 end

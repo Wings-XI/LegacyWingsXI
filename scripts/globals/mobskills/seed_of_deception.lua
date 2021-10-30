@@ -16,15 +16,15 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local ID = zones[mob:getZoneID()]
+    local mobID = mob:getID()
     local target = mob:getTarget()
 
     if target and target:isPet() then
         target = target:getMaster()
     end
 
-    for i, id in ipairs(ID.mob.SEED_THRALLS) do
-        local thrall = GetMobByID(id)
+    for i = mobID + 1, mobID + 6 do
+        local thrall = GetMobByID(i)
         if not thrall:isSpawned() then
             --Update thrall to mimic target
             local job = target:getMainJob()

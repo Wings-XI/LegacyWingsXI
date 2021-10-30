@@ -39,6 +39,7 @@ function onTrigger(player, npc)
         currentDay == player:getCharVar("LastIvoryKey") or
         ACP < tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II
     ) then
+        player:startEvent(28)
         player:messageSpecial(ID.text.SOFTLY_SHIMMERING_LIGHT)
 
     elseif (needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
@@ -70,6 +71,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 28 then
+        printf("%u", option)
         if option == 100 then
             if not player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
                 player:messageSpecial(ID.text.SCINTILLATING_BURST_OF_LIGHT)
@@ -83,9 +85,9 @@ function onEventFinish(player, csid, option)
             local now = tonumber(os.date("%j"))
             local lastAzure = player:getCharVar("LastAzureKey")
 
-            if not player:hasKeyItem(tpz.ki.AZURE_KEY) and now ~= lastAzure then
+            if not player:hasKeyItem(tpz.ki.MARK_OF_SEED) and not player:hasKeyItem(tpz.ki.AZURE_KEY) and now ~= lastAzure then
                 player:setCharVar("LastAzureKey", os.date("%j"))
-                npcUtil.giveKeyItem(player, tpz.ki.MARK_OF_SEED)
+                npcUtil.giveKeyItem(player, tpz.ki.AZURE_KEY)
                 player:delStatusEffectSilent(tpz.effect.MARK_OF_SEED)
                 player:setCharVar("SEED_AFTERGLOW_TIMER", 0)
                 player:setCharVar("SEED_AFTERGLOW_MASK", 0)

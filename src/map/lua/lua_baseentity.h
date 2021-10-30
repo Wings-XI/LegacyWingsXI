@@ -613,7 +613,6 @@ public:
     int32 getWeaponDamageType(lua_State*);       // gets the type of weapon equipped
     int32 getWeaponSkillType(lua_State*);       // gets the type of weapon equipped
     int32 getWeaponSubSkillType(lua_State*);    // gets the subskill of weapon equipped
-    int32 setWeaponSkillType(lua_State*);       // sets the type of weapon equipped
     int32 getWSSkillchainProp(lua_State* L);    // returns weapon skill's skillchain properties (up to 3)
 
     int32 takeWeaponskillDamage(lua_State* L);

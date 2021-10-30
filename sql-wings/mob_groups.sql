@@ -11466,10 +11466,10 @@ INSERT INTO `mob_groups` VALUES(53, 4205, 206, 'Vassago', 0, 128, 0, 0, 0, 50, 5
 INSERT INTO `mob_groups` VALUES(54, 2319, 206, 'Laila', 0, 128, 0, 2200, 1000, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(55, 42, 206, 'Adam', 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(56, 824, 206, 'Crabshaw', 0, 128, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(57, 3532, 206, 'Seed_Orc', 0, 128, 0, 0, 0, 50, 50, 0);
-INSERT INTO `mob_groups` VALUES(58, 3533, 206, 'Seed_Quadav', 0, 128, 0, 0, 0, 50, 50, 0);
-INSERT INTO `mob_groups` VALUES(59, 3535, 206, 'Seed_Yagudo', 0, 128, 0, 0, 0, 50, 50, 0);
-INSERT INTO `mob_groups` VALUES(60, 3530, 206, 'Seed_Goblin', 0, 128, 0, 0, 0, 50, 50, 0);
+INSERT INTO `mob_groups` VALUES(57, 3532, 206, 'Seed_Orc', 0, 128, 0, 8500, 0, 70, 70, 0);
+INSERT INTO `mob_groups` VALUES(58, 3533, 206, 'Seed_Quadav', 0, 128, 0, 7000, 0, 70, 70, 0);
+INSERT INTO `mob_groups` VALUES(59, 3535, 206, 'Seed_Yagudo', 0, 128, 0, 6500, 0, 70, 70, 0);
+INSERT INTO `mob_groups` VALUES(60, 3530, 206, 'Seed_Goblin', 0, 128, 0, 7000, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(61, 6069, 206, 'Ghul-I-Beaban_BLM', 0, 128, 0, 2200, 0, 43, 43, 0);
 INSERT INTO `mob_groups` VALUES(10045, 4006, 206, 'Trion', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(10055, 4498, 206, 'Zeid', 0, 0, 0, 0, 0, 0, 0, 0);

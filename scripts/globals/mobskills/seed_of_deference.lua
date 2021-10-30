@@ -30,6 +30,7 @@ function onMobWeaponSkill(target, mob, skill)
         target:addStatusEffect(tpz.effect.COSTUME, 31, 0, 60)
         mob:charm(target)
         mob:resetEnmity(target)
+        target:addMP(target:getMaxMP())
     end
     skill:setMsg(msg)
 

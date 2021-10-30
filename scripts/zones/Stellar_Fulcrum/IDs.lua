@@ -22,17 +22,8 @@ zones[tpz.zone.STELLAR_FULCRUM] =
         GEMSTONE_SHIMMERS       = 7910, -- Before you, a small gemstone shimmers with light...
         GEMSTONE_FUSE           = 7911, -- With a blinding flash of light, the stones in your hand fuse together to form a brilliant crystal
     },
-    mob = {
-        -- Ode of Life Bestowing
-        SEED_THRALLS =
-        {
-            17510453,
-            17510454,
-            17510455,
-            17510456,
-            17510457,
-            17510458,
-        },
+    mob =
+    {
     },
     npc =
     {
