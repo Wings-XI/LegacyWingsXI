@@ -5,22 +5,22 @@
 -- !pos -127.086 0.999 22.693 50
 -----------------------------------
 require("scripts/globals/besieged")
-require("scripts/globals/znm")
-local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 -----------------------------------
 
-entity.onTrade = function(player, npc, trade)
-    xi.znm.ryo.onTrade(player, npc, trade)
+function onTrade(player, npc, trade)
 end
 
-entity.onTrigger = function(player, npc)
-    xi.znm.ryo.onTrigger(player, npc)
+function onTrigger(player, npc)
+    player:startEvent(913)
 end
 
-entity.onEventUpdate = function(player, csid, option)
-    xi.znm.ryo.onEventUpdate(player, csid, option)
+function onEventUpdate(player, csid, option)
+    if option == 300 then
+        player:updateEvent(player:getCurrency("zeni_point"), 0)
+    else
+        player:updateEvent(0, 0)
+    end
 end
 
-entity.onEventFinish = function(player, csid, option)
-    xi.znm.ryo.onEventFinish(player, csid, option)
+function onEventFinish(player, csid, option)
 end
