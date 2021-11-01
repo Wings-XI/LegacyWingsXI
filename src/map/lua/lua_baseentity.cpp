@@ -4266,17 +4266,37 @@ inline int32 CLuaBaseEntity::getContainerSize(lua_State *L)
     return 1;
 }
 
-auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>
+/************************************************************************
+*  Function: addSoulPlate()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
 {
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
+        std::string name = lua_tostring(L, 1);
+        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+        uint8 zeni = (uint8) lua_tointeger(L, 3);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
+        uint8 fp = (uint8) lua_tointeger(L, 5);
+
         // Deduct Blank Plate
         if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
         {
             // Couldn't remove a blank plate
-            return std::nullopt;
+            lua_pushnil(L);
+            return 1;
         }
         PChar->pushPacket(new CInventoryFinishPacket());
 
@@ -4287,12 +4307,21 @@ auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint16 mobFamily, uin
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {
-            return std::nullopt;
+            lua_pushnil(L);
+            return 1;
         }
 
-        return std::optional<CLuaItem>(PItem);
+        lua_getglobal(L, CLuaItem::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, PItem);
+        lua_pcall(L, 2, 1, 0);
+        return 1;
     }
-    return std::nullopt;
+
+    lua_pushnil(L);
+    return 1;
 }
 
 /************************************************************************
@@ -17979,6 +18008,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
+
+    // Soul Plates
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSoulPlate),
 
     // Trading
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
