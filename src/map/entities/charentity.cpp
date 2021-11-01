@@ -1940,13 +1940,13 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
         {
             if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
             {
-                luautils::OnItemUse(this, PMember, PItem);
+                luautils::OnItemUse(PMember, PItem, this);
             }
         });
     }
     else
     {
-        luautils::OnItemUse(this, PTarget, PItem);
+        luautils::OnItemUse(PTarget, PItem, this);
     }
 
     action.id = this->id;

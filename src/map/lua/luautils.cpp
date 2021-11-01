@@ -2247,7 +2247,7 @@ namespace luautils
     // We use the subject. The return value is the message number or 0.
     // It is also necessary to somehow pass the message parameter (for example,
     // number of recovered MP)
-    int32 OnItemUse(CBaseEntity* PUser, CBaseEntity* PTarget, CItem* PItem)
+    int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar)
     {
         lua_prepscript("scripts/globals/items/%s.lua", PItem->getName());
 
@@ -2262,7 +2262,7 @@ namespace luautils
         CLuaItem LuaItem(PItem);
         Lunar<CLuaItem>::push(LuaHandle, &LuaItem);
 
-        CLuaBaseEntity LuaBaseEntityChar(PUser);
+        CLuaBaseEntity LuaBaseEntityChar(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntityChar);
 
         if (lua_pcall(LuaHandle, 3, 0, 0))
