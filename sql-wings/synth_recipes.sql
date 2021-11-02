@@ -4021,6 +4021,7 @@ INSERT INTO `synth_recipes` VALUES(4588, 1, 0, 0, 98, 60, 0, 0, 0, 0, 0, 4100, 4
 INSERT INTO `synth_recipes` VALUES(4589, 1, 0, 0, 91, 0, 0, 0, 0, 0, 0, 4100, 4242, 18406, 0, 0, 0, 0, 0, 0, 0, 2302, 2302, 2302, 2302, 1, 1, 2, 2, 'Jadagna_+1_Desynth');
 INSERT INTO `synth_recipes` VALUES(4590, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13414, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_Desynth');
 INSERT INTO `synth_recipes` VALUES(4591, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 14719, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_+1_Desynth');
+INSERT INTO `synth_recipes` VALUES(4592, 0, 0, 0, 0, 0, 0, 0, 0, 39, 0, 4101, 4243, 637, 913, 2513, 0, 0, 0, 0, 0, 1023, 1023, 1023, 1023, 3, 6, 9, 12, 'Living Key');
 
 -- -----------
 -- RECIPES END
