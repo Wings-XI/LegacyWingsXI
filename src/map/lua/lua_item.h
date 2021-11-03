@@ -83,6 +83,8 @@ public:
     int32 getAppraisalID(lua_State*);          // Get Appraisal ID
     int32 setAppraisalID(lua_State*);         // Set Appraisal ID
 
+    int32 setSoulPlateData(lua_State*);       // Set a soulplate's metadata
+    int32 getSoulPlateData(lua_State*);       // Get a soulplate's metadata
 };
 
 #endif

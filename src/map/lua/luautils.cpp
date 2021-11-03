@@ -2244,14 +2244,9 @@ namespace luautils
         return { messageId, param1, param2 };
     }
 
-    /************************************************************************
-    *                                                                       *
-    *  Используем предмет. Возврадаемое значение - номер сообщения или 0.   *
-    *  Так же необходимо как-то передавать параметр сообщения (например,    *
-    *  количество восстановленных MP)                                       *
-    *                                                                       *
-    ************************************************************************/
-
+    // We use the subject. The return value is the message number or 0.
+    // It is also necessary to somehow pass the message parameter (for example,
+    // number of recovered MP)
     int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar)
     {
         lua_prepscript("scripts/globals/items/%s.lua", PItem->getName());
