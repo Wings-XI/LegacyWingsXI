@@ -41,6 +41,7 @@ zones[tpz.zone.NASHMAU] =
         PIPIROON_SHOP_DIALOG     = 11786, -- Yes? I'm a busy man. Make it quick.
         RETRIEVE_DIALOG_ID       = 11886, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL    = 11923, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        BESIGED_RECHARGE         = 10829, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Imperial Standing credit/Imperial Standing credits] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
     },
     mob =
     {
