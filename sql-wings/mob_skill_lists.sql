@@ -860,7 +860,6 @@ INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1718);
 INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1720);
 INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1721);
 INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1722);
-INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1723);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1725);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1727);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1728);
@@ -3225,6 +3224,11 @@ INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 645);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 646);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 647);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 648);
+INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1183, 1718);
+INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1183, 1720);
+INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1183, 1721);
+INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1183, 1722);
+INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1183, 1723);
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
