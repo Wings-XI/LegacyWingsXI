@@ -25,7 +25,7 @@ function onSpikesDamage(mob, target, damage)
         INT_diff = 20 + (INT_diff - 20) * 0.5 -- INT above 20 is half as effective.
     end
 
-    local dmg = (damage + INT_diff) * 0.5 -- INT adjustment and base damage averaged together.
+    local dmg = (damage + INT_diff) * 2 -- INT adjustment and base damage averaged together.
     local params = {}
     params.bonusmab = 0
     params.includemab = false
@@ -39,6 +39,14 @@ function onSpikesDamage(mob, target, damage)
     end
 
     return tpz.subEffect.ICE_SPIKES, tpz.msg.basic.SPIKES_EFFECT_DMG, dmg
+end
+
+function onMobFight(mob)
+    -- Spams Ice Roar below 25% HP
+    if mob:getHPP() < 25 then
+        mob:setMobMod(tpz.mobMod.SKILL_LIST, 1180)
+        mob:setMod(tpz.mod.REGAIN, 250)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

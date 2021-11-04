@@ -1477,7 +1477,7 @@ namespace charutils
 
         if ((int32)(PItem->getQuantity() - PItem->getReserve() + quantity) < 0)
         {
-            ShowDebug("UpdateItem: %s trying to move invalid quantity %u of itemID %u\n", PChar->GetName(), quantity, ItemID);
+            ShowError("UpdateItem: %s trying to move invalid quantity %u of itemID %u\n", PChar->GetName(), quantity, ItemID);
             return 0;
         }
 
@@ -1888,6 +1888,7 @@ namespace charutils
 
         if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+            ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
             PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
         {

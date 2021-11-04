@@ -8,6 +8,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local EternalDialogue = player:getLocalVar("TOAU_ETERNAL_DIALOGUE")
     local promotion = player:getCharVar("AssaultPromotion")
     local rank = 0
 
@@ -17,11 +18,18 @@ function onTrigger(player, npc)
         rank = 2
     elseif promotion >= 12 and promotion <= 18 then
         rank = 3
-    elseif promotion >= 19 then
+    elseif promotion >= 19 and promotion <= 24 then
         rank = 4
+    elseif promotion >= 25 then
+        rank = 5
     end
-
-    player:startEvent(255, rank)
+    
+    if (player:getCurrentMission(TOAU) == tpz.mission.id.toau.ETERNAL_MERCENARY) and EternalDialogue == 0 then
+        player:startEvent(3154, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        player:setLocalVar("TOAU_ETERNAL_DIALOGUE", 1)
+    else 
+        player:startEvent(255, rank)
+    end 
 end
 
 function onEventUpdate(player, csid, option)

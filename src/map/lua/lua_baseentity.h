@@ -204,6 +204,8 @@ public:
     int32 getCurrentGPItem(lua_State*);      // Gets current GP item id and max points
     int32 breakLinkshell(lua_State*);        // Breaks all pearls/sacks
 
+    int32 addSoulPlate(lua_State*);          //
+
     // Trading
     int32 getContainerSize(lua_State*);      // Gets the current capacity of a container
     int32 changeContainerSize(lua_State*);   // Increase/Decreases container size
@@ -723,6 +725,7 @@ public:
     int32 castSpell(lua_State*);            // forces a mob to cast a spell (parameter = spell ID, otherwise picks a spell from its list)
     int32 useJobAbility(lua_State*);        // forces a job ability use (players/pets only)
     int32 useMobAbility(lua_State*);        // forces a mob to use a mobability (parameter = skill ID)
+    int32 triggerDrawIn(lua_State*);        // forces a mob to use Draw In
     int32 hasTPMoves(lua_State*);
 
     int32 weaknessTrigger(lua_State* L);

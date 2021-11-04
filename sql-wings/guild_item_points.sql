@@ -1192,8 +1192,6 @@ INSERT INTO `guild_item_points` VALUES(7, 16860, 8, 3150, 6320, 4);
 INSERT INTO `guild_item_points` VALUES(7, 16880, 8, 4275, 6320, 4);
 INSERT INTO `guild_item_points` VALUES(7, 16528, 8, 7200, 7200, 5);
 INSERT INTO `guild_item_points` VALUES(7, 16824, 8, 7200, 7200, 5);
-INSERT INTO `guild_item_points` VALUES(7, 16432, 8, 7120, 7120, 6);
-INSERT INTO `guild_item_points` VALUES(7, 17484, 8, 7120, 7120, 6);
 INSERT INTO `guild_item_points` VALUES(7, 17085, 8, 3060, 6320, 7);
 INSERT INTO `guild_item_points` VALUES(7, 17434, 8, 3240, 6320, 7);
 INSERT INTO `guild_item_points` VALUES(7, 4209, 9, 900, 4800, 0);

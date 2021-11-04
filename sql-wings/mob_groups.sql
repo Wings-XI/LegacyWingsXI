@@ -7718,7 +7718,7 @@ INSERT INTO `mob_groups` VALUES(22, 1287, 125, 'Fallen_Knight', 300, 1, 810, 0, 
 INSERT INTO `mob_groups` VALUES(23, 5862, 125, 'Calchas', 0, 32, 3074, 9000, 0, 74, 75, 0);
 INSERT INTO `mob_groups` VALUES(24, 597, 125, 'Cactuar_Cantautor', 0, 32, 398, 0, 0, 48, 53, 0);
 INSERT INTO `mob_groups` VALUES(25, 2407, 125, 'Lich', 300, 1, 1517, 0, 0, 49, 53, 0);
-INSERT INTO `mob_groups` VALUES(26, 2262, 125, 'King_Vinegarroon', 75600, 128, 1451, 25000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(26, 2262, 125, 'King_Vinegarroon', 0, 128, 1451, 25000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(27, 1745, 125, 'Goblin_Welldigger', 300, 0, 1188, 0, 0, 51, 55, 0);
 INSERT INTO `mob_groups` VALUES(28, 1641, 125, 'Goblin_Bouncer', 300, 0, 0, 0, 0, 51, 55, 0);
 INSERT INTO `mob_groups` VALUES(29, 1654, 125, 'Goblin_Enchanter', 300, 0, 1047, 0, 0, 51, 55, 0);
@@ -8593,7 +8593,7 @@ INSERT INTO `mob_groups` VALUES(23, 4417, 138, 'Yagudo_Eradicator', 960, 0, 2708
 INSERT INTO `mob_groups` VALUES(24, 5493, 138, 'Yagudo_Chanter_past', 960, 0, 2698, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(25, 4442, 138, 'Yagudo_Prelate_past', 960, 0, 2748, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(26, 2102, 138, 'Iron_Quadav', 960, 0, 1378, 0, 0, 77, 79, 0);
-INSERT INTO `mob_groups` VALUES(27, 4120, 138, 'Vajra_Quadav', 960, 0, 906, 0, 0, 77, 79, 0);
+INSERT INTO `mob_groups` VALUES(27, 4120, 138, 'Vajra_Quadav', 960, 0, 0, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(28, 5481, 138, 'Yagudo_Sentinel_past', 960, 0, 2765, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(29, 125, 138, 'Ancient_Quadav', 960, 0, 88, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(30, 5478, 138, 'Yagudo_High_Priest_past', 960, 0, 1910, 0, 0, 77, 79, 0);

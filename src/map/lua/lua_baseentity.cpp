@@ -4267,6 +4267,64 @@ inline int32 CLuaBaseEntity::getContainerSize(lua_State *L)
 }
 
 /************************************************************************
+*  Function: addSoulPlate()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        std::string name = lua_tostring(L, 1);
+        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+        uint8 zeni = (uint8) lua_tointeger(L, 3);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
+        uint8 fp = (uint8) lua_tointeger(L, 5);
+
+        // Deduct Blank Plate
+        if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
+        {
+            // Couldn't remove a blank plate
+            lua_pushnil(L);
+            return 1;
+        }
+        PChar->pushPacket(new CInventoryFinishPacket());
+
+        // Used Soul Plate
+        CItem* PItem = itemutils::GetItem(2477); 
+        PItem->setQuantity(1);
+        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
+        if (SlotID == ERROR_SLOTID)
+        {
+            lua_pushnil(L);
+            return 1;
+        }
+
+        lua_getglobal(L, CLuaItem::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, PItem);
+        lua_pcall(L, 2, 1, 0);
+        return 1;
+    }
+
+    lua_pushnil(L);
+    return 1;
+}
+
+/************************************************************************
 *  Function: changeContainerSize()
 *  Purpose : Upgrades the capacity of a container
 *  Example : player:changeContainerSize(container,newSize)
@@ -4500,6 +4558,11 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
         return 1;
     }
     if (checkLevel && (PItem->getReqLvl() > PChar->GetMLevel()))
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    if ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0)
     {
         lua_pushboolean(L, false);
         return 1;
@@ -6300,8 +6363,6 @@ inline int32 CLuaBaseEntity::levelRestriction(lua_State* L)
             PChar->SetMLevel(NewMLevel);
             PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
             charutils::ApplyAllEquipMods(PChar);
-
-            PChar->StatusEffectContainer->DelStatusEffectsForInstance();
 
             if (PChar->status != STATUS_DISAPPEAR)
             {
@@ -15476,6 +15537,51 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: triggerDrawIn()
+ *  Purpose : Forces a mob to use DrawIn on the mob's current target
+ *  Example : mob:triggerDrawIn(int drawInRange, int maxumumReach, bool includeParty)
+ *  Note    : Params can assume a default value by passing nil
+ *          : e.g. triggerDrawIn(nil, nil, true) to pull in a party/alliance with default range and reach
+ ************************************************************************/
+inline int32 CLuaBaseEntity::triggerDrawIn(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CBattleEntity* PTarget = PMob->GetBattleTarget();
+
+    // Default values
+    uint8 drawInRange = PMob->GetMeleeRange() * 2;
+    uint16 maximumReach = 0xFFFF;
+    bool includeParty = false;
+    float offset = PMob->GetMeleeRange() - 0.2f;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        auto drawInRange{ (uint8)lua_tointeger(L, 1) };
+    }
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        auto maximumReach{ (uint16)lua_tointeger(L, 2) };
+    }
+
+    if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
+    {
+        auto includeParty{ (bool)lua_toboolean(L, 3) };
+    }
+
+    if (PTarget)
+    {
+        // Draw in requires a target
+        battleutils::DrawIn(PTarget, PMob, offset, drawInRange, maximumReach, includeParty);
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: hasTPMoves()
 *  Purpose : Returns true if a Mob has TP moves in its skill list
 *  Example : if (mob:hasTPMoves()) then
@@ -17803,7 +17909,6 @@ inline int32 CLuaBaseEntity::lsConciergeCancel(lua_State *L)
     return 1;
 }
 
-
 //=======================================================//
 
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -17959,6 +18064,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
+
+    // Soul Plates
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSoulPlate),
 
     // Trading
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
@@ -18485,6 +18593,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,castSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useJobAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useMobAbility),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,triggerDrawIn),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTPMoves),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,weaknessTrigger),

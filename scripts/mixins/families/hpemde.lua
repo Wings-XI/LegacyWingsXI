@@ -92,6 +92,13 @@ g_mixins.families.hpemde = function(mob)
            closeMouth(mob)
         end
     end)
+
+    mob:addListener("TAKE_DAMAGE", "HPEMDE_DAMAGE", function(mob)
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMobAbilityEnabled(true)
+        mob:setLocalVar("[hpemde]damaged", 1)
+        mob:setLocalVar("[hpemde]changeTime", mob:getBattleTime() + 30)
+    end)
 end
 
 return g_mixins.families.hpemde

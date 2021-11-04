@@ -3225,11 +3225,13 @@ INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 645);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 646);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 647);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 648);
--- INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2415);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2416);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2417);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2418);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1180, 2419);
+INSERT INTO `mob_skill_lists` VALUES('Humbaba', 1180, 663);
+INSERT INTO `mob_skill_lists` VALUES('Okyupete', 1181, 400);
+INSERT INTO `mob_skill_lists` VALUES('Euryale', 1182, 1762);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1183, 2416);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1183, 2417);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1183, 2418);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1183, 2419);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
