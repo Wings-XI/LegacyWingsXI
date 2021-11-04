@@ -8593,7 +8593,7 @@ INSERT INTO `mob_groups` VALUES(23, 4417, 138, 'Yagudo_Eradicator', 960, 0, 2708
 INSERT INTO `mob_groups` VALUES(24, 5493, 138, 'Yagudo_Chanter_past', 960, 0, 2698, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(25, 4442, 138, 'Yagudo_Prelate_past', 960, 0, 2748, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(26, 2102, 138, 'Iron_Quadav', 960, 0, 1378, 0, 0, 77, 79, 0);
-INSERT INTO `mob_groups` VALUES(27, 4120, 138, 'Vajra_Quadav', 960, 0, 906, 0, 0, 77, 79, 0);
+INSERT INTO `mob_groups` VALUES(27, 4120, 138, 'Vajra_Quadav', 960, 0, 0, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(28, 5481, 138, 'Yagudo_Sentinel_past', 960, 0, 2765, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(29, 125, 138, 'Ancient_Quadav', 960, 0, 88, 0, 0, 77, 79, 0);
 INSERT INTO `mob_groups` VALUES(30, 5478, 138, 'Yagudo_High_Priest_past', 960, 0, 1910, 0, 0, 77, 79, 0);
