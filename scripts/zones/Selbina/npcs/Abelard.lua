@@ -76,12 +76,12 @@ function onTrigger(player, npc)
     local signedInBlood = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.SIGNED_IN_BLOOD)
     local signedInBloodStat = player:getCharVar("SIGNED_IN_BLOOD_Prog")
 
-    -- SIGNED IN BLOOD (will only activate if An Explorer's Footsteps is not active, or if it is completed)
-    if signedInBlood == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TORN_OUT_PAGES) and anExplorersFootsteps ~= QUEST_ACCEPTED and signedInBloodStat == 2 then
+    -- SIGNED IN BLOOD
+    if signedInBlood == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.TORN_OUT_PAGES) and signedInBloodStat == 2 then
         player:startEvent(1106)
-    elseif signedInBlood == QUEST_ACCEPTED and signedInBloodStat == 1 and anExplorersFootsteps ~= QUEST_ACCEPTED then
+    elseif signedInBlood == QUEST_ACCEPTED and signedInBloodStat == 1 then
         player:startEvent(1104)
-    elseif signedInBlood == QUEST_ACCEPTED and signedInBloodStat == 2 and anExplorersFootsteps ~= QUEST_ACCEPTED then
+    elseif signedInBlood == QUEST_ACCEPTED and signedInBloodStat == 2 then
         player:startEvent(1105)
     elseif signedInBlood == QUEST_ACCEPTED and signedInBloodStat == 3 then
         player:startEvent(48)
