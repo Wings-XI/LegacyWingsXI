@@ -1547,6 +1547,26 @@ INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 7);
 INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 8);
 INSERT INTO `item_latents` VALUES(28235, 169, 25, 26, 2);
 INSERT INTO `item_latents` VALUES(28256, 169, 25, 26, 2);
+INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 1);
+INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 2);
+INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 3);
+INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 4);
+INSERT INTO `item_latents` VALUES(18453, 73, 2, 16, 1);
+INSERT INTO `item_latents` VALUES(18453, 73, 2, 16, 2);
+INSERT INTO `item_latents` VALUES(18453, 73, 2, 16, 3);
+INSERT INTO `item_latents` VALUES(18453, 73, 2, 16, 4);
+INSERT INTO `item_latents` VALUES(18609, 23, 2, 16, 2);
+INSERT INTO `item_latents` VALUES(18609, 23, 2, 16, 4);
+INSERT INTO `item_latents` VALUES(18609, 23, 2, 16, 6);
+INSERT INTO `item_latents` VALUES(18609, 23, 2, 16, 8);
+INSERT INTO `item_latents` VALUES(18872, 25, 1, 16, 1);
+INSERT INTO `item_latents` VALUES(18872, 25, 1, 16, 2);
+INSERT INTO `item_latents` VALUES(18872, 25, 1, 16, 3);
+INSERT INTO `item_latents` VALUES(18872, 25, 1, 16, 4);
+INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 3);
+INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 4);
+INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 5);
+INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 6);
 
 --
 -- Indexes for dumped tables
