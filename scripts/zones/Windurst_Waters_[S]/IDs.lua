@@ -39,6 +39,7 @@ zones[tpz.zone.WINDURST_WATERS_S] =
         ALLIED_SIGIL               = 12907, -- You have received the Allied Sigil!
         RETRIEVE_DIALOG_ID         = 14974, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL      = 15035, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        CAMPAIGN_RECHARGE          = 12936, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Allied Note/Allied Notes] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
     },
     mob =
     {
