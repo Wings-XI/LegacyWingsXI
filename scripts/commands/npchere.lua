@@ -27,7 +27,7 @@ function onTrigger(player, npcId, noDepop)
             return
         end
     else
-        targ = GetNPCByID(npcId)
+        targ = GetNPCByID(npcId, player:getInstance())
         if (targ == nil) then
             error(player, "Invalid npcID.")
             return
