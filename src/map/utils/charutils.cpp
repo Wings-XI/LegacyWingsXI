@@ -1888,6 +1888,7 @@ namespace charutils
 
         if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+            ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
             PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
         {

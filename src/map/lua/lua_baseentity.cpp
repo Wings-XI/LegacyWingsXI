@@ -4562,6 +4562,11 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
         lua_pushboolean(L, false);
         return 1;
     }
+    if ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0)
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
     //ShowDebug("Item ID: %u Item Jobs: %u Player Job: %u\n",itemID,PItem->getJobs(),PChar->GetMJob());
     lua_pushboolean(L, true);
     return 1;

@@ -173,6 +173,14 @@ inline int32 CLuaItem::getReqLvl(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaItem::getRace(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
+    uint8 race = static_cast<CItemEquipment*>(m_PLuaItem)->getRace();
+    lua_pushinteger(L, race);
+    return 1;
+}
+
 inline int32 CLuaItem::getMod(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
@@ -439,6 +447,7 @@ Lunar<CLuaItem>::Register_t CLuaItem::methods[] =
     LUNAR_DECLARE_METHOD(CLuaItem,getName),
     LUNAR_DECLARE_METHOD(CLuaItem,getILvl),
     LUNAR_DECLARE_METHOD(CLuaItem,getReqLvl),
+    LUNAR_DECLARE_METHOD(CLuaItem,getRace),
     LUNAR_DECLARE_METHOD(CLuaItem,getMod),
     LUNAR_DECLARE_METHOD(CLuaItem,addMod),
     LUNAR_DECLARE_METHOD(CLuaItem,delMod),

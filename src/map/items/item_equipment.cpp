@@ -34,6 +34,7 @@ CItemEquipment::CItemEquipment(uint16 id) : CItemUsable(id)
 	m_shieldSize   = 0;
 	m_scriptType   = 0;
 	m_reqLvl       = 255;
+    m_race         = 0;
     m_iLvl         = 0;
 	m_equipSlotID  = 255;
     m_absorption   = 0;
@@ -79,6 +80,11 @@ uint32 CItemEquipment::getJobs()
 	return m_jobs;
 }
 
+uint8 CItemEquipment::getRace()
+{
+    return m_race;
+}
+
 void CItemEquipment::setReqLvl(uint8 lvl)
 {
 	m_reqLvl = lvl;
@@ -92,6 +98,11 @@ void CItemEquipment::setILvl(uint8 lvl)
 void CItemEquipment::setJobs(uint32 jobs)
 {
 	m_jobs = jobs;
+}
+
+void CItemEquipment::setRace(uint8 race)
+{
+    m_race = race;
 }
 
 void CItemEquipment::setModelId(uint16 mdl)
