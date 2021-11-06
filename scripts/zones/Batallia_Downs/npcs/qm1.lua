@@ -5,8 +5,15 @@
 -- Notes: Spawns Vegnix Greenthumb for ACP mission "Gatherer of Light (I)"
 -----------------------------------
 local ID = require("scripts/zones/Batallia_Downs/IDs")
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 -----------------------------------
+
+function onSpawn(npc)
+    if ENABLE_ACP == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
 
 function onTrade(player, npc, trade)
 end

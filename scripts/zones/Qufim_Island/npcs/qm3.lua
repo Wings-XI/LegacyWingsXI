@@ -10,6 +10,12 @@ require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 -----------------------------------
 
+function onSpawn(npc)
+    if ENABLE_ACP == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
 function onTrade(player, npc, trade)
     -- Trade Seedspall's Lux, Luna, Astrum
     if player:getCurrentMission(ACP) == tpz.mission.id.acp.THE_ECHO_AWAKENS and npcUtil.tradeHas(trade, {2740, 2741, 2742}) then

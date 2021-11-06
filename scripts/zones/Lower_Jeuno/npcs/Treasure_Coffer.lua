@@ -650,6 +650,12 @@ function intToBinary(x)
     return bin
 end
 
+function onSpawn(npc)
+    if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
 function onTrade(player, npc, trade)
 end
 

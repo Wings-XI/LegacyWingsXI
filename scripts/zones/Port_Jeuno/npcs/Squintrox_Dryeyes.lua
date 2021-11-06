@@ -11,6 +11,12 @@ require("scripts/globals/missions")
 local ID = require("scripts/zones/Port_Jeuno/IDs")
 -----------------------------------
 
+function onSpawn(npc)
+    if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
 function onTrade(player, npc, trade)
     local now = tonumber(os.date("%j"))
     local count = trade:getItemCount()
@@ -26,7 +32,7 @@ function onTrade(player, npc, trade)
     local eKitSleep = trade:hasItemQty(2781, 1)
     local uggalepihWhistle = trade:hasItemQty(1184, 1)
 
-    if (ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA ==0) then
+    if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
         player:showText(npc, ID.text.GET_LOST)
     else -- Crimson Key
         if sLux and sLuna and sAstrum and count == 3 and player:getCurrentMission(ACP) >= tpz.mission.id.acp.GATHERER_OF_LIGHT_I then

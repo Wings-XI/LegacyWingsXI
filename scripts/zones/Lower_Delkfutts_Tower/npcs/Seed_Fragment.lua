@@ -6,8 +6,15 @@
 -----------------------------------
 local ID = require("scripts/zones/Lower_Delkfutts_Tower/IDs")
 require("scripts/globals/missions")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
+
+function onSpawn(npc)
+    if ENABLE_ACP == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
 
 function onTrade(player, npc, trade)
 end

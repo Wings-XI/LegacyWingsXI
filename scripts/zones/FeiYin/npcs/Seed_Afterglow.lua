@@ -16,9 +16,16 @@ local ID = require("scripts/zones/FeiYin/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 -----------------------------------
+
+function onSpawn(npc)
+    if ENABLE_ACP == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
 
 function onTrade(player, npc, trade)
 end
