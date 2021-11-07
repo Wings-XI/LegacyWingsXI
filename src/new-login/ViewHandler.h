@@ -171,6 +171,13 @@ private:
 #pragma pack(pop)
 
     /**
+     *  Get the session pointer from either the first packet or
+     *  the connecting IP address (depending on settings).
+     *  @param pRequestPacket The payload of the request packet
+     */
+    bool GetSessionFromFirstPacket(const uint8_t* pRequestPacket);
+
+    /**
      *  Check the client version and send back a list of features
      *  @param pRequestPacket The payload of the request packet
      */

@@ -54,6 +54,12 @@ public:
     uint32_t GetAccountID() const;
 
     /**
+     *  Get the authentication token associated with the session.
+     *  @return Pointer to the authentication token
+     */
+    const uint8_t* GetAuthToken() const;
+
+    /**
      *  Get the IP address associated with the session
      *  @return IP address in network byte order
      */
@@ -362,6 +368,8 @@ public:
 private:
     // Account ID received from authentication
     uint32_t mdwAccountId;
+    // Authentication token to verify the session with
+    uint8_t mbufAuthToken[8];
     // IP address the user is connecting from
     uint32_t mdwIpAddr;
     // Initial key to be sent to the map server
