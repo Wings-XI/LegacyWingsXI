@@ -851,7 +851,8 @@ namespace charutils
             "gmlevel, "    // 0
             "mentor, "     // 1
             "nnameflags, "  // 2
-            "chatfilters " // 3
+            "chatfilters, " // 3
+            "languages "     // 4
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -865,6 +866,7 @@ namespace charutils
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
             PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
+            PChar->search.language = (uint8)Sql_GetUIntData(SqlHandle, 4);
         }
 
         charutils::LoadInventory(PChar);
@@ -5145,6 +5147,19 @@ namespace charutils
         const char* Query = "UPDATE chars SET chatfilters = %llu WHERE charid = %u;";
 
         Sql_Query(SqlHandle, Query, PChar->chatFilterFlags, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Save the char's language preference                                  *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveLanguages(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET languages = %u WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->search.language, PChar->id);
     }
 
     /************************************************************************

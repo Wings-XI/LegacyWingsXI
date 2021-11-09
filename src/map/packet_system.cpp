@@ -5509,6 +5509,7 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
 
     auto oldMenuConfigFlags = PChar->menuConfigFlags.flags;
     auto oldChatFilterFlags = PChar->chatFilterFlags;
+    auto oldLanguages = PChar->search.language;
 
     // Extract the system filter bits and update MenuConfig
     const uint8 systemFilterMask = (NFLAG_SYSTEM_FILTER_H | NFLAG_SYSTEM_FILTER_L) >> 8;
@@ -5527,6 +5528,11 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
     if (oldChatFilterFlags != PChar->chatFilterFlags)
     {
         charutils::SaveChatFilterFlags(PChar);
+    }
+
+    if (oldLanguages != PChar->search.language)
+    {
+        charutils::SaveLanguages(PChar);
     }
 
     PChar->pushPacket(new CMenuConfigPacket(PChar));
