@@ -1505,6 +1505,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 first = false;
             }
         }
+
+        battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
         // innin and yonin share recasts

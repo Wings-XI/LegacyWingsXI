@@ -260,6 +260,8 @@ namespace battleutils
     bool                IsMagicCovered(CCharEntity* PCoverAbilityUser);
     void                ConvertDmgToMP(CBattleEntity* PDefender, int32 damage, bool IsCovered);
     float               GetRangedAttackDistanceCorrection(CBattleEntity* PChar, float distance);
+
+    void                HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action);
 };
 
 #endif
