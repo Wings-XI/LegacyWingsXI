@@ -5864,6 +5864,19 @@ namespace charutils
         return false;
     }
 
+    uint8 GetHighestJobLevel(CCharEntity* PChar)
+    {
+        uint8 max_lv = 0;
+
+        for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+            if (PChar->jobs.job[i] > max_lv) {
+                max_lv = PChar->jobs.job[i];
+            }
+        }
+
+        return max_lv;
+    }
+
     //char_points manipulation
     void AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max)
     {

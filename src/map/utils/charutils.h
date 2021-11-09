@@ -203,6 +203,7 @@ namespace charutils
     void	ReloadParty(CCharEntity* PChar);
 
     bool    IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
+    uint8   GetHighestJobLevel(CCharEntity* PChar);
 
     void    AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
     void    SetPoints(CCharEntity* PChar, const char* type, int32 amount);

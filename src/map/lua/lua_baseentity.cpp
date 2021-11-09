@@ -419,6 +419,34 @@ inline int32 CLuaBaseEntity::messageBasic(lua_State* L)
 }
 
 /************************************************************************
+*  Function: messageStandard()
+*  Purpose : Send a standard message packet to the PC
+*  Example : target:messageStandard(11);
+*  Notes   : Used for debugging
+************************************************************************/
+
+inline int32 CLuaBaseEntity::messageStandard(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint16 messageID = (uint16)lua_tointeger(L, 1);
+
+    uint32 param0 = 0;
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        param0 = (uint32)lua_tointeger(L, 2);
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->pushPacket(new CMessageStandardPacket((CCharEntity*)m_PBaseEntity, param0, static_cast<MsgStd>(messageID)));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: messageName()
 *  Purpose : Message displayed with an entity's name in it
 *  Example : target:messageName(messageID, entity, param0, param1, param2, param3, chatType);
@@ -6119,14 +6147,8 @@ inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 max_lv = 0;
-    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
-        if (PChar->jobs.job[i] > max_lv) {
-            max_lv = PChar->jobs.job[i];
-        }
-    }
 
-    lua_pushinteger(L, max_lv);
+    lua_pushinteger(L, charutils::GetHighestJobLevel(PChar));
 
     return 1;
 }
@@ -17872,6 +17894,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToArea),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageBasic),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageStandard),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messagePublic),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageSpecial),

@@ -5053,11 +5053,13 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if ((PChar->loc.zone->CanUseMisc(MISC_YELL)) && (!PChar->isNewPlayer()) && (charutils::GetCharVar(PChar, "YellMuted") == 0))
+                    if ((PChar->loc.zone->CanUseMisc(MISC_YELL)) &&
+                        (charutils::GetHighestJobLevel(PChar) > map_config.yell_min_level) &&
+                        (charutils::GetCharVar(PChar, "YellMuted") == 0))
                     {
-                        if (gettick() >= PChar->m_LastYell)
+                        if (gettick() >= charutils::GetCharVar(PChar, "NextYell"))
                         {
-                            PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+                            charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
                             // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
                             int8 packetData[4]{};
                             ref<uint32>(packetData, 0) = PChar->id;

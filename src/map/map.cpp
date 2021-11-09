@@ -738,7 +738,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             charutils::LoadChar(PChar);
             if (PChar->loc.prevzone == 0) {
                 // New chars must wait one cooldown before they can yell
-                PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
             }
 
             if (map_config.mission_storage_recovery) {
@@ -2779,6 +2779,7 @@ int32 map_config_default()
     map_config.lv_cap_mission_bcnm = 0;
     map_config.max_merit_points = 30;
     map_config.yell_cooldown = 30;
+    map_config.yell_min_level = 5;
     map_config.audit_gm_cmd = 0;
     map_config.audit_chat = 0;
     map_config.audit_say = 0;
@@ -3227,6 +3228,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "yell_cooldown") == 0)
         {
             map_config.yell_cooldown = atoi(w2);
+        }
+        else if (strcmp(w1, "yell_min_level") == 0)
+        {
+        map_config.yell_min_level = atoi(w2);
         }
         else if (strcmp(w1, "audit_gm_cmd") == 0)
         {
