@@ -5053,11 +5053,13 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if ((PChar->loc.zone->CanUseMisc(MISC_YELL)) && (!PChar->isNewPlayer()) && (charutils::GetCharVar(PChar, "YellMuted") == 0))
+                    if ((PChar->loc.zone->CanUseMisc(MISC_YELL)) &&
+                        (charutils::GetHighestJobLevel(PChar) > map_config.yell_min_level) &&
+                        (charutils::GetCharVar(PChar, "YellMuted") == 0))
                     {
-                        if (gettick() >= PChar->m_LastYell)
+                        if (gettick() >= charutils::GetCharVar(PChar, "NextYell"))
                         {
-                            PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+                            charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
                             // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
                             int8 packetData[4]{};
                             ref<uint32>(packetData, 0) = PChar->id;
@@ -5507,6 +5509,7 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
 
     auto oldMenuConfigFlags = PChar->menuConfigFlags.flags;
     auto oldChatFilterFlags = PChar->chatFilterFlags;
+    auto oldLanguages = PChar->search.language;
 
     // Extract the system filter bits and update MenuConfig
     const uint8 systemFilterMask = (NFLAG_SYSTEM_FILTER_H | NFLAG_SYSTEM_FILTER_L) >> 8;
@@ -5525,6 +5528,11 @@ void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PCh
     if (oldChatFilterFlags != PChar->chatFilterFlags)
     {
         charutils::SaveChatFilterFlags(PChar);
+    }
+
+    if (oldLanguages != PChar->search.language)
+    {
+        charutils::SaveLanguages(PChar);
     }
 
     PChar->pushPacket(new CMenuConfigPacket(PChar));

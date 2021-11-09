@@ -851,7 +851,8 @@ namespace charutils
             "gmlevel, "    // 0
             "mentor, "     // 1
             "nnameflags, "  // 2
-            "chatfilters " // 3
+            "chatfilters, " // 3
+            "languages "     // 4
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -865,6 +866,7 @@ namespace charutils
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
             PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
+            PChar->search.language = (uint8)Sql_GetUIntData(SqlHandle, 4);
         }
 
         charutils::LoadInventory(PChar);
@@ -5149,6 +5151,19 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Save the char's language preference                                  *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveLanguages(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET languages = %u WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->search.language, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Saves character nation changes                                       *
     *                                                                       *
     ************************************************************************/
@@ -5862,6 +5877,19 @@ namespace charutils
                 return true;
         }
         return false;
+    }
+
+    uint8 GetHighestJobLevel(CCharEntity* PChar)
+    {
+        uint8 max_lv = 0;
+
+        for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+            if (PChar->jobs.job[i] > max_lv) {
+                max_lv = PChar->jobs.job[i];
+            }
+        }
+
+        return max_lv;
     }
 
     //char_points manipulation

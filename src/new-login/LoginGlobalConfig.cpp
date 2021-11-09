@@ -162,6 +162,11 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
         // Allow only a single account per IP address unless exempt
         return "0";
     }
+    else if (strConfigName == "ip_lookup_identification") {
+        // Use the old IP lookup method for data and view server
+        // user identification.
+        return "0";
+    }
     LOG_ERROR("No default configuration value found.");
     throw std::runtime_error("Configuration value does not have a hardcoded default");
 }

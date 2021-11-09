@@ -172,6 +172,7 @@ namespace charutils
     void    SaveMentorFlag(CCharEntity* PChar);                         // saves the char's mentor flag
     void    SaveMenuConfigFlags(CCharEntity* PChar);                    // saves the char's unnamed flags
     void    SaveChatFilterFlags(CCharEntity* PChar);                    // saves the char's chat filters
+    void    SaveLanguages(CCharEntity* PChar);                          // saves the char's language preference
     void	SaveCharNation(CCharEntity* PChar);							// Save the character's nation of allegiance.
     void    SaveCampaignAllegiance(CCharEntity* PChar);                 // Save the character's campaign allegiance.
     void	SaveCharMoghancement(CCharEntity* PChar);                   // Save the character's current moghancement
@@ -203,6 +204,7 @@ namespace charutils
     void	ReloadParty(CCharEntity* PChar);
 
     bool    IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
+    uint8   GetHighestJobLevel(CCharEntity* PChar);
 
     void    AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
     void    SetPoints(CCharEntity* PChar, const char* type, int32 amount);
