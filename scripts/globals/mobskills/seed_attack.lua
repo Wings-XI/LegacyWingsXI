@@ -2,7 +2,7 @@
 --  Seed Crystal's basic attack
 --
 --  Description: This is Seed Crystal's basic attack.
---  Type: Physical
+--  Type: Magical
 --
 --
 ---------------------------------------------

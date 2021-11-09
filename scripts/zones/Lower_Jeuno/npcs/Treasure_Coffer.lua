@@ -598,8 +598,6 @@ function scenarioArmor(player, option, giveToPlayer)
     aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
     gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
     addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
-    
-    -- player:PrintToPlayer(string.format("aug1=%i aug2=%i option=%i", aug1, aug2, option))
 
     local augment1 = optionToAugment[addon][aug1]
     local augment2 = optionToAugment[addon][aug2]

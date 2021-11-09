@@ -36,17 +36,14 @@ function onMobInitialize(mob)
                 if spawnMandragora then
                     mob:spawn()
                     if target and target:isAlive() and mob:checkDistance(target) < 40 then
-                        -- mob:updateClaim(target)
                         mob:updateEnmity(target)
                     elseif killer:isAlive() and mob:checkDistance(killer) < 40 then
-                        -- mob:updateClaim(killer)
                         mob:updateEnmity(killer)
                     else
                         local partySize = killer:getPartySize()
                         local i = 1
                         for _, partyMember in pairs(killer:getAlliance()) do
                             if partyMember:isAlive() and mob:checkDistance(partyMember) < 40 then
-                                -- mob:updateClaim(partyMember)
                                 mob:updateEnmity(partyMember)
                                 break
                             elseif i == partySize then

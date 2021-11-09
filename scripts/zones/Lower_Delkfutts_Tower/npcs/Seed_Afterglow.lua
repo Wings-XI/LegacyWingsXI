@@ -50,16 +50,6 @@ function onTrigger(player, npc)
             end
         end
     end
-
-    -- MessageID - 4
-    -- 7748 no sync
-    -- 7748, get ki
-    -- 7748 7749 have ki
-    -- player:addKeyItem(tpz.ki.LIGHT_OF_MEA)
-    -- A stone glitters before you
-    -- player:messageSpecial(ID.text.DOOR_FIRMLY_SHUT)
-    -- player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.AMICITIA_STONE)
-
 end
 
 function onEventUpdate(player, csid, option)

@@ -5243,9 +5243,6 @@ inline int32 CLuaBaseEntity::copyLook(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
-    //auto PChar = static_cast<CCharEntity*>(Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity);
-    //CCharEntity* PChar = zoneutils::GetCharByName((int8*)"Ari");
-
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
     if (PLuaBaseEntity != nullptr)
     {
