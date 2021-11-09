@@ -4,6 +4,8 @@
 -- !pos 108 -40 -83 26
 -----------------------------------
 require("scripts/globals/missions")
+local ID = require("scripts/zones/Tavnazian_Safehold/IDs")
+require("scripts/globals/settings")
 -----------------------------------
 -- TODO:
 -- Starts quests: "X Marks the Spot"
@@ -14,6 +16,19 @@ require("scripts/globals/missions")
 -- https://github.com/project-topaz/topaz/issues/1481
 
 function onTrade(player, npc, trade)
+    if player:getCharVar("AnnyEvent2020") == 3 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(539, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 4)
+            player:addItem(949)
+            player:PrintToPlayer("Despachiaire : This must of taken you a long time to get here..", 0xD)
+            player:PrintToPlayer("Despachiaire : For your next step, take this to the youngest of a pair of sisters...", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 949)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 949)
+            player:PrintToPlayer("Despachiaire : Come back after cleaning up that mess of an inventory...", 0xD)
+        end
+    end
 end
 
 function onTrigger(player, npc)

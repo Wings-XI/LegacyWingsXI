@@ -27,7 +27,18 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    if player:getCharVar("AnnyEvent2020") == 11 and player:getCharVar("AnnyEvent2020_aery") == 0 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 then
+            player:setCharVar("AnnyEvent2020_aery", 1)
+            player:addItem(6404)
+            player:PrintToPlayer("You hear the roar of a great wyrm off in the distance..", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 6404)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 6404)
+        end
+    else
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    end
 end
 
 function onEventUpdate(player, csid, option)
