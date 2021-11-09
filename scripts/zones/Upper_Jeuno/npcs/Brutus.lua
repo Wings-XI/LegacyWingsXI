@@ -21,6 +21,18 @@ function onTrade(player, npc, trade)
 
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
+    elseif player:getCharVar("AnnyEvent2020") == 8 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(4494, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 9)
+            player:addItem(840)
+            player:PrintToPlayer("Brutus : Heh! Took you long enough, what the chocobos weren't fast enough?", 0xD)
+            player:PrintToPlayer("Brutus : A great general has called on you.. Here take this to them", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 840)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 840)
+            player:PrintToPlayer("Brutus : Come back after cleaning up that mess of an inventory...", 0xD)
+        end
     end
 end
 
