@@ -4150,6 +4150,14 @@ INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 275, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 35, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 21, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 40, 45, 255);
+-- ACP 11 Ode of Life Bestowing (Stellar Fulcrum)
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 176, 1, 255); -- Firaga III
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 181, 1, 255); -- Blizzaga III
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 186, 1, 255); -- Aeroga III
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 191 , 1, 255); -- Stonega III
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 196, 1, 255); -- Thundaga III
+INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 201, 1, 255); -- Waterga III
+
 
 --
 -- Indexes for dumped tables

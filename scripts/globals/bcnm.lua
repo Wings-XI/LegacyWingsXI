@@ -400,7 +400,7 @@ local battlefields = {
      -- { 3,  259,    0},   -- The Solitary Demolisher (Mog Bonanza)
      -- { 4,  260,    0},   -- Heroine's Combat (Mog Bonanza)
      -- { 5,  261,    0},   -- Mercenary Camp (Mog Bonanza)
-     -- { 6,  262,    0},   -- Ode of Life Bestowing (ACP11)
+        { 6,  262,    0},   -- Ode of Life Bestowing (ACP11)
      -- { 7,    ?,    0},   -- *Return to Delkfutt's Tower (HTMBF)
      -- { 8,    ?,    0},   -- True Love
      -- { 9,    ?,    0},   -- A Fond Farewell
@@ -488,7 +488,7 @@ local battlefields = {
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
      -- {19,  531,    0},   -- Clash of the Comrades (Quest)
-     -- {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
+        {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
         {21,  533,    0},   -- Beyond Infinity (Quest)
      -- {22,    ?, 4062},   -- *Factory Rejects (SKC10)
      -- {23,    ?, 4063},   -- *Demolition Squad (SKC20)
@@ -590,6 +590,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
         [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                            ) end, -- ZM8: Return to Delkfutt's Tower
+        [ 262] = function() return ( player:hasKeyItem(tpz.ki.OMNIS_STONE) and not player:hasKeyItem(tpz.ki.EBON_KEY)                                                       ) end, -- ACP11: Ode of Life Bestowing
         [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(tpz.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
         [ 289] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(1) and not player:hasKeyItem(tpz.ki.SHARD_OF_COWARDICE)    ) end, -- ZM14: Ark Angels (Tarutaru)
         [ 290] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(2) and not player:hasKeyItem(tpz.ki.SHARD_OF_ENVY)         ) end, -- ZM14: Ark Angels (Mithra)
@@ -615,6 +616,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 518] = function() return ( mjob == tpz.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
         [ 519] = function() return ( mjob == tpz.job.BRD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BRD LB5)
         [ 530] = function() return ( mjob == tpz.job.DNC and mlvl >= 66                                                                                                     ) end, -- Quest: A Furious Finale (DNC LB5)
+        [ 532] = function() return ( player:hasKeyItem(tpz.ki.MARK_OF_SEED)                                                                                                 ) end, -- ACP7: Those Who Lurk in Shadows
         [ 533] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [ 544] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)                                                                                          ) end, -- Quest: Trial by Fire
         [ 545] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Fire

@@ -381,15 +381,15 @@ tpz.mission.id =
         A_CRYSTALLINE_PROPHECY        = 0, -- ± --
         THE_ECHO_AWAKENS              = 1, -- ± --
         GATHERER_OF_LIGHT_I           = 2, -- ± --
-        GATHERER_OF_LIGHT_II          = 3,
+        GATHERER_OF_LIGHT_II          = 3, -- ± --
         THOSE_WHO_LURK_IN_SHADOWS_I   = 4, -- ± --
         THOSE_WHO_LURK_IN_SHADOWS_II  = 5, -- ± --
         THOSE_WHO_LURK_IN_SHADOWS_III = 6, -- ± --
         REMEMBER_ME_IN_YOUR_DREAMS    = 7, -- ± --
         BORN_OF_HER_NIGHTMARES        = 8, -- ± --
-        BANISHING_THE_ECHO            = 9,
-        ODE_OF_LIFE_BESTOWING         = 10,
-        A_CRYSTALLINE_PROPHECY_FIN    = 11,
+        BANISHING_THE_ECHO            = 9, -- ± --
+        ODE_OF_LIFE_BESTOWING         = 10,-- ± --
+        A_CRYSTALLINE_PROPHECY_FIN    = 11,-- ± --
     },
 
     -----------------------------------

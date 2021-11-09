@@ -1366,10 +1366,15 @@ INSERT INTO `mob_skills` VALUES(2360, 1195, 'wind_shear_znm', 1, 10.0, 2000, 180
 INSERT INTO `mob_skills` VALUES(2361, 1269, 'stave_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2369, 1652, 'scintillant_lance', 4, 10.0, 2000, 1600, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2410, 2410, 'demonic_flower', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2411, 2411, 'phantasmal_dance', 1, 15.0, 2000, 2000, 4, 0, 0, 15, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2412, 2412, 'thunderous_yowl', 1, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2413, 2413, 'feather_maelstrom', 0, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2414, 2414, 'saucepan', 4, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2411, 1490, 'phantasmal_dance', 1, 15.0, 2000, 2000, 4, 0, 0, 15, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2412, 1491, 'thunderous_yowl', 1, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2413, 1492, 'feather_maelstrom', 0, 14.7, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2414, 1493, 'saucepan', 4, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2415, 1494, 'seed_attack', 1, 7.0, 100, 0, 4, 0, 0, 1, 0, 0, 0); -- actually has no name
+INSERT INTO `mob_skills` VALUES(2416, 1496, 'seed_of_deception', 0, 30.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2417, 1495, 'seed_of_deference', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2418, 1497, 'seed_of_nihility', 1, 17.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2419, 1498, 'seed_of_judgement', 1, 17.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2421, 1682, 'dark_orb', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2422, 1678, 'dark_mist', 1, 14.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2423, 1680, 'triumphant_roar', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
