@@ -755,7 +755,7 @@ namespace message
         {
             zoneutils::ForEachZone([&packet, packet_size](CZone* PZone) {
                 PZone->ForEachChar([&packet, packet_size](CCharEntity* PChar) {
-                    if (PChar != nullptr && PChar->m_GMlevel > 0)
+                    if (PChar != nullptr && PChar->m_GMlevel > 1)
                     {
                         CBasicPacket* newPacket = new CBasicPacket();
                         memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
