@@ -2136,7 +2136,7 @@ INSERT INTO `mob_groups` VALUES(34, 4364, 51, 'Woodtroll_Dark_Knight', 300, 0, 2
 INSERT INTO `mob_groups` VALUES(35, 4368, 51, 'Woodtroll_Ranger', 300, 0, 2485, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(36, 5863, 51, 'Gharial', 7200, 0, 3076, 16000, 0, 83, 83, 0);
 INSERT INTO `mob_groups` VALUES(37, 71, 51, 'Air_Elemental', 300, 4, 38, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(38, 2018, 51, 'Hydra', 172800, 128, 3150, 73000, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(38, 2018, 51, 'Hydra', 172800, 128, 3150, 77000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(39, 2534, 51, 'Mamool_Ja_Sophist', 300, 0, 1602, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(40, 2508, 51, 'Mamool_Ja_Bounder', 300, 0, 1588, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(41, 2533, 51, 'Mamool_Ja_Savant', 300, 0, 1602, 0, 0, 72, 73, 0);
@@ -4162,7 +4162,7 @@ INSERT INTO `mob_groups` VALUES(21, 743, 84, 'Clipper', 300, 0, 480, 0, 0, 32, 3
 INSERT INTO `mob_groups` VALUES(22, 2043, 84, 'Ice_Elemental', 300, 4, 1347, 0, 0, 45, 45, 0);
 INSERT INTO `mob_groups` VALUES(23, 3435, 84, 'Sadfly', 300, 0, 2143, 0, 0, 29, 31, 0);
 INSERT INTO `mob_groups` VALUES(24, 1402, 84, 'Forester_Beetle', 300, 0, 169, 0, 0, 47, 50, 0);
-INSERT INTO `mob_groups` VALUES(25, 2382, 84, 'La_Velue', 0, 32, 1503, 0, 0, 62, 67, 0);
+INSERT INTO `mob_groups` VALUES(25, 2382, 84, 'La_Velue', 0, 32, 1503, 6000, 0, 62, 67, 0);
 INSERT INTO `mob_groups` VALUES(26, 5760, 84, 'Habergoass', 0, 32, 3044, 8000, 0, 64, 64, 0);
 INSERT INTO `mob_groups` VALUES(27, 5546, 84, 'Chaneque', 5400, 0, 2986, 7000, 0, 56, 57, 0);
 INSERT INTO `mob_groups` VALUES(28, 3020, 84, 'Orcish_Impaler', 300, 0, 1881, 0, 0, 65, 67, 0);

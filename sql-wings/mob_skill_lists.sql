@@ -1045,6 +1045,7 @@ INSERT INTO `mob_skill_lists` VALUES('Thinker', 241, 1250);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 270);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 271);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 273);
+INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 2207);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 783);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 784);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 785);

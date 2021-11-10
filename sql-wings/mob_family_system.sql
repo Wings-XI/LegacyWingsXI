@@ -324,7 +324,7 @@ INSERT INTO `mob_family_system` VALUES(256, 'Weeper', 12, 'Empty', 0, 50, 110, 9
 INSERT INTO `mob_family_system` VALUES(257, 'Wivre', 14, 'Lizard', 3, 40, 140, 90, 1, 5, 1, 6, 6, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.3, 1.3, 0.6, 0.85, 1.15, 1.15, 1.15, 4, 259, 0);
 INSERT INTO `mob_family_system` VALUES(258, 'Worm', 1, 'Amorph', 0, 0, 120, 200, 4, 3, 5, 4, 2, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.5, 0.7, 1.3, 1.3, 1.5, 1, 4, 2, 1);
 INSERT INTO `mob_family_system` VALUES(259, 'OuryuWyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1.3, 0.05, 0.05, 1, 1, 1, 3, 1, 0);
-INSERT INTO `mob_family_system` VALUES(260, 'FafnirWyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 0.05, 0.05, 1, 1, 1.3, 1.3, 1, 1, 1, 1, 0);
+INSERT INTO `mob_family_system` VALUES(260, 'FafnirWyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.3, 1.3, 1, 1, 1, 1, 0);
 INSERT INTO `mob_family_system` VALUES(261, 'CynoprosopiWyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 0.875, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0);
 INSERT INTO `mob_family_system` VALUES(262, 'Wyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 0.05, 0.05, 1, 1, 1, 1.3, 1, 1, 1, 1, 0);
 INSERT INTO `mob_family_system` VALUES(263, 'NidhoggWyrm', 10, 'Dragon', 4, 40, 120, 90, 1, 3, 1, 3, 6, 3, 1, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0);
