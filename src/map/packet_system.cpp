@@ -689,7 +689,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                     // Compensate for speedy chickens
                     threshold = threshold * 2;
                 }
-                if ((diffPerSecond > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel == 0)))
+                if ((diffPerSecond > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel < 2)))
                 {
                     char cheatDesc[128];
                     snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s went over the speed limit: %f (raw=%f, time=%d, threshold=%f)", PChar->name.c_str(),
@@ -2046,7 +2046,7 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    if (!zoneutils::IsResidentialArea(PChar) && PChar->m_GMlevel == 0 && !PChar->loc.zone->CanUseMisc(MISC_AH) && !PChar->loc.zone->CanUseMisc(MISC_MOGMENU))
+    if (!zoneutils::IsResidentialArea(PChar) && PChar->m_GMlevel < 2 && !PChar->loc.zone->CanUseMisc(MISC_AH) && !PChar->loc.zone->CanUseMisc(MISC_MOGMENU))
     {
         ShowDebug(CL_CYAN "%s is trying to use the delivery box in a disallowed zone [%s]\n" CL_RESET, PChar->GetName(), PChar->loc.zone->GetName());
         return;
@@ -2731,7 +2731,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    if (PChar->m_GMlevel == 0 && !PChar->loc.zone->CanUseMisc(MISC_AH))
+    if (PChar->m_GMlevel < 2 && !PChar->loc.zone->CanUseMisc(MISC_AH))
     {
         ShowDebug(CL_CYAN "%s is trying to use the auction house in a disallowed zone [%s]\n" CL_RESET, PChar->GetName(), PChar->loc.zone->GetName());
         return;
@@ -4877,7 +4877,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         // this makes sure a command isn't sent to chat
     }
-    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 0)
+    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 1)
     {
         message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[7]));
     }
@@ -6019,7 +6019,7 @@ void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PCh
     if (PChar->StatusEffectContainer->HasPreventActionEffect())
         return;
 
-    if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 0)
+    if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 1)
     {
         PChar->status = STATUS_SHUTDOWN;
         charutils::SendToZone(PChar, 1, 0);
