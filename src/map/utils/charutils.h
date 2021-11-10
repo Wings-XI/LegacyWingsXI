@@ -259,6 +259,8 @@ namespace charutils
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
 
+    bool CanUseYell(CCharEntity* PChar);
+    bool IsYellSpamFiltered(CCharEntity* PChar);
 };
 
 #endif // _CHARUTILS_H

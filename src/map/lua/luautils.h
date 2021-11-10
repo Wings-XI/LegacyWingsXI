@@ -323,6 +323,8 @@ namespace luautils
     int32 GetTickets(lua_State* L);                                                         // Fetchs a list of GM tickets
     int32 GetDynaTimeRemaining(lua_State* L);
 
+    int32 GetCharVarByName(lua_State* L);
+    int32 SetCharVarByName(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -

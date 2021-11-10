@@ -6499,4 +6499,61 @@ int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
+bool CanUseYell(CCharEntity* PChar)
+{
+    if (PChar->isNewPlayer())
+    {
+        // Yells aren't enabled for new players
+        return false;
+    }
+
+    if (charutils::GetHighestJobLevel(PChar) <= map_config.yell_min_level)
+    {
+        // Player's max level is too low.
+        return false;
+    }
+
+    auto OptedIn = charutils::GetCharVar(PChar, "YellOptedIn");
+    if (OptedIn == 0)
+    {
+        // Player didn't opt-in to the rules.
+        return false;
+    }
+
+    auto YellMuteTime = charutils::GetCharVar(PChar, "YellMuteTime");
+    if (YellMuteTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellMuteTime > CurrentTime)
+        {
+            // Player is currently muted.
+            return false;
+        }
+
+        // Mute expired.
+        charutils::SetCharVar(PChar, "YellMuteTime", 0);
+    }
+
+    // Yaaaaaargh!
+    return true;
+}
+
+bool IsYellSpamFiltered(CCharEntity* PChar)
+{
+    auto YellSpamTime = charutils::GetCharVar(PChar, "YellSpamTime");
+    if (YellSpamTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellSpamTime > CurrentTime)
+        {
+            // Player is currently marked as spam.
+            return true;
+        }
+
+        charutils::SetCharVar(PChar, "YellSpamTime", 0);
+    }
+
+    return false;
+}
+
 }; // namespace charutils

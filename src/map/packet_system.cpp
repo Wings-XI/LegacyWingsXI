@@ -5053,17 +5053,15 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if ((PChar->loc.zone->CanUseMisc(MISC_YELL)) &&
-                        (charutils::GetHighestJobLevel(PChar) > map_config.yell_min_level) &&
-                        (charutils::GetCharVar(PChar, "YellMuted") == 0))
+                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && charutils::CanUseYell(PChar))
                     {
                         if (gettick() >= charutils::GetCharVar(PChar, "NextYell"))
                         {
                             charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
                             // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
-                            int8 packetData[4]{};
+                            int8 packetData[8]{};
                             ref<uint32>(packetData, 0) = PChar->id;
-
+                            ref<uint32>(packetData, 4) = charutils::IsYellSpamFiltered(PChar);
                             message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6]));
                         }
                         else // You must wait longer to perform that action.
