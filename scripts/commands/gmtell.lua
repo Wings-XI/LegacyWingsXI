@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 }
 
@@ -44,13 +44,13 @@ function onTrigger(player, message)
 		error(player, "You must both the target name and a message")
 		return
 	end
-	
+
 	local target = GetPlayerByName( targetName )
     if target == nil then
-        error(player, string.format("Player %s not found.", targetName)) 
+        error(player, string.format("Player %s not found.", targetName))
 		return
     end
-	
+
 	target:PrintToPlayer(msg, 12)
 	player:PrintToPlayer(string.format("Sent GM tell to player %s: %s", targetName, msg))
 
