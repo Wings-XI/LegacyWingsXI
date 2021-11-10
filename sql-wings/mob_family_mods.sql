@@ -412,7 +412,7 @@ INSERT INTO `mob_family_mods` VALUES(85, 31, 5, 1);
 INSERT INTO `mob_family_mods` VALUES(85, 36, 55, 1);
 INSERT INTO `mob_family_mods` VALUES(367, 52, 30, 1);
 INSERT INTO `mob_family_mods` VALUES(367, 31, 5, 1);
-INSERT INTO `mob_family_mods` VALUES(367, 36, 55, 1);
+INSERT INTO `mob_family_mods` VALUES(367, 36, 30, 1);
 INSERT INTO `mob_family_mods` VALUES(368, 52, 30, 1);
 INSERT INTO `mob_family_mods` VALUES(368, 31, 5, 1);
 INSERT INTO `mob_family_mods` VALUES(368, 36, 55, 1);
