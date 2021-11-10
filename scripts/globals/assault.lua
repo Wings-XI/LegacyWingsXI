@@ -1,5 +1,5 @@
 --------------------------------------
--- Assault Utilities 
+-- Assault Utilities
 -- desc : Common functions for the assaults
 -- Credit: KnowOne - https://github.com/KnowOne134/DSP-Shared_Collection/blob/main/Assault/assault.lua
 --------------------------------------
@@ -186,7 +186,7 @@ function onAssaultUpdate(player, csid, option, target, orders, zoneID)
 
     player:setCharVar("AssaultCap", cap)
 
-    if player:getGMLevel() == 0 and player:getPartySize() < 3 then
+    if (player:getGMLevel() == 0 or player:getGMLevel() == 1) and player:getPartySize() < 3 then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
         player:instanceEntry(target,1)
         return
@@ -307,7 +307,7 @@ function onAssaultComplete(instance, X, Z, textTable, npcTable)
     local chars = instance:getChars()
 
     for _,v in pairs(chars) do
-        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then 
+        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then
             v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
             v:setLocalVar("AssaultCompletedMessage", 1)
         end
