@@ -16,7 +16,9 @@ end
 function onTrigger(player, npc)
     local rank = tpz.besieged.getMercenaryRank(player)
     local haveimperialIDtag
-    local tokens = 3--player:getAssaultPoint(ILRUSI_ASSAULT_POINT)
+    
+    local tokens = player:getAssaultPoint(NYZUL_ISLE_ASSAULT_POINT)
+    local floors = 0 -- TODO get floors from nyzul
 
     if player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) then
         haveimperialIDtag = 1
@@ -24,11 +26,11 @@ function onTrigger(player, npc)
         haveimperialIDtag = 0
     end
 
---[[    if (rank > 0) then
-        player:startEvent(278, rank, haveimperialIDtag, tokens, player:getCurrentAssault())
-    else]]
+    if (rank > 0) then
+        player:startEvent(278, rank, haveimperialIDtag, tokens, player:getCurrentAssault(), floorProgress)
+    else
         player:startEvent(284) -- no rank
-    --end
+    end
 end
 
 function onEventUpdate(player, csid, option)
@@ -49,6 +51,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    printf("option %u", option)
     if csid == 278 then
         local selectiontype = bit.band(option, 0xF)
         if selectiontype == 1 then
@@ -57,6 +60,9 @@ function onEventFinish(player, csid, option)
             player:delKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG)
             player:addKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+        elseif selectiontype == 2 then
+            -- I have not found a way to supress the option for players to select Uncharted Area Survey via CS params
+            player:PrintToPlayer("Nyzul Isle: Uncharted Area Survey is not available.")
         end
     end
 end

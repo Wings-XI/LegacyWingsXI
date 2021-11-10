@@ -3052,6 +3052,11 @@ INSERT INTO `mob_groups` VALUES(2495, 1079, 76, 'Don_Poroggo', 0, 128, 673, 0, 0
 INSERT INTO `mob_groups` VALUES(2497, 1448, 76, 'Gakke', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(2499, 1835, 76, 'Guard_Skeleton', 0, 128, 0, 0, 0, 73, 73, 0);
 INSERT INTO `mob_groups` VALUES(2508, 3456, 76, 'Sand_Lizard', 0, 128, 0, 0, 0, 73, 73, 0);
+
+-- ------------------------------------------------------------
+-- Nyzul_Isle (Zone 77)
+-- ------------------------------------------------------------
+
 INSERT INTO `mob_groups` VALUES(1, 221, 77, 'Archaic_Rampart', 0, 128, 0, 0, 0, 75, 76, 0);
 INSERT INTO `mob_groups` VALUES(2, 1799, 77, 'Greatclaw', 0, 128, 1222, 0, 0, 68, 70, 0);
 INSERT INTO `mob_groups` VALUES(3, 3803, 77, 'Stygian_Pugil', 0, 128, 37, 0, 0, 66, 68, 0);
@@ -3211,7 +3216,7 @@ INSERT INTO `mob_groups` VALUES(156, 1170, 77, 'Ebony_Pudding', 0, 128, 740, 0, 
 INSERT INTO `mob_groups` VALUES(157, 3267, 77, 'Qiqirn_Treasure_Hunter', 0, 128, 2051, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(158, 3245, 77, 'Qiqirn_Archaeologist', 0, 128, 2051, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(159, 3302, 77, 'Racing_Chariot', 0, 128, 0, 0, 0, 76, 77, 0);
-INSERT INTO `mob_groups` VALUES(160, 0, 77, NULL, 0, 128, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(160, 0, 77, 'Adamantoise', 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(161, 387, 77, 'Behemoth', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(162, 1280, 77, 'Fafnir', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(163, 2220, 77, 'Khimaira', 0, 128, 1436, 0, 0, 80, 80, 0);

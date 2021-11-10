@@ -1,0 +1,444 @@
+===== Mob List =====
+
+== Rampart == 
+17092629 Archaic_Rampart
+17092630 Archaic_Rampart
+
+== Aquans ==
+17092631 Greatclaw
+17092632 Greatclaw
+17092633 Greatclaw
+17092634 Greatclaw
+17092635 Greatclaw
+17092636 Greatclaw
+17092637 Stygian_Pugil
+17092638 Stygian_Pugil
+17092639 Stygian_Pugil
+17092640 Stygian_Pugil
+17092641 Kulshedra
+17092642 Kulshedra
+
+== Amorphs_1 ==
+17092643 Bouncing_Ball
+17092644 Bouncing_Ball
+17092645 Bouncing_Ball
+17092646 Thousand_Eyes
+17092647 Thousand_Eyes
+17092648 Thousand_Eyes
+17092649 Mousse Mousse
+17092650 Mousse Mousse
+17092651 Mousse Mousse
+17092652 Mousse Mousse
+17092653 Black_Pudding
+17092654 Black_Pudding
+
+== Arcana_1 ==
+17092655 Killing_Weapon
+17092656 Killing_Weapon
+17092657 Ominous_Weapon
+17092658 Ominous_Weapon
+17092659 Magic_Flagon
+17092660 Magic_Flagon
+17092661 Friars_Lantern
+17092662 Friars_Lantern
+17092663 Sweeping_Cluster
+17092664 Sweeping_Cluster
+17092665 Friars_Lantern -- split group
+17092666 Friars_Lantern
+
+== Undead == 
+17092667 Garm
+17092668 Garm
+17092669 Garm
+17092670 Tainted_Flesh
+17092671 Tainted_Flesh
+17092672 Tainted_Flesh
+17092673 Draugar -- blm
+17092674 Draugar 
+17092675 Draugar -- thf
+17092676 Draugar
+17092677 Bhoot
+17092678 Bhoot
+
+== Vermin == 
+17092679 Carmine_Eruca
+17092680 Carmine_Eruca
+17092681 Carmine_Eruca
+17092682 Spinner
+17092683 Spinner
+17092684 Spinner
+17092685 Wamouracampa
+17092686 Wamouracampa
+17092687 Wamouracampa
+17092688 Wamouracampa
+17092689 Wamoura
+17092690 Wamoura
+
+== Demons ==
+17092691 Imp
+17092692 Imp
+17092693 Imp
+17092694 Imp
+17092695 Imp
+17092696 Imp
+17092697 Imp
+17092698 Imp
+17092699 Imp
+17092700 Imp
+17092701 Psycheflayer
+17092702 Psycheflayer
+
+== Dragons ==
+17092703 Puk
+17092704 Puk
+17092705 Puk
+17092706 Puk
+17092707 Puk
+17092708 Puk
+17092709 Puk
+17092710 Puk
+17092711 Puk
+17092712 Puk
+17092713 Wyvern
+17092714 Wyvern
+
+== Birds ==
+17092715 Marsh_Murre
+17092716 Marsh_Murre
+17092717 Marsh_Murre
+17092718 Lesser_Colibri
+17092719 Lesser_Colibri
+17092720 Lesser_Colibri
+17092721 Ziz
+17092722 Ziz
+17092723 Ziz
+17092724 Ziz
+17092725 Peryton
+17092726 Peryton
+
+== Beasts ==
+17092727 Wild_Karakul
+17092728 Wild_Karakul
+17092729 Wild_Karakul
+17092730 Wajaom_Tiger
+17092731 Wajaom_Tiger
+17092732 Wajaom_Tiger
+17092733 Manticore
+17092734 Manticore
+17092735 Manticore
+17092736 Manticore
+17092737 Marid
+17092738 Marid
+
+== Plantoids ==
+17092739 Death_Cap
+17092740 Death_Cap
+17092741 Death_Cap
+17092742 Puktrap
+17092743 Puktrap
+17092744 Puktrap
+17092745 Leshy
+17092746 Leshy
+17092747 Leshy
+17092748 Leshy
+17092749 Ameretat
+17092750 Ameretat
+
+== Lizards ==
+17092751 Sand_Lizard
+17092752 Sand_Lizard
+17092753 Sand_Lizard
+17092754 Deinonychus
+17092755 Deinonychus
+17092756 Deinonychus
+17092757 Bull_Bugard
+17092758 Bull_Bugard
+17092759 Bull_Bugard
+17092760 Bull_Bugard
+17092761 Wivre
+17092762 Wivre
+
+== Amporphs_2 ==
+17092763 Bouncing_Ball
+17092764 Bouncing_Ball
+17092765 Bouncing_Ball
+17092766 Bouncing_Ball
+17092767 Bouncing_Ball
+17092768 Thousand_Eyes
+17092769 Thousand_Eyes
+17092770 Thousand_Eyes
+17092771 Thousand_Eyes
+17092772 Thousand_Eyes
+17092773 Mousse
+17092774 Mousse
+
+== Mixed_1 ==
+17092775 Peryton
+17092776 Peryton
+17092777 Peryton
+17092778 Peryton
+17092779 Peryton
+17092780 Peryton
+17092781 Peryton
+17092782 Peryton
+17092783 Peryton
+17092784 Peryton
+17092785 Mousse
+17092786 Mousse
+
+== Mixed_2 ==
+17092787 Draugar
+17092788 Draugar
+17092789 Draugar
+17092790 Draugar
+17092791 Draugar
+17092792 Draugar
+17092793 Draugar
+17092794 Draugar
+17092795 Draugar
+17092796 Draugar
+17092797 Mousse
+17092798 Mousse
+
+== Amporphs_3
+17092799 Mousse
+17092800 Mousse
+17092801 Mousse
+17092802 Mousse
+17092803 Mousse
+17092804 Mousse
+17092805 Black_Pudding
+17092806 Black_Pudding
+17092807 Black_Pudding
+17092808 Black_Pudding
+17092809 Black_Pudding
+17092810 Black_Pudding
+
+== Arcana_2 ==
+17092811 Killing_Weapon
+17092812 Killing_Weapon
+17092813 Killing_Weapon
+17092814 Ominous_Weapon
+17092815 Ominous_Weapon
+17092816 Ominous_Weapon
+17092817 Magic_Flagon
+17092818 Magic_Flagon
+17092819 Magic_Flagon
+17092820 Magic_Flagon
+17092821 Magic_Flagon
+17092822 Magic_Flagon
+
+== Dahak ==
+17092823 Dahak
+
+====== Specified Enemies ======
+
+== Imps ==
+17092969 Heraldic_Imp 
+17092970 Heraldic_Imp 
+17092971 Heraldic_Imp 
+17092972 Heraldic_Imp 
+17092973 Heraldic_Imp 
+
+== Soulflayers ==
+17092974 Psycheflayer 
+17092975 Psycheflayer 
+17092976 Psycheflayer 
+17092977 Psycheflayer 
+17092978 Psycheflayer 
+
+== Poroggo ==
+17092979 Poroggo_Gent 
+17092980 Poroggo_Gent 
+17092981 Poroggo_Gent 
+17092982 Poroggo_Gent 
+17092983 Poroggo_Gent 
+
+== Puddings ==
+17092984 Ebony_Pudding 
+17092985 Ebony_Pudding 
+17092986 Ebony_Pudding 
+17092987 Ebony_Pudding 
+17092988 Ebony_Pudding 
+
+== Qiqirn ==
+17092989 Qiqirn_Treasure_Hunter 
+17092990 Qiqirn_Treasure_Hunter 
+17092991 Qiqirn_Archaeologist 
+17092992 Qiqirn_Archaeologist 
+17092993 Qiqirn_Archaeologist 
+
+== Chariots ==
+17092994 Racing_Chariot 
+17092995 Racing_Chariot 
+17092996 Racing_Chariot 
+17092997 Racing_Chariot 
+17092998 Racing_Chariot 
+
+====== Leaders ======
+17092944 Mokke
+17092945 Mokka
+17092946 Mokku
+17092947 Vile_Wahdaha
+17092948 Vile_Ineef
+17092949 Vile_Yabeewa
+17092950 Uriri_Samariri
+17092951 Eriri_Samariri
+17092952 Oriri_Samariri
+17092953 Ginger_Custard
+17092954 Anise_Custard
+17092955 Cumin_Custard
+17092956 Nutmeg_Custard
+17092957 Mint_Custard
+17092958 Cinnamon_Custard
+17092959 Caraway_Custard
+17092960 Vanilla_Custard
+17092961 Gem_Heister_Roorooroon
+17092962 Qiqirn_Mine
+17092963 Stealth_Bomber_Gagaroon
+17092964 Quick_Draw_Sasaroon
+17092965 Shielded_Chariot
+17092966 Battledressed_Chariot
+17092967 Long-Gunned_Chariot
+17092968 Long-Horned_Chariot
+
+====== Gears =====    why so many?
+17092914 Archaic_Gear
+17092915 Archaic_Gear
+17092916 Archaic_Gear
+17092917 Archaic_Gear
+17092918 Archaic_Gear
+17092919 Archaic_Gears
+17092920 Archaic_Gears
+17092921 Archaic_Gears
+17092922 Archaic_Gears
+17092923 Archaic_Gears
+17092924 Archaic_Gear
+17092925 Archaic_Gear
+17092926 Archaic_Gear
+17092927 Archaic_Gear
+17092928 Archaic_Gear
+17092929 Archaic_Gear
+17092930 Archaic_Gear
+17092931 Archaic_Gear
+17092932 Archaic_Gear
+17092933 Archaic_Gear
+17092934 Archaic_Gears
+17092935 Archaic_Gears
+17092936 Archaic_Gears
+17092937 Archaic_Gears
+17092938 Archaic_Gears
+17092939 Archaic_Gear
+17092940 Archaic_Gear
+17092941 Archaic_Gear
+17092942 Archaic_Gear
+17092943 Archaic_Gear
+
+===== Notorius Monsters =====
+== Floor 1-19 ==
+17092824 Bat_Eye
+17092825 Shadow_Eye
+17092826 Bomb_King
+17092827 Juggler_Hecatomb
+17092828 Smothered_Schmidt
+17092829 Hellion
+17092830 Leaping_Lizzy
+17092831 Tom_Tit_Tat
+17092832 Jaggedy-Eared_Jack
+17092833 Cactuar_Cantautor
+17092834 Gargantua
+17092835 Gyre-Carlin
+17092836 Asphyxiated_Amsel
+17092837 Frostmane
+17092838 Peallaidh
+17092839 Carnero
+17092840 Falcatus_Aranei
+17092841 Emergent_Elm
+
+== Floor 21-39 ==
+17092842 Old_Two-Wings
+17092843 Aiatar
+17092844 Intulo
+17092845 Orctrap
+17092846 Valkurm_Emperor
+17092847 Crushed_Krause
+17092848 Stinging_Sophie
+17092849 Serpopard_Ishtar
+17092850 Western_Shadow
+17092851 Bloodtear_Baldurf
+17092852 Zizzy_Zillah
+17092853 Ellyllon
+17092854 Mischievous_Micholas
+17092855 Leech_King
+17092856 Eastern_Shadow
+17092857 Nunyenunc
+17092858 Helldiver
+17092859 Taisaijin
+
+== Floor 41-59 ==
+17092860 Fungus_Beetle
+17092861 Friar_Rush
+17092862 Pulverized_Pfeffer
+17092863 Argus
+17092864 Bloodpool_Vorax
+17092865 Nightmare_Vase
+17092866 Daggerclaw_Dracos
+17092867 Northern_Shadow
+17092868 Fraelissa
+17092869 Roc
+17092870 Sabotender_Bailarin
+17092871 Aquarius
+17092872 Energetic_Eruca
+17092873 Spiny_Spipi
+17092874 Trickster_Kinetix
+17092875 Drooling_Daisy
+17092876 Bonnacon
+17092877 Taisaijin
+
+== Floor 61-79 ==
+17092878 Golden_Bat
+17092879 Steelfleece_Baldarich
+17092880 Sabotender_Mariachi
+17092881 Ungur
+17092882 Swamfisk
+17092883 Buburimboo
+17092884 Keeper_of_Halidom
+17092885 Serket
+17092886 Dune_Widow
+17092887 Odqan
+17092888 Burned_Bergmann
+17092889 Tom_Tit_Tat
+17092890 Tyrannic_Tunnok
+17092891 Bloodsucker
+17092892 Tottering_Toby
+17092893 Southern_Shadow
+17092894 Sharp-Eared_Ropipi
+17092895 Taisaijin
+
+== Floor 81-99 ==
+17092896 Panzer_Percival
+17092897 Vouivre
+17092898 Jolly_Green
+17092899 Tumbling_Truffle
+17092900 Capricious_Cassie
+17092901 Amikiri
+17092902 Stray_Mary
+17092903 Sewer_Syrup
+17092904 Unut
+17092905 Simurgh
+17092906 Pelican
+17092907 Cargo_Crab_Colin
+17092908 Wounded_Wurfel
+17092909 Peg_Powler
+17092910 Tom_Tit_Tat
+17092911 Jaded_Jody
+17092912 Maighdean_Uaine
+17092913 Taisaijin
+
+===== Bosses =====
+17092999 Adamantoise
+17093000 Behemoth
+17093001 Fafnir
+17093002 Khimaira
+17093003 Hydra
+17093004 Cerberus
