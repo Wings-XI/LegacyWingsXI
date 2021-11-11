@@ -106,3 +106,15 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(uint32 id, const int8* name, 
 
     memcpy(data + (0x26), name, strlen((const char*)name));
 }
+
+void CPartyMemberUpdatePacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needMasterLvFix) {
+        // Size commented out because the client freaks out and
+        // doesn't display the name at all. Keep an eye on uptree
+        // and see if this changes.
+        //this->size = 0x21;
+        memmove(data + 0x28, data + 0x26, 15);
+        ref<uint16>(0x26) = 0;
+    }
+}

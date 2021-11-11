@@ -111,6 +111,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 // Square-Enix changeg the chat message packet format in this version
 const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
 const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
+const std::string MASTER_LV_PACKET_CHANGE_VER("302111xx_x");
 
 
 /************************************************************************
@@ -480,15 +481,18 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pClientFeatQuery = "SELECT client_version, features, expansions FROM accounts_sessions WHERE charid = %u";
+            const char* pClientFeatQuery = "SELECT client_version, features, expansions, version_mismatch FROM accounts_sessions WHERE charid = %u";
             ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
                 PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
                 PChar->m_accountExpansions = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 2));
+                PChar->m_clientVerMismatch = (Sql_GetUIntData(SqlHandle, 3) != 0);
             }
-            PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
-            PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
+            std::string clientVer = PChar->m_clientVersion.substr(0, 6) + "xx_x";
+            PChar->m_needChatFix = ((!clientVer.empty()) && (clientVer >= CHAT_PACKET_CHANGE_VER));
+            PChar->m_needTellFix = ((!clientVer.empty()) && (clientVer >= TELL_PACKET_CHANGE_VER));
+            PChar->m_needMasterLvFix = ((!clientVer.empty()) && (clientVer >= MASTER_LV_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);

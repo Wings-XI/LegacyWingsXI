@@ -35,6 +35,10 @@ class CMobEntity;
 class CMeritPoints;
 class CAbility;
 
+extern const std::string CHAT_PACKET_CHANGE_VER;
+extern const std::string TELL_PACKET_CHANGE_VER;
+extern const std::string MASTER_LV_PACKET_CHANGE_VER;
+
 /**
  * @enum EMobDifficulty
  * @brief Order matters for /check message packet

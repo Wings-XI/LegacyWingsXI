@@ -392,8 +392,10 @@ public:
     uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
     uint32            m_accountExpansions;          // Expansions that the account has access to
     std::string       m_clientVersion;
+    bool              m_clientVerMismatch;
     bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets
     bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
+    bool              m_needMasterLvFix;            // Does he use a newer version of the game client, which has several packet changes due to master levels
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover

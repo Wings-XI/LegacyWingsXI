@@ -235,8 +235,10 @@ CCharEntity::CCharEntity()
 
     m_accountId = 0;
     m_accountFeatures = 0;
+    m_clientVerMismatch = false;
     m_needChatFix = 0;
     m_needTellFix = 0;
+    m_needMasterLvFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
@@ -303,6 +305,14 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
+
+    if (m_clientVerMismatch) {
+        packet->ClientVerFixup(this);
+    }
+
+    // Cannot be done via ClientVerFixup since these packets
+    // are passed through the MQ and the polymorphic information
+    // is lost.
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
         // Hack to word around the chat message format change of Sep. 2020
         uint8* packetbytes = packet->getData();
