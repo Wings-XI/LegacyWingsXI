@@ -33,6 +33,7 @@ zones[tpz.zone.BASTOK_MARKETS_S] =
         SILKE_SHOP_DIALOG        = 12802, -- You wouldn't happen to be a fellow scholar, by any chance? The contents of these pages are beyond me, but perhaps you might glean something from them. They could be yours...for a nominal fee.
         RETRIEVE_DIALOG_ID       = 14714, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL    = 14783, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        CAMPAIGN_RECHARGE        = 12379, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Allied Note/Allied Notes] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
     },
     mob =
     {

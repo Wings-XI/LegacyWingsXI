@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "b"
 }
 
@@ -360,7 +360,7 @@ function onTrigger(player, bytes)
     if in_prison ~= to_prison then
         player:setCharVar( "inJail", to_prison )
     end
-    
+
     -- send player to destination
     player:setPos(x, y, z, rot, zone)
 end

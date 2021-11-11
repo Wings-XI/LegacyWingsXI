@@ -35,6 +35,10 @@ class CMobEntity;
 class CMeritPoints;
 class CAbility;
 
+extern const std::string CHAT_PACKET_CHANGE_VER;
+extern const std::string TELL_PACKET_CHANGE_VER;
+extern const std::string MASTER_LV_PACKET_CHANGE_VER;
+
 /**
  * @enum EMobDifficulty
  * @brief Order matters for /check message packet
@@ -172,6 +176,7 @@ namespace charutils
     void    SaveMentorFlag(CCharEntity* PChar);                         // saves the char's mentor flag
     void    SaveMenuConfigFlags(CCharEntity* PChar);                    // saves the char's unnamed flags
     void    SaveChatFilterFlags(CCharEntity* PChar);                    // saves the char's chat filters
+    void    SaveLanguages(CCharEntity* PChar);                          // saves the char's language preference
     void	SaveCharNation(CCharEntity* PChar);							// Save the character's nation of allegiance.
     void    SaveCampaignAllegiance(CCharEntity* PChar);                 // Save the character's campaign allegiance.
     void	SaveCharMoghancement(CCharEntity* PChar);                   // Save the character's current moghancement
@@ -203,6 +208,7 @@ namespace charutils
     void	ReloadParty(CCharEntity* PChar);
 
     bool    IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
+    uint8   GetHighestJobLevel(CCharEntity* PChar);
 
     void    AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
     void    SetPoints(CCharEntity* PChar, const char* type, int32 amount);
@@ -257,6 +263,8 @@ namespace charutils
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
 
+    bool CanUseYell(CCharEntity* PChar);
+    bool IsYellSpamFiltered(CCharEntity* PChar);
 };
 
 #endif // _CHARUTILS_H

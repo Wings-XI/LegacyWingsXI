@@ -88,6 +88,7 @@ enum LATENT
     LATENT_IN_ASSAULT               = 58, // is in an Instance battle in a TOAU zone
     LATENT_VS_ECOSYSTEM             = 59, // Vs. Specific Ecosystem ID (e.g. Vs. Birds: Accuracy+3)
     LATENT_VS_FAMILY                = 60, // Vs. Specific Family ID (e.g. Vs. Apkallu: Accuracy+3)
+    LATENT_BASEHP_UNDER_TP_UNDER_100 = 61, // hp less than or equal to %, tp under 100 - PARAM: BASE HP PERCENT (Without Gear,etc)
 };
 
 #define MAX_LATENTEFFECTID    61

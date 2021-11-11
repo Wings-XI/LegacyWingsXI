@@ -148,7 +148,7 @@ INSERT INTO `bcnm_info` VALUES(258, 179, 'dauntless_duo_vs2', 'nobody', 0, 900, 
 INSERT INTO `bcnm_info` VALUES(259, 179, 'solitary_demolisher_vs1', 'nobody', 0, 900, 900, 60, 6, 0, 4, 0);
 INSERT INTO `bcnm_info` VALUES(260, 179, 'heroines_combat', 'nobody', 0, 900, 900, 60, 6, 0, 4, 0);
 INSERT INTO `bcnm_info` VALUES(261, 179, 'mercenary_camp', 'nobody', 0, 900, 900, 60, 6, 0, 4, 0);
-INSERT INTO `bcnm_info` VALUES(262, 179, 'ode_of_life_bestowing', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 0);
+INSERT INTO `bcnm_info` VALUES(262, 179, 'ode_of_life_bestowing', 'nobody', 0, 1800, 1800, 0, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(288, 180, 'ark_angels_1', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(289, 180, 'ark_angels_2', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(290, 180, 'ark_angels_3', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
@@ -195,7 +195,7 @@ INSERT INTO `bcnm_info` VALUES(528, 206, 'celery', 'nobody', 0, 900, 900, 60, 3,
 INSERT INTO `bcnm_info` VALUES(529, 206, 'mirror_images', 'nobody', 0, 900, 900, 50, 1, 0, 7, 0);
 INSERT INTO `bcnm_info` VALUES(530, 206, 'furious_finale', 'nobody', 0, 600, 600, 99, 1, 0, 6, 0);
 INSERT INTO `bcnm_info` VALUES(531, 206, 'clash_of_the_comrades', 'nobody', 0, 600, 600, 0, 1, 0, 7, 0);
-INSERT INTO `bcnm_info` VALUES(532, 206, 'those_who_lurk_in_shadows', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 0);
+INSERT INTO `bcnm_info` VALUES(532, 206, 'those_who_lurk_in_shadows', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(533, 206, 'beyond_infinity', 'nobody', 0, 600, 600, 0, 6, 0, 6, 0);
 INSERT INTO `bcnm_info` VALUES(544, 207, 'trial_by_fire', 'nobody', 0, 1800, 1800, 0, 6, 0, 5, 0);
 INSERT INTO `bcnm_info` VALUES(545, 207, 'trial-size_trial_by_fire', 'nobody', 0, 900, 900, 20, 1, 0, 5, 0);

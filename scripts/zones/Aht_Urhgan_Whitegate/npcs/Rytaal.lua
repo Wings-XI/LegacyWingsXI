@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Aht Urhgan Whitegate
--- NPC: Rytaal 
+-- NPC: Rytaal
 -- Type: Standard NPC
 -- !pos 112.002 -1.338 -45.038 50
 -----------------------------------
@@ -66,7 +66,7 @@ function onTrigger(player, npc)
         end
 
         -- GMs need tags for testing
-        if tagStock == 0 and player:getGMLevel() > 0 then
+        if tagStock == 0 and player:getGMLevel() > 1 then
             tagStock = tagStock + 1
         end
 

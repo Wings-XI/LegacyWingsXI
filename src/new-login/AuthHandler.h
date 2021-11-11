@@ -84,8 +84,10 @@ private:
         uint32_t dwAccountId;
         // Reason for authentication failure
         uint16_t wFailureReason;
-        // Zero pad
-        char szZero[9];
+        // Authentication token (pass in data and view ports)
+        char bufAuthToken[8];
+        // Zero
+        uint8_t ucZero;
     };
 #pragma pack(pop)
 

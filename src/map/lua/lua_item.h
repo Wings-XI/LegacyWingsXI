@@ -63,6 +63,7 @@ public:
     int32 getName(lua_State*);              // get the item's name
     int32 getILvl(lua_State*);              // get the item's ilvl
     int32 getReqLvl(lua_State*);            // get the item's level
+    int32 getRace(lua_State*);              // get the item's race bitmask
 
     int32 getMod(lua_State*);               // get the power of a mod
     int32 addMod(lua_State*);               // add mod to item (or add to a mod already applied on item)
@@ -83,6 +84,8 @@ public:
     int32 getAppraisalID(lua_State*);          // Get Appraisal ID
     int32 setAppraisalID(lua_State*);         // Set Appraisal ID
 
+    int32 setSoulPlateData(lua_State*);       // Set a soulplate's metadata
+    int32 getSoulPlateData(lua_State*);       // Get a soulplate's metadata
 };
 
 #endif

@@ -42,8 +42,8 @@ enum SEARCHTYPE
     SEARCH_RANK          = 0x10,    // 10000
     SEARCH_COMMENT       = 0x11,    // 10001
     SEARCH_LINKSHELL2    = 0x13,    // 10011
-    SEARCH_FLAGS2        = 0x14,    // 10100
-    SEARCH_LANGUAGE      = 0x15,    // 10101
+    SEARCH_FLAGS2        = 0x16,    // 10110
+    SEARCH_LANGUAGE      = 0x17,    // 10111
 };
 
 class CSearchListPacket

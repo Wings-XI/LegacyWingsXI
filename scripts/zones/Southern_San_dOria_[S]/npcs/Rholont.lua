@@ -5,9 +5,22 @@
 -----------------------------------
 local ID = require("scripts/zones/Southern_San_dOria_[S]/IDs")
 require("scripts/globals/quests")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    if player:getCharVar("AnnyEvent2020") == 13 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(4242, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
+		    player:PrintToPlayer("Rhodont: Oh wow! These will really keep me going..", 0xD)
+			player:setCharVar("AnnyEvent2020", 14)
+            player:tradeComplete()
+			player:PrintToPlayer("Rhodont : Almost there... The final step.. Take this to a fighter who is old and has seemingly not lost his step...", 0xD)
+			player:addItem(4059)
+			player:messageSpecial((ID.text.ITEM_OBTAINED), 4059)
+	    else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4059)
+        end
+	end
 end
 
 function onTrigger(player, npc)
@@ -99,7 +112,7 @@ function onEventFinish(player, csid, option)
             player:setCharVar("GiftsOfGriffonLostPlumes", 0)
             -- we can only get here if all 7 plumes have not been delivered and the player has tossed the plumes.
             -- but better safe than trying to give the player 0 plumes
-            if(deliveredPlumes < 7) then 
+            if(deliveredPlumes < 7) then
                 player:addItem(2528, 7 - deliveredPlumes) -- Plume d'or
                 player:messageSpecial(ID.text.ITEM_OBTAINED, 2528)
             end

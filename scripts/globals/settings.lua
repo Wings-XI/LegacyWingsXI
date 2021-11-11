@@ -162,6 +162,7 @@ HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, w
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
 STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
+Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
 
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
@@ -187,6 +188,7 @@ LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her ow
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
--- ASSAULTS
+-- ASSAULTS | ZNMs
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior

@@ -228,7 +228,6 @@ CCharEntity::CCharEntity()
     m_SaveTime = 0;
     m_reloadParty = 0;
 
-    m_LastYell = 0;
     m_moghouseID = 0;
     m_moghancementID = 0;
 
@@ -236,8 +235,10 @@ CCharEntity::CCharEntity()
 
     m_accountId = 0;
     m_accountFeatures = 0;
+    m_clientVerMismatch = false;
     m_needChatFix = 0;
     m_needTellFix = 0;
+    m_needMasterLvFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
@@ -304,6 +305,14 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
+
+    if (m_clientVerMismatch) {
+        packet->ClientVerFixup(this);
+    }
+
+    // Cannot be done via ClientVerFixup since these packets
+    // are passed through the MQ and the polymorphic information
+    // is lost.
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
         // Hack to word around the chat message format change of Sep. 2020
         uint8* packetbytes = packet->getData();
@@ -1505,6 +1514,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 first = false;
             }
         }
+
+        battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
         // innin and yonin share recasts
@@ -1936,11 +1948,11 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     //#TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())
     {
-        PTarget->ForParty([PItem, PTarget](CBattleEntity* PMember)
+        PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
         {
             if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
             {
-                luautils::OnItemUse(PMember, PItem);
+                luautils::OnItemUse(PMember, PItem, this);
             }
         });
     }

@@ -23,8 +23,14 @@ function onTrade(player, npc, trade)
             player:addKeyItem(tpz.ki.SMILING_STONE)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SMILING_STONE)
         end
+    elseif player:getCharVar("AnnyEvent2020") == 4 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(949, 1) and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 5)
+            player:PrintToPlayer("Kaede : Well hello! Thanks for this its a nice present!", 0xD)
+            player:PrintToPlayer("Kaede : Visit the first three of nine, obtain what power they newly provide and show my sister what you have found...", 0xD)
+        end
     end
-
 end
 
 function onTrigger(player, npc)

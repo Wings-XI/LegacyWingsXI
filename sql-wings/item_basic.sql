@@ -4041,7 +4041,7 @@ INSERT INTO `item_basic` VALUES(4291, 0, 'sandfish', 'sandfish', 12, 1548, 51, 0
 INSERT INTO `item_basic` VALUES(4292, 0, 'loaf_of_pain_de_neige', 'pain_de_neige', 12, 1548, 56, 0, 56);
 INSERT INTO `item_basic` VALUES(4293, 0, 'serving_of_monastic_saute', 'monastic_saute', 1, 1580, 54, 0, 533);
 INSERT INTO `item_basic` VALUES(4294, 0, 'serving_of_medicinal_quus', 'medicinal_quus', 1, 1580, 53, 0, 70);
-INSERT INTO `item_basic` VALUES(4295, 0, 'plate_of_royal_sautee', 'royal_sautee', 1, 1580, 52, 0, 70);
+INSERT INTO `item_basic` VALUES(4295, 0, 'plate_of_royal_saute', 'royal_saute', 1, 1580, 52, 0, 70);
 INSERT INTO `item_basic` VALUES(4296, 0, 'serving_of_green_curry', 'green_curry', 1, 1580, 55, 0, 270);
 INSERT INTO `item_basic` VALUES(4297, 0, 'serving_of_black_curry', 'black_curry', 1, 1580, 55, 0, 748);
 INSERT INTO `item_basic` VALUES(4298, 0, 'serving_of_red_curry', 'red_curry', 1, 1580, 55, 0, 831);

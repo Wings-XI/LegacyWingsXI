@@ -111,6 +111,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 // Square-Enix changeg the chat message packet format in this version
 const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
 const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
+const std::string MASTER_LV_PACKET_CHANGE_VER("302111xx_x");
 
 
 /************************************************************************
@@ -480,15 +481,18 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pClientFeatQuery = "SELECT client_version, features, expansions FROM accounts_sessions WHERE charid = %u";
+            const char* pClientFeatQuery = "SELECT client_version, features, expansions, version_mismatch FROM accounts_sessions WHERE charid = %u";
             ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
                 PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
                 PChar->m_accountExpansions = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 2));
+                PChar->m_clientVerMismatch = (Sql_GetUIntData(SqlHandle, 3) != 0);
             }
-            PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
-            PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
+            std::string clientVer = PChar->m_clientVersion.substr(0, 6) + "xx_x";
+            PChar->m_needChatFix = ((!clientVer.empty()) && (clientVer >= CHAT_PACKET_CHANGE_VER));
+            PChar->m_needTellFix = ((!clientVer.empty()) && (clientVer >= TELL_PACKET_CHANGE_VER));
+            PChar->m_needMasterLvFix = ((!clientVer.empty()) && (clientVer >= MASTER_LV_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);
@@ -851,7 +855,8 @@ namespace charutils
             "gmlevel, "    // 0
             "mentor, "     // 1
             "nnameflags, "  // 2
-            "chatfilters " // 3
+            "chatfilters, " // 3
+            "languages "     // 4
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -865,6 +870,7 @@ namespace charutils
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
             PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
+            PChar->search.language = (uint8)Sql_GetUIntData(SqlHandle, 4);
         }
 
         charutils::LoadInventory(PChar);
@@ -1888,6 +1894,7 @@ namespace charutils
 
         if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+            ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
             PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
         {
@@ -5148,6 +5155,19 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Save the char's language preference                                  *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveLanguages(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET languages = %u WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->search.language, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Saves character nation changes                                       *
     *                                                                       *
     ************************************************************************/
@@ -5863,6 +5883,19 @@ namespace charutils
         return false;
     }
 
+    uint8 GetHighestJobLevel(CCharEntity* PChar)
+    {
+        uint8 max_lv = 0;
+
+        for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+            if (PChar->jobs.job[i] > max_lv) {
+                max_lv = PChar->jobs.job[i];
+            }
+        }
+
+        return max_lv;
+    }
+
     //char_points manipulation
     void AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max)
     {
@@ -6468,6 +6501,63 @@ int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
         PChar->m_resendRaise = true;
     }
     return 0;
+}
+
+bool CanUseYell(CCharEntity* PChar)
+{
+    if (PChar->isNewPlayer())
+    {
+        // Yells aren't enabled for new players
+        return false;
+    }
+
+    if (charutils::GetHighestJobLevel(PChar) <= map_config.yell_min_level)
+    {
+        // Player's max level is too low.
+        return false;
+    }
+
+    auto OptedIn = charutils::GetCharVar(PChar, "YellOptedIn");
+    if (OptedIn == 0)
+    {
+        // Player didn't opt-in to the rules.
+        return false;
+    }
+
+    auto YellMuteTime = charutils::GetCharVar(PChar, "YellMuteTime");
+    if (YellMuteTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellMuteTime > CurrentTime)
+        {
+            // Player is currently muted.
+            return false;
+        }
+
+        // Mute expired.
+        charutils::SetCharVar(PChar, "YellMuteTime", 0);
+    }
+
+    // Yaaaaaargh!
+    return true;
+}
+
+bool IsYellSpamFiltered(CCharEntity* PChar)
+{
+    auto YellSpamTime = charutils::GetCharVar(PChar, "YellSpamTime");
+    if (YellSpamTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellSpamTime > CurrentTime)
+        {
+            // Player is currently marked as spam.
+            return true;
+        }
+
+        charutils::SetCharVar(PChar, "YellSpamTime", 0);
+    }
+
+    return false;
 }
 
 }; // namespace charutils
