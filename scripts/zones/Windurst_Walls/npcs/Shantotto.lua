@@ -86,7 +86,7 @@ function onTrade(player, npc, trade)
             player:startEvent(181, 0, 0, 0, 0, 0, 0, 17316, 940) -- Incorrect or not enough items
         end
     elseif player:getCharVar("AnnyEvent2020") == 1 and Anniversary_Event_2021 == 1 then
-        if trade:hasItemQty(536, 1) and player:getFreeSlotsCount() > 0 trade:getItemCount() == 1 then
+        if trade:hasItemQty(536, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
             player:tradeComplete()
             player:setCharVar("AnnyEvent2020", 2)
             player:PrintToPlayer("Shantoto : Oh ho ho! Look at what you have brought me..", 0xD)
