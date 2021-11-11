@@ -538,3 +538,98 @@ tpz.nyzul_isle_data.northEastRoomConfigurations = {
         LampSpawnPoints = {{x = 460, y = 0, z = 269}, {x = 460, y = 0, z = 251}}
     }
 }
+
+tpz.nyzul_isle_data.eastRoomConfigurations = {
+    EAST_A = {
+        MobSpawnPoints = {{x = 509, y = 0, z = 100}, {x = 491, y = 0, z = 100}, {x = 491, y = 0, z = 91}, {x = 491, y = 0, z = 109}, {x = 500, y = 0, z = 91}}, 
+        LampSpawnPoints = {{x = 500, y = 0, z = 109}, {x = 509, y = 0, z = 109}}
+    },
+    EAST_B = {
+        MobSpawnPoints = {{x = 455.5, y = 0, z = 64.5}, {x = 455.5, y = 0, z = 55.5}, {x = 451, y = 0, z = 46.5}, {x = 473.5, y = 0, z = 51}, {x = 446.5, y = 0, z = 73.5}}, 
+        LampSpawnPoints = {{x = 446.5, y = 0, z = 73.5}, {x = 464.5, y = 0, z = 60}}
+    },
+    EAST_C = {
+        MobSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 498, y = 0, z = 24.5}, {x = 500, y = 0, z = 6}, {x = 486.5, y = 0, z = 73.5}, {x = 513.5, y = 0, z = 46.5}}, 
+        LampSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 509, y = 0, z = 51}}
+    },
+    EAST_D = {
+        MobSpawnPoints = {{x = 540, y = 0, z = 55.5}, {x = 544.5, y = 0, z = 73.5}, {x = 553.5, y = 0, z = 64.5}, {x = 549, y = 0, z = 46.5}, {x = 531, y = 0, z = 73.5}}, 
+        LampSpawnPoints = {{x = 526.5, y = 0, z = 60}, {x = 540, y = 0, z = 55.5}}
+    },
+    EAST_E = {
+        MobSpawnPoints = {{x = 375.5, y = 0, z = 20}, {x = 400, y = 0, z = 0}, {x = 400, y = 0, z = 40}, {x = 406.5, y = 0, z = 20}, {x = 393.5, y = 0, z = 20}}, 
+        LampSpawnPoints = {{x = 393.5, y = 0, z = 20}, {x = 375.5, y = 0, z = 20}}
+    },
+    EAST_F = {
+        MobSpawnPoints = {{x = 473.5, y = 0, z = 33.5}, {x = 468.5, y = 0, z = 24.5}, {x = 464.5, y = 0, z = 15.5}, {x = 473.5, y = 0, z = 11}, {x = 469, y = 0, z = 6.5}}, 
+        LampSpawnPoints = {{x = 455.5, y = 0, z = 20}, {x = 446.5, y = 0, z = 33.5}}
+    },
+    EAST_G = {
+        MobSpawnPoints = {{x = 526.5, y = 0, z = 15.5}, {x = 526.5, y = 0, z = 24.5}, {x = 540, y = 0, z = 20}, {x = 553.5, y = 0, z = 33.5}, {x = 553.5, y = 0, z = 6.5}}, 
+        LampSpawnPoints = {{x = 531, y = 0, z = 29}, {x = 531, y = 0, z = 11}}
+    },
+    EAST_H = {
+        MobSpawnPoints = {{x = 571, y = 0, z = 33.5}, {x = 575.5, y = 0, z = 6.5}, {x = 575.5, y = 0, z = 24.5}, {x = 584.5, y = 0, z = 24.5}, {x = 589, y = 0, z = 6.5}}, 
+        LampSpawnPoints = {{x = 566.5, y = 0, z = 11}, {x = 566.5, y = 0, z = 29}}
+    },
+    EAST_I = {
+        MobSpawnPoints = {{x = 500, y = 0, z = -11}, {x = 495.5, y = 0, z = -15.5}, {x = 504.5, y = 0, z = -24.5}, {x = 495.5, y = 0, z = -24.5}, {x = 504.5, y = 0, z = -15.5}}, 
+        LampSpawnPoints = {{x = 500, y = 0, z = -20}, {x = 500, y = 0, z = -11}}
+    },
+    EAST_J = {
+        MobSpawnPoints = {{x = 553.5, y = 0, z = -11}, {x = 553.5, y = 0, z = -33.5}, {x = 544.5, y = 0, z = -15.5}, {x = 535.5, y = 0, z = -29}, {x = 526.5, y = 0, z = -33.5}}, 
+        LampSpawnPoints = {{x = 540, y = 0, z = -15.5}, {x = 553.5, y = 0, z = -20}}
+    },
+    EAST_K = {
+        MobSpawnPoints = {{x = 633.5, y = 0, z = -15.5}, {x = 633.5, y = 0, z = -24.5}, {x = 611, y = 0, z = -29}, {x = 611, y = 0, z = -11}, {x = 613, y = 0, z = -20}}, 
+        LampSpawnPoints = {{x = 606.5, y = 0, z = -20}, {x = 629, y = 0, z = -20}}
+    },
+    EAST_L = {
+        MobSpawnPoints = {{x = 504.5, y = 0, z = -55.5}, {x = 504.5, y = 0, z = -64.5}, {x = 500, y = 0, z = -46.5}, {x = 513.5, y = 0, z = -60}, {x = 513.5, y = 0, z = -73.5}}, 
+        LampSpawnPoints = {{x = 500, y = 0, z = -55.5}, {x = 500, y = 0, z = -64.5}}
+    },
+    EAST_M = {
+        MobSpawnPoints = {{x = 500, y = 0, z = -144.5}, {x = 500, y = 0, z = -131}, {x = 500, y = 0, z = -91}, {x = 509, y = 0, z = -100}, {x = 491, y = 0, z = -100}}, 
+        LampSpawnPoints = {{x = 500, y = 0, z = -140}, {x = 500, y = 0, z = -100}}
+    },
+    EAST_N = {
+        MobSpawnPoints = {{x = 553.5, y = 0, z = -109}, {x = 544.5, y = 0, z = -113.5}, {x = 526.5, y = 0, z = -113.5}, {x = 531, y = 0, z = -86.5}, {x = 544.5, y = 0, z = -100}}, 
+        LampSpawnPoints = {{x = 526.5, y = 0, z = -113.5}, {x = 540, y = 0, z = -104.5}}
+    },
+    EAST_O = {
+        MobSpawnPoints = {{x = 633.5, y = 0, z = -109}, {x = 633.5, y = 0, z = -91}, {x = 620, y = 0, z = -91}, {x = 611, y = 0, z = -109}, {x = 606.5, y = 0, z = -86.5}}, 
+        LampSpawnPoints = {{x = 611, y = 0, z = -100}, {x = 629, y = 0, z = -100}}
+    },
+    EAST_P = {
+        MobSpawnPoints = {{x = 381.5, y = 0, z = -140}, {x = 393.5, y = 0, z = -152}, {x = 406.5, y = 0, z = -166.5}, {x = 407, y = 0, z = -129}, {x = 393.5, y = 0, z = -113.5}}, 
+        LampSpawnPoints = {{x = 375.5, y = 0, z = -140}, {x = 400, y = 0, z = -140}}
+    },
+    EAST_Q = {
+        MobSpawnPoints = {{x = 446.5, y = 0, z = -131}, {x = 450.5, y = 0, z = -153.5}, {x = 473, y = 0, z = -149}, {x = 464.5, y = 0, z = -144.5}, {x = 464.5, y = 0, z = -135.5}}, 
+        LampSpawnPoints = {{x = 446.5, y = 0, z = -126.5}, {x = 455, y = 0, z = -140}}
+    },
+    EAST_R = {
+        MobSpawnPoints = {{x = 540, y = 0, z = -140}, {x = 526.5, y = 0, z = -126.5}, {x = 526.5, y = 0, z = -153.5}, {x = 535.5, y = 0, z = -149}, {x = 549, y = 0, z = -131}}, 
+        LampSpawnPoints = {{x = 540, y = 0, z = -140}, {x = 531, y = 0, z = -140}}
+    },
+    EAST_S = {
+        MobSpawnPoints = {{x = 584.5, y = 0, z = -135.5}, {x = 575.5, y = 0, z = -126.5}, {x = 566.5, y = 0, z = -131}, {x = 566.5, y = 0, z = -149}, {x = 589, y = 0, z = -153.5}}, 
+        LampSpawnPoints = {{x = 566.5, y = 0, z = -140}, {x = 580, y = 0, z = -144.5}}
+    },
+    EAST_T = {
+        MobSpawnPoints = {{x = 473.5, y = 0, z = -184.5}, {x = 473.5, y = 0, z = -166.5}, {x = 446.5, y = 0, z = -175.5}, {x = 460, y = 0, z = -175.5}, {x = 451, y = 0, z = -184.5}}, 
+        LampSpawnPoints = {{x = 464.5, y = 0, z = -180}, {x = 473.5, y = 0, z = -193.5}}
+    },
+    EAST_U = {
+        MobSpawnPoints = {{x = 500, y = 0, z = -180}, {x = 509, y = 0, z = -171}, {x = 491, y = 0, z = -189}, {x = 513.5, y = 0, z = -193.5}, {x = 486.5, y = 0, z = -166.5}}, 
+        LampSpawnPoints = {{x = 509, y = 0, z = -189}, {x = 491, y = 0, z = -171}}
+    },
+    EAST_V = {
+        MobSpawnPoints = {{x = 544.5, y = 0, z = -193.5}, {x = 544.5, y = 0, z = -184.5}, {x = 540, y = 0, z = -175.5}, {x = 535.5, y = 0, z = -184.5}, {x = 535.5, y = 0, z = -193.5}}, 
+        LampSpawnPoints = {{x = 526.5, y = 0, z = -193.5}, {x = 553.5, y = 0, z = -193.5}}
+    },
+    EAST_W = {
+        MobSpawnPoints = {{x = 495.5, y = 0, z = -211}, {x = 495.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -211}, {x = 491, y = 0, z = -220}}, 
+        LampSpawnPoints = {{x = 509, y = 0, z = -220}, {x = 513.5, y = 0, z = -220}}
+    }
+}

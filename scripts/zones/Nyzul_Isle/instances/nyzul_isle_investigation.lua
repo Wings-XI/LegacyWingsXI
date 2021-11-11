@@ -83,68 +83,9 @@ end
 function onInstanceTimeUpdate(instance, elapsed)
     local once = false
 
-    local mobsToSpawn = nil
-    if (once) then
-        once = false
-        mobsToSpawn = {}
-        printf("building up floor mobs\n")
-        local floorMobs = tpz.nyzul_isle_data.mobsByType["LIZARDS"]
-        for key, value in pairs(floorMobs) do
-            for nestedKey, nestedValue in pairs(value) do
-                table.insert(mobsToSpawn, nestedValue)
-            end
-        end
-        local specifiedEnmeies = tpz.nyzul_isle_data.mobsByType["QIQIRN"]
-        printf("building up specified enemeies\n")
-        for key, value in pairs(specifiedEnmeies) do
-            for nestedKey, nestedValue in pairs(value) do
-                table.insert(mobsToSpawn, nestedValue)
-            end
-        end
-        local possibleNMs = tpz.nyzul_isle_data.mobsByType["NMS_21_39"]["NotoriusMonsters"]
-        local nmIndex = math.random(#possibleNMs)
-        local nmID1 = possibleNMs[nmIndex]
-        table.insert(mobsToSpawn, nmID1)
-
-        local mobSpawnPoints = {}
-        local rooms = tpz.nyzul_isle_data.northEastFloorLayouts["FLOOR_NE_1"]["Rooms"]
-   
-        for key, value in pairs(rooms) do
-            local spawnpoints = tpz.nyzul_isle_data.northEastRoomConfigurations[value]["MobSpawnPoints"]
-            for subkey, subvalue in pairs(spawnpoints) do
-                table.insert(mobSpawnPoints, subvalue)
-            end
-        end
-
-        local mob
-        for key, value in pairs(mobsToSpawn) do
-            mob = GetMobByID(value, instance)
-
-            printf("mob id %d", value)
-            spawnpointIndex = math.random(#mobSpawnPoints)
-            spawnpoint = mobSpawnPoints[spawnpointIndex]
-            mob:setSpawn(spawnpoint["x"], spawnpoint["y"], spawnpoint["z"])
-            SpawnMob(value, instance)
-            table.remove(mobSpawnPoints, spawnpointIndex)
-        end
-    end
-   
-
-    --[[mob = GetMobByID(17092965, instance)
-    mob:setSpawn(-11, -4, -11)
-    SpawnMob(17092965, instance)
-
-    mob = GetMobByID(17092966, instance)
-    mob:setSpawn(-28, -4, -11)
-    SpawnMob(17092966, instance)
-
-    mob = GetMobByID(17092967, instance)
-    mob:setSpawn(-28, -4, -28)
-    SpawnMob(17092967, instance)
-
-    mob = GetMobByID(17092968, instance)
-    mob:setSpawn(-11, -4, -28)
-    SpawnMob(17092968, instance)]]
+    local tempmob = GetMobByID(17092910, instance)
+    tempmob:setSpawn(500, 0, 60)
+    --SpawnMob(17092910, instance)
 
     printf("onInstanceTimeUpdate \n")
 end
