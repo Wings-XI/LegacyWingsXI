@@ -469,7 +469,7 @@ tpz.nyzul_isle_data.southWestFloorLayouts =
 }
 
 tpz.nyzul_isle_data.northEastRoomConfigurations = {
-    NE_A = {
+    NE_A = { -- contains the connected east and west "elbow" hallways
         MobSpawnPoints = {{x = 420, y = 0, z = 500}, {x = 500, y = 0, z = 500}, {x = 460, y = 0, z = 509}, {x = 469, y = 0, z = 500}, {x = 451, y = 0, z = 500}}, 
         LampSpawnPoints = {{x = 460, y = 0, z = 500}, {x = 460, y = 0, z = 491}}
     },
@@ -521,7 +521,7 @@ tpz.nyzul_isle_data.northEastRoomConfigurations = {
         MobSpawnPoints = {{x = 540, y = 0, z = 340}, {x = 540, y = 0, z = 349}, {x = 531, y = 0, z = 340}, {x = 549, y = 0, z = 340}, {x = 553.5, y = 0, z = 326.5}}, 
         LampSpawnPoints = {{x = 540, y = 0, z = 340}, {x = 540, y = 0, z = 331}}
     },
-    NE_N = {
+    NE_N = { -- contains the connected north and south "elbow" hallways
         MobSpawnPoints = {{x = 420, y = 0, z = 340}, {x = 420, y = 0, z = 260}, {x = 433.5, y = 0, z = 300}, {x = 406.5, y = 0, z = 309}, {x = 411, y = 0, z = 295.5}}, 
         LampSpawnPoints = {{x = 424.5, y = 0, z = 300}, {x = 433.5, y = 0, z = 286.5}}
     },
@@ -548,7 +548,7 @@ tpz.nyzul_isle_data.eastRoomConfigurations = {
         MobSpawnPoints = {{x = 455.5, y = 0, z = 64.5}, {x = 455.5, y = 0, z = 55.5}, {x = 451, y = 0, z = 46.5}, {x = 473.5, y = 0, z = 51}, {x = 446.5, y = 0, z = 73.5}}, 
         LampSpawnPoints = {{x = 446.5, y = 0, z = 73.5}, {x = 464.5, y = 0, z = 60}}
     },
-    EAST_C = {
+    EAST_C = { -- contains the connected hallway to the south  TODO: split the hallways to their own "room"
         MobSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 498, y = 0, z = 24.5}, {x = 500, y = 0, z = 6}, {x = 486.5, y = 0, z = 73.5}, {x = 513.5, y = 0, z = 46.5}}, 
         LampSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 509, y = 0, z = 51}}
     },
@@ -588,7 +588,7 @@ tpz.nyzul_isle_data.eastRoomConfigurations = {
         MobSpawnPoints = {{x = 504.5, y = 0, z = -55.5}, {x = 504.5, y = 0, z = -64.5}, {x = 500, y = 0, z = -46.5}, {x = 513.5, y = 0, z = -60}, {x = 513.5, y = 0, z = -73.5}}, 
         LampSpawnPoints = {{x = 500, y = 0, z = -55.5}, {x = 500, y = 0, z = -64.5}}
     },
-    EAST_M = {
+    EAST_M = { -- contains the connected hallway to the south  TODO: split the hallways to their own "room"
         MobSpawnPoints = {{x = 500, y = 0, z = -144.5}, {x = 500, y = 0, z = -131}, {x = 500, y = 0, z = -91}, {x = 509, y = 0, z = -100}, {x = 491, y = 0, z = -100}}, 
         LampSpawnPoints = {{x = 500, y = 0, z = -140}, {x = 500, y = 0, z = -100}}
     },
@@ -633,3 +633,119 @@ tpz.nyzul_isle_data.eastRoomConfigurations = {
         LampSpawnPoints = {{x = 509, y = 0, z = -220}, {x = 513.5, y = 0, z = -220}}
     }
 }
+
+tpz.nyzul_isle_data.southEastRoomConfigurations = {
+	SE_A = {
+        MobSpawnPoints = {{x = 460, y = 0, z = -446.5}, {x = 460, y = 0, z = -433.5}, {x = 433.5, y = 0, z = -433.5}, {x = 486.5, y = 0, z = -433.5}, {x = 460, y = 0, z = -429}}, 
+        LampSpawnPoints = {{x = 480, y = 0, z = -440}, {x = 460, y = 0, z = -440}, {x = 440, y = 0, z = -440}}
+    },
+	SE_B = {
+        MobSpawnPoints = {{x = 406.5, y = 0, z = -513.5}, {x = 433.5, y = 0, z = -509}, {x = 433.5, y = 0, z = -486.5}, {x = 424.5, y = 0, z = -495.5}, {x = 415.5, y = 0, z = -495.5}}, 
+        LampSpawnPoints = {{x = 420, y = 0, z = -504.5}, {x = 411, y = 0, z = -513.5}}
+    },
+	SE_C = {
+        MobSpawnPoints = {{x = 473.5, y = 0, z = -486.5}, {x = 446.5, y = 0, z = -486.5}, {x = 455.5, y = 0, z = -495.5}, {x = 464.5, y = 0, z = -500}, {x = 455.5, y = 0, z = -513.5}}, 
+        LampSpawnPoints = {{x = 451, y = 0, z = -486.5}, {x = 469, y = 0, z = -486.5}}
+    },
+	SE_D = {
+        MobSpawnPoints = {{x = 509, y = 0, z = -500}, {x = 491, y = 0, z = -500}, {x = 491, y = 0, z = -509}, {x = 486.5, y = 0, z = -513.5}, {x = 500, y = 0, z = -486.5}}, 
+        LampSpawnPoints = {{x = 491, y = 0, z = -500}, {x = 500, y = 0, z = -509}}
+    },
+	SE_E_NE_HALF = { -- hideable walls (the only two I've found in Nyzul Isle) can split Room E in half diagonally
+        MobSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}, {x = 393.5, y = 0, z = -526.5}, {x = 380, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -540}}, 
+        LampSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}}
+    },
+	SE_E_SW_HALF = { -- hideable walls (the only two I've found in Nyzul Isle) can split Room E in half diagonally
+        MobSpawnPoints = {{x = 366.5, y = 0, z = -535.5}, {x = 375.5, y = 0, z = -535.5}, {x = 384.5, y = 0, z = -540}, {x = 375.5, y = 0, z = -544.5}, {x = 366.5, y = 0, z = -549}}, 
+        LampSpawnPoints = {{x = 366.5, y = 0, z = -535.5}}
+    },
+	SE_F = {
+        MobSpawnPoints = {{x = 433.5, y = 0, z = -553.5}, {x = 415.5, y = 0, z = -535.5}, {x = 429, y = 0, z = -531}, {x = 411, y = 0, z = -549}, {x = 420, y = 0, z = -540}}, 
+        LampSpawnPoints = {{x = 420, y = 0, z = -540}, {x = 429, y = 0, z = -549}}
+    },
+	SE_G = {
+        MobSpawnPoints = {{x = 500, y = 0, z = -540}, {x = 509, y = 0, z = -531}, {x = 491, y = 0, z = -549}, {x = 491, y = 0, z = -531}, {x = 509, y = 0, z = -549}}, 
+        LampSpawnPoints = {{x = 491, y = 0, z = -540}, {x = 509, y = 0, z = -540}}
+    },
+	SE_H = {
+        MobSpawnPoints = {{x = 553, y = 0, z = -560}, {x = 560, y = 0, z = -552.5}, {x = 560, y = 0, z = -527.5}, {x = 553.5, y = 0, z = -513.5}, {x = 553.5, y = 0, z = -540}}, 
+        LampSpawnPoints = {{x = 560, y = 0, z = -540}, {x = 560, y = 0, z = -520}, {x = 560, y = 0, z = -560}}
+    },
+	SE_I = {
+        MobSpawnPoints = {{x = 424.5, y = 0, z = -575.5}, {x = 415.5, y = 0, z = -580}, {x = 411, y = 0, z = -593.5}, {x = 406.5, y = 0, z = -566.5}, {x = 429, y = 0, z = -566.5}}, 
+        LampSpawnPoints = {{x = 424.5, y = 0, z = -580}, {x = 520, y = 0, z = -575.5}}
+    },
+	SE_J = {
+        MobSpawnPoints = {{x = 464.5, y = 0, z = -566.5}, {x = 464.5, y = 0, z = -580}, {x = 455.5, y = 0, z = -584.5}, {x = 455.5, y = 0, z = -566.5}, {x = 446.5, y = 0, z = -571}}, 
+        LampSpawnPoints = {{x = 446.5, y = 0, z = -566.5}, {x = 473.5, y = 0, z = -566.5}}
+    },
+	SE_K = {
+        MobSpawnPoints = {{x = 513.5, y = 0, z = -593.5}, {x = 505.5, y = 0, z = -585.5}, {x = 491, y = 0, z = -571}, {x = 486.5, y = 0, z = -566.5}, {x = 486.5, y = 0, z = -593.5}}, 
+        LampSpawnPoints = {{x = 509, y = 0, z = -589}, {x = 491, y = 0, z = -580}}
+    },
+	SE_L = {
+        MobSpawnPoints = {{x = 460, y = 0, z = -640}, {x = 486.5, y = 0, z = -646.5}, {x = 433.5, y = 0, z = -646.5}, {x = 486.5, y = 0, z = -633.5}, {x = 433.5, y = 0, z = -633.5}}, 
+        LampSpawnPoints = {{x = 460, y = 0, z = -646.5}, {x = 460, y = 0, z = -633.5}}
+    }
+}
+
+tpz.nyzul_isle_data.southRoomConfigurations = { -- consider creating "rooms" for the "elbow" hallways.  Would allow for some very high density small floors
+	SOUTH_A = {
+        MobSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -29, y = 0, z = -260}, {x = -20, y = 0, z = -251}, {x = -11, y = 0, z = -260}, {x = -20, y = 0, z = -269}}, 
+        LampSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -20, y = 0, z = -269}}
+    },
+	SOUTH_B = {
+        MobSpawnPoints = {{x = -51, y = 0, z = -286.5}, {x = -46.5, y = 0, z = -309}, {x = -55.5, y = 0, z = -304.5}, {x = -64.5, y = 0, z = -295.5}, {x = -69, y = 0, z = -286.5}}, 
+        LampSpawnPoints = {{x = -46.5, y = 0, z = -300}, {x = -55.5, y = 0, z = -300}}
+    },
+	SOUTH_C = {
+        MobSpawnPoints = {{x = -20, y = 0, z = -300}, {x = -11, y = 0, z = -300}, {x = -29, y = 0, z = -300}, {x = -11, y = 0, z = -291}, {x = -29, y = 0, z = -309}}, 
+        LampSpawnPoints = {{x = -20, y = 0, z = -309}, {x = -20, y = 0, z = -291}}
+    },
+	SOUTH_D = {
+        MobSpawnPoints = {{x = 29, y = 0, z = -286.5}, {x = 33.5, y = 0, z = -309}, {x = 24.5, y = 0, z = -300}, {x = 15.5, y = 0, z = -304.5}, {x = 6.5, y = 0, z = -309}}, 
+        LampSpawnPoints = {{x = 6.5, y = 0, z = -286.5}, {x = 15, y = 0, z = -286.5}}
+    },
+	SOUTH_E = {
+        MobSpawnPoints = {{x = 60, y = 0, z = -335.5}, {x = 69, y = 0, z = -326.5}, {x = 46, y = 0, z = -331}, {x = 55.5, y = 0, z = -353.5}, {x = 64.5, y = 0, z = -349}}, 
+        LampSpawnPoints = {{x = 64.5, y = 0, z = -340}, {x = 55.5, y = 0, z = -340}}
+    },
+    -- F is not in this list - it is BOSS_ROOM_1.  I have never seen a capture where the boss rooms are used for anything but boss floors - so ommitting non-boss configurations
+	SOUTH_G = {
+        MobSpawnPoints = {{x = 29, y = 0, z = -371}, {x = 20, y = 0, z = -371}, {x = 11, y = 0, z = -380}, {x = 20, y = 0, z = -389}, {x = 29, y = 0, z = -389}}, 
+        LampSpawnPoints = {{x = 29, y = 0, z = -380}, {x = 33.5, y = 0, z = -380}}
+    },
+	SOUTH_H = {
+        MobSpawnPoints = {{x = 100, y = 0, z = -380}, {x = 104.5, y = 0, z = -375.5}, {x = 104.5, y = 0, z = -384.5}, {x = 94.5, y = 0, z = -375.5}, {x = 94.5, y = 0, z = -384.5}}, 
+        LampSpawnPoints = {{x = 91, y = 0, z = -380}, {x = 109, y = 0, z = -380}}
+    },
+	SOUTH_I = {
+        MobSpawnPoints = {{x = 46.5, y = 0, z = -406.5}, {x = 51, y = 0, z = -433.5}, {x = 73.5, y = 0, z = -429}, {x = 64.5, y = 0, z = -411}, {x = 55.5, y = 0, z = -420.5}}, 
+        LampSpawnPoints = {{x = 73.5, y = 0, z = -420}, {x = 60, y = 0, z = -424.5}}
+    },
+	SOUTH_J = {
+        MobSpawnPoints = {{x = -46.5, y = 0, z = -446.5}, {x = -69, y = 0, z = -446.5}, {x = -60, y = 0, z = -455.5}, {x = -55.5, y = 0, z = -460}, {x = -73.5, y = 0, z = -469}}, 
+        LampSpawnPoints = {{x = -55.5, y = 0, z = -473.5}, {x = -46.5, y = 0, z = -473.5}}
+    },
+	SOUTH_K = {
+        MobSpawnPoints = {{x = -33.5, y = 0, z = -473.5}, {x = -6.5, y = 0, z = -446.5}, {x = -24.5, y = 0, z = -455.5}, {x = -15.5, y = 0, z = -464.5}, {x = -11, y = 0, z = -460}}, 
+        LampSpawnPoints = {{x = -11, y = 0, z = -451}, {x = -29, y = 0, z = -469}}
+    },
+	SOUTH_L = {
+        MobSpawnPoints = {{x = 33.5, y = 0, z = -473.5}, {x = 33.5, y = 0, z = -451}, {x = 24.5, y = 0, z = -460}, {x = 15.5, y = 0, z = -451}, {x = 6.5, y = 0, z = -469}}, 
+        LampSpawnPoints = {{x = 6.5, y = 0, z = -473.5}, {x = 15.5, y = 0, z = -473.5}}
+    },
+	SOUTH_M = {
+        MobSpawnPoints = {{x = -29, y = 0, z = -504.5}, {x = -29, y = 0, z = -495.5}, {x = -20, y = 0, z = -509}, {x = -20, y = 0, z = -491}, {x = -11, y = 0, z = -500}}, 
+        LampSpawnPoints = {{x = -20, y = 0, z = -500}, {x = -29, y = 0, z = -500}}
+    }
+}
+
+
+
+
+
+
+
+
+
