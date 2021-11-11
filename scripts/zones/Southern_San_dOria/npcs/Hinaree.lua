@@ -19,7 +19,7 @@ function onTrade(player, npc, trade)
             player:addItem(4376)
             player:PrintToPlayer("Hinaree : Well.. Well.. Took you long enough to get here!", 0xD)
             player:PrintToPlayer("Hinaree : Take this to a guard of a faraway point...", 0xD)
-            player:messageSpecial((ID.tex t.ITEM_OBTAINED), 4376)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 4376)
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4376)
             player:PrintToPlayer("Hinaree : Come back after cleaning up that mess of an inventory...", 0xD)
