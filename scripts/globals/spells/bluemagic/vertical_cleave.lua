@@ -29,7 +29,7 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_GRAVITATION
     params.spellLevel = 75
     params.numhits = 1
-    params.multiplier = 6.0
+    params.multiplier = 3.0 --6.0 Revert to 6 or correct number once BLU calcs fixed
     params.tp150 = 7.0
     params.tp300 = 8.0
     params.azuretp = 8.33
