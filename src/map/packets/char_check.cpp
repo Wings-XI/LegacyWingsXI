@@ -120,6 +120,9 @@ CCheckPacket::CCheckPacket(CCharEntity* PChar, CCharEntity* PTarget)
     }
 	if ((PChar->nameflags.flags & FLAG_GM) || !(PTarget->nameflags.flags & FLAG_ANON))
 	{
+        // Note November 2021 client packet change. Implemented in ClientVerFixup.
+        // This comment is here to intentionally create a git conflict so we don't
+        // accidentally break it when merging from uptree.
 		ref<uint8>(0x12) = PTarget->GetMJob();
 		ref<uint8>(0x13) = PTarget->GetSJob();
 		ref<uint8>(0x24) = PTarget->GetMLevel();
@@ -128,4 +131,18 @@ CCheckPacket::CCheckPacket(CCharEntity* PChar, CCharEntity* PTarget)
 
 	//Chevron 32 bit Big Endean, starting at 0x2B
 	//ref<uint8>(0x2C) = 0x00;	//Ballista Star next to Chevron count
+}
+
+void CCheckPacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needMasterLvFix) {
+        this->size = 0x2A;
+        ref<uint8>(0x22) = ref<uint8>(0x12); // PTarget->GetMJob();
+        ref<uint8>(0x23) = ref<uint8>(0x13); // PTarget->GetSJob();
+        ref<uint16>(0x20) = ref<uint16>(0x10); // PLinkshell->GetLSRawColor();
+        memmove(data + 0x10, data + 0x14, 15); // Linkshell Name
+        ref<uint8>(0x1F) = 0;
+        // 0x27 - Master level
+        // 0x28 - Bitflags, bit 0 = Master Breaker
+    }
 }

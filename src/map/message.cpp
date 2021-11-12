@@ -359,8 +359,11 @@ namespace message
                 {
                     PZone->ForEachChar([&packet, &extra, packet_size](CCharEntity* PChar)
                     {
+                        auto serverId = ref<uint32>((uint8*)extra, 0);
+                        auto isMarkedSpam = (ref<uint32>((uint8*)extra, 4) != 0) && PChar->isYellSpamFiltered();
+
                         // don't push to the sender or anyone with yell filtered
-                        if (PChar->id != ref<uint32>((uint8*)extra, 0) && !PChar->isYellFiltered())
+                        if (PChar->id != serverId && !PChar->isYellFiltered() && !isMarkedSpam)
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
                             memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
@@ -752,7 +755,7 @@ namespace message
         {
             zoneutils::ForEachZone([&packet, packet_size](CZone* PZone) {
                 PZone->ForEachChar([&packet, packet_size](CCharEntity* PChar) {
-                    if (PChar != nullptr && PChar->m_GMlevel > 0)
+                    if (PChar != nullptr && PChar->m_GMlevel > 1)
                     {
                         CBasicPacket* newPacket = new CBasicPacket();
                         memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));

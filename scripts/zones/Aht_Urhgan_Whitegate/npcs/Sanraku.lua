@@ -6,6 +6,8 @@
 -----------------------------------
 require("scripts/globals/keyitems")
 require("scripts/globals/besieged")
+require("scripts/globals/znm")
+require("scripts/globals/settings")
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 -----------------------------------
 
@@ -64,6 +66,10 @@ function onTrade(player,npc,trade)
         end
     end
     ]]
+
+    if ZNM_Enabled == 1 then
+        tpz.znm.sanraku.onTrade(player, npc, trade)
+    end
 end
 
 function onTrigger(player,npc)
@@ -113,6 +119,9 @@ function onTrigger(player,npc)
         player:startEvent(909,param)
     end
     ]]
+    if ZNM_Enabled == 1 then
+        tpz.znm.sanraku.onTrigger(player, npc)
+    end
 end
 
 function onEventUpdate(player,csid,option)
@@ -228,6 +237,9 @@ function onEventUpdate(player,csid,option)
         end
     end
     ]]
+    if ZNM_Enabled == 1 then
+        tpz.znm.sanraku.onEventUpdate(player, csid, option)
+    end
 end
 
 function onEventFinish(player,csid,option)
@@ -238,4 +250,7 @@ function onEventFinish(player,csid,option)
         player:addCurrency("zeni_point", 2000)
     end
     ]]
+    if ZNM_Enabled == 1 then
+        tpz.znm.sanraku.onEventFinish(player, csid, option)
+    end
 end

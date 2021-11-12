@@ -419,6 +419,34 @@ inline int32 CLuaBaseEntity::messageBasic(lua_State* L)
 }
 
 /************************************************************************
+*  Function: messageStandard()
+*  Purpose : Send a standard message packet to the PC
+*  Example : target:messageStandard(11);
+*  Notes   : Used for debugging
+************************************************************************/
+
+inline int32 CLuaBaseEntity::messageStandard(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint16 messageID = (uint16)lua_tointeger(L, 1);
+
+    uint32 param0 = 0;
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        param0 = (uint32)lua_tointeger(L, 2);
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->pushPacket(new CMessageStandardPacket((CCharEntity*)m_PBaseEntity, param0, static_cast<MsgStd>(messageID)));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: messageName()
 *  Purpose : Message displayed with an entity's name in it
 *  Example : target:messageName(messageID, entity, param0, param1, param2, param3, chatType);
@@ -4267,6 +4295,64 @@ inline int32 CLuaBaseEntity::getContainerSize(lua_State *L)
 }
 
 /************************************************************************
+*  Function: addSoulPlate()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        std::string name = lua_tostring(L, 1);
+        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+        uint8 zeni = (uint8) lua_tointeger(L, 3);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
+        uint8 fp = (uint8) lua_tointeger(L, 5);
+
+        // Deduct Blank Plate
+        if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
+        {
+            // Couldn't remove a blank plate
+            lua_pushnil(L);
+            return 1;
+        }
+        PChar->pushPacket(new CInventoryFinishPacket());
+
+        // Used Soul Plate
+        CItem* PItem = itemutils::GetItem(2477); 
+        PItem->setQuantity(1);
+        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
+        if (SlotID == ERROR_SLOTID)
+        {
+            lua_pushnil(L);
+            return 1;
+        }
+
+        lua_getglobal(L, CLuaItem::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, PItem);
+        lua_pcall(L, 2, 1, 0);
+        return 1;
+    }
+
+    lua_pushnil(L);
+    return 1;
+}
+
+/************************************************************************
 *  Function: changeContainerSize()
 *  Purpose : Upgrades the capacity of a container
 *  Example : player:changeContainerSize(container,newSize)
@@ -4500,6 +4586,11 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
         return 1;
     }
     if (checkLevel && (PItem->getReqLvl() > PChar->GetMLevel()))
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    if ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0)
     {
         lua_pushboolean(L, false);
         return 1;
@@ -5136,6 +5227,43 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
         m_PBaseEntity->SetModelId((uint16)lua_tointeger(L, 1));
     }
     m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: copyLook()
+*  Purpose : Copies the argument's look to the entity
+*  Example : mob:copyLook(target)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::copyLook(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    if (PLuaBaseEntity != nullptr)
+    {
+        CBaseEntity* PTarget = PLuaBaseEntity->GetBaseEntity();
+
+        memcpy(&m_PBaseEntity->look, &PTarget->mainlook, sizeof(PTarget->mainlook));
+        if (PTarget->objtype == TYPE_PC)
+        {
+            m_PBaseEntity->look.face = PTarget->mainlook.face;
+            m_PBaseEntity->look.race = PTarget->mainlook.race;
+            m_PBaseEntity->look.size = PTarget->mainlook.size;
+            m_PBaseEntity->look.head = PTarget->mainlook.head;
+            m_PBaseEntity->look.body = PTarget->mainlook.body;
+            m_PBaseEntity->look.hands = PTarget->mainlook.hands;
+            m_PBaseEntity->look.legs = PTarget->mainlook.legs;
+            m_PBaseEntity->look.feet = PTarget->mainlook.feet;
+            m_PBaseEntity->look.main = PTarget->look.main;
+            m_PBaseEntity->look.sub = PTarget->look.sub;
+            m_PBaseEntity->look.ranged = PTarget->look.ranged;
+        }
+    }
 
     return 0;
 }
@@ -5842,61 +5970,67 @@ inline int32 CLuaBaseEntity::getSubJob(lua_State *L)
 inline int32 CLuaBaseEntity::changeJob(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    JOBTYPE prevjob = PChar->GetMJob();
-
-    PChar->resetPetZoningInfo();
-
-    PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
-    PChar->SetMJob((uint8)lua_tointeger(L, 1));
-
-    if (lua_tointeger(L, 1) == JOB_BLU)
+    if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        if (prevjob != JOB_BLU)
+        ((CMobEntity*)m_PBaseEntity)->SetMJob((uint8)lua_tointeger(L, 1));
+    }
+    else if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+        JOBTYPE prevjob = PChar->GetMJob();
+
+        PChar->resetPetZoningInfo();
+
+        PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
+        PChar->SetMJob((uint8)lua_tointeger(L, 1));
+
+        if (lua_tointeger(L, 1) == JOB_BLU)
         {
-            blueutils::LoadSetSpells(PChar);
+            if (prevjob != JOB_BLU)
+            {
+                blueutils::LoadSetSpells(PChar);
+            }
         }
+        else if (PChar->GetSJob() != JOB_BLU)
+        {
+            blueutils::UnequipAllBlueSpells(PChar);
+        }
+        puppetutils::LoadAutomaton(PChar);
+        charutils::SetStyleLock(PChar, false);
+        luautils::CheckForGearSet(PChar); // check for gear set on gear change
+        charutils::BuildingCharSkillsTable(PChar);
+        charutils::CalculateStats(PChar);
+        charutils::CheckValidEquipment(PChar);
+        PChar->PRecastContainer->ChangeJob();
+        charutils::BuildingCharAbilityTable(PChar);
+        charutils::BuildingCharTraitsTable(PChar);
+
+        PChar->ForParty([](CBattleEntity* PMember)
+        {
+            ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
+        });
+
+        PChar->UpdateHealth();
+        PChar->health.hp = PChar->GetMaxHP();
+        PChar->health.mp = PChar->GetMaxMP();
+
+        charutils::SaveCharStats(PChar);
+        charutils::SaveCharJob(PChar, PChar->GetMJob());
+        charutils::SaveCharExp(PChar, PChar->GetMJob());
+        PChar->updatemask |= UPDATE_HP;
+
+        PChar->pushPacket(new CCharJobsPacket(PChar));
+        PChar->pushPacket(new CCharStatsPacket(PChar));
+        PChar->pushPacket(new CCharSkillsPacket(PChar));
+        PChar->pushPacket(new CCharRecastPacket(PChar));
+        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+        PChar->pushPacket(new CCharUpdatePacket(PChar));
+        PChar->pushPacket(new CMenuMeritPacket(PChar));
+        PChar->pushPacket(new CCharSyncPacket(PChar));
     }
-    else if (PChar->GetSJob() != JOB_BLU)
-    {
-        blueutils::UnequipAllBlueSpells(PChar);
-    }
-    puppetutils::LoadAutomaton(PChar);
-    charutils::SetStyleLock(PChar, false);
-    luautils::CheckForGearSet(PChar); // check for gear set on gear change
-    charutils::BuildingCharSkillsTable(PChar);
-    charutils::CalculateStats(PChar);
-    charutils::CheckValidEquipment(PChar);
-    PChar->PRecastContainer->ChangeJob();
-    charutils::BuildingCharAbilityTable(PChar);
-    charutils::BuildingCharTraitsTable(PChar);
 
-    PChar->ForParty([](CBattleEntity* PMember)
-    {
-        ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
-    });
-
-    PChar->UpdateHealth();
-    PChar->health.hp = PChar->GetMaxHP();
-    PChar->health.mp = PChar->GetMaxMP();
-
-    charutils::SaveCharStats(PChar);
-    charutils::SaveCharJob(PChar, PChar->GetMJob());
-    charutils::SaveCharExp(PChar, PChar->GetMJob());
-    PChar->updatemask |= UPDATE_HP;
-
-    PChar->pushPacket(new CCharJobsPacket(PChar));
-    PChar->pushPacket(new CCharStatsPacket(PChar));
-    PChar->pushPacket(new CCharSkillsPacket(PChar));
-    PChar->pushPacket(new CCharRecastPacket(PChar));
-    PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-    PChar->pushPacket(new CCharUpdatePacket(PChar));
-    PChar->pushPacket(new CMenuMeritPacket(PChar));
-    PChar->pushPacket(new CCharSyncPacket(PChar));
     return 0;
 }
 
@@ -5910,25 +6044,30 @@ inline int32 CLuaBaseEntity::changeJob(lua_State *L)
 inline int32 CLuaBaseEntity::changesJob(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-
-    PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
-    PChar->SetSJob((uint8)lua_tointeger(L, 1));
-    charutils::UpdateSubJob(PChar);
-
-    if (lua_tointeger(L, 1) == JOB_BLU)
+    if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        blueutils::LoadSetSpells(PChar);
+        ((CMobEntity*)m_PBaseEntity)->SetSJob((uint8)lua_tointeger(L, 1));
     }
-    else
+    else if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        blueutils::UnequipAllBlueSpells(PChar);
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+        PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
+        PChar->SetSJob((uint8)lua_tointeger(L, 1));
+        charutils::UpdateSubJob(PChar);
+
+        if (lua_tointeger(L, 1) == JOB_BLU)
+        {
+            blueutils::LoadSetSpells(PChar);
+        }
+        else
+        {
+            blueutils::UnequipAllBlueSpells(PChar);
+        }
+        puppetutils::LoadAutomaton(PChar);
     }
-    puppetutils::LoadAutomaton(PChar);
 
     return 0;
 }
@@ -6056,14 +6195,8 @@ inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 max_lv = 0;
-    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
-        if (PChar->jobs.job[i] > max_lv) {
-            max_lv = PChar->jobs.job[i];
-        }
-    }
 
-    lua_pushinteger(L, max_lv);
+    lua_pushinteger(L, charutils::GetHighestJobLevel(PChar));
 
     return 1;
 }
@@ -17809,6 +17942,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToArea),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageBasic),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageStandard),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messagePublic),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageSpecial),
@@ -17951,6 +18085,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
 
+    // Soul Plates
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSoulPlate),
+
     // Trading
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,changeContainerSize),
@@ -17989,6 +18126,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,copyLook),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,restoreNpcLook),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),

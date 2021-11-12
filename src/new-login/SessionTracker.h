@@ -68,6 +68,15 @@ public:
     std::shared_ptr<LoginSession> GetSessionDetails(uint32_t dwAccountId);
 
     /**
+     *  Look-up session details by authentication details
+     *  @param dwAccountId Account ID of the session
+     *  @param pbufAuthToken Authentication token of the session
+     *  @param dwIPAddress IP address (network byte order)
+     *  @return Session details struct
+     */
+    std::shared_ptr<LoginSession> LookupSessionByAuth(uint32_t dwAccountId, const uint8_t* pbufAuthToken, uint32_t dwIPAddress);
+
+    /**
      *  Look-up session details by a given IP address.
      *  @param dwIPAddress IP address (network byte order)
      *  @return Session details struct

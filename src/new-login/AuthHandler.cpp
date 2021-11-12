@@ -40,6 +40,8 @@ void AuthHandler::Run()
     bool bSuccess = false;
     // Number of allowed login attempts before the user is disconnected
     uint32_t dwMaxLoginAttempts = LoginGlobalConfig::GetInstance()->GetConfigUInt("max_login_attempts");
+    // Authentication token (for successful logins)
+    uint8_t bufAuthToken[8] = { 0 };
 
     LOG_DEBUG0("Called.");
     mbRunning = true;
@@ -58,12 +60,13 @@ void AuthHandler::Run()
         switch (static_cast<LOGIN_COMMANDS>(LoginRequest.ucCommandType)) {
         case LOGIN_COMMAND_LOGIN:
             LOG_DEBUG1("Received login packet, username=%s", LoginRequest.szUserName);
-            dwAccountId = Authenticator.AuthenticateUser(LoginRequest.szUserName, LoginRequest.szPassword);
+            dwAccountId = Authenticator.AuthenticateUser(LoginRequest.szUserName, LoginRequest.szPassword, bufAuthToken);
             if (dwAccountId) {
                 // Login successful
                 LOG_INFO("User %s successfully logged in.", LoginRequest.szUserName);
                 LoginResponse.ucResponseType = static_cast<uint8_t>(LOGIN_SUCCESSFUL);
                 LoginResponse.dwAccountId = dwAccountId;
+                memcpy(LoginResponse.bufAuthToken, bufAuthToken, sizeof(LoginResponse.bufAuthToken));
                 bSuccess = true;
             }
             else {
@@ -84,6 +87,7 @@ void AuthHandler::Run()
                 LOG_INFO("User %s successfully created.", LoginRequest.szUserName);
                 LoginResponse.ucResponseType = static_cast<uint8_t>(CREATE_SUCCESSFUL);
                 LoginResponse.dwAccountId = dwAccountId;
+                memcpy(LoginResponse.bufAuthToken, bufAuthToken, sizeof(LoginResponse.bufAuthToken));
                 bSuccess = true;
             }
             else {

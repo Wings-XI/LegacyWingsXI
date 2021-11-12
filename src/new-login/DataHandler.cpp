@@ -7,6 +7,7 @@
 
 #include <mariadb++/connection.hpp>
 #include "DataHandler.h"
+#include "LoginGlobalConfig.h"
 #include "../new-common/Debugging.h"
 #include "../new-common/Database.h"
 #include "SessionTracker.h"
@@ -37,6 +38,8 @@ void DataHandler::Run()
     bool bGotKey = false;
     // Error has occurred
     bool bError = false;
+    // Session is authenticated with token
+    bool bAuthenticated = false;
     // Request from view server
     LoginSession::REQUESTS_TO_DATA_SERVER RequestFromView;
     // Time now
@@ -48,9 +51,10 @@ void DataHandler::Run()
 
     LOG_DEBUG0("Called.");
     mbRunning = true;
+    bool bUseAuthToken = LoginGlobalConfig::GetInstance()->GetConfigUInt("ip_lookup_identification") ? false : true;
 
     // When the client connects, immediately ask for account ID
-    cOutgoingBytePacket = static_cast<uint8_t>(S2C_PACKET_SEND_ACCOUNT_ID);
+    cOutgoingBytePacket = static_cast<uint8_t>(bUseAuthToken ? S2C_PACKET_SEND_ACCOUNT_ID_EX : S2C_PACKET_SEND_ACCOUNT_ID);
     if (mpConnection->WriteAll(&cOutgoingBytePacket, sizeof(cOutgoingBytePacket)) != sizeof(cOutgoingBytePacket)) {
         // Shouldn't really happen unless the client immediately dropped the connection
         LOG_WARNING("Connection dropped before account ID request was sent.");
@@ -103,7 +107,7 @@ void DataHandler::Run()
                 // send an account ID request just to trigger it to
                 // send something (we ignore the actual answer content)
                 LOG_DEBUG0("Sending ping packet to client.");
-                cOutgoingBytePacket = static_cast<uint8_t>(S2C_PACKET_SEND_ACCOUNT_ID);
+                cOutgoingBytePacket = static_cast<uint8_t>(bUseAuthToken ? S2C_PACKET_SEND_ACCOUNT_ID_EX : S2C_PACKET_SEND_ACCOUNT_ID);
                 if (mpConnection->WriteAll(&cOutgoingBytePacket, sizeof(cOutgoingBytePacket)) != sizeof(cOutgoingBytePacket)) {
                     // Connection dropped apparently
                     LOG_WARNING("Connection to data server dropped.");
@@ -122,7 +126,9 @@ void DataHandler::Run()
             break;
         }
         LOG_DEBUG1("Received data from client, packet type=0x%02X", cIncomingPacketType);
-        if ((!bGotAccountID) && (static_cast<CLIENT_TO_SERVER_PACKET_TYPES>(cIncomingPacketType) != C2S_PACKET_ACCOUNT_ID)) {
+        if ((!bGotAccountID) &&
+            ((static_cast<CLIENT_TO_SERVER_PACKET_TYPES>(cIncomingPacketType) != C2S_PACKET_ACCOUNT_ID) &&
+            (static_cast<CLIENT_TO_SERVER_PACKET_TYPES>(cIncomingPacketType) != C2S_PACKET_ACCOUNT_ID_EX))) {
             // We're not willing to do anything before the client identifies itself, so this is an error.
             LOG_WARNING("Client sent data before sending its account ID, dropping connection.");
             bError = true;
@@ -133,14 +139,35 @@ void DataHandler::Run()
         }
         time_t now = time(NULL);
         tmLastPacket = now;
+        bAuthenticated = false;
         switch (static_cast<CLIENT_TO_SERVER_PACKET_TYPES>(cIncomingPacketType)) {
+        case C2S_PACKET_ACCOUNT_ID_EX:
+            bAuthenticated = true;
+            // Fallthrough
         case C2S_PACKET_ACCOUNT_ID:
             // Packet is 2 32-bit uints with account ID and server address
             ACCOUNT_ID_PACKET AccountPacket;
-            if (mpConnection->ReadAll(reinterpret_cast<uint8_t*>(&AccountPacket), sizeof(AccountPacket)) != sizeof(AccountPacket)) {
-                LOG_WARNING("Client sent an incomplete account ID packet.");
-                bError = true;
-                break;
+            ACCOUNT_ID_PACKET_EX AccountPacketEx;
+            if (bAuthenticated) {
+                if (mpConnection->ReadAll(reinterpret_cast<uint8_t*>(&AccountPacketEx), sizeof(AccountPacketEx)) != sizeof(AccountPacketEx)) {
+                    LOG_WARNING("Client sent an incomplete authenticated account ID packet.");
+                    bError = true;
+                    break;
+                }
+                // AccountPacketEx is an expansion of AccountPacket and they share the same header
+                memcpy(&AccountPacket, &AccountPacketEx, sizeof(AccountPacket));
+            }
+            else {
+                if (bUseAuthToken) {
+                    LOG_WARNING("Client sent an unauthenticated accout ID packet but authentication token is required in configuration.");
+                    bError = true;
+                    break;
+                }
+                if (mpConnection->ReadAll(reinterpret_cast<uint8_t*>(&AccountPacket), sizeof(AccountPacket)) != sizeof(AccountPacket)) {
+                    LOG_WARNING("Client sent an incomplete account ID packet.");
+                    bError = true;
+                    break;
+                }
             }
             if (!bGotAccountID || !mpSession) {
                 LOG_DEBUG1("Client claims account ID: %d", AccountPacket.dwAccountID);
@@ -170,6 +197,18 @@ void DataHandler::Run()
                     LOG_WARNING("Client session has expired.");
                     bError = true;
                     break;
+                }
+                if (bUseAuthToken && !bAuthenticated) {
+                    LOG_WARNING("Authentication token was required but not provided");
+                    bError = true;
+                    break;
+                }
+                if (bAuthenticated) {
+                    if (memcmp(AccountPacketEx.bufAuthToken, mpSession->GetAuthToken(), sizeof(AccountPacketEx.bufAuthToken)) != 0) {
+                        LOG_WARNING("Authentication token mismatch.");
+                        bError = true;
+                        break;
+                    }
                 }
                 LOG_DEBUG1("Account ID check passed.");
                 // Client passed account ID check

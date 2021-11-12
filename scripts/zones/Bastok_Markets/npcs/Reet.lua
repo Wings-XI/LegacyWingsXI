@@ -15,7 +15,21 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(5)
+    if player:getCharVar("AnnyEvent2020") == 0 and player:getNation() == 1 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 and player:hasItem(536) == false then
+            player:setCharVar("AnnyEvent2020", 1)
+            player:PrintToPlayer("Reet : Oh its you! Its been quite awhile since i've seen you.", 0xD)
+            player:PrintToPlayer("Reet : You seem to have some a long way since then, I have something for you.", 0xD)
+            player:PrintToPlayer("Reet : The mage who is always full of herself has been looking for this...", 0xD)
+            player:addItem(536)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 536)
+            player:PrintToPlayer("Reet : Come back after sorting that mess of an inventory...", 0xD)
+        end
+    else
+        player:startEvent(5)
+    end
 end
 
 function onEventUpdate(player, csid, option)

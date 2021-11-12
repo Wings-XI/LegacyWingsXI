@@ -27,6 +27,13 @@ function onMobFight(mob, target)
     end
 end
 
+function onMobRoamAction(mob)
+    local faustPos = mob:getPos()
+    if (faustPos.x ~= 740 and faustPos.z ~= -99) then
+        mob:pathThrough({ 740.000, 0, -99.000 })
+    end
+end
+
 function onMobRoam(mob)
     local roam = mob:getLocalVar("roam")
     local faustPos = mob:getPos()
@@ -41,7 +48,6 @@ function onMobRoam(mob)
         mob:setPos(faustPos.x, faustPos.y, faustPos.z, faustPos.rot)
     else 
         mob:setLocalVar("roam", roam+1)
-        mob:pathThrough({ 740.000, -0.400, -99.000 })
     end
 end
 
