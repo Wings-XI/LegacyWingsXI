@@ -26,6 +26,7 @@ end
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 1500)
+    mob:setMod(tpz.mod.COUNTER, 25)
 end
 
 function onMobSpawn(mob)

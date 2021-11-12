@@ -19,6 +19,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.UDMGRANGE, -75)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
     mob:setMod(tpz.mod.MOVE, 100) -- "Moves at Flee Speed in Quadrupedal stance and in the Final Form"
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
 function onMobFight(mob, target)
@@ -26,7 +27,7 @@ function onMobFight(mob, target)
     local formTime = mob:getLocalVar("formWait")
     local lifePercent = mob:getHPP()
     local currentForm = mob:getLocalVar("form")
-    
+
     if lifePercent < 70 and currentForm < 1 then
         currentForm = 1
         mob:setLocalVar("form", currentForm)
@@ -44,7 +45,7 @@ function onMobFight(mob, target)
                 mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
                 if not GetMobByID(mobID + 1):isSpawned() and math.random(0,1) == 1 then
                     mob:useMobAbility(1532)
-                end 
+                end
             else
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
                 mob:AnimationSub(1)
