@@ -86,11 +86,3 @@ function onEventFinish(player, csid, option)
         player:setCharVar("Halshaob_Quest", 0)
     end
 end
-
--- on bcnm exit:
--- if quest == entered_quest
---  complete quest if needed (if won)
--- else
---  timer = now (so it's like took this quest TODAY)
--- end
--- quest = 0 (so we know none are active)
