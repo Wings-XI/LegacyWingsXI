@@ -4151,14 +4151,22 @@ INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 35, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 21, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 40, 45, 255);
 -- ACP 11 Ode of Life Bestowing (Stellar Fulcrum)
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 176, 1, 255); -- Firaga III
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 181, 1, 255); -- Blizzaga III
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 186, 1, 255); -- Aeroga III
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 191 , 1, 255); -- Stonega III
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 196, 1, 255); -- Thundaga III
-INSERT INTO `mob_spell_lists` VALUES ('Seed_Crystal', 503, 201, 1, 255); -- Waterga III
-
-
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 176, 1, 255); -- Firaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 181, 1, 255); -- Blizzaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 186, 1, 255); -- Aeroga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 191 , 1, 255); -- Stonega III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 196, 1, 255); -- Thundaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 201, 1, 255); -- Waterga III
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 204, 60, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 206, 50, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 208, 52, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 210, 54, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 212, 56, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 214, 58, 255);
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 273, 1, 255); -- Sleepga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 356, 1, 255); -- Paralyga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 361, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 366, 1, 255); -- Graviga
 --
 -- Indexes for dumped tables
 --

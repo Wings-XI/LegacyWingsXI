@@ -13,6 +13,9 @@ tpz.appraisalUtil = tpz.appraisalUtil or {}
 
 tpz.appraisalUtil.Origin = 
 {
+    SCOUTING_THE_ASHU_TALIF     = 55,
+    ROYAL_PAINTER_ESCORT        = 56,
+    TARGETING_THE_CAPTAIN       = 57,
     NYZUL_BASIC                 = 100,
     NYZUL_BAT_EYE               = 101,
     NYZUL_SHADOW_EYE            = 102,
@@ -264,6 +267,15 @@ tpz.appraisalUtil.appraisalItems =
     },
     [tpz.appraisalUtil.questionMarkItems.DAGGER] =
     {
+        [tpz.appraisalUtil.Origin.SCOUTING_THE_ASHU_TALIF] =
+        {
+            items =
+            {
+                {20, 18028}, -- Matron's Knife
+                {50, 17984}, -- Spark Dagger
+                {30, 18008}, -- Hushed Dagger
+            }
+        },
         [tpz.appraisalUtil.Origin.NYZUL_TOM_TIT_TAT] =
         {
             items =
@@ -1202,6 +1214,17 @@ tpz.appraisalUtil.appraisalItems =
                 {19,  5453}, -- Istakoz
                 { 1,    90}, -- Rusty Bucket
             },
+        },
+
+        [tpz.appraisalUtil.Origin.SCOUTING_THE_ASHU_TALIF] =
+        {
+            items =
+            {
+                {25, 2349}, -- Turbo Charger
+                {25, 2352}, -- Condenser
+                {25, 2348}, -- Tranquilizer
+                {25, 2353}, -- Optic Fiber
+            }
         },
 
         [tpz.appraisalUtil.Origin.NYZUL_AIATAR] =
