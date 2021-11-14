@@ -98,6 +98,10 @@ function onInstanceProgressUpdate(instance, progress)
     printf("onInstanceProgressUpdate\n")
 end
 
+function onInstanceStageChange(instance)
+    printf("onInstanceStageChange\n")
+end
+
 function onInstanceComplete(instance)
     printf("onInstanceComplete\n")
 end
