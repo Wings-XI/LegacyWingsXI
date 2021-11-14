@@ -211,6 +211,7 @@ struct map_session_data_t
 extern map_config_t map_config;
 extern uint32 map_amntplayers;
 extern int32 map_fd;
+extern bool map_doing_final;
 
 static constexpr float server_tick_rate = 2.5f;
 
