@@ -2580,7 +2580,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         //if char then disconnects we need to tell the server about the alliance change
                         if (PChar->PParty != nullptr && PChar->PParty->m_PAlliance != nullptr && PChar->PParty->GetLeader() == PChar)
                         {
-                            if (PChar->PParty->members.size() == 1)
+                            if (PChar->PParty->GetRealNumberOfPeople() == 1)
                             {
                                 if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                                 {
