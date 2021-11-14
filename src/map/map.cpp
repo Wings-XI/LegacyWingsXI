@@ -103,6 +103,8 @@ thread_local Sql_t* SqlHandle = nullptr;
 int32  map_fd = 0;                      // main socket
 uint32 map_amntplayers = 0;             // map amnt unique players
 
+bool map_doing_final = false;
+
 in_addr map_ip;
 uint16 map_port = 0;
 
@@ -414,6 +416,8 @@ int32 do_init(int32 argc, char** argv)
 
 void do_final(int code)
 {
+    map_doing_final = true;
+
     delete[] g_PBuff;
     g_PBuff = nullptr;
     delete[] PTempBuff;

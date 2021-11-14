@@ -21,8 +21,8 @@ function onMobSkillCheck(target, mob, skill)
             return 1
         end
     end
-
-    if (mob:AnimationSub() <= 1) then
+    --Used if 2 or more heads are alive
+    if (mob:AnimationSub() <= 1 and target:isInfront(mob, 128)) then
         return 0
     else
         return 1

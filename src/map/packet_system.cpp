@@ -4446,13 +4446,61 @@ void SmallPacket0x083(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (PChar->loc.zone->GetID() == ZONE_RULUDE_GARDENS &&
                     (itemID == 948 || itemID == 636 || itemID == 958 || itemID == 949 || itemID == 941 || itemID == 951))
                 {
-                    // Sql_Query(SqlHandle, "SELECT value FROM char_vars WHERE charid = %u AND varname = 'DabihShopBought';", PChar->id);
-                    // uint16 prev = 0;
-                    // if (Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-                    // prev = Sql_GetUIntData(SqlHandle, 0);
-                    Sql_Query(SqlHandle,
-                              "INSERT INTO char_vars SET charid = %u, varname = 'DabihShopBought', value = %i ON DUPLICATE KEY UPDATE value = value + %i;",
-                              PChar->id, quantity, quantity);
+                    int32 old_bought = zoneutils::GetServerVariable("DabihShopBought");
+                    // Dabih's stock is based on the number of items purchased from her
+                    int32 new_bought = old_bought + quantity;
+                    if (new_bought < 0) {
+                        new_bought = 0;
+                    }
+                    if (new_bought > 20000) {
+                        new_bought = 20000;
+                    }
+                    zoneutils::SetServerVariable("DabihShopBought", new_bought);
+                    time_t timeNow = time(NULL);
+                    zoneutils::SetServerVariable("DabihShopLast", (int32)timeNow);
+                    if (((old_bought < 180) && (new_bought >= 180)) ||
+                        ((old_bought < 4150) && (new_bought >= 4150))) {
+                        // Announce new stock to nearby players
+                        uint32 newStockMsg = PChar->GetLocalVar("DabihMess");
+                        uint32 dabihID = PChar->GetLocalVar("DabihID");
+                        if (newStockMsg != 0 && dabihID != 0) {
+                            auto PNpc = zoneutils::GetEntity(dabihID, TYPE_NPC);
+                            if (PNpc) {
+                                PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CMessageSpecialPacket(PNpc, newStockMsg, 0, 0, 0, 0, true));
+                            }
+                        }
+                    }
+                }
+                // macchi shop
+                if (PChar->loc.zone->GetID() == ZONE_RULUDE_GARDENS &&
+                    (itemID == 5703 || itemID == 5684 || itemID == 5686 || itemID == 5729 || itemID == 5718 || itemID == 461 ||
+                     itemID == 5152 || itemID == 4722 || itemID == 4723 || itemID == 4724 || itemID == 4725 || itemID == 4726 ||
+                     itemID == 4727 || itemID == 4850))
+                {
+                    int32 old_bought = zoneutils::GetServerVariable("MacchiShopBought");
+                    // Macchi's stock is based on the amount of gil paid to her
+                    int32 new_bought = old_bought + (price * quantity);
+                    if (new_bought < 0) {
+                        new_bought = 0;
+                    }
+                    if (new_bought > 1000000) {
+                        new_bought = 1000000;
+                    }
+                    zoneutils::SetServerVariable("MacchiShopBought", new_bought);
+                    time_t timeNow = time(NULL);
+                    zoneutils::SetServerVariable("MacchiShopLast", (int32)timeNow);
+                    if (((old_bought < 10000) && (new_bought >= 10000)) ||
+                        ((old_bought < 250000) && (new_bought >= 250000))) {
+                        // Announce new stock to nearby players
+                        uint32 newStockMsg = PChar->GetLocalVar("MacchiMess");
+                        uint32 macchiID = PChar->GetLocalVar("MacchiID");
+                        if (newStockMsg != 0 && macchiID != 0) {
+                            auto PNpc = zoneutils::GetEntity(macchiID, TYPE_NPC);
+                            if (PNpc) {
+                                PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CMessageSpecialPacket(PNpc, newStockMsg, 0, 0, 0, 0, true));
+                            }
+                        }
+                    }
                 }
             }
         }

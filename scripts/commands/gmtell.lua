@@ -51,7 +51,7 @@ function onTrigger(player, message)
 		return
     end
 
-	target:PrintToPlayer(msg, 12)
+	target:PrintToPlayer(msg, 12, player:getName())
 	player:PrintToPlayer(string.format("Sent GM tell to player %s: %s", targetName, msg))
 
     -- player:PrintToPlayer("\"Testing a GM\" tell message", 12)

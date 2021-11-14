@@ -49,7 +49,7 @@ function onEventFinish(player, csid, option)
 
     if (csid == 1900) then -- onTrigger
 
-        if ZNM_Enabled == 1
+        if ZNM_Enabled == 1 then
             local shop =
             {
                 [1] = {itemID = 18721, price = 2, QTY = 1}, -- SoulTrapper

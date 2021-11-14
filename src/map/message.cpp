@@ -229,7 +229,12 @@ namespace message
         while (!message_queue.empty())
         {
             g_mqconnection->IncrementHighPriorityThreadsWaiting();
-            std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+            std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
+            while (!lk.try_lock_for(std::chrono::seconds(1))) {
+                if (map_doing_final) {
+                    return;
+                }
+            }
             g_mqconnection->DecrementHighPriorityThreadsWaiting();
             std::shared_ptr<uint8> msgptr = message_queue.front();
             uint8* msg = msgptr.get();
@@ -1012,7 +1017,12 @@ namespace message
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
         g_mqconnection->IncrementHighPriorityThreadsWaiting();
-        std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+        std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
+        while (!lk.try_lock_for(std::chrono::seconds(1))) {
+            if (map_doing_final) {
+                return;
+            }
+        }
         g_mqconnection->DecrementHighPriorityThreadsWaiting();
         uint8 stub;
 
