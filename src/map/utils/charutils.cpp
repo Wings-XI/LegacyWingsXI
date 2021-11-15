@@ -31,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <string.h>
 #include <array>
 #include <chrono>
+#include <ctime>
 
 #include "../lua/luautils.h"
 
@@ -6052,6 +6053,11 @@ namespace charutils
         return GetCharVar(PChar->id, var);
     }
 
+    uint32 GetCharUVar(CCharEntity* PChar, const char* var)
+    {
+        return GetCharUVar(PChar->id, var);
+    }
+
     int32 GetCharVar(uint32 charid, const char* var)
     {
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
@@ -6067,9 +6073,22 @@ namespace charutils
         return 0;
     }
 
+    uint32 GetCharUVar(uint32 charid, const char* var)
+    {
+        int32 res = GetCharVar(charid, var);
+        uint32 ures = 0;
+        ures = *reinterpret_cast<uint32*>(&res);
+        return ures;
+    }
+
     bool AddCharVar(CCharEntity* PChar, const char* var, int32 increment)
     {
         return AddCharVar(PChar->id, var, increment);
+    }
+
+    bool AddCharUVar(CCharEntity* PChar, const char* var, uint32 increment)
+    {
+        return AddCharUVar(PChar->id, var, increment);
     }
 
     bool AddCharVar(uint32 charid, const char* var, int32 increment)
@@ -6083,7 +6102,7 @@ namespace charutils
         {
             if (Sql_NumRows(SqlHandle) != 0)
             {
-                const char* fmtQuery2 = "UPDATE char_vars SET value = value + %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                const char* fmtQuery2 = "UPDATE char_vars SET value = value + %d WHERE varname = '%s' AND charid = %u LIMIT 1;";
                 ret = Sql_Query(SqlHandle, fmtQuery2, increment, var, id);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6092,7 +6111,7 @@ namespace charutils
             }
             else
             {
-                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%d);";
                 ret = Sql_Query(SqlHandle, fmtQuery3, id, var, increment);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6104,9 +6123,21 @@ namespace charutils
         return false;
     }
 
+    bool AddCharUVar(uint32 charid, const char* var, uint32 increment)
+    {
+        uint32 temp = GetCharUVar(charid, var);
+        temp += increment;
+        return SetCharUVar(charid, var, temp);
+    }
+
     bool SetCharVar(CCharEntity* PChar, const char* var, int32 value)
     {
         return SetCharVar(PChar->id, var, value);
+    }
+
+    bool SetCharUVar(CCharEntity* PChar, const char* var, uint32 value)
+    {
+        return SetCharUVar(PChar->id, var, value);
     }
 
     bool SetCharVar(uint32 charid, const char* var, int32 value)
@@ -6120,7 +6151,7 @@ namespace charutils
         {
             if (Sql_NumRows(SqlHandle) != 0)
             {
-                const char* fmtQuery2 = "UPDATE char_vars SET value = %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                const char* fmtQuery2 = "UPDATE char_vars SET value = %d WHERE varname = '%s' AND charid = %u LIMIT 1;";
                 ret = Sql_Query(SqlHandle, fmtQuery2, value, var, id);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6129,7 +6160,7 @@ namespace charutils
             }
             else
             {
-                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%d);";
                 ret = Sql_Query(SqlHandle, fmtQuery3, id, var, value);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6139,6 +6170,13 @@ namespace charutils
         }
 
         return false;
+    }
+
+    bool SetCharUVar(uint32 charid, const char* var, uint32 value)
+    {
+        int32 conv_val = 0;
+        conv_val = *reinterpret_cast<int32*>(&value);
+        return SetCharVar(charid, var, value);
     }
 
     uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance)
@@ -6503,25 +6541,25 @@ int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
-bool CanUseYell(CCharEntity* PChar)
+EYellCheckResult CanUseYell(CCharEntity* PChar)
 {
     if (PChar->isNewPlayer())
     {
         // Yells aren't enabled for new players
-        return false;
+        return EYellCheckResult::YELLDEC_NEW_PLAYER;
     }
 
     if (charutils::GetHighestJobLevel(PChar) <= map_config.yell_min_level)
     {
         // Player's max level is too low.
-        return false;
+        return EYellCheckResult::YELLDEC_LEVEL_TOO_LOW;
     }
 
-    auto OptedIn = charutils::GetCharVar(PChar, "YellOptedIn");
-    if (OptedIn == 0)
+    auto YellBanned = charutils::GetCharVar(PChar, "YellBan");
+    if (YellBanned != 0)
     {
-        // Player didn't opt-in to the rules.
-        return false;
+        // Player is permanently banned.
+        return EYellCheckResult::YELLDEC_BANNED;
     }
 
     auto YellMuteTime = charutils::GetCharVar(PChar, "YellMuteTime");
@@ -6531,15 +6569,22 @@ bool CanUseYell(CCharEntity* PChar)
         if (YellMuteTime > CurrentTime)
         {
             // Player is currently muted.
-            return false;
+            return EYellCheckResult::YELLDEC_MUTED;
         }
 
         // Mute expired.
         charutils::SetCharVar(PChar, "YellMuteTime", 0);
     }
 
+    auto OptedIn = charutils::GetCharVar(PChar, "YellOptedIn");
+    if (OptedIn == 0)
+    {
+        // Player didn't opt-in to the rules.
+        return EYellCheckResult::YELLDEC_NOT_OPTED_IN;
+    }
+
     // Yaaaaaargh!
-    return true;
+    return EYellCheckResult::YELLDEC_SUCCESS;
 }
 
 bool IsYellSpamFiltered(CCharEntity* PChar)
@@ -6558,6 +6603,46 @@ bool IsYellSpamFiltered(CCharEntity* PChar)
     }
 
     return false;
+}
+
+void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason)
+{
+    std::string reason;
+    char time_str[64] = { 0 };
+
+    if (Reason == EYellCheckResult::YELLDEC_SUCCESS) {
+        // Shouldn't be called but if it does then do nothing
+        return;
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_BANNED) {
+        reason = "You have been permanently banned from using yells.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_LEVEL_TOO_LOW) {
+        reason = "You must have a job leveled to at least level " + std::to_string(map_config.yell_min_level) + " to use the yell command.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_MUTED) {
+        reason = "You have been muted from using the yell command.";
+        time_t muted_until = charutils::GetCharVar(PChar, "YellMuteTime");
+        if (muted_until > 0) {
+            std::tm * ptm = std::gmtime(&muted_until);
+            // Do not change the date format! Using dd/mm/yy or mm/dd/yy
+            // will confuse NA or EU players respectively.
+            std::strftime(time_str, 64, "%a, %Y/%m/%d %H:%M:%S", ptm);
+            reason += " You will be able to use the command again on ";
+            reason += time_str;
+            reason += " UTC.";
+        }
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_NEW_PLAYER) {
+        reason = "You cannot use the yell command while you are still in a new player status.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_NOT_OPTED_IN) {
+        reason = "Using the yell command requires you to opt-in. Please type \"!yell\" for more information.";
+    }
+    else {
+        reason = "The use of the command failed for an unknown reason. If the issue persists please open a GM ticket.";
+    }
+    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, reason));
 }
 
 }; // namespace charutils

@@ -14,10 +14,11 @@ function onTrigger(player, iAgree)
     local hasReadRules = player:getCharVar("YellReadRules") ~= 0
     local isOptedIn = player:getCharVar("YellOptedIn") ~= 0
     local muteTime = player:getCharVar("YellMuteTime")
+    local yellBan = player:getCharVar("YellBan")
 
     local currentTime = os.time()
 
-    local isMuted = muteTime > currentTime
+    local isMuted = (muteTime > currentTime) or (yellBan ~= 0)
 
     if hasReadRules and not isMuted and not isOptedIn and string.lower(iAgree or '') == 'iagree' then
         player:PrintToPlayer("You are now permitted to use the /yell command. Go forth and be excellent to each other.")
