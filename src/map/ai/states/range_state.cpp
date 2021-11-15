@@ -109,7 +109,7 @@ bool CRangeState::Update(time_point tick)
         }
 
         CanUseRangedAttack(PTarget, range);
-        if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.y != m_PEntity->loc.p.y)
+        if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.z != m_PEntity->loc.p.z)
         {
             m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_MOVE_AND_INTERRUPT);
         }
@@ -149,7 +149,7 @@ bool CRangeState::Update(time_point tick)
         m_lastCancelCheck = tick;
 
         CanUseRangedAttack(PTarget, range);
-        if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.y != m_PEntity->loc.p.y)
+        if (m_startPos.x != m_PEntity->loc.p.x || m_startPos.z != m_PEntity->loc.p.z)
         {
             m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_MOVE_AND_INTERRUPT);
         }

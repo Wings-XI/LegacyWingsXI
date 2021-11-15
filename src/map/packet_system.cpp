@@ -499,7 +499,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PChar->PParty->GetLeader() == PChar)
                 {
-                    if (PChar->PParty->members.size() == 1)
+                    if (PChar->PParty->GetRealNumberOfPeople() == 1)
                     {
                         if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                         {
@@ -3760,7 +3760,7 @@ void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0: // party - must by party leader or solo
             if (PChar->PParty == nullptr || PChar->PParty->GetLeader() == PChar)
             {
-                if (PChar->PParty && PChar->PParty->members.size() > 5)
+                if (PChar->PParty && PChar->PParty->GetRealNumberOfPeople() > 5)
                 {
                     PChar->pushPacket(new CMessageStandardPacket(PChar, 0, 0, MsgStd::CannotInvite));
                     break;
@@ -3922,7 +3922,7 @@ void SmallPacket0x06F(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             case 0: // party - anyone may remove themself from party regardless of leadership or alliance
                 if (PChar->PParty->m_PAlliance &&
-                    PChar->PParty->members.size() == 1) // single member alliance parties must be removed from alliance before disband
+                    PChar->PParty->GetRealNumberOfPeople() == 1) // single member alliance parties must be removed from alliance before disband
                 {
                     ShowDebug(CL_CYAN "%s party size is one\n" CL_RESET, PChar->GetName());
                     if (PChar->PParty->m_PAlliance->partyCount() == 1) // if there is only 1 party then dissolve alliance
@@ -4256,7 +4256,7 @@ void SmallPacket0x074(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
                 if (PInviter->PParty->GetLeader() == PInviter)
                 {
-                    if (PInviter->PParty->members.size() > 5)
+                    if (PInviter->PParty->GetRealNumberOfPeople() > 5)
                     { // someone else accepted invitation
                         // PInviter->pushPacket(new CMessageStandardPacket(PInviter, 0, 0, 14)); Don't think retail sends error packet to inviter on full pt
                         ShowDebug(CL_CYAN "Someone else accepted party invite, %s cannot be added to party\n" CL_RESET, PChar->GetName());
@@ -4446,13 +4446,61 @@ void SmallPacket0x083(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (PChar->loc.zone->GetID() == ZONE_RULUDE_GARDENS &&
                     (itemID == 948 || itemID == 636 || itemID == 958 || itemID == 949 || itemID == 941 || itemID == 951))
                 {
-                    // Sql_Query(SqlHandle, "SELECT value FROM char_vars WHERE charid = %u AND varname = 'DabihShopBought';", PChar->id);
-                    // uint16 prev = 0;
-                    // if (Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-                    // prev = Sql_GetUIntData(SqlHandle, 0);
-                    Sql_Query(SqlHandle,
-                              "INSERT INTO char_vars SET charid = %u, varname = 'DabihShopBought', value = %i ON DUPLICATE KEY UPDATE value = value + %i;",
-                              PChar->id, quantity, quantity);
+                    int32 old_bought = zoneutils::GetServerVariable("DabihShopBought");
+                    // Dabih's stock is based on the number of items purchased from her
+                    int32 new_bought = old_bought + quantity;
+                    if (new_bought < 0) {
+                        new_bought = 0;
+                    }
+                    if (new_bought > 20000) {
+                        new_bought = 20000;
+                    }
+                    zoneutils::SetServerVariable("DabihShopBought", new_bought);
+                    time_t timeNow = time(NULL);
+                    zoneutils::SetServerVariable("DabihShopLast", (int32)timeNow);
+                    if (((old_bought < 180) && (new_bought >= 180)) ||
+                        ((old_bought < 4150) && (new_bought >= 4150))) {
+                        // Announce new stock to nearby players
+                        uint32 newStockMsg = PChar->GetLocalVar("DabihMess");
+                        uint32 dabihID = PChar->GetLocalVar("DabihID");
+                        if (newStockMsg != 0 && dabihID != 0) {
+                            auto PNpc = zoneutils::GetEntity(dabihID, TYPE_NPC);
+                            if (PNpc) {
+                                PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CMessageSpecialPacket(PNpc, newStockMsg, 0, 0, 0, 0, true));
+                            }
+                        }
+                    }
+                }
+                // macchi shop
+                if (PChar->loc.zone->GetID() == ZONE_RULUDE_GARDENS &&
+                    (itemID == 5703 || itemID == 5684 || itemID == 5686 || itemID == 5729 || itemID == 5718 || itemID == 461 ||
+                     itemID == 5152 || itemID == 4722 || itemID == 4723 || itemID == 4724 || itemID == 4725 || itemID == 4726 ||
+                     itemID == 4727 || itemID == 4850))
+                {
+                    int32 old_bought = zoneutils::GetServerVariable("MacchiShopBought");
+                    // Macchi's stock is based on the amount of gil paid to her
+                    int32 new_bought = old_bought + (price * quantity);
+                    if (new_bought < 0) {
+                        new_bought = 0;
+                    }
+                    if (new_bought > 1000000) {
+                        new_bought = 1000000;
+                    }
+                    zoneutils::SetServerVariable("MacchiShopBought", new_bought);
+                    time_t timeNow = time(NULL);
+                    zoneutils::SetServerVariable("MacchiShopLast", (int32)timeNow);
+                    if (((old_bought < 10000) && (new_bought >= 10000)) ||
+                        ((old_bought < 250000) && (new_bought >= 250000))) {
+                        // Announce new stock to nearby players
+                        uint32 newStockMsg = PChar->GetLocalVar("MacchiMess");
+                        uint32 macchiID = PChar->GetLocalVar("MacchiID");
+                        if (newStockMsg != 0 && macchiID != 0) {
+                            auto PNpc = zoneutils::GetEntity(macchiID, TYPE_NPC);
+                            if (PNpc) {
+                                PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CMessageSpecialPacket(PNpc, newStockMsg, 0, 0, 0, 0, true));
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -4873,13 +4921,27 @@ void SmallPacket0x0AD(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
+    uint8 msg_offset = 0;
+    EYellCheckResult YellCheck = EYellCheckResult::YELLDEC_MAX;
+    if (data.ref<uint8>(0x06) == '\\') {
+        msg_offset++;
+    }
     if (data.ref<uint8>(0x06) == '!' && !jailutils::InPrison(PChar) && CmdHandler.call(PChar, (const int8*)data[7]) == 0)
     {
         // this makes sure a command isn't sent to chat
     }
-    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 1)
+    else if (data.ref<uint8>(0x06) == '#' && data.ref<uint8>(0x07) == '#' && data.ref<uint8>(0x08) == '#' && PChar->m_GMlevel > 0)
     {
-        message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[7]));
+        message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[9]));
+    }
+    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 0)
+    {
+        if (PChar->m_GMlevel > 1) {
+            message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[7]));
+        }
+        else {
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, "To send system messages from this character prefix with ###"));
+        }
     }
     else
     {
@@ -4893,8 +4955,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                     Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                     std::string escaped_full_string;
-                    escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                    Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                    escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                    Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                     const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SAY','%s',current_timestamp())";
                     if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -4902,7 +4964,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ShowError("packet_system::call: Failed to log inPrison MESSAGE_SAY.\n");
                     }
                 }
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6]));
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6+msg_offset]));
             }
             else
             {
@@ -4921,8 +4983,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                         std::string escaped_full_string;
-                        escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                        escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                         const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SAY','%s',current_timestamp())";
                         if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -4930,11 +4992,11 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             ShowError("packet_system::call: Failed to log MESSAGE_SAY.\n");
                         }
                     }
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6+msg_offset]));
                 }
                 break;
                 case MESSAGE_EMOTION:
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, (const char*)data[6+msg_offset]));
                     break;
                 case MESSAGE_SHOUT:
                 {
@@ -4944,8 +5006,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                         std::string escaped_full_string;
-                        escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                        escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                         const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SHOUT','%s',current_timestamp())";
                         if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -4953,7 +5015,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             ShowError("packet_system::call: Failed to log MESSAGE_SHOUT.\n");
                         }
                     }
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, (const char*)data[6+msg_offset]));
                 }
                 break;
                 case MESSAGE_LINKSHELL:
@@ -4964,7 +5026,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ref<uint32>(packetData, 0) = PChar->PLinkshell1->getID();
                         ref<uint32>(packetData, 4) = PChar->id;
                         message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData,
-                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6]));
+                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
                         {
@@ -4977,8 +5039,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_ls, ls_name.data());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery =
                                 "INSERT into audit_chat (speaker,type,lsName,message,datetime) VALUES('%s','LINKSHELL','%s','%s',current_timestamp())";
@@ -4998,7 +5060,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ref<uint32>(packetData, 0) = PChar->PLinkshell2->getID();
                         ref<uint32>(packetData, 4) = PChar->id;
                         message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData,
-                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6]));
+                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
                         {
@@ -5011,8 +5073,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_ls, ls_name.data());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery =
                                 "INSERT into audit_chat (speaker,type,lsName,message,datetime) VALUES('%s','LINKSHELL','%s','%s',current_timestamp())";
@@ -5031,7 +5093,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         int8 packetData[8]{};
                         ref<uint32>(packetData, 0) = PChar->PParty->GetPartyID();
                         ref<uint32>(packetData, 4) = PChar->id;
-                        message::send(MSG_CHAT_PARTY, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_PARTY, (const char*)data[6]));
+                        message::send(MSG_CHAT_PARTY, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_PARTY, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_party == 1)
                         {
@@ -5039,8 +5101,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','PARTY','%s',current_timestamp())";
                             if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -5053,16 +5115,17 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && charutils::CanUseYell(PChar))
+                    YellCheck = charutils::CanUseYell(PChar);
+                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && YellCheck == EYellCheckResult::YELLDEC_SUCCESS)
                     {
-                        if (gettick() >= charutils::GetCharVar(PChar, "NextYell"))
+                        if (gettick() >= charutils::GetCharUVar(PChar, "NextYell"))
                         {
-                            charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                            charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
                             // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
                             int8 packetData[8]{};
                             ref<uint32>(packetData, 0) = PChar->id;
                             ref<uint32>(packetData, 4) = charutils::IsYellSpamFiltered(PChar);
-                            message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6]));
+                            message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6+msg_offset]));
                         }
                         else // You must wait longer to perform that action.
                         {
@@ -5075,8 +5138,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','YELL','%s',current_timestamp())";
                             if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -5087,7 +5150,12 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                     }
                     else // You cannot use that command in this area.
                     {
-                        PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::CannotHere));
+                        if (YellCheck != EYellCheckResult::YELLDEC_SUCCESS) {
+                            charutils::SendYellDeclineMessage(PChar, YellCheck);
+                        }
+                        else {
+                            PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::CannotHere));
+                        }
                     }
                 }
                 break;

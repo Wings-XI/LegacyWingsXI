@@ -103,6 +103,8 @@ thread_local Sql_t* SqlHandle = nullptr;
 int32  map_fd = 0;                      // main socket
 uint32 map_amntplayers = 0;             // map amnt unique players
 
+bool map_doing_final = false;
+
 in_addr map_ip;
 uint16 map_port = 0;
 
@@ -414,6 +416,8 @@ int32 do_init(int32 argc, char** argv)
 
 void do_final(int code)
 {
+    map_doing_final = true;
+
     delete[] g_PBuff;
     g_PBuff = nullptr;
     delete[] PTempBuff;
@@ -738,7 +742,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             charutils::LoadChar(PChar);
             if (PChar->loc.prevzone == 0) {
                 // New chars must wait one cooldown before they can yell
-                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
             }
 
             if (map_config.mission_storage_recovery) {
@@ -2576,7 +2580,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         //if char then disconnects we need to tell the server about the alliance change
                         if (PChar->PParty != nullptr && PChar->PParty->m_PAlliance != nullptr && PChar->PParty->GetLeader() == PChar)
                         {
-                            if (PChar->PParty->members.size() == 1)
+                            if (PChar->PParty->GetRealNumberOfPeople() == 1)
                             {
                                 if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                                 {

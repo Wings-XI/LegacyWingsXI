@@ -21,6 +21,7 @@ function onTrigger(player, name)
     local muteTime = GetCharVarByName(name, "YellMuteTime")
     local spamTime = GetCharVarByName(name, "YellSpamTime")
     local infractions = GetCharVarByName(name, "YellInfractions")
+    local yellBanned = GetCharVarByName(name, "YellBan")
 
     local currentTime = os.time()
 
@@ -39,6 +40,12 @@ function onTrigger(player, name)
         player:PrintToPlayer(string.format("\"%s\" has opted-in to participate in yells.", name), 29)
     else
         player:PrintToPlayer(string.format("\"%s\" has NOT opted-in to participate in yells.", name), 29)
+    end
+
+    if yellBanned == 0 then
+        player:PrintToPlayer(string.format("\"%s\" is not yell banned.", name), 29)
+    else
+        player:PrintToPlayer(string.format("\"%s\" is PERMANENTLY BANNED from using yells.", name), 29)
     end
 
     if muteTime <= currentTime then

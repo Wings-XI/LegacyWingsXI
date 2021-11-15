@@ -23,17 +23,15 @@ function onMobSkillCheck(target, mob, skill)
     elseif (mob:getFamily() == 313) then -- Tinnin can use at will
         return 0
     else
-        if (mob:AnimationSub() == 0) then
+        if (mob:AnimationSub() == 0 and mob:getHPP() <= 25) then -- Only used when all 3 Hydra heads alive
             return 0
         else
             return 1
         end
     end
-
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, 50, 0, 420))
     MobStatusEffectMove(mob, target, tpz.effect.POISON, 20, 3, 60)
     return tpz.effect.CURSE_I
