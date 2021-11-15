@@ -4921,13 +4921,27 @@ void SmallPacket0x0AD(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
+    uint8 msg_offset = 0;
+    EYellCheckResult YellCheck = EYellCheckResult::YELLDEC_MAX;
+    if (data.ref<uint8>(0x06) == '\\') {
+        msg_offset++;
+    }
     if (data.ref<uint8>(0x06) == '!' && !jailutils::InPrison(PChar) && CmdHandler.call(PChar, (const int8*)data[7]) == 0)
     {
         // this makes sure a command isn't sent to chat
     }
-    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 1)
+    else if (data.ref<uint8>(0x06) == '#' && data.ref<uint8>(0x07) == '#' && data.ref<uint8>(0x08) == '#' && PChar->m_GMlevel > 0)
     {
-        message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[7]));
+        message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[9]));
+    }
+    else if (data.ref<uint8>(0x06) == '#' && PChar->m_GMlevel > 0)
+    {
+        if (PChar->m_GMlevel > 1) {
+            message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, (const char*)data[7]));
+        }
+        else {
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, "To send system messages from this character prefix with ###"));
+        }
     }
     else
     {
@@ -4941,8 +4955,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                     Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                     std::string escaped_full_string;
-                    escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                    Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                    escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                    Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                     const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SAY','%s',current_timestamp())";
                     if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -4950,7 +4964,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ShowError("packet_system::call: Failed to log inPrison MESSAGE_SAY.\n");
                     }
                 }
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6]));
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6+msg_offset]));
             }
             else
             {
@@ -4969,8 +4983,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                         std::string escaped_full_string;
-                        escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                        escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                         const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SAY','%s',current_timestamp())";
                         if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -4978,11 +4992,11 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             ShowError("packet_system::call: Failed to log MESSAGE_SAY.\n");
                         }
                     }
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_SAY, (const char*)data[6+msg_offset]));
                 }
                 break;
                 case MESSAGE_EMOTION:
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, MESSAGE_EMOTION, (const char*)data[6+msg_offset]));
                     break;
                 case MESSAGE_SHOUT:
                 {
@@ -4992,8 +5006,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                         std::string escaped_full_string;
-                        escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                        escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                        Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                         const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SHOUT','%s',current_timestamp())";
                         if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -5001,7 +5015,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             ShowError("packet_system::call: Failed to log MESSAGE_SHOUT.\n");
                         }
                     }
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, (const char*)data[6]));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INSHOUT, new CChatMessagePacket(PChar, MESSAGE_SHOUT, (const char*)data[6+msg_offset]));
                 }
                 break;
                 case MESSAGE_LINKSHELL:
@@ -5012,7 +5026,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ref<uint32>(packetData, 0) = PChar->PLinkshell1->getID();
                         ref<uint32>(packetData, 4) = PChar->id;
                         message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData,
-                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6]));
+                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
                         {
@@ -5025,8 +5039,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_ls, ls_name.data());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery =
                                 "INSERT into audit_chat (speaker,type,lsName,message,datetime) VALUES('%s','LINKSHELL','%s','%s',current_timestamp())";
@@ -5046,7 +5060,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         ref<uint32>(packetData, 0) = PChar->PLinkshell2->getID();
                         ref<uint32>(packetData, 4) = PChar->id;
                         message::send(MSG_CHAT_LINKSHELL, packetData, sizeof packetData,
-                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6]));
+                                      new CChatMessagePacket(PChar, MESSAGE_LINKSHELL, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_linkshell == 1)
                         {
@@ -5059,8 +5073,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_ls, ls_name.data());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery =
                                 "INSERT into audit_chat (speaker,type,lsName,message,datetime) VALUES('%s','LINKSHELL','%s','%s',current_timestamp())";
@@ -5079,7 +5093,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         int8 packetData[8]{};
                         ref<uint32>(packetData, 0) = PChar->PParty->GetPartyID();
                         ref<uint32>(packetData, 4) = PChar->id;
-                        message::send(MSG_CHAT_PARTY, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_PARTY, (const char*)data[6]));
+                        message::send(MSG_CHAT_PARTY, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_PARTY, (const char*)data[6+msg_offset]));
 
                         if (map_config.audit_chat == 1 && map_config.audit_party == 1)
                         {
@@ -5087,8 +5101,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','PARTY','%s',current_timestamp())";
                             if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -5101,16 +5115,17 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && charutils::CanUseYell(PChar))
+                    YellCheck = charutils::CanUseYell(PChar);
+                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && YellCheck == EYellCheckResult::YELLDEC_SUCCESS)
                     {
-                        if (gettick() >= charutils::GetCharVar(PChar, "NextYell"))
+                        if (gettick() >= charutils::GetCharUVar(PChar, "NextYell"))
                         {
-                            charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                            charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
                             // ShowDebug(CL_CYAN" LastYell: %u \n" CL_RESET, PChar->m_LastYell);
                             int8 packetData[8]{};
                             ref<uint32>(packetData, 0) = PChar->id;
                             ref<uint32>(packetData, 4) = charutils::IsYellSpamFiltered(PChar);
-                            message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6]));
+                            message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6+msg_offset]));
                         }
                         else // You must wait longer to perform that action.
                         {
@@ -5123,8 +5138,8 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                             Sql_EscapeString(SqlHandle, escaped_speaker, (const char*)PChar->GetName());
 
                             std::string escaped_full_string;
-                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
-                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6]);
+                            escaped_full_string.reserve(strlen((const char*)data[6+msg_offset]) * 2 + 1);
+                            Sql_EscapeString(SqlHandle, escaped_full_string.data(), (const char*)data[6+msg_offset]);
 
                             const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','YELL','%s',current_timestamp())";
                             if (Sql_Query(SqlHandle, fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
@@ -5135,7 +5150,12 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                     }
                     else // You cannot use that command in this area.
                     {
-                        PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::CannotHere));
+                        if (YellCheck != EYellCheckResult::YELLDEC_SUCCESS) {
+                            charutils::SendYellDeclineMessage(PChar, YellCheck);
+                        }
+                        else {
+                            PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::CannotHere));
+                        }
                     }
                 }
                 break;

@@ -56,6 +56,17 @@ enum class EMobDifficulty : uint8
     MAX
 };
 
+enum class EYellCheckResult : uint8
+{
+    YELLDEC_SUCCESS = 0,
+    YELLDEC_NEW_PLAYER,
+    YELLDEC_LEVEL_TOO_LOW,
+    YELLDEC_NOT_OPTED_IN,
+    YELLDEC_BANNED,
+    YELLDEC_MUTED,
+    YELLDEC_MAX
+};
+
 namespace charutils
 {
     void	LoadExpTable();
@@ -220,10 +231,16 @@ namespace charutils
 
     int32   GetCharVar(CCharEntity* PChar, const char* var);
     int32   GetCharVar(uint32 charid, const char* var);
+    uint32   GetCharUVar(CCharEntity* PChar, const char* var);
+    uint32   GetCharUVar(uint32 charid, const char* var);
     bool    AddCharVar(CCharEntity* PChar, const char* var, int32 increment);
     bool    AddCharVar(uint32 charid, const char* var, int32 increment);
+    bool    AddCharUVar(CCharEntity* PChar, const char* var, uint32 increment);
+    bool    AddCharUVar(uint32 charid, const char* var, uint32 increment);
     bool    SetCharVar(CCharEntity* PChar, const char* var, int32 value);
     bool    SetCharVar(uint32 charid, const char* var, int32 value);
+    bool    SetCharUVar(CCharEntity* PChar, const char* var, uint32 value);
+    bool    SetCharUVar(uint32 charid, const char* var, uint32 value);
 
     uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance);
 
@@ -263,8 +280,9 @@ namespace charutils
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
 
-    bool CanUseYell(CCharEntity* PChar);
+    EYellCheckResult CanUseYell(CCharEntity* PChar);
     bool IsYellSpamFiltered(CCharEntity* PChar);
+    void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason);
 };
 
 #endif // _CHARUTILS_H

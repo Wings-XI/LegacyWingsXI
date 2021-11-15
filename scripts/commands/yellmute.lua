@@ -41,6 +41,7 @@ function onTrigger(player, name)
     if infractions > 10 then
         -- At this point, 512 weeks is pretty much a ban.
         infractions = 10
+        SetCharVarByName(name, "YellBan", 1)
     end
 
     -- Mute the player.

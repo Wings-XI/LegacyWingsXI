@@ -742,7 +742,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             charutils::LoadChar(PChar);
             if (PChar->loc.prevzone == 0) {
                 // New chars must wait one cooldown before they can yell
-                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
             }
 
             if (map_config.mission_storage_recovery) {
