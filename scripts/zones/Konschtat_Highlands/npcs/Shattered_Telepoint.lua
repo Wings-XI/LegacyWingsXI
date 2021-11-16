@@ -32,7 +32,7 @@ function onTrigger(player, npc)
         player:startEvent(913, 0, 0, 1) -- first time in promy -> have you made your preparations cs
     elseif
         player:getCurrentMission(COP) == tpz.mission.id.cop.THE_MOTHERCRYSTALS and
-        (player:hasKeyItem(tpz.ki.LIGHT_OF_HOLLA) or player:hasKeyItem(tpz.ki.LIGHT_OF_MEA))
+        (player:hasKeyItem(tpz.ki.LIGHT_OF_HOLLA) or player:hasKeyItem(tpz.ki.LIGHT_OF_MEA) or player:hasKeyItem(tpz.ki.LIGHT_OF_DEM))
     then
         if player:getCharVar("cspromy2") == 1 then
             player:startEvent(912)  -- cs you get nearing second promyvion

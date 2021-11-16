@@ -42,6 +42,7 @@ function onTrigger(player, name)
 
     -- Unmute the player.
     local result = SetCharVarByName(name, "YellMuteTime", 0)
+    SetCharVarByName(name, "YellBan", 0)
     if result == nil then
         player:PrintToPlayer(string.format("!yellmute: Failed to yell unmute \"%s\"!", name))
         return

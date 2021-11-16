@@ -188,6 +188,7 @@ LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her ow
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
--- ASSAULTS
+-- ASSAULTS | ZNMs
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior
