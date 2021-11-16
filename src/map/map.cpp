@@ -742,7 +742,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             charutils::LoadChar(PChar);
             if (PChar->loc.prevzone == 0) {
                 // New chars must wait one cooldown before they can yell
-                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
             }
 
             if (map_config.mission_storage_recovery) {
@@ -2580,7 +2580,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         //if char then disconnects we need to tell the server about the alliance change
                         if (PChar->PParty != nullptr && PChar->PParty->m_PAlliance != nullptr && PChar->PParty->GetLeader() == PChar)
                         {
-                            if (PChar->PParty->members.size() == 1)
+                            if (PChar->PParty->GetRealNumberOfPeople() == 1)
                             {
                                 if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                                 {

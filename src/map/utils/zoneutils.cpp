@@ -1258,4 +1258,35 @@ bool IsZoneEnabled(uint16 ZoneID)
     }
 }
 
+int32 GetServerVariable(const char* varName)
+{
+    int32 value = 0;
+
+    int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = '%s' LIMIT 1;", varName);
+
+    if (ret != SQL_ERROR &&
+        Sql_NumRows(SqlHandle) != 0 &&
+        Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        value = (int32)Sql_GetIntData(SqlHandle, 0);
+    }
+    return value;
+}
+
+void SetServerVariable(const char* varName, int32 varVal)
+{
+    if (varVal == 0)
+    {
+        Sql_Query(SqlHandle, "DELETE FROM server_variables WHERE name = '%s' LIMIT 1;", varName);
+        return;
+    }
+    Sql_Query(SqlHandle, "INSERT INTO server_variables VALUES ('%s', %i) ON DUPLICATE KEY UPDATE value = %i;", varName, varVal, varVal);
+}
+
+void AddServerVariable(const char* varName, int32 varVal)
+{
+    int32 oldVal = GetServerVariable(varName);
+    SetServerVariable(varName, oldVal + varVal);
+}
+
 }; // namespace zoneutils
