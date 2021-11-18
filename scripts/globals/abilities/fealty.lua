@@ -2,7 +2,7 @@
 -- Ability: Fealty
 -- Grants a powerful resistance to enfeebling magic.
 -- Obtained: Paladin Level 75
--- Recast Time: 0:10:00
+-- Recast Time: 0:20:00
 -- Duration: 0:01:00
 -----------------------------------
 require("scripts/globals/settings")

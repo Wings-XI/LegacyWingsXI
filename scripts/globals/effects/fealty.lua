@@ -21,7 +21,6 @@ function onEffectGain(target,effect)
    target:addMod(tpz.mod.STUNRESTRAIT,200)
    target:addMod(tpz.mod.CHARMRESTRAIT,200)
    target:addMod(tpz.mod.AMNESIARESTRAIT,200)
-   target:addMod(tpz.mod.LULLABYRESTRAIT,200)
 end
 
 function onEffectTick(target,effect)
@@ -42,5 +41,4 @@ function onEffectLose(target,effect)
    target:delMod(tpz.mod.STUNRESTRAIT,200)
    target:delMod(tpz.mod.CHARMRESTRAIT,200)
    target:delMod(tpz.mod.AMNESIARESTRAIT,200)
-   target:delMod(tpz.mod.LULLABYRESTRAIT,200)
 end
