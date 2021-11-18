@@ -14,7 +14,7 @@ function onTrigger(player, npc)
         {
             {
                 {itemid = 2286, droprate = 600}, -- ??? Box
-                {itemid = 2277, droprate = 300}, -- ??? Earring
+                {itemid = 2278, droprate = 300}, -- ??? Ring
                 {itemid = 0,    droprate = 100}, -- Nothing
             },
         },
