@@ -36,14 +36,18 @@ function onMobWeaponSkill(target, mob, skill)
             if job == tpz.job.RNG then
                 wsType = target:getWeaponSkillType(tpz.slot.RANGED)
             end
-            if wsType == 1 then
-                target:getWeaponSkillType(tpz.slot.MAIN)
+            if wsType == 1 or wsType == 27 then
+                wsType = target:getWeaponSkillType(tpz.slot.MAIN)
             end
-            -- Doesn't currently work & need more WS per weapon in each list
-            thrall:setSkillList(2000 + wsType)
 
             thrall:spawn()
-            thrall:delMobMod(tpz.mobMod.HP_STANDBACK, -70)
+
+            local standBack = thrall:getMobMod(tpz.mobMod.HP_STANDBACK)
+            if standBack > 0 then
+                thrall:delMobMod(tpz.mobMod.HP_STANDBACK, -standBack)
+            end
+            thrall:setMobMod(tpz.mobMod.SKILL_LIST, 2000 + wsType)
+            
             if target then
                 thrall:updateEnmity(target)
             end

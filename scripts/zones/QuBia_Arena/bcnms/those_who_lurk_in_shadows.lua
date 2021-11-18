@@ -19,12 +19,18 @@ function onBattlefieldEnter(player, battlefield)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
+    local hasMarkOfSeed = player:hasKeyItem(tpz.ki.MARK_OF_SEED)
+
+    if hasMarkOfSeed then
+        player:delKeyItem(tpz.ki.MARK_OF_SEED)
+    end
+
     if leavecode == tpz.battlefield.leaveCode.WON then
         local now = tonumber(os.date("%j"))
         local lastIvory = player:getCharVar("LastIvoryKey")
 
         player:addExp(700)
-        if player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
+        if hasMarkOfSeed then
             if player:getCurrentMission(ACP) == tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III then
                 player:completeMission(ACP, tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III)
                 player:addMission(ACP, tpz.mission.id.acp.REMEMBER_ME_IN_YOUR_DREAMS)
@@ -42,15 +48,12 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         player:startEvent(32002)
     end
 
-    if player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
-        player:delKeyItem(tpz.ki.MARK_OF_SEED)
-    end
+
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 32001 then
-    end
+
 end

@@ -686,7 +686,7 @@ INSERT INTO `bcnm_battlefield` VALUES(225, 3, 17473557, 2);
 INSERT INTO `bcnm_battlefield` VALUES(256, 1, 17510401, 3);
 INSERT INTO `bcnm_battlefield` VALUES(256, 2, 17510402, 3);
 INSERT INTO `bcnm_battlefield` VALUES(256, 3, 17510403, 3);
-INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510452, 3); -- Ode to live bestowing
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510452, 3); -- Ode of life bestowing
 INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510453, 0);
 INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510454, 0);
 INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510455, 0);

@@ -5246,22 +5246,21 @@ inline int32 CLuaBaseEntity::copyLook(lua_State* L)
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
     if (PLuaBaseEntity != nullptr)
     {
-        CBaseEntity* PTarget = PLuaBaseEntity->GetBaseEntity();
-
-        memcpy(&m_PBaseEntity->look, &PTarget->mainlook, sizeof(PTarget->mainlook));
-        if (PTarget->objtype == TYPE_PC)
+        if (PLuaBaseEntity->GetBaseEntity()->objtype == TYPE_PC)
         {
-            m_PBaseEntity->look.face = PTarget->mainlook.face;
-            m_PBaseEntity->look.race = PTarget->mainlook.race;
-            m_PBaseEntity->look.size = PTarget->mainlook.size;
-            m_PBaseEntity->look.head = PTarget->mainlook.head;
-            m_PBaseEntity->look.body = PTarget->mainlook.body;
-            m_PBaseEntity->look.hands = PTarget->mainlook.hands;
-            m_PBaseEntity->look.legs = PTarget->mainlook.legs;
-            m_PBaseEntity->look.feet = PTarget->mainlook.feet;
-            m_PBaseEntity->look.main = PTarget->look.main;
-            m_PBaseEntity->look.sub = PTarget->look.sub;
-            m_PBaseEntity->look.ranged = PTarget->look.ranged;
+            CCharEntity* PTarget = (CCharEntity*)PLuaBaseEntity->GetBaseEntity();
+            look_t *look = (PTarget->getStyleLocked() ? &PTarget->mainlook : &PTarget->look);
+            m_PBaseEntity->look.face = look->face;
+            m_PBaseEntity->look.race = look->race;
+            m_PBaseEntity->look.size = 1;
+            m_PBaseEntity->look.head = look->head;
+            m_PBaseEntity->look.body = look->body;
+            m_PBaseEntity->look.hands = look->hands;
+            m_PBaseEntity->look.legs = look->legs;
+            m_PBaseEntity->look.feet = look->feet;
+            m_PBaseEntity->look.main = look->main;
+            m_PBaseEntity->look.sub = look->sub;
+            m_PBaseEntity->look.ranged = look->ranged;
         }
     }
 

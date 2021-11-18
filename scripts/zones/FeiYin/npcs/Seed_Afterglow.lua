@@ -46,7 +46,6 @@ function onTrigger(player, npc)
         currentDay == player:getCharVar("LastIvoryKey") or
         ACP < tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II
     ) then
-        player:startEvent(28)
         player:messageSpecial(ID.text.SOFTLY_SHIMMERING_LIGHT)
 
     elseif (needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
