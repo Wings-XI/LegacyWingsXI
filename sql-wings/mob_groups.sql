@@ -2530,13 +2530,16 @@ INSERT INTO `mob_groups` VALUES(4, 5430, 60, 'Ashu_Talif_Crew2', 0, 128, 0, 0, 0
 INSERT INTO `mob_groups` VALUES(5, 5431, 60, 'Ashu_Talif_Crew3', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(6, 263, 60, 'Ashu_Talif_Crew', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(7, 262, 60, 'Ashu_Talif_Captain', 0, 128, 0, 0, 0, 68, 68, 0);
+INSERT INTO `mob_groups` VALUES(11, 263, 60, 'Ashu_Talif_Crew', 0, 128, 0, 450, 0, 75, 75, 0); -- rng
+INSERT INTO `mob_groups` VALUES(12, 5431, 60, 'Ashu_Talif_Crew2', 0, 128, 0, 450, 0, 75, 75, 0); -- rdm
+INSERT INTO `mob_groups` VALUES(13, 5430, 60, 'Ashu_Talif_Crew3', 0, 128, 0, 500, 0, 75, 75, 0); -- mnk
+INSERT INTO `mob_groups` VALUES(14, 4305, 60, 'Watch_Imp', 0, 128, 0, 750, 0, 70, 70, 0);
+INSERT INTO `mob_groups` VALUES(15, 3826, 60, 'Swiftwinged_Gekko', 0, 128, 0, 6500, 0, 77, 77, 0);
 INSERT INTO `mob_groups` VALUES(2017, 264, 60, 'Ashu_Talif_Marine', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2018, 432, 60, 'Black_Bartholomew', 0, 0, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2019, 550, 60, 'Bubbly', 0, 0, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(2020, 873, 60, 'Cutthroat_Kabsalah', 0, 0, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(2021, 1294, 60, 'Faluuya', 0, 0, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(2024, 3826, 60, 'Swiftwinged_Gekko', 0, 0, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(2025, 4305, 60, 'Watch_Imp', 0, 0, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2026, 4348, 60, 'Windjammer_Imp', 0, 0, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(1, 3615, 61, 'Sicklemoon_Crab', 0, 128, 2245, 0, 0, 71, 73, 0);
 INSERT INTO `mob_groups` VALUES(2, 4491, 61, 'Zazalda_Clot', 0, 128, 0, 0, 0, 75, 75, 0);
