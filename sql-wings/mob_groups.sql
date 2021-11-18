@@ -10977,7 +10977,7 @@ INSERT INTO `mob_groups` VALUES(24, 3754, 193, 'Stalking_Sapling', 720, 0, 2324,
 INSERT INTO `mob_groups` VALUES(20, 1139, 193, 'Dung_Beetle', 720, 0, 721, 0, 0, 23, 26, 0);
 INSERT INTO `mob_groups` VALUES(21, 4256, 193, 'Vorpal_Bunny', 300, 0, 326, 0, 0, 23, 26, 0);
 INSERT INTO `mob_groups` VALUES(22, 2146, 193, 'Jelly', 600, 0, 15, 0, 0, 26, 28, 0);
-INSERT INTO `mob_groups` VALUES(23, 5170, 193, 'Agar_Agar', 0, 32, 3036, 0, 0, 64, 66, 0);
+INSERT INTO `mob_groups` VALUES(23, 5170, 193, 'Agar_Agar', 0, 32, 3036, 6000, 0, 64, 66, 0);
 INSERT INTO `mob_groups` VALUES(19, 3901, 193, 'Thread_Leech', 720, 0, 343, 0, 0, 18, 21, 0);
 INSERT INTO `mob_groups` VALUES(18, 471, 193, 'Blood_Bunny', 720, 0, 309, 0, 0, 17, 19, 0);
 INSERT INTO `mob_groups` VALUES(26, 3614, 193, 'Shrieker', 600, 0, 2244, 0, 0, 24, 27, 0);
