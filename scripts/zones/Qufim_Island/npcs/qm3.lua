@@ -54,9 +54,6 @@ function onTrigger(player, npc)
             for _, partyMember in pairs(player:getAlliance()) do
                 partyMember:setCharVar("SEED_MANDY", 0)
                 partyMember:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 1800)
-                partyMember:delKeyItem(tpz.ki.SEEDSPALL_ROSEUM)
-                partyMember:delKeyItem(tpz.ki.SEEDSPALL_CAERULUM)
-                partyMember:delKeyItem(tpz.ki.SEEDSPALL_VIRIDIS)
             end
 
             for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
@@ -67,7 +64,7 @@ function onTrigger(player, npc)
                 end
             end
         end
-    elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and player:getCharVar("SEED_MANDY") >= 30 then
+    elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and amberKey then
         player:setCharVar("SEED_MANDY", 99)
         player:startEvent(34)
     elseif player:hasStatusEffect(tpz.effect.CONFRONTATION) then
