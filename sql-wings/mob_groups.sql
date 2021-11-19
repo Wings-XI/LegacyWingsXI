@@ -6915,7 +6915,7 @@ INSERT INTO `mob_groups` VALUES(24, 3912, 109, 'Thunder_Elemental', 300, 4, 2410
 INSERT INTO `mob_groups` VALUES(25, 646, 109, 'Carnivorous_Crawler', 300, 0, 422, 0, 0, 20, 23, 0);
 INSERT INTO `mob_groups` VALUES(26, 4314, 109, 'Water_Wasp', 300, 0, 2632, 0, 0, 15, 18, 0);
 INSERT INTO `mob_groups` VALUES(27, 4832, 109, 'Ni_Zho_Bladebender', 0, 32, 3022, 0, 0, 43, 45, 0);
-INSERT INTO `mob_groups` VALUES(28, 2155, 109, 'Jolly_Green', 0, 32, 1409, 0, 0, 27, 28, 0);
+INSERT INTO `mob_groups` VALUES(28, 2155, 109, 'Jolly_Green', 0, 32, 1409, 1000, 0, 27, 28, 0);
 INSERT INTO `mob_groups` VALUES(29, 1690, 109, 'Goblin_Mugger', 300, 0, 1117, 0, 0, 21, 25, 0);
 INSERT INTO `mob_groups` VALUES(30, 1635, 109, 'Goblin_Ambusher', 300, 0, 1017, 0, 0, 16, 20, 0);
 INSERT INTO `mob_groups` VALUES(31, 1683, 109, 'Goblin_Leecher', 300, 0, 1102, 0, 0, 21, 25, 0);
