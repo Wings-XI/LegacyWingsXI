@@ -6950,6 +6950,8 @@ INSERT INTO `mob_groups` VALUES(59, 3745, 109, 'Sprite', 300, 256, 0, 0, 0, 26, 
 INSERT INTO `mob_groups` VALUES(60, 331, 109, 'Ballistosporer', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(61, 5312, 109, 'Murk_veinedBan', 0, 128, 0, 0, 99999, 92, 94, 0);
 INSERT INTO `mob_groups` VALUES(62, 6193, 109, 'Toxic_Tamlyn', 3600, 0, 3173, 3400, 4000, 44, 45, 0);
+INSERT INTO `mob_groups` VALUES(63, 2986, 109, 'Onyx_Quadav', 0, 128, 1864, 0, 0, 16, 20, 0);
+INSERT INTO `mob_groups` VALUES(64, 525, 109, 'Brass_Quadav', 0, 128, 350, 0, 0, 20, 26, 0);
 INSERT INTO `mob_groups` VALUES(6001, 305, 109, 'Ayame', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(6013, 896, 109, 'Dalzakk', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(6017, 1518, 109, 'Ghoul', 0, 0, 960, 0, 0, 0, 0, 0);
