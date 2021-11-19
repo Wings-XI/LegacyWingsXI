@@ -11169,7 +11169,7 @@ INSERT INTO `mob_groups` VALUES(28, 2783, 196, 'Myconid', 792, 0, 1760, 0, 0, 30
 INSERT INTO `mob_groups` VALUES(29, 1329, 196, 'Feu_Follet', 792, 0, 827, 0, 0, 35, 38, 0);
 INSERT INTO `mob_groups` VALUES(30, 3912, 196, 'Thunder_Elemental', 792, 4, 2413, 0, 0, 33, 36, 0);
 INSERT INTO `mob_groups` VALUES(31, 1160, 196, 'Earth_Elemental', 792, 4, 735, 0, 0, 33, 36, 0);
-INSERT INTO `mob_groups` VALUES(32, 2165, 196, 'Juggler_Hecatomb', 86400, 0, 1417, 0, 0, 46, 48, 0);
+INSERT INTO `mob_groups` VALUES(32, 2165, 196, 'Juggler_Hecatomb', 86400, 0, 1417, 7000, 0, 46, 48, 0);
 INSERT INTO `mob_groups` VALUES(33, 3320, 196, 'Rancid_Ooze', 792, 0, 2075, 0, 0, 31, 34, 0);
 INSERT INTO `mob_groups` VALUES(34, 1454, 196, 'Gallinipper', 792, 0, 926, 0, 0, 32, 35, 0);
 INSERT INTO `mob_groups` VALUES(35, 113, 196, 'Amphisbaena', 792, 0, 74, 0, 0, 28, 30, 0);
