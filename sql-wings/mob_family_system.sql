@@ -535,6 +535,7 @@ INSERT INTO `mob_family_system` VALUES(502, 'Shikigami_Weapon', 3, 'Arcana', 0, 
 INSERT INTO `mob_family_system` VALUES(503, 'Mammet', 3, 'Arcana', 0, 40, 90, 110, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 0, 2, 0);
 INSERT INTO `mob_family_system` VALUES(504, 'Sidhe', 18, 'Unclassified', 0, 40, 90, 100, 4, 6, 4, 5, 5, 1, 3, 3, 3, 3, 3, 0.375, 0.375, 0.375, 0.375, 0.85, 0.85, 0.05, 0.85, 0.85, 0.85, 0.2, 0.85, 3, 5, 0);
 INSERT INTO `mob_family_system` VALUES(505, 'Living_Crystal', 18, 'Unclassified', 0, 0, 100, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);
+INSERT INTO `mob_family_system` VALUES(506, 'MemoryReceptacleENM', 12, 'Empty', 2, 60, 130, 0, 1, 3, 5, 4, 2, 2, 5, 3, 3, 3, 3, 2, 2, 2, 2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 3, 0);
 
 
 --

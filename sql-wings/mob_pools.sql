@@ -6237,6 +6237,10 @@ INSERT INTO `mob_pools` VALUES(6200, 'Bashe', 'Bashe', 174, 0x000048010000000000
 INSERT INTO `mob_pools` VALUES(6201, 'Cobraclaw_Buchzvotch', 'Cobraclaw_Buchzvotch', 334, 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 5007);
 INSERT INTO `mob_pools` VALUES(6202, 'Sapphirine_Quadav_LITD', 'Sapphire_Quadav', 202, 0x00009F0200000000000000000000000000000000, 3, 3, 5, 265, 100, 0, 1, 1, 1, 2, 0, 0, 301, 131, 0, 0, 1, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(6203, 'Dragonfly', 'Dragonfly', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 0, 0, 0, 510, 643, 0, 0, 0, 0, 0, 113);
+INSERT INTO `mob_pools` VALUES(6204, 'Memory_Receptacle', 'Memory_Receptacle', 506, 0x00005104, 1, 1, 7, 240, 100, 0, 1, 1, 0, 16, 0, 0, 6, 131, 0, 0, 0, 0, 0, 181);
+INSERT INTO `mob_pools` VALUES(6205, 'Memory_Receptacle', 'Memory_Receptacle', 506, 0x00004F04, 1, 1, 7, 240, 100, 0, 0, 0, 0, 16, 0, 0, 6, 131, 0, 0, 0, 0, 0, 181);
+INSERT INTO `mob_pools` VALUES(6206, 'Memory_Receptacle', 'Memory_Receptacle', 506, 0x00004E04, 1, 1, 7, 240, 100, 0, 0, 0, 0, 16, 0, 0, 6, 131, 0, 0, 0, 0, 0, 181);
+INSERT INTO `mob_pools` VALUES(6207, 'Memory_Receptacle', 'Memory_Receptacle', 506, 0x00005004, 1, 1, 7, 240, 100, 0, 0, 0, 0, 16, 0, 0, 6, 131, 0, 0, 0, 0, 0, 181);
 --
 -- Indexes for dumped tables
 --
