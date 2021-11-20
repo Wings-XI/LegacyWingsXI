@@ -4578,7 +4578,7 @@ INSERT INTO `mob_pools` VALUES(4514, 'Zmag_Ognjeni_Vuk', 'Zmag_Ognjeni_Vuk', 132
 INSERT INTO `mob_pools` VALUES(4515, 'Zolku-Azolku', 'Zolku-Azolku', 153, 0x01000d05cd10ba20ba30ba40ba50316100000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 153);
 INSERT INTO `mob_pools` VALUES(4516, 'Zombie', 'Zombie', 227, 0x0000340200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 555, 131, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(4517, 'Zonpa-Zippa', 'Zonpa-Zippa', 153, 0x01000a0577107c20693069406950000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 153);
-INSERT INTO `mob_pools` VALUES(4518, 'Zoraal_Jas_Pkuucha', 'Zoraal_Jas_Pkuucha', 72, 0x0000b80600000000000000000000000000000000, 5, 5, 2, 220, 100, 0, 0, 0, 0, 2, 0, 32, 0, 0, 0, 0, 3, 0, 0, 72);
+INSERT INTO `mob_pools` VALUES(4518, 'Zoraal_Jas_Pkuucha', 'Zoraal_Jas_Pkuucha', 72, 0x0000b80600000000000000000000000000000000, 6, 6, 2, 220, 100, 0, 0, 0, 0, 2, 0, 32, 0, 0, 0, 0, 3, 0, 0, 72);
 INSERT INTO `mob_pools` VALUES(4519, 'Zoredonite', 'Zoredonite', 251, 0x0000510500000000000000000000000000000000, 7, 7, 7, 290, 100, 0, 1, 0, 0, 2, 0, 0, 503, 647, 0, 0, 4, 0, 0, 251);
 INSERT INTO `mob_pools` VALUES(4520, 'Zo_Bha_Helmkeeper', 'Zo_Bha_Helmkeeper', 202, 0x00009e0200000000000000000000000000000000, 5, 5, 7, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(4521, 'Zo_Dhu_Legslicer', 'Zo_Dhu_Legslicer', 202, 0x0000970200000000000000000000000000000000, 3, 3, 3, 265, 100, 0, 1, 0, 1, 16, 0, 0, 0, 0, 0, 0, 1, 0, 0, 202);
