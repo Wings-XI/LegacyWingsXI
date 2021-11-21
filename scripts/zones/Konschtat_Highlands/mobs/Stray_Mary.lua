@@ -12,7 +12,7 @@ function onMobSpawn(mob)
     -- Disallow two Stray Marys from spawning
     if mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_N then
         DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_S, true)
-    elseif mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_S
+    elseif mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_S then
         DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_N, true)
     end
 end
@@ -24,7 +24,7 @@ function onMobDeath(mob, player, isKiller)
 
     if mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_N then
         DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_S, false)
-    elseif mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_S
+    elseif mob:getID() == ID.Konschtat_Highlands.STRAY_MARY_S then
         DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_N, false)
     end
 end
