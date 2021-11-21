@@ -4580,6 +4580,11 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
     CItemEquipment* PItem = (CItemEquipment*)itemutils::GetItem(itemID);
     CBattleEntity* PChar = (CBattleEntity*)m_PBaseEntity;
 
+    if (PChar->objtype == TYPE_PC && reinterpret_cast<CCharEntity*>(PChar)->m_GMSuperpowers) {
+        lua_pushboolean(L, true);
+        return 1;
+    }
+
     if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
     {
         lua_pushboolean(L, false);
@@ -5799,6 +5804,41 @@ inline int32 CLuaBaseEntity::setGMHidden(lua_State* L)
         else
             PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CCharPacket(PChar, ENTITY_SPAWN, 0));
     }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: getGMSuperpowers()
+*  Purpose : Returns true if a GM has superpowers (can cast / equip anything)
+*  Example : if (player:getGMSuperpowers()) then
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    lua_pushboolean(L, PChar->m_GMSuperpowers);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setGMSuperpowers()
+*  Purpose : Sets whether a GM has superpowers
+*  Example : player:setGMSuperpowers(1)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    PChar->m_GMSuperpowers = lua_toboolean(L, 1);
 
     return 0;
 }
@@ -18156,6 +18196,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMHidden),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMHidden),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMSuperpowers),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMSuperpowers),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isJailed),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,jail),

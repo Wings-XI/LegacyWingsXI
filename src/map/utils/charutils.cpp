@@ -1893,11 +1893,12 @@ namespace charutils
             return false;
         }
 
-        if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
+        if  ((!PChar->m_GMSuperpowers) &&
+            ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
             ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
-            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
+            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()]))))
         {
             return false;
         }
@@ -2152,6 +2153,10 @@ namespace charutils
         if (PItem == nullptr)
             return true;
 
+        if (PChar->m_GMSuperpowers) {
+            return true;
+        }
+
         for (uint8 i = 1; i < MAX_JOBTYPE; i++)
             if (PItem->getJobs() & (1 << (i - 1)) && PItem->getReqLvl() <= PChar->jobs.job[i])
                 return true;
@@ -2394,6 +2399,10 @@ namespace charutils
     void CheckValidEquipment(CCharEntity* PChar)
     {
         CItemEquipment* PItem = nullptr;
+
+        if (PChar->m_GMSuperpowers) {
+            return;
+        }
 
         for (uint8 slotID = 0; slotID < 16; ++slotID)
         {

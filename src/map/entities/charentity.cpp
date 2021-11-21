@@ -93,6 +93,7 @@ CCharEntity::CCharEntity()
 
     m_GMlevel = 0;
     m_isGMHidden = false;
+    m_GMSuperpowers = false;
     m_autoTargetOverride = nullptr;
 
     allegiance = ALLEGIANCE_PLAYER;
