@@ -44,6 +44,45 @@ tpz.nyzul_isle_data.mobType =
     "BOSSES_80_100",
 }
 
+tpz.nyzul_isle_data.objectiveType = {
+    "ELIMINATE_ALL_ENEMIES",
+    "ELIMINATE_ENEMY_LEADER",
+    "ELIMINATE_SPECIFIED_ENEMY",
+    "ELIMINATE_SPECIFIED_ENEMIES",
+    "ACTIVATE_ALL_LAMPS_CERTIFICATION",
+    "ACTIVATE_ALL_LAMPS_SAME_TIME",
+    "ACTIVATE_ALL_LAMPS_ORDERED"
+}
+
+tpz.nyzul_isle_data.subObjectiveType = {
+    "DO_NOT_DEFEAT_GEARS",
+    "AVOID_DECTECTION_BY_GEARS"
+}
+
+-- uses tpz.job for base key value (status.lua)
+tpz.nyzul_isle_data.jobToVigilWeaponMap = {
+    1  = 18492 -- WAR - Sturdy_Axe
+    2  = 18753 -- MNK - Burning_Fists
+    3  = 18851 -- WHM - Werebuster
+    4  = 18589 -- BLM - Mages_Staff
+    5  = 17742 -- RDM - Vorpal_Sword
+    6  = 18003 -- THF - Swordbuster
+    7  = 17744 -- PLD - Brave_Blade
+    8  = 18944 -- DRK - Death_Sickle
+    9  = 17956 -- BST - Double_Axe
+    10 = 18034 -- BRD - Dancing_Dagger
+    11 = 18719 -- RNG - Killer_Bow
+    12 = 18443 -- SAM - Windslicer
+    13 = 18426 -- NIN - Sasuke_Katana
+    14 = 18120 -- DRG - Radiant_Lance
+    15 = 18590 -- SMN - Scepter_Staff
+    16 = 17743 -- BLU - Wightslayer
+    17 = 18720 -- COR - Quicksilver
+    18 = 18754 -- PUP - Inferno_Claws
+    19 = 19102 -- DNC - Main_Gauche
+    20 = 18592 -- SCH - Elder_Staff
+}
+
 tpz.nyzul_isle_data.mobsByType =
 {
     AQUANS = {
@@ -193,32 +232,39 @@ tpz.nyzul_isle_data.mobsByType =
     },
 }
 
+tpz.nyzul_isle_data.bossFloorTableKeys = {
+    "BOSS_ROOM_1",
+    "BOSS_ROOM_2",
+    "BOSS_ROOM_3",
+    "BOSS_ROOM_4"
+}
+
 tpz.nyzul_isle_data.bossFloorLayouts =
 {
     BOSS_ROOM_1 = { -- South Map, Western room
         BossSpawnPoints = {{x = -60, y = 0, z = -395}, {x = -60, y = 0, z = -365}, {x = -75, y = 0, z = -380}},
-        RampartSpawnPoints = {{x = -35, y = 0, z = -405}, {x = -85, y = 0, z = -405}, {x = -85, y = 0, z = -355}, {x = -35, y = 0, z = -355}},
+        RampartSpawnPoints = {{x = -35, y = 0, z = -405}, {x = -85, y = 0, z = -405}, {x = -85, y = 0, z = -355}, {x = -35, y = 0, z = -355}, {x = -60, y = 0, z = -395}, {x = -60, y = 0, z = -365}, {x = -75, y = 0, z = -380}},
         RuneOfTransferSpawnPoint = {x = -11, y = 0, z = -380},
         DoorsToClose = {17093382, 17093384, 17093387},
         DoorsToOpen = {}
     },
     BOSS_ROOM_2 = { -- SouthWest Map, Central room
         BossSpawnPoints = {{x = -380, y = 0, z = -395}, {x = -380, y = 0, z = -365}, {x = -395, y = 0, z = -380}},
-        RampartSpawnPoints = {{x = -355, y = 0, z = -405}, {x = -405, y = 0, z = -405}, {x = -405, y = 0, z = -355}, {x = -355, y = 0, z = -355}},
+        RampartSpawnPoints = {{x = -355, y = 0, z = -405}, {x = -405, y = 0, z = -405}, {x = -405, y = 0, z = -355}, {x = -355, y = 0, z = -355}, {x = -380, y = 0, z = -395}, {x = -380, y = 0, z = -365}, {x = -395, y = 0, z = -380}},
         RuneOfTransferSpawnPoint = {x = -330, y = 0, z = -380},
         DoorsToClose = {17093408, 17093409, 17093410, 17093411},
         DoorsToOpen = {}
     },
     BOSS_ROOM_3 = { -- SouthWest Map, Northern room
         BossSpawnPoints = {{x = -540, y = -4, z = -275}, {x = -540, y = -4, z = -245}, {x = -555, y = -4, z = -260}},
-        RampartSpawnPoints = {{x = -565, y = -4, z = -285}, {x = -515, y = -4, z = -285}, {x = -565, y = -4, z = -235}, {x = -515, y = -4, z = -235}},
+        RampartSpawnPoints = {{x = -565, y = -4, z = -285}, {x = -515, y = -4, z = -285}, {x = -565, y = -4, z = -235}, {x = -515, y = -4, z = -235}, {x = -540, y = -4, z = -275}, {x = -540, y = -4, z = -245}, {x = -555, y = -4, z = -260}},
         RuneOfTransferSpawnPoint = {x = -491, y = -4, z = -260},
         DoorsToClose = {17093414, 17093415, 17093416},
         DoorsToOpen = {}
     },
     BOSS_ROOM_4 = { -- SouthWest Map, Southern room
         BossSpawnPoints = {{x = -540, y = -4, z = -515}, {x = -540, y = -4, z = -485}, {x = -555, y = -4, z = -500}},
-        RampartSpawnPoints = {{x = -565, y = -4, z = -475}, {x = -515, y = -4, z = -475}, {x = -565, y = -4, z = -525}, {x = -515, y = -4, z = -525}},
+        RampartSpawnPoints = {{x = -565, y = -4, z = -475}, {x = -515, y = -4, z = -475}, {x = -565, y = -4, z = -525}, {x = -515, y = -4, z = -525}, {x = -540, y = -4, z = -515}, {x = -540, y = -4, z = -485}, {x = -555, y = -4, z = -500}},
         RuneOfTransferSpawnPoint = {x = -491, y = -4, z = -500},
         DoorsToClose = {17093402, 17093403, 17093404},
         DoorsToOpen = {}
