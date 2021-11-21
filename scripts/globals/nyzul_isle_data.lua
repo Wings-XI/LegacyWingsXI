@@ -61,25 +61,25 @@ tpz.nyzul_isle_data.subObjectiveType = {
 
 -- uses tpz.job for base key value (status.lua)
 tpz.nyzul_isle_data.jobToVigilWeaponMap = {
-    1  = 18492 -- WAR - Sturdy_Axe
-    2  = 18753 -- MNK - Burning_Fists
-    3  = 18851 -- WHM - Werebuster
-    4  = 18589 -- BLM - Mages_Staff
-    5  = 17742 -- RDM - Vorpal_Sword
-    6  = 18003 -- THF - Swordbuster
-    7  = 17744 -- PLD - Brave_Blade
-    8  = 18944 -- DRK - Death_Sickle
-    9  = 17956 -- BST - Double_Axe
-    10 = 18034 -- BRD - Dancing_Dagger
-    11 = 18719 -- RNG - Killer_Bow
-    12 = 18443 -- SAM - Windslicer
-    13 = 18426 -- NIN - Sasuke_Katana
-    14 = 18120 -- DRG - Radiant_Lance
-    15 = 18590 -- SMN - Scepter_Staff
-    16 = 17743 -- BLU - Wightslayer
-    17 = 18720 -- COR - Quicksilver
-    18 = 18754 -- PUP - Inferno_Claws
-    19 = 19102 -- DNC - Main_Gauche
+    1  = 18492, -- WAR - Sturdy_Axe
+    2  = 18753, -- MNK - Burning_Fists
+    3  = 18851, -- WHM - Werebuster
+    4  = 18589, -- BLM - Mages_Staff
+    5  = 17742, -- RDM - Vorpal_Sword
+    6  = 18003, -- THF - Swordbuster
+    7  = 17744, -- PLD - Brave_Blade
+    8  = 18944, -- DRK - Death_Sickle
+    9  = 17956, -- BST - Double_Axe
+    10 = 18034, -- BRD - Dancing_Dagger
+    11 = 18719, -- RNG - Killer_Bow
+    12 = 18443, -- SAM - Windslicer
+    13 = 18426, -- NIN - Sasuke_Katana
+    14 = 18120, -- DRG - Radiant_Lance
+    15 = 18590, -- SMN - Scepter_Staff
+    16 = 17743, -- BLU - Wightslayer
+    17 = 18720, -- COR - Quicksilver
+    18 = 18754, -- PUP - Inferno_Claws
+    19 = 19102, -- DNC - Main_Gauche
     20 = 18592 -- SCH - Elder_Staff
 }
 

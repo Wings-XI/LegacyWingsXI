@@ -41,45 +41,6 @@ function generateFloor(floorNumber, instance)
 end
 
 -------------------------------------------------------
---
---
--------------------------------------------------------
-function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
-    local runeOfTransfer
-
-    -- choose the alternating runeOfTransfer
-    if ((floorNumber % 2) == 0) then -- even floor
-        runeOfTransfer = GetNPCByID(17093330, instance)
-    else
-        runeOfTransfer = GetNPCByID(17093331, instance)
-    end
-
-    -- move the runeOfTransfer to the correct location
-    -- using a delay of 100 as the default delay on queueMove is 3000 (3 seconds)
-    npcUtil.queueMove(runeOfTransfer, runeOfTransferSpawnPoint, 100)
-
-    -- make the rune of transfer visible
-    runeOfTransfer:setStatus(tpz.status.NORMAL)
-
-    return runeOfTransfer
-end
-
--------------------------------------------------------
--- Selects the archaicRampart for the floor
--------------------------------------------------------
-function selectArchaicRampartID(floorNumber, instance)
-    local archaicRampart
-
-    if ((floorNumber % 2) == 0) then -- even floor
-        archaicRampart = 17092629
-    else
-        archaicRampart = 17092630
-    end
-
-    return archaicRampart
-end
-
--------------------------------------------------------
 -- Performs all work for generating a Free Floor
 --
 -------------------------------------------------------
@@ -142,6 +103,44 @@ function generateBossFloor(floorNumber, instance)
 end
 
 
+-------------------------------------------------------
+-- Selects, positions, and spawns the Rune of Transfer
+-------------------------------------------------------
+function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
+    local runeOfTransfer
+
+    -- choose the alternating runeOfTransfer
+    if ((floorNumber % 2) == 0) then -- even floor
+        runeOfTransfer = GetNPCByID(17093330, instance)
+    else
+        runeOfTransfer = GetNPCByID(17093331, instance)
+    end
+
+    -- move the runeOfTransfer to the correct location
+    -- using a delay of 100 as the default delay on queueMove is 3000 (3 seconds)
+    npcUtil.queueMove(runeOfTransfer, runeOfTransferSpawnPoint, 100)
+
+    -- make the rune of transfer visible
+    runeOfTransfer:setStatus(tpz.status.NORMAL)
+
+    return runeOfTransfer
+end
+
+-------------------------------------------------------
+-- Selects the archaicRampart for the floor
+-------------------------------------------------------
+function selectArchaicRampartID(floorNumber, instance)
+    local archaicRampart
+
+    if ((floorNumber % 2) == 0) then -- even floor
+        archaicRampart = 17092629
+    else
+        archaicRampart = 17092630
+    end
+
+    return archaicRampart
+end
+
 -----------------------------------------------------------------------------------
 -- Given mobID, a spawnPoint, and the instance - sets spawnpoint and spawns the mob
 -----------------------------------------------------------------------------------
@@ -157,20 +156,20 @@ end
 function setBossWeaponDrop(bossID, instance)
     local players = instance:getChars()
     local job
+    
     if (players[1] ~= nil) then
         job = players[1]:getCharVar("Nyzul_DiscUserJob")
     end
 
     if (job ~= nil) then
         local boss = GetMobByID(bossID, instance)
-        boss:setLocalVar("ForceDropWeapon", tpz.nyzul_isle_data.jobToVigilWeaponMap[player:getMainJob()])
+        boss:setLocalVar("NyzulForceWeaponDrop", tpz.nyzul_isle_data.jobToVigilWeaponMap[player:getMainJob()])
     end
 end
 
--------------------------------------------------------
+--------------------------------------------------------------------
 -- Cleans up the previous floor as players teleport to the new floor
---
--------------------------------------------------------
+--------------------------------------------------------------------
 function cleanUpPreviousFloor(instance)
     -- Hide lamps
     -- Hide runeOfTransfer
