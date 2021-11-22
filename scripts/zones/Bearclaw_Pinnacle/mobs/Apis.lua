@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Bearclaw Pinnacle
---  Mob: Eldertaur
---  ENM: Brothers
+--  Mob: Apis
+--  ENM: Holy Cow
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/settings")

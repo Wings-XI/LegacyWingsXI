@@ -1,5 +1,5 @@
 ---------------------------------------------
---  Might Snort
+--  Mighty Snort
 --
 --  Deals Wind damage to targets in a fan-shaped area of effect. Additional effect: Hate reset
 --  Type: Magical (Wind)
