@@ -80,6 +80,13 @@ function onMobFight(mob, target)
     else
         mob:setMod(tpz.mod.DELAY, 0)
     end
+
+    if mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) then
+        mob:SetMobAbilityEnabled(false)
+    else
+        mob:SetMobAbilityEnabled(true)
+    end
+
 end
 
 function onMobDeath(mob, player, isKiller)

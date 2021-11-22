@@ -1014,6 +1014,12 @@ namespace luautils
                 }
                 else
                 {
+                    luautils::OnMobInitialize(PMob);
+                    luautils::OnMobFamilyInitialize(PMob);
+                    luautils::ApplyMixins(PMob);
+                    luautils::ApplyZoneMixins(PMob);
+                    PMob->saveModifiers();
+                    PMob->saveMobModifiers();
                     if (!PMob->PAI->IsSpawned())
                     {
                         PMob->Spawn();

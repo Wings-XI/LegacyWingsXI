@@ -27,6 +27,11 @@ function onSpellCast(caster, target, spell)
     else
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
+    
+    if target:hasImmunity(32768) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return 0
+    end
 
     return effect
 end

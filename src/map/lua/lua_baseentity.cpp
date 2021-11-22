@@ -8598,17 +8598,13 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         // Check for special flags which may prevent damage from waking up the target
         bool wakeUp = true;
         bool breakBind = true;
-        bool removePetrify = true;
+        bool removePetrify = false;
 
         if (!lua_isnil(L, 5) && lua_istable(L, 5))
         {
             // Attempt to wake up the target unless wakeUp is provided and is false.
             lua_getfield(L, 5, "wakeUp");
             wakeUp = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
-
-            // Remove petrification unless removePetrify is provided and is false
-            lua_getfield(L, 5, "removePetrify");
-            removePetrify = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
 
             // Attempt to break Bind unless breakBind is provided and is false
             lua_getfield(L, 5, "breakBind");
@@ -16476,7 +16472,7 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
         return 1;
     }
 
-    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+    if (PDefender && PAttacker && PDefender->PAI && PDefender->PAI->IsEngaged() &&
         facing(PDefender->loc.p, PAttacker->loc.p, 64))
         lua_pushinteger(L, battleutils::GetGuardRate(PAttacker, PDefender));
     else
