@@ -40,8 +40,8 @@ tpz.nyzul_isle_data.mobType =
     "NMS_41_59",
     "NMS_61_79",
     "NMS_81_99",
-    "BOSSES_20_60",
-    "BOSSES_80_100",
+    "BOSSES_20_40",
+    "BOSSES_60_100",
 }
 
 tpz.nyzul_isle_data.objectiveType = {
@@ -59,28 +59,36 @@ tpz.nyzul_isle_data.subObjectiveType = {
     "AVOID_DECTECTION_BY_GEARS"
 }
 
--- uses tpz.job for base key value (status.lua)
+tpz.nyzul_isle_data.maps = {
+    "NORTH_EAST",
+    "EAST",
+    "CENTRAL",
+    "SOUTH_EAST",
+    "SOUTH",
+    "SOUTH_WEST"
+}
+-- uses tpz.job values for key value (see status.lua)
 tpz.nyzul_isle_data.jobToVigilWeaponMap = {
-    1  = 18492, -- WAR - Sturdy_Axe
-    2  = 18753, -- MNK - Burning_Fists
-    3  = 18851, -- WHM - Werebuster
-    4  = 18589, -- BLM - Mages_Staff
-    5  = 17742, -- RDM - Vorpal_Sword
-    6  = 18003, -- THF - Swordbuster
-    7  = 17744, -- PLD - Brave_Blade
-    8  = 18944, -- DRK - Death_Sickle
-    9  = 17956, -- BST - Double_Axe
-    10 = 18034, -- BRD - Dancing_Dagger
-    11 = 18719, -- RNG - Killer_Bow
-    12 = 18443, -- SAM - Windslicer
-    13 = 18426, -- NIN - Sasuke_Katana
-    14 = 18120, -- DRG - Radiant_Lance
-    15 = 18590, -- SMN - Scepter_Staff
-    16 = 17743, -- BLU - Wightslayer
-    17 = 18720, -- COR - Quicksilver
-    18 = 18754, -- PUP - Inferno_Claws
-    19 = 19102, -- DNC - Main_Gauche
-    20 = 18592 -- SCH - Elder_Staff
+    18492, -- WAR - Sturdy_Axe
+    18753, -- MNK - Burning_Fists
+    18851, -- WHM - Werebuster
+    18589, -- BLM - Mages_Staff
+    17742, -- RDM - Vorpal_Sword
+    18003, -- THF - Swordbuster
+    17744, -- PLD - Brave_Blade
+    18944, -- DRK - Death_Sickle
+    17956, -- BST - Double_Axe
+    18034, -- BRD - Dancing_Dagger
+    18719, -- RNG - Killer_Bow
+    18443, -- SAM - Windslicer
+    18426, -- NIN - Sasuke_Katana
+    18120, -- DRG - Radiant_Lance
+    18590, -- SMN - Scepter_Staff
+    17743, -- BLU - Wightslayer
+    18720, -- COR - Quicksilver
+    18754, -- PUP - Inferno_Claws
+    19102, -- DNC - Main_Gauche
+    18592 -- SCH - Elder_Staff
 }
 
 tpz.nyzul_isle_data.mobsByType =
@@ -205,7 +213,7 @@ tpz.nyzul_isle_data.mobsByType =
     LEADERS = { -- 17092962 ommitted - its a Qiqirn_Mine
         Leaders = {17092944, 17092945, 17092946, 17092947, 17092948, 17092949, 17092950, 17092951, 17092952, 17092953, 17092954, 17092955, 17092956, 17092957, 17092958, 17092959, 17092960, 17092961, 17092963, 17092964, 17092965, 17092966, 17092967, 17092968},
     },
-    GEARS = { -- there are a lot more gears. 15 more Gear and 5 more Gears.  I dont know why and at this point I'm too afraid to ask
+    GEARS = { -- there are a lot more gears in the database. 15 more Gear and 5 more Gears.  I dont know why and at this point I'm too afraid to ask
         Archaic_Gear = {17092914, 17092915, 17092916, 17092917, 17092918},
         Archaic_Gears = {17092919, 17092920, 17092921, 17092922, 17092923},
     },
@@ -224,12 +232,18 @@ tpz.nyzul_isle_data.mobsByType =
     NMS_81_99 = {
         NotoriusMonsters = {17092896, 17092897, 17092898, 17092899, 17092900, 17092901, 17092902, 17092903, 17092904, 17092905, 17092906, 17092907, 17092908, 17092909, 17092910, 17092911, 17092912, 17092913},
     },
-    BOSSES_20_60 = {
+    BOSSES_20_40 = {
         Bosses = {17092999, 17093000, 17093001},
     },
-    BOSSES_80_100 = {
+    BOSSES_60_100 = {
         Bosses = {17093002, 17093003, 17093004},
     },
+}
+
+tpz.nyzul_isle_data.npcLists = {
+    Lamps = {17093332, 17093333, 17093334, 17093335, 17093336},
+    Armoury_Crates = {17092609, 17092610, 17092611, 17092612, 17092613, 17092614, 17092615, 17092616, 17092617, 17092618, 17092619, 17092620, 17092621, 17092622, 17092623},
+    Armoury_Crates_For_NMs = {17092624, 17092625, 17092626, 17092627, 17092628}
 }
 
 tpz.nyzul_isle_data.bossFloorTableKeys = {
@@ -269,6 +283,15 @@ tpz.nyzul_isle_data.bossFloorLayouts =
         DoorsToClose = {17093402, 17093403, 17093404},
         DoorsToOpen = {}
     }
+}
+
+tpz.nyzul_isle_data.northEastFloorTableKeys = {
+    "FLOOR_NE_1",
+    "FLOOR_NE_2",
+    "FLOOR_NE_3",
+    "FLOOR_NE_4",
+    "FLOOR_NE_5",
+    "FLOOR_NE_6",
 }
 
 -- Note that floor layouts do not include the starting floor.  Lamps and Mobs cannot spawn in the same room as a Rune of Transfer
@@ -314,6 +337,15 @@ tpz.nyzul_isle_data.northEastFloorLayouts =
     }
 }
 
+tpz.nyzul_isle_data.eastFloorTableKeys = {
+    "FLOOR_EAST_1",
+    "FLOOR_EAST_2",
+    "FLOOR_EAST_3",
+    "FLOOR_EAST_4",
+    "FLOOR_EAST_5",
+    "FLOOR_EAST_6",
+}
+
 tpz.nyzul_isle_data.eastFloorLayouts =
 {
     FLOOR_EAST_1 = {
@@ -352,6 +384,15 @@ tpz.nyzul_isle_data.eastFloorLayouts =
         DoorsToClose = {},
         DoorsToOpen = {}
     }
+}
+
+tpz.nyzul_isle_data.centralFloorTableKeys = {
+    "FLOOR_CENTRAL_1",
+    "FLOOR_CENTRAL_2",
+    "FLOOR_CENTRAL_3",
+    "FLOOR_CENTRAL_4",
+    "FLOOR_CENTRAL_5",
+    "FLOOR_CENTRAL_6",
 }
 
 tpz.nyzul_isle_data.centralFloorLayouts =
@@ -394,6 +435,15 @@ tpz.nyzul_isle_data.centralFloorLayouts =
     }
 }
 
+tpz.nyzul_isle_data.southEastFloorTableKeys = {
+    "FLOOR_SE_1",
+    "FLOOR_SE_2",
+    "FLOOR_SE_3",
+    "FLOOR_SE_4",
+    "FLOOR_SE_5",
+    "FLOOR_SE_6",
+}
+
 tpz.nyzul_isle_data.southEastFloorLayouts =
 {
     FLOOR_SE_1 = {
@@ -434,6 +484,15 @@ tpz.nyzul_isle_data.southEastFloorLayouts =
     }
 }
 
+tpz.nyzul_isle_data.southFloorTableKeys = {
+    "FLOOR_SOUTH_1",
+    "FLOOR_SOUTH_2",
+    "FLOOR_SOUTH_3",
+    "FLOOR_SOUTH_4",
+    "FLOOR_SOUTH_5",
+    "FLOOR_SOUTH_6",
+}
+
 tpz.nyzul_isle_data.southFloorLayouts =
 {
     FLOOR_SOUTH_1 = {
@@ -472,6 +531,14 @@ tpz.nyzul_isle_data.southFloorLayouts =
         DoorsToClose = {},
         DoorsToOpen = {}
     }
+}
+tpz.nyzul_isle_data.southWestFloorTableKeys = {
+    "FLOOR_SW_1",
+    "FLOOR_SW_2",
+    "FLOOR_SW_3",
+    "FLOOR_SW_4",
+    "FLOOR_SW_5",
+    "FLOOR_SW_6",
 }
 
 tpz.nyzul_isle_data.southWestFloorLayouts =
@@ -514,7 +581,7 @@ tpz.nyzul_isle_data.southWestFloorLayouts =
     }
 }
 
-tpz.nyzul_isle_data.northEastRoomConfigurations = {
+tpz.nyzul_isle_data.roomConfigurations = {
     NE_A = { -- contains the connected east and west "elbow" hallways
         MobSpawnPoints = {{x = 420, y = 0, z = 500}, {x = 500, y = 0, z = 500}, {x = 460, y = 0, z = 509}, {x = 469, y = 0, z = 500}, {x = 451, y = 0, z = 500}}, 
         LampSpawnPoints = {{x = 460, y = 0, z = 500}, {x = 460, y = 0, z = 491}}
@@ -582,10 +649,7 @@ tpz.nyzul_isle_data.northEastRoomConfigurations = {
     NE_Q = {
         MobSpawnPoints = {{x = 460, y = 0, z = 260}, {x = 455.5, y = 0, z = 264.5}, {x = 464.5, y = 0, z = 255.5}, {x = 455.5, y = 0, z = 255.5}, {x = 464.5, y = 0, z = 264.5}}, 
         LampSpawnPoints = {{x = 460, y = 0, z = 269}, {x = 460, y = 0, z = 251}}
-    }
-}
-
-tpz.nyzul_isle_data.eastRoomConfigurations = {
+    },
     EAST_A = {
         MobSpawnPoints = {{x = 509, y = 0, z = 100}, {x = 491, y = 0, z = 100}, {x = 491, y = 0, z = 91}, {x = 491, y = 0, z = 109}, {x = 500, y = 0, z = 91}}, 
         LampSpawnPoints = {{x = 500, y = 0, z = 109}, {x = 509, y = 0, z = 109}}
@@ -677,10 +741,7 @@ tpz.nyzul_isle_data.eastRoomConfigurations = {
     EAST_W = {
         MobSpawnPoints = {{x = 495.5, y = 0, z = -211}, {x = 495.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -211}, {x = 491, y = 0, z = -220}}, 
         LampSpawnPoints = {{x = 509, y = 0, z = -220}, {x = 513.5, y = 0, z = -220}}
-    }
-}
-
-tpz.nyzul_isle_data.southEastRoomConfigurations = {
+    },
 	SE_A = {
         MobSpawnPoints = {{x = 460, y = 0, z = -446.5}, {x = 460, y = 0, z = -433.5}, {x = 433.5, y = 0, z = -433.5}, {x = 486.5, y = 0, z = -433.5}, {x = 460, y = 0, z = -429}}, 
         LampSpawnPoints = {{x = 480, y = 0, z = -440}, {x = 460, y = 0, z = -440}, {x = 440, y = 0, z = -440}}
@@ -732,10 +793,8 @@ tpz.nyzul_isle_data.southEastRoomConfigurations = {
 	SE_L = {
         MobSpawnPoints = {{x = 460, y = 0, z = -640}, {x = 486.5, y = 0, z = -646.5}, {x = 433.5, y = 0, z = -646.5}, {x = 486.5, y = 0, z = -633.5}, {x = 433.5, y = 0, z = -633.5}}, 
         LampSpawnPoints = {{x = 460, y = 0, z = -646.5}, {x = 460, y = 0, z = -633.5}}
-    }
-}
-
-tpz.nyzul_isle_data.southRoomConfigurations = { -- consider creating "rooms" for the "elbow" hallways.  Would allow for some very high density small floors
+    },
+    -- consider creating "rooms" for the "elbow" hallways.  Would allow for some very high density small floors
 	SOUTH_A = {
         MobSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -29, y = 0, z = -260}, {x = -20, y = 0, z = -251}, {x = -11, y = 0, z = -260}, {x = -20, y = 0, z = -269}}, 
         LampSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -20, y = 0, z = -269}}
@@ -784,10 +843,8 @@ tpz.nyzul_isle_data.southRoomConfigurations = { -- consider creating "rooms" for
 	SOUTH_M = {
         MobSpawnPoints = {{x = -29, y = 0, z = -504.5}, {x = -29, y = 0, z = -495.5}, {x = -20, y = 0, z = -509}, {x = -20, y = 0, z = -491}, {x = -11, y = 0, z = -500}}, 
         LampSpawnPoints = {{x = -20, y = 0, z = -500}, {x = -29, y = 0, z = -500}}
-    }
-}
-
-tpz.nyzul_isle_data.centralRoomConfigurations = { -- The corner long hallways ("Rooms" Q, R, S, and T) are each their own room.  They are too big to leave blank.  
+    },
+    -- The corner long hallways ("Rooms" Q, R, S, and T) are each their own room.  They are too big to leave blank.  
 	CENTRAL_A = {
         MobSpawnPoints = {{x = -33.5, y = -4, z = 166.5}, {x = -6.5, y = -4, z = 171}, {x = -15.5, y = -4, z = 189}, {x = -24.5, y = -4, z = 175.5}, {x = -24.5, y = -4, z = 193.5}}, 
         LampSpawnPoints = {{x = -20, y = -4, z = 175.5}, {x = -20, y = -4, z = 166.5}}
@@ -864,10 +921,7 @@ tpz.nyzul_isle_data.centralRoomConfigurations = { -- The corner long hallways ("
     CENTRAL_T = {
         MobSpawnPoints = {{x = 20, y = -4, z = -31.5}, {x = 20, y = 0, z = -8.5}, {x = 23, y = -1, z = -17}, {x = 23, y = -3.5, z = -24}, {x = 17, y = -2, z = -20}}, 
         LampSpawnPoints = {{x = 20, y = 0, z = -6.5}, {x = 20, y = -2, z = -20}}
-    }
-}
-
-tpz.nyzul_isle_data.southWestRoomConfigurations = {
+    },
 	SW_A = {
         MobSpawnPoints = {{x = -495.5, y = -4, z = -184.5}, {x = -504.5, y = -4, z = -175.5}, {x = -509, y = -4, z = -189}, {x = -491, y = -4, z = -171}, {x = -500, y = -4, z = -180}}, 
         LampSpawnPoints = {{x = -509, y = -4, z = -171}, {x = -491, y = -4, z = -189}}
