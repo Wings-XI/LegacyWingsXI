@@ -4552,7 +4552,7 @@ INSERT INTO `item_basic` VALUES(4827, 219, 'scroll_of_comet', 'comet', 1, 34444,
 INSERT INTO `item_basic` VALUES(4828, 220, 'scroll_of_poison', 'poison', 1, 1676, 29, 0, 54);
 INSERT INTO `item_basic` VALUES(4829, 221, 'scroll_of_poison_ii', 'poison_ii', 1, 1676, 29, 0, 1858);
 INSERT INTO `item_basic` VALUES(4833, 225, 'scroll_of_poisonga', 'poisonga', 1, 1676, 29, 0, 864);
-INSERT INTO `item_basic` VALUES(4834, 226, 'scroll_of_poisonga_ii', 'poisonga_ii', 1, 1672, 29, 0, 2766);
+INSERT INTO `item_basic` VALUES(4834, 226, 'scroll_of_poisonga_ii', 'poisonga_ii', 1, 1736, 0, 1, 2766);
 INSERT INTO `item_basic` VALUES(4838, 230, 'scroll_of_bio', 'bio', 1, 1676, 29, 0, 270);
 INSERT INTO `item_basic` VALUES(4839, 231, 'scroll_of_bio_ii', 'bio_ii', 1, 1676, 29, 0, 1512);
 INSERT INTO `item_basic` VALUES(4840, 232, 'scroll_of_bio_iii', 'bio_iii', 1, 1676, 66, 0, 3000);
