@@ -51,6 +51,7 @@ CREATE TABLE `chars` (
   `isstylelocked` tinyint(1) NOT NULL DEFAULT '0',
   `nnameflags` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `chatfilters` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `languages` smallint(3) unsigned NOT NULL DEFAULT '0',
   `moghancement` smallint(4) unsigned NOT NULL DEFAULT '0',
   `timecreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastupdate` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

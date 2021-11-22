@@ -939,7 +939,7 @@ namespace battleutils
         {
             return 0;
         }
-        
+
         uint8 resultPercent = 0;
         int32 buildPercent = 0;
         uint32 lastCast = PTarget->GetLocalVar(("RESBUILD_LASTCAST_" + std::to_string((int)mod)).c_str());
@@ -1617,7 +1617,7 @@ namespace battleutils
         float levelCorrection = 1.0f;
 
         float ratio = (float)rAttack / (float)PDefender->DEF();
-        
+
         ratio = std::clamp<float>(ratio, 0, 3);
 
         if (PDefender->GetMLevel() > PAttacker->GetMLevel()) {
@@ -2035,10 +2035,7 @@ namespace battleutils
 
             if ((PAttacker->objtype == TYPE_PET || (PAttacker->objtype == TYPE_MOB && PAttacker->isCharmed)) && PAttacker->PMaster->objtype == TYPE_PC)
             {
-                if (PAttacker->objtype == TYPE_MOB)
-                    damageType = DAMAGE_SLASHING;
-                else
-                    damageType = PAttacker->m_dmgType == (DAMAGETYPE)0 ? DAMAGE_SLASHING : PAttacker->m_dmgType;
+                damageType = PAttacker->m_dmgType == (DAMAGETYPE)0 ? DAMAGE_SLASHING : PAttacker->m_dmgType;
             }
 
             if (isRanged)
@@ -2064,7 +2061,7 @@ namespace battleutils
                     case DAMAGE_PIERCING: resmult = (float)(PDefender->getMod(Mod::PIERCERES)) / 1000.0f; break;
                     case DAMAGE_SLASHING: resmult = (float)(PDefender->getMod(Mod::SLASHRES)) / 1000.0f; break;
                     case DAMAGE_IMPACT:   resmult = (float)(PDefender->getMod(Mod::IMPACTRES)) / 1000.0f; break;
-                    case DAMAGE_HTH:      resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f; break;
+                    case DAMAGE_H2H:      resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f; break;
                     default:
                     break;
                 }
@@ -2076,7 +2073,7 @@ namespace battleutils
             }
             else
             {
-                float resmult = (float)(PDefender->getMod(Mod::HTHRES)) / 1000.0f;
+                float resmult = (float)(PDefender->getMod(Mod::H2HRES)) / 1000.0f;
                 if (resmult < 1.0f)
                 {
                     resmult = 1.0f - ((1.0f - resmult) * (1.0f - (((float)(PDefender->getMod(Mod::SPDEF_DOWN))) / 100.0f)));
@@ -2463,7 +2460,7 @@ namespace battleutils
 
             // Hit Rate (%) = 75 + floor( (Accuracy - Evasion)/2 ) + 2*(dLVL)
             // For Avatars negative penalties for level correction seem to be ignored for attack and likely for accuracy,
-            // bonuses cap at level diff of 38 based on this testing: 
+            // bonuses cap at level diff of 38 based on this testing:
             // https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
 
             // Floor because hitrate can only be integer values
@@ -2482,7 +2479,7 @@ namespace battleutils
             // Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
             // https://www.bg-wiki.com/bg/PDIF#Level_Correction_Function_.28cRatio.29
             uint16 zoneId = PAttacker->getZone();
-            
+
             // All zones from Adoulin onward have an id of 256+
             // This includes Escha/Reisenjima and the new Dynamis zones
             // (Not a post Adoulin Zone) && (Not Legion_A)
@@ -2494,7 +2491,7 @@ namespace battleutils
                 // of this for ACC, ATT level correction for Pets/Avatars is the same as mobs though.
                 bool isPet = PAttacker->objtype == TYPE_PET;
                 bool isAvatar = false;
-                
+
                 if (isPet) {
                     CPetEntity* petEntity = dynamic_cast<CPetEntity*>(PAttacker);
                     isAvatar = petEntity->getPetType() == PETTYPE_AVATAR;
@@ -2522,8 +2519,8 @@ namespace battleutils
             // Further, some monster damage types have been changed from hand-to-hand to blunt.* Fellows and alter egos enjoy this benefit as well.
             // The maximum accuracy of beastmaster familiars, wyverns, avatars, and automatons has been increased from 95% to 99%.
             // * In line with this change, familiars summoned using the following items have had their damage types changed from hand-to-hand to blunt.
-            // Carrot Broth / Famous Carrot Broth / Bug Broth / Quadav Bug Broth / Berbal Broth / Singing Herbal Broth / Carrion Broth / 
-            // Cold Carrion Broth / Meat Broth / Warm Meat Broth / Tree Sap / Scarlet Sap / Fish Broth / Fish Oil Broth / Seedbed Soil / Sun Water / 
+            // Carrot Broth / Famous Carrot Broth / Bug Broth / Quadav Bug Broth / Berbal Broth / Singing Herbal Broth / Carrion Broth /
+            // Cold Carrion Broth / Meat Broth / Warm Meat Broth / Tree Sap / Scarlet Sap / Fish Broth / Fish Oil Broth / Seedbed Soil / Sun Water /
             // Grasshopper Broth / Noisy Grasshopper Broth / Mole Broth / Lively Mole Broth / Blood Broth / Clear Blood Broth / Antica Broth / Fragrant Antica Broth
 
             int32 maxHitRate = 99;
@@ -2636,7 +2633,7 @@ namespace battleutils
         int32 dDex = attackerdex - defenderagi;
         int32 dDexAbs = std::abs(dDex);
         int32 sign = 1;
-        
+
         if (dDex < 0)
         {
             // Target has higher AGI so this will be a decrease to crit rate
@@ -2645,7 +2642,7 @@ namespace battleutils
 
         // Default to +0 crit rate for a delta of 0-6
         int32 critRate = 0;
-        if (dDexAbs > 39) 
+        if (dDexAbs > 39)
         {
             // 40-50: (dDEX-35)
             critRate = dDexAbs - (int32)35;
@@ -2691,7 +2688,7 @@ namespace battleutils
         float cRatioMin = 0;
         float ratioCap = 4.0f;
         float levelCorrection = 1.0f;
-        
+
         ratio = std::clamp<float>(ratio, 0, ratioCap);
         float cRatio = ratio;
         if (PAttacker->objtype == TYPE_PC)
@@ -3318,24 +3315,24 @@ namespace battleutils
         static const Mod resistances[][4] =
         {
             {Mod::NONE,       Mod::NONE, Mod::NONE, Mod::NONE}, // SC_NONE
-            {Mod::LIGHTDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_TRANSFIXION
-            {Mod::DARKDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_COMPRESSION
-            {Mod::FIREDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_LIQUEFACTION
-            {Mod::EARTHDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_SCISSION
-            {Mod::WATERDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_REVERBERATION
-            {Mod::WINDDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_DETONATION
-            {Mod::ICEDEF,     Mod::NONE, Mod::NONE, Mod::NONE}, // SC_INDURATION
-            {Mod::THUNDERDEF, Mod::NONE, Mod::NONE, Mod::NONE}, // SC_IMPACTION
+            {Mod::SDT_LIGHT,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_TRANSFIXION
+            {Mod::SDT_DARK,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_COMPRESSION
+            {Mod::SDT_FIRE,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_LIQUEFACTION
+            {Mod::SDT_EARTH,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_SCISSION
+            {Mod::SDT_WATER,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_REVERBERATION
+            {Mod::SDT_WIND,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_DETONATION
+            {Mod::SDT_ICE,     Mod::NONE, Mod::NONE, Mod::NONE}, // SC_INDURATION
+            {Mod::SDT_THUNDER, Mod::NONE, Mod::NONE, Mod::NONE}, // SC_IMPACTION
 
-            { Mod::EARTHDEF, Mod::DARKDEF, Mod::NONE, Mod::NONE }, // SC_GRAVITATION
-            { Mod::ICEDEF, Mod::WATERDEF, Mod::NONE, Mod::NONE }, // SC_DISTORTION
-            {Mod::FIREDEF,  Mod::LIGHTDEF,   Mod::NONE, Mod::NONE}, // SC_FUSION
-            {Mod::WINDDEF,  Mod::THUNDERDEF, Mod::NONE, Mod::NONE}, // SC_FRAGMENTATION
+            { Mod::SDT_EARTH, Mod::SDT_DARK, Mod::NONE, Mod::NONE }, // SC_GRAVITATION
+            { Mod::SDT_ICE, Mod::SDT_WATER, Mod::NONE, Mod::NONE }, // SC_DISTORTION
+            {Mod::SDT_FIRE,  Mod::SDT_LIGHT,   Mod::NONE, Mod::NONE}, // SC_FUSION
+            {Mod::SDT_WIND,  Mod::SDT_THUNDER, Mod::NONE, Mod::NONE}, // SC_FRAGMENTATION
 
-            {Mod::FIREDEF, Mod::WINDDEF,  Mod::THUNDERDEF, Mod::LIGHTDEF}, // SC_LIGHT
-            {Mod::ICEDEF,  Mod::EARTHDEF, Mod::WATERDEF,   Mod::DARKDEF},  // SC_DARKNESS
-            {Mod::FIREDEF, Mod::WINDDEF,  Mod::THUNDERDEF, Mod::LIGHTDEF}, // SC_LIGHT
-            {Mod::ICEDEF,  Mod::EARTHDEF, Mod::WATERDEF,   Mod::DARKDEF},  // SC_DARKNESS_II
+            {Mod::SDT_FIRE, Mod::SDT_WIND,  Mod::SDT_THUNDER, Mod::SDT_LIGHT}, // SC_LIGHT
+            {Mod::SDT_ICE,  Mod::SDT_EARTH, Mod::SDT_WATER,   Mod::SDT_DARK},  // SC_DARKNESS
+            {Mod::SDT_FIRE, Mod::SDT_WIND,  Mod::SDT_THUNDER, Mod::SDT_LIGHT}, // SC_LIGHT
+            {Mod::SDT_ICE,  Mod::SDT_EARTH, Mod::SDT_WATER,   Mod::SDT_DARK},  // SC_DARKNESS_II
         };
 
         Mod defMod = Mod::NONE;
@@ -3360,9 +3357,9 @@ namespace battleutils
             case SC_GRAVITATION:
             case SC_DISTORTION:
                 if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
-                    defMod = resistances[element][0];
-                else
                     defMod = resistances[element][1];
+                else
+                    defMod = resistances[element][0];
                 break;
 
                 // Level 3 & 4 skill chains
@@ -3371,12 +3368,12 @@ namespace battleutils
             case SC_DARKNESS:
             case SC_DARKNESS_II:
                 if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
-                    defMod = resistances[element][0];
-                else
                     defMod = resistances[element][1];
-                if (PDefender->getMod(resistances[element][2]) < PDefender->getMod(defMod))
+                else
+                    defMod = resistances[element][0];
+                if (PDefender->getMod(resistances[element][2]) > PDefender->getMod(defMod))
                     defMod = resistances[element][2];
-                if (PDefender->getMod(resistances[element][3]) < PDefender->getMod(defMod))
+                if (PDefender->getMod(resistances[element][3]) > PDefender->getMod(defMod))
                     defMod = resistances[element][3];
                 break;
 
@@ -3388,28 +3385,28 @@ namespace battleutils
 
         switch (defMod)
         {
-            case Mod::FIREDEF:
+            case Mod::SDT_FIRE:
                 *appliedEle = ELEMENT_FIRE;
                 break;
-            case Mod::ICEDEF:
+            case Mod::SDT_ICE:
                 *appliedEle = ELEMENT_ICE;
                 break;
-            case Mod::WINDDEF:
+            case Mod::SDT_WIND:
                 *appliedEle = ELEMENT_WIND;
                 break;
-            case Mod::EARTHDEF:
+            case Mod::SDT_EARTH:
                 *appliedEle = ELEMENT_EARTH;
                 break;
-            case Mod::THUNDERDEF:
+            case Mod::SDT_THUNDER:
                 *appliedEle = ELEMENT_THUNDER;
                 break;
-            case Mod::WATERDEF:
+            case Mod::SDT_WATER:
                 *appliedEle = ELEMENT_WATER;
                 break;
-            case Mod::LIGHTDEF:
+            case Mod::SDT_LIGHT:
                 *appliedEle = ELEMENT_LIGHT;
                 break;
-            case Mod::DARKDEF:
+            case Mod::SDT_DARK:
                 *appliedEle = ELEMENT_DARK;
                 break;
             default:
@@ -3472,13 +3469,14 @@ namespace battleutils
             * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000
             * (100 + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100
             * (100 + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100);
-
+        // ShowDebug("RawDamage: %u\n,", damage);
         auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
         if (PChar && PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && behind(PChar->loc.p, PDefender->loc.p, 64))
         {
-            damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));    
+            damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));
         }
-        damage = damage * (1000 - resistance) / 1000;
+        damage = damage * resistance / 100;
+        // ShowDebug("DamageAfterResist: %u\n, Resistance:%u\n,", damage, resistance);
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
         if (damage > 0)
         {
@@ -3489,7 +3487,7 @@ namespace battleutils
         damage = std::clamp(damage, -99999, 99999);
 
         PDefender->takeDamage(damage, PAttacker, ATTACK_SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_NONE : (DAMAGETYPE)(DAMAGE_ELEMENTAL + appliedEle));
-
+        // ShowDebug("FinalDamage: %u\n,", damage);
         battleutils::ClaimMob(PDefender, PAttacker);
         PDefender->updatemask |= UPDATE_STATUS;
 
@@ -4063,7 +4061,7 @@ namespace battleutils
             return 0;
 
         // RNG level
-        uint8 lvl;                              
+        uint8 lvl;
         if (PChar->GetMJob() == JOB_RNG)
             lvl = PChar->GetMLevel();
         else if (PChar->GetSJob() == JOB_RNG)
@@ -4847,7 +4845,7 @@ namespace battleutils
         else
         {
             damage = HandleSevereDamage(PDefender, damage, true);
-            
+
             ConvertDmgToMP(PDefender, damage, IsCovered);
 
             damage = HandleFanDance(PDefender, damage);
@@ -6512,4 +6510,37 @@ namespace battleutils
         return 0.80f;
     }
 
+    void HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action)
+    {
+        TPZ_DEBUG_BREAK_IF(PSource == nullptr);
+
+        CCharEntity* PIterSource = nullptr;
+
+        if (PSource->objtype != TYPE_PC)
+        {
+            if (PSource->PMaster && PSource->PMaster->objtype == TYPE_PC)
+            {
+                PIterSource = static_cast<CCharEntity*>(PSource->PMaster);
+            }
+        }
+        else
+        {
+            PIterSource = static_cast<CCharEntity*>(PSource);
+        }
+
+        if (PIterSource)
+        {
+            for (SpawnIDList_t::const_iterator it = PIterSource->SpawnMOBList.begin(); it != PIterSource->SpawnMOBList.end(); ++it)
+            {
+                CMobEntity* PCurrentMob = (CMobEntity*)it->second;
+
+                // Unclear if the required conditions include enmity and/or alliance.
+                // Let's go with just alliance for now.
+                if (PCurrentMob->m_OwnerID.id != 0 && PIterSource->IsMobOwner(PCurrentMob) && distance(PIterSource->loc.p, PCurrentMob->loc.p) < 15.0)
+                {
+                    PCurrentMob->PAI->EventHandler.triggerListener("PLAYER_ABILITY_USED", PCurrentMob, PSource, PAbility, action);
+                }
+            }
+        }
+    }
 };

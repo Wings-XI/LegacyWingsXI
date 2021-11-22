@@ -5,9 +5,11 @@
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
 require("scripts/globals/status")
 require("scripts/globals/pathfind")
+require("scripts/globals/utils")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DEF, 400)
     local mobId = mob:getID()
     local x = mob:getXPos()
     local y = mob:getYPos()
@@ -28,24 +30,14 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-    local isBusy = false
-    local act = mob:getCurrentAction()
-    if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH then
-        isBusy = true
-    elseif mob:getStatusEffect(tpz.effect.STUN) ~= nil or mob:getStatusEffect(tpz.effect.PETRIFICATION) ~= nil
-    or mob:getStatusEffect(tpz.effect.TERROR) ~= nil or mob:getStatusEffect(tpz.effect.SLEEP) ~= nil
-    or mob:getStatusEffect(tpz.effect.SLEEP_II) ~= nil or mob:getStatusEffect(tpz.effect.AMNESIA) ~= nil
-    or mob:getStatusEffect(tpz.effect.LULLABY) ~= nil then
-        isBusy = true
-    end
-    
+
     local mobId = mob:getID()
     local x = mob:getXPos()
     local y = mob:getYPos()
     local z = mob:getZPos()
     for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do
         local wynav = GetMobByID(i)
-        if not wynav:isSpawned() and not isBusy then
+        if not wynav:isSpawned() and utils.canUseAbility(mob) == true then
             local repopWynavs = wynav:getLocalVar("repop") -- see Wynav script
             if mob:getBattleTime() - repopWynavs > 10 then
                 wynav:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
@@ -79,7 +71,7 @@ function onMobWeaponSkill(target, mob, skill)
     if (skill >= 1378 and skill <= 1382) or skill == 1386 then
         for i = ID.mob.WYNAV_START, ID.mob.WYNAV_END do
             local pet = GetMobByID(i)
-            if pet:isAlive() then
+            if pet:isAlive() and pet:checkDistance(pet:getTarget()) <= 7 and utils.canUseAbility(pet) == true then
                 pet:useMobAbility(randBreath) -- Wynavs will use breath attacks whenever Ix'DRG uses a weaponskill.
             end
         end

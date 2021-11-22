@@ -71,7 +71,7 @@ enum LATENT
     // 41 free to use
     // 42 free to use
     LATENT_WEAPON_DRAWN_HP_UNDER    = 43, //PARAM: HP PERCENT
-    // 44 free to use
+    LATENT_HOME_NATION              = 44, //Citizen of nation
     LATENT_MP_UNDER_VISIBLE_GEAR    = 45, //mp less than or equal to %, calculated using MP bonuses from visible gear only
     LATENT_HP_OVER_VISIBLE_GEAR     = 46, //hp more than or equal to %, calculated using HP bonuses from visible gear only
     LATENT_WEAPON_BROKEN            = 47,
@@ -88,6 +88,7 @@ enum LATENT
     LATENT_IN_ASSAULT               = 58, // is in an Instance battle in a TOAU zone
     LATENT_VS_ECOSYSTEM             = 59, // Vs. Specific Ecosystem ID (e.g. Vs. Birds: Accuracy+3)
     LATENT_VS_FAMILY                = 60, // Vs. Specific Family ID (e.g. Vs. Apkallu: Accuracy+3)
+    LATENT_BASEHP_UNDER_TP_UNDER_100 = 61, // hp less than or equal to %, tp under 100 - PARAM: BASE HP PERCENT (Without Gear,etc)
 };
 
 #define MAX_LATENTEFFECTID    61
@@ -123,6 +124,7 @@ public:
     void    SetModPower(int16 power);
     bool    Activate();
     bool    Deactivate();
+    Mod     GetModForPetLatentMod(Mod petModLatent);
 
     CLatentEffect(
          CBattleEntity* owner,

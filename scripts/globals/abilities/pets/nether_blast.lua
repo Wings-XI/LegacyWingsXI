@@ -5,7 +5,6 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/magic")
-
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -15,7 +14,6 @@ end
 function onPetAbility(target, pet, skill)
     local level = pet:getMainLvl()
     local damage = (5 * level +  10) -- 385 ...
-    damage = damage * 1.233 * (1 + math.random()/3.85)-- 475 to 600 damage, source https://www.ffxionline.com/forum/ffxi-game-related/race-job-type-q-a/summoner/63348-summoner-damage-dealer
     
     --damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.DARK, 1, TP_NO_EFFECT, 0)
     --damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.DARK)
@@ -24,13 +22,6 @@ function onPetAbility(target, pet, skill)
     local master = pet:getMaster()
     
     local mab = (100 + pet:getMod(tpz.mod.MATT)) / (100 + target:getMod(tpz.mod.MDEF))
-
-    if (mab > 1.3) then
-        mab = 1.3
-    end
-    if (mab < 0.7) then
-        mab = 0.7
-    end
     
     damage = damage * mab
     
@@ -59,11 +50,11 @@ function onPetAbility(target, pet, skill)
     end
 
     local dayElement = VanadielDayElement()
-    if (dayElement == tpz.magic.dayStrong[ele]) then
+    if (dayElement == ele) then
         if (math.random() < 0.33) then
             dayWeatherBonus = dayWeatherBonus + 0.10
         end
-    elseif (dayElement == tpz.magic.dayWeak[ele]) then
+    elseif (dayElement == tpz.magic.elementDescendant[ele]) then
         if (math.random() < 0.33) then
             dayWeatherBonus = dayWeatherBonus - 0.10
         end

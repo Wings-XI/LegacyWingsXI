@@ -17,15 +17,12 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = 10
+    local power = 50
     local duration = 60
     local typeEffect = tpz.effect.COUNTERSTANCE
 
-    -- if ( Conquerer Bakgodek ) then
-        -- power = 50? He's not implemented yet anyway :P
-    -- end
-
-    skill:setMsg(MobBuffMove(mob, typeEffect, 10, 0, 60))
+    -- technically there should not be a "mob gains the effect of Counterstance" message
+    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
 
     return typeEffect
 end

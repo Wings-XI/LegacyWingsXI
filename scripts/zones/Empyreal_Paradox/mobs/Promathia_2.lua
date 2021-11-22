@@ -10,8 +10,23 @@ require("scripts/globals/magic")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:addMod(tpz.mod.REGAIN, 50)
+    mob:addMod(tpz.mod.REGAIN, 150)
     mob:addMod(tpz.mod.UFASTCAST, 50)
+    mob:addMod(tpz.mod.MAIN_DMG_RATING, 150)
+    mob:addMod(tpz.mod.STR, 20)
+    mob:addMod(tpz.mod.VIT, 20)
+    mob:addMod(tpz.mod.INT, 20)
+    mob:addMod(tpz.mod.MND, 20)
+    mob:addMod(tpz.mod.CHR, 20)
+    mob:addMod(tpz.mod.AGI, 20)
+    mob:addMod(tpz.mod.DEFP, 20)
+    mob:addMod(tpz.mod.DOUBLE_ATTACK, 75)
+    mob:addMod(tpz.mod.UDMGMAGIC, -40)
+    mob:addMod(tpz.mod.UDMGPHYS, -20)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
+end
+
+function onMobSpawn(mob)
 end
 
 function onMobSpawn(mob)

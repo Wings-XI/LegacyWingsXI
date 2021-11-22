@@ -22,8 +22,11 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = mob:getMainLvl()/10 * 4 + 5
+    local power = mob:getMainLvl()/10 * .75
     local duration = 30
+    if power < 1 then
+        power = 1
+    end
 
     local typeEffect = tpz.effect.REGEN
     skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))

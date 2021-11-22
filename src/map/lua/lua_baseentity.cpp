@@ -419,6 +419,34 @@ inline int32 CLuaBaseEntity::messageBasic(lua_State* L)
 }
 
 /************************************************************************
+*  Function: messageStandard()
+*  Purpose : Send a standard message packet to the PC
+*  Example : target:messageStandard(11);
+*  Notes   : Used for debugging
+************************************************************************/
+
+inline int32 CLuaBaseEntity::messageStandard(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint16 messageID = (uint16)lua_tointeger(L, 1);
+
+    uint32 param0 = 0;
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+        param0 = (uint32)lua_tointeger(L, 2);
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->pushPacket(new CMessageStandardPacket((CCharEntity*)m_PBaseEntity, param0, static_cast<MsgStd>(messageID)));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: messageName()
 *  Purpose : Message displayed with an entity's name in it
 *  Example : target:messageName(messageID, entity, param0, param1, param2, param3, chatType);
@@ -3569,6 +3597,87 @@ inline int32 CLuaBaseEntity::bringPlayer(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getPlayerExpansions()
+*  Purpose : Get the bitmask of registered expansions for a player
+*  Example : player:getPlayerExpansions()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getPlayerExpansions(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    return ((CCharEntity*)m_PBaseEntity)->m_accountExpansions;
+}
+
+/************************************************************************
+*  Function: playerHasExpansion()
+*  Purpose : Check whether a player has a specific expansion registered
+*  Example : player:playerHasExpansion(2) or player:playerHasExpansion("COP")
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::playerHasExpansion(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1));
+
+    uint32 expansion_id = 0;
+    if (lua_isnumber(L, 1)) {
+        expansion_id = (uint32)lua_tointeger(L, 1);
+    }
+    else if (lua_isstring(L, 1)) {
+        std::string expansion_name(lua_tostring(L, 1));
+        size_t exp_len = expansion_name.length();
+        std::string expansion_name_up;
+        for (size_t i = 0; i < exp_len; i++) {
+            expansion_name_up += std::toupper(expansion_name[i]);
+        }
+        if (expansion_name_up == "ROZ") {
+            expansion_id = 1;
+        }
+        else if (expansion_name_up == "COP") {
+            expansion_id = 2;
+        }
+        else if (expansion_name_up == "TOAU") {
+            expansion_id = 3;
+        }
+        else if (expansion_name_up == "WOTG") {
+            expansion_id = 4;
+        }
+        else if (expansion_name_up == "ACP") {
+            expansion_id = 5;
+        }
+        else if (expansion_name_up == "AMK") {
+            expansion_id = 6;
+        }
+        else if (expansion_name_up == "ASA") {
+            expansion_id = 7;
+        }
+        else if (expansion_name_up == "ABYSSEAV" || expansion_name_up == "ABYSSEA") {
+            expansion_id = 8;
+        }
+        else if (expansion_name_up == "ABYSSEAS") {
+            expansion_id = 9;
+        }
+        else if (expansion_name_up == "ABYSSEAH") {
+            expansion_id = 10;
+        }
+        else if (expansion_name_up == "SOA") {
+            expansion_id = 11;
+        }
+    }
+    if (expansion_id == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    lua_pushboolean(L, (((CCharEntity*)m_PBaseEntity)->m_accountExpansions & (1 << expansion_id)) != 0);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getEquipID()
 *  Purpose : Returns the Item ID for an item
 *  Example : player:getEquipID(SLOT_MAIN)
@@ -4186,6 +4295,64 @@ inline int32 CLuaBaseEntity::getContainerSize(lua_State *L)
 }
 
 /************************************************************************
+*  Function: addSoulPlate()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        std::string name = lua_tostring(L, 1);
+        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+        uint8 zeni = (uint8) lua_tointeger(L, 3);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
+        uint8 fp = (uint8) lua_tointeger(L, 5);
+
+        // Deduct Blank Plate
+        if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
+        {
+            // Couldn't remove a blank plate
+            lua_pushnil(L);
+            return 1;
+        }
+        PChar->pushPacket(new CInventoryFinishPacket());
+
+        // Used Soul Plate
+        CItem* PItem = itemutils::GetItem(2477); 
+        PItem->setQuantity(1);
+        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
+        if (SlotID == ERROR_SLOTID)
+        {
+            lua_pushnil(L);
+            return 1;
+        }
+
+        lua_getglobal(L, CLuaItem::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, PItem);
+        lua_pcall(L, 2, 1, 0);
+        return 1;
+    }
+
+    lua_pushnil(L);
+    return 1;
+}
+
+/************************************************************************
 *  Function: changeContainerSize()
 *  Purpose : Upgrades the capacity of a container
 *  Example : player:changeContainerSize(container,newSize)
@@ -4413,12 +4580,22 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
     CItemEquipment* PItem = (CItemEquipment*)itemutils::GetItem(itemID);
     CBattleEntity* PChar = (CBattleEntity*)m_PBaseEntity;
 
+    if (PChar->objtype == TYPE_PC && reinterpret_cast<CCharEntity*>(PChar)->m_GMSuperpowers) {
+        lua_pushboolean(L, true);
+        return 1;
+    }
+
     if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
     {
         lua_pushboolean(L, false);
         return 1;
     }
     if (checkLevel && (PItem->getReqLvl() > PChar->GetMLevel()))
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    if ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0)
     {
         lua_pushboolean(L, false);
         return 1;
@@ -5044,9 +5221,73 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
     {
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
+        // Look "size" is look type. If the look type is one that uses pc models
+        // with equipment(equipped or chocobo), switch it to "standard" (model id-based).
+        // restoreNpcLook can be used to restore the original db look.
+        if (m_PBaseEntity->look.size == MODEL_EQUIPED || m_PBaseEntity->look.size == MODEL_CHOCOBO)
+        {
+            m_PBaseEntity->look.size = MODEL_STANDARD;
+        }
+
         m_PBaseEntity->SetModelId((uint16)lua_tointeger(L, 1));
     }
     m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: copyLook()
+*  Purpose : Copies the argument's look to the entity
+*  Example : mob:copyLook(target)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::copyLook(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    if (PLuaBaseEntity != nullptr)
+    {
+        if (PLuaBaseEntity->GetBaseEntity()->objtype == TYPE_PC)
+        {
+            CCharEntity* PTarget = (CCharEntity*)PLuaBaseEntity->GetBaseEntity();
+            look_t *look = (PTarget->getStyleLocked() ? &PTarget->mainlook : &PTarget->look);
+            m_PBaseEntity->look.face = look->face;
+            m_PBaseEntity->look.race = look->race;
+            m_PBaseEntity->look.size = 1;
+            m_PBaseEntity->look.head = look->head;
+            m_PBaseEntity->look.body = look->body;
+            m_PBaseEntity->look.hands = look->hands;
+            m_PBaseEntity->look.legs = look->legs;
+            m_PBaseEntity->look.feet = look->feet;
+            m_PBaseEntity->look.main = look->main;
+            m_PBaseEntity->look.sub = look->sub;
+            m_PBaseEntity->look.ranged = look->ranged;
+        }
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: restoreNpcLook()
+*  Purpose : Restores the NPC's Look back to the original
+*  Example : npc:restoreNpcLook
+*  Notes   : Ignored on all other entity types
+************************************************************************/
+
+inline int32 CLuaBaseEntity::restoreNpcLook(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype == TYPE_NPC)
+    {
+        memcpy(&m_PBaseEntity->look, &m_PBaseEntity->mainlook, sizeof(m_PBaseEntity->look));
+        m_PBaseEntity->updatemask |= UPDATE_LOOK;
+    }
 
     return 0;
 }
@@ -5568,6 +5809,41 @@ inline int32 CLuaBaseEntity::setGMHidden(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getGMSuperpowers()
+*  Purpose : Returns true if a GM has superpowers (can cast / equip anything)
+*  Example : if (player:getGMSuperpowers()) then
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    lua_pushboolean(L, PChar->m_GMSuperpowers);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setGMSuperpowers()
+*  Purpose : Sets whether a GM has superpowers
+*  Example : player:setGMSuperpowers(1)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    PChar->m_GMSuperpowers = lua_toboolean(L, 1);
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: isJailed()
 *  Purpose : Returns true if a player is a violent felon
 *  Example : if (player:isJailed()) then
@@ -5733,61 +6009,67 @@ inline int32 CLuaBaseEntity::getSubJob(lua_State *L)
 inline int32 CLuaBaseEntity::changeJob(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    JOBTYPE prevjob = PChar->GetMJob();
-
-    PChar->resetPetZoningInfo();
-
-    PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
-    PChar->SetMJob((uint8)lua_tointeger(L, 1));
-
-    if (lua_tointeger(L, 1) == JOB_BLU)
+    if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        if (prevjob != JOB_BLU)
+        ((CMobEntity*)m_PBaseEntity)->SetMJob((uint8)lua_tointeger(L, 1));
+    }
+    else if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+        JOBTYPE prevjob = PChar->GetMJob();
+
+        PChar->resetPetZoningInfo();
+
+        PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
+        PChar->SetMJob((uint8)lua_tointeger(L, 1));
+
+        if (lua_tointeger(L, 1) == JOB_BLU)
         {
-            blueutils::LoadSetSpells(PChar);
+            if (prevjob != JOB_BLU)
+            {
+                blueutils::LoadSetSpells(PChar);
+            }
         }
+        else if (PChar->GetSJob() != JOB_BLU)
+        {
+            blueutils::UnequipAllBlueSpells(PChar);
+        }
+        puppetutils::LoadAutomaton(PChar);
+        charutils::SetStyleLock(PChar, false);
+        luautils::CheckForGearSet(PChar); // check for gear set on gear change
+        charutils::BuildingCharSkillsTable(PChar);
+        charutils::CalculateStats(PChar);
+        charutils::CheckValidEquipment(PChar);
+        PChar->PRecastContainer->ChangeJob();
+        charutils::BuildingCharAbilityTable(PChar);
+        charutils::BuildingCharTraitsTable(PChar);
+
+        PChar->ForParty([](CBattleEntity* PMember)
+        {
+            ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
+        });
+
+        PChar->UpdateHealth();
+        PChar->health.hp = PChar->GetMaxHP();
+        PChar->health.mp = PChar->GetMaxMP();
+
+        charutils::SaveCharStats(PChar);
+        charutils::SaveCharJob(PChar, PChar->GetMJob());
+        charutils::SaveCharExp(PChar, PChar->GetMJob());
+        PChar->updatemask |= UPDATE_HP;
+
+        PChar->pushPacket(new CCharJobsPacket(PChar));
+        PChar->pushPacket(new CCharStatsPacket(PChar));
+        PChar->pushPacket(new CCharSkillsPacket(PChar));
+        PChar->pushPacket(new CCharRecastPacket(PChar));
+        PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+        PChar->pushPacket(new CCharUpdatePacket(PChar));
+        PChar->pushPacket(new CMenuMeritPacket(PChar));
+        PChar->pushPacket(new CCharSyncPacket(PChar));
     }
-    else if (PChar->GetSJob() != JOB_BLU)
-    {
-        blueutils::UnequipAllBlueSpells(PChar);
-    }
-    puppetutils::LoadAutomaton(PChar);
-    charutils::SetStyleLock(PChar, false);
-    luautils::CheckForGearSet(PChar); // check for gear set on gear change
-    charutils::BuildingCharSkillsTable(PChar);
-    charutils::CalculateStats(PChar);
-    charutils::CheckValidEquipment(PChar);
-    PChar->PRecastContainer->ChangeJob();
-    charutils::BuildingCharAbilityTable(PChar);
-    charutils::BuildingCharTraitsTable(PChar);
 
-    PChar->ForParty([](CBattleEntity* PMember)
-    {
-        ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
-    });
-
-    PChar->UpdateHealth();
-    PChar->health.hp = PChar->GetMaxHP();
-    PChar->health.mp = PChar->GetMaxMP();
-
-    charutils::SaveCharStats(PChar);
-    charutils::SaveCharJob(PChar, PChar->GetMJob());
-    charutils::SaveCharExp(PChar, PChar->GetMJob());
-    PChar->updatemask |= UPDATE_HP;
-
-    PChar->pushPacket(new CCharJobsPacket(PChar));
-    PChar->pushPacket(new CCharStatsPacket(PChar));
-    PChar->pushPacket(new CCharSkillsPacket(PChar));
-    PChar->pushPacket(new CCharRecastPacket(PChar));
-    PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-    PChar->pushPacket(new CCharUpdatePacket(PChar));
-    PChar->pushPacket(new CMenuMeritPacket(PChar));
-    PChar->pushPacket(new CCharSyncPacket(PChar));
     return 0;
 }
 
@@ -5801,25 +6083,30 @@ inline int32 CLuaBaseEntity::changeJob(lua_State *L)
 inline int32 CLuaBaseEntity::changesJob(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-
-    PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
-    PChar->SetSJob((uint8)lua_tointeger(L, 1));
-    charutils::UpdateSubJob(PChar);
-
-    if (lua_tointeger(L, 1) == JOB_BLU)
+    if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        blueutils::LoadSetSpells(PChar);
+        ((CMobEntity*)m_PBaseEntity)->SetSJob((uint8)lua_tointeger(L, 1));
     }
-    else
+    else if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        blueutils::UnequipAllBlueSpells(PChar);
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+        PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
+        PChar->SetSJob((uint8)lua_tointeger(L, 1));
+        charutils::UpdateSubJob(PChar);
+
+        if (lua_tointeger(L, 1) == JOB_BLU)
+        {
+            blueutils::LoadSetSpells(PChar);
+        }
+        else
+        {
+            blueutils::UnequipAllBlueSpells(PChar);
+        }
+        puppetutils::LoadAutomaton(PChar);
     }
-    puppetutils::LoadAutomaton(PChar);
 
     return 0;
 }
@@ -5947,14 +6234,8 @@ inline int32 CLuaBaseEntity::getHighestJobLevel(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-    uint8 max_lv = 0;
-    for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
-        if (PChar->jobs.job[i] > max_lv) {
-            max_lv = PChar->jobs.job[i];
-        }
-    }
 
-    lua_pushinteger(L, max_lv);
+    lua_pushinteger(L, charutils::GetHighestJobLevel(PChar));
 
     return 1;
 }
@@ -6140,8 +6421,6 @@ inline int32 CLuaBaseEntity::levelRestriction(lua_State* L)
             PChar->SetMLevel(NewMLevel);
             PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
             charutils::ApplyAllEquipMods(PChar);
-
-            PChar->StatusEffectContainer->DelStatusEffectsForInstance();
 
             if (PChar->status != STATUS_DISAPPEAR)
             {
@@ -6339,7 +6618,7 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
 
     uint8 fameArea = (uint8)lua_tointeger(L, -1);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         uint16 fame = 0;
         float fameMultiplier = map_config.fame_multiplier;
@@ -6376,6 +6655,10 @@ inline int32 CLuaBaseEntity::getFame(lua_State *L)
             case 15: // Adoulin
                 fame = (uint16)(PChar->profile.fame[14] * fameMultiplier);
                 break;
+            // Other
+            case 16: //Holiday Fame (Starlight Festival)
+                fame = (uint16)(PChar->profile.fame[fameArea]);
+                break;
         }
         lua_pushinteger(L, fame);
     }
@@ -6410,7 +6693,7 @@ inline int32 CLuaBaseEntity::addFame(lua_State *L)
     uint8 fameArea = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
     uint16 fame = (uint16)lua_tointeger(L, 2);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
@@ -6446,6 +6729,9 @@ inline int32 CLuaBaseEntity::addFame(lua_State *L)
             case 15: // Adoulin
                 PChar->profile.fame[14] += fame;
                 break;
+            case 16: //Holiday Fame (Starlight Festival)
+                PChar->profile.fame[fameArea] += fame;
+                break;
         }
         charutils::SaveFame(PChar);
     }
@@ -6479,7 +6765,7 @@ inline int32 CLuaBaseEntity::setFame(lua_State *L)
     uint8 fameArea = (uint8)lua_tointeger(L, lua_isnumber(L, 1) ? 1 : -1);
     uint16 fame = (uint16)lua_tointeger(L, 2);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         switch (fameArea)
         {
@@ -6513,6 +6799,9 @@ inline int32 CLuaBaseEntity::setFame(lua_State *L)
             case 15: // Adoulin
                 ((CCharEntity*)m_PBaseEntity)->profile.fame[14] = fame;
                 break;
+            case 16: //Holiday Fame (Starlight Festival)
+                ((CCharEntity*)m_PBaseEntity)->profile.fame[fameArea] = fame;
+                break;
         }
         charutils::SaveFame((CCharEntity*)m_PBaseEntity);
     }
@@ -6544,7 +6833,7 @@ inline int32 CLuaBaseEntity::getFameLevel(lua_State *L)
 
     uint8 fameArea = (uint8)lua_tointeger(L, -1);
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         this->getFame(L);
         uint16 fame = (uint16)lua_tointeger(L, -1);
@@ -9389,6 +9678,63 @@ inline int32 CLuaBaseEntity::recalculateAbilitiesTable(lua_State* L)
 
     PChar->pushPacket(new CCharAbilitiesPacket(PChar));
     return 0;
+}
+
+/************************************************************************
+ *  Function: getPlayersInRange()
+ *  Purpose : Returns a Lua table of players within range of the base entity
+ *  Example : local players = npc:getPlayersInRange(50)
+ *  Notes   : if the passed argument is nil or 0, just returns all players in the zone
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getPlayersInRange(lua_State* L)
+{
+    uint32 dist = 0;
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        dist = lua_tointeger(L, 1);
+
+    const uint32 distSquared = dist * dist;
+    int size = 0;
+    std::vector<CCharEntity*> PlayerList;
+
+    zoneutils::GetZone(m_PBaseEntity->getZone())->ForEachChar([&](CCharEntity* PChar) {
+        if (!distSquared)
+        {
+            PlayerList.push_back(PChar);
+            size++;
+        }
+        else // range specified, must be in range.
+        {
+            if (distanceSquared(PChar->loc.p, m_PBaseEntity->loc.p) < distSquared)
+            {
+                PlayerList.push_back(PChar);
+                size++;
+            }
+        }
+    });
+
+    if (!size)
+    {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    lua_createtable(L, size, 0);
+    int i = 1;
+
+    for (auto it = PlayerList.begin(); it != PlayerList.end(); it++)
+    {
+        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, (void*)(*it));
+        lua_pcall(L, 2, 1, 0);
+
+        lua_rawseti(L, -2, i++);
+    }
+
+    return 1;
 }
 
 /************************************************************************
@@ -15249,6 +15595,51 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: triggerDrawIn()
+ *  Purpose : Forces a mob to use DrawIn on the mob's current target
+ *  Example : mob:triggerDrawIn(int drawInRange, int maxumumReach, bool includeParty)
+ *  Note    : Params can assume a default value by passing nil
+ *          : e.g. triggerDrawIn(nil, nil, true) to pull in a party/alliance with default range and reach
+ ************************************************************************/
+inline int32 CLuaBaseEntity::triggerDrawIn(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+    CBattleEntity* PTarget = PMob->GetBattleTarget();
+
+    // Default values
+    uint8 drawInRange = PMob->GetMeleeRange() * 2;
+    uint16 maximumReach = 0xFFFF;
+    bool includeParty = false;
+    float offset = PMob->GetMeleeRange() - 0.2f;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        auto drawInRange{ (uint8)lua_tointeger(L, 1) };
+    }
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        auto maximumReach{ (uint16)lua_tointeger(L, 2) };
+    }
+
+    if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
+    {
+        auto includeParty{ (bool)lua_toboolean(L, 3) };
+    }
+
+    if (PTarget)
+    {
+        // Draw in requires a target
+        battleutils::DrawIn(PTarget, PMob, offset, drawInRange, maximumReach, includeParty);
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: hasTPMoves()
 *  Purpose : Returns true if a Mob has TP moves in its skill list
 *  Example : if (mob:hasTPMoves()) then
@@ -16280,8 +16671,8 @@ inline int32 CLuaBaseEntity::tryInterruptSpell(lua_State* L)
 }
 
 /************************************************************************
-*  Function:
-*  Purpose :
+*  Function: getGuardRate
+*  Purpose : finds guard rate, returns 0% if the attacker cannot guard
 *  Example : target:getGuardRate(attacker)
 *  Notes   : 
 ************************************************************************/
@@ -16300,7 +16691,8 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
         return 1;
     }
 
-    if (PDefender && PAttacker)
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+        facing(PDefender->loc.p, PAttacker->loc.p, 64))
         lua_pushinteger(L, battleutils::GetGuardRate(PAttacker, PDefender));
     else
         lua_pushinteger(L, 0);
@@ -16309,8 +16701,114 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
 }
 
 /************************************************************************
-*  Function:
-*  Purpose :
+ *  Function: getParryRate
+ *  Purpose : finds parry rate, returns 0% if the attacker cannot parry
+ *  Example : target:getParryRate(attacker)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getParryRate(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PDefender->objtype != TYPE_PC)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+        facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        lua_pushinteger(L, battleutils::GetParryRate(PAttacker, PDefender));
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: getBlockRate
+ *  Purpose : finds block rate, returns 0% if the attacker cannot block
+ *  Example : target:getBlockRate(attacker)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getBlockRate(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CBattleEntity* PAttacker = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
+
+    if (PDefender->objtype != TYPE_PC)
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+    else
+    {
+        CCharEntity* PChar = (CCharEntity*)PDefender;
+        if (!PChar->m_Weapons[SLOT_SUB] || !PChar->m_Weapons[SLOT_SUB]->IsShield())
+        {
+            lua_pushinteger(L, 0);
+            return 1;
+        }
+    }
+
+    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        lua_pushinteger(L, battleutils::GetBlockRate(PAttacker, PDefender));
+    else
+        lua_pushinteger(L, 0);
+
+    return 1;
+}
+
+/************************************************************************
+ *  Function: getBlockedDamage
+ *  Purpose : in the case of a successful block checked with getBlockRate, this returns the new damage
+ *  Example : target:getBlockedDamage(dmg)
+ *  Notes   : it is required that the dmg parameter is passed in
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getBlockedDamage(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+
+    CBattleEntity* PDefender = (CBattleEntity*)m_PBaseEntity;
+    int32 damage = (int32)lua_tointeger(L, 1);
+    if (!PDefender || PDefender->objtype != TYPE_PC || !PDefender->m_Weapons[SLOT_SUB] || !PDefender->m_Weapons[SLOT_SUB]->IsShield())
+    {
+        lua_pushinteger(L, damage);
+        return 1;
+    }
+    
+    uint8 absorb = std::clamp<uint8>(PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() + (uint8)(PDefender->getMod(Mod::SHIELD_DEF_BONUS)), (uint8)0, (uint8)100);
+
+    // Shield Mastery
+    if (damage - PDefender->getMod(Mod::PHALANX) > 0 && charutils::hasTrait((CCharEntity*)PDefender, TRAIT_SHIELD_MASTERY))
+    {
+        // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
+        PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
+    }
+
+    lua_pushinteger(L, damage * (100 - absorb) / 100);
+    return 1;
+}
+
+/************************************************************************
+*  Function: trySkillUp
+*  Purpose : if the target mob is sufficient level, will try to skill up
 *  Example : player:trySkillUp(mob, tpz.skill.SWORD, 2)
 *  Notes   : third argument is amount of hits landed
 ************************************************************************/
@@ -16323,7 +16821,7 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
     CBattleEntity* PMob = (CBattleEntity*)(PLuaBaseEntity->GetBaseEntity());
 
-    if (PChar->objtype != TYPE_PC)
+    if (!PChar || !PMob || PChar->objtype != TYPE_PC)
         return 0;
 
     uint8 skill = 1;
@@ -16334,10 +16832,22 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
     if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
         tries = (uint8)lua_tointeger(L, 3);
 
-    while (tries != 0 && PChar && PMob)
+    if (PChar->PPet && PChar->PPet->objtype == TYPE_PET && static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PETTYPE_AUTOMATON && PChar->PPet->WorkingSkills.skill[skill])
     {
-        charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
-        tries--;
+        while (tries && PChar->PPet)
+        {
+            puppetutils::TrySkillUP((CAutomatonEntity*)PChar->PPet, (SKILLTYPE)skill, PMob->GetMLevel());
+            tries--;
+        }
+    }
+
+    else
+    {
+        while (tries)
+        {
+            charutils::TrySkillUP((CCharEntity*)PChar, (SKILLTYPE)skill, PMob->GetMLevel());
+            tries--;
+        }
     }
 
     return 0;
@@ -16602,7 +17112,9 @@ inline int32 CLuaBaseEntity::checkHourglassValid(lua_State* L)
 
         if (token == itemToken || token == 0)
         {
-            if (now > glassReservationStart && now < glassReservationStart + 15min)
+            // Note - the inital 15mins gives players time to actually enter the dynamis instance. Unlike retail we dont start the timer/dyna instance until a player actually enters
+            // The +1min buffer on DynamisExpiry is just to prevent any kind of race condition.  No race conditions were observed during testing.
+            if (now > glassReservationStart && (now < glassReservationStart + 15min || now + 1min < (std::chrono::seconds)CDynamisHandler::DynamisGetExpiryTimepoint(zoneid)))
             {
                 if (now > DynaReservationStart + 71h)
                 {
@@ -17455,7 +17967,6 @@ inline int32 CLuaBaseEntity::lsConciergeCancel(lua_State *L)
     return 1;
 }
 
-
 //=======================================================//
 
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -17470,6 +17981,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToArea),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageBasic),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageStandard),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messagePublic),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageSpecial),
@@ -17593,6 +18105,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,goToEntity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,gotoPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,bringPlayer),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayerExpansions),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,playerHasExpansion),
 
     // Items
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEquipID),
@@ -17609,6 +18123,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
+
+    // Soul Plates
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSoulPlate),
 
     // Trading
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
@@ -17648,6 +18165,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,copyLook),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,restoreNpcLook),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),
 
@@ -17677,6 +18196,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMHidden),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMHidden),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMSuperpowers),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMSuperpowers),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isJailed),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,jail),
@@ -17845,6 +18366,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateAbilitiesTable),
 
     // Parties and Alliances
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayersInRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getParty),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyWithTrusts),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartySize),
@@ -18132,6 +18654,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,castSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useJobAbility),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,useMobAbility),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,triggerDrawIn),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTPMoves),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,weaknessTrigger),
@@ -18160,6 +18683,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addCharmTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,tryInterruptSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGuardRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getParryRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBlockRate),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getBlockedDamage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,trySkillUp),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addJobTraits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addRoamFlag),

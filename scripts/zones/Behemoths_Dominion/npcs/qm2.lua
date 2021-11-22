@@ -27,7 +27,18 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.IRREPRESSIBLE_MIGHT)
+    if player:getCharVar("AnnyEvent2020") == 11 and player:getCharVar("AnnyEvent2020_behe") == 0 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 then
+            player:setCharVar("AnnyEvent2020_behe", 1)
+            player:addItem(6405)
+            player:PrintToPlayer("You hear the thundering cry of a behemoth off in the distance...", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 6405)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 6405)
+        end
+    else
+        player:messageSpecial(ID.text.IRREPRESSIBLE_MIGHT)
+    end
 end
 
 function onEventUpdate(player, csid, option)

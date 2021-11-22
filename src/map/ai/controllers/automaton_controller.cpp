@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -42,6 +42,7 @@ CAutomatonController::CAutomatonController(CAutomatonEntity* PPet)
 {
     PPet->setInitialBurden();
     setCooldowns();
+     m_firstTick = true; // Default to first tick after activating
     if (isRanged())
     {
         PAutomaton->m_Behaviour |= BEHAVIOUR_STANDBACK;
@@ -132,6 +133,7 @@ void CAutomatonController::setMagicCooldowns()
     }
     }
 
+    m_statusCooldown = m_magicCooldown;
     m_enfeebleCooldown = m_magicCooldown;
     m_healCooldown = m_magicCooldown;
     m_elementalCooldown = m_magicCooldown;
@@ -211,13 +213,20 @@ void CAutomatonController::DoCombatTick(time_point tick)
             return;
         }
     }
+    // If target distance is over 15' the first time after being deployed, run into melee
+    if (m_firstTick)
+    {
+        m_firstTick = false;
+        if (isRanged() && (distanceSquared(PAutomaton->loc.p, PTarget->loc.p) > 225))
+            PAutomaton->m_Behaviour &= ~BEHAVIOUR_STANDBACK;
+    }
     Move();
 }
 
 void CAutomatonController::Move()
 {
     float currentDistance = distanceSquared(PAutomaton->loc.p, PTarget->loc.p);
-    if ((isRanged() && (currentDistance > 225)) || (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
+    if ((isRanged() && (currentDistance > 441)) || (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
     {
         PAutomaton->m_Behaviour &= ~BEHAVIOUR_STANDBACK;
     }
@@ -237,7 +246,8 @@ bool CAutomatonController::TryAction()
 
 bool CAutomatonController::TryShieldBash()
 {
-    if (PAutomaton->getFrame() != FRAME_VALOREDGE)
+    float bashRadius = battleutils::GetMobSkill(m_ShieldBashAbility)->getRadius();
+    if (PAutomaton->getFrame() != FRAME_VALOREDGE || distanceSquared(PAutomaton->loc.p, PTarget->loc.p) >= bashRadius*bashRadius)
         return false;
 
     CState* PState = PTarget->PAI->GetCurrentState();
@@ -263,6 +273,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
     {
         if (TryHeal(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -281,6 +292,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -291,6 +303,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (HPP > 75 && TryHeal(maneuvers)) // 100%-75% try heal first
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -301,6 +314,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (HPP > 50 && TryEnfeeble(maneuvers)) // 100%-50% do enfeebles
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -311,6 +325,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryHeal(maneuvers)) // below 50% do healing mode. also fallback
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -323,7 +338,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
     case HEAD_STORMWAKER:
     {
         bool under75 = false;
-        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() < 75)
+        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() <= 75)
             under75 = true;
 
         bool lowHP = PTarget->GetHPP() <= 30 && PTarget->health.hp <= 300;
@@ -338,6 +353,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (lowHP && TryElemental(maneuvers))  // Mob low HP -> Nuke
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -348,6 +364,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -358,6 +375,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (maxNonIceManeuver > 1 && TryEnfeeble(maneuvers)) // next prio enfeebling if 2 or more of associated maneuver
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -368,6 +386,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (!under75 && TryEnfeeble(maneuvers)) // next prio enfeebling if over 75% hp
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -378,6 +397,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (!maneuvers.ice && maneuvers.light && TryHeal(maneuvers)) // no ice, has light, do heal
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -388,6 +408,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryElemental(maneuvers)) // elemental magic by default
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -398,6 +419,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryEnfeeble(maneuvers)) // fallback
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -408,6 +430,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryHeal(maneuvers)) // fallback
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -420,11 +443,12 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
     case HEAD_SOULSOOTHER:
     {
         bool under75 = false;
-        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() < 75)
+        if (PAutomaton->GetBattleTarget() && PAutomaton->GetBattleTarget()->isAlive() && PAutomaton->GetBattleTarget()->GetHPP() <= 75)
             under75 = true;
 
         if (improvedHealingAI && maneuvers.light && TryHeal(maneuvers)) // Light -> Heal
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -435,6 +459,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryStatusRemoval(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -444,6 +469,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         }
         else if (under75 && TryHeal(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -453,6 +479,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         }
         else if (TryEnhance())
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -462,6 +489,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         }
         else if (TryEnfeeble(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -471,6 +499,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         }
         else if (TryHeal(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -484,6 +513,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
     {
         if (maneuvers.ice >= maneuvers.dark && TryElemental(maneuvers))  // Ice -> Nuke
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -493,6 +523,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
         }
         else if ((maneuvers.dark || PAutomaton->GetHPP() <= 75 || PAutomaton->GetMPP() <= 75) && TryEnfeeble(maneuvers)) // Dark + logic for aspir/drain
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -503,6 +534,7 @@ bool CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers)
 
         if (TryElemental(maneuvers))
         {
+            m_LastStatusTime = m_Tick;
             m_LastHealTime = m_Tick;
             m_LastElementalTime = m_Tick;
             m_LastEnfeebleTime = m_Tick;
@@ -520,6 +552,7 @@ bool CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers)
     if (!PAutomaton->PMaster || m_healCooldown == 0s || m_Tick <= m_LastHealTime + (m_healCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY))))
         return false;
 
+    float spellRange = spell::GetSpell(SpellID::Cure)->getRange(); // Using Cure as reference
     float threshold = 0;
     switch (maneuvers.light) // Light -> Higher healing threshold
     {
@@ -567,12 +600,12 @@ bool CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers)
     {
         if (PAutomaton->GetHPP() <= 50) // Automaton only heals itself when <= 50%
             PCastTarget = PAutomaton;
-        else if (PAutomaton->PMaster->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20*20)
+        else if (PAutomaton->PMaster->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < spellRange*spellRange)
             PCastTarget = PAutomaton->PMaster;
     }
     else
     {
-        if (PAutomaton->PMaster->GetHPP() <= threshold)
+        if (PAutomaton->PMaster->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < spellRange*spellRange)
             PCastTarget = PAutomaton->PMaster;
         else if (PAutomaton->GetHPP() <= 50) // Automaton only heals itself when <= 50%
             PCastTarget = PAutomaton;
@@ -587,18 +620,23 @@ bool CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers)
                 if (PMember->id != PAutomaton->PMaster->id)
                 {
                     auto enmity_obj = enmityList->find(PMember->id);
-                    if (enmity_obj != enmityList->end() && highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE && PMember->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20*20)
+                    if (enmity_obj != enmityList->end() && highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE)
                     {
-                        highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
-                        PCastTarget = PMember;
+                        if (PMember->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < spellRange*spellRange)
+                        {
+                            highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
+                            PCastTarget = PMember;
+                        }
                     }
+                    else if (!PCastTarget && PMember->GetHPP() <= threshold && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < spellRange*spellRange)
+                        PCastTarget = PMember;
                 }
             });
         }
         else
         {
             static_cast<CCharEntity*>(PAutomaton->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
-                if (PMember->id != PAutomaton->PMaster->id && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20*20)
+                if (PMember->id != PAutomaton->PMaster->id && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < spellRange*spellRange)
                 {
                     if (PMember->GetHPP() <= threshold)
                     {
@@ -615,13 +653,13 @@ bool CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers)
         auto missinghp = PCastTarget->GetMaxHP() - PCastTarget->health.hp;
         if (missinghp > 850 && Cast(PCastTarget->targid, SpellID::Cure_VI))
             return true;
-        else if (missinghp > 600 && Cast(PCastTarget->targid, SpellID::Cure_V))
+        else if (missinghp > 200 && Cast(PCastTarget->targid, SpellID::Cure_V))
             return true;
-        else if (missinghp > 350 && Cast(PCastTarget->targid, SpellID::Cure_IV))
+        else if (Cast(PCastTarget->targid, SpellID::Cure_IV))
             return true;
-        else if (missinghp > 190 && Cast(PCastTarget->targid, SpellID::Cure_III))
+        else if (Cast(PCastTarget->targid, SpellID::Cure_III))
             return true;
-        else if (missinghp > 120 && Cast(PCastTarget->targid, SpellID::Cure_II))
+        else if (Cast(PCastTarget->targid, SpellID::Cure_II))
             return true;
         else if (Cast(PCastTarget->targid, SpellID::Cure))
             return true;
@@ -636,7 +674,8 @@ inline bool resistanceComparator(const std::pair<SpellID, int16>& firstElem, con
 
 bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
+    float spellRange = spell::GetSpell(SpellID::Stone)->getRange(); // Using Stone as reference
+    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)) || distanceSquared(PAutomaton->loc.p, PTarget->loc.p) >= spellRange*spellRange)
         return false;
 
     std::vector<SpellID> castPriority;
@@ -723,7 +762,8 @@ bool CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
+    float spellRange = spell::GetSpell(SpellID::Dia)->getRange(); // Using Dia as reference
+    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)) || distanceSquared(PAutomaton->loc.p, PTarget->loc.p) >= spellRange*spellRange)
         return false;
 
     std::vector<SpellID> castPriority;
@@ -982,27 +1022,31 @@ bool CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers)
 {
-    if (!PAutomaton->PMaster || m_statusCooldown == 0s || m_Tick <= m_LastStatusTime + m_statusCooldown)
+    float spellRange = spell::GetSpell(SpellID::Poisona)->getRange(); // Using Poisona as reference
+    if (!PAutomaton->PMaster || m_statusCooldown == 0s || m_Tick <= m_LastStatusTime + (m_statusCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY))))
         return false;
 
     std::vector<SpellID> castPriority;
 
-    PAutomaton->PMaster->StatusEffectContainer->ForEachEffect([&castPriority](CStatusEffect* PStatus) {
-        if (PStatus->GetDuration() > 0)
-        {
-            auto id = autoSpell::FindNaSpell(PStatus);
-            if (id.has_value())
+    if (distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < spellRange*spellRange)
+    {
+        PAutomaton->PMaster->StatusEffectContainer->ForEachEffect([&castPriority](CStatusEffect* PStatus) {
+            if (PStatus->GetDuration() > 0)
             {
-                castPriority.push_back(id.value());
+                auto id = autoSpell::FindNaSpell(PStatus);
+                if (id.has_value())
+                {
+                    castPriority.push_back(id.value());
+                }
             }
-        }
-    });
+        });
 
     for (SpellID& id : castPriority)
         if (Cast(PAutomaton->PMaster->targid, id))
             return true;
 
     castPriority.clear();
+    }
 
     PAutomaton->StatusEffectContainer->ForEachEffect([&castPriority](CStatusEffect* PStatus) {
         if (PStatus->GetDuration() > 0)
@@ -1028,20 +1072,23 @@ bool CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers)
             {
                 castPriority.clear();
 
-                member->StatusEffectContainer->ForEachEffect([&castPriority](CStatusEffect* PStatus) {
-                    if (PStatus->GetDuration() > 0)
-                    {
-                        auto id = autoSpell::FindNaSpell(PStatus);
-                        if (id.has_value())
+                if (distanceSquared(PAutomaton->loc.p, member->loc.p) < spellRange*spellRange)
+                {
+                    member->StatusEffectContainer->ForEachEffect([&castPriority](CStatusEffect* PStatus) {
+                        if (PStatus->GetDuration() > 0)
                         {
-                            castPriority.push_back(id.value());
+                            auto id = autoSpell::FindNaSpell(PStatus);
+                            if (id.has_value())
+                            {
+                                castPriority.push_back(id.value());
+                            }
                         }
-                    }
-                });
+                    });
 
                 for (auto id : castPriority)
                     if (Cast(member->targid, id))
                         return true;
+                }
             }
         }
     }
@@ -1051,6 +1098,7 @@ bool CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers)
 
 bool CAutomatonController::TryEnhance()
 {
+    float spellRange = spell::GetSpell(SpellID::Regen)->getRange(); // Using Regen as reference
     if (!PAutomaton->PMaster || m_enhanceCooldown == 0s || m_Tick <= m_LastEnhanceTime + m_enhanceCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_DELAY)))
         return false;
 
@@ -1070,7 +1118,7 @@ bool CAutomatonController::TryEnhance()
     CBattleEntity* PHasteTarget = nullptr;
     CBattleEntity* PStoneSkinTarget = nullptr;
     CBattleEntity* PPhalanxTarget = nullptr;
-
+    
     bool protect = false;
     uint8 protectcount = 0;
     bool shell = false;
@@ -1080,27 +1128,24 @@ bool CAutomatonController::TryEnhance()
     bool phalanx = false;
 
     bool isEngaged = false;
-
-    if (distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20*20)
+    if (PMob)
     {
-        if (PMob)
+        auto enmity_obj = enmityList->find(PAutomaton->PMaster->id);
+        if (enmity_obj != enmityList->end())
         {
-            auto enmity_obj = enmityList->find(PAutomaton->PMaster->id);
-            if (enmity_obj != enmityList->end())
-            {
-                isEngaged = true;
-                if (highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE)
-                {
-                    highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
-                    PRegenTarget = PAutomaton->PMaster;
-                }
-            }
+            isEngaged = true;
+            highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
+            if (PAutomaton->PMaster->GetMLevel() <= (PMob->GetMLevel() + 5) && distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < spellRange*spellRange)
+                PRegenTarget = PAutomaton->PMaster;
         }
-        else
-        {
-            isEngaged = true; // Assume everyone is engaged if the target isn't a mob
-        }
-
+    }
+    else
+    {
+        isEngaged = true; // Assume everyone is engaged if the target isn't a mob
+    }
+    
+    if (distanceSquared(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < spellRange*spellRange)
+    {
         PAutomaton->PMaster->StatusEffectContainer->ForEachEffect([&protect, &protectcount, &shell, &shellcount, &haste, &stoneskin, &phalanx](CStatusEffect* PStatus) {
             if (PStatus->GetDuration() > 0)
             {
@@ -1158,7 +1203,8 @@ bool CAutomatonController::TryEnhance()
         if (enmity_obj != enmityList->end() && highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE)
         {
             highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
-            PRegenTarget = PAutomaton;
+            if (PAutomaton->GetMLevel() <= (PMob->GetMLevel() + 5))
+                PRegenTarget = PAutomaton;
         }
     }
 
@@ -1192,7 +1238,7 @@ bool CAutomatonController::TryEnhance()
     {
         members = PAutomaton->PMaster->PParty->members.size();
         static_cast<CCharEntity*>(PAutomaton->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
-            if (PMember->id != PAutomaton->PMaster->id && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < 20*20)
+            if (PMember->id != PAutomaton->PMaster->id)
             {
                 protect = false;
                 shell = false;
@@ -1209,7 +1255,8 @@ bool CAutomatonController::TryEnhance()
                         if (highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE)
                         {
                             highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
-                            PRegenTarget = PMember;
+                            if (PMember->GetMLevel() <= (PMob->GetMLevel() + 5) && distanceSquared(PAutomaton->loc.p, PMember->loc.p) < spellRange*spellRange)
+                                PRegenTarget = PMember;
                         }
                     }
                 }
@@ -1218,41 +1265,44 @@ bool CAutomatonController::TryEnhance()
                     isEngaged = true; // Assume everyone is engaged if the target isn't a mob
                 }
 
-                PMember->StatusEffectContainer->ForEachEffect([&protect, &protectcount, &shell, &shellcount, &haste](CStatusEffect* PStatus) {
-                    if (PStatus->GetDuration() > 0)
-                    {
-                        if (PStatus->GetStatusID() == EFFECT_PROTECT)
-                        {
-                            protect = true;
-                            ++protectcount;
-                        }
-
-                        if (PStatus->GetStatusID() == EFFECT_SHELL)
-                        {
-                            shell = true;
-                            ++shellcount;
-                        }
-
-                        if (PStatus->GetStatusID() == EFFECT_HASTE || PStatus->GetStatusID() == EFFECT_GEO_HASTE)
-                            haste = true;
-                    }
-                });
-
-                if (isEngaged)
+                if (distanceSquared(PAutomaton->loc.p, PMember->loc.p) < spellRange*spellRange)
                 {
-                    if (!PProtectTarget && !protect)
-                        PProtectTarget = PMember;
+                    PMember->StatusEffectContainer->ForEachEffect([&protect, &protectcount, &shell, &shellcount, &haste](CStatusEffect* PStatus) {
+                            if (PStatus->GetDuration() > 0)
+                            {
+                                if (PStatus->GetStatusID() == EFFECT_PROTECT)
+                                {
+                                    protect = true;
+                                    ++protectcount;
+                                }
 
-                    if (!PShellTarget && !shell)
-                        PShellTarget = PMember;
+                                if (PStatus->GetStatusID() == EFFECT_SHELL)
+                                {
+                                    shell = true;
+                                    ++shellcount;
+                                }
 
-                    if (!PHasteTarget && !haste)
-                        PHasteTarget = PMember;
+                                if (PStatus->GetStatusID() == EFFECT_HASTE || PStatus->GetStatusID() == EFFECT_GEO_HASTE)
+                                    haste = true;
+                            }
+                        });
+
+                    if (isEngaged)
+                    {
+                        if (!PProtectTarget && !protect)
+                            PProtectTarget = PMember;
+
+                        if (!PShellTarget && !shell)
+                            PShellTarget = PMember;
+
+                        if (!PHasteTarget && !haste)
+                            PHasteTarget = PMember;
+                    }
                 }
             }
         });
     }
-
+    
     // No info on how this spell worked
     if ((members - protectcount) >= 4)
         Cast(PAutomaton->targid, SpellID::Protectra_V);
@@ -1261,7 +1311,7 @@ bool CAutomatonController::TryEnhance()
     if ((members - shellcount) >= 4)
         Cast(PAutomaton->targid, SpellID::Shellra_V);
 
-    if (PRegenTarget && !(PRegenTarget->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN) || PRegenTarget->StatusEffectContainer->HasStatusEffect(EFFECT_GEO_REGEN)))
+    if (PRegenTarget && PRegenTarget->health.hp < PRegenTarget->GetMaxHP() && !(PRegenTarget->StatusEffectContainer->HasStatusEffect(EFFECT_REGEN) || PRegenTarget->StatusEffectContainer->HasStatusEffect(EFFECT_GEO_REGEN)))
         if (Cast(PRegenTarget->targid, SpellID::Regen_III) || Cast(PRegenTarget->targid, SpellID::Regen_II) || Cast(PRegenTarget->targid, SpellID::Regen))
             return true;
 
@@ -1309,8 +1359,7 @@ bool CAutomatonController::TryTPMove()
         for (auto skillid : FamilySkills)
         {
             auto PSkill = battleutils::GetMobSkill(skillid);
-            if (PSkill && PAutomaton->GetSkill(skilltype) >= PSkill->getParam() && PSkill->getParam() != -1 &&
-                distance(PAutomaton->loc.p, PTarget->loc.p) < PSkill->getRadius())
+            if (PSkill && PAutomaton->GetSkill(skilltype) >= PSkill->getParam() && PSkill->getParam() != -1)
             {
                 validSkills.push_back(PSkill);
             }
@@ -1325,22 +1374,19 @@ bool CAutomatonController::TryTPMove()
         if (attemptChain)
         {
             CStatusEffect* PSCEffect = PTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
-            if (PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now())
+            if (PSCEffect && PSCEffect->GetStartTime() + 1s < m_Tick)
             {
                 std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
-                if (PSCEffect->GetStartTime() + 3s < m_Tick)
-                {
                     if (uint16 power = PSCEffect->GetPower())
                     {
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power & 0xF));
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power >> 4 & 0xF));
                         resonanceProperties.push_back((SKILLCHAIN_ELEMENT)(power >> 8));
                     }
-                }
 
                 for (auto PSkill : validSkills)
                 {
-                    if (PSkill->getParam() > currentSkill)
+                    if (PSkill->getParam() >= currentSkill)
                     {
                         std::list<SKILLCHAIN_ELEMENT> skillProperties;
                         skillProperties.push_back((SKILLCHAIN_ELEMENT)PSkill->getPrimarySkillchain());
@@ -1357,12 +1403,12 @@ bool CAutomatonController::TryTPMove()
             }
         }
 
-        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY)))
+        if (!attemptChain || (currentManeuvers == -1 && PAutomaton->PMaster && PAutomaton->PMaster->health.tp < PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY) && !PAutomaton->PMaster->PAI->IsCurrentState<CWeaponSkillState>()))
         {
             for (auto PSkill : validSkills)
             {
                 int8 maneuvers = luautils::OnMobAutomatonSkillCheck(PTarget, PAutomaton, PSkill);
-                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() > currentSkill)))
+                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() >= currentSkill)))
                 {
                     currentManeuvers = maneuvers;
                     currentSkill = PSkill->getParam();
@@ -1375,7 +1421,7 @@ bool CAutomatonController::TryTPMove()
         if (currentManeuvers == -1)
             return false;
 
-        if (PWSkill)
+        if (PWSkill && distance(PAutomaton->loc.p, PTarget->loc.p) < PWSkill->getRadius())
             return MobSkill(PTarget->targid, PWSkill->getID());
     }
     return false;
@@ -1383,8 +1429,9 @@ bool CAutomatonController::TryTPMove()
 
 bool CAutomatonController::TryRangedAttack() // TODO: Find the animation for its ranged attack
 {
+        float rangedRadius = battleutils::GetMobSkill(m_RangedAbility)->getRadius();
     if (PAutomaton->getFrame() == FRAME_SHARPSHOT)
-        if (m_rangedCooldown > 0s && m_Tick > m_LastRangedTime + (m_rangedCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::SNAP_SHOT))))
+        if (m_rangedCooldown > 0s && m_Tick > m_LastRangedTime + (m_rangedCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::SNAP_SHOT))) && distanceSquared(PAutomaton->loc.p, PTarget->loc.p) < rangedRadius*rangedRadius)
             return MobSkill(PTarget->targid, m_RangedAbility);
 
     return false;
@@ -1428,6 +1475,7 @@ bool CAutomatonController::Disengage()
     PTarget = nullptr;
     if (isRanged())
     {
+        m_firstTick = true; // Reset to first tick after leaving combat
         PAutomaton->m_Behaviour |= BEHAVIOUR_STANDBACK;
     }
     return CMobController::Disengage();

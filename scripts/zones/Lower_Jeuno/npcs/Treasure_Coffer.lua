@@ -32,16 +32,124 @@ local optionToKI =
     [20] = tpz.ki.TONBERRY_KEY,
 }
 
+local optionToGear =
+{
+    [1] = {addon = 1, itemid = 11313}, -- nuevo_coselete
+    [2] = {addon = 1, itemid = 11314}, -- mirke_wardecors
+    [3] = {addon = 1, itemid = 11315}, -- royal_redingote
+    [4] = {addon = 2, itemid = 11487}, -- champions_galea
+    [5] = {addon = 2, itemid = 11488}, -- anwig_salade
+    [6] = {addon = 2, itemid = 11489}, -- selenian_cap
+    [7] = {addon = 3, itemid = 16369}, -- blitzer_poleyn
+    [8] = {addon = 3, itemid = 16370}, -- desultor_tassets
+    [9] = {addon = 3, itemid = 16371}, -- tatsumaki_sitagoromo
+}
+
+local optionToAugment =
+{
+    [1] = -- ACP
+    {
+        [ 1] = {{augment =  23, power =  9}}, -- Accuracy+10
+        [ 2] = {{augment =  25, power =  9}}, -- Attack+10
+        [ 3] = {{augment =  27, power =  9}}, -- Ranged Accuracy+10
+        [ 4] = {{augment =  29, power =  9}}, -- Ranged Attack+10
+        [ 5] = {{augment =  31, power =  9}}, -- Evasion+10
+        [ 6] = {{augment =  35, power =  3}}, -- Magic Accuracy+4
+        [ 7] = {{augment = 133, power =  3}}, -- "Magic Atk, Bonus"+4
+        [ 8] = {{augment = 143, power =  1}}, -- "Double Attack"+2
+        [ 9] = {{augment =  41, power =  2}}, -- Critical hit rate +3
+        [10] = {{augment =  44, power =  3}}, -- Store TP"+4 "Subtle Blow"+4
+        [11] = {{augment =  39, power =  4}}, -- Enmity+5
+        [12] = {{augment =  40, power =  4}}, -- Enmity-5
+        [13] = {{augment = 140, power =  4}}, -- Enhances "Fast Cast" effect +5
+        [14] = {{augment = 324, power = 14}}, -- "Call Beast" ability delay -15
+        [15] = {{augment = 211, power =  4}}, -- "Snapshot"+5
+        [16] = {{augment = 146, power =  2}}, -- Enhances "Dual Wield" effect +3
+        [17] = {{augment = 320, power =  3}}, -- "Blood Pact" ability delay -4
+        [18] = {{augment = 321, power =  1}}, -- Avatar perpetuation cost -2
+        [19] = {{augment = 325, power =  4}}, -- Quick Draw" ability delay -5
+        [20] = {{augment =  96, power = 14}}, -- Pet: Accuracy+15 Ranged Accuracy+15
+        [21] = {{augment =  97, power = 14}}, -- Pet: Attack+15 Ranged Attack+15
+        [22] = {{augment = 108, power =  6}}, -- Pet: Magic Acc.+7 "Magic Atk. Bonus"+7
+        [23] = {{augment = 109, power =  1}}, -- Pet: "Double Attack"+2 Crit. hit rate +2
+    },
+    [2] = -- AMK
+    {
+        [ 1] = {{augment = 512, power = 3}, {augment = 326, power = 14}}, -- STR+4 Weapon Skill Accuracy +15
+        [ 2] = {{augment = 513, power = 3}, {augment = 328, power =  1}}, -- DEX+4 Increases Critical Hit Damage (+2%)
+        [ 3] = {{augment = 514, power = 3}, {augment = 286, power =  4}}, -- VIT+4 Shield Skill +5
+        [ 4] = {{augment = 515, power = 3}, {augment = 327, power =  1}}, -- AGI+4 Increases weapon skill damage (+2%)
+        [ 5] = {{augment = 516, power = 3}, {augment =  35, power =  1}}, -- INT+4 Magic Accuracy+2
+        [ 6] = {{augment = 517, power = 3}, {augment = 329, power =  2}}, -- MND+4 "Cure" potency +3%
+        [ 7] = {{augment = 518, power = 3}, {augment = 331, power =  1}}, -- CHR+4 "Waltz" ability delay -2
+        [ 8] = {{augment = 512, power = 1}, {augment =  49, power =  1}}, -- STR+2 Haste +2%
+        [ 9] = {{augment = 513, power = 1}, {augment =  49, power =  1}}, -- DEX+2 Haste +2%
+        [10] = {{augment = 514, power = 1}, {augment =  49, power =  1}}, -- VIT+2 Haste +2%
+        [11] = {{augment = 515, power = 1}, {augment =  49, power =  1}}, -- AGI+2 Haste +2%
+        [12] = {{augment =  49, power = 2}, {augment = 211, power =  2}}, -- Haste+3% Enhances "Snapshot" effect (+3%)
+        [13] = {{augment =  23, power = 9}, {augment =  25, power =  4}}, -- Accuracy+10 Attack+5
+        [14] = {{augment =  27, power = 9}, {augment =  29, power =  4}}, -- Ranged Accuracy+10 Ranged Attack+5
+        [15] = {{augment =  31, power = 9}, {augment = 142, power =  3}}, -- Evasion+10 Store TP +4
+        [16] = {{augment = 133, power = 1}, {augment =  51, power =  2}}, -- "Magic Attack Bonus"+2 HP recovered while healing +3
+        [17] = {{augment =  35, power = 2}, {augment =  52, power =  2}}, -- Magic Accuracy+3 MP recovered while healing +3
+        [18] = {{augment =  55, power = 1}, {augment =  39, power =  3}}, -- Magic damage taken -2% Enmity+4
+        [19] = {{augment =  57, power = 9}, {augment =  40, power =  3}}, -- Magic critical hit rate +10% Enmity-4
+        [20] = {{augment = 516, power = 1}, {augment = 140, power =  1}}, -- INT+2 Enhances "Fast Cast" effect (+2%)
+        [21] = {{augment = 517, power = 1}, {augment = 140, power =  1}}, -- MND+2 Enhances "Fast Cast" effect (+2%)
+        [22] = {{augment = 518, power = 1}, {augment = 140, power =  1}}, -- CHR+2 Enhances "Fast Cast" effect (+2%)
+        [23] = {{augment = 140, power = 2}, {augment = 320, power =  2}}, -- Enhances "Fast Cast" effect (+3%) "Blood Pact" ability delay -3
+        [24] = {{augment =  23, power = 2}, {augment = 102, power =  2}}, -- Accuracy+3 Pet: Critical Hit Rate +3%
+        [25] = {{augment =  25, power = 2}, {augment = 110, power =  0}}, -- Attack+3 Pet: Adds "Regen" effect
+        [26] = {{augment =  25, power = 2}, {augment = 112, power =  9}}, -- Attack+3 Pet: Damage taken -10%
+        [27] = {{augment =  23, power = 2}, {augment = 111, power =  4}}, -- Accuracy+3 Pet: Haste +5%
+    },
+    [3] = -- ASA
+    {
+        [ 1] = {}, -- HP+25 Enmity+4
+        [ 2] = {}, -- MP+25 Enmity-4
+        [ 3] = {}, -- Attack+7
+        [ 4] = {}, -- Accuracy+7
+        [ 5] = {}, -- Ranged Accuracy+7
+        [ 6] = {}, -- Ranged Attack+7
+        [ 7] = {}, -- Evasion+7
+        [ 8] = {}, -- Magic Accuracy+4
+        [ 9] = {}, -- "Magic Atk. Bonus" +4
+        [10] = {}, -- Haste +3%
+        [11] = {}, -- "Double Attack" +2%
+        [12] = {}, -- Increases Critical Hit Damage +3%
+        [13] = {}, -- Skillchain damage +5%
+        [14] = {}, -- "Conserve TP"+5
+        [15] = {}, -- Physical damage taken -4%
+        [16] = {}, -- Magic Critical Hit damage +10%
+        [17] = {}, -- Magic Burst damage +10%
+        [18] = {}, -- "Kick Attacks" +5
+        [19] = {}, -- "Cure" potency +5%
+        [20] = {}, -- "Sic" & "Ready" ability delay -5
+        [21] = {}, -- Song Recast Delay -3
+        [22] = {}, -- "Barrage" +1
+        [23] = {}, -- "Elemental Siphon" +20
+        [24] = {}, -- "Phantom Roll" ability delay -5
+        [25] = {}, -- "Repair" potency +10%
+        [26] = {}, -- "Waltz" TP cost -5*
+        [27] = {}, -- Pet: Accuracy +7 Ranged Accuracy +7
+        [28] = {}, -- Pet: Attack +7 Ranged Attack +7
+        [29] = {}, -- Pet: "Store TP" +8 "Subtle Blow" +8
+        [30] = {}, -- Pet: Magic Accuracy +7
+        [31] = {}, -- Movement Speed +8% 	
+    },
+}
+
+-- No good data on augments.  Just pulled from each key on: https://ffxiclopedia.fandom.com/wiki/Treasure_Coffer_(Tenshodo)
 local prizes =
 {
     [tpz.ki.CRIMSON_KEY] =
     {
         {cutoff =   70, itemId = 13206, augments = {{9, 0,  5}, {516, 0, 1}, {517, 0, 1}, {518, 0, 1}, { 32, 0, 1}, { 96, 0, 1}}}, -- Gold Obi
         {cutoff =   80, itemId = 13445, augments = {{9, 0,  8}, {516, 0, 1}, {517, 0, 1}, {518, 0, 2}, { 39, 0, 1}, { 35, 0, 2}}}, -- Gold Ring
-        {cutoff =  186, itemId = 13446, augments = {{1, 0, 15}, { 13, 0, 2}, { 25, 0, 5}, { 31, 0, 2}, {195, 0, 1}, { 35, 0, 2}}}, -- Mythril Ring
+        {cutoff =  186, itemId = 13446, augments = {{1, 0, 15}, { 13, 0, 2}, { 25, 0, 5}, { 31, 0, 1}, {195, 0, 1}, { 35, 0, 1}}}, -- Mythril Ring
         {cutoff =  276, itemId = 13643, augments = {{9, 0,  5}, {516, 0, 1}, {517, 0, 1}, {518, 0, 1}, {100, 0, 1}, { 39, 0, 1}}}, -- Sarcenet Cape
         {cutoff =  351, itemId = 13196, augments = {{1, 0,  5}, { 23, 0, 1}, { 27, 0, 1}, {512, 0, 1}, {520, 0, 1}, {515, 0, 1}}}, -- Silver Belt
-        {cutoff =  460, itemId = 13571, augments = {{1, 0,  5}, { 25, 0, 3}, { 29, 0, 3}, {512, 0, 0}, {769, 0, 1}, { 32, 0, 1}}}, -- Wolf Mantle
+        {cutoff =  460, itemId = 13571, augments = {{1, 0,  5}, { 25, 0, 3}, { 29, 0, 3}, {512, 0, 0}, {769, 0, 2}, { 32, 0, 2}}}, -- Wolf Mantle
         {cutoff =  468, itemId =   694}, -- Chestnut Log
         {cutoff =  471, itemId =   887}, -- Coral Fragment
         {cutoff =  476, itemId =  4903}, -- Dark Spirit Pact
@@ -67,12 +175,12 @@ local prizes =
     },
     [tpz.ki.VIRIDIAN_KEY] =
     {
-        {cutoff =   65, itemId = 13639}, -- Aurora Mantle
-        {cutoff =  142, itemId = 13271}, -- Corsette
-        {cutoff =  237, itemId = 12364}, -- Nymph Shield
-        {cutoff =  356, itemId = 13570}, -- Ram Mantle
-        {cutoff =  457, itemId = 13198}, -- Swordbelt
-        {cutoff =  463, itemId = 13207}, -- Brocade Obi
+        {cutoff =   65, itemId = 13639, augments = {{ 9, 0, 19}, {  1, 0, 19}, { 40, 0,  1}, {771, 0, 6}, {768, 0,  6}, { 34, 2, 3}}}, -- Aurora Mantle
+        {cutoff =  142, itemId = 13271, augments = {{23, 0,  2}, { 31, 0,  1}, {  9, 0, 13}, { 26, 0, 1}, {  1, 0, 12}, { 49, 0, 2}}}, -- Corsette
+        {cutoff =  237, itemId = 12364, augments = {{ 9, 0,  9}, {517, 0,  0}, {516, 0,  0}, {512, 0, 0}, {518, 0,  0}, { 35, 0, 1}}}, -- Nymph Shield
+        {cutoff =  356, itemId = 13570, augments = {{ 5, 0,  5}, { 13, 0, 10}, {515, 0,  0}, {513, 0, 0}, { 23, 0,  3}, { 27, 0, 3}}}, -- Ram Mantle
+        {cutoff =  457, itemId = 13198, augments = {{ 1, 0,  4}, {512, 0,  1}, {513, 0,  1}, {514, 0, 0}, { 24, 0,  2}, { 29, 0, 3}}}, -- Swordbelt
+        {cutoff =  463, itemId = 13207, augments = {{ 1, 0,  3}, {  9, 0, 11}, { 35, 0,  2}, {290, 0, 2}, { 50, 0,  1}, {100, 0, 2}}}, -- Brocade Obi
         {cutoff =  469, itemId =   793}, -- Black Pearl
         {cutoff =  497, itemId =   775}, -- Black Rock
         {cutoff =  515, itemId =   770}, -- Blue Rock
@@ -97,11 +205,11 @@ local prizes =
     },
     [tpz.ki.AMBER_KEY] =
     {
-        {cutoff = 111, itemId = 16263}, -- Beak Necklace
-        {cutoff = 219, itemId = 13207}, -- Brocade Obi
-        {cutoff = 334, itemId = 13091}, -- Carapace Gorget
-        {cutoff = 436, itemId = 13445}, -- Gold Ring
-        {cutoff = 561, itemId = 13593}, -- Raptor Mantle
+        {cutoff = 111, itemId = 16263, augments = {{  9, 0, 12}, { 35, 0,  1}, {516, 0, 1}, {518, 0, 1}, {517, 0, 1}, { 97, 0, 4}, { 39, 0, 1}}}, -- Beak Necklace
+        {cutoff = 219, itemId = 13207, augments = {{  1, 0, 11}, {  9, 0, 11}, { 35, 0, 2}, {290, 0, 2}, { 50, 0, 0}, {100, 0, 2}             }}, -- Brocade Obi
+        {cutoff = 334, itemId = 13091, augments = {{513, 0,  0}, {512, 0,  2}, { 25, 0, 6}, { 29, 0, 6}, {142, 0, 1}, { 24, 0, 3}, {773, 0, 5}}}, -- Carapace Gorget
+        {cutoff = 436, itemId = 13445, augments = {{  9, 0, 13}, {517, 0,  1}, { 35, 0, 2}, { 39, 0, 1}, {516, 0, 1}, {518, 0, 1}             }}, -- Gold Ring
+        {cutoff = 561, itemId = 13593, augments = {{  1, 0, 29}, {513, 0,  1}, {520, 0, 1}, {515, 0, 2}, {514, 0, 2}, { 39, 0, 1}, {772, 0, 5}}}, -- Raptor Mantle
         {cutoff = 564, itemId =   887}, -- Coral Fragment
         {cutoff = 576, itemId =   645}, -- Darksteel Ore
         {cutoff = 599, itemId =   902}, -- Demon Horn
@@ -124,11 +232,11 @@ local prizes =
     },
     [tpz.ki.AZURE_KEY] =
     {
-        {cutoff = 106, itemId = 13597}, -- Beak Mantle
-        {cutoff = 203, itemId = 13092}, -- Coeurl Gorget
-        {cutoff = 305, itemId = 13447}, -- Platinum Ring
-        {cutoff = 386, itemId = 13208}, -- Rainbow Obi
-        {cutoff = 490, itemId = 13125}, -- Torque
+        {cutoff = 106, itemId = 13597, augments = {{512, 0,  1}, {513, 0,  1}, { 26, 0, 5}, { 23, 0, 6}, { 31, 0, 6}, {195, 0, 1}}}, -- Beak Mantle
+        {cutoff = 203, itemId = 13092, augments = {{515, 0,  3}, { 23, 0,  7}, { 27, 0, 7}, { 30, 0, 3}, {195, 0, 1}, {771, 0, 3}}}, -- Coeurl Gorget
+        {cutoff = 305, itemId = 13447, augments = {{  1, 0,  9}, {512, 0,  1}, {513, 0, 1}, {514, 0, 1}, { 26, 0, 2}, { 23, 0, 2}}}, -- Platinum Ring
+        {cutoff = 386, itemId = 13208, augments = {{  9, 0, 19}, {516, 0,  4}, {517, 0, 4}, {518, 0, 4}, { 36, 0, 2}, { 52, 0, 2}}}, -- Rainbow Obi
+        {cutoff = 490, itemId = 13125, augments = {{  5, 0, 13}, {  9, 0, 12}, {515, 0, 2}, {516, 0, 1}, {517, 0, 1}, {518, 0, 1}}}, -- Torque
         {cutoff = 498, itemId =   791}, -- Aquamarine
         {cutoff = 502, itemId =   801}, -- Chrysoberyl
         {cutoff = 536, itemId =   654}, -- Darksteel Ingot
@@ -149,14 +257,14 @@ local prizes =
     },
     [tpz.ki.IVORY_KEY] =
     {
-        {cutoff =   62, itemId = 13357}, -- Angels Earring
-        {cutoff =   70, itemId = 13356}, -- Death Earring
-        {cutoff =  113, itemId = 13353}, -- Diamond Earring
-        {cutoff =  196, itemId = 13351}, -- Emerald Earring
-        {cutoff =  301, itemId = 13352}, -- Ruby Earring
-        {cutoff =  392, itemId = 13355}, -- Sapphire Earring
-        {cutoff =  478, itemId = 13354}, -- Spinel Earring
-        {cutoff =  497, itemId = 13318}, -- Topaz Earring
+        {cutoff =   62, itemId = 13357, augments = {{518, 0, 1}, { 40, 0, 1}, {  1, 0,  9}, {  9, 0, 9}, {105, 0, 1}, {106, 0, 0}, {34, 0, 3}}}, -- Angels Earring
+        {cutoff =   70, itemId = 13356, augments = {{ 33, 0, 3}, { 39, 0, 1}, {  1, 0,  9}, {  9, 0, 9}, {104, 0, 1}, {521, 0, 1}            }}, -- Death Earring
+        {cutoff =  113, itemId = 13353, augments = {{516, 0, 1}, {515, 0, 0}, {133, 0,  1}, {  9, 0, 5}, { 36, 0, 0}, {101, 0, 1}            }}, -- Diamond Earring
+        {cutoff =  196, itemId = 13351, augments = {{515, 0, 1}, { 31, 0, 4}, { 98, 0,  4}, { 27, 0, 2}, {514, 0, 0}, { 30, 0, 1}            }}, -- Emerald Earring
+        {cutoff =  301, itemId = 13352, augments = {{ 25, 0, 4}, {516, 0, 0}, { 97, 0,  4}, { 29, 0, 4}, {512, 0, 1}, { 24, 0, 2}            }}, -- Ruby Earring
+        {cutoff =  392, itemId = 13355, augments = {{ 35, 0, 1}, {517, 0, 1}, {  9, 0,  5}, {100, 0, 1}, {512, 0, 0}, {  5, 0, 6}            }}, -- Sapphire Earring
+        {cutoff =  478, itemId = 13354, augments = {{ 23, 0, 2}, {513, 0, 1}, {517, 0,  0}, { 96, 0, 2}, {142, 0, 0}, {195, 0, 1}, {26, 0, 4}}}, -- Spinel Earring
+        {cutoff =  497, itemId = 13318, augments = {{ 33, 0, 4}, {513, 0, 0}, {  1, 0, 19}, { 99, 0, 4}, {514, 0, 1}, { 32, 0, 2}            }}, -- Topaz Earring
         {cutoff =  546, itemId =  1110}, -- Beetle Blood
         {cutoff =  602, itemId =   823}, -- Gold Thread
         {cutoff =  627, itemId =  1465}, -- Granite
@@ -171,14 +279,14 @@ local prizes =
     },
     [tpz.ki.EBON_KEY] =
     {
-        {cutoff =  31, itemId = 13463}, -- Angels Ring
-        {cutoff =  82, itemId = 13462}, -- Death Ring
-        {cutoff = 174, itemId = 13450}, -- Diamond Ring
-        {cutoff = 225, itemId = 13448}, -- Emerald Ring
-        {cutoff = 296, itemId = 13449}, -- Ruby Ring
-        {cutoff = 357, itemId = 13452}, -- Sapphire Ring
-        {cutoff = 459, itemId = 13451}, -- Spinel Ring
-        {cutoff = 500, itemId = 13453}, -- Topaz Ring
+        {cutoff =  31, itemId = 13463, augments = {{783, 0, 29}, { 40, 0, 1}, {  1, 0, 19}, {518, 0, 0}, { 23, 1, 5}, { 96, 0, 3}                                      }}, -- Angels Ring
+        {cutoff =  82, itemId = 13462, augments = {{782, 0, 29}, {525, 0, 2}, {  9, 0, 19}, { 33, 0, 6}, { 31, 0, 4}, { 39, 0, 0}                                      }}, -- Death Ring
+        {cutoff = 174, itemId = 13450, augments = {{776, 0, 29}, {519, 0, 4}, {  9, 0,  9}, {515, 0, 2}, {516, 0, 0}, {517, 0, 1}                                      }}, -- Diamond Ring
+        {cutoff = 225, itemId = 13448, augments = {{777, 0, 29}, {523, 0, 4}, {  1, 0,  8}, {512, 0, 1}, {514, 0, 2}, {515, 0, 0}                                      }}, -- Emerald Ring
+        {cutoff = 296, itemId = 13449, augments = {{781, 0, 29}, {524, 0, 1}, {  1, 0,  9}, {512, 0, 0}, {513, 0, 1}, {516, 0, 2}                                      }}, -- Ruby Ring
+        {cutoff = 357, itemId = 13452, augments = {{780, 0, 29}, {  9, 0, 9}, {519, 0,  2}, {520, 0, 3}, {517, 0, 0}, {518, 0, 2}                                      }}, -- Sapphire Ring
+        {cutoff = 459, itemId = 13451, augments = {{779, 0, 29}, {  1, 0, 9}, {513, 0,  0}, {521, 0, 0}, {515, 0, 1}, {517, 0, 2}, { 23, 0, 0}, {195, 0, 1}, {96, 0, 1}}}, -- Spinel Ring
+        {cutoff = 500, itemId = 13453, augments = {{778, 0, 29}, {522, 0, 5}, {771, 0,  8}, {  1, 0, 9}, {513, 0, 1}, {514, 0, 0}, {516, 0, 2}                         }}, -- Topaz Ring
         {cutoff = 510, itemId =   655}, -- Adaman Ingot
         {cutoff = 541, itemId =   813}, -- Angelstone
         {cutoff = 561, itemId =   645}, -- Darksteel Ore
@@ -476,6 +584,76 @@ local function givePrize(player, ki)
     end
 end
 
+function scenarioArmor(player, option, giveToPlayer)
+    local aug1 = 0
+    local aug2 = 0
+    local gear = 0
+    local addon = 0
+
+    if giveToPlayer then
+        option = option - 8388615 -- extra bit passed when recieving armor
+    end
+
+    aug2 = bit.rshift(option, 16)                               -- 5 bits for 2nd selected augment
+    aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
+    gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
+    addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
+
+    local augment1 = optionToAugment[addon][aug1]
+    local augment2 = optionToAugment[addon][aug2]
+    
+    local addAug = {}
+    if giveToPlayer then
+        -- Add each augment's ID and power
+        for i = 1, #augment1 do
+            table.insert(addAug, augment1[i].augment)
+            table.insert(addAug, augment1[i].power)
+        end
+        for i = 1, #augment2 do
+            table.insert(addAug, augment2[i].augment)
+            table.insert(addAug, augment2[i].power)
+        end
+
+        if player:getFreeSlotsCount() == 0 then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, optionToGear[gear].itemid)
+        else
+            player:addItem(optionToGear[gear].itemid, 1, unpack(addAug))
+            player:messageSpecial(ID.text.ITEM_OBTAINED, optionToGear[gear].itemid)
+            player:delKeyItem(({tpz.ki.PRISMATIC_KEY,tpz.ki.OXBLOOD_KEY,tpz.ki.BEHEMOTH_KEY})[addon])
+        end
+    else
+        -- Convert each augment's power and ID to binary (5 bits for power followed by 11 bits for ID)
+        for i = 1, #augment1 do
+            table.insert(addAug, string.format("%05i%011i", intToBinary(augment1[i].power), intToBinary(augment1[i].augment)))
+        end
+        for i = 1, #augment2 do
+            table.insert(addAug, string.format("%05i%011i", intToBinary(augment2[i].power), intToBinary(augment2[i].augment)))
+        end
+        for i = #addAug, 5 do
+            table.insert(addAug, "0000000000000000")
+        end
+
+        -- Each argument concats 2 different augments. For some reason, argument 1 contacts the string below.
+        player:updateEvent(tonumber(addAug[1] .. "0000001100000010", 2), tonumber(addAug[2] .. addAug[3], 2), tonumber(addAug[4] .. addAug[5], 2))
+    end
+end
+
+function intToBinary(x)
+    local bin = ""
+    while x > 1 do
+        bin = tostring(x % 2) .. bin
+        x = math.floor(x / 2)
+    end
+    bin = tostring(x) .. bin
+    return bin
+end
+
+function onSpawn(npc)
+    if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
 function onTrade(player, npc, trade)
 end
 
@@ -520,6 +698,11 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+    if csid == 10099 then
+        if option >= 2048 and option < 16777216 then
+            scenarioArmor(player, option, false)
+        end
+    end
 end
 
 function onEventFinish(player, csid, option)
@@ -533,6 +716,8 @@ function onEventFinish(player, csid, option)
             if ki ~= nil then
                 givePrize(player, ki)
             end
+        elseif option >= 2048 and option < 16777216 then
+            scenarioArmor(player, option, true)
         end
     end
 end

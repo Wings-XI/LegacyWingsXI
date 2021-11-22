@@ -2,6 +2,7 @@
 -- Area: The Shrine of Ru'Avitau
 --  Mob: Ullikummi
 -----------------------------------
+local ID = require("scripts/zones/The_Shrine_of_RuAvitau/IDs")
 require("scripts/globals/status")
 require("scripts/globals/mobs")
 -----------------------------------
@@ -11,7 +12,7 @@ function onMobInitialize(mob)
 
     mob:addListener("WEAPONSKILL_USE", "ULLI_WEAPONSKILL_USE", function(entity, target, wsid, tp, action)
 
-        if wsid == 3868 and target:isPC() and action:param(target:getID()) > 1 then
+        if wsid == 675 and target:isPC() and action:param(target:getID()) > 1 then
             entity:resetEnmity(target)
         end
     end)

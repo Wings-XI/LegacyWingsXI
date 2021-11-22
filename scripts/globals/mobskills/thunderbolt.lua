@@ -20,8 +20,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STUN
+    local duration = math.random(5, 12)
 
-    MobStatusEffectMove(mob, target, typeEffect, 1, 0, 4)
+    MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
 
     local dmgmod = 0.6
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2, tpz.magic.ele.THUNDER, dmgmod, TP_NO_EFFECT)

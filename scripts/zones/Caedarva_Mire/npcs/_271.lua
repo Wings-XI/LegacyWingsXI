@@ -11,16 +11,18 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS) then
-        player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.PERIQIA_ASSAULT_ORDERS)
-    elseif player:getZPos() <= -79.1 and player:getZPos() >= -82 then
+    if player:getZPos() <= -79.1 and player:getZPos() >= -82 then -- Enter safe zone
         player:messageSpecial(ID.text.STAGING_POINT_DVUCCA)
         player:messageSpecial(ID.text.IMPERIAL_CONTROL)
         player:startEvent(122)
-    elseif player:getZPos() >= -77.8 and player:getZPos() <= -75 then
-        player:messageSpecial(ID.text.STAGING_POINT_DVUCCA)
-        player:messageSpecial(ID.text.IMPERIAL_CONTROL)
-        player:startEvent(123)
+    elseif player:getZPos() >= -77.8 and player:getZPos() <= -75 then -- Leave safe zone
+        if player:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS) then
+            player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.PERIQIA_ASSAULT_ORDERS)
+        else
+            player:messageSpecial(ID.text.STAGING_POINT_DVUCCA)
+            player:messageSpecial(ID.text.IMPERIAL_CONTROL)
+            player:startEvent(123)
+        end
     else
         player:messageSpecial(ID.text.MOVE_CLOSER)
     end

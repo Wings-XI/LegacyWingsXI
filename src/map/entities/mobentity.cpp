@@ -87,6 +87,7 @@ CMobEntity::CMobEntity()
     m_SpawnType = SPAWNTYPE_NORMAL;
     m_SpawnTime = time_point::min();
     m_UncharmTime = std::chrono::system_clock::now() - 5min;
+    m_NextSlidingHit = std::chrono::system_clock::now();
     m_AutoClaimed = false;
     m_EcoSystem = SYSTEM_UNCLASSIFIED;
     m_Element = 0;
@@ -1107,7 +1108,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         }
         else if (m_THLvl == 4)
         {
-            mult = 0.43f;
+            mult = 0.25f;
             maxRolls = 3;
         }
         else if (m_THLvl >= 5)
@@ -1391,9 +1392,34 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
                 attack_range = (uint8)skill->getDistance();
             }
         }
-        if ((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize) > attack_range ||
-            !PAI->GetController()->IsAutoAttackEnabled())
+        if (!PAI->GetController()->IsAutoAttackEnabled())
         {
+            return false;
+        }
+        else if (distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize > attack_range)
+        {
+            if (!this->speed || !(this->PAI->PathFind->IsFollowingPath() || this->PAI->PathFind->IsFollowingScriptedPath()))
+                return false; // i must be chasing or not bound
+
+            float bonusRange = 2;
+            if (PTarget->speed >= this->speed)
+                bonusRange = this->speed / PTarget->speed * 2;
+            
+            // attempt to hit a running target, increase range slightly
+            if (std::chrono::system_clock::now() > this->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < attack_range + bonusRange)
+            {
+                std::chrono::duration delay = std::chrono::milliseconds(this->GetWeaponDelay(false));
+                if (this->m_Type & MOBTYPE_NOTORIOUS || this->m_Type & MOBTYPE_BATTLEFIELD || this->m_Type & MOBTYPE_EVENT)
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*2, delay.count()*4));
+                }
+                else
+                {
+                    delay = std::chrono::milliseconds(tpzrand::GetRandomNumber(delay.count()*3, delay.count()*6));
+                }
+                this->m_NextSlidingHit = std::chrono::system_clock::now() + delay;
+                return true;
+            }
             return false;
         }
         return true;

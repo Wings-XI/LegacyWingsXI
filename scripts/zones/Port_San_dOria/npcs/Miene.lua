@@ -4,12 +4,15 @@
 -- NPC for Quest "The Pickpocket"
 -- !pos 0.750 -4.000 -81.438 232
 -----------------------------------
+local ID = require("scripts/zones/Port_San_dOria/IDs")
 require("scripts/quests/flyers_for_regine")
 require("scripts/globals/npc_util")
 require("scripts/globals/quests")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     quests.ffr.onTrade(player, npc, trade, 2) -- FLYERS FOR REGINE
 end
 

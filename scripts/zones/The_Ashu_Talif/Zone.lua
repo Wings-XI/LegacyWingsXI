@@ -14,6 +14,10 @@ function onZoneIn(player, prevZone)
 
     player:addTempItem(5349)
 
+    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+        player:setPos(11.5, -22, 5, 60)
+    end
+
     return cs
 end
 
@@ -24,7 +28,5 @@ function onEventUpdate(player, csid, option, target)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 101 or csid == 102 then
-        player:setPos(0, 0, 0, 0, 54)
-    end
+    
 end

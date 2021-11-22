@@ -686,6 +686,27 @@ INSERT INTO `bcnm_battlefield` VALUES(225, 3, 17473557, 2);
 INSERT INTO `bcnm_battlefield` VALUES(256, 1, 17510401, 3);
 INSERT INTO `bcnm_battlefield` VALUES(256, 2, 17510402, 3);
 INSERT INTO `bcnm_battlefield` VALUES(256, 3, 17510403, 3);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510452, 3); -- Ode of life bestowing
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510453, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510454, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510455, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510456, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510457, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 1, 17510458, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510459, 3);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510460, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510461, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510462, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510463, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510464, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 2, 17510465, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510466, 3);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510467, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510468, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510469, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510470, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510471, 0);
+INSERT INTO `bcnm_battlefield` VALUES(262, 3, 17510472, 0);
 INSERT INTO `bcnm_battlefield` VALUES(288, 1, 17514497, 3);
 INSERT INTO `bcnm_battlefield` VALUES(288, 2, 17514498, 3);
 INSERT INTO `bcnm_battlefield` VALUES(288, 3, 17514499, 3);
@@ -1724,6 +1745,10 @@ INSERT INTO `bcnm_battlefield` VALUES(1301, 8, 16929085, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1301, 8, 16929086, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1301, 8, 16929087, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1301, 8, 16929088, 2);
+INSERT INTO `bcnm_battlefield` VALUES(1500, 1, 17125681, 3); 
+INSERT INTO `bcnm_battlefield` VALUES(1500, 2, 17125682, 3);
+INSERT INTO `bcnm_battlefield` VALUES(1500, 3, 17125683, 3);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

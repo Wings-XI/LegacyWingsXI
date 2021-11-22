@@ -30,6 +30,9 @@
 CCharHealthPacket::CCharHealthPacket(CCharEntity* PChar)
 {
 	this->type = 0xDF;
+    // May have been increased to 0x14 in the November 2021 version update
+    // So far it seems to play nicely with the old value but if there's any
+    // weird behavior change this.
 	this->size = 0x12;
 
 	ref<uint32>(0x04) = PChar->id;
@@ -49,6 +52,8 @@ CCharHealthPacket::CCharHealthPacket(CCharEntity* PChar)
         ref<uint8>(0x21) = PChar->GetMLevel();
         ref<uint8>(0x22) = PChar->GetSJob();
         ref<uint8>(0x23) = PChar->GetSLevel();
+        //0x24: master level
+        //0x25: bitflags, bit 0 = master breaker
     }
 }
 

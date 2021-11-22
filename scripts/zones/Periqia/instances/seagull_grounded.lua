@@ -8,12 +8,7 @@ require("scripts/globals/instance")
 require("scripts/globals/missions")
 require("scripts/globals/assault")
 require("scripts/globals/zone")
-require("scripts/zones/Periqia/mobs/Excaliace")
 -----------------------------------
-
-function  afterInstanceRegister(player)
-    afterAssaultRegister(player, 5346, ID.text, ID.mob)
-end
 
 function onInstanceCreated(instance)
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-495.000,-9.695,-72.000,0)
@@ -25,6 +20,11 @@ function onInstanceCreated(instance)
     instance:getEntity(bit.band(ID.npc._JK1, 0xFFF), tpz.objType.NPC):setAnimation(8)
     instance:getEntity(bit.band(ID.npc._JK3, 0xFFF), tpz.objType.NPC):setAnimation(8)
 
+    spawnMobInAssault(instance, ID.mob)
+end
+
+function  afterInstanceRegister(player)
+    afterAssaultRegister(player, 5346, ID.text, ID.mob)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
@@ -41,11 +41,9 @@ function onInstanceFailure(instance)
 end
 
 function onInstanceProgressUpdate(instance, progress)
-
-    if progress > 0 then
+    if (instance:getProgress() > 0) then
         instance:complete()
     end
-
 end
 
 function onInstanceComplete(instance)
@@ -53,8 +51,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end

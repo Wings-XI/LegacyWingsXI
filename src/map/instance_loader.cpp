@@ -191,7 +191,7 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
 
             PMob->setModifier(Mod::SLASHRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 35) * 1000));
             PMob->setModifier(Mod::PIERCERES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 36) * 1000));
-            PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 37) * 1000));
+            PMob->setModifier(Mod::H2HRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 37) * 1000));
             PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlInstanceHandle, 38) * 1000));
             /*
             PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlInstanceHandle, 39) - 1) * -100)); // These are stored as floating percentages

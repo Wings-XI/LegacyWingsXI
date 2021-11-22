@@ -17,7 +17,7 @@ function onPetAbility(target, automaton, skill, master, action)
         numHits = 1,
         atkmulti = 1,
         accBonus = 50,
-        weaponType = tpz.skill.CLUB,
+        damageType = tpz.damageType.BLUNT,
         ftp100 = 4.0,
         ftp200 = 5.0,
         ftp300 = 5.5,
@@ -40,13 +40,14 @@ function onPetAbility(target, automaton, skill, master, action)
         params.ftp300 = 11.0
     end
 
-    local damage = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
+    local damage, criticalHit, tpHits, extraHits = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
 
     if damage > 0 then
         if not target:hasStatusEffect(tpz.effect.EVASION_DOWN) then
             target:addStatusEffect(tpz.effect.EVASION_DOWN, 10, 0, 30)
         end
+        master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, tpHits+extraHits)
+        target:tryInterruptSpell(automaton, tpHits+extraHits)
     end
-
     return damage
 end

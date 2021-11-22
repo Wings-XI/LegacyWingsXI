@@ -45,8 +45,8 @@ local loot =
             {itemid = 770, droprate = 69},   -- Blue Rock
         },
         {
-            {itemid =     0, droprate = 389}, -- nothing
-            {itemid = 13548, droprate = 167}, -- astral_ring
+            {itemid =     0, droprate = 556}, -- nothing
+--            {itemid = 13548, droprate = 167}, -- astral_ring removed due to RMT changes
             {itemid =   922, droprate = 444}, -- bat_wing
         },
     },

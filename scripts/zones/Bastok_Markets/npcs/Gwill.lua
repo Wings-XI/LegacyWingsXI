@@ -10,9 +10,11 @@ require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     local returnOfAdven = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_RETURN_OF_THE_ADVENTURER)
     if (returnOfAdven == QUEST_ACCEPTED and trade:hasItemQty(628, 1) and trade:getItemCount() == 1) then
         player:startEvent(243)

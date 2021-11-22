@@ -51,3 +51,20 @@ CChatMessagePacket::CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE Mes
     memcpy(data + (0x08), &name[0], name.size());
     memcpy(data + (0x18), &message[0], buffSize);
 }
+
+/*
+void CChatMessagePacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needChatFix) {
+        // Hack to word around the chat message format change of Sep. 2020
+        uint8* packetbytes = this->data;
+        uint32 pktsize = this->size;
+        if (pktsize > PACKET_SIZE) {
+            pktsize = PACKET_SIZE;
+        }
+        pktsize -= 0x18;
+        memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
+        this->size = pktsize;
+    }
+}
+*/

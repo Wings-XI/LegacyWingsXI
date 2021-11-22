@@ -151,6 +151,7 @@ void CLatentEffectContainer::CheckLatentsHP()
         case LATENT_HP_UNDER_PERCENT:
         case LATENT_HP_OVER_PERCENT:
         case LATENT_HP_UNDER_TP_UNDER_100:
+        case LATENT_BASEHP_UNDER_TP_UNDER_100:
         case LATENT_HP_OVER_TP_UNDER_100:
         case LATENT_SANCTION_REGEN_BONUS:
         case LATENT_SIGIL_REGEN_BONUS:
@@ -179,6 +180,7 @@ void CLatentEffectContainer::CheckLatentsTP()
         case LATENT_TP_UNDER:
         case LATENT_TP_OVER:
         case LATENT_HP_UNDER_TP_UNDER_100:
+        case LATENT_BASEHP_UNDER_TP_UNDER_100:
         case LATENT_HP_OVER_TP_UNDER_100:
         case LATENT_SANCTION_REFRESH_BONUS:
         case LATENT_SIGIL_REFRESH_BONUS:
@@ -772,6 +774,9 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     case LATENT_HP_UNDER_TP_UNDER_100:
         expression = ((float)m_POwner->health.hp / m_POwner->health.modhp) * 100 <= latentEffect.GetConditionsValue() && m_POwner->health.tp < 1000;
         break;
+    case LATENT_BASEHP_UNDER_TP_UNDER_100:
+        expression = ((float)m_POwner->health.hp / m_POwner->health.maxhp) * 100 <= latentEffect.GetConditionsValue() && m_POwner->health.tp < 1000;
+        break;
     case LATENT_HP_OVER_TP_UNDER_100:
         expression = ((float)m_POwner->health.hp / m_POwner->health.modhp) * 100 >= latentEffect.GetConditionsValue() && m_POwner->health.tp < 1000;
         break;
@@ -1184,6 +1189,34 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         }
         break;
     }
+
+    case LATENT_HOME_NATION:
+    {
+        //player is logging in/zoning
+        if (m_POwner->loc.zone == nullptr)
+        {
+            break;
+        }
+
+        auto region = (REGIONTYPE)latentEffect.GetConditionsValue();
+
+        switch (region)
+        {
+        case REGION_SANDORIA:
+            expression = m_POwner->profile.nation == 0;
+            break;
+        case REGION_BASTOK:
+            expression = m_POwner->profile.nation == 1;
+            break;
+        case REGION_WINDURST:
+            expression = m_POwner->profile.nation == 2;
+            break;
+        default:
+            break;
+        }
+        break;
+    }
+
     case LATENT_MP_OVER:
         expression = m_POwner->health.mp >= latentEffect.GetConditionsValue();
         break;

@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 local ID = require("scripts/zones/King_Ranperres_Tomb/IDs")
 -----------------------------------
 
@@ -16,7 +17,8 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 75)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
-
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DEF, 500)
     mob:setMod(tpz.mod.MATT, 75)
     mob:setMod(tpz.mod.INT, 4)
@@ -63,6 +65,10 @@ function onMobFight(mob, target)
     end
 end
 
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENDARK, {power = math.random(45, 90), chance = 10})
+end
+
 function onMobWeaponSkill(target, mob, skill, action)
     local skillID = skill:getID()
     if skillID == 710 then
@@ -87,4 +93,3 @@ function onMobDespawn(mob)
     mob:setRespawnTime(respawn)
 	SetServerVariable("VrtraRespawn",(os.time() + respawn))
 end
-

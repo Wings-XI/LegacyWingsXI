@@ -1,17 +1,14 @@
 ---------------------------------------------
 --  Mantle Pierce
---
 --  Description: Stabs a single target. Additional effect: Weight
 --  Type: Physical
 --  Utsusemi/Blink absorb: 1-3 shadow(s)
 --  Range: Melee
 --  Notes:
 ---------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -23,11 +20,6 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = math.random(1, 3)
     local accmod = 2
     local dmgmod = 2
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 

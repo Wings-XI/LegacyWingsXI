@@ -46,7 +46,7 @@ function onUseAbility(player, target, ability, action)
         player:delStatusEffectSilent(tpz.effect.FINISHING_MOVE_5)
         player:addStatusEffect(tpz.effect.FINISHING_MOVE_4, 1, 0, 7200)
     end
-    
+
     local hit = 4
 
     local params = {}
@@ -74,7 +74,7 @@ function onUseAbility(player, target, ability, action)
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
         params.bonus = 50 - target:getMod(tpz.mod.STUNRES) + player:getMod(tpz.mod.VFLOURISH_MACC)
         local resist = applyResistance(player, target, spell, params)
-        
+
         if resist > 0.25 then
             target:addStatusEffect(tpz.effect.STUN, 1, 0, 2)
             tryBuildResistance(tpz.mod.RESBUILD_STUN, target)

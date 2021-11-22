@@ -457,6 +457,31 @@ INSERT INTO `instance_entities` VALUES(53, 17022989);
 INSERT INTO `instance_entities` VALUES(54, 17022977);
 INSERT INTO `instance_entities` VALUES(54, 17022978);
 
+-- Scouting the Ashu Talif
+INSERT INTO `instance_entities` VALUES(55, 17022990); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022991); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022992); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022993); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022994); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022995); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022996); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022997); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022998); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022999); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17023000); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17023001); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17023002); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17023003); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17023004); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17023005); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023006); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023007); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023008); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023009); -- Swiftwinged Gekko
+INSERT INTO `instance_entities` VALUES(55, 17023034); -- Ancient Lockbox (Normal)
+INSERT INTO `instance_entities` VALUES(55, 17023010); -- Ancient Lockbox (??? Item)
+INSERT INTO `instance_entities` VALUES(55, 17023059); -- Gate: Lifeboat
+
 -- Path of Darkness
 -- mobs
 INSERT INTO `instance_entities` VALUES(58, 17093132);
@@ -797,6 +822,31 @@ INSERT INTO `instance_entities` VALUES(79, 17006763);
 
 -- Seeing Blood Red
 INSERT INTO `instance_entities` VALUES(89, 17158191);
+
+-- Light In The Darkness
+INSERT INTO `instance_entities` VALUES (90, 17158192);
+INSERT INTO `instance_entities` VALUES (90, 17158193);
+INSERT INTO `instance_entities` VALUES (90, 17158194);
+INSERT INTO `instance_entities` VALUES (90, 17158195);
+INSERT INTO `instance_entities` VALUES (90, 17158196);
+INSERT INTO `instance_entities` VALUES (90, 17158197);
+INSERT INTO `instance_entities` VALUES (90, 17158198);
+INSERT INTO `instance_entities` VALUES (90, 17158199);
+INSERT INTO `instance_entities` VALUES (90, 17158200);
+INSERT INTO `instance_entities` VALUES (90, 17158201); -- Saphrire Quad
+INSERT INTO `instance_entities` VALUES (90, 17158387);
+INSERT INTO `instance_entities` VALUES (90, 17158388);
+INSERT INTO `instance_entities` VALUES (90, 17158389);
+INSERT INTO `instance_entities` VALUES (90, 17158390);
+INSERT INTO `instance_entities` VALUES (90, 17158391);
+INSERT INTO `instance_entities` VALUES (90, 17158392);
+INSERT INTO `instance_entities` VALUES (90, 17158393);
+INSERT INTO `instance_entities` VALUES (90, 17158394);
+INSERT INTO `instance_entities` VALUES (90, 17158395);
+INSERT INTO `instance_entities` VALUES (90, 17158396);
+INSERT INTO `instance_entities` VALUES (90, 17158397);
+
+-- A Manifest Problem
 INSERT INTO `instance_entities` VALUES(96, 17305662); -- Laa_Yaku_the_Austere
 INSERT INTO `instance_entities` VALUES(96, 17305921); -- Door
 INSERT INTO `instance_entities` VALUES(96, 17305647);

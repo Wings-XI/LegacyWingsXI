@@ -16,7 +16,7 @@ function onPetAbility(target, automaton, skill, master, action)
     local params = {
         numHits = 3,
         atkmulti = 1,
-        weaponType = tpz.skill.CLUB,
+        damageType = tpz.damageType.BLUNT,
         ftp100 = 1.5,
         ftp200 = 2.0,
         ftp300 = 3.0,
@@ -39,7 +39,10 @@ function onPetAbility(target, automaton, skill, master, action)
         params.accBonus = 0.04 * skill:getTP()
     end
 
-    local damage = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
-
+    local damage, criticalHit, tpHits, extraHits = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
+    if damage > 0 then
+        master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, tpHits+extraHits)
+        target:tryInterruptSpell(automaton, tpHits+extraHits)
+    end
     return damage
 end

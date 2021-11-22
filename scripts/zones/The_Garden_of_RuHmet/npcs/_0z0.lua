@@ -20,12 +20,12 @@ end
 function onTrigger(player, npc)
     --player:addMission(COP, tpz.mission.id.cop.WHEN_ANGELS_FALL)
     --player:setCharVar("PromathiaStatus", 3)
-    -- if (player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus")==3) then
-    --     player:startEvent(203)
-    -- elseif (EventTriggerBCNM(player, npc)) then
-    -- elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus")==5) then
-    --     player:startEvent(205)
-    -- end
+    if (player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus")==3) then
+        player:startEvent(203)
+    elseif (EventTriggerBCNM(player, npc)) then
+    elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus")==5) then
+        player:startEvent(205)
+    end
     return 1
 end
 

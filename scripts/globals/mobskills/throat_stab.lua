@@ -1,7 +1,7 @@
 ---------------------------------------------
 --  Throat Stab
 --
---  Description: Deals damage to a single target reducing their HP to 5%. Resets enmity.
+--  Description: Deals damage to a single target reducing their HP to 5%. Resets enmity.  or triggers an animation with no effect - dependent on mob Family
 --  Type: Physical
 --  Utsusemi/Blink absorb: No
 --  Range: Single Target
@@ -18,11 +18,13 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, 1)
-		return 0
-	end
+    -- Dolls for "A Reputation In Ruins" quest and Galarhigg in "Purple, the new black" only use this skill for an animation
+    -- Remember if you find a mob using mobskill 604 to update this line with the mob family - or the skill will execute
+    -- If a mob using skill 604 for animation is actually part of the tonberry families, perhaps use mobID
+    if mob:getFamily() == 83 or mob:getFamily() == 84 or mob:getFamily() == 271 or mob:getFamily() == 87 then 
+        skill:setMsg(tpz.msg.NONE)
+        return 0
+    end
 	
     local currentHP = target:getHP()
     -- remove all by 5%

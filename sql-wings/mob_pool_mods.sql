@@ -74,10 +74,14 @@ INSERT INTO `mob_pool_mods` VALUES(680, 1, 322, 0);
 INSERT INTO `mob_pool_mods` VALUES(680, 31, 200, 0);
 INSERT INTO `mob_pool_mods` VALUES(680, 251, -50, 0);
 INSERT INTO `mob_pool_mods` VALUES(681, 368, 10, 0);
+INSERT INTO `mob_pool_mods` VALUES(723, 3, 500, 1);
+INSERT INTO `mob_pool_mods` VALUES(723, 34, 30, 1);
 INSERT INTO `mob_pool_mods` VALUES(733, 302, 5, 0);
+INSERT INTO `mob_pool_mods` VALUES(763, 62, 1, 1);
 INSERT INTO `mob_pool_mods` VALUES(768, 28, 5, 1);
 INSERT INTO `mob_pool_mods` VALUES(770, 4, 4, 1);
 INSERT INTO `mob_pool_mods` VALUES(820, 368, 10, 0);
+INSERT INTO `mob_pool_mods` VALUES(882, 62, 1, 1);
 INSERT INTO `mob_pool_mods` VALUES(906, 4, 4, 1);
 INSERT INTO `mob_pool_mods` VALUES(930, 370, 15, 0);
 INSERT INTO `mob_pool_mods` VALUES(955, 28, -100, 1);
@@ -114,7 +118,7 @@ INSERT INTO `mob_pool_mods` VALUES(2156, 370, 25, 0);
 INSERT INTO `mob_pool_mods` VALUES(2180, 3, 100, 1);
 INSERT INTO `mob_pool_mods` VALUES(2254, 407, 100, 0);
 INSERT INTO `mob_pool_mods` VALUES(2255, 368, 70, 0);
-INSERT INTO `mob_pool_mods` VALUES(2255, 3, 100, 1);
+INSERT INTO `mob_pool_mods` VALUES(2255, 3, 500, 1);
 INSERT INTO `mob_pool_mods` VALUES(2255, 34, 60, 1);
 INSERT INTO `mob_pool_mods` VALUES(2262, 370, 125, 0);
 INSERT INTO `mob_pool_mods` VALUES(2265, 368, 150, 0);
@@ -221,12 +225,12 @@ INSERT INTO `mob_pool_mods` VALUES(6187, 1, 2000, 1);
 INSERT INTO `mob_pool_mods` VALUES(6187, 2, 13640, 1);
 INSERT INTO `mob_pool_mods` VALUES(6188, 1, 10000, 1);
 INSERT INTO `mob_pool_mods` VALUES(6188, 2, 30000, 1);
-INSERT INTO `mob_pool_mods` VALUES(2401, 1, 90, 0);
-INSERT INTO `mob_pool_mods` VALUES(2401, 28, 43, 0);
-INSERT INTO `mob_pool_mods` VALUES(2401, 407, 50, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 10, 20, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 28, 42, 0);
+INSERT INTO `mob_pool_mods` VALUES(2401, 407, 40, 0);
 INSERT INTO `mob_pool_mods` VALUES(2401, 11, 16, 1);
 
---SELECT * FROM mob_pool_mods WHERE poolid =2401;
+-- SELECT * FROM mob_pool_mods WHERE poolid =2401;
 --
 -- Indexes for dumped tables
 --

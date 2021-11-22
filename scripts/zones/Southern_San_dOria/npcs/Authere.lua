@@ -4,11 +4,14 @@
 -- Involved in Quest: Lure of the Wildcat (San d'Oria)
 -- !pos 33 1 -31 230
 -------------------------------------
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

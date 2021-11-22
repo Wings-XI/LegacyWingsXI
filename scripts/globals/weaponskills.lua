@@ -57,7 +57,7 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             if calcParams.hybridHit == true then
                 -- Calculate magical bonuses and reductions
                 local magicdmg = addBonusesAbility(attacker, wsParams.ele, target, finaldmg, wsParams)
-                magicdmg = magicdmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams.skill, bonusacc)
+                magicdmg = magicdmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams.skill, calcParams.bonusAcc)
                 magicdmg = target:magicDmgTaken(magicdmg)
                 magicdmg = adjustForTarget(target, magicdmg, wsParams.ele)
 
@@ -332,7 +332,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
 
-    local hthres = target:getMod(tpz.mod.HTHRES)
+    local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
     local impactres = target:getMod(tpz.mod.IMPACTRES)
     local slashres = target:getMod(tpz.mod.SLASHRES)
@@ -341,10 +341,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
         if attack.weaponType == tpz.skill.HAND_TO_HAND then
-            if hthres < 1000 then
-                finaldmg = finaldmg * (1 - ((1 - hthres / 1000) * (1 - spdefdown/100)))
+            if h2hres < 1000 then
+                finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
             else
-                finaldmg = finaldmg * hthres / 1000
+                finaldmg = finaldmg * h2hres / 1000
             end
         elseif attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM then
             if pierceres < 1000 then
@@ -898,7 +898,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp)
     cratio = cratio * levelcor
     cratio = utils.clamp(cratio, 0, 4.0)
     --print(string.format("cratio = %f",cratio))
-    
+
     local pdifmin = 0
     local pdifmax = 0
 
@@ -1261,44 +1261,54 @@ end
 function handleWSGorgetBelt(attacker)
     local ftpBonus = 0
     local accBonus = 0
-    if (attacker:getObjType() == tpz.objType.PC) then
+    if attacker:getObjType() == tpz.objType.PC then
         -- TODO: Get these out of itemid checks when possible.
-        local elementalGorget = { 15495, 15498, 15500, 15497, 15496, 15499, 15501, 15502 }
+        local elementalGorget = { 15495, 15496, 15497, 15498, 15499, 15500, 15501, 15502 }
         local elementalBelt =   { 11755, 11758, 11760, 11757, 11756, 11759, 11761, 11762 }
         local neck = attacker:getEquipID(tpz.slot.NECK)
         local belt = attacker:getEquipID(tpz.slot.WAIST)
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
-
         for i,v in ipairs(elementalGorget) do
-            if (neck == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
+            if neck == v then
+                if
+                    doesElementMatchWeaponskill(i, SCProp1) or
+                    doesElementMatchWeaponskill(i, SCProp2) or
+                    doesElementMatchWeaponskill(i, SCProp3)
+                then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1
                 end
+
                 break
             end
         end
 
-        if (neck == 27510) then -- Fotia Gorget
+        if neck == 27510 then -- Fotia Gorget
             accBonus = accBonus + 10
             ftpBonus = ftpBonus + 0.1
         end
 
         for i, v in ipairs(elementalBelt) do
-            if (belt == v) then
-                if (doesElementMatchWeaponskill(i, SCProp1) or doesElementMatchWeaponskill(i, SCProp2) or doesElementMatchWeaponskill(i, SCProp3)) then
+            if belt == v then
+                if
+                    doesElementMatchWeaponskill(i, SCProp1) or
+                    doesElementMatchWeaponskill(i, SCProp2) or
+                    doesElementMatchWeaponskill(i, SCProp3)
+                then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1
                 end
+
                 break
             end
         end
 
-        if (belt == 28420) then -- Fotia Belt
+        if belt == 28420 then -- Fotia Belt
             accBonus = accBonus + 10
             ftpBonus = ftpBonus + 0.1
         end
     end
+
     return ftpBonus, accBonus
 end
 

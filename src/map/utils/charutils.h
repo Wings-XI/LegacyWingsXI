@@ -35,6 +35,10 @@ class CMobEntity;
 class CMeritPoints;
 class CAbility;
 
+extern const std::string CHAT_PACKET_CHANGE_VER;
+extern const std::string TELL_PACKET_CHANGE_VER;
+extern const std::string MASTER_LV_PACKET_CHANGE_VER;
+
 /**
  * @enum EMobDifficulty
  * @brief Order matters for /check message packet
@@ -50,6 +54,17 @@ enum class EMobDifficulty : uint8
     VeryTough,
     IncrediblyTough,
     MAX
+};
+
+enum class EYellCheckResult : uint8
+{
+    YELLDEC_SUCCESS = 0,
+    YELLDEC_NEW_PLAYER,
+    YELLDEC_LEVEL_TOO_LOW,
+    YELLDEC_NOT_OPTED_IN,
+    YELLDEC_BANNED,
+    YELLDEC_MUTED,
+    YELLDEC_MAX
 };
 
 namespace charutils
@@ -88,7 +103,7 @@ namespace charutils
     void	BuildingCharTraitsTable(CCharEntity* PChar);
     void    BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID);
 
-    void    DoTrade(CCharEntity* PChar, CCharEntity* PTarget);
+    uint32  DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID = 0);
     bool    CanTrade(CCharEntity* PChar, CCharEntity* PTarget);
 
     void	CheckWeaponSkill(CCharEntity* PChar, uint8 skill);
@@ -172,6 +187,7 @@ namespace charutils
     void    SaveMentorFlag(CCharEntity* PChar);                         // saves the char's mentor flag
     void    SaveMenuConfigFlags(CCharEntity* PChar);                    // saves the char's unnamed flags
     void    SaveChatFilterFlags(CCharEntity* PChar);                    // saves the char's chat filters
+    void    SaveLanguages(CCharEntity* PChar);                          // saves the char's language preference
     void	SaveCharNation(CCharEntity* PChar);							// Save the character's nation of allegiance.
     void    SaveCampaignAllegiance(CCharEntity* PChar);                 // Save the character's campaign allegiance.
     void	SaveCharMoghancement(CCharEntity* PChar);                   // Save the character's current moghancement
@@ -203,6 +219,7 @@ namespace charutils
     void	ReloadParty(CCharEntity* PChar);
 
     bool    IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
+    uint8   GetHighestJobLevel(CCharEntity* PChar);
 
     void    AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
     void    SetPoints(CCharEntity* PChar, const char* type, int32 amount);
@@ -214,10 +231,16 @@ namespace charutils
 
     int32   GetCharVar(CCharEntity* PChar, const char* var);
     int32   GetCharVar(uint32 charid, const char* var);
+    uint32   GetCharUVar(CCharEntity* PChar, const char* var);
+    uint32   GetCharUVar(uint32 charid, const char* var);
     bool    AddCharVar(CCharEntity* PChar, const char* var, int32 increment);
     bool    AddCharVar(uint32 charid, const char* var, int32 increment);
+    bool    AddCharUVar(CCharEntity* PChar, const char* var, uint32 increment);
+    bool    AddCharUVar(uint32 charid, const char* var, uint32 increment);
     bool    SetCharVar(CCharEntity* PChar, const char* var, int32 value);
     bool    SetCharVar(uint32 charid, const char* var, int32 value);
+    bool    SetCharUVar(CCharEntity* PChar, const char* var, uint32 value);
+    bool    SetCharUVar(uint32 charid, const char* var, uint32 value);
 
     uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance);
 
@@ -257,6 +280,9 @@ namespace charutils
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
 
+    EYellCheckResult CanUseYell(CCharEntity* PChar);
+    bool IsYellSpamFiltered(CCharEntity* PChar);
+    void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason);
 };
 
 #endif // _CHARUTILS_H

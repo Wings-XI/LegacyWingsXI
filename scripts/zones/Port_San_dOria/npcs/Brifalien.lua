@@ -8,9 +8,11 @@ local ID = require("scripts/zones/Port_San_dOria/IDs")
 require("scripts/globals/npc_util")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
     if player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_1") == 7 and npcUtil.tradeHas(trade, 1127) then
         player:setCharVar("ridingOnTheClouds_1", 0)
         npcUtil.giveKeyItem(player, tpz.ki.SCOWLING_STONE)

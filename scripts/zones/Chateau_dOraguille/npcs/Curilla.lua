@@ -61,6 +61,7 @@ function onTrigger(player, npc)
     local peaceForTheSpirit = player:getQuestStatus(SANDORIA, sandyQuests.PEACE_FOR_THE_SPIRIT)
     local Rank3 = player:getRank() >= 3 and 1 or 0
 
+    
     -- Trust: San d'Oria (Curilla)
     if
         player:hasKeyItem(tpz.ki.SAN_DORIA_TRUST_PERMIT) and
@@ -78,13 +79,13 @@ function onTrigger(player, npc)
         player:startEvent(562)
 
     -- "The General's Secret"
-    -- [Blocks everything further down]
-    elseif theGeneralSecret == QUEST_ACCEPTED then
-        if player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL) then
-            player:startEvent(54)
-        else
-            player:startEvent(53)
-        end
+    elseif theGeneralSecret == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL) then
+        player:startEvent(54)
+
+    -- [Blocks everything further down] -- randomized to 50/50 block or pass through
+    elseif theGeneralSecret == QUEST_ACCEPTED and math.random(0, 1) == 1 then
+        player:startEvent(53)
+        
     elseif theGeneralSecret == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) > 1 then
         player:startEvent(55) -- Start
 

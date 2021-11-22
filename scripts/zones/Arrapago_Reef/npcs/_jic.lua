@@ -25,6 +25,5 @@ function onEventFinish(player, csid, option, target)
 end
 
 function onInstanceCreated(player, target, instance)
-    printf("onInstanceCreated - jic.lua")
     onAssaultCreated(player, target, instance, 108, tpz.ki.ILRUSI_ASSAULT_ORDERS)
 end

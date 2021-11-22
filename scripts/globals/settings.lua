@@ -122,8 +122,8 @@ DYNA_LEVEL_MIN           = 65       -- Level min for entering in Dynamis
 TIMELESS_HOURGLASS_COST  = 500000   -- Refund for the timeless hourglass for Dynamis.
 PRISMATIC_HOURGLASS_COST = 50000    -- Cost of the prismatic hourglass for Dynamis.
 CURRENCY_EXCHANGE_RATE   = 100      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
-RELIC_2ND_UPGRADE_WAIT_TIME = 7200  -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
-RELIC_3RD_UPGRADE_WAIT_TIME = 3600  -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
+RELIC_2ND_UPGRADE_WAIT_TIME = 604800  -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
+RELIC_3RD_UPGRADE_WAIT_TIME = 295200  -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
 
 -- QUEST/MISSION SPECIFIC SETTINGS
 AF1_QUEST_LEVEL = 40    -- Minimum level to start AF1 quest
@@ -160,6 +160,9 @@ FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to n
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
+STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
+STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
+Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
 
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
@@ -180,11 +183,12 @@ GOBBIE_BOX_MIN_AGE  = 45 -- Minimum character age in days before a character can
 ARTISAN_MOOGLES_GIVE_SCROLLS = 0 -- Do Artisan Moogles give free instant warp scrolls
 
 -- LINKSHELL CONCIERGE
-LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type  
+LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type
 
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
--- ASSAULTS
-IS_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take assault and door to let you enter in assault area
-MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from Naja (1 = PSC, 2 = PFC, 3 = SP, ...)
+-- ASSAULTS | ZNMs
+IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
+MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior

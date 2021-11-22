@@ -1,6 +1,7 @@
 --------------------------------------
--- Assault Utilities 
+-- Assault Utilities
 -- desc : Common functions for the assaults
+-- Credit: KnowOne - https://github.com/KnowOne134/DSP-Shared_Collection/blob/main/Assault/assault.lua
 --------------------------------------
 require("scripts/globals/appraisal")
 require("scripts/globals/besieged")
@@ -95,7 +96,7 @@ function onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csi
     local beginnings = player:getQuestStatus(tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.BEGINNINGS)
 
     -- IMMORTAL SENTRIES
-    if toauMission == IMMORTAL_SENTRIES then
+    if toauMission == tpz.mission.id.toau.IMMORTAL_SENTRIES then
         if player:hasKeyItem(tpz.ki.SUPPLIES_PACKAGE) then
             player:startEvent(csid1)
         elseif player:getCharVar("AhtUrganStatus") == 1 then
@@ -111,7 +112,7 @@ function onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csi
         end;
 
     -- ASSAULT
-    elseif toauMission >= PRESIDENT_SALAHEEM then
+    elseif toauMission >= tpz.mission.id.toau.PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
         if player:getCharVar("assaultEntered") == 0 and player:hasKeyItem(orders) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             player:startEvent(csid5, 50, IPpoint)
@@ -185,7 +186,7 @@ function onAssaultUpdate(player, csid, option, target, orders, zoneID)
 
     player:setCharVar("AssaultCap", cap)
 
-    if player:getGMLevel() == 0 and player:getPartySize() < 3 then
+    if (player:getGMLevel() == 0 or player:getGMLevel() == 1) and player:getPartySize() < 3 then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
         player:instanceEntry(target,1)
         return
@@ -233,9 +234,10 @@ function onAssaultCreated(player, target, instance, endCS, destinationID)
         if (party ~= nil) then
             for _,v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
+                    v:release()
                     v:setLocalVar("Area", destinationID)
                     v:setInstance(instance)
-                    v:startEvent(endCS, destinationID)
+                    v:timer(3000, function(player) player:startEvent(endCS, destinationID) end)
                 end
             end
         end
@@ -254,10 +256,8 @@ function afterAssaultRegister(player, fireFlies, textTable, mobTable)
     local assaultID = player:getCurrentAssault()
     --local cap = instance:getLevelCap()
     local cap = 0 -- TODO: need to correct this!
-    for _, v in pairs(mobTable[assaultID].MOBS_START) do
-        SpawnMob(v, instance)
-    end
 
+    player:setLocalVar("AssaultCompletedMessage", 0)
     player:messageSpecial(textTable.ASSAULT_START_OFFSET + assaultID, assaultID)
     player:messageSpecial(textTable.TIME_TO_COMPLETE, instance:getTimeLimit())
     player:addTempItem(fireFlies)
@@ -303,11 +303,14 @@ end
 -- onAssaultComplete( instance, X, Z, textTable, npcTable)
 -- Annonce to players that Rune of Release has appeared at a position
 -- -------------------------------------------------------------------
-function onAssaultComplete(instance, X, Z, textTable, npcTable) -- Recherche textTable et npcTable
+function onAssaultComplete(instance, X, Z, textTable, npcTable)
     local chars = instance:getChars()
 
     for _,v in pairs(chars) do
-        v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
+        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then
+            v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
+            v:setLocalVar("AssaultCompletedMessage", 1)
+        end
     end
 
     instance:getEntity(bit.band(npcTable.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
@@ -475,5 +478,17 @@ function assaultChestTrigger(player, npc, qItemTable, regItemTable, textTable)
                 end
             end
         end
+    end
+end
+
+-- -------------------------------------------------------------------
+-- spawnMobInAssault(instance, mobTable)
+-- Spawn the mob of the assault
+-- -------------------------------------------------------------------
+function spawnMobInAssault(instance, mobTable)
+    local assaultID = instance:getID()
+
+    for _, v in pairs(mobTable[assaultID].MOBS_START) do
+        SpawnMob(v, instance)
     end
 end

@@ -14,7 +14,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:getZPos() > -280 then
+    if player:getZPos() > 280 then
         player:startEvent(164) -- Ruins -> Zhayolm
     else
         player:startEvent(162) -- Zhayolm -> Ruins
@@ -27,6 +27,6 @@ end
 function onEventFinish(player, csid, option)
     if csid == 163 then
         player:confirmTrade()
-        player:setPos(-20, -6, 0, 192) -- using the pos method until the problem below is fixed
+        player:setPos(-16.720, 3.670, 319.996, 0) -- To Alzadaal Undersea Ruins (H-9 inside Alzadaal Undersea Ruins) 
     end
 end

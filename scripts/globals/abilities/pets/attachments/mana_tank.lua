@@ -13,6 +13,8 @@ function onEquip(pet)
     elseif frame == tpz.frames.STORMWAKER then
         pet:addMod(tpz.mod.MPP, 4)
     end
+    pet:updateHealth()
+    pet:setMP(pet:getMaxMP())
 end
 
 function onUnequip(pet)
@@ -22,6 +24,7 @@ function onUnequip(pet)
     elseif frame == tpz.frames.STORMWAKER then
         pet:delMod(tpz.mod.MPP, 4)
     end
+    pet:updateHealth()
 end
 
 function onManeuverGain(pet, maneuvers)

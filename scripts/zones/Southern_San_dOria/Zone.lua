@@ -10,12 +10,17 @@ require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/chocobo")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
+require("scripts/globals/status")
+require("scripts/globals/utils")
 -----------------------------------
 
 function onInitialize(zone)
     zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
     quests.ffr.initZone(zone) -- register regions 2 through 6
     applyHalloweenNpcCostumes(zone:getID())
+    applyHalloweenDecorations(zone:getID())
+    applyStarlightDecorations(zone:getID())
     tpz.chocobo.initZone(zone)
 end
 
@@ -54,6 +59,29 @@ end
 
 function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
+    -- Move Troupe Valeriano (Circus) --
+    if getNationRank(tpz.nation.SANDORIA) == 1 then
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.NORMAL)
+                end
+            end
+        end
+    else
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.DISAPPEAR)
+                end
+            end
+        end
+
+    end
 end
 
 function onRegionEnter(player, region)

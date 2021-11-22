@@ -646,7 +646,7 @@ void SetupJob(CMobEntity* PMob)
             {
                 PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 658); // catapult only used while at range
             }
-            else if (PMob->m_Family == 246) 
+            else if (PMob->m_Family == 246)
             {
                 // Trolls love cannons, but they take a second to shoot
                 PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1747);
@@ -680,6 +680,10 @@ void SetupJob(CMobEntity* PMob)
             else if (PMob->m_Family == 337) // Dyna-Quadav
             {
                 PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1123);
+            }
+            else if (PMob->m_Family == 358) // Dyna-Kindred
+            {
+                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1146);
             }
             else if (PMob->m_Family != 335) // exclude NIN Maat
             {
@@ -1270,7 +1274,7 @@ CMobEntity* InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance)
 
             PMob->setModifier(Mod::SLASHRES, (uint16)(Sql_GetFloatData(SqlHandle, 31) * 1000));
             PMob->setModifier(Mod::PIERCERES, (uint16)(Sql_GetFloatData(SqlHandle, 32) * 1000));
-            PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlHandle, 33) * 1000));
+            PMob->setModifier(Mod::H2HRES, (uint16)(Sql_GetFloatData(SqlHandle, 33) * 1000));
             PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlHandle, 34) * 1000));
             /*
             PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlHandle, 35) - 1) * -100)); // These are stored as floating percentages

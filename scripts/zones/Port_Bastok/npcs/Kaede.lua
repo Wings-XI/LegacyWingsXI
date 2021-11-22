@@ -10,9 +10,11 @@ require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onStarlightSmilebringersTrade(player, trade, npc)
 
     if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_2") == 4) then
         if (trade:hasItemQty(1127, 1) and trade:getItemCount() == 1) then -- Trade Kindred seal
@@ -21,8 +23,14 @@ function onTrade(player, npc, trade)
             player:addKeyItem(tpz.ki.SMILING_STONE)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SMILING_STONE)
         end
+    elseif player:getCharVar("AnnyEvent2020") == 4 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(949, 1) and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 5)
+            player:PrintToPlayer("Kaede : Well hello! Thanks for this its a nice present!", 0xD)
+            player:PrintToPlayer("Kaede : Visit the first three of nine, obtain what power they newly provide and show my sister what you have found...", 0xD)
+        end
     end
-
 end
 
 function onTrigger(player, npc)

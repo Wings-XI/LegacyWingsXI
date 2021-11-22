@@ -31,7 +31,7 @@ function onTrigger(player, npc)
         player:startEvent(439) -- cs - Post Talacca Cove win, sends player to Iruki-Waraki
     elseif (PuppetmasterBluesProgress == 4) then
         player:startEvent(440) -- reminds player to go to Iruki-Waraki
-    elseif (NoStringsAttached == QUEST_COMPLETE) then
+    elseif (NoStringsAttached == QUEST_COMPLETED) then
         player:startEvent(436) -- encourages you
     else
         player:startEvent(433) -- acts indifferent to you

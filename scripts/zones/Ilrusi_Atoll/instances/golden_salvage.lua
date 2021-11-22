@@ -10,13 +10,8 @@ require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
 
-function afterInstanceRegister(player)
-    afterAssaultRegister(player, 5347, ID.text, ID.mob)
-end
-
 function onInstanceCreated(instance)
     instance:setProgress(math.random(ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET, ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET + 11))
-    --instance:setProgress(17002515)
     local figureheadChest = instance:getProgress()
     local spawnPoints =
         {
@@ -38,20 +33,6 @@ function onInstanceCreated(instance)
             [16] = {546, -8, 258, 81},
         }
     
-    
-    -- for i = ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET, ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET + 11 do
-    --     local sPoint = math.random(1,#spawnPoints) -- Randoms the 1st 8 points for chests, last 4 are static on boats
-    --     local mobID = instance:getEntity(bit.band(i, 0xFFF), tpz.objType.MOB):getID()
-    --     if figureheadChest == mobID then 
-    --         instance:getEntity(bit.band(i, 0xFFF), tpz.objType.NPC):setPos(spawnPoints[sPoint])
-    --         instance:getEntity(bit.band(i, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
-    --     else
-    --         instance:getEntity(bit.band(i, 0xFFF), tpz.objType.MOB):setSpawn(spawnPoints[sPoint])
-    --         SpawnMob(i, instance)
-    --     end
-    --     table.remove(spawnPoints,sPoint)   
-    -- end
-
     for i = ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET, ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET + 7 do
         local sPoint = math.random(1,#spawnPoints) -- Randoms the 1st 8 points for chests, last 4 are static on boats
         instance:getEntity(bit.band(i, 0xFFF), tpz.objType.NPC):setPos(spawnPoints[sPoint])
@@ -61,6 +42,12 @@ function onInstanceCreated(instance)
 
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(380.000,-7.894,64.999,0)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(380.000,-7.756,61.999,0)
+
+    spawnMobInAssault(instance, ID.mob)
+end
+
+function afterInstanceRegister(player)
+    afterAssaultRegister(player, 5347, ID.text, ID.mob)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
@@ -82,8 +69,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
-    assaultOnEventFinish(player, 102, tpz.zone.ARRAPAGO_REEF)
 end

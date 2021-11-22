@@ -36,7 +36,7 @@ end
 
 function onInstanceProgressUpdate(instance, progress)
 
-    if (progress >= 10 and instance:completed() == false) then
+    if (progress >= 3 and instance:completed() == false) then
         instance:complete()
     end
 
@@ -59,5 +59,3 @@ end
 function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
-end

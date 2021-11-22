@@ -67,7 +67,7 @@ function onEventFinish(player, csid, option)
 
             local choice = items[item]
             if choice and npcUtil.giveItem(player, choice.itemid) then
-                player:delAssaultPoint(2, choice.price) -- Remove from LEBROS_ASSAULT_POINT
+                player:delAssaultPoint(choice.price, 2) -- Remove from LEBROS_ASSAULT_POINT
             end
         end
     end

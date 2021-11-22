@@ -142,6 +142,12 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
         // 0 - Mark the char as deleted but do not remove rows
         return "0";
     }
+    else if (strConfigName == "delete_char_cooldown") {
+        // Do not allow deletion of characters created less than
+        // the configured number in minutes. Set to zero to disable
+        // and allow character deletion regardless of time.
+        return "0";
+    }
     else if (strConfigName == "maintenance_mode") {
         // The server is in maintenance mode, only those with special
         // permission can log-in.
@@ -154,6 +160,11 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
     }
     else if (strConfigName == "one_account_per_ip") {
         // Allow only a single account per IP address unless exempt
+        return "0";
+    }
+    else if (strConfigName == "ip_lookup_identification") {
+        // Use the old IP lookup method for data and view server
+        // user identification.
         return "0";
     }
     LOG_ERROR("No default configuration value found.");

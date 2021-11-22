@@ -13,5 +13,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.STINGING_SOPHIE_PH, 5, math.random(1200, 3600)) -- 20 to 60 minutes
+    tpz.mob.phOnDespawn(mob, ID.mob.STINGING_SOPHIE_PH, 5, 1) -- True lottery pop, can pop back to back
 end

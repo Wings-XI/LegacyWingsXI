@@ -11,18 +11,10 @@ local valoredgeFrameModelId = 1983
 local sharpshotFrameModelId = 1990
 local stormwalkerFrameModelId = 1994
 
-local function messageAllPlayersInBattlefield(mob, messageId, percent)
-    local battlefield = mob:getBattlefield()
-    local players = battlefield:getPlayers()
-    for _, member in pairs(players) do
-        member:messageSpecial(messageId, percent)
-    end
-end
-
 local function changeToValoredge(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == valoredgeFrameModelId) then
         local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MELEE_KEEP_FRAME, percent)
+        mob:showText(mob, ID.text.VALKENG_MELEE_KEEP_FRAME, percent)
         if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
             mob:addMod(tpz.mod.DELAY, 200) -- Speed up attack rate
@@ -31,25 +23,25 @@ local function changeToValoredge(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MELEE_CHANGE_FRAME, percent)
-    mob:setModelId(valoredgeFrameModelId)
+    mob:showText(mob, ID.text.VALKENG_MELEE_CHANGE_FRAME, percent)
     mob:setLocalVar("CurrentFrame", valoredgeFrameModelId)
-    mob:sendUpdateToZoneCharsInRange()
     mob:setMod(tpz.mod.UDMGPHYS, -85)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
-    mob:SetMagicCastingEnabled(false)
     mob:setBehaviour(0) -- Standback disabled
     mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:delMobMod(tpz.mobMod.HP_STANDBACK, 50)
     mob:setMod(tpz.mod.DELAY, 2400) -- high attack speed
     mob:setMod(tpz.mod.REGEN, 10) --Weak Auto Regen
+
+    mob:SetMagicCastingEnabled(false)
+    mob:useMobAbility(2018)
 end
 
 local function changeToStormwaker(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == stormwalkerFrameModelId) then
         local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MAGIC_KEEP_FRAME, percent)
+        mob:showText(mob, ID.text.VALKENG_MAGIC_KEEP_FRAME, percent)
         if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
                 mob:delMobMod(tpz.mobMod.MAGIC_COOL, 1) -- Speed up magic casting
@@ -59,14 +51,11 @@ local function changeToStormwaker(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_MAGIC_CHANGE_FRAME, percent)
-    mob:setModelId(stormwalkerFrameModelId)
+    mob:showText(mob, ID.text.VALKENG_MAGIC_CHANGE_FRAME, percent)
     mob:setLocalVar("CurrentFrame", stormwalkerFrameModelId)
-    mob:sendUpdateToZoneCharsInRange()
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
     mob:setMod(tpz.mod.UDMGMAGIC, -85)
-    mob:SetMagicCastingEnabled(true)
     mob:setSpellList(2) -- generic blm
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 20)
     mob:setMod(tpz.mod.UFASTCAST, 25)
@@ -75,13 +64,16 @@ local function changeToStormwaker(mob, percent)
     mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:setMod(tpz.mod.DELAY, 0) -- remove high attack speed
     mob:setMod(tpz.mod.REGEN, 0) -- remove weak auto regen
+
+    mob:SetMagicCastingEnabled(false)
+    mob:useMobAbility(2018)
 end
 
 local function changeToSharpshot(mob, percent)
     if(mob:getLocalVar("CurrentFrame") == sharpshotFrameModelId) then
     local consecutiveManeuvers = mob:getLocalVar("ConsecutiveManeuvers")
-        messageAllPlayersInBattlefield(mob, ID.text.VALKENG_RANGED_KEEP_FRAME, percent)
-         if (consecutiveManeuvers < 5) then
+        mob:showText(mob, ID.text.VALKENG_RANGED_KEEP_FRAME, percent)
+        if (consecutiveManeuvers < 5) then
             mob:setLocalVar("ConsecutiveManeuvers", consecutiveManeuvers + 1)
             mob:delMobMod(tpz.mobMod.SPECIAL_COOL, 2)  -- Speed Up Ranged attacks
         end
@@ -89,19 +81,19 @@ local function changeToSharpshot(mob, percent)
     end
 
     mob:setLocalVar("ConsecutiveManeuvers", 0)
-    messageAllPlayersInBattlefield(mob, ID.text.VALKENG_RANGED_CHANGE_FRAME, percent)
-    mob:setModelId(sharpshotFrameModelId)
+    mob:showText(mob, ID.text.VALKENG_RANGED_CHANGE_FRAME, percent)
     mob:setLocalVar("CurrentFrame", sharpshotFrameModelId)
-    mob:sendUpdateToZoneCharsInRange()
     mob:setMod(tpz.mod.UDMGPHYS, 25)
     mob:setMod(tpz.mod.UDMGRANGE, -85)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
-    mob:SetMagicCastingEnabled(false)
     mob:setBehaviour(2) --Standback enabled
     mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 272) -- ranged attacks enabled
     mob:setMobMod(tpz.mobMod.SPECIAL_COOL, 14) -- ranged attack speed
     mob:setMod(tpz.mod.DELAY, 0) -- remove high attack speed
     mob:setMod(tpz.mod.REGEN, 0) -- remove weak auto regen
+
+    mob:SetMagicCastingEnabled(false)
+    mob:useMobAbility(2018)
 end
 
 
@@ -138,6 +130,18 @@ function onMobWeaponSkill(target, mob, skill)
     -- Valkeng (uniquely) treats this as a TP move
     if(skill:getID()==1944) then
         mob:setTP(0)
+    end
+
+    if(skill:getID()==2018) then
+        mob:timer(2000, function(mob)
+            if mob:isAlive() then
+                mob:setModelId(mob:getLocalVar("CurrentFrame"))
+                mob:sendUpdateToZoneCharsInRange()
+                if(mob:getLocalVar("CurrentFrame")==stormwalkerFrameModelId) then
+                    mob:SetMagicCastingEnabled(true)
+                end
+            end
+        end)
     end
 end
 

@@ -27,7 +27,6 @@ zones[tpz.zone.KUFTAL_TUNNEL] =
         FISHBONES                = 7349,  -- Fish bones lie scattered about the area...
         SENSE_OMINOUS_PRESENCE   = 7351,  -- You sense an ominous presence...
         REGIME_REGISTERED        = 10335, -- New training regime registered!
-        COMMON_SENSE_SURVIVAL    = 11419, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         PLAYER_OBTAINS_ITEM      = 11387, -- <name> obtains <item>!
         UNABLE_TO_OBTAIN_ITEM    = 11388, -- You were unable to obtain the item.
         PLAYER_OBTAINS_TEMP_ITEM = 11389, -- <name> obtains the temporary item: <item>!

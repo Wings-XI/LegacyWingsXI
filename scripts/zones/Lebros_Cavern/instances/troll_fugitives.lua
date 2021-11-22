@@ -27,7 +27,7 @@ function onInstanceCreated(instance)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
-    updateInstanceTime(instance, elapsed, Lebros.text)
+    updateInstanceTime(instance, elapsed, ID.text)
 end
 
 function onInstanceFailure(instance)
@@ -64,7 +64,4 @@ function onInstanceComplete(instance)
 end
 
 function onEventUpdate(player, csid, option)
-end
-
-function onEventFinish(player, csid, option)
 end

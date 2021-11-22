@@ -218,7 +218,11 @@ ROV =
     ['full_name'] = "Rhapsodies of Vana'diel",
     ['mission_log']= 13
 }
-
+HOLIDAY = 
+{
+    ['full_name'] = "Holiday Fame",
+    ['fame_area']= 16
+}
 QUEST_LOGS = {
     [0] = "SANDORIA",
     [1] = "BASTOK",

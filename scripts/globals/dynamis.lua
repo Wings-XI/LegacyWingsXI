@@ -47,7 +47,7 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaSandoria_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER,
         enterPos = {161.838, -2.000, 161.673, 93, 185},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
     },
     [tpz.zone.BASTOK_MINES] =
     {
@@ -62,7 +62,7 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaBastok_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_EYEGLASS,
         enterPos = {116.482, 0.994, -72.121, 128, 186},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
     },
     [tpz.zone.WINDURST_WALLS] =
     {
@@ -77,7 +77,7 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaWindurst_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_LANTERN,
         enterPos = {-221.988, 1.000, -120.184, 0, 187},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
     },
     [tpz.zone.RULUDE_GARDENS] =
     {
@@ -92,7 +92,7 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaJeuno_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_TACTICAL_MAP,
         enterPos = {48.930, 10.002, -71.032, 195, 188},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
     },
     [tpz.zone.BEAUCEDINE_GLACIER] =
     {
@@ -100,19 +100,18 @@ dynamis.entryInfo =
         csRegisterGlass = 118,
         csWin = 134,
         csDyna = 119,
-        enabled = false,
+        enabled = true,
         winVar = "DynaBeaucedine_Win",
         hasEnteredVar = "DynaBeaucedine_HasEntered",
         hasSeenWinCSVar = "DynaBeaucedine_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_INSIGNIA,
         enterPos = {-284.751, -39.923, -422.948, 235, 134},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_EYEGLASS) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_LANTERN) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_TACTICAL_MAP)
-        end,
+        reqs =
+                {tpz.ki.VIAL_OF_SHROUDED_SAND,
+                tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER,
+                tpz.ki.HYDRA_CORPS_EYEGLASS,
+                tpz.ki.HYDRA_CORPS_LANTERN,
+                tpz.ki.HYDRA_CORPS_TACTICAL_MAP}
     },
     [tpz.zone.XARCABARD] =
     {
@@ -120,16 +119,16 @@ dynamis.entryInfo =
         csRegisterGlass = 15,
         csWin = 32,
         csDyna = 16,
-        enabled = false,
+        enabled = true,
         winVar = "DynaXarcabard_Win",
         hasEnteredVar = "DynaXarcabard_HasEntered",
         hasSeenWinCSVar = "DynaXarcabard_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_BATTLE_STANDARD,
         enterPos = {569.312, -0.098, -270.158, 90, 135},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA)
-        end,
+        reqs =
+               {tpz.ki.VIAL_OF_SHROUDED_SAND,
+                tpz.ki.HYDRA_CORPS_INSIGNIA}
+
     },
     [tpz.zone.VALKURM_DUNES] =
     {
@@ -144,10 +143,9 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaValkurm_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_VALKURM_SLIVER,
         enterPos = {100, -8, 131, 47, 39},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
-        end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
+
+
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
@@ -162,10 +160,9 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaBuburimu_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_BUBURIMU_SLIVER,
         enterPos = {155, -1, -169, 170, 40},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
-        end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
+
+
     },
     [tpz.zone.QUFIM_ISLAND] =
     {
@@ -180,10 +177,9 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_QUFIM_SLIVER,
         enterPos = {-19, -17, 104, 253, 41},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
-        end,
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
+
+
     },
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {
@@ -198,13 +194,13 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         enterPos = {0.1, -7, -21, 190, 42},
-        reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.DYNAMIS_BUBURIMU_SLIVER) and
-                   player:hasKeyItem(tpz.ki.DYNAMIS_QUFIM_SLIVER) and
-                   player:hasKeyItem(tpz.ki.DYNAMIS_VALKURM_SLIVER) and
-                   player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED)
-        end,
+        reqs =
+                {tpz.ki.VIAL_OF_SHROUDED_SAND,
+                tpz.ki.DYNAMIS_BUBURIMU_SLIVER,
+                tpz.ki.DYNAMIS_QUFIM_SLIVER,
+                tpz.ki.DYNAMIS_VALKURM_SLIVER}
+
+
     },
 }
 
@@ -220,7 +216,7 @@ dynamis.dynaInfo =
         entryPos = {161.838, -2.000, 161.673, 93, tpz.zone.DYNAMIS_SAN_DORIA},
         ejectPos = {161.000, -2.000, 161.000, 94, tpz.zone.SOUTHERN_SAN_DORIA},
     },
-    [tpz.zone.SOUTHERN_SAN_DORIA] = 
+    [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         dynaZone = tpz.zone.DYNAMIS_SAN_DORIA,
         dynaZoneMessageParam = 1,
@@ -235,7 +231,7 @@ dynamis.dynaInfo =
         entryPos = {116.482, 0.994, -72.121, 128, tpz.zone.DYNAMIS_BASTOK},
         ejectPos = {112.000, 0.994, -72.000, 127, tpz.zone.BASTOK_MINES},
     },
-    [tpz.zone.BASTOK_MINES] = 
+    [tpz.zone.BASTOK_MINES] =
     {
         dynaZone = tpz.zone.DYNAMIS_BASTOK,
         dynaZoneMessageParam = 2,
@@ -250,7 +246,7 @@ dynamis.dynaInfo =
         entryPos = {-221.988, 1.000, -120.184, 0 , tpz.zone.DYNAMIS_WINDURST},
         ejectPos = {-217.000, 1.000, -119.000, 94, tpz.zone.WINDURST_WALLS},
     },
-    [tpz.zone.WINDURST_WALLS] = 
+    [tpz.zone.WINDURST_WALLS] =
     {
         dynaZone = tpz.zone.DYNAMIS_WINDURST,
         dynaZoneMessageParam = 3,
@@ -265,7 +261,7 @@ dynamis.dynaInfo =
         entryPos = {48.930, 10.002, -71.032, 195, tpz.zone.DYNAMIS_JEUNO},
         ejectPos = {48.930, 10.002, -71.032, 195, tpz.zone.RULUDE_GARDENS},
     },
-    [tpz.zone.RULUDE_GARDENS] = 
+    [tpz.zone.RULUDE_GARDENS] =
     {
         dynaZone = tpz.zone.DYNAMIS_JEUNO,
         dynaZoneMessageParam = 4,
@@ -277,10 +273,10 @@ dynamis.dynaInfo =
         hasSeenWinCSVar = "DynaBeaucedine_HasSeenWinCS",
         winKI = tpz.ki.HYDRA_CORPS_INSIGNIA,
         winTitle = tpz.title.DYNAMIS_BEAUCEDINE_INTERLOPER,
-        entryPos = {-284.751, -39.923, -422.948, 235, tpz.zone.RULUDE_GARDENS},
+        entryPos = {-284.751, -39.923, -422.948, 235, tpz.zone.DYNAMIS_BEAUCEDINE},
         ejectPos = {-284.751, -39.923, -422.948, 235, tpz.zone.BEAUCEDINE_GLACIER},
     },
-    [tpz.zone.BEAUCEDINE_GLACIER] = 
+    [tpz.zone.BEAUCEDINE_GLACIER] =
     {
         dynaZone = tpz.zone.DYNAMIS_BEAUCEDINE,
         dynaZoneMessageParam = 5,
@@ -295,7 +291,7 @@ dynamis.dynaInfo =
         entryPos = {569.312, -0.098, -270.158, 90, tpz.zone.DYNAMIS_XARCABARD},
         ejectPos = {569.312, -0.098, -270.158, 90, tpz.zone.XARCABARD},
     },
-    [tpz.zone.XARCABARD] = 
+    [tpz.zone.XARCABARD] =
     {
         dynaZone = tpz.zone.DYNAMIS_XARCABARD,
         dynaZoneMessageParam = 6,
@@ -310,7 +306,7 @@ dynamis.dynaInfo =
         entryPos = {100, -8, 131, 47, tpz.zone.DYNAMIS_VALKURM},
         ejectPos = {119, -9, 131, 52, tpz.zone.VALKURM_DUNES},
     },
-    [tpz.zone.VALKURM_DUNES] = 
+    [tpz.zone.VALKURM_DUNES] =
     {
         dynaZone = tpz.zone.DYNAMIS_VALKURM,
         dynaZoneMessageParam = 7,
@@ -325,7 +321,7 @@ dynamis.dynaInfo =
         entryPos = {155, -1, -169, 170, tpz.zone.DYNAMIS_BUBURIMU},
         ejectPos = {154, -1, -170, 190, tpz.zone.BUBURIMU_PENINSULA},
     },
-    [tpz.zone.BUBURIMU_PENINSULA] = 
+    [tpz.zone.BUBURIMU_PENINSULA] =
     {
         dynaZone = tpz.zone.DYNAMIS_BUBURIMU,
         dynaZoneMessageParam = 8,
@@ -340,7 +336,7 @@ dynamis.dynaInfo =
         entryPos = {-19, -17, 104, 253, tpz.zone.DYNAMIS_QUFIM},
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
     },
-    [tpz.zone.QUFIM_ISLAND] = 
+    [tpz.zone.QUFIM_ISLAND] =
     {
         dynaZone = tpz.zone.DYNAMIS_QUFIM,
         dynaZoneMessageParam = 9,
@@ -355,12 +351,12 @@ dynamis.dynaInfo =
         entryPos = {0.1, -7, -21, 190, tpz.zone.DYNAMIS_TAVNAZIA},
         ejectPos = {0  , -7, -23, 195, tpz.zone.TAVNAZIAN_SAFEHOLD},
     },
-    [tpz.zone.TAVNAZIAN_SAFEHOLD] = 
+    [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {
         dynaZone = tpz.zone.DYNAMIS_TAVNAZIA,
         dynaZoneMessageParam = 10,
     },
-    
+
 }
 
 dynamis.eyes =
@@ -381,16 +377,23 @@ dynamis.maxchars = 64
 dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
     local playerZoneID = player:getZoneID()
     if dynamis.entryInfo[playerZoneID].enabled == false then return end
-    if player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) == false then return end
+    for i, name in ipairs(dynamis.entryInfo[playerZoneID].reqs) do --requirements for northlands and elsewhere
+        if player:hasKeyItem(name) == false then return end
+    end
+    if dynamis.entryInfo[playerZoneID].csBit >= 7 then --Requirements for dreamlands
+        if player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) == false then
+            return
+        end
+    end
     if player:getMainLvl() < dynamis.min_lvl then
         player:messageSpecial(message_not_reached_level, dynamis.min_lvl)
         return
     end
-    
+
     local remaining = GetDynaTimeRemaining(dynamis.entryInfo[playerZoneID].enterPos[5])
     local hasEntered = player:getCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar)
     local timeSinceLastDynaReservation = player:timeSinceLastDynaReservation()
-    
+
     if npcUtil.tradeHas(trade, dynamis.timeless, true, false) then -- timeless hourglass, attempting to trade for a perpetual hourglass
         if remaining > 0 then
             player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
@@ -515,17 +518,17 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
 end
 
 dynamis.zoneOnInitialize = function(zone)
-    
+
 end
 
 dynamis.zoneOnZoneIn = function(player, prevZone)
     local zoneId = player:getZoneID()
     local info = dynamis.dynaInfo[zoneId]
     local ID = zones[zoneId]
-    
+
     -- usually happens when zoning in with !zone command
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then player:setPos(info.entryPos[1],info.entryPos[2],info.entryPos[3],info.entryPos[4]) end
-    
+
     if player:verifyHoldsValidHourglass() == true then
         player:updateHourglassExpireTime()
         player:timer(1000, function(player)
@@ -535,7 +538,7 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
         if player:getCharVar("DynaBypassWeakness") == 0 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
         player:setCharVar("DynaBypassWeakness", 0)
     end
-    
+
     return -1
 end
 
@@ -543,7 +546,7 @@ dynamis.spawnWave = function(mobList, waveNumber)
     local iStart = 4096*4096+(4096*mobList.zoneID)
     local i = iStart
     local iEnd = iStart + 1023
-    
+
     while i <= iEnd do
         if mobList[i] ~= nil and mobList[i].waves ~= nil and mobList[i].waves[waveNumber] ~= nil and GetMobByID(i):isSpawned() == false then SpawnMob(i) end
         i = i + 1
@@ -557,7 +560,7 @@ end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
     local eyes = mob:AnimationSub()
-    
+
     if isKiller and (eyes == dynamis.eyes.BLUE or eyes == dynamis.eyes.GREEN) then
         -- MP or HP refill
         local zone = mob:getZone()
@@ -581,7 +584,7 @@ end
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 0 then return end
     mob:setLocalVar("dynaReadyToSpawnChildren", 0)
-    
+
     local mobID = mob:getID()
     local specificChildrenList = nil
     local randomChildrenCount = nil
@@ -589,7 +592,7 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         randomChildrenCount = mobList[mobID].randomChildrenCount
         specificChildrenList = mobList[mobID].specificChildren
     end
-    
+
     local forceLink = false
     local i = 1
     while specificChildrenList ~= nil and specificChildrenList[i] ~= nil do
@@ -629,17 +632,17 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
 end
 
 dynamis.mobOnRoamAction = function(mob)
-    
+
 end
 
 dynamis.mobOnDeath = function (mob, mobList, msg)
     if mob:getLocalVar("dynamisMobOnDeathTriggered") == 1 then return end
     mob:setLocalVar("dynamisMobOnDeathTriggered", 1) -- onDeath lua happens once per party member that killed the mob, but we want this to only run once per mob
-    
+
     local mobID = mob:getID()
     if mobList[mobID] ~= nil and mobList[mobID].timeExtension ~= nil then mob:addTimeToDynamis(mobList[mobID].timeExtension, msg) end
     if mob:getLocalVar("clearSpawnPosOnDeath") == 1 then mob:setSpawn(1,1,1,0) end
-    
+
     local i = 2
     local j = 1
     local mobFound = false
@@ -655,7 +658,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
         j = 1
         i = i + 1
     end
-    
+
     if mobFound == true then
         --print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
@@ -736,13 +739,14 @@ end
 dynamis.setMobStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
-    
+
     mob:setMaxHPP(132)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -30)
     mob:setMod(tpz.mod.VIT, -15)
     mob:setMod(tpz.mod.DEFP, 10)
-    
+    mob:setTrueDetection(1)
+
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
         local params = { }
@@ -866,7 +870,7 @@ end
 dynamis.setNMStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
-    
+
     mob:setMaxHPP(132)
     mob:setMobLevel(math.random(85,86))
     mob:setMod(tpz.mod.STR, -15)
@@ -878,7 +882,7 @@ dynamis.setNMStats = function(mob)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
     mob:setMod(tpz.mod.BINDRESTRAIT, 20)
     mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-    
+
     mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
     mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
     mob:setMod(tpz.mod.RESBUILD_BIND, 25)
@@ -889,7 +893,9 @@ dynamis.setNMStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
     mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
-    
+
+    mob:setTrueDetection(1)
+
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
     elseif job == tpz.job.MNK then
@@ -929,23 +935,23 @@ dynamis.setNMStats = function(mob)
         mob:addMod(tpz.mod.REFRESH, 3)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
     end
-    
+
 end
 
 dynamis.setStatueStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
-    
+
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
     mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 15)
+    mob:setMod(tpz.mod.ATTP, 25)
     mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
     mob:setMod(tpz.mod.BINDRESTRAIT, 20)
     mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-   
+
     mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
     mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
     mob:setMod(tpz.mod.RESBUILD_BIND, 25)
@@ -956,15 +962,17 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
     mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
-   
-    mob:setMod(tpz.mod.DMGMAGIC, -10)
-    
+
+    mob:setMod(tpz.mod.DMGMAGIC, -50)
+    mob:setMod(tpz.mod.DMGPHYS, -50)
+    mob:setTrueDetection(1)
+
 end
 
 dynamis.setMegaBossStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
-    
+
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
     mob:setMod(tpz.mod.RATTP, 20)
@@ -974,7 +982,7 @@ dynamis.setMegaBossStats = function(mob)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 25)
     mob:setMod(tpz.mod.BINDRESTRAIT, 25)
     mob:setMod(tpz.mod.GRAVITYRESTRAIT, 25)
-    
+
     mob:setMod(tpz.mod.RESBUILD_SLEEP, 33)
     mob:setMod(tpz.mod.RESBUILD_LULLABY, 33)
     mob:setMod(tpz.mod.RESBUILD_BIND, 33)
@@ -985,19 +993,66 @@ dynamis.setMegaBossStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
     mob:setMod(tpz.mod.RESBUILD_STUN, 8)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
-    
+    mob:setTrueDetection(1)
+
 end
 
 dynamis.setPetStats = function(mob)
     local zone = mob:getZoneID()
-    
+
     mob:setMobLevel(80)
     mob:setMod(tpz.mod.STR, -40)
     mob:setMod(tpz.mod.VIT, -20)
     mob:setMod(tpz.mod.RATTP, -20)
     mob:setMod(tpz.mod.ATTP, -20)
     mob:setMod(tpz.mod.DEFP, -5)
-    
+    mob:setTrueDetection(1)
+
+end
+
+dynamis.setAnimatedWeaponStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setMobMod(tpz.mobMod.HP_HEAL_CHANCE, 90)
+    mob:setMod(tpz.mod.STUNRESTRAIT, 75)
+    mob:setMod(tpz.mod.PARALYZERESTRAIT, 100)
+    mob:setMod(tpz.mod.SLOWRESTRAIT, 100)
+    mob:setMod(tpz.mod.SILENCERESTRAIT, 100)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
+
+end
+
+dynamis.setEyeStats = function(mob)
+    local job = mob:getMainJob()
+    local zone = mob:getZoneID()
+
+    mob:setMobLevel(math.random(82,84))
+    mob:setMod(tpz.mod.RATTP, 15)
+    mob:setMod(tpz.mod.ATTP, 25)
+    mob:setMod(tpz.mod.DEF, 420)
+
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
+
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
+    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
+    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
+    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
+    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
+    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
+
+    mob:addMod(tpz.mod.MDEF, 150)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+
 end
 
 --------------------------------------------------

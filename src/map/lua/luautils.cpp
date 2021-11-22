@@ -179,6 +179,9 @@ namespace luautils
         lua_register(LuaHandle, "GetTickets", luautils::GetTickets);
         lua_register(LuaHandle, "GetDynaTimeRemaining", luautils::GetDynaTimeRemaining);
 
+        lua_register(LuaHandle, "GetCharVarByName", luautils::GetCharVarByName);
+        lua_register(LuaHandle, "SetCharVarByName", luautils::SetCharVarByName);
+
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
         Lunar<CLuaBaseEntity>::Register(LuaHandle);
@@ -2244,14 +2247,9 @@ namespace luautils
         return { messageId, param1, param2 };
     }
 
-    /************************************************************************
-    *                                                                       *
-    *  Используем предмет. Возврадаемое значение - номер сообщения или 0.   *
-    *  Так же необходимо как-то передавать параметр сообщения (например,    *
-    *  количество восстановленных MP)                                       *
-    *                                                                       *
-    ************************************************************************/
-
+    // We use the subject. The return value is the message number or 0.
+    // It is also necessary to somehow pass the message parameter (for example,
+    // number of recovered MP)
     int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar)
     {
         lua_prepscript("scripts/globals/items/%s.lua", PItem->getName());
@@ -5011,7 +5009,8 @@ namespace luautils
         };
 
         return searchLuaFileForFunction(PChar->m_event.Script) ||
-            (PChar->PInstance && searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" + (const char*)PChar->PInstance->GetName())) ||
+               (PChar->PInstance && searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" +
+                                                             (const char*)PChar->PInstance->GetName() + std::string(".lua"))) ||
             (searchLuaFileForFunction(std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua"));
     }
 
@@ -5651,6 +5650,72 @@ namespace luautils
         else
             lua_pushinteger(LuaHandle, 0);
 
+        return 1;
+    }
+
+    int32 GetCharVarByName(lua_State* L)
+    {
+        bool isValid = !lua_isnil(L, 1) && lua_isstring(L, 1);
+        isValid = isValid && !lua_isnil(L, 2) && lua_isstring(L, 2);
+
+        if (isValid)
+        {
+            const char* fmtQuery = "SELECT charid FROM chars WHERE charname = '%s';";
+            int32 ret = Sql_Query(SqlHandle, fmtQuery, std::string(lua_tostring(L, 1)).c_str());
+
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %d AND varname = '%s';";
+                auto charid = Sql_GetUIntData(SqlHandle, 0);
+
+                int32 ret = Sql_Query(SqlHandle, fmtQuery, charid, std::string(lua_tostring(L, 2)).c_str());
+                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    int32 value = Sql_GetIntData(SqlHandle, 0);
+                    lua_pushinteger(LuaHandle, value);
+                    return 1;
+                }
+
+                lua_pushinteger(LuaHandle, 0);
+                return 1;
+            }
+        }
+
+        lua_pushnil(L);
+        return 1;
+    }
+
+    int32 SetCharVarByName(lua_State* L)
+    {
+        bool isValid = !lua_isnil(L, 1) && lua_isstring(L, 1);
+        isValid = isValid && !lua_isnil(L, 2) && lua_isstring(L, 2);
+        isValid = isValid && !lua_isnil(L, 2) && lua_isnumber(L, 3);
+
+        if (isValid)
+        {
+            const char* fmtQuery = "SELECT charid FROM chars WHERE charname = '%s';";
+            int32 ret = Sql_Query(SqlHandle, fmtQuery, std::string(lua_tostring(L, 1)).c_str());
+
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                auto value = (int32) lua_tointeger(L, 3);
+
+                const char* fmtQuery = value != 0
+                    ? "INSERT INTO char_vars (charid, varname, value) VALUES (%d, '%s', %d) ON DUPLICATE KEY UPDATE value = VALUES(value);"
+                    : "DELETE FROM char_vars WHERE charid = %d AND varname = '%s';";
+
+                auto charid = Sql_GetUIntData(SqlHandle, 0);
+
+                int32 ret = Sql_Query(SqlHandle, fmtQuery, charid, std::string(lua_tostring(L, 2)).c_str(), value);
+                if (ret != SQL_ERROR && Sql_AffectedRows(SqlHandle) != 0)
+                {
+                    lua_pushinteger(LuaHandle, value);
+                    return 1;
+                }
+            }
+        }
+
+        lua_pushnil(L);
         return 1;
     }
 

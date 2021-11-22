@@ -24,6 +24,10 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    if caster:hasStatusEffect(tpz.effect.DIFFUSION) then
+        caster:delStatusEffect(tpz.effect.DIFFUSION)
+     end
+    
     local minCure = 60
     local divisor = 0.6666
     local constant = -45

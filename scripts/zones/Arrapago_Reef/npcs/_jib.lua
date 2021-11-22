@@ -10,13 +10,15 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:hasKeyItem(tpz.ki.ILRUSI_ASSAULT_ORDERS) then
-        player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.ILRUSI_ASSAULT_ORDERS)
-    elseif player:getXPos() <= 11.5 and player:getXPos() >= 8.500 then
-        player:messageSpecial(ID.text.STAGING_POINT_ILRUSI)
-        player:messageSpecial(ID.text.IMPERIAL_CONTROL)
-        player:startEvent(107)
-    elseif player:getXPos() <= 8 and player:getXPos() >= 5 then
+    if player:getXPos() <= 11.5 and player:getXPos() >= 8.500 then -- Leave safe zone
+        if player:hasKeyItem(tpz.ki.ILRUSI_ASSAULT_ORDERS) then
+            player:messageSpecial(ID.text.CANNOT_LEAVE, tpz.ki.ILRUSI_ASSAULT_ORDERS)
+        else
+            player:messageSpecial(ID.text.STAGING_POINT_ILRUSI)
+            player:messageSpecial(ID.text.IMPERIAL_CONTROL)
+            player:startEvent(107)
+        end
+    elseif player:getXPos() <= 8 and player:getXPos() >= 5 then -- Enter safe zone
         player:messageSpecial(ID.text.STAGING_POINT_ILRUSI)
         player:messageSpecial(ID.text.IMPERIAL_CONTROL)
         player:startEvent(106)

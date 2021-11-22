@@ -251,6 +251,7 @@ enum DAMAGETYPE
     DAMAGE_SLASHING = 2,
     DAMAGE_IMPACT = 3,
     DAMAGE_HTH = 4,
+    DAMAGE_H2H = 4,
     DAMAGE_ELEMENTAL = 5,
     DAMAGE_FIRE = 6,
     DAMAGE_ICE = 7,
@@ -452,19 +453,22 @@ struct apAction_t
 
 };
 
-/************************************************************************
-*																		*
-*  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64			*
-*																		*
-************************************************************************/
+/*************************************************************************
+*																		 *
+*  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64          *
+*  TP is stored according to the same principle as skill, i.e. 6.4% = 64 *
+*																		 *
+*************************************************************************/
 
 struct health_t
 {
-    int16   tp;                 // текущее значение
-    int32   hp, mp;             // текущие значения
-    int32   maxhp, maxmp;       // максимальные значения
-    int32   modhp, modmp;       // модифицированные максимальные значения
-    int32   zoneinhp, zoneinmp; // HP and MP from previous zone
+    int16   tp;                  // текущее значение // present value
+    int16   maxtp;               // максимальные значения // maximum values
+    int16   modtp;               // модифицированные максимальные значения // modified maximum values
+    int32   hp, mp;              // текущие значения // present value
+    int32   maxhp, maxmp;        // максимальные значения // maximum values
+    int32   modhp, modmp;        // модифицированные максимальные значения // modified maximum values
+    int32   zoneinhp, zoneinmp;  // HP and MP from previous zone
 };
 
 typedef std::vector<apAction_t> ActionList_t;
@@ -537,7 +541,7 @@ public:
     void            UpdateHealth();             // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
     float           GetStoreTPMultiplier();
-    int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons
+    int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons in milliseconds
     uint8           GetMeleeRange();                //returns the distance considered to be within melee range of the entity
     int16			GetRangedWeaponDelay(bool tp);	//returns delay of ranged weapon + ammo where applicable
     int16			GetAmmoDelay();			        //returns delay of ammo (for cooldown between shots)

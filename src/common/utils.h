@@ -54,6 +54,7 @@ bool infront(const position_t& A, const position_t& B, uint8 coneAngle);  // tru
 bool behind(const position_t& A, const position_t& B, uint8 coneAngle);   // true if A is behind of B within coneAngle degrees
 bool beside(const position_t& A, const position_t& B, uint8 coneAngle);   // true if A is to a side of B within coneAngle degrees
 position_t nearPosition(const position_t& A, float offset, float radian); // Returns a position near the given position
+const char* nnString(const char* str);                          // Returns a valid string pointer. If input is null, returns an empty string
 
 int32 hasBit(uint16 value, uint8* BitArray, uint32 size);		// Check for the presence of a bit in the array
 int32 addBit(uint16 value, uint8* BitArray, uint32 size);		// Adds a bit to the array
@@ -75,6 +76,7 @@ void EncodeStringLinkshell(int8* signature, int8* target);
 void DecodeStringLinkshell(int8* signature, int8* target);
 int8* EncodeStringSignature(int8* signature, int8* target);
 void DecodeStringSignature(int8* signature, int8* target);
+void PackSoultrapperName(std::string name, uint8 output[], uint8 size);
 std::string escape(std::string const &s);
 
 #endif

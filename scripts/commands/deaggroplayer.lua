@@ -6,7 +6,7 @@ require("scripts/globals/status")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 }
 
@@ -16,9 +16,9 @@ function error(player, msg)
 end
 
 function onTrigger(player, targname)
-    
+
     local targ = player:getCursorTarget()
-    
+
     if targ == nil or targ:isMob() == false then
         error(player, "you must select a target monster with the cursor first")
 		return
@@ -27,7 +27,7 @@ function onTrigger(player, targname)
 		error(player, "you must specify a target player name")
 		return
 	end
-    
+
 	if targ:deaggroPlayer(targname) then
 		player:PrintToPlayer(string.format("Cleared enmity against %s", targname))
 	else

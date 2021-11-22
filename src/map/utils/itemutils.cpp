@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -328,7 +328,10 @@ namespace itemutils
                 "f.aura,"           // 37
 
                 "p.slot,"           // 38
-                "p.element "        // 39
+                "p.element,"        // 39
+
+                "a.race "           // 40
+
             "FROM item_basic AS b "
             "LEFT JOIN item_usable AS u USING (itemId) "
             "LEFT JOIN item_equipment  AS a USING (itemId) "
@@ -380,6 +383,7 @@ namespace itemutils
                         ((CItemEquipment*)PItem)->setReqLvl(Sql_GetUIntData(SqlHandle, 15));
                         ((CItemEquipment*)PItem)->setILvl(Sql_GetUIntData(SqlHandle,16));
                         ((CItemEquipment*)PItem)->setJobs(Sql_GetUIntData(SqlHandle,17));
+                        ((CItemEquipment*)PItem)->setRace(Sql_GetUIntData(SqlHandle,40));
                         ((CItemEquipment*)PItem)->setModelId(Sql_GetUIntData(SqlHandle,18));
                         ((CItemEquipment*)PItem)->setShieldSize(Sql_GetUIntData(SqlHandle,19));
                         ((CItemEquipment*)PItem)->setScriptType(Sql_GetUIntData(SqlHandle,20));
@@ -550,7 +554,7 @@ namespace itemutils
 
         PUnarmedH2HItem = new CItemWeapon(0);
 
-        PUnarmedH2HItem->setDmgType(DAMAGE_HTH);
+        PUnarmedH2HItem->setDmgType(DAMAGE_H2H);
         PUnarmedH2HItem->setSkillType(SKILL_HAND_TO_HAND);
         PUnarmedH2HItem->setDamage(3);
     }

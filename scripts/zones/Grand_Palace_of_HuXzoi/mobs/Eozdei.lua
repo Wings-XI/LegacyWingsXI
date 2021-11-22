@@ -22,7 +22,7 @@ function onPath(mob)
     local spawnPos = mob:getSpawnPos()
     mob:pathThrough({spawnPos.x, spawnPos.y, spawnPos.z})
     local pos = mob:getPos()
-    if (spawnPos.x == pos.x and spawnPos.z == pos.z) then
+    if spawnPos.x == pos.x and spawnPos.z == pos.z then
         mob:setPos(spawnPos.x, spawnPos.y, spawnPos.z, mob:getRotPos() + 16)
     end
 end
@@ -43,22 +43,22 @@ function onMobFight(mob)
     end
 
     if mob:actionQueueEmpty() == true and not isBusy then -- dont change forms while charging Optic Induration
-        if (mob:AnimationSub() == 0 and mob:getBattleTime() - changeTime > randomTime) then
+        if mob:AnimationSub() == 0 and mob:getBattleTime() - changeTime > randomTime then
             mob:AnimationSub(math.random(2, 3))
             mob:setLocalVar("changeTime", mob:getBattleTime())
-        elseif (mob:AnimationSub() == 1 and mob:getBattleTime() - changeTime > randomTime) then
+        elseif mob:AnimationSub() == 1 and mob:getBattleTime() - changeTime > randomTime then
             mob:AnimationSub(math.random(2, 3))
             mob:setLocalVar("changeTime", mob:getBattleTime())
-        elseif (mob:AnimationSub() == 2 and mob:getBattleTime() - changeTime > randomTime) then
+        elseif mob:AnimationSub() == 2 and mob:getBattleTime() - changeTime > randomTime then
             local aniChance = math.random(0, 1)
-            if (aniChance == 0) then
+            if aniChance == 0 then
                 mob:AnimationSub(0)
                 mob:setLocalVar("changeTime", mob:getBattleTime())
             else
                 mob:AnimationSub(3)
                 mob:setLocalVar("changeTime", mob:getBattleTime())
             end
-        elseif (mob:AnimationSub() == 3 and mob:getBattleTime() - changeTime > randomTime) then
+        elseif mob:AnimationSub() == 3 and mob:getBattleTime() - changeTime > randomTime then
             mob:AnimationSub(math.random(0, 2))
             mob:setLocalVar("changeTime", mob:getBattleTime())
         end
@@ -76,7 +76,7 @@ function onMobWeaponSkill(target, mob, skill)
         opticCounter = opticCounter +1
         mob:setLocalVar("opticCounter", opticCounter)
 
-        if (opticCounter > 2) then
+        if opticCounter > 2 then
             mob:setLocalVar("opticCounter", 0)
             mob:setLocalVar("opticInduration", 1)
             chargeOptic(mob)
@@ -102,13 +102,17 @@ function chargeOptic(mob)
     end
 end
 
+function onMobDisengage(mob)
+    mob:AnimationSub(0)
+end
+
 function onMobDeath(mob, player, isKiller)
-    if (isKiller) then
+    if isKiller then
         local mobId = mob:getID()
         local nm    = GetMobByID(ID.mob.JAILER_OF_TEMPERANCE)
         local ph    = nm:getLocalVar("ph")
 
-        if (ph == mobId and os.time() > nm:getLocalVar("pop")) then
+        if ph == mobId and os.time() > nm:getLocalVar("pop") then
             local pos = mob:getSpawnPos()
             nm:setSpawn(pos.x, pos.y, pos.z)
             SpawnMob(ID.mob.JAILER_OF_TEMPERANCE):updateClaim(player)

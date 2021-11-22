@@ -26,7 +26,7 @@ end
 local function openMouth(mob)
     mob:addMod(tpz.mod.ATTP, 100)
     mob:addMod(tpz.mod.DEFP, -50)
-    mob:addMod(tpz.mod.DMGMAGIC, -50)
+    mob:addMod(tpz.mod.DMGMAGIC, 100)
     mob:setLocalVar("[hpemde]closeMouthHP", mob:getHP() - math.ceil(mob:getMaxHP() / 3))
     mob:AnimationSub(3)
     mob:wait(2000)
@@ -35,7 +35,7 @@ end
 local function closeMouth(mob)
     mob:delMod(tpz.mod.ATTP, 100)
     mob:delMod(tpz.mod.DEFP, -50)
-    mob:delMod(tpz.mod.DMGMAGIC, -50)
+    mob:delMod(tpz.mod.DMGMAGIC, 100)
     mob:setLocalVar("[hpemde]changeTime", mob:getBattleTime() + 30)
     mob:AnimationSub(6)
     mob:wait(2000)
@@ -91,6 +91,13 @@ g_mixins.families.hpemde = function(mob)
         if mob:AnimationSub() == 3 then
            closeMouth(mob)
         end
+    end)
+
+    mob:addListener("TAKE_DAMAGE", "HPEMDE_DAMAGE", function(mob)
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMobAbilityEnabled(true)
+        mob:setLocalVar("[hpemde]damaged", 1)
+        mob:setLocalVar("[hpemde]changeTime", mob:getBattleTime() + 30)
     end)
 end
 

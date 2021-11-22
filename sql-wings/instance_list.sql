@@ -103,7 +103,7 @@ INSERT INTO `instance_list` VALUES (41, 'golden_salvage', 54, 30, 386.000, -12.0
 -- INSERT INTO `instance_list` VALUES (52, 'nyzul_isle_uncharted_survey', 77, 72, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (53, 'the_black_coffin', 54, 30, 0, -22, 24, 64, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (54, 'against_all_odds', 54, 30, -9.000, -22.000, 17.000, 252, -1, -1, -1, -1);
--- INSERT INTO `instance_list` VALUES (55, 'scouting_the_ashu_talif', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
+INSERT INTO `instance_list` VALUES (55, 'scouting_the_ashu_talif', 54, 30, 11.500, -22.000, 5.000, 171, -1, -1, -1, -1);
 -- INSERT INTO `instance_list` VALUES (56, 'royal_painter_escort', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 -- INSERT INTO `instance_list` VALUES (57, 'targeting_the_captain', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (58, 'path_of_darkness', 72, 30, 500, 0, -572, 192, 143, 143, 143, 143);
@@ -120,6 +120,7 @@ INSERT INTO `instance_list` VALUES (59, 'nashmeiras_plea', 72, 45, -444, -4, 420
 -- INSERT INTO `instance_list` VALUES (73, 'silver_sea_remnants_ii', 76, 72, 100, 340.000, 12.000, -165.500, 63, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (79, 'shades_of_vengeance', 79, 30, 127, -15, -303, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (89, 'seeing_blood_red', 89, 30, -323.568, -23.825, -19.749, 128, -1, -1, -1, -1);
+INSERT INTO `instance_list` VALUES(90, 'light_in_the_darkness', 90, 30, -22.500, 1.6823, 40.00, 192, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES(96, 'a_manifest_problem', 96, 30, -220.89, 30.198, 258.137, 254, -1, -1, -1, -1);
 --
 -- Indexes for dumped tables

@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 }
 
@@ -15,7 +15,7 @@ function error(player, msg)
 end
 
 function onTrigger(player, targ)
-    
+
     -- validate target
     if (targ == nil) then
         targ = player:getCursorTarget()
@@ -31,5 +31,5 @@ function onTrigger(player, targ)
         end
     end
 
-    player:PrintToPlayer(string.format("%s's fomor hate: %u", targ:getName(), targ:getFomorHate(varName)))
+    player:PrintToPlayer(string.format("%s's fomor hate: %u", targ:getName(), targ:getFomorHate()))
 end

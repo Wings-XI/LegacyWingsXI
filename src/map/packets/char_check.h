@@ -40,6 +40,7 @@ class CCheckPacket : public CBasicPacket
 public:
 
 	CCheckPacket(CCharEntity* PChar, CCharEntity* PTarget);
+    virtual void ClientVerFixup(const CCharEntity* PChar);
 };
 
 #endif

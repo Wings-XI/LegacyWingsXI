@@ -19,8 +19,13 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    local bonus = 300
 
-    local dmgmod = MobBreathMove(mob, target, 0.333, 1, tpz.magic.ele.WIND, 300)
+    if mob:getID() == 16826570 then
+        bonus = 700
+    end
+
+    local dmgmod = MobBreathMove(mob, target, 0.333, 1, tpz.magic.ele.WIND, bonus)
 
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.WIND, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.WIND)

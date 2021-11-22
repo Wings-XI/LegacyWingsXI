@@ -21,8 +21,9 @@ function onMobSkillCheck(target, mob, skill)
         else
             return 1
         end
-    elseif (mob:getFamily() == 313) then -- Tinnin
-        if (mob:AnimationSub() < 2 and target:isBehind(mob, 48) == true) then
+    else
+        -- Can always use, only if target is behind and not exclusive like spike flail
+        if target:isBehind(mob, 96) then
             return 0
         else
             return 1
@@ -35,13 +36,8 @@ end
 function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 1
-    local accmod = 1
-    local dmgmod = 4.25
-	if math.random()*100 < target:getGuardRate(mob) then
-		skill:setMsg(tpz.msg.basic.SKILL_MISS)
-		target:trySkillUp(mob, tpz.skill.GUARD, numhits)
-		return 0
-	end
+    local accmod = 2
+    local dmgmod = 5
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 2, 3, 4)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
 

@@ -8,15 +8,41 @@ require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/zone")
+require("scripts/globals/events/starlight_festivals")
+require("scripts/globals/status")
+require("scripts/globals/utils")
 -----------------------------------
 
 function onInitialize(zone)
     zone:registerRegion(1, -112, -3, -17, -96, 3, -3)--event COP
     zone:registerRegion(2, 53.5, 5, -165.3, 66.5, 6, -72)--drawbridge area
+    applyStarlightDecorations(zone:getID())
 end
 
 function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
+    -- Move Troupe Valeriano (Circus) --
+    if getNationRank(tpz.nation.BASTOK) == 1 then
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.NORMAL)
+                end
+            end
+        end
+    else
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.DISAPPEAR)
+                end
+            end
+        end
+    end
 end
 
 function onZoneIn(player, prevZone)

@@ -21,7 +21,7 @@ function onTrigger(player, npc)
     if (player:getCampaignAllegiance() > 0 and player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.GIFTS_OF_THE_GRIFFON) == QUEST_AVAILABLE) then
         player:startEvent(21) -- Gifts of Griffon Quest Start
 
-    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.GIFTS_OF_THE_GRIFFON) == QUEST_ACCEPTED and player:getCharVar("GiftsOfGriffonProg") == 0) then
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.GIFTS_OF_THE_GRIFFON) == QUEST_ACCEPTED and player:getCharVar("GiftsOfGriffonProg") == 0 and player:needToZone() == false) then
         player:startEvent(22) -- Gifts of Griffon Stage 2 Cutscene
 
     elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.GIFTS_OF_THE_GRIFFON) == QUEST_ACCEPTED and player:getCharVar("GiftsOfGriffonProg") == 1) then
@@ -37,6 +37,7 @@ end
 function onEventFinish(player, csid, option)
     if (csid == 21) then
         player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.GIFTS_OF_THE_GRIFFON) -- Gifts of Griffon Quest Start
+        player:needToZone(true)
 
     elseif (csid == 22) then
         player:setCharVar("GiftsOfGriffonProg", 1) -- Gifts of Griffon Stage 2

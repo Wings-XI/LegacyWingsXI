@@ -10,6 +10,7 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -20,12 +21,15 @@ function onTrade(player, npc, trade)
     end
 
     if (player:getCharVar("aBoysDreamCS") >= 3) then
-        if (trade:hasItemQty(17001, 1) == true and trade:getItemCount() == 1 and player:hasItem(4562) == false) then
+        if (trade:hasItemQty(17001, 1) == true and trade:getItemCount() == 1) then
             player:startEvent(15) -- During Quest "A Boy's Dream" (trading bug) madame ?
         elseif (trade:hasItemQty(4562, 1) == true and trade:getItemCount() == 1) then
             player:startEvent(47) -- During Quest "A Boy's Dream" (trading odontotyrannus)
         end
     end
+
+    onStarlightSmilebringersTrade(player, trade, npc)
+
 end
 
 function onTrigger(player, npc)
@@ -130,9 +134,6 @@ function onEventFinish(player, csid, option)
     elseif ((csid == 41 or csid == 40) and option == 1) then
         player:addQuest(SANDORIA, tpz.quest.id.sandoria.A_BOY_S_DREAM)
         player:setCharVar("aBoysDreamCS", 2)
-		npcUtil.giveItem(player,4562)
-		player:PrintToPlayer("Ailbeche: Ya know, since I know fishing up monsters is exceptionally difficult right now until the Goddess fixes fishing...", 0xD)
-		player:PrintToPlayer("Ailbeche: Just bring me this fish back once you have the Giant Shell Bug!", 0xD)
     elseif (csid == 41 and option == 0) then
         player:setCharVar("aBoysDreamCS", 1)
     elseif (csid == 15 and player:getCharVar("aBoysDreamCS") == 3) then

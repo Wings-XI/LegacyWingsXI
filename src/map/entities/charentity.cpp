@@ -93,6 +93,7 @@ CCharEntity::CCharEntity()
 
     m_GMlevel = 0;
     m_isGMHidden = false;
+    m_GMSuperpowers = false;
     m_autoTargetOverride = nullptr;
 
     allegiance = ALLEGIANCE_PLAYER;
@@ -228,7 +229,6 @@ CCharEntity::CCharEntity()
     m_SaveTime = 0;
     m_reloadParty = 0;
 
-    m_LastYell = 0;
     m_moghouseID = 0;
     m_moghancementID = 0;
 
@@ -236,8 +236,10 @@ CCharEntity::CCharEntity()
 
     m_accountId = 0;
     m_accountFeatures = 0;
+    m_clientVerMismatch = false;
     m_needChatFix = 0;
     m_needTellFix = 0;
+    m_needMasterLvFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
@@ -304,6 +306,14 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         packet->priorityNumOverride = priorityNumOverride;
 
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
+
+    if (m_clientVerMismatch) {
+        packet->ClientVerFixup(this);
+    }
+
+    // Cannot be done via ClientVerFixup since these packets
+    // are passed through the MQ and the polymorphic information
+    // is lost.
     if ((packet->getType() == 0x17) && (m_needChatFix)) {
         // Hack to word around the chat message format change of Sep. 2020
         uint8* packetbytes = packet->getData();
@@ -1301,8 +1311,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
 
-        if (PAbility->getMeritModID() > 0 && (!(PAbility->getAddType() & ADDTYPE_MERIT) || id == 147 || id == 148 || id == 150 || id == 137 || id == 138 || id == 141 || id == 142 || id == 155 ||
-            id == 139 || id == 140 || id == 133 || id == 151 || id == 152 || id == 146 || id == 143 || id == 144 || id == 163 || id == 164 || id == 158 || id == 149 || id == 168 || id == 154)) // merit adds that also get CDR from add. merits. todo: generalize this
+        //Ignore SMN Group 2 Merits specifically until we can long term fix merits that serve dual purpose
+        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631)
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
@@ -1317,9 +1327,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             action.recast = PAbility->getRecastTime() - meritRecastReduction;
         }
-        //672 to 779 are the ability ids for all bst pets
-        if (id > 671 && id < 780)
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_SIC_RECAST, this) / 4;
+
+       if (id == 62 && this->StatusEffectContainer->HasStatusEffect({EFFECT_SEIGAN}))
+             action.recast = PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_THIRD_EYE_RECAST, this) / 2;
 
         if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
         {
@@ -1346,11 +1356,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         // remove invisible if aggressive
-        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
+        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
         {
             if (PAbility->getValidTarget() & TARGET_ENEMY) {
                 // aggressive action
-                StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                if (PAbility->getID() != ABILITY_ASSAULT)
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                else 
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK) {
                 // remove invisible only
@@ -1502,6 +1515,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 first = false;
             }
         }
+
+        battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
         // innin and yonin share recasts
@@ -1933,11 +1949,11 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     //#TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())
     {
-        PTarget->ForParty([PItem, PTarget](CBattleEntity* PMember)
+        PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
         {
             if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
             {
-                luautils::OnItemUse(PMember, PItem);
+                luautils::OnItemUse(PMember, PItem, this);
             }
         });
     }

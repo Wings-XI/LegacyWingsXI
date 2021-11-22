@@ -94,6 +94,28 @@ std::shared_ptr<LoginSession> SessionTracker::GetSessionDetails(uint32_t dwAccou
     throw std::runtime_error("Session ID not found");
 }
 
+std::shared_ptr<LoginSession> SessionTracker::LookupSessionByAuth(uint32_t dwAccountId, const uint8_t* pbufAuthToken, uint32_t dwIPAddress)
+{
+    LOG_DEBUG0("Called.");
+    auto i = mmapSessions.begin();
+    std::shared_ptr<LoginSession> pFoundSession = NULL;
+    while (i != mmapSessions.end()) {
+        if ((i->second->GetAccountID() == dwAccountId) &&
+            (i->second->GetClientIPAddress() == dwIPAddress) &&
+            (memcmp(i->second->GetAuthToken(), pbufAuthToken, 8) == 0)) {
+            pFoundSession = i->second;
+            break;
+        }
+        i++;
+    }
+    if (pFoundSession == NULL) {
+        LOG_WARNING("Session not found for given details.");
+        throw std::runtime_error("Session ID not found");
+    }
+    pFoundSession->SetLastLookupNow();
+    return pFoundSession;
+}
+
 std::shared_ptr<LoginSession> SessionTracker::LookupSessionByIP(uint32_t dwIPAddress)
 {
     LOG_DEBUG0("Called.");

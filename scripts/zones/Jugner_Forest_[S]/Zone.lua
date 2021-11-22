@@ -21,7 +21,7 @@ function onZoneIn(player, prevZone)
         player:setPos(621.865, -6.665, 300.264, 149)
     end
 
-    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CLAWS_OF_THE_GRIFFON) == QUEST_ACCEPTED and player:getCharVar("ClawsOfGriffonProg") == 0 then
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CLAWS_OF_THE_GRIFFON) == QUEST_ACCEPTED and player:getCharVar("ClawsOfGriffonProg") == 1 then
         cs = 200
     elseif player:getCharVar("roadToDivadomCS") == 1 then
         cs = 105
@@ -39,7 +39,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 200 then
-        player:setCharVar("ClawsOfGriffonProg", 1)
+        player:setCharVar("ClawsOfGriffonProg", 2)
     elseif csid == 105 then
         player:setCharVar("roadToDivadomCS", 2)
     end

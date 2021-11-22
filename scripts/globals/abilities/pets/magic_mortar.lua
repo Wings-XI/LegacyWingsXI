@@ -36,6 +36,8 @@ function onPetAbility(target, automaton, skill, master, action)
     if damage > 0 then
        target:addTP(20)
        automaton:addTP(80)
+       master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, 1)
+       target:tryInterruptSpell(automaton, 1)
     end
 
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)

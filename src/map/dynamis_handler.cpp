@@ -194,6 +194,7 @@ uint32 CDynamisHandler::DynamisGetToken(uint16 zone)
         if (PZone->m_DynamisHandler) {
             return PZone->m_DynamisHandler->m_token;
         }
+        // Checking cross cluster will cause PZone to return nullptr.  But if we get a PZone and we dont have a handler, something odd has happened.
         return 0;
     }
     // Fallback to DB query
@@ -225,8 +226,10 @@ uint32 CDynamisHandler::DynamisGetExpiryTimepoint(uint16 zone)
         if (PZone->m_DynamisHandler) {
             return PZone->m_DynamisHandler->m_expiryTimePoint;
         }
+        // Checking cross cluster will cause PZone to return nullptr.  But if we get a PZone and we dont have a handler, something odd has happened.
         return 0;
     }
+
     // Fallback to DB query
     std::string valstr("[DYNA]Timepoint_" + std::to_string(zone));
     int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = '%s';", valstr);
@@ -246,7 +249,7 @@ void CDynamisHandler::DynamisSetExpiryTimepoint(uint32 tp)
 {
     m_expiryTimePoint = tp;
     std::string valstr("[DYNA]Timepoint_" + std::to_string(m_zoneId));
-    Sql_Query(SqlHandle, "UPDATE server_variables SET value = %u WHERE name = '%s';", tp, valstr);
+    Sql_Query(SqlHandle, "INSERT INTO server_variables (name, value) VALUES ('%s', %u) ON DUPLICATE KEY UPDATE value = %u;", valstr, tp, tp);
 }
 
 bool CDynamisHandler::DynamisIsExpiring() const

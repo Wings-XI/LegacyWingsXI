@@ -18,6 +18,7 @@ function onPetAbility(target, automaton, skill, master, action)
 
     local damage = 60 + automaton:getSkillLevel(tpz.skill.AUTOMATON_MELEE)
     
+    damage = target:physicalDmgTaken(damage, tpz.damageType.SLASHING)
     damage = damage * target:getMod(tpz.mod.SLASHRES) / 1000
     
     if automaton:checkDistance(target) > 7 then
@@ -34,6 +35,9 @@ function onPetAbility(target, automaton, skill, master, action)
     end
     
     target:takeDamage(damage, automaton, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-
+    if damage > 0 then
+        master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, 1)
+        target:tryInterruptSpell(automaton, 1)
+    end
     return damage
 end

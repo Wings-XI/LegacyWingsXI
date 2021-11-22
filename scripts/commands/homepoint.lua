@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 }
 
@@ -29,6 +29,7 @@ function onTrigger(player, target)
 
     -- When zoning in and out of Mordion Gaol adjust the jail var
     local to_prison = 0
+    local zone = player:getZone()
     if zone == 131 then
         to_prison = 1
     end
