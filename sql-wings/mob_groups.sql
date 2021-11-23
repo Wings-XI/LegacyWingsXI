@@ -1094,7 +1094,7 @@ INSERT INTO `mob_groups` VALUES(4, 3908, 37, 'Thrym', 0, 128, 2860, 11000, 0, 77
 INSERT INTO `mob_groups` VALUES(5, 389, 37, 'Beli', 0, 128, 2860, 11000, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(6, 2193, 37, 'Kari', 0, 128, 2860, 11000, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(7, 3862, 37, 'Telchines_Bard', 0, 128, 2856, 8000, 0, 77, 80, 0);
-INSERT INTO `mob_groups` VALUES(8, 3866, 37, 'Telchines_White_Mage', 0, 128, 2856, 300, 0, 77, 80, 0);
+INSERT INTO `mob_groups` VALUES(8, 3866, 37, 'Telchines_White_Mage', 0, 128, 2856, 8000, 5000, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(9, 3863, 37, 'Telchines_Dragoon', 0, 128, 2856, 8000, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(10, 3865, 37, 'Telchiness_Wyvern', 0, 128, 0, 2000, 300, 74, 74, 0);
 INSERT INTO `mob_groups` VALUES(11, 3864, 37, 'Telchines_Monk', 0, 128, 2856, 8000, 0, 77, 80, 0);

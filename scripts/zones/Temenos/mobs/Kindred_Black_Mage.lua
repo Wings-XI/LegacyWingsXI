@@ -9,27 +9,31 @@ local ID = require("scripts/zones/Temenos/IDs")
 local flags = tpz.path.flag.WALLHACK + tpz.path.flag.RUN
 local path =
 {
-    [5] = 
+    [5] =
     {
         {-148.860, -80.000, 427.000},
         {-91.860, -80.000, 427.000}
     },
-    [6] = 
+    [6] =
     {
         {-148.860, -80.000, 430.000},
         {-91.860, -80.000, 430.000}
     },
-    [7] = 
+    [7] =
     {
         {-91.860, -80.000, 410.000},
         {-148.860, -80.000, 410.000}
     },
-    [8] = 
+    [8] =
     {
         {-91.860, -80.000, 413.000},
         {-148.860, -80.000, 413.000}
     },
 }
+
+function onMobSpawn(mob)
+    mob:setTrueDetection(1)
+end
 
 function onMobRoam(mob)
     local offset = mob:getID() - ID.mob.TEMENOS_N_MOB[4]

@@ -2,7 +2,7 @@
 -- Area: Apollyon Central
 --  Mob: Gunpod
 -----------------------------------
-local loot = 
+local loot =
 {
     [1] = -- AF
     {
@@ -99,4 +99,8 @@ function onMobDeath(mob, player, isKiller, noKiller)
             end
         end
     end
+end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
