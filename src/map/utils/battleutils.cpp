@@ -5352,9 +5352,9 @@ namespace battleutils
             if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
                 !PMember->isDead() && !PMember->isMounted())
             {
-                PMember->loc.p.x = nearEntity.x;
+                PMember->loc.p.x = PMob->loc.p.x;
                 PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                PMember->loc.p.z = nearEntity.z;
+                PMember->loc.p.z = PMob->loc.p.z;
                 PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 
                 if (PMember->objtype == TYPE_PC)
