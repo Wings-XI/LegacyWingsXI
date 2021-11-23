@@ -9,6 +9,8 @@ local ID = require("scripts/zones/Cloister_of_Storms/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/bcnm")
+require("scripts/globals/settings")
+-----------------------------------
 
 function onTrade(player, npc, trade)
     TradeBCNM(player, npc, trade)
@@ -18,7 +20,16 @@ function onTrigger(player, npc)
 
     if (player:getCurrentMission(ASA) == tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE and player:getCharVar("ASA4_Violet") == 1) then
         player:startEvent(2)
-    elseif (EventTriggerBCNM(player, npc)) then
+    elseif player:getCharVar("AnnyEvent2020") == 12 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 then
+            player:addItem(4242)
+            player:setCharVar("AnnyEvent2020", 13)
+            player:PrintToPlayer("A spark strikes you from the crackling of the protocrystal...", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 4242)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4242)
+        end
+	elseif (EventTriggerBCNM(player, npc)) then
         return
     else
         player:messageSpecial(ID.text.PROTOCRYSTAL)

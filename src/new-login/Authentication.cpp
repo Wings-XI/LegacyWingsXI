@@ -22,7 +22,7 @@ Authentication::Authentication(std::shared_ptr<TCPConnection> Connection) : mLas
     LOG_DEBUG0("Called.");
 }
 
-uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* pszPassword)
+uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* pszPassword, uint8_t* pbufAuthToken)
 {
     LOG_DEBUG0("Called.");
     try {
@@ -108,6 +108,9 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr,
             LoginGlobalConfig::GetInstance()->GetConfigUInt("session_timeout"));
         NewSession->SetPrivilegesBitmask(dwPrivileges);
+        if (pbufAuthToken) {
+            memcpy(pbufAuthToken, NewSession->GetAuthToken(), 8);
+        }
         return dwAccountId;
     }
     catch (SessionExistsError) {
@@ -122,7 +125,7 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
     return 0;
 }
 
-uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPassword, const char* pszEmail)
+uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPassword, const char* pszEmail, uint8_t* pbufAuthToken)
 {
     LOG_DEBUG0("Called.");
     try {
@@ -228,6 +231,9 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
             LoginGlobalConfig::GetInstance()->GetConfigUInt("session_timeout"));
         // Assume newly created accounts are normal users so we can save a DB query
         NewSession->SetPrivilegesBitmask(ACCT_PRIV_ENABLED);
+        if (pbufAuthToken) {
+            memcpy(pbufAuthToken, NewSession->GetAuthToken(), 8);
+        }
         return dwAccountId;
     }
     catch (...) {

@@ -29,9 +29,9 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_FUSION
     params.spellLevel = 70
     params.numhits = 1
-    params.multiplier = 4.0
-    params.tp150 = 4.5
-    params.tp300 = 5.0
+    params.multiplier = 2.0 --4.0 Revert to 4 or correct number once BLU calcs fixed
+    params.tp150 = 2.5
+    params.tp300 = 3.0
     params.azuretp = 5.16
     params.duppercap = 75
     params.str_wsc = 0.5

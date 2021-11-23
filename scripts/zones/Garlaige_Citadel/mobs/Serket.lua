@@ -17,7 +17,7 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
-    mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
+    mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
     mob:addMod(tpz.mod.DEF, -20)
     mob:addMod(tpz.mod.ACC, 20)
     mob:addMod(tpz.mod.ATT, 20)

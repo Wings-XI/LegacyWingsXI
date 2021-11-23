@@ -5352,9 +5352,9 @@ namespace battleutils
             if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
                 !PMember->isDead() && !PMember->isMounted())
             {
-                PMember->loc.p.x = nearEntity.x;
+                PMember->loc.p.x = PMob->loc.p.x;
                 PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                PMember->loc.p.z = nearEntity.z;
+                PMember->loc.p.z = PMob->loc.p.z;
                 PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 
                 if (PMember->objtype == TYPE_PC)
@@ -6510,4 +6510,37 @@ namespace battleutils
         return 0.80f;
     }
 
+    void HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action)
+    {
+        TPZ_DEBUG_BREAK_IF(PSource == nullptr);
+
+        CCharEntity* PIterSource = nullptr;
+
+        if (PSource->objtype != TYPE_PC)
+        {
+            if (PSource->PMaster && PSource->PMaster->objtype == TYPE_PC)
+            {
+                PIterSource = static_cast<CCharEntity*>(PSource->PMaster);
+            }
+        }
+        else
+        {
+            PIterSource = static_cast<CCharEntity*>(PSource);
+        }
+
+        if (PIterSource)
+        {
+            for (SpawnIDList_t::const_iterator it = PIterSource->SpawnMOBList.begin(); it != PIterSource->SpawnMOBList.end(); ++it)
+            {
+                CMobEntity* PCurrentMob = (CMobEntity*)it->second;
+
+                // Unclear if the required conditions include enmity and/or alliance.
+                // Let's go with just alliance for now.
+                if (PCurrentMob->m_OwnerID.id != 0 && PIterSource->IsMobOwner(PCurrentMob) && distance(PIterSource->loc.p, PCurrentMob->loc.p) < 15.0)
+                {
+                    PCurrentMob->PAI->EventHandler.triggerListener("PLAYER_ABILITY_USED", PCurrentMob, PSource, PAbility, action);
+                }
+            }
+        }
+    }
 };

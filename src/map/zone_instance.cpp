@@ -187,7 +187,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
                 PChar->PInstance = instance.get();
             }
         }
-        if (!PChar->PInstance && PChar->m_GMlevel > 0)
+        if (!PChar->PInstance && PChar->m_GMlevel > 1)
         {
             PChar->PInstance = new CInstance(this, 0);
         }

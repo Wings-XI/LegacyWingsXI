@@ -59,7 +59,9 @@ private:
         // Request that the client sends an initial encryption key
         S2C_PACKET_SEND_KEY = 2,
         // Provides the client with the character list associated with the account
-        S2C_PACKET_CHARACTER_LIST = 3
+        S2C_PACKET_CHARACTER_LIST = 3,
+        // Request that the client sends its account id and authentication token
+        S2C_PACKET_SEND_ACCOUNT_ID_EX = 4
     };
 
     /**
@@ -70,7 +72,9 @@ private:
         // Client sends its account ID
         C2S_PACKET_ACCOUNT_ID = 0xA1,
         // Client sends an initial encryption key
-        C2S_PACKET_KEY = 0xA2
+        C2S_PACKET_KEY = 0xA2,
+        // Client sends its account ID and authentication token
+        C2S_PACKET_ACCOUNT_ID_EX = 0xA3
     };
 
 #pragma pack(push, 1)
@@ -81,6 +85,18 @@ private:
     {
         uint32_t dwAccountID;
         uint32_t dwServerAddress;
+    };
+
+    /**
+     *  Account ID packet sent by the client
+     *  Extended version with authentication token
+     */
+    struct ACCOUNT_ID_PACKET_EX
+    {
+        uint32_t dwAccountID;
+        uint32_t dwServerAddress;
+        uint8_t bufAuthToken[8];
+        uint8_t bufReserved[16];
     };
 
     /**

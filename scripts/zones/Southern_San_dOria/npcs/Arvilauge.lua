@@ -13,8 +13,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    player:showText(npc, 11076)--temp dialog
+    player:startEvent(846)
 end
 
 function onEventUpdate(player, csid, option)

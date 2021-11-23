@@ -41,6 +41,8 @@ enum ENTITYUPDATE
     ENTITY_NONE
 };
 
+class CCharEntity;
+
 /** Base class for all packets
 *
 * Contains a 0x104 byte sized buffer
@@ -100,6 +102,16 @@ public:
 
     CBasicPacket& operator= (const CBasicPacket& other) = delete;
     CBasicPacket& operator= (CBasicPacket&& other) = delete;
+
+    /**
+     *  Allows to change packets just as they are about to be sent
+     *  to clients. This allows to adjust packet format according
+     *  to changes in different client versions, keeping backwards
+     *  compatibility.
+     */
+    virtual void ClientVerFixup(const CCharEntity* PChar)
+    {
+    }
 
     /* Getters for the header */
 

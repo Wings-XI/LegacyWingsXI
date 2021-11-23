@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 }
 
@@ -33,7 +33,7 @@ function onTrigger(player, target)
 
     if not targ:isNPC() then
         if targ:isAlive() then
-      
+
             local immortal = false
             if targ:isPC() then
                 if targ:getCharVar("Immortal") == 1 then

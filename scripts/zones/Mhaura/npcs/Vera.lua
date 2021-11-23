@@ -22,6 +22,18 @@ function onTrade(player, npc, trade)
         elseif (VeraOldLadyVar == 3 and trade:hasItemQty(540, 1)) then
             player:startEvent(137)
         end
+    elseif player:getCharVar("AnnyEvent2020") == 2 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(4862, 1) and player:getFreeSlotsCount() > 0 and player:hasItem(539) == false and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 3)
+            player:addItem(539)
+            player:PrintToPlayer("Vera : Ah, most don't seem to come to me nowadays. Instead they visit my pair..", 0xD)
+            player:PrintToPlayer("Vera : Take this to the grandfather of an important singer...", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 539)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 539)
+            player:PrintToPlayer("Vera : Come back after cleaning up that mess of an inventory...", 0xD)
+        end
     end
 end
 

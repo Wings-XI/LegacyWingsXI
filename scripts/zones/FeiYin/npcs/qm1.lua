@@ -2,7 +2,8 @@
 -- Area: FeiYin
 --  NPC: qm1 (???)
 -- Involved In Quest: Pieuje's Decision
--- !pos -55 -16 69 204
+-- !pos -55 -16 69 204 for new position
+-- !pos 165 -23 -85 204 for old position
 -----------------------------------
 local ID = require("scripts/zones/FeiYin/IDs")
 require("scripts/globals/npc_util")

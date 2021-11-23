@@ -8,8 +8,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(172)
-    return 1
+    if player:getCurrentMission(COP) >= tpz.mission.id.cop.WHEN_ANGELS_FALL then
+        player:startEvent(172)
+        return 1
+    else
+        player:messageSpecial(7230)
+    end
 end
 
 function onEventUpdate(player, csid, option)

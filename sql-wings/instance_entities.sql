@@ -457,6 +457,31 @@ INSERT INTO `instance_entities` VALUES(53, 17022989);
 INSERT INTO `instance_entities` VALUES(54, 17022977);
 INSERT INTO `instance_entities` VALUES(54, 17022978);
 
+-- Scouting the Ashu Talif
+INSERT INTO `instance_entities` VALUES(55, 17022990); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022991); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022992); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022993); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022994); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022995); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022996); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17022997); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17022998); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17022999); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17023000); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17023001); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17023002); -- Ashu Talif Crew (MNK)
+INSERT INTO `instance_entities` VALUES(55, 17023003); -- Ashu Talif Crew (RDM)
+INSERT INTO `instance_entities` VALUES(55, 17023004); -- Ashu Talif Crew (RNG)
+INSERT INTO `instance_entities` VALUES(55, 17023005); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023006); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023007); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023008); -- Watch Imp
+INSERT INTO `instance_entities` VALUES(55, 17023009); -- Swiftwinged Gekko
+INSERT INTO `instance_entities` VALUES(55, 17023034); -- Ancient Lockbox (Normal)
+INSERT INTO `instance_entities` VALUES(55, 17023010); -- Ancient Lockbox (??? Item)
+INSERT INTO `instance_entities` VALUES(55, 17023059); -- Gate: Lifeboat
+
 -- Path of Darkness
 -- mobs
 INSERT INTO `instance_entities` VALUES(58, 17093132);
