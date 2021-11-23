@@ -13,22 +13,22 @@ g_mixins.families.puk = function(mob)
     end)
 
     mob:addListener("TAKE_DAMAGE", "PUK_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        -- If the element corresponding to the elemental day of the in-game Vana'diel week is used on a Puk, it will get 100% TP instantly. 
-        if damageType == FIRE and VanadielDayOfTheWeek() == tpz.day.FIRESDAY then
+        -- If the element corresponding to the elemental day of the in-game Vana'diel week is used on a Puk, it will get 100% TP instantly.
+        if damageType == tpz.damageType.FIRE and VanadielDayOfTheWeek() == tpz.day.FIRESDAY then
             mob:addTP(3000)
-        elseif damageType == EARTH and VanadielDayOfTheWeek() == tpz.day.EARTHSDAY then
+        elseif damageType == tpz.damageType.EARTH and VanadielDayOfTheWeek() == tpz.day.EARTHSDAY then
             mob:addTP(3000)
-        elseif damageType == WATER and VanadielDayOfTheWeek() == tpz.day.WATERSDAY then
+        elseif damageType == tpz.damageType.WATER and VanadielDayOfTheWeek() == tpz.day.WATERSDAY then
             mob:addTP(3000)
-        elseif damageType == WIND and VanadielDayOfTheWeek() == tpz.day.WINDSDAY then
+        elseif damageType == tpz.damageType.WIND and VanadielDayOfTheWeek() == tpz.day.WINDSDAY then
             mob:addTP(3000)
-        elseif damageType == ICE and VanadielDayOfTheWeek() == tpz.day.ICEDAY then
+        elseif damageType == tpz.damageType.ICE and VanadielDayOfTheWeek() == tpz.day.ICEDAY then
             mob:addTP(3000)
-        elseif damageType == LIGHTNING and VanadielDayOfTheWeek() == tpz.day.LIGHTNINGSDAY then
+        elseif damageType == tpz.damageType.LIGHTNING and VanadielDayOfTheWeek() == tpz.day.LIGHTNINGSDAY then
             mob:addTP(3000)
-        elseif damageType == LIGHT and VanadielDayOfTheWeek() == tpz.day.LIGHTSDAY then
+        elseif damageType == tpz.damageType.LIGHT and VanadielDayOfTheWeek() == tpz.day.LIGHTSDAY then
             mob:addTP(3000)
-        elseif damageType == DARK and VanadielDayOfTheWeek() == tpz.day.DARKSDAY then
+        elseif damageType == tpz.damageType.DARK and VanadielDayOfTheWeek() == tpz.day.DARKSDAY then
             mob:addTP(3000)
         end
     end)
@@ -39,7 +39,7 @@ g_mixins.families.puk = function(mob)
         elseif VanadielDayOfTheWeek() ~= tpz.day.WINDSDAY and mob:getMod(tpz.mod.REGAIN) ~= 0 then
             mob:setMod(tpz.mod.REGAIN, 0)
         end
-    end
+    end)
 end
 
 return g_mixins.families.puk

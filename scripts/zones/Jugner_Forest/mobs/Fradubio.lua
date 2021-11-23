@@ -2,10 +2,11 @@
 -- Area: Jugner_Forest
 --   NM: Fradubio
 -----------------------------------
+local ID = require("scripts/zones/Jugner_Forest/IDs")
 
 function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 329 then
-        for i = ID.mob.DUESSA_START, ID.mob.DUESSA_START do
+        for i = ID.mob.DUESSA_START, ID.mob.DUESSA_END do
             local pet = GetMobByID(i)
             if not pet:isSpawned() then
                 local petId = pet:getID()

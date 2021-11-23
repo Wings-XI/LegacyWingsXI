@@ -15,7 +15,7 @@ end
 function onMobRoam(mob)
     local hour = VanadielHour()
 
-    if hour >= 6 or hour < 18 then -- Despawn Shii if its day
+    if hour >= 6 and hour < 18 then -- Despawn Shii if its day
         DespawnMob(mob:getID())
     end
 end
@@ -23,7 +23,7 @@ end
 function onMobDisengage(mob)
     local hour = VanadielHour()
 
-    if hour >= 6 or hour < 18 then -- Despawn Shii if its day
+    if hour >= 6 and hour < 18 then -- Despawn Shii if its day
         DespawnMob(mob:getID())
     end
 end

@@ -6,6 +6,11 @@
 local ID = require("scripts/zones/Bhaflau_Thickets/IDs")
 require("scripts/globals/mobs")
 mixins = {require("scripts/mixins/families/puk")}
+-----------------------------------
+
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.WIND_ABSORB, 100)
+end
 
 function onMobDeath(mob, player, isKiller)
 end
