@@ -4,6 +4,15 @@
 -----------------------------------
 local ID = require("scripts/zones/Temenos/IDs")
 
+function onMobInitialize(mob)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+    mob:addMod(tpz.mod.DMGPHYS, 15)
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.CURSE, {chance = 100})
+end
+
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then
         switch (mob:getID()): caseof
