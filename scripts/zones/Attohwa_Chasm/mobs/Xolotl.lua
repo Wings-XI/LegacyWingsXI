@@ -3,7 +3,8 @@
 --  Mob: Xolotl
 -----------------------------------
 require("scripts/globals/titles")
-local ID = require("scripts/zones/Attohwa_Chasm/IDs") 
+require("scripts/globals/world")
+local ID = require("scripts/zones/Attohwa_Chasm/IDs")
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -48,14 +49,14 @@ function onMobRoam(mob)
     for i = 1, 2 do
         local child = GetMobByID(mobId + i)
         if child:isSpawned() and child:getID() == mobId + 1 then
-            child:pathTo(mob:getXPos() + 1, mob:getYPos() + 3, mob:getZPos() + 0.15) 
+            child:pathTo(mob:getXPos() + 1, mob:getYPos() + 3, mob:getZPos() + 0.15)
         elseif child:isSpawned() and child:getID() == mobId + 2 then
-            child:pathTo(mob:getXPos() + 3, mob:getYPos() + 5, mob:getZPos() + 0.15) 
+            child:pathTo(mob:getXPos() + 3, mob:getYPos() + 5, mob:getZPos() + 0.15)
         end
     end
 
     local totd = VanadielTOTD()
-    if totd ~= 1 and totd ~= 7 then -- Despawn Xolotl if its day
+    if totd ~= tpz.time.NIGHT and totd ~= tpz.time.MIDNIGHT then -- Despawn Xolotl if its day
         DespawnMob(mob:getID())
     end
 end
@@ -83,7 +84,7 @@ function onMobDespawn(mob)
     -- "If he despawns, he will repop again the next night and keep doing so until he is defeated"
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
-    
+
     if XolotlDead == 1 then
         UpdateNMSpawnPoint(mob:getID())
         local respawn = math.random(75600, 86400) -- 21h to 24h

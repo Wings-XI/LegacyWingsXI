@@ -85,6 +85,19 @@ function onTrade(player, npc, trade)
         else
             player:startEvent(181, 0, 0, 0, 0, 0, 0, 17316, 940) -- Incorrect or not enough items
         end
+    elseif player:getCharVar("AnnyEvent2020") == 1 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(536, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 2)
+            player:PrintToPlayer("Shantoto : Oh ho ho! Look at what you have brought me..", 0xD)
+            player:PrintToPlayer("Shantoto : Here take this to the giver of a second great power, the lesser of two in more ways than one..", 0xD)
+            player:addItem(4862)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 4862)
+
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4862)
+            player:PrintToPlayer("Shantoto : Come back after sorting that mess of an inventory...", 0xD)
+        end
     end
 end
 

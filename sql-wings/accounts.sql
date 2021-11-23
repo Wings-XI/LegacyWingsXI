@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `timecreate` datetime NOT NULL DEFAULT current_timestamp(),
   `timelastmodify` timestamp NOT NULL DEFAULT current_timestamp(),
   `content_ids` tinyint(2) UNSIGNED NOT NULL DEFAULT 3,
-  `expansions` smallint(4) UNSIGNED NOT NULL DEFAULT 30,
+  `expansions` smallint(4) UNSIGNED NOT NULL DEFAULT 62,
   `features` tinyint(2) UNSIGNED NOT NULL DEFAULT 12,
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `priv` tinyint(3) UNSIGNED NOT NULL DEFAULT 1

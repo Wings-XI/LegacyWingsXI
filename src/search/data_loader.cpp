@@ -112,7 +112,7 @@ std::vector<ahItem*> CDataLoader::GetAHItemsToCategory(uint8 AHCategoryID, int8*
         "LEFT JOIN auction_house ON item_basic.itemId = auction_house.itemid AND auction_house.buyer_name IS NULL "
         "LEFT JOIN item_equipment ON item_basic.itemid = item_equipment.itemid "
         "LEFT JOIN item_weapon ON item_basic.itemid = item_weapon.itemid "
-        "WHERE aH = %u AND (item_equipment.level < 76 OR item_equipment.level IS NULL)"
+        "WHERE aH = %u AND (item_basic.flags & 0x4040 = 0) AND (item_equipment.level < 76 OR item_equipment.level IS NULL)"
         "GROUP BY item_basic.itemid "
         "%s";
 
@@ -205,7 +205,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
         filterQry.append("))) ");
     }
 
-    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2, nnameflags, seacom_type "
+    std::string fmtQuery = "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, linkshellid1, linkshellid2, nnameflags, seacom_type, languages "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -241,6 +241,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
             PPlayer->rank = (uint8)Sql_GetIntData(SqlHandle, 6 + PPlayer->nation);
 
             PPlayer->zone = (PPlayer->zone == 0 ? PPlayer->prevzone : PPlayer->zone);
+            PPlayer->languages = (uint8)Sql_GetIntData(SqlHandle, 19);
 
             PPlayer->linkshellid1 = (uint16)Sql_GetIntData(SqlHandle, 15);
             PPlayer->linkshellid2 = (uint16)Sql_GetIntData(SqlHandle, 16);
@@ -387,7 +388,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
 {
     std::list<SearchEntity*> PartyList;
 
-    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, nnameflags, seacom_type "
+    const char* Query = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, mlvl, slvl, nnameflags, seacom_type, languages "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING(charid) "
         "LEFT JOIN chars USING(charid) "
@@ -411,6 +412,7 @@ std::list<SearchEntity*> CDataLoader::GetPartyList(uint16 PartyID, uint16 Allian
 
             PPlayer->id = (uint32)Sql_GetUIntData(SqlHandle, 0);
             PPlayer->zone = (uint16)Sql_GetIntData(SqlHandle, 3);
+            PPlayer->languages = (uint8)Sql_GetIntData(SqlHandle, 16);
             PPlayer->nation = (uint8)Sql_GetIntData(SqlHandle, 4);
             PPlayer->mjob = (uint8)Sql_GetIntData(SqlHandle, 10);
             PPlayer->sjob = (uint8)Sql_GetIntData(SqlHandle, 11);
@@ -454,7 +456,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
     std::list<SearchEntity*> LinkshellList;
     const char* fmtQuery = "SELECT charid, partyid, charname, pos_zone, nation, rank_sandoria, rank_bastok, rank_windurst, race, nameflags, mjob, sjob, "
         "mlvl, slvl, linkshellid1, linkshellid2, "
-        "linkshellrank1, linkshellrank2, nnameflags, seacom_type "
+        "linkshellrank1, linkshellrank2, nnameflags, seacom_type, languages "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
         "LEFT JOIN chars USING (charid) "
@@ -478,6 +480,7 @@ std::list<SearchEntity*> CDataLoader::GetLinkshellList(uint32 LinkshellID)
 
             PPlayer->id = (uint32)Sql_GetUIntData(SqlHandle, 0);
             PPlayer->zone = (uint16)Sql_GetIntData(SqlHandle, 3);
+            PPlayer->languages = (uint8)Sql_GetIntData(SqlHandle, 20);
             PPlayer->nation = (uint8)Sql_GetIntData(SqlHandle, 4);
             PPlayer->mjob = (uint8)Sql_GetIntData(SqlHandle, 10);
             PPlayer->sjob = (uint8)Sql_GetIntData(SqlHandle, 11);

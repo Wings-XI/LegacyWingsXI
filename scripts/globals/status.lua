@@ -1831,7 +1831,7 @@ tpz.latent =
     -- 41 free to use
     -- 42 free to use
     WEAPON_DRAWN_HP_UNDER    = 43, -- PARAM: HP PERCENT
-    -- 44 free to use
+    HOME_NATION              = 44, -- Citizen of Nation (Param: Sando=19, Bastok=20, Windy=21)
     MP_UNDER_VISIBLE_GEAR    = 45, -- mp less than or equal to %, calculated using MP bonuses from visible gear only
     HP_OVER_VISIBLE_GEAR     = 46, -- hp more than or equal to %, calculated using HP bonuses from visible gear only
     WEAPON_BROKEN            = 47,

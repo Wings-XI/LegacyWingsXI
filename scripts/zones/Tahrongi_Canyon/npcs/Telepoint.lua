@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/Tahrongi_Canyon/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -17,7 +18,16 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if not player:hasKeyItem(tpz.ki.MEA_GATE_CRYSTAL) then
+    if player:getCharVar("AnnyEvent2020") == 5 and player:getCharVar("AnnyEvent2020_mea") == 0 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 then
+            player:setCharVar("AnnyEvent2020_mea", 1)
+            player:addItem(4241)
+            player:PrintToPlayer("A piece of the telepoint crystal fragments off..", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 4241)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4241)
+        end
+    elseif not player:hasKeyItem(tpz.ki.MEA_GATE_CRYSTAL) then
         npcUtil.giveKeyItem(player, tpz.ki.MEA_GATE_CRYSTAL)
     else
         player:messageSpecial(ID.text.ALREADY_OBTAINED_TELE)

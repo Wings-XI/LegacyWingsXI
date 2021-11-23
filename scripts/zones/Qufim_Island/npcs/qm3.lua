@@ -10,6 +10,12 @@ require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 -----------------------------------
 
+function onSpawn(npc)
+    if ENABLE_ACP == 0 then
+        npc:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
 function onTrade(player, npc, trade)
     -- Trade Seedspall's Lux, Luna, Astrum
     if player:getCurrentMission(ACP) == tpz.mission.id.acp.THE_ECHO_AWAKENS and npcUtil.tradeHas(trade, {2740, 2741, 2742}) then
@@ -27,32 +33,44 @@ function onTrigger(player, npc)
     local lastAmber = player:getCharVar("LastAmberKey") -- When last Amber key was obtained
     local lastViridian = player:getCharVar("LastViridianKey") -- When last Viridian key was obtained
 
-    if ENABLE_ACP == 1 and not player:hasKeyItem(tpz.ki.AMBER_KEY) then
-        if missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_I and SR and SC and SV and now ~= lastViridian then
-            player:startEvent(32)
-        elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and player:getCharVar("SEED_MANDY") == 0 then
-            -- Spawn Seed mandragora's
-            player:setCharVar("SEED_MANDY", 1) -- This will need moved into Seed mandies onDeath script later.
-            player:PrintToPlayer( "Confrontation Battles are not working yet." )
-            -- tpz.effect.CONFRONTATION for 30 min
-        elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and player:getCharVar("SEED_MANDY") == 1 then -- change SEED_MANDY var number later when battle actually works (intended purpose is to track number of slain mandies).
-            player:setCharVar("SEED_MANDY", 0)
-            player:startEvent(34)
-        -- elseif missionACP >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I and not amberKey and now ~= lastAmber and now ~= lastViridian and SR and SC and SV and player:getCharVar("SEED_MANDY") == 0) then
-            -- This is for repeats to get amber keys.
-            -- Spawn Seed mandragora's with tpz.effect.CONFRONTATION for 30 min
-        -- elseif SR and SC and SV and missionACP >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I and player:getCharVar("SEED_MANDY") == 1 then
-            -- npcUtil.giveKeyItem(player, tpz.ki.AMBER_KEY)
-            -- player:setCharVar("LastAmberKey", os.date("%j"))
-            -- player:setCharVar("SEED_MANDY", 0)
-            -- player:delKeyItem(tpz.ki.SEEDSPALL_ROSEUM)
-            -- player:delKeyItem(tpz.ki.SEEDSPALL_CAERULUM)
-            -- player:delKeyItem(tpz.ki.SEEDSPALL_VIRIDIS)
-        else
-            -- Todo: find retail message (if any) and text its ID
+    if missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_I and SR and SC and SV and now ~= lastViridian then
+        player:startEvent(32)
+        player:setCharVar("SEED_MANDY", 99)
+    elseif missionACP >= tpz.mission.id.acp.GATHERER_OF_LIGHT_II and SR and SC and SV and now ~= lastViridian and now ~= lastAmber and not amberKey and (player:getCharVar("SEED_MANDY") == 99 or player:getCharVar("SEED_MANDY") < 30) then
+        -- Make sure nobody else is doing this confrontation
+        local mandragoraSpawned = false
+        for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+            local mandragora = GetMobByID(id)
+            if mandragora:isSpawned() then    
+                mandragoraSpawned = true
+            end
         end
+
+        if mandragoraSpawned then
+            --Error
+            player:messageSpecial(ID.text.NOTHER_OUT_OF_THE_ORDINARY)
+        else
+            -- player:startEvent(43)
+            for _, partyMember in pairs(player:getAlliance()) do
+                partyMember:setCharVar("SEED_MANDY", 0)
+                partyMember:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 1800)
+            end
+
+            for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+                local mandragora = GetMobByID(id)
+                if not mandragora:isSpawned() then    
+                    mandragora:spawn()
+                    mandragora:updateEnmity(player)
+                end
+            end
+        end
+    elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and amberKey then
+        player:setCharVar("SEED_MANDY", 99)
+        player:startEvent(34)
+    elseif player:hasStatusEffect(tpz.effect.CONFRONTATION) then
+        player:delStatusEffect(tpz.effect.CONFRONTATION)
     else
-        -- Todo: find retail message (if any) and text its ID
+        player:messageSpecial(ID.text.NOTHER_OUT_OF_THE_ORDINARY)
     end
 end
 
@@ -67,11 +85,9 @@ function onEventFinish(player, csid, option)
     elseif csid == 32 then
         player:completeMission(ACP, tpz.mission.id.acp.GATHERER_OF_LIGHT_I)
         player:addMission(ACP, tpz.mission.id.acp.GATHERER_OF_LIGHT_II)
-        player:delKeyItem(tpz.ki.SEEDSPALL_ROSEUM)
-        player:delKeyItem(tpz.ki.SEEDSPALL_CAERULUM)
-        player:delKeyItem(tpz.ki.SEEDSPALL_VIRIDIS)
     elseif csid == 34 then
         player:completeMission(ACP, tpz.mission.id.acp.GATHERER_OF_LIGHT_II)
         player:addMission(ACP, tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I)
+        player:setCharVar("LastAmberKey", os.date("%j"))
     end
 end

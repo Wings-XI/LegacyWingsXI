@@ -69,17 +69,17 @@ function onZoneWeatherChange(weather)
     local KingVine = GetMobByID(ID.mob.KING_VINEGARROON)
 
     if
-        not KingVine:isSpawned() and os.time() > kvre
+        KingVine:isSpawned() == false and os.time() > kvre
         and weather == tpz.weather.DUST_STORM
     then
         -- 10% chance for KV pop at start of single earth weather
         chance = math.random(1, 10)
-        if chance == 1 then 
+        if chance == 1 then
             DisallowRespawn(KingVine:getID(), false)
             SpawnMob(ID.mob.KING_VINEGARROON)
         end
     elseif
-        not KingVine:isSpawned() and os.time() > kvre
+        KingVine:isSpawned() == false and os.time() > kvre
         and weather == tpz.weather.SAND_STORM
     then
         DisallowRespawn(KingVine:getID(), false)

@@ -1045,6 +1045,7 @@ INSERT INTO `mob_skill_lists` VALUES('Thinker', 241, 1250);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 270);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 271);
 INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 273);
+INSERT INTO `mob_skill_lists` VALUES('Tiger', 242, 2207);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 783);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 784);
 INSERT INTO `mob_skill_lists` VALUES('Tonberry', 243, 785);
@@ -1771,9 +1772,6 @@ INSERT INTO `mob_skill_lists` VALUES('Seed_Yagudo', 409, 619);
 INSERT INTO `mob_skill_lists` VALUES('Seed_Yagudo', 409, 620);
 INSERT INTO `mob_skill_lists` VALUES('Seed_Yagudo', 409, 633);
 INSERT INTO `mob_skill_lists` VALUES('Seed_Yagudo', 409, 2413);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Goblin', 410, 590);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Goblin', 410, 591);
-INSERT INTO `mob_skill_lists` VALUES('Seed_Goblin', 410, 2414);
 INSERT INTO `mob_skill_lists` VALUES('Capricious_Cassie', 411, 725);
 INSERT INTO `mob_skill_lists` VALUES('Capricious_Cassie', 411, 726);
 INSERT INTO `mob_skill_lists` VALUES('Capricious_Cassie', 411, 727);
@@ -3234,6 +3232,24 @@ INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 645);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 646);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 647);
 INSERT INTO `mob_skill_lists` VALUES('VanguardDragon', 1179, 648);
+INSERT INTO `mob_skill_lists` VALUES('Humbaba', 1180, 663);
+INSERT INTO `mob_skill_lists` VALUES('Okyupete', 1181, 400);
+INSERT INTO `mob_skill_lists` VALUES('Euryale', 1182, 1762);
+INSERT INTO `mob_skill_lists` VALUES('Seed_Crystal', 1183, 2415);
+INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
+INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
+INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
+INSERT INTO `mob_skill_lists` VALUES('GREAT_SWORD', 2004, 981); -- Ground Strike
+INSERT INTO `mob_skill_lists` VALUES('AXE', 2005, 940); -- Rampage
+INSERT INTO `mob_skill_lists` VALUES('GREAT_AXE', 2006, 86); -- Raging Rush
+INSERT INTO `mob_skill_lists` VALUES('SCYTHE', 2007, 104); -- Spiral Hell
+INSERT INTO `mob_skill_lists` VALUES('POLEARM', 2008, 116); -- Penta Thrust
+INSERT INTO `mob_skill_lists` VALUES('KATANA', 2009, 134); -- Balde: Jin
+INSERT INTO `mob_skill_lists` VALUES('GREAT_KATANA', 2010, 947); -- Tachi: Gekko
+INSERT INTO `mob_skill_lists` VALUES('CLUB', 2011, 168); -- Hexa Strike
+INSERT INTO `mob_skill_lists` VALUES('STAFF', 2012, 182); -- Full Swing
+INSERT INTO `mob_skill_lists` VALUES('ARCHERY', 2025, 196); -- Sidewinder
+INSERT INTO `mob_skill_lists` VALUES('MARKSMANSHIP', 2026, 212); -- Slug Shot
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1920); -- rushing_drub
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1921); -- forceful_blow
 INSERT INTO `mob_skill_lists` VALUES('MamoolJaMage', 5000, 1922); -- somersault_kick
@@ -3279,7 +3295,6 @@ INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
-
 
 --
 -- Indexes for dumped tables

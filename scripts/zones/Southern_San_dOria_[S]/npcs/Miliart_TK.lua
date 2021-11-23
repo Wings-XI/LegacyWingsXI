@@ -11,6 +11,7 @@ local ID = require("scripts/zones/Southern_San_dOria_[S]/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    tpz.campaign.onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)

@@ -103,6 +103,8 @@ thread_local Sql_t* SqlHandle = nullptr;
 int32  map_fd = 0;                      // main socket
 uint32 map_amntplayers = 0;             // map amnt unique players
 
+bool map_doing_final = false;
+
 in_addr map_ip;
 uint16 map_port = 0;
 
@@ -414,6 +416,8 @@ int32 do_init(int32 argc, char** argv)
 
 void do_final(int code)
 {
+    map_doing_final = true;
+
     delete[] g_PBuff;
     g_PBuff = nullptr;
     delete[] PTempBuff;
@@ -738,7 +742,7 @@ int32 recv_parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_da
             charutils::LoadChar(PChar);
             if (PChar->loc.prevzone == 0) {
                 // New chars must wait one cooldown before they can yell
-                PChar->m_LastYell = gettick() + (map_config.yell_cooldown * 1000);
+                charutils::SetCharUVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
             }
 
             if (map_config.mission_storage_recovery) {
@@ -1870,6 +1874,13 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0x61: // stats (self)
                     case 0x62: // skills
                     case 0x44: // job extra
+                    case 0x32: // event
+                    case 0x33: // event string
+                    case 0x34: // event with parameters
+                    case 0x5C: // event update
+                    case 0x5D: // event string update
+                    case 0x65: // self-position (on zone-in or on event finish)
+                    case 0x52: // event release
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -1890,10 +1901,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0xC9: // check
                     case 0x4B: // delivery box
                     case 0x77: // entity enable list
-                    case 0x32: // event
-                    case 0x33: // event string
-                    case 0x5C: // event update
-                    case 0x5D: // event string update
                     case 0x15: // fishing
                     case 0xFA: // furniture interact
                     case 0x86: // guild menu
@@ -1910,7 +1917,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0xDC: // party invite
                     case 0xE1: // party search
                     case 0x68: // synchronize pet with owner
-                    case 0x52: // event release
                     case 0x3D: // shop appraise
                     case 0x3F: // shop buy
                     case 0x3C: // shop items
@@ -1918,7 +1924,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0x31: // synth suggestion
                     case 0x75: // battlefield timer
                     case 0xF5: // widescan track
-                    case 0x65: // self-position (on zone-in or on event finish)
                     {
                         // these packets go straight to the character about their own actions/stats so they are prio0
                         priorityNum = 0;
@@ -2575,7 +2580,7 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         //if char then disconnects we need to tell the server about the alliance change
                         if (PChar->PParty != nullptr && PChar->PParty->m_PAlliance != nullptr && PChar->PParty->GetLeader() == PChar)
                         {
-                            if (PChar->PParty->members.size() == 1)
+                            if (PChar->PParty->GetRealNumberOfPeople() == 1)
                             {
                                 if (PChar->PParty->m_PAlliance->partyList.size() == 1)
                                 {
@@ -2779,6 +2784,7 @@ int32 map_config_default()
     map_config.lv_cap_mission_bcnm = 0;
     map_config.max_merit_points = 30;
     map_config.yell_cooldown = 30;
+    map_config.yell_min_level = 5;
     map_config.audit_gm_cmd = 0;
     map_config.audit_chat = 0;
     map_config.audit_say = 0;
@@ -3227,6 +3233,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "yell_cooldown") == 0)
         {
             map_config.yell_cooldown = atoi(w2);
+        }
+        else if (strcmp(w1, "yell_min_level") == 0)
+        {
+        map_config.yell_min_level = atoi(w2);
         }
         else if (strcmp(w1, "audit_gm_cmd") == 0)
         {

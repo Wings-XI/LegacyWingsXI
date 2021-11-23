@@ -18,9 +18,6 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.DARK_ABSORB, 100)
     elseif effect:getPower() < 2 then
         target:addMod(tpz.mod.UDMGMAGIC, -101)
-        if target:isPC() and target:hasTrait(77) then -- Iron Will
-            target:addMod(tpz.mod.SPELLINTERRUPT, target:getMerit(tpz.merit.IRON_WILL))
-        end
     else
         target:addMod(tpz.mod.MAGIC_ABSORB, 100)
     end
@@ -38,9 +35,6 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.DARK_ABSORB, 100)
     elseif effect:getPower() < 2 then
         target:delMod(tpz.mod.UDMGMAGIC, -101)
-        if target:isPC() and target:hasTrait(77) then -- Iron Will
-            target:delMod(tpz.mod.SPELLINTERRUPT, target:getMerit(tpz.merit.IRON_WILL))
-        end
     else
         target:delMod(tpz.mod.MAGIC_ABSORB, 100)
     end

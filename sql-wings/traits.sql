@@ -307,7 +307,7 @@ INSERT INTO `traits` VALUES(43, 'dragon killer', 14, 86, 1, 233, 10, 'ABYSSEA', 
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 20, 1, 1240, 10, NULL, 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 40, 2, 1240, 15, NULL, 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 60, 3, 1240, 20, NULL, 0);
-INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 75, 4, 1240, 25, NULL, 0);
+INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 75, 4, 1240, 25, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 81, 5, 1240, 30, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(49, 'resist poison', 11, 20, 1, 1241, 10, NULL, 0);
 INSERT INTO `traits` VALUES(49, 'resist poison', 11, 40, 2, 1241, 15, NULL, 0);

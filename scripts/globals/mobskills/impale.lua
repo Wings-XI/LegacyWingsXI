@@ -23,12 +23,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2.3
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local shadows = info.hitslanded
-
-    if mob:isMobType(MOBTYPE_NOTORIOUS) then
-        shadows = MOBPARAM_IGNORE_SHADOWS
-        typeEffect = tpz.effect.POISON
-        mob:resetEnmity(target)
-    end
     
     local dmg = 0
     
@@ -50,7 +44,7 @@ function onMobWeaponSkill(target, mob, skill)
         elseif eff3 == tpz.msg.basic.SKILL_ENFEEB_IS then
             return tpz.effect.POISON
         end
-        
+        mob:resetEnmity(target)
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return 0
     else

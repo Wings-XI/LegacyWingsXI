@@ -173,6 +173,14 @@ inline int32 CLuaItem::getReqLvl(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaItem::getRace(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
+    uint8 race = static_cast<CItemEquipment*>(m_PLuaItem)->getRace();
+    lua_pushinteger(L, race);
+    return 1;
+}
+
 inline int32 CLuaItem::getMod(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
@@ -370,6 +378,54 @@ inline int32 CLuaItem::setAppraisalID(lua_State* L)
 
     return 1;
 }
+
+inline int32 CLuaItem::setSoulPlateData(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+
+    std::string name = lua_tostring(L, 1);
+    uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+    uint8 zeni = (uint8) lua_tointeger(L, 3);
+    uint16 skillIndex = (uint16) lua_tointeger(L, 4);
+    uint8 fp = (uint8) lua_tointeger(L, 5);
+
+    m_PLuaItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+
+    return 1;
+}
+
+inline int32 CLuaItem::getSoulPlateData(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
+
+    auto data = m_PLuaItem->getSoulPlateData();
+
+    lua_createtable(L, 5, 0);
+    int8 newTable = lua_gettop(L);
+
+    lua_pushstring(L, std::get<0>(data).c_str());
+    lua_setfield(L, newTable, "name");
+
+    lua_pushinteger(L, std::get<1>(data));
+    lua_setfield(L, newTable, "mobFamily");
+
+    lua_pushinteger(L, std::get<2>(data));
+    lua_setfield(L, newTable, "zeni");
+
+    lua_pushinteger(L, std::get<3>(data));
+    lua_setfield(L, newTable, "skillIndex");
+
+    lua_pushinteger(L, std::get<4>(data));
+    lua_setfield(L, newTable, "fp");
+
+    return 1;
+}
+
 //==========================================================//
 
 const char CLuaItem::className[] = "CItem";
@@ -391,6 +447,7 @@ Lunar<CLuaItem>::Register_t CLuaItem::methods[] =
     LUNAR_DECLARE_METHOD(CLuaItem,getName),
     LUNAR_DECLARE_METHOD(CLuaItem,getILvl),
     LUNAR_DECLARE_METHOD(CLuaItem,getReqLvl),
+    LUNAR_DECLARE_METHOD(CLuaItem,getRace),
     LUNAR_DECLARE_METHOD(CLuaItem,getMod),
     LUNAR_DECLARE_METHOD(CLuaItem,addMod),
     LUNAR_DECLARE_METHOD(CLuaItem,delMod),
@@ -403,5 +460,7 @@ Lunar<CLuaItem>::Register_t CLuaItem::methods[] =
     LUNAR_DECLARE_METHOD(CLuaItem,getSignature),
     LUNAR_DECLARE_METHOD(CLuaItem,getAppraisalID),
     LUNAR_DECLARE_METHOD(CLuaItem,setAppraisalID),
+    LUNAR_DECLARE_METHOD(CLuaItem,setSoulPlateData),
+    LUNAR_DECLARE_METHOD(CLuaItem,getSoulPlateData),
     {nullptr,nullptr}
 };

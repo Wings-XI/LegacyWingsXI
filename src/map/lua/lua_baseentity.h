@@ -52,6 +52,7 @@ public:
     int32 PrintToPlayer(lua_State* L);      // for sending debugging messages/command confirmations to the player's client
     int32 PrintToArea(lua_State* L);        // for sending area messages to multiple players at once
     int32 messageBasic(lua_State*);         // Sends Basic Message
+    int32 messageStandard(lua_State* L);    // Sends Standard Message
     int32 messageName(lua_State* L);        // Sends a Message with a Name
     int32 messagePublic(lua_State*);        // Sends a public Basic Message
     int32 messageSpecial(lua_State*);       // Sends Special Message
@@ -204,6 +205,8 @@ public:
     int32 getCurrentGPItem(lua_State*);      // Gets current GP item id and max points
     int32 breakLinkshell(lua_State*);        // Breaks all pearls/sacks
 
+    int32 addSoulPlate(lua_State*);          //
+
     // Trading
     int32 getContainerSize(lua_State*);      // Gets the current capacity of a container
     int32 changeContainerSize(lua_State*);   // Increase/Decreases container size
@@ -241,6 +244,7 @@ public:
     int32 checkNameFlags(lua_State* L);      // this is check and not get because it tests for a flag, it doesn't return all flags
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
+    int32 copyLook(lua_State* L);
     int32 restoreNpcLook(lua_State* L);
     int32 costume(lua_State*);               // get or set user costume
     int32 costume2(lua_State*);              // set monstrosity costume
@@ -270,6 +274,8 @@ public:
     int32 setGMLevel(lua_State* L);
     int32 getGMHidden(lua_State* L);
     int32 setGMHidden(lua_State* L);
+    int32 getGMSuperpowers(lua_State* L);
+    int32 setGMSuperpowers(lua_State* L);
 
     int32 isJailed(lua_State *L);           // Is the player jailed
     int32 jail(lua_State* L);
@@ -722,6 +728,7 @@ public:
     int32 castSpell(lua_State*);            // forces a mob to cast a spell (parameter = spell ID, otherwise picks a spell from its list)
     int32 useJobAbility(lua_State*);        // forces a job ability use (players/pets only)
     int32 useMobAbility(lua_State*);        // forces a mob to use a mobability (parameter = skill ID)
+    int32 triggerDrawIn(lua_State*);        // forces a mob to use Draw In
     int32 hasTPMoves(lua_State*);
 
     int32 weaknessTrigger(lua_State* L);

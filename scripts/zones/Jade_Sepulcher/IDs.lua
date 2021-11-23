@@ -21,6 +21,7 @@ zones[tpz.zone.JADE_SEPULCHER] =
     },
     mob =
     {
+        LANCELORD_GAHEEL_JA = 17051694,
     },
     npc =
     {
