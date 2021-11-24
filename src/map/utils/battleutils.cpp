@@ -3725,7 +3725,7 @@ namespace battleutils
         auto isValidTrickAttackHelper = [&](CBattleEntity* PEntity) -> bool
         {
             // Dead PEntity should not be TA-able
-            if (!PEntity->isAlive()) {
+            if (PEntity->isDead()) {
                 return false;
             }
             if (taUser->id != PEntity->id && distanceSquared(PEntity->loc.p, PMob->loc.p) < distanceSquared(taUser->loc.p, PMob->loc.p))
