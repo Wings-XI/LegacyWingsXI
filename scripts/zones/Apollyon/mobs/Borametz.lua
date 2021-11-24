@@ -23,3 +23,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
         end
     end
 end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end

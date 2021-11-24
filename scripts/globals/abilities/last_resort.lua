@@ -3,7 +3,7 @@
 -- Increases user's attack, but lowers defense.
 -- Obtained: Dark Knight Level 15
 -- Recast Time: 5:00
--- Duration: 3:00
+-- Duration: 0:30
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")

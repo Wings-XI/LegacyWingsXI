@@ -29,6 +29,9 @@ function onMobSpawn(mob)
             {id = tpz.jsa.MIGHTY_STRIKES, hpp = math.random(90, 95), cooldown = 90},
         },
     })
+
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

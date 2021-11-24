@@ -95,7 +95,7 @@ local loot =
         },
         -- SE_Apollyon floor 3
         [3] =
-        {   
+        {
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
@@ -325,7 +325,7 @@ local loot =
             },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-            },  
+            },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
@@ -368,7 +368,7 @@ local loot =
             },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-            },  
+            },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
@@ -500,7 +500,7 @@ local loot =
                 {itemid = 1935, droprate =  24}, -- WHM
                 {itemid = 2657, droprate =  24}, -- BLU
                 {itemid = 2717, droprate =  71}, -- SCH
-            }, 
+            },
             {
                 {itemid =    0, droprate = 638}, -- Nothing
                 {itemid = 1311, droprate =  32}, -- Oxblood
@@ -614,14 +614,14 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
                 {itemid =    0, droprate = 1000}, -- Nothing
             },
-            {   
+            {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
                 {itemid =    0, droprate = 1000}, -- Nothing
             },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
                 {itemid =    0, droprate = 1000}, -- Nothing
-            },  
+            },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
                 {itemid =    0, droprate = 1000}, -- Nothing
@@ -677,7 +677,7 @@ local loot =
             },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-            },  
+            },
             {
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
@@ -897,7 +897,7 @@ function onTrigger(player, npc)
     local bfid = battlefield:getID()
     local hold = false
     if npc:getLocalVar("open") == 0 then
-        switch (bfid): caseof 
+        switch (bfid): caseof
         {
             [1290] = function() -- NW Apollyon Crate Handling
                 if crateID ~= ID.npc.APOLLYON_NW_CRATE[5] then
@@ -909,7 +909,7 @@ function onTrigger(player, npc)
                                 elseif model == 961 then
                                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                 elseif model == 962 then
-                                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+                                    tpz.limbus.extendTimeLimit(battlefield, 5, tpz.zone.APOLLYON)
                                 end
                             end
                         end
@@ -936,7 +936,7 @@ function onTrigger(player, npc)
                                         elseif crateID == itemPH then
                                             tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                         elseif crateID == timePH then
-                                            tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+                                            tpz.limbus.extendTimeLimit(battlefield, 10, tpz.zone.APOLLYON)
                                         else
                                             if mimicSpawned == 0 or mimicSpawned == 2 or mimicSpawned == 4 or mimicSpawned == 6 then
                                                 npc:setStatus(tpz.status.DISAPPEAR)
@@ -1017,7 +1017,7 @@ function onTrigger(player, npc)
                                 elseif model == 961 then
                                     tpz.limbus.handleLootRolls(battlefield, loot[bfid][i], nil, npc)
                                 elseif model == 962 then
-                                    tpz.limbus.extendTimeLimit(battlefield, 15, tpz.zone.APOLLYON)
+                                    tpz.limbus.extendTimeLimit(battlefield, 10, tpz.zone.APOLLYON)
                                 end
                             end
                         end
