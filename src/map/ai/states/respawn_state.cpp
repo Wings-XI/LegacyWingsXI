@@ -58,8 +58,7 @@ bool CRespawnState::Update(time_point tick)
             ResetEntryTime();
             return false;
         }
-        m_PEntity->Spawn();
-        
+        m_PEntity->Spawn();        
         return true;
     }
     return false;
