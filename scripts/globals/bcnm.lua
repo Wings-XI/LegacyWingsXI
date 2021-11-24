@@ -22,7 +22,7 @@ local battlefields = {
      -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
         { 3,  643,    0},   -- Brothers (ENM)
-     -- { 4,  644,    0},   -- Holy Cow (ENM)
+        { 4,  644,    0},   -- Holy Cow (ENM)
      -- { 5,    ?, 3454},   -- Taurassic Park (HKC30)
     },
 
@@ -81,7 +81,7 @@ local battlefields = {
     [tpz.zone.SPIRE_OF_VAHZL] =
     {
         { 0,  864,    0},   -- Desires of Emptiness (PM5-2)
-     -- { 1,  865,    0},   -- Pulling the Plug (ENM)
+      - { 1,  865,    0},   -- Pulling the Plug (ENM)
      -- { 2,  866, 3352},   -- Empty Aspirations (KC50)
     },
 

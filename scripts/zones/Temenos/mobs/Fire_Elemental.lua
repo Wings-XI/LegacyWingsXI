@@ -4,10 +4,12 @@
 -----------------------------------
 require("scripts/globals/limbus")
 local ID = require("scripts/zones/Temenos/IDs")
+require("scripts/globals/battlefield")
 
 function onMobInitialize(mob)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
     mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -31,56 +33,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
                 local mobZ = mob:getZPos()
                 local crateID = ID.npc.TEMENOS_E_CRATE[1] + (mobID - ID.mob.TEMENOS_E_MOB[1])
                 GetNPCByID(crateID):setPos(mobX, mobY, mobZ)
-
-                local FirstChoice = math.random(3,5)
-
-                if FirstChoice == 4 then
-                    FirstChoice = FirstChoice + 1
-                elseif FirstChoice == 5 then
-                    FirstChoice = FirstChoice + 2
-                end
-
-                if battlefield:getLocalVar("1ChestSpawn") == 0 then
-                    tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", FirstChoice, true)
-                    battlefield:setLocalVar("1ChestSpawn", battlefield:getLocalVar("1ChestSpawn") + 1)
-                    if FirstChoice == 3 then
-                        battlefield:setLocalVar('1Blue', 1)
-                    elseif FirstChoice == 5  then
-                        battlefield:setLocalVar('1Gold', 1)
-                    else
-                        battlefield:setLocalVar('1Brown', 1)
-                    end
-                else
-                    local nextChest = math.random(0,2)
-                    if nextChest == 0 and battlefield:getLocalVar('1Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 3, true)
-                        battlefield:setLocalVar('1Blue', 1)
-                    elseif nextChest == 0 and battlefield:getLocalVar('1Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 5, true)
-                        battlefield:setLocalVar('1Gold', battlefield:getLocalVar('1Gold') + 1)
-                    elseif nextChest == 0 and battlefield:getLocalVar('1Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 7, true)
-                        battlefield:setLocalVar('1Brown', 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('1Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 5, true)
-                        battlefield:setLocalVar('1Gold', battlefield:getLocalVar('1Gold') + 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('1Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 7, true)
-                        battlefield:setLocalVar('1Brown', 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('1Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 3, true)
-                        battlefield:setLocalVar('1Blue', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('1Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 7, true)
-                        battlefield:setLocalVar('1Brown', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('1Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 3, true)
-                        battlefield:setLocalVar('1Blue', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('1Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", 5, true)
-                        battlefield:setLocalVar('1Gold', battlefield:getLocalVar('1Gold') + 1)
-                    end
-                end
+                tpz.limbus.spawnRandomCrate(crateID, battlefield, "crateMaskF1", battlefield:getLocalVar("crateMaskF1"), true)
             end
         end
     end

@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/limbus")
 require("scripts/globals/pathfind")
+require("scripts/globals/battlefield")
 local ID = require("scripts/zones/Temenos/IDs")
 local flags = tpz.path.flag.WALLHACK
 local path =
@@ -33,6 +34,7 @@ local path =
 function onMobInitialize(mob)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
     mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -69,55 +71,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
                 local mobZ = mob:getZPos()
                 local crateID = ID.npc.TEMENOS_E_CRATE[5] + (mobID - ID.mob.TEMENOS_E_MOB[5])
                 GetNPCByID(crateID):setPos(mobX, mobY, mobZ)
-                local FirstChoice = math.random(3,5)
-
-                if FirstChoice == 4 then
-                    FirstChoice = FirstChoice + 1
-                elseif FirstChoice == 5 then
-                    FirstChoice = FirstChoice + 2
-                end
-
-                if battlefield:getLocalVar("5ChestSpawn") == 0 then
-                    tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", FirstChoice, true)
-                    battlefield:setLocalVar("5ChestSpawn", battlefield:getLocalVar("5ChestSpawn") + 1)
-                    if FirstChoice == 3 then
-                        battlefield:setLocalVar('5Blue', 1)
-                    elseif FirstChoice == 5  then
-                        battlefield:setLocalVar('5Gold', 1)
-                    else
-                        battlefield:setLocalVar('5Brown', 1)
-                    end
-                else
-                    local nextChest = math.random(0,2)
-                    if nextChest == 0 and battlefield:getLocalVar('5Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 3, true)
-                        battlefield:setLocalVar('5Blue', 1)
-                    elseif nextChest == 0 and battlefield:getLocalVar('5Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 5, true)
-                        battlefield:setLocalVar('5Gold', battlefield:getLocalVar('5Gold') + 1)
-                    elseif nextChest == 0 and battlefield:getLocalVar('5Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 7, true)
-                        battlefield:setLocalVar('5Brown', 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('5Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 5, true)
-                        battlefield:setLocalVar('5Gold', battlefield:getLocalVar('5Gold') + 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('5Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 7, true)
-                        battlefield:setLocalVar('5Brown', 1)
-                    elseif nextChest == 1 and battlefield:getLocalVar('5Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 3, true)
-                        battlefield:setLocalVar('5Blue', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('5Brown') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 7, true)
-                        battlefield:setLocalVar('5Brown', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('5Blue') == 0 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 3, true)
-                        battlefield:setLocalVar('5Blue', 1)
-                    elseif nextChest == 2 and battlefield:getLocalVar('5Gold') < 2 then
-                        tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF5", 5, true)
-                        battlefield:setLocalVar('5Gold', battlefield:getLocalVar('5Gold') + 1)
-                    end
-                end
+                tpz.limbus.spawnRandomCrate(crateID, battlefield, "crateMaskF5", battlefield:getLocalVar("crateMaskF5"), true)
             end
         end
     end

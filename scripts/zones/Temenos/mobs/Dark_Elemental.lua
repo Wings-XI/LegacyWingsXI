@@ -3,10 +3,12 @@
 --  Mob: Dark Elemental
 -----------------------------------
 local ID = require("scripts/zones/Temenos/IDs")
+require("scripts/globals/battlefield")
 
 function onMobInitialize(mob)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
     mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
 function onAdditionalEffect(mob, target, damage)
