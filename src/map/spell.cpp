@@ -628,6 +628,11 @@ namespace spell
                 return true; // every PC can use trusts
             }
 
+            if (PCaster->objtype == TYPE_PC && reinterpret_cast<CCharEntity*>(PCaster)->m_GMSuperpowers) {
+                // Allow GMs to cast any spell
+                return true;
+            }
+
             if(PCaster->GetMLevel() >= JobMLVL)
             {
                 usable = true;

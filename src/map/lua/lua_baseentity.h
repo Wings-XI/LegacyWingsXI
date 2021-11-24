@@ -274,6 +274,8 @@ public:
     int32 setGMLevel(lua_State* L);
     int32 getGMHidden(lua_State* L);
     int32 setGMHidden(lua_State* L);
+    int32 getGMSuperpowers(lua_State* L);
+    int32 setGMSuperpowers(lua_State* L);
 
     int32 isJailed(lua_State *L);           // Is the player jailed
     int32 jail(lua_State* L);
@@ -454,7 +456,7 @@ public:
 
     int32 addPartyEffect(lua_State*);               // Adds Effect to all party members
     int32 hasPartyEffect(lua_State*);               // Has Effect from all party members
-    int32 removePartyEffect(lua_State*);            // Removes Effect from all party members
+    int32 delPartyEffect(lua_State*);               // Deletes Effect from all party members
 
     int32 getAlliance(lua_State* L);
     int32 getAllianceSize(lua_State* L);            // Get the size of an entity's alliance

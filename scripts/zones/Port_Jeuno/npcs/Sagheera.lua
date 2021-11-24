@@ -9,6 +9,7 @@ require("scripts/globals/npc_util")
 require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/missions")
 -----------------------------------
 
 
@@ -257,7 +258,7 @@ local abcShop =
 local COSMO_READY = 2147483649 -- BITMASK for the purchase
 
 local function getCosmoCleanseTime(player)
-    local cosmoWaitTime = player:hasKeyItem(tpz.ki.RHAPSODY_IN_MAUVE) and 3600 or 72000
+    local cosmoWaitTime = 255600 --71 hours
     local lastCosmoTime = player:getCharVar("Cosmo_Cleanse_TIME")
 
     if lastCosmoTime ~= 0 then
@@ -274,56 +275,61 @@ end
 function onTrade(player, npc, trade)
     local count = trade:getItemCount()
     local afUpgrade = player:getCharVar("AFupgrade")
+    local currentCOPMission = player:getCurrentMission(COP)
 
-    -- store ancient beastcoins
-    if trade:hasItemQty(1875, count) then
-        local total = player:getCurrency("ancient_beastcoin") + count
+    if currentCOPMission > tpz.mission.id.cop.THE_WARRIOR_S_PATH then
+        -- store ancient beastcoins
+        if trade:hasItemQty(1875, count) then
+            local total = player:getCurrency("ancient_beastcoin") + count
 
-        if total < 9999 then -- store max 9999 ancient beastcoins
-            player:addCurrency("ancient_beastcoin", count)
-            player:tradeComplete()
-            player:startEvent(311, count, 0, 0, 0, 0, 0, 0, total)
-        else
-            player:messageSpecial(ID.text.SAGHEERA_MAX_ABCS)
-        end
-
-    -- af and relic upgrade trades
-    elseif afUpgrade == 0 then
-        local tradedCombo = 0
-        local storedABCs  = player:getCurrency("ancient_beastcoin")
-
-        -- check for af upgrade trades
-        for k, v in pairs(afArmorPlusOne) do
-            if npcUtil.tradeHasExactly(trade, v.trade) then
-                if v.abc <= storedABCs then
-                    player:delCurrency("ancient_beastcoin", v.abc)
-                    tradedCombo = k
-                else
-                    player:messageSpecial(ID.text.SAGHEERA_LACK_ABCS)
-                end
-                break
+            if total < 9999 then -- store max 9999 ancient beastcoins
+                player:addCurrency("ancient_beastcoin", count)
+                player:tradeComplete()
+                player:startEvent(311, count, 0, 0, 0, 0, 0, 0, total)
+            else
+                player:messageSpecial(ID.text.SAGHEERA_MAX_ABCS)
             end
-        end
 
-        -- check for relic upgrade trades
-        if tradedCombo == 0 then
-            for k, v in pairs(relicArmorPlusOne) do
+        -- af and relic upgrade trades
+        elseif afUpgrade == 0 then
+            local tradedCombo = 0
+            local storedABCs  = player:getCurrency("ancient_beastcoin")
+
+            -- check for af upgrade trades
+            for k, v in pairs(afArmorPlusOne) do
                 if npcUtil.tradeHasExactly(trade, v.trade) then
-                    tradedCombo = k
+                    if v.abc <= storedABCs then
+                        player:delCurrency("ancient_beastcoin", v.abc)
+                        tradedCombo = k
+                    else
+                        player:messageSpecial(ID.text.SAGHEERA_LACK_ABCS)
+                    end
                     break
                 end
             end
-        end
 
-        -- found a match
-        if tradedCombo > 0 then
-            local time = os.date("*t")
+            -- check for relic upgrade trades
+            if tradedCombo == 0 then
+                for k, v in pairs(relicArmorPlusOne) do
+                    if npcUtil.tradeHasExactly(trade, v.trade) then
+                        tradedCombo = k
+                        break
+                    end
+                end
+            end
 
-            player:confirmTrade()
-            player:setCharVar("AFupgrade", tradedCombo)
-            player:setCharVar("AFupgradeDay", os.time() + (3600 - time.min * 60)) -- Current time + Remaining minutes in the hour in seconds (Day Change)
-            player:startEvent(312)
+            -- found a match
+            if tradedCombo > 0 then
+                local time = os.date("*t")
+
+                player:confirmTrade()
+                player:setCharVar("AFupgrade", tradedCombo)
+                player:setCharVar("AFupgradeDay", os.time() + (3600 - time.min * 60)) -- Current time + Remaining minutes in the hour in seconds (Day Change)
+                player:startEvent(312)
+            end
         end
+    else
+        player:PrintToPlayer("Sagheera : Hmmm. . . Maybe come back when you are a more seasoned adventurer.", 0xD)
     end
 end
 
@@ -388,9 +394,9 @@ function onEventFinish(player, csid, option)
     -- purchase cosmocleanse
     elseif csid == 310 and option == 3 then
         local cosmoTime = getCosmoCleanseTime(player)
-        -- if cosmoTime == COSMO_READY and player:delGil(15000) then
-        --     npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
-        -- end
+        if cosmoTime == COSMO_READY and player:delGil(15000) then
+            npcUtil.giveKeyItem(player, tpz.ki.COSMOCLEANSE)
+        end
 
     -- purchase item using ancient beastcoins
     elseif csid == 310 and abcShop[option] then

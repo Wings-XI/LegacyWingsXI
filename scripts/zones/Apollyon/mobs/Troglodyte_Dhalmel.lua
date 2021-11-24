@@ -20,6 +20,7 @@ local path =
 function onMobSpawn(mob)
     local start = (mob:getID() - ID.mob.APOLLYON_NE_MOB[5]) - 1
     mob:setLocalVar("point", start)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
 function onMobRoam(mob)

@@ -3295,7 +3295,7 @@ namespace battleutils
                 PSCEffect->SetDuration(PSCEffect->GetDuration() - 1000);
                 PSCEffect->SetTier(GetSkillchainTier((SKILLCHAIN_ELEMENT)skillchain));
                 PSCEffect->SetPower(skillchain);
-                PSCEffect->SetSubPower(std::min(PSCEffect->GetSubPower() + 1, 5)); // Linked, limited to 5
+                PSCEffect->SetSubPower(std::min(PSCEffect->GetSubPower() + 1, 6)); // Linked, limited to 6
 
                 return (SUBEFFECT)GetSkillchainSubeffect((SKILLCHAIN_ELEMENT)skillchain);
             }
@@ -3456,26 +3456,27 @@ namespace battleutils
         ELEMENT appliedEle = ELEMENT_NONE;
         int16 resistance = GetSkillchainMinimumResistance(skillchain, PDefender, &appliedEle);
 
-        TPZ_DEBUG_BREAK_IF(chainLevel <= 0 || chainLevel > 4 || chainCount <= 0 || chainCount > 5);
+        TPZ_DEBUG_BREAK_IF(chainLevel <= 0 || chainLevel > 4 || chainCount <= 0 || chainCount > 6);
 
         // Skill chain damage = (Closing Damage)
         //                      × (Skill chain Level/Number from Table)
-        //                      × (1 + Skill chain Bonus ÷ 100)
-        //                      × (1 + Skill chain Damage + %/100)
+        //            OOE       × (1 + Skill chain Bonus ÷ 100)
+        //            OOE       × (1 + Skill chain Damage + %/100)
         //            TODO:     × (1 + Day/Weather bonuses)
         //            TODO:     × (1 + Staff Affinity)
 
         auto damage = (int32)floor((double)(abs(lastSkillDamage))
-            * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000
-            * (100 + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100
-            * (100 + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100);
+            * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000);
+        //OOE    * (100 + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100
+        //OOE    * (100 + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100);
         // ShowDebug("RawDamage: %u\n,", damage);
         auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
         if (PChar && PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && behind(PChar->loc.p, PDefender->loc.p, 64))
         {
             damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));
         }
-        damage = damage * resistance / 100;
+        damage = damage * std::clamp((int32)resistance, 10, 100) / 100;
+
         // ShowDebug("DamageAfterResist: %u\n, Resistance:%u\n,", damage, resistance);
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
         if (damage > 0)
@@ -5357,9 +5358,9 @@ namespace battleutils
             if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
                 !PMember->isDead() && !PMember->isMounted())
             {
-                PMember->loc.p.x = nearEntity.x;
+                PMember->loc.p.x = PMob->loc.p.x;
                 PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                PMember->loc.p.z = nearEntity.z;
+                PMember->loc.p.z = PMob->loc.p.z;
                 PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 
                 if (PMember->objtype == TYPE_PC)
@@ -5898,9 +5899,9 @@ namespace battleutils
             recast = (int32)(recast * 1.5f);
         }
 
-        recast = std::max<int32>(recast, (int32)(base * 0.2f));
+        recast = std::max<int32>(recast, (int32)(base * 0.5f)); // caps at 50%
 
-        // Light/Dark arts recast bonus/penalties applies after the 80% cap
+        // Light/Dark arts recast bonus/penalties applies after the 50% cap
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
             if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION))

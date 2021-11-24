@@ -42,9 +42,20 @@ function onSpellPrecast(mob, spell)
     end
 end
 
+function onMagicCastingCheck(mob, target, spell)
+    if math.random() > 0.50 then
+        return 218
+    else
+        return 0
+    end
+end
+
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then
         GetNPCByID(ID.npc.APOLLYON_NW_CRATE[5]):setStatus(tpz.status.NORMAL)
     end
 end
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end

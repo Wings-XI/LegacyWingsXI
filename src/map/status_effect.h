@@ -70,6 +70,7 @@ enum EFFECTFLAG
     EFFECTFLAG_OFFLINE_TICK     = 0x2000000, // Duration elapses while offline
     EFFECTFLAG_AURA             = 0x4000000, // Is an aura type effect
     EFFECTFLAG_ON_SYNC          = 0x8000000, // lose this effect on sync
+    EFFECTFLAG_LEVEL_RESTRICTION= 0x10000000, // Has Level Restriction
 };
 
 enum EFFECT

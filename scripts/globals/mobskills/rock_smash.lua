@@ -5,7 +5,7 @@
 --  Type: Physical
 --  Utsusemi/Blink absorb: 1 shadow
 --  Range: Melee
---  Notes:
+--  Notes: Requires No Weapon or Broken Weapon
 ---------------------------------------------
 
 require("scripts/globals/settings")
@@ -15,16 +15,20 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-  if(mob:getFamily() == 91) then
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 1680) then
+   if(mob:getFamily() == 91) then
+     local mobSkin = mob:getModelId()
+        if (mobSkin == 1680) then
+            return 0
+        else
+            return 1
+        end
+   end
+   if mob:AnimationSub() == 1 or mob:getMainJob() == tpz.job.MNK or mob:getMainJob() == tpz.job.PUP then     
         return 0
-    else
+   else 
         return 1
-    end
-  end
-    return 0
+   end
+
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -34,13 +38,13 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 3
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
-
+    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     local typeEffect = tpz.effect.PETRIFICATION
     local power = math.random(25, 40) + mob:getMainLvl()/3
 
-    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, power)
+    MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 50, 0, power)
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
+
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     return dmg
 end

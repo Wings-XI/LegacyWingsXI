@@ -23,6 +23,8 @@
 
 #include <string.h>
 
+#include "../utils/charutils.h"
+
 #include "campaign_map.h"
 
     uint8 packet0[] = {
@@ -59,6 +61,9 @@ CCampaignPacket::CCampaignPacket(CCharEntity * PChar, uint8 number)
 {
 	this->type = 0x71;
 	this->size = 0x66;
+
+	int32 notes = charutils::GetPoints(PChar, "allied_notes");
+	memcpy(&packet1[8], &notes, 32); // Allied notes index in packet1 is 8
 
 	switch (number)
 	{

@@ -183,7 +183,7 @@ INSERT INTO `status_effects` VALUES (139,'agi_down',8405026,0,0,0,0,83,2,0,0);
 INSERT INTO `status_effects` VALUES (140,'int_down',8405026,0,0,0,0,84,1,0,0);
 INSERT INTO `status_effects` VALUES (141,'mnd_down',8405026,0,0,0,0,85,5,0,0);
 INSERT INTO `status_effects` VALUES (142,'chr_down',8405026,0,0,0,0,86,8,0,0);
-INSERT INTO `status_effects` VALUES (143,'level_restriction',8388608,0,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (143,'level_restriction',276824064,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (144,'max_hp_down',8405026,0,0,0,0,88,8,0,0);
 INSERT INTO `status_effects` VALUES (145,'max_mp_down',8405026,0,0,0,0,89,7,0,0);
 INSERT INTO `status_effects` VALUES (146,'accuracy_down',8405026,0,0,0,0,90,4,0,0);

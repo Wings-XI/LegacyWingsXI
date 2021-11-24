@@ -6,6 +6,8 @@
 --
 -- Auto-Script: Requires Verification (Verified by Brawndo)
 -----------------------------------
+local ID = require("scripts/zones/Upper_Jeuno/IDs")
+-----------------------------------
 
 function onTrade(player, npc, trade)
 
@@ -91,7 +93,8 @@ function onTrigger(player, npc)
     elseif (player:getCharVar("comebackQueenCS") == 5) then --player cleared Laila's story
         player:startEvent(10156)
     else
-        player:startEvent(10122)
+        --player:startEvent(10122)
+        player:PrintToPlayer("Olgald : Feel free to trade me your old Dancer equipment for another kind...", 0xD)
     end
 end
 
