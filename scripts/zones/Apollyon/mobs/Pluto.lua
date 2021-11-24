@@ -11,6 +11,10 @@ local path =
         {-458.178, 0.000, 49.511}
 }
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end
+
 function onMobRoam(mob)
     local pause = mob:getLocalVar("pause")
     if pause < os.time() then

@@ -81,6 +81,9 @@ function onMobDeath(mob, player, isKiller)
         player:delStatusEffect(tpz.effect.CONFRONTATION)
 
         if SR and SC and SV and now ~= lastViridian and now ~= lastAmber and not amberKey then
+            player:delKeyItem(tpz.ki.SEEDSPALL_ROSEUM)
+            player:delKeyItem(tpz.ki.SEEDSPALL_CAERULUM)
+            player:delKeyItem(tpz.ki.SEEDSPALL_VIRIDIS)
             player:addExp(500)
             player:addKeyItem(tpz.ki.AMBER_KEY)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.AMBER_KEY)

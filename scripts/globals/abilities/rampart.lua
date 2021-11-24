@@ -1,8 +1,5 @@
 -----------------------------------
 -- Ability: Rampart
--- Grants all party members within the area of effect -25% SDT.
--- SDT is multiplicative with regular Damage Taken; many forms of SDT are for a single type or element of damage
--- However, Rampart's SDT is for all damage types.
 -- Obtained: Paladin Level 62
 -- Recast Time: 5:00
 -- Duration: 0:30
@@ -33,7 +30,7 @@ function onUseAbility(player, target, ability)
     --print(string.format("player = %u, target = %u, power = %u, SSpower = %u", player:getID(), target:getID(), power, SSpower))
     
     target:delStatusEffect(tpz.effect.DEFENSE_BOOST)
-    target:addStatusEffect(tpz.effect.DEFENSE_BOOST, power+10000, 3, duration, 0, player:getMerit(tpz.merit.IRON_WILL))
+    target:addStatusEffect(tpz.effect.DEFENSE_BOOST, power+10000, 3, duration, 0)
 
     return tpz.effect.DEFENSE_BOOST
 end

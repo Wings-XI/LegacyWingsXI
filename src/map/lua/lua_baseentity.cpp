@@ -3870,7 +3870,7 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
                     }
                     lua_pop(L, 2);
                 }
-                
+
                 lua_getfield(L, 1, "appraisal");
                 uint8 appraisalId = (uint8)lua_tointeger(L, -1);
                 if (appraisalId > 0)
@@ -4329,7 +4329,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         PChar->pushPacket(new CInventoryFinishPacket());
 
         // Used Soul Plate
-        CItem* PItem = itemutils::GetItem(2477); 
+        CItem* PItem = itemutils::GetItem(2477);
         PItem->setQuantity(1);
         PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
@@ -4579,6 +4579,11 @@ inline int32 CLuaBaseEntity::canEquipItem(lua_State *L)
 
     CItemEquipment* PItem = (CItemEquipment*)itemutils::GetItem(itemID);
     CBattleEntity* PChar = (CBattleEntity*)m_PBaseEntity;
+
+    if (PChar->objtype == TYPE_PC && reinterpret_cast<CCharEntity*>(PChar)->m_GMSuperpowers) {
+        lua_pushboolean(L, true);
+        return 1;
+    }
 
     if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
     {
@@ -5235,7 +5240,7 @@ inline int32 CLuaBaseEntity::setModelId(lua_State* L)
 *  Function: copyLook()
 *  Purpose : Copies the argument's look to the entity
 *  Example : mob:copyLook(target)
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::copyLook(lua_State* L)
@@ -5246,22 +5251,21 @@ inline int32 CLuaBaseEntity::copyLook(lua_State* L)
     CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
     if (PLuaBaseEntity != nullptr)
     {
-        CBaseEntity* PTarget = PLuaBaseEntity->GetBaseEntity();
-
-        memcpy(&m_PBaseEntity->look, &PTarget->mainlook, sizeof(PTarget->mainlook));
-        if (PTarget->objtype == TYPE_PC)
+        if (PLuaBaseEntity->GetBaseEntity()->objtype == TYPE_PC)
         {
-            m_PBaseEntity->look.face = PTarget->mainlook.face;
-            m_PBaseEntity->look.race = PTarget->mainlook.race;
-            m_PBaseEntity->look.size = PTarget->mainlook.size;
-            m_PBaseEntity->look.head = PTarget->mainlook.head;
-            m_PBaseEntity->look.body = PTarget->mainlook.body;
-            m_PBaseEntity->look.hands = PTarget->mainlook.hands;
-            m_PBaseEntity->look.legs = PTarget->mainlook.legs;
-            m_PBaseEntity->look.feet = PTarget->mainlook.feet;
-            m_PBaseEntity->look.main = PTarget->look.main;
-            m_PBaseEntity->look.sub = PTarget->look.sub;
-            m_PBaseEntity->look.ranged = PTarget->look.ranged;
+            CCharEntity* PTarget = (CCharEntity*)PLuaBaseEntity->GetBaseEntity();
+            look_t *look = (PTarget->getStyleLocked() ? &PTarget->mainlook : &PTarget->look);
+            m_PBaseEntity->look.face = look->face;
+            m_PBaseEntity->look.race = look->race;
+            m_PBaseEntity->look.size = 1;
+            m_PBaseEntity->look.head = look->head;
+            m_PBaseEntity->look.body = look->body;
+            m_PBaseEntity->look.hands = look->hands;
+            m_PBaseEntity->look.legs = look->legs;
+            m_PBaseEntity->look.feet = look->feet;
+            m_PBaseEntity->look.main = look->main;
+            m_PBaseEntity->look.sub = look->sub;
+            m_PBaseEntity->look.ranged = look->ranged;
         }
     }
 
@@ -5800,6 +5804,41 @@ inline int32 CLuaBaseEntity::setGMHidden(lua_State* L)
         else
             PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CCharPacket(PChar, ENTITY_SPAWN, 0));
     }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: getGMSuperpowers()
+*  Purpose : Returns true if a GM has superpowers (can cast / equip anything)
+*  Example : if (player:getGMSuperpowers()) then
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    lua_pushboolean(L, PChar->m_GMSuperpowers);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setGMSuperpowers()
+*  Purpose : Sets whether a GM has superpowers
+*  Example : player:setGMSuperpowers(1)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setGMSuperpowers(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    PChar->m_GMSuperpowers = lua_toboolean(L, 1);
 
     return 0;
 }
@@ -8729,17 +8768,13 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         // Check for special flags which may prevent damage from waking up the target
         bool wakeUp = true;
         bool breakBind = true;
-        bool removePetrify = true;
+        bool removePetrify = false;
 
         if (!lua_isnil(L, 5) && lua_istable(L, 5))
         {
             // Attempt to wake up the target unless wakeUp is provided and is false.
             lua_getfield(L, 5, "wakeUp");
             wakeUp = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
-
-            // Remove petrification unless removePetrify is provided and is false
-            lua_getfield(L, 5, "removePetrify");
-            removePetrify = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
 
             // Attempt to break Bind unless breakBind is provided and is false
             lua_getfield(L, 5, "breakBind");
@@ -12186,9 +12221,9 @@ inline int32 CLuaBaseEntity::dispelStatusEffect(lua_State *L)
 
 /************************************************************************
 *  Function: getBattleTargetID()
-*  Purpose : 
+*  Purpose :
 *  Example : mob:getBattleTargetID()
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getBattleTargetID(lua_State* L)
@@ -12778,12 +12813,12 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
     uint8 skilltype = weapon->getSkillType();
     if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
         skilltype = SKILL_AUTOMATON_RANGED;
-    
+
     uint16 skill = PEntity->GetSkill(skilltype);
     if (skilltype == SKILL_AUTOMATON_RANGED)
         skill = PEntity->PMaster->GetSkill(skilltype);
     uint16 acc = skill;
-    
+
     if (skill > 200) {
         acc = (int)(200 + (skill - 200) * 0.9);
     }
@@ -13404,7 +13439,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
 
 /************************************************************************
 *  Obsolete: use takeDamage() instead
-*  Function: int32 TakeSpellDamage() 
+*  Function: int32 TakeSpellDamage()
 *  Purpose : Calls Battle Utils to calculate final spell damage against a foe
 *  Example : target:takeSpellDamage(caster, spell, finaldmg, attackType, damageType)
 *  Notes   : Global function of same name in bluemagic.lua, calls this member function from within
@@ -13441,9 +13476,9 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
-    
+
     CBattleEntity* PCastTarget = nullptr;
-    
+
     if (!lua_isnil(L, 2) && lua_isuserdata(L,2))
         PCastTarget = static_cast<CBattleEntity*>((Lunar<CLuaBaseEntity>::check(L, 2))->GetBaseEntity());
 
@@ -13464,9 +13499,9 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
                     return 0;
                 }
             }
-            
+
             petutils::SpawnPet((CBattleEntity*)m_PBaseEntity, (uint32)lua_tointeger(L, 1), false, PCastTarget);
-            
+
         }
         else
         {
@@ -15558,9 +15593,13 @@ inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 /************************************************************************
  *  Function: triggerDrawIn()
  *  Purpose : Forces a mob to use DrawIn on the mob's current target
- *  Example : mob:triggerDrawIn(int drawInRange, int maxumumReach, bool includeParty)
+ *  Example : mob:triggerDrawIn(bool includeParty, int drawInRange, int maxumumReach, player Target)
+ *  Params  : includeParty - true will pull in full party/alliance
+ *          : drawInRange - MIN distance away that the target will cause a DrawIn
+ *          : maximumReach - MAX distance away that the target will cause a DrawIn
+ *          : Target - the target to DrawIn
  *  Note    : Params can assume a default value by passing nil
- *          : e.g. triggerDrawIn(nil, nil, true) to pull in a party/alliance with default range and reach
+ *          : e.g. triggerDrawIn(true, nil, nil, nil) to pull in a party/alliance with default range and reach and the mob's current hate target
  ************************************************************************/
 inline int32 CLuaBaseEntity::triggerDrawIn(lua_State* L)
 {
@@ -15576,19 +15615,32 @@ inline int32 CLuaBaseEntity::triggerDrawIn(lua_State* L)
     bool includeParty = false;
     float offset = PMob->GetMeleeRange() - 0.2f;
 
-    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
-    {
-        auto drawInRange{ (uint8)lua_tointeger(L, 1) };
-    }
-
     if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
     {
-        auto maximumReach{ (uint16)lua_tointeger(L, 2) };
+        auto drawInRange{ (uint8)lua_tointeger(L, 2) };
     }
 
-    if (!lua_isnil(L, 3) && lua_isboolean(L, 3))
+    if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
     {
-        auto includeParty{ (bool)lua_toboolean(L, 3) };
+        auto maximumReach{ (uint16)lua_tointeger(L, 3) };
+    }
+
+    if (!lua_isnil(L, 4) && lua_isuserdata(L, 4))
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 4);
+        if (PLuaBaseEntity != nullptr)
+        {
+            CBaseEntity* PBaseEntity = PLuaBaseEntity->GetBaseEntity();
+            if (PBaseEntity)
+            {
+                PTarget = ((CBattleEntity*)PBaseEntity);
+            }
+        }
+    }
+
+    if (!lua_isnil(L, 1) && lua_isboolean(L, 1))
+    {
+        auto includeParty{ (bool)lua_toboolean(L, 1) };
     }
 
     if (PTarget)
@@ -15783,7 +15835,7 @@ inline int32 CLuaBaseEntity::addTreasure(lua_State *L)
 *  Function: getStealItem()
 *  Purpose : Used to return the Item ID of a mob's item which can be stolen
 *  Example : steamItem = target:getStealItem()
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getStealItem(lua_State *L)
@@ -16374,7 +16426,7 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
 *  Function: setMobLevelRange(minlv,maxlv)
 *  Purpose : Used by developer GMs to set a mob's level range
 *  Example : target:setMobLevelRange(1,3)
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::setMobLevelRange(lua_State* L)
@@ -16436,7 +16488,7 @@ inline int32 CLuaBaseEntity::setSuperJump(lua_State* L)
 *  Function: getOAXTimes()
 *  Purpose : used in Jump calculations in Lua
 *  Example : getOAXTimes(0) for main hand, getOAXTimes(1) for off hand
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getOAXTimes(lua_State* L)
@@ -16467,9 +16519,9 @@ inline int32 CLuaBaseEntity::getOAXTimes(lua_State* L)
 }
 
 /************************************************************************
-*  Function: 
-*  Purpose : 
-*  Example : 
+*  Function:
+*  Purpose :
+*  Example :
 *  Notes   :
 ************************************************************************/
 
@@ -16496,7 +16548,7 @@ inline int32 CLuaBaseEntity::getOpenMH(lua_State* L)
         lua_pushboolean(L, true);
         return 1;
     }
-    
+
     lua_pushboolean(L, false);
     return 1;
 }
@@ -16578,7 +16630,7 @@ inline int32 CLuaBaseEntity::forceDropItems(lua_State* L)
 *  Function:
 *  Purpose : take a guess
 *  Example : pet:addCharmTime(100)
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::addCharmTime(lua_State* L)
@@ -16604,7 +16656,7 @@ inline int32 CLuaBaseEntity::addCharmTime(lua_State* L)
 }
 
 /************************************************************************
-*  Function: 
+*  Function:
 *  Purpose :
 *  Example : target:tryIntteruptSpell(attacker, 3)
 *  Notes   : second argument is amount of hits landed
@@ -16635,7 +16687,7 @@ inline int32 CLuaBaseEntity::tryInterruptSpell(lua_State* L)
 *  Function: getGuardRate
 *  Purpose : finds guard rate, returns 0% if the attacker cannot guard
 *  Example : target:getGuardRate(attacker)
-*  Notes   : 
+*  Notes   :
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
@@ -16652,7 +16704,7 @@ inline int32 CLuaBaseEntity::getGuardRate(lua_State* L)
         return 1;
     }
 
-    if (PDefender && PAttacker && !PDefender->StatusEffectContainer->HasPreventActionEffect() && PDefender->PAI && PDefender->PAI->IsEngaged() &&
+    if (PDefender && PAttacker && PDefender->PAI && PDefender->PAI->IsEngaged() &&
         facing(PDefender->loc.p, PAttacker->loc.p, 64))
         lua_pushinteger(L, battleutils::GetGuardRate(PAttacker, PDefender));
     else
@@ -16753,7 +16805,7 @@ inline int32 CLuaBaseEntity::getBlockedDamage(lua_State* L)
         lua_pushinteger(L, damage);
         return 1;
     }
-    
+
     uint8 absorb = std::clamp<uint8>(PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() + (uint8)(PDefender->getMod(Mod::SHIELD_DEF_BONUS)), (uint8)0, (uint8)100);
 
     // Shield Mastery
@@ -16815,10 +16867,10 @@ inline int32 CLuaBaseEntity::trySkillUp(lua_State* L)
 }
 
 /************************************************************************
-*  Function: 
-*  Purpose : 
-*  Example : 
-*  Notes   : 
+*  Function:
+*  Purpose :
+*  Example :
+*  Notes   :
 ************************************************************************/
 
 int32 CLuaBaseEntity::addRoamFlag(lua_State* L)
@@ -16857,7 +16909,7 @@ int32 CLuaBaseEntity::delRoamFlag(lua_State* L)
 /************************************************************************
 *  Function: deaggroPlayer
 *  Purpose : Removes enmity for a specific player
-*  Example : 
+*  Example :
 *  Notes   :
 ************************************************************************/
 
@@ -16888,7 +16940,7 @@ int32 CLuaBaseEntity::deaggroPlayer(lua_State* L)
 /************************************************************************
 *  Function: deaggroAll
 *  Purpose : Completely clears the mob's enmity list
-*  Example : 
+*  Example :
 *  Notes   :
 ************************************************************************/
 
@@ -17001,7 +17053,7 @@ inline int32 CLuaBaseEntity::closeTicket(lua_State* L)
 /************************************************************************
  *  Function: player:registerHourglass(zone)
  *  Purpose : adds a newly registered perpetual hourglass to player. Lua handles deleting the traded timeless hourglass.
- *  Example : 
+ *  Example :
  *  Notes   : it should already be checked in Lua if the battlefield is taken at the moment
  ************************************************************************/
 
@@ -17028,7 +17080,7 @@ inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
         ref<uint32>(PItem->m_extra, 0x0C) = now.count(); // registration start time (lasts 15 min)
         ref<uint8>(PItem->m_extra, 0x10) = zoneid;
         ref<uint32>(PItem->m_extra, 0x14) = tpzrand::GetRandomNumber(0,0x0FFFFFFF); // token
-        
+
         if (charutils::AddItem(PChar, LOC_INVENTORY, PItem, false) == ERROR_SLOTID)
             delete PItem;
         else
@@ -17046,7 +17098,7 @@ inline int32 CLuaBaseEntity::registerHourglass(lua_State* L)
  *  Function: player:checkHourglassValid(item, zoneid)
  *  Purpose : checks if player who traded glass can enter (71h from their last dynamis)
  *  Example :
- *  Notes   : 
+ *  Notes   :
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::checkHourglassValid(lua_State* L)
@@ -17118,7 +17170,7 @@ inline int32 CLuaBaseEntity::timeSinceLastDynaReservation(lua_State* L)
  *  Function: player:updateHourglassExpireTime()
  *  Purpose : it updates the hourglass expire time
  *  Example :
- *  Notes   : 
+ *  Notes   :
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::updateHourglassExpireTime(lua_State* L)
@@ -17181,7 +17233,7 @@ inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
     charutils::SetCharVar(PChar, "DynaPrep_token", token);
     charutils::SetCharVar(PChar, "DynaPrep_originalRegistrant", originalRegistrant);
     charutils::SetCharVar(PChar, "DynaPrep_bypassWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1) ? 1 : 0);
-    
+
     return 0;
 }
 
@@ -17282,7 +17334,7 @@ inline int32 CLuaBaseEntity::pingDynamis(lua_State* L)
  *  Function: player:replicateHourglass(item)
  *  Purpose : replicate perpetual hourglass on use
  *  Example :
- *  Notes   : 
+ *  Notes   :
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::replicateHourglass(lua_State* L)
@@ -17383,8 +17435,8 @@ inline int32 CLuaBaseEntity::verifyHoldsValidHourglass(lua_State* L)
 /************************************************************************
  *  Function: player:addTimeToDynamis(minutes, msg) or mob:addTimeToDynamis(minutes, msg)
  *  Purpose : not entirely sure, but i think it adds time to dynamis
- *  Example : 
- *  Notes   : 
+ *  Example :
+ *  Notes   :
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::addTimeToDynamis(lua_State* L)
@@ -17429,8 +17481,8 @@ inline int32 CLuaBaseEntity::addTimeToDynamis(lua_State* L)
 /************************************************************************
  *  Function: mob:setSkillList(120)
  *  Purpose : sets mob skill list
- *  Example : 
- *  Notes   : 
+ *  Example :
+ *  Notes   :
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::setSkillList(lua_State* L)
@@ -17438,7 +17490,7 @@ inline int32 CLuaBaseEntity::setSkillList(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    
+
     ((CMobEntity*)m_PBaseEntity)->m_MobSkillList = (uint16)lua_tointeger(L, 1);
 
     return 0;
@@ -18136,7 +18188,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimStart),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setAnimBegin),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendUpdateToZoneCharsInRange),    
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendUpdateToZoneCharsInRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,AnimationSub),
 
     // Player Status
@@ -18157,6 +18209,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMHidden),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMHidden),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGMSuperpowers),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setGMSuperpowers),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isJailed),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,jail),

@@ -11,7 +11,7 @@ end;
 function onMobDespawn(mob)
  local mobID = mob:getID();
  -- print(mobID);
-      local mobX = mob:getXPos();
+    local mobX = mob:getXPos();
     local mobY = mob:getYPos();
     local mobZ = mob:getZPos();
 
@@ -24,3 +24,7 @@ function onMobDespawn(mob)
     GetNPCByID(16932864+127):setStatus(tpz.status.NORMAL);
     end
 end;
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end

@@ -13,6 +13,10 @@ local avatarOffsets =
     [17453085] = 3, -- Duke Dantalian
     [17453092] = 3, -- Duke Dantalian
     [17506670] = 5, -- Kirin
+    [16928799] = 2, -- Temenos Kindred
+    [16928819] = 2, -- Temenos Tonberry
+    [16928823] = 2, -- Temenos Tonberry
+    [16928827] = 2, -- Temenos Tonberry
 }
 
 function onMobSkillCheck(target, mob, skill)

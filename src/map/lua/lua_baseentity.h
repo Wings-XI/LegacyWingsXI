@@ -274,6 +274,8 @@ public:
     int32 setGMLevel(lua_State* L);
     int32 getGMHidden(lua_State* L);
     int32 setGMHidden(lua_State* L);
+    int32 getGMSuperpowers(lua_State* L);
+    int32 setGMSuperpowers(lua_State* L);
 
     int32 isJailed(lua_State *L);           // Is the player jailed
     int32 jail(lua_State* L);

@@ -12605,11 +12605,11 @@ INSERT INTO `item_mods` VALUES (14095,1,14);
 INSERT INTO `item_mods` VALUES (14095,2,15);
 INSERT INTO `item_mods` VALUES (14095,14,5);
 INSERT INTO `item_mods` VALUES (14095,109,10);
-INSERT INTO `item_mods` VALUES (14095,857,90);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (14096,1,10);
 INSERT INTO `item_mods` VALUES (14096,2,15);
 INSERT INTO `item_mods` VALUES (14096,13,5);
-INSERT INTO `item_mods` VALUES (14096,858,90);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (14097,1,10);
 INSERT INTO `item_mods` VALUES (14097,2,11);
 INSERT INTO `item_mods` VALUES (14097,11,3);
@@ -17087,13 +17087,13 @@ INSERT INTO `item_mods` VALUES (15358,1,19);
 INSERT INTO `item_mods` VALUES (15358,2,20);
 INSERT INTO `item_mods` VALUES (15358,14,5);
 INSERT INTO `item_mods` VALUES (15358,109,12);
-INSERT INTO `item_mods` VALUES (15358,857,90);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (15358,857,30);    -- Holy Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (15359,1,17);
 INSERT INTO `item_mods` VALUES (15359,2,15);
 INSERT INTO `item_mods` VALUES (15359,5,15);
 INSERT INTO `item_mods` VALUES (15359,8,5);
 INSERT INTO `item_mods` VALUES (15359,13,5);
-INSERT INTO `item_mods` VALUES (15359,858,90);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (15359,858,30);    -- Arcane Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (15360,1,14);
 INSERT INTO `item_mods` VALUES (15360,2,11);
 INSERT INTO `item_mods` VALUES (15360,11,5);
@@ -21730,6 +21730,7 @@ INSERT INTO `item_mods` VALUES (18027,24,5);
 INSERT INTO `item_mods` VALUES (18027,110,5);
 INSERT INTO `item_mods` VALUES (18027,291,1);
 INSERT INTO `item_mods` VALUES (18028,9,4);
+INSERT INTO `item_mods` VALUES (18028,413,1);
 INSERT INTO `item_mods` VALUES (18030,2,15);
 INSERT INTO `item_mods` VALUES (18030,68,4);
 INSERT INTO `item_mods` VALUES (18031,2,20);

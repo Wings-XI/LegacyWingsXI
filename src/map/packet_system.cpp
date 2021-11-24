@@ -2856,7 +2856,12 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slot);
 
-            if ((PItem != nullptr) && !(PItem->isSubType(ITEM_LOCKED)) && !(PItem->getFlag() & ITEM_FLAG_NOAUCTION) && PItem->getQuantity() >= quantity)
+            if ((PItem != nullptr) &&
+                !(PItem->isSubType(ITEM_LOCKED)) &&
+                !(PItem->getFlag() & ITEM_FLAG_NOAUCTION) &&
+                !(PItem->getFlag() & ITEM_FLAG_EX) &&
+                (PItem->getAHCat() != 0) &&
+                (PItem->getQuantity() >= quantity))
             {
                 if (PItem->isSubType(ITEM_CHARGED) && ((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
                 {

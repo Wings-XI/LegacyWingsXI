@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Bostaunieux_Oubliette/IDs")
 require("scripts/globals/conquest")
+require("scripts/globals/world")
 -----------------------------------
 
 function onInitialize(zone)
@@ -22,6 +23,14 @@ function onInitialize(zone)
     else
         SpawnMob(ID.mob.BLOODSUCKER)
 	end
+
+    local hour = VanadielHour()
+
+    if hour < 6 or hour >= 18 then
+        DisallowRespawn(ID.mob.SHII, false)
+    else
+        DisallowRespawn(ID.mob.SHII, true)
+    end
 end
 
 function onZoneIn(player, prevZone)
@@ -47,4 +56,14 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+end
+
+function onGameHour()
+    local hour = VanadielHour()
+
+    if hour < 6 or hour >= 18 then
+        DisallowRespawn(ID.mob.SHII, false)
+    else
+        DisallowRespawn(ID.mob.SHII, true)
+    end
 end
