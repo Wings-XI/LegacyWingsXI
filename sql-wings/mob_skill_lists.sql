@@ -3231,6 +3231,12 @@ INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1184, 1720);
 INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1184, 1721);
 INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1184, 1722);
 INSERT INTO `mob_skill_lists` VALUES('Puk_Mamook', 1184, 1723);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 493);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 494);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 495);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 496);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 497);
+INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 1364);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
