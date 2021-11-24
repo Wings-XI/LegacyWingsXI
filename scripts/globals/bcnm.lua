@@ -81,7 +81,7 @@ local battlefields = {
     [tpz.zone.SPIRE_OF_VAHZL] =
     {
         { 0,  864,    0},   -- Desires of Emptiness (PM5-2)
-      - { 1,  865,    0},   -- Pulling the Plug (ENM)
+        { 1,  865,    0},   -- Pulling the Plug (ENM)
      -- { 2,  866, 3352},   -- Empty Aspirations (KC50)
     },
 
