@@ -12,16 +12,6 @@ mixins =
 
 local zone = 186
 
-function onMobFight(mob, target)
-    if mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) then
-        mob:SetMobAbilityEnabled(false)
-        mob:SetMagicCastingEnabled(false)
-    else
-        mob:SetMobAbilityEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-    end
-end
-
 function onMobDeath(mob, player, isKiller)
     require("scripts/zones/Dynamis-Bastok/dynamis_mobs")
     local ID = require("scripts/zones/Dynamis-Bastok/IDs")

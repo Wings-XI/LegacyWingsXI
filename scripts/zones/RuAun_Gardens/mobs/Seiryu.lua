@@ -16,16 +16,6 @@ function onMobSpawn(mob)
 	mob:setMod(tpz.mod.REGAIN, 200)
 end
 
-function onMobFight(mob, target)
-    if mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) then
-        mob:SetMobAbilityEnabled(false)
-        mob:SetMagicCastingEnabled(false)
-    else
-        mob:SetMobAbilityEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-    end
-end
-
 function onMonsterMagicPrepare(mob, target)
     if not mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS, 0) then
         local rnd = math.random()

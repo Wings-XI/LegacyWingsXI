@@ -13,14 +13,6 @@ mixins =
 
 local zone = 187
 
-function onMobFight(mob, target)
-    if mob:hasStatusEffect(tpz.effect.HUNDRED_FISTS) then
-        mob:SetMobAbilityEnabled(false)
-    else
-        mob:SetMobAbilityEnabled(true)
-    end
-end
-
 function onMobDeath(mob, player, isKiller)
     require("scripts/zones/Dynamis-Windurst/dynamis_mobs")
     local ID = require("scripts/zones/Dynamis-Windurst/IDs")

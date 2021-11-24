@@ -1,5 +1,6 @@
 -----------------------------------------
 -- Spell: Dispel
+-- TODO: When immunity in core is fixed we can remove the target:hasimmunity line
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/magic")
@@ -28,7 +29,7 @@ function onSpellCast(caster, target, spell)
         spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
     end
     
-    if target:hasImmunity(32768) then
+    if target:hasImmunity(32768) then --dispel immunity enum needed as core immunity only looks at effects and not spell land
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return 0
     end

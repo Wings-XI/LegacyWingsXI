@@ -37,12 +37,6 @@ bool CRespawnState::Update(time_point tick)
     auto PMob = dynamic_cast<CMobEntity*>(m_PEntity);
     if (PMob)
     {
-        luautils::OnMobInitialize(PMob);
-        luautils::OnMobFamilyInitialize(PMob);
-        luautils::ApplyMixins(PMob);
-        luautils::ApplyZoneMixins(PMob);
-        PMob->saveModifiers();
-        PMob->saveMobModifiers();
         if (!PMob->m_AllowRespawn)
         {
             if (m_spawnTime > 0s)

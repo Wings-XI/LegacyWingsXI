@@ -991,7 +991,6 @@ dynamis.setMegaBossStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_PARALYZE, 15)
     mob:setMod(tpz.mod.RESBUILD_BLIND, 15)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
-    --mob:setMod(tpz.mod.RESBUILD_STUN, 8)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
     mob:setTrueDetection(1)
 
