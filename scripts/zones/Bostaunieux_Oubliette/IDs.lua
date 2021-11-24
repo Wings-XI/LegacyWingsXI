@@ -73,6 +73,7 @@ zones[tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
         PHANDURON_THE_CONDEMNED = 17461343,
         BLOODSUCKER             = 17461478,
         BODACH                  = 17461479,
+        SHII                    = 17461315,
     },
     npc =
     {

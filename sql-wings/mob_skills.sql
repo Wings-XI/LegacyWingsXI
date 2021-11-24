@@ -396,8 +396,8 @@ INSERT INTO `mob_skills` VALUES(620, 364, 'sweep', 1, 10.0, 2000, 2000, 4, 0, 0,
 INSERT INTO `mob_skills` VALUES(621, 969, 'snowball', 2, 11.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(622, 366, 'helldive', 0, 9.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(623, 367, 'wing_cutter', 4, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(624, 434, 'vulture_1', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(625, 436, 'vulture_2', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(624, 432, 'vulture_1', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(625, 433, 'vulture_2', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(626, 437, 'vulture_3', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(627, 438, 'vulture_4', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(628, 372, 'wild_horn', 4, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -924,6 +924,7 @@ INSERT INTO `mob_skills` VALUES(1358, 1009, 'plasma_charge', 0, 7.0, 2000, 1000,
 INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(1360, 855, 'apocalyptic_ray', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1363, 822, 'hungry_crunch', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1364, 848, 'mighty_snort', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1365, 1043, 'tail_thrust', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1366, 1044, 'temporal_shift', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1367, 1031, 'sinuate_rush', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
