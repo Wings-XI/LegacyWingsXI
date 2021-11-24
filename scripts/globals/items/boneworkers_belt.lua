@@ -13,9 +13,25 @@ require("scripts/globals/status")
 
 function onItemCheck(target)
     local result = 0
-    if (target:hasStatusEffect(tpz.effect.BONECRAFT_IMAGERY) == true) then
-        result = 241
+    local imagery = 
+	{
+	tpz.effect.FISHING_IMAGERY,
+	tpz.effect.WOODWORKING_IMAGERY,
+	tpz.effect.SMITHING_IMAGERY,
+	tpz.effect.GOLDSMITHING_IMAGERY,
+	tpz.effect.CLOTHCRAFT_IMAGERY,
+	tpz.effect.LEATHERCRAFT_IMAGERY,
+	tpz.effect.BONECRAFT_IMAGERY,
+	tpz.effect.ALCHEMY_IMAGERY,
+	tpz.effect.COOKING_IMAGERY
+	}
+
+    for i, effect in ipairs(imagery) do
+        if (target:hasStatusEffect(effect)) then
+            result = tpz.msg.basic.ITEM_UNABLE_TO_USE
+        end
     end
+    
     return result
 end
 

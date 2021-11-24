@@ -13,6 +13,9 @@ function onEffectGain(target, effect)
     if effect:getPower() == 0 then
         target:ChangeMusic(4, 212)
         target:setAnimation(tpz.anim.CHOCOBO)
+        if target:getPet() ~= nil then
+            target:despawnPet()
+        end
     else
         target:ChangeMusic(4, 84)
         target:setAnimation(tpz.anim.MOUNT)
