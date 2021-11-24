@@ -3721,8 +3721,13 @@ namespace battleutils
             minSlope = (minZpoint - mobZ) / (minXpoint - mobX);
         }
 
-        auto checkPosition = [&](CBattleEntity* PEntity) -> bool
+        // Determines if a given party/alliance member is a valid candidate for Trick Attack
+        auto isValidTrickAttackHelper = [&](CBattleEntity* PEntity) -> bool
         {
+            // Dead PEntity should not be TA-able
+            if (!PEntity->isAlive()) {
+                return false;
+            }
             if (taUser->id != PEntity->id && distanceSquared(PEntity->loc.p, PMob->loc.p) < distanceSquared(taUser->loc.p, PMob->loc.p))
             {
                 float memberXdif = PEntity->loc.p.x - mobX;
@@ -3754,7 +3759,7 @@ namespace battleutils
             {
                 for (auto* PTrust : PChar->PTrusts)
                 {
-                    if (checkPosition(PTrust))
+                    if (isValidTrickAttackHelper(PTrust))
                     {
                         return PTrust;
                     }
@@ -3773,7 +3778,7 @@ namespace battleutils
                     for (uint8 i = 0; i < taUser->PParty->m_PAlliance->partyList.at(a)->members.size(); ++i)
                     {
                         CBattleEntity* member = taUser->PParty->m_PAlliance->partyList.at(a)->members.at(i);
-                        if (checkPosition(member))
+                        if (isValidTrickAttackHelper(member))
                         {
                             return member;
                         }
@@ -3790,7 +3795,7 @@ namespace battleutils
                 for (uint8 i = 0; i < taUser->PParty->members.size(); ++i)
                 {
                     CBattleEntity* member = taUser->PParty->members.at(i);
-                    if (checkPosition(member))
+                    if (isValidTrickAttackHelper(member))
                     {
                         return member;
                     }
