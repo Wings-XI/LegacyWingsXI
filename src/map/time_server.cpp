@@ -151,7 +151,7 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
         TracyZoneScoped;
         zoneutils::TOTDChange(VanadielTOTD);
 
-        if ((VanadielTOTD == TIME_DAY) || (VanadielTOTD == TIME_DUSK) || (VanadielTOTD == TIME_NIGHT))
+        if ((VanadielTOTD == TIME_DAY) || (VanadielTOTD == TIME_DUSK) || (VanadielTOTD == TIME_EVENING) || (VanadielTOTD == TIME_NIGHT))
         {
 			zoneutils::ForEachZone([](CZone* PZone)
 			{
