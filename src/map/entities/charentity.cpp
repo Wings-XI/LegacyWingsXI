@@ -857,6 +857,10 @@ void CCharEntity::delTrait(CTrait* PTrait)
 
 bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 {
+    if (PInitiator->objtype == TYPE_PC && StatusEffectContainer->GetLevelRestrictionEffect() != PInitiator->StatusEffectContainer->GetLevelRestrictionEffect())
+    {
+        return false;
+    }
     if (StatusEffectContainer->GetConfrontationEffect() != PInitiator->StatusEffectContainer->GetConfrontationEffect())
     {
         return false;
