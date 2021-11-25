@@ -54,11 +54,6 @@ function onZoneIn(player, prevZone)
         player:setPos(161, -2, 161, 94)
     end
 
-    return cs
-end
-
-function onConquestUpdate(zone, updatetype)
-    tpz.conq.onConquestUpdate(zone, updatetype)
     -- Move Troupe Valeriano (Circus) --
     if getNationRank(tpz.nation.SANDORIA) == 1 then
         local circus = ID.npc.CIRCUS
@@ -82,6 +77,12 @@ function onConquestUpdate(zone, updatetype)
         end
 
     end
+
+    return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
