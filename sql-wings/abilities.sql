@@ -188,7 +188,7 @@ INSERT INTO `abilities` VALUES(146, 'water_maneuver', 18, 1, 1, 10, 210, 0, 0, 8
 INSERT INTO `abilities` VALUES(147, 'light_maneuver', 18, 1, 1, 10, 210, 0, 0, 83, 2000, 0, 6, 18.0, 0, 1, 0, 0, 512, 'TOAU');
 INSERT INTO `abilities` VALUES(148, 'dark_maneuver', 18, 1, 1, 10, 210, 0, 0, 83, 2000, 0, 6, 18.0, 0, 1, 0, 0, 512, 'TOAU');
 INSERT INTO `abilities` VALUES(149, 'warriors_charge', 1, 75, 1, 1050, 6, 0, 0, 154, 2000, 0, 6, 20.0, 0, 1, 300, 2048, 1, 'TOAU');
-INSERT INTO `abilities` VALUES(150, 'tomahawk', 1, 75, 4, 195, 7, 0, 0, 244, 2000, 0, 3, 20.0, 0, 1, 600, 2050, 1, 'TOAU');
+INSERT INTO `abilities` VALUES(150, 'tomahawk', 1, 75, 4, 180, 7, 0, 0, 244, 2000, 0, 3, 20.0, 0, 1, 600, 2050, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(151, 'mantra', 2, 75, 1, 600, 19, 441, 0, 155, 2000, 0, 6, 20.0, 1, 1, 60, 2112, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(152, 'formless_strikes', 2, 75, 1, 600, 20, 0, 0, 156, 2000, 0, 6, 20.0, 0, 1, 300, 2114, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(153, 'martyr', 3, 75, 2, 1350, 27, 102, 0, 157, 2000, 0, 6, 20.0, 0, 1, 300, 2176, 1, 'TOAU');

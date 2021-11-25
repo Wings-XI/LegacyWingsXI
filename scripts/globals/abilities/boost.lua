@@ -20,6 +20,7 @@ function onUseAbility(player, target, ability)
         effect:setPower(effect:getPower() + power)
         player:addMod(tpz.mod.ATTP, power)
     else
+        player:delStatusEffect(tpz.effect.WARCRY)
         player:addStatusEffect(tpz.effect.BOOST, power, 1, 180)
     end
 end

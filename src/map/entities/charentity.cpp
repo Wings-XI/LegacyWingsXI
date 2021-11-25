@@ -1315,8 +1315,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
 
-        //Ignore SMN Group 2 Merits specifically until we can long term fix merits that serve dual purpose
-        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631)
+        //Ignore SMN Group 2 Merits/Tomahawk specifically until we can long term fix merits that serve dual purpose
+        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631 && id != 150)
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
