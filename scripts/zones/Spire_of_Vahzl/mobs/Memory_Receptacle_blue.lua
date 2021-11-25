@@ -11,10 +11,10 @@ local bfOne = {
     { -239.835, 60.75,   9.62}, -- S
     {  -249.41, 60.75,  0.078}, -- E
     { -240.022, 60.75,  -9.15}, -- N
-    {  -240.32, 60.00, -14.79}, -- EE
-    {  -240.32, 60.00, -14.79}, -- EE
+    { -255.249, 60.00,  0.028}, -- EE
+    { -255.249, 60.00,  0.028}, -- EE
     { -224.921, 60.00, -0.095}, -- WW
-    { -255.249, 60.00,  0.028}, -- NN
+    {  -240.32, 60.00, -14.79}, -- NN
 }
 
 local bfTwo = {
@@ -39,9 +39,6 @@ local bfThree = {
     { 225.249, -60.00,  0.028}, -- NN
 }
 
-function onMobInitialize(mob)
-end
-
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMod(tpz.mod.DEF, 300)
@@ -63,12 +60,6 @@ function onMobSpawn(mob)
     end
 end
 
-function onMobEngaged(mob, target)
-end
-
-function onMobWeaponSkill(target, mob, skill)
-end
-
 function onMobFight(mob, target)
     local bfID = mob:getBattlefield():getArea()
     local redID = GetMobByID(ID.pullingThePlug[bfID].RED_ID)
@@ -79,14 +70,11 @@ function onMobFight(mob, target)
     -- Orbs move every 30 seconds
     if os.time() == moveTime and moving == 0 then
         mob:setLocalVar("Moving", 1)
-    end
-
-    if moving == 1 then
+    elseif moving == 1 then
         if bfID == 1 then
             mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
             local nextPos = bfOne[position]
-            local needX = nextPos[1]
-            local posDiff = (math.floor(mob:getXPos()) - math.floor(needX))
+            local posDiff = (math.floor(mob:getXPos()) - math.floor(nextPos[1]))
             if posDiff < -3 or posDiff > 3 then
                 mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
             elseif posDiff >= -3 or posDiff <= 3 then
@@ -117,9 +105,6 @@ function onMobFight(mob, target)
             end
         end
     end
-end
-
-function onMobRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
