@@ -21,28 +21,6 @@ end
 
 function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
-    -- Move Troupe Valeriano (Circus) --
-    if getNationRank(tpz.nation.BASTOK) == 1 then
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.NORMAL)
-                end
-            end
-        end
-    else
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.DISAPPEAR)
-                end
-            end
-        end
-    end
 end
 
 function onZoneIn(player, prevZone)
@@ -74,6 +52,29 @@ function onZoneIn(player, prevZone)
         else
             local position = math.random(1, 5) + 57
             player:setPos(position, 8.5, -239, 192)
+        end
+    end
+
+    -- Move Troupe Valeriano (Circus) --
+    if getNationRank(tpz.nation.BASTOK) == 1 then
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.NORMAL)
+                end
+            end
+        end
+    else
+        local circus = ID.npc.CIRCUS
+        if circus then
+            for id, circus in pairs(circus) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(tpz.status.DISAPPEAR)
+                end
+            end
         end
     end
 

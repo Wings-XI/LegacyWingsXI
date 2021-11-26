@@ -3722,8 +3722,13 @@ namespace battleutils
             minSlope = (minZpoint - mobZ) / (minXpoint - mobX);
         }
 
-        auto checkPosition = [&](CBattleEntity* PEntity) -> bool
+        // Determines if a given party/alliance member is a valid candidate for Trick Attack
+        auto isValidTrickAttackHelper = [&](CBattleEntity* PEntity) -> bool
         {
+            // Dead PEntity should not be TA-able
+            if (PEntity->isDead()) {
+                return false;
+            }
             if (taUser->id != PEntity->id && distanceSquared(PEntity->loc.p, PMob->loc.p) < distanceSquared(taUser->loc.p, PMob->loc.p))
             {
                 float memberXdif = PEntity->loc.p.x - mobX;
@@ -3755,7 +3760,7 @@ namespace battleutils
             {
                 for (auto* PTrust : PChar->PTrusts)
                 {
-                    if (checkPosition(PTrust))
+                    if (isValidTrickAttackHelper(PTrust))
                     {
                         return PTrust;
                     }
@@ -3774,7 +3779,7 @@ namespace battleutils
                     for (uint8 i = 0; i < taUser->PParty->m_PAlliance->partyList.at(a)->members.size(); ++i)
                     {
                         CBattleEntity* member = taUser->PParty->m_PAlliance->partyList.at(a)->members.at(i);
-                        if (checkPosition(member))
+                        if (isValidTrickAttackHelper(member))
                         {
                             return member;
                         }
@@ -3791,7 +3796,7 @@ namespace battleutils
                 for (uint8 i = 0; i < taUser->PParty->members.size(); ++i)
                 {
                     CBattleEntity* member = taUser->PParty->members.at(i);
-                    if (checkPosition(member))
+                    if (isValidTrickAttackHelper(member))
                     {
                         return member;
                     }
@@ -5565,7 +5570,7 @@ namespace battleutils
     void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
         CCharEntity* PChar = PEntity->objtype == TYPE_PC ? static_cast<CCharEntity*>(PEntity) : nullptr;
-
+        
         for (auto&& PTrait : *traitList)
         {
             if (level >= PTrait->getLevel() && PTrait->getLevel() > 0)
@@ -5594,6 +5599,11 @@ namespace battleutils
                                     break;
                                 }
                             }
+                        }
+                        // Need to add the mod to mobs because m_modStatSave doesn't include job mods.
+                        else if (PEntity->objtype == TYPE_MOB)
+                        {
+                            PEntity->addModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
                         }
 
                         if (PExistingTrait->getRank() < PTrait->getRank())

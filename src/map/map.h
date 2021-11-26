@@ -161,8 +161,10 @@ struct map_config_t
     bool   audit_chat;
     bool   audit_say;
     bool   audit_shout;
+    bool   audit_emotion;
     bool   audit_tell;
     bool   audit_yell;
+    bool   audit_system;
     bool   audit_linkshell;
     bool   audit_party;
     uint8  healing_tick_delay;

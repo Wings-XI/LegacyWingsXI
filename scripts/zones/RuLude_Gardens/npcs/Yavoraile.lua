@@ -5,7 +5,41 @@
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
+
+local path =
+{
+30, 2, 69,
+30, 2, 69,
+30, 2, 69,
+30, 2, 69,
+30, 2, 69,
+30, 2, 69,
+27, 2, 69,
+27, 2, 69,
+27, 2, 69,
+27, 2, 69,
+27, 2, 69,
+27, 2, 69,
+27, 2, 72,
+26, 2, 72,
+26, 2, 72,
+26, 2, 72,
+26, 2, 72,
+26, 2, 72,
+28, 2, 69,
+}
+
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path)
+end
 
 function onTrade(player, npc, trade)
 end

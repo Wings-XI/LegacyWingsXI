@@ -14,12 +14,6 @@ end
 function onMobSpawn(mob)
     local position = math.random(1,8)
 
-    mob:addListener("ENGAGE", "RED_ENGAGE", function(mob, target)
-        mob:setMod(tpz.mod.REGAIN, 500)
-        mob:setLocalVar("drawInTime", os.time() + 20)
-        mob:setLocalVar("moveTime", os.time() + 30)
-    end)
-
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMod(tpz.mod.DEF, 300)
     mob:setMod(tpz.mod.UDMGRANGE, -101)
@@ -28,7 +22,8 @@ function onMobSpawn(mob)
 
     mob:SetAutoAttackEnabled(false)
     mob:setLocalVar("positionNum", 0)
-    mob:setLocalVar("TPCount", 0)
+    mob:setLocalVar("tpNumber", 0)
+    mob:setLocalVar("tpDelay", 0)
     mob:setLocalVar("positionNum", position)
 end
 
@@ -37,20 +32,24 @@ function onMobEngaged(mob, target)
     GetMobByID(ID.pullingThePlug[bfID].GREEN_ID):spawn()
     GetMobByID(ID.pullingThePlug[bfID].BLUE_ID):spawn()
     GetMobByID(ID.pullingThePlug[bfID].TEAL_ID):spawn()
+
+    mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setLocalVar("drawInTime", os.time() + 20)
+    mob:setLocalVar("moveTime", os.time() + 30)
 end
 
-function onMobWeaponSkillPrepare(target, mob, skill)
+function onMobWeaponSkill(target, mob, skill)
     local bfID = mob:getBattlefield():getArea()
-    local count = mob:getLocalVar("TPCount")
+    local tpNumber = mob:getLocalVar("tpNumber")
 
-    -- Every 3rd TP move the orbs all simultaneously Empty Seed
-    if count == 2 then
+    if tpNumber < 2 then
+        local addTP = tpNumber + 1
+        mob:setLocalVar("tpNumber", addTP)
+    elseif tpNumber >= 2 then
         GetMobByID(ID.pullingThePlug[bfID].GREEN_ID):useMobAbility(542)
         GetMobByID(ID.pullingThePlug[bfID].BLUE_ID):useMobAbility(542)
         GetMobByID(ID.pullingThePlug[bfID].TEAL_ID):useMobAbility(542)
-        mob:setLocalVar("TPCount", 0)
-    else
-        mob:setLocalVar("TPCount", count + 1)
+        mob:setLocalVar("tpNumber", 0)
     end
 end
 
@@ -99,8 +98,6 @@ function onMobRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:removeListener("RED_ENGAGE")
-
     -- Despawn all other mobs
     for i = mob:getID() + 1, mob:getID() + 8 do
         DespawnMob(i)

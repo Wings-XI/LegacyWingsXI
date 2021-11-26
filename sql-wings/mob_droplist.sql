@@ -16366,9 +16366,10 @@ INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 15136, 90);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 15145, 91);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 2, 8, 15146, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 16349, 91);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18290, 333);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18308, 334);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18332, 333);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18290, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18296, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18308, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18332, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1516, 4);
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1517, 4);

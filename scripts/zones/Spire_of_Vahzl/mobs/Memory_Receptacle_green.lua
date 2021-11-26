@@ -12,8 +12,8 @@ local bfOne = {
     {  -249.31, 60.75,  10.03}, -- SE
     {  -249.45, 60.75,  -8.71}, -- NE
     { -224.921, 60.00, -0.095}, -- WW
-    { -255.249, 60.00,  0.028}, -- NN
-    {  -240.32, 60.00, -14.79}, -- EE
+    {  -240.32, 60.00, -14.79}, -- NN
+    { -255.249, 60.00,  0.028}, -- EE
     { -224.921, 60.00, -0.095}, -- WW
 }
 
@@ -39,16 +39,12 @@ local bfThree = {
     { 256.921, -60.00, -0.095}, -- WW
 }
 
-function onMobInitialize(mob)
-end
-
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
     mob:setLocalVar("Moving", 0)
     mob:setMod(tpz.mod.DEF, 300)
-
 
     local bfID = mob:getBattlefield():getArea()
     local redID = GetMobByID(ID.pullingThePlug[bfID].RED_ID)
@@ -64,12 +60,6 @@ function onMobSpawn(mob)
     end
 end
 
-function onMobEngaged(mob, target)
-end
-
-function onMobWeaponSkill(target, mob, skill)
-end
-
 function onMobFight(mob, target)
     local bfID = mob:getBattlefield():getArea()
     local redID = GetMobByID(ID.pullingThePlug[bfID].RED_ID)
@@ -80,14 +70,11 @@ function onMobFight(mob, target)
     -- Orbs move every 30 seconds
     if os.time() == moveTime and moving == 0 then
         mob:setLocalVar("Moving", 1)
-    end
-
-    if moving == 1 then
+    elseif moving == 1 then
         if bfID == 1 then
             mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
             local nextPos = bfOne[position]
-            local needX = nextPos[1]
-            local posDiff = (math.floor(mob:getXPos()) - math.floor(needX))
+            local posDiff = (math.floor(mob:getXPos()) - math.floor(nextPos[1]))
             if posDiff < -3 or posDiff > 3 then
                 mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
             elseif posDiff >= -3 or posDiff <= 3 then
@@ -120,13 +107,8 @@ function onMobFight(mob, target)
     end
 end
 
-function onMobRoam(mob)
-end
-
 function onMobDeath(mob, player, isKiller)
     -- Spawn mob from body and let main receptacle know you died
-    local mobName = mob:getID()
-    print(mobName)
     local bfID = mob:getBattlefield():getArea()
     local pos = mob:getPos()
     local insurgitator = GetMobByID(ID.pullingThePlug[bfID].INGURGITATOR)
