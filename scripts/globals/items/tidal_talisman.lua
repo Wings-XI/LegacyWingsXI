@@ -4,8 +4,7 @@
 --
 -----------------------------------------
 
-function onItemCheck(target)
-    local result = 56
+function tidalGetDestZone(target)
     local destZone = 0
     local zone = target:getZoneID()
 
@@ -31,6 +30,14 @@ function onItemCheck(target)
         destZone = 50 -- player/s ends up at Aht Urahgan Whitegate
     end
     
+    return destZone
+
+end
+    
+function onItemCheck(target)
+    local result = 56
+    local destZone = tidalGetDestZone(target)
+    
     if destZone ~= 0 and target:isZoneVisited(destZone) then
         result = 0
     end
@@ -40,6 +47,7 @@ end
 
 function onItemUse(target)
     local zone = target:getZoneID()
+    local destZone = tidalGetDestZone(target)
 
     if destZone == 0 or target:isZoneVisited(destZone) == false then
         return
