@@ -5570,7 +5570,7 @@ namespace battleutils
     void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
         CCharEntity* PChar = PEntity->objtype == TYPE_PC ? static_cast<CCharEntity*>(PEntity) : nullptr;
-
+        
         for (auto&& PTrait : *traitList)
         {
             if (level >= PTrait->getLevel() && PTrait->getLevel() > 0)
@@ -5599,6 +5599,11 @@ namespace battleutils
                                     break;
                                 }
                             }
+                        }
+                        // Need to add the mod to mobs because m_modStatSave doesn't include job mods.
+                        else if (PEntity->objtype == TYPE_MOB)
+                        {
+                            PEntity->addModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
                         }
 
                         if (PExistingTrait->getRank() < PTrait->getRank())
