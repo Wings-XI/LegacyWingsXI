@@ -83,6 +83,7 @@
 #include "../packets/char_job_extra.h"
 #include "../packets/status_effects.h"
 #include "../mobskill.h"
+#include "../linkshell.h"
 
 CCharEntity::CCharEntity()
 {
@@ -128,6 +129,7 @@ CCharEntity::CCharEntity()
     memset(&nameflags, 0, sizeof(nameflags));
     memset(&menuConfigFlags, 0, sizeof(menuConfigFlags));
     chatFilterFlags = 0;
+    m_logChat = 0;
 
     // TODO: -Wno-class-memaccess - clearing an object on non-trivial type use assignment or value-init
     memset(&m_SpellList, 0, sizeof(m_SpellList));
@@ -311,18 +313,37 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
         packet->ClientVerFixup(this);
     }
 
-    // Cannot be done via ClientVerFixup since these packets
-    // are passed through the MQ and the polymorphic information
-    // is lost.
-    if ((packet->getType() == 0x17) && (m_needChatFix)) {
-        // Hack to word around the chat message format change of Sep. 2020
-        uint8* packetbytes = packet->getData();
-        uint32 pktsize = packet->getSize();
-        if (pktsize > PACKET_SIZE) {
-            pktsize = PACKET_SIZE;
+    if (packet->getType() == 0x17) {
+        if (m_logChat) {
+            CHAT_MESSAGE_TYPE MessageType = (CHAT_MESSAGE_TYPE)ref<uint8>(packet->getData(), 0x04);
+            char sender[16] = { 0 };
+            strncpy(sender, (char*)packet->getData() + 0x08, sizeof(sender) - 1);
+            char lsname[24] = { 0 };
+            if (MessageType == MESSAGE_LINKSHELL || MessageType == MESSAGE_NS_LINKSHELL) {
+                if (PLinkshell1) {
+                    DecodeStringLinkshell(PLinkshell1->getName(), (int8*)lsname);
+                }
+            }
+            if (MessageType == MESSAGE_LINKSHELL2 || MessageType == MESSAGE_NS_LINKSHELL2) {
+                if (PLinkshell2) {
+                    DecodeStringLinkshell(PLinkshell2->getName(), (int8*)lsname);
+                }
+            }
+            ((CChatMessagePacket*)packet)->LogChat(name.c_str(), lsname);
         }
-        pktsize -= 0x18;
-        memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
+        // Cannot be done via ClientVerFixup since these packets
+        // are passed through the MQ and the polymorphic information
+        // is lost.
+        if (m_needChatFix) {
+            // Hack to word around the chat message format change of Sep. 2020
+            uint8* packetbytes = packet->getData();
+            uint32 pktsize = packet->getSize();
+            if (pktsize > PACKET_SIZE) {
+                pktsize = PACKET_SIZE;
+            }
+            pktsize -= 0x18;
+            memmove(packetbytes + 0x17, packetbytes + 0x18, pktsize);
+        }
     }
 
     bool packetUpdatesPosition = false;
