@@ -5600,7 +5600,7 @@ namespace battleutils
                                 }
                             }
                         }
-                        // Need to add the mod to mobs because m_modStateSave doesn't include job mods.
+                        // Need to add the mod to mobs because m_modStatSave doesn't include job mods.
                         else if (PEntity->objtype == TYPE_MOB)
                         {
                             PEntity->addModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
