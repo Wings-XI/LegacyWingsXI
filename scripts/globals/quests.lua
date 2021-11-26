@@ -690,6 +690,18 @@ tpz.quest.id =
         THE_RIDER_COMETH                = 76,
         UNWAVERING_RESOLVE              = 77,
         A_STYGIAN_PACT                  = 78,
+        PROMOTION_PRIVATE_FIRST_CLASS   = 90,
+        PROMOTION_SUPERIOR_PRIVATE      = 91,
+        PROMOTION_CORPORAL              = 93,
+        PROMOTION_SERGEANT              = 94,
+        PROMOTION_SERGEANT_MAJOR        = 95,
+        PROMOTION_CHIEF_SERGEANT        = 96,
+        PROMOTION_SECOND_LIEUTENANT     = 97,
+        PROMOTION_FIRST_LIEUTENANT      = 98,
+        PROMOTION_CAPTAIN               = 99,
+        SCOUTING_THE_ASHU_TALIF         = 101,
+        ROYAL_PAINTER_ESCORT            = 102,
+        TARGETING_THE_CAPTAIN           = 103,
     },
 
     -----------------------------------

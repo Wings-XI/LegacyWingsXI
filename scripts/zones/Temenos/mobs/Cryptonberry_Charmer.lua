@@ -5,6 +5,10 @@
 mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Temenos/IDs")
 
+function onMobSpawn(mob)
+    mob:setTrueDetection(1)
+end
+
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then
         if GetMobByID(ID.mob.TEMENOS_N_MOB[6]+1):isDead() then

@@ -2789,8 +2789,10 @@ int32 map_config_default()
     map_config.audit_chat = 0;
     map_config.audit_say = 0;
     map_config.audit_shout = 0;
+    map_config.audit_emotion = 0;
     map_config.audit_tell = 0;
     map_config.audit_yell = 0;
+    map_config.audit_system = 0;
     map_config.audit_party = 0;
     map_config.audit_linkshell = 0;
     map_config.msg_server_port = 54003;
@@ -3254,6 +3256,10 @@ int32 map_config_read(const int8* cfgName)
         {
             map_config.audit_shout = atoi(w2);
         }
+        else if (strcmp(w1, "audit_emotion") == 0)
+        {
+            map_config.audit_emotion = atoi(w2);
+        }
         else if (strcmp(w1, "audit_tell") == 0)
         {
             map_config.audit_tell = atoi(w2);
@@ -3261,6 +3267,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "audit_yell") == 0)
         {
             map_config.audit_yell = atoi(w2);
+        }
+        else if (strcmp(w1, "audit_system") == 0)
+        {
+            map_config.audit_system = atoi(w2);
         }
         else if (strcmp(w1, "audit_linkshell") == 0)
         {

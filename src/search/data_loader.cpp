@@ -112,7 +112,7 @@ std::vector<ahItem*> CDataLoader::GetAHItemsToCategory(uint8 AHCategoryID, int8*
         "LEFT JOIN auction_house ON item_basic.itemId = auction_house.itemid AND auction_house.buyer_name IS NULL "
         "LEFT JOIN item_equipment ON item_basic.itemid = item_equipment.itemid "
         "LEFT JOIN item_weapon ON item_basic.itemid = item_weapon.itemid "
-        "WHERE aH = %u AND (item_equipment.level < 76 OR item_equipment.level IS NULL)"
+        "WHERE aH = %u AND (item_basic.flags & 0x4040 = 0) AND (item_equipment.level < 76 OR item_equipment.level IS NULL)"
         "GROUP BY item_basic.itemid "
         "%s";
 

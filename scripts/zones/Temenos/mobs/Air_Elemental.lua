@@ -3,22 +3,29 @@
 --  Mob: Air Elemental
 -----------------------------------
 require("scripts/globals/limbus")
+require("scripts/globals/battlefield")
 require("scripts/globals/pathfind")
 local ID = require("scripts/zones/Temenos/IDs")
 local flags = tpz.path.flag.NONE
 local path =
 {
-    [1] = 
+    [1] =
     {
         {20.000, 6.000, 150.000},
         {20.000, 6.000, 142.640}
     },
-    [3] = 
+    [3] =
     {
         {60.000, 6.000, 150.000},
         {60.000, 6.000, 142.640}
     },
 }
+
+function onMobInitialize(mob)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+    mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
 
 function onMobRoam(mob)
     if mob:getBattlefieldID() == 1300 then
@@ -31,6 +38,10 @@ function onMobRoam(mob)
             mob:setLocalVar("pause", os.time()+5)
         end
     end
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.SILENCE, {chance = 100})
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

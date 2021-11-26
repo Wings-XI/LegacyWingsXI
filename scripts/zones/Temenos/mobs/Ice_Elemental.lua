@@ -3,32 +3,43 @@
 --  Mob: Ice Elemental
 -----------------------------------
 require("scripts/globals/limbus")
+require("scripts/globals/battlefield")
 require("scripts/globals/pathfind")
 local ID = require("scripts/zones/Temenos/IDs")
 local flags = tpz.path.flag.NONE
 local path =
 {
-    [0] = 
+    [0] =
     {
         {200.000, -161.000, 197.000},
         {200.000, -161.000, 190.000}
     },
-    [1] = 
+    [1] =
     {
         {197.000, -161.000, 200.000},
         {190.000, -161.000, 200.000}
     },
-    [2] = 
+    [2] =
     {
         {200.000, -161.000, 203.000},
         {200.000, -161.000, 210.000}
     },
-    [3] = 
+    [3] =
     {
         {203.000, -161.000, 200.000},
         {210.000, -161.000, 200.000}
     },
 }
+
+function onMobInitialize(mob)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+    mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PARALYZE, {chance = 100})
+end
 
 function onMobRoam(mob)
     if mob:getBattlefieldID() == 1300 then
@@ -60,7 +71,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
                 local mobZ = mob:getZPos()
                 local crateID = ID.npc.TEMENOS_E_CRATE[2] + (mobID - ID.mob.TEMENOS_E_MOB[2])
                 GetNPCByID(crateID):setPos(mobX, mobY, mobZ)
-                tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF2", battlefield:getLocalVar("crateMaskF2"), true)
+                tpz.limbus.spawnRandomCrate(crateID, battlefield, "crateMaskF2", battlefield:getLocalVar("crateMaskF2"), true)
             end
         end
     end

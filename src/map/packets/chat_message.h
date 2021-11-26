@@ -78,6 +78,7 @@ public:
     static const uint16 id {0x17};
     CChatMessagePacket(CCharEntity* PChar, CHAT_MESSAGE_TYPE MessageType, const std::string& message, const std::string& sender = std::string(), uint16 zoneid = 0);
     //virtual void ClientVerFixup(const CCharEntity* PChar);
+    void LogChat(const char* recipient, const char* linkshell);
 };
 
 #endif

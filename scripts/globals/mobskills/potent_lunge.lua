@@ -5,7 +5,7 @@
 --  Type: Physical
 --  Utsusemi/Blink absorb: 1 shadow
 --  Range: Melee
---  Notes:
+--  Notes: Requires Weapon
 ---------------------------------------------
 
 require("scripts/globals/settings")
@@ -15,7 +15,11 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if (mob:AnimationSub() == 0 and mob:getMainJob() ~= tpz.job.MNK and mob:getMainJob() ~= tpz.job.PUP) then
+        return 0
+    else
+        return 1
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)

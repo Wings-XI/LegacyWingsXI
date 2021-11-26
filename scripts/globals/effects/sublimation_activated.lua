@@ -20,7 +20,7 @@ function onEffectTick(target, effect)
     local basemp = 2
     local bonus = target:getMod(tpz.mod.SUBLIMATION_BONUS)
 
-    local dmg = 2
+    local dmg = 2 + target:getMod(tpz.mod.SUBLIMATION_BONUS)
 
     local store = effect:getPower() + basemp + bonus
 
