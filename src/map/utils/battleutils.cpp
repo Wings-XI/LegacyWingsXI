@@ -1745,7 +1745,7 @@ namespace battleutils
 
         if (chance < check)
         {
-            return ProcessAquaveil(PDefender);
+            return ProcessAquaveil(PDefender); 
         }
 
         return false;
@@ -5600,12 +5600,7 @@ namespace battleutils
                                 }
                             }
                         }
-                        // Need to add the mod to mobs because m_modStatSave doesn't include job mods.
-                        else if (PEntity->objtype == TYPE_MOB)
-                        {
-                            PEntity->addModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
-                        }
-
+                        
                         if (PExistingTrait->getRank() < PTrait->getRank())
                         {
                             PEntity->delTrait(PExistingTrait);
