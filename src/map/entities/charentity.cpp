@@ -1356,14 +1356,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         else
         {
             action.recast = PAbility->getRecastTime() - meritRecastReduction;
-
-            //Call Beast Reduction
-            if (id == ABILITY_CALL_BEAST) {
-                action.recast -= std::min<int16>(getMod(Mod::CALL_BEAST_DELAY), 60);
-            }
         }
 
-       if (id == 62 && this->StatusEffectContainer->HasStatusEffect({EFFECT_SEIGAN}))
+        if (id == 62 && this->StatusEffectContainer->HasStatusEffect({EFFECT_SEIGAN}))
              action.recast = PAbility->getRecastTime() - PMeritPoints->GetMeritValue(MERIT_THIRD_EYE_RECAST, this) / 2;
 
         if (PAbility->getID() == ABILITY_LIGHT_ARTS || PAbility->getID() == ABILITY_DARK_ARTS || PAbility->getRecastId() == 231) //stratagems
@@ -1388,6 +1383,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
                 action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
             }
+        }
+        else if (id == ABILITY_CALL_BEAST) {
+            action.recast -= std::min<int16>(getMod(Mod::CALL_BEAST_DELAY), 60);
         }
 
         // remove invisible if aggressive
