@@ -1745,7 +1745,7 @@ namespace battleutils
 
         if (chance < check)
         {
-            return ProcessAquaveil(PDefender);
+            return ProcessAquaveil(PDefender); 
         }
 
         return false;

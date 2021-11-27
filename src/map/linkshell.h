@@ -53,6 +53,8 @@ public:
     const int8* getName();
 	void		setName(int8* name);
 	void		setMessage(const int8* message, const int8* poster);
+    uint8       getAuditSettings();
+    void        setAuditSettings(uint8 new_settings);
 
     void        AddMember(CCharEntity* PChar,int8 type, uint8 lsNum);
     bool        DelMember(CCharEntity* PChar);
@@ -71,6 +73,7 @@ private:
 
     uint32      m_id;
     uint16      m_color;
+    uint8       m_logChat;
 
     string_t    m_name;
 };
