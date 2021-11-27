@@ -1347,10 +1347,20 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
             action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+
+            //Quickdraw Reduction
+            if (id >= ABILITY_FIRE_SHOT && id <= ABILITY_DARK_SHOT) {
+                action.recast -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
+            }
         }
         else
         {
             action.recast = PAbility->getRecastTime() - meritRecastReduction;
+
+            //Call Beast Reduction
+            if (id == ABILITY_CALL_BEAST) {
+                action.recast -= std::min<int16>(getMod(Mod::CALL_BEAST_DELAY), 60);
+            }
         }
 
        if (id == 62 && this->StatusEffectContainer->HasStatusEffect({EFFECT_SEIGAN}))
