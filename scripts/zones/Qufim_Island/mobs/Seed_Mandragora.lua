@@ -63,6 +63,10 @@ function onMobSpawn(mob)
     mob:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 1800)
 end
 
+function onMobDisengage(mob)
+    DespawnMob(mob:getID(), 30)
+end
+
 function onMobDeath(mob, player, isKiller)
     local missionACP = player:getCurrentMission(ACP)
     local now = tonumber(os.date("%j"))
