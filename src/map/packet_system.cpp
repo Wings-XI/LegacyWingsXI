@@ -5034,7 +5034,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         int8 packetData[8]{};
                         ref<uint32>(packetData, 0) = PChar->PLinkshell2->getID();
                         ref<uint32>(packetData, 4) = PChar->id;
-                        if (map_config.audit_chat == 1 && ((map_config.audit_linkshell == 1) || (PChar->m_logChat) || (PChar->PLinkshell1->getAuditSettings())))
+                        if (map_config.audit_chat == 1 && ((map_config.audit_linkshell == 1) || (PChar->m_logChat) || (PChar->PLinkshell2->getAuditSettings())))
                         {
                             int8 ls2name[24] = { 0 };
                             DecodeStringLinkshell(PChar->PLinkshell2->getName(), ls2name);
