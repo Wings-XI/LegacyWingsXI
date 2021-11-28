@@ -5600,11 +5600,6 @@ namespace battleutils
                                 }
                             }
                         }
-                        // Need to add the mod to mobs because m_modStatSave doesn't include job mods.
-                        else if (PEntity->objtype == TYPE_MOB)
-                        {
-                            PEntity->addModifier(PExistingTrait->getMod(), PExistingTrait->getValue());
-                        }
 
                         if (PExistingTrait->getRank() < PTrait->getRank())
                         {
@@ -5636,6 +5631,11 @@ namespace battleutils
                 if (add)
                 {
                     PEntity->addTrait(PTrait);
+                    if (PEntity->objtype == TYPE_MOB)
+                    {
+                        // Append this trait's modifier to the mob's saved mod state so it is included on respawn.
+                        PEntity->m_modStatSave[PTrait->getMod()] += PTrait->getValue();
+                    }
                 }
             }
         }
