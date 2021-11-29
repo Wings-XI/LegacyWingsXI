@@ -5,6 +5,9 @@
 -- This is to allow server operators to further customize their servers.  As more features are added to pXI, the list will surely expand.
 -- Anything scripted can be customized with proper script editing.
 
+-- This is a template file only. Please create a copy of this file and
+-- name if "settings.lua" before starting the server.
+
 -- PLEASE REQUIRE THIS SCRIPT IN ANY SCRIPTS YOU DO: ADD THIS LINE TO THE TOP!!!!
 -- require("scripts/globals/settings")
 -- With this script added to yours, you can pull variables from it!!
