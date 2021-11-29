@@ -60,6 +60,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local arg8 = player:hasCompletedMission(ACP, tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING) and 1 or 0
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
+        player:setCharVar("ACP_BCNM", 0)
         player:startEvent(32002)
     end
 end
