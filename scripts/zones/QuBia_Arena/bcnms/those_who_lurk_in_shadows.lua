@@ -13,24 +13,27 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
+    for _, partyMember in pairs(player:getParty()) do
+        if partyMember:hasKeyItem(tpz.ki.MARK_OF_SEED) then
+            partyMember:setCharVar("ACP_BCNM", 1)
+            partyMember:delKeyItem(tpz.ki.MARK_OF_SEED)
+        else
+            partyMember:setCharVar("ACP_BCNM", 0)
+        end
+    end
 end
 
 function onBattlefieldEnter(player, battlefield)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
-    local hasMarkOfSeed = player:hasKeyItem(tpz.ki.MARK_OF_SEED)
-
-    if hasMarkOfSeed then
-        player:delKeyItem(tpz.ki.MARK_OF_SEED)
-    end
-
     if leavecode == tpz.battlefield.leaveCode.WON then
         local now = tonumber(os.date("%j"))
         local lastIvory = player:getCharVar("LastIvoryKey")
 
         player:addExp(700)
-        if hasMarkOfSeed then
+        if player:getCharVar("ACP_BCNM") == 1 then
+            player:setCharVar("ACP_BCNM", 0)
             if player:getCurrentMission(ACP) == tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III then
                 player:completeMission(ACP, tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III)
                 player:addMission(ACP, tpz.mission.id.acp.REMEMBER_ME_IN_YOUR_DREAMS)
@@ -45,10 +48,9 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local arg8 = player:hasCompletedMission(ACP, tpz.mission.id.acp.REMEMBER_ME_IN_YOUR_DREAMS) and 1 or 0 -- check the next mission
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
+        player:setCharVar("ACP_BCNM", 0)
         player:startEvent(32002)
     end
-
-
 end
 
 function onEventUpdate(player, csid, option)
