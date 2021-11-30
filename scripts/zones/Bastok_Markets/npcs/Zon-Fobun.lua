@@ -7,7 +7,37 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/quests")
+require("scripts/globals/pathfind")
 -----------------------------------
+local flags = tpz.path.flag.NONE
+local path =
+{
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -242.254, -2.000, 61.679,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+    -240.300, -2.000, 65.194,
+}
+
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path, flags)
+end
 
 function onTrade(player, npc, trade)
 end
