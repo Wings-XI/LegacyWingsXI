@@ -97,21 +97,7 @@ std::unordered_map<uint16, std::vector<uint16>>  g_PMobSkillLists;  // List of m
 
 namespace battleutils
 {
-    // Put private methods here
-    namespace
-    {
-        bool CheckRandomDealAbility(CAbility* PAbility, CCharEntity* PTarget)
-        {
-            if (PAbility == nullptr) return false;
-            if (PAbility->getRecastId() == 0) return false;
-            if (PAbility->isPetAbility()) return false;
-            if (PAbility->getID() == ABILITY_PET_COMMANDS) return false;
-            if (PAbility->getID() == ABILITY_RANDOM_DEAL) return false;
-            if (!charutils::CheckAbilityAddtype(PTarget, PAbility)) return false;
 
-            return true;
-        }
-    }
 
     /************************************************************************
     *                                                                       *
@@ -5509,56 +5495,81 @@ namespace battleutils
         }
     }
 
+    /************************************************************************
+    *                                                                       *
+    *   Does the random deal effect to a specific character (reset ability) *
+    *                                                                       *
+    ************************************************************************/
     bool DoRandomDealToEntity(CCharEntity* PChar, CCharEntity* PTarget)
     {
-        //TODO: ended up implementing how SE suggested they would be fixing it instead of stacking higher chance on shared abilities
-        std::vector<Recast_t*> ResetCandidateList;
-        std::vector<Recast_t*> ActiveCooldownList;
+        std::vector<uint16> ResetCandidateList;
+        std::vector<uint16> ActiveCooldownList;
+
+        if (PChar == nullptr || PTarget == nullptr)
+        {
+            // Invalid User or Target
+            return false;
+        }
 
         RecastList_t* recastList = PTarget->PRecastContainer->GetRecastList(RECAST_ABILITY);
 
-        for (auto&& recast : *recastList)
+        // Get position of abilites and add to the 2 lists
+        for (uint8 i = 0; i < recastList->size(); ++i)
         {
-            if (recast.ID != 0 && recast.ID != 196)
+            Recast_t* recast = &recastList->at(i);
+
+            if (recast->ID != 0 && recast->ID != 196)
             {
-                ResetCandidateList.push_back(&recast);
-                if (recast.RecastTime > 0)
+                ResetCandidateList.push_back(i);
+                if (recast->RecastTime > 0)
                 {
-                    ActiveCooldownList.push_back(&recast);
+                    ActiveCooldownList.push_back(i);
                 }
             }
         }
 
         if (ResetCandidateList.size() == 0)
         {
-            // Evade because we have abilities that can be reset
+            // Evade because we have no abilities that can be reset
             return false;
         }
 
         uint8 loadedDeck = PChar->PMeritPoints->GetMeritValue(MERIT_LOADED_DECK, PChar);
-        uint8 chance = 50 + loadedDeck;
+        uint8 loadedDeckChance = 50 + loadedDeck;
+        uint8 resetTwoChance = std::min<int8>(PChar->getMod(Mod::RANDOM_DEAL_BONUS), 50);
 
+        // Loaded Deck Merit Version
         if (loadedDeck && ActiveCooldownList.size() > 0)
         {
-            if (ActiveCooldownList.size() == 1)
+            if (ActiveCooldownList.size() > 1)
             {
-                if (chance >= tpzrand::GetRandomNumber(1, 100))
-                {
-
-                    ActiveCooldownList.at(0)->RecastTime = 0;
-                    return true;
-                }
-
-                // Evade because we failed to reset with loaded deck
-                return false;
+                // shuffle active cooldowns and take first (loaded deck)
+                std::shuffle(std::begin(ActiveCooldownList), std::end(ActiveCooldownList), tpzrand::mt());
+                loadedDeckChance = 100;
             }
 
-            // shuffle active cooldowns and take first (loaded deck)
-            std::shuffle(std::begin(ActiveCooldownList), std::end(ActiveCooldownList), tpzrand::mt());
-            ActiveCooldownList.at(0)->RecastTime = 0;
-            return true;
+            if (loadedDeckChance >= tpzrand::GetRandomNumber(1, 100))
+            {
+                PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(0));
+
+                // Reset 2 abilities by chance
+                if ((ActiveCooldownList.size() > 1) && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+                {
+                    PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(1));
+                }
+                if (PChar != PTarget)
+                {
+                    // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
+                    PTarget->pushPacket(new CCharRecastPacket(PTarget));
+                }
+                return true;
+            }
+
+            // Evade because we failed to reset with loaded deck
+            return false;
         }
 
+        // Standard Version
         if (ResetCandidateList.size() > 1)
         {
             // shuffle if more than 1 ability
@@ -5566,37 +5577,21 @@ namespace battleutils
         }
 
         // take first ability (shuffled or only)
-        ResetCandidateList.at(0)->RecastTime = 0;
+        PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
+
+        // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
+        if ((ResetCandidateList.size() > 1) && (ActiveCooldownList.size() > 1) && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+        {
+            PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(1));
+        }
+
+        if (PChar != PTarget)
+        {
+            // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
+            PTarget->pushPacket(new CCharRecastPacket(PTarget));
+        }
+
         return true;
-
-        //TODO: Possible other implementation based on stacked abilities
-        //for (const auto& PAbility : ability::GetAbilities(PTarget->GetMJob()))
-        //{
-        //    if (CheckRandomDealAbility(PAbility, PTarget) && PTarget->GetMLevel() >= PAbility->getLevel() && chance >= tpzrand::GetRandomNumber(1, 100))
-        //    {
-        //        if (PTarget->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
-        //        {
-        //            PTarget->PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
-        //            return true;
-        //        }
-        //    }
-        //}
-
-        //if (PTarget->GetSJob() != JOB_NON) {
-        //    for (const auto& PAbility : ability::GetAbilities(PTarget->GetSJob()))
-        //    {
-        //        if (CheckRandomDealAbility(PAbility, PTarget) && PTarget->GetSLevel() >= PAbility->getLevel() && !(PAbility->getAddType() & ADDTYPE_MAIN_ONLY) && chance >= tpzrand::GetRandomNumber(1, 100))
-        //        {
-        //            if (PTarget->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
-        //            {
-        //                PTarget->PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //return false;
     }
 
     /************************************************************************

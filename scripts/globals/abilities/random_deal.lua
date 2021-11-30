@@ -10,19 +10,13 @@ require("scripts/globals/ability")
 require("scripts/globals/status")
 -----------------------------------
 
-function onAbilityCheck(player,target,ability)
+function onAbilityCheck(player, target, ability)
     return 0, 0
 end
 
-function onUseAbility(player,target,ability,action)
-    meritRecastReduction(player, tpz.merit.RANDOM_DEAL_RECAST, action)
+function onUseAbility(player, target, ability, action)
+    --meritRecastReduction(player, tpz.merit.RANDOM_DEAL_RECAST, action)
     if not player:doRandomDeal(target) then
         ability:setMsg(tpz.msg.basic.EVADES)
     end
-
-    -- TODO: https://ffxiclopedia.fandom.com/wiki/Commodore_Frac Enhances "Random Deal" Effect
-
-    -- if player:getMod(tpz.mod.RANDOM_DEAL_BONUS_ABILITY_RATE) >= math.random(1,100) then
-    --     player:doRandomDeal(target)
-    -- end
 end

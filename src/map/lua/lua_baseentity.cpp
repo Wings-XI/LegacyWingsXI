@@ -12470,7 +12470,10 @@ inline int32 CLuaBaseEntity::doWildCard(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
     CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(L, 1);
-    battleutils::DoWildCardToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PEntity->m_PBaseEntity), (uint8)lua_tointeger(L, 2));
+    if (PEntity != nullptr)
+    {
+       battleutils::DoWildCardToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PEntity->m_PBaseEntity), (uint8)lua_tointeger(L, 2));
+    }
 
     return 0;
 }
@@ -12489,7 +12492,11 @@ inline int32 CLuaBaseEntity::doRandomDeal(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
     CLuaBaseEntity* PTarget = Lunar<CLuaBaseEntity>::check(L, 1);
-    lua_pushboolean(L, battleutils::DoRandomDealToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PTarget->m_PBaseEntity)));
+    if (PTarget != nullptr)
+    {
+        lua_pushboolean(L, battleutils::DoRandomDealToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PTarget->m_PBaseEntity)));
+    }
+    
     return 1;
 }
 
