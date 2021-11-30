@@ -7,7 +7,41 @@ require("scripts/globals/quests")
 require("scripts/globals/settings")
 require("scripts/globals/titles")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/pathfind")
 -----------------------------------
+local flags = tpz.path.flag.NONE
+local path =
+{
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    35.243, 7.000, -1.829,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+    89.659, 7.000, -0.181,
+}
+
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path, flags)
+end
 
 function onTrade(player, npc, trade)
 
