@@ -15,7 +15,6 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
-    --meritRecastReduction(player, tpz.merit.RANDOM_DEAL_RECAST, action)
     if not player:doRandomDeal(target) then
         ability:setMsg(tpz.msg.basic.EVADES)
     end

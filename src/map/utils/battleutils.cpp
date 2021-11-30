@@ -5543,7 +5543,7 @@ namespace battleutils
         {
             if (ActiveCooldownList.size() > 1)
             {
-                // shuffle active cooldowns and take first (loaded deck)
+                // Shuffle active cooldowns and take first (loaded deck)
                 std::shuffle(std::begin(ActiveCooldownList), std::end(ActiveCooldownList), tpzrand::mt());
                 loadedDeckChance = 100;
             }
@@ -5572,11 +5572,11 @@ namespace battleutils
         // Standard Version
         if (ResetCandidateList.size() > 1)
         {
-            // shuffle if more than 1 ability
+            // Shuffle if more than 1 ability
             std::shuffle(std::begin(ResetCandidateList), std::end(ResetCandidateList), tpzrand::mt());
         }
 
-        // take first ability (shuffled or only)
+        // Reset first ability (shuffled or only)
         PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
 
         // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
