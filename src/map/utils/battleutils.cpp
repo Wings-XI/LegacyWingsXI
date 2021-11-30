@@ -5553,7 +5553,7 @@ namespace battleutils
                 PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(0));
 
                 // Reset 2 abilities by chance
-                if ((ActiveCooldownList.size() > 1) && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+                if (ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
                 {
                     PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(1));
                 }
@@ -5580,7 +5580,7 @@ namespace battleutils
         PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
 
         // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
-        if ((ResetCandidateList.size() > 1) && (ActiveCooldownList.size() > 1) && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+        if (ResetCandidateList.size() > 1 && ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
         {
             PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(1));
         }
