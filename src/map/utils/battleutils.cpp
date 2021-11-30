@@ -5518,6 +5518,7 @@ namespace battleutils
         {
             Recast_t* recast = &recastList->at(i);
 
+            // Do not reset 2hrs or Random Deal
             if (recast->ID != 0 && recast->ID != 196)
             {
                 ResetCandidateList.push_back(i);
@@ -5568,30 +5569,34 @@ namespace battleutils
             // Evade because we failed to reset with loaded deck
             return false;
         }
-
-        // Standard Version
-        if (ResetCandidateList.size() > 1)
+        else // Standard Version
         {
-            // Shuffle if more than 1 ability
-            std::shuffle(std::begin(ResetCandidateList), std::end(ResetCandidateList), tpzrand::mt());
+            if (ResetCandidateList.size() > 1)
+            {
+                // Shuffle if more than 1 ability
+                std::shuffle(std::begin(ResetCandidateList), std::end(ResetCandidateList), tpzrand::mt());
+            }
+
+            // Reset first ability (shuffled or only)
+            PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
+
+            // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
+            if (ResetCandidateList.size() > 1 && ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+            {
+                PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(1));
+            }
+
+            if (PChar != PTarget)
+            {
+                // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
+                PTarget->pushPacket(new CCharRecastPacket(PTarget));
+            }
+
+            return true;
         }
 
-        // Reset first ability (shuffled or only)
-        PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
-
-        // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
-        if (ResetCandidateList.size() > 1 && ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
-        {
-            PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(1));
-        }
-
-        if (PChar != PTarget)
-        {
-            // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
-            PTarget->pushPacket(new CCharRecastPacket(PTarget));
-        }
-
-        return true;
+        // How did you get here!?
+        return false;
     }
 
     /************************************************************************
