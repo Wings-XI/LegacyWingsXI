@@ -165,6 +165,9 @@ void CBaseEntity::Wait(duration _duration)
         return;
     }
 
+    if (!PAI->GetCurrentState() || PAI->GetCurrentState()->m_id != INACTIVE_STATE) {
+        wait_count = 0;
+    }
     if (wait_count < 30) {
         wait_count++;
     }
@@ -177,6 +180,10 @@ void CBaseEntity::StopWait(bool force_stop)
         return;
     }
 
+    if (!PAI->GetCurrentState() || PAI->GetCurrentState()->m_id != INACTIVE_STATE) {
+        wait_count = 0;
+        return;
+    }
     if (wait_count > 0) {
         wait_count--;
         if (force_stop) {
