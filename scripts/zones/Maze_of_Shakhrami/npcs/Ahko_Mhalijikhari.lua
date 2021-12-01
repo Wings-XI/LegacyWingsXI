@@ -7,6 +7,7 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/status")
+require("scripts/globals/bcnm")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -14,6 +15,13 @@ end
 
 function onTrigger(player, npc)
     if player:getCharVar("EcoStatus") == 201 then
+        if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+            local sync_error = BCNMGetLevelSyncError(player)
+            if sync_error ~= nil then
+                player:messageSpecial(sync_error, 0, 0)
+            end
+            return
+        end
         if not player:hasStatusEffect(tpz.effect.LEVEL_RESTRICTION) then
             player:startEvent(62) -- Apply ointment option
         else
