@@ -13,6 +13,10 @@ require("scripts/globals/events/starlight_festivals")
 
 function onInitialize(zone)
     tpz.chocobo.initZone(zone)
+    if isStarlightEnabled() ~= 0 then
+        zone:setMusicBackgroundDay(239)
+        zone:setMusicBackgroundNight(239)
+    end
 end
 
 function onZoneIn(player, prevZone)
@@ -29,13 +33,6 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
-end
-
-function afterZoneIn(player)
-    if isStarlightEnabled() ~= 0 then
-        player:ChangeMusic(0,239)
-        player:ChangeMusic(1,239)
-    end
 end
 
 function onConquestUpdate(zone, updatetype)
