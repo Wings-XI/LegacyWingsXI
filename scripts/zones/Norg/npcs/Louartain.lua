@@ -34,12 +34,10 @@ end
 
 function onTrigger(player, npc)
     player:startEvent(84)
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option, npc)
-    npc:wait(0)
 end
