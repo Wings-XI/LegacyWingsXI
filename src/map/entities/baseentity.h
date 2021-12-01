@@ -235,6 +235,9 @@ public:
     uint32          GetLocalVar(const char* var);
     void            SetLocalVar(const char* var, uint32 val);
 
+    void            Wait(duration _duration);
+    void            StopWait(bool force_stop);
+
     //pre-tick update
     virtual void    Tick(time_point) = 0;
     //post-tick update
@@ -261,6 +264,7 @@ public:
     uint8           namevis;
     uint8           allegiance;         // what types of targets the entity can fight
     uint8           updatemask;         // what to update next server tick to players nearby
+    uint8           wait_count;         // how many times wait has been called
 
     uint32 animBegin;                   // Animation start time
     uint8 animPath;                     // Which animation Path

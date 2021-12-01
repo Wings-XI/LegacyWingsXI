@@ -50,6 +50,7 @@ CBaseEntity::CBaseEntity()
     animStart = false;
     animPath = 0;
     animBegin = 0;
+    wait_count = 0;
 }
 
 CBaseEntity::~CBaseEntity()
@@ -156,6 +157,43 @@ uint32 CBaseEntity::GetLocalVar(const char* var)
 void CBaseEntity::SetLocalVar(const char* var, uint32 val)
 {
     m_localVars[var] = val;
+}
+
+void CBaseEntity::Wait(duration _duration)
+{
+    if (!PAI) {
+        return;
+    }
+
+    if (!PAI->GetCurrentState() || PAI->GetCurrentState()->m_id != INACTIVE_STATE) {
+        wait_count = 0;
+    }
+    if (wait_count < 30) {
+        wait_count++;
+    }
+    PAI->Inactive(_duration, true);
+}
+
+void CBaseEntity::StopWait(bool force_stop)
+{
+    if (!PAI) {
+        return;
+    }
+
+    if (!PAI->GetCurrentState() || PAI->GetCurrentState()->m_id != INACTIVE_STATE) {
+        wait_count = 0;
+        return;
+    }
+    if (wait_count > 0) {
+        wait_count--;
+        if (force_stop) {
+            wait_count = 0;
+        }
+    }
+
+    if (force_stop || wait_count == 0) {
+        PAI->Reactivate();
+    }
 }
 
 void CBaseEntity::SetModelId(uint16 modelid)
