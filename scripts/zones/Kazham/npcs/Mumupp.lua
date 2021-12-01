@@ -36,7 +36,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path)
 end
 
 
@@ -78,7 +78,6 @@ function onTrigger(player, npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then -- has failed on future npc so disregard previous successful trade
             player:startEvent(199)
-            npc:wait()
         elseif (progress == 2 or failed == 3) then
                 player:startEvent(209)  -- asking for ten of coins
         elseif (progress >= 3 or failed >= 4) then
@@ -86,7 +85,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(199)
-        npc:wait()
     end
 end
 
@@ -106,7 +104,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 231) then              -- wrong trade, restart at first opo
         player:setCharVar("OPO_OPO_FAILED", 1)
         player:setCharVar("OPO_OPO_RETRY", 3)
-    else
-        npc:wait(0)
     end
 end

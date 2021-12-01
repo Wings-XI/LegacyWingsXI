@@ -40,14 +40,12 @@ end
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 601) then -- Ointment Case
         player:startEvent(513) -- Complete "A Sentry's Peril"
-        npc:wait()
     end
 end
 
 function onTrigger(player, npc)
     local sentrysPerilStatus = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.A_SENTRY_S_PERIL)
 
-    npc:wait()
     if sentrysPerilStatus == QUEST_AVAILABLE then
         player:startEvent(510) -- Starts "A Sentry's Peril"
     elseif sentrysPerilStatus == QUEST_ACCEPTED and (player:hasItem(600) or player:getCharVar("SentrysPerilTraded") == 1) then
@@ -63,7 +61,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option, npc)
-    npc:wait(5000)
     if csid == 510 and option == 0 and npcUtil.giveItem(player, 600) then
         player:addQuest(SANDORIA, tpz.quest.id.sandoria.A_SENTRY_S_PERIL)
     elseif csid == 644 then
