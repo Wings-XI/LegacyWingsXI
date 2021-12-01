@@ -5914,7 +5914,7 @@ INSERT INTO `mob_pools` VALUES(5850, 'Quu_Xijo_the_Illusory', 'Quu_Xijo_the_Illu
 INSERT INTO `mob_pools` VALUES(5851, 'Timeworn_Warrior', 'Timeworn_Warrior', 227, 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(5852, 'Eyegouger', 'Eyegouger', 55, 0x0000bc0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 55);
 INSERT INTO `mob_pools` VALUES(5853, 'Humbaba', 'Humbaba', 126, 0x0000c40200000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 2, 7, 32, 0, 0, 0, 0, 0, 0, 0, 126);
-INSERT INTO `mob_pools` VALUES(5854, 'Dynast_Beetle', 'Dynast_Beetle', 49, 0x0000980100000000000000000000000000000000, 7, 7, 8, 240, 100, 0, 1, 0, 1, 2, 135, 0, 0, 0, 0, 0, 0, 0, 0, 49);
+INSERT INTO `mob_pools` VALUES(5854, 'Dynast_Beetle', 'Dynast_Beetle', 49, 0x0000980100000000000000000000000000000000, 7, 7, 8, 240, 100, 0, 1, 0, 1, 2, 135, 0, 0, 0, 0, 0, 0, 0, 0, 1186);
 INSERT INTO `mob_pools` VALUES(5855, 'Nandi', 'Nandi', 80, 0x00004c0100000000000000000000000000000000, 1, 1, 12, 240, 100, 0, 0, 0, 1, 2, 7, 32, 0, 0, 0, 0, 0, 0, 0, 96);
 INSERT INTO `mob_pools` VALUES(5856, 'Powderer_Penny', 'Powderer_Penny', 48, 0x0000110100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 1, 2, 7, 32, 0, 0, 0, 0, 0, 0, 0, 814);
 INSERT INTO `mob_pools` VALUES(5857, 'Hoar-knuckled_Rimberry', 'Hoar-knuckled_Rimberry', 243, 0x0000b50400000000000000000000000000000000, 13, 13, 1, 240, 100, 0, 1, 0, 1, 2, 7, 32, 0, 0, 0, 0, 238, 0, 0, 0);
