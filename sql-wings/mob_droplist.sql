@@ -14965,19 +14965,19 @@ INSERT INTO `mob_droplist` VALUES(2818, 0, 0, 1000, 495, 250);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 12562, 451);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 17567, 479);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 658, 457);
-INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 4748, 212);
-INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 4818, 377);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 3, 300, 4748, 500);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 3, 300, 4818, 500);
 INSERT INTO `mob_droplist` VALUES(2819, 1, 1, 500, 1315, 453);
 INSERT INTO `mob_droplist` VALUES(2819, 1, 1, 500, 1337, 282);
 INSERT INTO `mob_droplist` VALUES(2819, 1, 1, 500, 1340, 298);
-INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 200, 1315, 453);
-INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 200, 1337, 282);
-INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 200, 1340, 298);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 500, 1315, 453);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 500, 1337, 282);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 2, 500, 1340, 298);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 747, 263);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 831, 358);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 658, 457);
-INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 4748, 212);
-INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 4818, 377);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 4, 300, 4748, 500);
+INSERT INTO `mob_droplist` VALUES(2819, 1, 4, 300, 4818, 500);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 747, 263);
 INSERT INTO `mob_droplist` VALUES(2819, 0, 0, 1000, 831, 358);
 INSERT INTO `mob_droplist` VALUES(2820, 0, 0, 1000, 1419, 1000);
@@ -16308,6 +16308,7 @@ INSERT INTO `mob_droplist` VALUES(3170, 0, 0, 1000, 1052, 41);
 INSERT INTO `mob_droplist` VALUES(3171, 0, 0, 1000, 2850, 59);
 INSERT INTO `mob_droplist` VALUES(3172, 0, 0, 1000, 19124, 198);
 INSERT INTO `mob_droplist` VALUES(3173, 0, 0, 1000, 2855, 350);
+INSERT INTO `mob_droplist` VALUES(3174, 0, 0, 1000, 16017, 212);
 
 
 -- 3200s are dynamis drops
@@ -16367,9 +16368,10 @@ INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 15136, 90);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 15145, 91);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 2, 8, 15146, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 8, 16349, 91);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18290, 333);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18308, 334);
-INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18332, 333);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18290, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18296, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18308, 250);
+INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18332, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1470, 5); -- mats
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1516, 4);
 INSERT INTO `mob_droplist` VALUES(3203, 0, 0, 1000, 1517, 4);

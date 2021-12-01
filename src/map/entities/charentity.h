@@ -205,6 +205,7 @@ public:
     nameflags_t				nameflags;						// флаги перед именем персонажа
     nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
     uint64                  chatFilterFlags;                // Chat Filters
+    uint8                   m_logChat;                      // Log chat messages being sent (0x01) or received (0x02) by this character
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
@@ -359,6 +360,7 @@ public:
 
     uint8			  m_GMlevel;                    // Level of the GM flag assigned to this character
     bool              m_isGMHidden;                 // GM Hidden flag to prevent player updates from being processed.
+    bool              m_GMSuperpowers;
 
     bool              m_mentorUnlocked;
     uint32            m_moghouseID;

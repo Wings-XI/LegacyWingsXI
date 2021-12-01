@@ -8,10 +8,9 @@ local ID = require("scripts/zones/Southern_San_dOria/IDs")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/npc_util")
--------------------------------------
-
 require("scripts/globals/pathfind")
-
+-------------------------------------
+local flags = tpz.path.flag.NONE
 local path =
 {
     -121.512833, -2.000000, 14.492509,
@@ -35,7 +34,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
 end
 
 function onTrade(player, npc, trade)

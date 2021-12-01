@@ -547,6 +547,10 @@ public:
     uint8           GetPartyBattleMusic();
     uint8           GetBackgroundMusicDay();
     uint8           GetBackgroundMusicNight();
+    void            SetSoloBattleMusic(uint8 newMusic);
+    void            SetPartyBattleMusic(uint8 newMusic);
+    void            SetBackgroundMusicDay(uint8 newMusic);
+    void            SetBackgroundMusicNight(uint8 newMusic);
     zoneLine_t*     GetZoneLine(uint32 zoneLineID);
 
     virtual CCharEntity*    GetCharByName(int8* name);                              // finds the player if exists in zone

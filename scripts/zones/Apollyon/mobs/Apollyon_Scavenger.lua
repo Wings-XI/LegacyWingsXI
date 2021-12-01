@@ -8,32 +8,32 @@ local ID = require("scripts/zones/Apollyon/IDs")
 local flags = tpz.path.flag.WALLHACK
 local path =
 {
-    [1] = 
+    [1] =
     {
         {-215.100, 0.000, 541.065},
         {-248.738, 0.000, 530.959}
     },
-    [2] = 
+    [2] =
     {
         {-286.292, 0.000, 510.972},
         {-310.000, 0.000, 485.000}
     },
-    [4] = 
+    [4] =
     {
         {-333.930, 0.000, 552.100},
         {-298.615, 0.000, 570.278}
     },
-    [5] = 
+    [5] =
     {
         {-272.770, 0.000, 540.876},
         {-307.652, 0.000, 574.133}
     },
-    [6] = 
+    [6] =
     {
         {-339.942, -0.321, 546.121},
         {-326.269, 0.000, 520.347}
     },
-    [7] = 
+    [7] =
     {
         {-307.256, 0.000, 505.708},
         {-337.000, 0.000, 522.000}
@@ -44,6 +44,10 @@ function onPath(mob)
     if mob:getID() ~= ID.mob.APOLLYON_NW_MOB[3]+4 then
         mob:setLocalVar("pause", os.time()+1)
     end
+end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
 function onMobRoam(mob)

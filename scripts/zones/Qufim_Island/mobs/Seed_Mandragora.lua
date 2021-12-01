@@ -5,11 +5,11 @@
 local ID = require("scripts/zones/Qufim_Island/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    -- Takes 3x damage
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 30)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 10)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
     mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
     mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
@@ -20,30 +20,21 @@ function onMobInitialize(mob)
                 local mandragoraKilled = killer:getCharVar("SEED_MANDY")
                 local spawnMandragora = true
 
-                -- Limit the amount of mandragora to spawn when getting close to 30
-                if mandragoraKilled >= 26 and mob:getID() == ID.mob.SEED_MANDRAGORA[1] then
-                    spawnMandragora = false
-                elseif mandragoraKilled >= 27 and mob:getID() == ID.mob.SEED_MANDRAGORA[2] then
-                    spawnMandragora = false
-                elseif mandragoraKilled >= 28 and mob:getID() == ID.mob.SEED_MANDRAGORA[3] then
-                    spawnMandragora = false
-                elseif mandragoraKilled >= 29 and mob:getID() == ID.mob.SEED_MANDRAGORA[4] then
-                    spawnMandragora = false
-                elseif mandragoraKilled >= 30 and mob:getID() == ID.mob.SEED_MANDRAGORA[5] then
+                if mandragoraKilled >= 30 then
                     spawnMandragora = false
                 end
 
                 if spawnMandragora then
                     mob:spawn()
-                    if target and target:isAlive() and mob:checkDistance(target) < 40 then
+                    if target and target:isAlive() then
                         mob:updateEnmity(target)
-                    elseif killer:isAlive() and mob:checkDistance(killer) < 40 then
+                    elseif killer:isAlive() then
                         mob:updateEnmity(killer)
                     else
                         local partySize = killer:getPartySize()
                         local i = 1
                         for _, partyMember in pairs(killer:getAlliance()) do
-                            if partyMember:isAlive() and mob:checkDistance(partyMember) < 40 then
+                            if partyMember:isAlive() then
                                 mob:updateEnmity(partyMember)
                                 break
                             elseif i == partySize then
@@ -60,7 +51,57 @@ end
 
 function onMobSpawn(mob)
     mob:removeListener("DEATH_SPAWN_CASKET")
+    mob:addMod(tpz.mod.DMG, 200)
+    mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 75)
     mob:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 1800)
+
+    mob:timer(math.random(2000), function(mob)
+        local hasTarget = mob:getTarget()
+
+        -- If no target, see if any mandy has a target
+        if not hasTarget then
+            for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+                local mandragora = GetMobByID(id)
+                if mandragora:isSpawned() then  
+                    local target = mandragora:getTarget()
+                    if target then
+                        mob:updateEnmity(target)
+                        hasTarget = true
+                        break
+                    end
+                end
+            end
+        end
+
+        -- if still no target, despawn everything
+        if not hasTarget then
+            for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+               DespawnMob(id)
+            end
+        end
+    end)
+end
+
+function onMobDisengage(mob)
+    DespawnMob(mob:getID(), 10)
+end
+
+function onMobFight(mob, target)
+    if mob:checkDistance(-120.342, -19.471, 306.661) > 30 then     -- If players wander too far, end confrontation
+        for _, partyMember in pairs(target:getAlliance()) do
+            partyMember:delStatusEffect(tpz.effect.CONFRONTATION)
+        end
+
+        for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+            DespawnMob(id)
+        end
+    end
+
+end
+
+function onMobDisengage(mob)
+    DespawnMob(mob:getID(), 30)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -94,9 +135,16 @@ function onMobDeath(mob, player, isKiller)
         if missionACP ~= tpz.mission.id.acp.GATHERER_OF_LIGHT_II then
             player:setCharVar("SEED_MANDY", 99)
         end
-    end
 
-    if isKiller then
+        if isKiller then
+            for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
+                local mandragora = GetMobByID(id)
+                if mandragora:isSpawned() then    
+                    DespawnMob(id)
+                end
+            end
+        end
+    elseif isKiller then
         DespawnMob(mob:getID())
     end
 end

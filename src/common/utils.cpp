@@ -469,7 +469,7 @@ uint64 unpackBitsLE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 leng
     return retVal;
 }
 
-void EncodeStringLinkshell(int8* signature, int8* target)
+void EncodeStringLinkshell(const int8* signature, int8* target)
 {
     uint8 encodedSignature[16];
     memset(encodedSignature, 0, sizeof encodedSignature);
@@ -498,7 +498,7 @@ void EncodeStringLinkshell(int8* signature, int8* target)
     strncpy((char*)target, (const char*)encodedSignature, sizeof encodedSignature);
 }
 
-void DecodeStringLinkshell(int8* signature, int8* target)
+void DecodeStringLinkshell(const int8* signature, int8* target)
 {
     uint8 decodedSignature[21];
     memset(decodedSignature, 0, sizeof decodedSignature);
@@ -532,7 +532,7 @@ void DecodeStringLinkshell(int8* signature, int8* target)
     strncpy((char*)target, (const char*)decodedSignature, sizeof decodedSignature);
 }
 
-int8* EncodeStringSignature(int8* signature, int8* target)
+int8* EncodeStringSignature(const int8* signature, int8* target)
 {
     uint8 encodedSignature[12];
     memset(encodedSignature, 0, sizeof encodedSignature);
@@ -561,7 +561,7 @@ int8* EncodeStringSignature(int8* signature, int8* target)
     return (int8*)strncpy((char*)target, (const char*)encodedSignature, sizeof encodedSignature);
 }
 
-void DecodeStringSignature(int8* signature, int8* target)
+void DecodeStringSignature(const int8* signature, int8* target)
 {
     uint8 decodedSignature[PacketNameLength + 1] = { 0 };
     for(uint8 currChar = 0; currChar < PacketNameLength; ++currChar)

@@ -8,6 +8,7 @@ local ID = require("scripts/zones/Middle_Delkfutts_Tower/IDs")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/bcnm")
 -----------------------------------
 
 function onSpawn(npc)
@@ -23,6 +24,13 @@ function onTrigger(player, npc)
     player:messageSpecial(ID.text.STONE_GLITTERS)
     
     if player:getCurrentMission(ACP) >= tpz.mission.id.acp.BANISHING_THE_ECHO then
+        if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+            local sync_error = BCNMGetLevelSyncError(player)
+            if sync_error ~= nil then
+                player:messageSpecial(sync_error, 0, 0)
+            end
+            return
+        end
         player:messageSpecial(ID.text.CRYSTAL_PULSATES)
         if player:hasStatusEffect(tpz.effect.LEVEL_RESTRICTION) then
             player:messageSpecial(ID.text.CRYSTAL_BECKONS)

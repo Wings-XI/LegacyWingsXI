@@ -10,7 +10,7 @@ require("scripts/globals/pathfind")
 require("scripts/globals/quests")
 require("scripts/globals/events/starlight_festivals")
 -----------------------------------
-
+local flags = tpz.path.flag.NONE
 local path =
 {
     -138.436340, -2.000000, 16.227097,
@@ -60,22 +60,6 @@ function onSpawn(npc)
     npc:initNpcAi()
     npc:setPos(tpz.path.first(path))
     onPath(npc)
-
-    -- test fromStart
-    local start = tpz.path.fromStart(path, 2)
-    local startFirst = tpz.path.get(path, 3)
-
-    if (start[1] ~= startFirst[1] or start[2] ~= startFirst[2] or start[3] ~= startFirst[3]) then
-        printf("[Error] start path is not right %f %f %f actually = %f %f %f", startFirst[1], startFirst[2], startFirst[3], start[1], start[2], start[3])
-    end
-
-    -- test fromEnd
-    -- local endPt = tpz.path.fromEnd(path, 2)
-    -- local endFirst = tpz.path.get(path, 37)
-
-    -- if (endPt[1] ~= endFirst[1] or endPt[2] ~= endFirst[2] or endPt[3] ~= endFirst[3]) then
-    --     printf("[Error] endPt path is not right %f %f %f actually = %f %f %f", endFirst[1], endFirst[2], endFirst[3], endPt[1], endPt[2], endPt[3])
-    -- end
 end
 
 function onPath(npc)
@@ -94,7 +78,7 @@ function onPath(npc)
     end
 
     -- go back and forth the set path
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
 end
 
 function onTrade(player, npc, trade)

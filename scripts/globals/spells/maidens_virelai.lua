@@ -23,7 +23,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    if target:isMob() and target:getID() == 17649730 then
+    if target:isPC() and caster:isPC() or target:getID() == 17649730 then
         spell:setMsg(tpz.msg.basic.NO_EFFECT)
         return
     end

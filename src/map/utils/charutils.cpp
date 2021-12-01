@@ -755,6 +755,14 @@ namespace charutils
             }
         }
 
+        fmtQuery = "SELECT flags FROM audit_list WHERE entity_type = 1 AND entity_name = '%s';";
+        Sql_Query(SqlHandle, fmtQuery, PChar->name.c_str());
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            PChar->m_logChat = (uint8)Sql_GetUIntData(SqlHandle, 0);
+        }
 
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
         Sql_Query(SqlHandle, "UPDATE accounts_sessions SET last_updated = NOW() WHERE charid = %u", PChar->id);
@@ -1893,11 +1901,12 @@ namespace charutils
             return false;
         }
 
-        if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
+        if  ((!PChar->m_GMSuperpowers) &&
+            ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
             ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
-            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
+            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()]))))
         {
             return false;
         }
@@ -2152,6 +2161,10 @@ namespace charutils
         if (PItem == nullptr)
             return true;
 
+        if (PChar->m_GMSuperpowers) {
+            return true;
+        }
+
         for (uint8 i = 1; i < MAX_JOBTYPE; i++)
             if (PItem->getJobs() & (1 << (i - 1)) && PItem->getReqLvl() <= PChar->jobs.job[i])
                 return true;
@@ -2394,6 +2407,10 @@ namespace charutils
     void CheckValidEquipment(CCharEntity* PChar)
     {
         CItemEquipment* PItem = nullptr;
+
+        if (PChar->m_GMSuperpowers) {
+            return;
+        }
 
         for (uint8 slotID = 0; slotID < 16; ++slotID)
         {

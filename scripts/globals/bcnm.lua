@@ -22,7 +22,7 @@ local battlefields = {
      -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
         { 3,  643,    0},   -- Brothers (ENM)
-     -- { 4,  644,    0},   -- Holy Cow (ENM)
+        { 4,  644,    0},   -- Holy Cow (ENM)
      -- { 5,    ?, 3454},   -- Taurassic Park (HKC30)
     },
 
@@ -81,7 +81,7 @@ local battlefields = {
     [tpz.zone.SPIRE_OF_VAHZL] =
     {
         { 0,  864,    0},   -- Desires of Emptiness (PM5-2)
-     -- { 1,  865,    0},   -- Pulling the Plug (ENM)
+        { 1,  865,    0},   -- Pulling the Plug (ENM)
      -- { 2,  866, 3352},   -- Empty Aspirations (KC50)
     },
 
@@ -134,13 +134,13 @@ local battlefields = {
 
     [tpz.zone.TEMENOS] =
     {
-     -- { 0, 1299,    0},   -- Northern Tower
-     -- { 1, 1300,    0},   -- Eastern Tower
-     -- { 2, 1298,    0},   -- Western Tower
+        { 0, 1299,    0},   -- Northern Tower
+        { 1, 1300,    0},   -- Eastern Tower
+        { 2, 1298,    0},   -- Western Tower
      -- { 3, 1306,   -1},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986)
-     -- { 4, 1305, 1904},   -- Central 3rd Floor
-     -- { 5, 1304, 1905},   -- Central 2nd Floor
-     -- { 6, 1303, 1906},   -- Central 1st Floor
+        { 4, 1305, 1904},   -- Central 3rd Floor
+        { 5, 1304, 1905},   -- Central 2nd Floor
+        { 6, 1303, 1906},   -- Central 1st Floor
      -- { 7, 1301, 2127},   -- Central Basement
      -- { 8, 1302,    0},   -- Central Basement II
      -- { 9, 1307,    0},   -- Central 4th Floor II
@@ -148,10 +148,10 @@ local battlefields = {
 
     [tpz.zone.APOLLYON] =
     {
-     -- { 0, 1291,    0},   -- SW Apollyon
-     -- { 1, 1290,    0},   -- NW Apollyon
-     -- { 2, 1293,    0},   -- SE Apollyon
-     -- { 3, 1292,    0},   -- NE Apollyon
+        { 0, 1291,    0},   -- SW Apollyon
+        { 1, 1290,    0},   -- NW Apollyon
+        { 2, 1293,    0},   -- SE Apollyon
+        { 3, 1292,    0},   -- NE Apollyon
      -- { 4, 1296,   -2},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
      -- { 5, 1294, 2127},   -- CS Apollyon
      -- { 6, 1295,    0},   -- CS Apollyon II
@@ -942,6 +942,16 @@ function GetCrackedMessage(player, option)
 end
 
 -----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function BCNMGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
+
+-----------------------------------------------
 -- onTrade Action
 -----------------------------------------------
 
@@ -975,6 +985,15 @@ function TradeBCNM(player, npc, trade, onUpdate)
         return false
     end
 
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) and not onUpdate then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- open menu of valid battlefields
     local validBattlefields = findBattlefields(player, npc, itemId)
     if validBattlefields ~= 0 then
@@ -994,6 +1013,16 @@ end
 
 function EventTriggerBCNM(player, npc)
     -- player:PrintToPlayer("EventTriggerBCNM")
+
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
         player:startEvent(32003)

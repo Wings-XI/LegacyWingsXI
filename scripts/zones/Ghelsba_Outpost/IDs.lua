@@ -22,6 +22,7 @@ zones[tpz.zone.GHELSBA_OUTPOST] =
         CARRIED_OVER_POINTS              = 7529, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY          = 7530, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                     = 7531, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CANNOT_ENTER_LEVEL_RESTRICTED    = 7551, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET           = 7579, -- You can't fish here.
         HUT_DOOR                         = 7713, -- This looks like an Orcish dwelling. The door is firmly shut.
         LOGGING_IS_POSSIBLE_HERE         = 7740, -- Logging is possible here if you have <item>.

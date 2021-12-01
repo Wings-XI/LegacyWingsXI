@@ -1579,6 +1579,7 @@ INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 3);
 INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 4);
 INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 5);
 INSERT INTO `item_latents` VALUES(18872, 73, 2, 16, 6);
+INSERT INTO `item_latents` VALUES(15773, 384, 400, 58, 0);
 
 --
 -- Indexes for dumped tables

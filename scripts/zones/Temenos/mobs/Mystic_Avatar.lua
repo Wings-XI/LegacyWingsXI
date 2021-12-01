@@ -3,6 +3,7 @@
 --  Mob: Mystic Avatar
 -----------------------------------
 require("scripts/globals/limbus")
+mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Temenos/IDs")
 
 function onMobSpawn(mob)

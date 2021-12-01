@@ -30,6 +30,6 @@ function onUseAbility(player, target, ability)
         merit = merit/2 -- half effect for party members
     end
 
-
+    target:delStatusEffect(tpz.effect.BOOST)
     target:addStatusEffect(tpz.effect.WARCRY, power, 0, duration, 0, merit)
 end
