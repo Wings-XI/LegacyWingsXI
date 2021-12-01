@@ -37,7 +37,6 @@ function onTrigger(player, npcId, noDepop)
     if (player:getZoneID() == targ:getZoneID()) then
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
         targ:setStatus(tpz.status.NORMAL)
-        --targ:setModelId(965)
         player:PrintToPlayer(string.format("Moved NPC %s", targ:getName()))
     else
         if (noDepop == nil or noDepop == 0) then
