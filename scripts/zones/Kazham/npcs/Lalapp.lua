@@ -20,7 +20,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path)
 end
 
 function onTrade(player, npc, trade)
@@ -61,7 +61,6 @@ function onTrigger(player, npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then                          -- has failed on future npc so disregard previous successful trade
             player:startEvent(205)
-            npc:wait()
         elseif (progress == 8 or failed == 9) then
                 player:startEvent(214)  -- asking for ancient salt
         elseif (progress >= 9 or failed >= 10) then
@@ -69,7 +68,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(205)
-        npc:wait()
     end
 end
 
@@ -89,7 +87,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 237) then              -- wrong trade, restart at first opo
         player:setCharVar("OPO_OPO_FAILED", 1)
         player:setCharVar("OPO_OPO_RETRY", 9)
-    else
-        npc:wait(0)
     end
 end

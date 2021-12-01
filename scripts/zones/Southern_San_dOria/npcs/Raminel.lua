@@ -65,13 +65,11 @@ end
 function onPath(npc)
     if (npc:atPoint(tpz.path.get(path, 23))) then
         npc:lookAt(GetNPCByID(ID.npc.ARPETION):getPos())
-        npc:wait()
     elseif (npc:atPoint(tpz.path.get(path, -1))) then
         -- give package to Lusiane, wait 4 seconds, then continue
         local lus = GetNPCByID(ID.npc.LUSIANE)
         lus:showText(npc, ID.text.RAMINEL_DELIVERY)
         npc:showText(lus, ID.text.LUSIANE_THANK)
-        npc:wait()
     elseif (npc:atPoint(tpz.path.last(path))) then
         -- when I walk away stop looking at me
         GetNPCByID(ID.npc.LUSIANE):clearTargID()

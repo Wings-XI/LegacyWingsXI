@@ -126,8 +126,7 @@ function onTrigger(player, npc)
 
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then                          -- has failed on future npc so disregard previous successful trade
-            player:startEvent(203)
-            npc:wait()
+            player:startEvent(203)  
         elseif (progress == 6 or failed == 7) then
                 player:startEvent(212)  -- asking for blackened toad
         elseif (progress >= 7 or failed >= 8) then
@@ -135,7 +134,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(203)
-        npc:wait()
     end
 end
 
@@ -155,7 +153,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 235) then              -- wrong trade, restart at first opo
         player:setCharVar("OPO_OPO_FAILED", 1)
         player:setCharVar("OPO_OPO_RETRY", 7)
-    else
-        npc:wait(0)
     end
 end
