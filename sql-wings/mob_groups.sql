@@ -9024,7 +9024,7 @@ INSERT INTO `mob_groups` VALUES(19, 1192, 147, 'Elder_Quadav', 960, 0, 753, 0, 0
 INSERT INTO `mob_groups` VALUES(20, 2102, 147, 'Iron_Quadav', 960, 0, 0, 0, 0, 43, 47, 0);
 INSERT INTO `mob_groups` VALUES(21, 3731, 147, 'Spinel_Quadav', 960, 0, 2306, 0, 0, 44, 48, 0);
 INSERT INTO `mob_groups` VALUES(22, 1207, 147, 'Emerald_Quadav', 960, 0, 762, 0, 0, 45, 49, 0);
-INSERT INTO `mob_groups` VALUES(23, 1023, 147, 'De_Vyu_Headhunter', 300, 0, 2818, 0, 0, 45, 45, 0);
+INSERT INTO `mob_groups` VALUES(23, 1023, 147, 'De_Vyu_Headhunter', 300, 0, 2818, 2000, 0, 45, 45, 0);
 INSERT INTO `mob_groups` VALUES(24, 539, 147, 'Broo', 960, 0, 363, 0, 0, 39, 41, 0);
 INSERT INTO `mob_groups` VALUES(25, 1482, 147, 'Ga_Bhu_Unvanquished', 0, 32, 2849, 0, 0, 47, 48, 0);
 INSERT INTO `mob_groups` VALUES(26, 1624, 147, 'Gloop', 960, 0, 1007, 0, 0, 38, 40, 0);
