@@ -96,8 +96,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(89) -- Standard Conversation
     end
-
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
@@ -117,6 +115,4 @@ function onEventFinish(player, csid, option, npc)
             player:completeQuest(OUTLANDS, tpz.quest.id.outlands.ITS_NOT_YOUR_VAULT)
         end
     end
-
-    npc:wait(0)
 end
