@@ -9006,7 +9006,7 @@ INSERT INTO `mob_groups` VALUES(1, 2965, 147, 'Old_Quadav', 300, 0, 1850, 0, 0, 
 INSERT INTO `mob_groups` VALUES(2, 791, 147, 'Copper_Quadav', 300, 0, 513, 0, 0, 22, 27, 0);
 INSERT INTO `mob_groups` VALUES(3, 2373, 147, 'Land_Pugil', 960, 0, 975, 0, 0, 20, 23, 0);
 INSERT INTO `mob_groups` VALUES(4, 525, 147, 'Brass_Quadav', 300, 0, 353, 0, 0, 22, 28, 0);
-INSERT INTO `mob_groups` VALUES(5, 427, 147, 'Bi_Gho_Headtaker', 0, 32, 2851, 0, 0, 25, 25, 0);
+INSERT INTO `mob_groups` VALUES(5, 427, 147, 'Bi_Gho_Headtaker', 0, 32, 2851, 1100, 0, 25, 25, 0);
 INSERT INTO `mob_groups` VALUES(6, 2987, 147, 'Ooze', 300, 0, 1867, 0, 0, 28, 30, 0);
 INSERT INTO `mob_groups` VALUES(7, 3628, 147, 'Silver_Quadav', 960, 0, 2254, 0, 0, 33, 37, 0);
 INSERT INTO `mob_groups` VALUES(8, 1472, 147, 'Garnet_Quadav', 960, 0, 936, 0, 0, 35, 39, 0);
