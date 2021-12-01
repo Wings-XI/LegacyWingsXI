@@ -1085,11 +1085,13 @@ inline int32 CLuaBaseEntity::startEvent(lua_State *L)
 
     if (PChar->m_event.Target && PChar->m_event.Target->objtype == TYPE_NPC) {
         uint32 wait_custom = PChar->m_event.Target->GetLocalVar("TriggerWaitCustom");
-        duration wait_time = std::chrono::milliseconds(60000);
+        uint32 wait_ms = 60000;
         if (wait_custom != 0) {
-            wait_time = std::chrono::milliseconds(PChar->m_event.Target->GetLocalVar("TriggerWaitTime"));
+            wait_ms = PChar->m_event.Target->GetLocalVar("TriggerWaitTime");
         }
-        PChar->m_event.Target->Wait(wait_time);
+        if (wait_ms > 0) {
+            PChar->m_event.Target->Wait(std::chrono::milliseconds(wait_ms));
+        }
     }
 
     uint16 EventID = (uint16)lua_tointeger(L, 1);
@@ -1182,11 +1184,13 @@ inline int32 CLuaBaseEntity::startEventString(lua_State *L)
 
     if (PChar->m_event.Target && PChar->m_event.Target->objtype == TYPE_NPC) {
         uint32 wait_custom = PChar->m_event.Target->GetLocalVar("TriggerWaitCustom");
-        duration wait_time = std::chrono::milliseconds(60000);
+        uint32 wait_ms = 60000;
         if (wait_custom != 0) {
-            wait_time = std::chrono::milliseconds(PChar->m_event.Target->GetLocalVar("TriggerWaitTime"));
+            wait_ms = PChar->m_event.Target->GetLocalVar("TriggerWaitTime");
         }
-        PChar->m_event.Target->Wait(wait_time);
+        if (wait_ms > 0) {
+            PChar->m_event.Target->Wait(std::chrono::milliseconds(wait_ms));
+        }
     }
 
     uint16 EventID = (uint16)lua_tointeger(L, 1);
