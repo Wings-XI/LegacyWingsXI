@@ -5,7 +5,7 @@
 -----------------------------------
 require("scripts/globals/pathfind")
 -----------------------------------
-
+local flags = tpz.path.flag.NONE
 local path =
 {
     -0.016294, -1.251156, -30.703135,
@@ -62,17 +62,17 @@ local path =
     1.013752, -1.273776, -30.729916,
     -0.022560, -1.251507, -30.706329,
     -2.217780, -1.106099, -30.654016,
-    -1.043870, -1.248653, -30.678118
+    -1.043870, -1.248653, -30.678118,
 }
 
 function onSpawn(npc)
     npc:initNpcAi()
     npc:setPos(tpz.path.first(path))
-    -- onPath(npc)
+    onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
 end
 
 function onTrade(player, npc, trade)
