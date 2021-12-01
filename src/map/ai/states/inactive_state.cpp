@@ -60,3 +60,13 @@ bool CInactiveState::Update(time_point tick)
 
 void CInactiveState::Cleanup(time_point tick)
 {}
+
+duration CInactiveState::GetDuration()
+{
+    return m_duration;
+}
+
+void CInactiveState::SetDuration(duration _duration)
+{
+    m_duration = _duration;
+}
