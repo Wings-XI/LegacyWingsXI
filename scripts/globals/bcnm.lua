@@ -942,6 +942,16 @@ function GetCrackedMessage(player, option)
 end
 
 -----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function BCNMGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
+
+-----------------------------------------------
 -- onTrade Action
 -----------------------------------------------
 
@@ -975,6 +985,15 @@ function TradeBCNM(player, npc, trade, onUpdate)
         return false
     end
 
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) and not onUpdate then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- open menu of valid battlefields
     local validBattlefields = findBattlefields(player, npc, itemId)
     if validBattlefields ~= 0 then
@@ -994,6 +1013,16 @@ end
 
 function EventTriggerBCNM(player, npc)
     -- player:PrintToPlayer("EventTriggerBCNM")
+
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
         player:startEvent(32003)

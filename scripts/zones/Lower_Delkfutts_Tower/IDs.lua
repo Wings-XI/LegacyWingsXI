@@ -21,6 +21,7 @@ zones[tpz.zone.LOWER_DELKFUTTS_TOWER] =
         CARRIED_OVER_POINTS              = 7188,  -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY          = 7189,  -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                     = 7190,  -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CANNOT_ENTER_LEVEL_RESTRICTED    = 7210, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET           = 7238,  -- You can't fish here.
         CRYSTAL_PULSATES                 = 7737,  -- The crystal pulsates with an otherworldly energy...
         CRYSTAL_VACUUM                   = 7738,  -- As you approach, the overwhelming force of a vacuum threatens to suck you inside the crystal...
