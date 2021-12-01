@@ -71,6 +71,16 @@ assaultUtil.missionInfo =
     [NYZUL_ISLE_UNCHARTED_AREA_SURVEY] = {suggestedLevel = 99, minimumPoints = nil},
 }
 
+-----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function AssaultGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
+
 -- -------------------------------------------------------------------
 -- hasOrders(player)
 -- Check if player has obtained the Assault Order
@@ -153,6 +163,15 @@ end
 -- -------------------------------------------------------------------
 function onAssaultTrigger(player, npc, csid, orders, indexID)
     if player:hasKeyItem(orders) and player:getCharVar("assaultEntered") == 0 and IS_ASSAULT_ACTIVATED == 1 then
+        -- don't allow players under level sync to enter
+        if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+            local sync_error = AssaultGetLevelSyncError(player)
+            if sync_error ~= nil then
+                player:messageSpecial(sync_error, 0, 0)
+            end
+            return
+        end
+
         local assaultID = player:getCurrentAssault()
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0

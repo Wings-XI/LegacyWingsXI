@@ -1297,6 +1297,7 @@ tpz.mod =
     CHARM_CHANCE              = 391, -- extra chance to charm (light+apollo staff ect)
     FERAL_HOWL_DURATION       = 503, -- +20% duration per merit when wearing augmented Monster Jackcoat +2
     JUG_LEVEL_RANGE           = 564, -- Decreases the level range of spawned jug pets. Maxes out at 2.
+    CALL_BEAST_DELAY          = 572, -- Lowers Call Beast recast
 
     -- Bard
     MINNE_EFFECT              = 433, --
@@ -1382,6 +1383,7 @@ tpz.mod =
     EXP_BONUS                 = 382, --
     ROLL_RANGE                = 528, -- Additional range for COR roll abilities.
     JOB_BONUS_CHANCE          = 542, -- Chance to apply job bonus to COR roll without having the job in the party.
+    QUICK_DRAW_DELAY          = 571, -- Lowers Quick Draw recast
 
     DMG_REFLECT               = 316, -- Tracks totals
     ROLL_ROGUES               = 317, -- Tracks totals

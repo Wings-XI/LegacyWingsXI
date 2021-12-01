@@ -379,6 +379,11 @@ void CStatusEffectContainer::OverwriteStatusEffect(CStatusEffect* StatusEffect)
     // remove effect by id
     EFFECT removeId = effects::EffectsParams[statusEffect].RemoveId;
     if (removeId > EFFECT_KO) {
+        if (removeId == EFFECT_LEVEL_SYNC) {
+            if (m_POwner->PParty && m_POwner->PParty->GetSyncTarget()) {
+                m_POwner->PParty->SetSyncTarget(nullptr, 550);
+            }
+        }
         DelStatusEffectSilent(removeId);
     }
 

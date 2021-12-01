@@ -10,26 +10,27 @@ zones[tpz.zone.TEMENOS] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED           = 6388, -- Obtained: <item>.
-        GIL_OBTAINED            = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
-        CARRIED_OVER_POINTS     = 6999, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
-        LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
-        CHIP_TRADE_T            = 7028, -- What do you wish to do? Show me the cutscene again. Skip the cutscene and continue.
-        TIME_EXCEEDED           = 7054, -- You have exceeded the time limit. Exiting Limbus now.
-        WIPE_KICK               = 7354, -- All party members in Limbus have fallen in battle. Exiting now.
-        WIPE                    = 7364, -- All party members in Limbus have fallen in battle. Exiting in <number> [minute/minutes].
-        CONDITION_FOR_LIMBUS_T  = 7055, -- You have clearance to enter Limbus, but cannot enter while you or a party member is engaged in battle.
-        HUM                     = 7071, -- You hear a faint hum.
-        NO_KEY                  = 7076, -- There is a disc here inscribed with strange letters. There are several six-sided indentations and a thin slot in the center.
-        TIME_EXTENDED           = 7372, -- our time in Limbus has been extended <number> [minute/minutes].
-        TIME_LEFT               = 7373, -- ou have <number> [minute/minutes] left in Limbus.
-        CONQUEST_BASE           = 7375, -- Tallying conquest results...
-        CITADEL_BASE            = 7548, -- 30...
-        CANNOT_OPEN_CHEST       = 7556, -- You cannot open the treasure chest now.
-        GATE_OPEN               = 7557, -- he gate opens...
+        ITEM_CANNOT_BE_OBTAINED       = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED                 = 6388, -- Obtained: <item>.
+        GIL_OBTAINED                  = 6389, -- Obtained <number> gil.
+        KEYITEM_OBTAINED              = 6391, -- Obtained key item: <keyitem>.
+        CARRIED_OVER_POINTS           = 6999, -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
+        LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CHIP_TRADE_T                  = 7028, -- What do you wish to do? Show me the cutscene again. Skip the cutscene and continue.
+        TIME_EXCEEDED                 = 7054, -- You have exceeded the time limit. Exiting Limbus now.
+        WIPE_KICK                     = 7354, -- All party members in Limbus have fallen in battle. Exiting now.
+        WIPE                          = 7364, -- All party members in Limbus have fallen in battle. Exiting in <number> [minute/minutes].
+        CONDITION_FOR_LIMBUS_T        = 7055, -- You have clearance to enter Limbus, but cannot enter while you or a party member is engaged in battle.
+        HUM                           = 7071, -- You hear a faint hum.
+        NO_KEY                        = 7076, -- There is a disc here inscribed with strange letters. There are several six-sided indentations and a thin slot in the center.
+        TIME_EXTENDED                 = 7372, -- our time in Limbus has been extended <number> [minute/minutes].
+        TIME_LEFT                     = 7373, -- ou have <number> [minute/minutes] left in Limbus.
+        CONQUEST_BASE                 = 7375, -- Tallying conquest results...
+        CITADEL_BASE                  = 7548, -- 30...
+        CANNOT_OPEN_CHEST             = 7556, -- You cannot open the treasure chest now.
+        GATE_OPEN                     = 7557, -- he gate opens...
     },
     mob =
     {

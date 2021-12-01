@@ -2090,6 +2090,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             // Check & Handle Afflatus Misery Accuracy Bonus
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
+
+            if (PTarget->objtype == TYPE_PC) 
+            {
+                charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
         }
 
         if (actionTarget.reaction != REACTION_HIT && actionTarget.reaction != REACTION_BLOCK && actionTarget.reaction != REACTION_GUARD)
