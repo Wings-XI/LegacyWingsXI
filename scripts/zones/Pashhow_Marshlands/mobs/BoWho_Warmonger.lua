@@ -14,9 +14,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DMGMAGIC,-50)
 
     local chance = math.random(1,2)
+    print(chance)
     if chance == 1 then
-        GetMobByID(ID.Pashhow_Marshlands.BOWHO_GUARD1):setSpawn(mob:getXPos()+2, mob:getYPos(), mob:getZPos())
-        GetMobByID(ID.Pashhow_Marshlands.BOWHO_GUARD2):setSpawn(mob:getXPos()+4, mob:getYPos(), mob:getZPos())
+        print("chanceTriggered")
+        GetMobByID(ID.mob.BOWHO_GUARD1):setSpawn(mob:getXPos()+2, mob:getYPos(), mob:getZPos())
+        GetMobByID(ID.mob.BOWHO_GUARD2):setSpawn(mob:getXPos()+4, mob:getYPos(), mob:getZPos())
+        SpawnMob(ID.mob.BOWHO_GUARD1)
+        SpawnMob(ID.mob.BOWHO_GUARD2)
     end
 end
 

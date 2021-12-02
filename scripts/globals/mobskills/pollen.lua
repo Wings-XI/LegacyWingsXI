@@ -26,7 +26,7 @@ function onMobWeaponSkill(target, mob, skill)
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 
     if mob:getID() == 17584398 then -- Demonic Tiphia pollen recovers 3k+ HP
-        return MobHealMove(mob, 3300) -- TODO: Working out correct potency
+        return MobHealMove(mob, mob:getMaxHP() * potency / 30)
     else
         return MobHealMove(mob, mob:getMaxHP() * potency / 100)
     end
