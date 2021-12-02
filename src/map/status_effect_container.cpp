@@ -379,6 +379,11 @@ void CStatusEffectContainer::OverwriteStatusEffect(CStatusEffect* StatusEffect)
     // remove effect by id
     EFFECT removeId = effects::EffectsParams[statusEffect].RemoveId;
     if (removeId > EFFECT_KO) {
+        if (removeId == EFFECT_LEVEL_SYNC) {
+            if (m_POwner->PParty && m_POwner->PParty->GetSyncTarget()) {
+                m_POwner->PParty->SetSyncTarget(nullptr, 550);
+            }
+        }
         DelStatusEffectSilent(removeId);
     }
 
@@ -1755,6 +1760,18 @@ bool CStatusEffectContainer::HasPreventActionEffect()
         EFFECT_PENALTY,
         EFFECT_STUN,
         EFFECT_TERROR});
+}
+
+uint16 CStatusEffectContainer::GetLevelRestrictionEffect()
+{
+    for (auto PEffect : m_StatusEffectSet)
+    {
+        if (PEffect->GetFlag() & EFFECTFLAG_LEVEL_RESTRICTION)
+        {
+            return PEffect->GetPower();
+        }
+    }
+    return 0;
 }
 
 uint16 CStatusEffectContainer::GetConfrontationEffect()

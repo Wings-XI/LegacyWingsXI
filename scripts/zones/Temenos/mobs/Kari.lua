@@ -15,6 +15,10 @@ local path =
     {185.000, -82.000, 495.000}
 }
 
+function onMobSpawn(mob)
+    mob:setTrueDetection(1)
+end
+
 function onMobRoam(mob)
     local pause = mob:getLocalVar("pause")
     if pause < os.time() then

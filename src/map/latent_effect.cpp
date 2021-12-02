@@ -137,7 +137,18 @@ bool CLatentEffect::Activate()
         }
         else
         {
-            m_POwner->addModifier(m_ModValue, m_ModPower);
+            // Add latent effects to movement speed to the move speed tracker
+            if (m_ModValue == Mod::MOVE)
+            {
+                // printf("[+] Adding item with MS Mod from latent effect (Start)\n"); 
+                m_POwner->m_MSItemValues.push_back(m_ModPower);
+                m_POwner->m_modStat[m_ModValue] = m_POwner->CalculateMSFromSources();
+                // printf("[+] Adding item with MS Mod from latent effect (Done)\n"); 
+            }
+            else
+            {
+                m_POwner->addModifier(m_ModValue, m_ModPower);
+            }
         }
 
         m_Activated = true;
@@ -185,7 +196,26 @@ bool CLatentEffect::Deactivate()
         }
         else
         {
-            m_POwner->delModifier(m_ModValue, m_ModPower);
+            // Remove latent effects to movement speed to the move speed tracker
+            if (m_ModValue == Mod::MOVE)
+            {
+                //printf("[+] Removing item with MS Mod from latent effect (Start)\n");
+                for (uint16 x = 0; x < m_POwner->m_MSItemValues.size(); x++)
+                {
+                    if (m_POwner->m_MSItemValues[x] == m_ModPower)
+                    {
+                        m_POwner->m_MSItemValues.erase(m_POwner->m_MSItemValues.begin() + x);
+                        break;
+                    }
+                }
+
+                m_POwner->m_modStat[m_ModValue] = m_POwner->CalculateMSFromSources();
+                //printf("[+] Removing item with MS Mod from latent effect (End)\n");
+            }
+            else
+            {
+                m_POwner->delModifier(m_ModValue, m_ModPower);
+            }
         }
 
         m_Activated = false;

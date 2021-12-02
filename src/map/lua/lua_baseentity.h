@@ -116,6 +116,7 @@ public:
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving
     int32 checkDistance(lua_State*);         // Check Distacnce and returns distance number
     int32 wait(lua_State* L);                // make the npc wait a number of ms and then back into roam
+    int32 stopwait(lua_State* L);            // resumes roaming if stopped via wait()
     // int32 WarpTo(lua_State* L);           // warp to the given point
     // int32 RoamAround(lua_State* L);       // pick a random point to walk to
     // int32 LimitDistance(lua_State* L);    // limits the current path distance to given max distance
@@ -456,7 +457,7 @@ public:
 
     int32 addPartyEffect(lua_State*);               // Adds Effect to all party members
     int32 hasPartyEffect(lua_State*);               // Has Effect from all party members
-    int32 removePartyEffect(lua_State*);            // Removes Effect from all party members
+    int32 delPartyEffect(lua_State*);               // Deletes Effect from all party members
 
     int32 getAlliance(lua_State* L);
     int32 getAllianceSize(lua_State* L);            // Get the size of an entity's alliance

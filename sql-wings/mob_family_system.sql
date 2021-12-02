@@ -465,7 +465,7 @@ INSERT INTO `mob_family_system` VALUES(401, 'Martinet', 3, 'Arcana', 1, 40, 108,
 INSERT INTO `mob_family_system` VALUES(402, 'Aqrabuamelu', 20, 'Vermin', 3, 40, 90, 120, 3, 3, 4, 3, 3, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.5, 1, 1, 1.3, 1.3, 1.5, 1, 4, 257, 0);
 INSERT INTO `mob_family_system` VALUES(403, 'Autarch', 3, 'Arcana', 1, 40, 108, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 2, 288, 0);
 INSERT INTO `mob_family_system` VALUES(404, 'CureRabbit', 6, 'Beast', 0, 40, 96, 120, 4, 3, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.15, 1.3, 1.15, 1.5, 1.5, 1.15, 1.5, 4, 257, 1);
-INSERT INTO `mob_family_system` VALUES(406, 'Seed_Mandragora', 17, 'Plantoid', 0, 40, 107, 120, 5, 3, 4, 4, 4, 4, 4, 3, 3, 3, 2, 1, 1.25, 1, 1, 1.5, 1.5, 1.5, 1, 1.5, 1, 1, 1.5, 4, 257, 0);
+INSERT INTO `mob_family_system` VALUES(406, 'Seed_Mandragora', 17, 'Plantoid', 0, 40, 107, 120, 5, 3, 4, 4, 4, 4, 4, 3, 3, 3, 2, 1, 1.25, 1, 1, 1.5, 1.5, 1.5, 1, 1.5, 1, 1, 1.5, 4, 3, 0);
 INSERT INTO `mob_family_system` VALUES(407, 'Seed_Orc', 7, 'Beastmen', 1, 40, 108, 100, 3, 3, 4, 4, 7, 4, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.5, 1.3, 1.3, 1, 1, 0);
 INSERT INTO `mob_family_system` VALUES(408, 'Seed_Quadav', 7, 'Beastmen', 0, 40, 120, 110, 2, 3, 4, 5, 4, 5, 3, 3, 2, 3, 3, 1, 1.25, 1, 1, 1, 1.3, 1.3, 1.3, 1.5, 1, 1.3, 1.3, 6, 1, 0);
 INSERT INTO `mob_family_system` VALUES(409, 'Seed_Yagudo', 7, 'Beastmen', 0, 40, 85, 120, 3, 3, 3, 3, 4, 5, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.3, 0.7, 0.7, 1, 0.3, 0.3, 1, 3, 1, 0);
@@ -535,6 +535,7 @@ INSERT INTO `mob_family_system` VALUES(502, 'Shikigami_Weapon', 3, 'Arcana', 0, 
 INSERT INTO `mob_family_system` VALUES(503, 'Mammet', 3, 'Arcana', 0, 40, 90, 110, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.15, 1, 1, 1, 0, 2, 0);
 INSERT INTO `mob_family_system` VALUES(504, 'Sidhe', 18, 'Unclassified', 0, 40, 90, 100, 4, 6, 4, 5, 5, 1, 3, 3, 3, 3, 3, 0.375, 0.375, 0.375, 0.375, 0.85, 0.85, 0.05, 0.85, 0.85, 0.85, 0.2, 0.85, 3, 5, 0);
 INSERT INTO `mob_family_system` VALUES(505, 'Living_Crystal', 18, 'Unclassified', 0, 0, 100, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);
+INSERT INTO `mob_family_system` VALUES(506, 'MemoryReceptacleENM', 12, 'Empty', 2, 60, 130, 0, 1, 3, 5, 4, 2, 2, 5, 3, 3, 3, 3, 2, 2, 2, 2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 3, 0);
 
 
 --

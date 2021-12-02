@@ -6,7 +6,11 @@ require("scripts/globals/limbus");
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-end;
+end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end
 
 function onMobDespawn(mob)
  local mobID = mob:getID();

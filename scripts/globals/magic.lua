@@ -792,8 +792,10 @@ function calculateMagicBurst(caster, spell, target, params)
             skillchainburst = 1.65
         elseif skillchainCount == 5 then -- six weaponskills
             skillchainburst = 1.75
+        elseif skillchainCount == 6 then -- seven weaponskills
+            skillchainburst = 1.85
         else
-            skillchainburst = 1.75 -- seven or more? shouldn't be possible
+            skillchainburst = 1.85 -- eight or more? shouldn't be possible
         end
     end
 

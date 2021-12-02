@@ -4,6 +4,17 @@
 -----------------------------------
 require("scripts/globals/limbus")
 local ID = require("scripts/zones/Temenos/IDs")
+require("scripts/globals/battlefield")
+
+function onMobInitialize(mob)
+    mob:addMod(tpz.mod.DMGMAGIC, -25)
+    mob:addMod(tpz.mod.DMGPHYS, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PLAGUE, {chance = 100})
+end
 
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then
@@ -22,7 +33,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
                 local mobZ = mob:getZPos()
                 local crateID = ID.npc.TEMENOS_E_CRATE[1] + (mobID - ID.mob.TEMENOS_E_MOB[1])
                 GetNPCByID(crateID):setPos(mobX, mobY, mobZ)
-                tpz.limbus.spawnRandomCrate(crateID, player, "crateMaskF1", battlefield:getLocalVar("crateMaskF1"), true)
+                tpz.limbus.spawnRandomCrate(crateID, battlefield, "crateMaskF1", battlefield:getLocalVar("crateMaskF1"), true)
             end
         end
     end

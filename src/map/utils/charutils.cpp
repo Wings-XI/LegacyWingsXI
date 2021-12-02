@@ -755,6 +755,14 @@ namespace charutils
             }
         }
 
+        fmtQuery = "SELECT flags FROM audit_list WHERE entity_type = 1 AND entity_name = '%s';";
+        Sql_Query(SqlHandle, fmtQuery, PChar->name.c_str());
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            PChar->m_logChat = (uint8)Sql_GetUIntData(SqlHandle, 0);
+        }
 
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
         Sql_Query(SqlHandle, "UPDATE accounts_sessions SET last_updated = NOW() WHERE charid = %u", PChar->id);

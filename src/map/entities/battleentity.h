@@ -22,17 +22,17 @@
 #ifndef _BATTLEENTITY_H
 #define _BATTLEENTITY_H
 
-#include <set>
-#include <vector>
-#include <unordered_map>
 #include <mutex>
+#include <set>
+#include <unordered_map>
+#include <vector>
 
-#include "baseentity.h"
-#include "../map.h"
-#include "../trait.h"
-#include "../party.h"
 #include "../alliance.h"
+#include "../map.h"
 #include "../modifier.h"
+#include "../party.h"
+#include "../trait.h"
+#include "baseentity.h"
 
 enum ECOSYSTEM
 {
@@ -87,7 +87,7 @@ enum JOBTYPE
     JOB_RUN = 22
 };
 
-#define MAX_JOBTYPE		23
+#define MAX_JOBTYPE 23
 
 enum SKILLTYPE
 {
@@ -144,7 +144,7 @@ enum SKILLTYPE
     SKILL_DIG = 59
 };
 
-#define MAX_SKILLTYPE	64
+#define MAX_SKILLTYPE 64
 
 enum SUBSKILLTYPE
 {
@@ -228,7 +228,7 @@ enum SLOTTYPE
     SLOT_LINK2 = 0x11,
 };
 
-#define MAX_SLOTTYPE	18
+#define MAX_SLOTTYPE 18
 
 // CROSSBOW и GUN - это Piercing, разделение сделано из-за одинакового skilltype
 // для возможности различить эти орудия при экипировке и избавиться от ошибки
@@ -265,13 +265,13 @@ enum DAMAGETYPE
 
 enum REACTION
 {
-    REACTION_NONE = 0x00,		// отсутствие реакции
-    REACTION_MISS = 0x01,		// промах
-    REACTION_PARRY = 0x03,		// блокирование оружием (MISS + PARRY)
-    REACTION_BLOCK = 0x04,		// блокирование щитом
-    REACTION_HIT = 0x08,		// попадание
-    REACTION_EVADE = 0x09,		// уклонение (MISS + HIT)
-    REACTION_GUARD = 0x14,		// mnk guard (20 dec)
+    REACTION_NONE = 0x00,  // отсутствие реакции
+    REACTION_MISS = 0x01,  // промах
+    REACTION_PARRY = 0x03, // блокирование оружием (MISS + PARRY)
+    REACTION_BLOCK = 0x04, // блокирование щитом
+    REACTION_HIT = 0x08,   // попадание
+    REACTION_EVADE = 0x09, // уклонение (MISS + HIT)
+    REACTION_GUARD = 0x14, // mnk guard (20 dec)
 };
 
 enum SPECEFFECT
@@ -287,16 +287,16 @@ enum SPECEFFECT
 enum SUBEFFECT
 {
     // ATTACK
-    SUBEFFECT_FIRE_DAMAGE = 1,  // 110000     3
-    SUBEFFECT_ICE_DAMAGE = 2,  // 1-01000    5
-    SUBEFFECT_WIND_DAMAGE = 3,  // 111000     7
-    SUBEFFECT_EARTH_DAMAGE = 4,  // 1-00100    9
-    SUBEFFECT_LIGHTNING_DAMAGE = 5,  // 110100    11
-    SUBEFFECT_WATER_DAMAGE = 6,  // 1-01100   13
-    SUBEFFECT_LIGHT_DAMAGE = 7,  // 111100    15
+    SUBEFFECT_FIRE_DAMAGE = 1,      // 110000     3
+    SUBEFFECT_ICE_DAMAGE = 2,       // 1-01000    5
+    SUBEFFECT_WIND_DAMAGE = 3,      // 111000     7
+    SUBEFFECT_EARTH_DAMAGE = 4,     // 1-00100    9
+    SUBEFFECT_LIGHTNING_DAMAGE = 5, // 110100    11
+    SUBEFFECT_WATER_DAMAGE = 6,     // 1-01100   13
+    SUBEFFECT_LIGHT_DAMAGE = 7,     // 111100    15
     SUBEFFECT_DARKNESS_DAMAGE = 8,  // 1-00010   17
-    SUBEFFECT_SLEEP = 9,  // 110010    19
-    SUBEFFECT_POISON = 10, // 1-01010   21
+    SUBEFFECT_SLEEP = 9,            // 110010    19
+    SUBEFFECT_POISON = 10,          // 1-01010   21
     SUBEFFECT_PARALYSIS = 11,
     SUBEFFECT_BLIND = 12, // 1-00110   25
     SUBEFFECT_SILENCE = 13,
@@ -306,7 +306,7 @@ enum SUBEFFECT
     SUBEFFECT_CURSE = 17,
     SUBEFFECT_DEFENSE_DOWN = 18, // 1-01001   37
     SUBEFFECT_EVASION_DOWN = 18, // Same subeffect as DEFENSE_DOWN
-    SUBEFFECT_ATTACK_DOWN = 18, // Same subeffect as DEFENSE_DOWN
+    SUBEFFECT_ATTACK_DOWN = 18,  // Same subeffect as DEFENSE_DOWN
     SUBEFFECT_DEATH = 19,
     SUBEFFECT_SHIELD = 20,
     SUBEFFECT_HP_DRAIN = 21, // 1-10101   43  This is retail correct animation
@@ -316,20 +316,20 @@ enum SUBEFFECT
     // There are no additional attack effect animations beyond 23. Some effects share subeffect/animations.
 
     // SPIKES
-    SUBEFFECT_BLAZE_SPIKES = 1,  // 01-1000    6
-    SUBEFFECT_ICE_SPIKES = 2,    // 01-0100   10
-    SUBEFFECT_DREAD_SPIKES = 3,  // 01-1100   14
-    SUBEFFECT_CURSE_SPIKES = 4,  // 01-0010   18
-    SUBEFFECT_SHOCK_SPIKES = 5,  // 01-1010   22
-    SUBEFFECT_REPRISAL = 6,      // 01-0110   26
-    // SUBEFFECT_GLINT_SPIKES = 6,
-    SUBEFFECT_GALE_SPIKES = 7,   // Used by enchantment "Cool Breeze" http://www.ffxiah.com/item/22018/
+    SUBEFFECT_BLAZE_SPIKES = 1, // 01-1000    6
+    SUBEFFECT_ICE_SPIKES = 2,   // 01-0100   10
+    SUBEFFECT_DREAD_SPIKES = 3, // 01-1100   14
+    SUBEFFECT_CURSE_SPIKES = 4, // 01-0010   18
+    SUBEFFECT_SHOCK_SPIKES = 5, // 01-1010   22
+    SUBEFFECT_REPRISAL = 6,     // 01-0110   26
+                            // SUBEFFECT_GLINT_SPIKES = 6,
+    SUBEFFECT_GALE_SPIKES = 7, // Used by enchantment "Cool Breeze" http://www.ffxiah.com/item/22018/
     SUBEFFECT_CLOD_SPIKES = 8,
     SUBEFFECT_DELUGE_SPIKES = 9,
     SUBEFFECT_DEATH_SPIKES = 10, // yes really: http://www.ffxiah.com/item/26944/
     SUBEFFECT_COUNTER = 63,      // Also used by Retaliation
-    // There are no spikes effect animations beyond 63. Some effects share subeffect/animations.
-    // "Damage Spikes" use the Blaze Spikes animation even though they are different status.
+                            // There are no spikes effect animations beyond 63. Some effects share subeffect/animations.
+                            // "Damage Spikes" use the Blaze Spikes animation even though they are different status.
 
     // SKILLCHAINS
     SUBEFFECT_LIGHT = 1,
@@ -366,7 +366,7 @@ enum TARGETTYPE
     TARGET_PLAYER_ALLIANCE = 0x08,
     TARGET_PLAYER = 0x10,
     TARGET_PLAYER_DEAD = 0x20,
-    TARGET_NPC = 0x40,		// скорее всего подразумевается mob, выглядящий как npc и воюющий на стороне персонажа
+    TARGET_NPC = 0x40, // скорее всего подразумевается mob, выглядящий как npc и воюющий на стороне персонажа
     TARGET_PLAYER_PARTY_PIANISSIMO = 0x80,
     TARGET_PET = 0x100
 };
@@ -375,28 +375,28 @@ enum SKILLCHAIN_ELEMENT
 {
     SC_NONE = 0, // Lv0 None
 
-    SC_TRANSFIXION = 1, // Lv1 Light
-    SC_COMPRESSION = 2, // Lv1 Dark
-    SC_LIQUEFACTION = 3, // Lv1 Fire
-    SC_SCISSION = 4, // Lv1 Earth
+    SC_TRANSFIXION = 1,   // Lv1 Light
+    SC_COMPRESSION = 2,   // Lv1 Dark
+    SC_LIQUEFACTION = 3,  // Lv1 Fire
+    SC_SCISSION = 4,      // Lv1 Earth
     SC_REVERBERATION = 5, // Lv1 Water
-    SC_DETONATION = 6, // Lv1 Wind
-    SC_INDURATION = 7, // Lv1 Ice
-    SC_IMPACTION = 8, // Lv1 Thunder
+    SC_DETONATION = 6,    // Lv1 Wind
+    SC_INDURATION = 7,    // Lv1 Ice
+    SC_IMPACTION = 8,     // Lv1 Thunder
 
-    SC_GRAVITATION = 9, // Lv2 Dark & Earth
-    SC_DISTORTION = 10, // Lv2 Water & Ice
-    SC_FUSION = 11, // Lv2 Fire & Light
+    SC_GRAVITATION = 9,    // Lv2 Dark & Earth
+    SC_DISTORTION = 10,    // Lv2 Water & Ice
+    SC_FUSION = 11,        // Lv2 Fire & Light
     SC_FRAGMENTATION = 12, // Lv2 Wind & Thunder
 
-    SC_LIGHT = 13, // Lv3 Fire, Light, Wind, Thunder
-    SC_DARKNESS = 14, // Lv3 Dark, Earth, Water, Ice
-    SC_LIGHT_II = 15, // Lv4 Light
+    SC_LIGHT = 13,       // Lv3 Fire, Light, Wind, Thunder
+    SC_DARKNESS = 14,    // Lv3 Dark, Earth, Water, Ice
+    SC_LIGHT_II = 15,    // Lv4 Light
     SC_DARKNESS_II = 16, // Lv4 Darkness
 };
 
 #define MAX_SKILLCHAIN_LEVEL (4)
-#define MAX_SKILLCHAIN_COUNT (5)
+#define MAX_SKILLCHAIN_COUNT (6)
 
 enum IMMUNITY : uint16
 {
@@ -405,34 +405,35 @@ enum IMMUNITY : uint16
     IMMUNITY_GRAVITY = 0x02,
     IMMUNITY_BIND = 0x04,
     IMMUNITY_STUN = 0x08,
-    IMMUNITY_SILENCE = 0x10,  // 16
-    IMMUNITY_PARALYZE = 0x20,  // 32
-    IMMUNITY_BLIND = 0x40,  // 64
-    IMMUNITY_SLOW = 0x80,  // 128
-    IMMUNITY_POISON = 0x100, // 256
-    IMMUNITY_ELEGY = 0x200, // 512
-    IMMUNITY_REQUIEM = 0x400, // 1024
+    IMMUNITY_SILENCE = 0x10,      // 16
+    IMMUNITY_PARALYZE = 0x20,     // 32
+    IMMUNITY_BLIND = 0x40,        // 64
+    IMMUNITY_SLOW = 0x80,         // 128
+    IMMUNITY_POISON = 0x100,      // 256
+    IMMUNITY_ELEGY = 0x200,       // 512
+    IMMUNITY_REQUIEM = 0x400,     // 1024
     IMMUNITY_LIGHT_SLEEP = 0x800, // 2048
     IMMUNITY_DARK_SLEEP = 0x1000, // 4096
-    IMMUNITY_ASPIR = 1 << 13, // 8192
-    IMMUNITY_TERROR = 1 << 14, // 16384
+    IMMUNITY_ASPIR = 1 << 13,     // 8192
+    IMMUNITY_TERROR = 1 << 14,    // 16384
+    IMMUNITY_DISPEL = 1 << 15,    // 32768
 };
 
 struct apAction_t
 {
-    CBattleEntity*    ActionTarget;		    // 32 bits
-    REACTION		  reaction;			    //  5 bits
-    uint16			  animation;			// 12 bits
-    SPECEFFECT		  speceffect;			// 7 bits
-    uint8             knockback;            // 3 bits
-    int32			  param;				// 17 bits
-    uint16			  messageID;			// 10 bits
-    SUBEFFECT         additionalEffect;     // 10 bits
-    int32             addEffectParam;       // 17 bits
-    uint16            addEffectMessage;     // 10 bits
-    SUBEFFECT         spikesEffect;         // 10 bits
-    uint16            spikesParam;          // 14 bits
-    uint16            spikesMessage;        // 10 bits
+    CBattleEntity* ActionTarget; // 32 bits
+    REACTION reaction;           //  5 bits
+    uint16 animation;            // 12 bits
+    SPECEFFECT speceffect;       // 7 bits
+    uint8 knockback;             // 3 bits
+    int32 param;                 // 17 bits
+    uint16 messageID;            // 10 bits
+    SUBEFFECT additionalEffect;  // 10 bits
+    int32 addEffectParam;        // 17 bits
+    uint16 addEffectMessage;     // 10 bits
+    SUBEFFECT spikesEffect;      // 10 bits
+    uint16 spikesParam;          // 14 bits
+    uint16 spikesMessage;        // 10 bits
 
     apAction_t()
     {
@@ -450,25 +451,24 @@ struct apAction_t
         spikesMessage = 0;
         knockback = 0;
     }
-
 };
 
 /*************************************************************************
-*																		 *
-*  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64          *
-*  TP is stored according to the same principle as skill, i.e. 6.4% = 64 *
-*																		 *
-*************************************************************************/
+ *																		 *
+ *  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64          *
+ *  TP is stored according to the same principle as skill, i.e. 6.4% = 64 *
+ *																		 *
+ *************************************************************************/
 
 struct health_t
 {
-    int16   tp;                  // текущее значение // present value
-    int16   maxtp;               // максимальные значения // maximum values
-    int16   modtp;               // модифицированные максимальные значения // modified maximum values
-    int32   hp, mp;              // текущие значения // present value
-    int32   maxhp, maxmp;        // максимальные значения // maximum values
-    int32   modhp, modmp;        // модифицированные максимальные значения // modified maximum values
-    int32   zoneinhp, zoneinmp;  // HP and MP from previous zone
+    int16 tp;                 // текущее значение // present value
+    int16 maxtp;              // максимальные значения // maximum values
+    int16 modtp;              // модифицированные максимальные значения // modified maximum values
+    int32 hp, mp;             // текущие значения // present value
+    int32 maxhp, maxmp;       // максимальные значения // maximum values
+    int32 modhp, modmp;       // модифицированные максимальные значения // modified maximum values
+    int32 zoneinhp, zoneinmp; // HP and MP from previous zone
 };
 
 typedef std::vector<apAction_t> ActionList_t;
@@ -492,153 +492,167 @@ struct action_t;
 class CBattleEntity : public CBaseEntity
 {
 public:
-    CBattleEntity();						// конструктор
-    virtual ~CBattleEntity();						// деструктор
+    CBattleEntity();          // конструктор
+    virtual ~CBattleEntity(); // деструктор
 
-    uint16          STR();
-    uint16          DEX();
-    uint16          VIT();
-    uint16          AGI();
-    uint16          INT();
-    uint16          MND();
-    uint16          CHR();
-    uint16          DEF();
-    uint16          ATT();
-    uint16			ACC(uint8 attackNumber, uint8 offsetAccuracy);
-    uint16          EVA();
-    uint16          RATT(uint8 skill, float distance = 999.9f, uint16 bonusSkill = 0);
-    uint16          RACC(uint8 skill, uint16 bonusSkill = 0);
+    uint16 STR();
+    uint16 DEX();
+    uint16 VIT();
+    uint16 AGI();
+    uint16 INT();
+    uint16 MND();
+    uint16 CHR();
+    uint16 DEF();
+    uint16 ATT();
+    uint16 ACC(uint8 attackNumber, uint8 offsetAccuracy);
+    uint16 EVA();
+    uint16 RATT(uint8 skill, float distance = 999.9f, uint16 bonusSkill = 0);
+    uint16 RACC(uint8 skill, uint16 bonusSkill = 0);
 
-    uint8           GetSpeed();
+    uint8 GetSpeed();
 
-    DAMAGETYPE      m_dmgType;
+    DAMAGETYPE m_dmgType;
 
-    std::mutex      scMutex;
+    std::mutex scMutex;
 
-    bool            isDead();					// проверяем, мертва ли сущность
-    bool            isAlive();
-    bool            isInAssault();
-    bool            isInDynamis();
-    bool            hasImmunity(uint32 imID);
-    bool            isAsleep();
-    bool            isMounted();
-    bool            isSitting();
+    bool isDead(); // проверяем, мертва ли сущность
+    bool isAlive();
+    bool isInAssault();
+    bool isInDynamis();
+    bool hasImmunity(uint32 imID);
+    bool isAsleep();
+    bool isMounted();
+    bool isSitting();
 
-    JOBTYPE		    GetMJob();					// главная профессия
-    JOBTYPE		    GetSJob();					// дополнительная профессия
-    uint8		    GetMLevel();				// уровень главной профессии
-    uint8		    GetSLevel();				// уровень дополнительной профессии
+    JOBTYPE GetMJob(); // главная профессия
+    JOBTYPE GetSJob(); // дополнительная профессия
+    uint8 GetMLevel(); // уровень главной профессии
+    uint8 GetSLevel(); // уровень дополнительной профессии
 
-    void		    SetMJob(uint8 mjob);		// главная профессия
-    void		    SetSJob(uint8 sjob);		// дополнительная профессия
-    void		    SetMLevel(uint8 mlvl);		// уровень главной профессии
-    void		    SetSLevel(uint8 slvl);		// уровень дополнительной профессии
+    void SetMJob(uint8 mjob);   // главная профессия
+    void SetSJob(uint8 sjob);   // дополнительная профессия
+    void SetMLevel(uint8 mlvl); // уровень главной профессии
+    void SetSLevel(uint8 slvl); // уровень дополнительной профессии
 
-    uint8		    GetHPP();					// количество hp в процентах
-    int32           GetMaxHP();                 // максимальное количество hp
-    uint8		    GetMPP();					// количество mp в процентах
-    int32           GetMaxMP();                 // максимальное количество mp
-    void            UpdateHealth();             // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
+    uint8 GetHPP();   // количество hp в процентах
+    int32 GetMaxHP(); // максимальное количество hp
+    uint8 GetMPP();   // количество mp в процентах
+    int32 GetMaxMP(); // максимальное количество mp
+    void UpdateHealth(); // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
-    float           GetStoreTPMultiplier();
-    int16			GetWeaponDelay(bool tp);		//returns delay of combined weapons in milliseconds
-    uint8           GetMeleeRange();                //returns the distance considered to be within melee range of the entity
-    int16			GetRangedWeaponDelay(bool tp);	//returns delay of ranged weapon + ammo where applicable
-    int16			GetAmmoDelay();			        //returns delay of ammo (for cooldown between shots)
-    uint16			GetMainWeaponDmg();				//returns total main hand DMG
-    uint16			GetSubWeaponDmg();				//returns total sub weapon DMG
-    uint16			GetRangedWeaponDmg();			//returns total ranged weapon DMG
-    uint16			GetMainWeaponRank();			//returns total main hand DMG Rank
-    uint16			GetSubWeaponRank();				//returns total sub weapon DMG Rank
-    uint16			GetRangedWeaponRank();			//returns total ranged weapon DMG Rank
+    float GetStoreTPMultiplier();
+    int16 GetWeaponDelay(bool tp);       // returns delay of combined weapons in milliseconds
+    uint8 GetMeleeRange();               // returns the distance considered to be within melee range of the entity
+    int16 GetRangedWeaponDelay(bool tp); // returns delay of ranged weapon + ammo where applicable
+    int16 GetAmmoDelay();                // returns delay of ammo (for cooldown between shots)
+    uint16 GetMainWeaponDmg();           // returns total main hand DMG
+    uint16 GetSubWeaponDmg();            // returns total sub weapon DMG
+    uint16 GetRangedWeaponDmg();         // returns total ranged weapon DMG
+    uint16 GetMainWeaponRank();          // returns total main hand DMG Rank
+    uint16 GetSubWeaponRank();           // returns total sub weapon DMG Rank
+    uint16 GetRangedWeaponRank();        // returns total ranged weapon DMG Rank
 
-    uint16		    GetSkill(uint16 SkillID);	// текущая величина умения (не максимальная, а ограниченная уровнем)
+    uint16 GetSkill(uint16 SkillID); // текущая величина умения (не максимальная, а ограниченная уровнем)
 
-    int16           AddTPFromSpell(CBattleEntity* PAttacker, uint8 numHits = 1);
-    int16           AddTPFromHit(CBattleEntity* PAttacker, CItemWeapon* weapon, int16 baseTp, float tpMultiplier);
+    int16 AddTPFromSpell(CBattleEntity* PAttacker, uint8 numHits = 1);
+    int16 AddTPFromHit(CBattleEntity* PAttacker, CItemWeapon* weapon, int16 baseTp, float tpMultiplier);
 
-    virtual int16	addTP(int16 tp);			// увеличиваем/уменьшаем количество tp
-    virtual int32	addHP(int32 hp);			// увеличиваем/уменьшаем количество hp
-    virtual int32 	addMP(int32 mp);			// увеличиваем/уменьшаем количество mp
+    virtual int16 addTP(int16 tp); // увеличиваем/уменьшаем количество tp
+    virtual int32 addHP(int32 hp); // увеличиваем/уменьшаем количество hp
+    virtual int32 addMP(int32 mp); // увеличиваем/уменьшаем количество mp
 
-    //Deals damage and updates the last attacker which is used when sending a player death message
-    virtual int32   takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACKTYPE attackType = ATTACK_NONE, DAMAGETYPE damageType = DAMAGE_NONE);
+    // Deals damage and updates the last attacker which is used when sending a player death message
+    virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACKTYPE attackType = ATTACK_NONE, DAMAGETYPE damageType = DAMAGE_NONE);
 
-    int16		    getMod(Mod modID);		// величина модификатора
+    int16 getMod(Mod modID); // величина модификатора
 
-    bool            CanRest(); // checks if able to heal
-    bool			Rest(float rate); // heal an amount of hp / mp
+    bool CanRest();        // checks if able to heal
+    bool Rest(float rate); // heal an amount of hp / mp
 
-    void		    addModifier(Mod type, int16 amount);
-    void		    setModifier(Mod type, int16 amount);
-    void		    delModifier(Mod type, int16 amount);
-    void		    addModifiers(std::vector<CModifier> *modList);
-    void            addEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid);
-    void		    setModifiers(std::vector<CModifier> *modList);
-    void		    delModifiers(std::vector<CModifier> *modList);
-    void            delEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid);
-    void 		    saveModifiers(); // save current state of modifiers
-    void 		    restoreModifiers(); // restore to saved state
+    void addModifier(Mod type, int16 amount);
+    void setModifier(Mod type, int16 amount);
+    void delModifier(Mod type, int16 amount);
+    void addModifiers(std::vector<CModifier>* modList);
+    void addEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid);
+    void setModifiers(std::vector<CModifier>* modList);
+    void delModifiers(std::vector<CModifier>* modList);
+    void delEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid);
+    void saveModifiers();    // save current state of modifiers
+    void restoreModifiers(); // restore to saved state
 
-    void            addPetModifier(Mod type, PetModType, int16 amount);
-    void            setPetModifier(Mod type, PetModType, int16 amount);
-    void            delPetModifier(Mod type, PetModType, int16 amount);
-    void            addPetModifiers(std::vector<CPetModifier> *modList);
-    void            delPetModifiers(std::vector<CPetModifier> *modList);
-    void            applyPetModifiers(CPetEntity* PPet);
-    void            removePetModifiers(CPetEntity* PPet);
+    void addPetModifier(Mod type, PetModType, int16 amount);
+    void setPetModifier(Mod type, PetModType, int16 amount);
+    void delPetModifier(Mod type, PetModType, int16 amount);
+    void addPetModifiers(std::vector<CPetModifier>* modList);
+    void delPetModifiers(std::vector<CPetModifier>* modList);
+    void applyPetModifiers(CPetEntity* PPet);
+    void removePetModifiers(CPetEntity* PPet);
 
-    template        <typename F, typename... Args>
-    void            ForParty(F func, Args&&... args)
+    template <typename F, typename... Args> void ForParty(F func, Args&&... args)
     {
-        if (PParty) {
-            for (auto PMember : PParty->members) {
+        if (PParty)
+        {
+            for (auto PMember : PParty->members)
+            {
                 func(PMember, std::forward<Args>(args)...);
             }
         }
-        else {
+        else
+        {
             func(this, std::forward<Args>(args)...);
         }
     }
 
-    template        <typename F, typename... Args>
-    void            ForAlliance(F func, Args&&... args)
+    template <typename F, typename... Args> void ForAlliance(F func, Args&&... args)
     {
-        if (PParty) {
-            if (PParty->m_PAlliance) {
-                for (auto PAllianceParty : PParty->m_PAlliance->partyList) {
-                    for (auto PMember : PAllianceParty->members) {
+        if (PParty)
+        {
+            if (PParty->m_PAlliance)
+            {
+                for (auto PAllianceParty : PParty->m_PAlliance->partyList)
+                {
+                    for (auto PMember : PAllianceParty->members)
+                    {
                         func(PMember, std::forward<Args>(args)...);
                     }
                 }
             }
-            else {
-                for (auto PMember : PParty->members) {
+            else
+            {
+                for (auto PMember : PParty->members)
+                {
                     func(PMember, std::forward<Args>(args)...);
                 }
             }
         }
-        else {
+        else
+        {
             func(this);
         }
     }
 
-    virtual void    addTrait(CTrait*);
-    virtual void    delTrait(CTrait*);
+    virtual void addTrait(CTrait*);
+    virtual void delTrait(CTrait*);
 
-    virtual bool    ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags);
-    virtual bool    CanUseSpell(CSpell*);
+    virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags);
+    virtual bool CanUseSpell(CSpell*);
 
-    virtual void    Spawn() override;
-    virtual void    Die();
+    virtual void Spawn() override;
+    virtual void Die();
     uint16 GetBattleTargetID();
-    void SetBattleTargetID(uint16 id) { m_battleTarget = id; }
+    void SetBattleTargetID(uint16 id)
+    {
+        m_battleTarget = id;
+    }
     CBattleEntity* GetBattleTarget();
 
     /* State callbacks */
     /* Auto attack */
     virtual bool OnAttack(CAttackState&, action_t&);
-    virtual bool OnAttackError(CAttackState&) { return false; }
+    virtual bool OnAttackError(CAttackState&)
+    {
+        return false;
+    }
     /* Returns whether to call Attack or not (which includes error messages) */
     virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg);
     virtual CBattleEntity* IsValidTarget(uint16 targid, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg);
@@ -652,10 +666,16 @@ public:
     virtual void OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action);
     virtual void OnChangeTarget(CBattleEntity* PTarget);
 
-    virtual void OnAbility(CAbilityState&, action_t&) {}
-    virtual void OnRangedAttack(CRangeState&, action_t&) {}
+    virtual void OnAbility(CAbilityState&, action_t&)
+    {
+    }
+    virtual void OnRangedAttack(CRangeState&, action_t&)
+    {
+    }
     virtual void OnDeathTimer();
-    virtual void OnRaise() {}
+    virtual void OnRaise()
+    {
+    }
     virtual void TryHitInterrupt(CBattleEntity* PAttacker);
     virtual void OnDespawn();
 
@@ -665,52 +685,56 @@ public:
     virtual void Tick(time_point) override;
     virtual void PostTick() override;
 
-    health_t	    health;						// hp,mp,tp
-    stats_t		    stats;						// атрибуты STR,DEX,VIT,AGI,INT,MND,CHR
-    skills_t	    WorkingSkills;				// структура всех доступных сущности умений, ограниченных уровнем
-    uint16		    m_Immunity;					// Mob immunity
-    uint16			m_magicEvasion;		        // store this so it can be removed easily
-    bool            m_unkillable;               // entity is not able to die (probably until some action removes this flag)
+    health_t health;        // hp,mp,tp
+    stats_t stats;          // атрибуты STR,DEX,VIT,AGI,INT,MND,CHR
+    skills_t WorkingSkills; // структура всех доступных сущности умений, ограниченных уровнем
+    uint16 m_Immunity;      // Mob immunity
+    uint16 m_magicEvasion;  // store this so it can be removed easily
+    bool m_unkillable;      // entity is not able to die (probably until some action removes this flag)
 
-    time_point  	charmTime;					// to hold the time entity is charmed
-    bool			isCharmed;					// is the battle entity charmed?
-    bool            isSuperJumped;
+    time_point charmTime; // to hold the time entity is charmed
+    bool isCharmed;       // is the battle entity charmed?
+    bool isSuperJumped;
 
-    uint8			m_ModelSize;			    // размер модели сущности, для расчета дальности физической атаки
-    ECOSYSTEM		m_EcoSystem;			    // эко-система сущности
-    CItemEquipment* m_Weapons[4];               // четыре основных ячейки, используемыж для хранения оружия (только оружия)
-    bool            m_dualWield;                // True/false depending on if the entity is using two weapons
+    uint8 m_ModelSize;     // размер модели сущности, для расчета дальности физической атаки
+    ECOSYSTEM m_EcoSystem; // эко-система сущности
+    CItemEquipment* m_Weapons[4]; // четыре основных ячейки, используемыж для хранения оружия (только оружия)
+    bool m_dualWield;             // True/false depending on if the entity is using two weapons
 
-    TraitList_t     TraitList;                  // список постянно активных способностей в виде указателей
+    TraitList_t TraitList; // список постянно активных способностей в виде указателей
 
-    EntityID_t	    m_OwnerID;				    // ID атакующей сущности (после смерти будет хранить ID сущности, нанесщей последний удар)
+    EntityID_t m_OwnerID; // ID атакующей сущности (после смерти будет хранить ID сущности, нанесщей последний удар)
 
-    ActionList_t	m_ActionList;			    // список совершенных действий за одну атаку (нужно будет написать структуру, включающую ActionList в которой будут категории анимации и т.д.)
+    ActionList_t m_ActionList; // список совершенных действий за одну атаку (нужно будет написать структуру, включающую ActionList в которой будут категории
+                               // анимации и т.д.)
 
-    CParty*			PParty;					    // описание группы, в которой состоит сущность
-    CBattleEntity*	PPet;					    // питомец сущности
-    CBattleEntity*	PMaster;				    // владелец/хозяин сущности (распространяется на все боевые сущности)
-    CBattleEntity*  PLastAttacker;
-    time_point      LastAttacked;
+    CParty* PParty;         // описание группы, в которой состоит сущность
+    CBattleEntity* PPet;    // питомец сущности
+    CBattleEntity* PMaster; // владелец/хозяин сущности (распространяется на все боевые сущности)
+    CBattleEntity* PLastAttacker;
+    time_point LastAttacked;
 
-    float           m_drawInOffsetY;
+    float m_drawInOffsetY;
 
     std::unique_ptr<CStatusEffectContainer> StatusEffectContainer;
     std::unique_ptr<CRecastContainer> PRecastContainer;
     std::unique_ptr<CNotorietyContainer> PNotorietyContainer;
 
+    int16 CalculateMSFromSources();       // Used to calculate movement speed when adding or removing items with movement speed modifiers
+    std::vector<int16> m_MSItemValues;    // Tracking movement speed items to prevent stacking values
+    std::vector<int16> m_MSNonItemValues; // Tracking movement speed from non-item sources
+
     std::unordered_map<Mod, int16, EnumClassHash> m_modStat;     // массив модификаторов
     std::unordered_map<Mod, int16, EnumClassHash> m_modStatSave; // saved state
 
 private:
+    JOBTYPE m_mjob; // главная профессия
+    JOBTYPE m_sjob; // дополнительная профессия
+    uint8 m_mlvl;   // ТЕКУЩИЙ уровень главной профессии
+    uint8 m_slvl;   // ТЕКУЩИЙ уровень дополнительной профессии
+    uint16 m_battleTarget{ 0 };
+    time_point m_battleStartTime;
 
-    JOBTYPE		m_mjob;						// главная профессия
-    JOBTYPE		m_sjob;						// дополнительная профессия
-    uint8		m_mlvl;						// ТЕКУЩИЙ уровень главной профессии
-    uint8		m_slvl;						// ТЕКУЩИЙ уровень дополнительной профессии
-    uint16      m_battleTarget {0};
-    time_point  m_battleStartTime;
-    
     std::unordered_map<PetModType, std::unordered_map<Mod, int16, EnumClassHash>, EnumClassHash> m_petMod;
 };
 

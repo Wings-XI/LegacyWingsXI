@@ -36,7 +36,10 @@ function onTrigger(player, npc)
     if missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_I and SR and SC and SV and now ~= lastViridian then
         player:startEvent(32)
         player:setCharVar("SEED_MANDY", 99)
-    elseif missionACP >= tpz.mission.id.acp.GATHERER_OF_LIGHT_II and SR and SC and SV and now ~= lastViridian and now ~= lastAmber and not amberKey and (player:getCharVar("SEED_MANDY") == 99 or player:getCharVar("SEED_MANDY") < 30) then
+    elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and lastAmber > 0 then
+        player:startEvent(34)
+        player:setCharVar("SEED_MANDY", 99)
+    elseif missionACP >= tpz.mission.id.acp.GATHERER_OF_LIGHT_II and SR and SC and SV and now ~= lastViridian and now ~= lastAmber and not amberKey and (player:getCharVar("SEED_MANDY") >= 99 or player:getCharVar("SEED_MANDY") < 30) then
         -- Make sure nobody else is doing this confrontation
         local mandragoraSpawned = false
         for i, id in ipairs(ID.mob.SEED_MANDRAGORA) do
@@ -64,9 +67,6 @@ function onTrigger(player, npc)
                 end
             end
         end
-    elseif missionACP == tpz.mission.id.acp.GATHERER_OF_LIGHT_II and amberKey then
-        player:setCharVar("SEED_MANDY", 99)
-        player:startEvent(34)
     elseif player:hasStatusEffect(tpz.effect.CONFRONTATION) then
         player:delStatusEffect(tpz.effect.CONFRONTATION)
     else
@@ -88,6 +88,5 @@ function onEventFinish(player, csid, option)
     elseif csid == 34 then
         player:completeMission(ACP, tpz.mission.id.acp.GATHERER_OF_LIGHT_II)
         player:addMission(ACP, tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I)
-        player:setCharVar("LastAmberKey", os.date("%j"))
     end
 end

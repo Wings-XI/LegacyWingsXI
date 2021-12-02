@@ -1017,7 +1017,7 @@ function onPath(npc)
         -- small delay after path finish
         npc:wait(8000)
     end
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path)
 end
 
 function onTrade(player, npc, trade)
@@ -1029,7 +1029,6 @@ function onTrigger(player, npc)
     else
         player:showText(npc, ID.text.ZOVRIACE_DIALOG)
     end
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
