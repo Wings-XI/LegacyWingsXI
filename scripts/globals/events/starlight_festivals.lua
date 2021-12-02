@@ -75,12 +75,12 @@ function onStarLightCardTrigger(player, npc)
             player:setCharVar("CardConvo", 1)
             player:setCharVar("CardGiven", 0)
         -- Remove for Prod, used for testing --
-        elseif player:getCharVar("CardConvo") == 1 and mainSlot == 18864 then
-            player:setCharVar("CardGiven", 0)
-            player:setCharVar("CardChosen", 0)
-            player:setCharVar("DialogChosen", 0)
-            player:setCharVar("HQCard", 0)
-            player:setCharVar("CardConvo", 0)
+        -- elseif player:getCharVar("CardConvo") == 1 and mainSlot == 18864 then
+        --     player:setCharVar("CardGiven", 0)
+        --     player:setCharVar("CardChosen", 0)
+        --     player:setCharVar("DialogChosen", 0)
+        --     player:setCharVar("HQCard", 0)
+        --     player:setCharVar("CardConvo", 0)
         -- Card Checker --
         elseif player:getCharVar("CardConvo") == 1 and player:getCharVar("DialogChosen") ~= 0 then
             if player:getCharVar("HQCard") ~= 1 then
@@ -535,12 +535,12 @@ function onStarlightSmilebringersTrade(player, trade, npc)
             
             if (item == presents_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) < 9)) then
                 player:showText(npc, ID.text.GIFT_THANK_YOU)
-                player:showText(npc, ID.text.BARRELS_JOY_TO_CHILDREN)
+                player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
                 player:addFame(HOLIDAY, 31)
                 player:tradeComplete()
             elseif (item == fireworks_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) < 9)) then
                 player:showText(npc, ID.text.GIFT_THANK_YOU)
-                player:showText(npc, ID.text.JOY_TO_CHILDREN)
+                player:messageSpecial(ID.text.JOY_TO_CHILDREN)
                 player:addFrame(HOLIDAY, 15)
                 player:tradeComplete()
             elseif ((item == presents_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) >= 9)) or ((item == fireworks_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) >= 9))  then

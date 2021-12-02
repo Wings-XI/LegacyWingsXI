@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Appolyon
--- Name: 
+-- Name:
 -----------------------------------
 require("scripts/globals/limbus")
 require("scripts/globals/battlefield")
@@ -25,7 +25,6 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     player:delKeyItem(tpz.ki.COSMOCLEANSE)
-    player:setCharVar("Cosmo_Cleanse_TIME", os.time())
     if player:getCharVar("ApollyonEntrance") == 0 then
         player:delKeyItem(tpz.ki.BLACK_CARD)
     else
