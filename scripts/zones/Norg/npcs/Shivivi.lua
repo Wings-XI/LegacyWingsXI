@@ -77,8 +77,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(85)
     end
-
-    npc:wait(0)
 end
 
 function onEventUpdate(player, csid, option)
@@ -88,6 +86,4 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 31) then
         player:addQuest(OUTLANDS, tpz.quest.id.outlands.SECRET_OF_THE_DAMP_SCROLL)
     end
-
-    npc:wait(0)
 end

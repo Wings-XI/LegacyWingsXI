@@ -53,6 +53,7 @@ local path =
     -110.907364, -2.000000, 16.429226,
     -111.995232, -2.000000, 16.411282,
     -140.205811, -2.000000, 15.668728,  -- package Lusiane
+    -140.205811, -2.000000, 15.668728,  -- Thank you
     -139.296539, -2.000000, 16.786556
 }
 
@@ -67,11 +68,20 @@ function onPath(npc)
         npc:lookAt(GetNPCByID(ID.npc.ARPETION):getPos())
         npc:wait()
     elseif (npc:atPoint(tpz.path.get(path, -1))) then
-        -- give package to Lusiane, wait 4 seconds, then continue
-        local lus = GetNPCByID(ID.npc.LUSIANE)
-        lus:showText(npc, ID.text.RAMINEL_DELIVERY)
-        npc:showText(lus, ID.text.LUSIANE_THANK)
-        npc:wait()
+        local msg_state = npc:getLocalVar("RamMsgState")
+        if msg_state == nil or msg_state == 0 then
+            -- give package to Lusiane, wait for her to thank us
+            local lus = GetNPCByID(ID.npc.LUSIANE)
+            lus:showText(npc, ID.text.RAMINEL_DELIVERY)
+            npc:wait(2000)
+            npc:setLocalVar("RamMsgState", 1)
+        else
+            -- she said thanks, wait a little and resume
+            local lus = GetNPCByID(ID.npc.LUSIANE)
+            npc:showText(lus, ID.text.LUSIANE_THANK)
+            npc:wait(3000)
+            npc:setLocalVar("RamMsgState", 0)
+        end
     elseif (npc:atPoint(tpz.path.last(path))) then
         -- when I walk away stop looking at me
         GetNPCByID(ID.npc.LUSIANE):clearTargID()
@@ -95,12 +105,10 @@ end
 
 function onTrigger(player, npc)
     player:startEvent(614)
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option, npc)
-    npc:wait(0)
 end
