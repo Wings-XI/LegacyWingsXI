@@ -276,6 +276,118 @@ int32 CLuaZone::printToZone(lua_State* L)
     return 0;
 }
 
+/************************************************************************
+*  Function: getMusicBattleSolo()
+*  Purpose : Returns the music of solo battles in the zone
+************************************************************************/
+int32 CLuaZone::getMusicBattleSolo(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushinteger(L, m_pLuaZone->GetSoloBattleMusic());
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getMusicBattleParty()
+*  Purpose : Returns the music of party battles in the zone
+************************************************************************/
+int32 CLuaZone::getMusicBattleParty(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushinteger(L, m_pLuaZone->GetPartyBattleMusic());
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getMusicBackgroundDay()
+*  Purpose : Returns the daytime background music in the zone
+************************************************************************/
+int32 CLuaZone::getMusicBackgroundDay(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushinteger(L, m_pLuaZone->GetBackgroundMusicDay());
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getMusicBackgroundNight()
+*  Purpose : Returns the nighttime background music in the zone
+************************************************************************/
+int32 CLuaZone::getMusicBackgroundNight(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushinteger(L, m_pLuaZone->GetBackgroundMusicNight());
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: setMusicBattleSolo()
+*  Purpose : Changes the music of solo battles in the zone
+************************************************************************/
+int32 CLuaZone::setMusicBattleSolo(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1)) {
+        return 0;
+    }
+    m_pLuaZone->SetSoloBattleMusic((uint8)lua_tointeger(L, 1));
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setMusicBattleParty()
+*  Purpose : Changes the music of party battles in the zone
+************************************************************************/
+int32 CLuaZone::setMusicBattleParty(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1)) {
+        return 0;
+    }
+    m_pLuaZone->SetPartyBattleMusic((uint8)lua_tointeger(L, 1));
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setMusicBackgroundDay()
+*  Purpose : Changes the daytime background music in the zone
+************************************************************************/
+int32 CLuaZone::setMusicBackgroundDay(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1)) {
+        return 0;
+    }
+    m_pLuaZone->SetBackgroundMusicDay((uint8)lua_tointeger(L, 1));
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setMusicBackgroundNight()
+*  Purpose : Changes the nighttime background music in the zone
+************************************************************************/
+int32 CLuaZone::setMusicBackgroundNight(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    if (lua_isnil(L, 1) || !lua_isnumber(L, 1)) {
+        return 0;
+    }
+    m_pLuaZone->SetBackgroundMusicNight((uint8)lua_tointeger(L, 1));
+
+    return 0;
+}
+
 
 /************************************************************************
 *                                                                       *
@@ -299,5 +411,13 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone, removeListener),
     LUNAR_DECLARE_METHOD(CLuaZone, triggerListener),
     LUNAR_DECLARE_METHOD(CLuaZone, printToZone),
-    {nullptr,nullptr}
+    LUNAR_DECLARE_METHOD(CLuaZone, getMusicBattleSolo),
+    LUNAR_DECLARE_METHOD(CLuaZone, getMusicBattleParty),
+    LUNAR_DECLARE_METHOD(CLuaZone, getMusicBackgroundDay),
+    LUNAR_DECLARE_METHOD(CLuaZone, getMusicBackgroundNight),
+    LUNAR_DECLARE_METHOD(CLuaZone, setMusicBattleSolo),
+    LUNAR_DECLARE_METHOD(CLuaZone, setMusicBattleParty),
+    LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundDay),
+    LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundNight),
+{nullptr,nullptr}
 };

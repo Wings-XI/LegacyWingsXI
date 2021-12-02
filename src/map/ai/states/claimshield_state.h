@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 this document is 100% original code written for the Wings FFXI server project
@@ -20,7 +20,7 @@ public:
 
 protected:
     virtual bool CanChangeState() override { return false; }
-    virtual bool CanFollowPath() override { return false; }
+    virtual bool CanFollowPath() override { return true; }
     virtual bool CanInterrupt() override { return false; }
     virtual bool Update(time_point tick) override;
     virtual void Cleanup(time_point tick) override;

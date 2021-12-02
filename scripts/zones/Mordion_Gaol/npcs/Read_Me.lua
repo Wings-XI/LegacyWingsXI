@@ -10,9 +10,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:showText(npc, ID.text.PROHIBITED_ACTIVITIES)
-    player:showText(npc, ID.text.DEPENDANT_UPON_OUTCOME)
-    player:showText(npc, ID.text.ONCE_YOUR_SUSPENSION)
+    player:startEvent(103)
 end
 
 function onEventUpdate(player, csid, option)

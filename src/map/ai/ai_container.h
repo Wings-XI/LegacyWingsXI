@@ -61,6 +61,7 @@ public:
     bool Trigger(uint16 targid);
     bool UseItem(uint16 targid, uint8 loc, uint8 slotid);
     bool Inactive(duration _duration, bool canChangeState);
+    bool Reactivate();
 
     /* Internal Controller functions */
     bool Internal_Engage(uint16 targetid);

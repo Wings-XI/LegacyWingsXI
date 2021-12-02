@@ -116,6 +116,7 @@ public:
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving
     int32 checkDistance(lua_State*);         // Check Distacnce and returns distance number
     int32 wait(lua_State* L);                // make the npc wait a number of ms and then back into roam
+    int32 stopwait(lua_State* L);            // resumes roaming if stopped via wait()
     // int32 WarpTo(lua_State* L);           // warp to the given point
     // int32 RoamAround(lua_State* L);       // pick a random point to walk to
     // int32 LimitDistance(lua_State* L);    // limits the current path distance to given max distance

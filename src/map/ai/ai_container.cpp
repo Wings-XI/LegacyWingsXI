@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -174,6 +174,17 @@ bool CAIContainer::Inactive(duration _duration, bool canChangeState)
     return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState);
 }
 
+bool CAIContainer::Reactivate()
+{
+    CState* current = GetCurrentState();
+    if (current->m_id == INACTIVE_STATE) {
+        CInactiveState* inactive = reinterpret_cast<CInactiveState*>(current);
+        inactive->SetDuration(std::chrono::milliseconds(1));
+        return true;
+    }
+    return false;
+}
+
 bool CAIContainer::Internal_Engage(uint16 targetid)
 {
     //#TODO: pet engage/disengage
@@ -321,7 +332,7 @@ bool CAIContainer::CanChangeState()
 
 bool CAIContainer::CanFollowPath()
 {
-    return PathFind && (!GetCurrentState() || GetCurrentState()->CanChangeState());
+    return PathFind && (!GetCurrentState() || GetCurrentState()->CanFollowPath());
 }
 
 void CAIContainer::SetController(std::unique_ptr<CController> controller)

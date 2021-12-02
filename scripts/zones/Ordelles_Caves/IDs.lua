@@ -22,6 +22,7 @@ zones[tpz.zone.ORDELLES_CAVES] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7159, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7160, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         GEOMAGNETRON_ATTUNED          = 7169,  -- Your <keyitem> has been attuned to a geomagnetic fount in the corresponding locale.
+        CANNOT_ENTER_LEVEL_RESTRICTED = 7180,  -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7208,  -- You can't fish here.
         DEVICE_NOT_WORKING            = 7322,  -- The device is not working.
         SYS_OVERLOAD                  = 7331,  -- Warning! Sys...verload! Enterin...fety mode. ID eras...d.

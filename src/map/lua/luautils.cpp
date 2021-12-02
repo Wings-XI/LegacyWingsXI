@@ -1861,6 +1861,9 @@ namespace luautils
             PChar->pushPacket(new CRaiseTractorMenuPacket(PChar, TYPE_HOMEPOINT));
             PChar->updatemask |= UPDATE_HP;
         }
+        if (PChar->m_event.Target && PChar->m_event.Target->objtype == TYPE_NPC) {
+            PChar->m_event.Target->StopWait(false);
+        }
         return 0;
     }
 

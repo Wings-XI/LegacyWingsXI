@@ -8,7 +8,8 @@ require("scripts/globals/settings")
 require("scripts/globals/shop")
 require("scripts/globals/quests")
 require("scripts/globals/pathfind")
-
+-----------------------------------
+local flags = tpz.path.flag.NONE
 local path =
 {
     59.698738, -6.282220, -0.842413,
@@ -49,18 +50,19 @@ local path =
     72.017265, -6.282220, -8.573789,
     71.103760, -6.282220, -7.982807,
     59.055004, -6.282220, -0.111382,
-    58.112335, -6.282220, 0.439206
+    58.112335, -6.282220, 0.439206,
 }
 
 function onSpawn(npc)
     npc:initNpcAi()
     npc:setPos(tpz.path.first(path))
-    -- onPath(npc)
+    onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
 end
+
 function onTrade(player, npc, trade)
 end
 
@@ -75,8 +77,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(85)
     end
-
-    npc:wait(0)
 end
 
 function onEventUpdate(player, csid, option)
@@ -86,6 +86,4 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 31) then
         player:addQuest(OUTLANDS, tpz.quest.id.outlands.SECRET_OF_THE_DAMP_SCROLL)
     end
-
-    npc:wait(0)
 end

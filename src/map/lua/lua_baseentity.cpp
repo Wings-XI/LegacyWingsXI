@@ -1083,6 +1083,17 @@ inline int32 CLuaBaseEntity::startEvent(lua_State *L)
         PChar->PPet->PAI->Disengage();
     }
 
+    if (PChar->m_event.Target && PChar->m_event.Target->objtype == TYPE_NPC) {
+        uint32 wait_custom = PChar->m_event.Target->GetLocalVar("TriggerWaitCustom");
+        uint32 wait_ms = 60000;
+        if (wait_custom != 0) {
+            wait_ms = PChar->m_event.Target->GetLocalVar("TriggerWaitTime");
+        }
+        if (wait_ms > 0) {
+            PChar->m_event.Target->Wait(std::chrono::milliseconds(wait_ms));
+        }
+    }
+
     uint16 EventID = (uint16)lua_tointeger(L, 1);
 
     uint32 param0 = 0;
@@ -1169,6 +1180,17 @@ inline int32 CLuaBaseEntity::startEventString(lua_State *L)
     if (PChar->PPet)
     {
         PChar->PPet->PAI->Disengage();
+    }
+
+    if (PChar->m_event.Target && PChar->m_event.Target->objtype == TYPE_NPC) {
+        uint32 wait_custom = PChar->m_event.Target->GetLocalVar("TriggerWaitCustom");
+        uint32 wait_ms = 60000;
+        if (wait_custom != 0) {
+            wait_ms = PChar->m_event.Target->GetLocalVar("TriggerWaitTime");
+        }
+        if (wait_ms > 0) {
+            PChar->m_event.Target->Wait(std::chrono::milliseconds(wait_ms));
+        }
     }
 
     uint16 EventID = (uint16)lua_tointeger(L, 1);
@@ -1916,7 +1938,14 @@ inline int32 CLuaBaseEntity::pathThrough(lua_State* L)
         lua_rawgeti(L, 1, i + 1);
         lua_rawgeti(L, 1, i + 2);
 
-        points.push_back({(float)lua_tointeger(L, -3), (float)lua_tointeger(L, -2), (float)lua_tointeger(L, -1), 0, 0});
+        if (lua_isnil(L, -1) || lua_isnil(L, -2) || lua_isnil(L, -3)) 
+        {
+            //error exit
+            ShowError("Lua::pathThrough : Path value is nil.");
+            return 0;
+        }
+
+        points.push_back({(float)lua_tonumber(L, -3), (float)lua_tonumber(L, -2), (float)lua_tonumber(L, -1), 0, 0});
 
         lua_pop(L, 3);
     }
@@ -2065,7 +2094,30 @@ inline int32 CLuaBaseEntity::wait(lua_State* L)
     {
         waitTime = (int32)lua_tonumber(L, 1);
     }
-    PBattle->PAI->Inactive(std::chrono::milliseconds(waitTime), true);
+    PBattle->Wait(std::chrono::milliseconds(waitTime));
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: stopwait()
+*  Purpose : Resume roaming if stopped by wait()
+*  Example : npc:stopwait()
+*  Notes   : No effect if not in an inactive state
+************************************************************************/
+
+inline int32 CLuaBaseEntity::stopwait(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    bool force_stop = false;
+    if (lua_isboolean(L, 1)) {
+        force_stop = lua_toboolean(L, 1);
+    }
+
+    CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
+
+    PBattle->StopWait(force_stop);
 
     return 0;
 }
@@ -18059,6 +18111,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,stopwait),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,openDoor),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeDoor),
