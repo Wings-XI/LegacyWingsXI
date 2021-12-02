@@ -6428,7 +6428,7 @@ INSERT INTO `mob_groups` VALUES(19, 1737, 100, 'Goblin_Thug', 210, 0, 1169, 0, 0
 INSERT INTO `mob_groups` VALUES(20, 1744, 100, 'Goblin_Weaver', 210, 0, 1182, 0, 0, 4, 8, 0);
 INSERT INTO `mob_groups` VALUES(21, 3836, 100, 'Tainted_Hound', 210, 1, 1562, 0, 0, 5, 8, 0);
 INSERT INTO `mob_groups` VALUES(22, 1214, 100, 'Enchanted_Bones', 210, 1, 769, 0, 0, 5, 8, 0);
-INSERT INTO `mob_groups` VALUES(23, 1438, 100, 'Fungus_Beetle', 0, 32, 917, 0, 0, 9, 10, 0);
+INSERT INTO `mob_groups` VALUES(23, 1438, 100, 'Fungus_Beetle', 0, 32, 917, 320, 0, 9, 10, 0);
 INSERT INTO `mob_groups` VALUES(24, 490, 100, 'Bomb', 210, 8, 216, 0, 0, 8, 10, 0);
 INSERT INTO `mob_groups` VALUES(25, 2125, 100, 'Jaggedy-Eared_Jack', 0, 32, 1390, 0, 0, 9, 10, 0);
 INSERT INTO `mob_groups` VALUES(26, 1659, 100, 'Goblin_Fisher', 210, 0, 1051, 0, 0, 5, 8, 0);
