@@ -136,7 +136,6 @@ function onTrigger(player, npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then                          -- has failed on future npc so disregard previous successful trade
             player:startEvent(200)
-            npc:wait()
         elseif (progress == 3 or failed == 4) then
                 player:startEvent(210)  -- asking for sands of silence
         elseif (progress >= 4 or failed >= 5) then
@@ -144,7 +143,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(200)
-        npc:wait()
     end
 end
 
@@ -164,7 +162,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 232) then              -- wrong trade, restart at first opo
         player:setCharVar("OPO_OPO_FAILED", 1)
         player:setCharVar("OPO_OPO_RETRY", 4)
-    else
-        npc:wait(0)
     end
 end

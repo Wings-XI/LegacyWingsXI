@@ -29,7 +29,7 @@ end
 
 function onPath(npc)
 
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path)
 end
 
 function onTrade(player, npc, trade)
@@ -48,7 +48,6 @@ function onTrigger(player, npc)
 
     if (player:getCurrentMission(SANDORIA) == tpz.mission.id.sandoria.INFILTRATE_DAVOI and player:getCharVar("MissionStatus") == 3) then
         player:startEvent(117)
-        npc:wait()
     else
         player:showText(npc, ID.text.QUEMARICOND_DIALOG)
         npc:wait(2000)
@@ -65,7 +64,7 @@ function onEventFinish(player, csid, option, npc)
         player:setCharVar("MissionStatus", 4)
         player:addKeyItem(tpz.ki.ROYAL_KNIGHTS_DAVOI_REPORT)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ROYAL_KNIGHTS_DAVOI_REPORT)
+    else
+        npc:wait(0)
     end
-
-    npc:wait(0)
 end

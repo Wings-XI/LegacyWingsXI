@@ -147,7 +147,6 @@ function onTrigger(player, npc)
     if (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry >= 1 then                          -- has failed on future npc so disregard previous successful trade
             player:startEvent(198)
-            npc:wait()
         elseif (progress == 1 or failed == 2) then
                 player:startEvent(208)  -- asking for workbench
         elseif (progress >= 2 or failed >= 3) then
@@ -155,7 +154,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(198)
-        npc:wait()
     end
 end
 
@@ -175,7 +173,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 230) then              -- wrong trade, restart at first opo
         player:setCharVar("OPO_OPO_FAILED", 1)
         player:setCharVar("OPO_OPO_RETRY", 2)
-    else
-        npc:wait(0)
     end
 end

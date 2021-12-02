@@ -53,9 +53,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(34)
     end
-
-    -- wait until event is over
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
@@ -65,7 +62,4 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 314) then
         player:setCharVar("WildcatJeuno", utils.mask.setBit(player:getCharVar("WildcatJeuno"), 15, true))
     end
-
-    npc:wait(0)
-
 end
