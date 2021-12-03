@@ -11,6 +11,7 @@ require("scripts/globals/titles")
 require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
+require("scripts/globals/pathfind")
 ------------------------------------
 
 dynamis = {}
@@ -684,8 +685,12 @@ end
 dynamis.mobOnRoam = function(mob)
     local home = mob:getSpawnPos()
     local location = mob:getPos()
-    mob:pathTo(home.x, home.y, home.z)
-    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then mob:setPos(location.x, location.y, location.z, home.rot) end
+
+    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
+        mob:setPos(location.x, location.y, location.z, home.rot)
+    else
+        mob:pathTo(home.x, home.y, home.z)
+    end
 end
 
 dynamis.qmOnTrade = function(player, npc, trade) -- i think this is for Xarcabard, so remember to update this once we start work on that
