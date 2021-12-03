@@ -614,23 +614,23 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         i = i + 1
     end
     i = 1
-    while randomChildrenList ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
-        local originalRoll = math.random(1,#randomChildrenList)
+    while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+        local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
         local roll = originalRoll
-        while GetMobByID(randomChildrenList[roll]):isSpawned() == true and roll ~= nil do
+        while  GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
             roll = roll + 1
-            if roll > #randomChildrenList then roll = 1 end
+            if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
             if roll == originalRoll then roll = nil end
         end
         if roll ~= nil then
-            local child = GetMobByID(randomChildrenList[roll])
+            local child = GetMobByID(randomChildrenList[randomChildrenCount][roll])
             local home = child:getSpawnPos()
             local randomSpawn = false
             if home.x == 1 and home.y == 1 and home.z == 1 then
                 child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
                 randomSpawn = true
             end
-            SpawnMob(randomChildrenList[roll]):updateEnmity(target)
+            SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
             if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
         else
             break
@@ -668,7 +668,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
     end
 
     if mobFound == true then
-        --print(string.format("mob's defeat is a requirement for wave number %u",i))
+        -- print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
         local allReqsMet = true
         while mobList.waveDefeatRequirements[i][j] ~= nil do
@@ -679,6 +679,25 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
             j = j + 1
         end
         if allReqsMet == true then dynamis.spawnWave(mobList, i) end
+    end
+    -- miniWave is used when the same mobID needs to be used twice for a waveDefeatRequirement
+    local mobID = mob:getID()
+    local miniWave = nil
+    if mobList[mobID] ~= nil then
+        miniWave = mobList[mobID].miniWave
+    end
+    local forceLink = false
+    local i = 1
+
+    while miniWave ~= nil and miniWave[i] ~= nil do
+        if type(miniWave[i]) == "boolean" then forceLink = miniWave[i]
+        else
+            local child = GetMobByID(miniWave[i])
+            if mobList[miniWave[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
+            SpawnMob(miniWave[i])
+            if forceLink == true then child:updateEnmity(target) end
+        end
+        i = i + 1
     end
 end
 
