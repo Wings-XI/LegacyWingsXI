@@ -541,7 +541,7 @@ function onStarlightSmilebringersTrade(player, trade, npc)
             elseif (item == fireworks_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) < 9)) then
                 player:showText(npc, ID.text.GIFT_THANK_YOU)
                 player:messageSpecial(ID.text.JOY_TO_CHILDREN)
-                player:addFrame(HOLIDAY, 15)
+                player:addFame(HOLIDAY, 15)
                 player:tradeComplete()
             elseif ((item == presents_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) >= 9)) or ((item == fireworks_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(HOLIDAY) >= 9))  then
                 player:showText(npc, ID.text.ONLY_TWO_HANDS)
