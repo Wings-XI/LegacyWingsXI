@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -230,6 +230,7 @@ namespace luautils
     int32 OnMobFamilyInitialize(CMobEntity* PMob);
     int32 ApplyMixins(CBaseEntity* PMob);
     int32 ApplyZoneMixins(CBaseEntity* PMob);
+    int32 ApplyInstanceMixins(CBaseEntity* PMob);
     int32 OnMobSpawn(CBaseEntity* PMob);                                          // triggers on mob spawn
     int32 OnMobRoamAction(CBaseEntity* PMob);                                     // triggers when event mob is ready for a custom roam action
     int32 OnMobRoam(CBaseEntity* PMob);

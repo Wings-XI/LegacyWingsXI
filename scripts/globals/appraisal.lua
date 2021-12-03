@@ -584,7 +584,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {95, 12952}, -- Leather Highboots
-                { 5, 13014}, -- Leaping boots
+                { 5, 15351}, -- Bounding boots
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_CACTUAR_CANTAUTOR] =
@@ -600,7 +600,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 12984}, -- Ash Clogs
-                {10, 18052}, -- Tredecim Scythe or Cure Clogs
+                {10, 15323}, -- Cure Clogs
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_TOTTERING_TOBY] =
@@ -853,7 +853,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 13601}, -- Cotton Cape +1
-                {10, 15469}, -- Bellicose Cape or Almogavar Bow
+                {10, 15469}, -- Bellicose Mantle
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_SPINY_SPIPI] =
@@ -875,7 +875,14 @@ tpz.appraisalUtil.appraisalItems =
     },
     [tpz.appraisalUtil.questionMarkItems.SASH] =
     {
-
+        [tpz.appraisalUtil.Origin.NYZUL_JOLLY_GREEN] =
+            {
+                items =
+                {
+                    {90, 13205}, -- Silver Obi
+                    {10, 13228}, -- Shaman's Belt
+                },
+            },
     },
     [tpz.appraisalUtil.questionMarkItems.SHIELD] =
     {
@@ -979,7 +986,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 15526}, -- Regen Collar
-                {10, 13056}, -- Peacok Charm
+                {10, 15515}, -- Peacok Amulet
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_BLOODPOOL_VORAX] =

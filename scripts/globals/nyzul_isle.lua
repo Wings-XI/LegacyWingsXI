@@ -598,7 +598,7 @@ function setBossWeaponDrop(bossID, instance)
     -- tpz.job starts at 1
     if (job) then
         local boss = GetMobByID(bossID, instance)
-        boss:setLocalVar("NyzulForceWeaponDrop", tpz.nyzul_isle_data.jobToVigilWeaponMap[job])
+        boss:setLocalVar("Nyzul_ForceWeaponDrop", tpz.nyzul_isle_data.jobToVigilWeaponMap[job])
     end
 end
 
