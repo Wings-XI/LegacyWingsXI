@@ -201,7 +201,7 @@ function moogleTrigger(player, npc)
             local WindurstianTree = player:getCharVar("WindurstianTree")
             local DreamHatObtained = player:getCharVar("DreamHatObtained")
             -- Home Nation Tree | Reward: Dream Hat +1
-            if HolidayTree == 1 and DreamHatObtained ~= 1 then
+            if HolidayTree == 1 and DreamHatObtained ~= getConquestTally() then
                 if player:hasItem(15179) == false and SandOrianTree == 1 then
                     player:startEvent(30017, 0, 0, 0, 86)
                 elseif player:hasItem(15179) == false and BastokanTree == 1 then
@@ -210,14 +210,17 @@ function moogleTrigger(player, npc)
                     player:startEvent(30017, 0, 0, 0, 116)
                 end
             -- Dream Platter | Reward: Buche au Chocolat + Roast Turkey *Repeatable during Starlight Festival*
-            elseif player:getCharVar("DreamPlatterPlaced") ~= getConquestTally() and player:getCharVar("RoastTurkeyObtained") ~= getConquestTally() then 
-                player:startEvent(30018, 0, 0, 0, 140)    
+            elseif player:getCharVar("DreamPlatterPlaced") == 1 and player:getCharVar("RoastTurkeyObtained") ~= getConquestTally() then 
+                player:startEvent(30018, 0, 0, 0, 140)
+                player:setCharVar("RoastTurkeyObtained", getConquestTally())    
             -- Dream Coffer | Reward: Gateau Aux Fraises + Candy Ring *Repeatable during Starlight Festival*
-            elseif player:getCharVar("DreamCofferPlaced") ~= getConquestTally() and player:getCharVar("CandyRingObtained") ~= getConquestTally() then 
+            elseif player:getCharVar("DreamCofferPlaced") == 1 and player:getCharVar("CandyRingObtained") ~= getConquestTally() then 
                 player:startEvent(30019, 0, 0, 0, 141)
+                player:setCharVar("CandyRingObtained", getConquestTally())
             -- Dream Stocking | Reward: Candy Cane + Black Pudding *Repeatable during Starlight Festival*
-            elseif player:getCharVar("DreamStockingPlaced") ~= getConquestTally() and player:getCharVar("BlackPuddingObtained") ~= getConquestTally() then 
+            elseif player:getCharVar("DreamStockingPlaced") == 1 and player:getCharVar("BlackPuddingObtained") ~= getConquestTally() then 
                 player:startEvent(30020, 0, 0, 0, 155)
+                player:setCharVar("BlackPuddingObtained", getConquestTally())
             end
         end
         return true   
@@ -390,7 +393,7 @@ function moogleEventFinish(player, csid, option)
         elseif csid == 30017 then
             player:addItem(15179) -- Dream Hat +1
             player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, 15179)
-            player:setCharVar("DreamHatObtained", 1)
+            player:setCharVar("DreamHatObtained", getConquestTally())
         -- Starlight Celebration - Dream Platter *Repeatable during Starlight Festival*
         elseif csid == 30018 then
             player:addItem(5550) -- Roll of Buche au Chocolat 
