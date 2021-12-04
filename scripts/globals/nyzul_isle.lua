@@ -7,6 +7,7 @@ require("scripts/globals/status")
 require("scripts/globals/instance")
 require("scripts/globals/npc_util")
 require("scripts/globals/nyzul_isle_data")
+require("scripts/globals/nyzul_isle_armoury_crates")
 ---------------------------------------------------
 tpz = tpz or {}
 tpz.nyzul_isle = tpz.nyzul_isle or {}
@@ -45,7 +46,7 @@ function generateFloor(floorNumber, instance)
 
     -- randomly generate a free floor if this is not the first floor in a run
     if (math.Random(1, 100) < FREE_FLOOR_CHANCE and previousFloorInfo ~= nil) then
-        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance)
+        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance, previousFloorInfo)
         return runeOfTransferSpawnPoint, {} -- no mobs on free floor
     end
 
@@ -58,16 +59,33 @@ end
 -- Performs all work for generating a Free Floor
 --
 -------------------------------------------------------
-function generateFreeFloor(floorNumber, instance)
+function generateFreeFloor(floorNumber, instance, previousFloorInfo)
     -- set objectives
     instance:setLocalVar("Nyzul_Objective", 0) -- FREE_FLOOR
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on free floors
     -- pick a floor
+    local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
     -- get rune of transfer
-    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance)
-    -- spawn runeOfTransfer
-    -- set runeOfTransferAnimation to lit
-    -- spawn 5-10 Armoury_Crates with temp items using mob spawn mechanic
+    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+    setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
+
+    local numberOfCrates = math.random(5, 10)
+    local remainingSpawnPoints = {}
+
+    for key, value in pairs(selectedFloorLayout.Rooms) do
+        -- for each room get the spawn points and add to the collection
+        for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
+            table.insert(remainingSpawnPoints, nestedValue)
+        end
+    end
+
+    for i=1,numberOfCrates do
+        index = math.random(#remainingSpawnPoints)
+        spawnPoint = remainingSpawnPoints[index]
+        tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor(instance, spawnPoint)
+        table.remove(remainingSpawnPoints, index)
+    end
+    
     return runeOfTransferSpawnPoint
 end
 
@@ -92,8 +110,7 @@ function generateBossFloor(floorNumber, instance)
     end
 
     -- get and setup entities that alternate per floor
-    local runeOfTransferSpawnPoint = bossFloor.RuneOfTransferSpawnPoint
-    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
+    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, bossFloor.RuneOfTransferSpawnPoint)
     local archaicRampartID = selectArchaicRampartID(floorNumber)
 
     -- Randomly pick a boss from BOSSES_20_40 or BOSSES_60_100 depending on floor
@@ -533,9 +550,11 @@ function spawnLampsForFloor(instance, lampsToSpawn, rooms, lampObjective)
 
         index = math.random(#spawnPoints)
         spawnPoint = spawnPoints[index]
-        -- using a delay of 100 as the default delay on queueMove is 3000 (3 seconds)
-        npcUtil.queueMove(lamp, spawnPoint, 100)
+
+        lamp:setPos(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(1, 359))
+        -- make the lamp visible
         lamp:setStatus(tpz.status.NORMAL)
+        lamp:entityAnimationPacket("deru") -- just incase a player is nearby
         table.remove(spawnPoints, index)
     end
 
@@ -543,24 +562,29 @@ end
 
 -------------------------------------------------------
 -- Selects, positions, and spawns the Rune of Transfer
+-- Also hides the old one
 -------------------------------------------------------
 function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     local runeOfTransfer
+    local oldRuneOfTransfer
 
     -- choose the alternating runeOfTransfer
     if ((floorNumber % 2) == 0) then -- even floor
         runeOfTransfer = GetNPCByID(17093330, instance)
+        oldRuneOfTransfer = GetNPCByID(17093331, instance)
     else
         runeOfTransfer = GetNPCByID(17093331, instance)
+        oldRuneOfTransfer = GetNPCByID(17093330, instance)
     end
 
-    -- move the runeOfTransfer to the correct location
-    -- using a delay of 100 as the default delay on queueMove is 3000 (3 seconds)
-    npcUtil.queueMove(runeOfTransfer, runeOfTransferSpawnPoint, 100)
+    runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, math.random(1, 359))
 
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)
+    runeOfTransfer:entityAnimationPacket("deru") -- just incase a player is nearby
 
+    oldRuneOfTransfer:entityAnimationPacket("kesu") -- just incase a player is nearby
+    oldRuneOfTransfer:setStatus(tpz.status.DISAPPEAR)
     return runeOfTransfer
 end
 
@@ -623,21 +647,64 @@ end
 -- Cleans up the previous floor as players teleport to the new floor
 --------------------------------------------------------------------
 function cleanUpPreviousFloor(instance)
-    -- Hide lamps
-    -- Hide runeOfTransfers
-        --runeOfTransfer:setStatus(tpz.status.DISAPPEAR)
-    -- Hide trasure caskets
-    -- Deaggro Mobs
-    -- Deaggro Pets
-    -- Despawn Mobs
-    -- clear all local vars? lamps, mobs, bosses
-
     -- close all doors
     setDoorAnimations(instance, {}, false, true)
 
+    -- Deaggro Mobs
+    -- Despawn Mobs
+    for _,mob in pairs(instance:getMobs()) do
+        local mobID = value:getID()
+        -- because EVERYTHING in nyzul aggros
+        mob:setAggressive(1)
+        -- because SE hates BSTs
+        mob:setMobMod(tpz.mobMod.CHARMABLE, 0)
+        mob:disengage()
+        DespawnMob(mobID, instance)
+    end
+
+    -- resetLocalVars for gears
+    for key,value in pairs(tpz.nyzul_isle_data.npcLists.GEARS.Archaic_Gear) do
+        mob = GetMobByID(value, instance)
+        if (mob) then
+            mob:resetLocalVars()
+        end
+    end
+
+    for key,value in pairs(tpz.nyzul_isle_data.npcLists.GEARS.Archaic_Gears) do
+        mob = GetMobByID(value, instance)
+        if (mob) then
+            mob:resetLocalVars()
+        end
+    end
+
+    -- remove and resetLocalVars for lamps
+    for key,value in pairs(tpz.nyzul_isle_data.npcLists.Lamps) do
+        npc = GetNPCByID(value, instance)
+        if (npc) then
+            npc:resetLocalVars()
+            npc:setStatus(tpz.status.DISAPPEAR)
+        end
+    end
+
+    -- remove crates (NM)
+    for key,value in pairs(tpz.nyzul_isle_data.npcLists.Armoury_Crates_For_NMs) do
+        npc = GetNPCByID(value, instance)
+        if (npc) then
+            tpz.nyzul_isle_armoury_crates.despawnArmouryCrate(npc)
+        end
+    end
+
+    -- remove crates (temp item)
+    for key,value in pairs(tpz.nyzul_isle_data.npcLists.Armoury_Crates) do
+        npc = GetNPCByID(value, instance)
+        if (npc) then
+            tpz.nyzul_isle_armoury_crates.despawnArmouryCrate(npc)
+        end
+    end
+
     -- remove NM flag if set for specified enemy
     local specifiedEnemyID  = instance:getLocalVar("Nyzul_Specified_Enemy")
-    if (specifiedEnemyID) then
+    if (specifiedEnemyID > 0) then
         local specifiedEnemy = GetMobByID(specifiedEnemyID, instance)
         specifiedEnemy:setNM(false)
         instance:setLocalVar("Nyzul_Specified_Enemy", 0)

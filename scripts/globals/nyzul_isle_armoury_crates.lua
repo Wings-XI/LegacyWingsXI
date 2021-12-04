@@ -17,7 +17,7 @@ tpz.nyzul_isle_armoury_crates = tpz.nyzul_isle_armoury_crates or {}
 --------------------------------------------------------
 -- Constants for configuring randomness
 --------------------------------------------------------
-local ARMOURY_CRATE_CHANCE = 5 -- chance for a non-NM to drop an Armoury Crate with temp items
+local ARMOURY_CRATE_CHANCE = 50 -- chance for a non-NM to drop an Armoury Crate with temp items
 local numTempItemsInFreeFloorChance = {100, 95, 75, 50, 30, 20, 10, 5} -- chance to see 1, 2, 3... 8, items in a chest on a free floor
 
 --------------------------------------------------------
@@ -183,7 +183,7 @@ end
 ----------------------------------------------------------------------------------
 -- Despawn the Crate and reset Local Vars
 ----------------------------------------------------------------------------------
-local function despawnArmouryCrate(npc)
+tpz.nyzul_isle_armoury_crates.despawnArmouryCrate = function(npc)
     npc:resetLocalVars()
     npc:timer(1000, function(npc) npc:entityAnimationPacket("kesu") end)
     npc:timer(2000, function(npc) npc:setStatus(tpz.status.DISAPPEAR) end)
@@ -245,7 +245,7 @@ local function checkTempItemChestIsEmpty(npc)
 
     if (item1 == 0 and item2 == 0 and item3 == 0 and item4 == 0 and
         item5 == 0 and item6 == 0 and item7 == 0 and item8 == 0) then
-        despawnArmouryCrate(npc)
+        tpz.nyzul_isle_armoury_crates.despawnArmouryCrate(npc)
     end
 end
 
@@ -334,7 +334,7 @@ tpz.nyzul_isle_armoury_crates.onTrigger = function(player, npc)
             for _, v in pairs(chars) do
                 v:messageName(ID.text.PLAYER_OBTAINS_ITEM, player, appraisalMappings[nmCrateID].id)
             end
-            despawnArmouryCrate(npc)
+            tpz.nyzul_isle_armoury_crates.despawnArmouryCrate(npc)
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, appraisalMappings[nmCrateID].id)
         end
