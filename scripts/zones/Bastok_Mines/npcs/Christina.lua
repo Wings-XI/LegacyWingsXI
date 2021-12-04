@@ -28,7 +28,7 @@ function onTrigger(player, npc)
             player:setCharVar("smilebringersconvo", 0)
         end
 
-        if (smilebringersconvo == 0) then
+        if smilebringersconvo == 0 then
             player:startEvent(252)
             player:setFame(HOLIDAY, 1)
         elseif smilebringersconvo == 1 and (head == 15179 or head == 15178) then
@@ -59,7 +59,7 @@ function onTrigger(player, npc)
                 player:setLocalVar("famebefore", player:getFame(HOLIDAY))
                 player:startEvent(32741, 0260, 0006, 0600, 0000, 7800, 0000, 0000, 0000)
             end
-        elseif smilebringersconvo == 1 then
+        else
             player:startEvent(32742)
         end
     end
