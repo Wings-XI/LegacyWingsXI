@@ -658,7 +658,7 @@ function cleanUpPreviousFloor(instance)
         mob:setAggressive(1)
         -- because SE hates BSTs
         mob:setMobMod(tpz.mobMod.CHARMABLE, 0)
-        mob:disengage()
+        mob:deaggroAll()
         DespawnMob(mobID, instance)
     end
 
