@@ -9,9 +9,9 @@ require("scripts/globals/events/starlight_festivals")
 -----------------------------------------
 
 function onFurniturePlaced(player)
-    player:setCharVar("DreamPlatterPlaced", getConquestTally())
+    player:setCharVar("DreamPlatterPlaced", 1)
 end
 
 function onFurnitureRemoved(player)
-    player:setCharVar("DreamPlatterPlaced", 1)
+    player:setCharVar("DreamPlatterPlaced", 0)
 end
