@@ -1021,8 +1021,39 @@ mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion 
 
 
 -- instead of standing still, i will patrol across these given points (triplets of x,y,z)
--- todo: this is not yet functional, this will most likely use dynamis.mobOnRoamAction
--- mobList[zone][SMB+1].path = { 11, 22, 33, 66, 77, 88, }
+-- add mob patrol paths for statues that are supposed to patrol
+-- mobList[zone][mob].patrolPath = { }
+--Wave 1 pathing
+mobList[zone][SMB+1  ].patrolPath = { 138, -2, 105,		148, -2, 116,	138, -2, 105 	}
+mobList[zone][SMB+42 ].patrolPath = { 97, 4, 22, 		98, 4, 66,		97, 4, 22  		}
+mobList[zone][SMB+54 ].patrolPath = { 148, 0, 35, 		147, 0, 51,		148, 0, 35 		}
+mobList[zone][SMB+60 ].patrolPath = { 148, 0, 32, 		134, 0, 15,		148, 0, 32 		}
+mobList[zone][SMB+71 ].patrolPath = { 85, 2, 6, 		59, 2, -20,		85, 2, 6  		}
+mobList[zone][SMB+92 ].patrolPath = { 87, 2, -32, 		72, 2, -16,		87, 2, -32 		}
+mobList[zone][SMB+95 ].patrolPath = { 65, 2, -26, 		80, 2, -41,		65, 2, -26 		}
+mobList[zone][SMB+99 ].patrolPath = { 80, 2, -8, 		94, 2, -23,		80, 2, -8  		}
+mobList[zone][SMB+149].patrolPath = { -40, 2, -28,		-59, 2, -17,	-40, 2, -28 	}
+mobList[zone][SMB+131].patrolPath = { 56, 2, -22, 		37, 2, -33,		56, 2, -22 		}
+mobList[zone][SMB+175].patrolPath = { -0, 1, 9, 		-0, -2, 43,		-0, 1, 9 		}
+mobList[zone][SMB+243].patrolPath = { -96, -2, 17, 		-83, -2, 3,		-96, -2, -17 	}
+mobList[zone][SMB+257].patrolPath = { -94, 2, -21, 		-81, 2, -8,		-94, 2, -21 	}
+mobList[zone][SMB+258].patrolPath = { -72, 2, -16, 		-86, 2, -30,	-72, 2, -16 	}
+mobList[zone][SMB+259].patrolPath = { -78, 2, -37, 		-64, 2, -24,	-78, 2, -37 	}
+mobList[zone][SMB+261].patrolPath = { -118, -2, 12, 	-99, -2, 27,	-118, -2, 12 	}
+mobList[zone][SMB+264].patrolPath = { -118, -2, 19, 	-136, -2, 18,	-118, -2, 19 	}
+mobList[zone][SMB+267].patrolPath = { -140, -2, 18, 	-163, -1, 17,	-140, -2, 18 	}
+mobList[zone][SMB+293].patrolPath = { -190, -1, 43, 	-193, -1, 55,	-190, -1, 43 	}
+mobList[zone][SMB+298].patrolPath = { -193, -2, 61, 	-194, -2, 78,	-193, -2, 61 	}
+mobList[zone][SMB+313].patrolPath = { -196, -2, 81, 	-210, -2, 95,	-196, -2, 81 	}
+mobList[zone][SMB+316].patrolPath = { -231, -2, 97, 	-213, -2, 98,	-231, -2, 97 	}
+mobList[zone][SMB+320].patrolPath = { -240, -4, 98, 	-259, -4, 98,	-240, -4, 98 	}
+mobList[zone][SMB+330].patrolPath = { -94, -6, 75, 		-105, -6, 84,	-94, -6, 75 	}
+mobList[zone][SMB+335].patrolPath = { -90, -6, 57, 		-93, -6, 71,	-90, -6, 57 	}
+mobList[zone][SMB+345].patrolPath = { -106, -6, 87, 	-125, -6, 88,	-106, -6, 87 	}
+
+--Wave 2 pathing
+mobList[zone][SMB+309].patrolPath = { -212, -2, 96, 	-229, -2, 98,	-212, -2, 96 	}
+mobList[zone][SMB+305].patrolPath = { -200, -2, 87, 	-193, -2, 69,	-200, -2, 87 	}
 
 -- set statue eye color
 mobList[zone][SMB+20 ].eyes = dynamis.eyes.GREEN
