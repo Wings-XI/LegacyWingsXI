@@ -294,46 +294,47 @@ tpz.nyzul_isle_data.northEastFloorTableKeys = {
     "FLOOR_NE_6",
 }
 
--- Note that floor layouts do not include the starting floor.  Lamps and Mobs cannot spawn in the same room as a Rune of Transfer
+-- Note that floor layouts do not include the starting floor (entrance to Nyzul).
+-- Lamps and Mobs should not spawn in the same room as a Rune of Transfer - therefore when the RuneOfTransferSpawnPoint is within a room, exclude that room from the Rooms list
 tpz.nyzul_isle_data.northEastFloorLayouts =
 {
     -- MobSpawnPoints need 26 - 12 (floor mobs) + 1  (rampart) + 5 (specified enemies) + 5 (gears) + 3 (NMs)
-    -- This means a minimum of 5 rooms per config
-    FLOOR_NE_1 = {
-        Rooms = {"NE_B", "NE_A", "NE_C", "NE_D", "NE_E", "NE_F", "NE_G"}, 
+    -- This means a minimum of 6 rooms per config minimum
+    FLOOR_NE_1 = { -- NW loop
+        Rooms = {"NE_B", "NE_A", "NE_C", "NE_D", "NE_E", "NE_F"},
         RuneOfTransferSpawnPoint = {x = 420, y = 0, z = 420},
-        DoorsToClose = {17093375},
-        DoorsToOpen = {17093379, 17093377, 17093376, 17093378}
+        DoorsToClose = {17093378},
+        DoorsToOpen = {17093379, 17093377, 17093376}
     },
-    FLOOR_NE_2 = {
-        Rooms = {}, 
+    FLOOR_NE_2 = { -- SW Loop
+        Rooms = {"NE_K", "NE_L", "NE_N", "NE_O", "NE_P", "NE_Q"},
+        RuneOfTransferSpawnPoint = {x = 500, y = 0, z = 260},
+        DoorsToClose = {17093373},
+        DoorsToOpen = {17093372, 17093371, 17093370}
+    },
+    FLOOR_NE_3 = { -- East collection of rooms
+        Rooms = {"NE_G", "NE_H", "NE_I", "NE_J", "NE_L", "NE_M"},
         RuneOfTransferSpawnPoint = {x = 580, y = 0, z = 420},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+        DoorsToClose = {17093378, 17093371, 17093372},
+        DoorsToOpen = {17093373, 17093374, 17093375}
     },
-    FLOOR_NE_3 = {
-        Rooms = {}, 
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_NE_4 = { -- Another East Collection - starting in NE_F
+        Rooms = {"NE_E", "NE_G", "NE_H", "NE_I", "NE_J", "NE_M" },
+        RuneOfTransferSpawnPoint = {x = 500, y = 0, z = 424.5},
+        DoorsToClose = {17093376, 17093377, 17093373},
+        DoorsToOpen = {17093378, 17093375, 17093374}
     },
-    FLOOR_NE_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_NE_5 = { -- East side, long train of rooms
+        Rooms = {"NE_E", "NE_F", "NE_G", "NE_J", "NE_M", "NE_L"},
+        RuneOfTransferSpawnPoint = {x = 580, y = 0, z = 340},
+        DoorsToClose = {17093371, 17093372, 17093374, 17093377, 17093376},
+        DoorsToOpen = {17093378, 17093375, 17093373}
     },
-    FLOOR_NE_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
-    },
-    FLOOR_NE_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_NE_6 = { -- North Loop starting in NE_C
+        Rooms = {"NE_A", "NE_B", "NE_D", "NE_E", "NE_F", "NE_G"},
+        RuneOfTransferSpawnPoint = {x = 460, y = 0, z = 469},
+        DoorsToClose = {17093375},
+        DoorsToOpen = {17093378, 17093377, 17093379, 17093376}
     }
 }
 
@@ -348,40 +349,40 @@ tpz.nyzul_isle_data.eastFloorTableKeys = {
 
 tpz.nyzul_isle_data.eastFloorLayouts =
 {
-    FLOOR_EAST_1 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
+    FLOOR_EAST_1 = { -- North side starting in EAST_F
+        Rooms = {"EAST_A", "EAST_B", "EAST_C", "EAST_HALLWAY_C", "EAST_D", "EAST_E", "EAST_I", "EAST_J"},
+        RuneOfTransferSpawnPoint = {x = 455.5, y = 0, z = 20},
+        DoorsToClose = {17093369, 17093368, 17093366},
+        DoorsToOpen = {17093367}
+    },
+    FLOOR_EAST_2 = { -- South side, starting at EAST_P
+        Rooms = {"EAST_L", "EAST_M", "EAST_HALLWAY_M", "EAST_N", "EAST_Q", "EAST_T", "EAST_U", "EAST_V", "EAST_W"},
+        RuneOfTransferSpawnPoint = {x = 379.5, y = 0, z = -140},
+        DoorsToClose = {17093366, 17093365, 17093363},
+        DoorsToOpen = {17093362, 17093364}
+    },
+    FLOOR_EAST_3 = { -- North side starting in EAST_HALLWAY_C
+        Rooms = {"EAST_A", "EAST_B", "EAST_C", "EAST_D", "EAST_E", "EAST_F", "EAST_I", "EAST_J"},
+        RuneOfTransferSpawnPoint = {x = 500, y = 0, z = 20},
+        DoorsToClose = {17093369, 17093368, 17093366},
+        DoorsToOpen = {17093367}
+    },
+    FLOOR_EAST_4 = { -- Center starting east of EAST_N
+        Rooms = {"EAST_L", "EAST_M", "EAST_HALLWAY_M", "EAST_N", "EAST_U", "EAST_V"},
+        RuneOfTransferSpawnPoint = {x = 580, y = 0, z = -100},
+        DoorsToClose = {17093365, 17093366, 17093363, 17093362, 17093364},
         DoorsToOpen = {}
     },
-    FLOOR_EAST_2 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_EAST_5 = { -- Center starting in EAST_HALLWAY_M
+        Rooms = {"EAST_E", "EAST_F", "EAST_I", "EAST_J", "EAST_L", "EAST_M", "EAST_N", "EAST_U", "EAST_V"},
+        RuneOfTransferSpawnPoint = {x = 500, y = 0, z = -140},
+        DoorsToClose = {17093367, 17093368, 17093364, 17093365, 17093363, 17093362},
+        DoorsToOpen = {17093366}
     },
-    FLOOR_EAST_3 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
-    },
-    FLOOR_EAST_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
-    },
-    FLOOR_EAST_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
-    },
-    FLOOR_EAST_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
+    FLOOR_EAST_6 = { -- East side, backwards C
+        Rooms = {"EAST_G", "EAST_H", "EAST_K", "EAST_O", "EAST_S", "EAST_R"},
+        RuneOfTransferSpawnPoint = {x = 620, y = 0, z = -60},
+        DoorsToClose = {17093369, 17093368, 17093365, 17093363},
         DoorsToOpen = {}
     }
 }
@@ -397,41 +398,41 @@ tpz.nyzul_isle_data.centralFloorTableKeys = {
 
 tpz.nyzul_isle_data.centralFloorLayouts =
 {
-    FLOOR_CENTRAL_1 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_1 = { --North section starting east of CENTRAL_A
+        Rooms = {"CENTRAL_A", "CENTRAL_B", "CENTRAL_D", "CENTRAL_E", "CENTRAL_Q", "CENTRAL_R"},
+        RuneOfTransferSpawnPoint = {x = 20, y = -4, z = 180},
+        DoorsToClose = {17093399, 17093398},
+        DoorsToOpen = {17093401, 17093400}
     },
-    FLOOR_CENTRAL_2 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_2 = { -- West, starting north of CENTRAL_G
+        Rooms = {"CENTRAL_C", "CENTRAL_G", "CENTRAL_H", "CENTRAL_K", "CENTRAL_S", "CENTRAL_P"},
+        RuneOfTransferSpawnPoint = {x = -100, y = 0, z = 100},
+        DoorsToClose = {17093399, 17093396, 17093390, 17093391},
+        DoorsToOpen = {17093397, 17093395, 17093392}
     },
-    FLOOR_CENTRAL_3 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_3 = { --East starting south of CENTRAL_J
+        Rooms = {"CENTRAL_D", "CENTRAL_E", "CENTRAL_F", "CENTRAL_I", "CENTRAL_J", "CENTRAL_N"},
+        RuneOfTransferSpawnPoint = {x = 100, y = 0, z = 20},
+        DoorsToClose = {17093400, 17093394},
+        DoorsToOpen = {17093398}
     },
-    FLOOR_CENTRAL_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_4 = { -- South/East - starts in CENTRAL_T
+        Rooms = {"CENTRAL_S", "CENTRAL_P", "CENTRAL_L", "CENTRAL_M", "CENTRAL_F", "CENTRAL_I", "CENTRAL_J", "CENTRAL_N"},
+        RuneOfTransferSpawnPoint = {x = 20, y = -2, z = -20.25},
+        DoorsToClose = {17093392, 17093398, 17093390},
+        DoorsToOpen = {17093393, 17093394}
     },
-    FLOOR_CENTRAL_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_5 = { -- East side reverse C, starts in CENTRAL_J
+        Rooms = {"CENTRAL_D", "CENTRAL_E", "CENTRAL_F", "CENTRAL_I", "CENTRAL_L", "CENTRAL_M", "CENTRAL_N"},
+        RuneOfTransferSpawnPoint = {x = 95.5, y = 0, z = 60},
+        DoorsToClose = {17093400, 17093393},
+        DoorsToOpen = {17093398, 17093394}
     },
-    FLOOR_CENTRAL_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_CENTRAL_6 = { -- North/West starting in CENTRAL_Q
+        Rooms = {"CENTRAL_A", "CENTRAL_B", "CENTRAL_R", "CENTRAL_C", "CENTRAL_G", "CENTRAL_H", "CENTRAL_K"},
+        RuneOfTransferSpawnPoint = {x = -60, y = -2, z = 140.25},
+        DoorsToClose = {17093400, 17093392, 17093395, 17093397},
+        DoorsToOpen = {17093401, 17093399, 17093396}
     }
 }
 
@@ -446,41 +447,41 @@ tpz.nyzul_isle_data.southEastFloorTableKeys = {
 
 tpz.nyzul_isle_data.southEastFloorLayouts =
 {
-    FLOOR_SE_1 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_1 = { -- South half starting in SE_K
+        Rooms = {"SE_E_SW_HALF ", "SE_I", "SE_J", "SE_G", "SE_H", "SE_L"},
+        RuneOfTransferSpawnPoint = {x = 509, y = 0, z = -589},
+        DoorsToClose = {17093353, 17093354, 17093357, 17093359},
+        DoorsToOpen = {17093355, 17093356, 17093358}
     },
-    FLOOR_SE_2 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_2 = { -- North half
+        Rooms = {"SE_A", "SE_B", "SE_C", "SE_D", "SE_E_NE_HALF", "SE_F"},
+        RuneOfTransferSpawnPoint = {x = 380, y = 0, z = -500},
+        DoorsToClose = {17093353, 17093354, 17093357, 17093359},
+        DoorsToOpen = {17093360, 17093361}
     },
-    FLOOR_SE_3 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_3 = { -- Center Loop starts in SE_F
+        Rooms = {"SE_B", "SE_C", "SE_D", "SE_E_SW_HALF", "SE_G", "SE_I", "SE_J", "SE_K"},
+        RuneOfTransferSpawnPoint = {x = 420, y = 0, z = -540},
+        DoorsToClose = {17093358, 17093361, 17093355},
+        DoorsToOpen = {17093353, 17093354, 17093357, 17093356, 17093359, 17093360}
     },
-    FLOOR_SE_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_4 = { -- Two large rooms, starts in SE_H
+        Rooms = {"SE_A", "SE_B", "SE_C", "SE_D", "SE_E_NE_HALF", "SE_F", "SE_G", "SE_K"},
+        RuneOfTransferSpawnPoint = {x = 560, y = 0, z = -540},
+        DoorsToClose = {17093353, 17093354, 17093356, 17093357},
+        DoorsToOpen = {17093360, 17093361, 17093359, 17093358}
     },
-    FLOOR_SE_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_5 = { -- South starting in SE_L
+        Rooms = {"SE_E_SW_HALF", "SE_I", "SE_J", "SE_K", "SE_G", "SE_H"},
+        RuneOfTransferSpawnPoint = {x = 460, y = 0, z = -640},
+        DoorsToClose = {17093353, 17093354, 17093357, 17093359},
+        DoorsToOpen = {17093355, 17093356, 17093358}
     },
-    FLOOR_SE_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SE_6 = { -- West section with doors closed to create a double loop
+        Rooms = {"SE_B", "SE_C", "SE_D", "SE_E_SW_HALF", "SE_F", "SE_I", "SE_J"},
+        RuneOfTransferSpawnPoint = {x = 380, y = 0, z = -500},
+        DoorsToClose = {17093353, 17093354, 17093361, 17093359, 17093355, 17093356},
+        DoorsToOpen = {17093357, 17093360}
     }
 }
 
@@ -495,43 +496,44 @@ tpz.nyzul_isle_data.southFloorTableKeys = {
 
 tpz.nyzul_isle_data.southFloorLayouts =
 {
-    FLOOR_SOUTH_1 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_1 = { -- North section
+        Rooms = {"SOUTH_A", "SOUTH_B", "SOUTH_C", "SOUTH_D", "SOUTH_E", "SOUTH_H"},
+        RuneOfTransferSpawnPoint = {x = 60, y = 0, z = -300},
+        DoorsToClose = {17093383, 17093386, 17093387},
+        DoorsToOpen = {17093388, 17093389}
     },
-    FLOOR_SOUTH_2 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_2 = { -- South Section
+        Rooms = {"SOUTH_G", "SOUTH_I", "SOUTH_J", "SOUTH_K", "SOUTH_L", "SOUTH_M"},
+        RuneOfTransferSpawnPoint = {x = 20, y = 0, z = -420}, -- south of G
+        DoorsToClose = {17093383, 17093386, 17093384, 17093382},
+        DoorsToOpen = {17093380, 17093381, 17093385}
     },
-    FLOOR_SOUTH_3 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_3 = { -- East Section plus north
+        Rooms = {"SOUTH_C", "SOUTH_D", "SOUTH_E", "SOUTH_G", "SOUTH_H", "SOUTH_I"},
+        RuneOfTransferSpawnPoint = {x = 20, y = 0, z = -460}, -- south of I
+        DoorsToClose = {17093388, 17093381, 17093384},
+        DoorsToOpen = {17093389, 17093383, 17093385, 17093386}
     },
-    FLOOR_SOUTH_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_4 = { -- South Eight starting in SOUTH_G
+        Rooms = {"SOUTH_E", "SOUTH_H", "SOUTH_I", "SOUTH_J", "SOUTH_K", "SOUTH_L", "SOUTH_M"},
+        RuneOfTransferSpawnPoint = {x = 20, y = 0, z = -371},
+        DoorsToClose = {17093382, 17093384, 17093389},
+        DoorsToOpen = {17093383, 17093385, 17093386, 17093381, 17093380}
     },
-    FLOOR_SOUTH_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_5 = { -- North Eight starting in SOUTH_G
+        Rooms = {"SOUTH_A", "SOUTH_B", "SOUTH_C", "SOUTH_D", "SOUTH_E", "SOUTH_H", "SOUTH_I"},
+        RuneOfTransferSpawnPoint = {x = 29, y = 0, z = -371},
+        DoorsToClose = {17093381, 17093384, 17093387},
+        DoorsToOpen = {17093388, 17093389, 17093383, 17093385, 17093386}
     },
-    FLOOR_SOUTH_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SOUTH_6 = { -- North East starting in SOUTH_C
+        Rooms = {"SOUTH_A", "SOUTH_B", "SOUTH_D", "SOUTH_E", "SOUTH_H", "SOUTH_I"},
+        RuneOfTransferSpawnPoint = {x = -20, y = 0, z = -300},
+        DoorsToClose = {17093387, 17093386, 17093383, 17093385, 17093381},
+        DoorsToOpen = {17093388, 17093389, 17093383}
     }
 }
+
 tpz.nyzul_isle_data.southWestFloorTableKeys = {
     "FLOOR_SW_1",
     "FLOOR_SW_2",
@@ -543,40 +545,40 @@ tpz.nyzul_isle_data.southWestFloorTableKeys = {
 
 tpz.nyzul_isle_data.southWestFloorLayouts =
 {
-    FLOOR_SW_1 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
+    FLOOR_SW_1 = { -- North
+        Rooms = {A, B, C, ZC, E, F, G, H},
+        RuneOfTransferSpawnPoint = {x = -460, y = -2, z = -299.75},
+        DoorsToClose = {17093416, 17093415, 17093413, 17093411},
         DoorsToOpen = {}
     },
-    FLOOR_SW_2 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SW_2 = { -- West Open starting in SW_J
+        Rooms = {I, L, M, N, R, S},
+        RuneOfTransferSpawnPoint = {x = -446.5, y = 0, z = -344.5},
+        DoorsToClose = {17093414, 17093413, 17093404, 17093407, 17093409},
+        DoorsToOpen = {17093412, 17093406}
     },
-    FLOOR_SW_3 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SW_3 = { -- South
+        Rooms = {U, V, X, Y, ZD, Z, ZA, ZB},
+        RuneOfTransferSpawnPoint = {x = -540, y = -4, z = -580},
+        DoorsToClose = {17093402, 17093403, 17093407, 17093408},
+        DoorsToOpen = {17093405}
     },
-    FLOOR_SW_4 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SW_4 = { -- Central and South
+        Rooms = {I, J, N, S, J, V, X, Y},
+        RuneOfTransferSpawnPoint = {x = -340, y = 0, z = -500},
+        DoorsToClose = {17093414, 17093413, 17093409, 17093406, 17093403, 17093405, 17093408},
+        DoorsToOpen = {17093407}
     },
-    FLOOR_SW_5 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
-        DoorsToOpen = {}
+    FLOOR_SW_5 = { -- West Closed starting in SW_N
+        Rooms = {I, J, L, M, R, S},
+        RuneOfTransferSpawnPoint = {x = -460, y = 0, z = -380},
+        DoorsToClose = {17093414, 17093413, 17093404, 17093407, 17093409, 17093406},
+        DoorsToOpen = {17093412}
     },
-    FLOOR_SW_6 = {
-        Rooms = {},
-        RuneOfTransferSpawnPoint = {x = xxx, y = xxx, z = xxx},
-        DoorsToClose = {},
+    FLOOR_SW_6 = { -- North starting in SW_ZC
+        Rooms = {A, B, C, E, F, G, H},
+        RuneOfTransferSpawnPoint = {x = -420.25, y = -2, z =-220},
+        DoorsToClose = {17093416, 17093415, 17093413, 17093411},
         DoorsToOpen = {}
     }
 }
@@ -658,9 +660,13 @@ tpz.nyzul_isle_data.roomConfigurations = {
         MobSpawnPoints = {{x = 455.5, y = 0, z = 64.5}, {x = 455.5, y = 0, z = 55.5}, {x = 451, y = 0, z = 46.5}, {x = 473.5, y = 0, z = 51}, {x = 446.5, y = 0, z = 73.5}}, 
         LampSpawnPoints = {{x = 446.5, y = 0, z = 73.5}, {x = 464.5, y = 0, z = 60}}
     },
-    EAST_C = { -- contains the connected hallway to the south  TODO: split the hallways to their own "room"
-        MobSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 498, y = 0, z = 24.5}, {x = 500, y = 0, z = 6}, {x = 486.5, y = 0, z = 73.5}, {x = 513.5, y = 0, z = 46.5}}, 
+    EAST_C = {
+        MobSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 491, y = 0, z = 69}, {x = 509, y = 0, z = 69}, {x = 509, y = 0, z = 51}, {x = 491, y = 0, z = 51}},
         LampSpawnPoints = {{x = 500, y = 0, z = 60}, {x = 509, y = 0, z = 51}}
+    },
+    EAST_HALLWAY_C = {
+        MobSpawnPoints = {{x = 500, y = 0, z = 20}, {x = 500, y = 0, z = 11}, {x = 500, y = 0, z = 6}, {x = 500, y = 0, z = 29}, {x = 500, y = 0, z = 33}},
+        LampSpawnPoints = {{x = 500, y = 0, z = 20}, {x = 500, y = 0, z = 20}} -- yes these entries are identical
     },
     EAST_D = {
         MobSpawnPoints = {{x = 540, y = 0, z = 55.5}, {x = 544.5, y = 0, z = 73.5}, {x = 553.5, y = 0, z = 64.5}, {x = 549, y = 0, z = 46.5}, {x = 531, y = 0, z = 73.5}}, 
@@ -698,9 +704,13 @@ tpz.nyzul_isle_data.roomConfigurations = {
         MobSpawnPoints = {{x = 504.5, y = 0, z = -55.5}, {x = 504.5, y = 0, z = -64.5}, {x = 500, y = 0, z = -46.5}, {x = 513.5, y = 0, z = -60}, {x = 513.5, y = 0, z = -73.5}}, 
         LampSpawnPoints = {{x = 500, y = 0, z = -55.5}, {x = 500, y = 0, z = -64.5}}
     },
-    EAST_M = { -- contains the connected hallway to the south  TODO: split the hallways to their own "room"
-        MobSpawnPoints = {{x = 500, y = 0, z = -144.5}, {x = 500, y = 0, z = -131}, {x = 500, y = 0, z = -91}, {x = 509, y = 0, z = -100}, {x = 491, y = 0, z = -100}}, 
-        LampSpawnPoints = {{x = 500, y = 0, z = -140}, {x = 500, y = 0, z = -100}}
+    EAST_M = {
+        MobSpawnPoints = {{x = 495.5, y = 0, z = -104.5}, {x = 504.5, y = 0, z = -104.5}, {x = 500, y = 0, z = -91}, {x = 509, y = 0, z = -100}, {x = 491, y = 0, z = -100}},
+        LampSpawnPoints = {{x = 500, y = 0, z = -109}, {x = 500, y = 0, z = -100}}
+    },
+    EAST_HALLWAY_M = {
+        MobSpawnPoints = {{x = 500, y = 0, z = -144.5}, {x = 500, y = 0, z = -131}, {x = 500, y = 0, z = -135.5}, {x = 500, y = 0, z = -129}, {x = 500, y = 0, z = -151.5}},
+        LampSpawnPoints = {{x = 500, y = 0, z = -140}, {x = 500, y = 0, z = -140}} -- yes these are identical
     },
     EAST_N = {
         MobSpawnPoints = {{x = 553.5, y = 0, z = -109}, {x = 544.5, y = 0, z = -113.5}, {x = 526.5, y = 0, z = -113.5}, {x = 531, y = 0, z = -86.5}, {x = 544.5, y = 0, z = -100}}, 
