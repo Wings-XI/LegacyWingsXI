@@ -13,7 +13,10 @@ function onMobSpawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)
+
+    local battlefield = mob:getBattlefield()
+
     if isKiller or noKiller then
-        tpz.limbus.handleDoors(player:getBattlefield(), true, ID.npc.APOLLYON_SE_PORTAL[1])
+        tpz.limbus.handleDoors(battlefield, true, ID.npc.APOLLYON_SE_PORTAL[1])
     end
 end

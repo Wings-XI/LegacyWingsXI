@@ -9,9 +9,11 @@ local ID = require("scripts/zones/Apollyon/IDs")
 
 function onBattlefieldInitialise(battlefield)
     battlefield:setLocalVar("loot", 1)
+	battlefield:setLocalVar("tick", 0)
     battlefield:setLocalVar("lootSpawned", 1)
     SetServerVariable("[SW_Apollyon]Time", battlefield:getTimeLimit()/60)
     tpz.limbus.handleDoors(battlefield)
+	battlefield:setLocalVar("raceF1", math.random(1, 8))
     local random = math.random(0, 7)
     battlefield:setLocalVar("timePH", ID.npc.APOLLYON_SW_CRATE[3]+random)
     battlefield:setLocalVar("restorePH", ID.npc.APOLLYON_SW_CRATE[3]+random+1)
@@ -21,9 +23,14 @@ end
 
 function onBattlefieldTick(battlefield, tick)
     if battlefield:getRemainingTime() % 60 == 0 then
-        SetServerVariable("[SW_Apollyon]Time", battlefield:getRemainingTime()/60)
+       SetServerVariable("[SW_Apollyon]Time", battlefield:getRemainingTime()/60)
     end
-    tpz.battlefield.onBattlefieldTick(battlefield, tick)
+
+	battlefield:setLocalVar("tick", battlefield:getLocalVar("tick") + 1)
+
+	if battlefield:getLocalVar("tick") >= 60 then
+		tpz.battlefield.onBattlefieldTick(battlefield, tick)
+	end
 end
 
 function onBattlefieldRegister(player, battlefield)
@@ -32,9 +39,6 @@ end
 function onBattlefieldEnter(player, battlefield)
     player:delKeyItem(tpz.ki.COSMOCLEANSE)
     player:delKeyItem(tpz.ki.RED_CARD)
-    if battlefield:getLocalVar("raceF1") == 0 then
-        battlefield:setLocalVar("raceF1", player:getRace())
-    end
 end
 
 function onBattlefieldDestroy(battlefield)
