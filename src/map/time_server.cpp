@@ -68,7 +68,6 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
     {
         if (tick > (lastVHourlyUpdate + 4800ms))
         {
-            
             uint8 interval = map_config.vana_hours_per_pos_update;
 
             zoneutils::ForEachZone([interval](CZone* PZone)
@@ -151,17 +150,14 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
         TracyZoneScoped;
         zoneutils::TOTDChange(VanadielTOTD);
 
-        if ((VanadielTOTD == TIME_DAY) || (VanadielTOTD == TIME_DUSK) || (VanadielTOTD == TIME_EVENING) || (VanadielTOTD == TIME_NIGHT))
+        zoneutils::ForEachZone([](CZone* PZone)
         {
-			zoneutils::ForEachZone([](CZone* PZone)
-			{
-				PZone->ForEachChar([](CCharEntity* PChar)
-				{
-					PChar->PLatentEffectContainer->CheckLatentsDay();
-					PChar->PLatentEffectContainer->CheckLatentsJobLevel();
-				});
-			});
-        }
+            PZone->ForEachChar([](CCharEntity* PChar)
+            {
+                PChar->PLatentEffectContainer->CheckLatentsDay();
+                PChar->PLatentEffectContainer->CheckLatentsJobLevel();
+            });
+        });
     }
 
     CTriggerHandler::getInstance()->triggerTimer();
