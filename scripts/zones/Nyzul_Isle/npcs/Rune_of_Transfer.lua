@@ -66,7 +66,7 @@ function onEventFinish(player, csid, option, npc)
         if (objective > 0) then
             player:messageSpecial(objectiveToStringMap[objective])
         else
-            -- Free Floor - any messaging needed?
+            -- Free Floor - any messaging needed? Nope - no message - but rune of transfer is lit up
         end
 
         if (subObjective > 0) then

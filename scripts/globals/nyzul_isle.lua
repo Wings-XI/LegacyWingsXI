@@ -20,6 +20,7 @@ local GEAR_SUB_OBJECTIVE_CHANCE = 5 -- 5% chance of having a gear related sub ob
 local NM_1_CHANCE = 75 -- chance to see 1 NM
 local NM_2_CHANCE = 50 -- chance to see 2 NMs
 local NM_3_CHANCE = 25 -- chance to see 3 NMs
+local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor
 
 ------------------------------------------------------------------------------------------
 -- Generates the Nyzul Isle Floor
@@ -204,11 +205,17 @@ end
 -- Selects an objective for the standard floor and sets local var
 ------------------------------------------------------------------
 function selectObjective(instance, previousObjective)
-    -- select an objective excluding the previousObjective
-    local objectiveKey = math.random(#tpz.nyzul_isle_data.objectiveType)
-    if (previousObjective > 0) then
+    -- based on capture videos, it appears that all lamp objectives are combined into one item which is weighted against the rest.
+    -- i.e. 1/5 chance and never back to back
+    local objectiveKey = 0
+    
+    if (math.random(100) < LAMP_FLOOR_CHANCE) and (previousObjective < 5) then
+        objectiveKey = math.random(5,7) -- lamp objectives are 5 through 7 inclusive
+    else
+        objectiveKey = math.random(1,4) -- non lamps are 1 to 4
+        -- somewhat ugly but simple way to ensure we do not repeat an objective back to back
         while objectiveKey == previousObjective do
-            objectiveKey = math.random(#tpz.nyzul_isle_data.objectiveType)
+            objectiveKey = math.random(1,4) 
         end
     end
 
