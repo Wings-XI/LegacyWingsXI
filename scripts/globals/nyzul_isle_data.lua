@@ -319,7 +319,7 @@ tpz.nyzul_isle_data.northEastFloorLayouts =
         DoorsToOpen = {17093373, 17093374, 17093375}
     },
     FLOOR_NE_4 = { -- Another East Collection - starting in NE_F
-        Rooms = {"NE_E", "NE_G", "NE_H", "NE_I", "NE_J", "NE_M" },
+        Rooms = {"NE_E", "NE_G", "NE_H", "NE_I", "NE_J", "NE_M"},
         RuneOfTransferSpawnPoint = {x = 500, y = 0, z = 424.5},
         DoorsToClose = {17093376, 17093377, 17093373},
         DoorsToOpen = {17093378, 17093375, 17093374}
@@ -448,7 +448,7 @@ tpz.nyzul_isle_data.southEastFloorTableKeys = {
 tpz.nyzul_isle_data.southEastFloorLayouts =
 {
     FLOOR_SE_1 = { -- South half starting in SE_K
-        Rooms = {"SE_E_SW_HALF ", "SE_I", "SE_J", "SE_G", "SE_H", "SE_L"},
+        Rooms = {"SE_E_SW_HALF", "SE_I", "SE_J", "SE_G", "SE_H", "SE_L"},
         RuneOfTransferSpawnPoint = {x = 509, y = 0, z = -589},
         DoorsToClose = {17093353, 17093354, 17093357, 17093359},
         DoorsToOpen = {17093355, 17093356, 17093358}
@@ -768,13 +768,13 @@ tpz.nyzul_isle_data.roomConfigurations = {
         MobSpawnPoints = {{x = 509, y = 0, z = -500}, {x = 491, y = 0, z = -500}, {x = 491, y = 0, z = -509}, {x = 486.5, y = 0, z = -513.5}, {x = 500, y = 0, z = -486.5}}, 
         LampSpawnPoints = {{x = 491, y = 0, z = -500}, {x = 500, y = 0, z = -509}}
     },
-	SE_E_NE_HALF = { -- hideable walls (the only two I've found in Nyzul Isle) can split Room E in half diagonally
+	SE_E_NE_HALF = { -- hideable walls - the only two I've found in Nyzul Isle - can split Room E in half diagonally
         MobSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}, {x = 393.5, y = 0, z = -526.5}, {x = 380, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -540}}, 
         LampSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}}
     },
-	SE_E_SW_HALF = { -- hideable walls (the only two I've found in Nyzul Isle) can split Room E in half diagonally
-        MobSpawnPoints = {{x = 366.5, y = 0, z = -535.5}, {x = 375.5, y = 0, z = -535.5}, {x = 384.5, y = 0, z = -540}, {x = 375.5, y = 0, z = -544.5}, {x = 366.5, y = 0, z = -549}}, 
-        LampSpawnPoints = {{x = 366.5, y = 0, z = -535.5}}
+	SE_E_SW_HALF = { -- hideable walls - the only two I've found in Nyzul Isle - can split Room E in half diagonally
+        MobSpawnPoints = {{x = 366.5, y = 0, z = -535.5}, {x = 375.5, y = 0, z = -535.5}, {x = 384.5, y = 0, z = -540}, {x = 375.5, y = 0, z = -544.5}, {x = 366.5, y = 0, z = -549}},
+        LampSpawnPoints = {{x = 366.5, y = 0, z = -535.5}, {x = 366.5, y = 0, z = -535.5}}
     },
 	SE_F = {
         MobSpawnPoints = {{x = 433.5, y = 0, z = -553.5}, {x = 415.5, y = 0, z = -535.5}, {x = 429, y = 0, z = -531}, {x = 411, y = 0, z = -549}, {x = 420, y = 0, z = -540}}, 

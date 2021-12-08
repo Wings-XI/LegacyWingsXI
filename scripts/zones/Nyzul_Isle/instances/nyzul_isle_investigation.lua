@@ -44,8 +44,25 @@ function onInstanceTimeUpdate(instance, elapsed)
     --vendingBox:setStatus(tpz.status.NORMAL)
     entraceRuneOfTransfer:setStatus(tpz.status.NORMAL)
 
---    generateAndSpawnRequiredLamps(instance, "ACTIVATE_ALL_LAMPS_ORDERED", tpz.nyzul_isle_data.northEastFloorLayouts.FLOOR_NE_1)
-  
+    local win = false
+    if (win) then
+        local runeOfTransfer
+            
+        if ((instance:getStage() % 2) == 0) then -- even floor
+            printf("even")
+            runeOfTransfer = GetNPCByID(17093330, instance)
+        else
+            printf("odd")
+            runeOfTransfer = GetNPCByID(17093331, instance)
+        end
+
+        -- turn on runeOfTransfer
+        runeOfTransfer:AnimationSub(1)
+
+        for _,player in pairs(instance:getChars()) do
+            player:messageSpecial(ID.text.OBJECTIVE_COMPLETE, instance:getStage())
+        end
+    end
     --printf("onInstanceTimeUpdate \n")
     
 end

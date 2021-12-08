@@ -13,7 +13,7 @@ local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_E
 local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
 
 function onTrigger(player, npc)
-    if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID or true) then
+    if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
             -- 0 if never set before, up to 100 for runic key
             local floorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
@@ -37,7 +37,11 @@ function onTrigger(player, npc)
             npcUtil.giveKeyItem(player, tpz.ki.RUNIC_DISC)
         end
     else
-        printf("On Floor - Rune_of_Transfer onTrigger")
+        if (npc:AnimationSub() ~= 1) then
+            showObjectives(player)
+        else
+            printf("On Floor - Rune_of_Transfer onTrigger")
+        end
     end
 end
 
@@ -58,21 +62,21 @@ function onEventFinish(player, csid, option, npc)
     -- bubble warp
     if (csid == 95) then
         local instance = player:getInstance()
-        local objective = instance:getLocalVar("Nyzul_Objective")
-        local subObjective = instance:getLocalVar("Nyzul_SubObjective")
-
         player:messageSpecial(ID.text.TRANSFER_COMPLETE, instance:getStage())
+        showObjectives(player)
+    end 
+end
 
-        if (objective > 0) then
-            player:messageSpecial(objectiveToStringMap[objective])
-        else
-            -- Free Floor - any messaging needed? Nope - no message - but rune of transfer is lit up
-        end
+function showObjectives(player)
+    local instance = player:getInstance()
+    local objective = instance:getLocalVar("Nyzul_Objective")
+    local subObjective = instance:getLocalVar("Nyzul_SubObjective")
 
-        if (subObjective > 0) then
-            player:messageSpecial(subObjectiveToStringMap[subObjective])
-        end
-        
+    if (objective > 0) then
+        player:messageSpecial(objectiveToStringMap[objective])
     end
-    
+
+    if (subObjective > 0) then
+        player:messageSpecial(subObjectiveToStringMap[subObjective])
+    end
 end

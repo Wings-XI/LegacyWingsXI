@@ -119,7 +119,9 @@ function generateFreeFloor(floorNumber, instance, previousFloorInfo)
         tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor(instance, spawnPoint)
         table.remove(remainingSpawnPoints, index)
     end
-    
+
+    -- light the run of transfer
+    activeRuneOfTransfer:AnimationSub(1)
     return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
@@ -540,10 +542,11 @@ end
 function spawnMobsForFloor(instance, mobsToSpawn, rooms)
     printf("in spawnMobsForFloor")
     local spawnPoints = {}
+
     for key, value in pairs(rooms) do
         -- for each room get the mob spawn points and add to the collection
         for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
-        table.insert(spawnPoints, nestedValue)
+            table.insert(spawnPoints, nestedValue)
         end
     end
     printf("~~~SpawnPoints for floor %d~~~~", #spawnPoints)
@@ -661,6 +664,11 @@ function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
 
     runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, 1)
     printf("selectRuneOfTransfer - POS x %d y %d z %d", runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z)
+
+    -- turn off both, just in case
+    runeOfTransfer:AnimationSub(0)
+    oldRuneOfTransfer:AnimationSub(0)
+
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)
     runeOfTransfer:timer(500, function(runeOfTransfer) runeOfTransfer:entityAnimationPacket("deru") end) -- just incase a player is nearby
