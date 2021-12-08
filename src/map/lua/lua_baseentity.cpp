@@ -17290,6 +17290,28 @@ inline int32 CLuaBaseEntity::setNM(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: mob:setMobType(mobType)
+ *  Purpose : sets a mob to be the type passed in 
+ *  Example : mob:setMobType(MOBTYPE_NORMAL)
+ *  Notes   : overwrites the mob's existing mobType
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setMobType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB)
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    int value = lua_tointeger(L, 1);
+    if (value >= MOBTYPE::MOBTYPE_NORMAL && value <= MOBTYPE::MOBTYPE_EVENT)
+    {
+        ((CMobEntity*)m_PBaseEntity)->m_Type = value;
+    }
+
+    return 0;
+}
+
+/************************************************************************
  *  Function: player:dynaCurrencyAutoDropEnabled()
  *  Purpose : returns true if auto drop is enabled for this player
  *  Example :
@@ -18486,6 +18508,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTimeToDynamis),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSkillList),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setNM),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,dynaCurrencyAutoDropEnabled),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getFomorHate),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setFomorHate),

@@ -546,37 +546,37 @@ tpz.nyzul_isle_data.southWestFloorTableKeys = {
 tpz.nyzul_isle_data.southWestFloorLayouts =
 {
     FLOOR_SW_1 = { -- North
-        Rooms = {A, B, C, ZC, E, F, G, H},
+        Rooms = {"SW_A", "SW_B", "SW_C", "SW_ZC", "SW_E", "SW_F", "SW_G", "SW_H"},
         RuneOfTransferSpawnPoint = {x = -460, y = -2, z = -299.75},
         DoorsToClose = {17093416, 17093415, 17093413, 17093411},
         DoorsToOpen = {}
     },
     FLOOR_SW_2 = { -- West Open starting in SW_J
-        Rooms = {I, L, M, N, R, S},
+        Rooms = {"SW_I", "SW_L", "SW_M", "SW_N", "SW_R", "SW_S"},
         RuneOfTransferSpawnPoint = {x = -446.5, y = 0, z = -344.5},
         DoorsToClose = {17093414, 17093413, 17093404, 17093407, 17093409},
         DoorsToOpen = {17093412, 17093406}
     },
     FLOOR_SW_3 = { -- South
-        Rooms = {U, V, X, Y, ZD, Z, ZA, ZB},
+        Rooms = {"SW_U", "SW_V", "SW_X", "SW_Y", "SW_ZD", "SW_Z", "SW_ZA", "SW_ZB"},
         RuneOfTransferSpawnPoint = {x = -540, y = -4, z = -580},
         DoorsToClose = {17093402, 17093403, 17093407, 17093408},
         DoorsToOpen = {17093405}
     },
     FLOOR_SW_4 = { -- Central and South
-        Rooms = {I, J, N, S, J, V, X, Y},
+        Rooms = {"SW_I", "SW_J", "SW_N", "SW_S", "SW_J", "SW_V", "SW_X", "SW_Y"},
         RuneOfTransferSpawnPoint = {x = -340, y = 0, z = -500},
         DoorsToClose = {17093414, 17093413, 17093409, 17093406, 17093403, 17093405, 17093408},
         DoorsToOpen = {17093407}
     },
     FLOOR_SW_5 = { -- West Closed starting in SW_N
-        Rooms = {I, J, L, M, R, S},
+        Rooms = {"SW_I", "SW_J", "SW_L", "SW_M", "SW_R", "SW_S"},
         RuneOfTransferSpawnPoint = {x = -460, y = 0, z = -380},
         DoorsToClose = {17093414, 17093413, 17093404, 17093407, 17093409, 17093406},
         DoorsToOpen = {17093412}
     },
     FLOOR_SW_6 = { -- North starting in SW_ZC
-        Rooms = {A, B, C, E, F, G, H},
+        Rooms = {"SW_A", "SW_B", "SW_C", "SW_E", "SW_F", "SW_G", "SW_H"},
         RuneOfTransferSpawnPoint = {x = -420.25, y = -2, z =-220},
         DoorsToClose = {17093416, 17093415, 17093413, 17093411},
         DoorsToOpen = {}
@@ -621,7 +621,7 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = 540, y = 0, z = 389}, {x = 526.5, y = 0, z = 366.5}}
     },
     NE_J = {
-        MobSpawnPoints = {{x = 584.5, y = 0, z = 375.5}, {x = 584.5, y = 0, z = 384.5}, {x = 580, y = 0, z = 336.5}, {x = 566.5, y = 0, z = 380}, {x = 580, y = 0, z = 393.5}}, 
+        MobSpawnPoints = {{x = 584.5, y = 0, z = 375.5}, {x = 584.5, y = 0, z = 384.5}, {x = 589, y = 0, z = 393.5}, {x = 566.5, y = 0, z = 389}, {x = 580, y = 0, z = 393.5}}, 
         LampSpawnPoints = {{x = 580, y = 0, z = 393.5}, {x = 575.5, y = 0, z = 380}}
     },
     NE_K = {

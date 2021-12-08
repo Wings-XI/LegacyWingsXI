@@ -25,8 +25,10 @@ zones[tpz.zone.ALZADAAL_UNDERSEA_RUINS] =
         RESPONSE                = 7229, -- There is no response...
         DEVICE_MALFUNCTIONING   = 7245, -- The device appears to be malfunctioning...
         NOTHING_OUT_OF_ORDINARY = 7425, -- There is nothing out of the ordinary here.
+        COMMENCING_TRANSPORT    = 7438, -- Commencing transport to Nyzul Isle
         CANNOT_ENTER            = 7441, -- You cannot enter at this time. Please wait a while before trying again.
         AREA_FULL               = 7442, -- This area is fully occupied. You were unable to enter.
+        ORDER_GIVEN_TO_INVADE   = 7445, -- The order has been given to invade <blank> Param 1 = 5 = Nyzul Isle.
         MEMBER_NO_REQS          = 7446, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
         PARTY_MIN_REQS          = 7449,	-- Your party does not meet the minimum required number of ≺Numeric Parameter 0≻ members. Unable to enter area.        
         MEMBER_TOO_FAR          = 7450, -- One or more party members are too far away from the entrance. Unable to enter area.

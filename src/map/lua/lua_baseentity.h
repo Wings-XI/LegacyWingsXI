@@ -773,6 +773,7 @@ public:
     int32 addTimeToDynamis(lua_State* L);
     int32 setSkillList(lua_State* L);
     int32 setNM(lua_State* L);
+    int32 setMobType(lua_State* L);
     int32 dynaCurrencyAutoDropEnabled(lua_State* L);
     int32 getFomorHate(lua_State *L);
     int32 setFomorHate(lua_State *L);

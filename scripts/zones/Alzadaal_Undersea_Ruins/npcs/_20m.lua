@@ -13,7 +13,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
+    -- TODO this needs to be re-done the way I did the cutter that goes to The Ashu Talif
+    -- cs 405 - param 1 (51) - to overwitre the debug entry with nyzul.  param 2 based on whatever missions the player has
+    -- then event update and complete written to match the return option from the menu
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS and player:hasKeyItem(tpz.ki.NYZUL_ISLE_ROUTE) and player:getCharVar("AhtUrganStatus") == 1 then
         player:setLocalVar("PathOfDarkness", 1)
         player:startEvent(405, 58, -6, 0, 99, 5, 0)
@@ -22,6 +24,7 @@ function onTrigger(player, npc)
         player:startEvent(405, 59, -10, 0, 99, 5, 0)
     elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
         local assaultid = player:getCurrentAssault()
+        printf("%s", assaultid)
         local recommendedLevel = getRecommendedAssaultLevel(assaultid)
         local armband = 0
         if player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
@@ -165,6 +168,7 @@ function onInstanceCreated(player, target, instance)
             player:setCharVar("AssaultCap", 0)
             player:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
             player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
+            player:messageSpecial(ID.text.COMMENCING_TRANSPORT)
         end
 
         player:setInstance(instance)
@@ -184,6 +188,7 @@ function onInstanceCreated(player, target, instance)
                         v:delKeyItem(tpz.ki.MYTHRIL_MIRROR)
                     else
                         v:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+                        player:messageSpecial(7445, 5)
                     end
                 end
             end
