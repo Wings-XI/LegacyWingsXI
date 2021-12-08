@@ -21,7 +21,7 @@ npcList = npcList or { }
 
 -- remember, statues 87, 157, 164, 243, 246, 368 are Warchief Tombstones instead of Serjeant, which are RDM instead of BLM. IDs are 17535463, 17535533, 17535540, 17535619, 17535622, 17535744
 
-mobList[zone] = 
+mobList[zone] =
 {
     [17534977] = { id =  DMB+1 }, --	Overlords_Tombstone
     [17534978] = { id =  DMB+2 }, --	Battlechoir_Gitchfotch
@@ -867,11 +867,11 @@ mobList[zone].zoneID = tpz.zone.DYNAMIS_SAN_DORIA
 
 -- set positions for mobs that have placements (x,y,z,rot) and rotation is required
 -- child monsters' positions are optional. if left unset, they are randomly placed closely around their parent monster when the parent mob engages
-mobList[zone][SMB+1  ].pos = { 137.0790, -2.0000,  105.1504, 226   } -- Residential Area
-mobList[zone][SMB+4  ].pos = { 120.0731,  0.0000,   98.3560, 192   } -- Lion Square Fount. N
-mobList[zone][SMB+8  ].pos = { 128.9389,  0.0000,   88.0389, 0     } -- Lion Square Fount. E
-mobList[zone][SMB+12 ].pos = { 119.9486,  0.0000,   78.9593, 64    } -- Lion Square Fount. S
-mobList[zone][SMB+16 ].pos = { 111.0925,  0.0000,   88.0319, 128   } -- Lion Square Fount. W
+mobList[zone][SMB+1  ].pos = { 137.0790, -2.0000,  105.1504, 225   } -- Residential Area
+mobList[zone][SMB+4  ].pos = { 116.4000,  0.0000,   91.6443, 225   } -- Lion Square Fount. N
+mobList[zone][SMB+8  ].pos = { 123.5808,  0.0000,   84.2734, 225     } -- Lion Square Fount. E
+mobList[zone][SMB+12 ].pos = { 119.8963,  0.0000,   80.3786, 225    } -- Lion Square Fount. S
+mobList[zone][SMB+16 ].pos = { 112.5138,  0.0000,   87.5595, 225   } -- Lion Square Fount. W
 mobList[zone][SMB+20 ].pos = { 100.0876,  1.0000,  103.6861, 32    } -- Lion Tavern
 mobList[zone][SMB+24 ].pos = { 104.0628,  1.9165,   72.0631, 226   } -- on stair, SW of Lion Square Fount.
 mobList[zone][SMB+25 ].pos = {  92.8329,  4.0000,   63.6029, 255   } -- Helbort's Blades N
@@ -1024,6 +1024,7 @@ mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion 
 -- add mob patrol paths for statues that are supposed to patrol
 -- mobList[zone][mob].patrolPath = { }
 --Wave 1 pathing
+mobList[zone][SMB+1  ].patrolPath = { 138, -2, 105,		148, -2, 116,	138, -2, 105 	}
 mobList[zone][SMB+4  ].patrolPath = { 116, 0, 91,		124, 0, 99, 	116, 0, 91  	}
 mobList[zone][SMB+8  ].patrolPath = { 123, 0, 84,		132, 0, 93, 	123, 0, 84  	}
 mobList[zone][SMB+42 ].patrolPath = { 97, 4, 22, 		98, 4, 66,		97, 4, 22  		}
@@ -1710,7 +1711,7 @@ mobList[zone][SMB+494].randomChildrenList = { 7, 7, 15, 15, 3, 3 }
 mobList[zone][SMB+501].randomChildrenList = { 9, 9, 9 }
 
 -- random children list - groups assigned to specific mob groups
-randomChildrenList[zone] = 
+randomChildrenList[zone] =
 {
     [1] = -- all jobs except SMN and BST and NIN (the main list)
     {
@@ -1866,7 +1867,7 @@ randomChildrenList[zone] =
         17535201, --	Vanguard_Bugler
         17535202  --	Vanguard_Bugler
     },
-    
+
     [2] = -- list 1, including SMNs (Astral Flow very dangerous), SMN 3x as likely
     {
         17534980, --	Vanguard_Footsoldier
@@ -2057,7 +2058,7 @@ randomChildrenList[zone] =
         17535203, --	Vanguard_Dollmaster
         17535203  --	Vanguard_Dollmaster
     },
-    
+
     [3] = -- list 1, including BSTs which only occur near LW guild/Taumila's/Raimbroy's
     {
         17534980, --	Vanguard_Footsoldier
@@ -2232,7 +2233,7 @@ randomChildrenList[zone] =
         17535201, --	Vanguard_Bugler
         17535202  --	Vanguard_Bugler
     },
-    
+
     [4] = -- NINs ONLY. for manor area
     {
         17534993, --	Vanguard_Backstabber
@@ -2248,7 +2249,7 @@ randomChildrenList[zone] =
         17535175, --	Vanguard_Backstabber
         17535176  --	Vanguard_Backstabber
     },
-    
+
     [5] = -- SMNs ONLY, i.e. center of Victory Square
     {
         17534996, --	Vanguard_Dollmaster
@@ -2260,7 +2261,7 @@ randomChildrenList[zone] =
         17535191, --	Vanguard_Dollmaster
         17535203  --	Vanguard_Dollmaster
     },
-    
+
     [6] = -- BSTs ONLY
     {
         17534994, --	Vanguard_Hawker
@@ -2274,7 +2275,7 @@ randomChildrenList[zone] =
 
 -- NPC list, only really need to add NPCs that need to be spawned at the start
 -- example: [5151] = { id = 5151, spawnAtStart = true },
-npcList[zone] = 
+npcList[zone] =
 {
-    
+
 }
