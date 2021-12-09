@@ -55,7 +55,7 @@ tpz.nyzul_isle_data.objectiveType = {
 }
 
 tpz.nyzul_isle_data.subObjectiveType = {
-    "DO_NOT_DEFEAT_GEARS",
+    "DO_NOT_DESTROY_GEARS",
     "AVOID_DECTECTION_BY_GEARS"
 }
 
@@ -510,7 +510,7 @@ tpz.nyzul_isle_data.southFloorLayouts =
     },
     FLOOR_SOUTH_3 = { -- East Section plus north
         Rooms = {"SOUTH_C", "SOUTH_D", "SOUTH_E", "SOUTH_G", "SOUTH_H", "SOUTH_I"},
-        RuneOfTransferSpawnPoint = {x = 20, y = 0, z = -460}, -- south of I
+        RuneOfTransferSpawnPoint = {x = 60, y = 0, z = -460}, -- south of I
         DoorsToClose = {17093388, 17093381, 17093384},
         DoorsToOpen = {17093389, 17093383, 17093385, 17093386}
     },

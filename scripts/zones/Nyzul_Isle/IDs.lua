@@ -1,4 +1,4 @@
------------------------------------
+﻿-----------------------------------
 -- Area: Nyzul_Isle
 -----------------------------------
 require("scripts/globals/zone")
@@ -48,6 +48,8 @@ zones[tpz.zone.NYZUL_ISLE] =
         TEMP_ITEM_OBTAINED          = 7344, -- Obtained temporary item: <item>.
         ALREADY_HAVE_TEMP           = 7345, -- You already have that temporary item.
         NEW_USER_CONFIRMED          = 7461, -- New user confirmed.  Issuing <keyitem>.
+        INSUFFCIENT_TOKENS          = 7480, -- Insufficient tokens.
+        RUNIC_DISC_PROGRESS_RECORDED= 7483, -- Data up to and including Floor ≺Numeric Parameter 1≻ has been recorded on your <keyitem>
         TRANSFER_COMPLETE           = 7484, -- Transfer complete. Welcome to floor <floor>
         FORMATION_GELINCIK          = 7503, -- Formation Gelincik! Eliminate the intruders!
         SURRENDER                   = 7504, -- You would be wise to surrender. A fate worse than death awaits those who anger an Immortal...

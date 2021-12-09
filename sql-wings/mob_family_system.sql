@@ -183,8 +183,8 @@ INSERT INTO `mob_family_system` VALUES(115, 'Fomor', 19, 'Undead', 0, 40, 105, 9
 INSERT INTO `mob_family_system` VALUES(116, 'Funguar', 17, 'Plantoid', 0, 40, 102, 110, 3, 4, 4, 4, 5, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 0.5, 1.5, 0.5, 8, 2, 1);
 INSERT INTO `mob_family_system` VALUES(117, 'Gargouille', 9, 'Demon', 0, 40, 110, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 3, 0);
 INSERT INTO `mob_family_system` VALUES(118, 'Gargoyle', 9, 'Demon', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.7, 1.15, 0.5, 0.85, 1, 1.15, 0.4, 2, 259, 0);
-INSERT INTO `mob_family_system` VALUES(119, 'Gear', 4, 'ArchaicMachine', 0, 40, 90, 90, 3, 3, 4, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.85, 0.85, 0.85, 0.5, 1.15, 0.5, 0.85, 0, 312, 0);
-INSERT INTO `mob_family_system` VALUES(120, 'Gears', 4, 'ArchaicMachine', 1, 40, 90, 90, 3, 3, 4, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.85, 0.85, 0.85, 0.5, 1.15, 0.5, 0.85, 0, 56, 0);
+INSERT INTO `mob_family_system` VALUES(119, 'Gear', 4, 'ArchaicMachine', 0, 40, 90, 90, 3, 3, 4, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.85, 0.85, 0.85, 0.5, 1.15, 0.5, 0.85, 0, 162, 0);
+INSERT INTO `mob_family_system` VALUES(120, 'Gears', 4, 'ArchaicMachine', 1, 40, 90, 90, 3, 3, 4, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.85, 0.85, 0.85, 0.5, 1.15, 0.5, 0.85, 0, 162, 0);
 INSERT INTO `mob_family_system` VALUES(121, 'Ghost', 19, 'Undead', 1, 40, 104, 140, 6, 3, 4, 4, 1, 5, 4, 3, 3, 3, 3, 0.75, 0.75, 0.5, 0.5, 1.5, 0.5, 1.3, 1, 1.3, 1.3, 1.5, 0.5, 2, 6, 0);
 INSERT INTO `mob_family_system` VALUES(122, 'Ghrah', 16, 'Luminion', 0, 40, 75, 140, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2, 0);
 INSERT INTO `mob_family_system` VALUES(123, 'Ghrah', 16, 'Luminion', 0, 40, 120, 140, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0.75, 0.75, 0.75, 0.75, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2, 0);
