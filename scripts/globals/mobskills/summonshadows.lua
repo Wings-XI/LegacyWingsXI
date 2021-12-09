@@ -23,8 +23,8 @@ function onMobWeaponSkill(target, mob, skill)
 
         shadowOne:spawn()
         shadowTwo:spawn()
-        shadowOne:setPos(X, Y, Z)
-        shadowTwo:setPos(X, Y, Z)
+        shadowOne:setPos(X, Y, Z+2)
+        shadowTwo:setPos(X, Y, Z-2)
         shadowOne:updateEnmity(target)
         shadowTwo:updateEnmity(target)
     end
