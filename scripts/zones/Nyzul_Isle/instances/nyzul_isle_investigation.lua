@@ -108,7 +108,7 @@ function evaluateEliminateAll(instance)
     local mobs = instance:getMobs()
     for _,mob in pairs(mobs) do
         -- ignore Archaic Gear and Gears
-        if (mob:isAlive() and not (mob:getFamily() ~= 119 or mob:getFamily() ~= 120)) then
+        if (mob:isAlive() and not (mob:getFamily() == 119 or mob:getFamily() == 120)) then
             return false
         end
     end
