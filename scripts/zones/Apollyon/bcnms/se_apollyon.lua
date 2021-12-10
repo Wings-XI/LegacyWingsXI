@@ -8,7 +8,7 @@ require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onBattlefieldInitialise(battlefield)
-    --battlefield:setLocalVar("loot", 1)
+    battlefield:setLocalVar("loot", 1)
     SetServerVariable("[SE_Apollyon]Time", battlefield:getTimeLimit()/60)
     tpz.limbus.handleDoors(battlefield)
     tpz.limbus.setupArmouryCrates(battlefield:getID())
