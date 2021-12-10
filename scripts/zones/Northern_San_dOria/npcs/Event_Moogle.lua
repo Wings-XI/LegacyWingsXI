@@ -264,7 +264,7 @@ function onTrade(player, npc, trade)
                         player:setCharVar("DialogChosen", 0)
                         player:setCharVar("CardChosen", 0)
                         player:tradeComplete()
-                    elseif player:hasItem(11965) == false then
+                    elseif player:getGender() == 1 and player:hasItem(11965) == false then
                         local reward = 11965 -- Dream Trousers (M)
                         player:addItem(reward)
                         player:messageSpecial(ID.text.ITEM_OBTAINED, reward)

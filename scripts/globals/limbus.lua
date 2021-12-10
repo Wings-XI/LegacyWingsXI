@@ -237,6 +237,7 @@ function tpz.limbus.extendTimeLimit(battlefield, minutes, zone, npc)
 
     players = battlefield:getPlayers()
     for _, player in pairs(players) do
+        --player:countdown(battlefield:getTimeLimit())
         player:messageSpecial(ID.text.TIME_EXTENDED, minutes)
         player:messageSpecial(ID.text.TIME_LEFT, battlefield:getRemainingTime()/60)
     end
