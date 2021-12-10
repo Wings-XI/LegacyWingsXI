@@ -154,7 +154,6 @@ namespace battleutils
     int32               TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 lastSkillDamage, CBattleEntity* taChar);
 
     bool                TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpell* PSpell);
-    bool                ProcessAquaveil(CBattleEntity* PDefender);
     bool                TryKnockbackInterrupt(CBattleEntity* PAttacker, CBattleEntity* PDefender);
     float               GetRangedDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical);
     void                HandleRangedAdditionalEffect(CCharEntity* PAttacker, CBattleEntity* PDefender, apAction_t* Action);
