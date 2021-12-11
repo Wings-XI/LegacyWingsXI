@@ -11328,8 +11328,8 @@ INSERT INTO `mob_groups` VALUES(2, 2951, 201, 'Ogmios', 0, 128, 0, 10000, 0, 65,
 INSERT INTO `mob_groups` VALUES(3, 1473, 201, 'Garuda_Prime', 0, 128, 0, 700, 0, 20, 23, 0);
 INSERT INTO `mob_groups` VALUES(4, 71, 201, 'Air_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(1, 4643, 202, 'Ramuh_Prime', 0, 128, 0, 8000, 0, 63, 68, 0);
-INSERT INTO `mob_groups` VALUES(2, 2410, 202, 'Lightning_Gremlin', 0, 128, 0, 6300, 0, 65, 65, 0);
-INSERT INTO `mob_groups` VALUES(3, 3914, 202, 'Thunder_Gremlin', 0, 128, 0, 2525, 0, 62, 62, 0);
+INSERT INTO `mob_groups` VALUES(2, 2410, 202, 'Lightning_Gremlin', 0, 128, 0, 7800, 0, 65, 65, 0);
+INSERT INTO `mob_groups` VALUES(3, 3914, 202, 'Thunder_Gremlin', 0, 128, 0, 3000, 0, 62, 62, 0);
 INSERT INTO `mob_groups` VALUES(4, 3317, 202, 'Ramuh_Prime', 0, 128, 0, 700, 0, 20, 23, 0);
 INSERT INTO `mob_groups` VALUES(5, 3912, 202, 'Thunder_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(1, 4642, 203, 'Shiva_Prime', 0, 128, 0, 9500, 0, 63, 68, 0);

@@ -30,10 +30,11 @@ function onTrigger(player, npc)
         end
 
     -- THE FIRST MEETING
-    elseif offset == 1 and player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_FIRST_MEETING) == QUEST_ACCEPTED and not player:hasKeyItem(tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL) then
-        if player:getCharVar("theFirstMeetingKilledNM") >= 2 then
+    elseif offset == 1 and player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_FIRST_MEETING) == QUEST_ACCEPTED and not player:hasKeyItem(tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL) 
+    and not GetMobByID(ID.mob.BILOPDOP):isSpawned() and not GetMobByID(ID.mob.DELOKNOK):isSpawned() then
+        if player:getCharVar("theFirstMeetingSpawnedNM") == 1 then
             npcUtil.giveKeyItem(player, tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL)
-            player:setCharVar("theFirstMeetingKilledNM", 0)
+            player:setCharVar("theFirstMeetingSpawnedNM", 0)
         elseif not GetMobByID(ID.mob.BILOPDOP):isSpawned() and not GetMobByID(ID.mob.DELOKNOK):isSpawned() then
             SpawnMob(ID.mob.BILOPDOP):updateClaim(player)
             SpawnMob(ID.mob.DELOKNOK):updateClaim(player)
