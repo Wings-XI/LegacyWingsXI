@@ -2270,6 +2270,7 @@ INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1533);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1534);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1538);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1539);
+INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1238);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1259);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1260);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1261);
