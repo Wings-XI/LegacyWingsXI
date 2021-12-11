@@ -77,6 +77,7 @@ function onEventFinish(player, csid, option, npc)
         end
     end
 
+    -- any non-entrance lamp
     if (csid == 200 and option > 0 and option <= 4) then
         -- 1 = Exit     2 = Go Up      3 = Travel to the right     4 = Travel to the Left
         for _,mob in pairs(instance:getMobs()) do
@@ -103,7 +104,7 @@ function onEventFinish(player, csid, option, npc)
 end
 
 function bubbleWarpThePlayers(player, instance, stage)
-    
+    -- locking mechanism to prevent mutiple players from trying to go up a floor all at once
     if (instance:getLocalVar("Nyzul_TransferInitiated") == 0) then    
         instance:setLocalVar("Nyzul_TransferInitiated", player:getID())
         instance:setStage(stage)

@@ -20,7 +20,7 @@ local GEAR_SUB_OBJECTIVE_CHANCE = 5 -- 5% chance of having a gear related sub ob
 local NM_1_CHANCE = 75 -- chance to see 1 NM
 local NM_2_CHANCE = 50 -- chance to see 2 NMs
 local NM_3_CHANCE = 25 -- chance to see 3 NMs
-local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor
+local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor 4 non-lamp objectives and 1 lamp = 20%
 
 ------------------------------------------------------------------------------------------
 -- Generates the Nyzul Isle Floor
@@ -216,6 +216,8 @@ function selectObjective(instance, previousObjective)
     local objectiveKey = 0
     
     if (math.random(100) < LAMP_FLOOR_CHANCE) and (previousObjective < 5) then
+        -- lamp objective is gated to not be allowed back to back.
+        -- there is no gate on getting the same lamp related objective back to back on say floor 1 and floor 3.
         objectiveKey = math.random(5,7) -- lamp objectives are 5 through 7 inclusive
     else
         objectiveKey = math.random(1,4) -- non lamps are 1 to 4
@@ -598,7 +600,6 @@ function generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
     end
 
     spawnLampsForFloor(instance, lampsToSpawn, selectedFloorLayout.Rooms, lampObjective)
-    instance:setLocalVar("Nyzul_LampsToLight", numberOfLamps)
 end
 
 -------------------------------------------------------------------------
@@ -630,8 +631,18 @@ function spawnLampsForFloor(instance, lampsToSpawn, rooms, lampObjective)
         end
         lamp = GetNPCByID(lampID, instance)
         lamp:setLocalVar("Nyzul_LampObjective", lampObjective)
+        printf("Spawning Lamp for Objective: %s", lampID)
 
-        -- Ordered lamps
+        -- Certification code required
+        if (lampObjective == 6) then
+            local chars = instance:getChars()
+            for i=1,#chars do
+                local lampVarName = string.format("Nyzul_LampCertCode" ..i.. "")
+                lamp:setLocalVar(lampVarName, chars[i]:getID())
+            end
+        end
+
+        -- Ordered lamps order
         if (lampObjective == 7) then
             random = math.random(#lampOrder)
             lamp:setLocalVar("Nyzul_LampOrder", lampOrder[random])
@@ -815,7 +826,9 @@ function cleanUpPreviousFloor(instance)
         instance:setLocalVar(mobVarName, 0)
     end
 
+    -- clean up local vars
     instance:setLocalVar("Nyzul_GearPenalty", 0)
+    instance:setLocalVar("Nyzul_LampState", 0)
 
     -- Hide initial Rune of Transfer and Vending Box
     entraceRuneOfTransfer = GetNPCByID(17093429, instance)

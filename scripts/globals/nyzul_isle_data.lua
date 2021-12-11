@@ -564,7 +564,7 @@ tpz.nyzul_isle_data.southWestFloorLayouts =
         DoorsToOpen = {17093405}
     },
     FLOOR_SW_4 = { -- Central and South
-        Rooms = {"SW_I", "SW_J", "SW_N", "SW_S", "SW_J", "SW_V", "SW_X", "SW_Y"},
+        Rooms = {"SW_I", "SW_J", "SW_N", "SW_S", "SW_U", "SW_V", "SW_X", "SW_Y"},
         RuneOfTransferSpawnPoint = {x = -340, y = 0, z = -500},
         DoorsToClose = {17093414, 17093413, 17093409, 17093406, 17093403, 17093405, 17093408},
         DoorsToOpen = {17093407}
