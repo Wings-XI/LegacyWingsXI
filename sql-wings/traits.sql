@@ -307,7 +307,7 @@ INSERT INTO `traits` VALUES(43, 'dragon killer', 14, 86, 1, 233, 10, 'ABYSSEA', 
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 20, 1, 1240, 10, NULL, 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 40, 2, 1240, 15, NULL, 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 60, 3, 1240, 20, NULL, 0);
-INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 75, 4, 1240, 25, NULL, 0);
+INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 75, 4, 1240, 25, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(48, 'resist sleep', 7, 81, 5, 1240, 30, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(49, 'resist poison', 11, 20, 1, 1241, 10, NULL, 0);
 INSERT INTO `traits` VALUES(49, 'resist poison', 11, 40, 2, 1241, 15, NULL, 0);
@@ -425,6 +425,7 @@ INSERT INTO `traits` VALUES(79, 'muted soul', 8, 75, 1, 0, 0, 'TOAU', 2500);
 INSERT INTO `traits` VALUES(80, 'desperate blows', 8, 15, 1, 906, 500, 'SOA', 0);
 INSERT INTO `traits` VALUES(80, 'desperate blows', 8, 30, 2, 906, 1000, 'SOA', 0);
 INSERT INTO `traits` VALUES(80, 'desperate blows', 8, 45, 3, 906, 1500, 'SOA', 0);
+INSERT INTO `traits` VALUES(80, 'desperate blows', 8, 75, 1, 0, 0, 'TOAU', 2502);
 INSERT INTO `traits` VALUES(81, 'beast affinity ', 9, 75, 1, 0, 0, 'TOAU', 2564);
 INSERT INTO `traits` VALUES(82, 'beast healer', 9, 75, 1, 0, 0, 'TOAU', 2566);
 INSERT INTO `traits` VALUES(83, 'snapshot', 11, 75, 1, 0, 0, 'TOAU', 2692);

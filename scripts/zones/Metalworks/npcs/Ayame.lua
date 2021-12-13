@@ -52,6 +52,19 @@ function onTrade(player, npc, trade)
         if (trade:hasItemQty(1100, 1) and trade:getItemCount() == 1) then -- Trade Xalmo Feather
             player:startEvent(749) -- Finish Quest "True Strength"
         end
+    elseif player:getCharVar("AnnyEvent2020") == 5 and player:getCharVar("AnnyEvent2020_holla") == 1 and player:getCharVar("AnnyEvent2020_dem") == 1 and player:getCharVar("AnnyEvent2020_mea") == 1  and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(4241, 1) and trade:hasItemQty(4240, 1) and trade:hasItemQty(4238, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 3 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 6)
+            player:addItem(4150)
+            player:PrintToPlayer("Ayame : I can't believe my sister put you up to this... Well thanks for this.", 0xD)
+            player:PrintToPlayer("Ayame : Off you go! Another delivery shouldn't be too much right?.", 0xD)
+            player:PrintToPlayer("Ayame : Take this to the elderly help you recieved on a long path...", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 4150)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4150)
+            player:PrintToPlayer("Ayame : Come back after cleaning up that mess of an inventory...", 0xD)
+        end
     end
 
 end

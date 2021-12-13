@@ -11,6 +11,7 @@ local eventSucceed = 910
 local eventFail    = 911
 
 function onTrade(player, npc, trade)
+    tpz.chocobo.renterOnTrade(player, npc, trade, eventSucceed, eventFail)
 end
 
 function onTrigger(player, npc)

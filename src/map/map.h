@@ -155,13 +155,16 @@ struct map_config_t
     uint8  lv_cap_mission_bcnm;       // 1 = Enable / 0 = Disable lv caps on mission battles.
     uint8  max_merit_points;          // global variable, amount of merit points players are allowed
     uint16 yell_cooldown;             // Minimum time between uses of yell command (in seconds).
+    uint8  yell_min_level;            // Minimum level requirement for yelling (must have a job that level, does not have to be on that job)
     float  fame_multiplier;           // Fame multiplier
     uint8  audit_gm_cmd;              // Minimum permission level of GM command to bother logging.
     bool   audit_chat;
     bool   audit_say;
     bool   audit_shout;
+    bool   audit_emotion;
     bool   audit_tell;
     bool   audit_yell;
+    bool   audit_system;
     bool   audit_linkshell;
     bool   audit_party;
     uint8  healing_tick_delay;
@@ -210,6 +213,7 @@ struct map_session_data_t
 extern map_config_t map_config;
 extern uint32 map_amntplayers;
 extern int32 map_fd;
+extern bool map_doing_final;
 
 static constexpr float server_tick_rate = 2.5f;
 

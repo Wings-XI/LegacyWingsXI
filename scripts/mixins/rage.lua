@@ -14,13 +14,15 @@ require("scripts/globals/status")
 g_mixins = g_mixins or {}
 
 g_mixins.rage = function(mob)
-
+    
     mob:addListener("SPAWN", "RAGE_SPAWN", function(mob)
         mob:setLocalVar("[rage]timer", 1200) -- 20 minutes
     end)
 
     mob:addListener("ENGAGE", "RAGE_ENGAGE", function(mob)
+        if mob:getLocalVar("[rage]at") == 0 then
         mob:setLocalVar("[rage]at", os.time() + mob:getLocalVar("[rage]timer"))
+        end
     end)
 
     mob:addListener("COMBAT_TICK", "RAGE_CTICK", function(mob)
@@ -70,32 +72,38 @@ g_mixins.rage = function(mob)
         end
     end)
 
-    -- Todo: should happen when mob begins to regen while unclaimed. If 1st healing tick hasn't happened, retail mob is stil raged.
     mob:addListener("DISENGAGE", "RAGE_DISENGAGE", function(mob)
-        if mob:getLocalVar("[rage]started") == 1 then
-            mob:setLocalVar("[rage]started", 0)
-
-            -- unboost stats
-            for i = tpz.mod.STR, tpz.mod.CHR do
-                local amt = mob:getLocalVar("[rage]mod_" .. i)
-                mob:delMod(i, amt)
-            end
-
-            -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all decrease
-            mob:delMod(tpz.mod.DELAY, 2600)
-            mob:delMod(tpz.mod.ATTP, 60)
-            mob:delMod(tpz.mod.ACC, 500)
-            mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
-            mob:delMod(tpz.mod.CRITHITRATE, 30)
-            mob:delMod(tpz.mod.MEVA, 500)
-            mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
-            mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
-            mob:delMod(tpz.mod.BINDRESTRAIT, 100)
-            mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
-            mob:delMod(tpz.mod.MOVE, 200)
-        end
+        mob:setLocalVar("current_hp", mob:getHPP())
     end)
 
+    mob:addListener("ROAM_TICK", "RAGE_ROAM_TICK", function(mob)        
+
+        if mob:getHPP() > mob:getLocalVar("current_hp") or mob:getHPP() == 100 then
+            mob:setLocalVar("[rage]at", 0)
+            if mob:getLocalVar("[rage]started") == 1 then                
+                mob:setLocalVar("[rage]started", 0)
+                
+                -- unboost stats
+                for i = tpz.mod.STR, tpz.mod.CHR do
+                    local amt = mob:getLocalVar("[rage]mod_" .. i)
+                    mob:delMod(i, amt)
+                end
+
+                -- TODO: ATT, DEF, MACC, MATT, EVA, attack speed all decrease
+                mob:delMod(tpz.mod.DELAY, 2600)
+                mob:delMod(tpz.mod.ATTP, 60)
+                mob:delMod(tpz.mod.ACC, 500)
+                mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
+                mob:delMod(tpz.mod.CRITHITRATE, 30)
+                mob:delMod(tpz.mod.MEVA, 500)
+                mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
+                mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
+                mob:delMod(tpz.mod.BINDRESTRAIT, 100)
+                mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
+                mob:delMod(tpz.mod.MOVE, 200)
+            end
+        end
+    end)
 end
 
 return g_mixins.rage

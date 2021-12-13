@@ -469,7 +469,7 @@ uint64 unpackBitsLE(uint8* target, int32 byteOffset, int32 bitOffset, uint8 leng
     return retVal;
 }
 
-void EncodeStringLinkshell(int8* signature, int8* target)
+void EncodeStringLinkshell(const int8* signature, int8* target)
 {
     uint8 encodedSignature[16];
     memset(encodedSignature, 0, sizeof encodedSignature);
@@ -498,7 +498,7 @@ void EncodeStringLinkshell(int8* signature, int8* target)
     strncpy((char*)target, (const char*)encodedSignature, sizeof encodedSignature);
 }
 
-void DecodeStringLinkshell(int8* signature, int8* target)
+void DecodeStringLinkshell(const int8* signature, int8* target)
 {
     uint8 decodedSignature[21];
     memset(decodedSignature, 0, sizeof decodedSignature);
@@ -532,7 +532,7 @@ void DecodeStringLinkshell(int8* signature, int8* target)
     strncpy((char*)target, (const char*)decodedSignature, sizeof decodedSignature);
 }
 
-int8* EncodeStringSignature(int8* signature, int8* target)
+int8* EncodeStringSignature(const int8* signature, int8* target)
 {
     uint8 encodedSignature[12];
     memset(encodedSignature, 0, sizeof encodedSignature);
@@ -561,7 +561,7 @@ int8* EncodeStringSignature(int8* signature, int8* target)
     return (int8*)strncpy((char*)target, (const char*)encodedSignature, sizeof encodedSignature);
 }
 
-void DecodeStringSignature(int8* signature, int8* target)
+void DecodeStringSignature(const int8* signature, int8* target)
 {
     uint8 decodedSignature[PacketNameLength + 1] = { 0 };
     for(uint8 currChar = 0; currChar < PacketNameLength; ++currChar)
@@ -578,6 +578,64 @@ void DecodeStringSignature(int8* signature, int8* target)
     }
     // TODO: -Wno-sizeof-pointer-memaccess - sizeof references source not destination
     strncpy((char*)target, (const char*)decodedSignature, sizeof decodedSignature);
+}
+
+// Take a regular string of 8-bit wide chars and packs it down into an
+// array of 7-bit wide chars.
+void PackSoultrapperName(std::string name, uint8 output[], uint8 size)
+{
+    // Before anything else, sanitize the name string
+    // If contains underscore character
+    if (std::find(name.begin(), name.end(), '_') != name.end())
+    {
+        // Remove underscores
+        name.erase(std::remove(name.begin(), name.end(), '_'), name.end());
+    }
+
+    // Add a space at the end to help with name truncation
+    // TODO: Remove the need for this
+    if (name.length() > 7)
+    {
+        name += ' ';
+    }
+
+    uint8 current = 0;
+    uint8 next    = 0;
+    uint8 shift   = 1;
+    uint8 loops   = 0;
+    uint8 total   = (uint8)name.length();
+    uint8 maxSize = std::max((uint8)20, size);
+
+    // Pack and shift 8-bit to 7-bit
+    for (uint8 i = 0; i <= maxSize; ++i)
+    {
+        current        = i < total ? (uint8)name.at(i) : 0;
+        next           = i + 1 < total ? (uint8)name.at(i + 1) : 0;
+        uint8 tempLeft = current;
+        for (int j = 0; j < shift; ++j)
+        {
+            tempLeft = tempLeft << 1;
+            if (j + 1 != shift && tempLeft & 128)
+            {
+                tempLeft = tempLeft ^ 128;
+            }
+        }
+
+        uint8 tempRight   = next >> (7 - shift);
+        output[i - loops] = tempLeft | tempRight;
+
+        if (shift == 7)
+        {
+            shift = 1;
+            loops++;
+            i++;
+            total--;
+        }
+        else
+        {
+            shift++;
+        }
+    }
 }
 
 std::string escape(std::string const &s)

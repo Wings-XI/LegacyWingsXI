@@ -9,7 +9,32 @@ require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Kazham/IDs")
+require("scripts/globals/pathfind")
+-----------------------------------
+local flags = tpz.path.flag.NONE
+local path =
+{
+    60.600, -12.000, -33.913,
+    60.600, -12.000, -33.913,
+    60.600, -12.000, -33.913,
+    60.600, -12.000, -33.913,
+    60.600, -12.000, -33.913,
+    60.600, -12.025, -38.151,
+    60.600, -12.025, -38.151,
+    60.600, -12.025, -38.151,
+    60.600, -12.025, -38.151,
+    60.600, -12.025, -38.151,
+}
 
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path, flags)
+end
 
 function onTrade(player, npc, trade)
     if (player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.GULLIBLES_TRAVELS) == QUEST_ACCEPTED) then

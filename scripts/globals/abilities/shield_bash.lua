@@ -2,7 +2,7 @@
 -- Ability: Shield Bash
 -- Delivers an attack that can stun the target. Shield required.
 -- Obtained: Paladin Level 15, Valoredge automaton frame Level 1
--- Recast Time: 1:00 minute (3:00 for Valoredge version)
+-- Recast Time: 5:00 minute (3:00 for Valoredge version)
 -- Duration: Instant
 -----------------------------------
 require("scripts/globals/settings")
@@ -36,21 +36,32 @@ function onUseAbility(player, target, ability)
     end
 
     -- Main job factors
-    if player:getMainJob() ~= tpz.job.PLD then
+    if player:getMainJob() == tpz.job.PLD then
+        damage = math.floor(damage)
+    else
         damage = math.floor(damage / 2.2)
         chance = 80
-    else
-        damage = math.floor(damage)
     end
 
     -- Calculate stun proc chance
-    chance = chance + player:getMainLvl()*2 - target:getMainLvl()*2
-    if chance < 33 then
-        chance = 33
-    elseif chance > 99 then
-        chance = 99
+    if player:getMainJob() == tpz.job.PLD then
+        chance = chance + player:getMainLvl()*2 - target:getMainLvl()*2
+        if chance < 33 then
+            chance = 33
+        elseif chance > 99 then
+            chance = 99
+        end
+    else
+        chance = chance + player: getSubLvl()*2 - target:getMainLvl()*2
+        if chance < 33 then
+            chance = 33
+        elseif chance > 99 then
+            chance = 99
+        end
     end
+
     --print(string.format("chance = %u",chance))
+    --print(string.format("player:getMainJob() = %u",player:getMainJob()))
     tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
     if math.random()*100 < chance then
         target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))

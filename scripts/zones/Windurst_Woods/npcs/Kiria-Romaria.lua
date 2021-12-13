@@ -12,7 +12,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(430)
+    player:startEvent(761)
 end
 
 function onEventUpdate(player, csid, option)

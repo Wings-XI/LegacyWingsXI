@@ -11,6 +11,7 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    tpz.campaign.onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)

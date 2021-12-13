@@ -117,7 +117,7 @@ public:
      *  Gets the session mutex object. Lock this before doing any changes.
      *  @return MQ Connection mutex object.
      */
-    std::recursive_mutex* GetMutex();
+    std::recursive_timed_mutex* GetMutex();
 
     /**
      *  Check the number of high priority threads waiting
@@ -193,7 +193,7 @@ private:
     std::vector<AssignedHandlers> mHandlers;
 
     // Mutex for access sync
-    std::recursive_mutex mMutex;
+    std::recursive_timed_mutex mMutex;
     /// High priority thread requesting mutex access
     std::atomic<uint32_t> madwHighPriorityAccess;
     // Counts the number of senders that want to send data

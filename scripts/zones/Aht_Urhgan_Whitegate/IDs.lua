@@ -83,6 +83,7 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         LS_CONCIERGE_REGISTERED2      = 14359, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
         LS_CONCIERGE_ALREADY_LISTED   = 14360, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         COMMON_SENSE_SURVIVAL         = 14380, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        BESIGED_RECHARGE              = 9857, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Imperial Standing credit/Imperial Standing credits] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
         },
     mob =
     {

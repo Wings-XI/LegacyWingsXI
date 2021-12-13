@@ -6,9 +6,20 @@
 require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Bibiki_Bay/IDs")
 require("scripts/globals/missions")
+require("scripts/globals/settings")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    if player:getCharVar("AnnyEvent2020") == 10 and player:getCharVar("AnnyEvent2020_spring") == 1 and player:getCharVar("AnnyEvent2020_cradle") == 1 and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(1537, 1) and trade:hasItemQty(1540, 1) and trade:getItemCount() == 2 then
+            player:tradeComplete()
+            player:setCharVar("AnnyEvent2020", 11)
+            player:PrintToPlayer("Warmachine : Items... Recieved..........", 0xD)
+            player:PrintToPlayer("Warmachine : Dispensing... Orders....", 0xD)
+            player:PrintToPlayer("Warmachine : Travel to the great kings, and the lands they inhabit..", 0xD)
+            player:PrintToPlayer("Warmachine : Bring thy rewards.. To an ally behind enemy lines...", 0xD)
+        end
+    end
 end
 
 function onTrigger(player, npc)

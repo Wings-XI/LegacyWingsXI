@@ -315,6 +315,26 @@ uint8 CZone::GetBackgroundMusicNight()
     return m_zoneMusic.m_songNight;
 }
 
+void CZone::SetSoloBattleMusic(uint8 newMusic)
+{
+    m_zoneMusic.m_bSongS = newMusic;
+}
+
+void CZone::SetPartyBattleMusic(uint8 newMusic)
+{
+    m_zoneMusic.m_bSongM = newMusic;
+}
+
+void CZone::SetBackgroundMusicDay(uint8 newMusic)
+{
+    m_zoneMusic.m_songDay = newMusic;
+}
+
+void CZone::SetBackgroundMusicNight(uint8 newMusic)
+{
+    m_zoneMusic.m_songNight = newMusic;
+}
+
 bool CZone::CanUseMisc(uint16 misc)
 {
     return (m_miscMask & misc) == misc;

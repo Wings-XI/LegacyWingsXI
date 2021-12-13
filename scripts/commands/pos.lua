@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "sssss"
 }
 
@@ -74,7 +74,7 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
             zoneId = targ:getZoneID()
             targ:setPos(x, y, z, 0)
         else
-        
+
             -- When zoning in and out of Mordion Gaol adjust the jail var
             local to_prison = 0
             if zoneId == 131 then

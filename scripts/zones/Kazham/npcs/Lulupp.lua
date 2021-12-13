@@ -35,7 +35,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path)
 end
 
 function onTrade(player, npc, trade)
@@ -75,7 +75,6 @@ function onTrigger(player, npc)
 
     if (player:getCharVar("BathedInScent") == 1 and OpoOpoAndIStatus == QUEST_AVAILABLE) then
         player:startEvent(217, 0, 483)  -- 483 broken mithran fishing rod
-        npc:wait()
     elseif (OpoOpoAndIStatus == QUEST_ACCEPTED) then
         if retry == 1 then
             player:startEvent(239) -- gave 1st NPC wrong item instead of "Broken Mithran Fishing Rod"
@@ -104,7 +103,6 @@ function onTrigger(player, npc)
         end
     else
         player:startEvent(197)  -- not sure why but this cs has no text
-        npc:wait()
     end
 end
 
@@ -126,7 +124,5 @@ function onEventFinish(player, csid, option, npc)
     elseif (csid == 239 and option == 1) then                -- Traded wrong to another NPC, give a clue
         player:setCharVar("OPO_OPO_RETRY", 0)
         player:setCharVar("OPO_OPO_FAILED", 1)
-    else
-        npc:wait(0)
     end
 end

@@ -34,6 +34,7 @@ zones[tpz.zone.AL_ZAHBI] =
         TATEN_BILTEN_SHOP_DIALOG  = 7845, -- Weave something beautiful with the materials you buy here, okay?
         CHOCOBO_HAPPY             = 7848, -- The chocobo appears to be extremely happy.
         SANCTION                  = 7973, -- You have received the Empire's Sanction.
+        BESIGED_RECHARGE          = 8029, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Imperial Standing credit/Imperial Standing credits] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
     },
     mob =
     {

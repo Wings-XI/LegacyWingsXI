@@ -16,7 +16,7 @@ function onPetAbility(target, automaton, skill, master, action)
     local params = {
         numHits = 3,
         atkmulti = 1,
-        weaponType = tpz.skill.CLUB,
+        damageType = tpz.damageType.BLUNT,
         ftp100 = 1.5,
         ftp200 = 2.0,
         ftp300 = 3.0,

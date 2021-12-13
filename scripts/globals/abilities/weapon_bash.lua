@@ -3,7 +3,7 @@
 -- Delivers an attack that can stun the target. Requires Two-handed weapon.
 -- Obtained: Dark Knight Level 20
 -- Cast Time: Instant
--- Recast Time: 3:00 minutes
+-- Recast Time: 5:00 minutes
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")

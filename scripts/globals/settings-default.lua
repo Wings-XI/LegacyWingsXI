@@ -5,6 +5,9 @@
 -- This is to allow server operators to further customize their servers.  As more features are added to pXI, the list will surely expand.
 -- Anything scripted can be customized with proper script editing.
 
+-- This is a template file only. Please create a copy of this file and
+-- name if "settings.lua" before starting the server.
+
 -- PLEASE REQUIRE THIS SCRIPT IN ANY SCRIPTS YOU DO: ADD THIS LINE TO THE TOP!!!!
 -- require("scripts/globals/settings")
 -- With this script added to yours, you can pull variables from it!!
@@ -19,7 +22,7 @@ require("scripts/globals/common")
 ENABLE_COP     = 1
 ENABLE_TOAU    = 1
 ENABLE_WOTG    = 1
-ENABLE_ACP     = 0
+ENABLE_ACP     = 1
 ENABLE_AMK     = 0
 ENABLE_ASA     = 0
 ENABLE_ABYSSEA = 0
@@ -162,6 +165,7 @@ HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, w
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
 STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
+Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
 
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
@@ -187,6 +191,7 @@ LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her ow
 -- COMMANDS
 UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being teleported
 
--- ASSAULTS
+-- ASSAULTS | ZNMs
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior

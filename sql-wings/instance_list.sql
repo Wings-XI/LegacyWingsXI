@@ -103,7 +103,7 @@ INSERT INTO `instance_list` VALUES (51, 'nyzul_isle_investigation', 72, 30, -20.
 -- INSERT INTO `instance_list` VALUES (52, 'nyzul_isle_uncharted_survey', 72, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (53, 'the_black_coffin', 54, 30, 0, -22, 24, 64, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (54, 'against_all_odds', 54, 30, -9.000, -22.000, 17.000, 252, -1, -1, -1, -1);
--- INSERT INTO `instance_list` VALUES (55, 'scouting_the_ashu_talif', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
+INSERT INTO `instance_list` VALUES (55, 'scouting_the_ashu_talif', 54, 30, 11.500, -22.000, 5.000, 171, -1, -1, -1, -1);
 -- INSERT INTO `instance_list` VALUES (56, 'royal_painter_escort', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 -- INSERT INTO `instance_list` VALUES (57, 'targeting_the_captain', 60, 54, 30, 0.000, 0.000, 0.000, 0, -1, -1, -1, -1);
 INSERT INTO `instance_list` VALUES (58, 'path_of_darkness', 72, 30, 500, 0, -572, 192, 143, 143, 143, 143);

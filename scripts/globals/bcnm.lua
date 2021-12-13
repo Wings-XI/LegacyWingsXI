@@ -22,7 +22,7 @@ local battlefields = {
      -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
         { 3,  643,    0},   -- Brothers (ENM)
-     -- { 4,  644,    0},   -- Holy Cow (ENM)
+        { 4,  644,    0},   -- Holy Cow (ENM)
      -- { 5,    ?, 3454},   -- Taurassic Park (HKC30)
     },
 
@@ -81,7 +81,7 @@ local battlefields = {
     [tpz.zone.SPIRE_OF_VAHZL] =
     {
         { 0,  864,    0},   -- Desires of Emptiness (PM5-2)
-     -- { 1,  865,    0},   -- Pulling the Plug (ENM)
+        { 1,  865,    0},   -- Pulling the Plug (ENM)
      -- { 2,  866, 3352},   -- Empty Aspirations (KC50)
     },
 
@@ -134,13 +134,13 @@ local battlefields = {
 
     [tpz.zone.TEMENOS] =
     {
-     -- { 0, 1299,    0},   -- Northern Tower
-     -- { 1, 1300,    0},   -- Eastern Tower
-     -- { 2, 1298,    0},   -- Western Tower
+        { 0, 1299,    0},   -- Northern Tower
+        { 1, 1300,    0},   -- Eastern Tower
+        { 2, 1298,    0},   -- Western Tower
      -- { 3, 1306,   -1},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986)
-     -- { 4, 1305, 1904},   -- Central 3rd Floor
-     -- { 5, 1304, 1905},   -- Central 2nd Floor
-     -- { 6, 1303, 1906},   -- Central 1st Floor
+        { 4, 1305, 1904},   -- Central 3rd Floor
+        { 5, 1304, 1905},   -- Central 2nd Floor
+        { 6, 1303, 1906},   -- Central 1st Floor
      -- { 7, 1301, 2127},   -- Central Basement
      -- { 8, 1302,    0},   -- Central Basement II
      -- { 9, 1307,    0},   -- Central 4th Floor II
@@ -148,10 +148,10 @@ local battlefields = {
 
     [tpz.zone.APOLLYON] =
     {
-     -- { 0, 1291,    0},   -- SW Apollyon
-     -- { 1, 1290,    0},   -- NW Apollyon
-     -- { 2, 1293,    0},   -- SE Apollyon
-     -- { 3, 1292,    0},   -- NE Apollyon
+        { 0, 1291,    0},   -- SW Apollyon
+        { 1, 1290,    0},   -- NW Apollyon
+        { 2, 1293,    0},   -- SE Apollyon
+        { 3, 1292,    0},   -- NE Apollyon
      -- { 4, 1296,   -2},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
      -- { 5, 1294, 2127},   -- CS Apollyon
      -- { 6, 1295,    0},   -- CS Apollyon II
@@ -400,7 +400,7 @@ local battlefields = {
      -- { 3,  259,    0},   -- The Solitary Demolisher (Mog Bonanza)
      -- { 4,  260,    0},   -- Heroine's Combat (Mog Bonanza)
      -- { 5,  261,    0},   -- Mercenary Camp (Mog Bonanza)
-     -- { 6,  262,    0},   -- Ode of Life Bestowing (ACP11)
+        { 6,  262,    0},   -- Ode of Life Bestowing (ACP11)
      -- { 7,    ?,    0},   -- *Return to Delkfutt's Tower (HTMBF)
      -- { 8,    ?,    0},   -- True Love
      -- { 9,    ?,    0},   -- A Fond Farewell
@@ -488,7 +488,7 @@ local battlefields = {
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
      -- {19,  531,    0},   -- Clash of the Comrades (Quest)
-     -- {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
+        {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
         {21,  533,    0},   -- Beyond Infinity (Quest)
      -- {22,    ?, 4062},   -- *Factory Rejects (SKC10)
      -- {23,    ?, 4063},   -- *Demolition Squad (SKC20)
@@ -583,13 +583,14 @@ function checkReqs(player, npc, bfid, registrant)
         [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                          ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                           ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == tpz.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
-        [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES                                                                                           ) end, -- ZM6: Through the Quicksand Caves
+        [ 192] = function() return ( roz >= mi.zilart.THROUGH_THE_QUICKSAND_CAVES and roz < mi.zilart.RETURN_TO_DELKFUTTS_TOWER                                             ) end, -- ZM6: Through the Quicksand Caves
         [ 194] = function() return ( mjob == tpz.job.SAM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SAM LB5)
         [ 195] = function() return ( mjob == tpz.job.NIN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (NIN LB5)
         [ 196] = function() return ( mjob == tpz.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
         [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                            ) end, -- ZM8: Return to Delkfutt's Tower
+        [ 262] = function() return ( player:hasKeyItem(tpz.ki.OMNIS_STONE) and not player:hasKeyItem(tpz.ki.EBON_KEY)                                                       ) end, -- ACP11: Ode of Life Bestowing
         [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(tpz.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
         [ 289] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(1) and not player:hasKeyItem(tpz.ki.SHARD_OF_COWARDICE)    ) end, -- ZM14: Ark Angels (Tarutaru)
         [ 290] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(2) and not player:hasKeyItem(tpz.ki.SHARD_OF_ENVY)         ) end, -- ZM14: Ark Angels (Mithra)
@@ -615,6 +616,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 518] = function() return ( mjob == tpz.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
         [ 519] = function() return ( mjob == tpz.job.BRD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BRD LB5)
         [ 530] = function() return ( mjob == tpz.job.DNC and mlvl >= 66                                                                                                     ) end, -- Quest: A Furious Finale (DNC LB5)
+        [ 532] = function() return ( player:hasKeyItem(tpz.ki.MARK_OF_SEED)                                                                                                 ) end, -- ACP7: Those Who Lurk in Shadows
         [ 533] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [ 544] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)                                                                                          ) end, -- Quest: Trial by Fire
         [ 545] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Fire
@@ -940,6 +942,16 @@ function GetCrackedMessage(player, option)
 end
 
 -----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function BCNMGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
+
+-----------------------------------------------
 -- onTrade Action
 -----------------------------------------------
 
@@ -973,6 +985,15 @@ function TradeBCNM(player, npc, trade, onUpdate)
         return false
     end
 
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) and not onUpdate then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- open menu of valid battlefields
     local validBattlefields = findBattlefields(player, npc, itemId)
     if validBattlefields ~= 0 then
@@ -992,6 +1013,16 @@ end
 
 function EventTriggerBCNM(player, npc)
     -- player:PrintToPlayer("EventTriggerBCNM")
+
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+        local sync_error = BCNMGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
         player:startEvent(32003)

@@ -31,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <string.h>
 #include <array>
 #include <chrono>
+#include <ctime>
 
 #include "../lua/luautils.h"
 
@@ -111,6 +112,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 // Square-Enix changeg the chat message packet format in this version
 const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
 const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
+const std::string MASTER_LV_PACKET_CHANGE_VER("302111xx_x");
 
 
 /************************************************************************
@@ -480,15 +482,18 @@ namespace charutils
             // 0x08 - Has access to Mog Wardrobe #4
             uint32 acctid = Sql_GetUIntData(SqlHandle, 30);
             PChar->m_accountId = acctid;
-            const char* pClientFeatQuery = "SELECT client_version, features, expansions FROM accounts_sessions WHERE charid = %u";
+            const char* pClientFeatQuery = "SELECT client_version, features, expansions, version_mismatch FROM accounts_sessions WHERE charid = %u";
             ret = Sql_Query(SqlHandle, pClientFeatQuery, PChar->id);
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
                 PChar->m_clientVersion = std::string(reinterpret_cast<char*>(Sql_GetData(SqlHandle, 0)));
                 PChar->m_accountFeatures = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 1));
                 PChar->m_accountExpansions = static_cast<uint16>(Sql_GetUIntData(SqlHandle, 2));
+                PChar->m_clientVerMismatch = (Sql_GetUIntData(SqlHandle, 3) != 0);
             }
-            PChar->m_needChatFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= CHAT_PACKET_CHANGE_VER));
-            PChar->m_needTellFix = ((!PChar->m_clientVersion.empty()) && (PChar->m_clientVersion >= TELL_PACKET_CHANGE_VER));
+            std::string clientVer = PChar->m_clientVersion.substr(0, 6) + "xx_x";
+            PChar->m_needChatFix = ((!clientVer.empty()) && (clientVer >= CHAT_PACKET_CHANGE_VER));
+            PChar->m_needTellFix = ((!clientVer.empty()) && (clientVer >= TELL_PACKET_CHANGE_VER));
+            PChar->m_needMasterLvFix = ((!clientVer.empty()) && (clientVer >= MASTER_LV_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);
@@ -750,6 +755,14 @@ namespace charutils
             }
         }
 
+        fmtQuery = "SELECT flags FROM audit_list WHERE entity_type = 1 AND entity_name = '%s';";
+        Sql_Query(SqlHandle, fmtQuery, PChar->name.c_str());
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            PChar->m_logChat = (uint8)Sql_GetUIntData(SqlHandle, 0);
+        }
 
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
         Sql_Query(SqlHandle, "UPDATE accounts_sessions SET last_updated = NOW() WHERE charid = %u", PChar->id);
@@ -851,7 +864,8 @@ namespace charutils
             "gmlevel, "    // 0
             "mentor, "     // 1
             "nnameflags, "  // 2
-            "chatfilters " // 3
+            "chatfilters, " // 3
+            "languages "     // 4
             "FROM chars "
             "WHERE charid = %u;";
 
@@ -865,6 +879,7 @@ namespace charutils
             PChar->m_mentorUnlocked = Sql_GetUIntData(SqlHandle, 1) > 0;
             PChar->menuConfigFlags.flags = (uint32)Sql_GetUIntData(SqlHandle, 2);
             PChar->chatFilterFlags = Sql_GetUInt64Data(SqlHandle, 3);
+            PChar->search.language = (uint8)Sql_GetUIntData(SqlHandle, 4);
         }
 
         charutils::LoadInventory(PChar);
@@ -1477,7 +1492,7 @@ namespace charutils
 
         if ((int32)(PItem->getQuantity() - PItem->getReserve() + quantity) < 0)
         {
-            ShowDebug("UpdateItem: %s trying to move invalid quantity %u of itemID %u\n", PChar->GetName(), quantity, ItemID);
+            ShowError("UpdateItem: %s trying to move invalid quantity %u of itemID %u\n", PChar->GetName(), quantity, ItemID);
             return 0;
         }
 
@@ -1886,10 +1901,12 @@ namespace charutils
             return false;
         }
 
-        if ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
+        if  ((!PChar->m_GMSuperpowers) &&
+            ((PChar->m_EquipBlock & (1 << equipSlotID)) ||
             !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+            ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0) ||
             (PItem->getReqLvl() > (map_config.disable_gear_scaling ?
-            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])))
+            PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()]))))
         {
             return false;
         }
@@ -2144,6 +2161,10 @@ namespace charutils
         if (PItem == nullptr)
             return true;
 
+        if (PChar->m_GMSuperpowers) {
+            return true;
+        }
+
         for (uint8 i = 1; i < MAX_JOBTYPE; i++)
             if (PItem->getJobs() & (1 << (i - 1)) && PItem->getReqLvl() <= PChar->jobs.job[i])
                 return true;
@@ -2386,6 +2407,10 @@ namespace charutils
     void CheckValidEquipment(CCharEntity* PChar)
     {
         CItemEquipment* PItem = nullptr;
+
+        if (PChar->m_GMSuperpowers) {
+            return;
+        }
 
         for (uint8 slotID = 0; slotID < 16; ++slotID)
         {
@@ -5148,6 +5173,19 @@ namespace charutils
 
     /************************************************************************
     *                                                                       *
+    *  Save the char's language preference                                  *
+    *                                                                       *
+    ************************************************************************/
+
+    void SaveLanguages(CCharEntity* PChar)
+    {
+        const char* Query = "UPDATE chars SET languages = %u WHERE charid = %u;";
+
+        Sql_Query(SqlHandle, Query, PChar->search.language, PChar->id);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Saves character nation changes                                       *
     *                                                                       *
     ************************************************************************/
@@ -5863,6 +5901,19 @@ namespace charutils
         return false;
     }
 
+    uint8 GetHighestJobLevel(CCharEntity* PChar)
+    {
+        uint8 max_lv = 0;
+
+        for (uint8 i = 0; i < MAX_JOBTYPE; i++) {
+            if (PChar->jobs.job[i] > max_lv) {
+                max_lv = PChar->jobs.job[i];
+            }
+        }
+
+        return max_lv;
+    }
+
     //char_points manipulation
     void AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max)
     {
@@ -6019,6 +6070,11 @@ namespace charutils
         return GetCharVar(PChar->id, var);
     }
 
+    uint32 GetCharUVar(CCharEntity* PChar, const char* var)
+    {
+        return GetCharUVar(PChar->id, var);
+    }
+
     int32 GetCharVar(uint32 charid, const char* var)
     {
         const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
@@ -6034,9 +6090,22 @@ namespace charutils
         return 0;
     }
 
+    uint32 GetCharUVar(uint32 charid, const char* var)
+    {
+        int32 res = GetCharVar(charid, var);
+        uint32 ures = 0;
+        ures = *reinterpret_cast<uint32*>(&res);
+        return ures;
+    }
+
     bool AddCharVar(CCharEntity* PChar, const char* var, int32 increment)
     {
         return AddCharVar(PChar->id, var, increment);
+    }
+
+    bool AddCharUVar(CCharEntity* PChar, const char* var, uint32 increment)
+    {
+        return AddCharUVar(PChar->id, var, increment);
     }
 
     bool AddCharVar(uint32 charid, const char* var, int32 increment)
@@ -6050,7 +6119,7 @@ namespace charutils
         {
             if (Sql_NumRows(SqlHandle) != 0)
             {
-                const char* fmtQuery2 = "UPDATE char_vars SET value = value + %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                const char* fmtQuery2 = "UPDATE char_vars SET value = value + %d WHERE varname = '%s' AND charid = %u LIMIT 1;";
                 ret = Sql_Query(SqlHandle, fmtQuery2, increment, var, id);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6059,7 +6128,7 @@ namespace charutils
             }
             else
             {
-                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%d);";
                 ret = Sql_Query(SqlHandle, fmtQuery3, id, var, increment);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6071,9 +6140,21 @@ namespace charutils
         return false;
     }
 
+    bool AddCharUVar(uint32 charid, const char* var, uint32 increment)
+    {
+        uint32 temp = GetCharUVar(charid, var);
+        temp += increment;
+        return SetCharUVar(charid, var, temp);
+    }
+
     bool SetCharVar(CCharEntity* PChar, const char* var, int32 value)
     {
         return SetCharVar(PChar->id, var, value);
+    }
+
+    bool SetCharUVar(CCharEntity* PChar, const char* var, uint32 value)
+    {
+        return SetCharUVar(PChar->id, var, value);
     }
 
     bool SetCharVar(uint32 charid, const char* var, int32 value)
@@ -6087,7 +6168,7 @@ namespace charutils
         {
             if (Sql_NumRows(SqlHandle) != 0)
             {
-                const char* fmtQuery2 = "UPDATE char_vars SET value = %u WHERE varname = '%s' AND charid = %u LIMIT 1;";
+                const char* fmtQuery2 = "UPDATE char_vars SET value = %d WHERE varname = '%s' AND charid = %u LIMIT 1;";
                 ret = Sql_Query(SqlHandle, fmtQuery2, value, var, id);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6096,7 +6177,7 @@ namespace charutils
             }
             else
             {
-                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%u);";
+                const char* fmtQuery3 = "INSERT INTO char_vars VALUES (%u,'%s',%d);";
                 ret = Sql_Query(SqlHandle, fmtQuery3, id, var, value);
                 if (ret == SQL_SUCCESS && Sql_AffectedRows(SqlHandle) != 0)
                     return true;
@@ -6106,6 +6187,13 @@ namespace charutils
         }
 
         return false;
+    }
+
+    bool SetCharUVar(uint32 charid, const char* var, uint32 value)
+    {
+        int32 conv_val = 0;
+        conv_val = *reinterpret_cast<int32*>(&value);
+        return SetCharVar(charid, var, value);
     }
 
     uint16  GetRangedAttackMessage(CCharEntity* PChar, float distance)
@@ -6468,6 +6556,110 @@ int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
         PChar->m_resendRaise = true;
     }
     return 0;
+}
+
+EYellCheckResult CanUseYell(CCharEntity* PChar)
+{
+    if (PChar->isNewPlayer())
+    {
+        // Yells aren't enabled for new players
+        return EYellCheckResult::YELLDEC_NEW_PLAYER;
+    }
+
+    if (charutils::GetHighestJobLevel(PChar) <= map_config.yell_min_level)
+    {
+        // Player's max level is too low.
+        return EYellCheckResult::YELLDEC_LEVEL_TOO_LOW;
+    }
+
+    auto YellBanned = charutils::GetCharVar(PChar, "YellBan");
+    if (YellBanned != 0)
+    {
+        // Player is permanently banned.
+        return EYellCheckResult::YELLDEC_BANNED;
+    }
+
+    auto YellMuteTime = charutils::GetCharVar(PChar, "YellMuteTime");
+    if (YellMuteTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellMuteTime > CurrentTime)
+        {
+            // Player is currently muted.
+            return EYellCheckResult::YELLDEC_MUTED;
+        }
+
+        // Mute expired.
+        charutils::SetCharVar(PChar, "YellMuteTime", 0);
+    }
+
+    auto OptedIn = charutils::GetCharVar(PChar, "YellOptedIn");
+    if (OptedIn == 0)
+    {
+        // Player didn't opt-in to the rules.
+        return EYellCheckResult::YELLDEC_NOT_OPTED_IN;
+    }
+
+    // Yaaaaaargh!
+    return EYellCheckResult::YELLDEC_SUCCESS;
+}
+
+bool IsYellSpamFiltered(CCharEntity* PChar)
+{
+    auto YellSpamTime = charutils::GetCharVar(PChar, "YellSpamTime");
+    if (YellSpamTime > 0)
+    {
+        auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        if (YellSpamTime > CurrentTime)
+        {
+            // Player is currently marked as spam.
+            return true;
+        }
+
+        charutils::SetCharVar(PChar, "YellSpamTime", 0);
+    }
+
+    return false;
+}
+
+void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason)
+{
+    std::string reason;
+    char time_str[64] = { 0 };
+
+    if (Reason == EYellCheckResult::YELLDEC_SUCCESS) {
+        // Shouldn't be called but if it does then do nothing
+        return;
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_BANNED) {
+        reason = "You have been permanently banned from using yells.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_LEVEL_TOO_LOW) {
+        reason = "You must have a job leveled to at least level " + std::to_string(map_config.yell_min_level) + " to use the yell command.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_MUTED) {
+        reason = "You have been muted from using the yell command.";
+        time_t muted_until = charutils::GetCharVar(PChar, "YellMuteTime");
+        if (muted_until > 0) {
+            std::tm * ptm = std::gmtime(&muted_until);
+            // Do not change the date format! Using dd/mm/yy or mm/dd/yy
+            // will confuse NA or EU players respectively.
+            std::strftime(time_str, 64, "%a, %Y/%m/%d %H:%M:%S", ptm);
+            reason += " You will be able to use the command again on ";
+            reason += time_str;
+            reason += " UTC.";
+        }
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_NEW_PLAYER) {
+        reason = "You cannot use the yell command while you are still in a new player status.";
+    }
+    else if (Reason == EYellCheckResult::YELLDEC_NOT_OPTED_IN) {
+        reason = "Using the yell command requires you to opt-in. Please type \"!yell\" for more information.";
+    }
+    else {
+        reason = "The use of the command failed for an unknown reason. If the issue persists please open a GM ticket.";
+    }
+    PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, reason));
 }
 
 }; // namespace charutils

@@ -35,6 +35,8 @@ function onPetAbility(target, pet, skill)
             burst = 1.65
         elseif (skillchainCount == 5) then -- six weaponskills
             burst = 1.75
+        elseif (skillchainCount == 6) then -- seven weaponskills
+            burst = 1.85
         else
             -- Something strange is going on if this occurs.
             burst = 1.0

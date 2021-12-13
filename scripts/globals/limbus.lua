@@ -28,7 +28,7 @@ function tpz.limbus.setupArmouryCrates(bfid, hide)
     else
         ID = zones[tpz.zone.TEMENOS]
     end
-    
+
     switch (bfid): caseof
     {
         [1290] = function() -- NW_Apollyon
@@ -237,6 +237,7 @@ function tpz.limbus.extendTimeLimit(battlefield, minutes, zone, npc)
 
     players = battlefield:getPlayers()
     for _, player in pairs(players) do
+        --player:countdown(battlefield:getTimeLimit())
         player:messageSpecial(ID.text.TIME_EXTENDED, minutes)
         player:messageSpecial(ID.text.TIME_LEFT, battlefield:getRemainingTime()/60)
     end
@@ -364,7 +365,7 @@ end
 
 function tpz.limbus.elementalsDead()
     local ID = zones[tpz.zone.APOLLYON]
-    local day = VanadielDayElement()
+    local day = VanadielDayOfTheWeek()
     local daykill = false
     if day == 0 then  --  fire
         if GetMobByID(ID.mob.APOLLYON_SW_MOB[4]+3):isDead() and GetMobByID(ID.mob.APOLLYON_SW_MOB[4]+11):isDead()

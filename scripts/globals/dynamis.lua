@@ -960,11 +960,17 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
     mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
     mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DMGPHYS, -50)
+
+    -- Disabling WHM job trait mods because their job is set to WHM in the DB.
+    mob:setMod(tpz.mod.MDEF, 0)
+    mob:setMod(tpz.mod.REGEN, 0)
+    mob:setMod(tpz.mod.MPHEAL, 0)
+    mob:setMod(tp.mod.CLEAR_MIND, 0)
+
     mob:setTrueDetection(1)
 
 end
@@ -991,7 +997,6 @@ dynamis.setMegaBossStats = function(mob)
     mob:setMod(tpz.mod.RESBUILD_PARALYZE, 15)
     mob:setMod(tpz.mod.RESBUILD_BLIND, 15)
     mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 8)
     mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
     mob:setTrueDetection(1)
 

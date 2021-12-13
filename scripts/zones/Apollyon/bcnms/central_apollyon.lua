@@ -11,7 +11,7 @@ function onBattlefieldInitialise(battlefield)
     battlefield:setLocalVar("loot", 1)
     battlefield:setLocalVar("podReady", 1)
     SetServerVariable("[Central_Apollyon]Time", battlefield:getTimeLimit()/60)
-    tpz.limbus.setupArmouryCrates(battlefield:getID())       
+    tpz.limbus.setupArmouryCrates(battlefield:getID())
 end
 
 function onBattlefieldTick(battlefield, tick)
@@ -26,7 +26,6 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     player:delKeyItem(tpz.ki.COSMOCLEANSE)
-    player:setCharVar("Cosmo_Cleanse_TIME", os.time())
     if player:getCharVar("ApollyonEntrance") == 0 then
         player:delKeyItem(tpz.ki.BLACK_CARD)
     else

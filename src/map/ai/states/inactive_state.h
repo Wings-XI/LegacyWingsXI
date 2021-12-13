@@ -28,6 +28,8 @@ class CInactiveState : public CState
 {
 public:
     CInactiveState(CBaseEntity* PEntity, duration _duration, bool canChangeState);
+    duration GetDuration();
+    void SetDuration(duration _duration);
 
 protected:
     virtual bool CanChangeState() override { return m_canChangeState; }
@@ -35,6 +37,7 @@ protected:
     virtual bool CanInterrupt() override { return false; }
     virtual bool Update(time_point tick) override;
     virtual void Cleanup(time_point tick) override;
+
 private:
     duration m_duration;
     bool m_canChangeState {false};

@@ -18,7 +18,21 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(615) -- i know a thing or 2 about these streets
+    if player:getCharVar("AnnyEvent2020") == 0 and player:getNation() == 0 and Anniversary_Event_2021 == 1 then
+        if player:getFreeSlotsCount() > 0 and player:hasItem(536) == false then
+            player:setCharVar("AnnyEvent2020", 1)
+            player:PrintToPlayer("Alevia : Oh its you! Its been quite awhile since i've seen you.", 0xD)
+            player:PrintToPlayer("Alevia : You seem to have some a long way since then, I have something for you.", 0xD)
+            player:PrintToPlayer("Alevia : The mage who is always full of herself has been looking for this...", 0xD)
+            player:addItem(536)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 536)
+            player:PrintToPlayer("Alevia : Come back after sorting that mess of an inventory...", 0xD)
+        end
+    else
+        player:startEvent(615) -- i know a thing or 2 about these streets
+    end
 end
 
 function onEventUpdate(player, csid, option)

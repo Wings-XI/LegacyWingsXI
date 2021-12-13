@@ -205,6 +205,7 @@ public:
     nameflags_t				nameflags;						// флаги перед именем персонажа
     nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
     uint64                  chatFilterFlags;                // Chat Filters
+    uint8                   m_logChat;                      // Log chat messages being sent (0x01) or received (0x02) by this character
     uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
@@ -354,12 +355,12 @@ public:
     uint32			  m_PlayTime;
     uint32			  m_SaveTime;
 
-    uint32            m_LastYell;
     uint16            m_LastEngagedTargID;          // my most recent engage target. used for auto-target logic
     CBattleEntity*    m_autoTargetOverride;         // When a party member auto-targets, this gets set to all of alliance to ensure everyone autotargets same mob (QoL)
 
     uint8			  m_GMlevel;                    // Level of the GM flag assigned to this character
     bool              m_isGMHidden;                 // GM Hidden flag to prevent player updates from being processed.
+    bool              m_GMSuperpowers;
 
     bool              m_mentorUnlocked;
     uint32            m_moghouseID;
@@ -393,8 +394,10 @@ public:
     uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
     uint32            m_accountExpansions;          // Expansions that the account has access to
     std::string       m_clientVersion;
+    bool              m_clientVerMismatch;
     bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets
     bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
+    bool              m_needMasterLvFix;            // Does he use a newer version of the game client, which has several packet changes due to master levels
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover

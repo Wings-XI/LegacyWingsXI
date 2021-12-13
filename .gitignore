@@ -198,6 +198,9 @@ cmake_install.cmake
 /conf/server_message.conf
 /conf/server_message_fr.conf
 
+# non-default settings file
+/scripts/globals/settings.lua
+
 # Tracy download
 tracy/
 libcrypto-3-x64.dll

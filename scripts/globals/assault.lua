@@ -1,5 +1,5 @@
 --------------------------------------
--- Assault Utilities 
+-- Assault Utilities
 -- desc : Common functions for the assaults
 -- Credit: KnowOne - https://github.com/KnowOne134/DSP-Shared_Collection/blob/main/Assault/assault.lua
 --------------------------------------
@@ -70,6 +70,16 @@ assaultUtil.missionInfo =
     [NYZUL_ISLE_INVESTIGATION]         = {suggestedLevel = 75, minimumPoints = nil},
     [NYZUL_ISLE_UNCHARTED_AREA_SURVEY] = {suggestedLevel = 99, minimumPoints = nil},
 }
+
+-----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function AssaultGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
 
 -- -------------------------------------------------------------------
 -- hasOrders(player)
@@ -153,6 +163,15 @@ end
 -- -------------------------------------------------------------------
 function onAssaultTrigger(player, npc, csid, orders, indexID)
     if player:hasKeyItem(orders) and player:getCharVar("assaultEntered") == 0 and IS_ASSAULT_ACTIVATED == 1 then
+        -- don't allow players under level sync to enter
+        if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+            local sync_error = AssaultGetLevelSyncError(player)
+            if sync_error ~= nil then
+                player:messageSpecial(sync_error, 0, 0)
+            end
+            return
+        end
+
         local assaultID = player:getCurrentAssault()
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0
@@ -186,7 +205,7 @@ function onAssaultUpdate(player, csid, option, target, orders, zoneID)
 
     player:setCharVar("AssaultCap", cap)
 
-    if player:getGMLevel() == 0 and player:getPartySize() < 3 then
+    if (player:getGMLevel() == 0 or player:getGMLevel() == 1) and player:getPartySize() < 3 then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
         player:instanceEntry(target,1)
         return
@@ -307,7 +326,7 @@ function onAssaultComplete(instance, X, Z, textTable, npcTable)
     local chars = instance:getChars()
 
     for _,v in pairs(chars) do
-        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then 
+        if v:getLocalVar("AssaultCompletedMessage") ~= 1 then
             v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
             v:setLocalVar("AssaultCompletedMessage", 1)
         end
