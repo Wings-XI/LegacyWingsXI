@@ -256,8 +256,7 @@ tpz.nyzul_isle_armoury_crates.spawnArmouryCrateOnMobDeath = function (mob, x, y,
     local mobIsNM = mob:isNM()
     local npc = getAvailableCrateNPC(mobIsNM, mob:getInstance())
     local spawnChest = false
-    printf("Is Mokke an NM %s", mobIsNM)
-    printf("Is Mokke not an NM %s", not mobIsNM)
+    
     if npc == nil then
         return
     end
@@ -287,9 +286,8 @@ end
 ------------------------------------------------------------------------------------------
 tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor = function (instance, spawnPoint)
     local npc = getAvailableCrateNPC(false, instance)
-    printf("spawnArmouryCrateForFreeFloor")
+    
     if npc == nil then
-        printf("spawnArmouryCrateForFreeFloor return")
         return
     end
 
@@ -319,7 +317,6 @@ tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor = function (instance
     npc:setPos(spawnPoint.x, spawnPoint.y, spawnPoint.z, math.random(1, 359))
     npc:setStatus(tpz.status.NORMAL)
     npc:entityAnimationPacket("deru")
-    printf("spawnArmouryCrateForFreeFloor end")
 end
 
 ------------------------------------------------------------------------------------------
@@ -388,7 +385,6 @@ end
 -- Called when an armoury event is updated (which is never)
 ------------------------------------------------------------------------------------------
 tpz.nyzul_isle_armoury_crates.onEventUpdate = function(player, csid, option)
-    --printf("Update - CSID %u  OPTION %u", csid, option)
 end
 
 ------------------------------------------------------------------------------------------

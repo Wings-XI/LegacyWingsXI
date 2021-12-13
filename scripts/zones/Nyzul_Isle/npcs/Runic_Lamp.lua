@@ -35,7 +35,7 @@ local function performOrderCheck(instance, npc)
     setAllLamps(instance, 1)
 
     -- check for win condition
-    if(checkOrderWinCondition(instance))
+    if(checkOrderWinCondition(instance)) then
         -- renable win check in the instance
         instance:setLocalVar("Nyzul_CheckWin", 1)
         return
@@ -178,7 +178,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option, npc)
-    printf("Runic_Lamp onEventFinish CSID %u OPTION %u", csid, option)
     local objective = npc:getLocalVar("Nyzul_LampObjective")
 
     if (csid == 3 and option == 1) then

@@ -50,37 +50,30 @@ function generateFloor(floorNumber, instance)
         previousMobType = instance:getLocalVar("Nyzul_MobType")
     }
 
-    printf("before cleanup")
     -- clean up the previous floor that players are leaving
     cleanUpPreviousFloor(instance)
 
-    printf("before boss")
     -- if this is a boss floor (20, 40, 60, 80, 100, "120", "140", etc) generate a boss floor
     if (floorNumber % 20 == 0) then
-        printf("boos floor")
         runeOfTransferSpawnPoint = generateBossFloor(floorNumber, instance)
         instance:setLocalVar("Nyzul_CheckWin", 1)
         return runeOfTransferSpawnPoint
     end
-    printf("before free")
+    
     -- randomly generate a free floor if this is not the first floor in a run
     if (math.random(1, 100) < FREE_FLOOR_CHANCE and (floorNumber ~= 1)) then
-        printf("free floor")
         runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance, previousFloorInfo)
         return runeOfTransferSpawnPoint, {} -- no mobs on free floor
     end
 
     --otherwise generate a standard floor
-    printf("generate normal")
     runeOfTransferSpawnPoint = generateStandardFloor(floorNumber, instance, previousFloorInfo)
 
-    printf("after normal")
     -- set the runeOfTransferSpawnPoint
     instance:setLocalVar("Nyzul_RuneOfTransferX", runeOfTransferSpawnPoint.x)
     instance:setLocalVar("Nyzul_RuneOfTransferY", runeOfTransferSpawnPoint.y)
     instance:setLocalVar("Nyzul_RuneOfTransferZ", runeOfTransferSpawnPoint.z)
 
-    printf("return")
     instance:setLocalVar("Nyzul_CheckWin", 1)
     return runeOfTransferSpawnPoint
 end
@@ -102,9 +95,6 @@ function generateFreeFloor(floorNumber, instance, previousFloorInfo)
     local numberOfCrates = math.random(5, 10)
     local remainingSpawnPoints = {}
 
-    printf("num of crates %s", numberOfCrates)
-    
-
     for key, value in pairs(selectedFloorLayout.Rooms) do
         -- for each room get the spawn points and add to the collection
         for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
@@ -112,12 +102,9 @@ function generateFreeFloor(floorNumber, instance, previousFloorInfo)
         end
     end
 
-    printf("num of spawn points %s", #remainingSpawnPoints)
-
     for i=1,numberOfCrates do        
         index = math.random(#remainingSpawnPoints)
         spawnPoint = remainingSpawnPoints[index]
-        printf("spawning crate at %s %s %s", spawnPoint.x, spawnPoint.y, spawnPoint.z)
         tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor(instance, spawnPoint)
         table.remove(remainingSpawnPoints, index)
     end
@@ -137,7 +124,7 @@ function generateBossFloor(floorNumber, instance)
     -- randomize a boss floor
     local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
     local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[bossFloorKey]
-    printf("key %s", bossFloorKey)
+
     -- update the current map
     if (bossFloorKey == 1) then
         -- only one boss floor is on the SOUTH map
@@ -147,12 +134,10 @@ function generateBossFloor(floorNumber, instance)
         instance:setLocalVar("Nyzul_Map", 1)
     end
 
-    printf("boss floor - select rune ")
     -- get and setup entities that alternate per floor
     local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, bossFloor.RuneOfTransferSpawnPoint)
     local archaicRampartID = selectArchaicRampartID(floorNumber)
 
-    printf("boss floor - select boss ")
     -- Randomly pick a boss from BOSSES_20_40 or BOSSES_60_100 depending on floor
     local possibleNMs
     if (floorNumber == 20 or floorNumber == 40) then
@@ -165,7 +150,7 @@ function generateBossFloor(floorNumber, instance)
     -- randomize a boss spawn point
     local bossSpawnPointIndex = math.random(#bossFloor.BossSpawnPoints)
     local bossSpawnPoint = bossFloor.BossSpawnPoints[bossSpawnPointIndex]
-    printf("boss floor - spawn points")
+    
     -- randomize an archaicRampart spawn, excluding the boss spawn point
     local remainingSpawnPoints = {}
     for key, value in pairs(bossFloor.RampartSpawnPoints) do
@@ -174,17 +159,11 @@ function generateBossFloor(floorNumber, instance)
     table.remove(remainingSpawnPoints, bossSpawnPointIndex)
     local archaicRampartSpawnPoint = remainingSpawnPoints[math.random(#remainingSpawnPoints)]
 
-    printf("boss floor - spawnmobs")
     -- Spawn the mobs
     setSpawnPointAndSpawnMob(bossID, bossSpawnPoint, instance)
     setSpawnPointAndSpawnMob(archaicRampartID, archaicRampartSpawnPoint, instance)
 
     instance:setLocalVar("Nyzul_ObjectiveMob1", bossID)
-
-    -- 
-    if (floorNumber == 100) then
-        setBossWeaponDrop(bossID, instance)
-    end
 
     return bossFloor.RuneOfTransferSpawnPoint, bossID
 end
@@ -198,8 +177,7 @@ function generateStandardFloor(floorNumber, instance, previousFloorInfo)
    local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
    setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
-   printf("Objective is %s", objective)
-   printf("SubObjective is %s", subObjective)
+   
    generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
 
    generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
@@ -236,13 +214,11 @@ end
 --------------------------------------------------------------------
 function selectSubObjective(instance, previousSubObjective)
     if (previousSubObjective > 0 or (math.random(100) > GEAR_SUB_OBJECTIVE_CHANCE)) then
-        printf(" No Gears")
         -- the previous floor had gears or the randomizing chose no gears
         instance:setLocalVar("Nyzul_SubObjective", 0)
         return "None"
     end
 
-    printf("Gears!")
     local subObjectiveKey = math.random(#tpz.nyzul_isle_data.subObjectiveType)
     instance:setLocalVar("Nyzul_SubObjective", subObjectiveKey)
     instance:setLocalVar("Nyzul_GearPenalty", math.random(1,2))
@@ -278,10 +254,6 @@ function selectFloorLayout(instance, previousMap)
         selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[math.random(#tpz.nyzul_isle_data.southWestFloorTableKeys)]]
     end
 
-    for key,value in pairs(selectedFloorLayout.Rooms) do
-        printf(value)
-    end
-
     return selectedFloorLayout
 end
 
@@ -293,38 +265,30 @@ function generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjec
     local objectiveMobs = {}
     local mobsToSpawn = {}
 
-
-    printf("before selectFloorMobs")
     -- we always need base floor mobs
     local selectedFloorMobs = selectFloorMobs(instance, previousMobType)
-    printf("before selectedNotorusMonsters")
+
     -- we always need to check for NMs
     local selectedNotorusMonsters = selectNotoriusMonsters(floorNumber)
 
-    printf("before addTableListsTogether")
     mobsToSpawn = addTableListsTogether(selectedFloorMobs, selectedNotorusMonsters)
 
-    printf("before selectArchaicRampartID")
     -- get the archaic rampart
     local archaicRampartID = selectArchaicRampartID(floorNumber)
     table.insert(mobsToSpawn, archaicRampartID)
 
-    printf("before objective checks")
     if (objective == "ELIMINATE_ALL_ENEMIES") then
-        printf("in ELIMINATE_ALL_ENEMIES")
         if (math.random(1, 2) == 2) then
             -- surprise DAHAK!
             table.insert(mobsToSpawn, tpz.nyzul_isle_data.mobsByType.DAHAK.Dahak[1])
         end
     elseif (objective == "ELIMINATE_ENEMY_LEADER") then
-        printf("in ELIMINATE_ENEMY_LEADER")
         -- randomize leader
         local leaderID = tpz.nyzul_isle_data.mobsByType.LEADERS.Leaders[math.random(#tpz.nyzul_isle_data.mobsByType.LEADERS.Leaders)]
         table.insert(objectiveMobs, leaderID)
         table.insert(mobsToSpawn, leaderID)
         setObjectiveMobInstanceLocalVars(instance, objectiveMobs)
     elseif (objective == "ELIMINATE_SPECIFIED_ENEMY") then
-        printf("in ELIMINATE_SPECIFIED_ENEMY")
         -- randomize the mob to be the specified enemy
         -- set mob as an NM, and store a local var to clean up later
         local specifiedEnemyID = selectedFloorMobs[math.random(#selectedFloorMobs)]
@@ -334,7 +298,6 @@ function generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjec
         specifiedEnemy:setNM(true)
         setObjectiveMobInstanceLocalVars(instance, objectiveMobs)
     elseif (objective == "ELIMINATE_SPECIFIED_ENEMIES") then
-        printf("in ELIMINATE_SPECIFIED_ENEMIES")
         -- randomizes the selection
         local specifiedEnemies = selectSpecifiedEnemies(instance)
         objectiveMobs = specifiedEnemies
@@ -342,15 +305,12 @@ function generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjec
         setObjectiveMobInstanceLocalVars(instance, objectiveMobs)
     end
 
-    printf("before gears")
     if (subObjective == "DO_NOT_DESTROY_GEARS" or subObjective == "AVOID_DECTECTION_BY_GEARS") then
-        printf("GEARS spawning")
         -- Add some gears -- gears are never part of the objective
         local selectedGearMobs = selectGearMobs(instance, subObjective)
         mobsToSpawn = addTableListsTogether(mobsToSpawn, selectedGearMobs)
     end
 
-    printf("before spawnMobsForFloor")
     spawnMobsForFloor(instance, mobsToSpawn, selectedFloorLayout.Rooms)
 
     return
@@ -400,7 +360,6 @@ function selectNotoriusMonsters(floorNumber)
     local nm3 = 0
     local possibleNMs = {}
 
-    printf("finding NM set")
     -- determine the possible NM set
     if (floorNumber < 20) then
         possibleNMs = tpz.nyzul_isle_data.mobsByType.NMS_01_19.NotoriusMonsters
@@ -422,19 +381,13 @@ function selectNotoriusMonsters(floorNumber)
     end
 
     local randomRoll = math.random(1, 100)
-    printf("NM random %d", randomRoll)
     if (randomRoll < NM_1_CHANCE ) then
-        printf("in NM1")
         nm1 = possibleNMs[math.random(#possibleNMs)]
         table.insert(notriousMonsters, nm1)
     end
-    printf(" checking NM1")
-    printf("%d", nm1)
     if (randomRoll < NM_2_CHANCE ) then
-        printf("in NM2")
         nm2 = possibleNMs[math.random(#possibleNMs)]
         while (nm2 == nm1) do
-            printf("nm1 is nm2  %d and %d", nm1, nm2)
             nm2 = possibleNMs[math.random(#possibleNMs)]
         end
         table.insert(notriousMonsters, nm2)
@@ -443,16 +396,13 @@ function selectNotoriusMonsters(floorNumber)
     -- this is about the limit of using this method for random selection without replacement
     -- there are 18 NMs per grouping so selecting 3 has a reasonable chance of collision 
     if (randomRoll < NM_3_CHANCE ) then
-        printf("in NM3")
         nm3 = possibleNMs[math.random(#possibleNMs)]
         while (nm3 == nm1 or nm3 == nm2) do
-            printf("nm1 is nm2 is nm3  %d and %d and %d", nm1, nm2, nm3)
             nm3 = possibleNMs[math.random(#possibleNMs)]
         end
         table.insert(notriousMonsters, nm3)
     end
 
-    printf("done with NMs")
     return notriousMonsters
 end
 
@@ -547,7 +497,6 @@ end
 -- Find spawn points and spawn all mobs
 ----------------------------------------------------------------------
 function spawnMobsForFloor(instance, mobsToSpawn, rooms)
-    printf("in spawnMobsForFloor")
     local spawnPoints = {}
 
     for key, value in pairs(rooms) do
@@ -556,11 +505,10 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
             table.insert(spawnPoints, nestedValue)
         end
     end
-    printf("~~~SpawnPoints for floor %d~~~~", #spawnPoints)
+    
     -- set and spawn all mobs
     for key, mobID in pairs(mobsToSpawn) do
         if (#spawnPoints == 0) then
-            printf("Attempted to spawn a mob but no more spawn points are available - mobID %d", mobID)
             break
         end
         index = math.random(#spawnPoints)
@@ -626,12 +574,10 @@ function spawnLampsForFloor(instance, lampsToSpawn, rooms, lampObjective)
     -- randomize spawn points, spawn lamps, and set local vars
     for key, lampID in pairs(lampsToSpawn) do
         if (#spawnPoints == 0) then
-            printf("Attempted to spawn a lamp but no more spawn points are available - lampID %d", lampID)
             return
         end
         lamp = GetNPCByID(lampID, instance)
         lamp:setLocalVar("Nyzul_LampObjective", lampObjective)
-        printf("Spawning Lamp for Objective: %s", lampID)
 
         -- Certification code required
         if (lampObjective == 6) then
@@ -668,20 +614,17 @@ end
 function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     local runeOfTransfer
     local oldRuneOfTransfer
-    printf("selectRuneOfTransfer - start")
+    
     -- choose the alternating runeOfTransfer
     if ((floorNumber % 2) == 0) then -- even floor
-        printf("selectRuneOfTransfer - even")
         runeOfTransfer = GetNPCByID(17093330, instance)
         oldRuneOfTransfer = GetNPCByID(17093331, instance)
     else
-        printf("selectRuneOfTransfer - odd")
         runeOfTransfer = GetNPCByID(17093331, instance)
         oldRuneOfTransfer = GetNPCByID(17093330, instance)
     end
 
     runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, 1)
-    printf("selectRuneOfTransfer - POS x %d y %d z %d", runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z)
 
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)
@@ -694,7 +637,6 @@ function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     -- hide the old one
     oldRuneOfTransfer:entityAnimationPacket("kesu") -- just incase a player is nearby
     oldRuneOfTransfer:setStatus(tpz.status.DISAPPEAR)
-    printf("selectRuneOfTransfer - complete")
     return runeOfTransfer
 end
 
@@ -720,20 +662,6 @@ function setSpawnPointAndSpawnMob(mobID, spawnPoint, instance)
     local mob = GetMobByID(mobID, instance)
     mob:setSpawn(spawnPoint.x, spawnPoint.y, spawnPoint.z)
     SpawnMob(mobID, instance)
-end
-
-----------------------------------------------------------------------------------------------
---  Checks players in instance and forces a drop for the job of the player who started the run
---  Only applied to floor 100 bosses
-----------------------------------------------------------------------------------------------
-function setBossWeaponDrop(bossID, instance)
-    local job = instance:getLocalVar("Nyzul_DiscUserJob")
-
-    -- tpz.job starts at 1
-    if (job > 0) then
-        local boss = GetMobByID(bossID, instance)
-        boss:setLocalVar("Nyzul_ForceWeaponDrop", tpz.nyzul_isle_data.jobToVigilWeaponMap[job])
-    end
 end
 
 ------------------------------------------------
@@ -844,8 +772,9 @@ end
 -- mob_pools is scoped game wide
 -- distinct mob_pools should be added for all nyzul mobs or mobType could be pulled to mob_groups
 -- for now, this function, called on instanceCreated for Nyzul will set mobType appropriately
+-- this function will also set other params which are required for Nyzul - like not-charmable and aggressive
 -------------------------------------------------------------------------------------------------
-function setMobTypes(instance)
+function setNyzulMobTypesAndTraits(instance)
     local NM = 2
     local Normal = 0
     for _,mob in pairs(instance:getMobs()) do
@@ -859,9 +788,9 @@ function setMobTypes(instance)
         -- Normal Floor Mobs
         if (mobID >= 17092631 and mobID <= 17092823) then
             mob:setMobType(0)
+        -- NMs
         elseif (mobID >= 17092824 and mobID <= 17092998) or (mobID >= 17092629 and mobID <= 17092630) then
             mob:setMobType(2)
         end
     end
-    printf("Done setting Mob Types")
 end

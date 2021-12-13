@@ -8280,6 +8280,9 @@ inline int32 CLuaBaseEntity::getAssaultPoint(lua_State *L)
         case 4:
             lua_pushinteger(L, charutils::GetPoints(PChar, "ilrusi_assault_point"));
             break;
+        case 5:
+            lua_pushinteger(L, charutils::GetPoints(PChar, "nyzul_isle_assault_point"));
+            break;
         default:
             lua_pushinteger(L, 0);
     }
@@ -8321,6 +8324,9 @@ inline int32 CLuaBaseEntity::addAssaultPoint(lua_State *L)
             break;
         case 4:
             charutils::AddPoints(PChar, "ilrusi_assault_point", points);
+            break;
+        case 5:
+            charutils::AddPoints(PChar, "nyzul_isle_assault_point", points);
             break;
         default:
             break;
@@ -8364,6 +8370,9 @@ inline int32 CLuaBaseEntity::delAssaultPoint(lua_State *L)
             break;
         case 4:
             charutils::AddPoints(PChar, "ilrusi_assault_point", -points);
+            break;
+        case 5:
+            charutils::AddPoints(PChar, "nyzul_isle_assault_point", -points);
             break;
         default:
             break;

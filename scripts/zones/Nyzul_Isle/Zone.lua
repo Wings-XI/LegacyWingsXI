@@ -23,6 +23,11 @@ function onInstanceZoneIn(player, instance)
 
     player:addTempItem(5348)
 
+    -- Nyzul Isle Investigation
+    if (instance:getID() == 51) then
+        player:setCharVar("assaultEntered", 6)
+    end
+
     return cs
 end
 
@@ -33,7 +38,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-
+    printf("NyzulZoneFinsih")
 end
 
 function onInstanceLoadFailed()

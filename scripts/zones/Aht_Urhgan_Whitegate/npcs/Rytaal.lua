@@ -32,10 +32,14 @@ function onTrigger(player, npc)
         player:startEvent(270)
     elseif currentAssault ~= 0 and player:getCharVar("assaultEntered") ~= 0 then
         if player:getCharVar("AssaultComplete") == 1 then
-            player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
+            if currentAssault == 51 then
+                player:messageText(player, ID.text.RYTAAL_NYZUL_COMPLETE)
+            else
+                player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
+            end
             player:completeAssault(currentAssault)
         elseif currentAssault == 51 then
-            player:messageText(player, ID.text.NYZUL_FAIL)
+            player:messageText(player, ID.text.RYTAAL_NYZUL_FAIL)
             player:delAssault(currentAssault)
         else
             local assaultPoint = assaultOrders[player:getCharVar("assaultEntered")].points

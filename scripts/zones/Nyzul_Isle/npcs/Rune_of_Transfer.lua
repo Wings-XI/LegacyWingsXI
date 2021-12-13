@@ -22,7 +22,6 @@ function onTrigger(player, npc)
             -- 0 if never set before, up to 100 for runic key
             local floorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
             local floorBitMask = 2097151 -- 111111111111111111111 - hides all floors (and the None option)
-            floorProgress = 95
             -- runs from 0 - 20 and uses xor against the full mask to un-mask the allowed floors
             for i=0,20 do
                 if ((i-1) * 5 <= floorProgress) then
@@ -61,7 +60,6 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option, npc)
-    printf("Rune_of_Transfer onEventFinish CSID %u OPTION %u", csid, option)
     local instance = player:getInstance()
 
     -- entrance rune of transfer
@@ -71,7 +69,10 @@ function onEventFinish(player, csid, option, npc)
         local tokens = player:getAssaultPoint(NYZUL_ISLE_ASSAULT_POINT)
         if (cost <= tokens) then
             player:delAssaultPoint(cost, NYZUL_ISLE_ASSAULT_POINT) -- Remove from NYZUL_ISLE_ASSAULT_POINT
+            instance:setLocalVar("Nyzul_StartingFloor", floorSelected)
             bubbleWarpThePlayers(player, instance, floorSelected)
+            local chars = instance:getChars()
+            instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
         else
             player:messageSpecial(ID.text.INSUFFCIENT_TOKENS)
         end
@@ -100,7 +101,12 @@ function onEventFinish(player, csid, option, npc)
         if (instance:getLocalVar("Nyzul_TransferInitiated") == player:getID()) then
             instance:setLocalVar("Nyzul_TransferInitiated", 0)
         end
-    end 
+    end
+
+    -- instance complete warp
+    if csid == 1 then
+        player:setPos(180, 0, 20, 90, 72)
+    end
 end
 
 function bubbleWarpThePlayers(player, instance, stage)
@@ -108,7 +114,9 @@ function bubbleWarpThePlayers(player, instance, stage)
     if (instance:getLocalVar("Nyzul_TransferInitiated") == 0) then    
         instance:setLocalVar("Nyzul_TransferInitiated", player:getID())
         instance:setStage(stage)
+        
         player:startEvent(95)
+        instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
                 char:release()
