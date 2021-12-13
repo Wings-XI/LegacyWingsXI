@@ -6,6 +6,7 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/besieged")
+require("scripts/globals/settings")
 local ID = require("scripts/zones/Alzadaal_Undersea_Ruins/IDs")
 -----------------------------------
 
@@ -22,7 +23,7 @@ function onTrigger(player, npc)
     elseif player:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and player:hasKeyItem(tpz.ki.MYTHRIL_MIRROR) and player:getCharVar("AhtUrganStatus") == 1 then
         player:setLocalVar("NashmeirasPlea", 1)
         player:startEvent(405, 59, -10, 0, 99, 5, 0)
-    elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) and player:getCharVar("assaultEntered") == 0 then
+    elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) and player:getCharVar("assaultEntered") == 0 and (IS_NYZUL_ISLE_ASSAULT_ACTIVATED and IS_NYZUL_ISLE_ASSAULT_ACTIVATED == 1) then
         local assaultid = player:getCurrentAssault()
         printf("%s", assaultid)
         local recommendedLevel = getRecommendedAssaultLevel(assaultid)

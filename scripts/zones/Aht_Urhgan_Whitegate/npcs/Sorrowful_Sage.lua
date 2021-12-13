@@ -5,9 +5,10 @@
 -- !pos 134.096 0.161 -30.401 50
 -----------------------------------
 require("scripts/globals/keyitems")
-local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 require("scripts/globals/besieged")
 require("scripts/globals/missions")
+require("scripts/globals/settings")
+local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 -----------------------------------
 
 local lowGradeItems = {         --  Item           
@@ -66,8 +67,7 @@ function onTrigger(player, npc)
         haveimperialIDtag = 0
     end
 
-    -- this false keeps Nyzul disabled
-    if (rank > 0 and false) then
+    if (rank > 0 and (IS_NYZUL_ISLE_ASSAULT_ACTIVATED and IS_NYZUL_ISLE_ASSAULT_ACTIVATED == 1)) then
         -- param7 on the client side, param 8 here (since the client is a good CS student and counts from 0) appears to be a lockout time - possibly related to uncharted?
         player:startEvent(278, rank, haveimperialIDtag, tokens, player:getCurrentAssault(), floorProgress, unchartedFloorProgress, vendingBoxPreferences, 0)
     else
