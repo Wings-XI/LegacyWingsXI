@@ -66,7 +66,8 @@ function onTrigger(player, npc)
         haveimperialIDtag = 0
     end
 
-    if (rank > 0) then
+    -- this false keeps Nyzul disabled
+    if (rank > 0 and false) then
         -- param7 on the client side, param 8 here (since the client is a good CS student and counts from 0) appears to be a lockout time - possibly related to uncharted?
         player:startEvent(278, rank, haveimperialIDtag, tokens, player:getCurrentAssault(), floorProgress, unchartedFloorProgress, vendingBoxPreferences, 0)
     else
