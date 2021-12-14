@@ -20,9 +20,6 @@ function onInitialize(zone)
 		SpawnMob(ID.mob.VRTRA)
 	end
 
-    UpdateNMSpawnPoint(ID.mob.BARBASTELLE)
-    GetMobByID(ID.mob.BARBASTELLE):setRespawnTime(math.random(1800, 5400))
-
     tpz.treasure.initZone(zone)
 end
 

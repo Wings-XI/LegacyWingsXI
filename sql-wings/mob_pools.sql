@@ -4629,7 +4629,7 @@ INSERT INTO `mob_pools` VALUES(4565, 'Ambuscader_Antlion', 'Ambuscader_Antlion',
 INSERT INTO `mob_pools` VALUES(4566, 'Iratham', 'Iratham', 450, 0x0000a50800000000000000000000000000000000, 4, 1, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 153, 0, 0, 841);
 INSERT INTO `mob_pools` VALUES(4567, 'Nocuous_Weapon', 'Nocuous_Weapon', 110, 0x0000de0100000000000000000000000000000000, 5, 5, 11, 240, 100, 0, 1, 0, 0, 2, 0, 0, 296, 645, 0, 0, 42, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(4568, 'Ah_Puch', 'Ah_Puch', 227, 0x0000400200000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 0, 0, 2, 7, 0, 0, 0, 0, 0, 28, 0, 0, 227);
-INSERT INTO `mob_pools` VALUES(4569, 'Barbastelle', 'Barbastelle', 46, 0x0000000100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 46);
+INSERT INTO `mob_pools` VALUES(4569, 'Barbastelle', 'Barbastelle', 46, 0x0000000100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 1186);
 INSERT INTO `mob_pools` VALUES(4570, 'Habrok', 'Habrok', 55, 0x0000bd0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 55);
 INSERT INTO `mob_pools` VALUES(4571, 'Herbage_Hunter', 'Herbage_Hunter', 79, 0x00008c0100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 79);
 INSERT INTO `mob_pools` VALUES(4572, 'Huwasi', 'Huwasi', 135, 0x0000b00100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 135);

@@ -10856,7 +10856,7 @@ INSERT INTO `mob_groups` VALUES(18, 3942, 190, 'Tomb_Bat', 660, 0, 2423, 0, 0, 1
 INSERT INTO `mob_groups` VALUES(19, 857, 190, 'Crypt_Ghost', 0, 128, 544, 0, 0, 20, 21, 0);
 INSERT INTO `mob_groups` VALUES(20, 3152, 190, 'Plague_Bats', 660, 2, 80, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(21, 5726, 190, 'Ankou', 3600, 0, 2989, 650, 650, 21, 21, 0);
-INSERT INTO `mob_groups` VALUES(22, 4569, 190, 'Barbastelle', 0, 128, 2971, 0, 0, 16, 19, 0);
+INSERT INTO `mob_groups` VALUES(22, 4569, 190, 'Barbastelle', 3600, 0, 2971, 550, 0, 16, 19, 0);
 INSERT INTO `mob_groups` VALUES(23, 1690, 190, 'Goblin_Mugger', 660, 0, 1118, 0, 0, 21, 23, 0);
 INSERT INTO `mob_groups` VALUES(24, 1683, 190, 'Goblin_Leecher', 660, 0, 1106, 0, 0, 21, 23, 0);
 INSERT INTO `mob_groups` VALUES(25, 1666, 190, 'Goblin_Gambler', 660, 0, 1080, 0, 0, 21, 23, 0);
