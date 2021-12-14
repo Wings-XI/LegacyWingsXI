@@ -21,7 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30))
 
-    if mob:GetMobByID() == 16932881 then
+    if mob:GetMobByID() == 16932881 or mob:GetMobByID() == 17555863 then
         target:addStatusEffect(params.effect, power, 50, 30)
         mob:resetenmity(target)
         target:takeDamage(250, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)

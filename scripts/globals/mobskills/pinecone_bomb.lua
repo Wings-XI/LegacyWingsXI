@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 
-    if mob:GetMobByID() == 16932881 then
+    if mob:GetMobByID() == 16932881 or mob:GetMobByID() == 17555863 then
         dmg = dmg * 2.5
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     else

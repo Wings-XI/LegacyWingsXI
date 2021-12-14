@@ -20,6 +20,23 @@ function onInitialize(zone)
 		SpawnMob(ID.mob.VRTRA)
 	end
 
+	local re = GetServerVariable("CherryRespawn")
+	if os.time() < re then
+        for i = ID.mob.CHERRY_SAPLING_OFFSET, ID.mob.CHERRY_SAPLING_OFFSET + 12 do
+            local mob = GetMobByID(i)
+            if mob ~= nil and mob:getName() == 'Cherry_Sapling' and not mob:isSpawned() then
+                mob:setRespawnTime(re - os.time())
+            end
+        end
+	else
+        for i = ID.mob.CHERRY_SAPLING_OFFSET, ID.mob.CHERRY_SAPLING_OFFSET + 12 do
+            local mob = GetMobByID(i)
+            if mob ~= nil and mob:getName() == 'Cherry_Sapling' and not mob:isSpawned() then
+                SpawnMob(mob)
+            end
+        end
+	end
+
     tpz.treasure.initZone(zone)
 end
 
