@@ -5829,7 +5829,7 @@ INSERT INTO `mob_pools` VALUES(5765, 'Mind_Hoarder', 'Mind_Hoarder', 175, 0x0000
 INSERT INTO `mob_pools` VALUES(5766, 'Demoiselle_Desolee', 'Demoiselle_Desolee', 113, 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 0, 0, 1, 2, 7, 32, 0, 643, 0, 0, 0, 0, 0, 21);
 INSERT INTO `mob_pools` VALUES(5767, 'Hazmat', 'Hazmat', 56, 0x0000180100000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 1, 0, 0, 2, 23, 32, 0, 0, 0, 0, 430, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(5768, 'Supplespine_Mujwuj', 'Supplespine_Mujwuj', 189, 0x0000640200000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 0, 1, 2, 7, 32, 0, 0, 0, 0, 0, 0, 0, 713);
-INSERT INTO `mob_pools` VALUES(5769, 'Gwyllgi', 'Gwyllgi', 143, 0x00006c0100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 22);
+INSERT INTO `mob_pools` VALUES(5769, 'Gwyllgi', 'Gwyllgi', 143, 0x00006c0100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 3072, 0, 0, 0, 0, 0, 0, 0, 0, 22);
 INSERT INTO `mob_pools` VALUES(5770, 'Trembler_Tabitha', 'Trembler_Tabitha', 258, 0x0000a90100000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 0, 0, 1, 2, 23, 32, 0, 129, 0, 0, 181, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(5771, 'Naa_Zeku_the_Unwaiting', 'Naa_Zeku_the_Unwaiting', 270, 0x0000560200000000000000000000000000000000, 12, 12, 10, 240, 100, 0, 1, 0, 1, 2, 7, 32, 0, 131, 0, 0, 0, 0, 0, 270);
 INSERT INTO `mob_pools` VALUES(5772, 'Centipedal_Centruroides', 'Centipedal_Centruroides', 217, 0x0000c30800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 217);
