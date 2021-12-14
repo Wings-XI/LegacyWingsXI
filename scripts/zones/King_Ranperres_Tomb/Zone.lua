@@ -52,3 +52,17 @@ end
 
 function onEventFinish(player, csid, option)
 end
+
+function onGameHour()
+    local hour = VanadielHour()
+    local respawn = GetMobByID(ID.mob.ANKOU):getLocalVar("Respawn")
+
+    if hour < 6 or hour >= 18 then
+        DisallowRespawn(ID.mob.SHII, false)
+    elseif respawn < os.time()
+        DisallowRespawn(ID.mob.SHII, true)
+        SpawnMob(GetMobByID(ID.mob.ANKOU))
+    else
+        DisallowRespawn(ID.mob.SHII, true)
+    end
+end
