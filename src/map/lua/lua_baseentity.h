@@ -75,6 +75,7 @@ public:
     int32 injectActionPacket(lua_State*);   // ONLY FOR DEBUGGING. Injects an action packet with the specified params.
     int32 entityVisualPacket(lua_State* L);
     int32 entityAnimationPacket(lua_State* L);
+    int32 sendNpcEmote(lua_State*);         // NPC emits emote packet, could one day be refactored into sendEmote.
 
     int32 startEvent(lua_State*);           // Begins Event
     int32 startEventString(lua_State*);     // Begins Event with string param (0x33 packet)

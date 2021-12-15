@@ -1045,6 +1045,53 @@ inline int32 CLuaBaseEntity::entityAnimationPacket(lua_State* L)
 }
 
 /************************************************************************
+*  Function: sendNpcEmote()
+*  Purpose : Makes an NPC entity emit an emote.
+*  Example : taru:sendEmote(target, tpz.emote.PANIC, tpz.emoteMode.MOTION)
+*  Notes   : Originally added for Pirate / Brigand chart events
+             target parameter can be nil
+************************************************************************/
+
+inline int32 CLuaBaseEntity::sendNpcEmote(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC)
+
+    TPZ_DEBUG_BREAK_IF(!lua_isnil(L, 1) && !lua_isuserdata(L, 1)); // nil or entity allowed
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    // 4th parameter is optional
+
+    const auto PNpc = dynamic_cast<CNpcEntity*>(m_PBaseEntity);
+    uint32 EntityId = 0;
+    uint16 EntityIndex = 0;
+    uint16 extra = 0;
+
+    if (!lua_isnil(L, 1) && lua_isuserdata(L, 1))
+    {
+        const auto PTarget = Lunar<CLuaBaseEntity>::check(L, 1);
+        EntityId = PTarget->GetBaseEntity()->id;
+        EntityIndex = PTarget->GetBaseEntity()->targid;
+    }
+
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+    {
+        extra = lua_tointeger(L, 4);
+    }
+
+    if (PNpc)
+    {
+        const auto emoteID = static_cast<Emote>(lua_tointeger(L, 2));
+        const auto emoteMode = static_cast<EmoteMode>(lua_tointeger(L, 3));
+
+        PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE,
+                                   new CCharEmotionPacket(PNpc, EntityId, EntityIndex, emoteID, emoteMode, extra));
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: startEvent()
 *  Purpose : Starts an event (cutscene)
 *  Example : player:startEvent(4)
@@ -1270,7 +1317,7 @@ inline int32 CLuaBaseEntity::updateEvent(lua_State *L)
 
     if (n > 8)
     {
-        ShowError("CLuaBaseEntity::updateEvent: Could not update event, Lack of arguments.\n");
+        ShowError("CLuaBaseEntity::updateEvent: too many parameters passed to updateEvent\n");
         lua_settop(L, -n);
         return 0;
     }
@@ -18095,6 +18142,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,injectActionPacket),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,entityVisualPacket),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,entityAnimationPacket),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendNpcEmote),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEvent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEventString),
