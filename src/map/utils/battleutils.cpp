@@ -1744,34 +1744,7 @@ namespace battleutils
             check = 0;
         }
 
-        if (chance < check)
-        {
-            return ProcessAquaveil(PDefender); 
-        }
-
         return false;
-    }
-
-    bool ProcessAquaveil(CBattleEntity* PDefender)
-    {
-        // Prevent interrupt if Aquaveil is active, if it were to interrupt.
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_AQUAVEIL))
-        {
-            auto aquaCount = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->GetPower();
-            // ShowDebug("Aquaveil counter: %u\n", aquaCount);
-            if (aquaCount - 1 == 0) // removes the status, but still prevents the interrupt
-            {
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_AQUAVEIL);
-            }
-            else
-            {
-                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->SetPower(aquaCount - 1);
-            }
-            return false;
-        }
-
-        //Otherwise interrupt the spell cast.
-        return true;
     }
 
     bool TryKnockbackInterrupt(CBattleEntity* PAttacker, CBattleEntity* PDefender)
@@ -1817,7 +1790,7 @@ namespace battleutils
         auto interruptChance = std::clamp(40 + fSTR + (levelCorrect * 4), 5, 75);
         auto interruptRoll = tpzrand::GetRandomNumber(100);
         //ShowDebug("InterruptRoll: %u, InterruptChance: %u, fSTR: %u\n", interruptRoll, interruptChance, fSTR);
-        if (interruptRoll <= interruptChance && ProcessAquaveil(PDefender))
+        if (interruptRoll <= interruptChance && (PDefender))
         {
             PDefender->PAI->GetCurrentState()->Interrupt();
             return true;
