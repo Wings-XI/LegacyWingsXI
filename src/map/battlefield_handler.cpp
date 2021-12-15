@@ -159,6 +159,7 @@ uint8 CBattlefieldHandler::LoadBattlefield(CCharEntity* PChar, uint16 battlefiel
             }
 
             charutils::SetCharVar(PChar->id, "BattlefieldToken", PBattlefield->m_Token);
+            luautils::OnBattlefieldRegister(PChar, PBattlefield);
             PBattlefield->InsertEntity(PChar, true);
 
             if (lootid != 0)
