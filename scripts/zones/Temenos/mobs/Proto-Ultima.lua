@@ -10,14 +10,34 @@ function onMobSpawn(mob)
     mob:SetMagicCastingEnabled(false)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
+    mob:addMod(tpz.mod.MATT, 100)
+    mob:setMod(tpz.mod.DMGMAGIC, -10)
+    mob:setMod(tpz.mod.DMGPHYS, -10)
+    mob:setMod(tpz.mod.DEF, 350)
 end
 
 function onMobEngaged(mob, target)
     tpz.limbus.setupArmouryCrates(mob:getBattlefieldID(), true)
 end
 
+function onMobWeaponSkillPrepare(mob, target)
+
+    if mob:getLocalVar("battlePhase") == 3 and math.random(1,3) == 3 then
+        return 1521
+    end
+
+end
+
 function onMobFight(mob, target)
+
+    if mob:getLocalVar("nuclearWaste") == 1 then
+        local ability = math.random(1262,1267)
+        mob:useMobAbility(ability)
+        mob:setLocalVar("nuclearWaste", 0)
+    end
+
     local phase = mob:getLocalVar("battlePhase")
+
     if mob:actionQueueEmpty() then
         if mob:getHPP() < (80 - (phase * 20)) then
             mob:useMobAbility(1524) -- use Dissipation on phase change

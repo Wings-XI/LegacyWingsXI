@@ -5520,9 +5520,9 @@ namespace charutils
             WEATHER_AURORAS,
             WEATHER_GLOOM};
 
-        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element - 1;
+        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element;
 
-        TPZ_DEBUG_BREAK_IF(element > 7);
+        TPZ_DEBUG_BREAK_IF(element > 8);
 
         reduction = reduction + PChar->getMod(strong[element]);
 

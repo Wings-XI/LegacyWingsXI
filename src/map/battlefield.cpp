@@ -685,10 +685,12 @@ void CBattlefield::Cleanup()
         {
             PChar->ForAlliance([this, PChar, id, &tempOutsidePlayers](CBattleEntity* PMember)
             {
-                if ((PMember->getZone() == PChar->getZone()) &&
-                    (this->m_EnteredPlayers.find(PMember->id) == this->m_EnteredPlayers.end()) &&
-                    (tempOutsidePlayers.find(PMember->id) == tempOutsidePlayers.end()))
+                auto allyMember = dynamic_cast<CCharEntity*>(PMember);
+
+                // Was this alliance member registered to the battlefield but did not enter?
+                if (IsRegistered(allyMember) && !IsEntered(allyMember))
                 {
+                    // Remember them so that their battlefield state can be reset
                     tempOutsidePlayers.insert(PMember->id);
                 }
             });

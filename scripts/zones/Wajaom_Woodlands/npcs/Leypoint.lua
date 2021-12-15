@@ -13,9 +13,7 @@ function onTrade(player, npc, trade)
 
     if (player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.OLDUUM) == QUEST_COMPLETED and player:hasItem(15769) == false) then
         if (trade:hasItemQty(2217, 1) and trade:getItemCount() == 1) then -- Trade Lightning Band
-            player:tradeComplete() -- Trade Complete
-            player:addItem(15769) -- Receive Olduum Ring
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 15769) -- Message for Receiving Ring
+            player:startEvent(2)           
         end
     end
 
@@ -45,4 +43,9 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    if csid == 2 and option == 0 then
+        player:tradeComplete() -- Trade Complete
+        player:addItem(15769) -- Receive Olduum Ring
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 15769) -- Message for Receiving Ring
+    end
 end
