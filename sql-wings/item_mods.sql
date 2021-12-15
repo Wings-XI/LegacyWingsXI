@@ -470,6 +470,7 @@ INSERT INTO `item_mods` VALUES (10373,28,5);
 INSERT INTO `item_mods` VALUES (10373,115,12);
 INSERT INTO `item_mods` VALUES (10382,1,1);
 INSERT INTO `item_mods` VALUES (10383,1,2);
+INSERT INTO `item_mods` VALUES (10383,947,30);    -- Dream mittens +1 invisible duration +30
 INSERT INTO `item_mods` VALUES (10384,1,1);       -- cumulus_masque DEF:1
 INSERT INTO `item_mods` VALUES (10385,1,2);       -- cumulus_masque_+1 DEF:2
 INSERT INTO `item_mods` VALUES (10392,27,-2);     -- Malison Medallion: Enmity -2
@@ -18409,6 +18410,7 @@ INSERT INTO `item_mods` VALUES (15751,13,2);
 INSERT INTO `item_mods` VALUES (15751,14,2);
 INSERT INTO `item_mods` VALUES (15751,55,11);
 INSERT INTO `item_mods` VALUES (15752,1,1);
+INSERT INTO `item_mods` VALUES (15753,946,30);    -- dream boots +1 sneak duration +30
 INSERT INTO `item_mods` VALUES (15753,1,2);
 INSERT INTO `item_mods` VALUES (15754,1,1);
 INSERT INTO `item_mods` VALUES (15755,1,18);
@@ -19652,6 +19654,7 @@ INSERT INTO `item_mods` VALUES (16276,27,-2);
 INSERT INTO `item_mods` VALUES (16276,71,1);
 INSERT INTO `item_mods` VALUES (16276,72,1);
 INSERT INTO `item_mods` VALUES (16277,68,5);
+INSERT INTO `item_mods` VALUES (16277,897,95);   -- Bandolero Scarf Gilfinder+95
 INSERT INTO `item_mods` VALUES (16278,14,5);
 INSERT INTO `item_mods` VALUES (16278,121,5);
 INSERT INTO `item_mods` VALUES (16279,2,3);
@@ -20053,6 +20056,7 @@ INSERT INTO `item_mods` VALUES (16520,5,18);
 INSERT INTO `item_mods` VALUES (16520,110,7);
 INSERT INTO `item_mods` VALUES (16521,110,5);
 INSERT INTO `item_mods` VALUES (16527,25,2);
+INSERT INTO `item_mods` VALUES (16528,431,1); -- bloody rapier hp_drain
 INSERT INTO `item_mods` VALUES (16540,5,25);     -- tyrfing MP+25
 INSERT INTO `item_mods` VALUES (16541,8,2);
 INSERT INTO `item_mods` VALUES (16541,10,2);
@@ -20148,6 +20152,7 @@ INSERT INTO `item_mods` VALUES (16680,14,2);
 INSERT INTO `item_mods` VALUES (16684,13,3);
 INSERT INTO `item_mods` VALUES (16684,14,3);
 INSERT INTO `item_mods` VALUES (16684,25,4);
+INSERT INTO `item_mods` VALUES (16684,431,1); -- kabrakan's axe slow
 INSERT INTO `item_mods` VALUES (16685,2,11);
 INSERT INTO `item_mods` VALUES (16685,9,3);
 INSERT INTO `item_mods` VALUES (16685,10,3);
@@ -20266,6 +20271,7 @@ INSERT INTO `item_mods` VALUES (16820,11,3);
 INSERT INTO `item_mods` VALUES (16821,110,10);
 INSERT INTO `item_mods` VALUES (16822,5,10);
 INSERT INTO `item_mods` VALUES (16822,12,5);
+INSERT INTO `item_mods` VALUES (16824,431,1); -- carnage rapier hp_drain
 INSERT INTO `item_mods` VALUES (16826,431,1);
 INSERT INTO `item_mods` VALUES (16827,431,1);
 INSERT INTO `item_mods` VALUES (16829,5,10);
@@ -20459,6 +20465,7 @@ INSERT INTO `item_mods` VALUES (17070,2,21);
 INSERT INTO `item_mods` VALUES (17071,431,1);
 INSERT INTO `item_mods` VALUES (17072,5,10);
 INSERT INTO `item_mods` VALUES (17072,12,5);
+INSERT INTO `item_mods` VALUES (17072,431,1); -- Liliths Rod mp drain
 INSERT INTO `item_mods` VALUES (17073,12,10);
 INSERT INTO `item_mods` VALUES (17073,13,10);
 INSERT INTO `item_mods` VALUES (17074,511,30);    -- Chocobo Wand: Chocobo riding time +30
@@ -21628,6 +21635,7 @@ INSERT INTO `item_mods` VALUES (17936,360,1);
 INSERT INTO `item_mods` VALUES (17937,8,3);
 INSERT INTO `item_mods` VALUES (17937,13,-1);
 INSERT INTO `item_mods` VALUES (17937,14,3);
+INSERT INTO `item_mods` VALUES (17937,431,1);     -- Leopard Axe: Additional Effect Poison
 INSERT INTO `item_mods` VALUES (17938,8,4);       -- Woodville's Axe: STR +4
 INSERT INTO `item_mods` VALUES (17938,168,5);     -- Spell interruption rate down 5%
 INSERT INTO `item_mods` VALUES (17939,11,5);
@@ -23204,6 +23212,7 @@ INSERT INTO `item_mods` VALUES (18856,5,30);
 INSERT INTO `item_mods` VALUES (18856,23,9);
 INSERT INTO `item_mods` VALUES (18856,25,9);
 INSERT INTO `item_mods` VALUES (18856,291,1);
+INSERT INTO `item_mods` VALUES (18856,431,1); -- Deae Gratia: hp drain
 INSERT INTO `item_mods` VALUES (18857,2,-20);
 INSERT INTO `item_mods` VALUES (18857,5,20);
 INSERT INTO `item_mods` VALUES (18857,28,10);

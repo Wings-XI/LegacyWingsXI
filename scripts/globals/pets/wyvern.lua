@@ -127,17 +127,17 @@ function onMobSpawn(mob)
                 }
                 local resistances =
                 {
-                    target:getMod(tpz.mod.FIRERES),
-                    target:getMod(tpz.mod.ICERES),
-                    target:getMod(tpz.mod.WINDRES),
-                    target:getMod(tpz.mod.EARTHRES),
-                    target:getMod(tpz.mod.THUNDERRES),
-                    target:getMod(tpz.mod.WATERRES),
+                    target:getMod(tpz.mod.SDT_FIRE),
+                    target:getMod(tpz.mod.SDT_ICE),
+                    target:getMod(tpz.mod.SDT_WIND),
+                    target:getMod(tpz.mod.SDT_EARTH),
+                    target:getMod(tpz.mod.SDT_THUNDER),
+                    target:getMod(tpz.mod.SDT_WATER),
                 }
                 local lowest = resistances[1]
                 local breath = breathList[1]
                 for i, v in ipairs(breathList) do
-                    if resistances[i] < lowest then
+                    if resistances[i] > lowest then
                         lowest = resistances[i]
                         breath = v
                     end
