@@ -1554,19 +1554,20 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         flags |= FINDFLAGS_HIT_ALL;
     }
     uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
+    AOERADIUS radiusType = (PSpell->getFlag() & SPELLFLAG_ATTACKER_RADIUS) != 0 ? AOERADIUS_ATTACKER : AOERADIUS_TARGET;
 
-    if (aoeType == SPELLAOE_RADIAL) {
+    if (aoeType == SPELLAOE_RADIAL)
+    {
         float distance = spell::GetSpellRadius(PSpell, this);
 
-        PAI->TargetFind->findWithinArea(PActionTarget, AOERADIUS_TARGET, distance, flags);
-
+        PAI->TargetFind->findWithinArea(PActionTarget, radiusType, distance, flags);
     }
     else if (aoeType == SPELLAOE_CONAL)
     {
-        //TODO: actual radius calculation
         float radius = spell::GetSpellRadius(PSpell, this);
+        float angle = spell::GetSpellConeAngle(PSpell, this);
 
-        PAI->TargetFind->findWithinCone(PActionTarget, radius, 45, flags);
+        PAI->TargetFind->findWithinCone(PActionTarget, radiusType, radius, angle, flags);
     }
     else
     {

@@ -92,12 +92,30 @@ inline int32 CLuaSpell::setFlag(lua_State *L)
     return 0;
 }
 
+inline int32 CLuaSpell::setRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    m_PLuaSpell->setRange((float)lua_tonumber(L, -1));
+    return 0;
+}
+
 inline int32 CLuaSpell::setRadius(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
     m_PLuaSpell->setRadius((float)lua_tonumber(L, -1));
+    return 0;
+}
+
+inline int32 CLuaSpell::setConeAngle(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaSpell == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+
+    m_PLuaSpell->setConeAngle((uint16)lua_tonumber(L, -1));
     return 0;
 }
 
@@ -262,7 +280,9 @@ Lunar<CLuaSpell>::Register_t CLuaSpell::methods[] =
     LUNAR_DECLARE_METHOD(CLuaSpell,setMsg),
     LUNAR_DECLARE_METHOD(CLuaSpell,setAoE),
     LUNAR_DECLARE_METHOD(CLuaSpell,setFlag),
+    LUNAR_DECLARE_METHOD(CLuaSpell,setRange),
     LUNAR_DECLARE_METHOD(CLuaSpell,setRadius),
+    LUNAR_DECLARE_METHOD(CLuaSpell,setConeAngle),
     LUNAR_DECLARE_METHOD(CLuaSpell,base),
     LUNAR_DECLARE_METHOD(CLuaSpell,multiplier),
     LUNAR_DECLARE_METHOD(CLuaSpell,getAnimation),
