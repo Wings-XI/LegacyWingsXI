@@ -860,7 +860,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
             float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
+            PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
         }
         else
         {
