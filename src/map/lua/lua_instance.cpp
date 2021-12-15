@@ -396,6 +396,25 @@ inline int32 CLuaInstance::insertAlly(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaInstance::getLocalVar(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    lua_pushinteger(L, (lua_Integer)m_PLuaInstance->GetLocalVar(lua_tostring(L, 1)));
+    return 1;
+}
+
+inline int32 CLuaInstance::setLocalVar(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaInstance == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    m_PLuaInstance->SetLocalVar(lua_tostring(L, 1), (uint64_t)lua_tointeger(L, 2));
+    return 0;
+}
+
 /************************************************************************
 *																		*
 *  declare lua function													*
@@ -429,5 +448,7 @@ Lunar<CLuaInstance>::Register_t CLuaInstance::methods[] =
     LUNAR_DECLARE_METHOD(CLuaInstance, complete),
     LUNAR_DECLARE_METHOD(CLuaInstance, completed),
     LUNAR_DECLARE_METHOD(CLuaInstance, insertAlly),
+    LUNAR_DECLARE_METHOD(CLuaInstance, getLocalVar),
+    LUNAR_DECLARE_METHOD(CLuaInstance, setLocalVar),
     { nullptr, nullptr }
 };
