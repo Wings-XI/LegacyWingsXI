@@ -11,6 +11,7 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:addMod(tpz.mod.SLEEPRES, 20)
     mob:addMod(tpz.mod.BINDRES, 20)
+    mob:addMod(tpz.mod.EARTHRES, 1000)
 end
 
 function onAdditionalEffect(mob, target, damage)
