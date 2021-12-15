@@ -6669,7 +6669,7 @@ INSERT INTO `mob_groups` VALUES(40, 1129, 104, 'Duessa', 0, 128, 0, 0, 0, 40, 50
 INSERT INTO `mob_groups` VALUES(41, 5768, 104, 'Supplespine_Mujwuj', 0, 32, 3052, 3000, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(42, 483, 104, 'Boggart', 300, 0, 319, 0, 0, 25, 27, 0);
 INSERT INTO `mob_groups` VALUES(43, 5739, 104, 'Sappy_Sycamore', 3600, 0, 3002, 2920, 0, 42, 42, 0);
-INSERT INTO `mob_groups` VALUES(44, 3095, 104, 'Panzer_Percival', 0, 32, 1981, 0, 0, 25, 26, 0);
+INSERT INTO `mob_groups` VALUES(44, 3095, 104, 'Panzer_Percival', 0, 32, 1981, 1700, 0, 25, 26, 0);
 INSERT INTO `mob_groups` VALUES(45, 1648, 104, 'Goblin_Digger', 300, 0, 1040, 0, 0, 18, 21, 0);
 INSERT INTO `mob_groups` VALUES(46, 1983, 104, 'Hobgoblin_Warrior', 0, 128, 0, 0, 0, 30, 35, 0);
 INSERT INTO `mob_groups` VALUES(47, 1984, 104, 'Hobgoblin_White_Mage', 0, 128, 0, 0, 0, 30, 35, 0);
