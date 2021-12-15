@@ -9818,7 +9818,7 @@ INSERT INTO `mob_groups` VALUES(1, 3579, 165, 'Shadow_Lord', 0, 128, 0, 10000, 0
 INSERT INTO `mob_groups` VALUES(2, 4593, 165, 'Shadow_Lord', 0, 128, 0, 4000, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3, 4498, 165, 'Zeid', 0, 128, 0, 0, 0, 75, 76, 0);
 INSERT INTO `mob_groups` VALUES(4, 4498, 165, 'Zeid', 0, 128, 0, 0, 0, 75, 78, 0);
-INSERT INTO `mob_groups` VALUES(5, 3580, 165, 'Shadow_of_Rage', 0, 128, 0, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(5, 3580, 165, 'Shadow_of_Rage', 0, 128, 0, 550, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(6, 1788, 165, 'Grand_Marquis_Chomiel', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(7, 1130, 165, 'Duke_Amduscias', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(8, 811, 165, 'Count_Andromalius', 0, 128, 0, 0, 0, 60, 60, 0);
@@ -9964,7 +9964,7 @@ INSERT INTO `mob_groups` VALUES(8856, 3283, 170, 'Queen_of_Batons', 0, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(8857, 3285, 170, 'Queen_of_Cups', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8858, 3286, 170, 'Queen_of_Swords', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(8860, 3584, 170, 'Shantotto', 0, 0, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_groups` VALUES(14184, 75, 170, 'Ajido-Marujido', 0, 128, 0, 0, 0, 75, 75, 1);
+INSERT INTO `mob_groups` VALUES(14184, 75, 170, 'Ajido-Marujido', 0, 128, 0, 600, 0, 75, 75, 1);
 INSERT INTO `mob_groups` VALUES(1, 4354, 171, 'Witch_Hazel', 960, 0, 2663, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(2, 3232, 171, 'Puroboros', 960, 0, 569, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(3, 1341, 171, 'Fire_Elemental', 960, 4, 831, 0, 0, 70, 70, 0);
