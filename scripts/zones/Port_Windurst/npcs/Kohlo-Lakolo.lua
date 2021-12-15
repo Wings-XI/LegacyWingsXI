@@ -20,8 +20,9 @@ function onTrade(player,npc,trade)
 
 TruthJusticeOnionWay = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.TRUTH_JUSTICE_AND_THE_ONION_WAY);
 KnowOnesOnions       = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.KNOW_ONE_S_ONIONS);
+BlazeSpikes          = player:getCharVar("BlazeSpikes")
 
-    if (KnowOnesOnions == QUEST_ACCEPTED) then
+    if (KnowOnesOnions == QUEST_ACCEPTED and BlazeSpikes == 0) then
         count = trade:getItemCount();
         WildOnion = trade:hasItemQty(4387,4);
 
@@ -219,6 +220,7 @@ function onEventFinish(player,csid,option)
             player:addItem(4857);
             player:messageSpecial(ID.text.ITEM_OBTAINED,4857);
             player:setCharVar("KnowOnesOnions",1);
+            player:setCharVar("BlazeSpikes", 1);
             player:setCharVar("KnowOnesOnionsTime", TradeTime + 86400);
         else
             player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE,4857);

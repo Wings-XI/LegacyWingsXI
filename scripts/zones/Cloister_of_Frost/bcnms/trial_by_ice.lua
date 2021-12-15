@@ -34,9 +34,11 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        player:delKeyItem(tpz.ki.TUNING_FORK_OF_ICE)
-        player:addKeyItem(tpz.ki.WHISPER_OF_FROST)
-        player:addTitle(tpz.title.HEIR_OF_THE_GREAT_ICE)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_FROST)
+        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_ICE) == QUEST_ACCEPTED then
+            player:delKeyItem(tpz.ki.TUNING_FORK_OF_ICE)
+            player:addKeyItem(tpz.ki.WHISPER_OF_FROST)
+            player:addTitle(tpz.title.HEIR_OF_THE_GREAT_ICE)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_FROST)
+        end
     end
 end
