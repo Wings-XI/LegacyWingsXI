@@ -6696,6 +6696,8 @@ INSERT INTO `mob_groups` VALUES(67, 682, 104, 'Cernunnos', 0, 128, 0, 0, 0, 75, 
 INSERT INTO `mob_groups` VALUES(68, 3745, 104, 'Sprite', 300, 256, 0, 0, 0, 26, 29, 0);
 INSERT INTO `mob_groups` VALUES(69, 2297, 104, 'Kumbaba', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(70, 5152, 104, 'Belphoebe', 0, 128, 0, 0, 9999, 88, 90, 0);
+INSERT INTO `mob_groups` VALUES(71, 3004, 104, 'Orcish_Cursemaker', 0, 128, 1886, 0, 0, 21, 25, 0);
+INSERT INTO `mob_groups` VALUES(72, 3032, 104, 'Orcish_Serjeant', 0, 128, 1886, 0, 0, 21, 25, 0);
 INSERT INTO `mob_groups` VALUES(5755, 1518, 104, 'Ghoul', 0, 0, 960, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5782, 2252, 104, 'Kingslayer_Doggvdegg', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(5787, 2415, 104, 'Lilisette', 0, 0, 0, 0, 0, 0, 0, 0);
