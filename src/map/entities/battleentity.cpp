@@ -1951,8 +1951,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
                     if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
-                        actionTarget.spikesParam = 0;
-                        actionTarget.spikesMessage = 14;
+                        actionTarget.spikesParam = 1;
+                        actionTarget.spikesMessage = MSGBASIC_COUNTER_ABS_BY_SHADOW;
                     }
                     else
                     {
