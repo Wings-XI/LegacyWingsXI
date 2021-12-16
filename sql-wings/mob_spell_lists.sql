@@ -4160,9 +4160,11 @@ INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 356, 1, 255); -- 
 INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 361, 1, 255); -- Bindga
 INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 366, 1, 255); -- Graviga
 INSERT INTO `mob_spell_lists` VALUES('Bombast', 506, 235, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 507, 274, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 507, 356, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 507, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 359, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 274, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 356, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 366, 1, 255);
 --
 -- Indexes for dumped tables
 --

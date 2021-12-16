@@ -6,6 +6,7 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/besieged")
+require("scripts/globals/settings")
 local ID = require("scripts/zones/Alzadaal_Undersea_Ruins/IDs")
 -----------------------------------
 
@@ -13,15 +14,18 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
+    -- TODO this needs to be re-done the way I did the cutter that goes to The Ashu Talif
+    -- cs 405 - param 1 (51) - to overwitre the debug entry with nyzul.  param 2 based on whatever missions the player has
+    -- then event update and complete written to match the return option from the menu
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS and player:hasKeyItem(tpz.ki.NYZUL_ISLE_ROUTE) and player:getCharVar("AhtUrganStatus") == 1 then
         player:setLocalVar("PathOfDarkness", 1)
         player:startEvent(405, 58, -6, 0, 99, 5, 0)
     elseif player:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and player:hasKeyItem(tpz.ki.MYTHRIL_MIRROR) and player:getCharVar("AhtUrganStatus") == 1 then
         player:setLocalVar("NashmeirasPlea", 1)
         player:startEvent(405, 59, -10, 0, 99, 5, 0)
-    elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
+    elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) and player:getCharVar("assaultEntered") == 0 and (IS_NYZUL_ISLE_ASSAULT_ACTIVATED and IS_NYZUL_ISLE_ASSAULT_ACTIVATED == 1) then
         local assaultid = player:getCurrentAssault()
+        printf("%s", assaultid)
         local recommendedLevel = getRecommendedAssaultLevel(assaultid)
         local armband = 0
         if player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
@@ -118,6 +122,17 @@ function onEventUpdate(player, csid, option, target)
 
         player:createInstance(59, 77)
     else
+        -- nyzul isle investigation asault
+        if player:getGMLevel() == 0 and player:getPartySize() < 3 then
+            player:messageSpecial(ID.text.PARTY_MIN_REQS, 3)
+            player:instanceEntry(target,1)
+            return
+        elseif player:checkSoloPartyAlliance() == 2 then
+            player:messageText(player, ID.text.PARTY_NO_REQS, false)
+            player:instanceEntry(target,1)
+            return
+        end
+        
 
         if party ~= nil then
             for i, v in ipairs(party) do
@@ -165,6 +180,8 @@ function onInstanceCreated(player, target, instance)
             player:setCharVar("AssaultCap", 0)
             player:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
             player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
+            player:setCharVar("Assault_Armband", 1)
+            player:messageSpecial(ID.text.COMMENCING_TRANSPORT)
         end
 
         player:setInstance(instance)
@@ -184,6 +201,7 @@ function onInstanceCreated(player, target, instance)
                         v:delKeyItem(tpz.ki.MYTHRIL_MIRROR)
                     else
                         v:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+                        player:messageSpecial(7445, 5)
                     end
                 end
             end

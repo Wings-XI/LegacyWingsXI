@@ -1,0 +1,123 @@
+=== Doors ===
+Animation 9 is closed
+Animation 8 is open
+
+=== Runic Lamps / Transfer ===
+Animation 0
+
+AnimateSub 0 is off
+AnimateSub 1 is on
+
+== Entrance ==
+17093429 Rune_of_Transfer
+17093430 Vending_Box
+
+== Transfers (alternate) ==
+17093330 Rune_of_Transfer
+17093331 Rune_of_Transfer
+
+== Lamps ==
+17093332 Runic_Lamp
+17093333 Runic_Lamp
+17093334 Runic_Lamp
+17093335 Runic_Lamp
+17093336 Runic_Lamp
+
+== Armory Crates ==
+17092609 Armoury_Crate
+17092610 Armoury_Crate
+17092611 Armoury_Crate
+17092612 Armoury_Crate
+17092613 Armoury_Crate
+17092614 Armoury_Crate
+17092615 Armoury_Crate
+17092616 Armoury_Crate
+17092617 Armoury_Crate
+17092618 Armoury_Crate
+17092619 Armoury_Crate
+17092620 Armoury_Crate
+17092621 Armoury_Crate
+17092622 Armoury_Crate
+17092623 Armoury_Crate
+17092624 Armoury_Crate
+17092625 Armoury_Crate
+17092626 Armoury_Crate
+17092627 Armoury_Crate
+17092628 Armoury_Crate
+
+== Doors ==
+==== SouthEast ====
+17093353 _253 366.500 -3.933 -531.000 -- Removeable Wall  -- SouthEast Floor - Western central room
+17093354 _254 389.000 -3.933 -553.500 -- Removeable Wall  -- SouthEast Floor - Western central room
+17093355 _251 460.000 -1.950 -600.000 -- Door -- SouthEast Floor -- Blocks off the wide southern room
+17093356 _252 480.000 -1.950 -580.000 -- Door -- SouthEast Floor -- Blocks east/west of S room from SE room in loop
+17093357 _255 420.000 -1.950 -560.000 -- Door -- SouthEast Floor -- Blocks north/south of W room from SW room in loop
+17093358 _256 520.000 -1.950 -540.000 -- Door -- SouthEast Floor -- Blocks east/west to wide eastern room
+17093359 _257 500.000 -1.950 -520.000 -- Door -- SouthEast Floor -- Blocks north/south of NE room from E room in loop
+17093360 _258 440.000 -1.950 -500.000 -- Door -- SouthEast Floor -- Blocks east/west of NW room from N room in loop
+17093361 _259 460.000 -1.950 -480.000 -- Door -- SouthEast Floor -- Blocks north/south to wide northern room
+
+==== East ====
+17093362 _25a 480.000 -1.950 -180.000 -- Door -- East Floor -- Blocks east/west SE from large southern room
+17093363 _25b 540.000 -1.950 -160.000 -- Door -- East Floor -- Blocks north/south southeast part of floor
+17093364 _25c 460.000 -1.950 -120.000 -- Door -- East Floor -- Blocks north/south southwest part of floor
+17093365 _25d 540.000 -1.950 -120.000 -- Door -- East Floor -- Blocks north/south southeast part of floor
+17093366 _25e 500.000 -1.950 -40.000  -- Door -- East Floor -- Blocks north/south central north part of floor
+17093367 _25f 460.000 -1.950 40.000 -- Door -- East Floor -- Blocks north/south north west part of floor
+17093368 _25g 540.000 -1.950 0.000 -- Door -- East Floor -- Blocks north/south north east part of floor
+17093369 _25h 540.000 -1.950 40.000 -- Door -- East Floor -- Blocks north/south north east part of floor
+
+==== NorthEast ====
+17093370 _25i 480.000 -1.950 260.000 -- Door -- NorthEast Floor -- Blocks east/west south most part of floor
+17093371 _25j 480.000 -1.950 340.000 -- Door -- NorthEast Floor -- Blocks east/west middle part of floor
+17093372 _25k 500.000 -1.950 320.000 -- Door -- NorthEast Floor -- Blocks north/south south part of floor
+17093373 _25l 520.000 -1.950 340.000 -- Door -- NorthEast Floor -- Blocks east/west middle part of floor
+17093374 _25m 560.000 -1.950 380.000 -- Door -- NorthEast Floor -- Blocks east/west east middle part of floor
+17093375 _25n 580.000 -1.950 400.000 -- Door -- NorthEast Floor -- Blocks north/south east middle part of floor
+17093376 _25o 440.000 -1.950 420.000 -- Door -- NorthEast Floor -- Blocks east/west north west part of floor
+17093377 _25p 500.000 -1.950 440.000 -- Door -- NorthEast Floor -- Blocks north/south north east part of floor
+17093378 _25q 520.000 -1.950 420.000 -- Door -- NorthEast Floor -- Blocks east/west north east part of floor
+17093379 _25r 500.000 -1.950 480.000 -- Door -- NorthEast Floor -- Blocks north/south north part of floor
+
+==== South ====
+17093380 _25s -40.000 -1.950 -500.000 -- Door -- South Floor -- Blocks east/west south part of floor
+17093381 _25t 40.000 -1.950 -460.000 -- Door -- South Floor -- Blocks east/west south east part of floor
+17093382 _25u -60.000 -1.950 -440.000 -- Door -- South Floor -- Blocks north/south to boss room south west part of floor
+17093383 _25v 80.000 -1.950 -420.000 -- Door -- South Floor -- Blocks east/west east part of floor
+17093384 _25w 0.000 -1.950 -380.000 -- Door -- South Floor -- Blocks east/west to boss room central part of floor
+17093385 _25x 20.000 -1.950 -400.000 -- Door -- South Floor -- Blocks north/south to boss room south west part of floor
+17093386 _25y 20.000 -1.950 -360.000 -- Door -- South Floor -- Blocks north/south east part of floor 
+17093387 _25z -60.000 -2.019 -320.000 -- Door -- South Floor -- Blocks north/south to boss room west part of floor 
+17093388 _k50 20.000 -1.950 -280.000 -- Door -- South Floor -- Blocks north/south north part of floor 
+17093389 _k51 40.000 -1.950 -300.000 -- Door -- South Floor -- Blocks east/west north part of floor 
+
+==== Central ====
+17093390 _k52 -20.000 -5.949 -40.000 -- Door -- Central Floor -- Starting room southern door
+17093391 _k53 0.000 -5.949 -60.000 -- Door -- Central Floor -- Blocks east/west south part of floor 
+17093392 _k54 -60.000 -1.950 0.000 -- Door -- Central Floor -- Blocks north/south south west part of floor 
+17093393 _k55 20.000 -1.950 0.0004 -- Door -- Central Floor -- Blocks north/south south east part of floor 
+17093394 _k56 40.000 -1.950 20.000 -- Door -- Central Floor -- Blocks east/west east south part of floor 
+17093395 _k57 -60.000 -1.950 40.000 -- Door -- Central Floor -- Blocks north/south west part of floor 
+17093396 _k58 -80.000 -1.950 60.000 -- Door -- Central Floor -- Blocks east/west west part of floor 
+17093397 _k59 -60.000 -1.950 80.000 -- Door -- Central Floor -- Blocks north/south west part of floor 
+17093398 _k5a 40.000 -1.95000.000 100.00 -- Door -- Central Floor -- Blocks east/west east north part of floor 
+17093399 _k5b -60.000 -1.95020.000 120.00 -- Door -- Central Floor -- Blocks north/south north west part of floor 
+17093400 _k5c 20.000 -1.95020.000 120.00 -- Door -- Central Floor -- Blocks north/south north part of floor 
+17093401 _k5d 0.000 -5.94980.000 180.00 -- Door -- Central Floor -- Blocks east/west north part of floor 
+
+==== SouthWest ====
+17093402 _k5e -540.000 -6.000 -560.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room   soutwest part of floor
+17093403 _k5f -480.000 -5.949 -500.000 -- Door -- SouthWest Floor -- Blocks east/west to boss room   soutwest part of floor
+17093404 _k5g -540.000 -6.000 -440.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room   soutwest part of floor
+17093405 _k5h -380.000 -1.950 -520.000 -- Door -- SouthWest Floor -- Blocks north/south  southeast part of floor
+17093406 _k5i -480.000 -2.012 -420.000 -- Door -- SouthWest Floor -- Blocks east/west  west part of floor
+17093407 _k5j -460.000 -2.012 -440.000 -- Door -- SouthWest Floor -- Blocks north/south  center part of floor
+17093408 _k5k -380.000 -1.950 -440.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room  southeast part of floor
+17093409 _k5l -440.000 -1.950 -380.000 -- Door -- SouthWest Floor -- Blocks east/west to boss room   east part of floor
+17093410 _k5m -320.000 -1.950 -380.000 -- Door -- SouthWest Floor -- Blocks east/west to boss room   east part of floor
+17093411 _k5n -380.000 -1.950 -320.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room  southeast part of floor
+17093412 _k5o -540.000 -6.000 -360.000 -- Door -- SouthWest Floor -- Blocks north/south  west part of floor
+17093413 _k5p -460.000 -2.012 -320.000 -- Door -- SouthWest Floor -- Blocks north/south  central north part of floor
+17093414 _k5q -540.000 -6.000 -320.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room  nothwest part of floor
+17093415 _k5r -480.000 -6.012 -260.000 -- Door -- SouthWest Floor -- Blocks east/west to boss room  nothwest part of floor
+17093416 _k5s -540.000 -5.949 -200.000 -- Door -- SouthWest Floor -- Blocks north/south to boss room  nothwest part of floor

@@ -1,11 +1,10 @@
 -----------------------------------
 -- Area: Waughroon Shrine
 --  Mob: Go'Bha Slaughterer
+-- BCNM mob in Bastok mission 7-2
 -----------------------------------
-
-function onMobSpawn(mob)
-    --print(mob:getName())
-end
+mixins = {require("scripts/mixins/job_special")}
+-----------------------------------
 
 function onMobDeath(mob, player, isKiller)
 end

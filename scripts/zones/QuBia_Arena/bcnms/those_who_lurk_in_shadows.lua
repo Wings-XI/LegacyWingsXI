@@ -13,13 +13,11 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    for _, partyMember in pairs(player:getParty()) do
-        if partyMember:hasKeyItem(tpz.ki.MARK_OF_SEED) then
-            partyMember:setCharVar("ACP_BCNM", 1)
-            partyMember:delKeyItem(tpz.ki.MARK_OF_SEED)
-        else
-            partyMember:setCharVar("ACP_BCNM", 0)
-        end
+    if player:hasKeyItem(tpz.ki.MARK_OF_SEED) then
+        player:setCharVar("ACP_BCNM", 1)
+        player:delKeyItem(tpz.ki.MARK_OF_SEED)
+    else
+        player:setCharVar("ACP_BCNM", 0)
     end
 end
 

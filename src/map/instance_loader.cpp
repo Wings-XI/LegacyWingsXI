@@ -93,6 +93,7 @@ bool CInstanceLoader::Check()
                     luautils::OnMobInitialize(PMob.second);
                     luautils::OnMobFamilyInitialize(((CMobEntity*)PMob.second));
                     luautils::ApplyMixins(PMob.second);
+                    luautils::ApplyInstanceMixins(PMob.second);
                     ((CMobEntity*)PMob.second)->saveModifiers();
                     ((CMobEntity*)PMob.second)->saveMobModifiers();
                 }

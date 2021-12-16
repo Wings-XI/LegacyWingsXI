@@ -14,13 +14,11 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    for _, partyMember in pairs(player:getParty()) do
-        if partyMember:hasKeyItem(tpz.ki.OMNIS_STONE) then
-            partyMember:setCharVar("ACP_BCNM", 1)
-            partyMember:delKeyItem(tpz.ki.OMNIS_STONE)
-        else
-            partyMember:setCharVar("ACP_BCNM", 0)
-        end
+    if player:hasKeyItem(tpz.ki.OMNIS_STONE) then
+        player:setCharVar("ACP_BCNM", 1)
+        player:delKeyItem(tpz.ki.OMNIS_STONE)
+    else
+        player:setCharVar("ACP_BCNM", 0)
     end
 end
 
@@ -33,6 +31,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local lastEbon = player:getCharVar("LastEbonKey")
 
         player:addExp(750)
+
         if player:getCharVar("ACP_BCNM") == 1 then
             player:setCharVar("ACP_BCNM", 0)
             if player:getCurrentMission(ACP) >= tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING then

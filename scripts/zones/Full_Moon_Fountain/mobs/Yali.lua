@@ -21,5 +21,14 @@ function onMobSpawn(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    local bcnmAllies = mob:getBattlefield():getAllies()
+    for i, v in pairs(bcnmAllies) do
+        if v:getName() == "Ajido-Marujido" then
+            v:addEnmity(mob, 0, 1)
+        end
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
 end

@@ -28,9 +28,8 @@ function onTrigger(player, npc)
             player:setCharVar("smilebringersconvo", 0)
         end
 
-        if (smilebringersconvo == 0) then
-            player:startEvent(768)
-            player:setFame(HOLIDAY, 1)
+        if smilebringersconvo == 0 then
+            player:startEvent(252)
         elseif smilebringersconvo == 1 and (head == 15179 or head == 15178) then
             if fame < 1 then
                 player:showText(npc, ID.text.STARLIGHT_FAME_DIALOG, 0, 0)
@@ -54,12 +53,12 @@ function onTrigger(player, npc)
                 player:startEvent(32741, 0210, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 8 then
                 player:setLocalVar("famebefore", player:getFame(HOLIDAY))
-                player:startEvent(32741, 0210, 0005, 0600, 0000, 7800, 0000, 0000, 0000) 
+                player:startEvent(32741, 0210, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 9 then
                 player:setLocalVar("famebefore", player:getFame(HOLIDAY))
                 player:startEvent(32741, 0210, 0006, 0600, 0000, 7800, 0000, 0000, 0000)
             end
-        elseif smilebringersconvo == 1 then
+        else
             player:startEvent(32742)
         end
     end
@@ -84,12 +83,16 @@ function onEventFinish(player,csid, option)
             player:setFame(HOLIDAY, fameafter)
             player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.WINDURST_STARLIGHT, 0, 1)
         end
-    elseif csid == 768 then
+    elseif csid == 252 then
         if player:getFreeSlotsCount() >= 1 then
             player:addItem(1742, 1)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 1742)
             player:setCharVar("smilebringersconvo", 1)
             player:setCharVar("previousDay", VanadielDayOfTheWeek())
+            if player:getCharVar("SmilebringersFameReset") ~= 1 then
+                player:setFame(HOLIDAY, 1)
+                player:setCharVar("SmilebringersFameReset", 1)
+            end
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED)
         end

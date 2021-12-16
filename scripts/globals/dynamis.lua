@@ -964,6 +964,13 @@ dynamis.setStatueStats = function(mob)
 
     mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DMGPHYS, -50)
+
+    -- Disabling WHM job trait mods because their job is set to WHM in the DB.
+    mob:setMod(tpz.mod.MDEF, 0)
+    mob:setMod(tpz.mod.REGEN, 0)
+    mob:setMod(tpz.mod.MPHEAL, 0)
+    mob:setMod(tp.mod.CLEAR_MIND, 0)
+
     mob:setTrueDetection(1)
 
 end

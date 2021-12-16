@@ -128,6 +128,12 @@ tpz.besieged.hasAssaultOrders = function(player)
         end
     end
 
+    -- NYZUL_ISLE_ASSAULT_ORDERS ID is non sequential
+    if player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
+        event = 125
+        keyitem = tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS
+    end
+
     return event, keyitem
 end
 

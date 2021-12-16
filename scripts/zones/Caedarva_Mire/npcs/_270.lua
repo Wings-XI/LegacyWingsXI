@@ -31,7 +31,7 @@ end
 function onEventUpdate(player, csid, option)
 	if csid == 120 and option == 0 then
 		for _, entry in pairs(player:getNotorietyList()) do
-			entry:disengage() -- resetEnmity(player) is not consistently working on all mobs.
+			entry:deaggroPlayer(player:getName()) -- reset hate on player entering staging point
 		end
 	end
 end
