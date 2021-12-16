@@ -9106,9 +9106,9 @@ INSERT INTO `mob_groups` VALUES(36, 926, 149, 'Davoi_Pugil', 792, 0, 575, 0, 0, 
 INSERT INTO `mob_groups` VALUES(37, 4309, 149, 'Water_Elemental', 960, 4, 2629, 0, 0, 47, 49, 0);
 INSERT INTO `mob_groups` VALUES(38, 2741, 149, 'Morbol', 960, 0, 1735, 0, 0, 37, 39, 0);
 INSERT INTO `mob_groups` VALUES(39, 925, 149, 'Davoi_Mush', 792, 0, 15, 0, 0, 33, 36, 0);
-INSERT INTO `mob_groups` VALUES(40, 475, 149, 'Blubbery_Bulge', 0, 32, 15, 0, 0, 45, 47, 0);
+INSERT INTO `mob_groups` VALUES(40, 475, 149, 'Blubbery_Bulge', 0, 32, 15, 2180, 0, 45, 47, 0);
 INSERT INTO `mob_groups` VALUES(41, 3006, 149, 'Orcish_Dragoon', 960, 0, 1891, 0, 0, 65, 69, 0);
-INSERT INTO `mob_groups` VALUES(42, 1046, 149, 'Dirtyhanded_Gochakzuk', 300, 0, 666, 0, 0, 71, 71, 0);
+INSERT INTO `mob_groups` VALUES(42, 1046, 149, 'Dirtyhanded_Gochakzuk', 300, 0, 666, 4000, 0, 71, 71, 0);
 INSERT INTO `mob_groups` VALUES(43, 1478, 149, 'Gavotvut', 0, 128, 307, 0, 0, 45, 45, 0);
 INSERT INTO `mob_groups` VALUES(44, 340, 149, 'Barakbok', 0, 128, 0, 0, 0, 43, 43, 0);
 INSERT INTO `mob_groups` VALUES(45, 419, 149, 'Bilopdop', 0, 128, 0, 0, 0, 55, 55, 0);
