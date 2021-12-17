@@ -52,7 +52,7 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 13465)
             player:addFame(SANDORIA, 30)
             player:addTitle(tpz.title.THE_BENEVOLENT_ONE)
-            player:setCharVar("sermonQuestVar", 0)
+            player:setCharVar("sermonQuestVar", 2)
             player:completeQuest(SANDORIA, tpz.quest.id.sandoria.THE_VICASQUE_S_SERMON )
         end
     elseif (csid == 589) then
