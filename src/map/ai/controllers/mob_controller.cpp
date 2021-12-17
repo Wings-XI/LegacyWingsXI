@@ -506,8 +506,8 @@ bool CMobController::CanCastSpells()
 
     // mob has no mp and does not have manafont Exclude NIN and BRD
    // mob has no mp and does not have manafont Exclude NIN and BRD
-    if (PMob->GetMJob() != JOB_NIN && PMob->GetSJob() != JOB_NIN && 
-    PMob->GetMJob() != JOB_BRD && PMob->GetSJob() != JOB_BRD && 
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetSJob() != JOB_NIN &&
+    PMob->GetMJob() != JOB_BRD && PMob->GetSJob() != JOB_BRD &&
     PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
@@ -705,6 +705,7 @@ void CMobController::Move()
             if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
             {
                 FaceTarget();
+                m_DrawInWait = server_clock::now() + 1000ms;
             }
             else
             {
@@ -713,6 +714,7 @@ void CMobController::Move()
                 currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 1.2f, drawInRange, maximumReach, includeParty))
                 {
                     FaceTarget();
+                    m_DrawInWait = server_clock::now() + 1000ms;
                 }
             }
         }
@@ -730,9 +732,9 @@ void CMobController::Move()
                     return;
                 }
             }
-            else if (CanMoveForward(currentDistance))
+            else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
-                if (!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                if (!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10 && currentDistance > attack_range)
                 {
                     //path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);

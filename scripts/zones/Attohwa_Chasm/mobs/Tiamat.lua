@@ -19,6 +19,7 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.BUFF_CHANCE, 30)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_FRONT, 1)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 
     mob:setMod(tpz.mod.MDEF, 100) -- 385 * 1.32/2 = 254 nether blast
