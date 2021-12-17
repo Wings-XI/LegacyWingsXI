@@ -705,7 +705,7 @@ void CMobController::Move()
             if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
             {
                 FaceTarget();
-                m_DrawInWait = server_clock::now() + 1000ms;
+                m_DrawInWait = server_clock::now() + 500ms;
             }
             else
             {
@@ -714,7 +714,6 @@ void CMobController::Move()
                 currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 1.2f, drawInRange, maximumReach, includeParty))
                 {
                     FaceTarget();
-                    m_DrawInWait = server_clock::now() + 1000ms;
                 }
             }
         }
@@ -734,7 +733,7 @@ void CMobController::Move()
             }
             else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
-                if (!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10 && currentDistance > attack_range)
+                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
                 {
                     //path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
