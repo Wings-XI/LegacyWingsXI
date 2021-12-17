@@ -218,6 +218,7 @@ INSERT INTO `mob_skills` VALUES(392, 136, 'ultrasonics', 1, 16.0, 2000, 1300, 4,
 INSERT INTO `mob_skills` VALUES(393, 137, 'sonic_boom', 1, 12.5, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(394, 138, 'blood_drain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(395, 139, 'jet_stream', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(397, 276, 'flurry_of_rage', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(399, 143, 'scratch', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(400, 144, 'triple_attack', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(401, 145, 'gliding_spike', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);

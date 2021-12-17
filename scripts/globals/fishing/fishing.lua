@@ -588,7 +588,12 @@ function createFishItemPool(player, fishingSkill, fishlist, rod, moonModifier)
                         table.insert(FishPool, FishItem)
                     end
                 elseif fish.item == 1 then
-                    if fish.quest < 255 and fish.log < 255 then
+                    if player:getLocalVar("Chart") == 1 then
+                            print("Totally Pirate Chart")
+                            table.insert(ItemPool, FishItem)
+                            ItemWeightQuestBonus = 500
+                            FishPoolWeight = -50
+                    elseif fish.quest < 255 and fish.log < 255 then
                         if player:getQuestStatus(fish.log, fish.quest) == QUEST_ACCEPTED then
                             table.insert(ItemPool, FishItem)
                             ItemWeightQuestBonus = 50
@@ -791,9 +796,17 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         ItemWeightAdd = 15
         NoCatchWeightAdd = 15
     elseif zoneType == 2 then           -- outdoors
-        FishWeightAdd = 20
-        ItemWeightAdd = 5
-        MobWeightAdd = 5
+        if player:getLocalVar("Chart") == 1 then
+            print("Chart Stuff")
+            ItemWeightAdd = 500
+            FishWeightAdd = -100
+            MobWeightAdd = -50
+        else
+            print("Not Chart Stuff")
+            FishWeightAdd = 20
+            ItemWeightAdd = 5
+            MobWeightAdd = 5
+        end
     elseif zoneType == 3 then           -- dungeon
         MobWeightAdd = 20
     end
@@ -897,7 +910,12 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
             TimeLimit = calcHookTime(player, rod, fishlist[CatchSelect], lure)
             CatchSizeType = fishlist[CatchSelect].sizeType
             -- CATCH ID
-            CatchID = fishlist[CatchSelect].id
+            if player:getLocalVar("Chart") == 1 then
+                print("Catching Chart Stuff")
+                CatchID = math.random(5329, 5330)
+            else
+                CatchID = fishlist[CatchSelect].id
+            end
 
             -- DELAY/MOVE TYPE
             Delay = fishlist[CatchSelect].baseDelay
@@ -1026,10 +1044,18 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         end
 
         -- CATCH STAMINA
-        Stamina = calcStamina(CatchLevel)
-
+        if player:getLocalVar("Chart") == 1 then
+            Stamina = 1000
+        else
+            Stamina = calcStamina(CatchLevel)
+        end
+        
         -- CATCH ATTACK
-        AttackDmg = math.max(20, calcAttack(CatchSize, rod.fishattack, LegendaryFish, rod.lgdbonusatk) - AttackPenalty)
+        if player:getLocalVar("Chart") == 1 then
+            AttackDmg = 1500
+        else
+            AttackDmg = math.max(20, calcAttack(CatchSize, rod.fishattack, LegendaryFish, rod.lgdbonusatk) - AttackPenalty)
+        end
 
         -- CATCH HEAL
         Heal = calcHeal(CatchSize, rod.missregen, LegendaryFish, rod.lgdmissregen) + HealAdd

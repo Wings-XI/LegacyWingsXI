@@ -240,6 +240,8 @@ INSERT INTO `fishing_group` VALUES(26, 12522, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(26, 13456, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(26, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(26, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
+INSERT INTO `fishing_group` VALUES(26, 5330, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
+INSERT INTO `fishing_group` VALUES(26, 5329, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(27, 4360, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(27, 4384, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(27, 4399, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');

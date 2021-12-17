@@ -55,6 +55,10 @@ zones[tpz.zone.OUTER_HORUTOTO_RUINS] =
         FULL_MOON_FOUNTAIN_OFFSET   = 17572197,
         JESTER_WHO_D_BE_KING_OFFSET = 17572201,
         APPARATUS_ELEMENTAL         = 17572203,
+        JACK_OF_COINS               = 17572200,
+        JACK_OF_CUPS                = 17572197,
+        JACK_OF_BATONS              = 17572198,
+        JACK_OF_SWORDS              = 17572199,
     },
     npc =
     {

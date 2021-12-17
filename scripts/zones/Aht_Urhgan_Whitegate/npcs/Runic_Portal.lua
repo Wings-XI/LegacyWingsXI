@@ -34,9 +34,9 @@ function onTrigger(player, npc)
         [124] = function ()
             hasRunicPortal = tpz.besieged.hasRunicPortal(player, 5)
         end,
-        --[[[125] = function ()
+        [125] = function ()
             hasRunicPortal = tpz.besieged.hasRunicPortal(player, 6)
-        end,]]
+        end,
     }
 
     if hasAssault > 0 then
@@ -89,9 +89,9 @@ function onEventFinish(player, csid, option)
             [124] = function ()
                 tpz.teleport.to(player, tpz.teleport.id.ILRUSI_SP)
             end,
-            --[[[125] = function ()
+            [125] = function ()
                 tpz.teleport.to(player, tpz.teleport.id.NYZUL_SP)
-            end,]]
+            end,
         }
     end
     if offset then

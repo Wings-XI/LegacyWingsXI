@@ -5,6 +5,10 @@
 -----------------------------------
 local ID = require("scripts/zones/Throne_Room/IDs")
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+end
+
 function onMobDeath(mob, player, isKiller)
     player:startEvent(32004, 3, 3, 1, 3, 3, 3, 3, 3)
 end
