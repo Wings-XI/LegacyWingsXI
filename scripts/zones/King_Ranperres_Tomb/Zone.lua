@@ -32,7 +32,7 @@ function onInitialize(zone)
         for i = ID.mob.CHERRY_SAPLING_OFFSET, ID.mob.CHERRY_SAPLING_OFFSET + 12 do
             local mob = GetMobByID(i)
             if mob ~= nil and mob:getName() == 'Cherry_Sapling' and not mob:isSpawned() then
-                SpawnMob(mob)
+                SpawnMob(mob:getID())
             end
         end
 	end
@@ -73,7 +73,7 @@ function onGameHour()
 
     if hour < 6 or hour >= 18 then
         DisallowRespawn(ID.mob.SHII, false)
-    elseif respawn < os.time()
+    elseif respawn < os.time() then
         DisallowRespawn(ID.mob.SHII, true)
         SpawnMob(GetMobByID(ID.mob.ANKOU))
     else

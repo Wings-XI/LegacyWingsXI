@@ -3250,9 +3250,6 @@ INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 1364);
 INSERT INTO `mob_skill_lists` VALUES('DynastBeetle', 1186, 341);
 INSERT INTO `mob_skill_lists` VALUES('EldritchEdge', 1187, 397);
 INSERT INTO `mob_skill_lists` VALUES('Barbastelle', 1188, 392);
-INSERT INTO `mob_skill_lists` VALUES('Cemetery_Cherry', 1189, 329);
-INSERT INTO `mob_skill_lists` VALUES('Cemetery_Cherry', 1189, 331);
-INSERT INTO `mob_skill_lists` VALUES('Cemetery_Cherry', 1189, 332);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade

@@ -6,7 +6,7 @@ require("scripts/globals/hunts")
 ------------------------------
 
 function onMobSpawn(mob)
-    mob:setMod(tpz.mod.REGAIN, 20)
+    mob:setMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobDeath(mob, player, isKiller)
