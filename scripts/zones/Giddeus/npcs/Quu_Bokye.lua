@@ -58,6 +58,7 @@ function onEventFinish(player, csid, option)
         player:addKeyItem(tpz.ki.ART_FOR_EVERYONE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ART_FOR_EVERYONE)
     elseif (csid == 65) then
+        player:tradeComplete()
         player:setCharVar("TheLostBookProgress", 2)
         player:addKeyItem(tpz.ki.LEATHERBOUND_BOOK)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LEATHERBOUND_BOOK)
