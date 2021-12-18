@@ -15,11 +15,25 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
-    mob:setMod(tpz.mod.UDMGPHYS, -75)
-    mob:setMod(tpz.mod.UDMGRANGE, -75)
+    mob:setMod(tpz.mod.UDMGPHYS, -65)
+    mob:setMod(tpz.mod.UDMGRANGE, -65)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
     mob:setMod(tpz.mod.MOVE, 100) -- "Moves at Flee Speed in Quadrupedal stance and in the Final Form"
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+
+    local mobID = mob:getID()
+
+    if mob:getLocalVar("form") == 2 and math.random(1,4) == 4 and (os.time() - mob:getLocalVar("podTime")) >= 30 then
+        if not GetMobByID(mobID + 1):isSpawned() then
+            mob:setLocalVar("podTime", os.time())
+            local move = 1532
+            return move
+        end
+    end
+
 end
 
 function onMobFight(mob, target)
@@ -36,6 +50,7 @@ function onMobFight(mob, target)
         mob:setMod(tpz.mod.UDMGRANGE, 0)
         mob:setMod(tpz.mod.UDMGMAGIC, -75)
         mob:setMod(tpz.mod.MOVE, 0)
+        mob:useMobAbility(1532)
     end
 
     if currentForm == 1 then
@@ -43,9 +58,6 @@ function onMobFight(mob, target)
             if mob:AnimationSub() == 1 then
                 mob:AnimationSub(2)
                 mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
-                if not GetMobByID(mobID + 1):isSpawned() and math.random(0,1) == 1 then
-                    mob:useMobAbility(1532)
-                end
             else
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
                 mob:AnimationSub(1)
@@ -54,6 +66,10 @@ function onMobFight(mob, target)
         end
 
         if lifePercent < 30 then
+            if not GetMobByID(mobID + 1):isSpawned() then
+                mob:useMobAbility(1532)
+                mob:setLocalVar("podTime", os.time())
+            end
             mob:AnimationSub(2)
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
             mob:setMod(tpz.mod.UDMGPHYS, -50)
