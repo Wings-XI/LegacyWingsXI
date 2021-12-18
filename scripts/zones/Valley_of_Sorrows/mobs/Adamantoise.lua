@@ -10,13 +10,11 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:addMod(tpz.mod.DMGPHYS, -50)
 end
 
 function onMobSpawn(mob)
     if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
         GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
-        mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
         mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     end
     if LandKingSystem_HQ == 0 then
@@ -24,6 +22,7 @@ function onMobSpawn(mob)
     end
 
     mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+    mob:setMod(tpz.mod.DMGMAGIC,-35)
 end
 
 function onMobDeath(mob, player, isKiller)
