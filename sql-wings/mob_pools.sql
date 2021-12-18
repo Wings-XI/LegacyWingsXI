@@ -6244,6 +6244,7 @@ INSERT INTO `mob_pools` VALUES(6207, 'Memory_Receptacle', 'Memory_Receptacle', 5
 INSERT INTO `mob_pools` VALUES(6208, 'Puk', 'Puk', 198, 0x0000d00600000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 0, 0, 0, 0, 239, 131, 0, 0, 0, 0, 0, 1184);
 INSERT INTO `mob_pools` VALUES(6209, 'Sea_Puk', 'Sea_Puk', 198, 0x0000d00600000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 0, 0, 0, 0, 2335, 133, 0, 0, 0, 0, 0, 1184);
 INSERT INTO `mob_pools` VALUES(6210, 'Draugar', 'Draugar', 89, 0x0000dd0600000000000000000000000000000000, 6, 6, 12, 240, 100, 0, 1, 0, 0, 16, 0, 0, 1, 131, 0, 0, 0, 0, 0, 89);
+INSERT INTO `mob_pools` VALUES(6211, 'Voirloup', 'Voirloup', 132, 0x0000f10700000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 2, 0, 0, 348, 135, 1, 0, 0, 0, 0, 132);
 --
 -- Indexes for dumped tables
 --
