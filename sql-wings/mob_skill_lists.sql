@@ -2266,7 +2266,6 @@ INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1527);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1528);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1529);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1530);
-INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1532);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1533);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1534);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1538);
