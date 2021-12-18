@@ -8,7 +8,12 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    -- 1 is standing for gnoles
+    if (mob:AnimationSub() == 1) then
+        return 0
+    else
+        return 1
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
