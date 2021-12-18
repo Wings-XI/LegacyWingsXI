@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Alzadaal Undersea Ruins
 -- Door: Gilded Doors (South)
--- !pos 180 0 -39 62 72
+-- !pos 180 0 -39 72
 -----------------------------------
 require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Alzadaal_Undersea_Ruins/IDs")
@@ -26,13 +26,11 @@ end
 function onEventUpdate(player, csid, option)
 	if csid == 114 and option == 0 then
 		for _, entry in pairs(player:getNotorietyList()) do
-			entry:disengage() -- resetEnmity(player) is not consistently working on all mobs.
+			entry:deaggroPlayer(player:getName()) -- reset hate on player entering staging point
 		end
 	end
 end
 
 function onEventFinish(player, csid, option)
---[[    if csid == 114 and option == 0 then
-        Todo add function that when entering staging point that a player looses all agro on mobs
-    end]]
+
 end

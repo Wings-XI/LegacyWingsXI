@@ -10,7 +10,7 @@ require("scripts/globals/utils")
 local flags = tpz.path.flag.NONE
 local path =
 {
-    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872, -- 1
     -96.241, 0.001, 8.872,
     -96.241, 0.001, 8.872,
     -96.241, 0.001, 8.872,
@@ -19,8 +19,7 @@ local path =
     -96.241, 0.001, 8.872,
     -96.241, 0.001, 8.872,
     -96.519, 0.001, -7.582,
-    -96.587, 0.001, -8.522, -- Forces turn.
-    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519, -- 10
     -96.584, 0.001, -8.519,
     -96.584, 0.001, -8.519,
     -96.584, 0.001, -8.519,
@@ -30,7 +29,6 @@ local path =
     -96.584, 0.001, -8.519,
     -96.584, 0.001, -8.519,
     -96.241, 0.001, 7.794,
-    -96.244, 0.001, 8.875, -- Forces turn.
 }
 
 function onSpawn(npc)
@@ -41,6 +39,11 @@ end
 
 function onPath(npc)
     tpz.path.patrolsimple(npc, path, flags)
+    if npc:atPoint(tpz.path.get(path, 1)) then
+        npc:setPos(-96.241, 0.001, 8.872, 24)
+    elseif npc:atPoint(tpz.path.get(path, 10)) then
+        npc:setPos(-96.584, 0.001, -8.519, 231)
+    end
 end
 
 function onTrade(player, npc, trade)

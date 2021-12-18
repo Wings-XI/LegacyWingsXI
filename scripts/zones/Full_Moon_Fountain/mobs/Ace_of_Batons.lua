@@ -4,6 +4,7 @@
 -- Windurst Mission 9-2
 -----------------------------------
 local ID = require("scripts/zones/Full_Moon_Fountain/IDs")
+mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function allMoonMobsDead(player)

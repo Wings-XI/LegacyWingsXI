@@ -16,10 +16,12 @@ function onMobSkillCheck(target,mob,skill)
     -- skillList 729 = Proto-Ultima
     local skillList = mob:getMobMod(tpz.mobMod.SKILL_LIST)
 
-    if ((skillList == 54 and mob:getHPP()) > 25 or (skillList == 727 and mob:AnimationSub() == 1)) and target:isBehind(mob) then
+    if (skillList == 54 and mob:getHPP() > 25) or (skillList == 727 and mob:AnimationSub() == 1 and target:isBehind(mob)) then
         return 0
+    else
+        return 1
     end
-    return 1
+
 end
 
 function onMobWeaponSkill(target, mob, skill)

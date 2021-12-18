@@ -21,6 +21,7 @@
 
 #include "char_emotion.h"
 #include "../entities/charentity.h"
+#include "../entities/npcentity.h"
 #include "../item_container.h"
 #include "../items/item_weapon.h"
 
@@ -44,6 +45,40 @@ CCharEmotionPacket::CCharEmotionPacket(CCharEntity* PChar, uint32 TargetID, uint
         auto PWeapon = PChar->getStorage(PChar->equipLoc[SLOT_MAIN])->GetItem(PChar->equip[SLOT_MAIN]);
         if (PWeapon && PWeapon->getID() != 65535)
             ref<uint16>(0x12) = PWeapon->getID();
+    }
+    else if (EmoteID == Emote::BELL)
+    {
+        // No emote text for /bell
+        emoteMode = EmoteMode::MOTION;
+
+        ref<uint8>(0x12) = (extra - 0x06);
+    }
+    else if (EmoteID == Emote::JOB)
+    {
+        ref<uint8>(0x12) = (extra - 0x1F);
+    }
+
+    ref<uint8>(0x16) = static_cast<uint8>(emoteMode);
+}
+
+CCharEmotionPacket::CCharEmotionPacket(CNpcEntity* PNpc, uint32 TargetID, uint16 TargetIndex, Emote EmoteID, EmoteMode emoteMode, uint16 extra)
+{
+    this->id(0x5A);
+    this->length(56);
+
+    ref<uint32>(0x04) = PNpc->id;
+    ref<uint32>(0x08) = TargetID;
+    ref<uint16>(0x0C) = PNpc->targid;
+    ref<uint16>(0x0E) = TargetIndex;
+    ref<uint8>(0x10)  = EmoteID == Emote::JOB ? static_cast<uint8>(EmoteID) + (extra - 0x1F) : static_cast<uint8>(EmoteID);
+
+    if (EmoteID == Emote::SALUTE)
+    {
+        ref<uint16>(0x12) = extra;
+    }
+    else if (EmoteID == Emote::HURRAY)
+    {
+        ref<uint16>(0x12) = extra;
     }
     else if (EmoteID == Emote::BELL)
     {

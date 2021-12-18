@@ -48,6 +48,7 @@ zones[tpz.zone.KING_RANPERRES_TOMB] =
         CORRUPTED_YORGOS      = 17555898,
         CORRUPTED_SOFFEIL     = 17555899,
         CORRUPTED_ULBRIG      = 17555900,
+        ANKOU                 = 17555709,
     },
     npc =
     {

@@ -502,6 +502,7 @@ INSERT INTO `mob_skill_lists` VALUES('Ghrah', 123, 1445);
 INSERT INTO `mob_skill_lists` VALUES('Ghrah', 123, 1446);
 INSERT INTO `mob_skill_lists` VALUES('Ghrah', 124, 1441);
 INSERT INTO `mob_skill_lists` VALUES('Ghrah', 124, 1444);
+INSERT INTO `mob_skill_lists` VALUES('Ghrah', 124, 1737);
 INSERT INTO `mob_skill_lists` VALUES('GiantBird', 125, 399);
 INSERT INTO `mob_skill_lists` VALUES('GiantBird', 125, 400);
 INSERT INTO `mob_skill_lists` VALUES('GiantBird', 125, 401);
@@ -2265,11 +2266,11 @@ INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1527);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1528);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1529);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1530);
-INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1532);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1533);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1534);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1538);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1539);
+INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1238);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1259);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1260);
 INSERT INTO `mob_skill_lists` VALUES('Ultima', 728, 1261);
@@ -2294,7 +2295,6 @@ INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1267);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1268);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1269);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1521);
-INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1522);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1523);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Ultima', 729, 1540);
 INSERT INTO `mob_skill_lists` VALUES('Tiamat-Flying-Attack', 730, 1278);
@@ -3246,6 +3246,9 @@ INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 495);
 INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 496);
 INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 497);
 INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 1364);
+INSERT INTO `mob_skill_lists` VALUES('DynastBeetle', 1186, 341);
+INSERT INTO `mob_skill_lists` VALUES('EldritchEdge', 1187, 397);
+INSERT INTO `mob_skill_lists` VALUES('Barbastelle', 1188, 392);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade

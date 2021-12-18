@@ -5,6 +5,7 @@
 require("scripts/globals/hunts")
 require("scripts/globals/mobs")
 require("scripts/globals/world")
+local ID = require("scripts/zones/Bostaunieux_Oubliette/IDs")
 -----------------------------------
 
 function onMobInitialize(mob)
