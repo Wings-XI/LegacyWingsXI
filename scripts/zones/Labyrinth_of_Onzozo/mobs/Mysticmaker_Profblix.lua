@@ -14,7 +14,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    local respawn = (7200 + ((math.random(0, 6)) * 300) -- 2:00 to 2:30 hours with 5 minute windows
+    local respawn = (7200 + ((math.random(0, 6)) * 300)) -- 2:00 to 2:30 hours with 5 minute windows
     mob:setRespawnTime(respawn)
     SetServerVariable("MysticmakerRespawn",(os.time() + respawn))
 end
