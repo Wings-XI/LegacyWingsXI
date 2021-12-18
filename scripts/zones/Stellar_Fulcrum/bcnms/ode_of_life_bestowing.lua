@@ -14,24 +14,26 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
+    if player:hasKeyItem(tpz.ki.OMNIS_STONE) then
+        player:setCharVar("ACP_BCNM", 1)
+        player:delKeyItem(tpz.ki.OMNIS_STONE)
+    else
+        player:setCharVar("ACP_BCNM", 0)
+    end
 end
 
 function onBattlefieldEnter(player, battlefield)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
-    local hasOmnisStone = player:hasKeyItem(tpz.ki.OMNIS_STONE)
-
-    if hasOmnisStone then
-        player:delKeyItem(tpz.ki.OMNIS_STONE)
-    end
-
     if leavecode == tpz.battlefield.leaveCode.WON then -- play end CS. Need time and battle id for record keeping + storage
         local now = tonumber(os.date("%j"))
         local lastEbon = player:getCharVar("LastEbonKey")
 
         player:addExp(750)
-        if hasOmnisStone then
+
+        if player:getCharVar("ACP_BCNM") == 1 then
+            player:setCharVar("ACP_BCNM", 0)
             if player:getCurrentMission(ACP) >= tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING then
                 if not player:hasKeyItem(tpz.ki.EBON_KEY) and now ~= lastEbon then
                     player:setCharVar("LastEbonKey", os.date("%j"))
@@ -57,6 +59,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local arg8 = player:hasCompletedMission(ACP, tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING) and 1 or 0
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
+        player:setCharVar("ACP_BCNM", 0)
         player:startEvent(32002)
     end
 end

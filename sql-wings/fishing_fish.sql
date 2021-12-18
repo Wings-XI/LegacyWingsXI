@@ -134,6 +134,7 @@ INSERT INTO `fishing_fish` VALUES(4315, 'Lungfish', 0, 31, 15, 10, 14, 1, 1, 0, 
 INSERT INTO `fishing_fish` VALUES(5468, 'Matsya', 90, 100, 40, 5, 12, 163, 331, 1, 0, 255, 255, 0, 1, 0, 0, 1, 500, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5467, 'Megalodon', 0, 87, 34, 10, 11, 446, 625, 1, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5454, 'Mercanbaligi', 0, 86, 31, 7, 9, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(5330, 'Mithra Snare', 0, 1, 1, 3, 2, 1, 1, 0, 0, 4, 90, 0, 0, 0, 1, 1, 0, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4401, 'Moat Carp', 0, 11, 16, 10, 9, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(1638, 'Moblin Mask', 0, 7, 15, 13, 2, 1, 1, 0, 0, 255, 255, 0, 0, 0, 1, 1, 800, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5134, 'Mola Mola', 90, 100, 16, 12, 12, 130, 184, 1, 1, 255, 255, 16, 1, 0, 0, 1, 500, 0, '', 0);
@@ -171,6 +172,7 @@ INSERT INTO `fishing_fish` VALUES(4354, 'Shining Trout', 0, 37, 16, 5, 11, 1, 1,
 INSERT INTO `fishing_fish` VALUES(13456, 'Silver Ring', 0, 7, 40, 13, 2, 1, 1, 0, 0, 255, 255, 1, 0, 0, 1, 1, 300, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4451, 'Silver Shark', 0, 76, 26, 3, 9, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 850, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4463, 'Takitaro', 90, 100, 18, 3, 14, 59, 127, 1, 0, 255, 255, 16, 1, 0, 0, 1, 500, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(5329, 'Tarutaru Snare', 0, 1, 1, 3, 2, 1, 1, 0, 0, 4, 90, 0, 0, 0, 1, 1, 0, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5130, 'Tavnazian Goby', 0, 75, 20, 7, 8, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 850, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4478, 'Three-Eyed Fish', 0, 79, 25, 10, 10, 50, 117, 1, 0, 255, 255, 0, 0, 0, 0, 1, 650, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4483, 'Tiger Cod', 0, 29, 18, 9, 9, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);

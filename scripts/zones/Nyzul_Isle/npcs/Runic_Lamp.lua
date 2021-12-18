@@ -46,12 +46,13 @@ local function performOrderCheck(instance, npc)
         for i=1,5 do
             local lampVarName = string.format("Nyzul_ObjectiveLamp" ..i.. "")
             local lampID = instance:getLocalVar(lampVarName)
-        if (lampID ~= 0) then
-             local lamp = GetNPCByID(lampID, instance)
-             if (lamp:getLocalVar("Nyzul_LampOrder") ~= lamp:getLocalVar("Nyzul_LampActivated")) then
-                lamp:AnimationSub(0)
-             end
-             lamp:setLocalVar("Nyzul_LampActivated", 0)
+            if (lampID ~= 0) then
+                 local lamp = GetNPCByID(lampID, instance)
+                 if (lamp:getLocalVar("Nyzul_LampOrder") ~= lamp:getLocalVar("Nyzul_LampActivated")) then
+                    lamp:AnimationSub(0)
+                 end
+                 lamp:setLocalVar("Nyzul_LampActivated", 0)
+            end
         end
     end)
 

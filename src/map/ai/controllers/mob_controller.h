@@ -90,6 +90,7 @@ private:
     time_point m_DeclaimTime;
     time_point m_NeutralTime;
     time_point m_WaitTime;
+    time_point m_DrawInWait;
 
     bool m_firstSpell{ true };
     time_point m_LastRoamScript {time_point::min()};

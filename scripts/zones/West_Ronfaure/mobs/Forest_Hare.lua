@@ -13,5 +13,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.JAGGEDY_EARED_JACK_PH, 5, math.random(3000, 21600)) -- 50 minutes to 6 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.JAGGEDY_EARED_JACK_PH, 9, 2400) -- 40 minute minimum
 end

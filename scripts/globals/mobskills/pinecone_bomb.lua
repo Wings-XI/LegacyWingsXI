@@ -15,7 +15,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    -- TODO Cemetery Cherry pool 671 600ish dmg no sleep
     local numhits = 1
     local accmod = 1
     local dmgmod = 2.3
@@ -23,8 +22,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 
-    if mob:GetMobByID() == 16932881 then
-        dmg = dmg * 2.5
+    if mob:getID() == 16932881 or mob:getID() == 17555863 then
+        dmg = dmg * 0.8
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     else
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
