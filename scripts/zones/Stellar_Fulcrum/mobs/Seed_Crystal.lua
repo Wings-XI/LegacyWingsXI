@@ -16,7 +16,7 @@ function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:setMod(tpz.mod.REGAIN, 1200) -- Basic attack is a WS
     mob:addMod(tpz.mod.EVA, -50)
-    mob:addMod(tpz.mod.MATT, -20)
+    mob:addMod(tpz.mod.MATT, -25)
     mob:setLocalVar("attacks", 0)
 end
 
