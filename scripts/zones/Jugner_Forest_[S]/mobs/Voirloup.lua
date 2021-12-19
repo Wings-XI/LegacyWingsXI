@@ -14,10 +14,10 @@ function onMobWeaponSkillPrepare(mob, target)
 end
 
 function onMobInitialize(mob)
-    -- per wiki resistant to Stun, Grav, Bind
-    mob:setMod(tpz.mod.STUNRESTRAIT, 75)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 75)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 75)
+    -- per capture immune to Stun, Grav, Bind
+    mob:setMod(tpz.mod.STUNRESTRAIT, 100)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 100)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 100)
     -- per this link - sleep immune https://wikiwiki.jp/ffxi/Verup/091110/NM/%E3%82%A2%E3%83%AB%E3%82%BF%E3%83%8A%E3%82%A8%E3%83%AA%E3%82%A2#rc846534
     -- link also claims stun/grav/bind immune - but a high resist rate would present as immune and all other sources list as high res
     -- A capture would remove the ambiguity
@@ -28,6 +28,11 @@ function onMobInitialize(mob)
 
     -- per wiki, double attack
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
+end
+
+function onMobSpawn(mob)
+ -- with MA 120 - almost identically matches the swing speed on capture
+    mob:setMod(tpz.mod.MARTIAL_ARTS, 120)
 end
 
 function onAdditionalEffect(mob, target, damage)
