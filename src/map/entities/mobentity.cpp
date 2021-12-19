@@ -427,6 +427,10 @@ void CMobEntity::restoreMobModifiers()
 
 ATTACKTYPE CMobEntity::getKillType()
 {
+    if (this->health.hp > 0)
+    {
+        return ATTACK_NONE;
+    }
     return m_KillType;
 }
 
