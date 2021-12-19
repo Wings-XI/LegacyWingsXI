@@ -39,6 +39,9 @@ local function performOrderCheck(instance, npc)
         -- renable win check in the instance
         instance:setLocalVar("Nyzul_CheckWin", 1)
         return
+    else 
+        -- reset progress (alternatively we could mod the progress with the number of lamps on the floor)
+        instance:setProgress(0)
     end
 
     -- after a few seconds turn off lamps that dont match ordering - it takes ~5s for the lamps to turn on
@@ -143,14 +146,6 @@ function onTrigger(player, npc)
     if (objective == 5 and npc:AnimationSub() ~= 1) then
         handleCertificationCodeRequired(player, npc)
     elseif (objective == 6) then
-        -- Nyzul_LampOrder
-        if (npc:getLocalVar("Nyzul_LampActivated") == 0) then
-            player:messageSpecial(ID.text.LAMP_SPECIFIC_ORDER)
-            player:startEvent(3, 5)
-        else
-            player:messageSpecial(ID.text.LAMP_ALREADY_ACTIVATED)
-        end
-    elseif (objective == 7) then
         local instance = player:getInstance()
 
         local instanceLampsState = instance:getLocalVar("Nyzul_LampState")
@@ -170,6 +165,15 @@ function onTrigger(player, npc)
         elseif (instanceLampsState == 2) then
             player:messageSpecial(ID.text.LAMP_MUST_WAIT)
         end
+
+    elseif (objective == 7) then
+        -- Nyzul_LampOrder
+        if (npc:getLocalVar("Nyzul_LampActivated") == 0) then
+            player:messageSpecial(ID.text.LAMP_SPECIFIC_ORDER)
+            player:startEvent(3, 5)
+        else
+            player:messageSpecial(ID.text.LAMP_ALREADY_ACTIVATED)
+        end
     end
 
 end
@@ -184,9 +188,9 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 3 and option == 1) then
         -- player has selected to Activate the lamp
         if (objective == 6) then
-            activateOneForInOrder(player, npc)
-        elseif (objective == 7) then
             lightOneForAllAtTheSameTime(player, npc)
+        elseif (objective == 7) then
+            activateOneForInOrder(player, npc)
         end
     end
 end
