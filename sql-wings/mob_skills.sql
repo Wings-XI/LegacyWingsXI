@@ -1026,7 +1026,7 @@ INSERT INTO `mob_skills` VALUES(1528, 1087, 'floodlight', 2, 15.0, 2000, 1500, 4
 INSERT INTO `mob_skills` VALUES(1529, 1089, 'hyper_pulse', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1530, 1088, 'stun_cannon', 4, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1238, 928, 'target_analysis', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1532, 1124, 'pod_ejection', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1532, 1124, 'pod_ejection', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1533, 1117, 'pile_pitch', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1534, 926, 'guided_missile', 2, 5.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1535, 1119, 'hyper_pulse', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
