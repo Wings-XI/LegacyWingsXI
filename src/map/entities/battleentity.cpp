@@ -638,6 +638,11 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         battleutils::BindBreakCheck(attacker, this);
     }
 
+    if (this->objtype == TYPE_MOB && (this->health.hp - amount) <= 0) 
+    {
+        dynamic_cast<CMobEntity*>(this)->m_KillType = attackType;
+    }
+
     return addHP(-amount);
 }
 
