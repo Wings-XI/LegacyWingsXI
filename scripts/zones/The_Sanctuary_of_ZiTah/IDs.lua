@@ -63,9 +63,9 @@ zones[tpz.zone.THE_SANCTUARY_OF_ZITAH] =
     },
     npc =
     {
-        CASKET_BASE      = 17273338,
-        OVERSEER_BASE    = 17273365,
-        CERMET_HEADSTONE = 17273390,
+        CASKET_BASE      = 17273336,
+        OVERSEER_BASE    = 17273364,
+        CERMET_HEADSTONE = 17273389,
     },
 }
 

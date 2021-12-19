@@ -730,6 +730,11 @@ INSERT INTO `mob_skills` VALUES(1040, 654, 'spike_flail', 1, 40.0, 2000, 2000, 4
 INSERT INTO `mob_skills` VALUES(1041, 655, 'dragon_breath', 4, 18.0, 2000, 1800, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1045, 659, 'absolute_terror', 0, 18.0, 4000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1046, 660, 'horrid_roar_2', 0, 18.0, 4000, 1500, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1047, 476, 'tortoise_song', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1048, 477, 'head_butt_turtle', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1049, 478, 'tortoise_stomp', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1050, 479, 'harden_shell', 0, 7.0, 2000, 1800, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1052, 481, 'aqua_breath', 4, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1053, 432, 'super_buff', 0, 1.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1064, 351, 'jump', 0, 9.5, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1066, 740, 'fanatic_dance', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);

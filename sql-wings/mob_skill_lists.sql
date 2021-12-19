@@ -2266,7 +2266,6 @@ INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1527);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1528);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1529);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1530);
-INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1532);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1533);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1534);
 INSERT INTO `mob_skill_lists` VALUES('Proto-Omega', 727, 1538);
@@ -3249,6 +3248,7 @@ INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 497);
 INSERT INTO `mob_skill_lists` VALUES('Apis', 1185, 1364);
 INSERT INTO `mob_skill_lists` VALUES('DynastBeetle', 1186, 341);
 INSERT INTO `mob_skill_lists` VALUES('EldritchEdge', 1187, 397);
+INSERT INTO `mob_skill_lists` VALUES('Barbastelle', 1188, 392);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade

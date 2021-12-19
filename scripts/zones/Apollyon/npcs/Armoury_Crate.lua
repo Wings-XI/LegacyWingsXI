@@ -1042,6 +1042,7 @@ function onTrigger(player, npc)
             end,
             [1296] = function() -- Central Apollyon Crate Handling
                 tpz.limbus.handleLootRolls(battlefield, loot[bfid][1], nil, npc)
+                player:setCharVar("CentralBox", player:getCharVar("CentralBox") + 1)
                 battlefield:setLocalVar("cutsceneTimer", 10)
                 battlefield:setLocalVar("lootSeen", 1)
             end,
