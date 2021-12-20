@@ -74,6 +74,12 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(CTrustEntity* PTrust, uint8 M
 
     TPZ_DEBUG_BREAK_IF(PTrust == nullptr);
 
+    // Can't trust assertion, somehow it still happened
+    if (PTrust == nullptr) {
+        memset(data, 0, 0x34);
+        return;
+    }
+
     ref<uint32>(0x04) = PTrust->id;
 
     ref<uint16>(0x14) = 0;
