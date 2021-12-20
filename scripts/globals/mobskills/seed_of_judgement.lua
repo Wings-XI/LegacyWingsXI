@@ -1,7 +1,7 @@
 ---------------------------------------------
 --  Seed of Judgement
 --
---  Description: Massive AoE damage (700-1300) & All Stats Down
+--  Description: Massive AoE damage (700-900) & All Stats Down
 --  Type: Magical
 --
 --
@@ -25,7 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.CHR_DOWN, 20, 3, 60)
 
     local dmgmod = 2
-    local rnddmg = math.random(700, 1300)
+    local rnddmg = math.random(700, 900)
     local info = MobMagicalMove(mob, target, skill, rnddmg, tpz.magic.ele.NONE, 1, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.NONE, MOBPARAM_1_SHADOW)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.NONE)

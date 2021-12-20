@@ -580,7 +580,7 @@ function spawnLampsForFloor(instance, lampsToSpawn, rooms, lampObjective)
         lamp:setLocalVar("Nyzul_LampObjective", lampObjective)
 
         -- Certification code required
-        if (lampObjective == 6) then
+        if (lampObjective == 5) then
             local chars = instance:getChars()
             for i=1,#chars do
                 local lampVarName = string.format("Nyzul_LampCertCode" ..i.. "")

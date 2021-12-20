@@ -68,8 +68,7 @@ function onEventUpdate(player, csid, option)
         player:addPartyEffect(143, 20, 0, 0) -- Add Level Restriction of 20
         player:addPartyEffect(276, 10, 0, 0) -- Add Confrontation Status to allow attacking the mobs
         local party = player:getParty()   
-            for _,member in pairs(party) do 
-                print(member)
+            for _,member in pairs(party) do
                 member:ChangeMusic(0, 136)
                 member:ChangeMusic(1, 136)
                 member:ChangeMusic(2, 136)

@@ -3869,6 +3869,7 @@ INSERT INTO `mob_groups` VALUES(34, 1339, 82, 'Fingerfilcher_Dradzad', 0, 128, 0
 INSERT INTO `mob_groups` VALUES(35, 6201, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0, 9200, 0, 74, 75, 0);
 INSERT INTO `mob_groups` VALUES(36, 1262, 82, 'Eurytos', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(37, 5153, 82, 'Kholomodumo', 0, 128, 0, 0, 9999, 93, 94, 0);
+INSERT INTO `mob_groups` VALUES(38, 6211, 82, 'Voirloup', 0, 128, 332, 16000, 0, 83, 85, 0);
 INSERT INTO `mob_groups` VALUES(3096, 18, 82, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(3097, 37, 82, 'Achtelle', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3098, 84, 82, 'Alfons', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -7820,8 +7821,8 @@ INSERT INTO `mob_groups` VALUES(2, 3120, 128, 'Peryton', 300, 0, 1991, 0, 0, 69,
 INSERT INTO `mob_groups` VALUES(3, 1341, 128, 'Fire_Elemental', 300, 4, 3149, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(4, 71, 128, 'Air_Elemental', 300, 4, 38, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(5, 4125, 128, 'Valley_Manticore', 300, 0, 2537, 0, 0, 71, 74, 0);
-INSERT INTO `mob_groups` VALUES(6, 44, 128, 'Adamantoise', 0, 128, 21, 7000, 0, 72, 74, 0);
-INSERT INTO `mob_groups` VALUES(7, 268, 128, 'Aspidochelone', 0, 128, 183, 15000, 0, 85, 88, 0);
+INSERT INTO `mob_groups` VALUES(6, 44, 128, 'Adamantoise', 0, 128, 21, 10000, 0, 72, 74, 0);
+INSERT INTO `mob_groups` VALUES(7, 268, 128, 'Aspidochelone', 0, 128, 183, 13000, 0, 85, 88, 0);
 INSERT INTO `mob_groups` VALUES(8, 3643, 128, 'Skahnowa', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(6861, 2226, 128, 'Kilhwch', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(6862, 2405, 128, 'Lhu_Mhakaracca', 0, 0, 0, 0, 0, 0, 0, 0);

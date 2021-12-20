@@ -283,7 +283,7 @@ local loot =
             {itemid =   683, droprate =  446}, -- Adaman Chain
             {itemid =   908, droprate =  420}, -- Adamantoise Shell
             {itemid =  1312, droprate =   71}, -- Piece Of Angel Skin
-            {itemid = 14080, droprate =   26}, -- Strider Boots
+            -- {itemid = 14080, droprate =   26}, -- Strider Boots, commented out due to RMT changes.
         },
         {
             {itemid =   887, droprate =  116}, -- Coral Fragment
@@ -366,7 +366,7 @@ local loot =
             {itemid =   831, droprate =  149}, -- Square Of Shining Cloth
         },
     },
-    
+
     -- BCNM Royal Jelly
     [77] =
     {
