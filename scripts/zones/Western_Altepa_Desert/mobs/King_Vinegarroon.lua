@@ -22,10 +22,9 @@ end
 
 function onMobDrawIn(mob, target)
     local battleTarget = mob:getTarget()
-    
+
     if target:getID() == battleTarget:getID() then
-        mob:useMobAbility(({354,722,723})[math.random(1,3)])
-        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+        mob:addTP(3000)
     end
 end
 
@@ -41,6 +40,25 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.VINEGAR_EVAPORATOR)
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (skill:getID() == 354 or skill:getID() == 355 or skill:getID() == 722 or skill:getID() == 723) and os.time() > drawInWait then
+        print(skill:getID())
+        local chance = math.random(1,2)
+        if chance == 1 then
+            print("Alliance")
+            mob:triggerDrawIn(true, 1, 35, target)
+        else
+            print("Single")
+            mob:triggerDrawIn(false, 1, 35, target)
+        end
+
+        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 end
 
 function onMobDespawn(mob)
