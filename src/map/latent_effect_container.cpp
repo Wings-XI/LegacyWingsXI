@@ -497,12 +497,14 @@ void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
             if (latentEffect.GetConditionsValue() <= members)
             {
                 auto inZone = 0;
-                for (size_t m = 0; m < members; ++m)
-                {
-                    auto PMember = (CCharEntity*)m_POwner->PParty->members.at(m);
-                    if (PMember->getZone() == m_POwner->getZone())
+                if (m_POwner->PParty) {
+                    for (size_t m = 0; m < members; ++m)
                     {
-                        inZone++;
+                        auto PMember = (CCharEntity*)m_POwner->PParty->members.at(m);
+                        if (PMember->getZone() == m_POwner->getZone())
+                        {
+                            inZone++;
+                        }
                     }
                 }
 
