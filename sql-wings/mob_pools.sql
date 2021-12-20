@@ -3318,7 +3318,7 @@ INSERT INTO `mob_pools` VALUES(3254, 'Qiqirn_Goldsmith', 'Qiqirn_Goldsmith', 199
 INSERT INTO `mob_pools` VALUES(3255, 'Qiqirn_Huckster', 'Qiqirn_Huckster', 199, 0x0000c70600000000000000000000000000000000, 6, 6, 2, 200, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 199);
 INSERT INTO `mob_pools` VALUES(3256, 'Qiqirn_Lieuter', 'Qiqirn_Lieuter', 199, 0x0000c70600000000000000000000000000000000, 6, 6, 2, 200, 100, 0, 0, 0, 1, 0, 0, 0, 138, 129, 0, 0, 0, 0, 0, 199);
 INSERT INTO `mob_pools` VALUES(3257, 'Qiqirn_Mercenary', 'Qiqirn_Mercenary', 199, 0x0000c70600000000000000000000000000000000, 11, 11, 5, 200, 100, 0, 0, 0, 1, 0, 0, 0, 185, 133, 0, 0, 0, 0, 0, 199);
-INSERT INTO `mob_pools` VALUES(3258, 'Qiqirn_Mine', 'Qiqirn_Mine', 236, 0x0000fe0600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_pools` VALUES(3258, 'Qiqirn_Mine', 'Qiqirn_Mine', 236, 0x0000ff0600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(3259, 'Qiqirn_Miner', 'Qiqirn_Miner', 199, 0x0000c70600000000000000000000000000000000, 6, 6, 2, 200, 100, 0, 0, 0, 0, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 199);
 INSERT INTO `mob_pools` VALUES(3260, 'Qiqirn_Mireguide', 'Qiqirn_Mireguide', 199, 0x0000c70600000000000000000000000000000000, 6, 6, 2, 200, 100, 0, 0, 0, 1, 0, 0, 0, 291, 129, 0, 0, 0, 0, 0, 199);
 INSERT INTO `mob_pools` VALUES(3261, 'Qiqirn_Mosstrooper', 'Qiqirn_Mosstrooper', 199, 0x0000c70600000000000000000000000000000000, 6, 6, 2, 200, 100, 0, 0, 0, 1, 0, 0, 0, 132, 131, 0, 0, 0, 0, 0, 199);

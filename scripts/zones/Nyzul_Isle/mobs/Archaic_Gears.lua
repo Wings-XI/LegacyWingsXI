@@ -28,7 +28,7 @@ local function applyPenalty(instance)
 end
 
 function onMobInitialize(mob)
-    mob:addListener("ON_AGGRO_PLAYER", "WS_START_MSG", function(mob)
+    mob:addListener("ON_AGGRO_PLAYER", "GEARS_AGGRO", function(mob)
         local instance = mob:getInstance()
         if (instance:getLocalVar("Nyzul_SubObjective") == 2) then
             applyPenalty(instance)
