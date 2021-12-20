@@ -570,7 +570,7 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
         local players = zone:getPlayers()
         for name, player in pairs(players) do
             if mob:checkDistance(player) < 30 then
-                if eyes == dynamis.eyes.BLUE then
+                if eyes == dynamis.eyes.GREEN then
                     local amt = player:getMaxMP() - player:getMP()
                     player:restoreMP(amt)
                     player:messageBasic(tpz.msg.basic.RECOVERS_MP, 0, amt)
