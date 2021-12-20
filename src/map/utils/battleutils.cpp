@@ -4762,7 +4762,9 @@ namespace battleutils
 
         if (PDefender->objtype == TYPE_MOB && (PDefender->health.hp - damage) <= 0) 
         {
-            dynamic_cast<CMobEntity*>(PDefender)->m_KillType = ATTACK_BREATH;
+            CMobEntity* MEntity = dynamic_cast<CMobEntity*>(PDefender);
+            MEntity->deathDetails.killType = ATTACK_BREATH;
+            MEntity->deathDetails.damage = damage;
         }
         return damage;
     }
@@ -4802,7 +4804,9 @@ namespace battleutils
 
         if (PDefender->objtype == TYPE_MOB && (PDefender->health.hp - damage) <= 0) 
         {
-            dynamic_cast<CMobEntity*>(PDefender)->m_KillType = ATTACK_MAGICAL;
+            CMobEntity* MEntity = dynamic_cast<CMobEntity*>(PDefender);
+            MEntity->deathDetails.killType = ATTACK_MAGICAL;
+            MEntity->deathDetails.damage = damage;
         }
         //ShowDebug(CL_CYAN"MagicDmgTaken: Element = %d\n" CL_RESET, element);
         return damage;
@@ -4841,7 +4845,9 @@ namespace battleutils
 
         if (PDefender->objtype == TYPE_MOB && (PDefender->health.hp - damage) <= 0) 
         {
-            dynamic_cast<CMobEntity*>(PDefender)->m_KillType = ATTACK_PHYSICAL;
+            CMobEntity* MEntity = dynamic_cast<CMobEntity*>(PDefender);
+            MEntity->deathDetails.killType = ATTACK_PHYSICAL;
+            MEntity->deathDetails.damage = damage;
         }
 
         return damage;
@@ -4881,7 +4887,9 @@ namespace battleutils
 
         if (PDefender->objtype == TYPE_MOB && (PDefender->health.hp - damage) <= 0) 
         {
-            dynamic_cast<CMobEntity*>(PDefender)->m_KillType = ATTACK_RANGED;
+            CMobEntity* MEntity = dynamic_cast<CMobEntity*>(PDefender);
+            MEntity->deathDetails.killType = ATTACK_RANGED;
+            MEntity->deathDetails.damage = damage;
         }
 
         return damage;

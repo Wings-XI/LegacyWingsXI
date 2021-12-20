@@ -16090,19 +16090,20 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
 }
 
 /************************************************************************
-*  Function: getKillType()
+*  Function: killedByType()
 *  Purpose : Returns the ATTACKTYPE which killed this mob
-*  Example : if (mob:getKillType() == tpz.attackType.MAGICAL)
+*  Example : if (mob:killedByType() == tpz.attackType.MAGICAL)
 *  Notes   : If the mob isn't dead, always returns the attackType NONE
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::killedByType(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
 
     if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        lua_pushinteger(L, ((CMobEntity*)m_PBaseEntity)->getKillType());
+        lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->deathDetails.killType);
     }
     return 1;
 }

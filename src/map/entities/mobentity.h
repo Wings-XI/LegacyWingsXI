@@ -147,7 +147,6 @@ public:
     int32     getBigMobMod(uint16 type);               // multiplies mod by 1000
     void      saveMobModifiers();                      // save current state of modifiers
     void      restoreMobModifiers();                   // restore to saved state
-    ATTACKTYPE getKillType();                          // gets the type of attack that killed this mob
 
     void      CallForHelp(bool call);
     bool      CalledForHelp();
@@ -187,8 +186,6 @@ public:
 
     bool         m_autoTargetReady;       // autotarget logic is in multiple places. makes sure it only triggers once.
     CCharEntity* m_autoTargetKiller;      // the player that landed the killing blow. used in auto-target logic
-
-    ATTACKTYPE m_KillType;                // The type of attack that killed this mob. Set to ATTACK_NONE on spawn
 
     uint32    m_DropID;                   // dropid of items to be dropped. dropid in Database (mob_droplist)
 

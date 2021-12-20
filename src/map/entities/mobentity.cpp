@@ -425,14 +425,6 @@ void CMobEntity::restoreMobModifiers()
     m_mobModStat = m_mobModStatSave;
 }
 
-ATTACKTYPE CMobEntity::getKillType()
-{
-    if (this->health.hp > 0)
-    {
-        return ATTACK_NONE;
-    }
-    return m_KillType;
-}
 
 void CMobEntity::HideHP(bool hide)
 {
@@ -728,7 +720,7 @@ void CMobEntity::Spawn()
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
     m_DropItemTime = 1000;
-    m_KillType = ATTACK_NONE;
+    deathDetails.clean();
     m_SpawnTime = server_clock::now();
     animationsub = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
     CallForHelp(false);

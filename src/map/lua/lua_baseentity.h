@@ -747,7 +747,7 @@ public:
     int32 getDespoilDebuff(lua_State*);     // gets the status effect id to apply to the mob on successful despoil
     int32 itemStolen(lua_State*);           // sets mob's ItemStolen var = true
     int32 getTHlevel(lua_State*);           // Returns the Monster's current Treasure Hunter Tier
-    int32 killedByType(lua_State* L);         // The type of attack which killed this mob (Example: PHYSICAL)
+    int32 killedByType(lua_State* L);       // Returns the type of attack which killed this mob (Example: PHYSICAL)
 
     int32 friendListMain(lua_State*);
     int32 setMobLevelRange(lua_State*);

@@ -471,6 +471,17 @@ struct health_t
     int32 zoneinhp, zoneinmp; // HP and MP from previous zone
 };
 
+struct deathInfo_t
+{
+    void clean()
+    {
+        killType = ATTACK_NONE;
+        damage = 0;
+    }
+    ATTACKTYPE killType; // The type of attack that killed this entity
+    int16 damage;        // The damage of the attack that killed this entity
+};
+
 typedef std::vector<apAction_t> ActionList_t;
 class CModifier;
 class CParty;
@@ -691,6 +702,7 @@ public:
     uint16 m_Immunity;      // Mob immunity
     uint16 m_magicEvasion;  // store this so it can be removed easily
     bool m_unkillable;      // entity is not able to die (probably until some action removes this flag)
+    deathInfo_t deathDetails;
 
     time_point charmTime; // to hold the time entity is charmed
     bool isCharmed;       // is the battle entity charmed?

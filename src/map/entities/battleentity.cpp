@@ -640,7 +640,9 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 
     if (this->objtype == TYPE_MOB && (this->health.hp - amount) <= 0) 
     {
-        dynamic_cast<CMobEntity*>(this)->m_KillType = attackType;
+        CBattleEntity* MEntity = dynamic_cast<CBattleEntity*>(this);
+        MEntity->deathDetails.killType = attackType;
+        MEntity->deathDetails.damage = amount;
     }
 
     return addHP(-amount);
