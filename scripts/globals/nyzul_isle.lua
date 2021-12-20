@@ -69,10 +69,14 @@ function generateFloor(floorNumber, instance)
     --otherwise generate a standard floor
     runeOfTransferSpawnPoint = generateStandardFloor(floorNumber, instance, previousFloorInfo)
 
-    -- set the runeOfTransferSpawnPoint
-    instance:setLocalVar("Nyzul_RuneOfTransferX", runeOfTransferSpawnPoint.x)
-    instance:setLocalVar("Nyzul_RuneOfTransferY", runeOfTransferSpawnPoint.y)
-    instance:setLocalVar("Nyzul_RuneOfTransferZ", runeOfTransferSpawnPoint.z)
+    --[[ Note: Setting the RoT spawn point here can cause a race condition
+        when someone other than the activating player calls generateFloor() before
+        we are finished saving the coordinates for the next floor causing them
+        to retrieve stale coordinates for the previous floor. So instead
+        we set coordinates as soon as possible ]]
+    --instance:setLocalVar("Nyzul_RuneOfTransferX", runeOfTransferSpawnPoint.x)
+    --instance:setLocalVar("Nyzul_RuneOfTransferY", runeOfTransferSpawnPoint.y)
+    --instance:setLocalVar("Nyzul_RuneOfTransferZ", runeOfTransferSpawnPoint.z)
 
     instance:setLocalVar("Nyzul_CheckWin", 1)
     return runeOfTransferSpawnPoint
@@ -88,6 +92,8 @@ function generateFreeFloor(floorNumber, instance, previousFloorInfo)
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on free floors
     -- pick a floor
     local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
+    -- set RoT asap
+    setRuneOfTransferSpawnPoint(instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
     -- get rune of transfer
     local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
     setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
@@ -124,6 +130,8 @@ function generateBossFloor(floorNumber, instance)
     -- randomize a boss floor
     local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
     local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[bossFloorKey]
+    -- set RoT spawn asap
+    setRuneOfTransferSpawnPoint(instance, bossFloor.RuneOfTransferSpawnPoint)
 
     -- update the current map
     if (bossFloorKey == 1) then
@@ -168,17 +176,24 @@ function generateBossFloor(floorNumber, instance)
     return bossFloor.RuneOfTransferSpawnPoint, bossID
 end
 
+function setRuneOfTransferSpawnPoint(instance, spawnPoint)
+    instance:setLocalVar("Nyzul_RuneOfTransferX", spawnPoint.x)
+    instance:setLocalVar("Nyzul_RuneOfTransferY", spawnPoint.y)
+    instance:setLocalVar("Nyzul_RuneOfTransferZ", spawnPoint.z)
+end
+
 -------------------------------------------------------
 -- Performs all work for generating a Standard Floor
 -------------------------------------------------------
-function generateStandardFloor(floorNumber, instance, previousFloorInfo) 
-   local objective = selectObjective(instance, previousFloorInfo.objective)
-   local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
-   local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
-   local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
-   setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
-   
-   generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
+function generateStandardFloor(floorNumber, instance, previousFloorInfo)
+    local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
+    setRuneOfTransferSpawnPoint(instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+    local objective = selectObjective(instance, previousFloorInfo.objective)
+    local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
+    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+    setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
+
+    generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
 
    generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
 
