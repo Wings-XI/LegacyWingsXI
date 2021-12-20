@@ -23,8 +23,10 @@ function getRequiredWsPoints(nyzulFloorProgress)
         return 2000 + (80 * (59 - nyzulFloorProgress))
     elseif (nyzulFloorProgress >= 20) then
         return 4000 + (160 * (39 - nyzulFloorProgress))
-    else
+    elseif (nyzulFloorProgress > 0) then
         return 8000 + (320 * (19 - nyzulFloorProgress))
+    else
+        return 16000
     end
 end
 
@@ -40,6 +42,7 @@ function onTrade(player, npc, trade)
                 local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()
                 local requiredWsPoints = getRequiredWsPoints(nyzulFloorProgress)
+
                 if wsPoints <= (requiredWsPoints / 4) then
                     player:startEvent(10091)
                 elseif wsPoints <= (requiredWsPoints / 2) then
