@@ -81,8 +81,8 @@ local function giveAllPreferredTempItemToPlayer(player, byPassPrefCheck)
 end
 
 local function giveSinglePreferredTempItemToPlayer(player, bitPosition)
+
     for k,v in pairs(lowGradeItems) do
-        
         if (v.BitPosition == bitPosition) then
             giveTempItemToPlayer(player, v.ItemID, LOW_GRADE_COST)
             return
@@ -106,6 +106,7 @@ end
 
 local function getTempItemsHeldByPlayer(player)
     local returnTempItems = 0
+
     for k,v in pairs(lowGradeItems) do
         if player:hasItem(v.ItemID, 3) then
             returnTempItems = returnTempItems + bit.lshift(1, v.BitPosition)
@@ -131,8 +132,7 @@ function onTrigger(player, npc)
     local tokens = player:getAssaultPoint(NYZUL_ISLE_ASSAULT_POINT)
     local vendingBoxPreferences = player:getCharVar("Nyzul_VendingBoxPref")
     local tempItemsHeld = getTempItemsHeldByPlayer(player)
-    player:startEvent(202, 0, tokens, tempItemsHeld, vendingBoxPreferences, LOW_GRADE_COST, MEDIUM_GRADE_COST, HIGH_GRADE_COST)
-    --[[cs 202
+     --[[cs 202
     - Param 1 - ???? - even after going through the assembly - still not sure what this does
 	- param 2 - Current tokens
 	- param 3 - Temp items currently held
@@ -140,6 +140,7 @@ function onTrigger(player, npc)
 	- param 5 - Enables low items - represents cost per item
 	- param 6 - Enables medium - represents cost per item
 	- param 7 - Enables high - represents cost per item]]
+    player:startEvent(202, 0, tokens, tempItemsHeld, vendingBoxPreferences, LOW_GRADE_COST, MEDIUM_GRADE_COST, HIGH_GRADE_COST)
 end
 
 function onEventUpdate(player, csid, option)
@@ -176,6 +177,7 @@ function onEventUpdate(player, csid, option)
     local tokens = player:getAssaultPoint(NYZUL_ISLE_ASSAULT_POINT)
     local vendingBoxPreferences = player:getCharVar("Nyzul_VendingBoxPref")
     local tempItemsHeld = getTempItemsHeldByPlayer(player)
+    -- send update
     player:updateEvent(0, tokens, tempItemsHeld, vendingBoxPreferences, LOW_GRADE_COST, MEDIUM_GRADE_COST, HIGH_GRADE_COST)
 end
 
