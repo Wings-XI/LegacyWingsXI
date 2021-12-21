@@ -5797,7 +5797,7 @@ INSERT INTO `mob_pools` VALUES(5733, 'Snipper', 'Snipper', 77, 0x000064010000000
 INSERT INTO `mob_pools` VALUES(5734, 'Rambukk', 'Rambukk', 208, 0x0000580100000000000000000000000000000000, 1, 1, 7, 320, 100, 0, 0, 0, 0, 2, 7, 0, 821, 129, 0, 0, 0, 0, 0, 771);
 INSERT INTO `mob_pools` VALUES(5735, 'Hippomaritimus', 'Hippomaritimus', 197, 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 2, 7, 0, 0, 3, 0, 0, 0, 0, 0, 770);
 INSERT INTO `mob_pools` VALUES(5736, 'Koropokkur', 'Koropokkur', 178, 0x00002c0100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 0, 0, 1, 2, 7, 32, 0, 3, 0, 0, 0, 0, 0, 772);
-INSERT INTO `mob_pools` VALUES(5737, 'Numbing_Norman', 'Numbing_Norman', 48, 0x0000100100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 1, 2, 0, 32, 0, 3, 0, 0, 0, 0, 0, 48);
+INSERT INTO `mob_pools` VALUES(5737, 'Numbing_Norman', 'Numbing_Norman', 48, 0x0000100100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 1, 2, 32, 32, 0, 3, 0, 0, 0, 0, 0, 48);
 INSERT INTO `mob_pools` VALUES(5738, 'Metal_Shears', 'Metal_Shears', 77, 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 0, 0, 0, 2, 1287, 0, 0, 0, 0, 0, 0, 0, 0, 773);
 INSERT INTO `mob_pools` VALUES(5739, 'Sappy_Sycamore', 'Sappy_Sycamore', 216, 0x0000880100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(5740, 'Skirling_Liger', 'Skirling_Liger', 242, 0x0000340100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 2, 0, 0, 5514, 133, 0, 0, 0, 0, 0, 774);
