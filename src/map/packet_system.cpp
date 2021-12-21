@@ -2052,6 +2052,22 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
+    if (PChar->animation == ANIMATION_SYNTH)
+    {
+        ShowExploit("SmallPacket0x04D: %s attempting to access delivery box in the middle of a synth!", PChar->GetName());
+        return;
+    }
+
+    if ((PChar->animation >= ANIMATION_FISHING_FISH && PChar->animation <= ANIMATION_FISHING_STOP) ||
+        PChar->animation == ANIMATION_FISHING_START_OLD || PChar->animation == ANIMATION_NEW_FISHING_START ||
+        PChar->animation == ANIMATION_NEW_FISHING_FISH || PChar->animation == ANIMATION_NEW_FISHING_CAUGHT ||
+        PChar->animation == ANIMATION_NEW_FISHING_ROD_BREAK || PChar->animation == ANIMATION_NEW_FISHING_LINE_BREAK ||
+        PChar->animation == ANIMATION_NEW_FISHING_MONSTER || PChar->animation == ANIMATION_NEW_FISHING_STOP)
+    {
+        ShowExploit("SmallPacket0x04D: %s attempting to access delivery box while fishing!", PChar->GetName());
+        return;
+    }
+
     // 0x01 - Send old items..
     // 0x02 - Add items to be sent..
     // 0x03 - Send confirmation..
@@ -2072,6 +2088,12 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         case 0x01:
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             const char* fmtQuery = "SELECT itemid, itemsubid, slot, quantity, sent, extra, sender, charname FROM delivery_box WHERE charid = %u AND box = %d "
                                    "AND slot < 8 ORDER BY slot;";
 
@@ -2127,9 +2149,16 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x02: // add items to send box
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             uint8  invslot  = data.ref<uint8>(0x07);
             uint32 quantity = data.ref<uint32>(0x08);
-            CItem* PItem    = PChar->getStorage(LOC_INVENTORY)->GetItem(invslot);
+
+            CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invslot);
 
             if (quantity > 0 && PItem && PItem->getQuantity() >= quantity && PChar->UContainer->IsSlotEmpty(slotID))
             {
@@ -2180,6 +2209,12 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x03: // send items
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             uint8 send_items = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -2242,7 +2277,10 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x04: // cancel send
         {
             if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
+            }
 
             if (!PChar->UContainer->IsSlotEmpty(slotID))
             {
@@ -2315,7 +2353,10 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             // Send the player the new items count not seen..
             if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
+            }
 
             uint8 received_items = 0;
             int32 ret            = SQL_ERROR;
@@ -2350,6 +2391,12 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x06: // Move item to received
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             if (boxtype == 1)
             {
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
@@ -2430,6 +2477,12 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x07: // remove received items from send box
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             uint8 received_items = 0;
             uint8 slotID         = 0;
             uint32 itemID        = 0;
@@ -2473,15 +2526,27 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x08:
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX && !PChar->UContainer->IsSlotEmpty(slotID))
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if (!PChar->UContainer->IsSlotEmpty(slotID))
             {
                 PChar->pushPacket(new CDeliveryBoxPacket(action, boxtype, PChar->UContainer->GetItem(slotID), slotID, 1, 1));
             }
+
             return;
         }
         case 0x09: // Option: Return
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX && !PChar->UContainer->IsSlotEmpty(slotID))
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+            if (!PChar->UContainer->IsSlotEmpty(slotID))
             {
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
                 bool commit         = false; // When in doubt back it out.
@@ -2547,7 +2612,13 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0A: // Option: Take
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX && !PChar->UContainer->IsSlotEmpty(slotID))
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if (!PChar->UContainer->IsSlotEmpty(slotID))
             {
                 bool isAutoCommitOn = Sql_GetAutoCommit(SqlHandle);
                 bool commit         = false;
@@ -2625,7 +2696,13 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0B: // Option: Drop
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX && !PChar->UContainer->IsSlotEmpty(slotID))
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if (!PChar->UContainer->IsSlotEmpty(slotID))
             {
                 uint32 itemID       = 0;
                 uint32 itemSubID    = 0;
@@ -2660,6 +2737,12 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0C: // Confirm name (send box)
         {
+            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                return;
+            }
+
             int32 ret = Sql_Query(SqlHandle, "SELECT accid FROM chars WHERE charname = '%s' LIMIT 1", data[0x10]);
 
             if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) > 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -2697,6 +2780,10 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
             if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX)
             {
                 PChar->UContainer->Clean();
+            }
+            else
+            {
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
             }
         }
         break;

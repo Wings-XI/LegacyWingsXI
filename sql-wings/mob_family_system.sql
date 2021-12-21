@@ -71,7 +71,7 @@ CREATE TABLE `mob_family_system` (
 --
 
 INSERT INTO `mob_family_system` VALUES(1, 'Acrolith', 3, 'Arcana', 1, 40, 90, 90, 4, 3, 3, 4, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.6, 0.6, 0.6, 0.7, 1, 0.3, 0.5, 0, 34, 0);
-INSERT INTO `mob_family_system` VALUES(2, 'Adamantoise', 14, 'Lizard', 3, 30, 120, 90, 1, 4, 1, 4, 1, 1, 1, 3, 2, 3, 3, 1, 1, 1, 1, 0.5, 1.3, 0.5, 0.05, 0.05, 0.05, 0.5, 0.5, 4, 2, 0);
+INSERT INTO `mob_family_system` VALUES(2, 'Adamantoise', 14, 'Lizard', 3, 30, 120, 90, 1, 4, 1, 4, 1, 1, 1, 3, 2, 3, 3, 1, 1, 1, 1, 1, 1.3, 1, 0.05, 0.05, 0.05, 0.5, 0.5, 4, 2, 0);
 INSERT INTO `mob_family_system` VALUES(3, 'Aern', 15, 'Luminian', 0, 40, 120, 140, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1.15, 1.15, 1.15, 0.3, 1.3, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(4, 'Ahriman', 9, 'Demon', 0, 40, 87, 140, 5, 3, 4, 4, 1, 2, 2, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.3, 0.3, 8, 3, 0);
 INSERT INTO `mob_family_system` VALUES(5, 'Amoeban', 21, 'Voragean', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.7, 1, 0.5, 0.7, 0.7, 1, 0.5, 0, 32, 0);

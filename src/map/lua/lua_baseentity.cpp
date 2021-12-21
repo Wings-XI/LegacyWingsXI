@@ -14545,18 +14545,19 @@ inline int32 CLuaBaseEntity::removeAllManeuvers(lua_State* L)
 /************************************************************************
 *  Function: updateAttachments()
 *  Purpose : Updates all of the attachments
-*  Example : master:updateAttachments()
-*  Notes   : Called when Optic Fiber has changed.
+*  Example : master:updateAttachments(true)
+*  Notes   : Called when Optic Fiber has changed. Passed value it boolean for Gained
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::updateAttachments(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
     CCharEntity* PEntity = (CCharEntity*)m_PBaseEntity;
 
-    puppetutils::UpdateAttachments(PEntity);
+    puppetutils::UpdateAttachments(PEntity, lua_toboolean(L, 1));
 
     return 0;
 }
