@@ -3647,7 +3647,7 @@ INSERT INTO `mob_pools` VALUES(3583, 'Shamblix_Rottenheart', 'Shamblix_Rottenhea
 INSERT INTO `mob_pools` VALUES(3584, 'Shantotto', 'Shantotto', 153, 0x0500470400000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 0, 0, 0, 16, 0, 0, 0, 3, 0, 0, 2, 0, 0, 153);
 INSERT INTO `mob_pools` VALUES(3585, 'Sharabha', 'Sharabha', 179, 0x0000930100000000000000000000000000000000, 1, 4, 6, 240, 100, 0, 0, 0, 1, 2, 0, 0, 7, 159, 0, 0, 267, 0, 0, 948);
 INSERT INTO `mob_pools` VALUES(3586, 'Sharayaan', 'Sharayaan', 149, 0x05005e0700000000000000000000000000000000, 16, 16, 2, 240, 100, 0, 1, 1, 1, 8, 0, 0, 1, 155, 0, 0, 8, 0, 0, 149);
-INSERT INTO `mob_pools` VALUES(3587, 'Sharp-Eared_Ropipi', 'Sharp-Eared_Ropipi', 206, 0x00000d0100000000000000000000000000000000, 6, 6, 7, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 206);
+INSERT INTO `mob_pools` VALUES(3587, 'Sharp-Eared_Ropipi', 'Sharp-Eared_Ropipi', 206, 0x00000d0100000000000000000000000000000000, 6, 6, 7, 240, 100, 0, 0, 0, 1, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 206);
 INSERT INTO `mob_pools` VALUES(3588, 'Shatterskull_Mippdapp', 'Shatterskull_Mippdapp', 334, 0x0000020800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 1, 1, 2, 0, 32, 3835, 157, 0, 0, 0, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(3589, 'Shaula', 'Shaula', 217, 0x0000c30800000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 0, 0, 0, 2, 0, 0, 7, 669, 0, 0, 0, 0, 0, 217);
 INSERT INTO `mob_pools` VALUES(3590, 'Shayaam', 'Shayaam', 149, 0x05005e0700000000000000000000000000000000, 16, 16, 2, 240, 100, 0, 1, 1, 1, 8, 0, 0, 1, 6, 0, 0, 8, 0, 0, 149);
