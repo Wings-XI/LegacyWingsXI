@@ -66,8 +66,10 @@ function onMobDeath(mob, player, isKiller)
 
     if not crab:isAlive() and not monk:isAlive() then
         barnacle:teleport(mob:getPos(), mob:getRotPos())
+        barnacle:setLocalVar("leaderID", player:getLeaderID())
         barnacle:setStatus(tpz.status.NORMAL)
         barnacle:setLocalVar("open", 0)        
+        barnacle:timer(180000, function(barnacle) barnacle:setStatus(tpz.status.DISAPPEAR) end)
     end
     mob:setLocalVar("twohour", 0)
 end

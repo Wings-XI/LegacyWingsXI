@@ -20,8 +20,22 @@ function onInitialize(zone)
 		SpawnMob(ID.mob.VRTRA)
 	end
 
-    UpdateNMSpawnPoint(ID.mob.BARBASTELLE)
-    GetMobByID(ID.mob.BARBASTELLE):setRespawnTime(math.random(1800, 5400))
+	local re = GetServerVariable("CherryRespawn")
+	if os.time() < re then
+        for i = ID.mob.CHERRY_SAPLING_OFFSET, ID.mob.CHERRY_SAPLING_OFFSET + 12 do
+            local mob = GetMobByID(i)
+            if mob ~= nil and mob:getName() == 'Cherry_Sapling' and not mob:isSpawned() then
+                mob:setRespawnTime(re - os.time())
+            end
+        end
+	else
+        for i = ID.mob.CHERRY_SAPLING_OFFSET, ID.mob.CHERRY_SAPLING_OFFSET + 12 do
+            local mob = GetMobByID(i)
+            if mob ~= nil and mob:getName() == 'Cherry_Sapling' and not mob:isSpawned() then
+                SpawnMob(mob:getID())
+            end
+        end
+	end
 
     tpz.treasure.initZone(zone)
 end
@@ -51,4 +65,18 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+end
+
+function onGameHour()
+    local hour = VanadielHour()
+    local respawn = GetMobByID(ID.mob.ANKOU):getLocalVar("Respawn")
+
+    if hour < 6 or hour >= 18 then
+        DisallowRespawn(ID.mob.SHII, false)
+    elseif respawn < os.time() then
+        DisallowRespawn(ID.mob.SHII, true)
+        SpawnMob(GetMobByID(ID.mob.ANKOU))
+    else
+        DisallowRespawn(ID.mob.SHII, true)
+    end
 end
