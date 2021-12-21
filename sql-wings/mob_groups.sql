@@ -7241,7 +7241,7 @@ INSERT INTO `mob_groups` VALUES(20, 2472, 115, 'Mad_Fox', 210, 1, 1562, 0, 0, 4,
 INSERT INTO `mob_groups` VALUES(21, 2475, 115, 'Magicked_Bones', 210, 1, 769, 0, 0, 4, 5, 0);
 INSERT INTO `mob_groups` VALUES(22, 831, 115, 'Crawler', 210, 0, 529, 0, 0, 4, 6, 0);
 INSERT INTO `mob_groups` VALUES(23, 1524, 115, 'Giant_Bee', 210, 0, 965, 0, 0, 5, 6, 0);
-INSERT INTO `mob_groups` VALUES(24, 3947, 115, 'Tom_Tit_Tat', 0, 32, 2427, 0, 0, 10, 10, 0);
+INSERT INTO `mob_groups` VALUES(24, 3947, 115, 'Tom_Tit_Tat', 0, 32, 2427, 0, 0, 9, 10, 0);
 INSERT INTO `mob_groups` VALUES(25, 2921, 115, 'Nunyenunc', 0, 32, 1829, 0, 0, 10, 12, 0);
 INSERT INTO `mob_groups` VALUES(26, 5737, 115, 'Numbing_Norman', 1200, 0, 3000, 440, 0, 12, 13, 0);
 INSERT INTO `mob_groups` VALUES(27, 1648, 115, 'Goblin_Digger', 210, 0, 1039, 0, 0, 5, 8, 0);
