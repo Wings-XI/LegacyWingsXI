@@ -555,7 +555,7 @@ end
 
 dynamis.statueOnSpawn = function(mob, eyes) -- says statue but this is also called by anything that spawn children mobs (like ahriman)
     mob:setLocalVar("dynaReadyToSpawnChildren", 1)
-    mob:AnimationSub(eyes)
+    mob:setLocalVar("eyeColor", eyes)
 end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
@@ -582,6 +582,9 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
+    local eyes = mob:getLocalVar("eyeColor")
+    mob:AnimationSub(eyes)
+
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 0 then return end
     mob:setLocalVar("dynaReadyToSpawnChildren", 0)
 
