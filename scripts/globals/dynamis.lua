@@ -972,7 +972,7 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.MDEF, 0)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.MPHEAL, 0)
-    mob:setMod(tp.mod.CLEAR_MIND, 0)
+    mob:setMod(tpz.mod.CLEAR_MIND, 0)
 
     mob:setTrueDetection(1)
 
