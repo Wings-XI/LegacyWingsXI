@@ -8,6 +8,7 @@ require("scripts/globals/instance")
 require("scripts/globals/npc_util")
 require("scripts/globals/nyzul_isle_data")
 require("scripts/globals/nyzul_isle_armoury_crates")
+local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ---------------------------------------------------
 tpz = tpz or {}
 tpz.nyzul_isle = tpz.nyzul_isle or {}
@@ -22,23 +23,39 @@ local NM_2_CHANCE = 50 -- chance to see 2 NMs
 local NM_3_CHANCE = 25 -- chance to see 3 NMs
 local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor 4 non-lamp objectives and 1 lamp = 20%
 
+--------------------------------------------------------
+-- Selects the next floor and sets RoT spawn point
+--------------------------------------------------------
+function selectNextFloor(floorNumber, instance)
+    local selectedFloorLayout
+    previousMap = instance:getLocalVar("Nyzul_Map")
+
+    -- select the next map and store the SpawnPoint, Map, and Floor
+    if (floorNumber % 20 == 0) then
+        -- randomize a boss floor
+        local floorKey = math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.bossFloorLayouts[tpz.nyzul_isle_data.bossFloorTableKeys[floorKey]]
+        instance:setLocalVar("Nyzul_FloorKey", floorKey)
+    else
+        -- randomize a non-boss floor
+        selectedFloorLayout = selectFloorLayout(instance, previousMap)
+    end
+
+    setRuneOfTransferSpawnPoint(instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+end
+
+
 ------------------------------------------------------------------------------------------
 -- Generates the Nyzul Isle Floor
--- Returns: List of Mobs
---          The list of mobs required to be killed for objective clear (can be empty)
+-- Returns: Rune of Transfer Spawn Point
 ------------------------------------------------------------------------------------------
 function generateFloor(floorNumber, instance)
     local runeOfTransferSpawnPoint
     local floor = instance:getLocalVar("Nyzul_Floor")
 
-    
+    -- lock to only generate a new floor once
     if (floor == floorNumber) then
-        local existingRuneOfTransferSpawnPoint = {x = 0, y = 0, z = 0}
-        existingRuneOfTransferSpawnPoint.x = instance:getLocalVar("Nyzul_RuneOfTransferX")
-        existingRuneOfTransferSpawnPoint.y = instance:getLocalVar("Nyzul_RuneOfTransferY")
-        existingRuneOfTransferSpawnPoint.z = instance:getLocalVar("Nyzul_RuneOfTransferZ")
-
-        return existingRuneOfTransferSpawnPoint
+        return getRuneOfTransferSpawnPoint(instance)
     end
 
     instance:setLocalVar("Nyzul_Floor", floorNumber)
@@ -46,7 +63,6 @@ function generateFloor(floorNumber, instance)
     local previousFloorInfo = {
         objective = instance:getLocalVar("Nyzul_Objective"),
         subObjective = instance:getLocalVar("Nyzul_SubObjective"),
-        previousMap = instance:getLocalVar("Nyzul_Map"),
         previousMobType = instance:getLocalVar("Nyzul_MobType")
     }
 
@@ -62,17 +78,12 @@ function generateFloor(floorNumber, instance)
     
     -- randomly generate a free floor if this is not the first floor in a run
     if (math.random(1, 100) < FREE_FLOOR_CHANCE and (floorNumber ~= 1)) then
-        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance, previousFloorInfo)
+        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance)
         return runeOfTransferSpawnPoint, {} -- no mobs on free floor
     end
 
     --otherwise generate a standard floor
     runeOfTransferSpawnPoint = generateStandardFloor(floorNumber, instance, previousFloorInfo)
-
-    -- set the runeOfTransferSpawnPoint
-    instance:setLocalVar("Nyzul_RuneOfTransferX", runeOfTransferSpawnPoint.x)
-    instance:setLocalVar("Nyzul_RuneOfTransferY", runeOfTransferSpawnPoint.y)
-    instance:setLocalVar("Nyzul_RuneOfTransferZ", runeOfTransferSpawnPoint.z)
 
     instance:setLocalVar("Nyzul_CheckWin", 1)
     return runeOfTransferSpawnPoint
@@ -82,12 +93,13 @@ end
 -- Performs all work for generating a Free Floor
 --
 -------------------------------------------------------
-function generateFreeFloor(floorNumber, instance, previousFloorInfo)
+function generateFreeFloor(floorNumber, instance)
     -- set objectives
     instance:setLocalVar("Nyzul_Objective", 0) -- FREE_FLOOR
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on free floors
     -- pick a floor
-    local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
+    local selectedFloorLayout = getFloorLayout(instance)
+     
     -- get rune of transfer
     local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
     setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
@@ -122,8 +134,8 @@ function generateBossFloor(floorNumber, instance)
     instance:setLocalVar("Nyzul_Objective", 2) -- ELIMINATE_ENEMY_LEADER
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on boss floors
     -- randomize a boss floor
-    local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
-    local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[bossFloorKey]
+    --local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
+    local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[tpz.nyzul_isle_data.bossFloorTableKeys[instance:getLocalVar("Nyzul_FloorKey")]]
 
     -- update the current map
     if (bossFloorKey == 1) then
@@ -168,21 +180,41 @@ function generateBossFloor(floorNumber, instance)
     return bossFloor.RuneOfTransferSpawnPoint, bossID
 end
 
+
+function setRuneOfTransferSpawnPoint(instance, spawnPoint)
+    if(spawnPoint) then
+    instance:setLocalVar("Nyzul_RuneOfTransferX", spawnPoint.x)
+    instance:setLocalVar("Nyzul_RuneOfTransferY", spawnPoint.y)
+    instance:setLocalVar("Nyzul_RuneOfTransferZ", spawnPoint.z)
+    else
+        printf("wtf m8")
+    end
+end
+
+function getRuneOfTransferSpawnPoint(instance)
+    local runeOfTransferSpawnPoint = { x = 0, y = 0, z = 0}
+    runeOfTransferSpawnPoint.x = instance:getLocalVar("Nyzul_RuneOfTransferX")
+    runeOfTransferSpawnPoint.y = instance:getLocalVar("Nyzul_RuneOfTransferY")
+    runeOfTransferSpawnPoint.z = instance:getLocalVar("Nyzul_RuneOfTransferZ")
+
+    return runeOfTransferSpawnPoint
+end
+
 -------------------------------------------------------
 -- Performs all work for generating a Standard Floor
 -------------------------------------------------------
-function generateStandardFloor(floorNumber, instance, previousFloorInfo) 
-   local objective = selectObjective(instance, previousFloorInfo.objective)
-   local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
-   local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
-   local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
-   setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
-   
-   generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
+function generateStandardFloor(floorNumber, instance, previousFloorInfo)
+    local selectedFloorLayout = getFloorLayout(instance)
+    local objective = selectObjective(instance, previousFloorInfo.objective)
+    local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
+    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+    setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
 
-   generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
+    generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
 
-   return selectedFloorLayout.RuneOfTransferSpawnPoint, objectiveMobs
+    generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
+
+    return selectedFloorLayout.RuneOfTransferSpawnPoint, objectiveMobs
 end
 
 ------------------------------------------------------------------
@@ -236,25 +268,57 @@ function selectFloorLayout(instance, previousMap)
             selectedMap = math.random(1,6)
         end
     end
-    instance:setLocalVar("Nyzul_Map", selectedMap)
 
     local selectedFloorLayout
+    local floorKey
     -- choose a floor from the map
     if (selectedMap == 1) then
-        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[math.random(#tpz.nyzul_isle_data.northEastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.northEastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[floorKey]]
     elseif (selectedMap == 2) then
-        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[math.random(#tpz.nyzul_isle_data.eastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.eastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[floorKey]]
     elseif (selectedMap == 3) then
-        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[math.random(#tpz.nyzul_isle_data.centralFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.centralFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[floorKey]]
     elseif (selectedMap == 4) then
-        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[math.random(#tpz.nyzul_isle_data.southEastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southEastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[floorKey]]
     elseif (selectedMap == 5) then
-        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[math.random(#tpz.nyzul_isle_data.southFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[floorKey]]
     else
-        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[math.random(#tpz.nyzul_isle_data.southWestFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southWestFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[floorKey]]
+    end
+
+    instance:setLocalVar("Nyzul_Map", selectedMap)
+    instance:setLocalVar("Nyzul_FloorKey", floorKey)
+    return selectedFloorLayout
+end
+
+function getFloorLayout(instance)
+    local selectedMap = instance:getLocalVar("Nyzul_Map")
+    local floorKey = instance:getLocalVar("Nyzul_FloorKey")
+
+     local selectedFloorLayout
+    -- choose a floor from the map
+    if (selectedMap == 1) then
+        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 2) then
+        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 3) then
+        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[floorKey]]
+    elseif (selectedMap == 4) then
+        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 5) then
+        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[floorKey]]
+    else
+        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[floorKey]]
     end
 
     return selectedFloorLayout
+
 end
 
 --------------------------------------------------------------------
@@ -792,5 +856,26 @@ function setNyzulMobTypesAndTraits(instance)
         elseif (mobID >= 17092824 and mobID <= 17092998) or (mobID >= 17092629 and mobID <= 17092630) then
             mob:setMobType(2)
         end
+    end
+end
+
+------------------------------------------------------------------
+-- Shows the objective(s) for the floor to the player
+------------------------------------------------------------------
+function showObjectives(player)
+    local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_ENEMY_LEADER, ID.text.ELIMINATE_SPECIFIED_ENEMY, ID.text.ELIMINATE_SPECIFIED_ENEMIES,
+                              ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS}
+    local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
+
+    local instance = player:getInstance()
+    local objective = instance:getLocalVar("Nyzul_Objective")
+    local subObjective = instance:getLocalVar("Nyzul_SubObjective")
+
+    if (objective > 0) then
+        player:messageSpecial(objectiveToStringMap[objective])
+    end
+
+    if (subObjective > 0) then
+        player:messageSpecial(subObjectiveToStringMap[subObjective])
     end
 end
