@@ -182,13 +182,9 @@ end
 
 
 function setRuneOfTransferSpawnPoint(instance, spawnPoint)
-    if(spawnPoint) then
     instance:setLocalVar("Nyzul_RuneOfTransferX", spawnPoint.x)
     instance:setLocalVar("Nyzul_RuneOfTransferY", spawnPoint.y)
     instance:setLocalVar("Nyzul_RuneOfTransferZ", spawnPoint.z)
-    else
-        printf("wtf m8")
-    end
 end
 
 function getRuneOfTransferSpawnPoint(instance)

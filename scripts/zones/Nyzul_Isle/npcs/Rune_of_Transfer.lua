@@ -13,6 +13,16 @@ local SPLIT_PATH_CHANCE = 5 -- percent chance to have a split path (choose left 
 local floorWarpCosts = {0, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900}
 
 function onTrigger(player, npc)
+    -- Force players out of menus when a rune of transfer is touched
+    if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID or npc:AnimationSub() > 0) then
+        local instance = player:getInstance()
+        for _,char in pairs(instance:getChars()) do
+            if char:getID() ~= player:getID() then
+                char:release()
+            end
+        end
+    end
+
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
@@ -57,7 +67,6 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option, npc)
-    printf("RoT onEventFinish csid %s option %s player %s", csid, option, player:getName())
     local instance = player:getInstance()
 
     -- entrance rune of transfer
@@ -119,6 +128,7 @@ function bubbleWarpThePlayers(player, instance, stage)
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
                 char:release()
+                char:disengage()
                 char:startEvent(95)
             end
         end
