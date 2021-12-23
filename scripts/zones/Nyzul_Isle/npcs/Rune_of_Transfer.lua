@@ -70,6 +70,7 @@ function onEventFinish(player, csid, option, npc)
         if (cost <= tokens) then
             player:delAssaultPoint(cost, NYZUL_ISLE_ASSAULT_POINT) -- Remove from NYZUL_ISLE_ASSAULT_POINT
             instance:setLocalVar("Nyzul_StartingFloor", floorSelected)
+            instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
             bubbleWarpThePlayers(player, instance, floorSelected)
             local chars = instance:getChars()
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
@@ -116,7 +117,6 @@ function bubbleWarpThePlayers(player, instance, stage)
         instance:setStage(stage)
         
         player:startEvent(95)
-        instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
                 char:release()
