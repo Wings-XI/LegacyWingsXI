@@ -37,12 +37,10 @@ function onTrigger(player, npc)
     local recommendedLevel = 75
     
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS and player:hasKeyItem(tpz.ki.NYZUL_ISLE_ROUTE) and player:getCharVar("AhtUrganStatus") == 1 then
-        player:setLocalVar("PathOfDarkness", 1)
         availableInstances = availableInstances - PATH_OF_DARKNESS
     end
 
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and player:hasKeyItem(tpz.ki.MYTHRIL_MIRROR) and player:getCharVar("AhtUrganStatus") == 1 then
-        player:setLocalVar("NashmeirasPlea", 1)
         availableInstances = availableInstances - NASHMEIRAS_PLEA
     end
 
@@ -58,7 +56,6 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option, target)
-
     if csid ~= 405 then
         return
     end
@@ -102,12 +99,10 @@ function onEventUpdate(player, csid, option, target)
 
     player:setCharVar("AssaultCap", cap)
 
-    local pathOfDarkness = player:getLocalVar("PathOfDarkness")
-    local nashmeirasPlea = player:getLocalVar("NashmeirasPlea")
     local party = player:getParty()
 
-    if pathOfDarkness == 1 then
-
+    -- PATH_OF_DARKNESS
+    if option == 524288 then
         if party ~= nil then
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() then
@@ -125,7 +120,8 @@ function onEventUpdate(player, csid, option, target)
         end
 
         player:createInstance(58, 77)
-    elseif nashmeirasPlea == 1 then
+    -- NASHMEIRAS_PLEA
+    elseif option == 786432 then
 
         if party ~= nil then
             for i, v in ipairs(party) do
@@ -179,7 +175,6 @@ function onEventUpdate(player, csid, option, target)
 end
 
 function onEventFinish(player, csid, option, target)
-
     if csid == 405 and option == 1073741824 and player:getLocalVar("NyzulReady") == 1 then
         player:startEvent(116, 2) -- This means the event was force terminated. Loop into the entrance animation.
     elseif csid == 116 or (csid == 405 and option == 4) and not(option == 1073741824) then
@@ -188,15 +183,11 @@ function onEventFinish(player, csid, option, target)
 end
 
 function onInstanceCreated(player, target, instance)
-    local pathOfDarkness = player:getLocalVar("PathOfDarkness")
-    local nashmeirasPlea = player:getLocalVar("NashmeirasPlea")
     
     if instance then
-        if pathOfDarkness == 1 then
-            player:setLocalVar("PathOfDarkness", 0)
+        if instance:getID() == 58 then
             player:delKeyItem(tpz.ki.NYZUL_ISLE_ROUTE)
-        elseif nashmeirasPlea == 1 then
-            player:setLocalVar("NashmeirasPlea", 0)
+        elseif instance:getID() == 59 then
             player:delKeyItem(tpz.ki.MYTHRIL_MIRROR)
         else
             instance:setLevelCap(player:getCharVar("AssaultCap"))
@@ -218,9 +209,9 @@ function onInstanceCreated(player, target, instance)
                     v:startEvent(116, 2)
                     v:setLocalVar("Nyzul", 1)
 
-                    if pathOfDarkness == 1 then
+                    if instance:getID() == 58 then
                         v:delKeyItem(tpz.ki.NYZUL_ISLE_ROUTE)
-                    elseif nashmeirasPlea == 1 then
+                    elseif instance:getID() == 59 then
                         v:delKeyItem(tpz.ki.MYTHRIL_MIRROR)
                     else
                         v:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
