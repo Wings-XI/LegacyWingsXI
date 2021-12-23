@@ -215,7 +215,7 @@ function onInstanceCreated(player, target, instance)
                         v:delKeyItem(tpz.ki.MYTHRIL_MIRROR)
                     else
                         v:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
-                        player:messageSpecial(7445, 5)
+                        v:messageSpecial(ID.text.ORDER_GIVEN_TO_INVADE, 5)
                     end
                 end
             end
