@@ -393,7 +393,7 @@ INSERT INTO `traits` VALUES(66, 'kick attacks', 2, 71, 2, 292, 12, NULL, 0);
 INSERT INTO `traits` VALUES(66, 'kick attacks', 2, 76, 3, 292, 14, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 5, 1, 289, 5, NULL, 0);
 INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 25, 2, 289, 10, NULL, 0);
-INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 40, 3, 289, 15, NULL, 0);
+INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 45, 3, 289, 15, NULL, 0);
 INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 65, 4, 289, 20, NULL, 0);
 INSERT INTO `traits` VALUES(67, 'subtle blow', 2, 91, 5, 289, 25, 'ABYSSEA', 0);
 INSERT INTO `traits` VALUES(67, 'subtle blow', 13, 15, 1, 289, 5, NULL, 0);
