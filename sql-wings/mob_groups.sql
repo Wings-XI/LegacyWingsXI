@@ -3211,7 +3211,7 @@ INSERT INTO `mob_groups` VALUES(145, 4200, 77, 'Vanilla_Custard', 0, 128, 0, 0, 
 INSERT INTO `mob_groups` VALUES(146, 1490, 77, 'Gem_Heister_Roorooroon', 0, 128, 945, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(147, 3258, 77, 'Qiqirn_Mine', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(148, 3762, 77, 'Stealth_Bomber_Gagaroon', 0, 128, 0, 0, 0, 76, 77, 0);
-INSERT INTO `mob_groups` VALUES(149, 3288, 77, 'Quick_Draw_Sasaroon', 0, 128, 0, 0, 0, 0, 76, 77);
+INSERT INTO `mob_groups` VALUES(149, 3288, 77, 'Quick_Draw_Sasaroon', 0, 128, 0, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(150, 3595, 77, 'Shielded_Chariot', 0, 128, 0, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(151, 365, 77, 'Battledressed_Chariot', 0, 128, 0, 0, 0, 76, 77, 0);
 INSERT INTO `mob_groups` VALUES(152, 2434, 77, 'Long-Gunned_Chariot', 0, 128, 0, 0, 0, 76, 77, 0);
@@ -3400,7 +3400,7 @@ INSERT INTO `mob_groups` VALUES(334, 0, 77, NULL, 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(335, 0, 77, NULL, 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(337, 0, 77, NULL, 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(338, 6210, 77, 'Draugar', 0, 128, 701, 0, 0, 67, 70, 0);
-INSERT INTO `mob_groups` VALUES(2510, 68, 77, 'Aiatar', 0, 128, 36, 0, 0, 75, 80, 0);
+INSERT INTO `mob_groups` VALUES(2510, 68, 77, 'Aiatar', 0, 128, 906, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(2514, 110, 77, 'Amnaf_blu', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2634, 3332, 77, 'Razfahd', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(2685, 110, 78, 'Amnaf_blu', 0, 0, 0, 0, 0, 0, 0, 0);
