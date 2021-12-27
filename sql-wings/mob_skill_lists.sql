@@ -3308,6 +3308,11 @@ INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 645);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 648);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 642);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 650);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 1792);
 
 --
 -- Indexes for dumped tables

@@ -1,10 +1,10 @@
 ---------------------------------------------
---  Voidsong
+--  Nullsong
 --
 --  Description: Removes all status effects in an area of effect.
 --  Type: Enfeebling
 --  Utsusemi/Blink absorb: Ignores shadows
---  Range: 20' radial
+--  Range: 15' radial
 --  Notes:
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
@@ -22,16 +22,16 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     mob:eraseAllStatusEffect()
-    local count = target:dispelAllStatusEffect()
-    count = count + target:eraseAllStatusEffect()
+    local dispellCount = target:dispelAllStatusEffect()
+    local totalCount = dispellCount + target:eraseAllStatusEffect()
+    local damagePerBuff = math.random(80,109)
 
-    if (count == 0) then
+    if (totalCount == 0) then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-    else
-        skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
+    --else
+        --skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
     end
-
-    return count
+    target:takeDamage(damagePerBuff*dispellCount, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)
+    return damagePerBuff * dispellCount
 end
