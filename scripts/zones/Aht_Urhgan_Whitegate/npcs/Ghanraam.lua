@@ -11,11 +11,30 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 --[[
+    IMPORTANT NOTE: According to wiki - on retail Ghanraam can only store 1 set of armor components at a time.  I did not find support
+                    for this in the dissassembled events or string tables.  Therefore I have implemented Ghanraam to be able to store
+                    all 5 armor sets at once.
+                    Players must change the active set by talking with Ghranraam to with in order to change what armor set can be retrieved or crafted.
+                    Addition PrintToPlayer messaging can be added if testing finds this to be non-obvious.
+
+    Potential problem scenario introduced by allowing storage of all 5 sets:
+        - Player has Usukane selected as the current armor set
+        - Player has all 3 armor pieces stored to make Usukane Head
+        - Player has 2/3 armor pieces stored to make Ares Head
+        - Player gets their Ares Head Drop from salvage, rushes to Ghanraam and trades it in.
+        - Ghanraam tells they player they now have all the Ares Head pieces!  Excitement!
+        - Player trades mats to craft _a head piece_ to Ghanraam
+        - Ghanraam tells the player "congrats, your USUKANE head will be ready soon"
+        - Player is mad, they meant to craft Ares
+
+        - We could change the current set whenever a player trades in an armor piece - but is that better?
+]]
+
+--[[
     CS List
     - 814 - Introduction CS
     - 815 - Default - info/retrieve
-        - Param 1 = Set you are working on? 
-    - 826 - Your armor is being crafted. - might lock all other functions until done?
+    - 826 - Your armor is being crafted.
     - 827 - Here is your completed armor. 
     - 893 - Introduction to weapons CS
     - 816 - Extremely flexible CS based on param 2
@@ -155,7 +174,6 @@ local function isArmorPieceComplete(player, armorSet, equipSlot)
     return true
 end
 
-
 local function checkForMaterialsAndCurrency(trade)
     local materials = {
         747,  -- Orichalcum Ingot     - Head
@@ -227,6 +245,7 @@ end
 function onTrade(player, npc, trade)
 
     local ALL_WEAPONS = 1048575
+    local currentSet = player:getCharVar("Ghanraam_CurrentSet")
 
     -- Only accept trades if players have gotten both basic introductions
     if ((player:getCharVar("Ghanraam_BasicIntro") > 0) and (player:getCharVar("Ghanraam_WeaponIntro") > 0)) then
@@ -291,6 +310,11 @@ function onTrade(player, npc, trade)
                     -- Armor does not complete a piece
                     player:startEvent(816, armorSet - 1, equipSlot - 1, 2)
                 end
+
+                if (currentSet == 0) then
+                    -- since the player traded us an armor piece and has never chosen an armor set, lets pick the set associated with the piece
+                    player:setCharVar("Ghanraam_CurrentSet", armorSet)
+                end
             end
             -- handled an armor
             return
@@ -300,9 +324,9 @@ function onTrade(player, npc, trade)
         local completeMatsAndCurrency = false
         -- checking for currency and mats
         equipSlot, completeMatsAndCurrency = checkForMaterialsAndCurrency(trade)
-        if (completeMatsAndCurrency) then
-            -- mats are complete from an equipSlot
-            local currentSet = player:getCharVar("Ghanraam_CurrentSet")
+
+        if (currentSet > 0 and completeMatsAndCurrency) then
+            -- mats are complete for an equipSlot and there is a selected armor set
             if (isArmorPieceComplete(player, currentSet, equipSlot)) then
                 -- all mats in trade and all 3 pieces stored
                 -- remove 3 pieces from storage
@@ -394,6 +418,10 @@ end
 
 local function sendEventUpdateForArmor(player)
     local currentSet = player:getCharVar("Ghanraam_CurrentSet")
+    if (currentSet == 0) then
+        -- no armor set selected yet
+        player:updateEvent(0, 0, 0, 0)
+    end
     local storedArmor = getStoredArmorByArmorSet(player, currentSet)
 
     local isArmorStored = 0
