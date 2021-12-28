@@ -12,9 +12,15 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
+    local wDmgMultiplier = 4
 
+    -- Nyzul Isle Racing Chariots
+    if (mob:getID() >= 17092994 and mob:getID() <= 17092998) then
+        -- lower damage from the racing chariots
+        wDmgMultiplier = 2
+    end
     local dmgmod = 2
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.ICE, dmgmod, TP_MAB_BONUS, 1)
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*wDmgMultiplier, tpz.magic.ele.ICE, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.damageType.MAGICAL, tpz.attackType.ICE, MOBPARAM_WIPE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.EARTH)
     return dmg

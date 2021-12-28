@@ -1262,7 +1262,7 @@ INSERT INTO `mob_skills` VALUES(2051, 1375, 'rail_cannon_1', 0, 20.0, 2000, 1500
 INSERT INTO `mob_skills` VALUES(2052, 1380, 'restoral', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2053, 1797, 'heavy_armature', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2054, 1407, 'diffusion_ray', 4, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2055, 1408, 'intertia_stream', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2055, 1408, 'inertia_stream', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2056, 1399, 'discharge', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2057, 1401, 'mortal_revolution', 1, 15.0, 2000, 1000, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2058, 1400, 'homing_missile', 2, 20.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
