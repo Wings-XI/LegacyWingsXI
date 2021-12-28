@@ -116,7 +116,12 @@ private:
 
 	void SetLeader(const char* MemberName);                   // устанавливаем лидера группы
     void SetQuarterMaster(const char* MemberName);            // устанавливаем владельца сокровищ
-	void RemovePartyLeader(CBattleEntity* PEntity);     // лидер покидает группу
+    /**
+     *  Call to remove the party leader from the party.
+     *  @param PEntity Entity to remove, which must be the party leader
+     *  @return True if the party still exists, false if it has been disbanded
+     */
+	bool RemovePartyLeader(CBattleEntity* PEntity);     // The leader leaves the party
     std::vector<partyInfo_t> GetPartyInfo();
     void RefreshFlags(std::vector<partyInfo_t>&);
 

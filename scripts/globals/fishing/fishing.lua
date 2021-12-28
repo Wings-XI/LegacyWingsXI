@@ -589,7 +589,6 @@ function createFishItemPool(player, fishingSkill, fishlist, rod, moonModifier)
                     end
                 elseif fish.item == 1 then
                     if player:getLocalVar("Chart") == 1 then
-                            print("Totally Pirate Chart")
                             table.insert(ItemPool, FishItem)
                             ItemWeightQuestBonus = 500
                             FishPoolWeight = -50
@@ -797,12 +796,10 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         NoCatchWeightAdd = 15
     elseif zoneType == 2 then           -- outdoors
         if player:getLocalVar("Chart") == 1 then
-            print("Chart Stuff")
             ItemWeightAdd = 500
             FishWeightAdd = -100
             MobWeightAdd = -50
         else
-            print("Not Chart Stuff")
             FishWeightAdd = 20
             ItemWeightAdd = 5
             MobWeightAdd = 5
@@ -911,7 +908,6 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
             CatchSizeType = fishlist[CatchSelect].sizeType
             -- CATCH ID
             if player:getLocalVar("Chart") == 1 then
-                print("Catching Chart Stuff")
                 CatchID = math.random(5329, 5330)
             else
                 CatchID = fishlist[CatchSelect].id

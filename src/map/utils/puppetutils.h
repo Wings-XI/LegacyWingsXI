@@ -28,9 +28,9 @@
 
 namespace puppetutils
 {
-	void LoadAutomaton(CCharEntity* PChar);
-	void SaveAutomaton(CCharEntity* PChar);
-	bool UnlockAttachment(CCharEntity* PChar, CItem* PItem);
+    void LoadAutomaton(CCharEntity* PChar);
+    void SaveAutomaton(CCharEntity* PChar);
+    bool UnlockAttachment(CCharEntity* PChar, CItem* PItem);
     bool HasAttachment(CCharEntity* PChar, CItem* PItem);
     void setAttachment(CCharEntity* PChar, uint8 slotId, uint8 attachment);
     void setFrame(CCharEntity* PChar, uint8 frame);
@@ -40,7 +40,7 @@ namespace puppetutils
     void TrySkillUP(CAutomatonEntity* PAutomaton, SKILLTYPE SkillID, uint8 lvl);
     void LoadAutomatonStats(CCharEntity* PChar);
     void CheckAttachmentsForManeuver(CCharEntity* PChar, EFFECT maneuver, bool gain);
-    void UpdateAttachments(CCharEntity* PChar);
+    void UpdateAttachments(CCharEntity* PChar, bool gain);
 };
 
 #endif

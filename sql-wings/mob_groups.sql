@@ -3869,6 +3869,7 @@ INSERT INTO `mob_groups` VALUES(34, 1339, 82, 'Fingerfilcher_Dradzad', 0, 128, 0
 INSERT INTO `mob_groups` VALUES(35, 6201, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0, 9200, 0, 74, 75, 0);
 INSERT INTO `mob_groups` VALUES(36, 1262, 82, 'Eurytos', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(37, 5153, 82, 'Kholomodumo', 0, 128, 0, 0, 9999, 93, 94, 0);
+INSERT INTO `mob_groups` VALUES(38, 6211, 82, 'Voirloup', 0, 128, 332, 16000, 0, 83, 85, 0);
 INSERT INTO `mob_groups` VALUES(3096, 18, 82, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(3097, 37, 82, 'Achtelle', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3098, 84, 82, 'Alfons', 1, 0, 0, 0, 0, 1, 1, 0);
