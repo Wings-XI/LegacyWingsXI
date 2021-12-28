@@ -11096,7 +11096,7 @@ INSERT INTO `mob_groups` VALUES(9682, 1518, 194, 'Ghoul', 660, 0, 960, 0, 0, 23,
 INSERT INTO `mob_groups` VALUES(9697, 3285, 194, 'Queen_of_Cups', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(9718, 3992, 194, 'Treasure_Chest', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1, 2408, 195, 'Lich_C_Magnus', 0, 128, 2869, 0, 0, 58, 58, 0);
-INSERT INTO `mob_groups` VALUES(2, 3655, 195, 'Skull_of_Gluttony', 0, 0, 2871, 0, 0, 0, 0, 0);
+INSERT INTO `mob_groups` VALUES(2, 3655, 195, 'Skull_of_Gluttony', 0, 128, 2871, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3, 3656, 195, 'Skull_of_Greed', 0, 128, 2872, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(4, 3659, 195, 'Skull_of_Sloth', 0, 128, 2875, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(5, 3657, 195, 'Skull_of_Lust', 0, 128, 2873, 0, 0, 60, 60, 0);

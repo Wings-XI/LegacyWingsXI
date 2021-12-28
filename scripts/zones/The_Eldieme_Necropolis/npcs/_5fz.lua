@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: The Eldieme Necropolis
 --  NPC: Tallow Candle
--- !pos 15.19 -18.30 339.80
+-- !pos -655.27 -2.30 214.58
 -----------------------------------
 local ID = require("scripts/zones/The_Eldieme_Necropolis/IDs")
 local func = require("scripts/zones/The_Eldieme_Necropolis/globals")
@@ -62,11 +62,11 @@ end
 function onTrigger(player, npc)
     local timer = GetServerVariable("SkullRespawn")
     local active = npc:getLocalVar("BrazierActive")
-    
+
     if os.time() < active then
         player:messageSpecial(ID.text.BRAZIER_ACTIVE)
     elseif os.time() > timer and os.time() > active then
-        player:messageSpecial(ID.text.BRAZIER_OUT, 768)
+        player:messageSpecial(ID.text.BRAZIER_OUT, 0, 768)
     else
         player:messageSpecial(ID.text.BRAZIER_COOLDOWN)
     end

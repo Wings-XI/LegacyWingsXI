@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: The Eldieme Necropolis
 --  NPC: Tallow Candle
--- !pos -185.54 -2.30 55.39
+-- !pos 139.96 -18.29 306.27
 -----------------------------------
 local ID = require("scripts/zones/The_Eldieme_Necropolis/IDs")
 local func = require("scripts/zones/The_Eldieme_Necropolis/globals")
@@ -11,6 +11,8 @@ function onTrade(player, npc, trade)
     local tradeCount = GetServerVariable("SkullTradeCount")
     local tradeWindow = GetServerVariable("SkullTradeTimer")
     local active = npc:getLocalVar("BrazierActive")
+
+    print(os.time() - active)
 
     if npcUtil.tradeHas(trade, 768) then
         if os.time() < tradeWindow and os.time() > active then
@@ -51,10 +53,13 @@ function onTrade(player, npc, trade)
                 SpawnMob(ID.mob.SKULL_OF_WRATH)
             end
         elseif os.time() > active then
+            npc:setLocalVar("BrazierActive", os.time() + 10)
             SetServerVariable("SkullTradeCount", 1)
-            SetServerVariable("SkullTradeTimer", os.time() + 10)
+            SetServerVariable("SkullTradeTimer", os.time() + 30)
             player:messageSpecial(ID.text.SKULL_SIX_REMAIN)
             player:confirmTrade()
+        elseif os.time() < active then
+            player:messageSpecial(ID.text.BRAZIER_ACTIVE)
         end
     end
 end
@@ -62,11 +67,11 @@ end
 function onTrigger(player, npc)
     local timer = GetServerVariable("SkullRespawn")
     local active = npc:getLocalVar("BrazierActive")
-    
+
     if os.time() < active then
         player:messageSpecial(ID.text.BRAZIER_ACTIVE)
     elseif os.time() > timer and os.time() > active then
-        player:messageSpecial(ID.text.BRAZIER_OUT, 768)
+        player:messageSpecial(ID.text.BRAZIER_OUT, 0, 768)
     else
         player:messageSpecial(ID.text.BRAZIER_COOLDOWN)
     end

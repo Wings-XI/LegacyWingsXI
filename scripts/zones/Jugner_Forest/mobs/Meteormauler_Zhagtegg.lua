@@ -14,20 +14,20 @@ function onMobSpawn(mob)
 
     local chance = math.random(1,2)
     if chance == 1 then
-        GetMobByID(ID.mob.METEORMAULER_GUARD1):setSpawn(mob:getXPos()+2, mob:getYPos(), mob:getZPos())
-        GetMobByID(ID.mob.METEORMAULER_GUARD2):setSpawn(mob:getXPos()+4, mob:getYPos(), mob:getZPos())
-        SpawnMob(ID.mob.METEORMAULER_GUARD1)
-        SpawnMob(ID.mob.METEORMAULER_GUARD2)
+        SpawnMob(ID.mob.METEORMAULER_GUARD1):setPos(mob:getXPos()+2, mob:getYPos(), mob:getZPos())
+        SpawnMob(ID.mob.METEORMAULER_GUARD2):setPos(mob:getXPos()+4, mob:getYPos(), mob:getZPos())
     end
 end
 
-function onMobEngage(mob, target)
+function onMobFight(mob, target)
     local mobId = mob:getID()
 
     for i = 1, 2 do
-        local guard = GetMobByID(mobId + i)
-        if guard:isSpawned() then
-            guard:updateEnmity(target)
+        local child = GetMobByID(mobId + i)
+        if child:isSpawned() then
+            if target and child:getCurrentAction() == tpz.act.ROAMING then -- doing nothing, make share enmity
+                child:updateEnmity(target)
+            end
         end
     end
 end
@@ -49,5 +49,6 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
+    UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(75600 + math.random(0, 600)) -- 21 hours, 10 minute window
 end
