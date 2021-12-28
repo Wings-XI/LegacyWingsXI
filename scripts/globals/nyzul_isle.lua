@@ -552,6 +552,44 @@ function setDoorAnimations(instance, doorsTable, openDoors, allDoors)
     end
 
 end
+----------------------------------------------------------------------
+-- Sets local vars to tell Qiqrn Thfs where to run away to
+----------------------------------------------------------------------
+function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
+    local mob = GetMobByID(mobID, instance)
+    local roomSpawnPoints = {}
+    -- find the spawn points associated to the room the QiQirn will spawn in
+    for key,value in pairs(rooms) do
+        for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
+            if (spawnPoint.x == nestedValue.x) and (spawnPoint.y == nestedValue.y) and (spawnPoint.z == nestedValue.z) then
+                roomSpawnPoints = addTableListsTogether(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints, {})
+                break
+            end
+        end
+        if (roomSpawnPoints ~= nil) then
+            break
+        end
+    end
+
+    local runAwayPoint = {}
+    local greatestDistance = 0
+    -- pick the furthest away point to run to
+    for i = 1, #roomSpawnPoints do
+        local diffX = spawnPoint.x - roomSpawnPoints[i].x 
+        local diffY = spawnPoint.y - roomSpawnPoints[i].y 
+        local diffZ = spawnPoint.z - roomSpawnPoints[i].z   
+
+        local currentDistance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
+        if (currentDistance > greatestDistance) then
+            greatestDistance = currentDistance
+            runAwayPoint = roomSpawnPoints[i]
+        end
+    end
+    -- set local vars used by the mob
+    mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x)
+    mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y)
+    mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z)
+end
 
 ----------------------------------------------------------------------
 -- Find spawn points and spawn all mobs
@@ -575,6 +613,11 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
         spawnPoint = spawnPoints[index]
         setSpawnPointAndSpawnMob(mobID, spawnPoint, instance)
         table.remove(spawnPoints, index)
+        -- Qiqirn Thf mobs run around and drop mines.  Given the current spawn system they require additional informat to know where to run
+        -- Quick Draw is a ranger - but is reported to act the same
+        if (mobID == 17092989 or mobID == 17092990 or mobID == 17092961 or mobID == 17092963 or mobID == 17092964) then
+            setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
+        end
     end
 end
 
