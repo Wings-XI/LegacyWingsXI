@@ -12,7 +12,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
-    local wDmgMultiplier = 4
+    local wDmgMultiplier = 3
 
     -- Nyzul Isle Racing Chariots
     if (mob:getID() >= 17092994 and mob:getID() <= 17092998) then
