@@ -1246,6 +1246,10 @@ INSERT INTO `mob_skills` VALUES(2026, 1381, 'fossilizing_breath', 4, 12.0, 2000,
 INSERT INTO `mob_skills` VALUES(2027, 1382, 'plague_swipe', 5, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2028, 1386, 'fulmination', 1, 32.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2031, 433, 'reactive_shield', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2032, 1383, 'roller_chain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2033, 1384, 'choke_chain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2035, 1396, 'biomagnet', 0, 50.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2036, 1397, 'astral_gate', 4, 10.0, 2000, 1500, 4, 0, 0, 5, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2038, 1387, 'artificial_gravity', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2039, 1388, 'antigravity', 1, 15.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2040, 1373, 'rail_cannon', 4, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
