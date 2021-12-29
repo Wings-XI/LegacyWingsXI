@@ -865,7 +865,7 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = -20, y = -4, z = 140}, {x = -20, y = -4, z = 131}}
     },
     CENTRAL_C = {
-        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}, {x = xxx, y = 0, z = xxx}},
+        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}},
         LampSpawnPoints = {{x = -51, y = 0, z = 109}, {x = -51, y = 0, z = 91}}
     },
     CENTRAL_D = {
@@ -938,7 +938,7 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = -509, y = -4, z = -171}, {x = -491, y = -4, z = -189}}
     },
 	SW_B = {
-        MobSpawnPoints = {{x = -455.5, y = -4, z = -175.5}, {x = -464.5, y = -4, z = -180}, {x = -460, y = -4, z = -189}, {x = -455.5, y = -4, z = 184.5}, {x = -446.5, y = -4, z = -166.5}},
+        MobSpawnPoints = {{x = -455.5, y = -4, z = -175.5}, {x = -464.5, y = -4, z = -180}, {x = -460, y = -4, z = -189}, {x = -455.5, y = -4, z = -184.5}, {x = -446.5, y = -4, z = -166.5}},
         LampSpawnPoints = {{x = -460, y = -4, z = -180}, {x = -460, y = -4, z = -171}}
     },
 	SW_C = {
