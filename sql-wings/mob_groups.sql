@@ -3561,6 +3561,7 @@ INSERT INTO `mob_groups` VALUES(64, 2627, 79, 'Merrow_Shadowdancer', 0, 128, 0, 
 INSERT INTO `mob_groups` VALUES(65, 2630, 79, 'Merrow_Typhoondancer', 0, 128, 0, 0, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(66, 5207, 79, 'Brekekekex', 0, 128, 0, 0, 20000, 95, 96, 0);
 INSERT INTO `mob_groups` VALUES(67, 5208, 79, 'Chorus_Toad', 0, 128, 0, 0, 20000, 95, 96, 0);
+INSERT INTO `mob_groups` VALUES(68, 6212, 79, 'Vidhuwa_the_Wrathborn', 0, 128, 337, 16000, 20000, 88, 88, 0);
 INSERT INTO `mob_groups` VALUES(2811, 2810, 79, 'Nareema', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(2812, 2941, 79, 'Odin', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(2820, 3327, 79, 'Raubahn', 0, 0, 0, 0, 0, 0, 0, 0);
