@@ -22,5 +22,16 @@ function onMobSpawn(mob)
     })
 end
 
+function onMobWeaponSkillPrepare(mob, target)
+    local random = math.random(1,3)
+    if (random == 1) then
+        return 647 -- Chaos Blade
+    elseif (random == 2) then
+        return 645 -- Body Slam
+    else
+        return 646 -- Heavy Stomp
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
 end

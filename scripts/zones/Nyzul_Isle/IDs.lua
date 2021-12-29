@@ -158,19 +158,22 @@ zones[tpz.zone.NYZUL_ISLE] =
 
     mob = {
         -- Path of Darkness
+        [51] = {
+            QIQIRN_MINE         = 17092962,
+        },
         [58] = {
-            AMNAF_BLU          = 17093132,
-            AMNAF_PSYCHEFLAYER = 17093133,
-            IMPERIAL_GEAR1     = 17093134,
-            IMPERIAL_GEAR2     = 17093135,
-            IMPERIAL_GEAR3     = 17093136,
-            IMPERIAL_GEAR4     = 17093137,
-            NAJA               = 17093142,
+            AMNAF_BLU           = 17093132,
+            AMNAF_PSYCHEFLAYER  = 17093133,
+            IMPERIAL_GEAR1      = 17093134,
+            IMPERIAL_GEAR2      = 17093135,
+            IMPERIAL_GEAR3      = 17093136,
+            IMPERIAL_GEAR4      = 17093137,
+            NAJA                = 17093142,
         },
         [59] = {
-            RAZFAHD = 17093143,
-            ALEXANDER = 17093144,
-            RAUBAHN = 17093145,
+            RAZFAHD             = 17093143,
+            ALEXANDER           = 17093144,
+            RAUBAHN             = 17093145,
         }
     },
 

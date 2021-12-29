@@ -848,9 +848,11 @@ INSERT INTO `mob_skill_lists` VALUES('Pixie', 195, 2197);
 INSERT INTO `mob_skill_lists` VALUES('Pixie', 195, 2198);
 INSERT INTO `mob_skill_lists` VALUES('Pixie', 195, 2199);
 INSERT INTO `mob_skill_lists` VALUES('Pixie', 195, 2200);
+INSERT INTO `mob_skill_lists` VALUES('Poroggo', 196, 1957);
 INSERT INTO `mob_skill_lists` VALUES('Poroggo', 196, 1958);
 INSERT INTO `mob_skill_lists` VALUES('Poroggo', 196, 1959);
 INSERT INTO `mob_skill_lists` VALUES('Poroggo', 196, 1960);
+INSERT INTO `mob_skill_lists` VALUES('Poroggo', 196, 1961);
 INSERT INTO `mob_skill_lists` VALUES('Pugil', 197, 449);
 INSERT INTO `mob_skill_lists` VALUES('Pugil', 197, 450);
 INSERT INTO `mob_skill_lists` VALUES('Pugil', 197, 451);
@@ -862,6 +864,7 @@ INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1720);
 INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1721);
 INSERT INTO `mob_skill_lists` VALUES('Puk', 198, 1722);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1725);
+INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1726);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1727);
 INSERT INTO `mob_skill_lists` VALUES('Qiqirn', 199, 1728);
 INSERT INTO `mob_skill_lists` VALUES('Quadav', 200, 611);
@@ -3304,6 +3307,11 @@ INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 483);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 2209);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 1336);
 INSERT INTO `mob_skill_lists` VALUES('War_Lynx_Tigress_Strikes', 5008, 480);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 645);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 648);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 642);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 650);
+INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 1792);
 
 --
 -- Indexes for dumped tables
