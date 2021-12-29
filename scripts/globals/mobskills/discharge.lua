@@ -16,12 +16,12 @@ end
 function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.PARALYSIS, 20, 0, 180)
 
-    local wDmgMultiplier = 4
+    local wDmgMultiplier = 2
 
     -- Nyzul Isle Racing Chariots
     if (mob:getID() >= 17092994 and mob:getID() <= 17092998) then
         -- lower damage from the racing chariots
-        wDmgMultiplier = 2
+        wDmgMultiplier = 1.5
     end
 
     local dmgmod = 2
