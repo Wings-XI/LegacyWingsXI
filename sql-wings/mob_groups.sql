@@ -8100,7 +8100,7 @@ INSERT INTO `mob_groups` VALUES(121, 2273, 134, 'Knii_Hoqo_the_Bisector', 0, 128
 INSERT INTO `mob_groups` VALUES(122, 3238, 134, 'Puu_Timu_the_Phantasmal', 0, 128, 3214, 8000, 0, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(123, 294, 134, 'Avatar_Icon', 0, 128, 3209, 1000, 1000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(124, 295, 134, 'Avatar_Idol', 0, 128, 0, 1000, 1000, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(125, 4184, 134, 'Vanguard_Smithy', 600, 128, 2542, 4000, 0, 76, 78, 0);
+INSERT INTO `mob_groups` VALUES(125, 4184, 134, 'Vanguard_Smithy', 600, 128, 3213, 4000, 0, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(126, 4173, 134, 'Vanguard_Pitfighter', 600, 128, 3213, 4000, 0, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(127, 4182, 134, 'Vanguard_Shaman', 600, 128, 3213, 4000, 0, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(128, 4147, 134, 'Vanguard_Enchanter', 600, 128, 3213, 4000, 0, 76, 78, 0);
@@ -8157,7 +8157,7 @@ INSERT INTO `mob_groups` VALUES(178, 2020, 134, 'Hydra_Beastmaster', 600, 128, 3
 INSERT INTO `mob_groups` VALUES(179, 2032, 134, 'Hydras_Hound', 0, 128, 0, 3300, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(180, 2034, 134, 'Hydra_Thief', 600, 128, 3217, 5500, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(181, 2022, 134, 'Hydra_Dark_Knight', 600, 128, 3217, 5500, 0, 80, 82, 0);
-INSERT INTO `mob_groups` VALUES(182, 4149, 134, 'Vanguard_Eye', 0, 128, 2561, 2000, 2000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(182, 4149, 134, 'Vanguard_Eye', 0, 128, 3218, 2000, 2000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(183, 2035, 134, 'Hydra_Warrior', 600, 128, 3217, 5500, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(184, 2019, 134, 'Hydra_Bard', 600, 128, 3217, 5500, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(185, 2027, 134, 'Hydra_Ranger', 600, 128, 3217, 5500, 0, 80, 82, 0);
