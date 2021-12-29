@@ -11,7 +11,8 @@ require("scripts/globals/quests")
 
 function onTrade(player, npc, trade)
     if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.CARGO) ~= QUEST_AVAILABLE then
-        if tonumber(os.date("%j")) ~= player:getCharVar("VuntarCanBuyItem_date") then
+        -- if tonumber(os.date("%j")) ~= player:getCharVar("VuntarCanBuyItem_date") then
+        -- Above line is commented due to being an RMT change.  If you want to use RMT changes on your server, uncomment above line.
             if npcUtil.tradeHas(trade, 4529) then
                 player:startEvent(52, 1) -- Can Buy rolanberry (881 ce)
             elseif npcUtil.tradeHas(trade, 4530) then
@@ -42,8 +43,8 @@ function onEventFinish(player, csid, option)
     if csid == 50 then
         player:addQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.CARGO)
     elseif csid == 52 then
-        player:setCharVar("VuntarCanBuyItem_date", os.date("%j"))
-
+        -- player:setCharVar("VuntarCanBuyItem_date", os.date("%j"))
+        -- Above line is commented due to being an RMT change.  If you want to use RMT changes on your server, uncomment above line.
         if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.CARGO) == QUEST_ACCEPTED then
             player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.CARGO)
             player:addFame(SELBINA, 30)

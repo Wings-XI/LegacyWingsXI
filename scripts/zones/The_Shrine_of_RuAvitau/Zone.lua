@@ -47,10 +47,10 @@ function onInitialize(zone)
 
     local mg_respawn = GetServerVariable("MG_Respawn")
 	if os.time() < mg_respawn then
-		GetMobByID(ID.mob.MOTHER_GLOBE):setRespawnTime(mg_respawn - os.time())
+		GetMobByID(ID.mob.MOTHER_GLOBE.MOTHER):setRespawnTime(mg_respawn - os.time())
 	else
-		SpawnMob(ID.mob.MOTHER_GLOBE)
-	end
+		SpawnMob(ID.mob.MOTHER_GLOBE.MOTHER)
+    end
 
 end
 

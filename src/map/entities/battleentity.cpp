@@ -301,6 +301,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         if (weapon->isHandToHand())
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
+            MinimumDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
         }
         else if (auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]); subweapon && subweapon->getDmgType() > 0 &&
             subweapon->getDmgType() < 4)
@@ -310,7 +311,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             //apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
-        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(this->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS)))
+        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             WeaponDelay = 480 * 1000 / 60;
         //apply haste and delay reductions that don't affect tp
         if (!tp)
@@ -862,7 +863,7 @@ uint16 CBattleEntity::DEF()
     int32 DEF = 1;
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
-        DEF = 8 + this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
+        DEF = this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
         if (m_modStat[Mod::DEFP] < 0)
             DEF = DEF + (DEF * m_modStat[Mod::DEFP]) / 100;
         return DEF;

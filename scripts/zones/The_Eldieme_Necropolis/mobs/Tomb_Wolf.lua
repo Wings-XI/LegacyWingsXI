@@ -13,5 +13,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.CWN_CYRFF_PH, 5, math.random(3600, 14400)) -- 1-4 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.CWN_CYRFF_PH, 5, 3600) -- 1 hour minimum respawn
 end
