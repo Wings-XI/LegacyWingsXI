@@ -27,7 +27,7 @@ end
 
 function onInstanceTimeUpdate(instance, elapsed)
     local timePenalty = instance:getLocalVar("Nyzul_TimePenalty")
-    updateInstanceTime(instance, elapsed+(timePenalty*60), ID.text)
+    updateInstanceTime(instance, elapsed+(timePenalty*60*1000), ID.text)
 
     if (instance:getLocalVar("Nyzul_CheckWin") > 0) then
         local win = false
