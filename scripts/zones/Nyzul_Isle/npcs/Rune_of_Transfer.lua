@@ -5,17 +5,24 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/besieged")
+require("scripts/globals/nyzul_isle")
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ------------------------------------------------
 local STARTING_RUNE_OF_TRANSFER_ID = 17093429
 local SPLIT_PATH_CHANCE = 5 -- percent chance to have a split path (choose left or right)
-
-local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_ENEMY_LEADER, ID.text.ELIMINATE_SPECIFIED_ENEMY, ID.text.ELIMINATE_SPECIFIED_ENEMIES,
-                              ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS}
-local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
 local floorWarpCosts = {0, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900}
 
 function onTrigger(player, npc)
+    -- Force players out of menus when a rune of transfer is touched
+    if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID or npc:AnimationSub() > 0) then
+        local instance = player:getInstance()
+        for _,char in pairs(instance:getChars()) do
+            if char:getID() ~= player:getID() then
+                char:release()
+            end
+        end
+    end
+
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
@@ -70,6 +77,7 @@ function onEventFinish(player, csid, option, npc)
         if (cost <= tokens) then
             player:delAssaultPoint(cost, NYZUL_ISLE_ASSAULT_POINT) -- Remove from NYZUL_ISLE_ASSAULT_POINT
             instance:setLocalVar("Nyzul_StartingFloor", floorSelected)
+            instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
             bubbleWarpThePlayers(player, instance, floorSelected)
             local chars = instance:getChars()
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
@@ -114,28 +122,15 @@ function bubbleWarpThePlayers(player, instance, stage)
     if (instance:getLocalVar("Nyzul_TransferInitiated") == 0) then    
         instance:setLocalVar("Nyzul_TransferInitiated", player:getID())
         instance:setStage(stage)
-        
+        -- select the floor we are headed to
+        selectNextFloor(stage, instance)
         player:startEvent(95)
-        instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
                 char:release()
+                char:disengage()
                 char:startEvent(95)
             end
         end
-    end
-end
-
-function showObjectives(player)
-    local instance = player:getInstance()
-    local objective = instance:getLocalVar("Nyzul_Objective")
-    local subObjective = instance:getLocalVar("Nyzul_SubObjective")
-
-    if (objective > 0) then
-        player:messageSpecial(objectiveToStringMap[objective])
-    end
-
-    if (subObjective > 0) then
-        player:messageSpecial(subObjectiveToStringMap[subObjective])
     end
 end

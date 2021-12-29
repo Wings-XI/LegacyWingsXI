@@ -7,6 +7,8 @@ require("scripts/globals/dynamis")
 require("scripts/globals/status")
 -----------------------------------
 
+local zone = 135
+
 function onMobInitialize(mob, target)
 end
 
@@ -50,6 +52,9 @@ function onMobDeath(mob, player, isKiller)
             mob:showText(mob, ID.text.YANG_DIALOG +2)
         end
     end
+
+    require("scripts/zones/Dynamis-Xarcabard/dynamis_mobs")
+    dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 
 function onMobDespawn(mob)

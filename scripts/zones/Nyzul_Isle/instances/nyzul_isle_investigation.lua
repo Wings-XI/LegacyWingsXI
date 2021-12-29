@@ -129,6 +129,11 @@ function onEventFinish(player, csid, option)
     if csid == 1 then
         player:setPos(180, 0, 20, 90, 72)
     end
+
+    if (csid == 95) then
+        player:messageSpecial(ID.text.TRANSFER_COMPLETE, player:getInstance():getStage())
+        showObjectives(player)
+    end
 end
 
 function floorObjectiveComplete(instance)
