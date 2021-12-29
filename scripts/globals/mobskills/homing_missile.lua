@@ -34,7 +34,10 @@ function onMobWeaponSkill(target, mob, skill)
     end
     
     target:takeDamage(damage, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
-    mob:resetEnmity(target)
+
+    if (mob:getLocalVar("homingMainTarget") == target:getID()) then
+        mob:resetEnmity(target)
+    end
 
     return damage
 end
