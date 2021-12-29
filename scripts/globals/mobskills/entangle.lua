@@ -17,15 +17,21 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local typeEffect = tpz.effect.BIND
+    if mob:getID() == 16932881 or mob:getID() == 17555863 then
+        local typeEffect = tpz.effect.POISON
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30))
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 30, 0, 120))
 
-    if mob:GetMobByID() == 16932881 then
-        target:addStatusEffect(params.effect, power, 50, 30)
-        mob:resetenmity(target)
         target:takeDamage(250, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
-    end
 
-    return typeEffect
+        mob:resetEnmity(target)
+
+        return typeEffect
+    else
+        local typeEffect = tpz.effect.BIND
+
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 30))
+
+        return typeEffect
+    end
 end

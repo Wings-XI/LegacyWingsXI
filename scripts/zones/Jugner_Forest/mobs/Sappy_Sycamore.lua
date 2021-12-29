@@ -7,10 +7,11 @@ require("scripts/globals/status")
 require("scripts/globals/mobs")
 -----------------------------------
 
-function onMobInitialize(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-    mob:addMod(tpz.mod.SLEEPRES, 20)
-    mob:addMod(tpz.mod.BINDRES, 20)
+    mob:setMod(tpz.mod.SLEEPRES, 20)
+    mob:setMod(tpz.mod.BINDRES, 20)
+    mob:setMod(tpz.mod.EARTHDEF, 256)
 end
 
 function onAdditionalEffect(mob, target, damage)

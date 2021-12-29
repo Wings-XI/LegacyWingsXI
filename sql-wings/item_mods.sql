@@ -12608,11 +12608,11 @@ INSERT INTO `item_mods` VALUES (14095,1,14);
 INSERT INTO `item_mods` VALUES (14095,2,15);
 INSERT INTO `item_mods` VALUES (14095,14,5);
 INSERT INTO `item_mods` VALUES (14095,109,10);
-INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14096,1,10);
 INSERT INTO `item_mods` VALUES (14096,2,15);
 INSERT INTO `item_mods` VALUES (14096,13,5);
-INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14097,1,10);
 INSERT INTO `item_mods` VALUES (14097,2,11);
 INSERT INTO `item_mods` VALUES (14097,11,3);
@@ -16278,7 +16278,7 @@ INSERT INTO `item_mods` VALUES (15133,1,15);
 INSERT INTO `item_mods` VALUES (15133,3,4);
 INSERT INTO `item_mods` VALUES (15133,9,4);
 INSERT INTO `item_mods` VALUES (15133,107,12);
-INSERT INTO `item_mods` VALUES (15133,543,5);
+INSERT INTO `item_mods` VALUES (15133,543,10);
 INSERT INTO `item_mods` VALUES (15134,1,15);
 INSERT INTO `item_mods` VALUES (15134,5,18);
 INSERT INTO `item_mods` VALUES (15134,13,5);
@@ -18045,7 +18045,7 @@ INSERT INTO `item_mods` VALUES (15666,1,16);
 INSERT INTO `item_mods` VALUES (15666,3,4);
 INSERT INTO `item_mods` VALUES (15666,9,5);
 INSERT INTO `item_mods` VALUES (15666,107,14);
-INSERT INTO `item_mods` VALUES (15666,543,5);
+INSERT INTO `item_mods` VALUES (15666,543,10);
 INSERT INTO `item_mods` VALUES (15667,1,16);
 INSERT INTO `item_mods` VALUES (15667,5,18);
 INSERT INTO `item_mods` VALUES (15667,13,6);

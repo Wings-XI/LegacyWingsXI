@@ -4162,6 +4162,18 @@ INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 366, 1, 255); -- 
 INSERT INTO `mob_spell_lists` VALUES('Bombast', 506, 235, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 359, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 274, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 356, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 273, 1, 255);
+
 --
 -- Indexes for dumped tables
 --

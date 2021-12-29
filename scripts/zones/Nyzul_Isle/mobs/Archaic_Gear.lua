@@ -28,12 +28,19 @@ local function applyPenalty(instance)
 end
 
 function onMobInitialize(mob)
-    mob:addListener("ON_AGGRO_PLAYER", "WS_START_MSG", function(mob)
+    mob:addListener("ON_AGGRO_PLAYER", "GEAR_AGGRO", function(mob)
         local instance = mob:getInstance()
         if (instance:getLocalVar("Nyzul_SubObjective") == 2) then
-            applyPenalty(instance)
+            if (mob:getLocalVar("GearAggro") == 0) then
+                mob:setLocalVar("GearAggro", 1)
+                applyPenalty(instance)
+            end
         end
     end)
+end
+
+function onMobDisengage(mob)
+    mob:setLocalVar("GearAggro", 0)   
 end
 
 function onMobDeath(mob, player, isKiller)

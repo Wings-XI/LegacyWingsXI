@@ -11,6 +11,10 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 600)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
+end
+
 function onAdditionalEffect(mob, target, damage)
     if mob:hasStatusEffect(tpz.effect.ENSTONE) then
         return 0, 0, 0
