@@ -15089,7 +15089,7 @@ inline int32 CLuaBaseEntity::setAggressive(lua_State* L)
 *  Function: setTrueDetection()
 *  Purpose : Toggle True Detection on or off for a Mob
 *  Example : mob:setTrueDetection(1)
-*  Notes   : Different integer values for True Hearing/Sight?
+*  Notes   : 0 (No True Detection), 1 (True Sight and Hearing), 2 (True Sight), 3 (True Hearing)
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::setTrueDetection(lua_State* L)
