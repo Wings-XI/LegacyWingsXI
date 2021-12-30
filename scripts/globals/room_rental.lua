@@ -6,32 +6,22 @@
 -- Licensed under AGPLv3                 --
 -------------------------------------------
 
-function rrGetPartyMemberByIndex(player, index)
-    if index < 0 then
+function rrGetPartyMemberByID(player, memberid)
+	-- Basically a regular get player by ID but only checks
+	-- the player's current alliance.
+    if memberid < 0 then
         return nil
     end
-    if index == 0 then
+    if memberid == 0 then
         return player
     end
-    local party = player:getParty()
+    local party = player:getAlliance()
     if party == nil then
         return nil
     end
-    if index > #party then
-        return nil
-    end
-    -- Sorted by member ID (I think...)
-    local memberids = {}
+	local memberid16 = bit.band(memberid, 0xFFFF)
     for key, member in pairs(party) do
-        table.insert(memberids, member:getID())
-    end
-    table.sort(memberids)
-    local targetmemberid = memberids[index]
-    if targetmemberid == nil then
-        return nil
-    end
-    for key, member in pairs(party) do
-        if member:getID() == targetmemberid then
+        if bit.band(member:getID(), 0xFFFF) == memberid16 then
             return member
         end
     end
@@ -72,13 +62,13 @@ function rrIsInSameTown(from, to)
     return false
 end
 
-function rrTryMoveToOpenMH(player, targetindex)
+function rrTryMoveToOpenMH(player, targetid)
 
-    if targetindex == nil or targetindex < 1 or targetindex > player:getPartySize() then
+    if targetid == nil or targetid < 1 or targetid > player:getPartySize() then
         return
     end
     
-    local targetplayer = rrGetPartyMemberByIndex(player, targetindex)
+    local targetplayer = rrGetPartyMemberByID(player, targetid)
     if targetplayer == nil or targetplayer:getID() == player:getID() then
         return
     end
