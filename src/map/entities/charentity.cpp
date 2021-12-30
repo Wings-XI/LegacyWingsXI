@@ -593,6 +593,69 @@ CItemContainer* CCharEntity::getStorage(uint8 LocationID)
     return 0;
 }
 
+bool CCharEntity::hasAccessToStorage(uint8 LocationID)
+{
+    TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);
+    if (LocationID >= MAX_CONTAINER_ID) {
+        // Invalid container
+        return false;
+    }
+    if (LocationID == LOC_MOGSAFE || LocationID == LOC_MOGSAFE2) {
+        // Can use in your own mog house / rent-a-room (not in open mog)
+        // or in zones that have nomad moogles.
+        if (m_moghouseID == id) {
+            return true;
+        }
+        if (loc.zone) {
+            return loc.zone->CanUseMisc(MISC_MOGMENU);
+        }
+        return false;
+    }
+    if (LocationID == LOC_STORAGE) {
+        // Only accessible from own mog house or rent-a-room
+        if (m_moghouseID == id) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_MOGLOCKER) {
+        // Check for expiry
+        bool safe_access = (m_moghouseID == id);
+        if (loc.zone) {
+            if (loc.zone->CanUseMisc(MISC_MOGMENU)) {
+                safe_access = true;
+            }
+        }
+        if (safe_access && charutils::hasMogLockerAccess(this)) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_MOGSATCHEL) {
+        // Requires secure account (2FA)
+        if (m_accountFeatures & 0x01) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_WARDROBE3) {
+        // Requires account feature
+        if (m_accountFeatures & 0x04) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_WARDROBE4) {
+        // Requires account feature
+        if (m_accountFeatures & 0x08) {
+            return true;
+        }
+        return false;
+    }
+    // Inventory, sack, case, wardrobe 1 and wardrobe 2 always accessible
+    return true;
+}
+
 int8 CCharEntity::getShieldSize()
 {
     CItemEquipment* PItem = (CItemEquipment*)(getEquip(SLOT_SUB));
