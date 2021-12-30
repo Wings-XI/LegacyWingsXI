@@ -865,7 +865,7 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = -20, y = -4, z = 140}, {x = -20, y = -4, z = 131}}
     },
     CENTRAL_C = {
-        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}},
+        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}, {x = -46.5, y = 0, z = 113.5}},
         LampSpawnPoints = {{x = -51, y = 0, z = 109}, {x = -51, y = 0, z = 91}}
     },
     CENTRAL_D = {
