@@ -18,6 +18,7 @@ end
 function onTrigger(player, mobId, noDepop)
     -- validate mobId
     local targ
+    local instance = player:getInstance()
     if (mobId == nil) then
         targ = player:getCursorTarget()
         if (targ == nil or not targ:isMob()) then
@@ -25,7 +26,12 @@ function onTrigger(player, mobId, noDepop)
             return
         end
     else
-        targ = GetMobByID(mobId)
+        if (instance ~= nil) then
+            targ = GetMobByID(mobId, instance)
+        else
+            targ = GetMobByID(mobId)
+        end
+
         if (targ == nil) then
             error(player, "Invalid mobID.")
             return
@@ -34,12 +40,20 @@ function onTrigger(player, mobId, noDepop)
     mobId = targ:getID()
 
     -- attempt to bring mob here
-    SpawnMob( mobId )
+    if (instance ~= nil) then
+        SpawnMob( mobId, instance )
+    else
+        SpawnMob( mobId )
+    end
     if (player:getZoneID() == targ:getZoneID()) then
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
     else
         if (noDepop == nil or noDepop == 0) then
-            DespawnMob( mobId )
+            if (instance ~= nil) then
+                DespawnMob( mobId, instance )
+            else
+                DespawnMob( mobId )
+            end
             player:PrintToPlayer("Despawned the mob because of an error.")
         end
         player:PrintToPlayer("Mob could not be moved to current pos - you are probably in the wrong zone.")
