@@ -75,7 +75,7 @@ function generateFloor(floorNumber, instance)
         instance:setLocalVar("Nyzul_CheckWin", 1)
         return runeOfTransferSpawnPoint
     end
-    
+
     -- randomly generate a free floor if this is not the first floor in a run
     if (math.random(1, 100) < FREE_FLOOR_CHANCE and (floorNumber ~= 1)) then
         runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance)
@@ -99,7 +99,7 @@ function generateFreeFloor(floorNumber, instance)
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on free floors
     -- pick a floor
     local selectedFloorLayout = getFloorLayout(instance)
-     
+
     -- get rune of transfer
     local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
     setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
@@ -114,7 +114,7 @@ function generateFreeFloor(floorNumber, instance)
         end
     end
 
-    for i=1,numberOfCrates do        
+    for i=1,numberOfCrates do
         index = math.random(#remainingSpawnPoints)
         spawnPoint = remainingSpawnPoints[index]
         tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor(instance, spawnPoint)
@@ -162,7 +162,7 @@ function generateBossFloor(floorNumber, instance)
     -- randomize a boss spawn point
     local bossSpawnPointIndex = math.random(#bossFloor.BossSpawnPoints)
     local bossSpawnPoint = bossFloor.BossSpawnPoints[bossSpawnPointIndex]
-    
+
     -- randomize an archaicRampart spawn, excluding the boss spawn point
     local remainingSpawnPoints = {}
     for key, value in pairs(bossFloor.RampartSpawnPoints) do
@@ -220,7 +220,7 @@ function selectObjective(instance, previousObjective)
     -- based on capture videos, it appears that all lamp objectives are combined into one item which is weighted against the rest.
     -- i.e. 1/5 chance and never back to back
     local objectiveKey = 0
-    
+
     if (math.random(100) < LAMP_FLOOR_CHANCE) and (previousObjective < 5) then
         -- lamp objective is gated to not be allowed back to back.
         -- there is no gate on getting the same lamp related objective back to back on say floor 1 and floor 3.
@@ -229,7 +229,7 @@ function selectObjective(instance, previousObjective)
         objectiveKey = math.random(1,4) -- non lamps are 1 to 4
         -- somewhat ugly but simple way to ensure we do not repeat an objective back to back
         while objectiveKey == previousObjective do
-            objectiveKey = math.random(1,4) 
+            objectiveKey = math.random(1,4)
         end
     end
 
@@ -454,7 +454,7 @@ function selectNotoriusMonsters(floorNumber)
     end
 
     -- this is about the limit of using this method for random selection without replacement
-    -- there are 18 NMs per grouping so selecting 3 has a reasonable chance of collision 
+    -- there are 18 NMs per grouping so selecting 3 has a reasonable chance of collision
     if (randomRoll < NM_3_CHANCE ) then
         nm3 = possibleNMs[math.random(#possibleNMs)]
         while (nm3 == nm1 or nm3 == nm2) do
@@ -533,7 +533,7 @@ function setDoorAnimations(instance, doorsTable, openDoors, allDoors)
     local firstDoorID = 17093353
     local lastDoorID = 17093416
     local npc
-    
+
     local animationID = tpz.animation.CLOSE_DOOR
     if (openDoors) then
         animationID = tpz.animation.OPEN_DOOR
@@ -552,6 +552,7 @@ function setDoorAnimations(instance, doorsTable, openDoors, allDoors)
     end
 
 end
+
 ----------------------------------------------------------------------
 -- Sets local vars to tell Qiqrn Thfs where to run away to
 ----------------------------------------------------------------------
@@ -575,9 +576,9 @@ function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
     local greatestDistance = 0
     -- pick the furthest away point to run to
     for i = 1, #roomSpawnPoints do
-        local diffX = spawnPoint.x - roomSpawnPoints[i].x 
-        local diffY = spawnPoint.y - roomSpawnPoints[i].y 
-        local diffZ = spawnPoint.z - roomSpawnPoints[i].z   
+        local diffX = spawnPoint.x - roomSpawnPoints[i].x
+        local diffY = spawnPoint.y - roomSpawnPoints[i].y
+        local diffZ = spawnPoint.z - roomSpawnPoints[i].z
 
         local currentDistance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
         if (currentDistance > greatestDistance) then
@@ -603,7 +604,7 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
             table.insert(spawnPoints, nestedValue)
         end
     end
-    
+
     -- set and spawn all mobs
     for key, mobID in pairs(mobsToSpawn) do
         if (#spawnPoints == 0) then
@@ -629,10 +630,10 @@ function generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
     -- default to 5
     local lampObjective = 5
     local numberOfLamps = math.random(3, 5)
-    
+
     if (objective == "ACTIVATE_ALL_LAMPS_CERTIFICATION") then
         numberOfLamps = 1
-        lampObjective = 5 
+        lampObjective = 5
     elseif (objective == "ACTIVATE_ALL_LAMPS_SAME_TIME") then
         lampObjective = 6
     elseif (objective == "ACTIVATE_ALL_LAMPS_ORDERED") then
@@ -717,7 +718,7 @@ end
 function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     local runeOfTransfer
     local oldRuneOfTransfer
-    
+
     -- choose the alternating runeOfTransfer
     if ((floorNumber % 2) == 0) then -- even floor
         runeOfTransfer = GetNPCByID(17093330, instance)

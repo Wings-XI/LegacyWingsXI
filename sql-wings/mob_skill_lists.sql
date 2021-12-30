@@ -3318,7 +3318,10 @@ INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 648);
 INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 642);
 INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 650);
 INSERT INTO `mob_skill_lists` VALUES('Dragon_TOAU', 5009, 1792);
-
+INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2032);
+INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2033);
+INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2035);
+INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2036);
 --
 -- Indexes for dumped tables
 --
