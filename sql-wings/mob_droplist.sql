@@ -16776,6 +16776,7 @@ INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4108, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4109, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4110, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
+INSERT INTO `mob_droplist` VALUES(3224, 1, 1, 1000, 19234, 220); -- Lyft Hexagun
 
 
 
