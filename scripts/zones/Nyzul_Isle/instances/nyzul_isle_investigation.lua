@@ -26,41 +26,8 @@ end
 
 
 function onInstanceTimeUpdate(instance, elapsed)
---[[
-    local currentMobID
-    if (instance:getLocalVar("currentMobID") > 0) then
-        currentMobID = instance:getLocalVar("currentMobID")
-    else
-        currentMobID = 17092629
-    end
-    local nextMobID = currentMobID + 1
-    
-    
-    local currentMob = GetMobByID(currentMobID, instance)
-    if(not currentMob:isSpawned()) then
-        local nextMob = GetMobByID(nextMobID, instance)
-        nextMob:setSpawn(-20, -4, -20)
-        --SpawnMob(nextMobID, instance)
-        instance:setLocalVar("currentMobID", nextMobID)
-        for k,v in pairs(instance:getChars()) do
-            v:PrintToPlayer(string.format("Spawning mob %s  ID %s", nextMob:getName(), nextMobID))
-        end
-        
-    end
-    ]]
-    
-    local mobID = 17092919
-    local mob = GetMobByID(mobID, instance)
-    if(not mob:isSpawned()) then
-        mob:setSpawn(-20, -4, -20)
-        --SpawnMob(mobID, instance)
-    end
-
-    local spawnPoint = {x = 406.5, y = 0, z = 473.5}
-    --433 0 446
-    
     local timePenalty = instance:getLocalVar("Nyzul_TimePenalty")
-    --updateInstanceTime(instance, elapsed+(timePenalty*60), ID.text)
+    updateInstanceTime(instance, elapsed+(timePenalty*60*1000), ID.text)
 
     if (instance:getLocalVar("Nyzul_CheckWin") > 0) then
         local win = false
