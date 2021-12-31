@@ -95,6 +95,7 @@ tpz.msg.basic =
     EFFECT_DRAINED          = 370, -- The <player> uses .. .. status effects are drained from <target>.
     TP_INCREASE             = 409, -- The <player> uses .. <target>'s TP is increased to ...
     STATUS_PREVENTS         = 569, -- Your current status prevents you from using that ability.
+    EFFECTS_DISAPPEAR       = 757, -- <number> of <player's> effects disappear!
     
     -- Weaponskills / Mobskills
     READIES_WS              =  43, -- ${actor} readies ${weapon_skill}.

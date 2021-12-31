@@ -35,13 +35,11 @@ function onItemUse(target)
         target:delStatusEffect(v)
     end
     
-    --[[
     if statusNum > 0 then
-        -- this is not the right message - need to find the right message
-        target:messagePublic(tpz.msg.basic.DISAPPEAR_NUM, target, 1, statusNum)
+        target:messagePublic(tpz.msg.basic.EFFECTS_DISAPPEAR, target, statusNum, statusNum)
     else
         target:messagePublic(tpz.msg.basic.NO_EFFECT, target)
     end
-    ]]
+    
 end
 
