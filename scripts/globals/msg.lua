@@ -81,6 +81,7 @@ tpz.msg.basic =
     IS_STATUS               = 203, -- ${target} is ${status}.
     IS_NO_LONGER_STATUS     = 204, -- ${target} is no longer ${status}.
     GAINS_EFFECT_OF_STATUS  = 205, -- ${target} gains the effect of ${status}.
+    GAINS_EFFECT_OF_ITEM    = 280, -- ${target} gains the effect of ${status}.
     STATUS_WEARS_OFF        = 206, -- ${target}'s ${status} effect wears off.
     DISAPPEAR_NUM           = 231, -- The <player> uses .. .. of <target>'s effects disappear!
     ABOUT_TO_WEAR_OFF       = 251, -- The effect of ${status} is about to wear off.
