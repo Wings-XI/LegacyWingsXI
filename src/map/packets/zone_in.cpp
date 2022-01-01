@@ -168,7 +168,15 @@ CZoneInPacket::CZoneInPacket(CCharEntity * PChar, int16 csid)
     if (PChar->m_moghouseID != 0)
     {
         ref<uint8>(0x80) = 1;
-        ref<uint16>(0xAA) = GetMogHouseID(PChar);            // Mog House id
+        CCharEntity* PResident = PChar;
+        if (PChar->m_moghouseID != PChar->id) {
+            PResident = zoneutils::GetChar(PChar->m_moghouseID);
+            if (!PResident) {
+                // Should not happen but better this than crash
+                PResident = PChar;
+            }
+        }
+        ref<uint16>(0xAA) = GetMogHouseID(PResident);       // Mog House id
         ref<uint8>(0xAE) = GetMogHouseFlag(PChar);          // Mog House leaving flag
     }
     else
@@ -206,4 +214,5 @@ CZoneInPacket::CZoneInPacket(CCharEntity * PChar, int16 csid)
     ref<uint64>(0xF8) = PChar->chatFilterFlags;
 
     ref<uint8>(0x100) = 0x01;
+
 }

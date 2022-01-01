@@ -313,6 +313,7 @@ public:
 
     CItemContainer*   PGuildShop;					// текущий магазин гильдии, в котором персонаж производит закупки
     CItemContainer*	  getStorage(uint8 LocationID);	// получение указателя на соответствующее хранилище
+    bool              hasAccessToStorage(uint8 LocationID); // Does the character have access to a certain storage location
 
     CTradeContainer*  TradeContainer;               // Container used specifically for trading.
     CTradeContainer*  Container;                    // универсальный контейнер для обмена, синтеза, магазина и т.д.

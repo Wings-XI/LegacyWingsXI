@@ -8,15 +8,15 @@
 require("scripts/globals/room_rental")
 
 function onTrade(player, npc, trade)
-end;
+end
 
 function onTrigger(player, npc)
-    player:startEvent(568);
-end;
+    rrOnTrigger(player, npc, 568)
+end
 
 function onEventUpdate(player, csid, option)
-end;
+end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
-end;
+    rrOnEventFinish(player, csid, option)
+end
