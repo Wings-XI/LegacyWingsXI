@@ -3083,7 +3083,7 @@ INSERT INTO `mob_groups` VALUES(17, 404, 77, 'Bhoot', 0, 128, 263, 0, 0, 66, 68,
 INSERT INTO `mob_groups` VALUES(18, 642, 77, 'Carmine_Eruca', 0, 128, 419, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(19, 3732, 77, 'Spinner', 0, 128, 228, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(20, 4281, 77, 'Wamouracampa', 0, 128, 0, 0, 0, 66, 68, 0);
-INSERT INTO `mob_groups` VALUES(21, 4280, 77, 'Wamoura', 0, 128, 2608, 0, 0, 66, 68, 0);
+INSERT INTO `mob_groups` VALUES(21, 4280, 77, 'Wamoura', 0, 128, 2608, 0, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(22, 2065, 77, 'Imp', 0, 128, 1002, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(23, 3215, 77, 'Psycheflayer', 0, 128, 2030, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(24, 3223, 77, 'Puk', 0, 128, 2038, 0, 0, 67, 70, 0);
