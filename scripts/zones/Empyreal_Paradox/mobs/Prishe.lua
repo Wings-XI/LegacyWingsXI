@@ -21,7 +21,6 @@ function onMobRoam(mob)
     local promathia = ID.mob.PROMATHIA_OFFSET + (mob:getBattlefield():getArea() - 1) * 2
     local wait = mob:getLocalVar("wait")
     local ready = mob:getLocalVar("ready")
-    print("Prishe Acc: " .. mob:getMod(tpz.mod.ACC))
 
     if ready == 0 and wait > 240 then
         if GetMobByID(promathia):getCurrentAction() ~= tpz.act.NONE then
