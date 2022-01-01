@@ -11,12 +11,12 @@ require("scripts/globals/status")
 
 function onItemCheck(target)
     local result = 0
-    if (target:hasStatusEffect(tpz.effect.PENGUIN_RING_EFFECT) == true) then
-        result = 56
+    if (target:getMod(tpz.mod.PENGUIN_RING_EFFECT) ~= 0) then
+        result = tpz.msg.basic.ITEM_UNABLE_TO_USE_2
     end
     return result
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.PENGUIN_RING_EFFECT, 1, 0, 1200)
+    target:addMod(tpz.mod.PENGUIN_RING_EFFECT, 1200)
 end
