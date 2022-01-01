@@ -18,6 +18,6 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.ENCHANTMENT, 1, 0, 1200)
+    target:addStatusEffectEx(tpz.effect.ENCHANTMENT, tpz.effect.ENCHANTMENT, 0, 3, 1200)
     target:addMod(tpz.mod.ALBATROSS_RING_EFFECT, 1200)
 end
