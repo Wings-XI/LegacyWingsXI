@@ -14,12 +14,14 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGAIN, 100)
     mob:addMod(tpz.mod.UDMGMAGIC, -40)
     mob:addMod(tpz.mod.UDMGPHYS, -70)
+    mob:addMod(tpz.mod.ACC, 100)
 end
 
 function onMobRoam(mob)
     local promathia = ID.mob.PROMATHIA_OFFSET + (mob:getBattlefield():getArea() - 1) * 2
     local wait = mob:getLocalVar("wait")
     local ready = mob:getLocalVar("ready")
+    print("Prishe Acc: " .. mob:getMod(tpz.mod.ACC))
 
     if ready == 0 and wait > 240 then
         if GetMobByID(promathia):getCurrentAction() ~= tpz.act.NONE then
