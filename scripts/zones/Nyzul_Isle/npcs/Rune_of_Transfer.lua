@@ -50,7 +50,7 @@ function onTrigger(player, npc)
         -- Rune of Transfer on any floor but the entrance
         if (npc:AnimationSub() ~= 1) then
             -- not lit up - so repeat the objective but dont show pathos
-            showObjectivesAndPathos(player, false)
+            showNyzulObjectivesAndPathos(player, false)
         else
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog

@@ -952,6 +952,8 @@ function determinePathos(instance)
     elseif (pathosRandom <= (PATHOS_DEBUFF_CHANCE + PATHOS_BUFF_CHANCE)) then
         -- 12 possible buffs
         instance:setLocalVar("Nyzul_CurrentPathos", math.random(18,29))
+    else
+        instance:setLocalVar("Nyzul_CurrentPathos", 0)
     end
 end
 
@@ -1074,18 +1076,24 @@ end
 function removePathosBuff(player, instance)
     if (player:hasStatusEffect(tpz.effect.REGAIN) and instance:getLocalVar("Nyzul_PreviousPathos") == 18) then
         player:delStatusEffectSilent(tpz.effect.REGAIN)
+        player:messageSpecial(ID.text.REGAIN_REMOVED)
     elseif (player:hasStatusEffect(tpz.effect.REGEN) and instance:getLocalVar("Nyzul_PreviousPathos") == 19) then
         player:delStatusEffectSilent(tpz.effect.REGEN)
+        player:messageSpecial(ID.text.REGEN_REMOVED)
     elseif (player:hasStatusEffect(tpz.effect.REFRESH) and instance:getLocalVar("Nyzul_PreviousPathos") == 20) then
         player:delStatusEffectSilent(tpz.effect.REFRESH)
+        player:messageSpecial(ID.text.REFRESH_REMOVED)
     elseif (player:hasStatusEffect(tpz.effect.FLURRY)) then
         player:delStatusEffectSilent(tpz.effect.FLURRY)
+        player:messageSpecial(ID.text.FLURRY_REMOVED)
     elseif (player:hasStatusEffect(tpz.effect.CONCENTRATION)) then
         player:delStatusEffectSilent(tpz.effect.CONCENTRATION)
+        player:messageSpecial(ID.text.CONCENTRATION_REMOVED)
     else
         for i = tpz.effect.STR_BOOST, tpz.effect.CHR_BOOST do
             if (player:hasStatusEffect(i)) then
                 player:delStatusEffectSilent(i)
+                player:messageSpecial(ID.text.STR_BOOST_REMOVED + (2 * (i - tpz.effect.STR_BOOST)))
             end
         end
     end
