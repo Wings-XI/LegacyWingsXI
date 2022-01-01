@@ -18,5 +18,6 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
+    target:addStatusEffect(tpz.effect.ENCHANTMENT, 1, 0, 1200)
     target:addMod(tpz.mod.PENGUIN_RING_EFFECT, 1200)
 end
