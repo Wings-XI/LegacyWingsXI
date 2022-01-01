@@ -1,8 +1,8 @@
 -----------------------------------
 -- Area: Nyzul Isle
---  Mob: Ziz
+--  Mob: Carmine Eruca
 -----------------------------------
-mixins = {require("scripts/mixins/families/ziz")}
+mixins = {require("scripts/mixins/families/eruca")}
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
