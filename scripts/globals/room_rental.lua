@@ -62,23 +62,23 @@ function rrIsInSameTown(from, to)
     return false
 end
 
-function rrTryMoveToOpenMH(player, targetid)
+function rrTryMoveToOpenMH(player, residentid)
 
-    if targetid == nil or targetid < 1 or targetid > player:getPartySize() then
+    if residentid == nil or residentid < 1 or residentid > player:getPartySize() then
         return
     end
     
-    local targetplayer = rrGetPartyMemberByID(player, targetid)
-    if targetplayer == nil or targetplayer:getID() == player:getID() then
+    local residentplayer = rrGetPartyMemberByID(player, residentid)
+    if residentplayer == nil or residentplayer:getID() == player:getID() then
         return
     end
     
-    local targetname = targetplayer:getName()
-    if targetplayer:getOpenMH() == false or targetplayer:isInMogHouse() == false or rrIsInSameTown(player:getZoneID(),targetplayer:getZoneID()) == false then
+    local residentname = residentplayer:getName()
+    if residentplayer:getOpenMH() == false or residentplayer:isInMogHouse() == false or rrIsInSameTown(player:getZoneID(),residentplayer:getZoneID()) == false then
         return
     end
     
-    player:gotoPlayer(targetname)
+    player:gotoPlayer(residentname)
     
     return
 end
@@ -98,7 +98,7 @@ function rrOnEventFinish(player, csid, option)
         -- we'd crash if we tried to use them.
         return
     end
-    if option > 0 and option <= psize then
+    if option > 0 and option <= 0xFFFF then
         rrTryMoveToOpenMH(player, option)
     end
 end
