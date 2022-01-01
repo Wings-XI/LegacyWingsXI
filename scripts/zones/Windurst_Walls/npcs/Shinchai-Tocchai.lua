@@ -13,12 +13,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(505)
+    rrOnTrigger(player, npc, 505)
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
+    rrOnEventFinish(player, csid, option)
 end

@@ -11,8 +11,11 @@ require("scripts/globals/quests")
 
 function onTrade(player, npc, trade)
     if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.CARGO) ~= QUEST_AVAILABLE then
-        -- if tonumber(os.date("%j")) ~= player:getCharVar("VuntarCanBuyItem_date") then
-        -- Above line is commented due to being an RMT change.  If you want to use RMT changes on your server, uncomment above line.
+        -- ToDo move things like this to a server congif
+        -- The below line is bypassed due to being an RMT change.
+        -- If you want to use RMT changes on your server, change the value ignoreRmtChanges to false
+        local ignoreRmtChanges = true
+        if (tonumber(os.date("%j")) ~= player:getCharVar("VuntarCanBuyItem_date")) or ignoreRmtChanges then
             if npcUtil.tradeHas(trade, 4529) then
                 player:startEvent(52, 1) -- Can Buy rolanberry (881 ce)
             elseif npcUtil.tradeHas(trade, 4530) then

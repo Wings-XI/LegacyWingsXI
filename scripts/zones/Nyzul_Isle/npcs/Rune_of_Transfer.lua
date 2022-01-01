@@ -9,7 +9,7 @@ require("scripts/globals/nyzul_isle")
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ------------------------------------------------
 local STARTING_RUNE_OF_TRANSFER_ID = 17093429
-local SPLIT_PATH_CHANCE = 5 -- percent chance to have a split path (choose left or right)
+local SPLIT_PATH_CHANCE = 10 -- percent chance to have a split path (choose left or right)
 local floorWarpCosts = {0, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900}
 
 function onTrigger(player, npc)
@@ -49,8 +49,8 @@ function onTrigger(player, npc)
     else
         -- Rune of Transfer on any floor but the entrance
         if (npc:AnimationSub() ~= 1) then
-            -- not lit up - so repeat the objective
-            showObjectives(player)
+            -- not lit up - so repeat the objective but dont show pathos
+            showObjectivesAndPathos(player, false)
         else
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog
@@ -97,6 +97,11 @@ function onEventFinish(player, csid, option, npc)
         if (option == 1) then
             instance:complete()
         else
+            if (option >= 3 and option <= 4) then
+                -- split path, flag the instance to determine a Pathos
+                instance:setLocalVar("Nyzul_DeterminePathos", 1)
+            end
+
             bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
         end
     end
@@ -104,7 +109,7 @@ function onEventFinish(player, csid, option, npc)
     -- bubble warp
     if (csid == 95) then
         player:messageSpecial(ID.text.TRANSFER_COMPLETE, instance:getStage())
-        showObjectives(player)
+        showNyzulObjectivesAndPathos(player, true)
         
         if (instance:getLocalVar("Nyzul_TransferInitiated") == player:getID()) then
             instance:setLocalVar("Nyzul_TransferInitiated", 0)

@@ -1216,17 +1216,41 @@ namespace charutils
     {
         auto pushContainer = [&](auto LocationID)
         {
-            CItemContainer* container = PChar->getStorage(LocationID);
-            if (container == nullptr)
-                return;
+            if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id && (LocationID == LOC_MOGSAFE || LocationID == LOC_MOGSAFE2)) {
+                // Open Mog, in another person's moghouse, so send *their* furniture
+                CCharEntity* PResident = zoneutils::GetChar(PChar->m_moghouseID);
+                if (PResident) {
+                    CItemContainer* container = PResident->getStorage(LocationID);
+                    if (container) {
+                        uint8 size = container->GetSize();
+                        uint8 virtual_slot = 1;
+                        for (uint8 slotID = 0; slotID <= size; ++slotID) {
+                            CItem* PItem = PResident->getStorage(LocationID)->GetItem(slotID);
+                            if (PItem != nullptr && PItem->isType(ITEM_FURNISHING) && ((CItemFurnishing*)PItem)->isInstalled())
+                            {
+                                CInventoryItemPacket* furniture_packet = new CInventoryItemPacket(PItem, LocationID, slotID);
+                                // Replace slot ID with virtual slot so the numbers are sequential
+                                furniture_packet->getData()[0x0F] = virtual_slot;
+                                virtual_slot++;
+                                PChar->pushPacket(furniture_packet);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                CItemContainer* container = PChar->getStorage(LocationID);
+                if (container == nullptr)
+                    return;
 
-            uint8 size = container->GetSize();
-            for (uint8 slotID = 0; slotID <= size; ++slotID)
-            {
-                CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
-                if (PItem != nullptr)
+                uint8 size = container->GetSize();
+                for (uint8 slotID = 0; slotID <= size; ++slotID)
                 {
-                    PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+                    CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
+                    if (PItem != nullptr)
+                    {
+                        PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+                    }
                 }
             }
         };
@@ -4428,6 +4452,7 @@ namespace charutils
             "pos_x = %.3f,"
             "pos_y = %.3f,"
             "pos_z = %.3f,"
+            "moghouse = %u,"
             "boundary = %u "
             "WHERE charid = %u;";
 
@@ -4436,6 +4461,7 @@ namespace charutils
             PChar->loc.p.x,
             PChar->loc.p.y,
             PChar->loc.p.z,
+            PChar->m_moghouseID,
             PChar->loc.boundary,
             PChar->id);
     }
@@ -5976,6 +6002,7 @@ namespace charutils
                 PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
                 return;
             }
+            PChar->SetLocalVar("NoRemoveOpenMH", 1);
             Sql_Query(SqlHandle, "UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
                 (uint32)ipp, (uint32)(ipp >> 32), PChar->id);
 
@@ -6546,6 +6573,37 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
             PZone->m_DynamisHandler->EjectPlayer(PChar, false);
     }
     return valid;
+}
+
+void RemoveGuestsFromMogHouse(CCharEntity* PChar)
+{
+    if (!PChar) {
+        return;
+    }
+    uint32 charid = PChar->id;
+    if (PChar->m_moghouseID == 0 || PChar->m_moghouseID != charid) {
+        return;
+    }
+
+    CZone* PZone = PChar->loc.zone;
+    if (!PZone) {
+        return;
+    }
+    uint16 zoneid = PZone->GetID();
+    PZone->ForEachChar([&PChar, charid, zoneid](CCharEntity* PZoneChar) {
+        if (PZoneChar->id != charid && PZoneChar->m_moghouseID == charid && PZoneChar->GetLocalVar("NoRemoveOpenMH") == 0) {
+            PZoneChar->loc.destination = zoneid;
+            PZoneChar->loc.p.x = 0;
+            PZoneChar->loc.p.y = 0;
+            PZoneChar->loc.p.z = 0;
+            PZoneChar->loc.p.rotation = 0;
+            PZoneChar->status = STATUS_DISAPPEAR;
+            PZoneChar->loc.boundary = 0;
+            PZoneChar->m_moghouseID = 0;
+            PZoneChar->clearPacketList();
+            charutils::SendToZone(PZoneChar, 2, zoneutils::GetZoneIPP(zoneid));
+        }
+    });
 }
 
 int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
