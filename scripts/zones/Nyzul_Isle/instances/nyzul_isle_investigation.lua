@@ -4,6 +4,7 @@
 --
 --------------------------------------------------
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
+require("scripts/globals/status")
 require("scripts/globals/instance")
 require("scripts/globals/keyitems")
 require("scripts/globals/nyzul_isle")
@@ -22,8 +23,6 @@ function onInstanceCreated(instance)
     -- sets mob types and other information required for nyzul
     setNyzulMobTypesAndTraits(instance)
 end
-
-
 
 function onInstanceTimeUpdate(instance, elapsed)
     local timePenalty = instance:getLocalVar("Nyzul_TimePenalty")
@@ -95,8 +94,8 @@ function onInstanceComplete(instance)
         if (char:getCharVar("Assault_Armband") > 0) then
             bonus = 0.1
         end
-        char:addAssaultPoint(NYZUL_ISLE_ASSAULT_POINT, math.floor(tokenReward + (tokenReward * .1)))
-        char:messageSpecial(ID.text.OBTAIN_TOKENS, math.floor(tokenReward + (tokenReward * .1)))
+        char:addAssaultPoint(NYZUL_ISLE_ASSAULT_POINT, math.floor(tokenReward + (tokenReward * bonus)))
+        char:messageSpecial(ID.text.OBTAIN_TOKENS, math.floor(tokenReward + (tokenReward * bonus)))
 
         -- set victory flag
         char:setCharVar("AssaultComplete", 1)
@@ -132,7 +131,7 @@ function onEventFinish(player, csid, option)
 
     if (csid == 95) then
         player:messageSpecial(ID.text.TRANSFER_COMPLETE, player:getInstance():getStage())
-        showObjectives(player)
+        showNyzulObjectivesAndPathos(player, true)
     end
 end
 

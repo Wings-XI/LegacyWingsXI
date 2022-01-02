@@ -4291,10 +4291,10 @@ INSERT INTO `mob_pools` VALUES(4227, 'Vhino_Delkahngo', 'Vhino_Delkahngo', 151, 
 INSERT INTO `mob_pools` VALUES(4228, 'Vhuud_Vanguard', 'Vhuud_Vanguard', 337, 0x0000920200000000000000000000000000000000, 6, 6, 2, 265, 100, 0, 0, 0, 1, 0, 0, 0, 8, 129, 0, 0, 0, 0, 0, 337);
 INSERT INTO `mob_pools` VALUES(4229, 'Vigilant_Gear', 'Vigilant_Gear', 120, 0x0000000000000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120);
 INSERT INTO `mob_pools` VALUES(4230, 'Vigilant_Gears', 'Vigilant_Gears', 120, 0x0000000000000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120);
-INSERT INTO `mob_pools` VALUES(4231, 'Vile_Ineef', 'Vile_Ineef', 233, 0x0000ef0600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 2, 0, 0, 233);
-INSERT INTO `mob_pools` VALUES(4232, 'Vile_Wahdaha', 'Vile_Wahdaha', 233, 0x0000f00600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 32, 113, 157, 4, 0, 2, 0, 0, 233);
+INSERT INTO `mob_pools` VALUES(4231, 'Vile_Ineef', 'Vile_Ineef', 233, 0x0000f00600000000000000000000000000000000,     4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 32, 113, 157, 0, 0, 2, 0, 0, 233);
+INSERT INTO `mob_pools` VALUES(4232, 'Vile_Wahdaha', 'Vile_Wahdaha', 233, 0x0000f00600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 32, 113, 157, 0, 0, 2, 0, 0, 233);
 INSERT INTO `mob_pools` VALUES(4233, 'Vile_Wahzil', 'Vile_Wahzil', 233, 0x0000be0600000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 233);
-INSERT INTO `mob_pools` VALUES(4234, 'Vile_Yabeewa', 'Vile_Yabeewa', 233, 0x0000ef0600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 2, 0, 0, 233);
+INSERT INTO `mob_pools` VALUES(4234, 'Vile_Yabeewa', 'Vile_Yabeewa', 233, 0x0000f00600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 32, 113, 157, 0, 0, 2, 0, 0, 233);
 INSERT INTO `mob_pools` VALUES(4235, 'Virid-faced_Shanberry', 'Virid-faced_Shanberry', 243, 0x0000aa0400000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 18, 0, 32, 127, 157, 0, 0, 0, 0, 0, 243);
 INSERT INTO `mob_pools` VALUES(4236, 'Viridis_Wyvern', 'Viridis_Wyvern', 266, 0x0000c50800000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 266);
 INSERT INTO `mob_pools` VALUES(4237, 'Virulent_Flask', 'Virulent_Flask', 247, 0x0000000700000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 247);
