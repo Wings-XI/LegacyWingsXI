@@ -5,6 +5,10 @@
 mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Temenos/IDs")
 
+function onMobSpawn(mob)
+    mob:setTrueDetection(1)
+end
+
 function onMobEngaged(mob, target)
     GetMobByID(ID.mob.TEMENOS_N_MOB[4]):updateEnmity(target)
     GetMobByID(ID.mob.TEMENOS_N_MOB[4]+1):updateEnmity(target)

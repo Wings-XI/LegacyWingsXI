@@ -8,6 +8,7 @@ require("scripts/globals/besieged")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    tpz.besieged.onTrade(player,npc, trade)
 end
 
 function onTrigger(player, npc)

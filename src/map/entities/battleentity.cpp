@@ -84,6 +84,7 @@ CBattleEntity::CBattleEntity()
     m_modStat[Mod::PIERCERES] = 1000;
     m_modStat[Mod::H2HRES] = 1000;
     m_modStat[Mod::IMPACTRES] = 1000;
+    m_modStat[Mod::MOVE] = 0;
 
     m_Immunity = 0;
     isCharmed = false;
@@ -234,6 +235,19 @@ uint8 CBattleEntity::GetSpeed()
     Mod mod = isMounted() ? Mod::MOUNT_MOVE : Mod::MOVE;
 
     float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
+    // Cap unmounted movement speed increase to 25%
+    if (mod == Mod::MOVE)
+    {
+        if (StatusEffectContainer->GetStatusEffect(EFFECT_FLEE))
+        {
+            modAmount = std::clamp(modAmount, 0.0f, 2.0f);
+        }
+        else
+        {
+            modAmount = std::clamp(modAmount, 0.0f, 1.25f);
+        }
+    }
+
     float modifiedSpeed = static_cast<float>(startingSpeed) * modAmount;
     uint8 outputSpeed = static_cast<uint8>(modifiedSpeed < 0 ? 0 : modifiedSpeed);
 
@@ -287,6 +301,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         if (weapon->isHandToHand())
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
+            MinimumDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
         }
         else if (auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]); subweapon && subweapon->getDmgType() > 0 &&
             subweapon->getDmgType() < 4)
@@ -296,7 +311,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             //apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
-        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(this->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS)))
+        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             WeaponDelay = 480 * 1000 / 60;
         //apply haste and delay reductions that don't affect tp
         if (!tp)
@@ -848,7 +863,7 @@ uint16 CBattleEntity::DEF()
     int32 DEF = 1;
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
-        DEF = 8 + this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
+        DEF = this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
         if (m_modStat[Mod::DEFP] < 0)
             DEF = DEF + (DEF * m_modStat[Mod::DEFP]) / 100;
         return DEF;
@@ -936,7 +951,17 @@ void CBattleEntity::SetSLevel(uint8 slvl)
 
 void CBattleEntity::addModifier(Mod type, int16 amount)
 {
-    m_modStat[type] += amount;
+    if (type == Mod::MOVE)
+    {
+        //printf("[+] Adding non-item source with MS Mod (Start)\n");
+        m_MSNonItemValues.push_back(amount);
+        m_modStat[type] = CalculateMSFromSources();
+        //printf("[+] Adding non-item source with MS Mod (End)\n");
+    }
+    else
+    {
+        m_modStat[type] += amount;
+    }
 }
 
 /************************************************************************
@@ -949,9 +974,65 @@ void CBattleEntity::addModifiers(std::vector<CModifier> *modList)
 {
     for (auto modifier : *modList)
     {
-        m_modStat[modifier.getModID()] += modifier.getModAmount();
+        if (modifier.getModID() == Mod::MOVE)
+        {
+            addModifier(modifier.getModID(), modifier.getModAmount()); // Calculations in addModifier already, don't duplicate
+        }
+        else
+        {
+            m_modStat[modifier.getModID()] += modifier.getModAmount();
+        }
     }
 }
+
+int16 CBattleEntity::CalculateMSFromSources()
+{
+    int16 highestItemPositiveValue = 0;
+    int16 highestNonItemPositve = 0;
+    int16 totalItemReducedValue = 0;
+    int16 totalNonItemReducedValue = 0;
+
+    //printf("    [*] Entered CalculateMSFromSources()\n");
+    //printf("    [*] Size of m_MSItemValues: %i\n", m_MSItemValues.size());
+    //printf("    [*] Size of m_MSNonItemValues: %i\n", m_MSNonItemValues.size());
+
+    for (uint16 i = 0; i < m_MSNonItemValues.size(); i++)
+    {
+        if (m_MSNonItemValues[i] >= 0)
+        {
+            if (m_MSNonItemValues[i] > highestNonItemPositve)
+            {
+                highestNonItemPositve = m_MSNonItemValues[i];
+            }
+        }
+        else
+        {
+            totalNonItemReducedValue += m_MSNonItemValues[i];
+        }
+    }
+    
+    for (uint16 i = 0; i < m_MSItemValues.size(); i++)
+    {
+        if (m_MSItemValues[i] >= 0)
+        {
+            if (m_MSItemValues[i] > highestItemPositiveValue)
+            {
+                highestItemPositiveValue = m_MSItemValues[i];
+            }
+        }
+        else
+        {
+            totalItemReducedValue += m_MSItemValues[i];
+        }
+    }
+
+    //printf("    [*] totalItemReducedValue = %i  -  highestItemPositiveValue = %i\n",totalItemReducedValue , highestItemPositiveValue);
+    //printf("    [*] totalNonItemReducedValue = %i  -  highestNonItemPositve = %i\n",totalNonItemReducedValue , highestNonItemPositve);
+    //printf("    [*] Leaving CalculateMSFromSources()\n");
+
+    return (highestItemPositiveValue + totalItemReducedValue) + (highestNonItemPositve + totalNonItemReducedValue);
+}
+
 
 void CBattleEntity::addEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid)
 {
@@ -972,7 +1053,18 @@ void CBattleEntity::addEquipModifiers(std::vector<CModifier> *modList, uint8 ite
             }
             else
             {
-                m_modStat[modList->at(i).getModID()] += modList->at(i).getModAmount();
+                // Add item with movement speed and prevent stacking
+                if (modList->at(i).getModID() == Mod::MOVE)
+                {
+                    //printf("[+] Adding item with MS Mod (Start)\n");
+                    m_MSItemValues.push_back(modList->at(i).getModAmount());
+                    m_modStat[modList->at(i).getModID()] = CalculateMSFromSources();
+                    //printf("[-] Adding item with MS Mod (Done)\n");
+                }
+                else
+                {
+                    m_modStat[modList->at(i).getModID()] += modList->at(i).getModAmount();
+                }
             }
         }
     }
@@ -1066,7 +1158,25 @@ void CBattleEntity::setModifiers(std::vector<CModifier> *modList)
 
 void CBattleEntity::delModifier(Mod type, int16 amount)
 {
-    m_modStat[type] -= amount;
+    if (type == Mod::MOVE)
+    {
+        //printf("[+] Removing non-item source with MS Mod (Start)\n");
+        for (uint16 x = 0; x < m_MSNonItemValues.size(); x++)
+        {
+            if (m_MSNonItemValues[x] == amount)
+            {
+                 m_MSNonItemValues.erase(m_MSNonItemValues.begin() + x);
+                break;
+            }
+        }
+
+        m_modStat[type] = CalculateMSFromSources();
+        //printf("[+] Removing non-item source with MS Mod (End)\n");
+    }
+    else
+    {
+        m_modStat[type] -= amount;
+    }
 }
 
 void CBattleEntity::saveModifiers()
@@ -1089,11 +1199,18 @@ void CBattleEntity::delModifiers(std::vector<CModifier> *modList)
 {
     for (uint16 i = 0; i < modList->size(); ++i)
     {
-        m_modStat[modList->at(i).getModID()] -= modList->at(i).getModAmount();
+        if (modList->at(i).getModID() == Mod::MOVE)
+        {
+            delModifier(modList->at(i).getModID(), modList->at(i).getModAmount()); // Calculations in delModifier already, don't duplicate
+        }
+        else
+        {
+            m_modStat[modList->at(i).getModID()] -= modList->at(i).getModAmount();
+        }
     }
 }
 
-void CBattleEntity::delEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid)
+void CBattleEntity::delEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid)
 {
     if (GetMLevel() >= itemLevel)
     {
@@ -1112,7 +1229,27 @@ void CBattleEntity::delEquipModifiers(std::vector<CModifier> *modList, uint8 ite
             }
             else
             {
-                m_modStat[modList->at(i).getModID()] -= modList->at(i).getModAmount();
+                // Remove item with movement speed and prevent stacking
+                if (modList->at(i).getModID() == Mod::MOVE)
+                {
+                    //printf("[+] Removing item with MS Mod (Start)\n");
+
+                    for (uint16 x = 0; x < m_MSItemValues.size(); x++)
+                    {
+                        if (m_MSItemValues[x] == modList->at(i).getModAmount())
+                        {
+                            m_MSItemValues.erase(m_MSItemValues.begin() + x);
+                            break;
+                        }
+                    }
+
+                    m_modStat[modList->at(i).getModID()] = CalculateMSFromSources();
+                    //printf("[+] Removing item with MS Mod (Done)\n");
+                }
+                else
+                {
+                    m_modStat[modList->at(i).getModID()] -= modList->at(i).getModAmount();
+                }
             }
         }
     }
@@ -1418,19 +1555,20 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         flags |= FINDFLAGS_HIT_ALL;
     }
     uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
+    AOERADIUS radiusType = (PSpell->getFlag() & SPELLFLAG_ATTACKER_RADIUS) != 0 ? AOERADIUS_ATTACKER : AOERADIUS_TARGET;
 
-    if (aoeType == SPELLAOE_RADIAL) {
+    if (aoeType == SPELLAOE_RADIAL)
+    {
         float distance = spell::GetSpellRadius(PSpell, this);
 
-        PAI->TargetFind->findWithinArea(PActionTarget, AOERADIUS_TARGET, distance, flags);
-
+        PAI->TargetFind->findWithinArea(PActionTarget, radiusType, distance, flags);
     }
     else if (aoeType == SPELLAOE_CONAL)
     {
-        //TODO: actual radius calculation
         float radius = spell::GetSpellRadius(PSpell, this);
+        float angle = spell::GetSpellConeAngle(PSpell, this);
 
-        PAI->TargetFind->findWithinCone(PActionTarget, radius, 45, flags);
+        PAI->TargetFind->findWithinCone(PActionTarget, radiusType, radius, angle, flags);
     }
     else
     {
@@ -1814,8 +1952,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
                     if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
-                        actionTarget.spikesParam = 0;
-                        actionTarget.spikesMessage = 14;
+                        actionTarget.spikesParam = 1;
+                        actionTarget.spikesMessage = MSGBASIC_COUNTER_ABS_BY_SHADOW;
                     }
                     else
                     {
@@ -1954,6 +2092,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             // Check & Handle Afflatus Misery Accuracy Bonus
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
+
+            if (PTarget->objtype == TYPE_PC) 
+            {
+                charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
         }
 
         if (actionTarget.reaction != REACTION_HIT && actionTarget.reaction != REACTION_BLOCK && actionTarget.reaction != REACTION_GUARD)

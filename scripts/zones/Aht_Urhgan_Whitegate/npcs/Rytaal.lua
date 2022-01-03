@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Aht Urhgan Whitegate
--- NPC: Rytaal 
+-- NPC: Rytaal
 -- Type: Standard NPC
 -- !pos 112.002 -1.338 -45.038 50
 -----------------------------------
@@ -32,10 +32,14 @@ function onTrigger(player, npc)
         player:startEvent(270)
     elseif currentAssault ~= 0 and player:getCharVar("assaultEntered") ~= 0 then
         if player:getCharVar("AssaultComplete") == 1 then
-            player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
+            if currentAssault == 51 then
+                player:messageText(player, ID.text.RYTAAL_NYZUL_COMPLETE)
+            else
+                player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
+            end
             player:completeAssault(currentAssault)
         elseif currentAssault == 51 then
-            player:messageText(player, ID.text.NYZUL_FAIL)
+            player:messageText(player, ID.text.RYTAAL_NYZUL_FAIL)
             player:delAssault(currentAssault)
         else
             local assaultPoint = assaultOrders[player:getCharVar("assaultEntered")].points
@@ -66,7 +70,7 @@ function onTrigger(player, npc)
         end
 
         -- GMs need tags for testing
-        if tagStock == 0 and player:getGMLevel() > 0 then
+        if tagStock == 0 and player:getGMLevel() > 1 then
             tagStock = tagStock + 1
         end
 

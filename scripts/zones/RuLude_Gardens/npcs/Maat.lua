@@ -16,20 +16,34 @@ require("scripts/globals/utils")
 
 function onTrade(player, npc, trade)
     local tradeCount = trade:getItemCount()
-    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.IN_DEFIANT_CHALLENGE) == QUEST_ACCEPTED) then
+
+    if player:getCharVar("AnnyEvent2020") == 14 and player:hasItem(11290) == false and Anniversary_Event_2021 == 1 then
+        if trade:hasItemQty(4059, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
+            player:tradeComplete()
+            player:PrintToPlayer("Gweivyth : F#$% AROUND AND FIND OUT...", 0xD)
+            player:PrintToPlayer("Aerec : Hey everyone! Thanks for coming and rediscovering Vanadiel with us! <3", 0xD)
+            player:PrintToPlayer("Latte : The clock struck 12, as the horseman tore thru town: 'Check the guilds! Check the guilds!'", 0xD)
+            player:PrintToPlayer("Twilight : Wings wouldn't have been anywhere near what it is today if not for all of the contributors who volunteered to develop, test and debug.", 0xD)
+            player:PrintToPlayer("Twilight : We are forever grateful for them. If you wish to become one of them we will welcome you too!", 0xD)
+			player:PrintToPlayer("Suzarn : Best Nation? The Federation.", 0xD)
+            player:addItem(11290)
+            player:PrintToPlayer("Staff : Here is a gift for celebrating the first year of wings!", 0xD)
+            player:messageSpecial((ID.text.ITEM_OBTAINED), 11290)
+			player:setCharVar("AnnyEvent2020", 15)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 11290)
+        end
+	elseif (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.IN_DEFIANT_CHALLENGE) == QUEST_ACCEPTED) then
         -- Trade Bomb Coal / Exoray Mold / Ancient Papyrus
         if (trade:hasItemQty(1090, 1) and trade:hasItemQty(1089, 1) and trade:hasItemQty(1088, 1) and tradeCount == 3) then
             player:startEvent(81) -- Finish Quest "In Defiant Challenge"
         end
-    end
-
-    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.SHATTERING_STARS) ~= QUEST_AVAILABLE and player:getMainLvl() >= 66 and player:getCharVar("maatsCap") < 1) then
+    elseif (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.SHATTERING_STARS) ~= QUEST_AVAILABLE and player:getMainLvl() >= 66 and player:getCharVar("maatsCap") < 1) then
         local mJob = player:getMainJob()
         if (trade:hasItemQty(1425 + mJob, 1) and tradeCount == 1 and mJob <= 15) then
             player:startEvent(64, mJob) -- Teleport to battlefield for "Shattering Stars"
         end
-    end
-
+   end
 end
 
 function onTrigger(player, npc)
@@ -187,6 +201,4 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15194)
         end
     end
-
-
 end

@@ -26,7 +26,7 @@ function onUseAbility(player,target,ability)
     if target:getMod(tpz.mod.SPDEF_DOWN) == 0 then
         local duration = 15 + player:getMerit(tpz.merit.TOMAHAWK)
         target:queue(0, function(target)
-            target:addMod(tpz.mod.SPDEF_DOWN,25)
+            target:setMod(tpz.mod.SPDEF_DOWN,25)
         end)
         target:queue(duration*1000, function(target)
             target:setMod(tpz.mod.SPDEF_DOWN,0)

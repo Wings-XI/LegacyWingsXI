@@ -27,7 +27,7 @@ function onTrigger(player, npcId, noDepop)
             return
         end
     else
-        targ = GetNPCByID(npcId)
+        targ = GetNPCByID(npcId, player:getInstance())
         if (targ == nil) then
             error(player, "Invalid npcID.")
             return
@@ -37,6 +37,7 @@ function onTrigger(player, npcId, noDepop)
     if (player:getZoneID() == targ:getZoneID()) then
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
         targ:setStatus(tpz.status.NORMAL)
+        player:PrintToPlayer(string.format("Moved NPC %s", targ:getName()))
     else
         if (noDepop == nil or noDepop == 0) then
             targ:setStatus(tpz.status.DISAPPEAR)

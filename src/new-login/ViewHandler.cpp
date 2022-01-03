@@ -44,31 +44,6 @@ void ViewHandler::Run()
     LOG_DEBUG0("Called.");
     mbRunning = true;
 
-    // The account ID is not sent on the view port, which is very unfortunate
-    // we have to fall back to the client's IP address and hope two people
-    // don't connect too quickly.
-    auto pSessionTracker = SessionTracker::GetInstance();
-    try {
-        mpSession = pSessionTracker->LookupSessionByIP(mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr);
-    }
-    catch (...) {
-        LOG_WARNING("Unknown user attempted to connect to view port.");
-        mpConnection->Close();
-        return;
-    }
-    if (!mpSession) {
-        LOG_ERROR("Session lookup returned a NULL value.");
-        mpConnection->Close();
-        return;
-    }
-    mpSession->SetViewServerFinished(false);
-    mpSession->SetNeverExpire(false);
-    // Don't catch this session again when performing IP lookups
-    mpSession->SetIgnoreIPLookupFlag(true);
-    // Add more time to the user, if creating a new character they may stay
-    // connected to the view server for a while.
-    mpSession->SetExpiryTimeRelative(600);
-
     // Packet pointers
     std::shared_ptr<uint8_t> pRawData;
     FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER* pPacketHeader = NULL;
@@ -88,13 +63,30 @@ void ViewHandler::Run()
                     LOG_INFO("Connection closed.");
                     break;
                 }
-                mpSession->SetLastPacketNow();
-                // Nasty but needed trick to get the raw pointer
+                if (mpSession != NULL) {
+                    mpSession->SetLastPacketNow();
+                }
+                
                 pPacketHeader = reinterpret_cast<FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER*>(pRawData.get());
                 pPayloadData = pRawData.get() + sizeof(FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER);
 
+                if (mpSession == NULL && pPacketHeader->PacketHeader.dwPacketType != FFXILoginPacket::FFXI_LOGIN_TYPE_GET_FEATURES) {
+                    // The FFXI_LOGIN_TYPE_GET_FEATURES packet is always the first
+                    // packet the client sends, and also contains any identification
+                    // information. If authentication token is enabled, we cannot
+                    // tell which user is connecting before this packet is received
+                    // so any other request is an error.
+                    LOG_ERROR("Client did not send a proper initial packet.");
+                    throw std::runtime_error("Invalid initial packet.");
+                }
                 switch (pPacketHeader->PacketHeader.dwPacketType) {
                 case FFXILoginPacket::FFXI_LOGIN_TYPE_GET_FEATURES:
+                    if (mpSession == NULL) {
+                        if ((!GetSessionFromFirstPacket(pPayloadData)) || (mpSession == NULL)) {
+                            throw std::runtime_error("Session lookup failed.");
+                        }
+                        mpSession->SetLastPacketNow();
+                    }
                     CheckVersionAndSendFeatures(pPayloadData);
                     break;
                 case FFXILoginPacket::FFXI_LOGIN_TYPE_GET_CHARACTER_LIST:
@@ -123,33 +115,35 @@ void ViewHandler::Run()
                 }
             }
 
-            // Check if the data server wants us to do something
-            RequestFromData = mpSession->GetRequestFromDataServer();
-            if (RequestFromData != LoginSession::VIEW_SERVER_IDLE) {
-                switch (RequestFromData) {
-                case LoginSession::VIEW_SERVER_SEND_CHARACTER_LIST:
-                    // The loader doesn't send any confirmation after it installs the character list
-                    // so we'll need to sleep a little to be sure it did its job.
-                    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                    SendCharacterList();
-                    break;
-                case LoginSession::VIEW_SERVER_PROCEED_LOGIN:
-                    HandleLoginRequest(&mLastLoginRequestPacket);
-                    break;
-                default:
-                    LOG_ERROR("View server in invalid state.");
-                    throw std::runtime_error("View server in invalid state.");
+            if (mpSession != NULL) {
+                // Check if the data server wants us to do something
+                RequestFromData = mpSession->GetRequestFromDataServer();
+                if (RequestFromData != LoginSession::VIEW_SERVER_IDLE) {
+                    switch (RequestFromData) {
+                    case LoginSession::VIEW_SERVER_SEND_CHARACTER_LIST:
+                        // The loader doesn't send any confirmation after it installs the character list
+                        // so we'll need to sleep a little to be sure it did its job.
+                        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                        SendCharacterList();
+                        break;
+                    case LoginSession::VIEW_SERVER_PROCEED_LOGIN:
+                        HandleLoginRequest(&mLastLoginRequestPacket);
+                        break;
+                    default:
+                        LOG_ERROR("View server in invalid state.");
+                        throw std::runtime_error("View server in invalid state.");
+                    }
+                    mpSession->SendRequestToViewServer(LoginSession::VIEW_SERVER_IDLE);
                 }
-                mpSession->SendRequestToViewServer(LoginSession::VIEW_SERVER_IDLE);
-            }
 
-            // Maybe we have a message waiting from MQ
-            // Even though we don't support any incoming messages (for now at least)
-            // we still want to clear them from the queue.
-            uint8_t cOrigin = 0;
-            pMessageFromMQ = mpSession->GetMessageFromMQ(&cOrigin);
-            if (pMessageFromMQ != NULL) {
-                LOG_WARNING("Ignoring unknown MQ message.");
+                // Maybe we have a message waiting from MQ
+                // Even though we don't support any incoming messages (for now at least)
+                // we still want to clear them from the queue.
+                uint8_t cOrigin = 0;
+                pMessageFromMQ = mpSession->GetMessageFromMQ(&cOrigin);
+                if (pMessageFromMQ != NULL) {
+                    LOG_WARNING("Ignoring unknown MQ message.");
+                }
             }
 
             // Maybe we've timed out
@@ -164,15 +158,54 @@ void ViewHandler::Run()
         LOG_ERROR("Exception thown by view server, disconnecting client.");
     }
 
-    mpSession->SetViewServerFinished();
-    if (mpSession->IsDataServerFinished()) {
-        mpSession->SetNeverExpire(false);
-        mpSession->SetExpiryTimeAbsolute(0);
+    if (mpSession != NULL) {
+        mpSession->SetViewServerFinished();
+        if (mpSession->IsDataServerFinished()) {
+            mpSession->SetNeverExpire(false);
+            mpSession->SetExpiryTimeAbsolute(0);
+        }
+        else {
+            mpSession->SetIgnoreIPLookupFlag(false);
+        }
     }
-    else {
-        mpSession->SetIgnoreIPLookupFlag(false);
+    if (mpConnection != NULL) {
+        mpConnection->Close();
     }
-    mpConnection->Close();
+}
+
+bool ViewHandler::GetSessionFromFirstPacket(const uint8_t* pRequestPacket)
+{
+    auto pSessionTracker = SessionTracker::GetInstance();
+    bool bUseAuthToken = LoginGlobalConfig::GetInstance()->GetConfigUInt("ip_lookup_identification") ? false : true;
+    try {
+        if (bUseAuthToken) {
+            mpSession = pSessionTracker->LookupSessionByAuth(*(uint32_t*)(pRequestPacket + 24),
+                pRequestPacket + 28,
+                mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr);
+        }
+        else {
+            mpSession = pSessionTracker->LookupSessionByIP(mpConnection->GetConnectionDetails().BindDetails.sin_addr.s_addr);
+        }
+    }
+    catch (...) {
+        LOG_WARNING("Unknown user attempted to connect to view port.");
+        mpConnection->Close();
+        return false;
+    }
+    if (!mpSession) {
+        LOG_ERROR("Session lookup returned a NULL value.");
+        mpConnection->Close();
+        return false;
+    }
+    mpSession->SetViewServerFinished(false);
+    mpSession->SetNeverExpire(false);
+    // Don't catch this session again when performing IP lookups
+    mpSession->SetIgnoreIPLookupFlag(true);
+    // Add more time to the user, if creating a new character they may stay
+    // connected to the view server for a while.
+    mpSession->SetExpiryTimeRelative(600);
+    LOG_INFO("Account ID connected: %u", mpSession->GetAccountID());
+    return true;
 }
 
 void ViewHandler::CheckVersionAndSendFeatures(const uint8_t* pRequestPacket)

@@ -1,10 +1,9 @@
 -----------------------------------
--- Area: Nyzul Isle
---   NM: Bloodtear Baldurf
+-- Area: Halvung
+--  Mob: Troll Lapidarist
 -----------------------------------
-require("scripts/globals/titles")
+mixins = {require("scripts/mixins/weapon_break")}
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(tpz.title.THE_HORNSPLITTER)
 end

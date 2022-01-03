@@ -6,7 +6,8 @@ require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobSpawn(mob)
-    mob:setMod(tpz.mod.UDMGMAGIC, -100)
+    mob:addMod(tpz.mod.UDMGMAGIC, -100)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

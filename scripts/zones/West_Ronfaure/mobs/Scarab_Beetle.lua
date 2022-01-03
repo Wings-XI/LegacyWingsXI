@@ -14,5 +14,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.FUNGUS_BEETLE_PH, 10, math.random(900, 10800)) -- 15 minutes to 3 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.FUNGUS_BEETLE_PH, 15, 900) -- 15 minutes minimum
 end

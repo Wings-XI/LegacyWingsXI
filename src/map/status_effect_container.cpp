@@ -379,6 +379,11 @@ void CStatusEffectContainer::OverwriteStatusEffect(CStatusEffect* StatusEffect)
     // remove effect by id
     EFFECT removeId = effects::EffectsParams[statusEffect].RemoveId;
     if (removeId > EFFECT_KO) {
+        if (removeId == EFFECT_LEVEL_SYNC) {
+            if (m_POwner->PParty && m_POwner->PParty->GetSyncTarget()) {
+                m_POwner->PParty->SetSyncTarget(nullptr, 550);
+            }
+        }
         DelStatusEffectSilent(removeId);
     }
 
@@ -1311,11 +1316,13 @@ void CStatusEffectContainer::SetEffectParams(CStatusEffect* StatusEffect)
     string_t name;
     EFFECT effect = StatusEffect->GetStatusID();
 
-    //Determine if this is a BRD Song or COR Effect.
+    //Determine if this is a BRD Song, COR Effect, Daze effect, or Battlefield effect.
     if (StatusEffect->GetSubID() == 0 || StatusEffect->GetSubID() > 20000 ||
         (effect >= EFFECT_REQUIEM && effect <= EFFECT_NOCTURNE) ||
         (effect >= EFFECT_DOUBLE_UP_CHANCE && effect <= EFFECT_NATURALISTS_ROLL) ||
-        effect == EFFECT_RUNEISTS_ROLL)
+        effect == EFFECT_RUNEISTS_ROLL ||
+        effect == EFFECT_DRAIN_DAZE || effect == EFFECT_ASPIR_DAZE || effect == EFFECT_HASTE_DAZE ||
+        effect == EFFECT_BATTLEFIELD)
     {
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
@@ -1753,6 +1760,18 @@ bool CStatusEffectContainer::HasPreventActionEffect()
         EFFECT_PENALTY,
         EFFECT_STUN,
         EFFECT_TERROR});
+}
+
+uint16 CStatusEffectContainer::GetLevelRestrictionEffect()
+{
+    for (auto PEffect : m_StatusEffectSet)
+    {
+        if (PEffect->GetFlag() & EFFECTFLAG_LEVEL_RESTRICTION)
+        {
+            return PEffect->GetPower();
+        }
+    }
+    return 0;
 }
 
 uint16 CStatusEffectContainer::GetConfrontationEffect()

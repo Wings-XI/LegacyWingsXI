@@ -50,7 +50,7 @@
 *                                                                       *
 ************************************************************************/
 
-CLinkshell::CLinkshell(uint32 id) : m_id(id), m_color(0)
+CLinkshell::CLinkshell(uint32 id) : m_id(id), m_color(0), m_logChat(0)
 {
 }
 
@@ -69,6 +69,11 @@ void CLinkshell::setColor(uint16 color)
     m_color = color;
 }
 
+uint8 CLinkshell::getPostRights()
+{
+    return m_postRights;
+}
+
 void CLinkshell::setPostRights(uint8 postrights)
 {
     m_postRights = postrights;
@@ -85,6 +90,16 @@ void CLinkshell::setName(int8* name)
 {
 	m_name.clear();
 	m_name.insert(0, (const char*)name);
+}
+
+uint8 CLinkshell::getAuditSettings()
+{
+    return m_logChat;
+}
+
+void CLinkshell::setAuditSettings(uint8 new_settings)
+{
+    m_logChat = new_settings;
 }
 
 void CLinkshell::setMessage(const int8* message, const int8* poster)
@@ -406,8 +421,10 @@ namespace linkshell
             auto PLinkshell = std::make_unique<CLinkshell>(Sql_GetUIntData(SqlHandle,0));
 
             PLinkshell->setColor(Sql_GetIntData(SqlHandle,1));
-            int8 EncodedName[16];
-            EncodeStringLinkshell(Sql_GetData(SqlHandle,2), EncodedName);
+            int8 DecodedName[24] = { 0 };
+            strncpy((char*)DecodedName, (char*)Sql_GetData(SqlHandle, 2), sizeof(DecodedName) - 1);
+            int8 EncodedName[16] = { 0 };
+            EncodeStringLinkshell(DecodedName, EncodedName);
             PLinkshell->setName(EncodedName);
             if (Sql_GetUIntData(SqlHandle,3) < LSTYPE_LINKSHELL || Sql_GetUIntData(SqlHandle,3) > LSTYPE_LINKPEARL)
             {
@@ -416,6 +433,10 @@ namespace linkshell
             else
             {
                 PLinkshell->m_postRights = Sql_GetUIntData(SqlHandle,3);
+            }
+            ret = Sql_Query(SqlHandle, "SELECT flags FROM audit_list WHERE entity_type = 2 AND entity_name = '%s';", DecodedName);
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS) {
+                PLinkshell->setAuditSettings((uint8)Sql_GetUIntData(SqlHandle, 0));
             }
             LinkshellList[id] = std::move(PLinkshell);
             return LinkshellList[id].get();

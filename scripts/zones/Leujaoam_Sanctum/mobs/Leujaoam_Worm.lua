@@ -72,3 +72,13 @@ function onMobRoam(mob)
         mob:setLocalVar("wormRoaming", 0)
     end
 end
+
+function onMobFight(mob, target)
+    mob:hideName(false)
+    mob:untargetable(false)
+    
+    if mob:getLocalVar("wormRoaming") == 2 then
+        mob:AnimationSub(0)
+        mob:setLocalVar("wormRoaming", 0)
+    end
+end

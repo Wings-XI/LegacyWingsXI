@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -214,7 +214,7 @@ namespace luautils
     int32 OnManeuverLose(CBattleEntity* PEntity, CItemPuppet* attachment, uint8 maneuvers);
     int32 OnUpdateAttachment(CBattleEntity* PEntity, CItemPuppet* attachment, uint8 maneuvers);
 
-    int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar = nullptr);    // triggers when item is used
+    int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar);    // triggers when item is used
     std::tuple<int32, int32, int32> OnItemCheck(CBaseEntity* PTarget, CItem* PItem, ITEMCHECK param = ITEMCHECK::NONE, CBaseEntity* PCaster = nullptr);    // check to see if item can be used
     int32 CheckForGearSet(CBaseEntity* PTarget);                                // check for gear sets
 
@@ -230,6 +230,7 @@ namespace luautils
     int32 OnMobFamilyInitialize(CMobEntity* PMob);
     int32 ApplyMixins(CBaseEntity* PMob);
     int32 ApplyZoneMixins(CBaseEntity* PMob);
+    int32 ApplyInstanceMixins(CBaseEntity* PMob);
     int32 OnMobSpawn(CBaseEntity* PMob);                                          // triggers on mob spawn
     int32 OnMobRoamAction(CBaseEntity* PMob);                                     // triggers when event mob is ready for a custom roam action
     int32 OnMobRoam(CBaseEntity* PMob);
@@ -323,6 +324,8 @@ namespace luautils
     int32 GetTickets(lua_State* L);                                                         // Fetchs a list of GM tickets
     int32 GetDynaTimeRemaining(lua_State* L);
 
+    int32 GetCharVarByName(lua_State* L);
+    int32 SetCharVarByName(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -

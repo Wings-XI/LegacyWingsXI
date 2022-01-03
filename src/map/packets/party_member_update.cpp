@@ -52,6 +52,9 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(CCharEntity* PChar, uint8 Mem
         ref<uint16>(0x10) = PChar->health.tp;
         ref<uint16>(0x18) = PChar->targid;
         ref<uint8>(0x1A) = MemberNumber;
+        if ((PChar->m_moghouseID == PChar->id) && (PChar->m_openMH)) {
+            ref<uint8>(0x1B) = 1;
+        }
         ref<uint8>(0x1D) = PChar->GetHPP();
         ref<uint8>(0x1E) = PChar->GetMPP();
 
@@ -73,6 +76,12 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(CTrustEntity* PTrust, uint8 M
     this->size = 0x20;
 
     TPZ_DEBUG_BREAK_IF(PTrust == nullptr);
+
+    // Can't trust assertion, somehow it still happened
+    if (PTrust == nullptr) {
+        memset(data, 0, 0x34);
+        return;
+    }
 
     ref<uint32>(0x04) = PTrust->id;
 
@@ -105,4 +114,16 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(uint32 id, const int8* name, 
     ref<uint16>(0x20) = ZoneID;
 
     memcpy(data + (0x26), name, strlen((const char*)name));
+}
+
+void CPartyMemberUpdatePacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needMasterLvFix) {
+        // Size commented out because the client freaks out and
+        // doesn't display the name at all. Keep an eye on uptree
+        // and see if this changes.
+        //this->size = 0x21;
+        memmove(data + 0x28, data + 0x26, 15);
+        ref<uint16>(0x26) = 0;
+    }
 }

@@ -34,6 +34,10 @@ zones[tpz.zone.JUGNER_FOREST_S] =
         },
         FINGERFILCHER_DRADZAD = 17113462,
         COBRACLAW_BUCHZVOTCH  = 17113464,
+        VOIRLOUP_PH =
+        {
+            [17113174] = 17113175, -- -204.612, -0.313, -119.120
+        },
     },
     npc =
     {

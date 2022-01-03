@@ -7,7 +7,8 @@ require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobInitialize(mob)
-    --mob:setMobMod(tpz.mobMod.DRAW_IN, 2) -- need to set a maximum distance for draw-in (this is now a thing with mobMod #77!!)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 35)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)
@@ -30,4 +31,8 @@ function onMobDespawn(mob)
             mob:getBattlefield():setLocalVar("mimicSpawned", mimicSpawned-4)
         end
     end
+end
+
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end

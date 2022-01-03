@@ -24,6 +24,9 @@ function onMobRoam(mob)
     end
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.MATT, 100)
+end
 
 function onMobDeath(mob, player, isKiller, noKiller)
     if isKiller or noKiller then

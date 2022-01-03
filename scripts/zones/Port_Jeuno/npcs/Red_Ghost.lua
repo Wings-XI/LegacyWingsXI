@@ -7,23 +7,30 @@ require("scripts/globals/pathfind")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
 -----------------------------------
-
+local flags = tpz.path.flag.NONE
 local path =
 {
--96.823616, 0.001000, -3.722488,
--96.761887, 0.001000, -2.632236,
--96.698341, 0.001000, -1.490001,
--96.636963, 0.001000, -0.363672,
--96.508736, 0.001000, 2.080966,
--96.290009, 0.001000, 6.895948,
--96.262505, 0.001000, 7.935584,
--96.282127, 0.001000, 6.815756,
--96.569176, 0.001000, -7.781419,
--96.256729, 0.001000, 8.059505,
--96.568405, 0.001000, -7.745419,
--96.254066, 0.001000, 8.195477,
--96.567200, 0.001000, -7.685426
+    -96.241, 0.001, 8.872, -- 1
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.241, 0.001, 8.872,
+    -96.519, 0.001, -7.582,
+    -96.584, 0.001, -8.519, -- 10
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.584, 0.001, -8.519,
+    -96.241, 0.001, 7.794,
 }
+
 function onSpawn(npc)
     npc:initNpcAi()
     npc:setPos(tpz.path.first(path))
@@ -31,7 +38,12 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
+    if npc:atPoint(tpz.path.get(path, 1)) then
+        npc:setPos(-96.241, 0.001, 8.872, 24)
+    elseif npc:atPoint(tpz.path.get(path, 10)) then
+        npc:setPos(-96.584, 0.001, -8.519, 231)
+    end
 end
 
 function onTrade(player, npc, trade)
@@ -44,9 +56,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(34)
     end
-
-    -- wait until event is over
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
@@ -56,7 +65,4 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 314) then
         player:setCharVar("WildcatJeuno", utils.mask.setBit(player:getCharVar("WildcatJeuno"), 15, true))
     end
-
-    npc:wait(0)
-
 end

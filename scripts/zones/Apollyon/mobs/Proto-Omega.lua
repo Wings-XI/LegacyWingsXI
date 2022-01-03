@@ -15,10 +15,11 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
-    mob:setMod(tpz.mod.UDMGPHYS, -75)
-    mob:setMod(tpz.mod.UDMGRANGE, -75)
+    mob:setMod(tpz.mod.UDMGPHYS, -65)
+    mob:setMod(tpz.mod.UDMGRANGE, -65)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
     mob:setMod(tpz.mod.MOVE, 100) -- "Moves at Flee Speed in Quadrupedal stance and in the Final Form"
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
 function onMobFight(mob, target)
@@ -26,15 +27,17 @@ function onMobFight(mob, target)
     local formTime = mob:getLocalVar("formWait")
     local lifePercent = mob:getHPP()
     local currentForm = mob:getLocalVar("form")
-    
-    if lifePercent < 70 and currentForm < 1 then
+    local timer = mob:getBattleTime()
+
+    if timer > 120 and currentForm < 1 then
         currentForm = 1
         mob:setLocalVar("form", currentForm)
-        formTime = os.time()
+        formTime = os.time() + 120
         mob:setMod(tpz.mod.UDMGPHYS, 0)
         mob:setMod(tpz.mod.UDMGRANGE, 0)
         mob:setMod(tpz.mod.UDMGMAGIC, -75)
         mob:setMod(tpz.mod.MOVE, 0)
+        mob:useMobAbility(1532)
     end
 
     if currentForm == 1 then
@@ -42,29 +45,38 @@ function onMobFight(mob, target)
             if mob:AnimationSub() == 1 then
                 mob:AnimationSub(2)
                 mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
-                if not GetMobByID(mobID + 1):isSpawned() and math.random(0,1) == 1 then
-                    mob:useMobAbility(1532)
-                end 
             else
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
                 mob:AnimationSub(1)
             end
-            mob:setLocalVar("formWait", os.time() + 60)
-        end
+            mob:setLocalVar("formWait", os.time() + 120)
+        end        
+    end
 
-        if lifePercent < 30 then
-            mob:AnimationSub(2)
-            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
-            mob:setMod(tpz.mod.UDMGPHYS, -50)
-            mob:setMod(tpz.mod.UDMGRANGE, -50)
-            mob:setMod(tpz.mod.UDMGMAGIC, -50)
-            mob:setMod(tpz.mod.MOVE, 100)
-            mob:addStatusEffect(tpz.effect.REGAIN,7,3,0) -- The final form has Regain,
-            mob:getStatusEffect(tpz.effect.REGAIN):setFlag(tpz.effectFlag.DEATH)
-            currentForm = 2
-            mob:setLocalVar("form", currentForm)
+    if lifePercent < 30 and currentForm < 2 then
+        if not GetMobByID(mobID + 1):isSpawned() then
+            mob:setLocalVar("podTime", os.time())
+            mob:useMobAbility(1532)
+        end
+        mob:AnimationSub(2)
+        mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+        mob:setMod(tpz.mod.UDMGPHYS, -50)
+        mob:setMod(tpz.mod.UDMGRANGE, -50)
+        mob:setMod(tpz.mod.UDMGMAGIC, -50)
+        mob:setMod(tpz.mod.MOVE, 100)
+        mob:addStatusEffect(tpz.effect.REGAIN,7,3,0) -- The final form has Regain,
+        mob:getStatusEffect(tpz.effect.REGAIN):setFlag(tpz.effectFlag.DEATH)
+        currentForm = 2
+        mob:setLocalVar("form", currentForm)
+    end
+
+    if currentForm == 2 and (os.time() - mob:getLocalVar("podTime")) >= 300 then
+        if not GetMobByID(mobID + 1):isSpawned() then
+            mob:setLocalVar("podTime", os.time() + 300)
+            mob:useMobAbility(1532)
         end
     end
+
 end
 
 function onAdditionalEffect(mob, target, damage)

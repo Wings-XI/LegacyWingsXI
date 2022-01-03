@@ -7,7 +7,9 @@ local ID = require("scripts/zones/Norg/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
-
+require("scripts/globals/pathfind")
+-----------------------------------
+local flags = tpz.path.flag.NONE
 local path =
 {
     -5.453587, 0.151494, -16.361458,
@@ -59,17 +61,17 @@ local path =
     -8.280642, 0.241637, -11.799251,
     -8.828505, 0.098458, -10.895535,
     -9.351592, 0.039748, -9.948843,
-    -9.856394, 0.036026, -9.068656
+    -9.856394, 0.036026, -9.068656,
 }
 
 function onSpawn(npc)
     npc:initNpcAi()
     npc:setPos(tpz.path.first(path))
-    -- onPath(npc)
+    onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+    tpz.path.patrolsimple(npc, path, flags)
 end
 
 function onTrade(player, npc, trade)
@@ -94,8 +96,6 @@ function onTrigger(player, npc)
     else
         player:startEvent(89) -- Standard Conversation
     end
-
-    npc:wait()
 end
 
 function onEventUpdate(player, csid, option)
@@ -115,6 +115,4 @@ function onEventFinish(player, csid, option, npc)
             player:completeQuest(OUTLANDS, tpz.quest.id.outlands.ITS_NOT_YOUR_VAULT)
         end
     end
-
-    npc:wait(0)
 end

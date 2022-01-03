@@ -5,7 +5,52 @@
 -----------------------------------
 local ID = require("scripts/zones/Southern_San_dOria/IDs")
 require("scripts/globals/shop")
+require("scripts/globals/pathfind")
 -----------------------------------
+local flags = tpz.path.flag.NONE
+local path =
+{
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+    11.166, 2.200, -95.754,
+}
+
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path, flags)
+    if npc:atPoint(tpz.path.get(path, 1)) then
+        npc:setPos(11.166, 2.200, -95.753, 0)
+    elseif npc:atPoint(tpz.path.get(path, 13)) then
+        npc:setPos(11.166, 2.200, -95.754, 214)
+    end
+end
 
 function onTrade(player, npc, trade)
 end

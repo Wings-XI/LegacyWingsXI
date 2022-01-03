@@ -2,7 +2,7 @@
 -- Area: Leujaoam Sanctum
 -- Ancient Lockbox
 -----------------------------------
-local ID = require("scripts/zones/Lebros_Cavern/IDs")
+local ID = require("scripts/zones/Leujaoam_Sanctum/IDs")
 require("scripts/globals/assault")
 require("scripts/globals/appraisal")
 -----------------------------------
@@ -14,7 +14,7 @@ function onTrigger(player, npc)
         {
             {
                 {itemid = 2286, droprate = 600}, -- ??? Box
-                {itemid = 2277, droprate = 300}, -- ??? Earring
+                {itemid = 2278, droprate = 300}, -- ??? Ring
                 {itemid = 0,    droprate = 100}, -- Nothing
             },
         },

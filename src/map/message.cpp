@@ -229,7 +229,12 @@ namespace message
         while (!message_queue.empty())
         {
             g_mqconnection->IncrementHighPriorityThreadsWaiting();
-            std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+            std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
+            while (!lk.try_lock_for(std::chrono::seconds(1))) {
+                if (map_doing_final) {
+                    return;
+                }
+            }
             g_mqconnection->DecrementHighPriorityThreadsWaiting();
             std::shared_ptr<uint8> msgptr = message_queue.front();
             uint8* msg = msgptr.get();
@@ -359,8 +364,11 @@ namespace message
                 {
                     PZone->ForEachChar([&packet, &extra, packet_size](CCharEntity* PChar)
                     {
+                        auto serverId = ref<uint32>((uint8*)extra, 0);
+                        auto isMarkedSpam = (ref<uint32>((uint8*)extra, 4) != 0) && PChar->isYellSpamFiltered();
+
                         // don't push to the sender or anyone with yell filtered
-                        if (PChar->id != ref<uint32>((uint8*)extra, 0) && !PChar->isYellFiltered())
+                        if (PChar->id != serverId && !PChar->isYellFiltered() && !isMarkedSpam)
                         {
                             CBasicPacket* newPacket = new CBasicPacket();
                             memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
@@ -614,6 +622,12 @@ namespace message
                 float z = ref<float>((uint8*)extra, 18);
                 uint8 rot = ref<uint8>((uint8*)extra, 22);
                 uint32 moghouseID = ref<uint32>((uint8*)extra, 23);
+                if (moghouseID != 0) {
+                    x = 0;
+                    y = 0;
+                    z = 0;
+                    rot = 192;
+                }
 
                 PChar->updatemask = 0;
 
@@ -752,7 +766,7 @@ namespace message
         {
             zoneutils::ForEachZone([&packet, packet_size](CZone* PZone) {
                 PZone->ForEachChar([&packet, packet_size](CCharEntity* PChar) {
-                    if (PChar != nullptr && PChar->m_GMlevel > 0)
+                    if (PChar != nullptr && PChar->m_GMlevel > 1)
                     {
                         CBasicPacket* newPacket = new CBasicPacket();
                         memcpy(*newPacket, packet, std::min<size_t>(packet_size, PACKET_SIZE));
@@ -1009,7 +1023,12 @@ namespace message
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
         g_mqconnection->IncrementHighPriorityThreadsWaiting();
-        std::lock_guard<std::recursive_mutex> lk(*g_mqconnection->GetMutex());
+        std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
+        while (!lk.try_lock_for(std::chrono::seconds(1))) {
+            if (map_doing_final) {
+                return;
+            }
+        }
         g_mqconnection->DecrementHighPriorityThreadsWaiting();
         uint8 stub;
 

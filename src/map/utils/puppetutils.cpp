@@ -420,7 +420,7 @@ uint16 getSkillCap(CCharEntity* PChar, SKILLTYPE skill, uint8 level)
             break;
         case FRAME_VALOREDGE:
             if (skill == SKILL_AUTOMATON_MELEE)
-                rank = 2;
+                rank = 3;
             break;
         case FRAME_SHARPSHOT:
             if (skill == SKILL_AUTOMATON_MELEE)
@@ -608,7 +608,8 @@ void CheckAttachmentsForManeuver(CCharEntity* PChar, EFFECT maneuver, bool gain)
     }
 }
 
-void UpdateAttachments(CCharEntity* PChar)
+// Called when gaining or losing light maneuvers while equiped with fiber optic
+void UpdateAttachments(CCharEntity* PChar, bool gain)
 {
     CAutomatonEntity* PAutomaton = PChar->PAutomaton;
 
@@ -631,7 +632,15 @@ void UpdateAttachments(CCharEntity* PChar)
                             break;
                         }
                     }
-                    luautils::OnUpdateAttachment(PAutomaton, PAttachment, PChar->StatusEffectContainer->GetEffectsCount((EFFECT)maneuver));
+
+                    // If maneuver is light based and we are losing the maneuver, remove 1 so attachment updates correctly
+                    uint8 maneuverCount = PChar->StatusEffectContainer->GetEffectsCount((EFFECT)maneuver);
+                    if (maneuver == EFFECT_LIGHT_MANEUVER && !gain)
+                    {
+                        maneuverCount--;
+                    }
+
+                    luautils::OnUpdateAttachment(PAutomaton, PAttachment, maneuverCount);
                 }
             }
         }

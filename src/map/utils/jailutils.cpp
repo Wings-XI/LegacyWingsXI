@@ -43,7 +43,7 @@ namespace jailutils
 
     bool InPrison(CCharEntity* PChar)
     {
-        return PChar->m_GMlevel == 0 && PChar->getZone() == ZONE_MORDION_GAOL;
+        return PChar->m_GMlevel < 2 && PChar->getZone() == ZONE_MORDION_GAOL;
     }
 
     /************************************************************************

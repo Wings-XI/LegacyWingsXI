@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Attohwa_Chasm/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
+require("scripts/globals/world")
 -----------------------------------
 
 function onInitialize(zone)
@@ -119,17 +120,16 @@ function onGameHour()
     local xolre = GetServerVariable("XolotlRespawn")
     local XolotlDead = GetServerVariable("XolotlDead")
     local Xolotl = GetMobByID(ID.mob.XOLOTL)
-    local hour = VanadielHour()
     local totd = VanadielTOTD()
 
-    if (totd == 1 or totd == 7) and (xolre - os.time() < 140) and XolotlDead == 1 and not Xolotl:isSpawned() then -- If respawn is less than one in game hour, allow Xolotl to spawn
+    if (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT) and (xolre - os.time() < 140) and XolotlDead == 1 and not Xolotl:isSpawned() then -- If respawn is less than one in game hour, allow Xolotl to spawn
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
-    elseif (totd == 1 or totd == 7) and xolre < os.time() and XolotlDead == 1 and not Xolotl:isSpawned() then -- If Xolotl's respawn window has passed, spawn him
+    elseif (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT) and xolre < os.time() and XolotlDead == 1 and not Xolotl:isSpawned() then -- If Xolotl's respawn window has passed, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SetServerVariable("XolotlDead", 0)
         SpawnMob(Xolotl:getID())
-    elseif (totd == 1 or totd == 7) and XolotlDead == 0 and not Xolotl:isSpawned() then -- If Xolotl didn't die last night, spawn him
+    elseif (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT) and XolotlDead == 0 and not Xolotl:isSpawned() then -- If Xolotl didn't die last night, spawn him
         DisallowRespawn(Xolotl:getID(), false)
         SpawnMob(Xolotl:getID())
     else
@@ -138,9 +138,9 @@ function onGameHour()
 
     local citire = GetServerVariable("CitipatiRespawn")
 
-    if (totd == 1 or totd == 7) and (citire - os.time() < 140) then -- If respawn is less than one in game hour, allow Citipati to spawn
+    if (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT) and (citire - os.time() < 140) then -- If respawn is less than one in game hour, allow Citipati to spawn
         DisallowRespawn(ID.mob.CITIPATI, false)
-    elseif (totd == 1 or totd == 7) and citire < os.time() then -- If Citipati's respawn window has passed, allow him to spawn.
+    elseif (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT) and citire < os.time() then -- If Citipati's respawn window has passed, allow him to spawn.
         DisallowRespawn(ID.mob.CITIPATI, false)
     else
         DisallowRespawn(ID.mob.CITIPATI, true)

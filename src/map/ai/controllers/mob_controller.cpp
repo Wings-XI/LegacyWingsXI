@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -251,11 +251,22 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     bool detectSight = (detects & DETECT_SIGHT) || forceSight;
     bool hasInvisible = false;
     bool hasSneak = false;
-
-    if (!PMob->m_TrueDetection)
-    {
-        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE);
-        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK);
+    if (PMob->m_TrueDetection == 0) // No True Detection
+    { 
+        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK); // Does not ignore sneak.
+        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE); // Does not ignore invisible.
+    }
+    if (PMob->m_TrueDetection == 1) // True Sight and Hearing
+    { 
+        // Ignores Invisible and Sneak
+    }
+    if (PMob->m_TrueDetection == 2) // True Sight
+    { 
+        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK); // Does not ignore sneak.
+    }
+    if (PMob->m_TrueDetection == 3) // True Hearing
+    { 
+        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE); // Does not ignore invisible.
     }
 
     auto angle = PMob->getMobMod(MOBMOD_SIGHT_ANGLE);
@@ -506,8 +517,8 @@ bool CMobController::CanCastSpells()
 
     // mob has no mp and does not have manafont Exclude NIN and BRD
    // mob has no mp and does not have manafont Exclude NIN and BRD
-    if (PMob->GetMJob() != JOB_NIN && PMob->GetSJob() != JOB_NIN && 
-    PMob->GetMJob() != JOB_BRD && PMob->GetSJob() != JOB_BRD && 
+    if (PMob->GetMJob() != JOB_NIN && PMob->GetSJob() != JOB_NIN &&
+    PMob->GetMJob() != JOB_BRD && PMob->GetSJob() != JOB_BRD &&
     PMob->health.mp == 0 && !PMob->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT))
     {
         return false;
@@ -705,6 +716,7 @@ void CMobController::Move()
             if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
             {
                 FaceTarget();
+                m_DrawInWait = server_clock::now() + 500ms;
             }
             else
             {
@@ -730,9 +742,9 @@ void CMobController::Move()
                     return;
                 }
             }
-            else if (CanMoveForward(currentDistance))
+            else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
-                if (!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
                 {
                     //path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);

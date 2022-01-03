@@ -13,6 +13,9 @@ tpz.appraisalUtil = tpz.appraisalUtil or {}
 
 tpz.appraisalUtil.Origin = 
 {
+    SCOUTING_THE_ASHU_TALIF     = 55,
+    ROYAL_PAINTER_ESCORT        = 56,
+    TARGETING_THE_CAPTAIN       = 57,
     NYZUL_BASIC                 = 100,
     NYZUL_BAT_EYE               = 101,
     NYZUL_SHADOW_EYE            = 102,
@@ -264,6 +267,15 @@ tpz.appraisalUtil.appraisalItems =
     },
     [tpz.appraisalUtil.questionMarkItems.DAGGER] =
     {
+        [tpz.appraisalUtil.Origin.SCOUTING_THE_ASHU_TALIF] =
+        {
+            items =
+            {
+                {20, 18028}, -- Matron's Knife
+                {50, 17984}, -- Spark Dagger
+                {30, 18008}, -- Hushed Dagger
+            }
+        },
         [tpz.appraisalUtil.Origin.NYZUL_TOM_TIT_TAT] =
         {
             items =
@@ -584,7 +596,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {95, 12952}, -- Leather Highboots
-                { 5, 13014}, -- Leaping boots
+                { 5, 15351}, -- Bounding boots
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_CACTUAR_CANTAUTOR] =
@@ -600,7 +612,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 12984}, -- Ash Clogs
-                {10, 18052}, -- Tredecim Scythe or Cure Clogs
+                {10, 15323}, -- Cure Clogs
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_TOTTERING_TOBY] =
@@ -853,7 +865,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 13601}, -- Cotton Cape +1
-                {10, 15469}, -- Bellicose Cape or Almogavar Bow
+                {10, 15469}, -- Bellicose Mantle
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_SPINY_SPIPI] =
@@ -875,7 +887,14 @@ tpz.appraisalUtil.appraisalItems =
     },
     [tpz.appraisalUtil.questionMarkItems.SASH] =
     {
-
+        [tpz.appraisalUtil.Origin.NYZUL_JOLLY_GREEN] =
+            {
+                items =
+                {
+                    {90, 13205}, -- Silver Obi
+                    {10, 13228}, -- Shaman's Belt
+                },
+            },
     },
     [tpz.appraisalUtil.questionMarkItems.SHIELD] =
     {
@@ -979,7 +998,7 @@ tpz.appraisalUtil.appraisalItems =
             items =
             {
                 {90, 15526}, -- Regen Collar
-                {10, 13056}, -- Peacok Charm
+                {10, 15515}, -- Peacok Amulet
             },
         },
         [tpz.appraisalUtil.Origin.NYZUL_BLOODPOOL_VORAX] =
@@ -1202,6 +1221,17 @@ tpz.appraisalUtil.appraisalItems =
                 {19,  5453}, -- Istakoz
                 { 1,    90}, -- Rusty Bucket
             },
+        },
+
+        [tpz.appraisalUtil.Origin.SCOUTING_THE_ASHU_TALIF] =
+        {
+            items =
+            {
+                {25, 2349}, -- Turbo Charger
+                {25, 2352}, -- Condenser
+                {25, 2348}, -- Tranquilizer
+                {25, 2353}, -- Optic Fiber
+            }
         },
 
         [tpz.appraisalUtil.Origin.NYZUL_AIATAR] =

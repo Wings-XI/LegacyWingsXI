@@ -3761,26 +3761,18 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 437, 274, 1, 255); -- sleepga
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 146, 62, 67);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 151, 64, 68);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 156, 59, 66);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 171, 63, 67);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 175, 63, 67);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 191, 63, 67);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 195, 61, 65);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 201, 65, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 204, 60, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 206, 50, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 208, 52, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 210, 54, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 212, 56, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 214, 58, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 221, 65, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 231, 35, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 235, 24, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 236, 22, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 237, 20, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 238, 18, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 239, 16, 255);
-INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 240, 27, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 245, 12, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 247, 25, 82);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 249, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 252, 45, 255);
+INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 253, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 254, 4, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 258, 7, 255);
 INSERT INTO `mob_spell_lists` VALUES('Altedour_I_Tavnazia', 442, 259, 41, 255);
@@ -4150,6 +4142,37 @@ INSERT INTO `mob_spell_lists` VALUES('Goblin_Wolfman', 501, 275, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 35, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 21, 45, 255);
 INSERT INTO `mob_spell_lists` VALUES('Goblin_Collector', 502, 40, 45, 255);
+-- ACP 11 Ode of Life Bestowing (Stellar Fulcrum)
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 176, 1, 255); -- Firaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 181, 1, 255); -- Blizzaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 186, 1, 255); -- Aeroga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 191 , 1, 255); -- Stonega III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 196, 1, 255); -- Thundaga III
+INSERT INTO `mob_spell_lists` VALUES('Seed_Crystal', 503, 201, 1, 255); -- Waterga III
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 204, 60, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 206, 50, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 208, 52, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 210, 54, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 212, 56, 255);
+INSERT INTO `mob_spell_lists` VALUES('AncientTier1', 504, 214, 58, 255);
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 273, 1, 255); -- Sleepga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 356, 1, 255); -- Paralyga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 361, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES('Swiftwinged_Gekko', 505, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES('Bombast', 506, 235, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 359, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 274, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 356, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 273, 1, 255);
 
 --
 -- Indexes for dumped tables

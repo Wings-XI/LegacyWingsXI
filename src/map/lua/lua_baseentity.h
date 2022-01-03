@@ -52,6 +52,7 @@ public:
     int32 PrintToPlayer(lua_State* L);      // for sending debugging messages/command confirmations to the player's client
     int32 PrintToArea(lua_State* L);        // for sending area messages to multiple players at once
     int32 messageBasic(lua_State*);         // Sends Basic Message
+    int32 messageStandard(lua_State* L);    // Sends Standard Message
     int32 messageName(lua_State* L);        // Sends a Message with a Name
     int32 messagePublic(lua_State*);        // Sends a public Basic Message
     int32 messageSpecial(lua_State*);       // Sends Special Message
@@ -74,6 +75,7 @@ public:
     int32 injectActionPacket(lua_State*);   // ONLY FOR DEBUGGING. Injects an action packet with the specified params.
     int32 entityVisualPacket(lua_State* L);
     int32 entityAnimationPacket(lua_State* L);
+    int32 sendNpcEmote(lua_State*);         // NPC emits emote packet, could one day be refactored into sendEmote.
 
     int32 startEvent(lua_State*);           // Begins Event
     int32 startEventString(lua_State*);     // Begins Event with string param (0x33 packet)
@@ -115,6 +117,7 @@ public:
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving
     int32 checkDistance(lua_State*);         // Check Distacnce and returns distance number
     int32 wait(lua_State* L);                // make the npc wait a number of ms and then back into roam
+    int32 stopwait(lua_State* L);            // resumes roaming if stopped via wait()
     // int32 WarpTo(lua_State* L);           // warp to the given point
     // int32 RoamAround(lua_State* L);       // pick a random point to walk to
     // int32 LimitDistance(lua_State* L);    // limits the current path distance to given max distance
@@ -156,6 +159,7 @@ public:
     int32 getCurrentRegion(lua_State*);      // Get Entity conquest region
     int32 getContinentID(lua_State*);        // узнаем континент, на котором находится сущность
     int32 isInMogHouse(lua_State*);          // Check if entity inside a mog house
+    int32 getMogHouseID(lua_State*);         // Get the current mog house ID (player ID if in own MH, zero if outside)
 
     int32 getPlayerRegionInZone(lua_State*); // Returns the player's current region in the zone. (regions made with registerRegion)
     int32 updateToEntireZone(lua_State*);    // Forces an update packet to update the NPC entity zone-wide
@@ -204,6 +208,8 @@ public:
     int32 getCurrentGPItem(lua_State*);      // Gets current GP item id and max points
     int32 breakLinkshell(lua_State*);        // Breaks all pearls/sacks
 
+    int32 addSoulPlate(lua_State*);          //
+
     // Trading
     int32 getContainerSize(lua_State*);      // Gets the current capacity of a container
     int32 changeContainerSize(lua_State*);   // Increase/Decreases container size
@@ -241,6 +247,7 @@ public:
     int32 checkNameFlags(lua_State* L);      // this is check and not get because it tests for a flag, it doesn't return all flags
     int32 getModelId(lua_State* L);
     int32 setModelId(lua_State* L);
+    int32 copyLook(lua_State* L);
     int32 restoreNpcLook(lua_State* L);
     int32 costume(lua_State*);               // get or set user costume
     int32 costume2(lua_State*);              // set monstrosity costume
@@ -270,6 +277,8 @@ public:
     int32 setGMLevel(lua_State* L);
     int32 getGMHidden(lua_State* L);
     int32 setGMHidden(lua_State* L);
+    int32 getGMSuperpowers(lua_State* L);
+    int32 setGMSuperpowers(lua_State* L);
 
     int32 isJailed(lua_State *L);           // Is the player jailed
     int32 jail(lua_State* L);
@@ -450,7 +459,7 @@ public:
 
     int32 addPartyEffect(lua_State*);               // Adds Effect to all party members
     int32 hasPartyEffect(lua_State*);               // Has Effect from all party members
-    int32 removePartyEffect(lua_State*);            // Removes Effect from all party members
+    int32 delPartyEffect(lua_State*);               // Deletes Effect from all party members
 
     int32 getAlliance(lua_State* L);
     int32 getAllianceSize(lua_State* L);            // Get the size of an entity's alliance
@@ -567,6 +576,7 @@ public:
 
     int32 fold(lua_State*);
     int32 doWildCard(lua_State*);
+    int32 doRandomDeal(lua_State*);
     int32 addCorsairRoll(lua_State*);          // Adds corsair roll effect
     int32 hasCorsairEffect(lua_State*);
     int32 hasBustEffect(lua_State*);           // Checks to see if a character has a specified busted corsair roll
@@ -722,6 +732,7 @@ public:
     int32 castSpell(lua_State*);            // forces a mob to cast a spell (parameter = spell ID, otherwise picks a spell from its list)
     int32 useJobAbility(lua_State*);        // forces a job ability use (players/pets only)
     int32 useMobAbility(lua_State*);        // forces a mob to use a mobability (parameter = skill ID)
+    int32 triggerDrawIn(lua_State*);        // forces a mob to use Draw In
     int32 hasTPMoves(lua_State*);
 
     int32 weaknessTrigger(lua_State* L);
@@ -773,6 +784,7 @@ public:
     int32 addTimeToDynamis(lua_State* L);
     int32 setSkillList(lua_State* L);
     int32 setNM(lua_State* L);
+    int32 setMobType(lua_State* L);
     int32 dynaCurrencyAutoDropEnabled(lua_State* L);
     int32 getFomorHate(lua_State *L);
     int32 setFomorHate(lua_State *L);

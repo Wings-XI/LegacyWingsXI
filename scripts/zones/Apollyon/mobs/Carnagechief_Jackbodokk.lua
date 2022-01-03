@@ -7,7 +7,15 @@ local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.SLASHRES, 1500)
+    mob:setMod(tpz.mod.H2HRES, 5000)
+    mob:setMod(tpz.mod.IMPACTRES, 5000)
+    mob:setMod(tpz.mod.DMGMAGIC, 10)
 end
+
 
 function onMobEngaged(mob, target)
     local battlefield = mob:getBattlefield()
@@ -29,7 +37,7 @@ function onMobFight(mob, target)
         local remainingTime = battlefield:getRemainingTime()
         local startTime = battlefield:getLocalVar("startTime")
         local wave = mob:getLocalVar("wave")
-    
+
         if GetMobByID(ID.mob.APOLLYON_CS_MOB[1]+1):isDead() and GetMobByID(ID.mob.APOLLYON_CS_MOB[1]+2):isDead()
             and GetMobByID(ID.mob.APOLLYON_CS_MOB[1]+3):isDead() and wave == 1
         then
@@ -57,7 +65,7 @@ function onMobFight(mob, target)
             GetMobByID(ID.mob.APOLLYON_CS_MOB[1]+3):setPos(mobX, mobY, mobZ)
             SpawnMob(ID.mob.APOLLYON_CS_MOB[1]+3):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
         end
-    
+
         if remainingTime <= startTime*0.66 then
             if GetMobByID(ID.mob.APOLLYON_CS_MOB[3]):isAlive() and not GetMobByID(ID.mob.APOLLYON_CS_MOB[3]):isEngaged() then
                 battlefield:setLocalVar("startTime", battlefield:getRemainingTime())

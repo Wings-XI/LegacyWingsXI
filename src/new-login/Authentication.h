@@ -72,18 +72,20 @@ public:
      *  Authenticate user by username / password.
      *  @param pszUsername Username to authenticate
      *  @param pszPassword Password to authenticate
+     *  @param pbufAuthToken If not null receives an 8 byte authentication token
      *  @return Account ID of the user on success or 0 on failure.
      */
-    uint32_t AuthenticateUser(const char* pszUsername, const char* pszPassword);
+    uint32_t AuthenticateUser(const char* pszUsername, const char* pszPassword, uint8_t* pbufAuthToken = NULL);
 
     /**
      *  Create a new user account.
      *  @param pszUsername Username to create
      *  @param pszPassword Password to assign
      *  @param pszEmail Optional email address
+     *  @param pbufAuthToken If not null receives an 8 byte authentication token
      *  @return Account ID of the user on success or 0 on failure.
      */
-    uint32_t CreateUser(const char* pszUsername, const char* pszPassword, const char* pszEmail = NULL);
+    uint32_t CreateUser(const char* pszUsername, const char* pszPassword, const char* pszEmail = NULL, uint8_t* pbufAuthToken = NULL);
 
     /**
      *  Changes the password of an existing user.

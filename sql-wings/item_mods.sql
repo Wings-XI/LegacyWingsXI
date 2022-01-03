@@ -470,6 +470,7 @@ INSERT INTO `item_mods` VALUES (10373,28,5);
 INSERT INTO `item_mods` VALUES (10373,115,12);
 INSERT INTO `item_mods` VALUES (10382,1,1);
 INSERT INTO `item_mods` VALUES (10383,1,2);
+INSERT INTO `item_mods` VALUES (10383,947,30);    -- Dream mittens +1 invisible duration +30
 INSERT INTO `item_mods` VALUES (10384,1,1);       -- cumulus_masque DEF:1
 INSERT INTO `item_mods` VALUES (10385,1,2);       -- cumulus_masque_+1 DEF:2
 INSERT INTO `item_mods` VALUES (10392,27,-2);     -- Malison Medallion: Enmity -2
@@ -4264,10 +4265,12 @@ INSERT INTO `item_mods` VALUES (11295,1,45);
 INSERT INTO `item_mods` VALUES (11295,8,3);
 INSERT INTO `item_mods` VALUES (11295,24,8);
 INSERT INTO `item_mods` VALUES (11295,25,8);
+INSERT INTO `item_mods` VALUES (11295,573,5);
 INSERT INTO `item_mods` VALUES (11296,1,46);
 INSERT INTO `item_mods` VALUES (11296,8,3);
 INSERT INTO `item_mods` VALUES (11296,24,10);
 INSERT INTO `item_mods` VALUES (11296,25,10);
+INSERT INTO `item_mods` VALUES (11296,573,5);
 INSERT INTO `item_mods` VALUES (11297,1,37);
 INSERT INTO `item_mods` VALUES (11297,2,17);
 INSERT INTO `item_mods` VALUES (11297,23,5);
@@ -12605,11 +12608,11 @@ INSERT INTO `item_mods` VALUES (14095,1,14);
 INSERT INTO `item_mods` VALUES (14095,2,15);
 INSERT INTO `item_mods` VALUES (14095,14,5);
 INSERT INTO `item_mods` VALUES (14095,109,10);
-INSERT INTO `item_mods` VALUES (14095,857,90);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14096,1,10);
 INSERT INTO `item_mods` VALUES (14096,2,15);
 INSERT INTO `item_mods` VALUES (14096,13,5);
-INSERT INTO `item_mods` VALUES (14096,858,90);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14097,1,10);
 INSERT INTO `item_mods` VALUES (14097,2,11);
 INSERT INTO `item_mods` VALUES (14097,11,3);
@@ -16275,7 +16278,7 @@ INSERT INTO `item_mods` VALUES (15133,1,15);
 INSERT INTO `item_mods` VALUES (15133,3,4);
 INSERT INTO `item_mods` VALUES (15133,9,4);
 INSERT INTO `item_mods` VALUES (15133,107,12);
-INSERT INTO `item_mods` VALUES (15133,543,5);
+INSERT INTO `item_mods` VALUES (15133,543,10);
 INSERT INTO `item_mods` VALUES (15134,1,15);
 INSERT INTO `item_mods` VALUES (15134,5,18);
 INSERT INTO `item_mods` VALUES (15134,13,5);
@@ -17087,13 +17090,13 @@ INSERT INTO `item_mods` VALUES (15358,1,19);
 INSERT INTO `item_mods` VALUES (15358,2,20);
 INSERT INTO `item_mods` VALUES (15358,14,5);
 INSERT INTO `item_mods` VALUES (15358,109,12);
-INSERT INTO `item_mods` VALUES (15358,857,90);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (15358,857,30);    -- Holy Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (15359,1,17);
 INSERT INTO `item_mods` VALUES (15359,2,15);
 INSERT INTO `item_mods` VALUES (15359,5,15);
 INSERT INTO `item_mods` VALUES (15359,8,5);
 INSERT INTO `item_mods` VALUES (15359,13,5);
-INSERT INTO `item_mods` VALUES (15359,858,90);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (15359,858,30);    -- Arcane Circle duration +90 seconds
 INSERT INTO `item_mods` VALUES (15360,1,14);
 INSERT INTO `item_mods` VALUES (15360,2,11);
 INSERT INTO `item_mods` VALUES (15360,11,5);
@@ -18042,7 +18045,7 @@ INSERT INTO `item_mods` VALUES (15666,1,16);
 INSERT INTO `item_mods` VALUES (15666,3,4);
 INSERT INTO `item_mods` VALUES (15666,9,5);
 INSERT INTO `item_mods` VALUES (15666,107,14);
-INSERT INTO `item_mods` VALUES (15666,543,5);
+INSERT INTO `item_mods` VALUES (15666,543,10);
 INSERT INTO `item_mods` VALUES (15667,1,16);
 INSERT INTO `item_mods` VALUES (15667,5,18);
 INSERT INTO `item_mods` VALUES (15667,13,6);
@@ -18407,6 +18410,7 @@ INSERT INTO `item_mods` VALUES (15751,13,2);
 INSERT INTO `item_mods` VALUES (15751,14,2);
 INSERT INTO `item_mods` VALUES (15751,55,11);
 INSERT INTO `item_mods` VALUES (15752,1,1);
+INSERT INTO `item_mods` VALUES (15753,946,30);    -- dream boots +1 sneak duration +30
 INSERT INTO `item_mods` VALUES (15753,1,2);
 INSERT INTO `item_mods` VALUES (15754,1,1);
 INSERT INTO `item_mods` VALUES (15755,1,18);
@@ -19650,6 +19654,7 @@ INSERT INTO `item_mods` VALUES (16276,27,-2);
 INSERT INTO `item_mods` VALUES (16276,71,1);
 INSERT INTO `item_mods` VALUES (16276,72,1);
 INSERT INTO `item_mods` VALUES (16277,68,5);
+INSERT INTO `item_mods` VALUES (16277,897,95);   -- Bandolero Scarf Gilfinder+95
 INSERT INTO `item_mods` VALUES (16278,14,5);
 INSERT INTO `item_mods` VALUES (16278,121,5);
 INSERT INTO `item_mods` VALUES (16279,2,3);
@@ -20051,6 +20056,7 @@ INSERT INTO `item_mods` VALUES (16520,5,18);
 INSERT INTO `item_mods` VALUES (16520,110,7);
 INSERT INTO `item_mods` VALUES (16521,110,5);
 INSERT INTO `item_mods` VALUES (16527,25,2);
+INSERT INTO `item_mods` VALUES (16528,431,1); -- bloody rapier hp_drain
 INSERT INTO `item_mods` VALUES (16540,5,25);     -- tyrfing MP+25
 INSERT INTO `item_mods` VALUES (16541,8,2);
 INSERT INTO `item_mods` VALUES (16541,10,2);
@@ -20146,6 +20152,7 @@ INSERT INTO `item_mods` VALUES (16680,14,2);
 INSERT INTO `item_mods` VALUES (16684,13,3);
 INSERT INTO `item_mods` VALUES (16684,14,3);
 INSERT INTO `item_mods` VALUES (16684,25,4);
+INSERT INTO `item_mods` VALUES (16684,431,1); -- kabrakan's axe slow
 INSERT INTO `item_mods` VALUES (16685,2,11);
 INSERT INTO `item_mods` VALUES (16685,9,3);
 INSERT INTO `item_mods` VALUES (16685,10,3);
@@ -20264,6 +20271,7 @@ INSERT INTO `item_mods` VALUES (16820,11,3);
 INSERT INTO `item_mods` VALUES (16821,110,10);
 INSERT INTO `item_mods` VALUES (16822,5,10);
 INSERT INTO `item_mods` VALUES (16822,12,5);
+INSERT INTO `item_mods` VALUES (16824,431,1); -- carnage rapier hp_drain
 INSERT INTO `item_mods` VALUES (16826,431,1);
 INSERT INTO `item_mods` VALUES (16827,431,1);
 INSERT INTO `item_mods` VALUES (16829,5,10);
@@ -20457,6 +20465,7 @@ INSERT INTO `item_mods` VALUES (17070,2,21);
 INSERT INTO `item_mods` VALUES (17071,431,1);
 INSERT INTO `item_mods` VALUES (17072,5,10);
 INSERT INTO `item_mods` VALUES (17072,12,5);
+INSERT INTO `item_mods` VALUES (17072,431,1); -- Liliths Rod mp drain
 INSERT INTO `item_mods` VALUES (17073,12,10);
 INSERT INTO `item_mods` VALUES (17073,13,10);
 INSERT INTO `item_mods` VALUES (17074,511,30);    -- Chocobo Wand: Chocobo riding time +30
@@ -21626,6 +21635,7 @@ INSERT INTO `item_mods` VALUES (17936,360,1);
 INSERT INTO `item_mods` VALUES (17937,8,3);
 INSERT INTO `item_mods` VALUES (17937,13,-1);
 INSERT INTO `item_mods` VALUES (17937,14,3);
+INSERT INTO `item_mods` VALUES (17937,431,1);     -- Leopard Axe: Additional Effect Poison
 INSERT INTO `item_mods` VALUES (17938,8,4);       -- Woodville's Axe: STR +4
 INSERT INTO `item_mods` VALUES (17938,168,5);     -- Spell interruption rate down 5%
 INSERT INTO `item_mods` VALUES (17939,11,5);
@@ -21730,6 +21740,7 @@ INSERT INTO `item_mods` VALUES (18027,24,5);
 INSERT INTO `item_mods` VALUES (18027,110,5);
 INSERT INTO `item_mods` VALUES (18027,291,1);
 INSERT INTO `item_mods` VALUES (18028,9,4);
+INSERT INTO `item_mods` VALUES (18028,413,1);
 INSERT INTO `item_mods` VALUES (18030,2,15);
 INSERT INTO `item_mods` VALUES (18030,68,4);
 INSERT INTO `item_mods` VALUES (18031,2,20);
@@ -23201,6 +23212,7 @@ INSERT INTO `item_mods` VALUES (18856,5,30);
 INSERT INTO `item_mods` VALUES (18856,23,9);
 INSERT INTO `item_mods` VALUES (18856,25,9);
 INSERT INTO `item_mods` VALUES (18856,291,1);
+INSERT INTO `item_mods` VALUES (18856,431,1); -- Deae Gratia: hp drain
 INSERT INTO `item_mods` VALUES (18857,2,-20);
 INSERT INTO `item_mods` VALUES (18857,5,20);
 INSERT INTO `item_mods` VALUES (18857,28,10);

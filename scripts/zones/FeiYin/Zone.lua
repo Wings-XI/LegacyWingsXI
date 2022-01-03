@@ -48,6 +48,12 @@ function onZoneIn(player, prevZone)
         cs = 19 -- WHM AF
     end
 
+    if (player:getCurrentMission(ACP) >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II) then
+        player:setCharVar("SEED_AFTERGLOW_TIMER", 0)
+        player:setCharVar("SEED_AFTERGLOW_MASK", 0)
+        player:setCharVar("SEED_AFTERGLOW_INTENSITY", 0)
+    end
+
     return cs
 end
 

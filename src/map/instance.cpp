@@ -319,3 +319,14 @@ const std::set<uint32>* CInstance::GetEnteredChars() const
 {
     return &m_enteredChars;
 }
+
+uint64_t CInstance::GetLocalVar(const std::string& name) const
+{
+    auto var = m_LocalVars.find(name);
+    return var != m_LocalVars.end() ? var->second : 0;
+}
+
+void CInstance::SetLocalVar(const std::string& name, uint64_t value)
+{
+    m_LocalVars[name] = value;
+}

@@ -15,6 +15,7 @@
 #include <string.h>
 #include <time.h>
 #include <algorithm>
+#include <openssl/rand.h>
 
 #define LOCK_SESSION std::lock_guard<std::recursive_mutex> l_session(*GetMutex())
 
@@ -43,6 +44,7 @@ LoginSession::LoginSession(uint32_t dwAccountId, uint32_t dwIpAddr, time_t tmTTL
     memset(mbufInitialKey, 0, sizeof(mbufInitialKey));
     mtmExpires = time(NULL) + tmTTL;
     memset(mCharacters, 0, sizeof(mCharacters));
+    RAND_bytes(mbufAuthToken, sizeof(mbufAuthToken));
 }
 
 LoginSession::~LoginSession()
@@ -59,6 +61,11 @@ std::recursive_mutex* LoginSession::GetMutex()
 uint32_t LoginSession::GetAccountID() const
 {
     return mdwAccountId;
+}
+
+const uint8_t* LoginSession::GetAuthToken() const
+{
+    return mbufAuthToken;
 }
 
 uint32_t LoginSession::GetClientIPAddress() const

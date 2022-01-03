@@ -300,9 +300,11 @@ void CZoneEntities::WeatherChange(WEATHER weather)
         {
             if (PCurrentMob->m_Element == element)
             {
-                PCurrentMob->SetDespawnTime(0s);
                 PCurrentMob->m_AllowRespawn = true;
-                PCurrentMob->Spawn();
+                if (!PCurrentMob->isAlive())
+                   {
+                       PCurrentMob->Spawn();
+                   } 
             }
             else
             {
@@ -485,7 +487,10 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
             bool validAggro = mobCheck > EMobDifficulty::TooWeak || PChar->isSitting() || PCurrentMob->getMobMod(MOBMOD_ALWAYS_AGGRO);
 
             if (validAggro && PController->CanAggroTarget(PChar))
+            {                
                 PCurrentMob->PEnmityContainer->AddBaseEnmity(PChar);
+                PCurrentMob->PAI->EventHandler.triggerListener("ON_AGGRO_PLAYER", PCurrentMob, PChar);
+            }
         }
         else
         {

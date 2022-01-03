@@ -18,13 +18,15 @@ function onSpellCast(caster, target, spell)
     -- duration is said to be based on enhancing skill with max 5 minutes, but I could find no
     -- tests that quantify the relationship so I'm using 5 minutes for now.
     local duration = calculateDuration(300, spell:getSkillType(), spell:getSpellGroup(), caster, target)
-
-    local power = AQUAVEIL_COUNTER + caster:getMod(tpz.mod.AQUAVEIL_COUNT)
-    if caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC) >= 200 then -- cutoff point is estimated. https://www.bg-wiki.com/bg/Aquaveil
-        power = power + 1
+    local enhskill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
+    -- there are no set formulas from in-era, this thread seems to have the closest forumla
+    -- https://www.bluegartr.com/threads/82143-Spell-interruption-down-cap-and-Aquaveil-Tests/page2
+    -- Arguments between 20-25% but one test seems to be pretty concrete on 23% being the cap
+    local power = enhskill / 12
+  
+    if power > 23 then
+        power = 23
     end
-
-    power = math.max(power, 1) -- this shouldn't happen but it's probably best to prevent someone from accidentally underflowing the counter...
 
     target:addStatusEffect(tpz.effect.AQUAVEIL, power, 0, duration)
     spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)

@@ -48,6 +48,8 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         RYTAAL_MISSION_FAILED         = 5653, -- Your mission was not successful; however, the Empire recognizes your contribution and has awarded you Assault Points.
         AUTOMATON_RENAME              = 5830, -- Your automaton has a new name.
         YOU_CAN_BECOME_PUP            = 5833, -- You can now become a puppetmaster!
+        RYTAAL_NYZUL_COMPLETE         = 6173, -- Congratulations. Please speak to Sorrowful Sage to confirm your current number of Nyzul tokens.
+        RYTAAL_NYZUL_FAIL             = 6174, -- Your mission was not successful.  I regret to inform you that the Imperial Army does not officially recognize your efforts within this Assault area.
         PAY_DIVINATION                = 8767, -- ou pay 1000 gil for the divination.
         GAVRIE_SHOP_DIALOG            = 9265, -- Remember to take your medicine in small doses... Sometimes you can get a little too much of a good thing!
         MALFUD_SHOP_DIALOG            = 9266, -- Welcome, welcome! Flavor your meals with Malfud's ingredients!
@@ -81,6 +83,7 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         LS_CONCIERGE_REGISTERED2      = 14359, -- May your journeys lead you to many as-yet-unmet friends, and may the bonds you forge last a lifetime.
         LS_CONCIERGE_ALREADY_LISTED   = 14360, -- Another member of that linkshell currently has an active registration. Please wait until that registration expires and try again.
         COMMON_SENSE_SURVIVAL         = 14380, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        BESIGED_RECHARGE              = 9857, -- You do not possess the ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[Imperial Standing credit/Imperial Standing credits] required to fully recharge the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻#≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻.≺Prompt≻
         },
     mob =
     {

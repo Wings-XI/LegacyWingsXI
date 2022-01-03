@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGAIN, 100)
     mob:addMod(tpz.mod.UDMGMAGIC, -40)
     mob:addMod(tpz.mod.UDMGPHYS, -70)
+    mob:addMod(tpz.mod.ACC, 100)
 end
 
 function onMobRoam(mob)

@@ -114,7 +114,7 @@ CMobEntity::CMobEntity()
     m_giveExp = false;
     m_neutral = false;
     m_Aggro = false;
-    m_TrueDetection = false;
+    m_TrueDetection = 0;
     m_Detects = DETECT_NONE;
     m_Link = 0;
 
@@ -860,7 +860,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
             float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
+            PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
         }
         else
         {
@@ -1069,11 +1069,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 {
     CDynamisHandler* PDynamisHandler = zoneutils::GetZone(this->getZone())->m_DynamisHandler;
 
-    //Adds an item to the treasure pool and returns true if the pool has been filled
+    //Adds an item to the treasure pool
     auto AddItemToPool = [this, PChar, PDynamisHandler](uint16 ItemID, uint8 dropCount)
     {
         PChar->PTreasurePool->AddItem(ItemID, this, PDynamisHandler);
-        return dropCount >= TREASUREPOOL_SIZE;
+
+        // This used to cap the number of drops a mob can produce at 10, but
+        // that's not the correct behavior.
+        return false; //dropCount >= TREASUREPOOL_SIZE;
     };
 
     //Limit number of items that can drop to the treasure pool size
@@ -1108,7 +1111,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         }
         else if (m_THLvl == 4)
         {
-            mult = 0.43f;
+            mult = 0.25f;
             maxRolls = 3;
         }
         else if (m_THLvl >= 5)

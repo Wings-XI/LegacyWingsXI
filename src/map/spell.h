@@ -229,10 +229,11 @@ enum SPELLAOE
 
 enum SPELLFLAG
 {
-    SPELLFLAG_NONE           = 0x00,
-    SPELLFLAG_HIT_ALL        = 0x01, // Hit all targets in range regardless of party
-    SPELLFLAG_WIPE_SHADOWS   = 0x02, // Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
-    SPELLFLAG_IGNORE_SHADOWS = 0x04  // Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    SPELLFLAG_NONE            = 0x00,
+    SPELLFLAG_HIT_ALL         = 0x01, // Hit all targets in range regardless of party
+    SPELLFLAG_WIPE_SHADOWS    = 0x02, // Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
+    SPELLFLAG_IGNORE_SHADOWS  = 0x04, // Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    SPELLFLAG_ATTACKER_RADIUS = 0x08, // Center the AoE around the attacker; the default is the target.
 };
 
 enum class SpellID : uint16
@@ -960,6 +961,7 @@ public:
     uint8       getFlag();
     int8*       getContentTag();
     float       getRange();
+    uint16      getConeAngle();
     bool        tookEffect(); // returns true if the spell landed, not resisted or missed
     bool        hasMPCost(); // checks if spell costs mp to use
     bool        isHeal(); // is a heal spell
@@ -996,6 +998,7 @@ public:
     void        setFlag(uint8 flag);
     void        setContentTag(int8* contentTag);
     void        setRange(float range);
+    void        setConeAngle(uint16 angle);
 
     const int8* getName();
     void        setName(int8* name);
@@ -1014,6 +1017,7 @@ private:
     uint8       m_skillType {};
     float       m_range {};
     float       m_radius {};
+    uint16      m_coneAngle {};
     uint16      m_totalTargets {};
     uint16      m_mpCost {};                               // mpCost/itemId for ninjitsu tool
     uint8       m_job[MAX_JOBTYPE]{};                      // job
@@ -1048,6 +1052,7 @@ namespace spell
     bool    CanUseSpell(CBattleEntity* PCaster, CSpell* PSpell);
     bool    CanUseSpellWith(SpellID spellId, JOBTYPE job, uint8 level);
     float   GetSpellRadius(CSpell* spellId, CBattleEntity* PCaster);
+    float   GetSpellConeAngle(CSpell* spellId, CBattleEntity* PCaster);
 };
 
 #endif

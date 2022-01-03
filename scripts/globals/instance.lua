@@ -26,8 +26,21 @@ local instances = {
     {
         { 0,   90,    0},   -- Light in the Darkness (WotG Mission-Quest)
     },
+    [tpz.zone.ARRAPAGO_REEF] =
+    {
+        { 4,   55,    0},
+    },
 }
 
+-----------------------------------------------
+-- get offset for level sync error
+-----------------------------------------------
+
+function InstanceGetLevelSyncError(player)
+    local zoneId = player:getZoneID()
+    local text = zones[zoneId].text
+    return text.CANNOT_ENTER_LEVEL_RESTRICTED
+end
 
 -----------------------------------------------
 -- check requirements for registrant and allies
@@ -35,12 +48,14 @@ local instances = {
 -----------------------------------------------
 function instanceCheckReqs(player, instanceId, isInitiator)
     local registerRequirements = {
+        [  55] = function() return ( player:getCharVar("Halshaob_Quest") == 2 ) end, -- Scouting the Ashu Talif
         [  90] = function() return ( player:hasKeyItem(tpz.ki.MINE_SHAFT_KEY) and (player:getCharVar("LightInTheDarkness") == 5 or player:getCharVar("LightInTheDarkness") == 8) ) end, -- Light in the Darkness (WotG Mission-Quest)
         [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) ) end, -- A Manifest Problem (WotG Mission-Quest)
     }
 
    -- Requirements to enter a battlefield already registered by a party member
     local enterRequirements = {
+        [  55] = function() return ( player:getCharVar("Halshaob_Quest") == 2 ) end, -- Scouting the Ashu Talif
         [  90] = function() return ((player:hasKeyItem(tpz.ki.MINE_SHAFT_KEY) and (player:getCharVar("LightInTheDarkness") == 5 or player:getCharVar("LightInTheDarkness") == 8)) or player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_COMPLETED ) end, -- Light in the Darkness (WotG Mission-Quest)
         [  96] = function() return ( player:hasKeyItem(tpz.ki.FORT_KEY) or player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.A_MANIFEST_PROBLEM) == QUEST_COMPLETED ) end, -- A Manifest Problem (WotG Mission-Quest)
     }
@@ -62,6 +77,16 @@ function VerfyInstanceForPlayer(player, instanceId, isInitiator)
     if possibleInstances == nil then
         return false -- no instances in the zone enabled
     end
+
+    -- don't allow players under level sync to enter
+    if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+        local sync_error = InstanceGetLevelSyncError(player)
+        if sync_error ~= nil then
+            player:messageSpecial(sync_error, 0, 0)
+        end
+        return false
+    end
+
     for k, instance in pairs(possibleInstances) do
         if instanceId == instance[2] then
             return instanceCheckReqs(player, instanceId, isInitiator)

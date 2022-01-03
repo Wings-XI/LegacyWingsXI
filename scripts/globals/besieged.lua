@@ -13,6 +13,35 @@ require("scripts/globals/missions")
 tpz = tpz or {}
 tpz.besieged = tpz.besieged or {}
 
+tpz.besieged.onTrade = function(player, npc, trade)
+    local expRings =
+    {
+    [15761] = {price=350, charges=7},
+    [15762] = {price=700, charges=7},
+    [15763] = {price=600, charges=3},
+    }
+    local item = trade:getItemId()
+    local tradeConfirmed = false
+    local mOffset  = zones[player:getZoneID()].text.BESIGED_RECHARGE
+    if not tradeConfirmed and expRings[item] and npcUtil.tradeHas(trade, item) then
+        if BYPASS_EXP_RING_ONE_PER_WEEK == 1 or player:getCharVar("CONQUEST_RING_RECHARGE") < os.time() then
+            local ring = expRings[item]
+
+            if player:getCurrency("imperial_standing") >= ring.price then
+                player:delCurrency("imperial_standing", ring.price)
+                player:confirmTrade()
+                player:addItem(item)
+                player:setCharVar("CONQUEST_RING_RECHARGE", getConquestTally())
+                player:showText(npc, mOffset + 3, item, ring.price, ring.charges) -- "Your ring is now fully recharged."
+            else
+                player:showText(npc, mOffset + 0, item, ring.price) -- "You do not have the required conquest points to recharge."
+            end
+         else
+            player:showText(npc, mOffset + 1, item) -- "Please be aware that you can only purchase or recharge <item> once during the period between each conquest results tally.
+        end
+    end
+end
+
 tpz.besieged.onTrigger = function(player, npc, eventBase)
     local mercRank = tpz.besieged.getMercenaryRank(player)
     if mercRank == 0 then
@@ -97,6 +126,12 @@ tpz.besieged.hasAssaultOrders = function(player)
             keyitem = ki
             break
         end
+    end
+
+    -- NYZUL_ISLE_ASSAULT_ORDERS ID is non sequential
+    if player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
+        event = 125
+        keyitem = tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS
     end
 
     return event, keyitem

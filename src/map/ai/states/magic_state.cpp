@@ -128,6 +128,7 @@ bool CMagicState::Update(time_point tick)
         }
         else
         {
+            m_PEntity->PAI->EventHandler.triggerListener("MAGIC_MID", m_PEntity, PTarget, m_PSpell.get()); // Ability to edit spells right before they actually cast
             m_PEntity->OnCastFinished(*this,action);
             m_PEntity->PAI->EventHandler.triggerListener("MAGIC_USE", m_PEntity, PTarget, m_PSpell.get(), &action);
             PTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", PTarget, m_PEntity, m_PSpell.get(), &action);
@@ -137,7 +138,7 @@ bool CMagicState::Update(time_point tick)
             
         Complete();
     }
-    else if (!IsCompleted() && tick > m_lastCancelCheck + 200ms)
+    else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
     {
         m_lastCancelCheck = tick;
         uint8 validTargets = m_PSpell->getValidTarget();
@@ -216,7 +217,7 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_CANNOT_USE_IN_AREA);
         return false;
     }
-    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA}))
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA}) || PreventedByPathos())
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_UNABLE_TO_CAST_SPELLS);
         return false;
@@ -409,4 +410,49 @@ void CMagicState::Interrupt()
 void CMagicState::ApplyMagicCoverEnmity(CBattleEntity* PCoverAbilityTarget, CBattleEntity* PCoverAbilityUser, CMobEntity* PMob)
 {
     PMob->PEnmityContainer->UpdateEnmityFromCover(PCoverAbilityTarget, PCoverAbilityUser);
+}
+
+/* PreventedByPathos
+*  Helper function to determine if any Pathos effect should stop the casting of the spell
+*/
+bool CMagicState::PreventedByPathos()
+{
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PATHOS))
+    {
+        int effectPower = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_PATHOS)->GetPower();
+        switch (m_PSpell->getSpellGroup())
+        {
+            case SPELLGROUP_WHITE:
+                if (effectPower & 4)
+                    return true;
+                break;
+            case SPELLGROUP_BLACK:
+                if (effectPower & 8)
+                    return true;
+                break;
+            case SPELLGROUP_SONG:
+                if (effectPower & 16)
+                    return true;
+                break;
+            case SPELLGROUP_NINJUTSU:
+                if (effectPower & 32)
+                    return true;
+                break;
+            case SPELLGROUP_SUMMONING:
+                if (effectPower & 64)
+                    return true;
+                break;
+            case SPELLGROUP_BLUE:
+                if (effectPower & 128)
+                    return true;
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+    else
+    {
+        return false;
+    }
 }

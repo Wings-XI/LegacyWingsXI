@@ -34,9 +34,11 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        player:delKeyItem(tpz.ki.TUNING_FORK_OF_WIND)
-        player:addKeyItem(tpz.ki.WHISPER_OF_GALES)
-        player:addTitle(tpz.title.HEIR_OF_THE_GREAT_WIND)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_GALES)
+        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_WIND) == QUEST_ACCEPTED then
+            player:delKeyItem(tpz.ki.TUNING_FORK_OF_WIND)
+            player:addKeyItem(tpz.ki.WHISPER_OF_GALES)
+            player:addTitle(tpz.title.HEIR_OF_THE_GREAT_WIND)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_GALES)
+        end
     end
 end

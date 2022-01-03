@@ -16,7 +16,7 @@
 #include <amqp_tcp_socket.h>
 #include <amqp_ssl_socket.h>
 
-#define LOCK_MQCONNECTION std::lock_guard<std::recursive_mutex> l_mqconnection(*GetMutex())
+#define LOCK_MQCONNECTION std::lock_guard<std::recursive_timed_mutex> l_mqconnection(*GetMutex())
 
 // We need to mess around with this struct to load certificates directly from buffer
 struct amqp_ssl_socket_t {
@@ -357,7 +357,7 @@ void MQConnection::Send(uint32_t dwChannel, const uint8_t* bufData, uint32_t cbD
     LOG_DEBUG1("Published message.");
 }
 
-std::recursive_mutex* MQConnection::GetMutex()
+std::recursive_timed_mutex* MQConnection::GetMutex()
 {
     return &mMutex;
 }

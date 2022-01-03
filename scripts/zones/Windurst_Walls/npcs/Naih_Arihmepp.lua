@@ -6,7 +6,56 @@
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
+local flags = tpz.path.flag.NONE
+local path =
+{
+    -63.660, -12.500, 204.874, -- 1
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.873, -- 6
+    -63.660, -12.500, 204.873,
+    -63.660, -12.500, 204.873,
+    -63.660, -12.500, 204.873,
+    -63.660, -12.500, 204.873,
+    -67.755, -12.348, 192.724, -- 11
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.723,-- 18
+    -67.755, -12.348, 192.723,
+    -67.755, -12.348, 192.723,
+    -67.755, -12.348, 192.723,
+    -67.755, -12.348, 192.724, -- 22
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+}
+
+function onSpawn(npc)
+    npc:initNpcAi()
+    npc:setPos(tpz.path.first(path))
+    onPath(npc)
+end
+
+function onPath(npc)
+    tpz.path.patrolsimple(npc, path, flags)
+    if npc:atPoint(tpz.path.get(path, 1)) then
+        npc:setPos(-63.660, -12.500, 204.874, 204)
+    elseif npc:atPoint(tpz.path.get(path, 6)) then
+        npc:setPos(-63.660, -12.500, 204.873, 10)
+    elseif npc:atPoint(tpz.path.get(path, 11)) then
+        npc:setPos(-67.755, -12.348, 192.724, 79)
+    elseif npc:atPoint(tpz.path.get(path, 18)) then
+        npc:setPos(-67.755, -12.348, 192.723, 6)
+    elseif npc:atPoint(tpz.path.get(path, 22)) then
+        npc:setPos(-67.755, -12.348, 192.724, 97)
+    end
+end
 
 function onTrade(player, npc, trade)
 end
