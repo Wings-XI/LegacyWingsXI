@@ -25,7 +25,7 @@ function onTrigger(player, npc)
         player:addCharVar("QuestHatInHand_var", 1)
         player:addCharVar("QuestHatInHand_count", 1)
     else
-        player:startEvent(984)
+        rrOnTrigger(player, npc, 984)
     end
 end
 
@@ -33,5 +33,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
+    if csid == 984 then
+        rrOnEventFinish(player, csid, option)
+    end
 end

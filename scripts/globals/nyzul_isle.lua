@@ -22,6 +22,9 @@ local NM_1_CHANCE = 75 -- chance to see 1 NM
 local NM_2_CHANCE = 50 -- chance to see 2 NMs
 local NM_3_CHANCE = 25 -- chance to see 3 NMs
 local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor 4 non-lamp objectives and 1 lamp = 20%
+local PATHOS_DEBUFF_CHANCE = 33 -- chance to get a negative pathos after a split path (left/right) 
+local PATHOS_BUFF_CHANCE = 33 -- chance to get a positive pathos after a split path (left/right)
+-- No Pathos buff or debuff = (100 - PATHOS_DEBUFF_CHANCE - PATHOS_BUFF_CHANCE)
 
 --------------------------------------------------------
 -- Selects the next floor and sets RoT spawn point
@@ -57,7 +60,6 @@ function generateFloor(floorNumber, instance)
     if (floor == floorNumber) then
         return getRuneOfTransferSpawnPoint(instance)
     end
-
     instance:setLocalVar("Nyzul_Floor", floorNumber)
 
     local previousFloorInfo = {
@@ -68,6 +70,9 @@ function generateFloor(floorNumber, instance)
 
     -- clean up the previous floor that players are leaving
     cleanUpPreviousFloor(instance)
+
+    -- determine if we have a new Pathos to add
+    determinePathos(instance)
 
     -- if this is a boss floor (20, 40, 60, 80, 100, "120", "140", etc) generate a boss floor
     if (floorNumber % 20 == 0) then
@@ -249,7 +254,7 @@ function selectSubObjective(instance, previousSubObjective)
 
     local subObjectiveKey = math.random(#tpz.nyzul_isle_data.subObjectiveType)
     instance:setLocalVar("Nyzul_SubObjective", subObjectiveKey)
-    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,2))
+    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,2,3))
     return tpz.nyzul_isle_data.subObjectiveType[subObjectiveKey]
 end
 
@@ -902,7 +907,7 @@ end
 ------------------------------------------------------------------
 -- Shows the objective(s) for the floor to the player
 ------------------------------------------------------------------
-function showObjectives(player)
+function showNyzulObjectivesAndPathos(player, showPathos)
     local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_ENEMY_LEADER, ID.text.ELIMINATE_SPECIFIED_ENEMY, ID.text.ELIMINATE_SPECIFIED_ENEMIES,
                               ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS}
     local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
@@ -917,5 +922,236 @@ function showObjectives(player)
 
     if (subObjective > 0) then
         player:messageSpecial(subObjectiveToStringMap[subObjective])
+    end
+
+    if (showPathos) then
+        -- Show the update and apply/remove
+        updatePlayerPathos(player, instance)
+    end
+end
+
+-------------------------------------------------------------------
+-- Determine Pathos during floor change
+--  Called once per new floor generation
+-------------------------------------------------------------------
+function determinePathos(instance)
+    local pathosRandom = math.random(100)
+
+    -- Track the previous Pathos - used to determine which buffs to remove
+    instance:setLocalVar("Nyzul_PreviousPathos", instance:getLocalVar("Nyzul_CurrentPathos"))
+
+    if (instance:getLocalVar("Nyzul_DeterminePathos") == 0) then
+        -- Not flagged to create a new Pathos - ensure current is cleared
+        instance:setLocalVar("Nyzul_CurrentPathos", 0)
+        return
+    end
+
+    if (pathosRandom <= PATHOS_DEBUFF_CHANCE) then
+        -- 17 possible debuffs
+        instance:setLocalVar("Nyzul_CurrentPathos", math.random(1,17))
+    elseif (pathosRandom <= (PATHOS_DEBUFF_CHANCE + PATHOS_BUFF_CHANCE)) then
+        -- 12 possible buffs
+        instance:setLocalVar("Nyzul_CurrentPathos", math.random(18,29))
+    else
+        instance:setLocalVar("Nyzul_CurrentPathos", 0)
+    end
+end
+
+-------------------------------------------------------------------
+-- Update Player Pathos
+--  This is used to update pathos effects for a player on floor transfer
+-------------------------------------------------------------------
+function updatePlayerPathos(player, instance)
+    -- Notify player of Pathos Removal
+    if (player:hasStatusEffect(tpz.effect.PATHOS)) then
+        local effect = player:getStatusEffect(tpz.effect.PATHOS)
+        local power = effect:getPower()
+        -- 10 debuffs under Pathos
+        for debuff = 0, 9 do
+            if (bit.band(power, (bit.lshift(1, debuff))) > 0) then
+                -- player has this debuff
+                player:messageSpecial(ID.text.JA_RESTRICTION_REMOVED + (2 * debuff))
+            end
+        end
+    end
+    -- Remove Pathos
+    player:delStatusEffectSilent(tpz.effect.PATHOS)
+
+    -- Notify player of Debilitation Removal
+    if (player:hasStatusEffect(tpz.effect.DEBILITATION)) then
+        local effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+        local power = effect:getPower()
+        -- 7 debuffs under Debilitation
+        for debuff = 0, 6 do
+            if (bit.band(power, (bit.lshift(1, debuff))) > 0) then
+                -- player has this debuff
+                player:messageSpecial(ID.text.STR_DOWN_REMOVED + (2 * debuff))
+            end
+        end
+    end
+    -- Remove Debilitation
+    player:delStatusEffectSilent(tpz.effect.DEBILITATION)
+
+    -- Remove buffs
+    removePathosBuff(player, instance)
+
+    -- Apply new Pathos
+    local newPathos = instance:getLocalVar("Nyzul_CurrentPathos")
+    if (newPathos > 0 and newPathos <= 17) then
+        addPathosDebuff(player, newPathos)
+    elseif (newPathos > 17 and newPathos <= 29) then
+        addPathosBuff(player, newPathos)
+    end
+    
+end
+
+-------------------------------------------------------------------
+-- Add Pathos Debuff
+--  This is used to add a pathos debuff to a player
+-------------------------------------------------------------------
+function addPathosDebuff(player, newPathos)
+    -- On this path, we have just cleared all debuffs and we may be adding a new one
+    -- We do not have to consider any existing debuffs
+    local effect
+    if (newPathos <= 10) then
+        -- Pathos
+        player:addStatusEffectEx(tpz.effect.PATHOS, tpz.effect.PATHOS, bit.lshift(1, newPathos - 1), 0, 0)
+        effect = player:getStatusEffect(tpz.effect.PATHOS)
+    else
+        -- Debilitation
+        player:addStatusEffectEx(tpz.effect.DEBILITATION, tpz.effect.DEBILITATION, bit.lshift(1, newPathos-11), 0, 0)
+        effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+    end
+
+    -- we dont want any of these effects to get out of Nyzul
+    if (effect) then
+        effect:setFlag(tpz.effectFlag.ON_ZONE)
+    end
+
+    player:messageSpecial(ID.text.JA_RESTRICTED + (2 * (newPathos - 1)))
+end
+
+-------------------------------------------------------------------
+-- Add Pathos Buff
+--  This is used to add a pathos buff to a player
+--  These buffs could all use a capture for:
+    -- potency (stats are +30 - but the rest?)
+    -- interaction between refresh/sublimation
+    -- if they can be removed
+-------------------------------------------------------------------
+function addPathosBuff(player, newPathos)
+    local buff = newPathos - 17
+    local effect
+    if (buff == 1) then
+        player:addStatusEffectEx(tpz.effect.REGAIN, tpz.effect.REGAIN, 50, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REGAIN)
+    elseif (buff == 2) then
+        player:addStatusEffectEx(tpz.effect.REGEN, tpz.effect.REGEN, 10, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REGEN)
+    elseif (buff == 3) then
+        player:addStatusEffectEx(tpz.effect.REFRESH, tpz.effect.REFRESH, 5, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REFRESH)
+    elseif (buff == 4) then
+        player:addStatusEffectEx(tpz.effect.FLURRY, tpz.effect.FLURRY, 2500, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.FLURRY)
+    elseif (buff == 5) then
+        player:addStatusEffectEx(tpz.effect.CONCENTRATION, tpz.effect.CONCENTRATION, 25, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.CONCENTRATION)
+    elseif (buff > 5) then
+        player:addStatusEffectEx(tpz.effect.STR_BOOST + (buff - 6), tpz.effect.STR_BOOST + (buff - 6), 30, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.STR_BOOST + (buff - 6))
+    end
+
+    -- we dont want any of these effects getting out of Nyzul
+    if (effect) then
+        effect:setFlag(tpz.effectFlag.ON_ZONE)
+    end
+
+    player:messageSpecial(ID.text.REGAIN_RECIEVED + (2 * (buff - 1)))
+end
+
+-------------------------------------------------------------------
+-- Removes any Pathos buffs from a player
+-------------------------------------------------------------------
+function removePathosBuff(player, instance)
+    if (player:hasStatusEffect(tpz.effect.REGAIN) and instance:getLocalVar("Nyzul_PreviousPathos") == 18) then
+        player:delStatusEffectSilent(tpz.effect.REGAIN)
+        player:messageSpecial(ID.text.REGAIN_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.REGEN) and instance:getLocalVar("Nyzul_PreviousPathos") == 19) then
+        player:delStatusEffectSilent(tpz.effect.REGEN)
+        player:messageSpecial(ID.text.REGEN_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.REFRESH) and instance:getLocalVar("Nyzul_PreviousPathos") == 20) then
+        player:delStatusEffectSilent(tpz.effect.REFRESH)
+        player:messageSpecial(ID.text.REFRESH_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.FLURRY)) then
+        player:delStatusEffectSilent(tpz.effect.FLURRY)
+        player:messageSpecial(ID.text.FLURRY_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.CONCENTRATION)) then
+        player:delStatusEffectSilent(tpz.effect.CONCENTRATION)
+        player:messageSpecial(ID.text.CONCENTRATION_REMOVED)
+    else
+        for i = tpz.effect.STR_BOOST, tpz.effect.CHR_BOOST do
+            if (player:hasStatusEffect(i)) then
+                player:delStatusEffectSilent(i)
+                player:messageSpecial(ID.text.STR_BOOST_REMOVED + (2 * (i - tpz.effect.STR_BOOST)))
+            end
+        end
+    end
+end
+
+-------------------------------------------------------------------
+-- Add Penalty Pathos
+--  This is used to determine a new debuff and add the debuff to all players
+-------------------------------------------------------------------
+function addPenaltyPathos(instance)
+    -- Get a Player and record current Pathos
+    local chars = instance:getChars()
+    local player = chars[1]
+    local possiblePathos = {}
+    local pathosPower = 0
+    local debilitationPower = 0
+
+    -- Pathos has effects 1 through 10
+    if (player:hasStatusEffect(tpz.effect.PATHOS)) then
+        pathosPower = player:getStatusEffect(tpz.effect.PATHOS):getPower()
+        for i = 1, 10 do
+            if (bit.band(pathosPower, (bit.lshift(1, i - 1))) == 0) then
+                table.insert(possiblePathos, i)
+            end
+        end
+    else
+        for i = 1, 10 do
+            table.insert(possiblePathos, i)
+        end
+    end
+
+    -- Debilitation has effects 11 through 17
+    if (player:hasStatusEffect(tpz.effect.DEBILITATION)) then
+        debilitationPower = player:getStatusEffect(tpz.effect.DEBILITATION):getPower()
+        for i = 1, 7 do
+            if (bit.band(debilitationPower, (bit.lshift(1, i - 1))) == 0) then
+                table.insert(possiblePathos, i + 10)
+            end
+        end
+    else
+        for i = 11, 17 do
+            table.insert(possiblePathos, i)
+        end
+    end
+
+    -- add the new debilitation
+    if (#possiblePathos > 0) then
+        local newPathos = possiblePathos[math.random(#possiblePathos)]
+        for _,player in pairs(chars) do
+            if (newPathos <= 10) then
+                player:addStatusEffectEx(tpz.effect.PATHOS, tpz.effect.PATHOS, pathosPower + bit.lshift(1, newPathos - 1), 0, 0)
+                effect = player:getStatusEffect(tpz.effect.PATHOS)
+            else
+                player:addStatusEffectEx(tpz.effect.DEBILITATION, tpz.effect.DEBILITATION, debilitationPower + bit.lshift(1, newPathos-11), 0, 0)
+                effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+            end
+            effect:setFlag(tpz.effectFlag.ON_ZONE)
+            player:messageSpecial(ID.text.JA_RESTRICTED + (2 * (newPathos - 1)))
+        end
     end
 end
