@@ -15,9 +15,12 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MDEF, 10)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 60)
     mob:setLocalVar("roamTime", os.time())
-    mob:setLocalVar("form2", math.random(2, 3))
+    if mob:getXPos() > 0 then
+        mob:setLocalVar("form2", 2)
+    else
+        mob:setLocalVar("form2", 3)
+    end
     local skin = math.random(1161, 1168)
-    local mobSkin = mob:getModelId()
     mob:setModelId(skin)
 
     if skin == 1161 then -- Fire
