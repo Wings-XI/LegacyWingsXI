@@ -3224,7 +3224,7 @@ INSERT INTO `mob_groups` VALUES(158, 3245, 77, 'Qiqirn_Archaeologist', 0, 128, 2
 INSERT INTO `mob_groups` VALUES(159, 3302, 77, 'Racing_Chariot', 0, 128, 0, 7500, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(160, 44, 77, 'Adamantoise', 0, 128, 71, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(161, 387, 77, 'Behemoth', 0, 128, 71, 20000, 0, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(162, 1280, 77, 'Fafnir', 0, 128, 71, 20000, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(162, 1280, 77, 'Fafnir', 0, 128, 71, 18000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(163, 2220, 77, 'Khimaira', 0, 128, 164, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(164, 2018, 77, 'Hydra', 0, 128, 164, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(165, 680, 77, 'Cerberus', 0, 128, 164, 20000, 0, 80, 80, 0);
