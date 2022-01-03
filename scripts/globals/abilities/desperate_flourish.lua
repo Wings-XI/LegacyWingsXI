@@ -63,16 +63,21 @@ function onUseAbility(player, target, ability, action)
         params.bonus = -10
         local resist = applyResistance(player, target, spell, params)
         local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-        if resist > 0.25 then
-            target:delStatusEffectSilent(tpz.effect.WEIGHT)
-            target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
-            ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+            if resist > 0.25 then
+                target:delStatusEffectSilent(tpz.effect.WEIGHT)
+                target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+                ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
+            else
+                ability:setMsg(tpz.msg.basic.JA_MISS)
+            end
+            action:animation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(tpz.slot.MAIN)))
+            action:speceffect(target:getID(), 2)
+            return tpz.effect.WEIGHT
         else
             ability:setMsg(tpz.msg.basic.JA_MISS)
+            return 0
         end
-        action:animation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(tpz.slot.MAIN)))
-        action:speceffect(target:getID(), 2)
-        return tpz.effect.WEIGHT
     else
         ability:setMsg(tpz.msg.basic.JA_MISS)
         return 0

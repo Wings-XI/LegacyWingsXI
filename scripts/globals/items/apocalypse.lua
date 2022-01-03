@@ -15,10 +15,11 @@ function onAdditionalEffect(player, target, damage)
         -- spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     -- This does nothing, as this is not a spell, and it doesn't get used in the return.
     -- That should be handled in the resist check in the global anyways.
-
-    if math.random(100) <= chance and applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0) > 0.5 then
-        target:addStatusEffect(tpz.effect.BLINDNESS, 15, 0, 30)
-        return tpz.subEffect.BLIND, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.BLINDNESS
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        if math.random(100) <= chance and applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0) > 0.5 then
+            target:addStatusEffect(tpz.effect.BLINDNESS, 15, 0, 30)
+            return tpz.subEffect.BLIND, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.BLINDNESS
+        end
     end
 
     return 0, 0, 0

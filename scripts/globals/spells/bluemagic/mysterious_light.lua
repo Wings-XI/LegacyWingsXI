@@ -47,8 +47,10 @@ function onSpellCast(caster, target, spell)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
     
     local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then
-        target:addStatusEffect(tpz.effect.WEIGHT, 26, 0, duration*resist) -- https://www.bg-wiki.com/ffxi/Mysterious_Light 26%
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then
+            target:addStatusEffect(tpz.effect.WEIGHT, 26, 0, duration*resist) -- https://www.bg-wiki.com/ffxi/Mysterious_Light 26%
+        end
     end
 
     return damage

@@ -11,6 +11,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SILENCERES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SILENCE
+    end
+    
     if getElementalSDT(4,target) == 50 then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return tpz.effect.SILENCE
