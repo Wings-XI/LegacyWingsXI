@@ -984,7 +984,14 @@ inline int32 CLuaBaseEntity::injectActionPacket(lua_State* L)
             target.animation = castAnim;
         }
         target.param = message;
-        target.messageID = 327; // starts casting
+        if (m_PBaseEntity->objtype == TYPE_MOB)
+        {
+            target.messageID = 3; // starts casting
+        }
+        else
+        {
+            target.messageID = 327; // starts casting on <target>
+        }
         return 0;
     }
 
@@ -1985,7 +1992,7 @@ inline int32 CLuaBaseEntity::pathThrough(lua_State* L)
         lua_rawgeti(L, 1, i + 1);
         lua_rawgeti(L, 1, i + 2);
 
-        if (lua_isnil(L, -1) || lua_isnil(L, -2) || lua_isnil(L, -3)) 
+        if (lua_isnil(L, -1) || lua_isnil(L, -2) || lua_isnil(L, -3))
         {
             //error exit
             ShowError("Lua::pathThrough : Path value is nil.");
@@ -12615,7 +12622,7 @@ inline int32 CLuaBaseEntity::doRandomDeal(lua_State* L)
     {
         lua_pushboolean(L, battleutils::DoRandomDealToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PTarget->m_PBaseEntity)));
     }
-    
+
     return 1;
 }
 
@@ -16109,25 +16116,6 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
 }
 
 /************************************************************************
-*  Function: killedByType()
-*  Purpose : Returns the ATTACKTYPE which killed this mob
-*  Example : if (mob:killedByType() == tpz.attackType.MAGICAL)
-*  Notes   : If the mob isn't dead, always returns the attackType NONE
-************************************************************************/
-
-inline int32 CLuaBaseEntity::killedByType(lua_State* L)
-{
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
-
-    if (m_PBaseEntity->objtype == TYPE_MOB)
-    {
-        lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->deathDetails.killType);
-    }
-    return 1;
-}
-
-/************************************************************************
 *  Function: friendListMain()
 *  Purpose : where it begins
 *  Example : !flist ... player:friendListMain(arg1,arg2,arg3)
@@ -17691,7 +17679,7 @@ inline int32 CLuaBaseEntity::setNM(lua_State* L)
 
 /************************************************************************
  *  Function: mob:setMobType(mobType)
- *  Purpose : sets a mob to be the type passed in 
+ *  Purpose : sets a mob to be the type passed in
  *  Example : mob:setMobType(MOBTYPE_NORMAL)
  *  Notes   : overwrites the mob's existing mobType
  ************************************************************************/
