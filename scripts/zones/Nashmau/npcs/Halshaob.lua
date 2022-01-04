@@ -15,7 +15,7 @@ function onTrade(player, npc, trade)
     local questSTAT = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.SCOUTING_THE_ASHU_TALIF)
     local questRPE = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.ROYAL_PAINTER_ESCORT)
     
-    if timer < now and quest == 0 then
+    if timer ~= now and quest == 0 then
         if trade:getItemQty(2184) == 3 and trade:getItemCount() == 3 then
             player:tradeComplete()
             if player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.SCOUTING_THE_ASHU_TALIF) == QUEST_AVAILABLE then

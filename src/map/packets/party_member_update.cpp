@@ -52,6 +52,9 @@ CPartyMemberUpdatePacket::CPartyMemberUpdatePacket(CCharEntity* PChar, uint8 Mem
         ref<uint16>(0x10) = PChar->health.tp;
         ref<uint16>(0x18) = PChar->targid;
         ref<uint8>(0x1A) = MemberNumber;
+        if ((PChar->m_moghouseID == PChar->id) && (PChar->m_openMH)) {
+            ref<uint8>(0x1B) = 1;
+        }
         ref<uint8>(0x1D) = PChar->GetHPP();
         ref<uint8>(0x1E) = PChar->GetMPP();
 

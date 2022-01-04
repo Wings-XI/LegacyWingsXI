@@ -114,7 +114,7 @@ CMobEntity::CMobEntity()
     m_giveExp = false;
     m_neutral = false;
     m_Aggro = false;
-    m_TrueDetection = false;
+    m_TrueDetection = 0;
     m_Detects = DETECT_NONE;
     m_Link = 0;
 
