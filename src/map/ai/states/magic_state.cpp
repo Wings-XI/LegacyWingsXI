@@ -86,7 +86,15 @@ CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid,
     actionTarget.speceffect = SPECEFFECT_NONE;
     actionTarget.animation = 0;
     actionTarget.param = static_cast<uint16>(m_PSpell->getID());
-    actionTarget.messageID = 327; // starts casting
+    if (m_PEntity->objtype == TYPE_MOB)
+    {
+        actionTarget.messageID = 3; // starts casting
+    }
+    else
+    {
+        actionTarget.messageID = 327; // starts casting on <target>
+    }
+
     m_PEntity->PAI->EventHandler.triggerListener("MAGIC_START", m_PEntity, m_PSpell.get(), &action); //TODO: weaponskill lua object
 
     m_lastCancelCheck = server_clock::now();
@@ -135,7 +143,7 @@ bool CMagicState::Update(time_point tick)
         }
 
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
-            
+
         Complete();
     }
     else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
