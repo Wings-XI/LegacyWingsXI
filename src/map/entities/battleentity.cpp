@@ -1697,6 +1697,14 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
         {
             luautils::OnMagicHit(this, PTarget, PSpell);
+
+            if (PSpell->getSpellGroup() == SPELLGROUP_BLUE && ((CBlueSpell*)PSpell)->isPhysical() && msg != MSGBASIC_MAGIC_FAIL)
+            {
+                // ToDo Regurgitation is a magical spell that has bind + knockback
+                actionTarget.reaction = REACTION::REACTION_HIT;
+                actionTarget.speceffect = SPECEFFECT::SPECEFFECT_RECOIL;
+                actionTarget.knockback = ((CBlueSpell*)PSpell)->getKnockback();
+            }
         }
     }
     this->StatusEffectContainer->DelStatusEffect(EFFECT_CONVERGENCE);

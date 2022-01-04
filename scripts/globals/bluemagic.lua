@@ -1,6 +1,7 @@
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/utils")
+require("scripts/globals/msg")
 
 -- BLU ecosystem
 ECO_BEAST = 1
@@ -299,6 +300,10 @@ function BluePhysicalSpell(caster, target, spell, params)
     finaldmg = BlueApplyTargetDamageReductions(target, finaldmg)
 
     if finaldmg > 0 then target:addTPFromSpell(caster, hitslanded) end
+
+    if (hitslanded == 0) then
+        spell:setMsg(tpz.msg.basic.MAGIC_FAIL)
+    end
 
     return finaldmg, hitslanded, taChar
 end
