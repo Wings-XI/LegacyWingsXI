@@ -5,7 +5,7 @@
 require("scripts/globals/limbus");
 -----------------------------------
 
-function onMobInitialize()
+function onMobInitialize(mob)
     mob:addMod(tpz.mod.EVA, 50)
 end
 
@@ -17,9 +17,8 @@ function onMobSpawn(mob)
 end
 
 function onMobDespawn(mob)
- local mobID = mob:getID();
- -- print(mobID);
-      local mobX = mob:getXPos();
+    local mobID = mob:getID();
+    local mobX = mob:getXPos();
     local mobY = mob:getYPos();
     local mobZ = mob:getZPos();
 

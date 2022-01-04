@@ -11,11 +11,6 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
-    local boss = battlefield:getLocalVar("floor2Boss")
-    if (ID.mob.APOLLYON_NE_MOB[2] + boss) == mob:getID() then -- One Roc will be significately stronger and has 3.5x the HP of others
-        mob:setMobLevel(82)
-        mob:setMaxHPP(350)
-    end
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)
