@@ -3323,6 +3323,11 @@ INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2033);
 INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2035);
 INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2036);
 INSERT INTO `mob_skill_lists` VALUES('Vasiliceratops', 5010, 2099);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1821);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1822);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1823);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1824);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1825);
 --
 -- Indexes for dumped tables
 --
