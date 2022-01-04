@@ -13,7 +13,7 @@ end
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 10)
     mob:setMod(tpz.mod.LIGHTDEF, 54)
     mob:setMod(tpz.mod.DARKDEF, 200)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 100)
@@ -171,7 +171,7 @@ function onMobFight(mob, target)
         end
     elseif mob:getLocalVar("spellstate") == 3 then -- Wind
         mob:setSpellList(511)
-        mob:setMod(tpz.mod.BLINK, 2)
+        mob:setMod(tpz.mod.BLINK, 1)
         mob:addStatusEffect(tpz.effect.ENAERO, 10, 0, 9000000)
         mob:setMod(tpz.mod.WINDDEF, 200)
         -- Remove Defensive Buffs
@@ -218,10 +218,16 @@ function onMobFight(mob, target)
         mob:setMod(tpz.mod.EARTHDEF, 200)
         mob:setMod(tpz.mod.SLOWRES, 100)
         -- Remove Defensive Buffs
-        mob:delStatusEffect(tpz.effect.BLAZE_SPIKES)
-        mob:delStatusEffect(tpz.effect.ICE_SPIKES)
-        mob:delStatusEffect(tpz.effect.SHOCK_SPIKES)
-        mob:delMod(tpz.mod.BLINK)
+        if mob:hasStatusEffect(tpz.effect.ICE_SPIKES) then
+            mob:delStatusEffect(tpz.effect.ICE_SPIKES)
+        end
+        if mob:hasStatusEffect(tpz.effect.ICE_SPIKES) then
+            mob:delStatusEffect(tpz.effect.SHOCK_SPIKES)
+        end
+        if mob:hasStatusEffect(tpz.effect.ICE_SPIKES) then
+            mob:delStatusEffect(tpz.effect.SHOCK_SPIKES)
+        end
+        mob:setMod(tpz.mod.BLINK, 0)
         -- Remove Resistances
         mob:setMod(tpz.mod.FIREDEF, 128)
         mob:setMod(tpz.mod.ICEDEF, 128)
