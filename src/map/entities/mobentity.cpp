@@ -720,7 +720,6 @@ void CMobEntity::Spawn()
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
     m_DropItemTime = 1000;
-    deathDetails.clean();
     m_SpawnTime = server_clock::now();
     animationsub = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
     CallForHelp(false);
