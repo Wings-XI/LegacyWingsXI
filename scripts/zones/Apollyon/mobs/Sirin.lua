@@ -5,6 +5,10 @@
 require("scripts/globals/limbus");
 -----------------------------------
 
+function onMobInitialize()
+    mob:addMod(tpz.mod.EVA, 50)
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 

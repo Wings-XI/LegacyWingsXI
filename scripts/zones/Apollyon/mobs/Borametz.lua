@@ -18,6 +18,7 @@ function onMobDeath(mob, player, isKiller, noKiller)
                 GetNPCByID(ID.npc.APOLLYON_NE_CRATE[1][1]):setStatus(tpz.status.NORMAL)
             elseif randomF1 == 4 or randomF1 == 5 then
                 battlefield:setLocalVar("randomF2", ID.mob.APOLLYON_NE_MOB[2]+math.random(0,2))
+                battlefield:setLocalVar("floor2Boss", math.random(0,3))
                 tpz.limbus.handleDoors(battlefield, true, ID.npc.APOLLYON_NE_PORTAL[1])
             end
         end
