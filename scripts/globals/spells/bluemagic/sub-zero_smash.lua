@@ -55,10 +55,12 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.PARALYSIS
     local resist = applyResistanceEffect(caster, target, spell, params)
-
+    
     local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
-        target:addStatusEffect(tpz.effect.PARALYSIS, 23, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 23, 0, duration*resist)
+        end
     end
 
     return damage

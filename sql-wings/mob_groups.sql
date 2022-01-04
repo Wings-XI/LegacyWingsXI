@@ -1080,8 +1080,8 @@ INSERT INTO `mob_groups` VALUES(30, 2130, 35, 'Jailer_of_Faith', 0, 128, 1396, 2
 INSERT INTO `mob_groups` VALUES(31, 2112, 35, 'Ix_aern_drg', 0, 128, 2843, 14500, 0, 82, 87, 0);
 INSERT INTO `mob_groups` VALUES(32, 5536, 35, 'Ix_aern_drgs_Wynav', 0, 128, 0, 0, 0, 78, 79, 0);
 INSERT INTO `mob_groups` VALUES(33, 6196, 35, 'Ix_zdei_rdm', 0, 128, 0, 7000, 0, 78, 78, 0);
-INSERT INTO `mob_groups` VALUES(1, 3205, 36, 'Promathia', 0, 128, 0, 8000, 0, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(2, 5106, 36, 'Promathia', 0, 128, 0, 0, 12000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(1, 3205, 36, 'Promathia', 0, 128, 0, 8000, 8000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(2, 5106, 36, 'Promathia', 0, 128, 0, 12000, 12000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(3, 2184, 36, 'Kam_lanaut', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(4, 1158, 36, 'Eald_narche', 0, 128, 0, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(5, 4820, 36, 'Metus', 0, 128, 0, 0, 20000, 125, 125, 0);
@@ -2740,7 +2740,7 @@ INSERT INTO `mob_groups` VALUES(42, 2890, 65, 'Nipper', 960, 0, 1816, 0, 0, 76, 
 INSERT INTO `mob_groups` VALUES(43, 2529, 65, 'Mamool_Ja_Pikeman', 300, 0, 1592, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(44, 2537, 65, 'Mamool_Ja_Stabler', 300, 0, 1604, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(45, 2540, 65, 'Mamool_Jas_Raptor', 300, 128, 0, 0, 0, 77, 78, 0);
-INSERT INTO `mob_groups` VALUES(46, 4737, 65, 'Firedance_Magmaal_Ja', 0, 32, 1853, 0, 0, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(46, 4737, 65, 'Firedance_Magmaal_Ja', 0, 32, 3224, 0, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(47, 220, 65, 'Archaic_Mirror', 0, 128, 160, 0, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(48, 2512, 65, 'Mamool_Ja_Conservator', 300, 0, 0, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(49, 2543, 65, 'Mamool_Ja_Treasurer', 300, 0, 0, 0, 0, 81, 83, 0);
@@ -3224,7 +3224,7 @@ INSERT INTO `mob_groups` VALUES(158, 3245, 77, 'Qiqirn_Archaeologist', 0, 128, 2
 INSERT INTO `mob_groups` VALUES(159, 3302, 77, 'Racing_Chariot', 0, 128, 0, 7500, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(160, 44, 77, 'Adamantoise', 0, 128, 71, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(161, 387, 77, 'Behemoth', 0, 128, 71, 20000, 0, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(162, 1280, 77, 'Fafnir', 0, 128, 71, 20000, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(162, 1280, 77, 'Fafnir', 0, 128, 71, 18000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(163, 2220, 77, 'Khimaira', 0, 128, 164, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(164, 2018, 77, 'Hydra', 0, 128, 164, 20000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(165, 680, 77, 'Cerberus', 0, 128, 164, 20000, 0, 80, 80, 0);
@@ -5954,7 +5954,7 @@ INSERT INTO `mob_groups` VALUES(5, 5478, 97, 'Yagudo_High_Priest_past', 300, 0, 
 INSERT INTO `mob_groups` VALUES(6, 4417, 97, 'Yagudo_Eradicator', 300, 0, 2707, 0, 0, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(7, 4442, 97, 'Yagudo_Prelate_past', 300, 0, 2746, 0, 0, 76, 78, 0);
 INSERT INTO `mob_groups` VALUES(8, 5481, 97, 'Yagudo_Sentinel_past', 300, 0, 2764, 0, 0, 76, 78, 0);
-INSERT INTO `mob_groups` VALUES(9, 4298, 97, 'War_Lynx', 300, 0, 0, 0, 0, 68, 72, 0);
+INSERT INTO `mob_groups` VALUES(9, 4298, 97, 'War_Lynx', 300, 0, 3223, 0, 0, 68, 72, 0);
 INSERT INTO `mob_groups` VALUES(10, 2772, 97, 'Muq_Shabeel', 5400, 0, 3094, 9000, 0, 72, 72, 0);
 INSERT INTO `mob_groups` VALUES(11, 3991, 97, 'Treant_Sapling', 300, 0, 2465, 0, 0, 56, 59, 0);
 INSERT INTO `mob_groups` VALUES(12, 3752, 97, 'Stag_Beetle', 300, 0, 2320, 0, 0, 45, 48, 0);

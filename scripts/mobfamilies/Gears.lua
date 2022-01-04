@@ -1,11 +1,29 @@
-require("scripts/globals/mixins")
+--------------------------------------------------------------
+--  Family: Gears
+--  Behavior: Updates the animation sub and mob skill list of Gears based on loss of hp 
+--------------------------------------------------------------
 require("scripts/globals/status")
+--------------------------------------------------------------
+--[[
+    Gears
+    AnimationSub(0) = 3 Gears
+    AnimationSub(1) = 2 Gears
+    AnimationSub(2) = 1 Gear
+
+    Gears lose a gear at 50% and another at 25%
+    Restoral can cause a Gears to regain a gear
+    Gears TP moves are different depending on the number of Gears
+    More Gears "alive" = More powerful TP moves
+
+    Need to
+        - catch hp falling through threasholds (take_damage)
+        - catch hp raising (WEAPONSKILL_USE)  Could I make restoral take negative damage?
+        - Swap skill lists and AnimationSubs
 
 
-g_mixins = g_mixins or {}
+]]
 
-g_mixins.gears = function(mob)
-
+function onMobFamilyInitialize(mob)
     mob:addListener("COMBAT_TICK", "GEARS_CTICK", function(mob)
         local mobHPP = mob:getHPP()
         if (mobHPP >= 26 and mobHPP <= 49) then
@@ -36,7 +54,4 @@ g_mixins.gears = function(mob)
         end
 
     end)
-
 end
-
-return g_mixins.gears

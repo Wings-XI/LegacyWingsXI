@@ -25,24 +25,28 @@ function onPetAbility(target, automaton, skill, master, action)
     
     local stunduration = math.random(3,6)
     stunduration = math.ceil(stunduration * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if math.random() < chance then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, stunduration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if math.random() < chance then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, stunduration)
+        end
     end
 
     local slowPower = automaton:getMod(tpz.mod.AUTO_SHIELD_BASH_SLOW)
-    if slowPower > 0 and math.random() < 0.7 then
-        local resist = applyResistanceAbility(automaton, target, tpz.magic.element.EARTH, 0, bonus)
-        local duration = 20
-        if slowPower == 12 then
-            duration = math.random(20, 35)
-        elseif slowPower == 19 then
-            duration = math.random(51, 57)
-        elseif slowPower == 25 then
-            duration = math.random(70, 75)
-        end
-        duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
-        if resist > 0.25 then
-            target:addStatusEffect(tpz.effect.SLOW, slowPower * 100, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SLOWRES) < 100 then
+        if slowPower > 0 and math.random() < 0.7 then
+            local resist = applyResistanceAbility(automaton, target, tpz.magic.element.EARTH, 0, bonus)
+            local duration = 20
+            if slowPower == 12 then
+                duration = math.random(20, 35)
+            elseif slowPower == 19 then
+                duration = math.random(51, 57)
+            elseif slowPower == 25 then
+                duration = math.random(70, 75)
+            end
+            duration = math.ceil(duration * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+            if resist > 0.25 then
+                target:addStatusEffect(tpz.effect.SLOW, slowPower * 100, 0, duration)
+            end
         end
     end
 

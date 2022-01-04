@@ -5,6 +5,10 @@
 require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
+function onMobInitialize(mob)
+    mob:setMod(tpz.mod.SILENCERES, 50)
+end
+
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end

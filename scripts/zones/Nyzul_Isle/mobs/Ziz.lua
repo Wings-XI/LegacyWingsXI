@@ -1,7 +1,6 @@
 -----------------------------------
--- Area: Mamook
+-- Area: Nyzul Isle
 --  Mob: Ziz
--- Note: PH for Zizzy Zillah
 -----------------------------------
 mixins = {require("scripts/mixins/families/ziz")}
 -----------------------------------

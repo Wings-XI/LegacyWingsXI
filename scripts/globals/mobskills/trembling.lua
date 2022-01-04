@@ -19,21 +19,23 @@ function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 3
     local accmod = 1
-    local dmgmod = .7
+    local dmgmod = .5
+    local requireNumHits = true
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
-    local dispelled = math.random(2, 3)
+    local dmg
+    local finalInfo = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded, requireNumHits)
 
-    if info.hitslanded ~= 0 then
-        for i=1, dispelled do 
-            target:dispelStatusEffect() 
-        end
-    end
-
-    if effect ~= tpz.effect.NONE then
-        --TODO: Dispelled messages. No examples of damage+dispel working currently.      
+    if (type(finalInfo) == "number") then
+        dmg = finalInfo
     else
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        dmg = finalInfo.dmg
+
+        if (finalInfo.hitslanded > 0) then
+            local dispelled = math.random(2, 3)
+            for i=1, dispelled do 
+                target:dispelStatusEffect() 
+            end    
+        end
     end
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
