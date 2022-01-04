@@ -94,10 +94,10 @@ bool CPlayerController::ChangeTarget(uint16 targid)
 }
 
 // Checks that the next target is in front of the player when an autotarget occurs during combat
-bool CPlayerController::AutoChangeTarget(uint16 targid, location_t playerLoc, location_t mobLoc)
+bool CPlayerController::ChangeAutoTarget(uint16 targid, position_t &playerPos, position_t &mobPos)
 {
     // mob must be in front of player
-    if (infront(mobLoc.p, playerLoc.p, 90))
+    if (infront(mobPos, playerPos, 128))
     {
         return CController::ChangeTarget(targid);
     }

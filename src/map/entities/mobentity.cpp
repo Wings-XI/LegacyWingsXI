@@ -528,7 +528,7 @@ void CMobEntity::DoAutoTarget()
                         distanceSquared(PMember->loc.p, PMember->m_autoTargetOverride->loc.p) < 29.0f * 29.0f)
                     {
                         auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
-                        success = controller->AutoChangeTarget(PMember->m_autoTargetOverride->targid, PMember->loc, this->loc);
+                        success = controller->ChangeAutoTarget(PMember->m_autoTargetOverride->targid, PMember->loc.p, PMember->m_autoTargetOverride->loc.p);
                     }
                 }
                 else
@@ -564,7 +564,7 @@ void CMobEntity::DoAutoTarget()
                     }
                     if (PWinner)
                     {
-                        success = controller->AutoChangeTarget(PWinner->targid, PWinner->loc, this->loc);
+                        success = controller->ChangeAutoTarget(PWinner->targid, PMember->loc.p, PWinner->loc.p);
                         PMember->ForAlliance([PMember, PWinner](CBattleEntity* PMembermember) {
                             if (PMembermember->objtype == TYPE_PC && PMembermember->loc.zone->GetID() == PMember->loc.zone->GetID() &&
                                 PMembermember->animation == ANIMATION_ATTACK)
@@ -601,7 +601,7 @@ void CMobEntity::DoAutoTarget()
                         distanceSquared(PMember->loc.p, PMember->m_autoTargetOverride->loc.p) < 29.0f * 29.0f)
                     {
                         auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
-                        success = controller->AutoChangeTarget(PMember->m_autoTargetOverride->targid, PMember->loc, this->loc);
+                        success = controller->ChangeAutoTarget(PMember->m_autoTargetOverride->targid, PMember->loc.p, PMember->m_autoTargetOverride->loc.p);
                     }
                 }
                 else
@@ -634,7 +634,7 @@ void CMobEntity::DoAutoTarget()
                     }
                     if (PWinner)
                     {
-                        success = controller->AutoChangeTarget(PWinner->targid, PWinner->loc, this->loc);
+                        success = controller->ChangeAutoTarget(PWinner->targid, PMember->loc.p, PWinner->loc.p);
                         PZone->ForEachChar([PMember, PWinner](CCharEntity* PMembermember) {
                             if (PMembermember->objtype == TYPE_PC && PMembermember->loc.zone->GetID() == PMember->loc.zone->GetID() &&
                                 PMembermember->animation == ANIMATION_ATTACK)
