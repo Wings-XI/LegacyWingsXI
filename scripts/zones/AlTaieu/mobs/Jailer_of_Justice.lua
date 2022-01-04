@@ -56,23 +56,11 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 740 then
-        familiarXzomits()
         mob:addTP(mob:getLocalVar("twohour_tp"))
         mob:setLocalVar("twohour_tp", 0)
     elseif skill:getID() == 710 then
         mob:addTP(mob:getLocalVar("twohour_tp"))
         mob:setLocalVar("twohour_tp", 0)
-    end
-end
-
-function familiarXzomits()
-    for i = ID.mob.QN_XZOMIT_START, ID.mob.QN_XZOMIT_END do
-        local pet = GetMobByID(i)
-        if pet and pet:isAlive() then
-            pet:timer(1500, function(pet)
-                pet:useMobAbility(786) -- lateral slash
-            end)
-        end
     end
 end
 
