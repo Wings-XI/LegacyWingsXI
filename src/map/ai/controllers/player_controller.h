@@ -38,6 +38,7 @@ public:
     virtual bool Cast(uint16 targid, SpellID spellid) override;
     virtual bool Engage(uint16 targid) override;
     virtual bool ChangeTarget(uint16 targid) override;
+    bool AutoChangeTarget(uint16 targid, location_t playerLoc, location_t mobLoc); // Checks player is facing mob when autotargets occur
     virtual bool Disengage() override;
     virtual bool WeaponSkill(uint16 targid, uint16 wsid) override;
 
