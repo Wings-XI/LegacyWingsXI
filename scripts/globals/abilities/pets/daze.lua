@@ -44,8 +44,10 @@ function onPetAbility(target, automaton, skill, master, action)
     local duration = math.ceil(4 * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
     if damage > 0 then
         local chance = 0.033 * skill:getTP()
-        if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+            if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
+                target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+            end
         end
         master:trySkillUp(target, tpz.skill.AUTOMATON_RANGED, tpHits+extraHits)
         target:tryInterruptSpell(automaton, tpHits+extraHits)

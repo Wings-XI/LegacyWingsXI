@@ -1166,6 +1166,7 @@ tpz.mod =
     LUMINION_KILLER           = 238, -- Enhances "Luminion Killer" effect
 
     -- Resistances to enfeebles - Traits/Job Ability
+    -- Values specified greater than or equal to 100 will be fully immune (No Effect)
     STATUSRES                 = 239, -- "Resistance to All Status Ailments"
     SLEEPRES                  = 240, -- Enhances "Resist Sleep" effect
     POISONRES                 = 241, -- Enhances "Resist Poison" effect

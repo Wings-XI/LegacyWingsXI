@@ -55,21 +55,25 @@ function onSpellCast(caster, target, spell)
     local slowDuration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
     local silenceDuration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
     
-    if resistSlow >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
-        local cMND = caster:getStat(tpz.mod.MND)
-        local tMND = target:getStat(tpz.mod.MND)
-        local power = 1800
-        
-        if cMND < tMND then
-            power = power - (tMND - cMND)*50
-            if power < 300 then power = 300 end
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SLOWRES) < 100 then
+        if resistSlow >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
+            local cMND = caster:getStat(tpz.mod.MND)
+            local tMND = target:getStat(tpz.mod.MND)
+            local power = 1800
+            
+            if cMND < tMND then
+                power = power - (tMND - cMND)*50
+                if power < 300 then power = 300 end
+            end
+            
+            target:addStatusEffect(tpz.effect.SLOW, power, 0, slowDuration*resistSlow)
         end
-        
-        target:addStatusEffect(tpz.effect.SLOW, power, 0, slowDuration*resistSlow)
     end
 
-    if resistSilence >= 0.5 and not target:hasStatusEffect(tpz.effect.SILENCE) then
-        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, silenceDuration*resistSilence)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SILENCERES) < 100 then
+        if resistSilence >= 0.5 and not target:hasStatusEffect(tpz.effect.SILENCE) then
+            target:addStatusEffect(tpz.effect.SILENCE, 25, 0, silenceDuration*resistSilence)
+        end
     end
 
     return damage

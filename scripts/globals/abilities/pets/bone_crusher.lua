@@ -55,8 +55,10 @@ function onPetAbility(target, automaton, skill, master, action)
 
     if damage > 0 then
         local chance = 0.033 * skill:getTP()
-        if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+            if not target:hasStatusEffect(tpz.effect.STUN) and chance >= math.random()*100 then
+                target:addStatusEffect(tpz.effect.STUN, 1, 0, 4)
+            end
         end
         master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, tpHits+extraHits)
         target:tryInterruptSpell(automaton, tpHits+extraHits)
