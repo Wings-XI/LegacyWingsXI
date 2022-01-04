@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -56,6 +56,7 @@ enum MSGBASIC_ID : uint16
     MSGBASIC_CANNOT_CAST_SPELL          =  47, /* <player> cannot cast <spell>. */
     MSGBASIC_UNABLE_TO_CAST_SPELLS      =  49, /* The <player> is unable to cast spells. */
     MSGBASIC_MAGIC_NO_EFFECT            =  75, /* <caster>'s <spell> has no effect on <target>. */
+    MSGBASIC_MAGIC_FAIL                 = 114, /* <caster> casts <spell> on <target>, but the spell fails to take effect. */
     MSGBASIC_MAGIC_TELEPORT             =  93, /* <caster> casts <spell>. <target> vanishes. */
     MSGBASIC_OUT_OF_RANGE_UNABLE_CAST   = 313, /* Out of range unable to cast */
     /* Ranged */
