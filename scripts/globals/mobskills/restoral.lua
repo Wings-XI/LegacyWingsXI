@@ -8,7 +8,11 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if (mob:getHPP() < 100) then
+        return 0
+    end
+
+    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -21,7 +25,8 @@ function onMobWeaponSkill(target, mob, skill)
     if mob:getPool() == 243 then
         heal = heal * 2.5
     end
-    skill:setMsg(tpz.msg.basic.SELF_HEAL)
 
+    skill:setMsg(tpz.msg.basic.SELF_HEAL)
+    
     return MobHealMove(mob, heal)
 end

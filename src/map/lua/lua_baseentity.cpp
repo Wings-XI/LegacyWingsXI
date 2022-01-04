@@ -2912,9 +2912,27 @@ inline int32 CLuaBaseEntity::isInMogHouse(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    lua_pushboolean(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID);
+    lua_pushboolean(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID == m_PBaseEntity->id);
     return 1;
 }
+
+/************************************************************************
+*  Function: getMogHouseID()
+*  Purpose : Returns the Mog House ID where the player is located.
+*  Example : if (player:getMogHouseID() == 0) then
+*  Notes   : If in one's own Mog House, will be equal to the character
+*            ID. If in someone else's open mog, will be the resident's
+*            char ID. If outside, will be zero.
+************************************************************************/
+inline int32 CLuaBaseEntity::getMogHouseID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID);
+    return 1;
+}
+
 /************************************************************************
 *  Function: getPlayerRegionInZone
 *  Purpose : Returns the player's current region inside the zone
@@ -10012,9 +10030,9 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
     else if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member];
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member - 1];
         else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member];
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member - 1];
     }
 
     if (PTargetChar != nullptr)
@@ -15089,7 +15107,7 @@ inline int32 CLuaBaseEntity::setAggressive(lua_State* L)
 *  Function: setTrueDetection()
 *  Purpose : Toggle True Detection on or off for a Mob
 *  Example : mob:setTrueDetection(1)
-*  Notes   : Different integer values for True Hearing/Sight?
+*  Notes   : 0 (No True Detection), 1 (True Sight and Hearing), 2 (True Sight), 3 (True Hearing)
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::setTrueDetection(lua_State* L)
@@ -18254,6 +18272,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentRegion),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContinentID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isInMogHouse),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMogHouseID),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,showPosition),

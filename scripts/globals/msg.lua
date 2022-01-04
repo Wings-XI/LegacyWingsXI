@@ -81,6 +81,7 @@ tpz.msg.basic =
     IS_STATUS               = 203, -- ${target} is ${status}.
     IS_NO_LONGER_STATUS     = 204, -- ${target} is no longer ${status}.
     GAINS_EFFECT_OF_STATUS  = 205, -- ${target} gains the effect of ${status}.
+    GAINS_EFFECT_OF_ITEM    = 280, -- ${target} gains the effect of ${status}.
     STATUS_WEARS_OFF        = 206, -- ${target}'s ${status} effect wears off.
     DISAPPEAR_NUM           = 231, -- The <player> uses .. .. of <target>'s effects disappear!
     ABOUT_TO_WEAR_OFF       = 251, -- The effect of ${status} is about to wear off.
@@ -94,6 +95,7 @@ tpz.msg.basic =
     EFFECT_DRAINED          = 370, -- The <player> uses .. .. status effects are drained from <target>.
     TP_INCREASE             = 409, -- The <player> uses .. <target>'s TP is increased to ...
     STATUS_PREVENTS         = 569, -- Your current status prevents you from using that ability.
+    EFFECTS_DISAPPEAR       = 757, -- <number> of <player's> effects disappear!
     
     -- Weaponskills / Mobskills
     READIES_WS              =  43, -- ${actor} readies ${weapon_skill}.

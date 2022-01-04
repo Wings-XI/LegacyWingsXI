@@ -222,7 +222,7 @@ public:
 
     uint8     m_Type;                     // mob type
     bool      m_Aggro;
-    bool      m_TrueDetection;   // Has true sight or sound
+    uint8    m_TrueDetection;             // Has true sight or sound
     uint16    m_Detects;                // mobs detection methods, sight, sound, etc
     uint8     m_Link;                     // link with mobs of it's family
     uint16    m_Behaviour;                // mob behaviour
