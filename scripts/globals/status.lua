@@ -823,7 +823,8 @@ tpz.effect =
     SUPER_JUMP               = 804, -- Description
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
-    -- 807-1022
+    SOLDIERS_DRINK           = 807,
+    -- 808-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 

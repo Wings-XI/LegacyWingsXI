@@ -404,6 +404,12 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
 	end
     target:handleAfflatusMiseryDamage(dmg)
     -- TP has already been dealt with.
+
+    if (caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK)) then
+        dmg = dmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
+    end
+
     return dmg
 end
 
