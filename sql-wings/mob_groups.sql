@@ -9713,7 +9713,7 @@ INSERT INTO `mob_groups` VALUES(14, 5145, 164, 'Citadel_Pipistrelles', 0, 128, 0
 INSERT INTO `mob_groups` VALUES(15, 5144, 164, 'Elatha', 14400, 0, 0, 0, 9999, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(16, 3503, 164, 'Scolopendrid', 300, 0, 113, 0, 0, 68, 70, 0);
 INSERT INTO `mob_groups` VALUES(17, 1160, 164, 'Earth_Elemental', 300, 4, 733, 0, 0, 65, 65, 0);
-INSERT INTO `mob_groups` VALUES(18, 5143, 164, 'Buarainech', 14400, 0, 0, 0, 9999, 80, 81, 0);
+INSERT INTO `mob_groups` VALUES(18, 5143, 164, 'Buarainech', 14400, 0, 3225, 0, 9999, 80, 81, 0);
 INSERT INTO `mob_groups` VALUES(19, 4457, 164, 'Yagudo_Transporter', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(20, 4421, 164, 'Yagudo_Guard', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(21, 2216, 164, 'Khadem_Quemquoma', 0, 0, 0, 0, 0, 0, 0, 0);

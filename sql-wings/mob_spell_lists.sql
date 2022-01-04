@@ -4162,6 +4162,15 @@ INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 226, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 162, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 172, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 273, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 532, 1, 255); -- Blue Magic: Blitzstrahl
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 644, 1, 255); -- Blue Magic: Mind Blast
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 616, 1, 255); -- Blue Magic: Temporal Shift
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 615, 1, 255); -- Blue Magic: Plasma Charge
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 212, 1, 255); -- Black Magic: Burst
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 196, 1, 255); -- Black Magic: Thundaga III
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 167, 1, 255); -- Black Magic: Thunder IV
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 512, 1, 252); -- Stun
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 57, 1, 252); -- Haste
 
 -- Oupire Spell List (Ice)
 INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 181, 1, 255); -- Blizzaga III

@@ -3334,6 +3334,12 @@ INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1822);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1823);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1824);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1825);
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 116); -- Penta Thrust
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 120); -- Impulse Drive
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 114); -- Raiden Thrust
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 249); -- Netherspikes
+
 --
 -- Indexes for dumped tables
 --

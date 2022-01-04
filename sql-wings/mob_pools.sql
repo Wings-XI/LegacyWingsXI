@@ -5203,7 +5203,7 @@ INSERT INTO `mob_pools` VALUES(5139, 'Mahishasura', 'Mahishasura', 371, 0x0000ca
 INSERT INTO `mob_pools` VALUES(5140, 'Nis_Puk', 'Nis_Puk', 198, 0x0000d00600000000000000000000000000000000, 6, 6, 7, 200, 100, 0, 1, 0, 0, 2, 7, 0, 2335, 133, 0, 0, 0, 0, 0, 198);
 INSERT INTO `mob_pools` VALUES(5141, 'Robber_Crab', 'Robber_Crab', 77, 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 0, 32, 0, 0, 305, 131, 0, 0, 0, 0, 0, 77);
 INSERT INTO `mob_pools` VALUES(5142, 'Wespe', 'Wespe', 48, 0x0000110100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 138, 643, 0, 0, 0, 0, 0, 48);
-INSERT INTO `mob_pools` VALUES(5143, 'Buarainech', 'Buarainech', 359, 0x01001d030e110e210e310e410e51cd6100700000, 14, 4, 2, 240, 100, 0, 1, 1, 0, 2, 7, 0, 1, 157, 0, 0, 2, 0, 0, 115);
+INSERT INTO `mob_pools` VALUES(5143, 'Buarainech', 'Buarainech', 359, 0x01001d030e110e210e310e410e51cd6100700000, 14, 4, 2, 240, 100, 0, 1, 1, 0, 2, 7, 0, 1, 157, 0, 0, 516, 0, 0, 5012);
 INSERT INTO `mob_pools` VALUES(5144, 'Elatha', 'Elatha', 359, 0x001d0814111421143114411451cf610070000000, 8, 4, 2, 240, 100, 0, 1, 1, 0, 2, 7, 0, 1, 1181, 0, 0, 5, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(5145, 'Citadel_Pipistrelles', 'Citadel_Pipistrelles', 47, 0x0000040100000000000000000000000000000000, 6, 6, 5, 240, 100, 0, 1, 1, 1, 2, 0, 64, 138, 645, 8, 0, 0, 0, 0, 47);
 INSERT INTO `mob_pools` VALUES(5146, 'Laidly_Laurence', 'Laidly_Laurence', 215, 0x0000ec0700000000000000000000000000000000, 4, 4, 7, 280, 100, 0, 1, 0, 0, 2, 0, 0, 7, 155, 0, 0, 2, 0, 0, 215);
