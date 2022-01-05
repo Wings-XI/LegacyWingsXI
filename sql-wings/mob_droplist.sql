@@ -16779,6 +16779,7 @@ INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
 INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,2512,123); -- Lynx Hide
 INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,5667,122); -- Lynx Meat
 INSERT INTO `mob_droplist` VALUES(3224, 1, 1, 1000, 19234, 220); -- Lyft Hexagun
+-- Buarainech
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 2858, 250); -- Wolfram Steel Ingot
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 2858, 250); -- Wolfram Steel Ingot
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 2858, 250); -- Wolfram Steel Ingot
@@ -16786,6 +16787,14 @@ INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 2859, 313); -- Chunk of Coba
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 19307, 125); -- Blunt Lance
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 11411, 188); -- Shrewd Pumps
 INSERT INTO `mob_droplist` VALUES(3225, 1, 1, 1000, 747, 150); -- Orichalcum Ingot
+-- Elatha
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 2859, 263); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 19162, 316); -- Dull Claymore
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 15057, 272); -- Bricta's Cuffs
+INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 747, 82); -- Orichalcum Ingot
 
 
 

@@ -3339,6 +3339,13 @@ INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 116); -- Penta Thrust
 INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 120); -- Impulse Drive
 INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 114); -- Raiden Thrust
 INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 52); -- Shockwave
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 56); -- Ground Strike
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 51); -- Freezebite
+
 
 --
 -- Indexes for dumped tables

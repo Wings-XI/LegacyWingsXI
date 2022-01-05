@@ -88,7 +88,11 @@ function onUseAbility(player, target, ability, action)
 
         action:animation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(tpz.slot.MAIN)))
         action:speceffect(target:getID(), hit)
-        return damage
+        if target:getID() == (17449008) then
+            return 0
+        else
+            return damage
+        end
     else
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)

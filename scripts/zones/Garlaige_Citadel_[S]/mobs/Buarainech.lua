@@ -16,7 +16,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.CHR, 20)
     mob:addMod(tpz.mod.AGI, 20)
     mob:addMod(tpz.mod.DEFP, 75)
-    mob:addMod(tpz.mod.RATTP, 75)
+    mob:addMod(tpz.mod.RATTP, 75)    
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Buarainech
     mob:setMod(tpz.mod.EARTHDEF, 128)
     mob:setMod(tpz.mod.DARKDEF, 200)
@@ -49,57 +49,6 @@ function onMobFight(mob, target)
         mob:messageBasic(232, 0, 0, target)
     end
 
-    -- Spirit Surge
-    -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-    local timer = mob:getLocalVar("BSpiritSurgeTimer")
-    if mob:getHPP() <= 50 then
-        if os.time() > timer then
-            mob:useMobAbility(1893)
-            mob:setLocalVar("BSpiritSurgeTimer", os.time() + 300)
-        end
-    end
-
-    -- En-doom When Spirit Surge Active (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-    if (mob:hasStatusEffect(tpz.effect.SPIRIT_SURGE)) then
-        mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-    else
-        mob:setMobMod(tpz.mobMod.ADD_EFFECT, 0)
-    end
-
-    -- Level Up Function
-    -- Starts Level Up Sequence When Any Buff Is Gained (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-    mob:addListener("EFFECT_GAIN", "BUARAINECH_EFFECT_GAIN", function(mob, effect)
-        if (effect:getType() == tpz.effect.SPIRIT_SURGE) then
-            mob:setLocalVar("LevelUp", 0)
-        else
-            if mob:AnimationSub() == 0 then
-                local levelupsum = mob:getLocalVar("TotalLevelUp")
-                mob:setLocalVar("LevelUp", 1)
-                mob:setLocalVar("TotalLevelUp", levelupsum + 1)
-                mob:AnimationSub(1)
-            end
-        end
-    end)
-
-    -- Magic Retaliation
-    -- Should Always Retaliate When Taking Magic Damage (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-    mob:addListener("MAGIC_TAKE", "BUARAINECH_MAGIC_TAKE", function(target, caster, spell)
-        if
-            target:AnimationSub() == 0 and
-            spell:tookEffect() and
-            (caster:isPC() or caster:isPet())
-        then
-            target:setLocalVar("BRetaliate", 1)
-            target:AnimationSub(1)
-        end
-    end)
-
-    -- Enmity Handling
-    -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-    mob:addListener("TAKE_DAMAGE", "BUARAINECH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        mob:addEnmity(attacker, 1000, 1000)
-    end)
-
     -- Combat Tick Logic
     mob:addListener("COMBAT_TICK", "BUARAINECH_CTICK", function(mob)
         local retaliate = mob:getLocalVar("BRetaliate")
@@ -126,6 +75,62 @@ function onMobFight(mob, target)
             end
         end
     end)
+
+    -- Spirit Surge
+    -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Buarainech)
+    local timer = mob:getLocalVar("BSpiritSurgeTimer")
+    if mob:getHPP() <= 50 then
+        if os.time() > timer then
+            mob:useMobAbility(1893)
+            mob:setLocalVar("BSpiritSurgeTimer", os.time() + 300)
+        end
+    end
+
+    -- En-doom When Spirit Surge Active (https://ffxiclopedia.fandom.com/wiki/Buarainech)
+    if (mob:hasStatusEffect(tpz.effect.SPIRIT_SURGE)) then
+        mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    else
+        mob:setMobMod(tpz.mobMod.ADD_EFFECT, 0)
+    end
+
+    -- Level Up Function
+    -- Starts Level Up Sequence When Any Buff Is Gained (https://ffxiclopedia.fandom.com/wiki/Buarainech)
+    mob:addListener("EFFECT_GAIN", "BUARAINECH_EFFECT_GAIN", function(mob, effect)
+        if (effect:getType() == tpz.effect.SPIRIT_SURGE) then
+            mob:setLocalVar("LevelUp", 0)
+        else
+            if mob:AnimationSub() == 0 then
+                local levelupsum = mob:getLocalVar("TotalLevelUp")
+                if levelupsum <= 30 then
+                    mob:setLocalVar("LevelUp", 1)
+                    mob:setLocalVar("TotalLevelUp", levelupsum + 1)
+                    mob:AnimationSub(1)
+                else
+                    mob:setLocalVar("LevelUp", 0)
+                end
+            end
+        end
+    end)
+
+    -- Magic Retaliation
+    -- Should Always Retaliate When Taking Magic Damage (https://ffxiclopedia.fandom.com/wiki/Buarainech)
+    mob:addListener("MAGIC_TAKE", "BUARAINECH_MAGIC_TAKE", function(target, caster, spell)
+        if
+            target:AnimationSub() == 0 and
+            spell:tookEffect() and
+            (caster:isPC() or caster:isPet())
+        then
+            target:setLocalVar("BRetaliate", 1)
+            target:AnimationSub(1)
+        end
+    end)
+
+    -- Enmity Handling
+    -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Buarainech)
+    mob:addListener("TAKE_DAMAGE", "BUARAINECH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
+        mob:addEnmity(attacker, 1000, 1000)
+    end)
+
 end
 
 function OnSpellPrecast(caster, target, spell)
