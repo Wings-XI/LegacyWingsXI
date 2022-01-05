@@ -425,7 +425,6 @@ void CMobEntity::restoreMobModifiers()
     m_mobModStat = m_mobModStatSave;
 }
 
-
 void CMobEntity::HideHP(bool hide)
 {
     if (hide)
