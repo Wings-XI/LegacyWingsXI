@@ -20,10 +20,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     -- need a capture to determine how much should be absorbed
-    local magicalStoneskinAmount = 1500
+    local magicalStoneskinAmount = 1000
     
     if (mob:isNM()) then
-        magicalStoneskinAmount = 3000
+        magicalStoneskinAmount = 2000
     end
 
     mob:setMod(tpz.mod.RAMPART_STONESKIN, magicalStoneskinAmount)
