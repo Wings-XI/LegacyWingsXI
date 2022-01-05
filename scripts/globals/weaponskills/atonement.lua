@@ -87,12 +87,16 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         end
         damage = damage * WEAPON_SKILL_POWER
 
-        -- Atonement hits Cerberuses twice as hard
+        -- Atonement hits Cerberuses for additional damage
         if (damage > 0) then
             local family = target:getFamily()
             -- Cerberus families, Sarameya, and PW pretending to be Cerb
             if (family == 62) or (family == 314) or (family == 316 and target:getModelId() == 1793) then
-                damage = damage * 2
+                -- this 70 page thread has data claiming that the damage mod is ~25~35%
+                -- https://www.bluegartr.com/threads/63084-New-WS-Properties-Modifier-Damage-Testing
+                -- SS of a 1008 on freke can be found on the talk page on ffxi wiki
+
+                damage = damage * math.random(1.25, 1.35)
             end
         end
 
