@@ -790,6 +790,16 @@ function addTableListsTogether(table1, table2)
     return returnTable
 end
 
+---------------------------------------------
+-- clear mob hate if needed
+---------------------------------------------
+function clearHateIfRequired(mob)
+    local enmityList = mob:getEnmityList()
+    if enmityList and #enmityList > 0 then
+        mob:deaggroAll()
+    end
+end
+
 --------------------------------------------------------------------
 -- Cleans up the previous floor as players teleport to the new floor
 --------------------------------------------------------------------
@@ -801,7 +811,7 @@ function cleanUpPreviousFloor(instance)
     -- Despawn Mobs
     for _,mob in pairs(instance:getMobs()) do
         local mobID = mob:getID()
-        mob:deaggroAll()
+        clearHateIfRequired(mob)
         DespawnMob(mobID, instance)
     end
 
