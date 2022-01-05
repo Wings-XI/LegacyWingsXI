@@ -743,6 +743,11 @@ end
         if dmg > 0 then target:addTPFromSpell(caster) end
     end
 
+    if (caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK)) then
+        dmg = dmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
+    end
+
     return dmg
  end
 

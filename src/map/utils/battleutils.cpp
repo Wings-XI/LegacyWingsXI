@@ -2239,6 +2239,12 @@ namespace battleutils
         if (PAttacker->objtype == TYPE_PC && !isRanged)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
+        }
+
         return damage;
     }
 
@@ -2368,6 +2374,13 @@ namespace battleutils
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HAGAKURE))
         {
             PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_HAGAKURE);
+        }
+
+        // Apply Soilders Drink
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
         }
 
         return damage;
