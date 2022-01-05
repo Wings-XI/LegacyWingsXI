@@ -28,7 +28,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.THUNDERDEF, 200)
     mob:setMod(tpz.mod.WINDDEF, 200)
     mob:setMod(tpz.mod.SILENCERES, 100)
-    mob:setMod(tpz.mod.FIRE_ABSORB, 0)
+    mob:setMod(tpz.mod.ICE_ABSORB, 0)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:addStatusEffect(tpz.effect.ICE_SPIKES, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
