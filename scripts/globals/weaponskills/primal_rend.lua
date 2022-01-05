@@ -38,7 +38,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local mythicMagicWsParams = {}
     mythicMagicWsParams.attackerStat = tpz.mod.CHR
     mythicMagicWsParams.defenderStat = tpz.mod.INT
-    mythicMagicWsParams.magnification = 2.0
+    mythicMagicWsParams.magnification = 1.5
 
     local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary, mythicMagicWsParams)
 
