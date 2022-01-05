@@ -100,6 +100,8 @@ function onEventFinish(player, csid, option, npc)
             if (option >= 3 and option <= 4) then
                 -- split path, flag the instance to determine a Pathos
                 instance:setLocalVar("Nyzul_DeterminePathos", 1)
+            else
+                instance:setLocalVar("Nyzul_DeterminePathos", 0)
             end
 
             bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
