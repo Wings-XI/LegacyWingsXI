@@ -2821,7 +2821,7 @@ int32 map_config_default()
     map_config.daily_tally_limit = 50000;
     map_config.mission_storage_recovery = false;
     map_config.helpdesk_enabled = false;
-    map_config.autotarget_qol = false;
+    map_config.autotarget_qol = true;
     return 0;
 }
 
