@@ -12,6 +12,14 @@ local path =
     {496.692, 0.000, 22.934}
 }
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PARALYZE, {duration = 60})
+end
+
 function onMobRoam(mob)
     local pause = mob:getLocalVar("pause")
     if pause < os.time() then

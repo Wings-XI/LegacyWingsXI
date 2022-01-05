@@ -2509,6 +2509,7 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         map_session_data->PChar != nullptr)
     {
         charutils::SavePlayTime(map_session_data->PChar);
+        charutils::RemoveGuestsFromMogHouse(map_session_data->PChar);
 
         //clear accounts_sessions if character is logging out (not when zoning)
         if (map_session_data->shuttingDown == 1)
@@ -2601,7 +2602,16 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         }
 
                         PChar->StatusEffectContainer->SaveStatusEffects(true);
+                        if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id) {
+                            PChar->loc.boundary = 0;
+                            PChar->loc.p.x = 0;
+                            PChar->loc.p.y = 0;
+                            PChar->loc.p.z = 0;
+                            PChar->loc.p.rotation = 0;
+                            PChar->m_moghouseID = 0;
+                        }
                         charutils::SaveCharPosition(PChar);
+                        charutils::RemoveGuestsFromMogHouse(PChar);
 
                         ShowDebug(CL_CYAN"map_cleanup: %s timed out, closing session\n" CL_RESET, PChar->GetName());
 

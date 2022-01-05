@@ -8,6 +8,7 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.ACC, effect:getPower())
+    target:addMod(tpz.mod.RACC, effect:getPower())
 end
 
 function onEffectTick(target, effect)
@@ -16,6 +17,7 @@ function onEffectTick(target, effect)
     if (boostACC_effect_size > 0) then
         effect:setPower(boostACC_effect_size - 1)
         target:delMod(tpz.mod.ACC, 1)
+        target:delMod(tpz.mod.RACC, 1)
     end
 end
 
@@ -23,5 +25,6 @@ function onEffectLose(target, effect)
     local boostACC_effect_size = effect:getPower()
     if (boostACC_effect_size > 0) then
         target:delMod(tpz.mod.ACC, effect:getPower())
+        target:delMod(tpz.mod.RACC, effect:getPower())
     end
 end

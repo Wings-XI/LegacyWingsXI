@@ -1246,6 +1246,12 @@ INSERT INTO `mob_skill_lists` VALUES('Grav_iton', 282, 788);
 INSERT INTO `mob_skill_lists` VALUES('Grav_iton', 282, 920);
 INSERT INTO `mob_skill_lists` VALUES('Grav_iton', 282, 921);
 INSERT INTO `mob_skill_lists` VALUES('Melusine', 283, 2198);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2106);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2107);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2108);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2109);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2110);
+INSERT INTO `mob_skill_lists` VALUES('Oupire', 284, 2111);
 INSERT INTO `mob_skill_lists` VALUES('Gulool', 285, 1731);
 INSERT INTO `mob_skill_lists` VALUES('Gulool', 285, 1732);
 INSERT INTO `mob_skill_lists` VALUES('Gulool', 285, 1733);
@@ -3322,6 +3328,12 @@ INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2032);
 INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2033);
 INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2035);
 INSERT INTO `mob_skill_lists` VALUES('Rampart', 209, 2036);
+INSERT INTO `mob_skill_lists` VALUES('Vasiliceratops', 5010, 2099);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1821);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1822);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1823);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1824);
+INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1825);
 --
 -- Indexes for dumped tables
 --

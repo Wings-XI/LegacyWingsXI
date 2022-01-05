@@ -48,54 +48,68 @@ function onSpellCast(caster, target, spell)
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     local resist = 1
     local duration = 1
-    
-    params.effect = tpz.effect.PARALYSIS
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
-        target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration*resist)
+
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+        params.effect = tpz.effect.PARALYSIS
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration*resist)
+        end
     end
     
-    params.effect = tpz.effect.WEIGHT
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then
-        target:addStatusEffect(tpz.effect.WEIGHT, 25, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+        params.effect = tpz.effect.WEIGHT
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.WEIGHT) then
+            target:addStatusEffect(tpz.effect.WEIGHT, 25, 0, duration*resist)
+        end
+    end
+
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        params.effect = tpz.effect.POISON
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
+            target:addStatusEffect(tpz.effect.POISON, 4, 0, duration*resist)
+        end
     end
     
-    params.effect = tpz.effect.POISON
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
-        target:addStatusEffect(tpz.effect.POISON, 4, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SLOWRES) < 100 then
+        params.effect = tpz.effect.SLOW
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
+            target:addStatusEffect(tpz.effect.SLOW, 2000, 0, duration*resist)
+        end
+    end
+
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SILENCERES) < 100 then
+        params.effect = tpz.effect.SILENCE
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SILENCE) then
+            target:addStatusEffect(tpz.effect.SILENCE, 25, 0, duration*resist)
+        end
     end
     
-    params.effect = tpz.effect.SLOW
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
-        target:addStatusEffect(tpz.effect.SLOW, 2000, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
+        params.effect = tpz.effect.BIND
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BIND) then
+            target:addStatusEffect(tpz.effect.BIND, 1, 0, duration*resist)
+        end
     end
     
-    params.effect = tpz.effect.SILENCE
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SILENCE) then
-        target:addStatusEffect(tpz.effect.SILENCE, 25, 0, duration*resist)
-    end
-    
-    params.effect = tpz.effect.BIND
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BIND) then
-        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration*resist)
-    end
-    
-    params.effect = tpz.effect.BLINDNESS
-    resist = applyResistanceEffect(caster, target, spell, params)
-    duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BLINDNESS) then
-        target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        params.effect = tpz.effect.BLINDNESS
+        resist = applyResistanceEffect(caster, target, spell, params)
+        duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BLINDNESS) then
+            target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration*resist)
+        end
     end
 
     return damage

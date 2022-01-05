@@ -104,3 +104,28 @@ void CBlueSpell::addModifier(CModifier modifier)
 {
     modList.push_back(modifier);
 }
+
+void CBlueSpell::setKnockback(uint8 knockback)
+{
+    m_knockback = knockback;
+}
+
+uint8 CBlueSpell::getKnockback()
+{
+    return m_knockback;
+}
+
+void CBlueSpell::setPhysical(uint8 isPhysical)
+{
+    m_isPhysical = isPhysical;
+}
+
+bool CBlueSpell::isPhysical()
+{
+    return m_isPhysical;
+}
+
+bool CBlueSpell::isMagical()
+{
+    return !m_isPhysical;
+}

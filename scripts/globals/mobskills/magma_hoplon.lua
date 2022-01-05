@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Magma_Hoplon
+-- Magma Hoplon
 -- Covers the user in fiery spikes and absorbs damage. Enemies that hit it take fire damage.
 -- Stoneskin portion cannot be removed with dispel.
 ---------------------------------------------

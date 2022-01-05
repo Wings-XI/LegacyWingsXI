@@ -13,6 +13,11 @@ end
 
 function onSpellCast(caster, target, spell)
 
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.PARALYZERES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.PARALYSIS
+    end
+
     if (target:hasStatusEffect(tpz.effect.PARALYSIS)) then --effect already on, do nothing
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     else

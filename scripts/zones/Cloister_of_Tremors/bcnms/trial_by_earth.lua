@@ -34,7 +34,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_EARTH) == QUEST_ACCEPTED then
+        if player:getQuestStatus(BASTOK, tpz.quest.id.bastok.TRIAL_BY_EARTH) == QUEST_ACCEPTED then
             player:delKeyItem(tpz.ki.TUNING_FORK_OF_EARTH)
             player:addKeyItem(tpz.ki.WHISPER_OF_TREMORS)
             player:addTitle(tpz.title.HEIR_OF_THE_GREAT_EARTH)

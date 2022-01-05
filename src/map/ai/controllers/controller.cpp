@@ -112,10 +112,23 @@ bool CController::WeaponSkill(uint16 targid, uint16 wsid)
     {
         CBattleEntity* PTarget = (CBattleEntity*)(POwner->GetEntity(targid));
         CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(wsid);
-        if (distance(POwner->loc.p, PTarget->loc.p) > (float)(PWeaponSkill->getRange()))
+        float dist = distance(POwner->loc.p, PTarget->loc.p);
+        // Special casing Behemoth mob size - TODO: Get a comprehensive list of how far we should be able to weaponskill from on larger mobs
+        if (PWeaponSkill->getRange() <= 5 && PTarget->objtype == TYPE_MOB)
+        {
+            CMobEntity* mob = (CMobEntity*)PTarget;
+            if (mob->m_Family == 51 || mob->m_Family == 479) // Behemoth or King Behemoth
+            {
+                // Allow a reach from approx 6 yalms based on a model size of 4
+                // Behe's model starts at 5.3.  6 yalms gives some room for TA/SA
+                dist = dist - PTarget->m_ModelSize / 4.0;
+            }
+        }
+
+        if (dist > (float)(PWeaponSkill->getRange()))
         {
             if (POwner->objtype == TYPE_PC)
-                ((CCharEntity*)POwner)->pushPacket(new CMessageBasicPacket(POwner, POwner, (int32)(PTarget->id), 0, 4)); // the [target] is too far away.
+                ((CCharEntity*)POwner)->pushPacket(new CMessageBasicPacket(POwner, PTarget, (int32)(PTarget->id), 0, 4)); // the [target] is too far away.
             return false;
         }
         else

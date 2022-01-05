@@ -13,7 +13,12 @@ end
 function onSpellCast(caster, target, spell)
     
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
-        spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SLEEP_I
+    end
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return tpz.effect.SLEEP_I
     end
 

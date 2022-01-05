@@ -5952,7 +5952,7 @@ namespace battleutils
         int32 recast = base;
 
         // Apply Fast Cast
-        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 25.0f)) / 100.0f));
+        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, -25.0f, 25.0f)) / 100.0f));
 
         // Apply Haste (Magic and Gear)
         int16 haste = PEntity->getMod(Mod::HASTE_MAGIC) + PEntity->getMod(Mod::HASTE_GEAR);

@@ -8,6 +8,8 @@
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/msg")
+---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
     -- Being silenced does not stop this skill, but does prevent casting of the spell associated
@@ -39,4 +41,5 @@ function onMobWeaponSkill(target, mob, skill)
     mob:timer(3000, function(mob)
         mob:setMod(tpz.mod.UFASTCAST, mob:getLocalVar("fastCastMod"))
     end)
+    skill:setMsg(tpz.msg.basic.NONE)
 end

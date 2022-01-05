@@ -229,8 +229,8 @@ INSERT INTO `mob_family_system` VALUES(161, 'HybridElemental-Lightning', 11, 'El
 INSERT INTO `mob_family_system` VALUES(162, 'HybridElemental-Water', 11, 'Elemental', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
 INSERT INTO `mob_family_system` VALUES(163, 'Hydra', 10, 'Dragon', 4, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 2, 3, 3, 1, 1, 1, 0.875, 0.3, 0.3, 0.3, 0.6, 0.6, 0.6, 0.6, 0.6, 6, 2, 0);
 INSERT INTO `mob_family_system` VALUES(164, 'Hydra', 10, 'Dragon', 4, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 2, 3, 3, 1, 1, 1, 0.875, 0.3, 0.3, 0.3, 0.6, 0.6, 0.6, 0.6, 0.6, 6, 2, 0);
-INSERT INTO `mob_family_system` VALUES(165, 'Imp', 9, 'Demon', 0, 50, 70, 140, 6, 3, 4, 3, 1, 5, 4, 3, 3, 3, 5, 1, 1.25, 1, 1, 1.15, 1.15, 0.7, 1.15, 1.15, 1.15, 1.3, 0.3, 8, 1, 0);
-INSERT INTO `mob_family_system` VALUES(166, 'Imp', 9, 'Demon', 0, 50, 70, 140, 6, 3, 4, 3, 1, 5, 4, 3, 3, 3, 5, 1, 1.25, 1, 1, 1.15, 1.15, 0.7, 1.15, 1.15, 1.15, 1.3, 0.3, 8, 1, 0);
+INSERT INTO `mob_family_system` VALUES(165, 'Imp', 9, 'Demon', 0, 50, 70, 140, 6, 3, 4, 3, 1, 5, 4, 3, 3, 3, 5, 1, 1.25, 1, 1, 1.15, 1.15, 0.7, 1.15, 1.15, 1.15, 1.3, 0.3, 8, 3, 0);
+INSERT INTO `mob_family_system` VALUES(166, 'Imp', 9, 'Demon', 0, 50, 70, 140, 6, 3, 4, 3, 1, 5, 4, 3, 3, 3, 5, 1, 1.25, 1, 1, 1.15, 1.15, 0.7, 1.15, 1.15, 1.15, 1.3, 0.3, 8, 3, 0);
 INSERT INTO `mob_family_system` VALUES(167, 'Karakul', 6, 'Beast', 1, 40, 90, 110, 3, 4, 4, 4, 5, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1, 1.3, 1.3, 1.5, 1.5, 1.3, 1.3, 4, 1, 1);
 INSERT INTO `mob_family_system` VALUES(168, 'Khimaira', 3, 'Arcana', 3, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.4, 0.8, 0.4, 0.5, 0.3, 0.8, 0.5, 0.8, 5, 3, 0);
 INSERT INTO `mob_family_system` VALUES(169, 'Kindred', 9, 'Demon', 0, 50, 110, 140, 2, 2, 4, 4, 1, 2, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.3, 1, 8, 257, 0);
@@ -316,7 +316,7 @@ INSERT INTO `mob_family_system` VALUES(248, 'Turret-Orc', 18, 'Unclassified', 4,
 INSERT INTO `mob_family_system` VALUES(249, 'Turret-Quadav', 18, 'Unclassified', 4, 40, 100, 120, 3, 3, 4, 4, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(250, 'Turret-Yagudo', 18, 'Unclassified', 4, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(251, 'Uragnite', 2, 'Aquan', 1, 40, 120, 90, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 0.6, 1.15, 1.15, 1.15, 1.5, 0.6, 1.15, 1.15, 6, 2, 1);
-INSERT INTO `mob_family_system` VALUES(252, 'Vampyr', 19, 'Undead', 1, 40, 100, 120, 4, 3, 2, 4, 3, 6, 6, 3, 1, 3, 3, 1, 1, 1, 1, 0.6, 0.3, 0.4, 0.4, 0.6, 0.6, 0.85, 0.05, 8, 6, 0);
+INSERT INTO `mob_family_system` VALUES(252, 'Vampyr', 19, 'Undead', 3, 40, 100, 120, 4, 3, 2, 4, 3, 6, 6, 3, 1, 3, 3, 1, 1, 1, 1, 0.6, 0.3, 0.4, 0.4, 0.6, 0.6, 0.85, 0.05, 8, 6, 0);
 INSERT INTO `mob_family_system` VALUES(253, 'Wamoura', 20, 'Vermin', 1, 40, 90, 90, 5, 5, 1, 5, 5, 5, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.05, 1.3, 0.7, 1.15, 1, 1.3, 1, 1.15, 1, 35, 0);
 INSERT INTO `mob_family_system` VALUES(254, 'Wamouracampa', 20, 'Vermin', 1, 45, 90, 90, 5, 5, 1, 5, 5, 5, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 1.125, 1, 1, 1, 1, 1, 1, 1, 2, 0);
 INSERT INTO `mob_family_system` VALUES(255, 'Wanderer', 12, 'Empty', 0, 40, 110, 90, 4, 3, 5, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);

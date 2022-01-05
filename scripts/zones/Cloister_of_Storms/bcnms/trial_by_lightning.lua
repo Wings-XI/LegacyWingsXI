@@ -34,7 +34,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_LIGHTNING) == QUEST_ACCEPTED then
+        if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.TRIAL_BY_LIGHTNING) == QUEST_ACCEPTED then
             player:delKeyItem(tpz.ki.TUNING_FORK_OF_LIGHTNING)
             player:addKeyItem(tpz.ki.WHISPER_OF_STORMS)
             player:addTitle(tpz.title.HEIR_OF_THE_GREAT_LIGHTNING)
