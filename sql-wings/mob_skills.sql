@@ -1031,7 +1031,7 @@ INSERT INTO `mob_skills` VALUES(1533, 1117, 'pile_pitch', 0, 10.0, 2000, 1500, 4
 INSERT INTO `mob_skills` VALUES(1534, 926, 'guided_missile', 2, 5.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1535, 1119, 'hyper_pulse', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1537, 929, 'discharger', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1538, 930, 'ion_efflux', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1538, 930, 'ion_efflux', 5, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1539, 1123, 'rear_lasers', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1540, 1081, 'citadel_buster', 2, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1542, 1133, 'trample', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
