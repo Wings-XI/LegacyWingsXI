@@ -20,8 +20,9 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-	
-	
+
+    skill:setKnockback(1)
+
     local currentHP = target:getHP()
     -- remove all by 5%
     local damage = 0
