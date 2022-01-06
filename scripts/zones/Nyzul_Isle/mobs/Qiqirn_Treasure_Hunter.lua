@@ -25,7 +25,7 @@ function onMobFight(mob, target)
         local runAwayZ = mob:getLocalVar("QQ_RunAwayZ")
         -- runaway logic unless we have a 0,0,0 pos
         if (runAwayX > 0) or (runAwayY > 0) or (runAwayZ > 0) then
-            mob:pathTo(runAwayX, runAwayY, runAwayZ)
+            mob:pathTo(runAwayX, runAwayY, runAwayZ, 0)
         end
     end
 

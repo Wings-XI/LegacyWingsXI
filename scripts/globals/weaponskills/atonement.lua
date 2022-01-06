@@ -86,6 +86,48 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
             damage = damage * (100 + player:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)) / 100
         end
         damage = damage * WEAPON_SKILL_POWER
+
+        -- Atonement hits Cerberuses for additional damage
+        if (damage > 0) then
+            local family = target:getFamily()
+            -- Cerberus families, Sarameya, and PW pretending to be Cerb
+            if (family == 62) or (family == 314) or (family == 316 and target:getModelId() == 1793) then
+                -- this 70 page thread has data claiming that the damage mod is ~25~35%
+                -- https://www.bluegartr.com/threads/63084-New-WS-Properties-Modifier-Damage-Testing
+                -- SS of a 1008 on freke can be found on the talk page on ffxi wiki
+                local random = math.random(25, 35)
+                damage = damage * (random/100.0 + 1)
+            end
+        end
+
+        -- Circle Effects
+        if target:isMob() and damage > 0 then
+            local eco = target:getSystem()
+            local circlemult = 100
+            local mod = 0
+
+            if     eco == 1  then mod = 1226
+            elseif eco == 2  then mod = 1228
+            elseif eco == 3  then mod = 1232
+            elseif eco == 6  then mod = 1230
+            elseif eco == 8  then mod = 1225
+            elseif eco == 9  then mod = 1234
+            elseif eco == 10 then mod = 1233
+            elseif eco == 14 then mod = 1227
+            elseif eco == 16 then mod = 1238
+            elseif eco == 15 then mod = 1237
+            elseif eco == 17 then mod = 1229
+            elseif eco == 19 then mod = 1231
+            elseif eco == 20 then mod = 1224
+            end
+
+            if mod > 0 then
+                circlemult = 100 + player:getMod(mod)
+            end
+
+            damage = math.floor(damage * circlemult / 100)
+        end
+
         calcParams.finalDmg = damage
 
         if damage > 0 then
@@ -101,6 +143,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
     end
 
-	if damage > 0 then player:trySkillUp(target, tpz.skill.SWORD, tpHits+extraHits) end
+	if damage > 0 then player:trySkillUp(target, tpz.skill.SWORD, 1) end
     return calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.criticalHit, damage
 end

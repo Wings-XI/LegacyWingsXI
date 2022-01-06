@@ -93,6 +93,21 @@ bool CPlayerController::ChangeTarget(uint16 targid)
     return CController::ChangeTarget(targid);
 }
 
+// Checks that the next target is in front of the player when an autotarget occurs during combat
+bool CPlayerController::ChangeAutoTarget(uint16 targid, position_t &playerPos, position_t &mobPos)
+{
+    if (map_config.autotarget_qol) // autotarget is radial if qol enabled so skip position check
+    {
+        return CController::ChangeTarget(targid);
+    }
+    // mob must be in front of player
+    if (infront(mobPos, playerPos, 128))
+    {
+        return CController::ChangeTarget(targid);
+    }
+    return false;
+}
+
 bool CPlayerController::Disengage()
 {
     return CController::Disengage();
