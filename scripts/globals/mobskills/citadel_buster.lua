@@ -77,7 +77,7 @@ function onMobSkillCheck(target,mob,skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local basedmg = 2088
+    local basedmg = 1700
     if mob:getWeather() == tpz.weather.AURORAS or mob:getWeather() == tpz.weather.STELLAR_GLARE then basedmg = basedmg + 520 end
     if VanadielDayOfTheWeek() == tpz.day.LIGHTSDAY then basedmg = basedmg + 208 end
     local damage = basedmg/(1+(target:getMod(tpz.mod.MDEF)/100))
