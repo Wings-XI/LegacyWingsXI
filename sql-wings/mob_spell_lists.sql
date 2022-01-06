@@ -4256,14 +4256,14 @@ INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 157, 1, 255); -- Black Magic
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 359, 1, 255); -- White Magic: Silencega
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 366, 1, 255); -- Black Magic: Graviga
 -- Tethra
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 524, 1, 255); -- Blue Magic: Sandspin
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 548, 1, 255); -- Blue Magic: Filamented Hold
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 555, 1, 255); -- Blue Magic: Magnetite Cloud
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 524, 1, 255); -- Blue Magic: Sandspin
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 548, 1, 255); -- Blue Magic: Filamented Hold
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 555, 1, 255); -- Blue Magic: Magnetite Cloud
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 210, 1, 255); -- Black Magic: Quake
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic: Stonega III
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic: Stonega III
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 162, 1, 255); -- Black Magic: Stone IV
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
---INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
 
 
 --

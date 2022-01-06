@@ -83,7 +83,10 @@ INSERT INTO `mob_skills` VALUES(165, 81, 'skullbreaker', 0, 7.0, 2000, 1, 4, 0, 
 INSERT INTO `mob_skills` VALUES(166, 82, 'true_strike', 0, 7.0, 2000, 1, 4, 0, 0, 0, 6, 8, 0);
 INSERT INTO `mob_skills` VALUES(168, 84, 'hexa_strike', 0, 7.0, 2000, 1, 4, 0, 0, 0, 11, 0, 0);
 INSERT INTO `mob_skills` VALUES(169, 85, 'black_halo', 0, 7.0, 2000, 1, 4, 0, 0, 0, 12, 2, 0);
+INSERT INTO `mob_skills` VALUES(177, 137, 'rock_crusher', 0, 5.0, 2000, 0, 4, 0, 0, 0, 5, 8, 0);
+INSERT INTO `mob_skills` VALUES(178, 138, 'earth_crusher', 1, 5.0, 2000, 0, 4, 0, 0, 0, 5, 8, 0);
 INSERT INTO `mob_skills` VALUES(182, 142, 'full_swing', 0, 5.0, 2000, 0, 4, 0, 0, 0, 3, 8, 0);
+INSERT INTO `mob_skills` VALUES(184, 144, 'retribution', 0, 7.0, 2500, 1500, 4, 0, 0, 0, 12, 4, 0);
 INSERT INTO `mob_skills` VALUES(196, 195, 'sidewinder', 0, 21.0, 2000, 0, 4, 0, 0, 0, 5, 1, 6);
 INSERT INTO `mob_skills` VALUES(212, 200, 'slug_shot', 0, 21.0, 2000, 0, 4, 0, 0, 0, 5, 1, 6);
 INSERT INTO `mob_skills` VALUES(241, 241, 'netherspikes', 4, 10.0, 2000, 1, 4, 0, 0, 0, 0, 0, 0);
