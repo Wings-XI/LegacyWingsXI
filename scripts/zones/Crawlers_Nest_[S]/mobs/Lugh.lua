@@ -76,7 +76,7 @@ function onMobFight(mob, target)
         mob:messageBasic(232, 0, 0, target)
     end
 
-    -- 20 Yalm Intimidate Aura Wtih Might Strikes Active (https://ffxiclopedia.fandom.com/wiki/Elatha)
+    -- 20 Yalm Intimidate Aura Wtih Might Strikes Active (https://ffxiclopedia.fandom.com/wiki/Lugh)
     -- This just silently removes and adds Intimidate. Has 20% proc chance.
     if mob:hasStatusEffect(tpz.effect.MIGHTY_STRIKES) == true then
         local nearbyPlayers = mob:getPlayersInRange(20)
@@ -97,7 +97,6 @@ function onMobFight(mob, target)
         local levelup = mob:getLocalVar("LLevelUp")
 
         if mob:AnimationSub() == 1 then
-            -- Retaliation Should Cause Level Up And Always Be Blizzard IV With Instant Cast (https://ffxiclopedia.fandom.com/wiki/Elatha)
             if levelup > 0 then
                 -- Perform Level Up
                 local levelupsum = mob:getLocalVar("TotalLevelUp")
