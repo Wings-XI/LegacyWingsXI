@@ -6246,6 +6246,15 @@ INSERT INTO `mob_pools` VALUES(6209, 'Sea_Puk', 'Sea_Puk', 198, 0x0000d006000000
 INSERT INTO `mob_pools` VALUES(6210, 'Draugar', 'Draugar', 89, 0x0000dd0600000000000000000000000000000000, 6, 6, 12, 240, 100, 0, 1, 0, 0, 16, 0, 0, 1, 131, 0, 0, 0, 0, 0, 89);
 INSERT INTO `mob_pools` VALUES(6211, 'Voirloup', 'Voirloup', 132, 0x0000f10700000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 2, 0, 0, 348, 135, 1, 0, 0, 0, 0, 132);
 INSERT INTO `mob_pools` VALUES(6212, 'Vidhuwa_the_Wrathborn', 'Vidhuwa_the_Wrathborn', 233, 0x0000ef0600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 3, 1, 2, 0, 0, 404, 133, 0, 1, 0, 0, 0, 233);
+INSERT INTO `mob_pools` VALUES(6213, 'Air_Elemental', 'Air_Elemental', 99, 0x0000b60100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 658, 0, 112, 1155, 16, 0, 12, 0, 0, 99);
+INSERT INTO `mob_pools` VALUES(6214, 'Dark_Elemental', 'Dark_Elemental', 100, 0x0000bb0100000000000000000000000000000000, 8, 8, 11, 240, 100, 0, 1, 0, 0, 2, 4096, 0, 291, 131, 16, 0, 18, 0, 0, 100);
+INSERT INTO `mob_pools` VALUES(6215, 'Earth_Elemental', 'Earth_Elemental', 101, 0x00000b0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 648, 0, 508, 1155, 0, 0, 13, 0, 0, 101);
+INSERT INTO `mob_pools` VALUES(6216, 'Fire_Elemental', 'Fire_Elemental', 102, 0x0000080000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 36, 0, 1934, 131, 0, 0, 17, 0, 0, 102);
+INSERT INTO `mob_pools` VALUES(6217, 'Ice_Elemental', 'Ice_Elemental', 103, 0x0000090000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 54, 0, 764, 1155, 0, 0, 14, 0, 0, 103);
+INSERT INTO `mob_pools` VALUES(6218, 'Light_Elemental', 'Light_Elemental', 104, 0x00000e0000000000000000000000000000000000, 3, 3, 11, 240, 100, 0, 1, 0, 0, 2, 2048, 0, 1710, 131, 0, 0, 19, 0, 0, 104);
+INSERT INTO `mob_pools` VALUES(6219, 'Water_Elemental', 'Water_Elemental', 106, 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 256, 0, 343, 131, 0, 0, 15, 0, 0, 106);
+INSERT INTO `mob_pools` VALUES(6220, 'Thunder_Elemental', 'Thunder_Elemental', 105, 0x0000b90100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 264, 0, 291, 131, 16, 0, 16, 0, 0, 105);
+
 --
 -- Indexes for dumped tables
 --
