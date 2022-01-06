@@ -530,7 +530,10 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     }
 
     local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
-    bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC)
+    -- There is an assumed +100 macc bonus for magical weaponskills
+    -- https://www.bg-wiki.com/ffxi/Category:Elemental_Weapon_Skill
+    -- While this is very difficult to prove, the consistency of Trueflight, Leaden Salute, and Primal Rend (among others) supports this
+    bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC) + 100
     
     local fint = utils.clamp(8 + (attacker:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)), -32, 32)
     local dmg = 0
