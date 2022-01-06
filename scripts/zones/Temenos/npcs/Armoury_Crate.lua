@@ -1178,20 +1178,20 @@ local loot =
                 {itemid = 1875, droprate = 1000},
             },
             {
-                {itemid = 1920, droprate = 659},
-                {itemid = 1924, droprate = 394},
-                {itemid = 1923, droprate = 388},
-                {itemid = 1922, droprate = 404},
+                {itemid = 1920, droprate = 442}, -- Cerebrum
+                {itemid = 1924, droprate = 112}, -- Tail
+                {itemid = 1923, droprate = 257}, -- Leg
+                {itemid = 1922, droprate = 189}, -- Claw
             },
             {
-                {itemid = 1924, droprate = 394},
-                {itemid = 1922, droprate = 402},
-                {itemid = 1920, droprate = 659},
-                {itemid = 1923, droprate = 383},
+                {itemid = 1920, droprate = 442}, -- Cerebrum
+                {itemid = 1924, droprate = 112}, -- Tail
+                {itemid = 1923, droprate = 257}, -- Leg
+                {itemid = 1922, droprate = 189}, -- Claw
             },
             {
-                {itemid = 1921, droprate = 265},
-                {itemid =    0, droprate = 735},
+                {itemid = 1921, droprate = 364}, -- Heart
+                {itemid =    0, droprate = 636},
             },
         },
     -- central temenos floor 4 side loot
