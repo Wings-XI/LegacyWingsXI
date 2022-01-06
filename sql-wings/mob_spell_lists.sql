@@ -4246,6 +4246,15 @@ INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 645, 1, 255); -- Blue Magic: E
 INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 204, 1, 255); -- Black Magic: Flare
 INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 176, 1, 255); -- Black Magic: Firaga III
 INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 147, 1, 255); -- Black Magic: Fire IV
+-- Ethniu
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 563, 588, 1, 255); -- Blue Magic: Hecatomb Wave
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 647, 591, 1, 255); -- Blue Magic: Zephyr Mantle
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 561, 645, 1, 255); -- Blue Magic: Frightful Roar
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 208, 1, 255); -- Black Magic: Tornado
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 186, 1, 255); -- Black Magic: Aeroga III
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 157, 1, 255); -- Black Magic: Aero IV
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 359, 1, 255); -- Black Magic: Silencega
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 366, 1, 255); -- Black Magic: Graviga
 
 --
 -- Indexes for dumped tables

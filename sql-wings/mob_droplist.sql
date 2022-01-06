@@ -16803,7 +16803,15 @@ INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 2859, 154); -- Chunk of Coba
 INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 19162, 154); -- Chipped Scimitar
 INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 15057, 77); -- Setanta's Ledelsens
 INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 747, 86); -- Orichalcum Ingot
-
+-- Ethniu
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 2859, 200); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 19128, 200); -- Edgeless Knife
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 16376, 200); -- Bahram Cuisses
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 15772, 200); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 1, 1, 1000, 747, 50); -- Orichalcum Ingot
 
 --
 -- Indexes for dumped tables

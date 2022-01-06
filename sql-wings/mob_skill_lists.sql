@@ -3354,6 +3354,13 @@ INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 242); -- Carnal Nightmare
 INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 34); -- Red Lotus Blade
 INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 38); -- Circle Blade
 INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 42); -- Savage Blade
+-- Ethniu
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 247); -- Foxfire
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 19); -- Gust Slash
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 20); -- Cyclone
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 25); -- Evisceration
 
 
 --

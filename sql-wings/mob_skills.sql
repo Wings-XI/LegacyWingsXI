@@ -50,11 +50,13 @@ CREATE TABLE `mob_skills` (
 -- Dumping data for table `mob_skills`
 --
 
-INSERT INTO `mob_skills` VALUES (16, 31, 'wasp_sting', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
-INSERT INTO `mob_skills` VALUES (17, 32, 'viper_bite', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
-INSERT INTO `mob_skills` VALUES (18, 33, 'shadowstitch', 0, 5.0, 2000, 1, 4, 0, 0, 0, 5, 0, 0);
-INSERT INTO `mob_skills` VALUES (23, 38, 'dancing_edge', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 6, 0);
-INSERT INTO `mob_skills` VALUES (25, 40, 'evisceration', 0, 5.0, 2000, 1, 4, 0, 0, 0, 9, 1, 0);
+INSERT INTO `mob_skills` VALUES(16, 31, 'wasp_sting', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
+INSERT INTO `mob_skills` VALUES(17, 32, 'viper_bite', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 0, 0);
+INSERT INTO `mob_skills` VALUES(18, 33, 'shadowstitch', 0, 5.0, 2000, 1, 4, 0, 0, 0, 5, 0, 0);
+INSERT INTO `mob_skills` VALUES(19, 34, 'gust_slash', 0, 5.0, 2000, 0, 4, 0, 0, 0, 5, 8, 0);
+INSERT INTO `mob_skills` VALUES(20, 35, 'cyclone', 1, 5.0, 2000, 0, 4, 0, 0, 0, 5, 8, 0);
+INSERT INTO `mob_skills` VALUES(23, 38, 'dancing_edge', 0, 5.0, 2000, 1, 4, 0, 0, 0, 4, 6, 0);
+INSERT INTO `mob_skills` VALUES(25, 40, 'evisceration', 0, 5.0, 2000, 1, 4, 0, 0, 0, 9, 1, 0);
 INSERT INTO `mob_skills` VALUES(32, 1, 'fast_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(33, 2, 'burning_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 3, 0, 0);
 INSERT INTO `mob_skills` VALUES(34, 3, 'red_lotus_blade', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
