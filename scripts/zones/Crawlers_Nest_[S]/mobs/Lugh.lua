@@ -162,4 +162,5 @@ end
 
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 516)
+    player:setTitle(tpz.title.LUGH_EXORCIST)
 end
