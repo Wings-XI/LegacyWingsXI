@@ -91,8 +91,8 @@ function onMobFight(mob, target)
     end
     
     -- Combat Tick Logic
-    mob:addListener("COMBAT_TICK", "LUGH_CTICK", function(mob)
-        local levelup = mob:getLocalVar("LLevelUp")
+    mob:addListener("COMBAT_TICK", "ETHNIU_CTICK", function(mob)
+        local levelup = mob:getLocalVar("ELevelUp")
 
         if mob:AnimationSub() == 1 then
             if levelup > 0 then
@@ -102,11 +102,11 @@ function onMobFight(mob, target)
                     mob:useMobAbility(2460)
                     mob:setLocalVar("TotalLevelUp", levelupsum + 1)
                 end
-                mob:setLocalVar("LLevelUp", 0)
+                mob:setLocalVar("ELevelUp", 0)
                 mob:AnimationSub(0)
             -- Resets States And Mods
             else
-                mob:setLocalVar("LLevelUp", 0)
+                mob:setLocalVar("ELevelUp", 0)
                 mob:AnimationSub(0)
             end
         end
@@ -114,26 +114,32 @@ function onMobFight(mob, target)
 
     -- Magic Enmity Handling
     -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Ethniu)
-    mob:addListener("MAGIC_TAKE", "LUGH_MAGIC_TAKE", function(target, caster, spell)
+    mob:addListener("MAGIC_TAKE", "ETHNIU_MAGIC_TAKE", function(target, caster, spell)
         if
             target:AnimationSub() == 0 and
             spell:tookEffect() and
             (caster:isPC() or caster:isPet())
         then
-            caster:addEnmity(caster, 1000, 1000)
+            target:addEnmity(caster, 1000, 1000)
         end
     end)
 
     -- Enmity Handling
     -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Ethniu)
-    mob:addListener("TAKE_DAMAGE", "LUGH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        mob:addEnmity(attacker, 1000, 1000)
+    mob:addListener("TAKE_DAMAGE", "ETHNIU_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
+        if attackType == tpz.attackType.PHYSICAL then
+            mob:addEnmity(attacker, 1000, 1000)
+        end
+    end)
+
+    mob:addListener("WEAPONSKILL_TAKE", "ETHNIU_WEAPONSKILL_TAKE", function(target, attacker, skillid, tp, action)
+        target:addEnmity(attacker, 1000, 1000)
     end)
 end
 
 function onSpellPrecast(mob, spell)
     if spell:getID() == (208 or 186 or 157 or 359 or 366) then
-        mob:setLocalVar("LLevelUp", 1)
+        mob:setLocalVar("ELevelUp", 1)
         mob:AnimationSub(1)
     end
 end

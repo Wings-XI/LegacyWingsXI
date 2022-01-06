@@ -188,7 +188,13 @@ function onMobFight(mob, target)
     -- Enmity Handling
     -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Tethra)
     mob:addListener("TAKE_DAMAGE", "TETHRA_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        mob:addEnmity(attacker, 1000, 1000)
+        if attackType == tpz.attackType.PHYSICAL then
+            mob:addEnmity(attacker, 1000, 1000)
+        end
+    end)
+
+    mob:addListener("WEAPONSKILL_TAKE", "TETHRA_WEAPONSKILL_TAKE", function(target, attacker, skillid, tp, action)
+        target:addEnmity(attacker, 1000, 1000)
     end)
 
 end

@@ -128,14 +128,20 @@ function onMobFight(mob, target)
             spell:tookEffect() and
             (caster:isPC() or caster:isPet())
         then
-            caster:addEnmity(caster, 1000, 1000)
+            target:addEnmity(caster, 1000, 1000)
         end
     end)
 
     -- Enmity Handling
     -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Lugh)
     mob:addListener("TAKE_DAMAGE", "LUGH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        mob:addEnmity(attacker, 1000, 1000)
+        if attackType == tpz.attackType.PHYSICAL then
+            mob:addEnmity(attacker, 1000, 1000)
+        end
+    end)
+
+    mob:addListener("WEAPONSKILL_TAKE", "LUGH_WEAPONSKILL_TAKE", function(target, attacker, skillid, tp, action)
+        target:addEnmity(attacker, 1000, 1000)
     end)
 end
 
