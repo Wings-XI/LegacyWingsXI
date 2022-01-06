@@ -157,7 +157,7 @@ function onMobDisengage(mob)
 end
 
 function onMobDespawn(mob)
-    player:messageBasic(tpz.zone.CRAWLERS_NEST_S.NM_DESPAWN) -- Despawn Message
+    mob:messageBasic(tpz.zone.CRAWLERS_NEST_S.NM_DESPAWN) -- Despawn Message
 end
 
 function onMobDeath(mob, player, isKiller)

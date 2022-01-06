@@ -153,7 +153,7 @@ function onMobDisengage(mob)
 end
 
 function onMobDespawn(mob)
-    player:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.NM_DESPAWN) -- Despawn Message
+    mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.NM_DESPAWN) -- Despawn Message
 end
 
 function onMobDeath(mob, player, isKiller)
