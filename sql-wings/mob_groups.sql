@@ -1173,7 +1173,7 @@ INSERT INTO `mob_groups` VALUES(83, 4415, 37, 'Yagudo_Disciplinant', 0, 128, 286
 INSERT INTO `mob_groups` VALUES(84, 4429, 37, 'Yagudo_Kapellmeister', 0, 128, 2861, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(85, 6098, 37, 'Yagudo_Knight_Templar', 0, 128, 2861, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(86, 4443, 37, 'Yagudo_Prelatess', 0, 128, 2861, 0, 0, 75, 80, 0);
-INSERT INTO `mob_groups` VALUES(87, 6171, 37, 'Yagudo_Eradicator', 0, 128, 2861, 0, 0, 75, 80, 0);
+INSERT INTO `mob_groups` VALUES(87, 4417, 37, 'Yagudo_Eradicator', 0, 128, 2861, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(88, 6147, 37, 'Light_Elemental', 0, 128, 2863, 7000, 1000, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(89, 6148, 37, 'Airi', 0, 128, 2863, 16000, 1000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(90, 3868, 37, 'Temenos_Cleaner', 0, 128, 2863, 16000, 1000, 75, 80, 0);
