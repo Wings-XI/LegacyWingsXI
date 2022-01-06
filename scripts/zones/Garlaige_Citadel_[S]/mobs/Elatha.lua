@@ -15,12 +15,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.MND, 20)
     mob:addMod(tpz.mod.CHR, 20)
     mob:addMod(tpz.mod.AGI, 20)
+    mob:addMod(tpz.mod.DEX, 40)
     mob:addMod(tpz.mod.DEFP, 75)
     mob:addMod(tpz.mod.RATTP, 75)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:setMod(tpz.mod.EARTHDEF, 200)
-    mob:setMod(tpz.mod.DARKDEF, 200)
+    mob:setMod(tpz.mod.DARKDEF, 240)
     mob:setMod(tpz.mod.LIGHTDEF, 240)
     mob:setMod(tpz.mod.FIREDEF, 128)
     mob:setMod(tpz.mod.WATERDEF, 200)
@@ -34,10 +35,12 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.POISONRES, 100)
     mob:setMod(tpz.mod.PARALYZERES, 100)
+    mob:setMod(tpz.mod.LULLABYRES, 100)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:addStatusEffect(tpz.effect.ICE_SPIKES, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
     mob:addStatusEffect(tpz.effect.ENBLIZZARD_II, 25, 0, 0)
+    mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
@@ -97,7 +100,6 @@ function onMobFight(mob, target)
                 -- Perform Level Up
                 local levelupsum = mob:getLocalVar("TotalLevelUp")
                 if levelupsum <= 15 then
-                    print(levelupsum)
                     mob:useMobAbility(2460)
                     mob:setLocalVar("TotalLevelUp", levelupsum + 1)
                 end
@@ -129,6 +131,7 @@ function onMobFight(mob, target)
             (caster:isPC() or caster:isPet())
         then
             target:setLocalVar("ERetaliate", 1)
+            caster:addEnmity(caster, 1000, 1000)
             target:AnimationSub(1)
         end
     end)
@@ -143,7 +146,7 @@ end
 
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
-    if mob:gethpp() < 100 or levelupsum > 0 then
+    if mob:getHPP() < 100 or levelupsum > 0 then
         mob:DespawnMob(17449008, 0)
         mob:setLocalVar("TotalLevelUp", 0)
     end

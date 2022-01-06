@@ -4239,6 +4239,13 @@ INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 608, 1, 255); -- Blue Magic:
 INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 206, 1, 255); -- Black Magic: Freeze
 INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 181, 1, 255); -- Black Magic: Blizzaga III
 INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 152, 1, 255); -- Black Magic: Blizzard IV
+-- Lugh
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 588, 1, 255); -- Blue Magic: Lowing
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 591, 1, 255); -- Blue Magic: Heat Breath
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 645, 1, 255); -- Blue Magic: Exuviation
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 204, 1, 255); -- Black Magic: Flare
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 176, 1, 255); -- Black Magic: Firaga III
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 147, 1, 255); -- Black Magic: Fire IV
 
 --
 -- Indexes for dumped tables

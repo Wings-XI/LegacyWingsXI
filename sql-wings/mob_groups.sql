@@ -9993,7 +9993,7 @@ INSERT INTO `mob_groups` VALUES(14, 525, 171, 'Brass_Quadav', 960, 0, 354, 0, 0,
 INSERT INTO `mob_groups` VALUES(15, 3464, 171, 'Sapphirine_Quadav', 960, 0, 2161, 0, 0, 66, 69, 0);
 INSERT INTO `mob_groups` VALUES(16, 1084, 171, 'Doom_Scorpion', 960, 0, 113, 0, 0, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(17, 3200, 171, 'Processionaire', 960, 0, 2023, 0, 0, 69, 71, 0);
-INSERT INTO `mob_groups` VALUES(18, 4696, 171, 'Lugh', 0, 128, 0, 0, 5000, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(18, 4696, 171, 'Lugh', 14400, 0, 3227, 0, 9999, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(19, 4309, 171, 'Water_Elemental', 960, 4, 2629, 0, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(20, 3276, 171, 'Quadav_Transporter', 0, 128, 0, 0, 0, 50, 50, 0);
 INSERT INTO `mob_groups` VALUES(21, 3274, 171, 'Quadav_Guard', 0, 128, 0, 0, 0, 75, 75, 0);

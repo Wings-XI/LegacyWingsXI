@@ -16795,7 +16795,14 @@ INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 2859, 263); -- Chunk of Coba
 INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 19162, 316); -- Dull Claymore
 INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 15057, 272); -- Bricta's Cuffs
 INSERT INTO `mob_droplist` VALUES(3226, 1, 1, 1000, 747, 82); -- Orichalcum Ingot
-
+-- Lugh
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 2859, 154); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 19162, 154); -- Chipped Scimitar
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 15057, 77); -- Setanta's Ledelsens
+INSERT INTO `mob_droplist` VALUES(3227, 1, 1, 1000, 747, 86); -- Orichalcum Ingot
 
 
 --
