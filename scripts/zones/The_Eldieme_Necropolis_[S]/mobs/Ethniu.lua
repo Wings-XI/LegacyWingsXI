@@ -22,8 +22,6 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.EVA, 100)
     -- Adding 10% Triple Since THF
     mob:setMod(tpz.mod.TRIPLE_ATTACK, 10)
-    -- Adding 90% Double Attack To Make Up For Lack Of Dual Wield
-    mob:setMod(tpz.mod.DOUBLE_ATTACK, 90)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Ethniu
     mob:setMod(tpz.mod.EARTHDEF, 170)
     mob:setMod(tpz.mod.DARKDEF, 240)
@@ -84,10 +82,8 @@ function onMobFight(mob, target)
     -- Increases Triple Attack Rate To 80% While Perfect Dodge (https://ffxiclopedia.fandom.com/wiki/Ethniu)
     if mob:hasStatusEffect(tpz.effect.PERFECT_DODGE) == true then
         mob:setMod(tpz.mod.TRIPLE_ATTACK, 80)
-        mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     else
         mob:setMod(tpz.mod.TRIPLE_ATTACK, 10)
-        mob:setMod(tpz.mod.DOUBLE_ATTACK, 90)
     end
     
     -- Combat Tick Logic
