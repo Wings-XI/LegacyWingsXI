@@ -29,7 +29,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.ICEDEF, 170)
     mob:setMod(tpz.mod.WINDDEF, 170)
     mob:setMod(tpz.mod.SILENCERES, 100)
-    mob:setMod(tpz.mod.FIRE_ABSORB, 0)
+    mob:setMod(tpz.mod.FIRE_ABSORB, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
@@ -68,12 +68,16 @@ function onMobFight(mob, target)
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room, Draws In Anyone In Range (https://ffxiclopedia.fandom.com/wiki/Lugh)
-    if (target:getZPos() < 214.00 or target:getZPos() > 240.00) then
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (target:getZPos() < 214.00 or target:getZPos() > 240.00) and os.time() > drawInWait then
         target:setPos(-196.076, -0.447, 220.810)
         mob:messageBasic(232, 0, 0, target)
-    elseif (target:getXPos() < -218.00 or target:getXPos() > -175.00) then
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif (target:getXPos() < -218.00 or target:getXPos() > -175.00) and os.time() > drawInWait then
         target:setPos(-196.076, -0.447, 220.810)
         mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
     end
 
     -- 20 Yalm Intimidate Aura Wtih Might Strikes Active (https://ffxiclopedia.fandom.com/wiki/Lugh)
@@ -152,11 +156,15 @@ function onMobDisengage(mob)
     if mob:getHPP() < 100 or levelupsum > 0 then
         mob:DespawnMob(17477708, 0)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("MobPoof", 1)
     end
 end
 
 function onMobDespawn(mob)
-    mob:messageBasic(tpz.zone.CRAWLERS_NEST_S.NM_DESPAWN) -- Despawn Message
+    if mob:getLocalVar("MobPoof") == 1 then
+        mob:messageBasic(tpz.zone.CRAWLERS_NEST_S.text.NM_DESPAWN) -- Despawn Message
+        mob:setLocalVar("MobPoof", 0)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -3361,6 +3361,13 @@ INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 242); -- Carnal Nightmare
 INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 19); -- Gust Slash
 INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 20); -- Cyclone
 INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 25); -- Evisceration
+-- Tethra
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 177); -- Rock Crusher
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 178); -- Earth Crusher
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 184); -- Retribution
 
 
 --

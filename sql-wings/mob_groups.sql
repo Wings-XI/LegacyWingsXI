@@ -10211,7 +10211,8 @@ INSERT INTO `mob_groups` VALUES(25, 3018, 175, 'Orcish_Guard', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(26, 1200, 175, 'Ellylldan', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(27, 1026, 175, 'Dhoul', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(28, 5178, 175, 'Giltine', 0, 128, 0, 0, 20000, 94, 95, 0);
-INSERT INTO `mob_groups` VALUES(29, 6885, 175,'Ethniu', 14400, 0, 0, 0, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(29, 6885, 175,'Ethniu', 14400, 3228, 0, 0, 0, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(30, 6886, 175,'Tethra', 14400, 3229, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(9053, 18, 175, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(9054, 37, 175, 'Achtelle', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(9055, 84, 175, 'Alfons', 1, 0, 0, 0, 0, 1, 1, 0);

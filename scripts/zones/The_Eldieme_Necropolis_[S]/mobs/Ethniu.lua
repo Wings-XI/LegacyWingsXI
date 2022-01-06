@@ -69,14 +69,16 @@ function onMobFight(mob, target)
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room, Draws In Anyone In Range (https://ffxiclopedia.fandom.com/wiki/Ethniu)
-    if (target:getXPos() > 175.00) then
-        print("Draw 1")
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (target:getXPos() > 175.00) and os.time() > drawInWait then
         target:setPos(152.955, -15.000, 272.959)
         mob:messageBasic(232, 0, 0, target)
-    elseif (target:getYPos() < -18.00 and player:getXPos() > 137.00) then
-        print("Draw 2")
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif (target:getYPos() < -18.00 and player:getXPos() > 137.00) and os.time() > drawInWait then
         target:setPos(152.955, -15.000, 272.959)
         mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
     end
 
     -- Increases Triple Attack Rate To 80% While Perfect Dodge (https://ffxiclopedia.fandom.com/wiki/Ethniu)
@@ -139,11 +141,15 @@ function onMobDisengage(mob)
     if mob:getHPP() < 100 or levelupsum > 0 then
         mob:DespawnMob(17494093, 0)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("MobPoof", 1)
     end
 end
 
 function onMobDespawn(mob)
-    mob:messageBasic(tpz.zone.THE_ELDIEME_NECROPOLIS_S.NM_DESPAWN) -- Despawn Message
+    if mob:getLocalVar("MobPoof") == 1 then
+        mob:messageBasic(tpz.zone.THE_ELDIEME_NECROPOLIS_S.text.NM_DESPAWN) -- Despawn Message
+        mob:setLocalVar("MobPoof", 0)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

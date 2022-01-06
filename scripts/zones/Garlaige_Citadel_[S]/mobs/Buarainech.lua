@@ -54,9 +54,12 @@ function onMobFight(mob, target)
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://www.youtube.com/watch?v=7sjZoknSXRw&ab_channel=RainbowChaser)
-    if (target:getZPos() < -146.66) then
+    local drawInWait = mob:getLocalVar("DrawInWait")
+    
+    if (target:getZPos() < -146.66) and os.time() > drawInWait then
         target:setPos(121.70, 7.00, -122.45)
         mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
     end
 
     -- Combat Tick Logic
@@ -156,11 +159,15 @@ function onMobDisengage(mob)
     if mob:getHPP() < 100 or levelupsum > 0 then
         mob:DespawnMob(17449017, 0)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("MobPoof", 1)
     end
 end
 
 function onMobDespawn(mob)
-    mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.NM_DESPAWN) -- Despawn Message
+    if mob:getLocalVar("MobPoof") == 1 then
+        mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.text.NM_DESPAWN) -- Despawn Message
+        mob:setLocalVar("MobPoof", 0)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

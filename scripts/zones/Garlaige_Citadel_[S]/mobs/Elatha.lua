@@ -27,8 +27,9 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.WATERDEF, 200)
     mob:setMod(tpz.mod.THUNDERDEF, 200)
     mob:setMod(tpz.mod.WINDDEF, 200)
+    mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.SILENCERES, 100)
-    mob:setMod(tpz.mod.ICE_ABSORB, 0)
+    mob:setMod(tpz.mod.ICE_ABSORB, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
@@ -78,13 +79,17 @@ function onMobFight(mob, target)
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room, Draws In Anyone In Range (https://ffxiclopedia.fandom.com/wiki/Elatha)
-        if (target:getZPos() < -111.00 or target:getZPos() > -82.00) then
-            target:setPos(-140.25, 0.00, -100.00)
-            mob:messageBasic(232, 0, 0, target)
-        elseif (target:getXPos() < -155.00 or target:getXPos() > -122.00) then
-            target:setPos(-140.25, 0.00, -100.00)
-            mob:messageBasic(232, 0, 0, target)
-        end
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (target:getZPos() < -111.00 or target:getZPos() > -82.00) and os.time() > drawInWait then
+        target:setPos(-140.25, 0.00, -100.00)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif (target:getXPos() < -155.00 or target:getXPos() > -122.00) and os.time() > drawInWait then
+        target:setPos(-140.25, 0.00, -100.00)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 
     -- Combat Tick Logic
     mob:addListener("COMBAT_TICK", "ELATHA_CTICK", function(mob)
@@ -149,11 +154,15 @@ function onMobDisengage(mob)
     if mob:getHPP() < 100 or levelupsum > 0 then
         mob:DespawnMob(17449008, 0)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("MobPoof", 1)
     end
 end
 
 function onMobDespawn(mob)
-    mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.NM_DESPAWN) -- Despawn Message
+    if mob:getLocalVar("MobPoof") == 1 then
+        mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.text.NM_DESPAWN) -- Despawn Message
+        mob:setLocalVar("MobPoof", 0)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

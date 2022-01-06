@@ -4247,14 +4247,24 @@ INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 204, 1, 255); -- Black Magic: 
 INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 176, 1, 255); -- Black Magic: Firaga III
 INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 147, 1, 255); -- Black Magic: Fire IV
 -- Ethniu
-INSERT INTO `mob_spell_lists` VALUES('Ethniu', 563, 588, 1, 255); -- Blue Magic: Hecatomb Wave
-INSERT INTO `mob_spell_lists` VALUES('Ethniu', 647, 591, 1, 255); -- Blue Magic: Zephyr Mantle
-INSERT INTO `mob_spell_lists` VALUES('Ethniu', 561, 645, 1, 255); -- Blue Magic: Frightful Roar
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 563, 1, 255); -- Blue Magic: Hecatomb Wave
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 647, 1, 255); -- Blue Magic: Zephyr Mantle
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 561, 1, 255); -- Blue Magic: Frightful Roar
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 208, 1, 255); -- Black Magic: Tornado
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 186, 1, 255); -- Black Magic: Aeroga III
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 157, 1, 255); -- Black Magic: Aero IV
-INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 359, 1, 255); -- Black Magic: Silencega
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 359, 1, 255); -- White Magic: Silencega
 INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 366, 1, 255); -- Black Magic: Graviga
+-- Tethra
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 524, 1, 255); -- Blue Magic: Sandspin
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 548, 1, 255); -- Blue Magic: Filamented Hold
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 555, 1, 255); -- Blue Magic: Magnetite Cloud
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 210, 1, 255); -- Black Magic: Quake
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic: Stonega III
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 162, 1, 255); -- Black Magic: Stone IV
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
+--INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
+
 
 --
 -- Indexes for dumped tables
