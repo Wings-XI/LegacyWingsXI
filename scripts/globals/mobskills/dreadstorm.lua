@@ -22,6 +22,10 @@ function onMobWeaponSkill(target, mob, skill)
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
 
     local dmgmod = 6
+    if (mob:getID() == 17093002) then -- Nyzul Isle Khimaira
+        dmgmod = 3
+    end
+    
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.DARK, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_WIPE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.DARK)

@@ -13,7 +13,7 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    if getElementalSDT(8,target) == 5 or target:isUndead() then
+    if target:isUndead() then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return 0
     end

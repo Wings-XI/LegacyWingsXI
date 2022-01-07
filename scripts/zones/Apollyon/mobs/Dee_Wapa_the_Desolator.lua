@@ -7,6 +7,12 @@ local ID = require("scripts/zones/Apollyon/IDs")
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
+    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
+    mob:setMod(tpz.mod.SLASHRES, 5000)
+    mob:setMod(tpz.mod.H2HRES, 1500)
+    mob:setMod(tpz.mod.IMPACTRES, 5000)
+    mob:setMod(tpz.mod.DMGMAGIC, -50)
 end
 
 function onMobEngaged(mob, target)

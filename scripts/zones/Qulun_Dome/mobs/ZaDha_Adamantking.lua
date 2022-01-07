@@ -11,6 +11,7 @@ require("scripts/globals/mobs")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 40)
 end
 
 function onMobEngaged(mob, target)

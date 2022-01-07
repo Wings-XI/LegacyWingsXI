@@ -2,7 +2,6 @@
 -- Area: Arrapago Remnants
 --  Mob: Archaic Gears
 -----------------------------------
-mixins = {require("scripts/mixins/families/gears")}
 
 function onMobDeath(mob, player, isKiller)
     local instance = mob:getInstance()

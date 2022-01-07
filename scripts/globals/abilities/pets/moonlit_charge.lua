@@ -24,8 +24,10 @@ function onPetAbility(target, pet, skill)
     
     local resist = applyResistanceAbility(pet, target, tpz.magic.element.DARK, tpz.skill.ENFEEBLING_MAGIC, bonus)
     local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
-    if resist >= 0.5 then
-        target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        if resist >= 0.5 then
+            target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, duration)
+        end
     end
     
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)

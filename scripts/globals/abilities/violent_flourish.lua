@@ -74,18 +74,25 @@ function onUseAbility(player, target, ability, action)
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
         params.bonus = 50 - target:getMod(tpz.mod.STUNRES) + player:getMod(tpz.mod.VFLOURISH_MACC)
         local resist = applyResistance(player, target, spell, params)
-
-        if resist > 0.25 then
-            target:addStatusEffect(tpz.effect.STUN, 1, 0, 2)
-            tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
-            action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE_AND_STUN)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+            if resist > 0.25 then
+                target:addStatusEffect(tpz.effect.STUN, 1, 0, 2)
+                tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
+                action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE_AND_STUN)
+            else
+                action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE)
+            end
         else
             action:messageID(target:getID(), tpz.msg.basic.JA_DAMAGE)
         end
 
         action:animation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(tpz.slot.MAIN)))
         action:speceffect(target:getID(), hit)
-        return damage
+        if target:getID() == (17449008) then
+            return 0
+        else
+            return damage
+        end
     else
         action:messageID(target:getID(), tpz.msg.basic.JA_MISS_2)
         action:speceffect(target:getID(), 0)

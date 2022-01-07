@@ -75,6 +75,7 @@ public:
     int32 injectActionPacket(lua_State*);   // ONLY FOR DEBUGGING. Injects an action packet with the specified params.
     int32 entityVisualPacket(lua_State* L);
     int32 entityAnimationPacket(lua_State* L);
+    int32 sendNpcEmote(lua_State*);         // NPC emits emote packet, could one day be refactored into sendEmote.
 
     int32 startEvent(lua_State*);           // Begins Event
     int32 startEventString(lua_State*);     // Begins Event with string param (0x33 packet)
@@ -158,6 +159,7 @@ public:
     int32 getCurrentRegion(lua_State*);      // Get Entity conquest region
     int32 getContinentID(lua_State*);        // узнаем континент, на котором находится сущность
     int32 isInMogHouse(lua_State*);          // Check if entity inside a mog house
+    int32 getMogHouseID(lua_State*);         // Get the current mog house ID (player ID if in own MH, zero if outside)
 
     int32 getPlayerRegionInZone(lua_State*); // Returns the player's current region in the zone. (regions made with registerRegion)
     int32 updateToEntireZone(lua_State*);    // Forces an update packet to update the NPC entity zone-wide
@@ -574,6 +576,7 @@ public:
 
     int32 fold(lua_State*);
     int32 doWildCard(lua_State*);
+    int32 doRandomDeal(lua_State*);
     int32 addCorsairRoll(lua_State*);          // Adds corsair roll effect
     int32 hasCorsairEffect(lua_State*);
     int32 hasBustEffect(lua_State*);           // Checks to see if a character has a specified busted corsair roll
@@ -781,6 +784,7 @@ public:
     int32 addTimeToDynamis(lua_State* L);
     int32 setSkillList(lua_State* L);
     int32 setNM(lua_State* L);
+    int32 setMobType(lua_State* L);
     int32 dynaCurrencyAutoDropEnabled(lua_State* L);
     int32 getFomorHate(lua_State *L);
     int32 setFomorHate(lua_State *L);

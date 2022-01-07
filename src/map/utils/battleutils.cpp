@@ -98,6 +98,7 @@ std::unordered_map<uint16, std::vector<uint16>>  g_PMobSkillLists;  // List of m
 namespace battleutils
 {
 
+
     /************************************************************************
     *                                                                       *
     *                                                                       *
@@ -797,10 +798,10 @@ namespace battleutils
         // Deal with spikesEffect effect gear
         else if (PDefender->getMod(Mod::ITEM_SPIKES_TYPE) > 0) // todo: this is probably where Sune-Ate are breaking and not doing any damage -.-
         {
-            if (PDefender->objtype == TYPE_PC)
-            {
-                CCharEntity* PCharDef = (CCharEntity*)PDefender;
+            auto PCharDef = dynamic_cast<CCharEntity*>(PDefender);
 
+            if (PCharDef)
+            {
                 for (auto&& slot : {SLOT_SUB, SLOT_BODY, SLOT_LEGS, SLOT_HEAD, SLOT_HANDS, SLOT_FEET})
                 {
                     CItemEquipment* PItem = PCharDef->getEquip(slot);
@@ -818,10 +819,13 @@ namespace battleutils
                         Action->spikesParam = battleutils::GetScaledItemModifier(PDefender, PItem, Mod::ITEM_SPIKES_DMG);
                         chance = battleutils::GetScaledItemModifier(PDefender, PItem, Mod::ITEM_SPIKES_CHANCE);
 
-                        if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
+                        // Update mob's attacker level for xp purposes.
+                        auto PMobAtt = dynamic_cast<CMobEntity*>(PAttacker);
+                        if (PMobAtt)
                         {
-                            ((CMobEntity*)PDefender)->m_HiPCLvl = PAttacker->GetMLevel();
+                            PMobAtt->m_HiPCLvl = std::max(PMobAtt->m_HiPCLvl, PDefender->GetMLevel());
                         }
+
                         if (Action->spikesEffect && HandleSpikesEquip(PAttacker, PDefender, Action, (uint8)Action->spikesParam, Action->spikesEffect, chance))
                             return true;
                     }
@@ -1743,34 +1747,7 @@ namespace battleutils
             check = 0;
         }
 
-        if (chance < check)
-        {
-            return ProcessAquaveil(PDefender); 
-        }
-
         return false;
-    }
-
-    bool ProcessAquaveil(CBattleEntity* PDefender)
-    {
-        // Prevent interrupt if Aquaveil is active, if it were to interrupt.
-        if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_AQUAVEIL))
-        {
-            auto aquaCount = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->GetPower();
-            // ShowDebug("Aquaveil counter: %u\n", aquaCount);
-            if (aquaCount - 1 == 0) // removes the status, but still prevents the interrupt
-            {
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_AQUAVEIL);
-            }
-            else
-            {
-                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_AQUAVEIL)->SetPower(aquaCount - 1);
-            }
-            return false;
-        }
-
-        //Otherwise interrupt the spell cast.
-        return true;
     }
 
     bool TryKnockbackInterrupt(CBattleEntity* PAttacker, CBattleEntity* PDefender)
@@ -1816,7 +1793,7 @@ namespace battleutils
         auto interruptChance = std::clamp(40 + fSTR + (levelCorrect * 4), 5, 75);
         auto interruptRoll = tpzrand::GetRandomNumber(100);
         //ShowDebug("InterruptRoll: %u, InterruptChance: %u, fSTR: %u\n", interruptRoll, interruptChance, fSTR);
-        if (interruptRoll <= interruptChance && ProcessAquaveil(PDefender))
+        if (interruptRoll <= interruptChance && (PDefender))
         {
             PDefender->PAI->GetCurrentState()->Interrupt();
             return true;
@@ -2265,6 +2242,12 @@ namespace battleutils
         if (PAttacker->objtype == TYPE_PC && !isRanged)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
+        }
+
         return damage;
     }
 
@@ -2394,6 +2377,13 @@ namespace battleutils
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HAGAKURE))
         {
             PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_HAGAKURE);
+        }
+
+        // Apply Soilders Drink
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
         }
 
         return damage;
@@ -5358,9 +5348,18 @@ namespace battleutils
             if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach && PMember->status != STATUS_CUTSCENE_ONLY &&
                 !PMember->isDead() && !PMember->isMounted())
             {
-                PMember->loc.p.x = PMob->loc.p.x;
-                PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
-                PMember->loc.p.z = PMob->loc.p.z;
+                if (PMob->getMobMod(MOBMOD_DRAW_IN_FRONT) > 0)
+                {
+                    PMember->loc.p.x = nearEntity.x;
+                    PMember->loc.p.y = nearEntity.y + PMember->m_drawInOffsetY;
+                    PMember->loc.p.z = nearEntity.z;
+                }
+                else
+                {
+                    PMember->loc.p.x = PMob->loc.p.x;
+                    PMember->loc.p.y = PMob->loc.p.y + PMember->m_drawInOffsetY;
+                    PMember->loc.p.z = PMob->loc.p.z;
+                }
                 PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 
                 if (PMember->objtype == TYPE_PC)
@@ -5496,6 +5495,110 @@ namespace battleutils
 
     /************************************************************************
     *                                                                       *
+    *   Does the random deal effect to a specific character (reset ability) *
+    *                                                                       *
+    ************************************************************************/
+    bool DoRandomDealToEntity(CCharEntity* PChar, CCharEntity* PTarget)
+    {
+        std::vector<uint16> ResetCandidateList;
+        std::vector<uint16> ActiveCooldownList;
+
+        if (PChar == nullptr || PTarget == nullptr)
+        {
+            // Invalid User or Target
+            return false;
+        }
+
+        RecastList_t* recastList = PTarget->PRecastContainer->GetRecastList(RECAST_ABILITY);
+
+        // Get position of abilites and add to the 2 lists
+        for (uint8 i = 0; i < recastList->size(); ++i)
+        {
+            Recast_t* recast = &recastList->at(i);
+
+            // Do not reset 2hrs or Random Deal
+            if (recast->ID != 0 && recast->ID != 196)
+            {
+                ResetCandidateList.push_back(i);
+                if (recast->RecastTime > 0)
+                {
+                    ActiveCooldownList.push_back(i);
+                }
+            }
+        }
+
+        if (ResetCandidateList.size() == 0)
+        {
+            // Evade because we have no abilities that can be reset
+            return false;
+        }
+
+        uint8 loadedDeck = PChar->PMeritPoints->GetMeritValue(MERIT_LOADED_DECK, PChar);
+        uint8 loadedDeckChance = 50 + loadedDeck;
+        uint8 resetTwoChance = std::min<int8>(PChar->getMod(Mod::RANDOM_DEAL_BONUS), 50);
+
+        // Loaded Deck Merit Version
+        if (loadedDeck && ActiveCooldownList.size() > 0)
+        {
+            if (ActiveCooldownList.size() > 1)
+            {
+                // Shuffle active cooldowns and take first (loaded deck)
+                std::shuffle(std::begin(ActiveCooldownList), std::end(ActiveCooldownList), tpzrand::mt());
+                loadedDeckChance = 100;
+            }
+
+            if (loadedDeckChance >= tpzrand::GetRandomNumber(1, 100))
+            {
+                PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(0));
+
+                // Reset 2 abilities by chance
+                if (ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+                {
+                    PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ActiveCooldownList.at(1));
+                }
+                if (PChar != PTarget)
+                {
+                    // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
+                    PTarget->pushPacket(new CCharRecastPacket(PTarget));
+                }
+                return true;
+            }
+
+            // Evade because we failed to reset with loaded deck
+            return false;
+        }
+        else // Standard Version
+        {
+            if (ResetCandidateList.size() > 1)
+            {
+                // Shuffle if more than 1 ability
+                std::shuffle(std::begin(ResetCandidateList), std::end(ResetCandidateList), tpzrand::mt());
+            }
+
+            // Reset first ability (shuffled or only)
+            PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(0));
+
+            // Reset 2 abilities by chance (could be 2 abilitie that don't need resets)
+            if (ResetCandidateList.size() > 1 && ActiveCooldownList.size() > 1 && resetTwoChance >= tpzrand::GetRandomNumber(1, 100))
+            {
+                PTarget->PRecastContainer->DeleteByIndex(RECAST_ABILITY, ResetCandidateList.at(1));
+            }
+
+            if (PChar != PTarget)
+            {
+                // Update target's recast state; caster's will be handled in CCharEntity::OnAbility.
+                PTarget->pushPacket(new CCharRecastPacket(PTarget));
+            }
+
+            return true;
+        }
+
+        // How did you get here!?
+        return false;
+    }
+
+    /************************************************************************
+    *                                                                       *
     *   Get the Snapshot shot time reduction                                *
     *                                                                       *
     ************************************************************************/
@@ -5570,7 +5673,7 @@ namespace battleutils
     void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
         CCharEntity* PChar = PEntity->objtype == TYPE_PC ? static_cast<CCharEntity*>(PEntity) : nullptr;
-        
+
         for (auto&& PTrait : *traitList)
         {
             if (level >= PTrait->getLevel() && PTrait->getLevel() > 0)
@@ -5865,7 +5968,7 @@ namespace battleutils
         int32 recast = base;
 
         // Apply Fast Cast
-        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 25.0f)) / 100.0f));
+        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, -25.0f, 25.0f)) / 100.0f));
 
         // Apply Haste (Magic and Gear)
         int16 haste = PEntity->getMod(Mod::HASTE_MAGIC) + PEntity->getMod(Mod::HASTE_GEAR);

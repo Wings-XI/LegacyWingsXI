@@ -823,7 +823,8 @@ tpz.effect =
     SUPER_JUMP               = 804, -- Description
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
-    -- 807-1022
+    SOLDIERS_DRINK           = 807,
+    -- 808-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -996,7 +997,7 @@ tpz.mod =
     SDT_WIND                  = 1056, -- % Specific Damage Taken Wind
     SDT_EARTH                 = 1057, -- % Specific Damage Taken Earth
     SDT_THUNDER               = 1058, -- % Specific Damage Taken Thunder
-    SDT_WATER                 = 1059, -- % Specific Damage Taken Water 
+    SDT_WATER                 = 1059, -- % Specific Damage Taken Water
     SDT_LIGHT                 = 1060, -- % Specific Damage Taken Light
     SDT_DARK                  = 1061, -- % Specific Damage Taken Dark
 
@@ -1166,6 +1167,7 @@ tpz.mod =
     LUMINION_KILLER           = 238, -- Enhances "Luminion Killer" effect
 
     -- Resistances to enfeebles - Traits/Job Ability
+    -- Values specified greater than or equal to 100 will be fully immune (No Effect)
     STATUSRES                 = 239, -- "Resistance to All Status Ailments"
     SLEEPRES                  = 240, -- Enhances "Resist Sleep" effect
     POISONRES                 = 241, -- Enhances "Resist Poison" effect
@@ -1384,6 +1386,7 @@ tpz.mod =
     ROLL_RANGE                = 528, -- Additional range for COR roll abilities.
     JOB_BONUS_CHANCE          = 542, -- Chance to apply job bonus to COR roll without having the job in the party.
     QUICK_DRAW_DELAY          = 571, -- Lowers Quick Draw recast
+    RANDOM_DEAL_BONUS         = 573, -- % chance to reset 2 abilities
 
     DMG_REFLECT               = 316, -- Tracks totals
     ROLL_ROGUES               = 317, -- Tracks totals
@@ -1686,7 +1689,6 @@ tpz.mod =
     BARSPELL_MDEF_BONUS       = 827, -- Extra magic defense bonus granted to the bar- spell effect
     RAPTURE_AMOUNT            = 568, -- Bonus amount added to Rapture effect
     EBULLIENCE_AMOUNT         = 569, -- Bonus amount added to Ebullience effect
-    AQUAVEIL_COUNT            = 832, -- Modifies the amount of hits that Aquaveil absorbs before being removed
     ENH_MAGIC_DURATION        = 890, -- Enhancing Magic Duration increase %
     ENHANCES_COURSERS_ROLL    = 891, -- Courser's Roll Bonus % chance
     ENHANCES_CASTERS_ROLL     = 892, -- Caster's Roll Bonus % chance
@@ -1784,7 +1786,7 @@ tpz.mod =
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 through 825 used by WS DMG mods these are not spares.
-    
+
     -- super jump taking up 988
 }
 
@@ -2458,6 +2460,7 @@ tpz.mobMod =
     DRAW_IN_MAXIMUM_REACH=77, -- players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
     DRAW_IN_INCLUDE_PARTY=78, -- this will cause the mob's draw-in to also affect all party and alliance members
     DRAW_IN_IGNORE_STATIONARY=79, -- stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or Nyzul Isle Alexander)
+    DRAW_IN_FRONT       = 80, -- certain mobs draw in slightly in front them instead of the middle of their hit box. put in this mobmod to not draw in to the center of the mob.
     SEVERE_SPELL_CHANCE = 13, -- % chance to use a severe spell like death or impact
     SKILL_LIST          = 14, -- uses given mob skill list
     MUG_GIL             = 15, -- amount gil carried for mugging
@@ -2521,7 +2524,7 @@ tpz.mobMod =
     ATTRACT_FAMILY_NM   = 73, -- NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
     FAMILYLINK          = 74, -- Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
     ENCROACH_PLAYER     = 75,
-    -- #76 and #77 and #78 and #79 are taken (placed next to #12 for clarity)
+    -- #76 and #77 and #78 and #79 and #80 are taken (placed next to #12 for clarity)
     SIGHT_ANGLE         = 84, -- Angle in which a mob will detect by sight
     FOMOR_HATE          = 85, -- Fomors: Only aggro if the target player (or a player in party/alliance) has hate
     PIXIE               = 86, -- Pixies: Cure and raise players
@@ -2613,7 +2616,7 @@ tpz.jobSpecialAbility =
     -- EES_?                = 2148,
     EES_TROLL            = 2252,
     -- EES_?                = 2941,
-    -- SPIRIT_SURGE         = 1893,
+    SPIRIT_SURGE_NM         = 1893,
     -- SPIRIT_SURGE         = 2255,
     AZURE_LORE           = 1933,
     -- AZURE_LORE           = 2006,

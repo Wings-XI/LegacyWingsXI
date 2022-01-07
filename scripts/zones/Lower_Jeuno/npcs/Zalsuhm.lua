@@ -11,8 +11,27 @@ require("scripts/globals/status")
 require("scripts/globals/weaponskillids")
 -----------------------------------
 
+-- note: since we currently save floor progress on ANY exited floor, not just steps of 5 this will give players a slightly better gradient
+function getRequiredWsPoints(nyzulFloorProgress)
+    if (nyzulFloorProgress == 100) then
+        return 250
+    elseif (nyzulFloorProgress >= 80) then
+        return 500 + (20 * (99 - nyzulFloorProgress))
+    elseif (nyzulFloorProgress >= 60) then
+        return 1000 + (40 * (79 - nyzulFloorProgress))
+    elseif (nyzulFloorProgress >= 40) then
+        return 2000 + (80 * (59 - nyzulFloorProgress))
+    elseif (nyzulFloorProgress >= 20) then
+        return 4000 + (160 * (39 - nyzulFloorProgress))
+    elseif (nyzulFloorProgress > 0) then
+        return 8000 + (320 * (19 - nyzulFloorProgress))
+    else
+        return 16000
+    end
+end
+
 function getQuestId(mainJobId)
-    return tpz.quest.jeuno.UNLOCKING_A_MYTH_WARRIOR - 1 + mainJobId
+    return tpz.quest.id.jeuno.UNLOCKING_A_MYTH_WARRIOR - 1 + mainJobId
 end
 
 function onTrade(player, npc, trade)
@@ -20,14 +39,17 @@ function onTrade(player, npc, trade)
         if npcUtil.tradeHasExactly(trade, wepId) then
             local unlockingAMyth = player:getQuestStatus(JEUNO, getQuestId(i))
             if unlockingAMyth == QUEST_ACCEPTED then
+                local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()
-                if wsPoints <= 49 then
+                local requiredWsPoints = getRequiredWsPoints(nyzulFloorProgress)
+
+                if wsPoints <= (requiredWsPoints / 4) then
                     player:startEvent(10091)
-                elseif wsPoints <= 200 then
+                elseif wsPoints <= (requiredWsPoints / 2) then
                     player:startEvent(10092)
-                elseif wsPoints <= 249 then
+                elseif wsPoints <= ((requiredWsPoints *3) / 4) then
                     player:startEvent(10093)
-                elseif wsPoints >= 250 then
+                elseif wsPoints >= requiredWsPoints then
                     player:startEvent(10088, i)
                 end
             end

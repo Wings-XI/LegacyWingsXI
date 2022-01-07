@@ -114,7 +114,7 @@ CMobEntity::CMobEntity()
     m_giveExp = false;
     m_neutral = false;
     m_Aggro = false;
-    m_TrueDetection = false;
+    m_TrueDetection = 0;
     m_Detects = DETECT_NONE;
     m_Link = 0;
 
@@ -492,7 +492,7 @@ void CMobEntity::DoAutoTarget()
     // person who landed the final blow designates a new target for the alliance (closest mob to that person)
     // which is a mob that is trying to attack a player and can be attacked by the alliance (white or red name mob)
     // this way, when auto-target triggers, the entire alliance/party will always engage on the same mob together
-    // it is no longer a requirement for players to face towards a mob in order to auto-target it
+    // but only if the character is facing the next target
 
     CCharEntity* POwner = nullptr;
     if (this->m_autoTargetKiller)
@@ -527,7 +527,7 @@ void CMobEntity::DoAutoTarget()
                         distanceSquared(PMember->loc.p, PMember->m_autoTargetOverride->loc.p) < 29.0f * 29.0f)
                     {
                         auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
-                        success = controller->ChangeTarget(PMember->m_autoTargetOverride->targid);
+                        success = controller->ChangeAutoTarget(PMember->m_autoTargetOverride->targid, PMember->loc.p, PMember->m_autoTargetOverride->loc.p);
                     }
                 }
                 else
@@ -563,7 +563,7 @@ void CMobEntity::DoAutoTarget()
                     }
                     if (PWinner)
                     {
-                        success = controller->ChangeTarget(PWinner->targid);
+                        success = controller->ChangeAutoTarget(PWinner->targid, PMember->loc.p, PWinner->loc.p);
                         PMember->ForAlliance([PMember, PWinner](CBattleEntity* PMembermember) {
                             if (PMembermember->objtype == TYPE_PC && PMembermember->loc.zone->GetID() == PMember->loc.zone->GetID() &&
                                 PMembermember->animation == ANIMATION_ATTACK)
@@ -600,7 +600,7 @@ void CMobEntity::DoAutoTarget()
                         distanceSquared(PMember->loc.p, PMember->m_autoTargetOverride->loc.p) < 29.0f * 29.0f)
                     {
                         auto controller{ static_cast<CPlayerController*>(PMember->PAI->GetController()) };
-                        success = controller->ChangeTarget(PMember->m_autoTargetOverride->targid);
+                        success = controller->ChangeAutoTarget(PMember->m_autoTargetOverride->targid, PMember->loc.p, PMember->m_autoTargetOverride->loc.p);
                     }
                 }
                 else
@@ -633,7 +633,7 @@ void CMobEntity::DoAutoTarget()
                     }
                     if (PWinner)
                     {
-                        success = controller->ChangeTarget(PWinner->targid);
+                        success = controller->ChangeAutoTarget(PWinner->targid, PMember->loc.p, PWinner->loc.p);
                         PZone->ForEachChar([PMember, PWinner](CCharEntity* PMembermember) {
                             if (PMembermember->objtype == TYPE_PC && PMembermember->loc.zone->GetID() == PMember->loc.zone->GetID() &&
                                 PMembermember->animation == ANIMATION_ATTACK)
@@ -860,7 +860,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
             float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
+            PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
         }
         else
         {
@@ -1069,11 +1069,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 {
     CDynamisHandler* PDynamisHandler = zoneutils::GetZone(this->getZone())->m_DynamisHandler;
 
-    //Adds an item to the treasure pool and returns true if the pool has been filled
+    //Adds an item to the treasure pool
     auto AddItemToPool = [this, PChar, PDynamisHandler](uint16 ItemID, uint8 dropCount)
     {
         PChar->PTreasurePool->AddItem(ItemID, this, PDynamisHandler);
-        return dropCount >= TREASUREPOOL_SIZE;
+
+        // This used to cap the number of drops a mob can produce at 10, but
+        // that's not the correct behavior.
+        return false; //dropCount >= TREASUREPOOL_SIZE;
     };
 
     //Limit number of items that can drop to the treasure pool size

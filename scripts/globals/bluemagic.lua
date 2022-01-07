@@ -1,6 +1,7 @@
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/utils")
+require("scripts/globals/msg")
 
 -- BLU ecosystem
 ECO_BEAST = 1
@@ -300,6 +301,10 @@ function BluePhysicalSpell(caster, target, spell, params)
 
     if finaldmg > 0 then target:addTPFromSpell(caster, hitslanded) end
 
+    if (hitslanded == 0) then
+        spell:setMsg(tpz.msg.basic.MAGIC_FAIL)
+    end
+
     return finaldmg, hitslanded, taChar
 end
 
@@ -399,6 +404,12 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
 	end
     target:handleAfflatusMiseryDamage(dmg)
     -- TP has already been dealt with.
+
+    if (caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK)) then
+        dmg = dmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
+    end
+
     return dmg
 end
 

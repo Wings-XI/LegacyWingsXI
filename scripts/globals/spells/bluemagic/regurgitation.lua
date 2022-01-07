@@ -50,9 +50,11 @@ function onSpellCast(caster, target, spell)
 
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(45 * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if resist >= 0.5 then
-        target:delStatusEffect(tpz.effect.BIND)
-        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
+        if resist >= 0.5 then
+            target:delStatusEffect(tpz.effect.BIND)
+            target:addStatusEffect(tpz.effect.BIND, 1, 0, duration*resist)
+        end
     end
 
     return damage

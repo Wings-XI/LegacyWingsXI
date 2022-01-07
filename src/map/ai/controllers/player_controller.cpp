@@ -93,6 +93,21 @@ bool CPlayerController::ChangeTarget(uint16 targid)
     return CController::ChangeTarget(targid);
 }
 
+// Checks that the next target is in front of the player when an autotarget occurs during combat
+bool CPlayerController::ChangeAutoTarget(uint16 targid, position_t &playerPos, position_t &mobPos)
+{
+    if (map_config.autotarget_qol) // autotarget is radial if qol enabled so skip position check
+    {
+        return CController::ChangeTarget(targid);
+    }
+    // mob must be in front of player
+    if (infront(mobPos, playerPos, 128))
+    {
+        return CController::ChangeTarget(targid);
+    }
+    return false;
+}
+
 bool CPlayerController::Disengage()
 {
     return CController::Disengage();
@@ -179,7 +194,8 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
             return false;
         }
 
-        if (PChar->StatusEffectContainer->HasStatusEffect({EFFECT_AMNESIA, EFFECT_IMPAIRMENT}))
+        if (PChar->StatusEffectContainer->HasStatusEffect({EFFECT_AMNESIA, EFFECT_IMPAIRMENT}) ||
+            (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_PATHOS) && (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_PATHOS)->GetPower() & 2)))
         {
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANNOT_USE_ANY_WS));
             return false;
@@ -274,7 +290,8 @@ bool CPlayerController::CanUseAbility(uint16 targid, uint16 abilityid)
     }
     if (PChar->StatusEffectContainer->HasStatusEffect({ EFFECT_AMNESIA, EFFECT_IMPAIRMENT }) ||
         (!PAbility->isPetAbility() && !charutils::hasAbility(PChar, PAbility->getID())) ||
-        (PAbility->isPetAbility() && !charutils::hasPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY)))
+        (PAbility->isPetAbility() && !charutils::hasPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY)) ||
+        (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_PATHOS) && (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_PATHOS)->GetPower() & 1)))
     {
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_UNABLE_TO_USE_JA2));
         return false;

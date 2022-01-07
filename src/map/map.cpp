@@ -2509,6 +2509,7 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         map_session_data->PChar != nullptr)
     {
         charutils::SavePlayTime(map_session_data->PChar);
+        charutils::RemoveGuestsFromMogHouse(map_session_data->PChar);
 
         //clear accounts_sessions if character is logging out (not when zoning)
         if (map_session_data->shuttingDown == 1)
@@ -2601,7 +2602,16 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         }
 
                         PChar->StatusEffectContainer->SaveStatusEffects(true);
+                        if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id) {
+                            PChar->loc.boundary = 0;
+                            PChar->loc.p.x = 0;
+                            PChar->loc.p.y = 0;
+                            PChar->loc.p.z = 0;
+                            PChar->loc.p.rotation = 0;
+                            PChar->m_moghouseID = 0;
+                        }
                         charutils::SaveCharPosition(PChar);
+                        charutils::RemoveGuestsFromMogHouse(PChar);
 
                         ShowDebug(CL_CYAN"map_cleanup: %s timed out, closing session\n" CL_RESET, PChar->GetName());
 
@@ -2811,6 +2821,7 @@ int32 map_config_default()
     map_config.daily_tally_limit = 50000;
     map_config.mission_storage_recovery = false;
     map_config.helpdesk_enabled = false;
+    map_config.autotarget_qol = true;
     return 0;
 }
 
@@ -2844,6 +2855,8 @@ int32 map_config_read(const int8* cfgName)
         return 1;
     }
 
+    bool knownSetting = true;
+
     while (fgets(line, sizeof(line), fp))
     {
         char* ptr;
@@ -2863,6 +2876,9 @@ int32 map_config_read(const int8* cfgName)
         ptr++;
         *ptr = '\0';
 
+        // TODO: Refactor these blocks of ifs 
+        // There is a compiler-enforced limitation of no more than 128 nested ifs so this is split once the limitation is reached
+        // https://docs.microsoft.com/en-us/cpp/error-messages/compiler-errors-1/fatal-error-c1061?view=msvc-170
         if (strcmpi(w1, "timestamp_format") == 0)
         {
             strncpy(timestamp_format, w2, 20);
@@ -3343,14 +3359,27 @@ int32 map_config_read(const int8* cfgName)
         {
         map_config.mission_storage_recovery = atoi(w2);
         }
-        else if (strcmp(w1, "helpdesk_enabled") == 0)
-        {
-        map_config.helpdesk_enabled = atoi(w2);
-        }
         else
         {
-            ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, cfgName);
+            knownSetting = false;
         }
+        // Breaking previous if statement block as a workaround for else-if clause limitatation of 128
+        if (!knownSetting)
+        {
+            if (strcmp(w1, "helpdesk_enabled") == 0)
+            {
+                map_config.helpdesk_enabled = atoi(w2);
+            }
+            else if (strcmp(w1, "autotarget_qol") == 0)
+            {
+                map_config.autotarget_qol = atoi(w2);
+            }
+            else
+            {
+                ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, cfgName);
+            }
+        }
+        knownSetting = true;
     }
 
     fclose(fp);

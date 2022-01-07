@@ -5,13 +5,18 @@
 -----------------------------------
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
+mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
-function onMobDeath(mob, player, isKiller)
-    local theFirstMeeting = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_FIRST_MEETING)
-    local martialArtsScroll = player:hasKeyItem(tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL)
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 12)
+end
 
-    if (theFirstMeeting == QUEST_ACCEPTED and martialArtsScroll == false) then
-        player:addCharVar("theFirstMeetingKilledNM", 1)
+function onMobFight(mob, target)
+    local theFirstMeeting = target:getQuestStatus(BASTOK, tpz.quest.id.bastok.THE_FIRST_MEETING)
+    local martialArtsScroll = target:hasKeyItem(tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL)
+
+    if (theFirstMeeting == QUEST_ACCEPTED and martialArtsScroll == false and target:getCharVar("theFirstMeetingSpawnedNM")) == 0 then
+        target:addCharVar("theFirstMeetingSpawnedNM", 1)
     end
 end

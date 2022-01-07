@@ -27,7 +27,7 @@ end
 
 function onMobRoam(mob)
     local wait = mob:getLocalVar("wait")
-    if wait > 40 then
+    if wait > 90 then -- 90 seconds until auto engage
         -- pick a random living target from the two enemies
         local inst = mob:getBattlefield():getArea()
         local instOffset = ID.mob.MOON_READING_OFFSET + (6 * (inst - 1))

@@ -4,6 +4,13 @@
 -----------------------------------
 local ID = require("scripts/zones/Temenos/IDs")
 
+function onMobSpawn(mob)
+    mob:addMod(tpz.mod.DMGPHYS, 25)
+    mob:addMod(tpz.mod.DMGMAGIC, -40)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 1)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end
+
 function onMobEngaged(mob, target)
     local mobID = mob:getID()
     if mobID == ID.mob.TEMENOS_C_MOB[2]+1 then

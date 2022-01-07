@@ -35,7 +35,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     -- Apply aftermath
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local mythicMagicWsParams = {}
+    mythicMagicWsParams.attackerStat = tpz.mod.CHR
+    mythicMagicWsParams.defenderStat = tpz.mod.INT
+    mythicMagicWsParams.magnification = 1.5
+
+    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary, mythicMagicWsParams)
 
 	if damage > 0 then player:trySkillUp(target, tpz.skill.AXE, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage

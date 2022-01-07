@@ -45,6 +45,7 @@ enum MOBMODIFIER : int
     MOBMOD_DRAW_IN_MAXIMUM_REACH=77, // players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
     MOBMOD_DRAW_IN_INCLUDE_PARTY=78, // this will cause the mob's draw-in to also affect all party and alliance members
     MOBMOD_DRAW_IN_IGNORE_STATIONARY=79, // stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or Nyzul Isle Alexander)
+    MOBMOD_DRAW_IN_FRONT       = 80, // certain mobs draw in slightly in front them instead of the middle of their hit box. put in this mobmod to not draw in to the center of the mob.
     MOBMOD_SEVERE_SPELL_CHANCE = 13, // % chance to use a severe spell like death or impact
     MOBMOD_SKILL_LIST          = 14, // uses given mob skill list
     MOBMOD_MUG_GIL             = 15, // amount gil carried for mugging
@@ -108,7 +109,7 @@ enum MOBMODIFIER : int
     MOBMOD_ATTRACT_FAMILY_NM   = 73, // NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
     MOBMOD_FAMILYLINK          = 74, // Mob will link with mobs of the same familly in the zone. Usefull to make a NM link if the family doesn't, like Cactrot Rapido.
     MOBMOD_ENCROACH_PLAYER     = 75,
-    // #76 and #77 and #78 and #79 are taken (placed next to #12 for clarity)
+    // #76 and #77 and #78 and #79 and #80 are taken (placed next to #12 for clarity)
     MOBMOD_SIGHT_ANGLE         = 84, // Angle in which a mob will detect by sight
     MOBMOD_FOMOR_HATE          = 85, // Mob aggros according to fomor hate
     MOBMOD_PIXIE               = 86, // Pixie (heals players)

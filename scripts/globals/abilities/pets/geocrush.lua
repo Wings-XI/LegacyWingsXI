@@ -46,8 +46,10 @@ function onPetAbility(target, pet, skill)
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,tpz.skill.ENFEEBLING_MAGIC,bonus)
     
     local duration = math.ceil(5 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if resist >= 0.5 and target:hasStatusEffect(tpz.effect.STUN) == false then --Do it!
-        target:addStatusEffect(tpz.effect.STUN, 3, 3, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if resist >= 0.5 and target:hasStatusEffect(tpz.effect.STUN) == false then --Do it!
+            target:addStatusEffect(tpz.effect.STUN, 3, 3, duration)
+        end
     end
 
     return damage

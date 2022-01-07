@@ -137,11 +137,11 @@ local battlefields = {
         { 0, 1299,    0},   -- Northern Tower
         { 1, 1300,    0},   -- Eastern Tower
         { 2, 1298,    0},   -- Western Tower
-     -- { 3, 1306,   -1},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986)
+        { 3, 1306,   -1},   -- Central 4th Floor (multiple items needed: 1907, 1908, 1986)
         { 4, 1305, 1904},   -- Central 3rd Floor
         { 5, 1304, 1905},   -- Central 2nd Floor
         { 6, 1303, 1906},   -- Central 1st Floor
-     -- { 7, 1301, 2127},   -- Central Basement
+        { 7, 1301, 2127},   -- Central Basement
      -- { 8, 1302,    0},   -- Central Basement II
      -- { 9, 1307,    0},   -- Central 4th Floor II
     },
@@ -152,8 +152,8 @@ local battlefields = {
         { 1, 1290,    0},   -- NW Apollyon
         { 2, 1293,    0},   -- SE Apollyon
         { 3, 1292,    0},   -- NE Apollyon
-     -- { 4, 1296,   -2},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
-     -- { 5, 1294, 2127},   -- CS Apollyon
+        { 4, 1296,   -2},   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
+        { 5, 1294, 2127},   -- CS Apollyon
      -- { 6, 1295,    0},   -- CS Apollyon II
      -- { 7, 1297,    0},   -- Central Apollyon II
     },
@@ -284,7 +284,7 @@ local battlefields = {
      -- { 9,   73, 1552},   -- Birds of a Feather (BS30)
      -- {10,   74, 1551},   -- Crustacean Conundrum (BS20) -- TODO: You can only do 0-2 damage no matter what your attack is
      -- {11,   75, 1552},   -- Grove Guardians (BS30)
-     -- {12,   76, 1553},   -- The Hills are Alive (KS99) -- TODO: Tartaruga Gigante is not coded
+        {12,   76, 1553},   -- The Hills are Alive (KS99)
         {13,   77, 1131},   -- Royal Jelly (BS40)
      -- {14,   78, 1177},   -- The Final Bout (BS50) -- TODO: mobskills Big Blow and Counterstance
         {15,   79, 1130},   -- Up in Arms (BS60)

@@ -69,8 +69,7 @@ local loot =
             {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
         },
         {
-            {itemid =    0, droprate = 1000}, -- Ancient Beastcoin
-            {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+            {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
         },
     },
 }
@@ -103,4 +102,10 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+end
+
+function onMobDespawn(mob)
+    omega = GetMobByID(mob:getID() - 1)
+
+    omega:setLocalVar("podTime", os.time())
 end

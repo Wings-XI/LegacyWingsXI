@@ -12,6 +12,8 @@ require("scripts/globals/status")
 local ID = require("scripts/zones/Throne_Room/IDs")
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+    mob:setLocalVar("threshold", 0)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -24,14 +26,36 @@ function onMobSpawn(mob)
     end
 end
 
+function onMobEngaged(mob, target)
+    local bcnmAllies = mob:getBattlefield():getAllies()
+    for i, v in pairs(bcnmAllies) do
+        if v:getName() == "Volker" then
+            v:addEnmity(mob, 0, 1)
+        end
+    end
+end
+
 function onMobFight(mob, target)
     local zeid = mob:getID()
     local shadow1 = GetMobByID(zeid + 1)
     local shadow2 = GetMobByID(zeid + 2)
+    local shadowthreshold = mob:getLocalVar("threshold")
 
-    if mob:getHPP() <= 77 and mob:getTP() >= 1000 and shadow1:isDead() and shadow2:isDead() then
-        mob:useMobAbility(984)
+    if mob:getHPP() <= 80 and shadow1:isDead() and shadow2:isDead() and shadowthreshold == 0 then
+        mob:useMobAbility(1002)
+        mob:setLocalVar("threshold", 1)
     end
+
+    if mob:getHPP() <= 45 and shadow1:isDead() and shadow2:isDead() and shadowthreshold <= 1 then
+        mob:useMobAbility(1002)
+        mob:setLocalVar("threshold", 2)
+    end
+
+    if mob:getHPP() <= 20 and shadow1:isDead() and shadow2:isDead() and shadowthreshold <= 2 then
+        mob:useMobAbility(1002)
+        mob:setLocalVar("threshold", 3)
+    end
+
 end
 
 function onMobDeath(mob, player, isKiller)

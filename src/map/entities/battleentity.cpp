@@ -301,6 +301,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         if (weapon->isHandToHand())
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
+            MinimumDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
         }
         else if (auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]); subweapon && subweapon->getDmgType() > 0 &&
             subweapon->getDmgType() < 4)
@@ -310,7 +311,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             //apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
-        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(this->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS)))
+        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             WeaponDelay = 480 * 1000 / 60;
         //apply haste and delay reductions that don't affect tp
         if (!tp)
@@ -862,7 +863,7 @@ uint16 CBattleEntity::DEF()
     int32 DEF = 1;
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
-        DEF = 8 + this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
+        DEF = this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
         if (m_modStat[Mod::DEFP] < 0)
             DEF = DEF + (DEF * m_modStat[Mod::DEFP]) / 100;
         return DEF;
@@ -1554,19 +1555,20 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         flags |= FINDFLAGS_HIT_ALL;
     }
     uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
+    AOERADIUS radiusType = (PSpell->getFlag() & SPELLFLAG_ATTACKER_RADIUS) != 0 ? AOERADIUS_ATTACKER : AOERADIUS_TARGET;
 
-    if (aoeType == SPELLAOE_RADIAL) {
+    if (aoeType == SPELLAOE_RADIAL)
+    {
         float distance = spell::GetSpellRadius(PSpell, this);
 
-        PAI->TargetFind->findWithinArea(PActionTarget, AOERADIUS_TARGET, distance, flags);
-
+        PAI->TargetFind->findWithinArea(PActionTarget, radiusType, distance, flags);
     }
     else if (aoeType == SPELLAOE_CONAL)
     {
-        //TODO: actual radius calculation
         float radius = spell::GetSpellRadius(PSpell, this);
+        float angle = spell::GetSpellConeAngle(PSpell, this);
 
-        PAI->TargetFind->findWithinCone(PActionTarget, radius, 45, flags);
+        PAI->TargetFind->findWithinCone(PActionTarget, radiusType, radius, angle, flags);
     }
     else
     {
@@ -1695,6 +1697,14 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
         {
             luautils::OnMagicHit(this, PTarget, PSpell);
+
+            if (PSpell->getSpellGroup() == SPELLGROUP_BLUE && ((CBlueSpell*)PSpell)->isPhysical() && msg != MSGBASIC_MAGIC_FAIL)
+            {
+                // ToDo Regurgitation is a magical spell that has bind + knockback
+                actionTarget.reaction = REACTION::REACTION_HIT;
+                actionTarget.speceffect = SPECEFFECT::SPECEFFECT_RECOIL;
+                actionTarget.knockback = ((CBlueSpell*)PSpell)->getKnockback();
+            }
         }
     }
     this->StatusEffectContainer->DelStatusEffect(EFFECT_CONVERGENCE);
@@ -1950,8 +1960,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
                     if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
-                        actionTarget.spikesParam = 0;
-                        actionTarget.spikesMessage = 14;
+                        actionTarget.spikesParam = 1;
+                        actionTarget.spikesMessage = MSGBASIC_COUNTER_ABS_BY_SHADOW;
                     }
                     else
                     {

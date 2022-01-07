@@ -17,30 +17,33 @@ function onTrade(player, npc, trade)
         BluePeas = trade:getItemQty(618)
         if (BluePeas == 1 and count == 1 and player:getCharVar("sermonQuestVar") == 0) then
             player:tradeComplete()
-            player:showText(npc, 7349)
+            player:showText(npc, 7414)
             player:startEvent(19)
+            player:showText(npc, 7416)
             player:setCharVar("sermonQuestVar", 1)
         elseif (BluePeas > 1 and count == BluePeas) then
-            player:showText(npc, 7352)
-            player:startEvent(19)
-        elseif (BluePeas == 1 and count == 1) then
-            player:showText(npc, 7352, 618)
-            player:startEvent(19)
+            player:showText(npc, 7417, 618)
         else
-            player:showText(npc, 7350)
-            player:showText(npc, 7351)
-            player:startEvent(19)
+            player:showText(npc, 7415, 618)
         end
-    else
-        player:showText(npc, 7350)
-        player:showText(npc, 7351)
-        player:startEvent(19)
+    elseif (sermonQuest == QUEST_COMPLETED) then    
+        player:showText(npc, 7417)
     end
 end
 
 function onTrigger(player, npc)
-    player:showText(npc, 7347)
-    player:showText(npc, 7348, 618)
+    sermonQuest = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_VICASQUE_S_SERMON)
+
+    if sermonQuest == QUEST_ACCEPTED and player:getCharVar("sermonQuestVar") == 0 then
+        player:showText(npc, 7413, 618)    
+    elseif player:getCharVar("sermonQuestVar") >= 1 then 
+        player:startEvent(19)
+        player:showText(npc, 7416)
+    else
+        player:showText(npc, 7412)
+        player:showText(npc, 7416)
+        player:startEvent(19)
+    end
 end
 
 function onEventUpdate(player, csid, option)

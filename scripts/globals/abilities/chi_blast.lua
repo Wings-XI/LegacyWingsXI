@@ -14,13 +14,20 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    local boost = player:getStatusEffect(tpz.effect.BOOST)
-    local multiplier = 1.0
-    if boost ~= nil then
-        multiplier = multiplier + ( (boost:getPower()/100) * 4 ) -- power is the raw % atk boost
+
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
+    local mnd = player:getStat(tpz.mod.MND)
+    local Boosts = player:getLocalVar("BoostCounter")
+    local Rand = (math.random(26,60)/100)
+
+    if player:getMod(tpz.mod.BOOST_EFFECT) > 0 then
+        Rand = (math.random(75,110)/100)
     end
 
-    local dmg = math.floor(player:getStat(tpz.mod.MND) * (0.5 + (math.random() / 2))) * multiplier
+    local dmg = mnd * (Boosts * Rand + 1)
     
     local penance = player:getMerit(tpz.merit.PENANCE)
     

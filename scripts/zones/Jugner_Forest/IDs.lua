@@ -50,10 +50,13 @@ zones[tpz.zone.JUGNER_FOREST] =
         {
             [17203447] = 17203448,
         },
-        KING_ARTHRO  = 17203216,
-        FRAELISSA    = 17203447,
-        DUESSA_START = 17203449,
-        DUESSA_END   = 17203453,
+        KING_ARTHRO          = 17203216,
+        FRAELISSA            = 17203447,
+        DUESSA_START         = 17203449,
+        DUESSA_END           = 17203453,
+        METEORMAULER         = 17203414,
+        METEORMAULER_GUARD1  = 17203415,
+        METEORMAULER_GUARD2  = 17203416,
     },
     npc =
     {

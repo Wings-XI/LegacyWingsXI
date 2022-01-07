@@ -6,6 +6,7 @@
 --       50% HP/MP reduction pre-2 hour and 75% HP/MP reduction post-2 hour.
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -23,4 +24,21 @@ function onMobSpawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+    if (mob:hasStatusEffect(tpz.effect.SILENCE) == true) then
+        return 647 -- Chaos Blade
+    end
+    
+    local random = math.random(1 , 4)
+    if (random == 1) then
+        return 647 -- Chaos Blade
+    elseif (random == 2) then
+        return 651 -- Lodesong
+    elseif (random == 3) then
+        return 650 -- Thornsong
+    else
+        return 649 -- Voidsong
+    end
 end

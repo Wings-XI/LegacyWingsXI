@@ -19,10 +19,12 @@ function onAdditionalEffect(player, target, damage)
     elseif (math.random(0, 100) >= chance or applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0) < 0.5) then
         return 0, 0, 0
     else
-        target:delStatusEffect(tpz.effect.BLINDNESS)
-        if (not target:hasStatusEffect(tpz.effect.BLINDNESS)) then
-            target:addStatusEffect(tpz.effect.BLINDNESS, 10, 0, 30)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+            target:delStatusEffect(tpz.effect.BLINDNESS)
+            if (not target:hasStatusEffect(tpz.effect.BLINDNESS)) then
+                target:addStatusEffect(tpz.effect.BLINDNESS, 10, 0, 30)
+            end
+            return tpz.subEffect.BLIND, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.BLINDNESS
         end
-        return tpz.subEffect.BLIND, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.BLINDNESS
     end
 end

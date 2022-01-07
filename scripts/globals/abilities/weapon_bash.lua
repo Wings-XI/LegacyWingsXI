@@ -19,6 +19,10 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
     
     local chance = 110
     
@@ -39,8 +43,10 @@ function onUseAbility(player, target, ability)
     end
     
     tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
-    if (math.random()*100 < chance) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if (math.random()*100 < chance) then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
+        end
     end
 
     -- Calculating and applying Weapon Bash damage

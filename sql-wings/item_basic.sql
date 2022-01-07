@@ -1659,7 +1659,7 @@ INSERT INTO `item_basic` VALUES(1769, 0, 'square_of_galateia', 'galateia', 12, 4
 INSERT INTO `item_basic` VALUES(1770, 0, 'oversized_fang', 'oversized_fang', 12, 4, 42, 0, 519);
 INSERT INTO `item_basic` VALUES(1771, 0, 'dragon_bone', 'dragon_bone', 12, 4, 42, 0, 1020);
 INSERT INTO `item_basic` VALUES(1772, 0, 'chunk_of_super_cermet', 'super_cermet', 12, 4, 44, 0, 519);
-INSERT INTO `item_basic` VALUES(1773, 0, 'handful_of_darksteel_scales', 'dark_scales', 12, 4, 38, 0, 970);
+INSERT INTO `item_basic` VALUES(1773, 0, 'handful_of_darksteel_scales', 'dark_scales', 12, 4, 38, 0, 2862);
 INSERT INTO `item_basic` VALUES(1774, 0, 'pile_of_red_gravel', 'red_gravel', 12, 4, 46, 0, 632);
 INSERT INTO `item_basic` VALUES(1775, 0, 'jar_of_brimsand', 'brimsand', 12, 4, 44, 0, 674);
 INSERT INTO `item_basic` VALUES(1776, 0, 'serving_of_spaghetti', 'spaghetti', 12, 4, 59, 0, 200);
@@ -9048,7 +9048,7 @@ INSERT INTO `item_basic` VALUES(11784, 0, 'aias_bonnet', 'aias_bonnet', 1, 63572
 INSERT INTO `item_basic` VALUES(11785, 0, 'veloce_zuchetto', 'veloce_zuchetto', 1, 63572, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(11786, 0, 'laurel_wreath', 'laurel_wreath', 1, 63572, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(11787, 0, 'hikmet_hat', 'hikmet_hat', 1, 63572, 0, 1, 0);
-INSERT INTO `item_basic` VALUES(11788, 0, 'jesters_hat', 'jesters_hat', 1, 35844, 17, 0, 256);
+INSERT INTO `item_basic` VALUES(11788, 0, 'jesters_hat', 'jesters_hat', 1, 35908, 0, 0, 256);
 INSERT INTO `item_basic` VALUES(11789, 0, 'bellicus_celata', 'bellicus_celata', 1, 30800, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(11790, 0, 'bestia_helm', 'bestia_helm', 1, 30800, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(11791, 0, 'paragon_galea', 'paragon_galea', 1, 30800, 0, 1, 0);
@@ -10707,7 +10707,7 @@ INSERT INTO `item_basic` VALUES(13451, 0, 'spinel_ring', 'spinel_ring', 1, 2084,
 INSERT INTO `item_basic` VALUES(13452, 0, 'sapphire_ring', 'sapphire_ring', 1, 2084, 25, 0, 8410);
 INSERT INTO `item_basic` VALUES(13453, 0, 'topaz_ring', 'topaz_ring', 1, 2084, 25, 0, 8410);
 INSERT INTO `item_basic` VALUES(13454, 0, 'copper_ring', 'copper_ring', 1, 2084, 25, 0, 19);
-INSERT INTO `item_basic` VALUES(13455, 0, 'coral_ring', 'coral_ring', 1, 2084, 25, 0, 4304);
+INSERT INTO `item_basic` VALUES(13455, 0, 'coral_ring', 'coral_ring', 1, 2084, 25, 0, 3570);
 INSERT INTO `item_basic` VALUES(13456, 0, 'silver_ring', 'silver_ring', 1, 2084, 25, 0, 256);
 INSERT INTO `item_basic` VALUES(13457, 0, 'beetle_ring', 'beetle_ring', 1, 2084, 25, 0, 589);
 INSERT INTO `item_basic` VALUES(13458, 0, 'scorpion_ring', 'scorpion_ring', 1, 2084, 25, 0, 450);
@@ -10756,7 +10756,7 @@ INSERT INTO `item_basic` VALUES(13500, 0, 'bone_ring_+1', 'bone_ring_+1', 1, 208
 INSERT INTO `item_basic` VALUES(13501, 0, 'beetle_ring_+1', 'beetle_ring_+1', 1, 2080, 25, 0, 825);
 INSERT INTO `item_basic` VALUES(13502, 0, 'horn_ring_+1', 'horn_ring_+1', 1, 2080, 25, 0, 1500);
 INSERT INTO `item_basic` VALUES(13503, 0, 'carapace_ring_+1', 'carapace_ring_+1', 1, 2080, 25, 0, 2537);
-INSERT INTO `item_basic` VALUES(13504, 0, 'mermans_ring', 'mermans_ring', 1, 2080, 25, 0, 4304);
+INSERT INTO `item_basic` VALUES(13504, 0, 'mermans_ring', 'mermans_ring', 1, 2080, 25, 0, 4900);
 INSERT INTO `item_basic` VALUES(13505, 0, 'judges_ring', 'judges_ring', 1, 2050, 0, 0, 61);
 INSERT INTO `item_basic` VALUES(13506, 0, 'bomb_ring', 'bomb_ring', 1, 34820, 25, 0, 983);
 INSERT INTO `item_basic` VALUES(13507, 0, 'malflood_ring', 'malflood_ring', 1, 34820, 25, 0, 1300);
@@ -16392,7 +16392,7 @@ INSERT INTO `item_basic` VALUES(19198, 0, 'dweomer_bullet', 'dweomer_bullet', 99
 INSERT INTO `item_basic` VALUES(19199, 0, 'oberons_bullet', 'oberons_bullet', 99, 2052, 15, 0, 7);
 INSERT INTO `item_basic` VALUES(19200, 0, 'black_bolt', 'black_bolt', 99, 2052, 15, 0, 10);
 INSERT INTO `item_basic` VALUES(19201, 0, 'electrum_bullet', 'electrum_bullet', 99, 2052, 15, 0, 25);
-INSERT INTO `item_basic` VALUES(19202, 0, 'smart_grenade', 'smart_grenade', 1, 34820, 15, 0, 9500);
+INSERT INTO `item_basic` VALUES(19202, 0, 'smart_grenade', 'smart_grenade', 1, 51268, 0, 0, 9500);
 INSERT INTO `item_basic` VALUES(19203, 0, 'war_hoop', 'war_hoop', 1, 63552, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(19204, 0, 'fiendtrapper', 'fiendtrapper', 1, 64592, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(19205, 0, 'blank_fiend_plate', 'blank_f._plate', 12, 30800, 0, 1, 0);

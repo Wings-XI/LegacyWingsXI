@@ -28,6 +28,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
     if (player:getWeaponSkillType(tpz.slot.RANGED) == tpz.skill.MARKSMANSHIP) then
         action:animation(target:getID(), action:animation(target:getID()) + 1)
     end

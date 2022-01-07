@@ -7,20 +7,15 @@
 require("scripts/globals/room_rental")
 
 function onTrade(player, npc, trade)
-
 end
 
 function onTrigger(player, npc)
-    if (player:getNation() == 0) then
-    player:startEvent(595)
-else
-    player:startEvent(598)
-    end
+    rrOnTrigger(player, npc, 838)
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
+    rrOnEventFinish(player, csid, option)
 end

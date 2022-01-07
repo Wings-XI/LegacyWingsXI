@@ -27,9 +27,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if (damage > 0 and target:hasStatusEffect(tpz.effect.SLEEP_I) == false) then
-        local duration = (tp/1000 * 20) * applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0)
-        target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SLEEPRES) < 100 then
+        if (damage > 0 and target:hasStatusEffect(tpz.effect.SLEEP_I) == false) then
+            local duration = (tp/1000 * 20) * applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0)
+            target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration)
+        end
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.GREAT_SWORD, tpHits+extraHits) end
 	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end

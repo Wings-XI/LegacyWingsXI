@@ -118,16 +118,49 @@ function doBoostGain(caster, target, spell, effect)
 end
 
 function doEnspell(caster, target, spell, effect)
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    -- Calculate Bonus duration
+    local baseDuration = 0
+    if caster:getEquipID(tpz.slot.MAIN) == 17696 then
+        baseDuration = 210
+    else
+        baseDuration = 180
+    end
+
+    local duration = calculateDuration(baseDuration, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
     --calculate potency
     local magicskill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
-
-    local potency = 3 + math.floor(6 * magicskill / 100)
-    if magicskill > 200 then
-        potency = 5 + math.floor(5 * magicskill / 100)
+    -- Add effect bonuses from equipment
+    local potencybonus = 0
+    if caster:getEquipID(tpz.slot.MAIN) == 17696 then -- Buzzard Tusk
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(tpz.slot.EAR1) == 16011 or caster:getEquipID(tpz.slot.EAR2) == 16011 then -- Lycopodium Earring
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(tpz.slot.EAR1) == 15964 or caster:getEquipID(tpz.slot.EAR2) == 15964 then -- Hollow Earring
+        potencybonus = 3 + potencybonus
+    elseif(caster:getHPP() <= 75 and caster:getTP() <= 100) and (caster:getEquipID(tpz.slot.RING1) == 13290 or caster:getEquipID(tpz.slot.RING2) == 13290) then -- Fencer's Ring
+        potencybonus = 5 + potencybonus
+    elseif caster:getEquipID(tpz.slot.MAIN) == 17696 then -- Enhancing Sword
+        potencybonus = 5 + potencybonus
     end
 
+    -- Potency with Effect Bonus
+    local potency = 0
+    if (caster:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.SWORD or caster:getWeaponSkillType(tpz.slot.SUB) == tpz.skill.SWORD) then
+        if magicskill <= 200 then
+            potency = 3 + potencybonus + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + potencybonus + math.floor(5 * magicskill / 100)
+        end
+    -- Potency without Effect Bonus
+    else
+        if magicskill <= 200 then
+            potency = 3 + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + math.floor(5 * magicskill / 100)
+        end
+    end
+    
     if target:addStatusEffect(effect, potency, 0, duration) then
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else
@@ -708,6 +741,11 @@ end
         target:handleAfflatusMiseryDamage(dmg)
         target:updateEnmityFromDamage(caster, dmg)
         if dmg > 0 then target:addTPFromSpell(caster) end
+    end
+
+    if (caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK)) then
+        dmg = dmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
     end
 
     return dmg

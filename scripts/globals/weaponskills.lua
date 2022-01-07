@@ -470,6 +470,35 @@ end
         finaldmg = finaldmg * pierceres / 1000
     end
 
+    -- Circle Effects
+    if target:isMob() and finaldmg > 0 then
+        local eco = target:getSystem()
+        local circlemult = 100
+        local mod = 0
+
+        if     eco == 1  then mod = 1226
+        elseif eco == 2  then mod = 1228
+        elseif eco == 3  then mod = 1232
+        elseif eco == 6  then mod = 1230
+        elseif eco == 8  then mod = 1225
+        elseif eco == 9  then mod = 1234
+        elseif eco == 10 then mod = 1233
+        elseif eco == 14 then mod = 1227
+        elseif eco == 16 then mod = 1238
+        elseif eco == 15 then mod = 1237
+        elseif eco == 17 then mod = 1229
+        elseif eco == 19 then mod = 1231
+        elseif eco == 20 then mod = 1224
+        end
+
+        if mod > 0 then
+            circlemult = 100 + attacker:getMod(mod)
+        end
+
+        finaldmg = math.floor(finaldmg * circlemult / 100)
+    end
+    
+
     finaldmg = finaldmg * WEAPON_SKILL_POWER
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -482,7 +511,7 @@ end
 -- params: ftp100, ftp200, ftp300, wsc_str, wsc_dex, wsc_vit, wsc_agi, wsc_int, wsc_mnd, wsc_chr,
 --         ele (tpz.magic.ele.FIRE), skill (tpz.skill.STAFF)
 
-function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primaryMsg, mythicMagicWsParams)
 
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local attack =
@@ -501,8 +530,11 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     }
 
     local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
-    bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC)
-
+    -- There is an assumed +100 macc bonus for magical weaponskills
+    -- https://www.bg-wiki.com/ffxi/Category:Elemental_Weapon_Skill
+    -- While this is very difficult to prove, the consistency of Trueflight, Leaden Salute, and Primal Rend (among others) supports this
+    bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC) + 100
+    
     local fint = utils.clamp(8 + (attacker:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)), -32, 32)
     local dmg = 0
 
@@ -544,7 +576,18 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         dmg = attacker:getMainLvl() + 2 + (attacker:getStat(tpz.mod.STR) * wsParams.str_wsc + attacker:getStat(tpz.mod.DEX) * wsParams.dex_wsc +
              attacker:getStat(tpz.mod.VIT) * wsParams.vit_wsc + attacker:getStat(tpz.mod.AGI) * wsParams.agi_wsc +
              attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
-             attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) + fint
+             attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc)
+
+        -- mythic weapons use: D value = (77 + status correction) x magnification + (own step A-enemy step B) x system magnification
+        -- Source: bgwiki and https://w.atwiki.jp/studiogobli/pages/77.html
+        if (mythicMagicWsParams) then
+            local attackerStat = mythicMagicWsParams.attackerStat
+            local defenderStat = mythicMagicWsParams.defenderStat
+            local magnification = mythicMagicWsParams.magnification
+            dmg = dmg + ((attacker:getStat(attackerStat) - target:getStat(defenderStat)) * magnification)
+        else
+            dmg = dmg + fint
+        end
 
         -- Applying fTP multiplier
         local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + bonusfTP
@@ -567,11 +610,41 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         dmg = target:magicDmgTaken(dmg)
         dmg = adjustForTarget(target, dmg, wsParams.ele)
 
+        
+        --https://www.bluegartr.com/threads/79254-Circle-Testing/page2
+        -- Circle Effects
+        if target:isMob() and dmg > 0 then
+            local eco = target:getSystem()
+            local circlemult = 100
+            local mod = 0
+
+            if     eco == 1  then mod = 1226
+            elseif eco == 2  then mod = 1228
+            elseif eco == 3  then mod = 1232
+            elseif eco == 6  then mod = 1230
+            elseif eco == 8  then mod = 1225
+            elseif eco == 9  then mod = 1234
+            elseif eco == 10 then mod = 1233
+            elseif eco == 14 then mod = 1227
+            elseif eco == 16 then mod = 1238
+            elseif eco == 15 then mod = 1237
+            elseif eco == 17 then mod = 1229
+            elseif eco == 19 then mod = 1231
+            elseif eco == 20 then mod = 1224
+            end
+
+            if mod > 0 then
+                circlemult = 100 + attacker:getMod(mod)
+            end
+
+            dmg = math.floor(dmg * circlemult / 100)
+        end
+
         dmg = dmg * WEAPON_SKILL_POWER -- Add server bonus
     else
         calcParams.shadowsAbsorbed = 1
     end
-
+    
     calcParams.finalDmg = dmg
     dmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return dmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed

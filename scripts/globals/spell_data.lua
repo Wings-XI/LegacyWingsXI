@@ -9,10 +9,11 @@ tpz.magic = tpz.magic or {}
 
 tpz.magic.spellFlag =
 {
-    NONE           = 0x00,
-    HIT_ALL        = 0x01, -- Hit all targets in range regardless of party
-    WIPE_SHADOWS   = 0x02, -- Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
-    IGNORE_SHADOWS = 0x04  -- Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    NONE            = 0x00,
+    HIT_ALL         = 0x01, -- Hit all targets in range regardless of party
+    WIPE_SHADOWS    = 0x02, -- Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
+    IGNORE_SHADOWS  = 0x04, -- Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    ATTACKER_RADIUS = 0x08, -- Center the AoE around the attacker; the default is the target.
 }
 
 ------------------------------------
@@ -790,7 +791,7 @@ tpz.magic.spell =
     KAKKA_ICHI            =  509,
     MIGAWARI_ICHI         =  510,
     HASTE_II              =  511,
-
+    STUNGA                =  512,
     VENOM_SHELL           =  513,
 
     MAELSTROM             =  515,

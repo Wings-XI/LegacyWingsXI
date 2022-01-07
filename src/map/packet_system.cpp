@@ -532,8 +532,19 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->setPetZoningInfo();
         }
 
+        if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id && PChar->GetLocalVar("NoRemoveOpenMH") == 0) {
+            PChar->loc.boundary = 0;
+            PChar->loc.p.x = 0;
+            PChar->loc.p.y = 0;
+            PChar->loc.p.z = 0;
+            PChar->loc.p.rotation = 0;
+            PChar->m_moghouseID = 0;
+            charutils::SaveCharPosition(PChar);
+        }
+
         PSession->shuttingDown = 1;
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
+
     }
     else
     {
@@ -1231,6 +1242,10 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowExploit(CL_YELLOW "SmallPacket0x028: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
     }
+    if (!PChar->hasAccessToStorage(container)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
 
     CItem* PItem = PChar->getStorage(container)->GetItem(slotID);
 
@@ -1280,8 +1295,14 @@ void SmallPacket0x029(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8  FromSlotID     = data.ref<uint8>(0x0A);
     uint8  ToSlotID       = data.ref<uint8>(0x0B);
 
-    if (ToLocationID >= MAX_CONTAINER_ID || FromLocationID >= MAX_CONTAINER_ID)
+    if (ToLocationID >= MAX_CONTAINER_ID || FromLocationID >= MAX_CONTAINER_ID) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: Invalid container ID passed to packet by %s\n" CL_RESET, PChar->GetName());
         return;
+    }
+    if (!PChar->hasAccessToStorage(FromLocationID) || !PChar->hasAccessToStorage(ToLocationID)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
 
     CItem* PItem = PChar->getStorage(FromLocationID)->GetItem(FromSlotID);
 
@@ -1749,6 +1770,11 @@ void SmallPacket0x03A(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowExploit(CL_YELLOW "SmallPacket0x03A: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
     }
+    if (!PChar->hasAccessToStorage(container)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
+
 
     CItemContainer* PItemContainer = PChar->getStorage(container);
 
@@ -2781,10 +2807,6 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 PChar->UContainer->Clean();
             }
-            else
-            {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
-            }
         }
         break;
     }
@@ -3642,6 +3664,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
             // Validate travel
             if (moghouseExitRegular || moghouseExitQuestZoneline || moghouseExitMogGardenZoneline)
             {
+                charutils::RemoveGuestsFromMogHouse(PChar);
                 PChar->m_moghouseID    = 0;
                 PChar->loc.destination = destinationZone;
                 memset(&PChar->loc.p, 0, sizeof(PChar->loc.p));
@@ -5248,7 +5271,7 @@ void SmallPacket0x0BE(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 3: // change merit
         {
-            if (PChar->m_moghouseID)
+            if (PChar->m_moghouseID == PChar->id)
             {
                 MERIT_TYPE merit = (MERIT_TYPE)(data.ref<uint16>(0x06) << 1);
 
@@ -5491,7 +5514,16 @@ void SmallPacket0x0CB(map_session_data_t* const PSession, CCharEntity* const PCh
     TracyZoneScoped;
     if (data.ref<uint8>(0x04) == 1)
     {
-        PChar->m_openMH = true; // open
+        REGIONTYPE currentRegion = zoneutils::GetCurrentRegion(PChar->getZone());
+        if ((currentRegion == REGION_SANDORIA && PChar->profile.nation == 0) ||
+            (currentRegion == REGION_BASTOK && PChar->profile.nation == 1) ||
+            (currentRegion == REGION_WINDURST && PChar->profile.nation == 2)) {
+            PChar->m_openMH = true; // open
+        }
+        else {
+            ShowWarning(CL_RED "Player %s trying to use open mog function outside their own nation.\n" CL_RESET, PChar->name);
+            return;
+        }
     }
     else if (data.ref<uint8>(0x04) == 2)
     {
@@ -5502,6 +5534,9 @@ void SmallPacket0x0CB(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowWarning(CL_RED "SmallPacket0x0CB : unknown byte <%.2X>\n" CL_RESET, data.ref<uint8>(0x04));
     }
     PChar->pushPacket(new CCharSyncPacket(PChar));
+    if (PChar->PParty) {
+        PChar->PParty->ReloadParty();
+    }
 }
 
 /************************************************************************
@@ -6098,6 +6133,7 @@ void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 1)
     {
+        charutils::RemoveGuestsFromMogHouse(PChar);
         PChar->status = STATUS_SHUTDOWN;
         charutils::SendToZone(PChar, 1, 0);
     }
@@ -6341,6 +6377,9 @@ void SmallPacket0x0FA(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         return;
     }
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemFurnishing* PItem = (CItemFurnishing*)PChar->getStorage(containerID)->GetItem(slotID);
 
@@ -6441,6 +6480,9 @@ void SmallPacket0x0FB(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         return;
     }
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
 
@@ -6519,6 +6561,9 @@ void SmallPacket0x0FC(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if ((potContainerID != LOC_MOGSAFE && potContainerID != LOC_MOGSAFE2) || (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2))
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PPotItemContainer = PChar->getStorage(potContainerID);
     CItemFlowerpot* PPotItem          = (CItemFlowerpot*)PPotItemContainer->GetItem(potSlotID);
@@ -6586,6 +6631,9 @@ void SmallPacket0x0FD(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6645,6 +6693,9 @@ void SmallPacket0x0FE(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6710,6 +6761,9 @@ void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6739,7 +6793,7 @@ void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || PChar->m_moghouseID)
+    if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || (PChar->m_moghouseID == PChar->id))
     {
         uint8 mjob = data.ref<uint8>(0x04);
         uint8 sjob = data.ref<uint8>(0x05);

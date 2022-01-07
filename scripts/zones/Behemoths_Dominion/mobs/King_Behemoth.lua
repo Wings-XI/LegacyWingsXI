@@ -19,9 +19,7 @@ function onMobSpawn(mob)
     if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
         GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(tpz.status.DISAPPEAR)
     end
-    
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 35)
+
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.ATT, -50)
@@ -46,14 +44,28 @@ function onMobFight(mob, target)
     else
         mob:setMod(tpz.mod.REGAIN, 80)
     end
-    
+
     local delay = mob:getLocalVar("delay")
-        if (delay > 98) then -- Use Meteor every 40s, based on capture
-                mob:castSpell(218) -- meteor
-                mob:setLocalVar("delay", 0)
-            else
-                mob:setLocalVar("delay", delay+1)
-        end
+    if (delay > 98) then -- Use Meteor every 40s, based on capture
+            mob:castSpell(218) -- meteor
+            mob:setLocalVar("delay", 0)
+        else
+            mob:setLocalVar("delay", delay+1)
+    end
+
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (target:getXPos() > -180 and target:getZPos() > 53) and os.time() > drawInWait then -- North Tunnel Draw In
+        local rot = target:getRotPos()
+        target:setPos(-182.19,-19.83,58.34,rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif (target:getXPos() > -230 and target:getZPos() < 5) and os.time() > drawInWait then -- South Tunnel Draw In
+        local rot = target:getRotPos()
+        target:setPos(-235.35,-20.01,-4.47,rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 end
 
 function onSpellPrecast(mob, spell)

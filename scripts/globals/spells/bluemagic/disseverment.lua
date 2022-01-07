@@ -59,9 +59,11 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-    if resist >= 0.5 and target:getStatusEffect(tpz.effect.POISON) == nil then
-        local power = caster:getMainLvl()/5 + 3
-        target:addStatusEffect(tpz.effect.POISON, power, 3, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if resist >= 0.5 and target:getStatusEffect(tpz.effect.POISON) == nil then
+            local power = caster:getMainLvl()/5 + 3
+            target:addStatusEffect(tpz.effect.POISON, power, 3, duration*resist)
+        end
     end
 
     return damage

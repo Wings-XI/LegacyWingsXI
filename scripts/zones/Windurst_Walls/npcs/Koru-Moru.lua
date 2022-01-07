@@ -24,7 +24,7 @@ function onTrade(player, npc, trade)
                 player:startEvent(287) -- MAKING THE GRADE: Have test answers but not talked/given to Fuepepe
             end
         end
-    elseif (trade:hasItemQty(584, 1) and count == 1 and trade:getGil() == 0) then
+    elseif (qStarStruck == QUEST_ACCEPTED and trade:hasItemQty(584, 1) and count == 1 and trade:getGil() == 0) then
         player:startEvent(199)
     elseif (qStarStruck == QUEST_ACCEPTED and trade:hasItemQty(582, 1) and count == 1 and trade:getGil() == 0) then
         player:startEvent(211)
@@ -75,16 +75,7 @@ function onTrigger(player, npc)
     elseif (blastFromPast == QUEST_ACCEPTED) then
         player:startEvent(216)
     elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.MAKING_THE_GRADE) == QUEST_ACCEPTED) then
-        local makingGradeProg = player:getCharVar("QuestMakingTheGrade_prog")
-        if (makingGradeProg == 0 and player:hasItem(544)) then
-            player:startEvent(287) -- MAKING THE GRADE: Have test answers but not talked/given to Fuepepe
-        elseif (makingGradeProg == 1) then
-            player:startEvent(285) -- MAKING THE GRADE: Turn in Test Answer & Told to go back to Fuepepe & Chomoro
-        elseif (makingGradeProg >= 2) then
-            player:startEvent(286) -- MAKING THE GRADE: Reminder to go away
-        else
-            player:startEvent(193)
-        end
+        player:startEvent(286) -- MAKING THE GRADE: Reminder to go away
     elseif (qStarStruck == QUEST_ACCEPTED) then
         player:startEvent(198)
     elseif ((qStarStruck == QUEST_AVAILABLE) and (ClassReunion ~= QUEST_ACCEPTED) and player:hasItem(584)) then
@@ -141,17 +132,18 @@ function onEventFinish(player, csid, option)
         player:addKeyItem(tpz.ki.TATTERED_TEST_SHEET)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TATTERED_TEST_SHEET)
         player:setCharVar("QuestMakingTheGrade_prog", 2)
-    elseif (csid == 211) then
+    elseif (csid == 211) then -- Star Struck finished by trading Meteorite
         player:tradeComplete()
         player:addItem(12502)
         player:messageSpecial(ID.text.ITEM_OBTAINED, 12502)
         player:completeQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
         player:needToZone(true)
         player:addFame(WINDURST, 20)
-    elseif (csid == 199) then
+    elseif (csid == 199) then -- Star Struck finished by trading Torn Epistle
         player:tradeComplete()
         player:messageSpecial(ID.text.GIL_OBTAINED, 50)
         player:addGil(50)
+        player:completeQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
     elseif (csid == 197 and option == 0) then
         player:addQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
     elseif (csid == 214 and option == 0) then

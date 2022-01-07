@@ -19,6 +19,11 @@ function onPetAbility(target, pet, skill, summoner)
         return tpz.effect.SLEEP_I
     end
 
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return tpz.effect.SLEEP_I
+    end
+
     local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
     local effect = tpz.effect.SLEEP_I
