@@ -13,14 +13,14 @@ end
 
 function onSpellCast(caster, target, spell)
 
+    if target:hasStatusEffect(tpz.effect.HASTE) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+    end
+
     if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLOWRES) >= 100 then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return tpz.effect.SLOW
     end
-
-    if target:hasStatusEffect(tpz.effect.HASTE) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    else
 
     local dMND = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
     
@@ -48,7 +48,6 @@ function onSpellCast(caster, target, spell)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
         end
-    end
 
     return params.effect
 end
