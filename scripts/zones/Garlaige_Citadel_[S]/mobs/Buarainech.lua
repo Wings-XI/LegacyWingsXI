@@ -16,8 +16,10 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.CHR, 20)
     mob:addMod(tpz.mod.AGI, 20)
     mob:addMod(tpz.mod.DEX, 40)
-    mob:addMod(tpz.mod.DEFP, 75)
-    mob:addMod(tpz.mod.RATTP, 75)
+    mob:setMod(tpz.mod.DEFP, 0)
+    mob:setMod(tpz.mod.RATTP, 0)
+    mob:addMod(tpz.mod.DEFP, 750)
+    mob:addMod(tpz.mod.RATTP, 750)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Buarainech
     mob:setMod(tpz.mod.EARTHDEF, 128)
@@ -134,7 +136,7 @@ function onMobFight(mob, target)
             (caster:isPC() or caster:isPet())
         then
             target:setLocalVar("BRetaliate", 1)
-            caster:addEnmity(caster, 1000, 1000)
+            target:addEnmity(caster, 1000, 1000)
             target:AnimationSub(1)
         end
     end)
@@ -142,7 +144,13 @@ function onMobFight(mob, target)
     -- Enmity Handling
     -- Mob Should Have Little To No Enmity Control (https://ffxiclopedia.fandom.com/wiki/Buarainech)
     mob:addListener("TAKE_DAMAGE", "BUARAINECH_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
-        mob:addEnmity(attacker, 1000, 1000)
+        if attackType == tpz.attackType.PHYSICAL then
+            mob:addEnmity(attacker, 1000, 1000)
+        end
+    end)
+
+    mob:addListener("WEAPONSKILL_TAKE", "BUARAINECH_WEAPONSKILL_TAKE", function(target, attacker, skillid, tp, action)
+        target:addEnmity(attacker, 1000, 1000)
     end)
 
 end
