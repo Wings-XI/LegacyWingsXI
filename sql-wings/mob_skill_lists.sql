@@ -3260,6 +3260,13 @@ INSERT INTO `mob_skill_lists` VALUES('EldritchEdge', 1187, 397);
 INSERT INTO `mob_skill_lists` VALUES('Barbastelle', 1188, 392);
 INSERT INTO `mob_skill_lists` VALUES('Supplespine_Mujwuj', 1189, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Supplespine_Mujwuj', 1189, 609);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 662);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 663);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 664);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 665);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 666);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 667);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 710);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
