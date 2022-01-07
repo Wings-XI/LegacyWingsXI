@@ -1,8 +1,8 @@
 -----------------------------------------
 -- ID: 5435
--- Fools's Drink
+-- Fools Drink
 -- Makes user immune to magical damage
--- ToDo should overwrite fanatics
+-- ToDo should overwrite fanatics -- to be done once the effects are unique and not reused
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -24,6 +24,6 @@ function onItemUse(target)
     else
         target:messagePublic(tpz.msg.basic.NO_EFFECT, target, effect)
     end
-    target:addStatusEffect(effect2, power, 0, duration)
+    target:addStatusEffectEX(effect2, power, 0, 0, duration)
 
 end

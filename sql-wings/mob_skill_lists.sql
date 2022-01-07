@@ -3260,6 +3260,13 @@ INSERT INTO `mob_skill_lists` VALUES('EldritchEdge', 1187, 397);
 INSERT INTO `mob_skill_lists` VALUES('Barbastelle', 1188, 392);
 INSERT INTO `mob_skill_lists` VALUES('Supplespine_Mujwuj', 1189, 1064);
 INSERT INTO `mob_skill_lists` VALUES('Supplespine_Mujwuj', 1189, 609);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 662);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 663);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 664);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 665);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 666);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 667);
+INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 710);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
@@ -3334,6 +3341,42 @@ INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1822);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1823);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1824);
 INSERT INTO `mob_skill_lists` VALUES('Custard', 5011, 1825);
+-- Buarainech
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 116); -- Penta Thrust
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 120); -- Impulse Drive
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 114); -- Raiden Thrust
+INSERT INTO `mob_skill_lists` VALUES('Buarainech', 5012, 249); -- Netherspikes
+-- Elatha
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 52); -- Shockwave
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 56); -- Ground Strike
+INSERT INTO `mob_skill_lists` VALUES('Elatha', 5013, 51); -- Freezebite
+-- Lugh
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 247); -- Foxfire
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 34); -- Red Lotus Blade
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 38); -- Circle Blade
+INSERT INTO `mob_skill_lists` VALUES('Lugh', 5014, 42); -- Savage Blade
+-- Ethniu
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 247); -- Foxfire
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 19); -- Gust Slash
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 20); -- Cyclone
+INSERT INTO `mob_skill_lists` VALUES('Ethniu', 5015, 25); -- Evisceration
+-- Tethra
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 248); -- Grim Halo
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 249); -- Netherspikes
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 242); -- Carnal Nightmare
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 177); -- Rock Crusher
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 178); -- Earth Crusher
+INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 184); -- Retribution
+
+
 --
 -- Indexes for dumped tables
 --

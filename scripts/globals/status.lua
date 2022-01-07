@@ -823,7 +823,8 @@ tpz.effect =
     SUPER_JUMP               = 804, -- Description
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
-    -- 807-1022
+    SOLDIERS_DRINK           = 807,
+    -- 808-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -2615,7 +2616,7 @@ tpz.jobSpecialAbility =
     -- EES_?                = 2148,
     EES_TROLL            = 2252,
     -- EES_?                = 2941,
-    -- SPIRIT_SURGE         = 1893,
+    SPIRIT_SURGE_NM         = 1893,
     -- SPIRIT_SURGE         = 2255,
     AZURE_LORE           = 1933,
     -- AZURE_LORE           = 2006,

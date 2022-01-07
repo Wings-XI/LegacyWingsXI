@@ -798,10 +798,10 @@ namespace battleutils
         // Deal with spikesEffect effect gear
         else if (PDefender->getMod(Mod::ITEM_SPIKES_TYPE) > 0) // todo: this is probably where Sune-Ate are breaking and not doing any damage -.-
         {
-            if (PDefender->objtype == TYPE_PC)
-            {
-                CCharEntity* PCharDef = (CCharEntity*)PDefender;
+            auto PCharDef = dynamic_cast<CCharEntity*>(PDefender);
 
+            if (PCharDef)
+            {
                 for (auto&& slot : {SLOT_SUB, SLOT_BODY, SLOT_LEGS, SLOT_HEAD, SLOT_HANDS, SLOT_FEET})
                 {
                     CItemEquipment* PItem = PCharDef->getEquip(slot);
@@ -819,10 +819,13 @@ namespace battleutils
                         Action->spikesParam = battleutils::GetScaledItemModifier(PDefender, PItem, Mod::ITEM_SPIKES_DMG);
                         chance = battleutils::GetScaledItemModifier(PDefender, PItem, Mod::ITEM_SPIKES_CHANCE);
 
-                        if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
+                        // Update mob's attacker level for xp purposes.
+                        auto PMobAtt = dynamic_cast<CMobEntity*>(PAttacker);
+                        if (PMobAtt)
                         {
-                            ((CMobEntity*)PDefender)->m_HiPCLvl = PAttacker->GetMLevel();
+                            PMobAtt->m_HiPCLvl = std::max(PMobAtt->m_HiPCLvl, PDefender->GetMLevel());
                         }
+
                         if (Action->spikesEffect && HandleSpikesEquip(PAttacker, PDefender, Action, (uint8)Action->spikesParam, Action->spikesEffect, chance))
                             return true;
                     }
@@ -2239,6 +2242,12 @@ namespace battleutils
         if (PAttacker->objtype == TYPE_PC && !isRanged)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
+        }
+
         return damage;
     }
 
@@ -2368,6 +2377,13 @@ namespace battleutils
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HAGAKURE))
         {
             PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_HAGAKURE);
+        }
+
+        // Apply Soilders Drink
+        if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
+        {
+            damage *= 1.5;
+            PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_SOLDIERS_DRINK);
         }
 
         return damage;

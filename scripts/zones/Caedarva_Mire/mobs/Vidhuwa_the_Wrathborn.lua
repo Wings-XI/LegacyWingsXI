@@ -1,6 +1,7 @@
 ------------------------------
 -- Area: Caedarva Mire
 --   NM: Vidhuwa the Wrathborn
+--   http://wiki.ffo.jp/html/18805.html
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
@@ -18,7 +19,7 @@ function onMobInitialize(mob)
     -- takes ~3s to cast AOE flood
     mob:setMod(tpz.mod.UFASTCAST, 75)
     -- said to spam tp moves/barrage of tp moves
-    mob:setMod(tpz.mod.REGAIN, 200)
+    mob:setMod(tpz.mod.REGAIN, 100)
     -- this NM casts an AOE flood in 3s, every ~20 seconds
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 35)
 

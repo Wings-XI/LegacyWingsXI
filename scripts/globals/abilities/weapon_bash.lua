@@ -19,6 +19,10 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
     
     local chance = 110
     

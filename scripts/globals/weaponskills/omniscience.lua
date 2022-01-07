@@ -32,7 +32,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.mnd_wsc = 0.8
     end
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local mythicMagicWsParams = {}
+    mythicMagicWsParams.attackerStat = tpz.mod.MND
+    mythicMagicWsParams.defenderStat = tpz.mod.MND
+    mythicMagicWsParams.magnification = 2.0
+
+    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary, mythicMagicWsParams)
 
     -- Apply Aftermath
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)

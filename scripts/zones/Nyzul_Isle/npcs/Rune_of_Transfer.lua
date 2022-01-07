@@ -90,7 +90,7 @@ function onEventFinish(player, csid, option, npc)
     if (csid == 200 and option > 0 and option <= 4) then
         -- 1 = Exit     2 = Go Up      3 = Travel to the right     4 = Travel to the Left
         for _,mob in pairs(instance:getMobs()) do
-            mob:deaggroAll()
+            clearHateIfRequired(mob)
         end
 
         -- players choose to exit
@@ -100,6 +100,8 @@ function onEventFinish(player, csid, option, npc)
             if (option >= 3 and option <= 4) then
                 -- split path, flag the instance to determine a Pathos
                 instance:setLocalVar("Nyzul_DeterminePathos", 1)
+            else
+                instance:setLocalVar("Nyzul_DeterminePathos", 0)
             end
 
             bubbleWarpThePlayers(player, instance, instance:getStage() + 1)

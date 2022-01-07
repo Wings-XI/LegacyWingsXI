@@ -19,6 +19,11 @@ function onUseAbility(player, target, ability, action)
     if target:isMob() then
         target:lowerEnmity(player, 99)
     end
+    
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
     local params = {}
     params.numHits = 1
     local ftp = 1 + (player:getStat(tpz.mod.VIT) / 256)

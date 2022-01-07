@@ -21,6 +21,13 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+
+    -- Fomor Shadowreign NM Modus Immunity
+    if target:getID() == (17494213 or 17494093 or 17477708 or 17449008 or 17449017) then
+        ability:setMsg(tpz.msg.basic.JA_MISS)
+        return 0
+    end
+
     local helix = target:getStatusEffect(tpz.effect.HELIX)
     if helix ~= nil then
         local mvPower = helix:getSubPower()
