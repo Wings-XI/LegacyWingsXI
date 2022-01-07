@@ -78,6 +78,7 @@ end
 function onInstanceFailure(instance)
     local chars = instance:getChars()
     for i, v in pairs(chars) do
+        v:setCharVar("LightInTheDarkness", 6)
         v:startEvent(10001)
     end
 end
