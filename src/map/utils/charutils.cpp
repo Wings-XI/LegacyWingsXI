@@ -1715,7 +1715,7 @@ namespace charutils
                 if (PItem->getID() == 4237)
                     checkHG = true;
                 UpdateItem(PChar, LOC_INVENTORY, PItem->getSlotID(), (int32)(0 - amount));
-                
+
                 PChar->UContainer->ClearSlot(slotid);
             }
         }
@@ -2736,7 +2736,7 @@ namespace charutils
         {
             /*
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
-            
+
             for (auto&& abilityid : skillList)
             {
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
@@ -5546,13 +5546,13 @@ namespace charutils
             WEATHER_AURORAS,
             WEATHER_GLOOM};
 
-        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element;
+        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element-1;
 
-        TPZ_DEBUG_BREAK_IF(element > 8);
+        TPZ_DEBUG_BREAK_IF(element > 7);
 
         reduction = reduction + PChar->getMod(strong[element]);
 
-        if (battleutils::GetDayElement() == element)
+        if (battleutils::GetDayElement() == element + 1)
         {
             reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
         }
