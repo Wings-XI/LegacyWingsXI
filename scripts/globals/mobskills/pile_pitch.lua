@@ -30,6 +30,9 @@ function onMobWeaponSkill(target, mob, skill)
     local currentHP = target:getHP()
     local damage = currentHP * .90
     local dmg = MobFinalAdjustments(damage,mob,skill,target,tpz.attackType.MAGICAL,tpz.damageType.NONE,MOBPARAM_IGNORE_SHADOWS)
+    if target:hasStatusEffect(tpz.effect.STONESKIN) then
+        target:delStatusEffect(tpz.effect.STONESKIN)
+    end
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.NONE)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
     mob:resetEnmity(target)

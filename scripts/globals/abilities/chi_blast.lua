@@ -14,6 +14,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
     local mnd = player:getStat(tpz.mod.MND)
     local Boosts = player:getLocalVar("BoostCounter")
     local Rand = (math.random(26,60)/100)

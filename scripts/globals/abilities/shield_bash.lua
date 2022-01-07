@@ -20,6 +20,11 @@ end
 
 function onUseAbility(player, target, ability)
 
+    -- Mob IDs That Are Immune to JA Damage
+    if target:getID() == (17449008) then
+        return 0
+    end
+
     local shieldSize = player:getShieldSize()
     local damage = 0
     local chance = 112
