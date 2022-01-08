@@ -17,40 +17,6 @@ local removables = {tpz.effect.FLASH, tpz.effect.BLINDNESS, tpz.effect.MAX_HP_DO
                     tpz.effect.EVASION_DOWN, tpz.effect.DEFENSE_DOWN, tpz.effect.MAGIC_ACC_DOWN, tpz.effect.MAGIC_ATK_DOWN, tpz.effect.MAGIC_EVASION_DOWN,
                     tpz.effect.MAGIC_DEF_DOWN, tpz.effect.MAX_TP_DOWN, tpz.effect.SILENCE}
 
-function onMobSpawn(mob)
-    mob:AnimationSub(2)
-    mob:SetMobAbilityEnabled(true)
-    mob:SetAutoAttackEnabled(true)
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
-    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 13)
-    mob:setMod(tpz.mod.REGEN, 0)
-    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
-    mob:addMod(tpz.mod.DMGMAGIC,-40)
-    mob:SetMagicCastingEnabled(false) -- will not cast until it goes into shell
-    outOfShell(mob)
-end
-
-function onMobEngaged(mob, target)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
-    local changeHP = mob:getHP() - (mob:getHP() * .05)
-    mob:setLocalVar("changeHP", changeHP)
-end
-
-function onMobFight(mob, target)
-    local hpp = mob:getHPP()
-    local changeHP = mob:getLocalVar("changeHP")
-    local act = mob:getCurrentAction()
-    if mob:getHP() < changeHP then -- will go in and out of shell after being brought down 5% hp
-        if mob:AnimationSub() == 2 then
-            intoShell(mob)
-        elseif mob:AnimationSub() == 1 and act ~= tpz.act.MAGIC_START or act ~= tpz.act.MAGIC_CASTING then
-            outOfShell(mob)
-        end
-    elseif hpp == 100 and mob:AnimationSub() == 1 then
-        outOfShell(mob)
-    end
-end
-
 function intoShell(mob)
     for i, effect in ipairs(removables) do
         if (mob:hasStatusEffect(effect)) then
@@ -59,13 +25,6 @@ function intoShell(mob)
     end
 
     mob:SetMobAbilityEnabled(false)
-    local chance = math.random(5,10)
-    local changeHP = mob:getLocalVar("changeHP")
-    if mob:getHPP() < changeHP then
-        local changeHP = changeHP - chance
-        mob:setLocalVar("changeHP", changeHP) -- record HP going into shell
-    end
-    mob:setLocalVar("changeTime", os.time() + 90) -- Time to come out of shell
     mob:AnimationSub(1)
     mob:setMod(tpz.mod.REGEN, 400)
     mob:SetAutoAttackEnabled(false)
@@ -78,23 +37,57 @@ end
 
 function outOfShell(mob)
     mob:SetMobAbilityEnabled(true)
-    local chance = math.random(5,10)
-    local changeHP = mob:getLocalVar("changeHP")
-    local changeHP = changeHP - chance
-    mob:setLocalVar("changeHP", changeHP) -- record HP coming out of shell
-    if mob:AnimationSub() == 1 then
-        mob:AnimationSub(2)
-    else
-        mob:AnimationSub(0)
-    end
+    mob:AnimationSub(2)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:SetAutoAttackEnabled(true)
-    mob:SetMagicCastingEnabled(false)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
 end
 
+function onMobSpawn(mob)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(false) -- will not cast until it goes into shell
+    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
+    mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 13)
+    mob:setMod(tpz.mod.REGEN, 0)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
+    mob:addMod(tpz.mod.DMGMAGIC,-40)
+
+    local changeHP = mob:getHP() - (mob:getHP() * .05)
+    mob:setLocalVar("changeHP", changeHP)
+    mob:AnimationSub(2)
+    -- outOfShell(mob)
+end
+
+function onMobFight(mob, target)
+    local changeHP = mob:getLocalVar("changeHP")
+    local waitTime = mob:getLocalVar("waitTime")
+
+    if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+        mob:AnimationSub(1)
+        changeHP = mob:getHP() - (mob:getHP() * .05)
+        mob:setLocalVar("changeHP", changeHP)
+        mob:setLocalVar("waitTime", os.time() + 2)
+        intoShell(mob)
+    elseif mob:getHP() < changeHP and mob:AnimationSub() == 1 and os.time() > waitTime then
+        mob:AnimationSub(2)
+        changeHP = mob:getHP() - (mob:getHP() * .05)
+        mob:setLocalVar("changeHP", changeHP)
+        mob:setLocalVar("waitTime", os.time() + 2)
+        outOfShell(mob)
+    elseif mob:getHPP() == 100 and mob:AnimationSub() == 1 and os.time() > waitTime then
+        mob:AnimationSub(2)
+        changeHP = mob:getHP() - (mob:getHP() * .05)
+        mob:setLocalVar("changeHP", changeHP)
+        mob:setLocalVar("waitTime", os.time() + 2)
+        outOfShell(mob)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
+    mob:resetLocalVars()
 end
