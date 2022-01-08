@@ -15,7 +15,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if mob:getID() then -- Cemetery Cherry Leafstorm dispels all effects and gives slow instead of damage.
+    if mob:getID() == 17555863 or mob:getID() == 16932881 then -- Cemetery Cherry Leafstorm dispels all effects and gives slow instead of damage.
         local dispel =  target:dispelAllStatusEffect(bit.bor(tpz.effectFlag.DISPELABLE, tpz.effectFlag.FOOD))
 
         if dispel == 0 then
