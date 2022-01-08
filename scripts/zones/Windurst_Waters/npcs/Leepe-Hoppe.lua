@@ -230,6 +230,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
         end
     elseif (csid == 848) then
+        player:delQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
+        player:addQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
         player:addKeyItem(tpz.ki.MOON_BAUBLE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MOON_BAUBLE)
     elseif (csid == 734) then
