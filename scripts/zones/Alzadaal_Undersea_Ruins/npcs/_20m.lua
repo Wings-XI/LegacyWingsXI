@@ -208,7 +208,8 @@ function onInstanceCreated(player, target, instance)
                     -- force players out of menu
                     v:release()
                     v:setInstance(instance)
-                    v:startEvent(116, 2)
+                    -- Delay entrace CS
+                    v:timer(2000, function(v) v:startEvent(116, 2) end)
                     v:setLocalVar("Nyzul", 1)
 
                     if instance:getID() == 58 then
