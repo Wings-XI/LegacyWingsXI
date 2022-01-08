@@ -1747,6 +1747,11 @@ namespace battleutils
             check = 0;
         }
 
+        if (chance < check)
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -1793,7 +1798,7 @@ namespace battleutils
         auto interruptChance = std::clamp(40 + fSTR + (levelCorrect * 4), 5, 75);
         auto interruptRoll = tpzrand::GetRandomNumber(100);
         //ShowDebug("InterruptRoll: %u, InterruptChance: %u, fSTR: %u\n", interruptRoll, interruptChance, fSTR);
-        if (interruptRoll <= interruptChance && (PDefender))
+        if (interruptRoll <= interruptChance)
         {
             PDefender->PAI->GetCurrentState()->Interrupt();
             return true;
