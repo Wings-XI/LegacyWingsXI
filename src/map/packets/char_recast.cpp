@@ -24,6 +24,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include <string.h>
 
+#include "../ability.h"
 #include "../entities/charentity.h"
 
 #include "char_recast.h"
@@ -52,6 +53,15 @@ CCharRecastPacket::CCharRecastPacket(CCharEntity* PChar)
         {
             ref<uint32>(0x0C + count * 8) = recasttime;
             ref<uint8>(0x0F + count * 8) = (uint8)recast.ID;
+            if (recast.chargeTime != 0)
+            {
+                auto charge = ability::GetCharge(PChar, recast.ID);
+                if (charge->chargeTime > recast.chargeTime)
+                {
+                    ref<uint8>(0x10 + count * 8) = (uint8)(256 - ((charge->chargeTime - recast.chargeTime) * charge->maxCharges));
+                    ref<uint8>(0x11 + count * 8) = 255;
+                }
+            }
             count++;
         }
         else
