@@ -205,6 +205,8 @@ function onInstanceCreated(player, target, instance)
         if party ~= nil then
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
+                    -- force players out of menu
+                    v:release()
                     v:setInstance(instance)
                     v:startEvent(116, 2)
                     v:setLocalVar("Nyzul", 1)
