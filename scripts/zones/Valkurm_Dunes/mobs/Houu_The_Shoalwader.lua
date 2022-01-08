@@ -56,7 +56,12 @@ function onMobFight(mob, target)
 end
 
 function onMobDespawn(mob)
-    OnWipe()
+    local crab = GetMobByID(ID.mob.HEIKE_CRAB)
+    local monk = GetMobByID(ID.mob.BEACH_MONK)
+
+    if not crab:isAlive() and not monk:isAlive() then
+        OnWipe()      
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

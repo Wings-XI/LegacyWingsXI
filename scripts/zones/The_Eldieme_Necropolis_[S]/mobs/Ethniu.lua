@@ -34,7 +34,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.ICEDEF, 170)
     mob:setMod(tpz.mod.WINDDEF, 170)
     mob:setMod(tpz.mod.SILENCERES, 100)
-    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMod(tpz.mod.STUNRES, 99)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -147,15 +147,15 @@ end
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
-        mob:DespawnMob(17494093, 0)
+        DespawnMob(17494093)
         mob:setLocalVar("TotalLevelUp", 0)
         mob:setLocalVar("MobPoof", 1)
     end
 end
 
-function onMobDespawn(mob)
+function onMobDespawn(mob) 
     if mob:getLocalVar("MobPoof") == 1 then
-        mob:messageBasic(tpz.zone.THE_ELDIEME_NECROPOLIS_S.text.NM_DESPAWN) -- Despawn Message
+        mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
 end
