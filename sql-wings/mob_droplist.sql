@@ -16814,13 +16814,13 @@ INSERT INTO `mob_droplist` VALUES(3228, 0, 6, 1000, 15772, 200); -- Scintillant 
 INSERT INTO `mob_droplist` VALUES(3228, 0, 7, 1000, 747, 50); -- Orichalcum Ingot
 -- Tethra
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
-INSERT INTO `mob_droplist` VALUES(3229, 0, 1, 1000, 2858, 550); -- Wolfram Steel Ingot
-INSERT INTO `mob_droplist` VALUES(3229, 0, 2, 1000, 2858, 550); -- Wolfram Steel Ingot
-INSERT INTO `mob_droplist` VALUES(3229, 0, 3, 1000, 2859, 430); -- Chunk of Cobalt Ore
-INSERT INTO `mob_droplist` VALUES(3229, 0, 4, 1000, 18617, 233); -- Cracked Staff
-INSERT INTO `mob_droplist` VALUES(3229, 0, 5, 1000, 16302, 167); -- Bloodbead Gorget
-INSERT INTO `mob_droplist` VALUES(3229, 0, 6, 1000, 15772, 167); -- Scintillant Ingot
-INSERT INTO `mob_droplist` VALUES(3229, 0, 7, 1000, 747, 100); -- Orichalcum Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2859, 430); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 18617, 233); -- Cracked Staff
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 16302, 167); -- Bloodbead Gorget
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 15772, 167); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 747, 100); -- Orichalcum Ingot
 
 --
 -- Indexes for dumped tables
