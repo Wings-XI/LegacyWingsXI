@@ -2822,6 +2822,7 @@ int32 map_config_default()
     map_config.mission_storage_recovery = false;
     map_config.helpdesk_enabled = false;
     map_config.autotarget_qol = true;
+    map_config.instances_treat_GMs_as_players = true;
     return 0;
 }
 
@@ -3371,6 +3372,10 @@ int32 map_config_read(const int8* cfgName)
                 map_config.helpdesk_enabled = atoi(w2);
             }
             else if (strcmp(w1, "autotarget_qol") == 0)
+            {
+                map_config.autotarget_qol = atoi(w2);
+            }
+            else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
                 map_config.autotarget_qol = atoi(w2);
             }
