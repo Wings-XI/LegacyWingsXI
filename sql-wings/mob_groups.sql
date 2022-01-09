@@ -208,7 +208,7 @@ INSERT INTO `mob_groups` VALUES(31, 3679, 5, 'Smolenkos', 300, 0, 804, 0, 0, 80,
 INSERT INTO `mob_groups` VALUES(32, 2249, 5, 'Kindred_Warrior', 300, 0, 1444, 0, 0, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(33, 2234, 5, 'Kindred_Black_Mage', 300, 0, 1443, 0, 0, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(34, 2235, 5, 'Kindred_Dark_Knight', 300, 0, 1444, 0, 0, 81, 84, 0);
-INSERT INTO `mob_groups` VALUES(35, 2243, 5, 'Kindred_Summoner', 300, 0, 1445, 0, 0, 81, 84, 0);
+INSERT INTO `mob_groups` VALUES(35, 6887, 5, 'Kindred_Summoner', 300, 0, 1445, 0, 0, 81, 84, 0);
 INSERT INTO `mob_groups` VALUES(36, 2721, 5, 'Molech', 300, 0, 359, 0, 0, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(37, 62, 5, 'Agloolik', 300, 0, 30, 0, 0, 77, 80, 0);
 INSERT INTO `mob_groups` VALUES(38, 1278, 5, 'Fachan', 300, 0, 804, 0, 0, 86, 87, 0);
