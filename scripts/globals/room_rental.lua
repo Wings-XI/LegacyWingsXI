@@ -7,8 +7,8 @@
 -------------------------------------------
 
 function rrGetPartyMemberByID(player, memberid)
-	-- Basically a regular get player by ID but only checks
-	-- the player's current alliance.
+    -- Basically a regular get player by ID but only checks
+    -- the player's current alliance.
     if memberid < 0 then
         return nil
     end
@@ -19,7 +19,7 @@ function rrGetPartyMemberByID(player, memberid)
     if party == nil then
         return nil
     end
-	local memberid16 = bit.band(memberid, 0xFFFF)
+    local memberid16 = bit.band(memberid, 0xFFFF)
     for key, member in pairs(party) do
         if bit.band(member:getID(), 0xFFFF) == memberid16 then
             return member
@@ -64,7 +64,7 @@ end
 
 function rrTryMoveToOpenMH(player, residentid)
 
-    if residentid == nil or residentid < 1 or residentid > player:getPartySize() then
+    if residentid == nil or residentid < 1 or residentid > 0xFFFF then
         return
     end
     

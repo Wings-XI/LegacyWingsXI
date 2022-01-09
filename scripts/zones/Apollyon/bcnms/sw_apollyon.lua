@@ -28,7 +28,7 @@ function onBattlefieldTick(battlefield, tick)
 
 	battlefield:setLocalVar("tick", battlefield:getLocalVar("tick") + 1)
 
-	if battlefield:getLocalVar("tick") >= 60 then
+	if battlefield:getLocalVar("tick") >= 90 then
 		tpz.battlefield.onBattlefieldTick(battlefield, tick)
 	end
 end

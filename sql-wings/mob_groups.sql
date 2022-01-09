@@ -3104,7 +3104,7 @@ INSERT INTO `mob_groups` VALUES(38, 3456, 77, 'Sand_Lizard', 0, 128, 221, 0, 0, 
 INSERT INTO `mob_groups` VALUES(39, 962, 77, 'Deinonychus', 0, 128, 600, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(40, 577, 77, 'Bull_Bugard', 0, 128, 242, 0, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(41, 4355, 77, 'Wivre', 0, 128, 2664, 0, 0, 66, 68, 0);
-INSERT INTO `mob_groups` VALUES(42, 894, 77, 'Dahak', 0, 128, 7500, 0, 0, 66, 68, 0);
+INSERT INTO `mob_groups` VALUES(42, 894, 77, 'Dahak', 0, 128, 0, 7500, 0, 66, 68, 0);
 INSERT INTO `mob_groups` VALUES(43, 374, 77, 'Bat_Eye', 0, 128, 906, 7500, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(44, 3576, 77, 'Shadow_Eye', 0, 128, 906, 7500, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(45, 495, 77, 'Bomb_King', 0, 128, 906, 7500, 0, 75, 80, 0);
