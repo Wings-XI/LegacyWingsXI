@@ -141,7 +141,6 @@ function onEventFinish(player, csid, option, npc)
             npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
         end
     elseif (csid == 200) then
-        printf("exits")
         npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
     end
 
