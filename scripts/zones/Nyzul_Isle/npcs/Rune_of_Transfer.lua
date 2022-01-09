@@ -9,23 +9,44 @@ require("scripts/globals/nyzul_isle")
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ------------------------------------------------
 local STARTING_RUNE_OF_TRANSFER_ID = 17093429
+local VENDING_BOX = 17093430
 local SPLIT_PATH_CHANCE = 10 -- percent chance to have a split path (choose left or right)
 local floorWarpCosts = {0, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900}
 
-function onTrigger(player, npc)
-    -- Force players out of menus when a rune of transfer is touched
-    if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID or npc:AnimationSub() > 0) then
-        local instance = player:getInstance()
-        for _,char in pairs(instance:getChars()) do
-            if char:getID() ~= player:getID() then
-                char:release()
-            end
+local function releaseOtherPlayers(player)
+    local instance = player:getInstance()
+    for _,char in pairs(instance:getChars()) do
+        if char:getID() ~= player:getID() then
+            char:release()
         end
+    end
+end
+
+-- 1 locks, 0 unlocks
+local function updateNpcLocks(instance, lockValue)
+    local vendingBox = GetNPCByID(VENDING_BOX, instance)
+    vendingBox:setLocalVar("Nyzul_VendingBoxLock", lockValue)
+    local startingRuneOfTransfer = GetNPCByID(STARTING_RUNE_OF_TRANSFER_ID, instance)
+    startingRuneOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+end
+
+function onTrigger(player, npc)
+    -- Force players out of menus when an active rune of transfer is touched
+    if (npc:AnimationSub() > 0) then
+        releaseOtherPlayers(player)
     end
 
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
+            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") > 0) then
+                player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
+                return
+            end
+            -- Lock the vending box
+            updateNpcLocks(player:getInstance(), 1)
+            -- Force players out of other menus
+            releaseOtherPlayers(player)
             -- 0 if never set before, up to 100 for runic key
             local floorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
             local floorBitMask = 2097151 -- 111111111111111111111 - hides all floors (and the None option)
@@ -67,6 +88,7 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option, npc)
+    printf("onEventFinish csid %s option %s", csid, option)
     local instance = player:getInstance()
 
     -- entrance rune of transfer
@@ -82,8 +104,13 @@ function onEventFinish(player, csid, option, npc)
             local chars = instance:getChars()
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
         else
+            -- Unlock the vending box
+            updateNpcLocks(instance, 0)
             player:messageSpecial(ID.text.INSUFFCIENT_TOKENS)
         end
+    elseif (csid == 94) then
+        -- Unlock the vending box
+        updateNpcLocks(instance, 0)
     end
 
     -- any non-entrance lamp

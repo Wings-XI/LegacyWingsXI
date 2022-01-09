@@ -129,6 +129,11 @@ local function getTempItemsHeldByPlayer(player)
 end
 
 function onTrigger(player, npc)
+    local locked = npc:getLocalVar("Nyzul_VendingBoxLock")
+    if (locked > 0) then
+        player:PrintToPlayer("The Vending Box is locked while players are using the Rune Of Transfer.", 0x1F)
+        return
+    end
     local tokens = player:getAssaultPoint(NYZUL_ISLE_ASSAULT_POINT)
     local vendingBoxPreferences = player:getCharVar("Nyzul_VendingBoxPref")
     local tempItemsHeld = getTempItemsHeldByPlayer(player)
