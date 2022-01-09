@@ -39,12 +39,12 @@ function onTrigger(player, npc)
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
-            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") > 0) then
+            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
                 player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
                 return
             end
             -- Lock the vending box
-            updateNpcLocks(player:getInstance(), 1)
+            updateNpcLocks(player:getInstance(), player:getID())
             -- Force players out of other menus
             releaseOtherPlayers(player)
             -- 0 if never set before, up to 100 for runic key
@@ -73,13 +73,13 @@ function onTrigger(player, npc)
             -- not lit up - so repeat the objective but dont show pathos
             showNyzulObjectivesAndPathos(player, false)
         else
-            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") > 0) then
+            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
                 player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
                 return
             end
 
             -- Lock to single player only
-            npc:setLocalVar("Nyzul_RuneOfTransferLock", 1)
+            npc:setLocalVar("Nyzul_RuneOfTransferLock", player:getID())
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog
             -- Param 1 = bitflag to show menu options.
