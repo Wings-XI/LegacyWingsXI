@@ -73,12 +73,19 @@ function onTrigger(player, npc)
             -- not lit up - so repeat the objective but dont show pathos
             showNyzulObjectivesAndPathos(player, false)
         else
+            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") > 0) then
+                player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
+                return
+            end
+
+            -- Lock to single player only
+            npc:setLocalVar("Nyzul_RuneOfTransferLock", 1)
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog
             -- Param 1 = bitflag to show menu options.
                 -- 1 = Not yet, 2 = Exit, 4 = Travel to next floor, 8 = Go Right, 16 = Go Left, 32 = Travel to floor <Param 2>., 64 = Travel to floor ???
             -- Param 2 = Floor number to be shown in Menu item "Travel to floor <number>"
-            if (math.random(100) < SPLIT_PATH_CHANCE) then
+            if (npc:getLocalVar("Nyzul_SplitPathChance") < SPLIT_PATH_CHANCE) then
                 player:startEvent(200, 27)
             else
                 player:startEvent(200, 7)
@@ -88,7 +95,6 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option, npc)
-    printf("onEventFinish csid %s option %s", csid, option)
     local instance = player:getInstance()
 
     -- entrance rune of transfer
@@ -132,7 +138,10 @@ function onEventFinish(player, csid, option, npc)
             end
 
             bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
+            npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
         end
+    elseif (csid == 200) then
+        npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
     end
 
     -- bubble warp
