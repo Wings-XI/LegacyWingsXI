@@ -1398,6 +1398,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         // get any available merit recast reduction
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
+        uint8 chargeTime = 0;
 
         //Ignore SMN Group 2 Merits/Tomahawk specifically until we can long term fix merits that serve dual purpose
         if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631 && id != 150 && id != 152)
@@ -1409,12 +1410,20 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         auto charge = ability::GetCharge(this, PAbility->getRecastId());
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+            // Ready is 2sec/merit (Sic is 4sec/merit so divide by 2)
+            if (PAbility->getMeritModID() == 902)
+            {
+                meritRecastReduction /= 2;
+            }
+
+            chargeTime = charge->chargeTime - meritRecastReduction;
 
             //Quickdraw Reduction
             if (id >= ABILITY_FIRE_SHOT && id <= ABILITY_DARK_SHOT) {
-                action.recast -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
+                chargeTime -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
             }
+
+            action.recast = chargeTime * PAbility->getRecastTime();
         }
         else
         {
@@ -1614,7 +1623,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
 
-        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 
         // innin and yonin share recasts
         if (PAbility->getRecastId() == 146)
