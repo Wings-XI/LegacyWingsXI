@@ -734,6 +734,7 @@ function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     end
 
     runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, 1)
+    runeOfTransfer:setLocalVar("Nyzul_SplitPathChance", math.random(1, 100))
 
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)
