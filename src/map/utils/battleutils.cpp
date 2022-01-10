@@ -1747,6 +1747,11 @@ namespace battleutils
             check = 0;
         }
 
+        if (chance < check)
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -1793,7 +1798,7 @@ namespace battleutils
         auto interruptChance = std::clamp(40 + fSTR + (levelCorrect * 4), 5, 75);
         auto interruptRoll = tpzrand::GetRandomNumber(100);
         //ShowDebug("InterruptRoll: %u, InterruptChance: %u, fSTR: %u\n", interruptRoll, interruptChance, fSTR);
-        if (interruptRoll <= interruptChance && (PDefender))
+        if (interruptRoll <= interruptChance)
         {
             PDefender->PAI->GetCurrentState()->Interrupt();
             return true;
@@ -2257,7 +2262,7 @@ namespace battleutils
     *                                                                       *
     ************************************************************************/
 
-    int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool useAutoTPFormula)
+    int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, uint16 useAutoTPFormula)
     {
         auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
@@ -2345,21 +2350,25 @@ namespace battleutils
             if (weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             {
                 baseTp = 65;
-                if (useAutoTPFormula)
+                if (useAutoTPFormula != 0)
                     baseTp = 130;
             }
 
             float attackerStoreTPMult = PAttacker->GetStoreTPMultiplier();
-
+            float attackerJumpTPBonus = PAttacker->GetJumpTPBonus();
             // add tp to attacker
-            if (primary && !useAutoTPFormula)
+            if (primary && useAutoTPFormula == 0)
                 // Calculate TP Return from WS
             {
                 standbyTp = ((int16)(((tpMultiplier * baseTp) + bonusTP) * attackerStoreTPMult));
             }
-            else if (primary && useAutoTPFormula)
+            else if (primary && useAutoTPFormula == 1)
             { // bonusTP variable instead encodes extra hits we did
-                standbyTp = ((int16)(((tpMultiplier * (baseTp * (bonusTP + 1)))) * attackerStoreTPMult));
+                standbyTp = ((int16)((((tpMultiplier * (baseTp * (bonusTP + 1)))) * attackerStoreTPMult)));
+            }
+            else if (primary && useAutoTPFormula == 2)
+            { // useAutoTPFormula == 2 used to designate a jump, thus needs to have Jump TP Bonus added at the end, bonusTP variable encodes the number of extra hits
+                standbyTp = ((int16)((((tpMultiplier * (baseTp * (bonusTP + 1))) + attackerJumpTPBonus) * attackerStoreTPMult)));
             }
 
             PDefender->AddTPFromHit(PAttacker, weapon, baseTp, tpMultiplier * targetTPMultiplier);

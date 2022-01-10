@@ -562,13 +562,17 @@ end
 -- Sets local vars to tell Qiqrn Thfs where to run away to
 ----------------------------------------------------------------------
 function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
+    if (not spawnPoint) then
+        return
+    end
+
     local mob = GetMobByID(mobID, instance)
-    local roomSpawnPoints = {}
+    local roomSpawnPoints
     -- find the spawn points associated to the room the QiQirn will spawn in
     for key,value in pairs(rooms) do
         for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
             if (spawnPoint.x == nestedValue.x) and (spawnPoint.y == nestedValue.y) and (spawnPoint.z == nestedValue.z) then
-                roomSpawnPoints = addTableListsTogether(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints, {})
+                roomSpawnPoints = tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints
                 break
             end
         end
@@ -577,7 +581,7 @@ function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
         end
     end
 
-    local runAwayPoint = {}
+    local runAwayPoint
     local greatestDistance = 0
     -- pick the furthest away point to run to
     for i = 1, #roomSpawnPoints do
@@ -591,10 +595,34 @@ function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
             runAwayPoint = roomSpawnPoints[i]
         end
     end
-    -- set local vars used by the mob
-    mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x)
-    mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y)
-    mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z)
+
+    if (runAwayPoint) then
+        -- set local vars used by the mob
+        -- localVars are stored as unit32s so usings two vars to represent mob locations which are negative
+        if (runAwayPoint.x >= 0) then
+            mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x)
+            mob:setLocalVar("QQ_RunAwayX_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x * -1)
+            mob:setLocalVar("QQ_RunAwayX_Negative", 1)
+        end
+
+        if (runAwayPoint.y >= 0) then
+            mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y)
+            mob:setLocalVar("QQ_RunAwayY_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y * -1)
+            mob:setLocalVar("QQ_RunAwayY_Negative", 1)
+        end
+
+        if (runAwayPoint.z >= 0) then
+            mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z)
+            mob:setLocalVar("QQ_RunAwayZ_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z * -1)
+            mob:setLocalVar("QQ_RunAwayZ_Negative", 1)
+        end
+    end
 end
 
 ----------------------------------------------------------------------
@@ -620,8 +648,7 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
         setSpawnPointAndSpawnMob(mobID, spawnPoint, instance)
         table.remove(spawnPoints, index)
         -- Qiqirn Thf mobs run around and drop mines.  Given the current spawn system they require additional informat to know where to run
-        -- Quick Draw is a ranger - but is reported to act the same
-        if (mobID == 17092989 or mobID == 17092990 or mobID == 17092961 or mobID == 17092963 or mobID == 17092964) then
+        if (mobID == 17092989 or mobID == 17092990 or mobID == 17092961) then
             setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
         end
     end
@@ -734,6 +761,7 @@ function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     end
 
     runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, 1)
+    runeOfTransfer:setLocalVar("Nyzul_SplitPathChance", math.random(1, 100))
 
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)

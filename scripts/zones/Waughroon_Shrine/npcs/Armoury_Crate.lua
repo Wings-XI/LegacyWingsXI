@@ -259,7 +259,10 @@ local loot =
     [76] =
     {
         {
-            {itemid =  3343, droprate = 1000}, -- Blue Pondweed
+            {itemid =  4135, droprate =  295},  -- Hi-ether +3
+            {itemid =  4119, droprate =  250},  -- Hi-potion +3
+            {itemid =  4173, droprate =  196},  -- Hi-reraiser
+            {itemid =  4175, droprate =  214},  -- Vile Elixir +1
         },
         {
             {itemid = 18047, droprate =  188}, -- Havoc Scythe
@@ -325,10 +328,7 @@ local loot =
             {itemid = 17698, droprate =  152}, -- Princely Sword
         },
         {
-            {itemid =  4135, droprate =  295},  -- Hi-ether +3
-            {itemid =  4119, droprate =  250},  -- Hi-potion +3
-            {itemid =  4173, droprate =  196},  -- Hi-reraiser
-            {itemid =  4175, droprate =  214},  -- Vile Elixir +1
+            {itemid =  3343, droprate = 1000}, -- Blue Pondweed
         },
         {
             {itemid =   887, droprate =  139}, -- Coral Fragment
