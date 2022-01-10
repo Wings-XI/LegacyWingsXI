@@ -655,15 +655,15 @@ function getSpellBonusAcc(caster, target, spell, params)
 
     --add acc for RDM group 2 merits
     if spell == tpz.magic.spell.PARALYZE_II then
-        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.PARALYZE_II)
+        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.PARALYZE_II))
     end
 
     if spell == tpz.magic.spell.SLOW_II then
-        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.SLOW_II)
+        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.SLOW_II))
     end
 
     if spell == tpz.magic.spell.BLIND_II then
-        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.BLIND_II)
+        magicAccBonus = magicAccBonus + (2 *caster:getMerit(tpz.merit.BLIND_II))
     end
 
     return magicAccBonus
