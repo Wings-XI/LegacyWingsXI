@@ -54,9 +54,11 @@ function onSpellCast(caster, target, spell)
     -- Do it!
     target:delStatusEffect(tpz.effect.BIO)
     if caster:isPC() then
-        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, merits, 0, 20, 3)
+        -- Defense down is 15.2% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129420&id=338)
+        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, merits, 0, 15, 3)
     else
-        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, duration, 0, 20, 3)
+        -- Defense down is 15.2% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129420&id=338)
+        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, duration, 0, 15, 3)
     end
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
