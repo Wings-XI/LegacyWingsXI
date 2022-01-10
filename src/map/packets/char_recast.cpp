@@ -56,22 +56,25 @@ CCharRecastPacket::CCharRecastPacket(CCharEntity* PChar)
             if (recast.chargeTime != 0)
             {
                 auto charge = ability::GetCharge(PChar, recast.ID);
-                int8 chargeReduction = charge->chargeTime - recast.chargeTime; // Seconds the client should remove from the recharge timer
+                if (charge)
+                {
+                    int8 chargeReduction = charge->chargeTime - recast.chargeTime; // Seconds the client should remove from the recharge timer
 
-                // Ready recast is 60 seconds in era so lower the reduction by 30 seconds
-                if (recast.ID == 102)
-                {
-                    chargeReduction -= 30; // Adds 30 seconds to recharge timer
-                }
+                    // Ready recast is 60 seconds in era so lower the reduction by 30 seconds
+                    if (recast.ID == 102)
+                    {
+                        chargeReduction -= 30; // Adds 30 seconds to recharge timer
+                    }
 
-                if (chargeReduction <= 0) // Timer should be higher than client thinks
-                {
-                    ref<uint8>(0x10 + count * 8) = abs(chargeReduction) * charge->maxCharges;
-                }
-                else
-                {
-                    ref<uint8>(0x10 + count * 8) = 256 - chargeReduction * charge->maxCharges;
-                    ref<uint8>(0x11 + count * 8) = 255; // Denotes previous value is a reduction in time
+                    if (chargeReduction <= 0) // Timer should be higher than client thinks
+                    {
+                        ref<uint8>(0x10 + count * 8) = abs(chargeReduction) * charge->maxCharges;
+                    }
+                    else
+                    {
+                        ref<uint8>(0x10 + count * 8) = 256 - chargeReduction * charge->maxCharges;
+                        ref<uint8>(0x11 + count * 8) = 255; // Denotes previous value is a reduction in time
+                    }
                 }
             }
             count++;
