@@ -649,21 +649,21 @@ function getSpellBonusAcc(caster, target, spell, params)
     -- gating to be only effective for main job RDM
     if caster:getMainJob() == tpz.job.RDM then
         if element >= tpz.magic.element.FIRE and element <= tpz.magic.element.WATER then
-            magicAccBonus = magicAccBonus + (3 * caster:getMerit(rdmMerit[element]))
+            magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
         end
     end
 
     --add acc for RDM group 2 merits
     if spell == tpz.magic.spell.PARALYZE_II then
-        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.PARALYZE_II))
+        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.PARALYZE_II)
     end
 
     if spell == tpz.magic.spell.SLOW_II then
-        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.SLOW_II))
+        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.SLOW_II)
     end
 
     if spell == tpz.magic.spell.BLIND_II then
-        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.BLIND_II))
+        magicAccBonus = magicAccBonus + caster:getMerit(tpz.merit.BLIND_II)
     end
 
     return magicAccBonus
