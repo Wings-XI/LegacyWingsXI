@@ -395,7 +395,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
         finaldmg = math.floor(finaldmg * circlemult / 100)
     end
 
-    if wsParams.useAutoTPFormula == nil or wsParams.useAutoTPFormula == false then
+    if wsParams.useAutoTPFormula == nil or wsParams.useAutoTPFormula == 0 then
         finaldmg = finaldmg * WEAPON_SKILL_POWER * 1.0
     end
 
@@ -655,9 +655,9 @@ end
 function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
     local targetTPMult = wsParams.targetTPMult or 1
-    local useAutoTPFormula = wsParams.useAutoTPFormula or false
+    local useAutoTPFormula = wsParams.useAutoTPFormula or 0
     local passedBonusTP = wsResults.extraHitsLanded * 10 + wsResults.bonusTP
-    if useAutoTPFormula ~= nil and useAutoTPFormula == true then
+    if useAutoTPFormula ~= 0 then
         passedBonusTP = wsResults.extraHitsLanded
     end
     finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, passedBonusTP, targetTPMult, useAutoTPFormula)
