@@ -32,7 +32,10 @@ function onSpellCast(caster, target, spell)
     if resist >= 0.5 then --Do it!
         -- Lowest ~12.5%
         -- Highest ~35.1%
-        local power = utils.clamp(math.floor(dMND * 226 / 15) + 2380, 1250, 3510)
+        -- Get Merit Potency Bonus 1 Potency/Upgrade
+        local merits = caster:getMerit(tpz.merit.SLOW_II)
+        -- Base Potency is 1825 (Same as Slow), each merit adds 111 to base potency (full merits and dMND(75) gives 3510)
+        local power = utils.clamp(math.floor(dMND * 226 / 15) + (1825 + (merits * 111)), 1250, 3510)
         power = calculatePotency(power, spell:getSkillType(), caster, target)
     
         --Duration, including resistance.
