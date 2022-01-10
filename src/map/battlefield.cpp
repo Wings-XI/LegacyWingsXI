@@ -332,11 +332,18 @@ bool CBattlefield::ReinsertPlayer(CCharEntity* PChar)
     ApplyLevelRestrictions(PChar);
     PChar->ClearTrusts();
     luautils::OnBattlefieldEnter(PChar, this);
-    // Client needs some time before it'll accept timer packets
-    std::string taskName = "sendTimerPlayer" + std::to_string(PChar->id);
-    CTaskMgr::getInstance()->RemoveTask(taskName.c_str());
-    CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask(taskName.c_str(),
+
+    // Show timer except in Temenos and Apollyon
+    if (this->GetZoneID() != 37 && this->GetZoneID() != 38)
+    {
+        // Client needs some time before it'll accept timer packets
+        std::string taskName = "sendTimerPlayer" + std::to_string(PChar->id);
+        CTaskMgr::getInstance()->RemoveTask(taskName.c_str());
+        CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask(taskName.c_str(),
         server_clock::now() + std::chrono::seconds(5), PChar, CTaskMgr::TASK_ONCE, delayedTimerPacket));
+    }
+
+
     return true;
 }
 
@@ -369,7 +376,12 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                 }
                 PChar->ClearTrusts();
                 luautils::OnBattlefieldEnter(PChar, this);
-                charutils::SendTimerPacket(PChar, GetRemainingTime());
+
+                // Show timer except in Temenos and Apollyon
+                if (this->GetZoneID() != 37 && this->GetZoneID() != 38)
+                {
+                    charutils::SendTimerPacket(PChar, GetRemainingTime());
+                }
             }
             else if (!IsRegistered(PChar))
             {
