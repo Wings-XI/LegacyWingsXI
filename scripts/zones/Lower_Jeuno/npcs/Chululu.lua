@@ -139,7 +139,7 @@ function onEventFinish(player, csid, option)
             title = tpz.title.CARD_COLLECTOR,
             var = {"AllInTheCards_date"}
         }) then
-            trade:confirm()
+            player:tradeComplete()
         end
     elseif csid == 197 then
         npcUtil.completeQuest(player, JEUNO, tpz.quest.id.jeuno.RUBBISH_DAY, {
