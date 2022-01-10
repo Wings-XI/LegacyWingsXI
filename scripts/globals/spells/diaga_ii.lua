@@ -47,8 +47,8 @@ function onSpellCast(caster, target, spell)
     local bio = target:getStatusEffect(tpz.effect.BIO)
 
     -- Do it!
-    -- Defense down is 5.1% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129420&id=338)
-    target:addStatusEffect(tpz.effect.DIA, 2 + dotBonus, 3, duration, 0, 5, 2)
+    -- Defense down is 10.1% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129420&id=338)
+    target:addStatusEffect(tpz.effect.DIA, 2 + dotBonus, 3, duration, 0, 10, 2)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
     -- Try to kill same tier Bio (non-default behavior)
