@@ -47,11 +47,17 @@ function onSpellCast(caster, target, spell)
 
     -- Calculate duration and bonus
     local merits = caster:getMerit(tpz.merit.DIA_III)
+    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+
     local dotBonus = caster:getMod(tpz.mod.DIA_DOT) -- Dia Wand
 
     -- Do it!
     target:delStatusEffect(tpz.effect.BIO)
-    target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, merits, 0, 20, 3)
+    if caster:isPC() then
+        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, merits, 0, 20, 3)
+    else
+        target:addStatusEffect(tpz.effect.DIA, 3 + dotBonus, 3, duration, 0, 20, 3)
+    end
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
     return final

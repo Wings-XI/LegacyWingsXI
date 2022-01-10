@@ -291,6 +291,18 @@ float CBattleEntity::GetStoreTPMultiplier()
     return 1.0f + 0.01f * (float)((getMod(Mod::STORETP) + samuraiMeritBonus));
 }
 
+float CBattleEntity::GetJumpTPBonus()
+{
+    if ((float)getMod(Mod::JUMP_TP_BONUS) != 0)
+    {
+        return ((float)(getMod(Mod::JUMP_TP_BONUS)) / 10);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
     uint16 WeaponDelay = 9999;

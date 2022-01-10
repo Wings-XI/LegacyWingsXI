@@ -147,15 +147,15 @@ end
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
-        mob:DespawnMob(17494093, 0)
+        DespawnMob(17494093)
         mob:setLocalVar("TotalLevelUp", 0)
         mob:setLocalVar("MobPoof", 1)
     end
 end
 
-function onMobDespawn(mob)
+function onMobDespawn(mob) 
     if mob:getLocalVar("MobPoof") == 1 then
-        mob:messageBasic(tpz.zone.THE_ELDIEME_NECROPOLIS_S.text.NM_DESPAWN) -- Despawn Message
+        mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
 end

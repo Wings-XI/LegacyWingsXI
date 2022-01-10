@@ -44,6 +44,7 @@ function onSpellCast(caster, target, spell)
 
     -- Calculate duration
     local merits = caster:getMerit(tpz.merit.BIO_III)
+    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
     -- Calculate DoT effect
     -- http://wiki.ffo.jp/html/1954.html
@@ -67,7 +68,11 @@ function onSpellCast(caster, target, spell)
 
     -- Do it!
     target:delStatusEffect(tpz.effect.DIA)
-    target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, merits, 0, 20, 3)
+    if caster:isPC() then
+        target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, merits, 0, 20, 3)
+    else
+        target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 20, 3)
+    end
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
     return final
