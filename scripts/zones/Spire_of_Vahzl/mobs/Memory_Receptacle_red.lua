@@ -78,8 +78,7 @@ function onMobFight(mob, target)
 
     if os.time() > moveTime then
         local i = math.random(1,8)
-        print(i)
-        battlefield:setLocalVar("moveTime", os.time() + 10)
+        battlefield:setLocalVar("moveTime", os.time() + 30)
         battlefield:setLocalVar("positionNum", i)
     end
 
