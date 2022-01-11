@@ -57,7 +57,12 @@ function onMobFight(mob, target)
 end
 
 function onMobDespawn(mob)
-    OnWipe()
+    local monk = GetMobByID(ID.mob.BEACH_MONK)
+    local houu = GetMobByID(ID.mob.HOUU_THE_SHOALWADER)
+
+    if not monk:isAlive() and not houu:isAlive() then
+         OnWipe()
+    end
 end
 
 function onMobDeath(mob, player)

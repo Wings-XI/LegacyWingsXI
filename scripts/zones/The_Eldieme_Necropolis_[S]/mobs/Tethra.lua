@@ -4,7 +4,7 @@
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
-local ID = require("scripts/zones/The_Eldieme_Necropolis_[S]/IDs")
+mixins = {require("scripts/mixins/fomor_hate")}
 ------------------------------
 
 function onMobSpawn(mob)
@@ -23,16 +23,18 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.RATTP, 750)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Tethra
-    mob:setMod(tpz.mod.EARTHDEF, 200)
+    mob:setMod(tpz.mod.EARTHDEF, 170)
     mob:setMod(tpz.mod.DARKDEF, 240)
-    mob:setMod(tpz.mod.LIGHTDEF, 200)
+    mob:setMod(tpz.mod.LIGHTDEF, 170)
     mob:setMod(tpz.mod.FIREDEF, 128)
-    mob:setMod(tpz.mod.WATERDEF, 200)
-    mob:setMod(tpz.mod.THUNDERDEF, 200)
+    mob:setMod(tpz.mod.WATERDEF, 170)
+    mob:setMod(tpz.mod.THUNDERDEF, 170)
     mob:setMod(tpz.mod.WINDDEF, 128)
     mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.SILENCERES, 100)
-    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMod(tpz.mod.STUNRES, 99)
+    -- Adding Resbuild for Stun as it was too potent.
+    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -44,7 +46,8 @@ function onMobSpawn(mob)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Tethra
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
     mob:setMod(tpz.effect.FAST_CAST, 25)
-    mob:addStatusEffect(tpz.effect.ENSTONE_II, 25, 0, 0)
+    -- Increasing Enstone to 100 Per Attack Round (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129692&id=18306)
+    mob:addStatusEffect(tpz.effect.ENSTONE_II, 100, 0, 0)
     mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
@@ -56,7 +59,17 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
+function onMobEngage(mob, target)
+    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129692&id=18306)
+    mob:setLocalVar("TFightTimer", (os.time() + 7200))
+end
+
 function onMobFight(mob, target)
+    local fighttimer = mob:getLocalVar("TFightTimer")
+    if os.time() > fighttimer then
+        mob:disengage()
+    end
+
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://ffxiclopedia.fandom.com/wiki/Tethra)
@@ -212,15 +225,20 @@ end
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
-        mob:DespawnMob(17494213, 0)
+        DespawnMob(17494213)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("TFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
+    mob:removeListener("WEAPONSKILL_TAKE")
+    mob:removeListener("TAKE_DAMAGE")
+    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("PLAYER_ABILITY_USED")
 end
 
-function onMobDespawn(mob)
+function onMobDespawn(mob) 
     if mob:getLocalVar("MobPoof") == 1 then
-        mob:messageBasic(tpz.zone.THE_ELDIEME_NECROPOLIS_S.text.NM_DESPAWN) -- Despawn Message
+        mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
 end

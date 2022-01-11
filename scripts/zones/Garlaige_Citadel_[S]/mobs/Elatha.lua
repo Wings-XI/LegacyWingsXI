@@ -4,6 +4,7 @@
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
+mixins = {require("scripts/mixins/fomor_hate")}
 ------------------------------
 
 function onMobSpawn(mob)
@@ -18,13 +19,14 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEX, 40)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
-    mob:addMod(tpz.mod.DEFP, 750)
-    mob:addMod(tpz.mod.RATTP, 750)
+    -- Raising Defense As Melee Was Doing Too Much Damage
+    mob:addMod(tpz.mod.DEFP, 850)
+    mob:addMod(tpz.mod.RATTP, 850)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:setMod(tpz.mod.EARTHDEF, 200)
-    mob:setMod(tpz.mod.DARKDEF, 240)
-    mob:setMod(tpz.mod.LIGHTDEF, 240)
+    mob:setMod(tpz.mod.DARKDEF, 250)
+    mob:setMod(tpz.mod.LIGHTDEF, 200)
     mob:setMod(tpz.mod.FIREDEF, 128)
     mob:setMod(tpz.mod.WATERDEF, 200)
     mob:setMod(tpz.mod.THUNDERDEF, 200)
@@ -32,16 +34,21 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.ICE_ABSORB, 100)
-    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMod(tpz.mod.STUNRES, 99)
+    -- Adding Resbuild for Stun as it was too potent.
+    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.POISONRES, 100)
     mob:setMod(tpz.mod.PARALYZERES, 100)
     mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
+    mob:setMod(tpz.mod.FASTCAST, 10)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:addStatusEffect(tpz.effect.ICE_SPIKES, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
+    -- Increasing Enblizzard for Standard Attack Round to 100 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129694&id=18305)
     mob:addStatusEffect(tpz.effect.ENBLIZZARD_II, 25, 0, 0)
     mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
@@ -54,7 +61,16 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
+function onMobEngage(mob, target)
+    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
+    mob:setLocalVar("EFightTimer", (os.time() + 7200))
+end
+
 function onMobFight(mob, target)
+    local fighttimer = mob:getLocalVar("EFightTimer")
+    if os.time() > fighttimer then
+        mob:disengage()
+    end
 
    -- Blood Weapon
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Elatha)
@@ -160,15 +176,19 @@ end
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
-        mob:DespawnMob(17449008, 0)
+        DespawnMob(17449008)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("EFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
+    mob:removeListener("WEAPONSKILL_TAKE")
+    mob:removeListener("TAKE_DAMAGE")
+    mob:removeListener("MAGIC_TAKE")
 end
 
-function onMobDespawn(mob)
+function onMobDespawn(mob) 
     if mob:getLocalVar("MobPoof") == 1 then
-        mob:messageBasic(tpz.zone.GARLAIGE_CITADEL_S.text.NM_DESPAWN) -- Despawn Message
+        mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
 end

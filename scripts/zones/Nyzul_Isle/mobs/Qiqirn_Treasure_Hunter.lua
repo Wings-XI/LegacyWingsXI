@@ -20,12 +20,25 @@ function onMobFight(mob, target)
     if (mob:getHPP() <= 50 and mob:getLocalVar("QQ_RunAway") == 0) then
         mob:setLocalVar("QQ_RunAway", 1)
         mob:setMod(tpz.mod.MOVE, 50)
+        mob:setLocalVar("QQ_MineTime", os.time() + 3)
+
         local runAwayX = mob:getLocalVar("QQ_RunAwayX")
         local runAwayY = mob:getLocalVar("QQ_RunAwayY")
         local runAwayZ = mob:getLocalVar("QQ_RunAwayZ")
+
+        if (mob:getLocalVar("QQ_RunAwayX_Negative") > 0) then
+            runAwayX = runAwayX * -1
+        end
+        if (mob:getLocalVar("QQ_RunAwayY_Negative") > 0) then
+            runAwayY = runAwayY * -1
+        end
+        if (mob:getLocalVar("QQ_RunAwayZ_Negative") > 0) then
+            runAwayZ = runAwayZ * -1
+        end
+
         -- runaway logic unless we have a 0,0,0 pos
-        if (runAwayX > 0) or (runAwayY > 0) or (runAwayZ > 0) then
-            mob:pathTo(runAwayX, runAwayY, runAwayZ, 0)
+        if (runAwayX ~= 0) or (runAwayZ ~= 0) then
+            mob:pathTo(runAwayX, runAwayY, runAwayZ, 9)
         end
     end
 

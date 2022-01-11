@@ -31,8 +31,10 @@ function onSpellCast(caster, target, spell)
     
     local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target) * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target)
     if resist >= 0.5 then
-        -- Base potency
-        local potency = utils.clamp(math.floor(dMND / 4) + 20, 10, 30)
+        -- Get Merit Potency Bonus 1% Potency/Upgrade
+        local merits = caster:getMerit(tpz.merit.PARALYZE_II)
+        -- Base Potency is 15 (Same as Paralyze)
+        local potency = utils.clamp(math.floor(dMND / 4) + (15 + merits), 10, 30)
         potency = calculatePotency(potency, spell:getSkillType(), caster, target)
     
         if target:addStatusEffect(params.effect, potency, 0, math.ceil(duration * resist)) then

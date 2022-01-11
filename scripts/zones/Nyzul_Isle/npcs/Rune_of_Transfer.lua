@@ -172,7 +172,9 @@ function bubbleWarpThePlayers(player, instance, stage)
             if char:getID() ~= player:getID() then
                 char:release()
                 char:disengage()
-                char:startEvent(95)
+                char:timer(125, function(char)
+                    char:startEvent(95)
+                end)
             end
         end
     end
