@@ -4,6 +4,7 @@
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
+mixins = {require("scripts/mixins/fomor_hate")}
 ------------------------------
 
 function onMobSpawn(mob)
@@ -26,27 +27,32 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.TRIPLE_ATTACK, 10)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Ethniu
     mob:setMod(tpz.mod.EARTHDEF, 170)
-    mob:setMod(tpz.mod.DARKDEF, 240)
+    mob:setMod(tpz.mod.DARKDEF, 250)
     mob:setMod(tpz.mod.LIGHTDEF, 128)
     mob:setMod(tpz.mod.FIREDEF, 128)
     mob:setMod(tpz.mod.WATERDEF, 170)
     mob:setMod(tpz.mod.THUNDERDEF, 170)
-    mob:setMod(tpz.mod.ICEDEF, 170)
+    mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.WINDDEF, 170)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
+    -- Adding Resbuild for Stun as it was too potent.
+    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.PARALYZERES, 100)
     mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
     mob:setMod(tpz.mod.FASTCAST, 10)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Ethniu
     mob:addStatusEffect(tpz.effect.REGAIN, 10, 3, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
-    mob:addStatusEffect(tpz.effect.ENAERO_II, 25, 0, 0)
+    -- Increasing Enaero for Standard Attack Round to Equal 100 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
+    mob:addStatusEffect(tpz.effect.ENAERO, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
-    mob:addStatusEffect(tpz.effect.MAZURKA, 12, 0, 0)
+    -- Revamping Movement Speed Bonus
+    mob:addMod(tpz.mod.MOVE, 12)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
@@ -57,7 +63,16 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
+function onMobEngage(mob, target)
+    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
+    mob:setLocalVar("EFightTimer", (os.time() + 7200))
+end
+
 function onMobFight(mob, target)
+    local fighttimer = mob:getLocalVar("EFightTimer")
+    if os.time() > fighttimer then
+        mob:disengage()
+    end
 
     -- Perfect Dodge
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Ethniu)
@@ -149,6 +164,7 @@ function onMobDisengage(mob)
     if mob:getHPP() < 100 or levelupsum > 0 then
         DespawnMob(17494093)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("EFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
 end
@@ -158,6 +174,9 @@ function onMobDespawn(mob)
         mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
+    mob:removeListener("WEAPONSKILL_TAKE")
+    mob:removeListener("TAKE_DAMAGE")
+    mob:removeListener("MAGIC_TAKE")
 end
 
 function onMobDeath(mob, player, isKiller)
