@@ -4,6 +4,7 @@
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
+mixins = {require("scripts/mixins/fomor_hate")}
 ------------------------------
 
 function onMobSpawn(mob)
@@ -20,11 +21,11 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.RATTP, 0)
     mob:addMod(tpz.mod.DEFP, 750)
     mob:addMod(tpz.mod.RATTP, 750)
-    mob:addMod(tpz.mod.ACC, 100)
+    mob:addMod(tpz.mod.ACC, 150)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Buarainech
     mob:setMod(tpz.mod.EARTHDEF, 128)
-    mob:setMod(tpz.mod.DARKDEF, 240)
-    mob:setMod(tpz.mod.LIGHTDEF, 240)
+    mob:setMod(tpz.mod.DARKDEF, 250)
+    mob:setMod(tpz.mod.LIGHTDEF, 200)
     mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.FIREDEF, 200)
     mob:setMod(tpz.mod.WATERDEF, 200)
@@ -32,16 +33,21 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.WINDDEF, 200)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
+    -- Adding Resbuild for Stun as it was too potent.
+    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.POISONRES, 100)
     mob:setMod(tpz.mod.PARALYZERES, 100)
     mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
+    mob:setMod(tpz.mod.FASTCAST, 10)
     -- Status Effecs Based On https://ffxiclopedia.fandom.com/wiki/Buarainech
     mob:addStatusEffect(tpz.effect.SHOCK_SPIKES, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
-    mob:addStatusEffect(tpz.effect.ENTHUNDER_II, 25, 0, 0)
+    -- Increasing Enthunder for Standard Attack Round to 100 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129693&id=18304)
+    mob:addStatusEffect(tpz.effect.ENTHUNDER_II, 100, 0, 0)
     mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
 end
 
@@ -52,7 +58,16 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
+function onMobEngage(mob, target)
+    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129693&id=18304)
+    mob:setLocalVar("BFightTimer", (os.time() + 7200))
+end
+
 function onMobFight(mob, target)
+    local fighttimer = mob:getLocalVar("BFightTimer")
+    if os.time() > fighttimer then
+        mob:disengage()
+    end
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://www.youtube.com/watch?v=7sjZoknSXRw&ab_channel=RainbowChaser)
@@ -166,9 +181,14 @@ function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
         DespawnMob(17449017)
+        mob:setLocalVar("BFightTimer", 0)
         mob:setLocalVar("TotalLevelUp", 0)
         mob:setLocalVar("MobPoof", 1)
     end
+    mob:removeListener("WEAPONSKILL_TAKE")
+    mob:removeListener("TAKE_DAMAGE")
+    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("EFFECT_GAIN")
 end
 
 function onMobDespawn(mob) 
