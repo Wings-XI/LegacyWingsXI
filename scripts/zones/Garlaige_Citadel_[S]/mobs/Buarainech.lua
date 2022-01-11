@@ -185,6 +185,10 @@ function onMobDisengage(mob)
         mob:setLocalVar("TotalLevelUp", 0)
         mob:setLocalVar("MobPoof", 1)
     end
+    mob:removeListener("WEAPONSKILL_TAKE")
+    mob:removeListener("TAKE_DAMAGE")
+    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("EFFECT_GAIN")
 end
 
 function onMobDespawn(mob) 
@@ -192,10 +196,6 @@ function onMobDespawn(mob)
         mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
-    mob:removeListener("EFFECT_GAIN")
 end
 
 function onMobDeath(mob, player, isKiller)
