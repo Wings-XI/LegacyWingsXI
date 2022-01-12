@@ -11,53 +11,86 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
     local vHour = VanadielHour()
     local vMin  = VanadielMinute()
+    local rMin  = 0
+    local onwayto = ID.text.ON_WAY_TO_MHAURA
+    local arrivingsoon = ID.text.ARRIVING_SOON_MHAURA
 
     while vHour >= 6 do
         vHour = vHour - 8
     end
 
-    if (vHour == -2) then
+    if (vHour == -4) then
         vHour = 8
-    elseif (vHour == -1) then
+        if vMin < 30 then
+            rMin = 17
+        else
+            rMin = 16
+        end
+    elseif (vHour == -3) then
         vHour = 7
-    elseif (vHour ==  0) then
+        if vMin < 30 then
+            rMin = 15
+        else
+            rMin = 14
+        end
+    elseif (vHour == -2) then
         vHour = 6
-    elseif (vHour ==  1) then
+        if vMin < 30 then
+            rMin = 13
+        else
+            rMin = 12
+        end
+    elseif (vHour == -1) then
         vHour = 5
-    elseif (vHour ==  2) then
+        if vMin < 30 then
+            rMin = 11
+        else
+            rMin = 10
+        end
+    elseif (vHour ==  0) then
         vHour = 4
-    elseif (vHour ==  3) then
+        if vMin < 30 then
+            rMin = 9
+        else
+            rMin = 8
+        end
+    elseif (vHour ==  1) then
         vHour = 3
-    elseif (vHour ==  4) then
+        if vMin < 30 then
+            rMin = 7
+        else
+            rMin = 6
+        end
+    elseif (vHour ==  2) then
         vHour = 2
-    elseif (vHour ==  5) then
+        if vMin < 30 then
+            rMin = 5
+        else
+            rMin = 4
+        end
+    elseif (vHour ==  3) then
         vHour = 1
-    end
-
-    if (vHour == 8 and vMin <= 40) then
-        vHour = 0
+        if vMin < 30 then
+            rMin = 3
+        else
+            rMin = 2
+        end
     end
 
     local vMinutes = (vHour * 60) + 40 - vMin
 
-    vHour = math.floor( vMinutes / 60 + 0.5)
-
-    local message = ID.text.ON_WAY_TO_MHAURA
+    local message = onwayto
 
     if (vMinutes <= 30) then
-        message = ID.text.ARRIVING_SOON_MHAURA
+        message = arrivingsoon
     elseif (vMinutes < 60) then
         vHour = 0
+        rMin = 1
     end
 
-    if (vHour > 7) then -- Normal players can't be on the boat longer than 7 Vanadiel hours. This is for GMs.
-        vHour = 7
-    end
-
-    player:messageSpecial( message, math.floor((2.4 * ((vHour * 60) + 40 - vMin)) / 60), vHour)
+    player:messageSpecial( message, rMin, vHour)
 end
 
 function onEventUpdate(player, csid, option)

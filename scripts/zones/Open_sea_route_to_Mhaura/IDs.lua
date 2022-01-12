@@ -21,6 +21,7 @@ zones[tpz.zone.OPEN_SEA_ROUTE_TO_MHAURA] =
         ON_WAY_TO_MHAURA           = 7308, -- We are on our way to Mhaura. We should arrive in [less than an hour/about 1 hour/about 2 hours/about 3 hours/about 4 hours/about 5 hours/about 6 hours/about 7 hours] (# [minute/minutes] in Earth time).
         DOCKING_IN_MHAURA          = 7309, -- We are now docking in Mhaura.
         PASHI_MACCALEH_SHOP_DIALOG = 7312, -- Step right up for the best fishing gear in these parts!
+        ARRIVING_SOON_MHAURA       = 7313, -- We are on our way to Mhaura. We will be arriving soon.
     },
     mob =
     {
