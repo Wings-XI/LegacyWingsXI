@@ -2682,8 +2682,6 @@ namespace battleutils
             attPercentBonus = PAttacker->ATT() * bonusAttPercent;
 
         float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
-        float cRatioMax = 0;
-        float cRatioMin = 0;
         // Using 2013 model
         // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
         float ratioCap = 2.25f;
@@ -2702,6 +2700,7 @@ namespace battleutils
         else
         {
             // TODO: This was left untouched in a rewrite of this function, unsure where this is sourced from
+            // or which entities it is used for. Possibly needs double checked if it's mob or pet cRatio 
             if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
                 cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
@@ -2712,12 +2711,13 @@ namespace battleutils
 
         // Using Motenten's model
         float wRatio = cRatio;
+        float upperLimit = 3.25f;
+        float lowerLimit = 0.0f;
         if (isCritical)
         {
-            wRatio = cRatio + 1;
+            wRatio += 1;
         }
-
-        float upperLimit = 0.0f;
+        ShowDebug("after crit wRatio is %f\n", wRatio);
 
         if (wRatio < 0.5f)
             upperLimit = wRatio + 0.5f;
@@ -2729,10 +2729,8 @@ namespace battleutils
             upperLimit = (wRatio * 0.25f) + wRatio;
         else if (wRatio < 2.625f)
             upperLimit = wRatio + 0.375f;
-        else if (wRatio < 3.25f)
+        else if (wRatio <= 3.25f)
             upperLimit = 3.0f;
-        
-        float lowerLimit = 0.0f;
 
         if (wRatio < 0.38f)
             lowerLimit = 0.0f;
@@ -2742,21 +2740,19 @@ namespace battleutils
             lowerLimit = 1.0f;
         else if (wRatio < 2.44f)
             lowerLimit = wRatio * (1176.0f/1024.0f) - (755.0f/1024.0f);
-        else if (wRatio < 3.25f)
+        else if (wRatio <= 3.25f)
             lowerLimit = wRatio - 0.375f;
 
         float pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
-        if (pDIF < 0)
-            pDIF = 0.0f;
-        else if (pDIF > 3.0f)
-            pDIF = 3.0f;
+
+        pDIF = std::clamp<float>(pDIF, 0, 3.0);
 
         // Multiply final val by a random number between 1 and 1.05 
         pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
 
-        //ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
+        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
 
-        if (isCritical) // Apply any crit damage increases
+        if (isCritical) // Apply any crit damage increases or reductions
         {
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
