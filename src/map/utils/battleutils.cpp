@@ -1984,6 +1984,7 @@ namespace battleutils
 
     int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
     {
+        ShowWarning("TakePhysicalDamage - Entry da");
         auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         giveTPtoAttacker = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
         giveTPtoVictim = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
@@ -2724,13 +2725,19 @@ namespace battleutils
         if (isCritical && cRatioMin > cRatioMax)
             cRatioMin = cRatioMax;
 
-        // ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
+        //ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
 
         float pDIF = 1.0f;
         if (cRatioMin == cRatioMax)
+        {
             pDIF = cRatioMax;
+        }
         else
+        {
+            if (cRatioMin < 0)
+                cRatioMin = 0;
             pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
+        }
 
         if (isCritical)
         {
@@ -5906,7 +5913,6 @@ namespace battleutils
     {
         if (PSpell == nullptr)
         {
-            ShowWarning("battleutils::CalculateMPCost Spell is NULL\n");
             return 0;
         }
 
