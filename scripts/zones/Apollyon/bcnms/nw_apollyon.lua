@@ -10,6 +10,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 function onBattlefieldInitialise(battlefield)
     battlefield:setLocalVar("randomF1", ID.mob.APOLLYON_NW_MOB[1]+math.random(1,7))
     battlefield:setLocalVar("loot", 1)
+    battlefield:setLocalVar("tick", 0)
     SetServerVariable("[NW_Apollyon]Time", battlefield:getTimeLimit()/60)
     tpz.limbus.handleDoors(battlefield)
     tpz.limbus.setupArmouryCrates(battlefield:getID())
@@ -17,9 +18,14 @@ end
 
 function onBattlefieldTick(battlefield, tick)
     if battlefield:getRemainingTime() % 60 == 0 then
-        SetServerVariable("[NW_Apollyon]Time", battlefield:getRemainingTime()/60)
-    end
-    tpz.battlefield.onBattlefieldTick(battlefield, tick)
+        SetServerVariable("[SW_Apollyon]Time", battlefield:getRemainingTime()/60)
+     end
+
+     battlefield:setLocalVar("tick", battlefield:getLocalVar("tick") + 1)
+
+     if battlefield:getLocalVar("tick") >= 90 then
+         tpz.battlefield.onBattlefieldTick(battlefield, tick)
+     end
 end
 
 function onBattlefieldRegister(player, battlefield)

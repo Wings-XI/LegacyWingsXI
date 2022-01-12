@@ -52,16 +52,18 @@ function onSpellCast(caster, target, spell)
     local duration = 60
 
     -- Calculate DoT effect
-    -- http://wiki.ffo.jp/html/1954.html
+    -- Caps at 2 dmg/tick (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=110731&id=1954)
     local dotdmg = 0
-    if     skillLvl > 80 then dotdmg = 3
-    elseif skillLvl > 40 then dotdmg = 2
-    else                      dotdmg = 1
+    if skillLvl > 40 then
+        dotdmg = 2
+    else                
+        dotdmg = 1
     end
 
     -- Do it!
     target:delStatusEffect(tpz.effect.DIA)
-    target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 10, 1)
+    -- Bio's attack down in era is 5.1% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=110731&id=1954)
+    target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 5, 1)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
     return final

@@ -4,6 +4,7 @@
 ------------------------------
 require("scripts/globals/hunts")
 require("scripts/globals/status")
+mixins = {require("scripts/mixins/fomor_hate")}
 ------------------------------
 
 function onMobSpawn(mob)
@@ -21,18 +22,22 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEFP, 750)
     mob:addMod(tpz.mod.RATTP, 750)
     mob:addMod(tpz.mod.ACC, 100)
+    -- Adding 10% Double Since WAR
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Lugh
     mob:setMod(tpz.mod.EARTHDEF, 170)
-    mob:setMod(tpz.mod.DARKDEF, 240)
+    mob:setMod(tpz.mod.DARKDEF, 250)
     mob:setMod(tpz.mod.LIGHTDEF, 128)
-    mob:setMod(tpz.mod.FIREDEF, 128)
+    mob:setMod(tpz.mod.FIREDEF, 170)
     mob:setMod(tpz.mod.WATERDEF, 170)
     mob:setMod(tpz.mod.THUNDERDEF, 170)
-    mob:setMod(tpz.mod.ICEDEF, 170)
+    mob:setMod(tpz.mod.ICEDEF, 200)
     mob:setMod(tpz.mod.WINDDEF, 170)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.FIRE_ABSORB, 100)
-    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMod(tpz.mod.STUNRES, 99)
+    -- Adding Resbuild for Stun as it was too potent.
+    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -43,9 +48,11 @@ function onMobSpawn(mob)
     mob:addStatusEffect(tpz.effect.BLAZE_SPIKES, 50, 0, 0)
     mob:addStatusEffect(tpz.effect.REGAIN, 10, 3, 0)
     mob:addStatusEffect(tpz.effect.REGEN, 30, 3, 0)
-    mob:addStatusEffect(tpz.effect.ENFIRE_II, 25, 0, 0)
+    -- Increasing Enfire for Standard Attack Round to 100 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129695&id=18303)
+    mob:addStatusEffect(tpz.effect.ENFIRE_II, 100, 0, 0)
     mob:addStatusEffect(tpz.effect.REFRESH, 50, 3, 0)
-    mob:addStatusEffect(tpz.effect.MAZURKA, 12, 0, 0)
+    -- Revamping Movement Speed Bonus
+    mob:addMod(tpz.mod.MOVE, 12)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
@@ -56,7 +63,16 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
+function onMobEngage(mob, target)
+    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129695&id=18303)
+    mob:setLocalVar("LFightTimer", (os.time() + 7200000))
+end
+
 function onMobFight(mob, target)
+    local fighttimer = mob:getLocalVar("LFightTimer")
+    if os.time() > fighttimer then
+        mob:disengage()
+    end
 
     -- Mighty Strikes
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Lugh)
@@ -162,15 +178,19 @@ end
 function onMobDisengage(mob)
     local levelupsum = mob:getLocalVar("TotalLevelUp")
     if mob:getHPP() < 100 or levelupsum > 0 then
-        mob:DespawnMob(17477708, 0)
+        DespawnMob(17477708)
         mob:setLocalVar("TotalLevelUp", 0)
+        mob:setLocalVar("LFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
+    mob:removeListener("LUGH_WEAPONSKILL_TAKE")
+    mob:removeListener("LUGH_TAKE_DAMAGE")
+    mob:removeListener("LUGH_MAGIC_TAKE")
 end
 
-function onMobDespawn(mob)
+function onMobDespawn(mob) 
     if mob:getLocalVar("MobPoof") == 1 then
-        mob:messageBasic(tpz.zone.CRAWLERS_NEST_S.text.NM_DESPAWN) -- Despawn Message
+        mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
 end

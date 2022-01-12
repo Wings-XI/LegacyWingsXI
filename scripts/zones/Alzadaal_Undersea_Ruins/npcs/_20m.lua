@@ -35,7 +35,7 @@ function onTrigger(player, npc)
         armband = 1
     end
     local recommendedLevel = 75
-    
+
     if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS and player:hasKeyItem(tpz.ki.NYZUL_ISLE_ROUTE) and player:getCharVar("AhtUrganStatus") == 1 then
         availableInstances = availableInstances - PATH_OF_DARKNESS
     end
@@ -88,7 +88,7 @@ function onEventUpdate(player, csid, option, target)
 
     local cap = bit.band(option, 0x03)
     if cap == 0 then
-        cap = 99
+        cap = 0
     elseif cap == 1 then
         cap = 70
     elseif cap == 2 then
@@ -151,7 +151,7 @@ function onEventUpdate(player, csid, option, target)
             player:instanceEntry(target,1)
             return
         end
-        
+
 
         if party ~= nil then
             for i, v in ipairs(party) do
@@ -183,7 +183,7 @@ function onEventFinish(player, csid, option, target)
 end
 
 function onInstanceCreated(player, target, instance)
-    
+
     if instance then
         if instance:getID() == 58 then
             player:delKeyItem(tpz.ki.NYZUL_ISLE_ROUTE)
@@ -205,8 +205,11 @@ function onInstanceCreated(player, target, instance)
         if party ~= nil then
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
+                    -- force players out of menu
+                    v:release()
                     v:setInstance(instance)
-                    v:startEvent(116, 2)
+                    -- Delay entrace CS
+                    v:timer(2000, function(v) v:startEvent(116, 2) end)
                     v:setLocalVar("Nyzul", 1)
 
                     if instance:getID() == 58 then
