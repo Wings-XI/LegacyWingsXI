@@ -65,7 +65,7 @@ end
 
 function onMobEngage(mob, target)
     -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
-    mob:setLocalVar("EFightTimer", (os.time() + 7200))
+    mob:setLocalVar("EFightTimer", (os.time() + 7200000))
 end
 
 function onMobFight(mob, target)
