@@ -18,7 +18,7 @@ function onTrigger(player, npc)
     local arrivingsoon = ID.text.ARRIVING_SOON_MHAURA
 
     while vHour >= 4 do
-        vHour = vHour - 8
+        vHour = vHour - 10
     end
 
     if (vHour == -4) then
