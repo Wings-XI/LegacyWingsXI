@@ -1586,6 +1586,7 @@ namespace battleutils
         //get ranged attack value
         uint16 rAttack = 1;
 
+        // Calculating ranged attack value
         if (PAttacker->objtype == TYPE_PC)
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
@@ -1595,7 +1596,7 @@ namespace battleutils
             {
                 rAttack = PChar->RATT(PItem->getSkillType(), distance(PChar->loc.p, PDefender->loc.p), PItem->getILvlSkill());
             }
-            else
+            else // thrown
             {
                 PItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
 
@@ -1618,47 +1619,50 @@ namespace battleutils
             rAttack = battleutils::GetMaxSkill(SKILL_ARCHERY, JOB_RNG, PAttacker->GetMLevel());
         }
 
-        float levelCorrection = 1.0f;
-
         float ratio = (float)rAttack / (float)PDefender->DEF();
 
         ratio = std::clamp<float>(ratio, 0, 3);
 
+        // Level correction
+        float cRatio = ratio;
+
         if (PDefender->GetMLevel() > PAttacker->GetMLevel()) {
-            levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel())*0.01f;
-            if (PAttacker->objtype == TYPE_PC && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
-            {
-                levelCorrection = 1.03f;
-            }
-            if (levelCorrection < 0.2f)
-                levelCorrection = 0.2f;
-            ratio *= levelCorrection;
+            cRatio = cRatio - (PDefender->GetMLevel() - PAttacker->GetMLevel()) * 0.025f;
         }
 
-        //calculate min/max PDIF
-        float minPdif = 0;
-        float maxPdif = 0;
+        float upperLimit = 3.0f;
+        float lowerLimit = 0.0f;
 
-        maxPdif = ratio * 1.25f;
-        minPdif = maxPdif * 0.675f + 1 / 6;
-        if (minPdif > maxPdif - 0.1f)
-            minPdif = maxPdif - 0.1f;
-
-        minPdif = std::clamp<float>(minPdif, 0, 3);
-        maxPdif = std::clamp<float>(maxPdif, 0, 3);
+        if (cRatio < 0.9f)
+            upperLimit = cRatio * (10.0f/9.0f);
+        else if (cRatio < 1.1f)
+            upperLimit = 1.0f;
+        else if (cRatio <= 3.0f)
+            upperLimit = cRatio;
+        
+        if (cRatio < 0.9f)
+            lowerLimit = cRatio;
+        else if (cRatio < 1.1f)
+            lowerLimit = 1.0f;
+        else if (cRatio <= 3.0f)
+            lowerLimit = cRatio * (20.0f/19.0f) - (3.0f/19.0f);
 
         //return random number between the two
-        float pdif = tpzrand::GetRandomNumber(minPdif, maxPdif);
+        float pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+
+        pDIF = std::clamp<float>(pDIF, 0, 3);
 
         if (isCritical)
         {
-            pdif *= 1.25;
+            pDIF *= 1.25;
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) + PAttacker->getMod(Mod::RANGED_CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
-            pdif *= ((100 + criticaldamage) / 100.0f);
+            pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
-        return pdif;
+        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
+
+        return pDIF;
     }
 
     int16 CalculateBaseTP(int delay)
@@ -2717,7 +2721,6 @@ namespace battleutils
         {
             wRatio += 1;
         }
-        ShowDebug("after crit wRatio is %f\n", wRatio);
 
         if (wRatio < 0.5f)
             upperLimit = wRatio + 0.5f;
@@ -2792,9 +2795,10 @@ namespace battleutils
         else if (dif >= -21) {
             fstr = static_cast<int32>((dif + 12) / 2);
         }
-        else {
+        else { // >= -22
             fstr = static_cast<int32>((dif + 13) / 2);
         }
+
         if (SlotID == SLOT_RANGED)
         {
             rank = PAttacker->GetRangedWeaponRank();
@@ -2808,7 +2812,7 @@ namespace battleutils
             else
                 return 2 * (rank + 8);
         }
-        else
+        else // melee
         {
             fstr /= 2;
             if (SlotID == SLOT_MAIN)

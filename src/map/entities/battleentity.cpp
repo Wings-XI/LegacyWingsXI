@@ -404,6 +404,7 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 {
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 dmg = weapon->getDamage();
@@ -422,6 +423,7 @@ uint16 CBattleEntity::GetSubWeaponDmg()
 {
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 dmg = weapon->getDamage();
@@ -441,6 +443,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
     uint16 dmg = 0;
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 scaleddmg = weapon->getDamage();
@@ -454,6 +457,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
     }
     if (auto ammo = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_AMMO]))
     {
+        // Level sync scaling
         if ((ammo->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 scaleddmg = ammo->getDamage();
