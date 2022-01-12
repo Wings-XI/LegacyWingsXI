@@ -658,9 +658,9 @@ namespace battleutils
 
                 // Dmg math.
                 float DamageRatio = GetDamageRatio(PDefender, PAttacker, crit, 0.f);
-                uint16 dmg = (uint32)((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
+                int16 dmg = (uint32)((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
                 dmg = attackutils::CheckForDamageMultiplier(((CCharEntity*)PDefender), dynamic_cast<CItemWeapon*>(PDefender->m_Weapons[SLOT_MAIN]), dmg, PHYSICAL_ATTACK_TYPE::NORMAL, SLOT_MAIN);
-                uint16 bonus = dmg * (PDefender->getMod(Mod::RETALIATION) / 100);
+                int16 bonus = dmg * (PDefender->getMod(Mod::RETALIATION) / 100);
                 dmg = dmg + bonus;
 
                 // FINISH HIM! dun dun dun
@@ -1991,6 +1991,7 @@ namespace battleutils
         int32 baseDamage = damage;
         ATTACKTYPE attackType = ATTACK_PHYSICAL;
         DAMAGETYPE damageType = DAMAGE_NONE;
+            
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
         {
             attackType = ATTACK_SPECIAL;
@@ -2131,8 +2132,6 @@ namespace battleutils
         damage = std::clamp(damage, -99999, 99999);
 
         int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
-        if (damage < 0)
-            damage = -corrected;
 
         battleutils::ClaimMob(PDefender, PAttacker);
 
@@ -4192,13 +4191,13 @@ namespace battleutils
                         AttMultiplerPercent = PAttacker->getMod(Mod::JUMP_ATT_BONUS) / 100.f;
 
                     float DamageRatio = battleutils::GetDamageRatio(PAttacker, PVictim, false, AttMultiplerPercent);
-                    damageForRound = (uint16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
+                    damageForRound = (int16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
 
                     // bonus applies to jump only, not high jump
                     if (tier == 1)
                     {
                         float jumpBonus = 1.f + PAttacker->VIT() / 256.f;
-                        damageForRound = (uint16)(damageForRound * jumpBonus);
+                        damageForRound = (int16)(damageForRound * jumpBonus);
                     }
 
                     hitTarget = true;
