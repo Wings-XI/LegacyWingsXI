@@ -2704,7 +2704,7 @@ namespace battleutils
         else
         {
             // TODO: This was left untouched in a rewrite of this function, unsure where this is sourced from
-            // or which entities it is used for. Possibly needs double checked if it's mob or pet cRatio 
+            // or which entities it is used for. Possibly needs double checked for accuracy if it's mob or pet cRatio 
             if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
                 cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
