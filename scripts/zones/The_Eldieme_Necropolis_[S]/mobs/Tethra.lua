@@ -61,7 +61,7 @@ end
 
 function onMobEngage(mob, target)
     -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129692&id=18306)
-    mob:setLocalVar("TFightTimer", (os.time() + 7200))
+    mob:setLocalVar("TFightTimer", (os.time() + 7200000))
 end
 
 function onMobFight(mob, target)
@@ -230,10 +230,10 @@ function onMobDisengage(mob)
         mob:setLocalVar("TFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
-    mob:removeListener("PLAYER_ABILITY_USED")
+    mob:removeListener("TEHTRA_WEAPONSKILL_TAKE")
+    mob:removeListener("TEHTRA_TAKE_DAMAGE")
+    mob:removeListener("TEHTRA_MAGIC_TAKE")
+    mob:removeListener("TEHTRA_PLAYER_ABILITY_USED")
 end
 
 function onMobDespawn(mob) 

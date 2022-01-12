@@ -20,8 +20,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
     -- Raising Defense As Melee Was Doing Too Much Damage
-    mob:addMod(tpz.mod.DEFP, 850)
-    mob:addMod(tpz.mod.RATTP, 850)
+    mob:addMod(tpz.mod.DEFP, 775)
+    mob:addMod(tpz.mod.RATTP, 775)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:setMod(tpz.mod.EARTHDEF, 200)
@@ -63,7 +63,7 @@ end
 
 function onMobEngage(mob, target)
     -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
-    mob:setLocalVar("EFightTimer", (os.time() + 7200))
+    mob:setLocalVar("EFightTimer", (os.time() + 7200000))
 end
 
 function onMobFight(mob, target)
@@ -181,9 +181,9 @@ function onMobDisengage(mob)
         mob:setLocalVar("EFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("ELATHA_WEAPONSKILL_TAKE")
+    mob:removeListener("ELATHA_DAMAGE")
+    mob:removeListener("ELATHA_TAKE")
 end
 
 function onMobDespawn(mob) 
