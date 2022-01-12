@@ -2132,6 +2132,8 @@ namespace battleutils
         damage = std::clamp(damage, -99999, 99999);
 
         int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
+        if (damage < 0)
+            damage = -corrected;
 
         battleutils::ClaimMob(PDefender, PAttacker);
 
