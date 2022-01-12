@@ -2684,60 +2684,79 @@ namespace battleutils
         float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
         float cRatioMax = 0;
         float cRatioMin = 0;
-        float ratioCap = 4.0f;
-        float levelCorrection = 1.0f;
+        // Using 2013 model
+        // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
+        float ratioCap = 2.25f;
 
         ratio = std::clamp<float>(ratio, 0, ratioCap);
+
         float cRatio = ratio;
+        // Level correction
         if (PAttacker->objtype == TYPE_PC)
         {
             if (PAttacker->GetMLevel() < PDefender->GetMLevel())
             {
-                levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 0.02f;
-                if (levelCorrection < 0.2f)
-                    levelCorrection = 0.2f;
-                cRatio *= levelCorrection;
+                cRatio = cRatio - (PDefender->GetMLevel() - PAttacker->GetMLevel()) * 0.05f;
             }
         }
         else
         {
+            // TODO: This was left untouched in a rewrite of this function, unsure where this is sourced from
             if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
                 cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
             }
         }
 
-        if (isCritical)
-        {
-            cRatio += 1;
-        }
-
         cRatio = std::clamp<float>(cRatio, 0, ratioCap);
 
-        cRatioMax = cRatio * 1.25f;
-        cRatioMin = cRatioMax * 0.675f + 1 / 6;
-        if (cRatioMax > 2.75f)
-            cRatioMax = 2.75f;
-        if (!isCritical && cRatioMin > cRatioMax - 0.1f)
-            cRatioMin = cRatioMax - 0.1f;
-        if (isCritical && cRatioMin > cRatioMax)
-            cRatioMin = cRatioMax;
+        // Using Motenten's model
+        float wRatio = cRatio;
+        if (isCritical)
+        {
+            wRatio = cRatio + 1;
+        }
+
+        float upperLimit = 0.0f;
+
+        if (wRatio < 0.5f)
+            upperLimit = wRatio + 0.5f;
+        else if (wRatio < 0.7f)
+            upperLimit = 1.0f;
+        else if (wRatio < 1.2f)
+            upperLimit = wRatio + 0.3f;
+        else if (wRatio < 1.5f)
+            upperLimit = (wRatio * 0.25f) + wRatio;
+        else if (wRatio < 2.625f)
+            upperLimit = wRatio + 0.375f;
+        else if (wRatio < 3.25f)
+            upperLimit = 3.0f;
+        
+        float lowerLimit = 0.0f;
+
+        if (wRatio < 0.38f)
+            lowerLimit = 0.0f;
+        else if (wRatio < 1.25f)
+            lowerLimit = wRatio * (1176.0f/1024.0f) - (448.0f/1024.0f);
+        else if (wRatio < 1.51f)
+            lowerLimit = 1.0f;
+        else if (wRatio < 2.44f)
+            lowerLimit = wRatio * (1176.0f/1024.0f) - (755.0f/1024.0f);
+        else if (wRatio < 3.25f)
+            lowerLimit = wRatio - 0.375f;
+
+        float pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+        if (pDIF < 0)
+            pDIF = 0.0f;
+        else if (pDIF > 3.0f)
+            pDIF = 3.0f;
+
+        // Multiply final val by a random number between 1 and 1.05 
+        pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
 
         //ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
 
-        float pDIF = 1.0f;
-        if (cRatioMin == cRatioMax)
-        {
-            pDIF = cRatioMax;
-        }
-        else
-        {
-            if (cRatioMin < 0)
-                cRatioMin = 0;
-            pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
-        }
-
-        if (isCritical)
+        if (isCritical) // Apply any crit damage increases
         {
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
