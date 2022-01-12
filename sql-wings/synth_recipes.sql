@@ -337,7 +337,7 @@ INSERT INTO `synth_recipes` VALUES(232, 1, 0, 0, 0, 49, 0, 0, 0, 0, 0, 4100, 424
 INSERT INTO `synth_recipes` VALUES(233, 1, 0, 0, 0, 59, 0, 0, 0, 0, 0, 4100, 4242, 13144, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 1, 1, 'Mythril Ingot');
 INSERT INTO `synth_recipes` VALUES(234, 1, 0, 0, 0, 42, 0, 0, 0, 0, 0, 4100, 4242, 13328, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 2, 2, 'Mythril Ingot');
 INSERT INTO `synth_recipes` VALUES(235, 1, 0, 0, 0, 47, 0, 0, 0, 0, 0, 4100, 4242, 13446, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 2, 2, 'Mythril Ingot');
-INSERT INTO `synth_recipes` VALUES(236, 1, 0, 0, 0, 45, 0, 0, 0, 0, 0, 4100, 4242, 14790, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 1, 1, 'Mythril Ingot');
+INSERT INTO `synth_recipes` VALUES(236, 1, 0, 0, 0, 45, 0, 0, 0, 0, 0, 4100, 4242, 14790, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 2, 2, 2, 'Mythril Ingot');
 INSERT INTO `synth_recipes` VALUES(237, 1, 0, 0, 42, 0, 0, 0, 0, 0, 0, 4100, 4242, 16475, 0, 0, 0, 0, 0, 0, 0, 653, 653, 653, 653, 1, 1, 1, 1, 'Mythril Ingot');
 INSERT INTO `synth_recipes` VALUES(238, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 4096, 4238, 643, 643, 643, 645, 0, 0, 0, 0, 654, 654, 654, 654, 1, 1, 1, 1, 'Darksteel Ingot');
 INSERT INTO `synth_recipes` VALUES(239, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 4096, 4238, 645, 1228, 1228, 1228, 1228, 1228, 1228, 0, 654, 654, 654, 654, 1, 1, 1, 1, 'Darksteel Ingot');
@@ -547,8 +547,8 @@ INSERT INTO `synth_recipes` VALUES(443, 1, 0, 0, 0, 99, 0, 0, 0, 0, 0, 4100, 424
 INSERT INTO `synth_recipes` VALUES(444, 0, 0, 0, 0, 63, 0, 0, 0, 0, 0, 4096, 4238, 738, 738, 738, 738, 0, 0, 0, 0, 746, 746, 746, 746, 1, 1, 1, 1, 'Platinum Ingot');
 INSERT INTO `synth_recipes` VALUES(445, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 4096, 4238, 738, 1227, 1227, 1227, 1227, 1227, 1227, 0, 746, 746, 746, 746, 1, 1, 1, 1, 'Platinum Ingot');
 INSERT INTO `synth_recipes` VALUES(446, 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 4096, 4238, 751, 751, 751, 751, 0, 0, 0, 0, 746, 746, 746, 746, 1, 1, 1, 1, 'Platinum Ingot');
-INSERT INTO `synth_recipes` VALUES(447, 1, 0, 0, 0, 68, 0, 0, 0, 0, 0, 4100, 4242, 13316, 0, 0, 0, 0, 0, 0, 0, 746, 746, 746, 746, 1, 1, 1, 1, 'Platinum Ingot');
-INSERT INTO `synth_recipes` VALUES(448, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13352, 0, 0, 0, 0, 0, 0, 0, 746, 786, 786, 786, 1, 1, 1, 2, 'Platinum Ingot');
+INSERT INTO `synth_recipes` VALUES(447, 1, 0, 0, 0, 68, 0, 0, 0, 0, 0, 4100, 4242, 13316, 0, 0, 0, 0, 0, 0, 0, 746, 746, 746, 746, 1, 1, 2, 2, 'Platinum Ingot');
+INSERT INTO `synth_recipes` VALUES(448, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13352, 0, 0, 0, 0, 0, 0, 0, 746, 786, 746, 746, 1, 1, 1, 2, 'Platinum Ingot');
 INSERT INTO `synth_recipes` VALUES(449, 1, 0, 0, 0, 70, 0, 0, 0, 0, 0, 4100, 4242, 13447, 0, 0, 0, 0, 0, 0, 0, 746, 746, 746, 746, 1, 1, 1, 2, 'Platinum Ingot');
 INSERT INTO `synth_recipes` VALUES(450, 0, 0, 0, 0, 89, 0, 0, 0, 0, 0, 4096, 4238, 738, 739, 739, 739, 0, 0, 0, 0, 747, 747, 747, 747, 1, 1, 1, 1, 'Ocl. Ingot');
 INSERT INTO `synth_recipes` VALUES(451, 0, 1995, 0, 0, 54, 0, 0, 0, 0, 0, 4096, 4238, 745, 745, 745, 745, 745, 745, 2144, 0, 752, 752, 752, 752, 6, 6, 6, 6, 'Gold Sheet');
@@ -574,7 +574,7 @@ INSERT INTO `synth_recipes` VALUES(470, 1, 0, 0, 0, 55, 0, 0, 0, 0, 0, 4100, 424
 INSERT INTO `synth_recipes` VALUES(471, 1, 0, 0, 0, 45, 0, 0, 0, 0, 0, 4100, 4242, 13317, 0, 0, 0, 0, 0, 0, 0, 792, 653, 653, 653, 1, 1, 2, 2, 'Pearl');
 INSERT INTO `synth_recipes` VALUES(472, 1, 0, 0, 0, 55, 0, 0, 0, 0, 0, 4100, 4242, 13483, 0, 0, 0, 0, 0, 0, 0, 792, 792, 653, 653, 1, 1, 1, 2, 'Pearl');
 INSERT INTO `synth_recipes` VALUES(473, 1, 0, 0, 0, 55, 0, 0, 0, 0, 0, 4100, 4242, 13482, 0, 0, 0, 0, 0, 0, 0, 793, 793, 653, 653, 1, 1, 1, 2, 'Black Pearl');
-INSERT INTO `synth_recipes` VALUES(474, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13355, 0, 0, 0, 0, 0, 0, 0, 794, 794, 746, 746, 1, 1, 1, 1, 'Sapphire');
+INSERT INTO `synth_recipes` VALUES(474, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13355, 0, 0, 0, 0, 0, 0, 0, 746, 794, 746, 746, 1, 1, 1, 2, 'Platinum Ingot');
 INSERT INTO `synth_recipes` VALUES(475, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 4098, 4240, 770, 0, 0, 0, 0, 0, 0, 0, 795, 798, 791, 794, 1, 1, 1, 1, 'Lapis Lazuli');
 INSERT INTO `synth_recipes` VALUES(476, 1, 0, 0, 0, 25, 0, 0, 0, 0, 0, 4100, 4242, 13334, 0, 0, 0, 0, 0, 0, 0, 795, 795, 744, 744, 1, 1, 1, 2, 'Lapis Lazuli');
 INSERT INTO `synth_recipes` VALUES(477, 1, 0, 0, 0, 35, 0, 0, 0, 0, 0, 4100, 4242, 13472, 0, 0, 0, 0, 0, 0, 0, 795, 795, 744, 744, 1, 1, 1, 2, 'Lapis Lazuli');
@@ -594,7 +594,7 @@ INSERT INTO `synth_recipes` VALUES(490, 1, 0, 0, 0, 35, 0, 0, 0, 0, 0, 4100, 424
 INSERT INTO `synth_recipes` VALUES(491, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 4098, 4240, 769, 0, 0, 0, 0, 0, 0, 0, 807, 790, 803, 786, 1, 1, 1, 1, 'Sardonyx');
 INSERT INTO `synth_recipes` VALUES(492, 1, 0, 0, 0, 25, 0, 0, 0, 0, 0, 4100, 4242, 13331, 0, 0, 0, 0, 0, 0, 0, 807, 807, 744, 744, 1, 1, 1, 2, 'Sardonyx');
 INSERT INTO `synth_recipes` VALUES(493, 1, 0, 0, 0, 35, 0, 0, 0, 0, 0, 4100, 4242, 13444, 0, 0, 0, 0, 0, 0, 0, 807, 807, 744, 744, 1, 1, 1, 2, 'Sardonyx');
-INSERT INTO `synth_recipes` VALUES(494, 1, 0, 0, 0, 44, 0, 0, 0, 0, 0, 4100, 4242, 17291, 0, 0, 0, 0, 0, 0, 0, 807, 744, 653, 790, 1, 1, 1, 1, 'Sardonyx');
+INSERT INTO `synth_recipes` VALUES(494, 1, 0, 0, 0, 44, 0, 0, 0, 0, 0, 4100, 4242, 17291, 0, 0, 0, 0, 0, 0, 0, 818, 744, 653, 790, 1, 1, 1, 1, 'Cotton Thread');
 INSERT INTO `synth_recipes` VALUES(495, 1, 0, 0, 0, 55, 0, 0, 0, 0, 0, 4100, 4242, 13478, 0, 0, 0, 0, 0, 0, 0, 808, 808, 653, 653, 1, 1, 1, 2, 'Goshenite');
 INSERT INTO `synth_recipes` VALUES(496, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 4098, 4240, 773, 0, 0, 0, 0, 0, 0, 0, 809, 808, 805, 787, 1, 1, 1, 1, 'Clear Topaz');
 INSERT INTO `synth_recipes` VALUES(497, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 4098, 4240, 1470, 0, 0, 0, 0, 0, 0, 0, 809, 808, 805, 1460, 1, 1, 1, 1, 'Clear Topaz');
