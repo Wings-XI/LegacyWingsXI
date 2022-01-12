@@ -230,10 +230,10 @@ function onMobDisengage(mob)
         mob:setLocalVar("TFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
-    mob:removeListener("PLAYER_ABILITY_USED")
+    mob:removeListener("TEHTRA_WEAPONSKILL_TAKE")
+    mob:removeListener("TEHTRA_TAKE_DAMAGE")
+    mob:removeListener("TEHTRA_MAGIC_TAKE")
+    mob:removeListener("TEHTRA_PLAYER_ABILITY_USED")
 end
 
 function onMobDespawn(mob) 

@@ -183,9 +183,9 @@ function onMobDisengage(mob)
         mob:setLocalVar("LFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("LUGH_WEAPONSKILL_TAKE")
+    mob:removeListener("LUGH_TAKE_DAMAGE")
+    mob:removeListener("LUGH_MAGIC_TAKE")
 end
 
 function onMobDespawn(mob) 

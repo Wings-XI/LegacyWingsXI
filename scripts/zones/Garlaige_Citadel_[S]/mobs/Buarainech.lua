@@ -185,10 +185,10 @@ function onMobDisengage(mob)
         mob:setLocalVar("TotalLevelUp", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
-    mob:removeListener("EFFECT_GAIN")
+    mob:removeListener("BUARAINECH_WEAPONSKILL_TAKE")
+    mob:removeListener("BUARAINECH_TAKE_DAMAGE")
+    mob:removeListener("BUARAINECH_MAGIC_TAKE")
+    mob:removeListener("BUARAINECH_EFFECT_GAIN")
 end
 
 function onMobDespawn(mob) 
