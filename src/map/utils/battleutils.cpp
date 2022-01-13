@@ -2753,7 +2753,7 @@ namespace battleutils
         // Multiply final val by a random number between 1 and 1.05 
         pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
 
-        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
+        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, pDIF);
 
         if (isCritical) // Apply any crit damage increases or reductions
         {
