@@ -3364,6 +3364,7 @@ int32 map_config_read(const int8* cfgName)
         {
             knownSetting = false;
         }
+
         // Breaking previous if statement block as a workaround for else-if clause limitatation of 128
         if (!knownSetting)
         {
@@ -3377,7 +3378,7 @@ int32 map_config_read(const int8* cfgName)
             }
             else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
-                map_config.autotarget_qol = atoi(w2);
+                map_config.instances_treat_GMs_as_players = atoi(w2);
             }
             else
             {
