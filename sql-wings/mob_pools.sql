@@ -2322,7 +2322,7 @@ INSERT INTO `mob_pools` VALUES(2258, 'King_of_Batons', 'King_of_Batons', 61, 0x0
 INSERT INTO `mob_pools` VALUES(2259, 'King_of_Coins', 'King_of_Coins', 61, 0x0000af0100000000000000000000000000000000, 5, 5, 11, 240, 100, 0, 1, 1, 1, 2, 0, 0, 7, 2183, 0, 0, 3, 0, 0, 61);
 INSERT INTO `mob_pools` VALUES(2260, 'King_of_Cups', 'King_of_Cups', 61, 0x0000af0100000000000000000000000000000000, 3, 3, 11, 240, 100, 0, 1, 1, 1, 2, 0, 0, 7, 2183, 0, 0, 1, 0, 0, 61);
 INSERT INTO `mob_pools` VALUES(2261, 'King_of_Swords', 'King_of_Swords', 61, 0x0000af0100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 1, 1, 2, 0, 0, 7, 2183, 0, 0, 4, 0, 0, 61);
-INSERT INTO `mob_pools` VALUES(2262, 'King_Vinegarroon', 'King_Vinegarroon', 274, 0x00001c0100000000000000000000000000000000, 1, 1, 7, 280, 125, 0, 1, 0, 0, 2, 0, 32, 661, 159, 0, 0, 0, 0, 0, 274);
+INSERT INTO `mob_pools` VALUES(2262, 'King_Vinegarroon', 'King_Vinegarroon', 274, 0x00001c0100000000000000000000000000000000, 1, 1, 7, 280, 125, 0, 1, 0, 0, 2, 64, 32, 661, 159, 0, 0, 0, 0, 0, 274);
 INSERT INTO `mob_pools` VALUES(2263, 'King_Zagan', 'King_Zagan', 358, 0x0000e60200000000000000000000000000000000, 14, 14, 8, 240, 100, 0, 1, 1, 1, 2, 3, 32, 764, 159, 0, 0, 0, 0, 0, 358);
 INSERT INTO `mob_pools` VALUES(2264, 'Kirata', 'Kirata', 242, 0x0000340100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 242);
 INSERT INTO `mob_pools` VALUES(2265, 'Kirin', 'Kirin', 281, 0x0000930100000000000000000000000000000000, 15, 4, 7, 360, 125, 0, 1, 1, 0, 2, 1, 32, 539, 159, 0, 0, 23, 0, 0, 281);
@@ -6256,6 +6256,7 @@ INSERT INTO `mob_pools` VALUES(6219, 'Water_Elemental', 'Water_Elemental', 106, 
 INSERT INTO `mob_pools` VALUES(6220, 'Thunder_Elemental', 'Thunder_Elemental', 105, 0x0000b90100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 0, 2, 264, 0, 291, 131, 16, 0, 16, 0, 0, 105);
 INSERT INTO `mob_pools` VALUES(6885, 'Ethniu', 'Ethniu', 115, 0x01001D0702110221023102410251CB61CB710000, 16, 4, 1, 240, 100, 0, 1, 1, 0, 2, 32768, 0, 1, 157, 0, 0, 519, 0, 0, 5015);
 INSERT INTO `mob_pools` VALUES(6886, 'Tethra', 'Tethra', 115, 0x01001D0505110521053105410551CE6100700000, 4, 16, 1, 240, 100, 0, 1, 1, 0, 2, 32768, 0, 1, 157, 0, 0, 520, 0, 0, 5016);
+INSERT INTO `mob_pools` VALUES(6887, 'Kindred_Summoner', 'Kindred_Summoner', 358, 0x0000f30200000000000000000000000000000000, 15, 15, 7, 290, 100, 0, 1, 0, 1, 0, 0, 0, 343, 131, 0, 0, 31, 0, 0, 358);
 --
 -- Indexes for dumped tables
 --

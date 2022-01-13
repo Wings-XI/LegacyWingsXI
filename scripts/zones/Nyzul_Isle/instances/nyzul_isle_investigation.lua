@@ -49,7 +49,11 @@ function onInstanceFailure(instance)
     local chars = instance:getChars()
     for _,char in pairs(chars) do
         char:messageSpecial(ID.text.MISSION_FAILED)
-        char:startEvent(1)
+        char:release()
+        char:disengage()
+        char:timer(125, function(char)
+            char:startEvent(1)
+        end)
     end
 end
 
@@ -108,7 +112,12 @@ function onInstanceComplete(instance)
         end
 
         --exit
-        char:startEvent(1)
+        char:release()
+        char:disengage()
+        char:timer(125, function(char)
+            char:startEvent(1)
+        end)
+        
     end
 end
 

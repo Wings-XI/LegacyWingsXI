@@ -658,9 +658,9 @@ namespace battleutils
 
                 // Dmg math.
                 float DamageRatio = GetDamageRatio(PDefender, PAttacker, crit, 0.f);
-                uint16 dmg = (uint32)((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
+                int16 dmg = (uint32)((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
                 dmg = attackutils::CheckForDamageMultiplier(((CCharEntity*)PDefender), dynamic_cast<CItemWeapon*>(PDefender->m_Weapons[SLOT_MAIN]), dmg, PHYSICAL_ATTACK_TYPE::NORMAL, SLOT_MAIN);
-                uint16 bonus = dmg * (PDefender->getMod(Mod::RETALIATION) / 100);
+                int16 bonus = dmg * (PDefender->getMod(Mod::RETALIATION) / 100);
                 dmg = dmg + bonus;
 
                 // FINISH HIM! dun dun dun
@@ -1991,6 +1991,7 @@ namespace battleutils
         int32 baseDamage = damage;
         ATTACKTYPE attackType = ATTACK_PHYSICAL;
         DAMAGETYPE damageType = DAMAGE_NONE;
+            
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
         {
             attackType = ATTACK_SPECIAL;
@@ -2131,8 +2132,6 @@ namespace battleutils
         damage = std::clamp(damage, -99999, 99999);
 
         int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
-        if (damage < 0)
-            damage = -corrected;
 
         battleutils::ClaimMob(PDefender, PAttacker);
 
@@ -2262,7 +2261,7 @@ namespace battleutils
     *                                                                       *
     ************************************************************************/
 
-    int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool useAutoTPFormula)
+    int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, uint16 useAutoTPFormula)
     {
         auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
@@ -2350,21 +2349,25 @@ namespace battleutils
             if (weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             {
                 baseTp = 65;
-                if (useAutoTPFormula)
+                if (useAutoTPFormula != 0)
                     baseTp = 130;
             }
 
             float attackerStoreTPMult = PAttacker->GetStoreTPMultiplier();
-
+            float attackerJumpTPBonus = PAttacker->GetJumpTPBonus();
             // add tp to attacker
-            if (primary && !useAutoTPFormula)
+            if (primary && useAutoTPFormula == 0)
                 // Calculate TP Return from WS
             {
                 standbyTp = ((int16)(((tpMultiplier * baseTp) + bonusTP) * attackerStoreTPMult));
             }
-            else if (primary && useAutoTPFormula)
+            else if (primary && useAutoTPFormula == 1)
             { // bonusTP variable instead encodes extra hits we did
-                standbyTp = ((int16)(((tpMultiplier * (baseTp * (bonusTP + 1)))) * attackerStoreTPMult));
+                standbyTp = ((int16)((((tpMultiplier * (baseTp * (bonusTP + 1)))) * attackerStoreTPMult)));
+            }
+            else if (primary && useAutoTPFormula == 2)
+            { // useAutoTPFormula == 2 used to designate a jump, thus needs to have Jump TP Bonus added at the end, bonusTP variable encodes the number of extra hits
+                standbyTp = ((int16)((((tpMultiplier * (baseTp * (bonusTP + 1))) + attackerJumpTPBonus) * attackerStoreTPMult)));
             }
 
             PDefender->AddTPFromHit(PAttacker, weapon, baseTp, tpMultiplier * targetTPMultiplier);
@@ -2720,13 +2723,19 @@ namespace battleutils
         if (isCritical && cRatioMin > cRatioMax)
             cRatioMin = cRatioMax;
 
-        // ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
+        //ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
 
         float pDIF = 1.0f;
         if (cRatioMin == cRatioMax)
+        {
             pDIF = cRatioMax;
+        }
         else
+        {
+            if (cRatioMin < 0)
+                cRatioMin = 0;
             pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
+        }
 
         if (isCritical)
         {
@@ -4182,13 +4191,13 @@ namespace battleutils
                         AttMultiplerPercent = PAttacker->getMod(Mod::JUMP_ATT_BONUS) / 100.f;
 
                     float DamageRatio = battleutils::GetDamageRatio(PAttacker, PVictim, false, AttMultiplerPercent);
-                    damageForRound = (uint16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
+                    damageForRound = (int16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
 
                     // bonus applies to jump only, not high jump
                     if (tier == 1)
                     {
                         float jumpBonus = 1.f + PAttacker->VIT() / 256.f;
-                        damageForRound = (uint16)(damageForRound * jumpBonus);
+                        damageForRound = (int16)(damageForRound * jumpBonus);
                     }
 
                     hitTarget = true;
@@ -5902,7 +5911,6 @@ namespace battleutils
     {
         if (PSpell == nullptr)
         {
-            ShowWarning("battleutils::CalculateMPCost Spell is NULL\n");
             return 0;
         }
 
