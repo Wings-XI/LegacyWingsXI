@@ -37,7 +37,7 @@ function onUseAbility(player, target, ability, action)
     params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
     params.hitsHigh = true
     params.useOAXTimes = true
-    params.useAutoTPFormula = true
+    params.useAutoTPFormula = 2
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)

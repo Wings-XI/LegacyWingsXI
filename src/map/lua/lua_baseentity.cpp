@@ -13579,7 +13579,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 7) || !lua_isnumber(L, 7));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 8) || !lua_isnumber(L, 8));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 9) || !lua_isnumber(L, 9));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 10) || !lua_isboolean(L, 10));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 10) || !lua_isnumber(L, 10));
 
     auto PChar = static_cast<CCharEntity*>(Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity);
     auto damage = (int32)lua_tointeger(L, 2);
@@ -13590,7 +13590,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     auto tpMultiplier = (float)lua_tonumber(L, 7);
     auto bonusTP = (uint16)lua_tointeger(L, 8);
     auto targetTPMultiplier = (float)lua_tonumber(L, 9);
-    bool useAutoTPFormula = (bool)lua_toboolean(L, 10);
+    auto useAutoTPFormula = (uint16)lua_tonumber(L, 10);
 
     lua_pushinteger(L, (lua_Integer)battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier, useAutoTPFormula));
     return 1;

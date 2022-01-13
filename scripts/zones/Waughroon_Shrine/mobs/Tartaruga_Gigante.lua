@@ -36,7 +36,9 @@ function intoShell(mob)
 end
 
 function outOfShell(mob)
+    mob:setTP(3000)
     mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(false)
     mob:AnimationSub(2)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:SetAutoAttackEnabled(true)
@@ -55,12 +57,32 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 13)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
-    mob:addMod(tpz.mod.DMGMAGIC,-40)
+    mob:setMod(tpz.mod.DMGMAGIC, -30)
+    mob:setMod(tpz.mob.CURSERES, 100)
 
     local changeHP = mob:getHP() - (mob:getHP() * .05)
     mob:setLocalVar("changeHP", changeHP)
+    mob:setLocalVar("DamageTaken", 0)
     mob:AnimationSub(2)
-    -- outOfShell(mob)
+
+    mob:addListener("TAKE_DAMAGE", "TARTARUGA_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
+        local damageTaken = mob:getLocalVar("DamageTaken")
+        local waitTime = mob:getLocalVar("waitTime")
+        damageTaken = damageTaken + amount
+
+        if damageTaken > 4000 then
+            mob:setLocalVar("DamageTaken", 0)
+            if mob:AnimationSub() == 1 and os.time() > waitTime then
+                mob:AnimationSub(2)
+                changeHP = mob:getHP() - (mob:getHP() * .05)
+                mob:setLocalVar("changeHP", changeHP)
+                mob:setLocalVar("waitTime", os.time() + 2)
+                outOfShell(mob)
+            end
+        elseif os.time() > waitTime then
+            mob:setLocalVar("DamageTaken", damageTaken)
+        end
+    end)
 end
 
 function onMobFight(mob, target)
@@ -68,18 +90,12 @@ function onMobFight(mob, target)
     local waitTime = mob:getLocalVar("waitTime")
 
     if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+        mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(1)
-        changeHP = mob:getHP() - (mob:getHP() * .05)
-        mob:setLocalVar("changeHP", changeHP)
         mob:setLocalVar("waitTime", os.time() + 2)
         intoShell(mob)
-    elseif mob:getHP() < changeHP and mob:AnimationSub() == 1 and os.time() > waitTime then
-        mob:AnimationSub(2)
-        changeHP = mob:getHP() - (mob:getHP() * .05)
-        mob:setLocalVar("changeHP", changeHP)
-        mob:setLocalVar("waitTime", os.time() + 2)
-        outOfShell(mob)
     elseif mob:getHPP() == 100 and mob:AnimationSub() == 1 and os.time() > waitTime then
+        mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(2)
         changeHP = mob:getHP() - (mob:getHP() * .05)
         mob:setLocalVar("changeHP", changeHP)
@@ -88,6 +104,7 @@ function onMobFight(mob, target)
     end
 end
 
-function onMobDeath(mob, player, isKiller)
+function onMobDespawn(mob)
     mob:resetLocalVars()
+    mob:removeListener("TARTARUGA_TAKE_DAMAGE")
 end

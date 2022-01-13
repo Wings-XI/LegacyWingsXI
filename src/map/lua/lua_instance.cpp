@@ -98,6 +98,8 @@ inline int32 CLuaInstance::getChars(lua_State* L)
     int i = 1;
     for (auto member : m_PLuaInstance->m_charList)
     {
+        if (!map_config.instances_treat_GMs_as_players && ((CCharEntity*)(member.second))->m_GMlevel >= 2)
+            continue;
         lua_getglobal(L, CLuaBaseEntity::className);
         lua_pushstring(L, "new");
         lua_gettable(L, -2);

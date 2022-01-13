@@ -47,24 +47,24 @@ function onMobSpawn(mob)
     mob:setLocalVar("Moving", 0)
 
     local bfID = mob:getBattlefield():getArea()
-    local redID = GetMobByID(ID.pullingThePlug[bfID].RED_ID)
-    local position = redID:getLocalVar("positionNum")
+    local battlefield = mob:getBattlefield()
+    local position = battlefield:getLocalVar("positionNum")
 
     -- Give orbs a random spawn location
     if bfID == 1 then
-        mob:setSpawn(bfOne[position][1],bfOne[position][2],bfOne[position][3])
+        mob:setPos(bfOne[position][1],bfOne[position][2],bfOne[position][3])
     elseif bfID == 2 then
-        mob:setSpawn(bfTwo[position[1]],bfTwo[position[2]],bfTwo[position[3]])
+        mob:setPos(bfTwo[position[1]],bfTwo[position[2]],bfTwo[position[3]])
     elseif bfID == 3 then
-        mob:setSpawn(bfThree[position[1]],bfThree[position[2]],bfThree[position[3]])
+        mob:setPos(bfThree[position[1]],bfThree[position[2]],bfThree[position[3]])
     end
 end
 
 function onMobFight(mob, target)
     local bfID = mob:getBattlefield():getArea()
-    local redID = GetMobByID(ID.pullingThePlug[bfID].RED_ID)
-    local moveTime = redID:getLocalVar("moveTime")
-    local position = redID:getLocalVar("positionNum")
+    local battlefield = mob:getBattlefield()
+    local moveTime = battlefield:getLocalVar("moveTime")
+    local position = battlefield:getLocalVar("positionNum")
     local moving = mob:getLocalVar("Moving")
 
     -- Orbs move every 30 seconds
@@ -74,32 +74,24 @@ function onMobFight(mob, target)
         if bfID == 1 then
             mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
             local nextPos = bfOne[position]
-            local posDiff = (math.floor(mob:getXPos()) - math.floor(nextPos[1]))
-            if posDiff < -3 or posDiff > 3 then
-                mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
-            elseif posDiff >= -3 or posDiff <= 3 then
+            mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
+            if mob:getXPos() == bfOne[position][1] then
                 mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
                 mob:setLocalVar("Moving", 0)
             end
         elseif bfID == 2 then
             mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
             local nextPos = bfTwo[position]
-            local needX = nextPos[1]
-            local posDiff = (math.floor(mob:getXPos()) - math.floor(needX))
-            if posDiff < -3 or posDiff > 3 then
-                mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
-            elseif posDiff >= -3 or posDiff <= 3 then
+            mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
+            if mob:getXPos() == bfOne[position][1] then
                 mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
                 mob:setLocalVar("Moving", 0)
             end
         elseif bfID == 3 then
             mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
             local nextPos = bfThree[position]
-            local needX = nextPos[1]
-            local posDiff = (math.floor(mob:getXPos()) - math.floor(needX))
-            if posDiff < -3 or posDiff > 3 then
-                mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
-            elseif posDiff >= -3 or posDiff <= 3 then
+            mob:pathThrough(nextPos, tpz.path.flag.SCRIPT)
+            if mob:getXPos() == bfOne[position][1] then
                 mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
                 mob:setLocalVar("Moving", 0)
             end

@@ -15,6 +15,7 @@ function onSpellCast(caster, target, spell)
 
     if target:hasStatusEffect(tpz.effect.HASTE) then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SLOW
     end
 
     if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLOWRES) >= 100 then

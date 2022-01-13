@@ -20,10 +20,15 @@ function onSpellCast(caster, target, spell)
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
     local skill = caster:getSkillLevel(tpz.skill.ENFEEBLING_MAGIC)
-    local power = math.max(skill / 25, 1)
-    if skill > 400 then
-        power = math.min((skill - 225) / 5, 55) -- Cap is 55 hp/tick
+    -- Rough Estimated Cap for 2010 is 10/tick (https://ffxiclopedia.fandom.com/wiki/Poison?oldid=1046974)
+    -- Previous formulas were not implemented until 2012.
+    if skill < 120 then
+        local power = math.floor(math.max(skill / 30, 1))
+    -- Clamp at 4/tick
+    else
+        local power = 4
     end
+
     power = calculatePotency(power, spell:getSkillType(), caster, target)
 
     local duration = calculateDuration(30, spell:getSkillType(), spell:getSpellGroup(), caster, target)
