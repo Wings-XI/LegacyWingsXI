@@ -59,8 +59,8 @@ tpz.transport.pos =
 {
     mhaura =
     {
-        ARRIVING  = {7.06, -1.36, 2.20},
-        DEPARTING = {8.26, -1.36, 2.20}
+        ARRIVING  = {7.06, -1.50, 2.20},
+        DEPARTING = {8.26, -1.50, 2.20}
     }
 }
 
