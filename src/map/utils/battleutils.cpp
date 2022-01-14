@@ -2688,6 +2688,7 @@ namespace battleutils
         float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
         // Using 2013 model
         // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
+        // Note that only player autoattacks use this function, weaponskill pDIF is calculated in scripts/global/weaponskills.lua
         float ratioCap = 2.25f;
 
         ratio = std::clamp<float>(ratio, 0, ratioCap);
