@@ -1433,6 +1433,22 @@ inline int32 CLuaBaseEntity::updateEventString(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: getEventID()
+ *  Purpose : Returns the ID of the player's current event, or -1 if there is not an event
+ *  Example : local eventID = player:getEventID()
+ *  Notes   : Used to determine if a player is in an active event
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getEventID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_event.EventID);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getEventTarget()
 *  Purpose : Returns object data of the NPC in the event
 *  Example : local npc = player:getEventTarget()
@@ -18205,6 +18221,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEventString),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEvent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEventString),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,release),
 
