@@ -1339,6 +1339,11 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
     auto PAbility = state.GetAbility();
+    if (PAbility->getLevel() > this->GetMLevel())
+    {
+        pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
+        return;
+    }
     if (this->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
     {
         pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_WAIT_LONGER));
