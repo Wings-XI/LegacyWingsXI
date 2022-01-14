@@ -69,6 +69,9 @@ function onEventUpdate(player, csid, option)
             end
         end
     elseif (csid == 71) then
+        local kit = 2779 + math.random(0,3)
+        player:updateEvent(kit)
+        player:setCharVar("ASA_kit", kit)
         player:setCharVar("ASA_Status", option)
     end
 end

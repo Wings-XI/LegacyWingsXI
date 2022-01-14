@@ -15,22 +15,36 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
+    local astralFlows = mob:getLocalVar("astralflows")
     -- ASA-4: Astral Flow Behavior - Guaranteed to Use At Least 5 times before killable, at specified intervals.
     if mob:getCurrentAction() == tpz.act.ATTACK then
-        local astralFlows = mob:getLocalVar("astralflows")
-        if (astralFlows == 0 and mob:getHPP() <= 80)
-        or (astralFlows == 1 and mob:getHPP() <= 60)
-        or (astralFlows == 2 and mob:getHPP() <= 40)
-        or (astralFlows == 3 and mob:getHPP() <= 20)
-        or (astralFlows == 4 and mob:getHPP() <= 1) then
+        if astralFlows == 0 and mob:getHPP() <= 80 then
+            print("Astral flow")
+            mob:useMobAbility(857)
+            mob:setLocalVar("astralflows", astralFlows + 1)
+        elseif astralFlows == 1 and mob:getHPP() <= 60 then
+            mob:useMobAbility(857)
+            mob:setLocalVar("astralflows", astralFlows + 1)
+        elseif astralFlows == 2 and mob:getHPP() <= 40 then
+            mob:useMobAbility(857)
+            mob:setLocalVar("astralflows", astralFlows + 1)
+        elseif astralFlows == 3 and mob:getHPP() <= 20 then
+            mob:useMobAbility(857)
+            mob:setLocalVar("astralflows", astralFlows + 1)
+        elseif astralFlows == 4 and mob:getHPP() <= 1 then
             mob:setLocalVar("astralflows", astralFlows + 1)
             mob:useMobAbility(857)
-            if astralFlows >= 5 then
-                mob:setUnkillable(false)
-            end
         end
+    end
+
+    if astralFlows >= 5 then
+        mob:setUnkillable(false)
     end
 end
 
 function onMobDeath(mob, player, isKiller)
+    local players = player:getBattlefield():getPlayers()
+    for _, member in pairs(players) do
+        member:setCharVar("ASA_Titan", 2)
+    end
 end

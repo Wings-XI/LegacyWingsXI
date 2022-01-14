@@ -56,6 +56,9 @@ function onEventUpdate( player, csid, option)
     if csid == 48 then
         quests.rainbow.onEventUpdate(player)
     elseif csid == 62 or csid == 63 then
+        local kit = 2779 + math.random(0,3)
+        player:updateEvent(kit)
+        player:setCharVar("ASA_kit", kit)
         player:setCharVar("ASA_Status", option)
     elseif csid == 50 then
         if player:getZPos() > 470 then

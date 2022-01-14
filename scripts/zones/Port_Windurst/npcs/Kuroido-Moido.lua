@@ -58,18 +58,10 @@ function onTrigger(player, npc)
             player:startEvent(286, 0, 937) -- Post Making Amens! dialogue (before Wonder Wands)
         end
     elseif (player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD) then
-        local item = 0
-        local asaStatus = player:getCharVar("ASA_Status")
-
-        -- TODO: Other Enfeebling Kits
-        if (asaStatus == 0) then
-            item = 2779
-        else
-            printf("Error: Unknown ASA Status Encountered <%u>", asaStatus)
-        end
+        local kit = player:getCharVar("ASA_kit")
 
         -- The Parameters are Item IDs for the Recipe
-        player:startEvent(858, item, 1134, 2778, 2778, 4099, 2778)
+        player:startEvent(858, kit, 1134, 2778, 2778, 4099, 2778)
     else
         rand = math.random(1, 2)
         if (rand == 1) then
