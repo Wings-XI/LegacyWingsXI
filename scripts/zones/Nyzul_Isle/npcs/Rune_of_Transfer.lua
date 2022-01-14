@@ -45,7 +45,7 @@ function onTrigger(player, npc)
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
-            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID() and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0) then
+            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0 and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
                 player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
                 return
             end
@@ -79,7 +79,7 @@ function onTrigger(player, npc)
             -- not lit up - so repeat the objective but dont show pathos
             showNyzulObjectivesAndPathos(player, false)
         else
-            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID() and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0) then
+            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0 and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
                 player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
                 return
             end
