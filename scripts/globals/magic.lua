@@ -644,6 +644,11 @@ function getSpellBonusAcc(caster, target, spell, params)
         magicAccBonus = magicAccBonus + 256
     end
 
+    -- Add acc for elemental seal
+    if caster:hasStatusEffect(tpz.effect.ELEMENTAL_SEAL) then
+        magicAccBonus = magicAccBonus + 256
+    end
+
     --add acc for RDM group 1 merits
     -- each merit should add +3 magic accuracy per upgrade
     -- gating to be only effective for main job RDM
