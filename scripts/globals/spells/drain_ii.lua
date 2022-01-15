@@ -47,9 +47,13 @@ function onSpellCast(caster, target, spell)
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 
     local leftOver = (caster:getHP() + dmg) - caster:getMaxHP()
+    local overHeal = (leftOver/caster:getMaxHP())*100
+    if caster:hasStatusEffect(tpz.effect.WEAKNESS) then
+        overHeal = (leftOver/(caster:getBaseHP() + caster:getMod(tpz.mod.HP)))*100
+    end
 
     if (leftOver > 0) then
-        caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, (leftOver/caster:getMaxHP())*100, 0, 60)
+        caster:addStatusEffect(tpz.effect.MAX_HP_BOOST, overHeal, 0, 60)
     end
 
     dmg = caster:addHP(dmg)
