@@ -16,9 +16,9 @@ require("scripts/globals/utils")
 require("scripts/globals/msg")
 
 -- Function to calculate if a hit in a WS misses, criticals, and the respective damage done
+-- dmg parameter is ( D + fSTR + WSC) * fTP, also sometimes referred to as WD
 function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     local criticalHit = false
-    local pdif = 0
     local finaldmg = 0
 
     local testEntity = attacker
@@ -63,8 +63,6 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
 
                 finaldmg = finaldmg + magicdmg
             end
-
-
             -- if criticalHit == false then
                 --testEntity:PrintToPlayer(string.format("non-critical WS hit for %i",finaldmg))
             -- else
@@ -141,6 +139,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
          attacker:getStat(tpz.mod.VIT) * wsParams.vit_wsc + attacker:getStat(tpz.mod.AGI) * wsParams.agi_wsc +
          attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
          attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) * calcParams.alpha
+    -- (D + fSTR + WSC)
     local mainBase = calcParams.weaponDamage[1] + wsMods + calcParams.bonusWSmods
 
     -- Calculate fTP multiplier
@@ -419,7 +418,8 @@ end
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(tpz.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
     end
-    local cratio, ccritratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
+    local cratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
+    local ccritratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
 
     -- Set up conditions and params used for calculating weaponskill damage
     local gorgetBeltFTP, gorgetBeltAcc = handleWSGorgetBelt(attacker)
@@ -981,12 +981,13 @@ function cMeleeRatio(attacker, defender, params, isCritical, attPercentBonus, ig
 
     -- Using Montenten's model
     local wRatio = cRatio
-    local upperLimit = 3.25
-    local lowerLimit = 0.0
 
     if (isCritical) then
         wRatio = wRatio + 1
     end
+
+    local upperLimit = 3.25
+    local lowerLimit = 0.0
 
     if (wRatio < 0.5) then
         upperLimit = wRatio + 0.5
@@ -1001,87 +1002,94 @@ function cMeleeRatio(attacker, defender, params, isCritical, attPercentBonus, ig
     elseif (wRatio <= 3.25) then
         upperLimit = 3.0
     end
+    upperLimit = utils.clamp(upperLimit, 0, 3.0)
 
     if (wRatio < 0.38) then
         lowerLimit = 0.0
     elseif (wRatio < 1.25) then
-        lowerLimit = wRatio * (1176/1024) - (448/1024)
+        lowerLimit = wRatio * (1176.0/1024.0) - (448.0/1024.0)
     elseif (wRatio < 1.51) then
         lowerLimit = 1.0
     elseif (wRatio < 2.44) then
-        lowerLimit = wRatio * (1176/1024) - (755/1024)
+        lowerLimit = wRatio * (1176.0/1024.0) - (755.0/1024.0)
     elseif (wRatio <= 3.25) then
         lowerLimit = wRatio - 0.375
     end
-
-    local pDIF = math.random(lowerLimit, upperLimit)
-    pDIF = utils.clamp(pDIF, 0, 3.0)
-
-    pDIF = pDIF * math.random(1, 1.05)
-
-    -- attacker:PrintToPlayer(string.format("att post wsmod: %i ... def post ignoreddef: %i",attacker:getStat(tpz.mod.ATT) * atkmulti,defender:getStat(tpz.mod.DEF) - ignoredDef))
+    lowerLimit = utils.clamp(lowerLimit, 0, 3.0)
 
     if isCritical then
         local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
         critbonus = utils.clamp(critbonus, 0, 100)
-        pDIF = pDIF * ((100 + critbonus)/ 100.0)
+        lowerLimit = lowerLimit * ((100 + critbonus)/ 100.0)
+        upperLimit = upperLimit * ((100 + critbonus)/ 100.0)
     end
 
+    local pDIF = {}
+    pDIF[1] = lowerLimit
+    pDIF[2] = upperLimit
+    -- attacker:PrintToPlayer(string.format("lower was %f upper was %f", lowerLimit, upperLimit))
+    
     return pDIF
 end
 
-function cRangedRatio(attacker, defender, params, ignoredDef, tp)
+function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
+    local ratioCap = 3.0
 
     local range = attacker:checkDistance(defender)
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local cratio = attacker:getRATT(range) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local ratio = attacker:getRATT(range) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
-    local levelcor = 1 + (attacker:getMainLvl() - defender:getMainLvl())*0.01
-    if levelcor > 1 then levelcor = 1
-    elseif levelcor < 0.2 then levelcor = 0.2 end
-    if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
-        levelcor = 1.03
-    end
-    cratio = cratio * levelcor
+    ratio = utils.clamp(ratio, 0, ratioCap)
 
-    cratio = cratio * atkmulti
+    local cRatio = ratio
 
-    if (cratio > 3) then
-        cratio = 3
-    end
-
-    if (cratio < 0) then
-        cratio = 0
+    if attacker:getMainLvl() < defender:getMainLvl() then
+        -- Flashy shot ignores level difference penalty
+        if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
+            cRatio = ratio
+        else
+            cRatio = ratio - (defender:getMainLlvl() - attacker:getMainLvl()) * 0.025
+        end
     end
 
-    local pdifmin = 0
-    local pdifmax = 0
+    local upperLimit = 3.0
+    if cRatio < 0.9 then
+        upperLimit = cRatio * 10.0/9.0
+    elseif cRatio < 1.1 then
+        upperLimit = 1.0
+    elseif cRatio < 3.0 then
+        upperLimit = cRatio
+    end
+    upperLimit = utils.clamp(upperLimit, 0.0, 3.0)
 
-    pdifmax = cratio * 1.25
-	if pdifmax < 0.15 then
-		pdifmax = 0.15
-	end
+    local lowerLimit = 0
+    if cRatio < 0.9 then
+        lowerLimit = cRatio
+    elseif cRatio < 1.1 then
+        lowerLimit = 1.0
+    elseif cRatio < 3.0 then
+        lowerLimit = cRatio * (20.0/19.0) - (3.0/19.0)
+    end
+    lowerLimit = utils.clamp(lowerLimit, 0.0, 3.0)
 
-    pdifmin = pdifmax * 0.675 + 1/6
-    if pdifmin > pdifmax - 0.1 then
-        pdifmin = pdifmax - 0.1
+    local pDIF = {}
+    pDIF[1] = lowerLimit
+    pDIF[2] = upperLimit
+
+    if isCritical then
+        -- Ranged attacks get pDIF * 1.25
+        pDIF[1] = pDIF[1] * 1.25
+        pDIF[2] = pDIF[2] * 1.25
+
+        -- Apply crit damage increase mods 
+        local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
+        critbonus = utils.clamp(critbonus, 0, 100)
+        lowerLimit = lowerLimit * ((100 + critbonus)/ 100.0)
+        upperLimit = upperLimit * ((100 + critbonus)/ 100.0)
     end
 
-    pdif = {}
-    pdif[1] = pdifmin
-    pdif[2] = pdifmax
-    -- printf("ratio: %f min: %f max %f\n", cratio, pdifmin, pdifmax)
-    pdifcrit = {}
-
-    pdifmin = pdifmin * 1.25
-    pdifmax = pdifmax * 1.25
-
-    pdifcrit[1] = pdifmin
-    pdifcrit[2] = pdifmax
-
-    return pdif, pdifcrit
-
+    return pDIF
 end
 
 -- Given the attacker's str and the mob's vit, fSTR is calculated (for melee WS)
@@ -1278,11 +1286,13 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
 end
 
 function generatePdif (cratiomin, cratiomax, melee)
-    local pdif = math.random(cratiomin*1000, cratiomax*1000) / 1000
-    if (melee) then
-        pdif = pdif * (math.random(100, 105)/100)
+    local pDIF = math.random(cratiomin*1000, cratiomax*1000) / 1000
+
+    if melee then
+        pDIF = pDIF * (math.random(100, 105)/100)
     end
-    return pdif
+
+    return pDIF
 end
 
 function getStepAnimation(skill)
