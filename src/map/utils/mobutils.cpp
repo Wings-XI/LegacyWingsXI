@@ -151,15 +151,15 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
             case 2: // B
                 return (uint16)(147 + (lvl - 50) * 4.9f);
             case 3: // C
-                return (uint16)(136 + (lvl - 50) * 4.8f);
+                return (uint16)(142 + (lvl - 50) * 4.8f);
             case 4: // D
-                return (uint16)(126 + (lvl - 50) * 4.7f);
+                return (uint16)(136 + (lvl - 50) * 4.7f);
             case 5: // E
-                return (uint16)(116 + (lvl - 50) * 4.5f);
+                return (uint16)(126 + (lvl - 50) * 4.5f);
             case 6: // F
-                return (uint16)(106 + (lvl - 50) * 4.4f);
+                return (uint16)(116 + (lvl - 50) * 4.4f);
             case 7: // G
-                return (uint16)(96 + (lvl - 50) * 4.3f);
+                return (uint16)(106 + (lvl - 50) * 4.3f);
         }
     } else {
         switch(rank){
