@@ -939,6 +939,11 @@ function setNyzulMobTypesAndTraits(instance)
         elseif (mobID >= 17092824 and mobID <= 17092998) or (mobID >= 17092629 and mobID <= 17092630) then
             mob:setMobType(2)
         end
+
+        -- Temp hack to ensure Bull Bugards and Carmine Eruca are not true sound aggro - they currently share mob pools with Besieged mobs who are true detection
+        if (mobID >= 17092757 and mobID <= 17092760) or (mobID >= 17092679 and mobID <= 17092681) then
+            mob:setTrueDetection(0)
+        end
     end
 end
 
