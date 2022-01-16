@@ -59,17 +59,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129692&id=18306)
-    mob:setLocalVar("TFightTimer", (os.time() + 7200000))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("TFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
-
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://ffxiclopedia.fandom.com/wiki/Tethra)

@@ -405,16 +405,16 @@ local loot =
             {itemid =   829, droprate = 1000}, -- square_of_silk_cloth
         },
         {
-            {itemid = 14662, droprate =  250}, -- teleport_ring_dem
-            {itemid = 14663, droprate =  250}, -- teleport_ring_mea
-            {itemid = 17841, droprate =  250}, -- nursemaids_harp
-            {itemid = 18004, droprate =  250}, -- trailers_kukri
+            {itemid = 14662, droprate =  200}, -- teleport_ring_dem
+            {itemid = 14663, droprate =  200}, -- teleport_ring_mea
+            {itemid = 17841, droprate =  300}, -- nursemaids_harp
+            {itemid = 18004, droprate =  300}, -- trailers_kukri
         },
         {
-            {itemid = 14761, droprate =  250}, -- elusive_earring
-            {itemid = 13691, droprate =  250}, -- knightly_mantle
-            {itemid = 13689, droprate =  250}, -- hi-ether_tank
-            {itemid = 13688, droprate =  250}, -- hi-potion_tank
+            {itemid = 14761, droprate =  500}, -- elusive_earring
+            {itemid = 13691, droprate =  200}, -- knightly_mantle
+            {itemid = 13689, droprate =  150}, -- hi-ether_tank
+            {itemid = 13688, droprate =  150}, -- hi-potion_tank
         },
         {
             {itemid =     0, droprate =  950}, -- nothing

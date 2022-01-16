@@ -24,13 +24,7 @@ function onSpellCast(caster, target, spell)
     -- Rough Estimated Cap for 2010 is 10/tick (https://www.bg-wiki.com/index.php?title=Poison_II&oldid=54561 and https://ffxiclopedia.fandom.com/wiki/Poison_II?oldid=988334)
     -- Previous caps were not implemented until 2012.
     -- Increased floor of Poison II to 5 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129421&id=833)
-    if skill <= 300 then
-        local power = math.floor(math.max(skill / 30, 5))
-    -- Clamp at 10/tick
-    else
-        local power = 10
-    end
-
+    local power = math.floor((skill / 30), 5, 10)
     power = calculatePotency(power, spell:getSkillType(), caster, target)
 
     local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)
