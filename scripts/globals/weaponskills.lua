@@ -281,8 +281,8 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     local attPercentBonus = 0
 
-    local cratio = cMeleeRatio(attacker, target, wsParams, false, attPercentBonus, ignoredDef)
-    local ccritratio = cMeleeRatio(attacker, target, wsParams, true, attPercentBonus, ignoredDef)
+    local cratio = cMeleeRatio(attacker, target, wsParams, ignoredDef, tp, false)
+    local ccritratio = cMeleeRatio(attacker, target, wsParams, ignoredDef, tp, true)
 
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local gorgetBeltFTP, gorgetBeltAcc = handleWSGorgetBelt(attacker)
@@ -418,8 +418,8 @@ end
     if (wsParams.ignoresDef == not nil and wsParams.ignoresDef == true) then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(tpz.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
     end
-    local cratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
-    local ccritratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp)
+    local cratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp, false)
+    local ccritratio = cRangedRatio(attacker, target, wsParams, ignoredDef, tp, true)
 
     -- Set up conditions and params used for calculating weaponskill damage
     local gorgetBeltFTP, gorgetBeltAcc = handleWSGorgetBelt(attacker)
@@ -961,12 +961,13 @@ function calculatedIgnoredDef(tp, def, ignore1, ignore2, ignore3)
 end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
-function cMeleeRatio(attacker, defender, params, isCritical, attPercentBonus, ignoredDef)
+function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local flourishCoefficient = 1
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 2 + flourisheffect:getSubPower()/50 end
 
-    local ratio = (attacker:getStat(tpz.mod.ATT) * flourishCoefficient) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
+    local ratio = (attacker:getStat(tpz.mod.ATT) * atkmulti * flourishCoefficient) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
     --attacker:PrintToPlayer(string.format("att post wsmod: %i ... def post ignoreddef: %i",attacker:getStat(tpz.mod.ATT) * atkmulti,defender:getStat(tpz.mod.DEF) - ignoredDef))
     
     local ratioCap = 2.25
@@ -1038,12 +1039,13 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local range = attacker:checkDistance(defender)
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
-    local ratio = attacker:getRATT(range) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
+    local ratio = (attacker:getRATT(range) * atkmulti) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
 
     ratio = utils.clamp(ratio, 0, ratioCap)
 
     local cRatio = ratio
 
+    -- Level difference penalty
     if attacker:getMainLvl() < defender:getMainLvl() then
         -- Flashy shot ignores level difference penalty
         if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
@@ -1061,9 +1063,8 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     elseif cRatio < 3.0 then
         upperLimit = cRatio
     end
-    upperLimit = utils.clamp(upperLimit, 0.0, 3.0)
 
-    local lowerLimit = 0
+    local lowerLimit = 0.0
     if cRatio < 0.9 then
         lowerLimit = cRatio
     elseif cRatio < 1.1 then
@@ -1071,7 +1072,6 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     elseif cRatio < 3.0 then
         lowerLimit = cRatio * (20.0/19.0) - (3.0/19.0)
     end
-    lowerLimit = utils.clamp(lowerLimit, 0.0, 3.0)
 
     local pDIF = {}
     pDIF[1] = lowerLimit
@@ -1085,8 +1085,8 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
         -- Apply crit damage increase mods 
         local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
         critbonus = utils.clamp(critbonus, 0, 100)
-        lowerLimit = lowerLimit * ((100 + critbonus)/ 100.0)
-        upperLimit = upperLimit * ((100 + critbonus)/ 100.0)
+        pDIF[1] = pDIF[1] * ((100 + critbonus)/ 100.0)
+        pDIF[2] = pDIF[2] * ((100 + critbonus)/ 100.0)
     end
 
     return pDIF

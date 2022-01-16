@@ -2754,14 +2754,16 @@ namespace battleutils
         // Multiply final val by a random number between 1 and 1.05 
         pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
 
-        ShowDebug("pdif min: %f ... pdif max: %f ... pDIF final: %f\n", lowerLimit, upperLimit, pDIF);
 
         if (isCritical) // Apply any crit damage increases or reductions
         {
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
             pDIF *= ((100 + criticaldamage) / 100.0f);
+            ShowDebug("Crit multiplier from mods: %f\n", (100 + criticaldamage)/100.f);
         }
+
+        ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
 
         return pDIF;
     }
