@@ -3375,6 +3375,14 @@ INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 242); -- Carnal Nightmare
 INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 177); -- Rock Crusher
 INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 178); -- Earth Crusher
 INSERT INTO `mob_skill_lists` VALUES('Tethra', 5016, 184); -- Retribution
+-- Celery BCNM Ghosts
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 472);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 473);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 474);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 475);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 476);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 477);
+INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 1339);
 
 
 --

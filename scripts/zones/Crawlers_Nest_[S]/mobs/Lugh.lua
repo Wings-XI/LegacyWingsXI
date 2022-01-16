@@ -63,16 +63,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129695&id=18303)
-    mob:setLocalVar("LFightTimer", (os.time() + 7200000))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("LFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
 
     -- Mighty Strikes
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Lugh)
