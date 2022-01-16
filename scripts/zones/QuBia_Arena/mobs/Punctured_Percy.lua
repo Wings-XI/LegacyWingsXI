@@ -21,5 +21,4 @@ function onMobEngaged(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:getBattlefield():win()
 end
