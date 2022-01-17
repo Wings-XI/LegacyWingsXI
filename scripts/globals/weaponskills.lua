@@ -51,6 +51,7 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             else
                 calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], true)
             end
+            attacker:PrintToPlayer(string.format("final pdif %f", calcParams.pdif))
             finaldmg = dmg * calcParams.pdif
 
             -- Duplicate the first hit with an added magical component for hybrid WSes
@@ -1028,7 +1029,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local pDIF = {}
     pDIF[1] = lowerLimit
     pDIF[2] = upperLimit
-    -- attacker:PrintToPlayer(string.format("lower was %f upper was %f", lowerLimit, upperLimit))
+    attacker:PrintToPlayer(string.format("enemy def %f ... lower was %f ... upper was %f", defender:getStat(tpz.mod.DEF), lowerLimit, upperLimit))
     
     return pDIF
 end
@@ -1286,10 +1287,10 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
 end
 
 function generatePdif (cratiomin, cratiomax, melee)
-    local pDIF = math.random(cratiomin*1000, cratiomax*1000) / 1000
+    local pDIF = math.random(cratiomin*1000, cratiomax*1000) / 1000.0
 
     if melee then
-        pDIF = pDIF * (math.random(100, 105)/100)
+        pDIF = pDIF * (math.random(100, 105)/100.0)
     end
 
     return pDIF
