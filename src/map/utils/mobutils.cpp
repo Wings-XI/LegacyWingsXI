@@ -123,13 +123,13 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
 {
     switch (rank)
     {
-        case 1: return (5+((lvl-1)*50)/100); // A
-        case 2: return (4+((lvl-1)*45)/100); // B
-        case 3: return (4+((lvl-1)*40)/100); // C
-        case 4: return (3+((lvl-1)*35)/100); // D
-        case 5: return (3+((lvl-1)*30)/100); // E
-        case 6: return (2+((lvl-1)*25)/100); // F
-        case 7: return (2+((lvl-1)*20)/100); // G
+        case 1: return (3+((lvl-1)*59)/100); // A
+        case 2: return (3+((lvl-1)*55)/100); // B
+        case 3: return (2+((lvl-1)*49)/100); // C
+        case 4: return (2+((lvl-1)*46)/100); // D
+        case 5: return (2+((lvl-1)*42)/100); // E
+        case 6: return (1+((lvl-1)*39)/100); // F
+        case 7: return (1+((lvl-1)*36)/100); // G
     }
     return 0;
 }
@@ -151,15 +151,15 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
             case 2: // B
                 return (uint16)(147 + (lvl - 50) * 4.9f);
             case 3: // C
-                return (uint16)(136 + (lvl - 50) * 4.8f);
+                return (uint16)(142 + (lvl - 50) * 4.8f);
             case 4: // D
-                return (uint16)(126 + (lvl - 50) * 4.7f);
+                return (uint16)(136 + (lvl - 50) * 4.7f);
             case 5: // E
-                return (uint16)(116 + (lvl - 50) * 4.5f);
+                return (uint16)(126 + (lvl - 50) * 4.5f);
             case 6: // F
-                return (uint16)(106 + (lvl - 50) * 4.4f);
+                return (uint16)(116 + (lvl - 50) * 4.4f);
             case 7: // G
-                return (uint16)(96 + (lvl - 50) * 4.3f);
+                return (uint16)(106 + (lvl - 50) * 4.3f);
         }
     } else {
         switch(rank){
