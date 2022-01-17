@@ -2763,7 +2763,7 @@ namespace battleutils
             ShowDebug("Crit multiplier from mods: %f\n", (100 + criticaldamage)/100.f);
         }
 
-        ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
+        //ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
 
         return pDIF;
     }

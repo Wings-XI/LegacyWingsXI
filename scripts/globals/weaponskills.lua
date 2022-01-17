@@ -51,7 +51,7 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             else
                 calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], true)
             end
-            attacker:PrintToPlayer(string.format("final pdif %f", calcParams.pdif))
+            -- attacker:PrintToPlayer(string.format("final pdif %f", calcParams.pdif))
             finaldmg = dmg * calcParams.pdif
 
             -- Duplicate the first hit with an added magical component for hybrid WSes
@@ -1029,7 +1029,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local pDIF = {}
     pDIF[1] = lowerLimit
     pDIF[2] = upperLimit
-    attacker:PrintToPlayer(string.format("enemy def %f ... lower was %f ... upper was %f", defender:getStat(tpz.mod.DEF), lowerLimit, upperLimit))
+    -- attacker:PrintToPlayer(string.format("enemy def %f ... lower was %f ... upper was %f", defender:getStat(tpz.mod.DEF), lowerLimit, upperLimit))
     
     return pDIF
 end
