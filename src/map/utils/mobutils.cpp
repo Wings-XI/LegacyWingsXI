@@ -126,8 +126,8 @@ uint16 GetBaseToRank(uint8 rank, uint16 lvl)
         case 1: return (3+((lvl-1)*59)/100); // A
         case 2: return (3+((lvl-1)*55)/100); // B
         case 3: return (2+((lvl-1)*49)/100); // C
-        case 4: return (2+((lvl-1)*46)/100); // D
-        case 5: return (2+((lvl-1)*42)/100); // E
+        case 4: return (2+((lvl-1)*47)/100); // D
+        case 5: return (1+((lvl-1)*43)/100); // E
         case 6: return (1+((lvl-1)*39)/100); // F
         case 7: return (1+((lvl-1)*36)/100); // G
     }

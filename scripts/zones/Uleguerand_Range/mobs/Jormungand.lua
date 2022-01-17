@@ -24,7 +24,6 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MDEF, 124) -- 385 * 1.32/2.24 = 226 nether blast
     mob:setMod(tpz.mod.DEF, 500)
     mob:setMod(tpz.mod.MATT, 75)
-    mob:setMod(tpz.mod.INT, 4)
 end
 
 function onMobFight(mob, target)
