@@ -25,8 +25,12 @@ function onInstanceCreated(instance)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
+    local mobID = 17092951
+    local mob = GetMobByID(mobID, instance)
+    mob:setSpawn(-20, -4, -20)
+    SpawnMob(mobID, instance)
     local timePenalty = instance:getLocalVar("Nyzul_TimePenalty")
-    updateInstanceTime(instance, elapsed+(timePenalty*60*1000), ID.text)
+    --updateInstanceTime(instance, elapsed+(timePenalty*60*1000), ID.text)
 
     if (instance:getLocalVar("Nyzul_CheckWin") > 0) then
         local win = false
