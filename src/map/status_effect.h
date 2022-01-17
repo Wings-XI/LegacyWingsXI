@@ -728,7 +728,8 @@ enum EFFECT
     EFFECT_GM_HIDE                  = 805,
     EFFECT_GM_IMMORTAL              = 806,
     EFFECT_SOLDIERS_DRINK           = 807,
-    // 808-1022
+    EFFECT_BRAINJACK                = 808,
+    // 809-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
