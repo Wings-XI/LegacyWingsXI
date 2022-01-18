@@ -824,7 +824,8 @@ tpz.effect =
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
     SOLDIERS_DRINK           = 807,
-    -- 808-1022
+    BRAINJACK                = 808,
+    -- 809-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
