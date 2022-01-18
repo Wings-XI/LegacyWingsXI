@@ -641,12 +641,12 @@ function getSpellBonusAcc(caster, target, spell, params)
 
     --Add acc for dark seal
     if skill == tpz.skill.DARK_MAGIC and caster:hasStatusEffect(tpz.effect.DARK_SEAL) then
-        magicAccBonus = magicAccBonus + 256
+        magicAccBonus = magicAccBonus + 75
     end
 
     -- Add acc for elemental seal
     if caster:hasStatusEffect(tpz.effect.ELEMENTAL_SEAL) then
-        magicAccBonus = magicAccBonus + 256
+        magicAccBonus = magicAccBonus + 75
     end
 
     --add acc for RDM group 1 merits
