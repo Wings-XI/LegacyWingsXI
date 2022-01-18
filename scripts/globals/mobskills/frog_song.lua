@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     local msg = MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
     if (msg == tpz.msg.basic.SKILL_ENFEEB_IS) then
-        target:addStatusEffect(tpz.effect.COSTUME, 2239, 0, 60) -- 1812 alternate froggo costume but doesnt seem to work!
+        target:addStatusEffect(tpz.effect.COSTUME_II, 2239, 0, 60) -- 1812 alternate froggo costume but doesnt seem to work!
         mob:charm(target)
         mob:resetEnmity(target)
     end
