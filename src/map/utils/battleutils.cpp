@@ -2686,7 +2686,7 @@ namespace battleutils
             attPercentBonus = PAttacker->ATT() * bonusAttPercent;
 
         float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
-        // Using 2013 model
+        // Using 2013 model since it is the most up-to-date and tested version of the one used in 75 era
         // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
         // Note that only player autoattacks use this function, weaponskill pDIF is calculated in scripts/global/weaponskills.lua
         float ratioCap = 2.25f;
