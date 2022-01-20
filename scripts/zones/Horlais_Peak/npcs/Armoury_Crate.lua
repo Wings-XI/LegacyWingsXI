@@ -593,7 +593,7 @@ local loot =
     },
 
     -- KSNM Double Dragonian
-    [15] =	
+    [15] =
     {
         {
             {itemid = 65535, droprate = 1000, amount = 24000}, -- Gil
