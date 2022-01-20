@@ -24,7 +24,7 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 1
     
-    dmgmod = 2 + skill:getMobHPP()/10
+    dmgmod = 2 + skill:getMobHPP()/11
 
     if mob:isMobType(MOBTYPE_NOTORIOUS) then dmgmod = dmgmod + 3 end
 
