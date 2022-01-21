@@ -13,9 +13,9 @@ local function night(mob)
     if mob:getLocalVar("Phase") == 0 then
         mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
         mob:setMobMod(tpz.mobMod.ROAM_COOL, 10)
-        mob:delMod(tpz.mod.TRIPLE_ATTACK, 20)
         mob:delMod(tpz.mod.EVA, 15)
         mob:delMod(tpz.mod.ACC, 15)
+        mob:setMod(tpz.mod.DELAY, -400)
         mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]nightSkillList"))
         mob:setLocalVar("Phase", 1)
     end
@@ -25,9 +25,9 @@ local function day(mob)
     if mob:getLocalVar("Phase") == 1 then
         mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
         mob:setMobMod(tpz.mobMod.ROAM_COOL, 0)
-        mob:addMod(tpz.mod.TRIPLE_ATTACK, 20)
         mob:addMod(tpz.mod.EVA, 15)
         mob:addMod(tpz.mod.ACC, 15)
+        mob:setMod(tpz.mod.DELAY, 0)
         mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]daySkillList"))
         mob:setLocalVar("Phase", 0)
     end

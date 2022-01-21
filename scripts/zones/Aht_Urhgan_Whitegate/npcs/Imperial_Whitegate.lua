@@ -45,7 +45,11 @@ function onTrigger(player,npc)
         if ringParam > 0 or standardParam > 0 then
             player:startEvent(3155, standardParam, ringParam, 0, 0, 0, 0, 0, 0, 0)
         end
-
+    elseif player:getCurrentMission(tpz.mission.id.toau.ETERNAL_MERCENARY) then
+        local invsize = player:getContainerSize(tpz.inv.WARDROBE4)
+        player:completeMission(TOAU, tpz.mission.id.toau.ETERNAL_MERCENARY)
+        player:PrintToPlayer("The capacity of your Mog Wardrobe 4 has increased by 2 slots!", 21)
+        player:changeContainerSize(tpz.inv.WARDROBE4, (invsize + 2))
     -- TRANSFORMATIONS
     elseif player:getCharVar("TransformationsProgress") == 1 then
         player:startEvent(722)
