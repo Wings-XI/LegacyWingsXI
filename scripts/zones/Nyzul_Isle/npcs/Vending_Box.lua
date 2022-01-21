@@ -82,24 +82,32 @@ end
 
 local function giveSinglePreferredTempItemToPlayer(player, bitPosition)
 
-    for k,v in pairs(lowGradeItems) do
-        if (v.BitPosition == bitPosition) then
-            giveTempItemToPlayer(player, v.ItemID, LOW_GRADE_COST)
-            return
+    if (bitPosition > 0 and bitPosition <=12) then
+        for itemPosition = 1, #lowGradeItems do
+            if (itemPosition == bitPosition) then
+                giveTempItemToPlayer(player, lowGradeItems[itemPosition].ItemID, LOW_GRADE_COST)
+                return
+            end
         end
     end
 
-    for k,v in pairs(mediumGradeItems) do
-        if (v.BitPosition == bitPosition) then
-            giveTempItemToPlayer(player, v.ItemID, MEDIUM_GRADE_COST)
-            return
+    if (bitPosition > 12 and bitPosition <=24) then
+        bitPosition = bitPosition - 12
+        for itemPosition = 1, #mediumGradeItems do
+            if (itemPosition == bitPosition) then
+                giveTempItemToPlayer(player, mediumGradeItems[itemPosition].ItemID, MEDIUM_GRADE_COST)
+                return
+            end
         end
     end
 
-    for k,v in pairs(highGradeItems) do
-        if (v.BitPosition == bitPosition) then
-            giveTempItemToPlayer(player, v.ItemID, HIGH_GRADE_COST)
-            return
+    if (bitPosition > 24) then
+        bitPosition = bitPosition - 24
+        for itemPosition = 1, #highGradeItems do
+            if (itemPosition == bitPosition) then
+                giveTempItemToPlayer(player, highGradeItems[itemPosition].ItemID, HIGH_GRADE_COST)
+                return
+            end
         end
     end
 end

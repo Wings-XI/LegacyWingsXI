@@ -19,8 +19,8 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEX, 40)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
-    mob:addMod(tpz.mod.DEFP, 750)
-    mob:addMod(tpz.mod.RATTP, 750)
+    mob:addMod(tpz.mod.DEFP, 475)
+    mob:addMod(tpz.mod.RATTP, 475)
     mob:addMod(tpz.mod.ACC, 150)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Buarainech
     mob:setMod(tpz.mod.EARTHDEF, 128)
@@ -34,7 +34,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
     -- Adding Resbuild for Stun as it was too potent.
-    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 50)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -58,16 +58,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129693&id=18304)
-    mob:setLocalVar("BFightTimer", (os.time() + 7200000))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("BFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://www.youtube.com/watch?v=7sjZoknSXRw&ab_channel=RainbowChaser)

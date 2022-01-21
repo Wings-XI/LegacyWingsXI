@@ -29,6 +29,10 @@ function onUseAbility(player, target, ability)
         dmg = math.floor(dmg * 1.3)
     end
 
+    if player:hasStatusEffect(tpz.effect.WEAKNESS) then
+        player:delStatusEffect(tpz.effect.WEAKNESS)
+    end
+
     dmg = utils.stoneskin(target, dmg)
     target:takeDamage(dmg, player, tpz.attackType.SPECIAL, tpz.damageType.ELEMENTAL)
 

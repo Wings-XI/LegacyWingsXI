@@ -6,6 +6,7 @@ require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/besieged")
 require("scripts/globals/nyzul_isle")
+require("scripts/globals/nyzul_isle_data")
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ------------------------------------------------
 local STARTING_RUNE_OF_TRANSFER_ID = 17093429
@@ -22,20 +23,25 @@ local function releaseOtherPlayers(player)
     end
 end
 
--- 1 locks, 0 unlocks
-local function updateNpcLocks(instance, lockValue)
+-- lockValue >0 locks, 0 unlocks
+local function updateLobbyNpcLocks(instance, lockValue)
     local vendingBox = GetNPCByID(VENDING_BOX, instance)
     vendingBox:setLocalVar("Nyzul_VendingBoxLock", lockValue)
     local startingRuneOfTransfer = GetNPCByID(STARTING_RUNE_OF_TRANSFER_ID, instance)
     startingRuneOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
 end
 
-function onTrigger(player, npc)
-    -- Force players out of menus when an active rune of transfer is touched
-    if (npc:AnimationSub() > 0) then
-        releaseOtherPlayers(player)
+local function updateFloorNpcLocks(instance, lockValue, runeOfTransfer)
+    -- dont have to lock NM crates - they dont create events
+    for _,armouryCrateID in pairs(tpz.nyzul_isle_data.npcLists.Armoury_Crates) do
+        local armouryCrate = GetNPCByID(armouryCrateID, instance)
+        armouryCrate:setLocalVar("Nyzul_ArmouryCrateLock", lockValue)
     end
 
+    runeOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+end
+
+function onTrigger(player, npc)
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
@@ -44,7 +50,7 @@ function onTrigger(player, npc)
                 return
             end
             -- Lock the vending box
-            updateNpcLocks(player:getInstance(), player:getID())
+            updateLobbyNpcLocks(player:getInstance(), player:getID())
             -- Force players out of other menus
             releaseOtherPlayers(player)
             -- 0 if never set before, up to 100 for runic key
@@ -79,7 +85,8 @@ function onTrigger(player, npc)
             end
 
             -- Lock to single player only
-            npc:setLocalVar("Nyzul_RuneOfTransferLock", player:getID())
+            updateFloorNpcLocks(player:getInstance(), player:getID(), npc)
+            releaseOtherPlayers(player)
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog
             -- Param 1 = bitflag to show menu options.
@@ -111,12 +118,12 @@ function onEventFinish(player, csid, option, npc)
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
         else
             -- Unlock the vending box
-            updateNpcLocks(instance, 0)
+            updateLobbyNpcLocks(instance, 0)
             player:messageSpecial(ID.text.INSUFFCIENT_TOKENS)
         end
     elseif (csid == 94) then
         -- Unlock the vending box
-        updateNpcLocks(instance, 0)
+        updateLobbyNpcLocks(instance, 0)
     end
 
     -- any non-entrance lamp
@@ -138,10 +145,10 @@ function onEventFinish(player, csid, option, npc)
             end
 
             bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
-            npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
+            updateFloorNpcLocks(instance, 0, npc)
         end
     elseif (csid == 200) then
-        npc:setLocalVar("Nyzul_RuneOfTransferLock", 0)
+        updateFloorNpcLocks(instance, 0, npc)
     end
 
     -- bubble warp
@@ -170,11 +177,11 @@ function bubbleWarpThePlayers(player, instance, stage)
         player:startEvent(95)
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
-                char:release()
-                char:disengage()
-                char:timer(125, function(char)
-                    char:startEvent(95)
-                end)
+                char:setLocalVar("Nyzul_BubbleWarQuit", os.time() + 2)
+                while(char:getEventID() ~= -1 and os.time() <= char:getLocalVar("Nyzul_BubbleWarQuit")) do
+                    char:release()
+                end
+                char:startEvent(95)
             end
         end
     end

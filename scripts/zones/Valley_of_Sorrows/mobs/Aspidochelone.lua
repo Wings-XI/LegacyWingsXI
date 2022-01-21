@@ -9,25 +9,10 @@ require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
 
--- Removes any possible debuff when it goes into shell and we have no function that exists for this
-local removables = {tpz.effect.FLASH, tpz.effect.BLINDNESS, tpz.effect.MAX_HP_DOWN, tpz.effect.MAX_MP_DOWN, tpz.effect.PARALYSIS, tpz.effect.POISON,
-                    tpz.effect.CURSE_I, tpz.effect.CURSE_II, tpz.effect.DISEASE, tpz.effect.PLAGUE, tpz.effect.WEIGHT, tpz.effect.BIND,
-                    tpz.effect.BIO, tpz.effect.DIA, tpz.effect.BURN, tpz.effect.FROST, tpz.effect.CHOKE, tpz.effect.RASP, tpz.effect.SHOCK, tpz.effect.DROWN,
-                    tpz.effect.STR_DOWN, tpz.effect.DEX_DOWN, tpz.effect.VIT_DOWN, tpz.effect.AGI_DOWN, tpz.effect.INT_DOWN, tpz.effect.MND_DOWN,
-                    tpz.effect.CHR_DOWN, tpz.effect.ADDLE, tpz.effect.SLOW, tpz.effect.HELIX, tpz.effect.ACCURACY_DOWN, tpz.effect.ATTACK_DOWN,
-                    tpz.effect.EVASION_DOWN, tpz.effect.DEFENSE_DOWN, tpz.effect.MAGIC_ACC_DOWN, tpz.effect.MAGIC_ATK_DOWN, tpz.effect.MAGIC_EVASION_DOWN,
-                    tpz.effect.MAGIC_DEF_DOWN, tpz.effect.MAX_TP_DOWN, tpz.effect.SILENCE}
-
 function intoShell(mob)
-    for i, effect in ipairs(removables) do
-        if (mob:hasStatusEffect(effect)) then
-            mob:delStatusEffect(effect)
-        end
-    end
-
     mob:SetMobAbilityEnabled(false)
     mob:AnimationSub(1)
-    mob:setMod(tpz.mod.REGEN, 400)
+    mob:setMod(tpz.mod.REGEN, 200)
     mob:SetAutoAttackEnabled(false)
     mob:SetMagicCastingEnabled(false)
     mob:setMod(tpz.mod.UDMGRANGE, -95)
@@ -66,12 +51,12 @@ function onMobSpawn(mob)
     mob:setLocalVar("DamageTaken", 0)
     mob:AnimationSub(2)
 
-    mob:addListener("TAKE_DAMAGE", "TARTARUGA_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
+    mob:addListener("TAKE_DAMAGE", "ASPID_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         local damageTaken = mob:getLocalVar("DamageTaken")
         local waitTime = mob:getLocalVar("waitTime")
         damageTaken = damageTaken + amount
-
-        if damageTaken > 4000 then
+        print(damageTaken)
+        if damageTaken > 2000 then
             mob:setLocalVar("DamageTaken", 0)
             if mob:AnimationSub() == 1 and os.time() > waitTime then
                 mob:AnimationSub(2)
@@ -88,6 +73,7 @@ end
 
 function onMobFight(mob, target)
     local changeHP = mob:getLocalVar("changeHP")
+    -- print(changeHP)
     local waitTime = mob:getLocalVar("waitTime")
 
     if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
@@ -107,7 +93,7 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.ASPIDOCHELONE_SINKER)
-    mob:removeListener("TARTARUGA_TAKE_DAMAGE")
+    mob:removeListener("ASPID_TAKE_DAMAGE")
 end
 
 function onMobDespawn(mob)
@@ -127,5 +113,5 @@ function onMobDespawn(mob)
         UpdateNMSpawnPoint(ID.mob.ADAMANTOISE)
         GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
     end
-    mob:removeListener("TARTARUGA_TAKE_DAMAGE")
+    mob:removeListener("ASPID_TAKE_DAMAGE")
 end

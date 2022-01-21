@@ -19,8 +19,8 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEX, 40)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
-    mob:addMod(tpz.mod.DEFP, 750)
-    mob:addMod(tpz.mod.RATTP, 750)
+    mob:addMod(tpz.mod.DEFP, 475)
+    mob:addMod(tpz.mod.RATTP, 475)
     mob:addMod(tpz.mod.ACC, 100)
     -- Adding 10% Double Since WAR
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
@@ -37,7 +37,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.FIRE_ABSORB, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
     -- Adding Resbuild for Stun as it was too potent.
-    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 50)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -63,16 +63,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129695&id=18303)
-    mob:setLocalVar("LFightTimer", (os.time() + 7200000))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("LFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
 
     -- Mighty Strikes
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Lugh)

@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     local msg = MobStatusEffectMove(mob, target, typeEffect, power, 3, 90)
     if (msg == tpz.msg.basic.SKILL_ENFEEB_IS) then
-        target:addStatusEffectEx(tpz.effect.REGEN, 0, -25, 3, 90)
+        target:addStatusEffectEx(tpz.effect.BRAINJACK, 0, 25, 3, 90)
         mob:charm(target)
         mob:resetEnmity(target)
     end

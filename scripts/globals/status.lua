@@ -824,7 +824,8 @@ tpz.effect =
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
     SOLDIERS_DRINK           = 807,
-    -- 808-1022
+    BRAINJACK                = 808,
+    -- 809-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -1498,6 +1499,8 @@ tpz.mod =
     TP_BONUS                  = 345, --
     SAVETP                    = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, -- Conserve TP trait, random chance between 10 and 200 TP
+
+    WYRMAL_ABJ_KILLER_EFFECT  = 53, -- Wyrmal Abjuration (Crimson/Blood) which makes players susceptible to Dragon Killer effects
 
     -- Rune Fencer
 
