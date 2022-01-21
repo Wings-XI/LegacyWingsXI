@@ -26,8 +26,12 @@ function onMobSkillCheck(target, mob, skill)
     local result = 1
 
     if (family == 168 and mobhp <= 35) then -- Khimaira < 35%
-        if (mob:getID() == 17093002) and (mob:getInstance():getStage() ~= 100) and (mobhp > 25) then -- Nyzul Isle Khimaira will only use this on floor 100 and below 25%
-            return 1
+        if (mob:getID() == 17093002) then -- Nyzul Isle Khimaira will only use this on floor 100 and below 25%
+            if (mob:getInstance():getStage() == 100) and (mobhp <= 25) then
+                return 0
+            else
+                return 1
+            end
         end
         result = 0
     elseif (family == 315 and mobhp <= 50) then -- Tyger < 50%
