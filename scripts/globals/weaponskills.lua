@@ -454,7 +454,7 @@ end
     end
 
     calcParams.firstHitRateBonus = 0
-    calcParams.hitRate = getRangedHitRate(attacker, target, false, calcParams.bonusAcc)
+    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, true)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
@@ -786,8 +786,9 @@ function getMeleeDmg(attacker, weaponType, kick)
     return {mainhandDamage, offhandDamage}
 end
 
-function getHitRate(attacker, target, capHitRate, bonus)
-    local acc = attacker:getACC()
+-- Works for ranged and melee. Will default to melee if isRanged parameter is not specified
+function getHitRate(attacker, target, capHitRate, bonus, isRanged)
+    local acc = isRanged and attacker:getRACC() or attacker:getACC()
     local eva = target:getEVA()
 
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
@@ -808,128 +809,20 @@ function getHitRate(attacker, target, capHitRate, bonus)
 
     acc = acc + bonus
 
+    -- https://www.bg-wiki.com/index.php?title=Hit_Rate&oldid=167680
     local lvldiff = attacker:getMainLvl() - target:getMainLvl()
-    if lvldiff > 8 then
-        lvldiff = 8 + (lvldiff - 8)/3
-    end
-    if lvldiff < -8 then
-        lvldiff = -8 + (lvldiff + 8)/3
-    end
 
     acc = acc + lvldiff*4
 
-    --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        --acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
-    --elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        --acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
-    --end
-
-    local hitdiff = 0
-    local hitrate = 75
-    if (acc>eva) then
-    hitdiff = (acc-eva)/2
-    end
-    if (eva>acc) then
-    hitdiff = ((-1)*(eva-acc))/2
-    end
-
-    hitrate = hitrate+hitdiff
-
-    --[[
-    local firstBonus = 0
-    if hitrate < 95 then -- 35% bonus at 75% below this threshhold
-        firstBonus = (95 - hitrate)*30/75
-    end
-    if hitrate < 20 then
-        firstBonus = firstBonus + hitrate - 20
-    end
-    if firstBonus < 0 then
-        firstBonus = 0
-    end
-    ]]
-
-    hitrate = hitrate/100
-    --firstBonus = firstBonus/100
+    -- % hitrate: baseline 75%, 2 acc or 2 evasion net 1% +/- hit rate
+    local hitrate = 75 + math.floor(acc-eva)/2
 
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate>0.95) then
-            hitrate = 0.95
-        end
-        if (hitrate<0.2) then
-            hitrate = 0.2
-        end
+        hitrate = utils.clamp(hitrate, 20, 95)
     end
-    return hitrate
-end
-
-function getRangedHitRate(attacker, target, capHitRate, bonus)
-    local acc = attacker:getRACC()
-    local eva = target:getEVA()
-
-    if (bonus == nil) then
-        bonus = 0
-    end
-    if (target:hasStatusEffect(tpz.effect.YONIN) and target:isFacing(attacker, 23)) then -- Yonin evasion boost if defender is facing attacker
-        bonus = bonus - target:getStatusEffect(tpz.effect.YONIN):getPower()
-    end
-    if (attacker:hasTrait(76) and attacker:isBehind(target, 23)) then --TRAIT_AMBUSH
-        bonus = bonus + attacker:getMerit(tpz.merit.AMBUSH)
-    end
-
-    acc = acc + bonus
-
-    local lvldiff = attacker:getMainLvl() - target:getMainLvl()
-    if lvldiff > 6 then
-        lvldiff = 6 + (lvldiff - 8)/3
-    end
-    if lvldiff < -6 then
-        lvldiff = -6 + (lvldiff + 8)/3
-    end
-
-    acc = acc + lvldiff*4
-
-    --if (attacker:getMainLvl() > target:getMainLvl()) then -- acc bonus!
-        --acc = acc + ((attacker:getMainLvl()-target:getMainLvl())*4)
-    --elseif (attacker:getMainLvl() < target:getMainLvl()) then -- acc penalty :(
-        --acc = acc - ((target:getMainLvl()-attacker:getMainLvl())*4)
-    --end
-
-    local hitdiff = 0
-    local hitrate = 75
-    if (acc>eva) then
-    hitdiff = (acc-eva)/2
-    end
-    if (eva>acc) then
-    hitdiff = ((-1)*(eva-acc))/2
-    end
-
-    hitrate = hitrate+hitdiff
-    --[[
-    local firstBonus = 0
-    if hitrate < 95 then -- 35% bonus at 75% below this threshhold
-        firstBonus = (95 - hitrate)*30/75
-    end
-    if hitrate < 20 then
-        firstBonus = firstBonus + hitrate - 20
-    end
-    if firstBonus < 0 then
-        firstBonus = 0
-    end
-    ]]
-    hitrate = hitrate/100
-    --firstBonus = firstBonus/100
-
-    -- Applying hitrate caps
-    if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
-        if (hitrate>0.95) then
-            hitrate = 0.95
-        end
-        if (hitrate<0.2) then
-            hitrate = 0.2
-        end
-    end
-    return hitrate
+    -- Needs to be a decimal percent
+    return hitrate/100
 end
 
 function fTP(tp, ftp1, ftp2, ftp3)
