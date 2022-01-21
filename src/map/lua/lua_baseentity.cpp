@@ -17408,7 +17408,7 @@ inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
     charutils::SetCharVar(PChar, "DynaPrep_registrationStartTime", registrationStartTime);
     charutils::SetCharVar(PChar, "DynaPrep_token", token);
     charutils::SetCharVar(PChar, "DynaPrep_originalRegistrant", originalRegistrant);
-    charutils::SetCharVar(PChar, "DynaPrep_bypassWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1) ? 1 : 0);
+    charutils::SetCharVar(PChar, "DynaPrep_inflictWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 2) ? 1 : 0);
 
     return 0;
 }
