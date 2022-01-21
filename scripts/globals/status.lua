@@ -1500,6 +1500,8 @@ tpz.mod =
     SAVETP                    = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, -- Conserve TP trait, random chance between 10 and 200 TP
 
+    WYRMAL_ABJ_KILLER_EFFECT  = 53, -- Wyrmal Abjuration (Crimson/Blood) which makes players susceptible to Dragon Killer effects
+
     -- Rune Fencer
 
     INQUARTATA                = 963, -- increases parry rate by a flat %.

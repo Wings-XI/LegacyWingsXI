@@ -3,6 +3,10 @@
 ------------------------------------------
 require("scripts/globals/nyzul_isle_data")
 ------------------------------------------
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.STUNRES, -100) -- Need to adjust stunres so it's stunnable
+    mob:setMod(tpz.mod.MEVA, 340)
+end
 
 function onMobDeath(mob, player, isKiller)
     -- gating this to be called only once - as there should only be one killer per mob

@@ -535,8 +535,8 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, math.floor(GetDynaTimeRemaining(zoneId)/60), 1)
             if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
         end)
-        if player:getCharVar("DynaBypassWeakness") == 0 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
-        player:setCharVar("DynaBypassWeakness", 0)
+        if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
+        player:setCharVar("DynaInflictWeakness", 0)
     end
 
     return -1
