@@ -1052,7 +1052,7 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
         if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
             cRatio = ratio
         else
-            cRatio = ratio - (defender:getMainLlvl() - attacker:getMainLvl()) * 0.025
+            cRatio = ratio - (defender:getMainLvl() - attacker:getMainLvl()) * 0.025
         end
     end
 
