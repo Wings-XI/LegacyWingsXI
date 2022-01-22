@@ -13,11 +13,7 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
-    if option == 0 then
-        player:setLocalVar("SelectedConfirmed", 1)
-    else
-        player:setLocalVar("SelectedConfirmed", 0)
-    end
+
 end
 
 function onEventFinish(player, csid, option)
