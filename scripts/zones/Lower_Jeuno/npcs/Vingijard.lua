@@ -16,7 +16,13 @@ function onEventUpdate(player, csid, option)
 end
 
 function checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option)
-    if option < 16 then
+    if option >= 16 then -- Cool jobs
+        if player:hasCompletedQuest(questcity2, quest2) then
+            return 1
+        else
+            return 0
+        end
+    elseif option < 16 then -- Boring jobs
         if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
             return 1
         else
@@ -26,13 +32,19 @@ function checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, o
 end
 
 function checkArtifactGear(player, reward0, reward0b, reward1, reward2, reward3, option)
-    if option == 13 then
+    if option >= 16 then -- Cool jobs
+        if not (player:hasItem(reward0) or player:hasItem(reward1) or player:hasItem(reward2)) then
+            return 1
+        else
+            return 0
+        end
+    elseif option == 13 then -- Ninja
         if not (player:hasItem(reward0) or player:hasItem(reward0b) or player:hasItem(reward1) or player:hasItem(reward2) or player:hasItem(reward3)) then
             return 1
         else
             return 0
         end
-    elseif option < 16 then
+    elseif option < 16 then -- Boring jobs
         if not (player:hasItem(reward0) or player:hasItem(reward1) or player:hasItem(reward2) or player:hasItem(reward3)) then
             return 1
         else
@@ -42,7 +54,52 @@ function checkArtifactGear(player, reward0, reward0b, reward1, reward2, reward3,
 end
 
 function onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
-    if option < 16 then
+    if option == 16 then -- Blue Mage
+        player:delGil(10000)
+        player:delQuest(questcity0, quest0)
+        player:delQuest(questcity1, quest1)
+        player:delQuest(questcity2, quest2)
+        player:setCharVar("[BLUAF]Current", 0)
+        player:setCharVar("[BLUAF]CraftingStage", 0)
+        player:setCharVar("[BLUAF]Remaining", 5)
+        player:setCharVar("[BLUAF]PaymentDay", 0)
+        player:setCharVar("[BLUAF]RestingDay", 0)
+    elseif option == 17 then -- Corsair
+        player:delGil(10000)
+        player:delQuest(questcity0, quest0)
+        player:delQuest(questcity1, quest1)
+        player:delQuest(questcity2, quest2)
+        player:setCharVar("LeleroonsLetterGreen", 0)
+        player:setCharVar("LeleroonsLetterBlue", 0)
+        player:setCharVar("LeleroonsLetterRed", 0)
+    elseif option == 18 then -- Puppetmaster
+        player:delGil(10000)
+        player:delQuest(questcity0, quest0)
+        player:delQuest(questcity1, quest1)
+        player:delQuest(questcity2, quest2)
+        player:setCharVar("[PUPAF]Current", 0)
+        player:setCharVar("[PUPAF]Remaining", 5)
+        player:setCharVar("[PUPAF]TradeDone", 0)
+        player:setCharVar("[PUPAF]TradeDay", 0)
+    elseif option == 19 then -- Dancer
+        player:delGil(10000)
+        player:delQuest(questcity0, quest0)
+        player:delQuest(questcity1, quest1)
+        player:delQuest(questcity2, quest2)
+        player:setCharVar("dancerCompletedAF", 0)
+        player:setCharVar("dancerTailorCS", 0)
+        player:setCharVar("dancerAFChoice", 0)
+    elseif option == 20 then -- Scholar
+        player:delGil(10000)
+        player:delQuest(questcity0, quest0)
+        player:delQuest(questcity1, quest1)
+        player:delQuest(questcity2, quest2)
+        player:setCharVar("AF_SCH_COMPLETE", 0)
+        player:setCharVar("AF_Loussaire", 0)
+        player:setCharVar("AF_SCH_BOOTS", 0)
+        player:setCharVar("AF_SCH_PANTS", 0)
+        player:setCharVar("AF_SCH_BODY", 0)
+    elseif option < 16 then -- All of the boring jobs
         player:delGil(10000)
         player:delQuest(questcity0, quest0)
         player:delQuest(questcity1, quest1)
@@ -386,10 +443,100 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 16 then -- Blue Mage
+        local questcity0 = AHT_URHGAN
+        local quest0 = tpz.quest.id.ahtUrhgan.BEGINNINGS
+        local reward0 = 17717 -- Immortal's Scimitar
+        local questcity1 = AHT_URHGAN
+        local quest1 = tpz.quest.id.ahtUrhgan.OMENS
+        local reward1 = 11381 -- Magus Charuqs
+        local questcity2 = AHT_URHGAN
+        local quest2 = tpz.quest.id.ahtUrhgan.TRANSFORMATIONS
+        local reward2 = 11464 -- Magus Keffiyeh
+        if checkArtifactProgress(player, questcity2, quest2, option) == 1 then
+            if checkArtifactGear(player, reward0, reward1, reward2, option) == 1 then
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, option)
+            else
+                player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
+            end
+        else
+            player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
+        end
     elseif option == 17 then -- Corsair
+        local questcity0 = AHT_URHGAN
+        local quest0 = tpz.quest.id.ahtUrhgan.EQUIPPED_FOR_ALL_OCCASIONS
+        local reward0 = 18702 -- Trump Gun
+        local questcity1 = AHT_URHGAN
+        local quest1 = tpz.quest.id.ahtUrhgan.NAVIGATING_THE_UNFRIENDLY_SEAS
+        local reward1 = 15601 -- Corsair's Culottes
+        local questcity2 = AHT_URHGAN
+        local quest2 = tpz.quest.id.ahtUrhgan.AGAINST_ALL_ODDS
+        local reward2 = 11467 -- Corsair's Tricorne
+        if checkArtifactProgress(player, questcity2, quest2, option) == 1 then
+            if checkArtifactGear(player, reward0, reward1, reward2, option) == 1 then
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, option)
+            else
+                player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
+            end
+        else
+            player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
+        end
     elseif option == 18 then -- Puppetmaster
+        local questcity0 = AHT_URHGAN
+        local quest0 = tpz.quest.id.ahtUrhgan.THE_WAYWARD_AUTOMATION
+        local reward0 = 17858 -- Turbo Animator
+        local questcity1 = AHT_URHGAN
+        local quest1 = tpz.quest.id.ahtUrhgan.OPERATION_TEATIME
+        local reward1 = 15602 -- Puppetry Churidars
+        local questcity2 = AHT_URHGAN
+        local quest2 = tpz.quest.id.ahtUrhgan.PUPPETMASTER_BLUES
+        local reward2 = 11470 -- Puppetry Taj
+        if checkArtifactProgress(player, questcity2, quest2, option) == 1 then
+            if checkArtifactGear(player, reward0, reward1, reward2, option) == 1 then
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, option)
+            else
+                player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
+            end
+        else
+            player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
+        end
     elseif option == 19 then -- Dancer
+        local questcity0 = JEUNO
+        local quest0 = tpz.quest.id.jeuno.THE_UNFINISHED_WALTZ
+        local reward0 = 19203 -- War Hoop
+        local questcity1 = JEUNO
+        local quest1 = tpz.quest.id.jeuno.THE_ROAD_TO_DIVADOM
+        local reward1 = 15659 -- Dancer's Tights
+        local questcity2 = JEUNO
+        local quest2 = tpz.quest.id.jeuno.COMEBACK_QUEEN
+        local reward2 = 14578 -- Dancer's Casaque
+        if checkArtifactProgress(player, questcity2, quest2, option) == 1 then
+            if checkArtifactGear(player, reward0, reward1, reward2, option) == 1 then
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, option)
+            else
+                player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
+            end
+        else
+            player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
+        end
     elseif option == 20 then -- Scholar
+        local questcity0 = CRYSTAL_WAR
+        local quest0 = tpz.quest.id.crystalWar.ON_SABBATICAL
+        local reward0 = 6058 -- Klimaform Schema
+        local questcity1 = CRYSTAL_WAR
+        local quest1 = tpz.quest.id.crystalWar.DOWNWARD_HELIX
+        local reward1 = 15004 -- Scholar's Bracers
+        local questcity2 = CRYSTAL_WAR
+        local quest2 = tpz.quest.id.crystalWar.SEEING_BLOOD_RED
+        local reward2 = 16140 -- Scholar's Motarboard
+        if checkArtifactProgress(player, questcity2, quest2, option) == 1 then
+            if checkArtifactGear(player, reward0, reward1, reward2, option) == 1 then
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, option)
+            else
+                player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
+            end
+        else
+            player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
+        end
     elseif option == 21 then -- Geomancer
         player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Job not available.
     elseif option == 22 then -- Runefencer
