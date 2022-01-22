@@ -2525,17 +2525,21 @@ namespace battleutils
             // Cold Carrion Broth / Meat Broth / Warm Meat Broth / Tree Sap / Scarlet Sap / Fish Broth / Fish Oil Broth / Seedbed Soil / Sun Water /
             // Grasshopper Broth / Noisy Grasshopper Broth / Mole Broth / Lively Mole Broth / Blood Broth / Clear Blood Broth / Antica Broth / Fragrant Antica Broth
 
-            int32 maxHitRate = 99;
-            auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+            // Before 2016, this value is 95. After, it should be 99
+            // https://www.bg-wiki.com/index.php?title=Hit_Rate&oldid=167680
+            int32 maxHitRate = 95;
 
-            // As far as I can tell kick attacks fall under Hand-to-Hand so ignoring them and letting them go to 99
-            bool isOffhand = attackNumber == 1;
-            bool isTwoHanded = targ_weapon && targ_weapon->isTwoHanded();
+            // If server is based in 2016 or later, uncomment the code below.
+            // auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
 
-            if (isOffhand || isTwoHanded)
-            {
-                maxHitRate = 95;
-            }
+            // // As far as I can tell kick attacks fall under Hand-to-Hand so ignoring them and letting them go to 99
+            // bool isOffhand = attackNumber == 1;
+            // bool isTwoHanded = targ_weapon && targ_weapon->isTwoHanded();
+
+            // if (isOffhand || isTwoHanded)
+            // {
+            //     maxHitRate = 95;
+            // }
 
             hitrate = std::clamp(hitrate, 20, maxHitRate);
         }
