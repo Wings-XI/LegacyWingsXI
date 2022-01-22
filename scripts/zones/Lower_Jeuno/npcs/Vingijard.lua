@@ -25,8 +25,14 @@ function checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, o
     end
 end
 
-function checkArtifactGear(player, reward0, reward1, reward2, reward3, option)
-    if option < 16 then
+function checkArtifactGear(player, reward0, reward0b, reward1, reward2, reward3, option)
+    if option == 13 then
+        if not (player:hasItem(reward0) or player:hasItem(reward0b) or player:hasItem(reward1) or player:hasItem(reward2) or player:hasItem(reward3)) then
+            return 1
+        else
+            return 0
+        end
+    elseif option < 16 then
         if not (player:hasItem(reward0) or player:hasItem(reward1) or player:hasItem(reward2) or player:hasItem(reward3)) then
             return 1
         else
@@ -84,9 +90,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_STRIKING_HANDS
         local reward3 = 13962 -- Temple Gloves
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -108,9 +112,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_HEALING_HANDS
         local reward3 = 13963 -- Healer's Mitts
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -132,9 +134,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SORCEROUS_HANDS
         local reward3 = 13964 -- Wizard's Gloves
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -156,9 +156,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_VERMILLION_HANDS
         local reward3 = 13965 -- Warlock's Gloves
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -180,9 +178,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SNEAKY_HANDS
         local reward3 = 13966 -- Rogue's Armlets
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -204,9 +200,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_STALWART_HANDS
         local reward3 = 13967 -- Gallant Gauntlets
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -228,9 +222,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SHADOWY_HANDS
         local reward3 = 13968 -- Chaos Gauntlets
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -252,9 +244,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WILD_HANDS
         local reward3 = 13969 -- Beast Gloves
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -276,9 +266,7 @@ function onEventFinish(player, csid, option)
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_HARMONIOUS_HANDS
         local reward3 = 13970 -- Choral Cuffs
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -287,22 +275,20 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 11 then -- Ranger
-        local questcity0 = BASTOK
-        local quest0 = tpz.quest.id.bastok.THE_DOORMAN
-        local reward0 = 16678 -- Razor Axe
-        local questcity1 = BASTOK
-        local quest1 = tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH
-        local reward1 = 14089 -- Fighter's Calligae
-        local questcity2 = BASTOK
-        local quest2 = tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT
-        local reward2 = 12638 -- Fighter's Lorica
+        local questcity0 = WINDURST
+        local quest0 = tpz.quest.id.windurst.SIN_HUNTING
+        local reward0 = 17188 -- Sniping Bow
+        local questcity1 = WINDURST
+        local quest1 = tpz.quest.id.windurst.FIRE_AND_BRIMSTONE
+        local reward1 = 12518 -- Hunter's Beret
+        local questcity2 = WINDURST
+        local quest2 = tpz.quest.id.windurst.UNBRIDLED_PASSION
+        local reward2 = 14099 -- Hunter's Socks
         local questcity3 = JEUNO
-        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
-        local reward3 = 13961 -- Fighter's Mufflers
+        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_CHASING_HANDS
+        local reward3 = 13971 -- Hunter's Bracers
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -311,22 +297,20 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 12 then -- Samurai
-        local questcity0 = BASTOK
-        local quest0 = tpz.quest.id.bastok.THE_DOORMAN
-        local reward0 = 16678 -- Razor Axe
-        local questcity1 = BASTOK
-        local quest1 = tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH
-        local reward1 = 14089 -- Fighter's Calligae
-        local questcity2 = BASTOK
-        local quest2 = tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT
-        local reward2 = 12638 -- Fighter's Lorica
+        local questcity0 = OUTLANDS
+        local quest0 = tpz.quest.id.outlands.THE_SACRED_KATANA
+        local reward0 = 17812 -- Magoroku
+        local questcity1 = OUTLANDS
+        local quest1 = tpz.quest.id.outlands.YOMI_OKURI
+        local reward1 = 14100 -- Myochin Sune-Ate
+        local questcity2 = OUTLANDS
+        local quest2 = tpz.quest.id.outlands.A_THIEF_IN_NORG
+        local reward2 = 13868 -- Myochin Kabuto
         local questcity3 = JEUNO
-        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
-        local reward3 = 13961 -- Fighter's Mufflers
+        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_LOYAL_HANDS
+        local reward3 = 13972 -- Myochin Kote
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -335,22 +319,21 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 13 then -- Ninja
-        local questcity0 = BASTOK
-        local quest0 = tpz.quest.id.bastok.THE_DOORMAN
-        local reward0 = 16678 -- Razor Axe
-        local questcity1 = BASTOK
-        local quest1 = tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH
-        local reward1 = 14089 -- Fighter's Calligae
-        local questcity2 = BASTOK
-        local quest2 = tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT
-        local reward2 = 12638 -- Fighter's Lorica
+        local questcity0 = OUTLANDS
+        local quest0 = tpz.quest.id.outlands.TWENTY_IN_PIRATE_YEARS
+        local reward0 = 17771 -- Anju
+        local reward0b = 17772 -- Zushio
+        local questcity1 = OUTLANDS
+        local quest1 = tpz.quest.id.outlands.I_LL_TAKE_THE_BIG_BOX
+        local reward1 = 14226 -- Ninja Hakama
+        local questcity2 = OUTLANDS
+        local quest2 = tpz.quest.id.outlands.TRUE_WILL
+        local reward2 = 13782 -- Ninja Chainmail
         local questcity3 = JEUNO
-        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
-        local reward3 = 13961 -- Fighter's Mufflers
+        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_LURKING_HANDS
+        local reward3 = 13973 -- Ninja Tekko
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
-            if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
+            if checkArtifactGear(player, reward0, reward0b, reward1, reward2, reward3, option) == 1 then
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -359,22 +342,20 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 14 then -- Dragoon
-        local questcity0 = BASTOK
-        local quest0 = tpz.quest.id.bastok.THE_DOORMAN
-        local reward0 = 16678 -- Razor Axe
-        local questcity1 = BASTOK
-        local quest1 = tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH
-        local reward1 = 14089 -- Fighter's Calligae
-        local questcity2 = BASTOK
-        local quest2 = tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT
-        local reward2 = 12638 -- Fighter's Lorica
+        local questcity0 = SANDORIA
+        local quest0 = tpz.quest.id.sandoria.A_CRAFTSMAN_S_WORK
+        local reward0 = 16887 -- Peregrine
+        local questcity1 = SANDORIA
+        local quest1 = tpz.quest.id.sandoria.CHASING_QUOTAS
+        local reward1 = 14227 -- Drachen Brais
+        local questcity2 = SANDORIA
+        local quest2 = tpz.quest.id.sandoria.KNIGHT_STALKER
+        local reward2 = 12519 -- Drachen Armet
         local questcity3 = JEUNO
-        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
-        local reward3 = 13961 -- Fighter's Mufflers
+        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_DRAGON_HANDS
+        local reward3 = 13974 -- Drachen Finger Gauntlets
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
@@ -383,22 +364,20 @@ function onEventFinish(player, csid, option)
             player:PrintToPlayer("Vingijard: You have not endured the trials of which I can erase.", 13) -- Player has not completed all quests.
         end
     elseif option == 15 then -- Summoner
-        local questcity0 = BASTOK
-        local quest0 = tpz.quest.id.bastok.THE_DOORMAN
-        local reward0 = 16678 -- Razor Axe
-        local questcity1 = BASTOK
-        local quest1 = tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH
-        local reward1 = 14089 -- Fighter's Calligae
-        local questcity2 = BASTOK
-        local quest2 = tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT
-        local reward2 = 12638 -- Fighter's Lorica
+        local questcity0 = WINDURST
+        local quest0 = tpz.quest.id.windurst.THE_PUPPET_MASTER
+        local reward0 = 17532 -- Kukulcan's Staff
+        local questcity1 = WINDURST
+        local quest1 = tpz.quest.id.windurst.CLASS_REUNION
+        local reward1 = 14228 -- Evoker's Spats
+        local questcity2 = WINDURST
+        local quest2 = tpz.quest.id.windurst.CARBUNCLE_DEBACLE
+        local reward2 = 112520 -- Evoker's Horn
         local questcity3 = JEUNO
-        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
-        local reward3 = 13961 -- Fighter's Mufflers
+        local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_CALLING_HANDS
+        local reward3 = 13975 -- Evoker's Bracers
         if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3, option) == 1 then
-            print("Has Completed Quests")
             if checkArtifactGear(player, reward0, reward1, reward2, reward3, option) == 1 then
-                print("Does not have gear")
                 onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3, option)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
