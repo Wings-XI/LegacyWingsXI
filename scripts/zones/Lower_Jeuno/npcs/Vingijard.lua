@@ -13,7 +13,30 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+end
 
+function checkArtifactProgress(player, questcity2, quest2, questcity3, quest3)
+    if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
+        return 1
+    else
+        return 0
+    end
+end
+
+function checkArtifactGear(player, reward0, reward1, reward2, reward3)
+    if not (player:hasItem(reward0) or player:hasItem(reward1) or player:hasItem(reward2) or player:hasItem(reward3)) then
+        return 1
+    else
+        return 0
+    end
+end
+
+function onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
+    player:delGil(10000)
+    player:delQuest(questcity0, quest0)
+    player:delQuest(questcity1, quest1)
+    player:delQuest(questcity2, quest2)
+    player:delQuest(questcity3, quest3)
 end
 
 function onEventFinish(player, csid, option)
@@ -32,13 +55,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -58,13 +79,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_STRIKING_HANDS
         local reward3 = 13962 -- Temple Gloves
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -84,13 +103,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_HEALING_HANDS
         local reward3 = 13963 -- Healer's Mitts
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -110,13 +127,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SORCEROUS_HANDS
         local reward3 = 13964 -- Wizard's Gloves
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -136,13 +151,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_VERMILLION_HANDS
         local reward3 = 13965 -- Warlock's Gloves
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -162,13 +175,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SNEAKY_HANDS
         local reward3 = 13966 -- Rogue's Armlets
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -188,13 +199,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_STALWART_HANDS
         local reward3 = 13967 -- Gallant Gauntlets
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -214,13 +223,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_SHADOWY_HANDS
         local reward3 = 13968 -- Chaos Gauntlets
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -240,13 +247,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WILD_HANDS
         local reward3 = 13969 -- Beast Gloves
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -266,13 +271,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_HARMONIOUS_HANDS
         local reward3 = 13970 -- Choral Cuffs
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -292,13 +295,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -318,13 +319,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -344,13 +343,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -370,13 +367,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
@@ -396,13 +391,11 @@ function onEventFinish(player, csid, option)
         local questcity3 = JEUNO
         local quest3 = tpz.quest.id.jeuno.BORGHERTZ_S_WARRING_HANDS
         local reward3 = 13961 -- Fighter's Mufflers
-        if player:hasCompletedQuest(questcity2, quest2) and player:hasCompletedQuest(questcity3, quest3) then
-            if not (player:hasItem(reward0) and player:hasItem(reward1) and player:hasItem(reward2) and player:hasItem(reward3)) then
-                player:delGil(10000)
-                player:delQuest(questcity0, quest0)
-                player:delQuest(questcity1, quest1)
-                player:delQuest(questcity2, quest2)
-                player:delQuest(questcity3, quest3)
+        if checkArtifactProgress(player, questcity2, quest2, questcity3, quest3) == 1 then
+            print("Has Completed Quests")
+            if checkArtifactGear(player, reward0, reward1, reward2, reward3) == 1 then
+                print("Does not have gear")
+                onArtifactQuesetReset(player, questcity0, quest0, questcity1, quest1, questcity2, quest2, questcity3, quest3)
             else
                 player:PrintToPlayer("Vingijard: You must forget the items you have gained during your trials.", 13) -- Player still has quested AF gear.
             end
