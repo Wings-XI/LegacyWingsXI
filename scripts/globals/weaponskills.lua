@@ -820,13 +820,13 @@ function getHitRate(attacker, target, capHitRate, bonus, isRanged)
     acc = acc + lvldiff*4
 
     -- % hitrate: baseline 75%, 2 acc or 2 evasion net 1% +/- hit rate
-    local hitrate = 75 + math.floor(acc-eva)/2
+    local hitrate = 75 + math.floor((acc-eva)/2)
 
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
         hitrate = utils.clamp(hitrate, 20, 95)
     end
-    -- Needs to be a decimal percent
+    -- Needs return as a decimal percent
     return hitrate/100
 end
 
