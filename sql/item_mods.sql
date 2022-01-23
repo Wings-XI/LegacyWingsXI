@@ -15982,7 +15982,7 @@ INSERT INTO `item_mods` VALUES (15068,1,22);
 INSERT INTO `item_mods` VALUES (15069,1,32);
 INSERT INTO `item_mods` VALUES (15070,1,40);
 INSERT INTO `item_mods` VALUES (15070,385,200);
-INSERT INTO `item_mods` VALUES (15070,831,-25);
+INSERT INTO `item_mods` VALUES (15070,163,-25); -- Set to use MDT rather than MDT_II due to MDT_II being OOE. (https://www.bg-wiki.com/ffxi/Version_Update_(05/09/2011))
 INSERT INTO `item_mods` VALUES (15071,1,11);
 INSERT INTO `item_mods` VALUES (15072,1,28);
 INSERT INTO `item_mods` VALUES (15072,9,5);
