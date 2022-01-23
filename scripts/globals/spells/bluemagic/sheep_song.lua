@@ -26,7 +26,7 @@ end
 
 function onSpellCast(caster, target, spell)
 
-    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.LULLABYRES) >= 100 then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         return tpz.effect.SLEEP_I
     end

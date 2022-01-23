@@ -128,7 +128,7 @@ public:
         using result_type = T;
 
         static T min() {
-            return std::numeric_limits<T>::max();
+            return std::numeric_limits<T>::min();
         }
         static T max() {
             return std::numeric_limits<T>::max();
