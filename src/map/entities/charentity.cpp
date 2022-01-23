@@ -2064,13 +2064,19 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     //#TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())
     {
-        PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
+        //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
+        for each (CBattleEntity* PMember in PTarget->PParty->members)
         {
+            // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
+            if (this->id == PMember->id)
+                continue;
             if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
             {
                 luautils::OnItemUse(PMember, PItem, this);
             }
-        });
+        };
+        // Triggering for item user
+        luautils::OnItemUse(this, PItem, this);
     }
     else
     {
