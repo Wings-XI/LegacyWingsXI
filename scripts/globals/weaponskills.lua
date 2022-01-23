@@ -912,18 +912,35 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     end
     lowerLimit = utils.clamp(lowerLimit, 0, 3.0)
 
-    if isCritical then
-        local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
-        critbonus = utils.clamp(critbonus, 0, 100)
-        lowerLimit = lowerLimit * ((100 + critbonus)/ 100.0)
-        upperLimit = upperLimit * ((100 + critbonus)/ 100.0)
-    end
-
     local pDIF = {}
     pDIF[1] = lowerLimit
     pDIF[2] = upperLimit
     -- attacker:PrintToPlayer(string.format("enemy def %f ... lower was %f ... upper was %f", defender:getStat(tpz.mod.DEF), lowerLimit, upperLimit))
     
+    -- Bernoulli distribution, applied for cRatio < 0.5 and 0.75 < cRatio < 1.25
+    -- Other cRatio values are uniformly distributed
+    -- https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5308205&viewfull=1#post5308205
+    local U = math.max(0.0, math.min(0.333, 1.3 * (2.0 - math.abs(wRatio - 1)) - 1.96))
+
+    local bernoulli = false
+
+    if (math.random() < U) then
+        bernoulli = true
+    end
+
+    if (bernoulli) then
+        local roundedRatio = math.floor(wRatio + 0.5) -- equivalent to rounding
+        pDIF[1] = roundedRatio
+        pDIF[2] = roundedRatio
+    end
+
+    if isCritical then
+        local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
+        critbonus = utils.clamp(critbonus, 0, 100)
+        pDIF[1] = pDIF[1] * ((100 + critbonus)/ 100.0)
+        pDIF[2] = pDIF[2] * ((100 + critbonus)/ 100.0)
+    end
+
     return pDIF
 end
 

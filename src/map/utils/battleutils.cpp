@@ -2679,7 +2679,7 @@ namespace battleutils
 
     /************************************************************************
     *                                                                       *
-    *   Formula for calculating damage ratio                                *
+    *   Formula for calculating damage ratio (pDIF)                         *
     *                                                                       *
     ************************************************************************/
 
@@ -2751,13 +2751,27 @@ namespace battleutils
         else if (wRatio <= 3.25f)
             lowerLimit = wRatio - 0.375f;
 
-        float pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+        float pDIF = 0.0f;
+
+        // Bernoulli distribution, applied for cRatio < 0.5 and 0.75 < cRatio < 1.25
+        // Other cRatio values are uniformly distributed
+        // https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5308205&viewfull=1#post5308205
+        float U = std::max<float>(0.0, std::min<float>(0.333, 1.3 * (2.0 - std::abs(wRatio - 1)) - 1.96));
+
+        bool bernoulli = tpzrand::GetRandomNumber(0.0f, 1.0f) < U ? true : false;
+
+        if (bernoulli)
+        {
+            pDIF = std::round(wRatio);
+        } else 
+        {
+            pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+        }
 
         pDIF = std::clamp<float>(pDIF, 0, 3.0);
 
-        // Multiply final val by a random number between 1 and 1.05 
+        // Applies "noise" to the final pDIF, this can push it higher than 3.0, up to a maximum of 3.15
         pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
-
 
         if (isCritical) // Apply any crit damage increases or reductions
         {
@@ -2766,9 +2780,7 @@ namespace battleutils
             pDIF *= ((100 + criticaldamage) / 100.0f);
             //ShowDebug("Crit multiplier from mods: %f\n", (100 + criticaldamage)/100.f);
         }
-
-        //ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
-
+        // ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
         return pDIF;
     }
 
