@@ -1586,6 +1586,7 @@ namespace battleutils
         //get ranged attack value
         uint16 rAttack = 1;
 
+        // Calculating ranged attack value
         if (PAttacker->objtype == TYPE_PC)
         {
             CCharEntity* PChar = (CCharEntity*)PAttacker;
@@ -1595,7 +1596,7 @@ namespace battleutils
             {
                 rAttack = PChar->RATT(PItem->getSkillType(), distance(PChar->loc.p, PDefender->loc.p), PItem->getILvlSkill());
             }
-            else
+            else // thrown
             {
                 PItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
 
@@ -1618,47 +1619,50 @@ namespace battleutils
             rAttack = battleutils::GetMaxSkill(SKILL_ARCHERY, JOB_RNG, PAttacker->GetMLevel());
         }
 
-        float levelCorrection = 1.0f;
-
         float ratio = (float)rAttack / (float)PDefender->DEF();
 
         ratio = std::clamp<float>(ratio, 0, 3);
 
+        // Level correction
+        float cRatio = ratio;
+
         if (PDefender->GetMLevel() > PAttacker->GetMLevel()) {
-            levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel())*0.01f;
-            if (PAttacker->objtype == TYPE_PC && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FLASHY_SHOT))
-            {
-                levelCorrection = 1.03f;
-            }
-            if (levelCorrection < 0.2f)
-                levelCorrection = 0.2f;
-            ratio *= levelCorrection;
+            cRatio = cRatio - (PDefender->GetMLevel() - PAttacker->GetMLevel()) * 0.025f;
         }
 
-        //calculate min/max PDIF
-        float minPdif = 0;
-        float maxPdif = 0;
+        float upperLimit = 3.0f;
+        float lowerLimit = 0.0f;
 
-        maxPdif = ratio * 1.25f;
-        minPdif = maxPdif * 0.675f + 1 / 6;
-        if (minPdif > maxPdif - 0.1f)
-            minPdif = maxPdif - 0.1f;
-
-        minPdif = std::clamp<float>(minPdif, 0, 3);
-        maxPdif = std::clamp<float>(maxPdif, 0, 3);
+        if (cRatio < 0.9f)
+            upperLimit = cRatio * (10.0f/9.0f);
+        else if (cRatio < 1.1f)
+            upperLimit = 1.0f;
+        else if (cRatio <= 3.0f)
+            upperLimit = cRatio;
+        
+        if (cRatio < 0.9f)
+            lowerLimit = cRatio;
+        else if (cRatio < 1.1f)
+            lowerLimit = 1.0f;
+        else if (cRatio <= 3.0f)
+            lowerLimit = cRatio * (20.0f/19.0f) - (3.0f/19.0f);
 
         //return random number between the two
-        float pdif = tpzrand::GetRandomNumber(minPdif, maxPdif);
+        float pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+
+        pDIF = std::clamp<float>(pDIF, 0, 3);
 
         if (isCritical)
         {
-            pdif *= 1.25;
+            pDIF *= 1.25;
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) + PAttacker->getMod(Mod::RANGED_CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
-            pdif *= ((100 + criticaldamage) / 100.0f);
+            pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
-        return pdif;
+        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
+
+        return pDIF;
     }
 
     int16 CalculateBaseTP(int delay)
@@ -2521,17 +2525,21 @@ namespace battleutils
             // Cold Carrion Broth / Meat Broth / Warm Meat Broth / Tree Sap / Scarlet Sap / Fish Broth / Fish Oil Broth / Seedbed Soil / Sun Water /
             // Grasshopper Broth / Noisy Grasshopper Broth / Mole Broth / Lively Mole Broth / Blood Broth / Clear Blood Broth / Antica Broth / Fragrant Antica Broth
 
-            int32 maxHitRate = 99;
-            auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+            // Before 2016, this value is 95. After, it should be 99
+            // https://www.bg-wiki.com/index.php?title=Hit_Rate&oldid=167680
+            int32 maxHitRate = 95;
 
-            // As far as I can tell kick attacks fall under Hand-to-Hand so ignoring them and letting them go to 99
-            bool isOffhand = attackNumber == 1;
-            bool isTwoHanded = targ_weapon && targ_weapon->isTwoHanded();
+            // If server is based in 2016 or later, uncomment the code below.
+            // auto targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
 
-            if (isOffhand || isTwoHanded)
-            {
-                maxHitRate = 95;
-            }
+            // // As far as I can tell kick attacks fall under Hand-to-Hand so ignoring them and letting them go to 99
+            // bool isOffhand = attackNumber == 1;
+            // bool isTwoHanded = targ_weapon && targ_weapon->isTwoHanded();
+
+            // if (isOffhand || isTwoHanded)
+            // {
+            //     maxHitRate = 95;
+            // }
 
             hitrate = std::clamp(hitrate, 20, maxHitRate);
         }
@@ -2671,7 +2679,7 @@ namespace battleutils
 
     /************************************************************************
     *                                                                       *
-    *   Formula for calculating damage ratio                                *
+    *   Formula for calculating damage ratio (pDIF)                         *
     *                                                                       *
     ************************************************************************/
 
@@ -2682,68 +2690,97 @@ namespace battleutils
             attPercentBonus = PAttacker->ATT() * bonusAttPercent;
 
         float ratio = (float)(PAttacker->ATT() + attPercentBonus) / (float)((PDefender->DEF() == 0) ? 1 : PDefender->DEF());
-        float cRatioMax = 0;
-        float cRatioMin = 0;
-        float ratioCap = 4.0f;
-        float levelCorrection = 1.0f;
+        // Using 2013 model since it is the most up-to-date and tested version of the one used in 75 era
+        // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
+        // Note that only player autoattacks use this function, weaponskill pDIF is calculated in scripts/global/weaponskills.lua
+        float ratioCap = 2.25f;
 
         ratio = std::clamp<float>(ratio, 0, ratioCap);
+
         float cRatio = ratio;
+        // Level correction
         if (PAttacker->objtype == TYPE_PC)
         {
             if (PAttacker->GetMLevel() < PDefender->GetMLevel())
             {
-                levelCorrection = 1.0f + (PAttacker->GetMLevel() - PDefender->GetMLevel()) * 0.02f;
-                if (levelCorrection < 0.2f)
-                    levelCorrection = 0.2f;
-                cRatio *= levelCorrection;
+                cRatio = cRatio - (PDefender->GetMLevel() - PAttacker->GetMLevel()) * 0.05f;
             }
         }
         else
         {
+            // TODO: This was left untouched in a rewrite of this function, unsure where this is sourced from
+            // or which entities it is used for. Possibly needs double checked for accuracy if it's mob or pet cRatio 
             if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
                 cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
             }
         }
 
-        if (isCritical)
-        {
-            cRatio += 1;
-        }
-
         cRatio = std::clamp<float>(cRatio, 0, ratioCap);
 
-        cRatioMax = cRatio * 1.25f;
-        cRatioMin = cRatioMax * 0.675f + 1 / 6;
-        if (cRatioMax > 2.75f)
-            cRatioMax = 2.75f;
-        if (!isCritical && cRatioMin > cRatioMax - 0.1f)
-            cRatioMin = cRatioMax - 0.1f;
-        if (isCritical && cRatioMin > cRatioMax)
-            cRatioMin = cRatioMax;
-
-        //ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... level correction was %f\n", cRatioMin, cRatioMax, cRatio, levelCorrection);
-
-        float pDIF = 1.0f;
-        if (cRatioMin == cRatioMax)
-        {
-            pDIF = cRatioMax;
-        }
-        else
-        {
-            if (cRatioMin < 0)
-                cRatioMin = 0;
-            pDIF = tpzrand::GetRandomNumber(cRatioMin, cRatioMax);
-        }
-
+        // Using Motenten's model
+        float wRatio = cRatio;
+        float upperLimit = 3.25f;
+        float lowerLimit = 0.0f;
         if (isCritical)
+        {
+            wRatio += 1;
+        }
+
+        if (wRatio < 0.5f)
+            upperLimit = wRatio + 0.5f;
+        else if (wRatio < 0.7f)
+            upperLimit = 1.0f;
+        else if (wRatio < 1.2f)
+            upperLimit = wRatio + 0.3f;
+        else if (wRatio < 1.5f)
+            upperLimit = (wRatio * 0.25f) + wRatio;
+        else if (wRatio < 2.625f)
+            upperLimit = wRatio + 0.375f;
+        else if (wRatio <= 3.25f)
+            upperLimit = 3.0f;
+
+        if (wRatio < 0.38f)
+            lowerLimit = 0.0f;
+        else if (wRatio < 1.25f)
+            lowerLimit = wRatio * (1176.0f/1024.0f) - (448.0f/1024.0f);
+        else if (wRatio < 1.51f)
+            lowerLimit = 1.0f;
+        else if (wRatio < 2.44f)
+            lowerLimit = wRatio * (1176.0f/1024.0f) - (755.0f/1024.0f);
+        else if (wRatio <= 3.25f)
+            lowerLimit = wRatio - 0.375f;
+
+        float pDIF = 0.0f;
+
+        // Bernoulli distribution, applied for cRatio < 0.5 and 0.75 < cRatio < 1.25
+        // Other cRatio values are uniformly distributed
+        // https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5308205&viewfull=1#post5308205
+        float U = std::max<float>(0.0, std::min<float>(0.333, 1.3 * (2.0 - std::abs(wRatio - 1)) - 1.96));
+
+        bool bernoulli = tpzrand::GetRandomNumber(0.0f, 1.0f) < U ? true : false;
+
+        if (bernoulli)
+        {
+            pDIF = std::round(wRatio);
+        } else 
+        {
+            pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
+        }
+
+        pDIF = std::clamp<float>(pDIF, 0, 3.0);
+
+        // Applies "noise" to the final pDIF, this can push it higher than 3.0, up to a maximum of 3.15
+        pDIF = pDIF * tpzrand::GetRandomNumber(1.0f, 1.05f);
+
+        if (isCritical) // Apply any crit damage increases or reductions
         {
             int16 criticaldamage = PAttacker->getMod(Mod::CRIT_DMG_INCREASE) - PDefender->getMod(Mod::CRIT_DEF_BONUS);
             criticaldamage = std::clamp<int16>(criticaldamage, 0, 100);
             pDIF *= ((100 + criticaldamage) / 100.0f);
+            //ShowDebug("Crit multiplier from mods: %f\n", (100 + criticaldamage)/100.f);
         }
-
+        // ShowDebug("wRatio: %f ... pdif min: %f ... pdif max: %f ... pDIF final: %f\n", wRatio, lowerLimit, upperLimit, pDIF);
         return pDIF;
     }
 
@@ -2777,9 +2814,10 @@ namespace battleutils
         else if (dif >= -21) {
             fstr = static_cast<int32>((dif + 12) / 2);
         }
-        else {
+        else { // >= -22
             fstr = static_cast<int32>((dif + 13) / 2);
         }
+
         if (SlotID == SLOT_RANGED)
         {
             rank = PAttacker->GetRangedWeaponRank();
@@ -2793,7 +2831,7 @@ namespace battleutils
             else
                 return 2 * (rank + 8);
         }
-        else
+        else // melee
         {
             fstr /= 2;
             if (SlotID == SLOT_MAIN)

@@ -12963,7 +12963,7 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 *  Function: getRACC()
 *  Purpose : Calculates and returns the Ranged Accuracy of a Weapon euipped in the Ranged slot
 *  Example : player:getRACC()
-*  Notes   : To Do: The calculation is already a public member of battleentity, shouldn't have two calculations, just call (CBattleEntity*)m_PBaseEntity)->RACC and return result
+*  Notes   : Uses the RACC member of CBattleEntity for calculation
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
@@ -12989,17 +12989,7 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
     if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
         skilltype = SKILL_AUTOMATON_RANGED;
 
-    uint16 skill = PEntity->GetSkill(skilltype);
-    if (skilltype == SKILL_AUTOMATON_RANGED)
-        skill = PEntity->PMaster->GetSkill(skilltype);
-    uint16 acc = skill;
-
-    if (skill > 200) {
-        acc = (int)(200 + (skill - 200) * 0.9);
-    }
-    acc += PEntity->getMod(Mod::RACC);
-    acc += PEntity->AGI() / 2;
-    acc += std::min<int16>(((100 + PEntity->getMod(Mod::FOOD_RACCP)) * acc / 100), PEntity->getMod(Mod::FOOD_RACC_CAP));
+    uint16 acc = PEntity->RACC(skilltype, 0);
 
     lua_pushinteger(L, acc);
     return 1;

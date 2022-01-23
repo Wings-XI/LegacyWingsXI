@@ -542,6 +542,7 @@ local loot =
         {
             {itemid = 65535, droprate = 1000, amount = 24000}, -- Gil
         },
+        {
             {itemid = 1473, droprate = 813}, -- High-quality Scorpion Shell
             {itemid = 13552, droprate = 55}, -- Serket Ring
             {itemid = 901, droprate = 123}, -- Venomous Claw
