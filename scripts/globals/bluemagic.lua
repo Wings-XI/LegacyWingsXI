@@ -170,25 +170,27 @@ function BluePhysicalSpell(caster, target, spell, params)
         else
             params.offcratiomod = skill + 15
         end
-        if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
-            local capskill = (params.spellLevel + 16)*276/75
-            local capattack = 0
-            if capskill > 200 then
-                capattack = 215 + (capskill-200)*0.9
-            else
-                capattack = capskill + 15
-            end
-            capattack = capattack + (skill - capskill)*0.66
-            params.offcratiomod = params.offcratiomod > capattack and capattack or params.offcratiomod
-        end
+        -- Can't find any evidence for this atm 
+        -- if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
+        --     local capskill = (params.spellLevel + 16)*276/75
+        --     local capattack = 0
+        --     if capskill > 200 then
+        --         capattack = 215 + (capskill-200)*0.9
+        --     else
+        --         capattack = capskill + 15
+        --     end
+        --     capattack = capattack + (skill - capskill)*0.66
+        --     params.offcratiomod = params.offcratiomod > capattack and capattack or params.offcratiomod
+        -- end
         -- https://ffxiclopedia.fandom.com/wiki/Talk:Physical_Potency need to go to talk page because the main page is saying only +accuracy and nobody ever fixed it
     end
-    params.offcratiomod = params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100
+    params.offcratiomod =  params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100 + math.floor(caster:getStat(tpz.mod.STR))
 
     params.bonusacc = params.bonusacc == nil and 0 or params.bonusacc
     params.critchance = params.critchance == nil and 0 or utils.clamp(params.critchance + caster:getStat(tpz.mod.DEX)/2 - target:getStat(tpz.mod.AGI)/2, 5, 65) / 100
+    local isCritical = math.random() < params.critchance
 
-    local cratio = BluecRatio(params.offcratiomod / target:getStat(tpz.mod.DEF), caster:getMainLvl(), target:getMainLvl(), params.attackType == tpz.attackType.RANGED)
+    local cratio = BluecRatio(params.offcratiomod / target:getStat(tpz.mod.DEF), caster:getMainLvl(), target:getMainLvl(), isCritical, params.attackType == tpz.attackType.RANGED)
     local hitrate = BlueGetHitRate(caster, target, true, params.bonusacc)
 
     -- print("pdifmin "..cratio[1].." pdifmax "..cratio[2])
@@ -208,11 +210,8 @@ function BluePhysicalSpell(caster, target, spell, params)
             local DBonusFromSA = 0
             pdif = pdif/1000
 
-            if isSneakValid or math.random() < params.critchance then
-                pdif = pdif + 0.7 -- force crit
-                if isSneakValid and caster:getMainJob() == tpz.job.THF then
-                    DBonusFromSA = caster:getStat(tpz.mod.DEX) * (1 + caster:getMod(tpz.mod.SNEAK_ATK_DEX)/100) * (100+(caster:getMod(tpz.mod.AUGMENTS_SA)))/100
-                end
+            if isSneakValid and caster:getMainJob() == tpz.job.THF then
+                DBonusFromSA = caster:getStat(tpz.mod.DEX) * (1 + caster:getMod(tpz.mod.SNEAK_ATK_DEX)/100) * (100+(caster:getMod(tpz.mod.AUGMENTS_SA)))/100
             end
             if taChar and caster:getMainJob() == tpz.job.THF and hitsdone == 0 then
                 DBonusFromSA = DBonusFromSA + caster:getStat(tpz.mod.AGI) * (1 + caster:getMod(tpz.mod.TRICK_ATK_AGI)/100) * (100+(caster:getMod(tpz.mod.AUGMENTS_TA)))/100
@@ -425,38 +424,122 @@ function BlueGetWsc(attacker, params)
 end
 
 -- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
-function BluecRatio(ratio, atk_lvl, def_lvl, isRanged)
-    local levelcor = 1 + (atk_lvl - def_lvl)*0.02
-    if isRanged == true then levelcor = 1 + (atk_lvl - def_lvl)*0.01 end
-    if levelcor > 1 then levelcor = 1
-    elseif levelcor < 0.2 then levelcor = 0.2 end
-    ratio = ratio * levelcor
-    ratio = utils.clamp(ratio, 0, 4.0)
-    --print(string.format("blue cratio = %f",ratio))
+function BluecRatio(ratio, atk_lvl, def_lvl, isCritical, isRanged)
+    local pDIF = {}
 
-    local pdifmin = 0
-    local pdifmax = 0
+    if isRanged then
+        local ratioCap = 3.0
 
-    pdifmax = ratio * 1.25
-	if pdifmax < 0.15 then
-		pdifmax = 0.15
-	end
+        ratio = utils.clamp(ratio, 0, ratioCap)
 
-    pdifmin = pdifmax * 0.675 + 1/6
-    if pdifmax > 2.75 then
-        pdifmax = 2.75
+        local cRatio = ratio
+
+        -- level correction
+        if atk_lvl < def_lvl then
+            cRatio = ratio - (def_lvl - atk_lvl) * 0.025
+        end
+
+        local upperLimit = 3.0
+        if cRatio < 0.9 then
+            upperLimit = cRatio * 10.0/9.0
+        elseif cRatio < 1.1 then
+            upperLimit = 1.0
+        elseif cRatio < 3.0 then
+            upperLimit = cRatio
+        end
+    
+        local lowerLimit = 0.0
+        if cRatio < 0.9 then
+            lowerLimit = cRatio
+        elseif cRatio < 1.1 then
+            lowerLimit = 1.0
+        elseif cRatio < 3.0 then
+            lowerLimit = cRatio * (20.0/19.0) - (3.0/19.0)
+        end
+
+        pDIF[1] = lowerLimit
+        pDIF[2] = upperLimit
+
+        if isCritical then
+            -- Ranged attacks get pDIF * 1.25
+            pDIF[1] = pDIF[1] * 1.25
+            pDIF[2] = pDIF[2] * 1.25
+        end
+    else -- melee calc
+        local ratioCap = 2.25
+        ratio = utils.clamp(ratio, 0, ratioCap)
+        local cRatio = ratio;
+
+        if atk_lvl < def_lvl then
+            cRatio = cRatio - (def_lvl - atk_lvl) * 0.05
+        end
+
+        cRatio = utils.clamp(cRatio, 0, ratioCap)
+
+        -- Using Montenten's model
+        local wRatio = cRatio
+
+        if (isCritical) then
+            wRatio = wRatio + 1
+        end
+
+        local upperLimit = 3.25
+        local lowerLimit = 0.0
+
+        if (wRatio < 0.5) then
+            upperLimit = wRatio + 0.5
+        elseif (wRatio < 0.7) then
+            upperLimit = 1.0
+        elseif (wRatio < 1.2) then
+            upperLimit = wRatio + 0.3
+        elseif (wRatio < 1.5) then
+            upperLimit = (wRatio * 0.25) + wRatio
+        elseif (wRatio < 2.625) then
+            upperLimit = wRatio + 0.375
+        elseif (wRatio <= 3.25) then
+            upperLimit = 3.0
+        end
+        upperLimit = utils.clamp(upperLimit, 0, 3.0)
+
+        if (wRatio < 0.38) then
+            lowerLimit = 0.0
+        elseif (wRatio < 1.25) then
+            lowerLimit = wRatio * (1176.0/1024.0) - (448.0/1024.0)
+        elseif (wRatio < 1.51) then
+            lowerLimit = 1.0
+        elseif (wRatio < 2.44) then
+            lowerLimit = wRatio * (1176.0/1024.0) - (755.0/1024.0)
+        elseif (wRatio <= 3.25) then
+            lowerLimit = wRatio - 0.375
+        end
+        lowerLimit = utils.clamp(lowerLimit, 0, 3.0)
+
+        pDIF[1] = lowerLimit
+        pDIF[2] = upperLimit
+
+        -- Bernoulli distribution, applied for cRatio < 0.5 and 0.75 < cRatio < 1.25
+        -- Other cRatio values are uniformly distributed
+        -- https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5308205&viewfull=1#post5308205
+        local U = math.max(0.0, math.min(0.333, 1.3 * (2.0 - math.abs(wRatio - 1)) - 1.96))
+
+        local bernoulli = false
+
+        if (math.random() < U) then
+            bernoulli = true
+        end
+
+        if (bernoulli) then
+            local roundedRatio = math.floor(wRatio + 0.5) -- equivalent to rounding
+            pDIF[1] = roundedRatio
+            pDIF[2] = roundedRatio
+        end
+        -- Add 0-5% "noise"
+        local noise = math.random(100, 105)/100
+        pDIF[1] = pDIF[1] * noise
+        pDIF[2] = pDIF[2] * noise
     end
-    if pdifmin > pdifmax - 0.1 then
-        pdifmin = pdifmax - 0.1
-    end
 
-    --print(pdifmin)
-    --print(pdifmax)
-
-    local cratio = {}
-    cratio[1] = pdifmin
-    cratio[2] = pdifmax
-    return cratio
+    return pDIF
 end
 
 -- Gets the fTP multiplier by applying 2 straight lines between ftp1-ftp2 and ftp2-ftp3
