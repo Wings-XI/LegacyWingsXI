@@ -170,7 +170,7 @@ function BluePhysicalSpell(caster, target, spell, params)
         else
             params.offcratiomod = skill + 15
         end
-        -- Can't find any evidence for this atm 
+        -- Can't find evidence that any of this is necessary.
         -- if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
         --     local capskill = (params.spellLevel + 16)*276/75
         --     local capattack = 0
