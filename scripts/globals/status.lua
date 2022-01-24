@@ -1087,8 +1087,8 @@ tpz.mod =
     DMGPHYS                   = 161, -- Physical Damage Taken %
     DMGPHYS_II                = 190, -- Physical Damage Taken II % (Burtgang)
     DMGBREATH                 = 162, -- Breath Damage Taken %
-    DMGMAGIC                  = 163, -- Magic Damage Taken %
-    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Aegis)
+    DMGMAGIC                  = 163, -- Magic Damage Taken % (Used with 2010 Era Aegis)
+    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Used with OOE Aegis, and Lvl 99+ Aegis)
     DMGRANGE                  = 164, -- Range Damage Taken %
 
     UDMGPHYS                  = 387, -- Uncapped Damage Multipliers
@@ -1499,6 +1499,8 @@ tpz.mod =
     TP_BONUS                  = 345, --
     SAVETP                    = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, -- Conserve TP trait, random chance between 10 and 200 TP
+
+    WYRMAL_ABJ_KILLER_EFFECT  = 53, -- Wyrmal Abjuration (Crimson/Blood) which makes players susceptible to Dragon Killer effects
 
     -- Rune Fencer
 

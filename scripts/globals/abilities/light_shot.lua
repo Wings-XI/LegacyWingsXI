@@ -58,8 +58,8 @@ function onUseAbility(player, target, ability)
         newEffect:setStartTime(startTime)
     end
 
-    local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
     if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.LULLABYRES) < 100 then
+        local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
         if target:addStatusEffect(tpz.effect.SLEEP_I, 1, 0, duration) then
             ability:setMsg(tpz.msg.basic.JA_ENFEEB_IS)
         else

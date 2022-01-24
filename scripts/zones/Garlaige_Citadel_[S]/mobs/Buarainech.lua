@@ -77,7 +77,7 @@ function onMobFight(mob, target)
 
         if mob:AnimationSub() == 1 then
             -- Retaliation Should Always Be Thunder IV And Instant Cast (https://ffxiclopedia.fandom.com/wiki/Buarainech)
-            if retaliate > 0 and not mob:hasStatusEffect(tpz.effect.SILENCE) then
+            if retaliate > 0 then
                 mob:setMod(tpz.mod.UFASTCAST, 100)
                 mob:castSpell(167)
                 mob:setLocalVar("BRetaliate", 0)
@@ -93,6 +93,10 @@ function onMobFight(mob, target)
                 mob:setLocalVar("LevelUp", 0)
                 mob:setMod(tpz.mod.UFASTCAST, 0)
                 mob:AnimationSub(0)
+            end
+        else
+            if mob:getCurrentAction() ~= 30 then
+                mob:setMod(tpz.mod.UFASTCAST, 0)
             end
         end
     end)
