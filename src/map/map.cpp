@@ -294,7 +294,7 @@ int32 do_init(int32 argc, char** argv)
     {
         do_final(EXIT_FAILURE);
     }
-    Sql_Keepalive(SqlHandle);
+    Sql_Keepalive(SqlHandle, "map");
 
     // crash recovery, save pruned sessions to RAM before clearing SQL
     inCrashRecoveryLoop = false;
@@ -526,7 +526,7 @@ int32 do_sockets(fd_set* rfd, duration next)
         {
             exit(EXIT_FAILURE);
         }
-        Sql_Keepalive(SqlHandle);
+        Sql_Keepalive(SqlHandle, "map");
     }
 
     if (sFD_ISSET(map_fd, rfd))

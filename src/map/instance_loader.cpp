@@ -63,7 +63,7 @@ CInstanceLoader::CInstanceLoader(uint8 instanceid, CZone* PZone, CCharEntity* PR
     {
         do_final(EXIT_FAILURE);
     }
-    Sql_Keepalive(SqlInstanceHandle);
+    Sql_Keepalive(SqlInstanceHandle, "instanceloader_" + std::to_string(instanceid));
 
     task = std::async(std::launch::async, &CInstanceLoader::LoadInstance, this, instance);
 }
