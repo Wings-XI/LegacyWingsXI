@@ -61,6 +61,7 @@ local function checkForWeapon(trade, withCurrency)
     local itemsToCheckFor = {}
     -- create table of traded items, with key/val of itemId/itemQty
     for weaponIndex = 1, 20 do
+        itemsToCheckFor = {}
         table.insert(itemsToCheckFor, BaseNyzulWeapons[weaponIndex])
         if (withCurrency) then
             table.insert(itemsToCheckFor, IMPERIAL_BRONZE_PIECE)
@@ -188,26 +189,21 @@ local function checkForMaterialsAndCurrency(trade)
     local completeMatsAndCurrency = false
     -- check for 6 of any crafting mat
     for material = 1, 5 do
-        printf("checking mats for material %s", materials[material])
         if (npcUtil.tradeHas(trade, {{materials[material], 6}}, false, false)) then
             if (completeMatsAndCurrency == false) then
-                printf("found mats for material %s", materials[material])
                 completeMatsAndCurrency = true
                 -- the index of material corresponds to Head/Body/Hands/Legs/Feet
                 equipSlot = material
             else
                 -- We have found multiple sets of materials - bail out
-                    printf("found extra for material %s", materials[material])
                 equipSlot = 0
                 completeMatsAndCurrency = false
                 return 0, completeMatsAndCurrency
             end
         end
     end
-    printf("getting to final check")
     -- check for 10 IMPERIAL_GOLD_PIECE iff the material check passed
     if (completeMatsAndCurrency and (equipSlot > 0)) then
-        printf("getting to final check 2")
         if (not npcUtil.tradeHasExactly(trade, {{materials[equipSlot], 6},{IMPERIAL_GOLD_PIECE, 10}})) then
             equipSlot = 0
             completeMatsAndCurrency = false
@@ -388,7 +384,6 @@ end
 local function sendEventUpdateForSetSelection(player, selectedSet)
     -- ToDo:  There is another updateEvent we can send which triggers "It appears you already have this armor on your person." - perhaps this for players who have completed an entire armor set?
     local currentSet = player:getCharVar("Ghanraam_CurrentSet")
-    printf("current %s selected %s", currentSet, selectedSet)
     if (currentSet == 0) then
         -- no selected set - good to go - return param 1 as 0
         player:setCharVar("Ghanraam_CurrentSet", selectedSet)
@@ -440,8 +435,6 @@ local function sendEventUpdateForArmor(player)
 end
 
 function onEventUpdate(player, csid, option)
-    printf("onEventUpdate csid %s option %s", csid, option)
-
     if (csid == 815 and option == 1) then
         -- selected Ares
        sendEventUpdateForSetSelection(player, 1)
@@ -511,7 +504,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    printf("onEventFinish csid %s option %s", csid, option)
     if (csid == 814) then
         player:setCharVar("Ghanraam_BasicIntro", 1)
     elseif (csid == 893) then
