@@ -159,7 +159,9 @@ function BluePhysicalSpell(caster, target, spell, params)
     local chainAffinity = caster:getStatusEffect(tpz.effect.CHAIN_AFFINITY)
     if azureLore ~= nil then
         multiplier = params.azuretp
-        atkMulti = params.azureatt
+        if (params.azureatt ~= nil) then
+            atkMulti = params.azureatt
+        end
     elseif chainAffinity ~= nil then
         -- Calculate the total TP available for the fTP multiplier.
         local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
@@ -567,7 +569,7 @@ function BluefTP(tp, ftp0, ftp15, ftp30)
     if tp >= 0 and tp <= 3000 then
         return ftp0 + (ftp15 - ftp0) * math.min(tp, 1500)/1500 + (ftp30-ftp15) * math.min(0, tp-1500)/1500
     else
-        print("blue fTP error: TP value is not between 0-3000!")
+        --print("blue fTP error: TP value is not between 0-3000!")
     end
     return 1 -- no ftp mod
 end
