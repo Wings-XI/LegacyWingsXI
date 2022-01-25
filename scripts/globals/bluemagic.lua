@@ -141,7 +141,7 @@ function BluePhysicalSpell(caster, target, spell, params)
         if multiplier ~= nil then multiplier = multiplier + correl end
         if params.tp150 ~= nil then params.tp150 = params.tp150 + correl end
         if params.tp300 ~= nil then params.tp300 = params.tp300 + correl end
-        print(string.format("monster family correl was %f",correl))
+        --print(string.format("monster family correl was %f",correl))
     end
 
     -- If under CA, replace multiplier with fTP(multiplier, tp150, tp300)
