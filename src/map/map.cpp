@@ -953,7 +953,8 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         // for non-ordered, they will be randomized so that entities update somewhat uniformly
         std::deque<CBasicPacket*> priority0;   // char's own actions
         std::deque<CBasicPacket*> priority1;   // actions performed on char by enemies/party/alliance, tells/party chat
-        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities, party list updates
+        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities
+        std::deque<CBasicPacket*> partyList;   // party list updates. the packets in this list REMAIN IN ORDER and are between prio2 and 3. uses prio num 25 (like "2.5")
         std::deque<CBasicPacket*> priority3;   // positional updates of party/alliance (chance to hop to prio1)
         std::deque<CBasicPacket*> priority4;   // actions performed on party/alliance by enemies
         std::deque<CBasicPacket*> priority5;   // 
@@ -1984,19 +1985,18 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0xC8:
                     {
                         // party list reload packet. fixed size
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0x76:
                     case 0xDD:
                     {
-                        // party effect icons update
+                        // party effect icons update/party member update packet (job,hp,mp,etc)
                         // this is a fairly large packet; sadly no way to optimize its prio since the client doesn't send a packet notifying server of /focustarget
-
-                        // and: party member update packet (job,hp,mp,etc)
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0xA0:
@@ -2068,6 +2068,9 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     break;
                 case 2:
                     priority2.push_back(PSmallPacket);
+                    break;
+                case 25: // "2.5"
+                    partyList.push_back(PSmallPacket);
                     break;
                 case 3:
                     priority3.push_back(PSmallPacket);
@@ -2146,6 +2149,11 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         {
             orderedList.push_back(priority2.front());
             priority2.pop_front();
+        }
+        while (!partyList.empty())
+        {
+            orderedList.push_back(partyList.front());
+            partyList.pop_front();
         }
         while (!priority3.empty())
         {
