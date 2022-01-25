@@ -131,7 +131,7 @@ function BluePhysicalSpell(caster, target, spell, params)
     local WSC = BlueGetWsc(caster, params) -- ex. params.str_wsc of 0.2 = 20% STR added to base dmg
     if caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then WSC = WSC * 2 end
     local multiplier = params.multiplier -- a.k.a. ftp0
-    print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
+    -- print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
 
     -- monster correlation affects fTP mults
     local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
@@ -473,7 +473,7 @@ function BluefTP(tp, ftp1, ftp2, ftp3)
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
         return ftp2 + ((ftp3-ftp2)/100) * ((tp-1500) / 10)
     else
-        print("blue fTP error: TP value is not between 0-3000!")
+        -- print("blue fTP error: TP value is not between 0-3000!")
     end
     return 1 -- no ftp mod
 end
