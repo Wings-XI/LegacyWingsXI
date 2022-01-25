@@ -800,7 +800,7 @@ INSERT INTO `mob_skills` VALUES(1132, 321, 'oblivion_smash', 1, 18.0, 2000, 1500
 INSERT INTO `mob_skills` VALUES(1133, 322, 'oblivion_smash', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1134, 323, 'tera_slash', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1135, 324, 'tera_slash', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1146, 304, 'hecatomb_wave', 0, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1146, 304, 'hecatomb_wave', 0, 25.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1148, 311, 'condemnation', 4, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1149, 313, 'quadrastrike', 0, 7.0, 2000, 1600, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1151, 314, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
