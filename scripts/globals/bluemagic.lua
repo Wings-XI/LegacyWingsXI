@@ -125,13 +125,20 @@ function BluePhysicalSpell(caster, target, spell, params)
     -- http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
 
     local D =  math.floor((caster:getSkillLevel(tpz.skill.BLUE_MAGIC) * 0.11)) * 2 + 3
+
     if D > params.duppercap then D = params.duppercap end
 
-    local fStr = BluefSTR(caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT))
+    -- Melee is fSTR and ranged is fSTR2
+    local fStr = 0
+    if params.attackType == tpz.attackType.RANGED then
+        fStr = BluefSTR2(caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT))
+    else
+        fStr = BluefSTR(caster:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT))
+    end
     local WSC = BlueGetWsc(caster, params) -- ex. params.str_wsc of 0.2 = 20% STR added to base dmg
     if caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) then WSC = WSC * 2 end
     local multiplier = params.multiplier -- a.k.a. ftp0
-    print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
+    -- print(caster:getMod(tpz.mod.MONSTER_CORRELATION_BONUS))
 
     -- monster correlation affects fTP mults
     local correl = GetMonsterCorrelation(params.eco,GetTargetEcosystem(target))
@@ -141,36 +148,42 @@ function BluePhysicalSpell(caster, target, spell, params)
         if multiplier ~= nil then multiplier = multiplier + correl end
         if params.tp150 ~= nil then params.tp150 = params.tp150 + correl end
         if params.tp300 ~= nil then params.tp300 = params.tp300 + correl end
-        print(string.format("monster family correl was %f",correl))
+        --print(string.format("monster family correl was %f",correl))
     end
 
+    -- For spells like Vertical Cleave that may scale attack by TP
+    -- BLU magic always defaults to att0 for cases where there is an attack penalty
+    local atkMulti = params.att0 ~= nil and params.att0 or 1
     -- If under CA, replace multiplier with fTP(multiplier, tp150, tp300)
     local azureLore = caster:getStatusEffect(tpz.effect.AZURE_LORE)
     local chainAffinity = caster:getStatusEffect(tpz.effect.CHAIN_AFFINITY)
     if azureLore ~= nil then
         multiplier = params.azuretp
+        atkMulti = params.azureatt
     elseif chainAffinity ~= nil then
         -- Calculate the total TP available for the fTP multiplier.
         local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
         if tp > 3000 then tp = 3000 end
 
         multiplier = BluefTP(tp, multiplier, params.tp150, params.tp300)
+        if (params.att0 ~= nil and params.att150 ~= nil and params.att300 ~= nil) then
+            atkMulti = BluefTP(tp, params.att0, params.att150, params.att300)
+        end
     end
 
     local finalD = math.floor(D + fStr + WSC) * multiplier
     --GetPlayerByID(1):PrintToPlayer(string.format("finalD = (D + fSTR + WSC) * mult ... %u = (%u + %u + %u) * %f",finalD,D,fStr,WSC,multiplier))
-
     --print(params.offcratiomod)
-    if params.offcratiomod == nil then -- cannonball uses def (cannonball.lua)
+    if params.offcratiomod == nil then
         -- https://forum.square-enix.com/ffxi/threads/43706-Aug-12-2014-%28JST%29-Version-Update
         -- implies that pre-2014, player attack has NO effect on BLU spell damage. one of the physical spells stated it did more damage based on skill, so let's use that
         local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
         if skill > 200 then
-            params.offcratiomod = 215 + (skill-200)*0.9
+            params.offcratiomod = 215 + (skill-200)*0.9 + caster:getStat(tpz.mod.STR)*0.75
         else
-            params.offcratiomod = skill + 15
+            params.offcratiomod = skill + 15 + caster:getStat(tpz.mod.STR)*0.75
         end
-        -- Can't find evidence that any of this is necessary.
+        -- The only cap seems to be on the D contribution from skill.
         -- if params.spellLevel ~= nil and BLUlvl > params.spellLevel + 16 then
         --     local capskill = (params.spellLevel + 16)*276/75
         --     local capattack = 0
@@ -184,16 +197,15 @@ function BluePhysicalSpell(caster, target, spell, params)
         -- end
         -- https://ffxiclopedia.fandom.com/wiki/Talk:Physical_Potency need to go to talk page because the main page is saying only +accuracy and nobody ever fixed it
     end
-    params.offcratiomod =  params.offcratiomod * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100 + math.floor(caster:getStat(tpz.mod.STR))
+    params.offcratiomod = (params.offcratiomod) * (caster:getMerit(tpz.merit.PHYSICAL_POTENCY)+100)/100
 
     params.bonusacc = params.bonusacc == nil and 0 or params.bonusacc
+    -- 0 if a BLU spell isn't supposed to crit and calculates the crit chance otherwise
     params.critchance = params.critchance == nil and 0 or utils.clamp(params.critchance + caster:getStat(tpz.mod.DEX)/2 - target:getStat(tpz.mod.AGI)/2, 5, 65) / 100
+    -- Used to determine if the calculated cRatio should be for a critical hit or not
     local isCritical = math.random() < params.critchance
-
-    local cratio = BluecRatio(params.offcratiomod / target:getStat(tpz.mod.DEF), caster:getMainLvl(), target:getMainLvl(), isCritical, params.attackType == tpz.attackType.RANGED)
     local hitrate = BlueGetHitRate(caster, target, true, params.bonusacc)
 
-    -- print("pdifmin "..cratio[1].." pdifmax "..cratio[2])
 
     -------------------------
     --     Attack Loop     --
@@ -206,6 +218,9 @@ function BluePhysicalSpell(caster, target, spell, params)
 
     while hitsdone < params.numhits do
         if isSneakValid or math.random() < hitrate then
+            local cratio = BluecRatio((params.offcratiomod * atkMulti) / target:getStat(tpz.mod.DEF), caster:getMainLvl(),
+                                    target:getMainLvl(), isCritical or isSneakValid, params.attackType == tpz.attackType.RANGED)
+
             local pdif = math.random((cratio[1]*1000), (cratio[2]*1000))
             local DBonusFromSA = 0
             pdif = pdif/1000
@@ -481,6 +496,7 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isCritical, isRanged)
 
         if (isCritical) then
             wRatio = wRatio + 1
+            --print(string.format("crit"))
         end
 
         local upperLimit = 3.25
@@ -533,7 +549,7 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isCritical, isRanged)
             pDIF[1] = roundedRatio
             pDIF[2] = roundedRatio
         end
-        -- Add 0-5% "noise"
+        -- Add 0-5% "noise" on top of the pDIF
         local noise = math.random(100, 105)/100
         pDIF[1] = pDIF[1] * noise
         pDIF[2] = pDIF[2] * noise
@@ -542,24 +558,42 @@ function BluecRatio(ratio, atk_lvl, def_lvl, isCritical, isRanged)
     return pDIF
 end
 
--- Gets the fTP multiplier by applying 2 straight lines between ftp1-ftp2 and ftp2-ftp3
+-- Gets the fTP multiplier by applying 2 straight lines between ftp0-ftp15 and ftp15-ftp30
 -- tp - The current TP
--- ftp1 - The TP 0% value
--- ftp2 - The TP 150% value
--- ftp3 - The TP 300% value
-function BluefTP(tp, ftp1, ftp2, ftp3)
-    if tp >= 0 and tp < 1500 then
-        return ftp1 + ((ftp2-ftp1)/100) * (tp / 10)
-    elseif tp >= 1500 and tp <= 3000 then
-        -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + ((ftp3-ftp2)/100) * ((tp-1500) / 10)
+-- ftp0 - The TP 0% value
+-- ftp15 - The TP 150% value
+-- ftp30 - The TP 300% value
+function BluefTP(tp, ftp0, ftp15, ftp30)
+    if tp >= 0 and tp <= 3000 then
+        return ftp0 + (ftp15 - ftp0) * math.min(tp, 1500)/1500 + (ftp30-ftp15) * math.min(0, tp-1500)/1500
     else
         print("blue fTP error: TP value is not between 0-3000!")
     end
     return 1 -- no ftp mod
 end
 
+-- Melee fSTR
 function BluefSTR(dSTR)
+    local fSTR2 = 0
+
+    if     dSTR >= 12  then fSTR2 = (dSTR+4)/4
+    elseif dSTR >= 6   then fSTR2 = (dSTR+6)/4
+    elseif dSTR >= 1   then fSTR2 = (dSTR+7)/4
+    elseif dSTR >= -2  then fSTR2 = (dSTR+8)/4
+    elseif dSTR >= -7  then fSTR2 = (dSTR+9)/4
+    elseif dSTR >= -15 then fSTR2 = (dSTR+10)/4
+    elseif dSTR >= -21 then fSTR2 = (dSTR+12)/4
+    else                    fSTR2 = (dSTR+13)/4 end
+
+    -- fSTR for BLU caps at 22
+    -- https://www.bg-wiki.com/ffxi/Calculating_Blue_Magic_Damage
+    if fSTR2 > 22 then fSTR2 = 12 end -- dSTR caps once you have more than 84 STR than the mob's VIT
+    if fSTR2 < -22 then fSTR2 = -22 end -- and the lower bound will be met at 84 STR *under* the mob's VIT
+    return math.floor(fSTR2)
+end
+
+-- Ranged fSTR
+function BluefSTR2(dSTR)
     local fSTR2 = 0
 
     if     dSTR >= 12  then fSTR2 = (dSTR+4)/2
@@ -571,8 +605,10 @@ function BluefSTR(dSTR)
     elseif dSTR >= -21 then fSTR2 = (dSTR+12)/2
     else                    fSTR2 = (dSTR+13)/2 end
 
-    if fSTR2 > 12 then fSTR2 = 12 end -- dSTR caps once you have more than 20 STR than the mob's VIT (equivalent to having a weapon rank 4)
-    if fSTR2 < -4 then fSTR2 = -4 end -- and the lower bound will be met at 20 STR *under* the mob's VIT
+    -- fSTR2 for BLU caps at 44
+    -- https://www.bg-wiki.com/ffxi/Calculating_Blue_Magic_Damage
+    if fSTR2 > 44 then fSTR2 = 44 end
+    if fSTR2 < -44 then fSTR2 = -44 end
     return math.floor(fSTR2)
 end
 

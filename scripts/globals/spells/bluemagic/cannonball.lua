@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_FUSION
     params.spellLevel = 70
     params.numhits = 1
-    params.multiplier = 4.0
-    params.tp150 = 2.5
-    params.tp300 = 3.0
-    params.azuretp = 5.16
+    params.multiplier = 1.75 -- ftp0 as well as the default multi when not using chain affinity
+    params.tp150 = 2.125
+    params.tp300 = 2.75
+    params.azuretp = 2.875
     params.duppercap = 75
     params.str_wsc = 0.5
     params.dex_wsc = 0.0
