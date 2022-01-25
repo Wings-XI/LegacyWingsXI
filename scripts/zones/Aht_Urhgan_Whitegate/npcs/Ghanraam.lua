@@ -15,7 +15,7 @@ require("scripts/globals/npc_util")
                     for this in the dissassembled events or string tables.  Therefore I have implemented Ghanraam to be able to store
                     all 5 armor sets at once.
                     Players must change the active set by talking with Ghranraam to with in order to change what armor set can be retrieved or crafted.
-                    Addition PrintToPlayer messaging can be added if testing finds this to be non-obvious.
+                    Additional PrintToPlayer messaging can be added if testing finds this to be non-obvious.
 
     Potential problem scenario introduced by allowing storage of all 5 sets:
         - Player has Usukane selected as the current armor set
@@ -41,19 +41,19 @@ require("scripts/globals/npc_util")
       - Param 0 - Ares-0/Skadi-1/Usukane-2/Marduk-3/Morrigan-4
       - Param 1 - Head-0/Body-1/Hands-2/Legs-3/Feet-4
       - Param 2 - Message
-        - 0 - Invalid
-        - 1 - "I see you have all the items required for the <set> <slot>." - Perhpas when trading in the last of the 3 piece set
-        - 2 - "This is most certainly armor from the Ruins of Alzadaal. Soon you will have all the items required to create the <set> <slot>." - Perhaps when trading anything _but_ the last of 3 piece set
-        - 3 - "You have yet to bring me all of the necessary items.<07>I will ask for my fee once you have everything ready." - Perhaps if you try to trade currency/mats early?
-        - 4 - "I will require the entire fee all at once, if you would be so kind." - perhaps if the trade doesnt match any material amounts
-        - 5 - "Yes, this should cover my expenses for ordering the <set> <slot>.   I will set the artisans to work at once." - perhaps traded the correct currency
-        - 6 - "Please, I do not wish to cheapen the value of my gallery with multiple displays of the same armor." - Trading armor already stored
-        - 7 - "My gallery is now fit to bursting with rare and wondrous armor.<07>I feel positively dizzy. I suppose it is time for you to prepare my fee." - Perhaps when you trade him all pieces for all armour?
-        - 8 - "These are the items required to create the <set> <slot>.  But it appears, my greedy friend, that you already own this particular part." - Perhaps when you own the item that corresponds to the traded items
-        - 9 - "I have not a single spare display case remaining, I'm afraid. My collection of legendary weapons is perfect and complete!<07>I must say, the daily care of these artifacts is quite demanding...though I do love it so!" - Perhaps when all weapons are traded in
+        - 0  - Invalid
+        - 1  - "I see you have all the items required for the <set> <slot>." - Perhpas when trading in the last of the 3 piece set
+        - 2  - "This is most certainly armor from the Ruins of Alzadaal. Soon you will have all the items required to create the <set> <slot>." - Perhaps when trading anything _but_ the last of 3 piece set
+        - 3  - "You have yet to bring me all of the necessary items.<07>I will ask for my fee once you have everything ready." - Perhaps if you try to trade currency/mats early?
+        - 4  - "I will require the entire fee all at once, if you would be so kind." - perhaps if the trade doesnt match any material amounts
+        - 5  - "Yes, this should cover my expenses for ordering the <set> <slot>.   I will set the artisans to work at once." - perhaps traded the correct currency
+        - 6  - "Please, I do not wish to cheapen the value of my gallery with multiple displays of the same armor." - Trading armor already stored
+        - 7  - "My gallery is now fit to bursting with rare and wondrous armor.<07>I feel positively dizzy. I suppose it is time for you to prepare my fee." - Perhaps when you trade him all pieces for all armour?
+        - 8  - "These are the items required to create the <set> <slot>.  But it appears, my greedy friend, that you already own this particular part." - Perhaps when you own the item that corresponds to the traded items
+        - 9  - "I have not a single spare display case remaining, I'm afraid. My collection of legendary weapons is perfect and complete!<07>I must say, the daily care of these artifacts is quite demanding...though I do love it so!" - Perhaps when all weapons are traded in
         - 10 - "That weapon already graces my gallery, my treasure-hunting friend. I need but one of each!" - When trading a weapon already stored
         - 11 - "This is a weapon found in the ruins!? Simply breathtaking!" - Traded a weapon and accepted (with fee)
-        - 12 - " Like I've told you before, I typically only store pieces of armor in my gallery. The special attention and care a fine weapon requires will cost you an extra <currency>" - Trade a weapon w/o fee
+        - 12 - "Like I've told you before, I typically only store pieces of armor in my gallery. The special attention and care a fine weapon requires will cost you an extra <currency>" - Trade a weapon w/o fee
 ]]
 
 local function checkForWeapon(trade, withCurrency)
