@@ -254,6 +254,11 @@ CCharEntity::CCharEntity()
     lastCastTime = 0;
     nextFishTime = 0;
     fishingToken = 0;
+    fishingStrike[0] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[1] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[2] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[3] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[4] = std::chrono::system_clock::now() - 8760h;
 
     m_ZoneAggroImmunity = server_clock::now() + 12s;
     m_fomorHate = 0;
