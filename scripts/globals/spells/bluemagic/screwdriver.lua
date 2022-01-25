@@ -30,10 +30,10 @@ function onSpellCast(caster, target, spell)
     params.scattr2 = SC_SCISSION
     params.spellLevel = 26
     params.numhits = 1
-    params.multiplier = 3.1
-    params.tp150 = 3.1
-    params.tp300 = 3.1
-    params.azuretp = 3.1
+    params.multiplier = 1.375
+    params.tp150 = 1.375
+    params.tp300 = 1.375
+    params.azuretp = 1.375
     params.duppercap = 27
     params.str_wsc = 0.2
     params.dex_wsc = 0.0
