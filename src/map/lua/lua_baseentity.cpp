@@ -11827,6 +11827,10 @@ inline int32 CLuaBaseEntity::updateEnmityFromCure(lua_State *L)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
+        else if (m_PBaseEntity->objtype == TYPE_PET && ((CPetEntity*)m_PBaseEntity)->m_PetID == PETID_LIGHTSPIRIT)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity); // light spirit attracts cure enmity to itself
+        }
         else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() != PETTYPE_AUTOMATON)
         {
             auto PMaster = static_cast<CPetEntity*>(m_PBaseEntity)->PMaster;
