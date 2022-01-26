@@ -146,7 +146,7 @@ bool CMagicState::Update(time_point tick)
 
         Complete();
     }
-    else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
+    else if (!IsCompleted() && tick > m_lastCancelCheck + 200ms)
     {
         m_lastCancelCheck = tick;
         uint8 validTargets = m_PSpell->getValidTarget();
