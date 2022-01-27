@@ -27,7 +27,65 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.ON_WAY_TO_NASHMAU, 0, 0) -- Earth Time, Vana Hours. Needs a get-time function for boat?
+    local vHour = VanadielHour()
+    local vMin  = VanadielMinute()
+    local rMin  = 0
+    local onwayto = ID.text.ON_WAY_TO_NASHMAU
+    local arrivingsoon = ID.text.ARRIVING_SOON_NASHMAU
+
+    while vHour >= 6 do
+        vHour = vHour - 5
+    end
+
+    if (vHour ==  1) then
+        vHour = 5
+        if vMin < 30 then
+            rMin = 11
+        else
+            rMin = 10
+        end
+    elseif (vHour ==  2) then
+        vHour = 4
+        if vMin < 30 then
+            rMin = 9
+        else
+            rMin = 8
+        end
+    elseif (vHour ==  3) then
+        vHour = 3
+        if vMin < 30 then
+            rMin = 7
+        else
+            rMin = 6
+        end
+    elseif (vHour ==  4) then
+        vHour = 2
+        if vMin < 30 then
+            rMin = 5
+        else
+            rMin = 4
+        end
+    elseif (vHour ==  5) then
+        vHour = 1
+        if vMin < 30 then
+            rMin = 3
+        else
+            rMin = 2
+        end
+    end
+
+    local vMinutes = (vHour * 60) + 40 - vMin
+
+    local message = onwayto
+
+    if (vMinutes <= 30) then
+        message = arrivingsoon
+    elseif (vMinutes < 60) then
+        vHour = 0
+        rMin = 1
+    end
+
+    player:messageSpecial( message, rMin, vHour)
 end
 
 function onEventUpdate(player, csid, option)

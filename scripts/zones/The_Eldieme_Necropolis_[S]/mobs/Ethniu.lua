@@ -19,8 +19,8 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEX, 50)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
-    mob:addMod(tpz.mod.DEFP, 750)
-    mob:addMod(tpz.mod.RATTP, 750)
+    mob:addMod(tpz.mod.DEFP, 450)
+    mob:addMod(tpz.mod.RATTP, 450)
     mob:addMod(tpz.mod.ACC, 150)
     mob:addMod(tpz.mod.EVA, 100)
     -- Adding 10% Triple Since THF
@@ -37,7 +37,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
     -- Adding Resbuild for Stun as it was too potent.
-    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 50)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -63,16 +63,8 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
-    mob:setLocalVar("EFightTimer", (os.time() + 7200000))
-end
 
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("EFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
 
     -- Perfect Dodge
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Ethniu)

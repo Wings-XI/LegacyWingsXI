@@ -596,6 +596,9 @@ local loot =
     [15] =
     {
         {
+            {itemid = 65535, droprate = 1000, amount = 24000}, -- Gil
+        },
+        {
             {itemid = 18378, droprate = 222}, -- Subduer
             {itemid = 17699, droprate = 302}, -- Dissector
             {itemid = 17509, droprate = 245}, -- Destroyers

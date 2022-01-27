@@ -339,6 +339,12 @@ tpz.nyzul_isle_armoury_crates.onTrigger = function(player, npc)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, appraisalMappings[nmCrateID].id)
         end
     else
+        local locked = npc:getLocalVar("Nyzul_ArmouryCrateLock")
+        if (locked > 0) then
+            player:PrintToPlayer("Armoury Crates are locked while players are using the Rune Of Transfer.", 0x1F)
+            return
+        end
+
         local item1 = getTempItemFromCrate(npc, 1)
         local item2 = 0
         if (item1 > 0) then item2 = getTempItemFromCrate(npc, 2) end

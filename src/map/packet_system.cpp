@@ -5234,11 +5234,13 @@ void SmallPacket0x0B6(map_session_data_t* const PSession, CCharEntity* const PCh
         messageContentOffset = 21;
     }
     string_t RecipientName = string_t((const char*)data[recipientNameOffset], 15);
+    string_t MessageContent = string_t((const char*)data[messageContentOffset], data.length() - messageContentOffset);
 
     int8 packetData[64];
     strncpy((char*)packetData + 4, RecipientName.c_str(), RecipientName.length() + 1);
     ref<uint32>(packetData, 0) = PChar->id;
-    CChatMessagePacket* NewMessage = new CChatMessagePacket(PChar, MESSAGE_TELL, (const char*)data[messageContentOffset]);
+    
+    CChatMessagePacket* NewMessage = new CChatMessagePacket(PChar, MESSAGE_TELL, MessageContent);
     if (map_config.audit_chat == 1 && ((map_config.audit_tell == 1) || (PChar->m_logChat)))
     {
         NewMessage->LogChat(RecipientName.c_str(), nullptr);

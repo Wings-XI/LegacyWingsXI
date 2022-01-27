@@ -1433,6 +1433,22 @@ inline int32 CLuaBaseEntity::updateEventString(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: getEventID()
+ *  Purpose : Returns the ID of the player's current event, or -1 if there is not an event
+ *  Example : local eventID = player:getEventID()
+ *  Notes   : Used to determine if a player is in an active event
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getEventID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_event.EventID);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getEventTarget()
 *  Purpose : Returns object data of the NPC in the event
 *  Example : local npc = player:getEventTarget()
@@ -11811,6 +11827,10 @@ inline int32 CLuaBaseEntity::updateEnmityFromCure(lua_State *L)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
+        else if (m_PBaseEntity->objtype == TYPE_PET && ((CPetEntity*)m_PBaseEntity)->m_PetID == PETID_LIGHTSPIRIT)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity); // light spirit attracts cure enmity to itself
+        }
         else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() != PETTYPE_AUTOMATON)
         {
             auto PMaster = static_cast<CPetEntity*>(m_PBaseEntity)->PMaster;
@@ -12947,7 +12967,7 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 *  Function: getRACC()
 *  Purpose : Calculates and returns the Ranged Accuracy of a Weapon euipped in the Ranged slot
 *  Example : player:getRACC()
-*  Notes   : To Do: The calculation is already a public member of battleentity, shouldn't have two calculations, just call (CBattleEntity*)m_PBaseEntity)->RACC and return result
+*  Notes   : Uses the RACC member of CBattleEntity for calculation
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
@@ -12973,17 +12993,7 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
     if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
         skilltype = SKILL_AUTOMATON_RANGED;
 
-    uint16 skill = PEntity->GetSkill(skilltype);
-    if (skilltype == SKILL_AUTOMATON_RANGED)
-        skill = PEntity->PMaster->GetSkill(skilltype);
-    uint16 acc = skill;
-
-    if (skill > 200) {
-        acc = (int)(200 + (skill - 200) * 0.9);
-    }
-    acc += PEntity->getMod(Mod::RACC);
-    acc += PEntity->AGI() / 2;
-    acc += std::min<int16>(((100 + PEntity->getMod(Mod::FOOD_RACCP)) * acc / 100), PEntity->getMod(Mod::FOOD_RACC_CAP));
+    uint16 acc = PEntity->RACC(skilltype, 0);
 
     lua_pushinteger(L, acc);
     return 1;
@@ -17392,7 +17402,7 @@ inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
     charutils::SetCharVar(PChar, "DynaPrep_registrationStartTime", registrationStartTime);
     charutils::SetCharVar(PChar, "DynaPrep_token", token);
     charutils::SetCharVar(PChar, "DynaPrep_originalRegistrant", originalRegistrant);
-    charutils::SetCharVar(PChar, "DynaPrep_bypassWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1) ? 1 : 0);
+    charutils::SetCharVar(PChar, "DynaPrep_inflictWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 2) ? 1 : 0);
 
     return 0;
 }
@@ -18205,6 +18215,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEventString),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEvent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEventString),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,release),
 
