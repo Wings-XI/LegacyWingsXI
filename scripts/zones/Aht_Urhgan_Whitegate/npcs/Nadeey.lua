@@ -8,7 +8,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(251)
+    
+    if (IsCustomToAURingReacquisitionEnabled() > 0) then    -- server configured enablement/disablement of this custom behavior
+        -- if player completed eternal merc, 
+    else
+        player:startEvent(251)
+    end
 end
 
 function onEventUpdate(player, csid, option)

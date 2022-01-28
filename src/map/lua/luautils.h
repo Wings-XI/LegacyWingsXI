@@ -178,6 +178,7 @@ namespace luautils
     int32 GetTextIDVariable(uint16 ZoneID, const char* variable);               // загружаем значение переменной TextID указанной зоны
     uint8 GetSettingsVariable(const char* variable);                            // Gets a Variable Value from Settings.lua
     bool IsContentEnabled(const char* content);                                 // Check if the content is enabled in settings.lua
+    int32 IsCustomToAURingReacquisitionEnabled(lua_State* L);                    // Is Custom ToAU Ring Reacquisition Enabled via server configuration
 
     int32 OnGameDay(CZone* PZone);                                              // Automatic action of NPC every game day
     int32 OnGameHour(CZone* PZone);                                             // Automatic action of NPC every game hour
