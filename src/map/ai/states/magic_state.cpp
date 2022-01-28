@@ -146,7 +146,7 @@ bool CMagicState::Update(time_point tick)
 
         Complete();
     }
-    else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
+    else if (!IsCompleted() && tick > m_lastCancelCheck + 200ms)
     {
         m_lastCancelCheck = tick;
         uint8 validTargets = m_PSpell->getValidTarget();
@@ -248,7 +248,33 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_TOO_FAR_AWAY);
         return false;
     }
-    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
+    if (m_PSpell->getSpellGroup() == SPELLGROUP_BLUE && ((CBlueSpell*)GetSpell())->isPhysical() && m_PSpell->getAOE() == 0 && m_PSpell->getRange() <= 5)
+    {
+        float range = 4.6; // basic short range for physical spells
+
+        // ToDo: This is an approximation that works well enough especially for larger mob sizes like Behemoth
+        // More captures on retail on different mob sizes will help to dial this in
+        switch (PTarget->m_ModelSize)
+        {
+            case 5: 
+                range = 7.1;
+                break;
+            case 4: 
+                range = 6.1;
+                break;
+            case 3:
+            case 2:
+                range = 5.1;
+                break;
+        }
+
+        if (distance(m_PEntity->loc.p, PTarget->loc.p) > range)
+        {
+            m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
+            return false;
+        }
+    }
+    else if(m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
         return false;

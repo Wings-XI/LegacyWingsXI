@@ -159,7 +159,9 @@ function BluePhysicalSpell(caster, target, spell, params)
     local chainAffinity = caster:getStatusEffect(tpz.effect.CHAIN_AFFINITY)
     if azureLore ~= nil then
         multiplier = params.azuretp
-        atkMulti = params.azureatt
+        if (params.azureatt ~= nil) then
+            atkMulti = params.azureatt
+        end
     elseif chainAffinity ~= nil then
         -- Calculate the total TP available for the fTP multiplier.
         local tp = caster:getTP() + caster:getMerit(tpz.merit.ENCHAINMENT)
