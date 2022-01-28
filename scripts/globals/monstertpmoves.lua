@@ -48,12 +48,12 @@ function MobRangedMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffec
 end
 
 function tryParryBlockGuard(mob, target, tpeffect, minRatio, maxRatio, dmg)
-
+    
     -- return value is newDMG, hitLanded
     -- hitLanded is basically for the purpose of if the attack should be considered for shadowbeh later, and also tp generation for defender
-
+    
     local pdif = math.random((minRatio*1000),(maxRatio*1000))/1000
-
+    
     if tpeffect ~= TP_RANGED then
         if math.random()*100 < target:getParryRate(mob) then
             target:trySkillUp(mob, tpz.skill.PARRY, 1)
@@ -70,7 +70,7 @@ function tryParryBlockGuard(mob, target, tpeffect, minRatio, maxRatio, dmg)
             if pdif < 0 then return 0, false end
         end
     end
-
+    
     return dmg*pdif, true
 end
 
@@ -95,7 +95,7 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     local dstr = math.floor((mob:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT)) / 2)
     if dstr < -10 then dstr = -10
     elseif dstr > 26 then dstr = 26 end
-
+    
     local acc = mob:getACC()
     local eva = target:getEVA()
     if target:hasStatusEffect(tpz.effect.YONIN) and mob:isFacing(target, 23) then -- Yonin evasion boost if mob is facing target
@@ -112,12 +112,12 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     if lvldiff < 0 then lvldiff = 0 end
     local ratio = offcratiomod/target:getStat(tpz.mod.DEF) + lvldiff * 0.05
     ratio = utils.clamp(ratio, 0, 4)
-
+    
     --work out hit rate for mobs (bias towards them)
     local hitrate = 75 + acc*accmod - eva + lvldiff*2
     hitrate = utils.clamp(hitrate, 20, 95)
     -- printf("acc: %f, eva: %f, hitrate: %f", acc, eva, hitrate)
-
+    
     local hitdamage = (base + lvldiff) * dmgmod
 
     if tpeffect == TP_DMG_VARIES then hitdamage = hitdamage * MobTPMod(skill:getTP() / 10) end
@@ -181,7 +181,7 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
         finaldmg = 0
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
-
+    
     local returninfo = {}
     returninfo.dmg = finaldmg
     returninfo.hitslanded = hitslanded
@@ -252,7 +252,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
         end
     end
 
-    if accmod and accmod > 0 then
+    if (accMod and accMod > 0) then
         totalAccBonus = totalAccBonus + accmod
     end
 
@@ -261,7 +261,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
-
+    
     local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
     if ramSS > 0 then
         if finaldmg >= ramSS then
@@ -352,7 +352,7 @@ function mobAddBonuses(caster, spell, target, dmg, ele)
     dmg = math.floor(dmg * dayWeatherBonus)
 
     burst = calculateMobMagicBurst(caster, ele, target)
-
+    
     -- todo: damage compensation until +magic acc can be added instead further up the stack
     if burst > 1.0 then
         burst = burst + 0.1
@@ -432,7 +432,7 @@ function MobBreathMove(mob, target, percent, base, element, cap, bonus)
     if bonus == nil then
         bonus = 0
     end
-
+    
     -- Deal bonus damage vs mob ecosystem
     local systemBonus = utils.getSystemStrengthBonus(mob, target)
     damage = damage + (damage * (systemBonus * 0.25))
@@ -449,7 +449,7 @@ function MobBreathMove(mob, target, percent, base, element, cap, bonus)
 
         damage = damage * resist * defense
     end
-
+    
     damage = math.floor(damage * (math.random()/4 + 0.75))
 
     local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
@@ -472,7 +472,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     -- physical attack missed, skip rest
     if skill:hasMissMsg() then return 0 end
-
+    
     if ( target:hasStatusEffect(tpz.effect.PERFECT_DODGE) or target:hasStatusEffect(tpz.effect.TOO_HIGH) ) and attackType == tpz.attackType.PHYSICAL then
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return 0
@@ -488,10 +488,10 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         if skill:isAoE() or skill:isConal() then
             shadowbehav = MobTakeAoEShadow(mob, target, shadowbehav)
         end
-
+        
         if shadowbehav == nil then shadowbehav = 1 end
         dmg, numShadowsUsed = utils.takeShadows(target, dmg, shadowbehav, mob)
-
+        
         if numShadowsUsed == shadowbehav then
             skill:setMsg(tpz.msg.basic.SHADOW_ABSORB)
             return shadowbehav
@@ -508,7 +508,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
         skill:setMsg(tpz.msg.basic.ANTICIPATE)
         return 0
     end
-
+	
 	if attackType == tpz.attackType.PHYSICAL and skill:isSingle() == false and math.random() < 0.7 then -- per wiki, multiattacks have a very high chance to remove TE
         target:delStatusEffect(tpz.effect.THIRD_EYE)
     end
@@ -540,7 +540,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
             local impactres = target:getMod(tpz.mod.IMPACTRES)
             local slashres = target:getMod(tpz.mod.SLASHRES)
             local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
-
+            
             if damageType == tpz.damageType.H2H then
                 if h2hres < 1000 then
                     dmg = dmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
@@ -802,9 +802,9 @@ function MobTakeAoEShadow(mob, target, maxs)
         skillmax = 40
     end
     local currskill = target:getSkillLevel(tpz.skill.NINJUTSU)
-
+    
     local chance = 0.65 * currskill / skillmax
-
+    
     if math.random() < chance then
         maxs = maxs - 1
         if maxs < 1 then
@@ -824,7 +824,7 @@ end
 
 function fTP(tp, ftp1, ftp2, ftp3)
     if tp < 1000 then tp = 1000 end
-
+    
     if tp >= 1000 and tp < 1500 then
         return ftp1 + ((ftp2-ftp1)/500) * (tp-1000)
     elseif tp >= 1500 and tp <= 3000 then
