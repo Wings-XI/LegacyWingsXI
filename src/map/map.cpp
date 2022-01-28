@@ -953,7 +953,8 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         // for non-ordered, they will be randomized so that entities update somewhat uniformly
         std::deque<CBasicPacket*> priority0;   // char's own actions
         std::deque<CBasicPacket*> priority1;   // actions performed on char by enemies/party/alliance, tells/party chat
-        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities, party list updates
+        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities
+        std::deque<CBasicPacket*> partyList;   // party list updates. the packets in this list REMAIN IN ORDER and are between prio2 and 3. uses prio num 25 (like "2.5")
         std::deque<CBasicPacket*> priority3;   // positional updates of party/alliance (chance to hop to prio1)
         std::deque<CBasicPacket*> priority4;   // actions performed on party/alliance by enemies
         std::deque<CBasicPacket*> priority5;   // 
@@ -1333,68 +1334,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                         priorityNum = 12; // PC outside our pt
                         PSmallPacket->priorityNumOverride = 12;
                         break;
-                    }
-                    case 0x39: // visual
-                    {
-                        // if i'm not mistaken, this is very similar to anim packet
-                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
-                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
-                        if (!POwner)
-                        {
-                            priorityNum = 12;
-                            PSmallPacket->priorityNumOverride = 12;
-                            PSmallPacket->recyclePacket = false;
-                            break;
-                        }
-                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
-                        {
-                            priorityNum = -1;
-                            PSmallPacket->priorityNumOverride = -1;
-                            break;
-                        }
-                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
-                        {
-                            priorityNum = 0;
-                            PSmallPacket->priorityNumOverride = 0;
-                            break;
-                        }
-                        if ((POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner)) ||
-                            ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster &&
-                             ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)((CBattleEntity*)POwner)->PMaster))))
-                        { // animation user is my party member or a party member's pet
-                            priorityNum = 2;
-                            PSmallPacket->priorityNumOverride = 2;
-                            break;
-                        }
-                        if (POwner->objtype == TYPE_MOB ||
-                            (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
-                        {
-                            CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
-                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
-                            { // mob is targeting me or my pet
-                                priorityNum = 1;
-                                PSmallPacket->priorityNumOverride = 1;
-                                break;
-                            }
-                            if (POwner->animation == ANIMATION_ATTACK &&
-                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
-                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
-                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
-                            { // mob is targeting my party member or a party member's pet
-                                priorityNum = 4;
-                                PSmallPacket->priorityNumOverride = 4;
-                                break;
-                            }
-                            priorityNum = 11;
-                            PSmallPacket->priorityNumOverride = 11;
-                            break;
-                        }
-                        if (POwner->objtype == TYPE_PC)
-                        {
-                            priorityNum = 12;
-                            PSmallPacket->priorityNumOverride = 12;
-                            break;
-                        }
                     }
                     case 0X0E: // entity update
                     {
@@ -1881,6 +1820,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0x5D: // event string update
                     case 0x65: // self-position (on zone-in or on event finish)
                     case 0x52: // event release
+                    case 0x39: // entity visual
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -2045,19 +1985,18 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0xC8:
                     {
                         // party list reload packet. fixed size
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0x76:
                     case 0xDD:
                     {
-                        // party effect icons update
+                        // party effect icons update/party member update packet (job,hp,mp,etc)
                         // this is a fairly large packet; sadly no way to optimize its prio since the client doesn't send a packet notifying server of /focustarget
-
-                        // and: party member update packet (job,hp,mp,etc)
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0xA0:
@@ -2129,6 +2068,9 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     break;
                 case 2:
                     priority2.push_back(PSmallPacket);
+                    break;
+                case 25: // "2.5"
+                    partyList.push_back(PSmallPacket);
                     break;
                 case 3:
                     priority3.push_back(PSmallPacket);
@@ -2207,6 +2149,11 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         {
             orderedList.push_back(priority2.front());
             priority2.pop_front();
+        }
+        while (!partyList.empty())
+        {
+            orderedList.push_back(partyList.front());
+            partyList.pop_front();
         }
         while (!priority3.empty())
         {

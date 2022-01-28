@@ -11,7 +11,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/magic")
-
+require("scripts/globals/msg")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
     return 0
@@ -22,7 +22,7 @@ function onMobWeaponSkill(target, mob, skill)
     -- Remember if you find a mob using mobskill 604 to update this line with the mob family - or the skill will execute
     -- If a mob using skill 604 for animation is actually part of the tonberry families, perhaps use mobID
     if mob:getFamily() == 83 or mob:getFamily() == 84 or mob:getFamily() == 271 or mob:getFamily() == 87 then 
-        skill:setMsg(tpz.msg.NONE)
+        skill:setMsg(tpz.msg.basic.NONE)
         return 0
     end
 	
