@@ -35,7 +35,7 @@ assaultUtil.missionInfo =
     [IMPERIAL_TREASURE_RETRIEVAL]      = {suggestedLevel = 50, minimumPoints = 1200},
     [BLITZKRIEG]                       = {suggestedLevel = 70, minimumPoints = 1533},
     [MARIDS_IN_THE_MIST]               = {suggestedLevel = 70, minimumPoints = 1333},
-    [AZURE_EXPERIMENTS]                = {suggestedLevel = 70, minimumPoints = 1000},
+    [AZURE_AILMENTS]                   = {suggestedLevel = 70, minimumPoints = 1000},
     [THE_SUSANOO_SHUFFLE]              = {suggestedLevel = 70, minimumPoints = 1500},
     [EXCAVATION_DUTY]                  = {suggestedLevel = 50, minimumPoints = 1100},
     [LEBROS_SUPPLIES]                  = {suggestedLevel = 60, minimumPoints = 1200},
