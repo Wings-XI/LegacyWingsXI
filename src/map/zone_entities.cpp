@@ -1075,7 +1075,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
         }
 
         if (PMob->PAI)
-        PMob->PAI->Tick(tick);
+            PMob->PAI->Tick(tick);
     }
 
     for (EntityList_t::const_iterator it = m_npcList.begin(); it != m_npcList.end(); ++it)
@@ -1104,7 +1104,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
         }
 
         if (PPet->PAI)
-        PPet->PAI->Tick(tick);
+            PPet->PAI->Tick(tick);
 
         if (PPet->status == STATUS_DISAPPEAR)
         {
