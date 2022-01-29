@@ -45,10 +45,20 @@ function onTrigger(player, npc)
         local hasUlthalamsRing = player:hasItem(ULTHALAMS_RING)
         local hasJalzahnsRing = player:hasItem(JALZAHNS_RING)
         local playerHasToauRing = hasBalrahnsRing or hasUlthalamsRing or hasJalzahnsRing
-        local playerHasWaitedConquest = getConquestTally() ~= player:getCharVar("TOAU_RING_REACQ_WAIT")
+        local currentDay = tonumber(os.date("%j")) -- gives the literal day of the year, 1-365 or 366 I guess in leap year
+        local dayRingLastObtained = player:getCharVar("TOAU_RING_REACQ_WAIT")
+        local playerHasWaited28days = false
         local playerToauRingRacqStatus = player:getCharVar("TOAU_RING_REACQ_STATUS")
 
-        if (eternalMercenaryComplete and (not playerHasToauRing) and playerHasWaitedConquest and (playerToauRingRacqStatus == 0)) then
+        if (dayRingLastObtained == 0) then
+            playerHasWaited28days = true -- never got a re-acquired ring
+        elseif ((currentDay - dayRingLastObtained) > 28) then
+            playerHasWaited28days = true -- player has waited 28 days
+        elseif ((currentDay < dayRingLastObtained) and (currentDay + (365 - dayRingLastObtained) > 28)) then 
+            playerHasWaited28days = true -- wrapped around the year change
+        end
+
+        if (eternalMercenaryComplete and (not playerHasToauRing) and playerHasWaited28days and (playerToauRingRacqStatus == 0)) then
             local line2 = string.format("Nadeey : Oh %s, you appear quite upset! What troubles you?", player:getName())
             player:PrintToPlayer("Nadeey : Welcome to Walahra Temple. Our doors are always open to those seeking knowledge.", 0xD)
             player:PrintToPlayer(line2, 0xD)
@@ -98,19 +108,19 @@ function onEventFinish(player, csid, option)
         -- 1 is BALRAHNS_RING
         if npcUtil.giveItem(player, BALRAHNS_RING) then
             player:setCharVar("TOAU_RING_REACQ_STATUS", 0)
-            player:setCharVar("TOAU_RING_REACQ_WAIT", getConquestTally())
+            player:setCharVar("TOAU_RING_REACQ_WAIT", tonumber(os.date("%j")))
         end
     elseif ((csid == 961 or csid == 962) and option == 2) then
         -- 2 is ULTHALAMS_RING
         if npcUtil.giveItem(player, ULTHALAMS_RING) then
             player:setCharVar("TOAU_RING_REACQ_STATUS", 0)
-            player:setCharVar("TOAU_RING_REACQ_WAIT", getConquestTally())
+            player:setCharVar("TOAU_RING_REACQ_WAIT", tonumber(os.date("%j")))
         end
     elseif ((csid == 961 or csid == 962) and option == 3) then
         -- 3 is JALZAHNS_RING
         if npcUtil.giveItem(player, JALZAHNS_RING) then
             player:setCharVar("TOAU_RING_REACQ_STATUS", 0)
-            player:setCharVar("TOAU_RING_REACQ_WAIT", getConquestTally())
+            player:setCharVar("TOAU_RING_REACQ_WAIT", tonumber(os.date("%j")))
         end
     end
 end
