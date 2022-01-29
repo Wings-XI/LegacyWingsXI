@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_TRANSFIXION
     params.spellLevel = 16
     params.numhits = 1
-    params.multiplier = 3.3
-    params.tp150 = 3.7
-    params.tp300 = 4.1
-    params.azuretp = 4.23
+    params.multiplier = 1.25
+    params.tp150 = 1.625
+    params.tp300 = 2.0
+    params.azuretp = 2.125
     params.duppercap = 19
     params.str_wsc = 0.0
     params.dex_wsc = 0.0

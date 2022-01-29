@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_ARCANA
     params.attackType = tpz.damageType.MAGICAL
     params.damageType = tpz.damageType.LIGHTNING
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4.3 or 3.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.375 or 1.375
     params.tMultiplier = 1.0
     params.duppercap = 61
     params.str_wsc = 0.0

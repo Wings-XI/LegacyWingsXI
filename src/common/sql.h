@@ -71,12 +71,12 @@ enum SqlDataType
 
 struct Sql_t
 {
-	std::string buf;
-	MYSQL handle;
-	MYSQL_RES* result;
-	MYSQL_ROW row;
-	unsigned long* lengths;
-	int keepalive;
+    std::string buf;
+    MYSQL handle;
+    MYSQL_RES* result;
+    MYSQL_ROW row;
+    unsigned long* lengths;
+    std::string keepalive_taskname;
     // The connection details (in case we want to reconnect)
     std::string host;
     uint16 port;
@@ -168,7 +168,7 @@ int32 Sql_NextRow(Sql_t* self);
 /// Establishes keepalive (periodic ping) on the connection
 ///
 /// @return the keepalive timer id, or INVALID_TIMER
-int32 Sql_Keepalive(Sql_t* self);
+int32 Sql_Keepalive(Sql_t* self, const std::string& taskname);
 
 /// Gets the data of a column.
 /// The data remains valid until the next row is fetched or the result is freed.

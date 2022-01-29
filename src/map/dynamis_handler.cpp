@@ -309,8 +309,8 @@ int32 CDynamisHandler::DynamisHandleNewPlayer(uint32 charid, bool canLoadNewDyna
         if (success)
         {
             charutils::SetCharVar(charid, "DynaReservationStart", registrationStartTime);
-            if (charutils::GetCharVar(charid, "DynaPrep_bypassWeakness") == 1)
-                charutils::SetCharVar(charid, "DynaBypassWeakness", 1);
+            if (charutils::GetCharVar(charid, "DynaPrep_inflictWeakness") == 1)
+                charutils::SetCharVar(charid, "DynaInflictWeakness", 1);
         }
         return success ? 1 : 0;
     }

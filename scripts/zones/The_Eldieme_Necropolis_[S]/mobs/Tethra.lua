@@ -19,8 +19,8 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DEX, 40)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
-    mob:addMod(tpz.mod.DEFP, 750)
-    mob:addMod(tpz.mod.RATTP, 750)
+    mob:addMod(tpz.mod.DEFP, 375)
+    mob:addMod(tpz.mod.RATTP, 375)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Tethra
     mob:setMod(tpz.mod.EARTHDEF, 170)
@@ -34,7 +34,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
     -- Adding Resbuild for Stun as it was too potent.
-    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 50)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -59,17 +59,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129692&id=18306)
-    mob:setLocalVar("TFightTimer", (os.time() + 7200))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("TFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
-
 
     -- Arena Style Draw-In
     -- Should Draw Into A Single Point In the Room (https://ffxiclopedia.fandom.com/wiki/Tethra)
@@ -155,6 +145,10 @@ function onMobFight(mob, target)
                 mob:setMod(tpz.mod.UFASTCAST, 0)
                 mob:AnimationSub(0)
             end
+        else
+            if mob:getCurrentAction() ~= 30 then
+                mob:setMod(tpz.mod.UFASTCAST, 0)
+            end
         end
     end)
 
@@ -230,10 +224,10 @@ function onMobDisengage(mob)
         mob:setLocalVar("TFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
-    mob:removeListener("PLAYER_ABILITY_USED")
+    mob:removeListener("TEHTRA_WEAPONSKILL_TAKE")
+    mob:removeListener("TEHTRA_TAKE_DAMAGE")
+    mob:removeListener("TEHTRA_MAGIC_TAKE")
+    mob:removeListener("TEHTRA_PLAYER_ABILITY_USED")
 end
 
 function onMobDespawn(mob) 

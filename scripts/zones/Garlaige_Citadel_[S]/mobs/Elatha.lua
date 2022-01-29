@@ -20,8 +20,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DEFP, 0)
     mob:setMod(tpz.mod.RATTP, 0)
     -- Raising Defense As Melee Was Doing Too Much Damage
-    mob:addMod(tpz.mod.DEFP, 850)
-    mob:addMod(tpz.mod.RATTP, 850)
+    mob:addMod(tpz.mod.DEFP, 525)
+    mob:addMod(tpz.mod.RATTP, 525)
     mob:addMod(tpz.mod.ACC, 100)
     -- Resistances Based On https://ffxiclopedia.fandom.com/wiki/Elatha
     mob:setMod(tpz.mod.EARTHDEF, 200)
@@ -36,7 +36,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.ICE_ABSORB, 100)
     mob:setMod(tpz.mod.STUNRES, 99)
     -- Adding Resbuild for Stun as it was too potent.
-    mob:setMod(tpz.mod.RESBUILD_STUN, 33)
+    mob:setMod(tpz.mod.RESBUILD_STUN, 50)
     mob:setMod(tpz.mod.BINDRES, 100)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -61,16 +61,7 @@ function onAdditionalEffect(mob, target, damage)
     end
 end
 
-function onMobEngage(mob, target)
-    -- Set 2 Hour Time Limit (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129696&id=18300)
-    mob:setLocalVar("EFightTimer", (os.time() + 7200))
-end
-
 function onMobFight(mob, target)
-    local fighttimer = mob:getLocalVar("EFightTimer")
-    if os.time() > fighttimer then
-        mob:disengage()
-    end
 
    -- Blood Weapon
     -- Should Be Used Every 5 Minutes, Set to 50% Health As Baseline (https://ffxiclopedia.fandom.com/wiki/Elatha)
@@ -113,10 +104,10 @@ function onMobFight(mob, target)
     mob:addListener("COMBAT_TICK", "ELATHA_CTICK", function(mob)
         local retaliate = mob:getLocalVar("ERetaliate")
         local efollowup = mob:getLocalVar("EBloodWeaponFollow")
-
+        
         if mob:AnimationSub() == 1 then
             -- Retaliation Should Cause Level Up And Always Be Blizzard IV With Instant Cast (https://ffxiclopedia.fandom.com/wiki/Elatha)
-            if retaliate > 0 and not mob:hasStatusEffect(tpz.effect.SILENCE) then
+            if retaliate > 0 then
                 -- Perform Retalitory Blizzard IV
                 mob:setMod(tpz.mod.UFASTCAST, 100)
                 mob:castSpell(152)
@@ -141,6 +132,10 @@ function onMobFight(mob, target)
                 mob:setLocalVar("EBloodWeaponFollow", 0)
                 mob:setMod(tpz.mod.UFASTCAST, 0)
                 mob:AnimationSub(0)
+            end
+        else
+            if mob:getCurrentAction() ~= 30 then
+                mob:setMod(tpz.mod.UFASTCAST, 0)
             end
         end
     end)
@@ -181,9 +176,9 @@ function onMobDisengage(mob)
         mob:setLocalVar("EFightTimer", 0)
         mob:setLocalVar("MobPoof", 1)
     end
-    mob:removeListener("WEAPONSKILL_TAKE")
-    mob:removeListener("TAKE_DAMAGE")
-    mob:removeListener("MAGIC_TAKE")
+    mob:removeListener("ELATHA_WEAPONSKILL_TAKE")
+    mob:removeListener("ELATHA_DAMAGE")
+    mob:removeListener("ELATHA_TAKE")
 end
 
 function onMobDespawn(mob) 

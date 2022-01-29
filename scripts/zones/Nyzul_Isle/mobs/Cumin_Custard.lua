@@ -9,7 +9,7 @@ function onMobInitialize(mob)
     mob:addMod(tpz.mod.WIND_ABSORB, 100)
 end
 
-function onSpellPrecast(mob, spell)
+function onCastStarting(mob, spell)
     if (mob:getLocalVar("Xenoglossia") > 0) then
         mob:setLocalVar("Xenoglossia", 0)
         spell:castTime(1)
