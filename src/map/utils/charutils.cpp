@@ -4684,10 +4684,8 @@ namespace charutils
             afterMW2 += 4;
         if (HasCompletedMission(PChar, 3, 28))
             afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 30))
-            afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 31))
-            afterMW2 += 12;
+        if (HasCompletedMission(PChar, 3, 30)) // Awakening (Set to 16 as the Last Verse cannot be completed.)
+            afterMW2 += 16;
 
 
 
@@ -4771,10 +4769,8 @@ namespace charutils
             afterMW3 += 2;
         if (HasCompletedMission(PChar, 6, 828)) //WHEN_ANGELS_FALL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 840)) //DAWN
-            afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 850)) //THE_LAST_VERSE
-            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 840)) //DAWN (Set to 6 as the Last Verse cannot be completed.)
+            afterMW3 += 6;
 
         uint8 AU = 0;
         while (AU < 48)
