@@ -4264,6 +4264,20 @@ INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 162, 1, 255); -- Black Magic: Stone IV
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
+-- Apoc Nigh
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,356,76,255); -- paralyaga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,357,75,255); -- slowga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,359,75,255); -- silencega
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,360,75,255); -- dispelga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,366,76,255); -- graviga
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 176, 75, 255);-- firaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 181, 75, 255);-- blizzaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 186, 75, 255);-- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 191, 75, 255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 196, 75, 255);-- thundaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 201, 75, 255);-- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 274, 75, 255);-- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 362, 75, 255);-- bindga
 
 
 --
