@@ -49,7 +49,7 @@ end
 --  Returns the next upcoming JST midnight
 -----------------------------------
 
-getMidnight = JstMidnight
+getMidnight = JstMidnight()
 
 -----------------------------------
 --  getVanaMidnight(day)

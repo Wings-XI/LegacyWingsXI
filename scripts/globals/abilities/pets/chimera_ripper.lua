@@ -39,7 +39,7 @@ function onPetAbility(target, automaton, skill, master, action)
         params.ftp300 = 11.0
     end
 
-    local damage, criticalHit, tpHits, extraHits = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill, action)
+    local damage, criticalHit, tpHits, extraHits = doAutoPhysicalWeaponskill(automaton, target, 0, skill:getTP(), true, action, false, params, skill)
     if damage > 0 then
         master:trySkillUp(target, tpz.skill.AUTOMATON_MELEE, tpHits+extraHits)
         target:tryInterruptSpell(automaton, tpHits+extraHits)

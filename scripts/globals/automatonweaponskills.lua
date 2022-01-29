@@ -8,7 +8,7 @@ require("scripts/globals/msg")
 
 
 -- params contains: ftp100, ftp200, ftp300, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, canCrit, crit100, crit200, crit300, acc100, acc200, acc300, ignoresDef, ignore100, ignore200, ignore300, atkmulti, kick, accBonus, weaponType, weaponDamage
-function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, action, taChar, wsParams, skill, action)
+function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, action, taChar, wsParams, skill)
 
     -- Determine cratio and ccritratio
     local ignoredDef = 0
@@ -132,7 +132,7 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
     calcParams.bonusfTP = flameHolderFTP or 0
     calcParams.bonusAcc = (wsParams.accBonus or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.hitRate = getAutoHitRate(attacker, target, true, calcParams.bonusAcc, calcParams.melee)
-    
+
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = calcParams.finalDmg

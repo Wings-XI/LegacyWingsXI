@@ -31,6 +31,7 @@ function onTrade(player, npc, trade)
     if player:getCharVar("chips") == 1 then
         if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
             player:startEvent(883,1693,1692,1694)
+            player:tradeComplete()
         end
     end
 
@@ -184,7 +185,6 @@ function onEventFinish(player, csid, option)
         if player:hasItem(5268) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 5268)
         else
-            player:tradeComplete(trade)
             player:addItem(5268)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 5268)
             player:completeQuest(BASTOK, tpz.quest.id.bastok.CHIPS)
@@ -221,8 +221,8 @@ function onEventFinish(player, csid, option)
         finishMissionTimeline(player, 1, csid, option)
     elseif (csid == 505 and option == 0) then
         if (player:getCharVar("MissionStatus") == 0) then
+            local crystal = math.random(4096, 4103)
             if (player:getFreeSlotsCount(0) >= 1) then
-                crystal = math.random(4096, 4103)
                 player:addItem(crystal)
                 player:messageSpecial(ID.text.ITEM_OBTAINED, crystal)
                 player:setCharVar("MissionStatus", 1)
