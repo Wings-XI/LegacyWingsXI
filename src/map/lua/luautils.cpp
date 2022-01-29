@@ -178,7 +178,6 @@ namespace luautils
         lua_register(LuaHandle, "SelectDailyItem", luautils::SelectDailyItem);
         lua_register(LuaHandle, "GetTickets", luautils::GetTickets);
         lua_register(LuaHandle, "GetDynaTimeRemaining", luautils::GetDynaTimeRemaining);
-        lua_register(LuaHandle, "IsCustomToAURingReacquisitionEnabled", luautils::IsCustomToAURingReacquisitionEnabled);
 
         lua_register(LuaHandle, "GetCharVarByName", luautils::GetCharVarByName);
         lua_register(LuaHandle, "SetCharVarByName", luautils::SetCharVarByName);
@@ -4807,12 +4806,6 @@ namespace luautils
         }
 
         return 0;
-    }
-
-    int32 IsCustomToAURingReacquisitionEnabled(lua_State* L)
-    {
-        lua_pushnumber(L, map_config.toau_custom_ring_reacquisition);
-        return 1;
     }
 
     int32 GetHealingTickDelay(lua_State* L) {
