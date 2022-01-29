@@ -27,10 +27,10 @@ function onTrade(player, npc, trade)
         if (npcUtil.tradeHasExactly(trade, {{2187, 10}})) then -- 10 Imperial Gold Pieces
             player:confirmTrade() -- take the coins
             player:setCharVar("TOAU_RING_REACQ_STATUS", 2)
-            local line4 = string.format("Nadeey : Please %s, esnure the safety of Aht Urhgan one again, and heed Nashmeira's Plea.", player:getName())
-            player:PrintToPlayer("Nadeey : Yes, this should cover their expenses.  Although it may take some time for their search to complete...", 0xD)
-            player:PrintToPlayer("Nadeey : Perhaps while we wait, you could handle a small investigation for the Princess and I?", 0xD)
-            player:PrintToPlayer("Nadeey : I have heard that enemenies who were thought vanquished in the Alzadaal Undersea Ruins stir once more.", 0xD)
+            local line4 = string.format("Nadeey : Please %s, ensure the safety of Aht Urhgan again, and heed Nashmeira's Plea.", player:getName())
+            player:PrintToPlayer("Nadeey : Yes, this should cover their expenses.  Although it may take some time for the search to complete...", 0xD)
+            player:PrintToPlayer("Nadeey : Perhaps while we wait, you could handle a small investigation for the princess and I?", 0xD)
+            player:PrintToPlayer("Nadeey : I have heard that enemies who were thought vanquished in the Alzadaal Undersea Ruins stir once more.", 0xD)
             player:PrintToPlayer(line4, 0xD)
             player:PrintToPlayer("Nadeey : May the wisdom of Walahra safely guide your steps...", 0xD)
         end
