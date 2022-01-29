@@ -10,12 +10,12 @@ require("scripts/globals/npc_util")
 
 --[[
     Custom TOAU_CUSTOM_RING_REACQUISITION logic
-    - TOAU_RING_REACQ_STAUS 0   -   Quest not started (or quest complete)
-    - TOAU_RING_REACQ_STAUS 1   -   Iniital discussion with Nadeey, waiting on payment
-    - TOAU_RING_REACQ_STAUS 2   -   Payment recieved, waiting for Alex re-run
-    - TOAU_RING_REACQ_STAUS 3   -   Alex Win
-    - TOAU_RING_REACQ_STAUS 4   -   Ring reacquisition CS seen, but did not choose a ring
-    - TOAU_RING_REACQ_STAUS 0   -   Was given a ring - conquest tally var gets set
+    - TOAU_RING_REACQ_STATUS 0   -   Quest not started (or quest complete)
+    - TOAU_RING_REACQ_STATUS 1   -   Iniital discussion with Nadeey, waiting on payment
+    - TOAU_RING_REACQ_STATUS 2   -   Payment recieved, waiting for Alex re-run
+    - TOAU_RING_REACQ_STATUS 3   -   Alex Win
+    - TOAU_RING_REACQ_STATUS 4   -   Ring reacquisition CS seen, but did not choose a ring
+    - TOAU_RING_REACQ_STATUS 0   -   Was given a ring - conquest tally var gets set
 ]]
 
 local BALRAHNS_RING = 15807
@@ -23,7 +23,7 @@ local ULTHALAMS_RING = 15808
 local JALZAHNS_RING = 15809
 
 function onTrade(player, npc, trade)
-    if (TOAU_CUSTOM_RING_REACQUISITION == 1 and (player:getCharVar("TOAU_RING_REACQ_STAUS") == 1)) then
+    if (TOAU_CUSTOM_RING_REACQUISITION == 1 and (player:getCharVar("TOAU_RING_REACQ_STATUS") == 1)) then
         if (npcUtil.tradeHasExactly(trade, {{2187, 10}})) then -- 10 Imperial Gold Pieces
             player:confirmTrade() -- take the coins
             player:setCharVar("TOAU_RING_REACQ_STATUS", 2)
@@ -55,7 +55,7 @@ function onTrigger(player, npc)
             player:PrintToPlayer("Nadeey : Ah, you have \"misplaced\" the ring entrsusted to you by Nashmeira. I see.", 0xD)
             player:PrintToPlayer("Nadeey : Fear not, I know exactly whom I can send in search of this \"lost\" ring...", 0xD)
             player:PrintToPlayer("Nadeey : I think a fee of say, 10 Imperial Gold Pieces should suffice for their services.", 0xD)
-            --player:setCharVar("TOAU_RING_REACQ_STATUS", 1)
+            player:setCharVar("TOAU_RING_REACQ_STATUS", 1)
         elseif (playerToauRingRacqStatus == 1) then
             -- remind the player, 10 Imperial Gold Pieces
             player:PrintToPlayer("Nadeey : If you wish for your \"lost\" ring to be found, procure 10 Imperial Gold Pieces for me.", 0xD)
@@ -64,7 +64,7 @@ function onTrigger(player, npc)
         elseif (playerToauRingRacqStatus == 2) then
             -- remind the player, investigate Alzadaal Undersea Ruins
             player:PrintToPlayer("Nadeey : The search for your \"lost\" ring continues...", 0xD)
-            player:PrintToPlayer("Nadeey : Perhaps to pass the time, you might wish to visit the Alzadaal Undersea Ruins and look for some old foes from your past.", 0xD)
+            player:PrintToPlayer("Nadeey : Perhaps to pass the time, you might wish to visit the Alzadaal Undersea Ruins and answer Nashmeira's Plea.", 0xD)
             player:PrintToPlayer("Nadeey : May the wisdom of Walahra safely guide your steps...", 0xD)
         elseif (playerToauRingRacqStatus == 3) then
             -- initate the ring CS 961
@@ -84,8 +84,6 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
-    local string = string.format("onEventUpdate csid %s option %s", csid, option)
-    player:PrintToPlayer(string, 0xD)
     if (csid == 961 or csid == 962) then
         player:updateEvent(BALRAHNS_RING, ULTHALAMS_RING, JALZAHNS_RING)
     end
