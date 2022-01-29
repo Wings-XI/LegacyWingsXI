@@ -2770,7 +2770,6 @@ int32 map_config_default()
     map_config.helpdesk_enabled = false;
     map_config.autotarget_qol = true;
     map_config.instances_treat_GMs_as_players = true;
-    map_config.toau_custom_ring_reacquisition = false;
     return 0;
 }
 
@@ -3327,10 +3326,6 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
                 map_config.instances_treat_GMs_as_players = atoi(w2);
-            }
-            else if (strcmp(w1, "toau_custom_ring_reacquisition") == 0)
-            {
-                map_config.toau_custom_ring_reacquisition = atoi(w2);
             }
             else
             {

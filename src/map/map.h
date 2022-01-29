@@ -185,7 +185,6 @@ struct map_config_t
     bool   helpdesk_enabled;          // GM tickets through helpdesk menu enabled
     bool   autotarget_qol;            // Enable radial autotargeting
     bool  instances_treat_GMs_as_players; // Set to 1 to allow characters with GM Level 2 or greater to count towards getChars inside an instance
-    bool toau_custom_ring_reacquisition; // Allows a custom quest to reacquire toau rings
 
 };
 
