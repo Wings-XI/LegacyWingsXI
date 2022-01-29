@@ -43,7 +43,7 @@ function onTrigger(player, npc)
             local dateObtained = player:getCharVar("COP-lastRingday")
             local playerHasWaited28days = false
 
-            if (currentDay - dateObtained) > 28) then
+            if ((currentDay - dateObtained) > 28) then
                 playerHasWaited28days = true -- player has waited 28 days
             elseif ((currentDay < dateObtained) and (currentDay + (365 - dateObtained) > 28)) then 
                 playerHasWaited28days = true -- wrapped around the year change
