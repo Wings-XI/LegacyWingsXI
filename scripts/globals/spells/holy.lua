@@ -22,7 +22,6 @@ function onSpellCast(caster, target, spell)
         local dmgmult = 1 + solace / 589
         params.dmg = params.dmg * dmgmult
         caster:setLocalVar("SolaceCureRecording",0)
-        print(string.format("player holy dmg mult was %.2f",dmgmult))
     end
     dmg = doDivineNuke(caster, target, spell, params)
     return dmg
