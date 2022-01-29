@@ -130,7 +130,7 @@ function onUseAbility(player, target, ability, action)
             pet:delStatusEffect(tpz.effect.SLOW)
             pet:delStatusEffect(tpz.effect.SILENCE)
             end,
-        [14481] = function (x) -- monster jackcoat +1
+        [14508] = function (x) -- monster jackcoat +1
             -- This will remove Paralyze, Poison, Blind, Weight, Slow and Silence from the pet.
             -- printf("Monster jackcoat +1 detected.")
             pet:delStatusEffect(tpz.effect.PARALYSIS)

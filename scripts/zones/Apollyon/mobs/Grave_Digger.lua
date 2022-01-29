@@ -12,7 +12,7 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
-function onMobDeath(mob, player, isKiller, noKiller, noKiller)
+function onMobDeath(mob, player, isKiller, noKiller)
 
     local battlefield = mob:getBattlefield()
 
