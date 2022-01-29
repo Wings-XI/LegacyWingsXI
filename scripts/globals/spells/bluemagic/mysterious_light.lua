@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4.5 or 3.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2 or 2
     params.tMultiplier = 1.0
     params.duppercap = 56
     params.str_wsc = 0.0

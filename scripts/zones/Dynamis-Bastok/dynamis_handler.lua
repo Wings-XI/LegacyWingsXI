@@ -15,7 +15,7 @@ require("scripts/globals/zone")
 
 local zone = tpz.zone.DYNAMIS_BASTOK
 
-function onDynamisTick(timeRemaining)
+function onDynamisTick(timeRemaining)  
     -- haven't had a reason to use this yet, for now this function is disabled for optimization purposes (a lua callback every server tick!!)
     -- if this is needed, uncomment line //luautils::OnDynamisTick(this); in file dynamis_handler.cpp and build
 end
@@ -81,8 +81,8 @@ function onDynamisEjectPlayer(player, immediate)
     else
         if ID.text.NO_LONGER_HAVE_CLEARANCE ~= nil then player:timer(1000, function(player) player:messageSpecial(ID.text.NO_LONGER_HAVE_CLEARANCE, 0, 30) end) end
         player:timer(25000, function(player)
-            player:addHP(9999) -- there is currently a bug where if a dead player gets force-zoned, they cannot homepoint
-            player:addMP(9999)
+            --player:addHP(9999) -- there is currently a bug where if a dead player gets force-zoned, they cannot homepoint
+            --player:addMP(9999) -- unable to reproduce the bug - commenting these for now (2022-01-18)
             player:startEvent(100)
         end)
         player:timer(30000, function(player) player:setPos(ejectPos[1],ejectPos[2],ejectPos[3],ejectPos[4],ejectPos[5]) end)

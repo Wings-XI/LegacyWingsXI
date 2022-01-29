@@ -49,11 +49,85 @@ function onTrigger(player, npc)
             elseif (ringsTaken > 1 and (currentDay - dateObtained) >= 28) then -- Wait time is >= 28 days, not 26
                 player:startEvent(204, ring[1], ring[2], ring[3])
             else
-                return -1
+                MarbleEateryDoorCheck(player)
             end
         end
     else
-        return -1
+        MarbleEateryDoorCheck(player)
+    end
+end
+
+function MarbleEateryDoorCheck(player)
+    local dayofthemonth = VanadielDayOfTheMonth()
+    local nation = player:getNation()
+    local job = player:getMainJob()
+    local race = player:getRace()
+    local gender = player:getGender()
+
+    -- Rotation is based on https://ffxiclopedia.fandom.com/wiki/Marble_Bridge_Eatery removed by 3 days to match up with http://www.mithrapride.org/vana_time/
+    -- Check Nations
+    if dayofthemonth == 1 and nation == tpz.nation.SANDORIA then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 2 and nation == tpz.nation.BASTOK then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 3 and nation == tpz.nation.WINDURST then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 4 and job == tpz.job.WAR then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 5 and job == tpz.job.MNK then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 6 and job == tpz.job.WHM then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 7 and job == tpz.job.BLM then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 8 and job == tpz.job.RDM then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 9 and job == tpz.job.THF then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 10 and job == tpz.job.PLD then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 11 and job == tpz.job.DRK then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 12 and job == tpz.job.BST then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 13 and job == tpz.job.BRD then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 14 and job == tpz.job.RNG then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 15 and job == tpz.job.SAM then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 16 and job == tpz.job.NIN then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 17 and job == tpz.job.DRG then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 18 and job == tpz.job.SMN then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 19 and job == tpz.job.BLU then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 20 and job == tpz.job.COR then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 21 and job == tpz.job.PUP then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 22 and job == tpz.job.DNC then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 23 and job == tpz.job.SCH then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 24 and race == (tpz.race.HUME_F or tpz.race.HUME_M) then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 25 and race == (tpz.race.ELVAAN_F or tpz.race.ELVAAN_M) then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 26 and race == (tpz.race.TARU_F or tpz.race.TARU_M) then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 27 and race == (tpz.race.MITHRA) then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 28 and race == (tpz.race.GALKA) then
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 29 and gender == 0 then -- Ladies
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    elseif dayofthemonth == 29 and gender == 1 then -- Gents
+        player:startEvent(124, (dayofthemonth - 1), 1)
+    else
+        player:startEvent(124, (dayofthemonth - 1), 0)
     end
 end
 

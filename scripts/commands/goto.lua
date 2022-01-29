@@ -57,8 +57,9 @@ function onTrigger(player, target, forceZone)
 
         -- check for an instance
         if (targ and (targ:getInstance() ~= nil)) then
-            local instance = targ:getInstance()
-            player:setInstance(instance)
+            -- Disabling until futher testing is done
+            --local instance = targ:getInstance()
+            --player:setInstance(instance)
         end
 
         player:setPos(targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos(), forceZone == 1 and targ:getZoneID() or nil)

@@ -58,9 +58,9 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMod(tpz.mod.DMGMAGIC, -30)
-    mob:setMod(tpz.mob.CURSERES, 100)
+    mob:setMod(tpz.mod.CURSERES, 100)
 
-    local changeHP = mob:getHP() - (mob:getHP() * .05)
+    local changeHP = mob:getHP() - 2000 -- 5% of Max HP
     mob:setLocalVar("changeHP", changeHP)
     mob:setLocalVar("DamageTaken", 0)
     mob:AnimationSub(2)
@@ -74,9 +74,10 @@ function onMobSpawn(mob)
             mob:setLocalVar("DamageTaken", 0)
             if mob:AnimationSub() == 1 and os.time() > waitTime then
                 mob:AnimationSub(2)
-                changeHP = mob:getHP() - (mob:getHP() * .05)
+                changeHP = (mob:getHP() - amount) - 2000
                 mob:setLocalVar("changeHP", changeHP)
                 mob:setLocalVar("waitTime", os.time() + 2)
+                print(changeHP)
                 outOfShell(mob)
             end
         elseif os.time() > waitTime then
@@ -89,7 +90,8 @@ function onMobFight(mob, target)
     local changeHP = mob:getLocalVar("changeHP")
     local waitTime = mob:getLocalVar("waitTime")
 
-    if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+    if mob:getHP() <= changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+        print(changeHP)
         mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(1)
         mob:setLocalVar("waitTime", os.time() + 2)
@@ -97,7 +99,7 @@ function onMobFight(mob, target)
     elseif mob:getHPP() == 100 and mob:AnimationSub() == 1 and os.time() > waitTime then
         mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(2)
-        changeHP = mob:getHP() - (mob:getHP() * .05)
+        changeHP = mob:getHP() - 2000
         mob:setLocalVar("changeHP", changeHP)
         mob:setLocalVar("waitTime", os.time() + 2)
         outOfShell(mob)

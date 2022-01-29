@@ -24,8 +24,10 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
-    mob:eraseAllStatusEffect()
-
-    return 0
+    local effectcount = target:dispelAllStatusEffect()
+    local finalCount = effectcount + target:eraseAllStatusEffect()
+    target:eraseAllStatusEffect()
+    
+    skill:setMsg(tpz.msg.basic.DISAPPEAR_NUM)
+    return finalCount
 end

@@ -23,6 +23,7 @@ tpz.mix.uragnite.config(mob, {
 --]]
 require("scripts/globals/mixins")
 require("scripts/globals/status")
+require("scripts/globals/monstertpmoves")
 -----------------------------------
 
 tpz = tpz or {}
