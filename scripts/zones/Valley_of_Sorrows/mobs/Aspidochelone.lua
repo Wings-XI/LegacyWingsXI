@@ -11,16 +11,10 @@ require("scripts/globals/titles")
 
 function intoShell(mob)
     mob:SetMobAbilityEnabled(false)
-    local chance = math.random(5,10)
-    local changeHP = mob:getLocalVar("changeHP")
-    if mob:getHPP() < changeHP then
-        local changeHP = changeHP - chance
-        mob:setLocalVar("changeHP", changeHP) -- record HP going into shell
-    end
-    mob:setLocalVar("changeTime", os.time() + 90) -- Time to come out of shell
     mob:AnimationSub(1)
-    mob:setMod(tpz.mod.REGEN, 150)
+    mob:setMod(tpz.mod.REGEN, 200)
     mob:SetAutoAttackEnabled(false)
+    mob:SetMagicCastingEnabled(false)
     mob:setMod(tpz.mod.UDMGRANGE, -95)
     mob:setMod(tpz.mod.UDMGPHYS, -95)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.STANDBACK))
@@ -28,16 +22,10 @@ function intoShell(mob)
 end
 
 function outOfShell(mob)
+    mob:setTP(3000)
     mob:SetMobAbilityEnabled(true)
-    local chance = math.random(5,10)
-    local changeHP = mob:getLocalVar("changeHP")
-    local changeHP = changeHP - chance
-    mob:setLocalVar("changeHP", changeHP) -- record HP coming out of shell
-    if mob:AnimationSub() == 1 then
-        mob:AnimationSub(2)
-    else
-        mob:AnimationSub(0)
-    end
+    mob:SetMagicCastingEnabled(false)
+    mob:AnimationSub(2)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:SetAutoAttackEnabled(true)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
@@ -47,42 +35,63 @@ function outOfShell(mob)
 end
 
 function onMobSpawn(mob)
-    if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
-        GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
-    end
+    mob:SetMobAbilityEnabled(true)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(false) -- will not cast until it goes into shell
+    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.STANDBACK)))
+    mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 13)
+    mob:setMod(tpz.mod.REGEN, 0)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
+    mob:setMod(tpz.mod.DMGMAGIC, -30)
+    mob:setMod(tpz.mob.CURSERES, 100)
 
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMod(tpz.mod.DMGMAGIC,-35)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
-    mob:setLocalVar("changeHP", 100)
-    outOfShell(mob)
+    local changeHP = mob:getHP() - (mob:getHP() * .05)
+    mob:setLocalVar("changeHP", changeHP)
+    mob:setLocalVar("DamageTaken", 0)
+    mob:AnimationSub(2)
+
+    mob:addListener("TAKE_DAMAGE", "ASPID_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
+        local damageTaken = mob:getLocalVar("DamageTaken")
+        local waitTime = mob:getLocalVar("waitTime")
+        damageTaken = damageTaken + amount
+        if damageTaken > 2000 then
+            mob:setLocalVar("DamageTaken", 0)
+            if mob:AnimationSub() == 1 and os.time() > waitTime then
+                mob:AnimationSub(2)
+                changeHP = mob:getHP() - (mob:getHP() * .05)
+                mob:setLocalVar("changeHP", changeHP)
+                mob:setLocalVar("waitTime", os.time() + 2)
+                outOfShell(mob)
+            end
+        elseif os.time() > waitTime then
+            mob:setLocalVar("DamageTaken", damageTaken)
+        end
+    end)
 end
 
 function onMobFight(mob, target)
-    local hpp = mob:getHPP()
     local changeHP = mob:getLocalVar("changeHP")
-    local act = mob:getCurrentAction()
-    local changeTime = mob:getLocalVar("changeTime")
     local waitTime = mob:getLocalVar("waitTime")
-    if hpp <= changeHP then -- will go in and out of shell after being brought down 5% hp
-        if (mob:AnimationSub() == 2 or mob:AnimationSub() == 0) and os.time() > waitTime then
-            print("Into Shell")
-            intoShell(mob)
-            mob:setLocalVar("waitTime", os.time() + 2)
-        elseif mob:AnimationSub() == 1 and (act ~= tpz.act.MAGIC_START or act ~= tpz.act.MAGIC_CASTING) and os.time() > waitTime then
-            print("Out of Shell")
-            outOfShell(mob)
-            mob:setLocalVar("waitTime", os.time() + 2)
-        end
-    elseif (hpp == 100 or os.time() > changeTime) and mob:AnimationSub() == 1 and os.time() > waitTime then
-        print("Forced out")
-        outOfShell(mob)
+
+    if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+        mob:setLocalVar("DamageTaken", 0)
+        mob:AnimationSub(1)
         mob:setLocalVar("waitTime", os.time() + 2)
+        intoShell(mob)
+    elseif mob:getHPP() == 100 and mob:AnimationSub() == 1 and os.time() > waitTime then
+        mob:setLocalVar("DamageTaken", 0)
+        mob:AnimationSub(2)
+        changeHP = mob:getHP() - (mob:getHP() * .05)
+        mob:setLocalVar("changeHP", changeHP)
+        mob:setLocalVar("waitTime", os.time() + 2)
+        outOfShell(mob)
     end
 end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.ASPIDOCHELONE_SINKER)
+    mob:removeListener("ASPID_TAKE_DAMAGE")
 end
 
 function onMobDespawn(mob)
@@ -102,4 +111,5 @@ function onMobDespawn(mob)
         UpdateNMSpawnPoint(ID.mob.ADAMANTOISE)
         GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
     end
+    mob:removeListener("ASPID_TAKE_DAMAGE")
 end

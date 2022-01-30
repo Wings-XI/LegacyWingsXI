@@ -56,7 +56,12 @@ function onMobFight(mob, target)
 end
 
 function onMobDespawn(mob)
-    OnWipe()
+    local crab = GetMobByID(ID.mob.HEIKE_CRAB)
+    local monk = GetMobByID(ID.mob.BEACH_MONK)
+
+    if not crab:isAlive() and not monk:isAlive() then
+        OnWipe()      
+    end
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -66,8 +71,10 @@ function onMobDeath(mob, player, isKiller)
 
     if not crab:isAlive() and not monk:isAlive() then
         barnacle:teleport(mob:getPos(), mob:getRotPos())
+        barnacle:setLocalVar("leaderID", player:getLeaderID())
         barnacle:setStatus(tpz.status.NORMAL)
         barnacle:setLocalVar("open", 0)        
+        barnacle:timer(180000, function(barnacle) barnacle:setStatus(tpz.status.DISAPPEAR) end)
     end
     mob:setLocalVar("twohour", 0)
 end

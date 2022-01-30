@@ -984,7 +984,14 @@ inline int32 CLuaBaseEntity::injectActionPacket(lua_State* L)
             target.animation = castAnim;
         }
         target.param = message;
-        target.messageID = 327; // starts casting
+        if (m_PBaseEntity->objtype == TYPE_MOB)
+        {
+            target.messageID = 3; // starts casting
+        }
+        else
+        {
+            target.messageID = 327; // starts casting on <target>
+        }
         return 0;
     }
 
@@ -1423,6 +1430,22 @@ inline int32 CLuaBaseEntity::updateEventString(lua_State* L)
         )
     );
     return 0;
+}
+
+/************************************************************************
+ *  Function: getEventID()
+ *  Purpose : Returns the ID of the player's current event, or -1 if there is not an event
+ *  Example : local eventID = player:getEventID()
+ *  Notes   : Used to determine if a player is in an active event
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getEventID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_event.EventID);
+    return 1;
 }
 
 /************************************************************************
@@ -1985,7 +2008,7 @@ inline int32 CLuaBaseEntity::pathThrough(lua_State* L)
         lua_rawgeti(L, 1, i + 1);
         lua_rawgeti(L, 1, i + 2);
 
-        if (lua_isnil(L, -1) || lua_isnil(L, -2) || lua_isnil(L, -3)) 
+        if (lua_isnil(L, -1) || lua_isnil(L, -2) || lua_isnil(L, -3))
         {
             //error exit
             ShowError("Lua::pathThrough : Path value is nil.");
@@ -2912,9 +2935,27 @@ inline int32 CLuaBaseEntity::isInMogHouse(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    lua_pushboolean(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID);
+    lua_pushboolean(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID == m_PBaseEntity->id);
     return 1;
 }
+
+/************************************************************************
+*  Function: getMogHouseID()
+*  Purpose : Returns the Mog House ID where the player is located.
+*  Example : if (player:getMogHouseID() == 0) then
+*  Notes   : If in one's own Mog House, will be equal to the character
+*            ID. If in someone else's open mog, will be the resident's
+*            char ID. If outside, will be zero.
+************************************************************************/
+inline int32 CLuaBaseEntity::getMogHouseID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    lua_pushinteger(L, ((CCharEntity*)m_PBaseEntity)->m_moghouseID);
+    return 1;
+}
+
 /************************************************************************
 *  Function: getPlayerRegionInZone
 *  Purpose : Returns the player's current region inside the zone
@@ -10012,9 +10053,9 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
     else if (((CBattleEntity*)m_PBaseEntity)->PParty != nullptr)
     {
         if (allianceparty == 0 && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member];
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->members[member - 1];
         else if (((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance != nullptr && member <= ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members.size())
-            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member];
+            PTargetChar = ((CBattleEntity*)m_PBaseEntity)->PParty->m_PAlliance->partyList.at(allianceparty)->members[member - 1];
     }
 
     if (PTargetChar != nullptr)
@@ -11786,6 +11827,10 @@ inline int32 CLuaBaseEntity::updateEnmityFromCure(lua_State *L)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
+        else if (m_PBaseEntity->objtype == TYPE_PET && ((CPetEntity*)m_PBaseEntity)->m_PetID == PETID_LIGHTSPIRIT)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity); // light spirit attracts cure enmity to itself
+        }
         else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() != PETTYPE_AUTOMATON)
         {
             auto PMaster = static_cast<CPetEntity*>(m_PBaseEntity)->PMaster;
@@ -12597,7 +12642,7 @@ inline int32 CLuaBaseEntity::doRandomDeal(lua_State* L)
     {
         lua_pushboolean(L, battleutils::DoRandomDealToEntity(static_cast<CCharEntity*>(m_PBaseEntity), static_cast<CCharEntity*>(PTarget->m_PBaseEntity)));
     }
-    
+
     return 1;
 }
 
@@ -12922,7 +12967,7 @@ inline int32 CLuaBaseEntity::getEVA(lua_State *L)
 *  Function: getRACC()
 *  Purpose : Calculates and returns the Ranged Accuracy of a Weapon euipped in the Ranged slot
 *  Example : player:getRACC()
-*  Notes   : To Do: The calculation is already a public member of battleentity, shouldn't have two calculations, just call (CBattleEntity*)m_PBaseEntity)->RACC and return result
+*  Notes   : Uses the RACC member of CBattleEntity for calculation
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getRACC(lua_State *L)
@@ -12948,17 +12993,7 @@ inline int32 CLuaBaseEntity::getRACC(lua_State *L)
     if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON && PEntity->PMaster && PEntity->PMaster->objtype == TYPE_PC)
         skilltype = SKILL_AUTOMATON_RANGED;
 
-    uint16 skill = PEntity->GetSkill(skilltype);
-    if (skilltype == SKILL_AUTOMATON_RANGED)
-        skill = PEntity->PMaster->GetSkill(skilltype);
-    uint16 acc = skill;
-
-    if (skill > 200) {
-        acc = (int)(200 + (skill - 200) * 0.9);
-    }
-    acc += PEntity->getMod(Mod::RACC);
-    acc += PEntity->AGI() / 2;
-    acc += std::min<int16>(((100 + PEntity->getMod(Mod::FOOD_RACCP)) * acc / 100), PEntity->getMod(Mod::FOOD_RACC_CAP));
+    uint16 acc = PEntity->RACC(skilltype, 0);
 
     lua_pushinteger(L, acc);
     return 1;
@@ -13554,7 +13589,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 7) || !lua_isnumber(L, 7));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 8) || !lua_isnumber(L, 8));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 9) || !lua_isnumber(L, 9));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 10) || !lua_isboolean(L, 10));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 10) || !lua_isnumber(L, 10));
 
     auto PChar = static_cast<CCharEntity*>(Lunar<CLuaBaseEntity>::check(L, 1)->m_PBaseEntity);
     auto damage = (int32)lua_tointeger(L, 2);
@@ -13565,7 +13600,7 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(lua_State* L)
     auto tpMultiplier = (float)lua_tonumber(L, 7);
     auto bonusTP = (uint16)lua_tointeger(L, 8);
     auto targetTPMultiplier = (float)lua_tonumber(L, 9);
-    bool useAutoTPFormula = (bool)lua_toboolean(L, 10);
+    auto useAutoTPFormula = (uint16)lua_tonumber(L, 10);
 
     lua_pushinteger(L, (lua_Integer)battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier, useAutoTPFormula));
     return 1;
@@ -14545,18 +14580,19 @@ inline int32 CLuaBaseEntity::removeAllManeuvers(lua_State* L)
 /************************************************************************
 *  Function: updateAttachments()
 *  Purpose : Updates all of the attachments
-*  Example : master:updateAttachments()
-*  Notes   : Called when Optic Fiber has changed.
+*  Example : master:updateAttachments(true)
+*  Notes   : Called when Optic Fiber has changed. Passed value it boolean for Gained
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::updateAttachments(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
     CCharEntity* PEntity = (CCharEntity*)m_PBaseEntity;
 
-    puppetutils::UpdateAttachments(PEntity);
+    puppetutils::UpdateAttachments(PEntity, lua_toboolean(L, 1));
 
     return 0;
 }
@@ -15088,7 +15124,7 @@ inline int32 CLuaBaseEntity::setAggressive(lua_State* L)
 *  Function: setTrueDetection()
 *  Purpose : Toggle True Detection on or off for a Mob
 *  Example : mob:setTrueDetection(1)
-*  Notes   : Different integer values for True Hearing/Sight?
+*  Notes   : 0 (No True Detection), 1 (True Sight and Hearing), 2 (True Sight), 3 (True Hearing)
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::setTrueDetection(lua_State* L)
@@ -17366,7 +17402,7 @@ inline int32 CLuaBaseEntity::prepareDynamisEntry(lua_State* L)
     charutils::SetCharVar(PChar, "DynaPrep_registrationStartTime", registrationStartTime);
     charutils::SetCharVar(PChar, "DynaPrep_token", token);
     charutils::SetCharVar(PChar, "DynaPrep_originalRegistrant", originalRegistrant);
-    charutils::SetCharVar(PChar, "DynaPrep_bypassWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 1) ? 1 : 0);
+    charutils::SetCharVar(PChar, "DynaPrep_inflictWeakness", (!lua_isnil(L, 2) && lua_isnumber(L, 2) && (int)lua_tointeger(L, 2) == 2) ? 1 : 0);
 
     return 0;
 }
@@ -17653,7 +17689,7 @@ inline int32 CLuaBaseEntity::setNM(lua_State* L)
 
 /************************************************************************
  *  Function: mob:setMobType(mobType)
- *  Purpose : sets a mob to be the type passed in 
+ *  Purpose : sets a mob to be the type passed in
  *  Example : mob:setMobType(MOBTYPE_NORMAL)
  *  Notes   : overwrites the mob's existing mobType
  ************************************************************************/
@@ -18179,6 +18215,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,startEventString),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEvent),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateEventString),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEventTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,release),
 
@@ -18253,6 +18290,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentRegion),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContinentID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isInMogHouse),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMogHouseID),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,showPosition),

@@ -22,7 +22,6 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DEF, 500)
     mob:setMod(tpz.mod.MATT, 75)
-    mob:setMod(tpz.mod.INT, 4)
 end
 
 function onMobEngaged(mob, target)

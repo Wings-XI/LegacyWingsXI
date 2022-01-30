@@ -4,6 +4,7 @@
 --
 --------------------------------------------------
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
+require("scripts/globals/status")
 require("scripts/globals/instance")
 require("scripts/globals/keyitems")
 require("scripts/globals/nyzul_isle")
@@ -23,11 +24,9 @@ function onInstanceCreated(instance)
     setNyzulMobTypesAndTraits(instance)
 end
 
-
-
 function onInstanceTimeUpdate(instance, elapsed)
     local timePenalty = instance:getLocalVar("Nyzul_TimePenalty")
-    updateInstanceTime(instance, elapsed+(timePenalty*60), ID.text)
+    updateInstanceTime(instance, elapsed+(timePenalty*60*1000), ID.text)
 
     if (instance:getLocalVar("Nyzul_CheckWin") > 0) then
         local win = false
@@ -50,7 +49,11 @@ function onInstanceFailure(instance)
     local chars = instance:getChars()
     for _,char in pairs(chars) do
         char:messageSpecial(ID.text.MISSION_FAILED)
-        char:startEvent(1)
+        char:release()
+        char:disengage()
+        char:timer(125, function(char)
+            char:startEvent(1)
+        end)
     end
 end
 
@@ -69,10 +72,10 @@ function onInstanceComplete(instance)
     local startingFloor = instance:getLocalVar("Nyzul_StartingFloor")
     local endingFloor = instance:getStage()
     local beatFloor100 = instance:getLocalVar("Nyzul_BeatFloor100")
-    local tokenPenlty = instance:getLocalVar("Nyzul_TokenPenalty")
+    local tokenPenalty = instance:getLocalVar("Nyzul_TokenPenalty")
     local numberOfPlayers = instance:getLocalVar("Nyzul_NumberOfPlayers")
-    printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
-    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenlty, numberOfPlayers)
+    --printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
+    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenalty, numberOfPlayers)
 
     for _,char in pairs(chars) do
         -- save runic disc progress
@@ -95,8 +98,8 @@ function onInstanceComplete(instance)
         if (char:getCharVar("Assault_Armband") > 0) then
             bonus = 0.1
         end
-        char:addAssaultPoint(NYZUL_ISLE_ASSAULT_POINT, math.floor(tokenReward + (tokenReward * .1)))
-        char:messageSpecial(ID.text.OBTAIN_TOKENS, math.floor(tokenReward + (tokenReward * .1)))
+        char:addAssaultPoint(NYZUL_ISLE_ASSAULT_POINT, math.floor(tokenReward + (tokenReward * bonus)))
+        char:messageSpecial(ID.text.OBTAIN_TOKENS, math.floor(tokenReward + (tokenReward * bonus)))
 
         -- set victory flag
         char:setCharVar("AssaultComplete", 1)
@@ -109,7 +112,12 @@ function onInstanceComplete(instance)
         end
 
         --exit
-        char:startEvent(1)
+        char:release()
+        char:disengage()
+        char:timer(125, function(char)
+            char:startEvent(1)
+        end)
+        
     end
 end
 
@@ -128,6 +136,11 @@ end
 function onEventFinish(player, csid, option)
     if csid == 1 then
         player:setPos(180, 0, 20, 90, 72)
+    end
+
+    if (csid == 95) then
+        player:messageSpecial(ID.text.TRANSFER_COMPLETE, player:getInstance():getStage())
+        showNyzulObjectivesAndPathos(player, true)
     end
 end
 

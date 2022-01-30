@@ -8215,13 +8215,13 @@ INSERT INTO `item_equipment` VALUES(18482, 'amood', 75, 0, 1, 376, 0, 0, 1, 0, 2
 INSERT INTO `item_equipment` VALUES(18483, 'amood_+1', 75, 0, 1, 376, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18484, 'wamoura_axe', 70, 0, 2097281, 95, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18485, 'imperial_bhuj', 71, 0, 2097281, 96, 0, 0, 1, 0, 255);
-INSERT INTO `item_equipment` VALUES(18486, 'wardancer', 70, 0, 2097281, 363, 0, 0, 1, 0, 255);
+INSERT INTO `item_equipment` VALUES(18486, 'wardancer', 70, 0, 2097281, 364, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18487, 'eriks_axe', 68, 0, 2097281, 335, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18488, 'assailants_axe', 5, 0, 2097281, 94, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18489, 'dark_amood', 68, 0, 1, 385, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18490, 'dark_amood_+1', 68, 0, 1, 385, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18491, 'perdu_voulge', 73, 0, 2097281, 365, 0, 0, 1, 0, 255);
-INSERT INTO `item_equipment` VALUES(18492, 'sturdy_axe', 75, 0, 1, 363, 0, 0, 1, 0, 255);
+INSERT INTO `item_equipment` VALUES(18492, 'sturdy_axe', 75, 0, 1, 364, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18493, 'regiment_kheten', 44, 0, 129, 97, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18494, 'fourth_toporok', 71, 0, 2097281, 92, 0, 0, 1, 0, 255);
 INSERT INTO `item_equipment` VALUES(18495, 'wootz_amood', 75, 0, 1, 406, 0, 0, 1, 0, 255);

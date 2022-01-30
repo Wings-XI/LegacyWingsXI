@@ -504,7 +504,7 @@ namespace spell
 
         const char* blueQuery = "SELECT blue_spell_list.spellid, blue_spell_list.mob_skill_id, blue_spell_list.set_points, \
                                 blue_spell_list.trait_category, blue_spell_list.trait_category_weight, blue_spell_list.primary_sc, \
-                                blue_spell_list.secondary_sc, spell_list.content_tag \
+                                blue_spell_list.secondary_sc, spell_list.content_tag, blue_spell_list.physical, blue_spell_list.knockback \
                              FROM blue_spell_list JOIN spell_list on blue_spell_list.spellid = spell_list.spellid;";
 
         ret = Sql_Query(SqlHandle, blueQuery);
@@ -535,6 +535,8 @@ namespace spell
                 ((CBlueSpell*)PSpellList[spellId])->setTraitWeight(Sql_GetIntData(SqlHandle,4));
                 ((CBlueSpell*)PSpellList[spellId])->setPrimarySkillchain(Sql_GetIntData(SqlHandle,5));
                 ((CBlueSpell*)PSpellList[spellId])->setSecondarySkillchain(Sql_GetIntData(SqlHandle,6));
+                ((CBlueSpell*)PSpellList[spellId])->setPhysical(Sql_GetIntData(SqlHandle, 8));
+                ((CBlueSpell*)PSpellList[spellId])->setKnockback(Sql_GetIntData(SqlHandle, 9));
                 PMobSkillToBlueSpell.insert(std::make_pair(Sql_GetIntData(SqlHandle,1), spellId));
             }
         }

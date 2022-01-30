@@ -8,7 +8,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 35)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 21)
 end
 
 function onMobDeath(mob, player, isKiller, noKiller)

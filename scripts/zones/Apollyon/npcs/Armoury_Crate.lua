@@ -28,28 +28,28 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1939, droprate =  350}, -- RDM
-                {itemid = 1941, droprate =  278}, -- THF
-                {itemid = 1959, droprate =  174}, -- SMN
-                {itemid = 1949, droprate =  200}, -- BRD
-                {itemid = 1945, droprate =   47}, -- DRK
-                {itemid = 1951, droprate =   49}, -- RNG
-                {itemid = 1955, droprate =  200}, -- NIN
-                {itemid = 2659, droprate =   62}, -- COR
-                {itemid = 2715, droprate =  407}, -- DNC
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1939, droprate =  56}, -- RDM
+                {itemid = 1941, droprate =  55}, -- THF
+                {itemid = 1959, droprate =  56}, -- SMN
+                {itemid = 1949, droprate =  56}, -- BRD
+                {itemid = 1945, droprate =  55}, -- DRK
+                {itemid = 1951, droprate =  56}, -- RNG
+                {itemid = 1955, droprate =  55}, -- NIN
+                {itemid = 2659, droprate =  56}, -- COR
+                {itemid = 2715, droprate =  55}, -- DNC
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1939, droprate =  350}, -- RDM
-                {itemid = 1941, droprate =  278}, -- THF
-                {itemid = 1959, droprate =  174}, -- SMN
-                {itemid = 1949, droprate =  200}, -- BRD
-                {itemid = 1945, droprate =   47}, -- DRK
-                {itemid = 1951, droprate =   49}, -- RNG
-                {itemid = 1955, droprate =  200}, -- NIN
-                {itemid = 2659, droprate =   62}, -- COR
-                {itemid = 2715, droprate =  407}, -- DNC
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1939, droprate =  56}, -- RDM
+                {itemid = 1941, droprate =  55}, -- THF
+                {itemid = 1959, droprate =  56}, -- SMN
+                {itemid = 1949, droprate =  56}, -- BRD
+                {itemid = 1945, droprate =  55}, -- DRK
+                {itemid = 1951, droprate =  56}, -- RNG
+                {itemid = 1955, droprate =  55}, -- NIN
+                {itemid = 2659, droprate =  56}, -- COR
+                {itemid = 2715, droprate =  55}, -- DNC
             },
         },
         -- SE_Apollyon floor 2
@@ -68,29 +68,29 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1959, droprate =  47}, -- SMN
-                {itemid = 1949, droprate =  30}, -- BRD
-                {itemid = 1943, droprate = 200}, -- PLD
-                {itemid = 1947, droprate = 460}, -- BST
-                {itemid = 2661, droprate = 400}, -- PUP
-                {itemid = 1951, droprate =  20}, -- RNG
-                {itemid = 1955, droprate =  80}, -- NIN
-                {itemid = 1945, droprate =  90}, -- DRK
+                {itemid = 1959, droprate = 100}, -- SMN
+                {itemid = 1949, droprate = 100}, -- BRD
+                {itemid = 1943, droprate = 100}, -- PLD
+                {itemid = 1947, droprate = 100}, -- BST
+                {itemid = 2661, droprate = 100}, -- PUP
+                {itemid = 1951, droprate = 100}, -- RNG
+                {itemid = 1955, droprate = 100}, -- NIN
+                {itemid = 1945, droprate = 100}, -- DRK
                 {itemid = 2659, droprate = 100}, -- COR
-                {itemid = 2715, droprate = 120}, -- DNC
+                {itemid = 2715, droprate = 100}, -- DNC
             },
             {
-                {itemid =    0, droprate = 999}, -- Nothing
-                {itemid = 1959, droprate =  47}, -- SMN
-                {itemid = 1949, droprate =  30}, -- BRD
-                {itemid = 1943, droprate = 200}, -- PLD
-                {itemid = 1947, droprate = 460}, -- BST
-                {itemid = 2661, droprate = 400}, -- PUP
-                {itemid = 1951, droprate =  20}, -- RNG
-                {itemid = 1955, droprate =  80}, -- NIN
-                {itemid = 1945, droprate =  90}, -- DRK
-                {itemid = 2659, droprate = 100}, -- COR
-                {itemid = 2715, droprate = 120}, -- DNC
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1959, droprate =  50}, -- SMN
+                {itemid = 1949, droprate =  50}, -- BRD
+                {itemid = 1943, droprate =  50}, -- PLD
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 2661, droprate =  50}, -- PUP
+                {itemid = 1951, droprate =  50}, -- RNG
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 1945, droprate =  50}, -- DRK
+                {itemid = 2659, droprate =  50}, -- COR
+                {itemid = 2715, droprate =  50}, -- DNC
             },
         },
         -- SE_Apollyon floor 3
@@ -109,22 +109,34 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 999}, -- Nothing
-                {itemid = 1955, droprate =  59}, -- NIN
-                {itemid = 1959, droprate = 139}, -- SMN
-                {itemid = 1949, droprate =  39}, -- BRD
-                {itemid = 1681, droprate =  39}, -- Light Steel
-                {itemid =  645, droprate =  39}, -- Darksteel Ore
-                {itemid = 1933, droprate = 627}, -- MNK
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1955, droprate =  42}, -- NIN
+                {itemid = 1959, droprate =  42}, -- SMN
+                {itemid = 1949, droprate =  42}, -- BRD
+                {itemid = 1933, droprate =  41}, -- MNK
+                {itemid = 1931, droprate =  42}, -- WAR
+                {itemid = 1945, droprate =  41}, -- DRK
+                {itemid = 1951, droprate =  42}, -- RNG
+                {itemid = 2659, droprate =  42}, -- COR
+                {itemid =  646, droprate =  42}, -- Adaman Ore
+                {itemid =  645, droprate =  41}, -- Darksteel Ore
+                {itemid =  664, droprate =  42}, -- Darksteel Sheet
+                {itemid = 1681, droprate =  41}, -- Light Steel
             },
             {
                 {itemid =    0, droprate = 500}, -- Nothing
-                {itemid = 1945, droprate = 159}, -- DRK
-                {itemid = 1951, droprate = 139}, -- RNG
-                {itemid = 2659, droprate =  39}, -- COR
-                {itemid =  664, droprate =  20}, -- Darksteel Sheet
-                {itemid =  646, droprate =  20}, -- Adaman Ore
-                {itemid = 1931, droprate = 200}, -- WAR
+                {itemid = 1955, droprate =  42}, -- NIN
+                {itemid = 1959, droprate =  42}, -- SMN
+                {itemid = 1949, droprate =  42}, -- BRD
+                {itemid = 1933, droprate =  41}, -- MNK
+                {itemid = 1931, droprate =  42}, -- WAR
+                {itemid = 1945, droprate =  41}, -- DRK
+                {itemid = 1951, droprate =  42}, -- RNG
+                {itemid = 2659, droprate =  42}, -- COR
+                {itemid =  646, droprate =  42}, -- Adaman Ore
+                {itemid =  645, droprate =  41}, -- Darksteel Ore
+                {itemid =  664, droprate =  42}, -- Darksteel Sheet
+                {itemid = 1681, droprate =  41}, -- Light Steel
             },
         },
         -- SE_Apollyon floor 4
@@ -146,29 +158,33 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1935, droprate = 220}, -- WHM
-                {itemid = 1937, droprate = 300}, -- BLM
-                {itemid = 1957, droprate = 260}, -- DRG
-                {itemid = 1953, droprate = 340}, -- SAM
-                {itemid = 2657, droprate = 220}, -- BLU
-                {itemid = 2717, droprate = 180}, -- SCH
-                {itemid = 1931, droprate = 300}, -- WAR
+                {itemid = 1935, droprate = 111}, -- WHM
+                {itemid = 1937, droprate = 111}, -- BLM
+                {itemid = 1957, droprate = 111}, -- DRG
+                {itemid = 1953, droprate = 111}, -- SAM
+                {itemid = 2657, droprate = 111}, -- BLU
+                {itemid = 2717, droprate = 111}, -- SCH
+                {itemid = 1931, droprate = 111}, -- WAR
+                {itemid = 1941, droprate = 111}, -- THF
+                {itemid = 1943, droprate = 112}, -- PLD
             },
             {
-                {itemid = 1935, droprate = 220}, -- WHM
-                {itemid = 1937, droprate = 300}, -- BLM
-                {itemid = 1957, droprate = 260}, -- DRG
-                {itemid = 1953, droprate = 340}, -- SAM
-                {itemid = 2657, droprate = 220}, -- BLU
-                {itemid = 2717, droprate = 180}, -- SCH
-                {itemid = 1931, droprate = 300}, -- WAR
+                {itemid = 1935, droprate = 111}, -- WHM
+                {itemid = 1937, droprate = 111}, -- BLM
+                {itemid = 1957, droprate = 111}, -- DRG
+                {itemid = 1953, droprate = 111}, -- SAM
+                {itemid = 2657, droprate = 111}, -- BLU
+                {itemid = 2717, droprate = 111}, -- SCH
+                {itemid = 1931, droprate = 111}, -- WAR
+                {itemid = 1941, droprate = 111}, -- THF
+                {itemid = 1943, droprate = 112}, -- PLD
             },
             {
                 {itemid = 1909, droprate = 1000}, -- Smalt Chip
             },
             {
-                {itemid = 2127, droprate =  59}, -- Metal Chip
-                {itemid =    0, droprate = 100}, -- Nothing
+                {itemid = 2127, droprate =  60}, -- Metal Chip
+                {itemid =    0, droprate = 940}, -- Nothing
             },
         },
     },
@@ -187,33 +203,32 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1953, droprate = 304}, -- SAM
-                {itemid = 1943, droprate =  18}, -- PLD
-                {itemid = 1941, droprate = 200}, -- THF
-                {itemid = 2715, droprate = 200}, -- DNC
-                {itemid = 2661, droprate =  36}, -- PUP
-                {itemid = 1933, droprate =  18}, -- MNK
-                {itemid = 1939, droprate =  36}, -- RDM
-                {itemid = 1935, droprate = 411}, -- WHM
-                {itemid = 2717, droprate = 482}, -- SCH
-                {itemid = 1947, droprate =  18}, -- BST
+                {itemid = 1953, droprate = 100}, -- SAM
+                {itemid = 1943, droprate = 100}, -- PLD
+                {itemid = 2661, droprate = 100}, -- PUP
+                {itemid = 1933, droprate = 100}, -- MNK
+                {itemid = 1939, droprate = 100}, -- RDM
+                {itemid = 1935, droprate = 100}, -- WHM
+                {itemid = 2717, droprate = 100}, -- SCH
+                {itemid = 1947, droprate = 100}, -- BST
+                {itemid = 1941, droprate = 100}, -- THF
+                {itemid = 2715, droprate = 100}, -- DNC
             },
             {
-                {itemid =    0, droprate = 1000}, -- SAM
-                {itemid = 1953, droprate =  304}, -- SAM
-                {itemid = 1943, droprate =   18}, -- PLD
-                {itemid = 1941, droprate =  200}, -- THF
-                {itemid = 2715, droprate =  200}, -- DNC
-                {itemid = 2661, droprate =   36}, -- PUP
-                {itemid = 1933, droprate =   18}, -- MNK
-                {itemid = 1939, droprate =   36}, -- RDM
-                {itemid = 1935, droprate =  411}, -- WHM
-                {itemid = 2717, droprate =  482}, -- SCH
-                {itemid = 1947, droprate =   18}, -- BST
+                {itemid = 1953, droprate = 100}, -- SAM
+                {itemid = 1943, droprate = 100}, -- PLD
+                {itemid = 2661, droprate = 100}, -- PUP
+                {itemid = 1933, droprate = 100}, -- MNK
+                {itemid = 1939, droprate = 100}, -- RDM
+                {itemid = 1935, droprate = 100}, -- WHM
+                {itemid = 2717, droprate = 100}, -- SCH
+                {itemid = 1947, droprate = 100}, -- BST
+                {itemid = 1941, droprate = 100}, -- THF
+                {itemid = 2715, droprate = 100}, -- DNC
             },
         },
         -- NE_Apollyon floor 2
@@ -229,31 +244,33 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1947, droprate =  26}, -- BST
-                {itemid = 1933, droprate =  53}, -- MNK
-                {itemid = 1943, droprate =  26}, -- PLD
-                {itemid = 2661, droprate =  26}, -- PUP
-                {itemid = 1937, droprate = 395}, -- BLM
-                {itemid = 1957, droprate = 289}, -- DRG
-                {itemid = 1941, droprate =  53}, -- THF
-                {itemid = 1939, droprate = 112}, -- RDM
-                {itemid = 2657, droprate = 477}, -- BLU
+                {itemid = 1947, droprate = 100}, -- BST
+                {itemid = 1933, droprate = 100}, -- MNK
+                {itemid = 1943, droprate = 100}, -- PLD
+                {itemid = 2661, droprate = 100}, -- PUP
+                {itemid = 1937, droprate = 100}, -- BLM
+                {itemid = 1957, droprate = 100}, -- DRG
+                {itemid = 1941, droprate = 100}, -- THF
+                {itemid = 2659, droprate = 100}, -- COR
+                {itemid = 1939, droprate = 100}, -- RDM
+                {itemid = 2657, droprate = 100}, -- BLU
             },
             {
-                {itemid =    0, droprate =  1000}, -- Nothing
-                {itemid = 1947, droprate =    26}, -- BST
-                {itemid = 1933, droprate =    53}, -- MNK
-                {itemid = 1943, droprate =    26}, -- PLD
-                {itemid = 2661, droprate =    26}, -- PUP
-                {itemid = 1937, droprate =   395}, -- BLM
-                {itemid = 1957, droprate =   289}, -- DRG
-                {itemid = 1941, droprate =    53}, -- THF
-                {itemid = 1939, droprate =   112}, -- RDM
-                {itemid = 2657, droprate =   477}, -- BLU
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 1933, droprate =  50}, -- MNK
+                {itemid = 1943, droprate =  50}, -- PLD
+                {itemid = 2661, droprate =  50}, -- PUP
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1941, droprate =  50}, -- THF
+                {itemid = 2659, droprate =  50}, -- COR
+                {itemid = 1939, droprate =  50}, -- RDM
+                {itemid = 2657, droprate =  50}, -- BLU
             },
         },
         -- NE_Apollyon floor 3
@@ -272,46 +289,48 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1931, droprate =  788}, -- WAR
-                {itemid = 1939, droprate =   30}, -- RDM
-                {itemid = 1953, droprate =  130}, -- SAM
-                {itemid = 1957, droprate =  100}, -- DRG
-                {itemid = 1947, droprate =   90}, -- BST
-                {itemid = 1933, droprate =   30}, -- MNK
-                {itemid = 1941, droprate =   99}, -- THF
-                {itemid = 2661, droprate =   61}, -- PUP
-                {itemid = 2715, droprate =   30}, -- DNC
-                {itemid = 1943, droprate =  160}, -- PLD
+                {itemid =    0, droprate =  500}, -- Nothing
+                {itemid = 1931, droprate =   45}, -- WAR
+                {itemid = 1939, droprate =   46}, -- RDM
+                {itemid = 1933, droprate =   45}, -- MNK
+                {itemid = 1941, droprate =   46}, -- THF
+                {itemid = 2661, droprate =   45}, -- PUP
+                {itemid = 2715, droprate =   46}, -- DNC
+                {itemid = 2657, droprate =   45}, -- BLU
+                {itemid = 1953, droprate =   46}, -- SAM
+                {itemid = 1957, droprate =   45}, -- DRG
+                {itemid = 1947, droprate =   46}, -- BST
+                {itemid = 1943, droprate =   45}, -- PLD
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1931, droprate =  788}, -- WAR
-                {itemid = 1939, droprate =   30}, -- RDM
-                {itemid = 1953, droprate =  130}, -- SAM
-                {itemid = 1957, droprate =  100}, -- DRG
-                {itemid = 1947, droprate =   90}, -- BST
-                {itemid = 1933, droprate =   30}, -- MNK
-                {itemid = 1941, droprate =   99}, -- THF
-                {itemid = 2661, droprate =   61}, -- PUP
-                {itemid = 2715, droprate =   30}, -- DNC
-                {itemid = 1943, droprate =  160}, -- PLD
+                {itemid =    0, droprate =  500}, -- Nothing
+                {itemid = 1931, droprate =   45}, -- WAR
+                {itemid = 1939, droprate =   46}, -- RDM
+                {itemid = 1933, droprate =   45}, -- MNK
+                {itemid = 1941, droprate =   46}, -- THF
+                {itemid = 2661, droprate =   45}, -- PUP
+                {itemid = 2715, droprate =   46}, -- DNC
+                {itemid = 2657, droprate =   45}, -- BLU
+                {itemid = 1953, droprate =   46}, -- SAM
+                {itemid = 1957, droprate =   45}, -- DRG
+                {itemid = 1947, droprate =   46}, -- BST
+                {itemid = 1943, droprate =   45}, -- PLD
             },
             {
-                {itemid =    0, droprate = 180}, -- Nothing
-                {itemid = 1633, droprate =  30}, -- Clot Plasma
-                {itemid =  821, droprate =  40}, -- Rainbow Thread
-                {itemid = 1311, droprate =  50}, -- Oxblood
-                {itemid = 1883, droprate =  40}, -- Shell Powder
-                {itemid = 2004, droprate =  20}, -- Carapace Powder
+                {itemid =    0, droprate = 200}, -- Nothing
+                {itemid = 1633, droprate = 160}, -- Clot Plasma
+                {itemid =  821, droprate = 160}, -- Rainbow Thread
+                {itemid = 1311, droprate = 160}, -- Oxblood
+                {itemid = 1883, droprate = 160}, -- Shell Powder
+                {itemid = 2004, droprate = 160}, -- Carapace Powder
             },
             {
-                {itemid =    0, droprate = 180}, -- Nothing
-                {itemid = 1633, droprate =  30}, -- Clot Plasma
-                {itemid =  821, droprate =  40}, -- Rainbow Thread
-                {itemid = 1311, droprate =  50}, -- Oxblood
-                {itemid = 1883, droprate =  40}, -- Shell Powder
-                {itemid = 2004, droprate =  20}, -- Carapace Powder
+                {itemid =    0, droprate = 200}, -- Nothing
+                {itemid = 1633, droprate = 160}, -- Clot Plasma
+                {itemid =  821, droprate = 160}, -- Rainbow Thread
+                {itemid = 1311, droprate = 160}, -- Oxblood
+                {itemid = 1883, droprate = 160}, -- Shell Powder
+                {itemid = 2004, droprate = 160}, -- Carapace Powder
             },
         },
         -- NE_Apollyon floor 4
@@ -336,25 +355,25 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1949, droprate = 326}, -- BRD
-                {itemid = 1945, droprate = 256}, -- DRK
-                {itemid = 1951, droprate = 395}, -- RNG
-                {itemid = 1959, droprate = 279}, -- SMN
-                {itemid = 1955, droprate = 256}, -- NIN
-                {itemid = 2659, droprate = 326}, -- COR
+                {itemid = 1949, droprate = 167}, -- BRD
+                {itemid = 1945, droprate = 167}, -- DRK
+                {itemid = 1951, droprate = 166}, -- RNG
+                {itemid = 1959, droprate = 167}, -- SMN
+                {itemid = 1955, droprate = 166}, -- NIN
+                {itemid = 2659, droprate = 167}, -- COR
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1949, droprate =  326}, -- BRD
-                {itemid = 1945, droprate =  256}, -- DRK
-                {itemid = 1951, droprate =  395}, -- RNG
-                {itemid = 1959, droprate =  279}, -- SMN
-                {itemid = 1955, droprate =  256}, -- NIN
-                {itemid = 2659, droprate =  326}, -- COR
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1949, droprate =  83}, -- BRD
+                {itemid = 1945, droprate =  82}, -- DRK
+                {itemid = 1951, droprate =  83}, -- RNG
+                {itemid = 1959, droprate =  82}, -- SMN
+                {itemid = 1955, droprate =  83}, -- NIN
+                {itemid = 2659, droprate =  83}, -- COR
             },
         },
         -- NE_Apollyon floor 5
@@ -385,8 +404,8 @@ local loot =
                 {itemid = 1910, droprate = 1000}, -- Smoky Chip
             },
             {
-                {itemid =    0, droprate = 100}, -- Nothing
-                {itemid = 2127, droprate =  59}, -- Metal Chip
+                {itemid =    0, droprate = 917}, -- Nothing
+                {itemid = 2127, droprate =  83}, -- Metal Chip
             },
         },
     },
@@ -408,25 +427,27 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1949, droprate = 464}, -- BRD
-                {itemid = 1945, droprate = 250}, -- DRK
-                {itemid = 1953, droprate = 110}, -- SAM
-                {itemid = 1937, droprate =  71}, -- BLM
-                {itemid = 1931, droprate = 180}, -- WAR
-                {itemid = 2657, droprate = 210}, -- BLU
+                {itemid = 1949, droprate = 111}, -- BRD
+                {itemid = 1945, droprate = 111}, -- DRK
+                {itemid = 1953, droprate = 111}, -- SAM
+                {itemid = 1937, droprate = 112}, -- BLM
+                {itemid = 1931, droprate = 111}, -- WAR
+                {itemid = 2657, droprate = 111}, -- BLU
                 {itemid = 2717, droprate = 111}, -- SCH
-                {itemid = 1935, droprate = 107}, -- WHM
+                {itemid = 1935, droprate = 111}, -- WHM
+                {itemid = 1957, droprate = 111}, -- DRG
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1949, droprate =  464}, -- BRD
-                {itemid = 1945, droprate =  250}, -- DRK
-                {itemid = 1953, droprate =  110}, -- SAM
-                {itemid = 1937, droprate =   71}, -- BLM
-                {itemid = 1931, droprate =  180}, -- WAR
-                {itemid = 2657, droprate =  210}, -- BLU
-                {itemid = 2717, droprate =  111}, -- SCH
-                {itemid = 1935, droprate =  107}, -- WHM
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1949, droprate =  56}, -- BRD
+                {itemid = 1945, droprate =  55}, -- DRK
+                {itemid = 1953, droprate =  56}, -- SAM
+                {itemid = 1937, droprate =  55}, -- BLM
+                {itemid = 1931, droprate =  55}, -- WAR
+                {itemid = 2657, droprate =  56}, -- BLU
+                {itemid = 2717, droprate =  56}, -- SCH
+                {itemid = 1935, droprate =  55}, -- WHM
+                {itemid = 1957, droprate =  56}, -- DRG
             },
         },
         -- SW_Apollyon floor 2
@@ -445,23 +466,29 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1951, droprate = 154}, -- RNG
-                {itemid = 1935, droprate =  95}, -- WHM
-                {itemid = 1959, droprate = 269}, -- SMN
-                {itemid = 1937, droprate = 106}, -- BLM
-                {itemid = 1931, droprate =  77}, -- WAR
-                {itemid = 2659, droprate = 423}, -- COR
-                {itemid = 1957, droprate = 110}, -- DRG
+                {itemid = 1951, droprate = 100}, -- RNG
+                {itemid = 1935, droprate = 100}, -- WHM
+                {itemid = 1959, droprate = 100}, -- SMN
+                {itemid = 1937, droprate = 100}, -- BLM
+                {itemid = 1931, droprate = 100}, -- WAR
+                {itemid = 2659, droprate = 100}, -- COR
+                {itemid = 1957, droprate = 100}, -- DRG
+                {itemid = 1955, droprate = 100}, -- NIN
+                {itemid = 2657, droprate = 100}, -- BLU
+                {itemid = 1953, droprate = 100}, -- SAM
             },
             {
-                {itemid =    0, droprate = 999}, -- Nothing
-                {itemid = 1951, droprate = 154}, -- RNG
-                {itemid = 1935, droprate =  95}, -- WHM
-                {itemid = 1959, droprate = 269}, -- SMN
-                {itemid = 1937, droprate = 106}, -- BLM
-                {itemid = 1931, droprate =  77}, -- WAR
-                {itemid = 2659, droprate = 423}, -- COR
-                {itemid = 1957, droprate = 110}, -- DRG
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1951, droprate =  50}, -- RNG
+                {itemid = 1935, droprate =  50}, -- WHM
+                {itemid = 1959, droprate =  50}, -- SMN
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 1931, droprate =  50}, -- WAR
+                {itemid = 2659, droprate =  50}, -- COR
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 2657, droprate =  50}, -- BLU
+                {itemid = 1953, droprate =  50}, -- SAM
             },
         },
         -- SW_Apollyon floor 3
@@ -480,37 +507,40 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 120}, -- Nothing
-                {itemid = 1931, droprate = 120}, -- WAR
-                {itemid = 1955, droprate = 595}, -- NIN
-                {itemid = 1957, droprate = 100}, -- DRG
-                {itemid = 1937, droprate =  24}, -- BLM
-                {itemid = 1953, droprate =  48}, -- SAM
-                {itemid = 1935, droprate =  24}, -- WHM
-                {itemid = 2657, droprate =  24}, -- BLU
-                {itemid = 2717, droprate =  71}, -- SCH
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1931, droprate =  50}, -- WAR
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 1953, droprate =  50}, -- SAM
+                {itemid = 1935, droprate =  50}, -- WHM
+                {itemid = 2657, droprate =  50}, -- BLU
+                {itemid = 2717, droprate =  50}, -- SCH
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 2657, droprate =  50}, -- BLU
             },
             {
-                {itemid =    0, droprate = 120}, -- Nothing
-                {itemid = 1931, droprate = 120}, -- WAR
-                {itemid = 1955, droprate = 595}, -- NIN
-                {itemid = 1957, droprate = 100}, -- DRG
-                {itemid = 1937, droprate =  24}, -- BLM
-                {itemid = 1953, droprate =  48}, -- SAM
-                {itemid = 1935, droprate =  24}, -- WHM
-                {itemid = 2657, droprate =  24}, -- BLU
-                {itemid = 2717, droprate =  71}, -- SCH
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1931, droprate =  50}, -- WAR
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 1953, droprate =  50}, -- SAM
+                {itemid = 1935, droprate =  50}, -- WHM
+                {itemid = 2657, droprate =  50}, -- BLU
+                {itemid = 2717, droprate =  50}, -- SCH
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 2657, droprate =  50}, -- BLU
             },
             {
-                {itemid =    0, droprate = 638}, -- Nothing
-                {itemid = 1311, droprate =  32}, -- Oxblood
-                {itemid = 1883, droprate =  40}, -- Shell Powder
-                {itemid = 1681, droprate =  31}, -- Light Steel
-                {itemid = 1633, droprate =  71}, -- Clot Plasma
-                {itemid =  645, droprate =  31}, -- Darksteel Ore
-                {itemid =  664, droprate =  63}, -- Darksteel Sheet
-                {itemid =  646, droprate =  31}, -- Adaman Ore
-                {itemid =  821, droprate =  63}, -- Rainbow Thread
+                {itemid =    0, droprate = 600}, -- Nothing
+                {itemid = 1311, droprate =  57}, -- Oxblood
+                {itemid = 1681, droprate =  58}, -- Light Steel
+                {itemid = 1633, droprate =  57}, -- Clot Plasma
+                {itemid =  645, droprate =  57}, -- Darksteel Ore
+                {itemid =  664, droprate =  57}, -- Darksteel Sheet
+                {itemid =  646, droprate =  57}, -- Adaman Ore
+                {itemid =  821, droprate =  57}, -- Rainbow Thread
             },
         },
         -- SW_Apollyon floor 4
@@ -529,34 +559,34 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1941, droprate = 468}, -- THF
-                {itemid = 1947, droprate = 340}, -- BST
-                {itemid = 1933, droprate = 255}, -- MNK
-                {itemid = 1939, droprate = 191}, -- RDM
-                {itemid = 1943, droprate = 170}, -- PLD
-                {itemid = 2661, droprate = 340}, -- PUP
-                {itemid = 2715, droprate = 170}, -- DNC
+                {itemid = 1941, droprate = 143}, -- THF
+                {itemid = 1947, droprate = 143}, -- BST
+                {itemid = 1933, droprate = 143}, -- MNK
+                {itemid = 1939, droprate = 142}, -- RDM
+                {itemid = 1943, droprate = 143}, -- PLD
+                {itemid = 2661, droprate = 143}, -- PUP
+                {itemid = 2715, droprate = 143}, -- DNC
             },
             {
-                {itemid =    0, droprate = 400}, -- Nothing
-                {itemid = 1941, droprate = 468}, -- THF
-                {itemid = 1947, droprate = 340}, -- BST
-                {itemid = 1933, droprate = 255}, -- MNK
-                {itemid = 1939, droprate = 191}, -- RDM
-                {itemid = 1943, droprate = 170}, -- PLD
-                {itemid = 2661, droprate = 340}, -- PUP
-                {itemid = 2715, droprate = 170}, -- DNC
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1941, droprate =  72}, -- THF
+                {itemid = 1947, droprate =  71}, -- BST
+                {itemid = 1933, droprate =  71}, -- MNK
+                {itemid = 1939, droprate =  72}, -- RDM
+                {itemid = 1943, droprate =  71}, -- PLD
+                {itemid = 2661, droprate =  71}, -- PUP
+                {itemid = 2715, droprate =  72}, -- DNC
             },
             {
                 {itemid = 1987, droprate = 1000}, -- Charcoal Chip
             },
             {
                 {itemid = 2127, droprate =  59}, -- Metal Chip
-                {itemid =    0, droprate = 100}, -- Nothing
+                {itemid =    0, droprate = 941}, -- Nothing
             },
         },
     },
@@ -573,14 +603,15 @@ local loot =
             },
             {
                 {itemid =    0, droprate = 100}, -- Nothing
-                {itemid = 1937, droprate =  25}, -- BLM
-                {itemid = 2657, droprate = 175}, -- BLU
+                {itemid = 1937, droprate = 100}, -- BLM
+                {itemid = 2657, droprate = 100}, -- BLU
                 {itemid = 1957, droprate = 100}, -- DRG
-                {itemid = 1943, droprate =  25}, -- PLD
-                {itemid = 1953, droprate = 250}, -- SAM
-                {itemid = 2717, droprate =  75}, -- SCH
-                {itemid = 1931, droprate = 225}, -- WAR
-                {itemid = 1935, droprate =  50}, -- WHM
+                {itemid = 1943, droprate = 100}, -- PLD
+                {itemid = 1953, droprate = 100}, -- SAM
+                {itemid = 2717, droprate = 100}, -- SCH
+                {itemid = 1931, droprate = 100}, -- WAR
+                {itemid = 1935, droprate = 100}, -- WHM
+                {itemid = 2715, droprate = 100}, -- DNC
             },
         },
         -- NW_Apollyon floor 2
@@ -593,68 +624,68 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 100}, -- Nothing
-                {itemid = 1943, droprate = 235}, -- PLD
-                {itemid = 2659, droprate =  59}, -- COR
-                {itemid = 1945, droprate = 235}, -- DRK
-                {itemid = 1955, droprate = 147}, -- NIN
-                {itemid = 1951, droprate = 118}, -- RNG
-                {itemid = 1959, droprate = 176}, -- SMN
-                {itemid = 1935, droprate = 110}, -- WHM
+                {itemid =    0, droprate = 125}, -- Nothing
+                {itemid = 1949, droprate = 125}, -- BRD
+                {itemid = 2659, droprate = 125}, -- COR
+                {itemid = 1945, droprate = 125}, -- DRK
+                {itemid = 1955, droprate = 125}, -- NIN
+                {itemid = 1951, droprate = 125}, -- RNG
+                {itemid = 1959, droprate = 125}, -- SMN
+                {itemid = 2715, droprate = 125}, -- DNC
             },
         },
         -- NW_Apollyon floor 3
         [3] =
         {
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1947, droprate = 133}, -- BST
-                {itemid = 1933, droprate = 133}, -- MNK
-                {itemid = 1943, droprate = 133}, -- PLD
-                {itemid = 2661, droprate = 133}, -- PUP
-                {itemid = 1939, droprate = 110}, -- RDM
-                {itemid = 1941, droprate = 400}, -- THF
+                {itemid = 1947, droprate = 167}, -- BST
+                {itemid = 1933, droprate = 167}, -- MNK
+                {itemid = 1943, droprate = 166}, -- PLD
+                {itemid = 2661, droprate = 167}, -- PUP
+                {itemid = 1941, droprate = 166}, -- THF
+                {itemid = 2715, droprate = 167}, -- DNC
             },
             {
-                {itemid =    0, droprate = 400}, -- Nothing
-                {itemid =  646, droprate =  50}, -- Adaman Ore
-                {itemid = 1633, droprate =  50}, -- Clot Plasma
-                {itemid =  664, droprate =  50}, -- Darksteel Sheet
-                {itemid =  645, droprate =  50}, -- Darksteel Ore
-                {itemid = 1311, droprate =  50}, -- Oxblood
-                {itemid = 1681, droprate =  50}, -- Light Steel
-                {itemid =  821, droprate =  50}, -- Rainbow Thread
-                {itemid = 1883, droprate =  50}, -- Shell Powder
+                {itemid =    0, droprate = 700}, -- Nothing
+                {itemid =  646, droprate =  38}, -- Adaman Ore
+                {itemid = 1633, droprate =  37}, -- Clot Plasma
+                {itemid =  664, droprate =  38}, -- Darksteel Sheet
+                {itemid =  645, droprate =  37}, -- Darksteel Ore
+                {itemid = 1311, droprate =  38}, -- Oxblood
+                {itemid = 1681, droprate =  37}, -- Light Steel
+                {itemid =  821, droprate =  38}, -- Rainbow Thread
+                {itemid = 1883, droprate =  37}, -- Shell Powder
             },
             {
-                {itemid =    0, droprate = 400}, -- Nothing
-                {itemid =  646, droprate =  50}, -- Adaman Ore
-                {itemid = 1633, droprate =  50}, -- Clot Plasma
-                {itemid =  664, droprate =  50}, -- Darksteel Sheet
-                {itemid =  645, droprate =  50}, -- Darksteel Ore
-                {itemid = 1311, droprate =  50}, -- Oxblood
-                {itemid = 1681, droprate =  50}, -- Light Steel
-                {itemid =  821, droprate =  50}, -- Rainbow Thread
-                {itemid = 1883, droprate =  50}, -- Shell Powder
+                {itemid =    0, droprate = 700}, -- Nothing
+                {itemid =  646, droprate =  38}, -- Adaman Ore
+                {itemid = 1633, droprate =  37}, -- Clot Plasma
+                {itemid =  664, droprate =  38}, -- Darksteel Sheet
+                {itemid =  645, droprate =  37}, -- Darksteel Ore
+                {itemid = 1311, droprate =  38}, -- Oxblood
+                {itemid = 1681, droprate =  37}, -- Light Steel
+                {itemid =  821, droprate =  38}, -- Rainbow Thread
+                {itemid = 1883, droprate =  37}, -- Shell Powder
             },
         },
         -- NW_Apollyon floor 4
@@ -682,31 +713,25 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
-                {itemid =    0, droprate = 1000}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
             },
             {
-                {itemid =    0, droprate = 100}, -- Nothing
-                {itemid = 1937, droprate =  80}, -- BLM
-                {itemid = 2657, droprate =  70}, -- BLU
-                {itemid = 1949, droprate =  48}, -- BRD
-                {itemid = 1947, droprate =  30}, -- BST
-                {itemid = 2659, droprate =  25}, -- COR
-                {itemid = 1957, droprate =  19}, -- DRG
-                {itemid = 1945, droprate =  48}, -- DRK
-                {itemid = 1933, droprate =  90}, -- MNK
-                {itemid = 1955, droprate = 100}, -- NIN
-                {itemid = 2661, droprate =  48}, -- PUP
-                {itemid = 1939, droprate = 136}, -- RDM
-                {itemid = 1951, droprate =  80}, -- RNG
-                {itemid = 1953, droprate = 110}, -- SAM
-                {itemid = 1959, droprate =  95}, -- SMN
-                {itemid = 2715, droprate = 123}, -- DNC
-                {itemid = 1935, droprate =  48}, -- WHM
+                {itemid =    0, droprate = 200}, -- Nothing
+                {itemid = 1949, droprate =  80}, -- BRD
+                {itemid = 1947, droprate =  80}, -- BST
+                {itemid = 1945, droprate =  80}, -- DRK
+                {itemid = 1933, droprate =  80}, -- MNK
+                {itemid = 2661, droprate =  80}, -- PUP
+                {itemid = 1939, droprate =  80}, -- RDM
+                {itemid = 1959, droprate =  80}, -- SMN
+                {itemid = 1935, droprate =  80}, -- WHM
+                {itemid = 1931, droprate =  80}, -- WAR
+                {itemid = 1941, droprate =  80}, -- THF
             },
         },
         -- NW_Apollyon floor 5
@@ -728,78 +753,78 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1937, droprate = 109}, -- BLM
-                {itemid = 2657, droprate = 152}, -- BLU
-                {itemid = 1949, droprate = 283}, -- BRD
-                {itemid = 1947, droprate = 109}, -- BST
-                {itemid = 2659, droprate =  65}, -- COR
-                {itemid = 2715, droprate = 130}, -- DNC
-                {itemid = 1957, droprate =  65}, -- DRG
-                {itemid = 1945, droprate = 174}, -- DRK
-                {itemid = 1933, droprate = 130}, -- MNK
-                {itemid = 1955, droprate = 196}, -- NIN
-                {itemid = 1943, droprate = 174}, -- PLD
-                {itemid = 2661, droprate = 174}, -- PUP
-                {itemid = 1939, droprate = 109}, -- RDM
-                {itemid = 1951, droprate = 130}, -- RNG
-                {itemid = 1953, droprate = 304}, -- SAM
-                {itemid = 2717, droprate =  87}, -- SCH
-                {itemid = 1959, droprate = 217}, -- SMN
-                {itemid = 1941, droprate = 174}, -- THF
-                {itemid = 1931, droprate = 130}, -- WAR
-                {itemid = 1935, droprate = 109}, -- WHM
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 2657, droprate =  50}, -- BLU
+                {itemid = 1949, droprate =  50}, -- BRD
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 2659, droprate =  50}, -- COR
+                {itemid = 2715, droprate =  50}, -- DNC
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1945, droprate =  50}, -- DRK
+                {itemid = 1933, droprate =  50}, -- MNK
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 1943, droprate =  50}, -- PLD
+                {itemid = 2661, droprate =  50}, -- PUP
+                {itemid = 1939, droprate =  50}, -- RDM
+                {itemid = 1951, droprate =  50}, -- RNG
+                {itemid = 1953, droprate =  50}, -- SAM
+                {itemid = 2717, droprate =  50}, -- SCH
+                {itemid = 1959, droprate =  50}, -- SMN
+                {itemid = 1941, droprate =  50}, -- THF
+                {itemid = 1931, droprate =  50}, -- WAR
+                {itemid = 1935, droprate =  50}, -- WHM
             },
             {
-                {itemid = 1937, droprate = 109}, -- BLM
-                {itemid = 2657, droprate = 152}, -- BLU
-                {itemid = 1949, droprate = 283}, -- BRD
-                {itemid = 1947, droprate = 109}, -- BST
-                {itemid = 2659, droprate =  65}, -- COR
-                {itemid = 2715, droprate = 130}, -- DNC
-                {itemid = 1957, droprate =  65}, -- DRG
-                {itemid = 1945, droprate = 174}, -- DRK
-                {itemid = 1933, droprate = 130}, -- MNK
-                {itemid = 1955, droprate = 196}, -- NIN
-                {itemid = 1943, droprate = 174}, -- PLD
-                {itemid = 2661, droprate = 174}, -- PUP
-                {itemid = 1939, droprate = 109}, -- RDM
-                {itemid = 1951, droprate = 130}, -- RNG
-                {itemid = 1953, droprate = 304}, -- SAM
-                {itemid = 2717, droprate =  87}, -- SCH
-                {itemid = 1959, droprate = 217}, -- SMN
-                {itemid = 1941, droprate = 174}, -- THF
-                {itemid = 1931, droprate = 130}, -- WAR
-                {itemid = 1935, droprate = 109}, -- WHM
+                {itemid = 1937, droprate =  50}, -- BLM
+                {itemid = 2657, droprate =  50}, -- BLU
+                {itemid = 1949, droprate =  50}, -- BRD
+                {itemid = 1947, droprate =  50}, -- BST
+                {itemid = 2659, droprate =  50}, -- COR
+                {itemid = 2715, droprate =  50}, -- DNC
+                {itemid = 1957, droprate =  50}, -- DRG
+                {itemid = 1945, droprate =  50}, -- DRK
+                {itemid = 1933, droprate =  50}, -- MNK
+                {itemid = 1955, droprate =  50}, -- NIN
+                {itemid = 1943, droprate =  50}, -- PLD
+                {itemid = 2661, droprate =  50}, -- PUP
+                {itemid = 1939, droprate =  50}, -- RDM
+                {itemid = 1951, droprate =  50}, -- RNG
+                {itemid = 1953, droprate =  50}, -- SAM
+                {itemid = 2717, droprate =  50}, -- SCH
+                {itemid = 1959, droprate =  50}, -- SMN
+                {itemid = 1941, droprate =  50}, -- THF
+                {itemid = 1931, droprate =  50}, -- WAR
+                {itemid = 1935, droprate =  50}, -- WHM
             },
             {
-                {itemid =    0, droprate = 300}, -- Nothing
-                {itemid = 1937, droprate = 109}, -- BLM
-                {itemid = 2657, droprate = 152}, -- BLU
-                {itemid = 1949, droprate = 283}, -- BRD
-                {itemid = 1947, droprate = 109}, -- BST
-                {itemid = 2659, droprate =  65}, -- COR
-                {itemid = 2715, droprate = 130}, -- DNC
-                {itemid = 1957, droprate =  65}, -- DRG
-                {itemid = 1945, droprate = 174}, -- DRK
-                {itemid = 1933, droprate = 130}, -- MNK
-                {itemid = 1955, droprate = 196}, -- NIN
-                {itemid = 1943, droprate = 174}, -- PLD
-                {itemid = 2661, droprate = 174}, -- PUP
-                {itemid = 1939, droprate = 109}, -- RDM
-                {itemid = 1951, droprate = 130}, -- RNG
-                {itemid = 1953, droprate = 304}, -- SAM
-                {itemid = 2717, droprate =  87}, -- SCH
-                {itemid = 1959, droprate = 217}, -- SMN
-                {itemid = 1941, droprate = 174}, -- THF
-                {itemid = 1931, droprate = 130}, -- WAR
-                {itemid = 1935, droprate = 109}, -- WHM
+                {itemid =    0, droprate = 200}, -- Nothing
+                {itemid = 1937, droprate =  40}, -- BLM
+                {itemid = 2657, droprate =  40}, -- BLU
+                {itemid = 1949, droprate =  40}, -- BRD
+                {itemid = 1947, droprate =  40}, -- BST
+                {itemid = 2659, droprate =  40}, -- COR
+                {itemid = 2715, droprate =  40}, -- DNC
+                {itemid = 1957, droprate =  40}, -- DRG
+                {itemid = 1945, droprate =  40}, -- DRK
+                {itemid = 1933, droprate =  40}, -- MNK
+                {itemid = 1955, droprate =  40}, -- NIN
+                {itemid = 1943, droprate =  40}, -- PLD
+                {itemid = 2661, droprate =  40}, -- PUP
+                {itemid = 1939, droprate =  40}, -- RDM
+                {itemid = 1951, droprate =  40}, -- RNG
+                {itemid = 1953, droprate =  40}, -- SAM
+                {itemid = 2717, droprate =  40}, -- SCH
+                {itemid = 1959, droprate =  40}, -- SMN
+                {itemid = 1941, droprate =  40}, -- THF
+                {itemid = 1931, droprate =  40}, -- WAR
+                {itemid = 1935, droprate =  40}, -- WHM
             },
             {
                 {itemid = 1988, droprate = 1000}, -- Magenta Chip
             },
             {
-                {itemid = 2127, droprate =  59}, -- Metal Chip
-                {itemid =    0, droprate = 100}, -- Nothing
+                {itemid = 2127, droprate = 104}, -- Metal Chip
+                {itemid =    0, droprate = 896}, -- Nothing
             },
         },
     },
@@ -824,16 +849,16 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
                 {itemid = 2127, droprate =  59}, -- Metal Chip
-                {itemid =    0, droprate = 100}, -- Nothing
+                {itemid =    0, droprate = 941}, -- Nothing
             },
         },
     },
@@ -858,20 +883,20 @@ local loot =
                 {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
             },
             {
-                {itemid =    0, droprate = 1000}, -- Nothing
-                {itemid = 1875, droprate = 1000}, -- Ancient Beastcoin
+                {itemid =    0, droprate = 500}, -- Nothing
+                {itemid = 1875, droprate = 500}, -- Ancient Beastcoin
             },
             {
-                {itemid = 1925, droprate = 659}, -- Omega's Eye
-                {itemid = 1927, droprate = 394}, -- Omega's Foreleg
-                {itemid = 1928, droprate = 388}, -- Omega's Hinf Leg
-                {itemid = 1929, droprate = 404}, -- Omega's Tail
+                {itemid = 1925, droprate = 357}, -- Omega's Eye
+                {itemid = 1927, droprate = 213}, -- Omega's Foreleg
+                {itemid = 1928, droprate = 211}, -- Omega's Hinf Leg
+                {itemid = 1929, droprate = 219}, -- Omega's Tail
             },
             {
-                {itemid = 1928, droprate = 394}, -- Omega's Hind Leg
-                {itemid = 1929, droprate = 402}, -- Omega's Tail
-                {itemid = 1925, droprate = 659}, -- Omega's Eye
-                {itemid = 1927, droprate = 383}, -- Omega's Foreleg
+                {itemid = 1925, droprate = 357}, -- Omega's Eye
+                {itemid = 1927, droprate = 213}, -- Omega's Foreleg
+                {itemid = 1928, droprate = 211}, -- Omega's Hinf Leg
+                {itemid = 1929, droprate = 219}, -- Omega's Tail
             },
             {
                 {itemid =    0, droprate = 735}, -- Nothing

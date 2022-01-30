@@ -64,7 +64,7 @@ INSERT INTO `fishing_rod` VALUES(17380, 'Mithran Fishing Rod', 0, 1, 1, 32, 30, 
 INSERT INTO `fishing_rod` VALUES(17381, 'Composite Fishing Rod', 1, 1, 1, 34, 0, 0, 50, 0, 43, 0, 0, 0, 1, 0, 2, 1, 473, 0);
 INSERT INTO `fishing_rod` VALUES(17382, 'Single Hook Fishing Rod', 1, 1, 1, 30, 0, 0, 50, 0, 45, 0, 0, 0, 1, 0, 3, 1, 472, 0);
 INSERT INTO `fishing_rod` VALUES(17383, 'Clothespole', 0, 1, 1, 28, 30, 0, 70, 0, 30, 0, 0, 0, 1, 0, 3, 1, 482, 0);
-INSERT INTO `fishing_rod` VALUES(17384, 'Carbon Fishing Rod', 1, 0, 0, 20, 0, 0, 50, 0, 43, 0, 2, 1, 1, 0, 4, 1, 490, 0);
+INSERT INTO `fishing_rod` VALUES(17384, 'Carbon Fishing Rod', 1, 0, 0, 25, 0, 0, 50, 0, 43, 0, 2, 1, 1, 0, 4, 1, 490, 0);
 INSERT INTO `fishing_rod` VALUES(17385, 'Glass Fiber Fishing Rod', 1, 0, 0, 24, 0, 0, 50, 0, 45, 0, 2, 1, 1, 0, 4, 1, 491, 0);
 INSERT INTO `fishing_rod` VALUES(17386, 'Lu Shang\'s Fishing Rod', 0, 2, 0, 38, 10, 20, 120, 110, 40, 10, 2, 1, 1, 0, 2, 1, 489, 0);
 INSERT INTO `fishing_rod` VALUES(17387, 'Tarutaru Fishing Rod', 0, 0, 0, 18, 30, 0, 80, 0, 30, 0, 2, 1, 1, 0, 4, 1, 484, 0);

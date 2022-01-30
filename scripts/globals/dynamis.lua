@@ -535,8 +535,8 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, math.floor(GetDynaTimeRemaining(zoneId)/60), 1)
             if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
         end)
-        if player:getCharVar("DynaBypassWeakness") == 0 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
-        player:setCharVar("DynaBypassWeakness", 0)
+        if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
+        player:setCharVar("DynaInflictWeakness", 0)
     end
 
     return -1
@@ -555,7 +555,9 @@ end
 
 dynamis.statueOnSpawn = function(mob, eyes) -- says statue but this is also called by anything that spawn children mobs (like ahriman)
     mob:setLocalVar("dynaReadyToSpawnChildren", 1)
-    mob:AnimationSub(eyes)
+    if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
+        mob:setLocalVar("eyeColor", eyes)
+    end
 end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
@@ -582,6 +584,11 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
+    if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
+        local eyes = mob:getLocalVar("eyeColor")
+        mob:AnimationSub(eyes)
+    end
+
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 0 then return end
     mob:setLocalVar("dynaReadyToSpawnChildren", 0)
 
@@ -746,6 +753,41 @@ dynamis.setMobStats = function(mob)
     mob:setMod(tpz.mod.VIT, -15)
     mob:setMod(tpz.mod.DEFP, 10)
     mob:setTrueDetection(1)
+
+    local familyEES =
+    {
+        [  3] = tpz.jsa.EES_AERN,    -- Aern
+        [ 25] = tpz.jsa.EES_ANTICA,  -- Antica
+        [115] = tpz.jsa.EES_SHADE,   -- Fomor
+        [126] = tpz.jsa.EES_GIGA,    -- Gigas
+        [127] = tpz.jsa.EES_GIGA,    -- Gigas
+        [128] = tpz.jsa.EES_GIGA,    -- Gigas
+        [129] = tpz.jsa.EES_GIGA,    -- Gigas
+        [130] = tpz.jsa.EES_GIGA,    -- Gigas
+        [133] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [169] = tpz.jsa.EES_KINDRED, -- Kindred
+        [171] = tpz.jsa.EES_LAMIA,   -- Lamiae
+        [182] = tpz.jsa.EES_MERROW,  -- Merrow
+        [184] = tpz.jsa.EES_GOBLIN,  -- Moblin
+        [189] = tpz.jsa.EES_ORC,     -- Orc
+        [200] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [201] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [202] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [221] = tpz.jsa.EES_SHADE,   -- Shadow
+        [222] = tpz.jsa.EES_SHADE,   -- Shadow
+        [223] = tpz.jsa.EES_SHADE,   -- Shadow
+        [246] = tpz.jsa.EES_TROLL,   -- Troll
+        [270] = tpz.jsa.EES_YAGUDO,  -- Yagudo
+        [327] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [328] = tpz.jsa.EES_GIGA,    -- Gigas
+        [334] = tpz.jsa.EES_ORC,     -- OrcNM
+        [335] = tpz.jsa.EES_MAAT,    -- Maat
+        [337] = tpz.jsa.EES_QUADAV,  -- QuadavNM
+        [358] = tpz.jsa.EES_KINDRED, -- Kindred
+        [359] = tpz.jsa.EES_SHADE,   -- Fomor
+        [360] = tpz.jsa.EES_YAGUDO,  -- YagudoNM
+        [373] = tpz.jsa.EES_GOBLIN,  -- Goblin_Armored
+    }
 
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
@@ -969,7 +1011,7 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.MDEF, 0)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.MPHEAL, 0)
-    mob:setMod(tp.mod.CLEAR_MIND, 0)
+    mob:setMod(tpz.mod.CLEAR_MIND, 0)
 
     mob:setTrueDetection(1)
 

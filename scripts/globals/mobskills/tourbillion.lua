@@ -22,6 +22,9 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 3
     local accmod = 1
     local dmgmod = 1.5
+    if (mob:getID() == 17093002) then -- Nyzul Isle Khimaira
+        dmgmod = 1
+    end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
     local duration = 20 * (skill:getTP() / 1000)

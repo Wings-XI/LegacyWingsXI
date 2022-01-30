@@ -475,29 +475,29 @@ INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 3224, 680);
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 5564, 40);
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 18532, 220);
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 19129, 1000);
-INSERT INTO `mob_droplist` VALUES(71, 1, 2, 100, 15733, 333); -- Nyzul Isle Investigation Floor 20 Boss
-INSERT INTO `mob_droplist` VALUES(71, 1, 2, 100, 15734, 333);
-INSERT INTO `mob_droplist` VALUES(71, 1, 2, 100, 15735, 334);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 17742, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 17743, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 17744, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 17956, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18003, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18034, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18120, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18426, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18443, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18492, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18589, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18590, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18592, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18719, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18720, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18753, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18754, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18851, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 18944, 50);
-INSERT INTO `mob_droplist` VALUES(71, 1, 1, 100, 19102, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15733, 111); -- Nyzul Isle Investigation Floor 20 Boss
+INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15734, 111);
+INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15735, 111);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17742, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17743, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17744, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17956, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18003, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18034, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18120, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18426, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18443, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18492, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18589, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18590, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18592, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18719, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18720, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18753, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18754, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18851, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 18944, 50);
+INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 19102, 50);
 INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 1473, 80); -- Untouched / Unknown
 INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 16968, 1000); -- 100% as per ffxidb
 INSERT INTO `mob_droplist` VALUES(72, 0, 0, 1000, 896, 1000); -- 100% as per ffxidb
@@ -831,29 +831,29 @@ INSERT INTO `mob_droplist` VALUES(146, 0, 0, 1000, 1456, 10);
 INSERT INTO `mob_droplist` VALUES(146, 0, 0, 1000, 3474, 1000);
 INSERT INTO `mob_droplist` VALUES(146, 0, 0, 1000, 3497, 15);
 INSERT INTO `mob_droplist` VALUES(147, 2, 0, 1000, 864, 0);
-INSERT INTO `mob_droplist` VALUES(148, 1, 2, 100, 15647, 333); -- Nyzul Isle Investigation Floor 40 Boss
-INSERT INTO `mob_droplist` VALUES(148, 1, 2, 100, 15648, 333);
-INSERT INTO `mob_droplist` VALUES(148, 1, 2, 100, 15649, 334);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 17742, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 17743, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 17744, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 17956, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18003, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18034, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18120, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18426, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18443, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18492, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18589, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18590, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18592, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18719, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18720, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18753, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18754, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18851, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 18944, 50);
-INSERT INTO `mob_droplist` VALUES(148, 1, 1, 100, 19102, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15647, 111); -- Nyzul Isle Investigation Floor 40 Boss
+INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15648, 111);
+INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15649, 111);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17742, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17743, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17744, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17956, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18003, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18034, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18120, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18426, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18443, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18492, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18589, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18590, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18592, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18719, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18720, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18753, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18754, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18851, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 18944, 50);
+INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 19102, 50);
 INSERT INTO `mob_droplist` VALUES(149, 0, 0, 1000, 881, 710);
 INSERT INTO `mob_droplist` VALUES(149, 0, 0, 1000, 936, 160);
 INSERT INTO `mob_droplist` VALUES(149, 0, 0, 1000, 4400, 710);
@@ -925,29 +925,29 @@ INSERT INTO `mob_droplist` VALUES(162, 0, 0, 1000, 1740, 140);
 INSERT INTO `mob_droplist` VALUES(163, 0, 0, 1000, 902, 110);
 INSERT INTO `mob_droplist` VALUES(163, 0, 0, 1000, 1048, 60);
 INSERT INTO `mob_droplist` VALUES(163, 0, 0, 1000, 17415, 330);
-INSERT INTO `mob_droplist` VALUES(164, 1, 2, 100, 14983, 333); -- Nyzul Isle Investigation Floor 60 Boss
-INSERT INTO `mob_droplist` VALUES(164, 1, 2, 100, 14984, 333);
-INSERT INTO `mob_droplist` VALUES(164, 1, 2, 100, 14985, 334);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 17742, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 17743, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 17744, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 17956, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18003, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18034, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18120, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18426, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18443, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18492, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18589, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18590, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18592, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18719, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18720, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18753, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18754, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18851, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 18944, 50);
-INSERT INTO `mob_droplist` VALUES(164, 1, 1, 100, 19102, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14983, 111); -- Nyzul Isle Investigation Floor 60 Boss
+INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14984, 111);
+INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14985, 111);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17742, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17743, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17744, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17956, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18003, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18034, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18120, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18426, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18443, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18492, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18589, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18590, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18592, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18719, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18720, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18753, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18754, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18851, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 18944, 50);
+INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 19102, 50);
 INSERT INTO `mob_droplist` VALUES(165, 0, 0, 1000, 914, 490);
 INSERT INTO `mob_droplist` VALUES(165, 0, 0, 1000, 939, 440);
 INSERT INTO `mob_droplist` VALUES(165, 0, 0, 1000, 939, 220);
@@ -1062,29 +1062,29 @@ INSERT INTO `mob_droplist` VALUES(180, 0, 0, 1000, 852, 200);
 INSERT INTO `mob_droplist` VALUES(180, 0, 0, 1000, 926, 280);
 INSERT INTO `mob_droplist` VALUES(180, 0, 0, 1000, 1189, 10);
 INSERT INTO `mob_droplist` VALUES(180, 0, 0, 1000, 4362, 200);
-INSERT INTO `mob_droplist` VALUES(181, 1, 2, 100, 14568, 333); -- Nyzul Isle Investigation Floor 80 Boss
-INSERT INTO `mob_droplist` VALUES(181, 1, 2, 100, 14569, 333);
-INSERT INTO `mob_droplist` VALUES(181, 1, 2, 100, 14570, 334);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 17742, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 17743, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 17744, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 17956, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18003, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18034, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18120, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18426, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18443, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18492, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18589, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18590, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18592, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18719, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18720, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18753, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18754, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18851, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 18944, 50);
-INSERT INTO `mob_droplist` VALUES(181, 1, 1, 100, 19102, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14568, 111); -- Nyzul Isle Investigation Floor 80 Boss
+INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14569, 111);
+INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14570, 111);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17742, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17743, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17744, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17956, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18003, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18034, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18120, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18426, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18443, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18492, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18589, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18590, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18592, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18719, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18720, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18753, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18754, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18851, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 18944, 50);
+INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 19102, 50);
 INSERT INTO `mob_droplist` VALUES(182, 0, 0, 1000, 529, 60);
 INSERT INTO `mob_droplist` VALUES(182, 2, 0, 1000, 825, 0);
 INSERT INTO `mob_droplist` VALUES(182, 0, 0, 1000, 825, 1000);
@@ -1844,9 +1844,9 @@ INSERT INTO `mob_droplist` VALUES(302, 0, 0, 1000, 930, 80);
 INSERT INTO `mob_droplist` VALUES(302, 0, 0, 1000, 930, 90);
 INSERT INTO `mob_droplist` VALUES(302, 0, 0, 1000, 1125, 20);
 INSERT INTO `mob_droplist` VALUES(302, 0, 0, 1000, 1125, 20);
-INSERT INTO `mob_droplist` VALUES(303, 1, 2, 100, 16106, 333); -- Nyzul Isle Investigation Floor 100 Boss
-INSERT INTO `mob_droplist` VALUES(303, 1, 2, 100, 16107, 333);
-INSERT INTO `mob_droplist` VALUES(303, 1, 2, 100, 16108, 334);
+INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16106, 111); -- Nyzul Isle Investigation Floor 100 Boss
+INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16107, 111);
+INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16108, 111);
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17744, 50);
@@ -1885,8 +1885,8 @@ INSERT INTO `mob_droplist` VALUES(305, 0, 0, 1000, 17926, 100);
 INSERT INTO `mob_droplist` VALUES(306, 0, 0, 1000, 15529, 100);
 INSERT INTO `mob_droplist` VALUES(306, 0, 0, 1000, 18066, 100);
 INSERT INTO `mob_droplist` VALUES(307, 2, 0, 1000, 656, 0);
-INSERT INTO `mob_droplist` VALUES(308, 0, 0, 1000, 922, 160);
-INSERT INTO `mob_droplist` VALUES(308, 0, 0, 1000, 2919, 90);
+INSERT INTO `mob_droplist` VALUES(308, 0, 0, 1000, 930, 20);
+INSERT INTO `mob_droplist` VALUES(308, 0, 0, 1000, 1125, 10);
 INSERT INTO `mob_droplist` VALUES(309, 0, 0, 1000, 856, 150);
 INSERT INTO `mob_droplist` VALUES(309, 2, 0, 1000, 4358, 0);
 INSERT INTO `mob_droplist` VALUES(309, 0, 0, 1000, 4358, 120);
@@ -1967,8 +1967,7 @@ INSERT INTO `mob_droplist` VALUES(331, 0, 0, 1000, 3146, 100);
 INSERT INTO `mob_droplist` VALUES(331, 0, 0, 1000, 3147, 100);
 INSERT INTO `mob_droplist` VALUES(331, 0, 0, 1000, 3149, 100);
 INSERT INTO `mob_droplist` VALUES(331, 0, 0, 1000, 11900, 100);
-INSERT INTO `mob_droplist` VALUES(332, 0, 0, 1000, 928, 270);
-INSERT INTO `mob_droplist` VALUES(332, 0, 0, 1000, 2278, 100);
+INSERT INTO `mob_droplist` VALUES(332, 0, 0, 1000, 18771, 200);
 INSERT INTO `mob_droplist` VALUES(333, 0, 0, 1000, 928, 820);
 INSERT INTO `mob_droplist` VALUES(333, 0, 0, 1000, 13506, 280);
 INSERT INTO `mob_droplist` VALUES(333, 2, 0, 1000, 17316, 0);
@@ -1986,8 +1985,7 @@ INSERT INTO `mob_droplist` VALUES(336, 0, 0, 1000, 1628, 290);
 INSERT INTO `mob_droplist` VALUES(336, 0, 0, 1000, 5152, 430);
 INSERT INTO `mob_droplist` VALUES(336, 0, 0, 1000, 15323, 120);
 INSERT INTO `mob_droplist` VALUES(336, 0, 0, 1000, 18052, 140);
-INSERT INTO `mob_droplist` VALUES(337, 0, 0, 1000, 1628, 30);
-INSERT INTO `mob_droplist` VALUES(337, 0, 0, 1000, 2196, 100);
+INSERT INTO `mob_droplist` VALUES(337, 0, 0, 1000, 18958, 200);
 INSERT INTO `mob_droplist` VALUES(338, 0, 0, 1000, 1119, 30);
 INSERT INTO `mob_droplist` VALUES(338, 0, 0, 1000, 1143, 1000);
 INSERT INTO `mob_droplist` VALUES(338, 0, 0, 1000, 1143, 1000);
@@ -2883,17 +2881,28 @@ INSERT INTO `mob_droplist` VALUES(518, 0, 0, 1000, 886, 167);
 INSERT INTO `mob_droplist` VALUES(518, 0, 0, 1000, 902, 500);
 INSERT INTO `mob_droplist` VALUES(518, 0, 0, 1000, 4875, 83);
 INSERT INTO `mob_droplist` VALUES(518, 0, 0, 1000, 16792, 250);
-INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1449, 10);
-INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1455, 10);
-INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1456, 5);
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 15107, 30);
-INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1449, 50);
-INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1450, 5);
-INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1452, 50);
+INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(520, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(520, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(520, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(520, 0, 0, 1000, 15083, 30);
-INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 1452, 100);
+INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(521, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(521, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(521, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(521, 0, 0, 1000, 15087, 30);
 INSERT INTO `mob_droplist` VALUES(522, 0, 0, 1000, 1722, 537);
@@ -3685,13 +3694,29 @@ INSERT INTO `mob_droplist` VALUES(712, 0, 0, 1000, 920, 150);
 INSERT INTO `mob_droplist` VALUES(712, 0, 0, 1000, 13838, 130);
 INSERT INTO `mob_droplist` VALUES(713, 0, 0, 1000, 1620, 60);
 INSERT INTO `mob_droplist` VALUES(713, 0, 0, 1000, 1621, 80);
-INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1449, 100);
-INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1453, 5);
-INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1456, 5);
+
+
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(519, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(519, 1, 1, 5, 1456, 330);
+
+INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(714, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(714, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(714, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(714, 0, 0, 1000, 15076, 30);
-INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 1450, 5);
-INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 1452, 100);
+INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(715, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(715, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(715, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(715, 0, 0, 1000, 15073, 30);
 INSERT INTO `mob_droplist` VALUES(716, 0, 0, 1000, 886, 202);
@@ -3699,7 +3724,12 @@ INSERT INTO `mob_droplist` VALUES(716, 0, 0, 1000, 902, 327);
 INSERT INTO `mob_droplist` VALUES(716, 0, 0, 1000, 4111, 10);
 INSERT INTO `mob_droplist` VALUES(716, 0, 0, 1000, 4875, 298);
 INSERT INTO `mob_droplist` VALUES(716, 0, 0, 1000, 16786, 317);
-INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 1455, 100);
+INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(717, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(717, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(717, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(717, 0, 0, 1000, 15079, 30);
 INSERT INTO `mob_droplist` VALUES(718, 0, 0, 1000, 854, 30);
@@ -4509,26 +4539,26 @@ INSERT INTO `mob_droplist` VALUES(905, 0, 0, 1000, 918, 150);
 INSERT INTO `mob_droplist` VALUES(905, 0, 0, 1000, 923, 400);
 INSERT INTO `mob_droplist` VALUES(905, 0, 0, 1000, 4448, 100);
 INSERT INTO `mob_droplist` VALUES(905, 0, 0, 1000, 17211, 380);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 17742, 50); -- Nyzul Isle Investigation NMs
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 17743, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 17744, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 17956, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18003, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18034, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18120, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18426, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18443, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18492, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18589, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18590, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18592, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18719, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18720, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18753, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18754, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18851, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 18944, 50);
-INSERT INTO `mob_droplist` VALUES(906, 1, 1, 100, 19102, 50);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 17742, 20); -- Nyzul Isle Investigation NMs
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 17743, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 17744, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 17956, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18003, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18034, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18120, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18426, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18443, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18492, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18589, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18590, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18592, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18719, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18720, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18753, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18754, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18851, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 18944, 20);
+INSERT INTO `mob_droplist` VALUES(906, 1, 0, 1000, 19102, 20);
 INSERT INTO `mob_droplist` VALUES(907, 0, 0, 1000, 928, 270);
 INSERT INTO `mob_droplist` VALUES(907, 2, 0, 1000, 17316, 0);
 INSERT INTO `mob_droplist` VALUES(907, 0, 0, 1000, 17316, 80);
@@ -7469,11 +7499,12 @@ INSERT INTO `mob_droplist` VALUES(1450, 0, 0, 1000, 1334, 190);
 INSERT INTO `mob_droplist` VALUES(1451, 0, 0, 1000, 901, 140);
 INSERT INTO `mob_droplist` VALUES(1451, 0, 0, 1000, 15223, 430);
 INSERT INTO `mob_droplist` VALUES(1451, 0, 0, 1000, 18255, 140);
-INSERT INTO `mob_droplist` VALUES(1452, 2, 0, 1000, 1449, 0);
-INSERT INTO `mob_droplist` VALUES(1452, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 1452, 50);
-INSERT INTO `mob_droplist` VALUES(1452, 2, 0, 1000, 1455, 0);
-INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 1455, 50);
+INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1452, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1452, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1452, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1452, 0, 0, 1000, 15085, 30);
 INSERT INTO `mob_droplist` VALUES(1453, 0, 0, 1000, 861, 230);
@@ -8238,40 +8269,63 @@ INSERT INTO `mob_droplist` VALUES(1623, 0, 0, 1000, 4755, 30);
 INSERT INTO `mob_droplist` VALUES(1623, 0, 0, 1000, 4784, 50);
 INSERT INTO `mob_droplist` VALUES(1623, 0, 0, 1000, 4812, 30);
 INSERT INTO `mob_droplist` VALUES(1623, 0, 0, 1000, 17232, 100);
-INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 1449, 100);
-INSERT INTO `mob_droplist` VALUES(1624, 2, 0, 1000, 1449, 0);
-INSERT INTO `mob_droplist` VALUES(1624, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(1624, 2, 0, 1000, 1455, 0);
+INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1624, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1624, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1624, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1624, 0, 0, 1000, 15110, 30);
-INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 1452, 50);
-INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 1455, 50);
+INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1625, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1625, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1625, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1625, 0, 0, 1000, 15097, 30);
-INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 1452, 100);
+INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1626, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1626, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1626, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1626, 0, 0, 1000, 15126, 30);
 INSERT INTO `mob_droplist` VALUES(1627, 0, 0, 1000, 2695, 1000);
 INSERT INTO `mob_droplist` VALUES(1627, 0, 0, 1000, 18952, 131);
 INSERT INTO `mob_droplist` VALUES(1627, 0, 0, 1000, 19040, 131);
-INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 1449, 100);
+INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1628, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1628, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1628, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1628, 0, 0, 1000, 15114, 30);
-INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 1449, 100);
-INSERT INTO `mob_droplist` VALUES(1629, 2, 0, 1000, 1449, 0);
-INSERT INTO `mob_droplist` VALUES(1629, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 1453, 5);
-INSERT INTO `mob_droplist` VALUES(1629, 2, 0, 1000, 1455, 0);
+INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1629, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1629, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1629, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1629, 0, 0, 1000, 15086, 30);
-INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 1449, 100);
+INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1630, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1630, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1630, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1630, 0, 0, 1000, 15075, 30);
-INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 1449, 10);
-INSERT INTO `mob_droplist` VALUES(1631, 2, 0, 1000, 1449, 0);
-INSERT INTO `mob_droplist` VALUES(1631, 2, 0, 1000, 1452, 0);
-INSERT INTO `mob_droplist` VALUES(1631, 2, 0, 1000, 1455, 0);
-INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 1455, 10);
+INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(1631, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(1631, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(1631, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(1631, 0, 0, 1000, 15093, 30);
 INSERT INTO `mob_droplist` VALUES(1632, 0, 0, 1000, 4373, 170);
@@ -10547,8 +10601,12 @@ INSERT INTO `mob_droplist` VALUES(2020, 0, 0, 1000, 5374, 100);
 INSERT INTO `mob_droplist` VALUES(2020, 0, 0, 1000, 5375, 100);
 INSERT INTO `mob_droplist` VALUES(2020, 0, 0, 1000, 5384, 100);
 INSERT INTO `mob_droplist` VALUES(2020, 0, 0, 1000, 14555, 1000);
-INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 1449, 100);
-INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 1456, 5);
+INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 1449, 70);
+INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 1452, 70);
+INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 1455, 70);
+INSERT INTO `mob_droplist` VALUES(2021, 1, 1, 5, 1450, 330);
+INSERT INTO `mob_droplist` VALUES(2021, 1, 1, 5, 1453, 330);
+INSERT INTO `mob_droplist` VALUES(2021, 1, 1, 5, 1456, 330);
 INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 4249, 1000);
 INSERT INTO `mob_droplist` VALUES(2021, 0, 0, 1000, 15104, 30);
 INSERT INTO `mob_droplist` VALUES(2022, 0, 0, 1000, 816, 90);
@@ -16718,22 +16776,66 @@ INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4108, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4109, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4110, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
-
+INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,2512,123); -- Lynx Hide
+INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,5667,122); -- Lynx Meat
+INSERT INTO `mob_droplist` VALUES(3224, 1, 1, 1000, 19234, 220); -- Lyft Hexagun
+-- Buarainech
+INSERT INTO `mob_droplist` VALUES(3225, 0, 0, 1000, 2858, 250); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3225, 0, 1, 1000, 2858, 250); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3225, 0, 2, 1000, 2858, 250); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3225, 0, 3, 1000, 2859, 313); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3225, 0, 4, 1000, 19307, 125); -- Blunt Lance
+INSERT INTO `mob_droplist` VALUES(3225, 0, 5, 1000, 11411, 188); -- Shrewd Pumps
+INSERT INTO `mob_droplist` VALUES(3225, 0, 6, 1000, 747, 150); -- Orichalcum Ingot
+-- Elatha
+INSERT INTO `mob_droplist` VALUES(3226, 0, 0, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 0, 1, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 0, 2, 1000, 2858, 260); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3226, 0, 3, 1000, 2859, 263); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3226, 0, 4, 1000, 19162, 316); -- Dull Claymore
+INSERT INTO `mob_droplist` VALUES(3226, 0, 5, 1000, 15057, 272); -- Bricta's Cuffs
+INSERT INTO `mob_droplist` VALUES(3226, 0, 6, 1000, 747, 82); -- Orichalcum Ingot
+-- Lugh
+INSERT INTO `mob_droplist` VALUES(3227, 0, 0, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 0, 1, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 0, 2, 1000, 2858, 500); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3227, 0, 3, 1000, 2859, 154); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3227, 0, 4, 1000, 17767, 154); -- Chipped Scimitar
+INSERT INTO `mob_droplist` VALUES(3227, 0, 5, 1000, 11410, 77); -- Setanta's Ledelsens
+INSERT INTO `mob_droplist` VALUES(3227, 0, 6, 1000, 747, 86); -- Orichalcum Ingot
+-- Ethniu
+INSERT INTO `mob_droplist` VALUES(3228, 0, 0, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 0, 1, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 0, 2, 1000, 2858, 520); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 0, 3, 1000, 2859, 200); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3228, 0, 4, 1000, 19128, 200); -- Edgeless Knife
+INSERT INTO `mob_droplist` VALUES(3228, 0, 5, 1000, 16376, 200); -- Bahram Cuisses
+INSERT INTO `mob_droplist` VALUES(3228, 0, 6, 1000, 15772, 200); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 0, 7, 1000, 747, 50); -- Orichalcum Ingot
+-- Tethra
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2859, 430); -- Chunk of Cobalt Ore
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 18617, 233); -- Cracked Staff
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 16302, 167); -- Bloodbead Gorget
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 15772, 167); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 747, 100); -- Orichalcum Ingot
 -- Bahamut v2 drops
-INSERT INTO `mob_droplist` VALUES(3223, 1, 1, 1000, 17598, 231); -- Bahamut Staff
-INSERT INTO `mob_droplist` VALUES(3223, 1, 1, 1000, 17597, 769); -- Dragon Staff
-INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 15264, 318); -- Bahamut Mask
-INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 18061, 268); -- Bahamut Zaghnal
-INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 15599, 414); -- Bahamut Hose
-INSERT INTO `mob_droplist` VALUES(3223, 1, 3, 712, 1704, 1000); -- Kunwu Iron
-INSERT INTO `mob_droplist` VALUES(3223, 1, 4, 678, 1703, 1000); -- Kunwu Ore
-INSERT INTO `mob_droplist` VALUES(3223, 1, 5, 864, 647, 1000); -- Moly Ore
-INSERT INTO `mob_droplist` VALUES(3223, 1, 6, 763, 647, 1000); -- Moly Ore
-INSERT INTO `mob_droplist` VALUES(3223, 1, 7, 576, 1714, 1000); -- Cashmere Cloth
-INSERT INTO `mob_droplist` VALUES(3223, 1, 8, 593, 1713, 1000); -- Cashmere Thread
-INSERT INTO `mob_droplist` VALUES(3223, 1, 9, 746, 1816, 1000); -- Wyrm Horn
-INSERT INTO `mob_droplist` VALUES(3223, 1, 10, 864, 722, 1000); -- Divine Log
-INSERT INTO `mob_droplist` VALUES(3223, 1, 10, 864, 1313, 1000); -- Sirens Hair
+INSERT INTO `mob_droplist` VALUES(3230, 1, 1, 1000, 17598, 231); -- Bahamut Staff
+INSERT INTO `mob_droplist` VALUES(3230, 1, 1, 1000, 17597, 769); -- Dragon Staff
+INSERT INTO `mob_droplist` VALUES(3230, 1, 2, 1000, 15264, 318); -- Bahamut Mask
+INSERT INTO `mob_droplist` VALUES(3230, 1, 2, 1000, 18061, 268); -- Bahamut Zaghnal
+INSERT INTO `mob_droplist` VALUES(3230, 1, 2, 1000, 15599, 414); -- Bahamut Hose
+INSERT INTO `mob_droplist` VALUES(3230, 1, 3, 712, 1704, 1000); -- Kunwu Iron
+INSERT INTO `mob_droplist` VALUES(3230, 1, 4, 678, 1703, 1000); -- Kunwu Ore
+INSERT INTO `mob_droplist` VALUES(3230, 1, 5, 864, 647, 1000); -- Moly Ore
+INSERT INTO `mob_droplist` VALUES(3230, 1, 6, 763, 647, 1000); -- Moly Ore
+INSERT INTO `mob_droplist` VALUES(3230, 1, 7, 576, 1714, 1000); -- Cashmere Cloth
+INSERT INTO `mob_droplist` VALUES(3230, 1, 8, 593, 1713, 1000); -- Cashmere Thread
+INSERT INTO `mob_droplist` VALUES(3230, 1, 9, 746, 1816, 1000); -- Wyrm Horn
+INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 722, 1000); -- Divine Log
+INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 1313, 1000); -- Sirens Hair
 
 --
 -- Indexes for dumped tables

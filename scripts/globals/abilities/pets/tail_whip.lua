@@ -29,8 +29,10 @@ function onPetAbility(target, pet, skill)
     end
     
     local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-    if duration > 0 and AvatarPhysicalHit(skill, totaldamage) and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
-        target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+        if duration > 0 and AvatarPhysicalHit(skill, totaldamage) and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
+            target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+        end
     end
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(pet,totaldamage)

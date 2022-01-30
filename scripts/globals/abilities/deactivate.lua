@@ -18,6 +18,9 @@ function onUseAbility(player, target, ability)
     local pet = player:getPet()
     if pet:getHP() == pet:getMaxHP() then
         player:resetRecast(tpz.recast.ABILITY, 205) -- activate
+        if (player:getInstance() ~= nil) then
+            player:addRecast(tpz.recast.ABILITY, 205, 5) -- activate
+        end
     end
     target:despawnPet()
 end

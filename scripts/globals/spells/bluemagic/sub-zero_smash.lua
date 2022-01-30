@@ -28,10 +28,10 @@ function onSpellCast(caster, target, spell)
     params.damageType = tpz.damageType.BLUNT
     params.scattr = SC_FRAGMENTATION
     params.numhits = 1
-    params.multiplier = 4.0
-    params.tp150 = 4.5
-    params.tp300 = 5.0
-    params.azuretp = 5.16
+    params.multiplier = 2.0
+    params.tp150 = 2.0
+    params.tp300 = 2.0
+    params.azuretp = 2.0
     params.duppercap = 72
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
@@ -55,10 +55,12 @@ function onSpellCast(caster, target, spell)
     params.bonus = 0
     params.effect = tpz.effect.PARALYSIS
     local resist = applyResistanceEffect(caster, target, spell, params)
-
+    
     local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
-        target:addStatusEffect(tpz.effect.PARALYSIS, 23, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 23, 0, duration*resist)
+        end
     end
 
     return damage

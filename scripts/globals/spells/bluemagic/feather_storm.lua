@@ -28,10 +28,10 @@ function onSpellCast(caster, target, spell)
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIGHT
     params.numhits = 1
-    params.multiplier = 1.5
-    params.tp150 = 1.5
-    params.tp300 = 1.5
-    params.azuretp = 1.5
+    params.multiplier = 2.0
+    params.tp150 = 2.0
+    params.tp300 = 2.0
+    params.azuretp = 2.0
     params.duppercap = 17
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
@@ -54,11 +54,14 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
-        local BLUlvl = caster:getMainLvl()
-        if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
-        local power = 3 + math.floor(BLUlvl/15)
-        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
+
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
+            local BLUlvl = caster:getMainLvl()
+            if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+            local power = 3 + math.floor(BLUlvl/15)
+            target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
+        end
     end
 
     return damage

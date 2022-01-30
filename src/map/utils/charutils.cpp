@@ -1216,17 +1216,41 @@ namespace charutils
     {
         auto pushContainer = [&](auto LocationID)
         {
-            CItemContainer* container = PChar->getStorage(LocationID);
-            if (container == nullptr)
-                return;
+            if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id && (LocationID == LOC_MOGSAFE || LocationID == LOC_MOGSAFE2)) {
+                // Open Mog, in another person's moghouse, so send *their* furniture
+                CCharEntity* PResident = zoneutils::GetChar(PChar->m_moghouseID);
+                if (PResident) {
+                    CItemContainer* container = PResident->getStorage(LocationID);
+                    if (container) {
+                        uint8 size = container->GetSize();
+                        uint8 virtual_slot = 1;
+                        for (uint8 slotID = 0; slotID <= size; ++slotID) {
+                            CItem* PItem = PResident->getStorage(LocationID)->GetItem(slotID);
+                            if (PItem != nullptr && PItem->isType(ITEM_FURNISHING) && ((CItemFurnishing*)PItem)->isInstalled())
+                            {
+                                CInventoryItemPacket* furniture_packet = new CInventoryItemPacket(PItem, LocationID, slotID);
+                                // Replace slot ID with virtual slot so the numbers are sequential
+                                furniture_packet->getData()[0x0F] = virtual_slot;
+                                virtual_slot++;
+                                PChar->pushPacket(furniture_packet);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                CItemContainer* container = PChar->getStorage(LocationID);
+                if (container == nullptr)
+                    return;
 
-            uint8 size = container->GetSize();
-            for (uint8 slotID = 0; slotID <= size; ++slotID)
-            {
-                CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
-                if (PItem != nullptr)
+                uint8 size = container->GetSize();
+                for (uint8 slotID = 0; slotID <= size; ++slotID)
                 {
-                    PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+                    CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
+                    if (PItem != nullptr)
+                    {
+                        PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+                    }
                 }
             }
         };
@@ -1691,7 +1715,7 @@ namespace charutils
                 if (PItem->getID() == 4237)
                     checkHG = true;
                 UpdateItem(PChar, LOC_INVENTORY, PItem->getSlotID(), (int32)(0 - amount));
-                
+
                 PChar->UContainer->ClearSlot(slotid);
             }
         }
@@ -2712,7 +2736,7 @@ namespace charutils
         {
             /*
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
-            
+
             for (auto&& abilityid : skillList)
             {
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
@@ -3005,7 +3029,15 @@ namespace charutils
                     auto maxCharges = 0;
                     if (charge)
                     {
-                        chargeTime = charge->chargeTime - PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
+                        uint16 meritRecastReduction = PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
+
+                        // Ready is 2sec/merit (Sic is 4sec/merit so divide by 2)
+                        if (PAbility->getMeritModID() == 902)
+                        {
+                            meritRecastReduction /= 2;
+                        }
+
+                        chargeTime = charge->chargeTime - meritRecastReduction;
                         maxCharges = charge->maxCharges;
                     }
                     if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
@@ -4428,6 +4460,7 @@ namespace charutils
             "pos_x = %.3f,"
             "pos_y = %.3f,"
             "pos_z = %.3f,"
+            "moghouse = %u,"
             "boundary = %u "
             "WHERE charid = %u;";
 
@@ -4436,6 +4469,7 @@ namespace charutils
             PChar->loc.p.x,
             PChar->loc.p.y,
             PChar->loc.p.z,
+            PChar->m_moghouseID,
             PChar->loc.boundary,
             PChar->id);
     }
@@ -4650,10 +4684,8 @@ namespace charutils
             afterMW2 += 4;
         if (HasCompletedMission(PChar, 3, 28))
             afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 30))
-            afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 31))
-            afterMW2 += 12;
+        if (HasCompletedMission(PChar, 3, 30)) // Awakening (Set to 16 as the Last Verse cannot be completed.)
+            afterMW2 += 16;
 
 
 
@@ -4737,10 +4769,8 @@ namespace charutils
             afterMW3 += 2;
         if (HasCompletedMission(PChar, 6, 828)) //WHEN_ANGELS_FALL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 840)) //DAWN
-            afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 850)) //THE_LAST_VERSE
-            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 840)) //DAWN (Set to 6 as the Last Verse cannot be completed.)
+            afterMW3 += 6;
 
         uint8 AU = 0;
         while (AU < 48)
@@ -5520,13 +5550,13 @@ namespace charutils
             WEATHER_AURORAS,
             WEATHER_GLOOM};
 
-        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element;
+        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element-1;
 
-        TPZ_DEBUG_BREAK_IF(element > 8);
+        TPZ_DEBUG_BREAK_IF(element > 7);
 
         reduction = reduction + PChar->getMod(strong[element]);
 
-        if (battleutils::GetDayElement() == element)
+        if (battleutils::GetDayElement() == element + 1)
         {
             reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
         }
@@ -5976,6 +6006,7 @@ namespace charutils
                 PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
                 return;
             }
+            PChar->SetLocalVar("NoRemoveOpenMH", 1);
             Sql_Query(SqlHandle, "UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
                 (uint32)ipp, (uint32)(ipp >> 32), PChar->id);
 
@@ -6546,6 +6577,37 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
             PZone->m_DynamisHandler->EjectPlayer(PChar, false);
     }
     return valid;
+}
+
+void RemoveGuestsFromMogHouse(CCharEntity* PChar)
+{
+    if (!PChar) {
+        return;
+    }
+    uint32 charid = PChar->id;
+    if (PChar->m_moghouseID == 0 || PChar->m_moghouseID != charid) {
+        return;
+    }
+
+    CZone* PZone = PChar->loc.zone;
+    if (!PZone) {
+        return;
+    }
+    uint16 zoneid = PZone->GetID();
+    PZone->ForEachChar([&PChar, charid, zoneid](CCharEntity* PZoneChar) {
+        if (PZoneChar->id != charid && PZoneChar->m_moghouseID == charid && PZoneChar->GetLocalVar("NoRemoveOpenMH") == 0) {
+            PZoneChar->loc.destination = zoneid;
+            PZoneChar->loc.p.x = 0;
+            PZoneChar->loc.p.y = 0;
+            PZoneChar->loc.p.z = 0;
+            PZoneChar->loc.p.rotation = 0;
+            PZoneChar->status = STATUS_DISAPPEAR;
+            PZoneChar->loc.boundary = 0;
+            PZoneChar->m_moghouseID = 0;
+            PZoneChar->clearPacketList();
+            charutils::SendToZone(PZoneChar, 2, zoneutils::GetZoneIPP(zoneid));
+        }
+    });
 }
 
 int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)

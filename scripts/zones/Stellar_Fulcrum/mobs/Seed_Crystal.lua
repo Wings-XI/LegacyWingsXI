@@ -10,11 +10,13 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_IGNORE_STATIONARY, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 5)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 6)
     mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 70)
     mob:SetAutoAttackEnabled(false)
-    mob:setMod(tpz.mod.REGAIN, 1500) -- Basic attack is a WS
-    mob:setMod(tpz.mod.EVA, -50)
+    mob:setMod(tpz.mod.REGAIN, 1200) -- Basic attack is a WS
+    mob:addMod(tpz.mod.EVA, -50)
+    mob:addMod(tpz.mod.MATT, -25)
     mob:setLocalVar("attacks", 0)
 end
 
@@ -24,7 +26,7 @@ end
 
 function onMobFight(mob, target)
     if mob:getHPP() < 25 then
-        mob:setMod(tpz.mod.REGAIN, 500) -- Since TP moves go off sooner, let's lower this
+        mob:setMod(tpz.mod.REGAIN, 300) -- Since TP moves go off sooner, let's lower this
     end
 end
 

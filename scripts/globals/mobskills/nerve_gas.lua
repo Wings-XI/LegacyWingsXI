@@ -24,6 +24,9 @@ function onMobSkillCheck(target, mob, skill)
         return 0
     else
         if (mob:AnimationSub() == 0 and mob:getHPP() <= 25) then -- Only used when all 3 Hydra heads alive
+            if (mob:getID() == 17093003) and (mob:getInstance():getStage() ~= 100) then -- Nyzul Isle Hydra will only use this on floor 100
+                return 1
+            end
             return 0
         else
             return 1
@@ -32,7 +35,22 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    skill:setMsg(MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, 50, 0, 420))
-    MobStatusEffectMove(mob, target, tpz.effect.POISON, 20, 3, 60)
-    return tpz.effect.CURSE_I
+    local cursePower = 50
+    local poisonPower = 20
+    local dmgmod = 1
+
+    if (mob:getID() == 17093003) then -- Nyzul Isle Hydra
+        cursePower = 30
+        poisonPower = 15
+        dmgmod = 1
+    end
+    -- Perform damage before curse - similar to chaos blade. Otherwise this is a instant kill vs anyone but Galka
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*5, tpz.magic.ele.NONE, dmgmod, TP_NO_EFFECT)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.NONE, MOBPARAM_WIPE_SHADOWS)
+    target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.NONE)
+
+    MobStatusEffectMove(mob, target, tpz.effect.CURSE_I, cursePower, 0, 420)
+    MobStatusEffectMove(mob, target, tpz.effect.POISON, poisonPower, 3, 60)
+   
+    return dmg
 end

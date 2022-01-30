@@ -35,10 +35,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-
-    if (damage > 0 and target:hasStatusEffect(tpz.effect.BLINDNESS) == false) then
-        local duration = 60 * applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0)
-        target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        if (damage > 0 and target:hasStatusEffect(tpz.effect.BLINDNESS) == false) then
+            local duration = 60 * applyResistanceAddEffect(player, target, tpz.magic.ele.DARK, 0)
+            target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration)
+        end
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.GREAT_KATANA, tpHits+extraHits) end
     return tpHits, extraHits, criticalHit, damage

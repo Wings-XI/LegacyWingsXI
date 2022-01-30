@@ -7,6 +7,18 @@ require("scripts/globals/toau")
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 -----------------------------------
 
+local drawInPos =
+{
+    {838.88,  0.00, 358.86},
+    {834.93, -0.14, 363.68},
+    {840.13, -0.31, 366.46},
+    {842.69,  0.00, 360.12},
+    {846.15, -0.27, 360.25},
+    {845.30, -0.51, 366.68},
+    {850.33, -1.34, 365.43},
+    {850.40, -1.45, 355.85},
+}
+
 function onMobInitialize(mob)
     tpz.toau.mobSpecialHook("KHIMAIRA", mob, 1, function(mob)
         if mob:AnimationSub() == 0 then
@@ -30,6 +42,24 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.STUNRES, -75)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     mob:AnimationSub(0)
+end
+
+function onMobFight(mob, target)
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (target:getXPos() < 814 or target:getXPos() > 865) and os.time() > drawInWait then
+        local rot = target:getRotPos()
+        local position = math.random(1,8)
+        target:setPos(drawInPos[position][1],drawInPos[position][2],drawInPos[position][3],rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif (target:getZPos() < 345 or target:getZPos() > 377) and os.time() > drawInWait then
+        local rot = target:getRotPos()
+        local position = math.random(1,8)
+        target:setPos(drawInPos[position][1],drawInPos[position][2],drawInPos[position][3],rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 end
 
 function onMobEngaged(mob, target)

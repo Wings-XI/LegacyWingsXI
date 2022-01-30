@@ -20,6 +20,11 @@ function onPetAbility(target, pet, skill)
         return tpz.effect.SLEEP_I
     end
 
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return tpz.effect.SLEEP_I
+    end
+
     local bonus = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
         bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet)

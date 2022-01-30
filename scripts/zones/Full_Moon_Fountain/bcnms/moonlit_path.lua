@@ -33,7 +33,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.THE_MOONLIT_PATH) == QUEST_ACCEPTED then
+        if player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) == QUEST_ACCEPTED then
             player:delKeyItem(tpz.ki.MOON_BAUBLE)
             player:addKeyItem(tpz.ki.WHISPER_OF_THE_MOON)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHISPER_OF_THE_MOON)

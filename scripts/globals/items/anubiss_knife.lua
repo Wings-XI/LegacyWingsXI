@@ -12,9 +12,11 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    if not target:hasStatusEffect(tpz.effect.POISON) then
-        target:addStatusEffect(tpz.effect.POISON, 1, 3, 180)
-    else
-        target:messageBasic(tpz.msg.basic.NO_EFFECT)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if not target:hasStatusEffect(tpz.effect.POISON) then
+            target:addStatusEffect(tpz.effect.POISON, 1, 3, 180)
+        else
+            target:messageBasic(tpz.msg.basic.NO_EFFECT)
+        end
     end
 end

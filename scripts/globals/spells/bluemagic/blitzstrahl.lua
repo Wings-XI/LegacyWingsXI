@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_ARCANA
     params.attackType = tpz.damageType.MAGICAL
     params.damageType = tpz.damageType.LIGHTNING
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4.3 or 3.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.375 or 1.375
     params.tMultiplier = 1.0
     params.duppercap = 61
     params.str_wsc = 0.0
@@ -48,8 +48,10 @@ function onSpellCast(caster, target, spell)
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(4 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+        end
     end
 
     return damage

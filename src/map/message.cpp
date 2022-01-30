@@ -622,6 +622,12 @@ namespace message
                 float z = ref<float>((uint8*)extra, 18);
                 uint8 rot = ref<uint8>((uint8*)extra, 22);
                 uint32 moghouseID = ref<uint32>((uint8*)extra, 23);
+                if (moghouseID != 0) {
+                    x = 0;
+                    y = 0;
+                    z = 0;
+                    rot = 192;
+                }
 
                 PChar->updatemask = 0;
 
@@ -837,7 +843,7 @@ namespace message
             {
                 exit(EXIT_FAILURE);
             }
-            Sql_Keepalive(SqlHandle);
+            Sql_Keepalive(SqlHandle, "mqhandler");
         }
         return true;
     }
@@ -924,7 +930,7 @@ namespace message
         {
             exit(EXIT_FAILURE);
         }
-        Sql_Keepalive(SqlHandle);
+        Sql_Keepalive(SqlHandle, "message");
 
         uint64 ipp = map_ip.s_addr;
         uint64 port = map_port;

@@ -25,10 +25,11 @@ function onPetAbility(target, pet, skill)
     if totaldamage > 0 then
         local resist = applyResistanceAbility(pet,target,tpz.magic.element.DARK,tpz.skill.ENFEEBLING_MAGIC,bonus)
         local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-        
-        if resist >= 0.5 then
-            target:delStatusEffect(tpz.effect.PARALYSIS)
-            target:addStatusEffect(tpz.effect.PARALYSIS, 30, 0, duration)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+            if resist >= 0.5 then
+                target:delStatusEffect(tpz.effect.PARALYSIS)
+                target:addStatusEffect(tpz.effect.PARALYSIS, 30, 0, duration)
+            end
         end
     end
 

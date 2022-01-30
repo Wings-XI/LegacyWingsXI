@@ -118,14 +118,47 @@ function doBoostGain(caster, target, spell, effect)
 end
 
 function doEnspell(caster, target, spell, effect)
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    -- Calculate Bonus duration
+    local baseDuration = 0
+    if caster:getEquipID(tpz.slot.MAIN) == 17696 then
+        baseDuration = 210
+    else
+        baseDuration = 180
+    end
+
+    local duration = calculateDuration(baseDuration, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
     --calculate potency
     local magicskill = caster:getSkillLevel(tpz.skill.ENHANCING_MAGIC)
+    -- Add effect bonuses from equipment
+    local potencybonus = 0
+    if caster:getEquipID(tpz.slot.MAIN) == 17696 then -- Buzzard Tusk
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(tpz.slot.EAR1) == 16011 or caster:getEquipID(tpz.slot.EAR2) == 16011 then -- Lycopodium Earring
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(tpz.slot.EAR1) == 15964 or caster:getEquipID(tpz.slot.EAR2) == 15964 then -- Hollow Earring
+        potencybonus = 3 + potencybonus
+    elseif(caster:getHPP() <= 75 and caster:getTP() <= 100) and (caster:getEquipID(tpz.slot.RING1) == 13290 or caster:getEquipID(tpz.slot.RING2) == 13290) then -- Fencer's Ring
+        potencybonus = 5 + potencybonus
+    elseif caster:getEquipID(tpz.slot.MAIN) == 16605 then -- Enhancing Sword
+        potencybonus = 5 + potencybonus
+    end
 
-    local potency = 3 + math.floor(6 * magicskill / 100)
-    if magicskill > 200 then
-        potency = 5 + math.floor(5 * magicskill / 100)
+    -- Potency with Effect Bonus
+    local potency = 0
+    if (caster:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.SWORD or caster:getWeaponSkillType(tpz.slot.SUB) == tpz.skill.SWORD) then
+        if magicskill <= 200 then
+            potency = 3 + potencybonus + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + potencybonus + math.floor(5 * magicskill / 100)
+        end
+    -- Potency without Effect Bonus
+    else
+        if magicskill <= 200 then
+            potency = 3 + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + math.floor(5 * magicskill / 100)
+        end
     end
 
     if target:addStatusEffect(effect, potency, 0, duration) then
@@ -234,7 +267,7 @@ function getCureFinal(caster, spell, basecure, minCure, isBlueMagic)
 end
 
 function getCureAsNukeFinal(caster, spell, power, divisor, constant, basepower)
-    return getCureFinal(caster, spell, power, divisor, constant, basepower)
+    return getCureFinal(caster, spell, power, divisor, constant)
 end
 
 function isValidHealTarget(caster, target)
@@ -309,7 +342,7 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
     local element = spell:getElement()
     local percentBonus = 0
     local magicaccbonus = getSpellBonusAcc(caster, target, spell, params)
-    
+
     local softcap = params.dStatAccSoftCap -- 10 is set on all nukes. everything else is nil
     if softcap == nil then
         softcap = 15
@@ -328,22 +361,22 @@ function applyResistanceEffect(caster, target, spell, params) -- says "effect" b
     if effect ~= nil then
         percentBonus = percentBonus - getEffectResistance(target, effect) -- this is a HITRATE penalty not a MEVA BOOST (but they are the same thing if macc > meva)
     end
-    
+
     if params.skillBonus ~= nil then -- bard only it seems like. takes into account signing+instrument skill (at least, it should)
         magicaccbonus = magicaccbonus + params.skillBonus
     end
 
     local p = getMagicHitRate(caster, target, skill, element, percentBonus, magicaccbonus)
     local res = getMagicResist(p)
-    
+
     if getElementalSDT(element, target) == 5 then -- jimmayus: SDT tier .05 makes you lose ALL coin flips
         res = 1/8
     end
-    
+
     if getElementalSDT(element, target) <= 50 then -- .5 or below SDT drops a resist tier
         res = res / 2
     end
-    
+
     if target:isPC() and element ~= nil and element > 0 and element < 9 then
         -- shiyo's research https://discord.com/channels/799050462539284533/799051759544434698/827052905151332354 (Project Wings Discord)
         local eleres = target:getMod(element+53)
@@ -366,14 +399,14 @@ function applyResistanceAddEffect(player, target, element, bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus)
     local res = getMagicResist(p)
-    
+
     if target:isPC() and element ~= nil and element > 0 and element < 9 then
         -- shiyo's research https://discord.com/channels/799050462539284533/799051759544434698/827052905151332354 (Project Wings Discord)
         local eleres = target:getMod(element+53)
         if     eleres < 0  and res < 0.5  then res = 0.5
         elseif eleres < 10 and res < 0.25 then res = 0.25 end
     end
-    
+
     return res
 end
 
@@ -381,20 +414,20 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     if target:hasStatusEffect(tpz.effect.MAGIC_SHIELD, 0) then return 0 end
     if bonusAcc == nil then bonusAcc = 0 end
     local magiceva = 0
-    
+
     local magicacc = caster:getMod(tpz.mod.MACC) + caster:getILvlMacc()
 
     -- Get the base acc (just skill + skill mod (79 + skillID = ModID) + magic acc mod)
     if skillType ~= 0 then
         local skillBonus = 0
         local skillAmount = caster:getSkillLevel(skillType)
-        
+
         if skillAmount > 200 then
             skillBonus = 200 + (skillAmount - 200)*0.9
         else
             skillBonus = skillAmount
         end
-        
+
         magicacc = magicacc + skillBonus
     else
         magicacc = magicacc + utils.getSkillLvl(1, caster:getMainLvl()) -- for mob skills / additional effects which don't have a skill
@@ -424,7 +457,7 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     -- Add macc% from food
     local maccFood = magicacc * (caster:getMod(tpz.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(tpz.mod.FOOD_MACC_CAP))
-    
+
     local SDT = getElementalSDT(element, target)
 
     return calculateMagicHitRate(magicacc, magiceva, percentBonus, caster:getMainLvl(), target:getMainLvl(), SDT)
@@ -432,12 +465,12 @@ end
 
 function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targetLvl, SDT)
     local p = 0
-    
+
     -- percentBonus is a bit deceiving of a name. it's either 0 or a negative number. its only application is specific effect resistance (i.e. +5 resist to paralyze = -5% hitrate on incoming paras)
     -- note that this has nothing to do with the resist TRAIT which is handled BEFORE rate calculations. gear bonuses (i.e. "Enhances Resist Paralyze Effect") count as traits.
     -- If dMAcc < 0, Magic Hit Rate = 70% + floor( dMAcc÷2 ) = magic hit rate
     -- If dMAcc ≥ 0, Magic Hit Rate = 70% + dMAcc = magic hit rate
-    
+
     --magicacc = magicacc + (casterLvl - targetLvl)*4
     magicacc = magicacc + utils.clamp(casterLvl - targetLvl, -10, 5)*3
     local dMAcc = magicacc - magiceva
@@ -447,7 +480,7 @@ function calculateMagicHitRate(magicacc, magiceva, percentBonus, casterLvl, targ
     else
         p = 70 + dMAcc
     end
-    
+
     p = p + percentBonus
 	--GetPlayerByID(1):PrintToPlayer(string.format("magic hit rate pre SDT: %u",p))
     p = p * SDT/100
@@ -521,7 +554,7 @@ function getEffectResistanceTraitChance(caster, target, effect)
     elseif effect == tpz.effect.AMNESIA then
         effectres = tpz.mod.AMNESIARESTRAIT
     end
-    
+
     if effectres ~= 0 then
         local ret = target:getMod(effectres)
         if not caster:isPC() and caster:isNM() then
@@ -531,7 +564,7 @@ function getEffectResistanceTraitChance(caster, target, effect)
     end
 
     return 0
-    
+
 end
 
 -- Returns the amount of resistance the
@@ -608,12 +641,34 @@ function getSpellBonusAcc(caster, target, spell, params)
 
     --Add acc for dark seal
     if skill == tpz.skill.DARK_MAGIC and caster:hasStatusEffect(tpz.effect.DARK_SEAL) then
-        magicAccBonus = magicAccBonus + 256
+        magicAccBonus = magicAccBonus + 75
+    end
+
+    -- Add acc for elemental seal
+    if caster:hasStatusEffect(tpz.effect.ELEMENTAL_SEAL) then
+        magicAccBonus = magicAccBonus + 75
     end
 
     --add acc for RDM group 1 merits
-    if element >= tpz.magic.element.FIRE and element <= tpz.magic.element.WATER then
-        magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
+    -- each merit should add +3 magic accuracy per upgrade
+    -- gating to be only effective for main job RDM
+    if caster:getMainJob() == tpz.job.RDM then
+        if element >= tpz.magic.element.FIRE and element <= tpz.magic.element.WATER then
+            magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
+        end
+    end
+
+    --add acc for RDM group 2 merits
+    if spell == tpz.magic.spell.PARALYZE_II then
+        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.PARALYZE_II))
+    end
+
+    if spell == tpz.magic.spell.SLOW_II then
+        magicAccBonus = magicAccBonus + (2 * caster:getMerit(tpz.merit.SLOW_II))
+    end
+
+    if spell == tpz.magic.spell.BLIND_II then
+        magicAccBonus = magicAccBonus + (2 *caster:getMerit(tpz.merit.BLIND_II))
     end
 
     return magicAccBonus
@@ -623,7 +678,7 @@ function handleAfflatusMisery(caster, spell, dmg)
     if caster:hasStatusEffect(tpz.effect.AFFLATUS_MISERY) then
         local misery = caster:getMod(tpz.mod.AFFLATUS_MISERY)
         local miseryMax = 300 -- BGWiki Caps at 300 magic damage.
-        
+
         if misery > miseryMax then misery = miseryMax end
 
         local boost = 1 + misery / miseryMax -- linear boost range 1x~2x
@@ -637,7 +692,7 @@ end
 
  function finalMagicAdjustments(caster, target, spell, dmg)
     --Handles target's HP adjustment and returns UNSIGNED dmg (absorb message is set in this function)
-    
+
     local skill = spell:getSkillType()
     if skill == tpz.skill.ELEMENTAL_MAGIC then
         dmg = dmg * ELEMENTAL_POWER
@@ -652,13 +707,13 @@ end
     elseif skill == tpz.skill.DIVINE_MAGIC then
         dmg = dmg * DIVINE_POWER
     end
-    
+
     -- Circle Effects
     if target:isMob() and dmg > 0 then
         local eco = target:getSystem()
         local circlemult = 100
         local mod = 0
-        
+
         if     eco == 1  then mod = 1226
         elseif eco == 2  then mod = 1228
         elseif eco == 3  then mod = 1232
@@ -673,9 +728,9 @@ end
         elseif eco == 19 then mod = 1231
         elseif eco == 20 then mod = 1224
         end
-        
+
         if mod > 0 then circlemult = 100 + caster:getMod(mod) end
-        
+
         dmg = math.floor(dmg * circlemult / 100)
     end
 
@@ -685,7 +740,7 @@ end
         dmg = dmg - target:getMod(tpz.mod.PHALANX)
         dmg = utils.clamp(dmg, 0, 99999)
     end
-    
+
     local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
     if ramSS > 0 then
         if dmg >= ramSS then
@@ -696,7 +751,7 @@ end
             dmg = 0
         end
     end
-    
+
     dmg = utils.stoneskin(target, dmg)
     dmg = utils.clamp(dmg, -99999, 99999)
 
@@ -708,6 +763,11 @@ end
         target:handleAfflatusMiseryDamage(dmg)
         target:updateEnmityFromDamage(caster, dmg)
         if dmg > 0 then target:addTPFromSpell(caster) end
+    end
+
+    if (caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK)) then
+        dmg = dmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
     end
 
     return dmg
@@ -722,7 +782,7 @@ function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
         dmg = dmg - target:getMod(tpz.mod.PHALANX)
         dmg = utils.clamp(dmg, 0, 99999)
     end
-    
+
     local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
     if ramSS > 0 then
         if dmg >= ramSS then
@@ -1006,14 +1066,14 @@ end
 
 function getElementalDebuffDOT(INT)
     local DOT = 0
-    
+
     if     INT <=  39 then DOT = 1
     elseif INT <=  69 then DOT = 2
     elseif INT <=  99 then DOT = 3
     elseif INT <= 149 then DOT = 4
     else                   DOT = 5
     end
-    
+
     return DOT
 end
 
@@ -1026,12 +1086,12 @@ function getHelixDuration(caster)
 
     local casterLevel = caster:getMainLvl()
     local duration = 30
-    
+
     if     casterLevel < 40 then duration = 30
     elseif casterLevel < 60 then duration = 60
     else                         duration = 90
     end
-    
+
     return duration
 end
 
@@ -1057,10 +1117,10 @@ function handleThrenody(caster, target, spell, basePower, baseDuration, modifier
         local sLvl = caster:getSkillLevel(tpz.skill.SINGING) -- Gets skill level of Singing
         local iLvl = caster:getWeaponSkillLevel(tpz.slot.RANGED)
         local skillcap = caster:getMaxSkillLevel(caster:getMainLvl(), tpz.job.BRD, tpz.skill.STRING_INSTRUMENT) -- will return the same whether string or wind, both are C for bard
-        
+
         local rangedType = caster:getWeaponSkillType(tpz.slot.RANGED)
         if rangedType ~= tpz.skill.STRING_INSTRUMENT and rangedType ~= tpz.skill.WIND_INSTRUMENT then iLvl = sLvl end
-        
+
         if sLvl + iLvl > skillcap*2 then
             params.skillBonus = sLvl + iLvl - skillcap*2 -- every point over the skillcap (only attainable from gear/merits) is an extra +1 magic accuracy
         end
@@ -1122,7 +1182,7 @@ function getElementalSDT(element, target) -- takes into account if magic burst w
 
     local SDT = 100
     local SDTmod = 0
-    
+
     if     element == 1 then SDTmod = tpz.mod.SDT_FIRE
     elseif element == 2 then SDTmod = tpz.mod.SDT_ICE
     elseif element == 3 then SDTmod = tpz.mod.SDT_WIND
@@ -1133,13 +1193,13 @@ function getElementalSDT(element, target) -- takes into account if magic burst w
     elseif element == 8 then SDTmod = tpz.mod.SDT_DARK
     end
     if SDTmod > 0 then SDT = target:getMod(SDTmod) end
-    
+
     if SDT == 0 or SDT == nil then SDT = 100 end
-    
+
     local MB1 = 0
     local MB2 = 0
     MB1, MB2 = FormMagicBurst(element, target)
-    
+
     if MB1 > 0 then -- window is open for this element, up one tier SDT
         if     SDT == 5   then SDT = 10
         elseif SDT == 10  then SDT = 15
@@ -1158,18 +1218,18 @@ function getElementalSDT(element, target) -- takes into account if magic burst w
         elseif SDT == 150 then SDT = 150
         else SDT = SDT + 10 end
     end
-    
+
     local SDTcoe = (1 - target:getMod(tpz.mod.SPDEF_DOWN)/100) -- warrior's tomahawk, or whm's banish against undead
     if SDTcoe < 0.03 then
         SDTcoe = 0.03
     elseif SDTcoe > 1 then
         SDTcoe = 1
     end
-    
+
     if SDT < 100 then -- these SPDEF_DOWN effects don't mean anything if it's the mob's weakness already
         SDT = 100 - ((100 - SDT) * SDTcoe)
     end
-    
+
     if SDT < 5 then
         SDT = 5
     elseif SDT > 150 then
@@ -1201,7 +1261,7 @@ function doElementalNuke(caster, spell, target, spellParams)
         else -- Above inflection point I additional dINT is only half as effective
             DMG = V + I + ((dINT - I) * (M / 2))
         end
-        
+
         if DMG > cap then DMG = cap end
 
     else
@@ -1238,11 +1298,11 @@ function doElementalNuke(caster, spell, target, spellParams)
     params.dStatAccSoftCap = 10
 
     local resist = applyResistance(caster, target, spell, params)
-    
+
     local element = spell:getElement()
-    
+
     local MTDR = 1.0
-    
+
     if hasMultipleTargetReduction == true then
         MTDR = 0.90 - spell:getTotalTargets() * 0.05
         if MTDR == 0.85 then -- 1 target, stay at 1.0
@@ -1252,9 +1312,9 @@ function doElementalNuke(caster, spell, target, spellParams)
         end
         --print(string.format("MTDR was %.2f for numtargets %u",MTDR,spell:getTotalTargets()))
     end
-    
+
     if target:isNM() then DMG = applyNMDamagePenalty(target, DMG) end
-    
+
     DMG = DMG * resist * MTDR
     DMG = addBonuses(caster, spell, target, DMG, spellParams) -- staff/day/weather/jas/mab/etc all go in this function
     DMG = adjustForTarget(target, DMG, element)
@@ -1292,10 +1352,10 @@ function doNuke(caster, target, spell, params)
     params.dStatAccSoftCap = 10
     local dmg = calculateMagicDamage(caster, target, spell, params)
     if target:isNM() then dmg = applyNMDamagePenalty(target, dmg) end
-    
+
     local resist = applyResistance(caster, target, spell, params)
     dmg = dmg*resist
-    
+
     if spell:getSkillType() == tpz.skill.NINJUTSU then
         if caster:getMainJob() == tpz.job.NIN then -- NIN main gets a bonus to their ninjutsu nukes
             local ninSkillBonus = 100
@@ -1309,13 +1369,13 @@ function doNuke(caster, target, spell, params)
             ninSkillBonus = utils.clamp(ninSkillBonus, 100, 200) -- bonus caps at +100%, and does not go negative
             dmg = dmg * ninSkillBonus/100
         end
-        
+
         if caster:hasStatusEffect(tpz.effect.FUTAE) then
             dmg = math.floor(dmg * 1.50)
             caster:delStatusEffect(tpz.effect.FUTAE)
         end
     end
-    
+
     dmg = addBonuses(caster, spell, target, dmg, params) -- staff/day/weather/jas/mab/etc all go in this function
     dmg = adjustForTarget(target, dmg, spell:getElement())
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
@@ -1326,14 +1386,14 @@ function doDivineBanishNuke(caster, target, spell, params)
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.attribute = tpz.mod.MND
     params.dStatAccSoftCap = 10
-    
+
     if caster:isPC() then params.dmg = params.dmg + caster:getMerit(tpz.merit.BANISH_EFFECT) end
 
     local dmg = calculateMagicDamage(caster, target, spell, params)
     local resist = applyResistance(caster, target, spell, params)
 
     if target:isNM() then dmg = applyNMDamagePenalty(target, dmg) end
-    
+
     dmg = dmg*resist
     dmg = addBonuses(caster, spell, target, dmg, params) -- staff/day/weather/jas/mab/etc all go in this function
     dmg = adjustForTarget(target, dmg, spell:getElement())
@@ -1349,10 +1409,10 @@ end
 
 function calculateDuration(duration, magicSkill, spellGroup, caster, target, useComposure)
     if magicSkill == tpz.skill.ENHANCING_MAGIC then
-    
+
         duration = duration + duration * caster:getMod(tpz.mod.ENH_MAGIC_DURATION) / 100 -- Gear mods
         duration = duration + caster:getMerit(tpz.merit.ENHANCING_MAGIC_DURATION)
-        
+
         useComposure = useComposure or (useComposure == nil and true)
 
         if useComposure and caster:hasStatusEffect(tpz.effect.COMPOSURE) and caster:getID() == target:getID() then
@@ -1362,7 +1422,7 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
         if caster:hasStatusEffect(tpz.effect.PERPETUANCE) and spellGroup == tpz.magic.spellGroup.WHITE then
             duration  = duration * 2
         end
-        
+
     elseif magicSkill == tpz.skill.ENFEEBLING_MAGIC then
         if caster:hasStatusEffect(tpz.effect.SABOTEUR) then
             if target:isNM() then
@@ -1371,7 +1431,7 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
                 duration = duration * 2
             end
         end
-        
+
         duration = duration + caster:getMerit(tpz.merit.ENFEEBLING_MAGIC_DURATION) -- After Saboteur according to bg-wiki
     end
 
@@ -1442,7 +1502,7 @@ function applyNMDamagePenalty(target, DMG)
         target:setMod(tpz.mod.MAGIC_STACKING_MDT, target:getMod(tpz.mod.MAGIC_STACKING_MDT) + NM_MAGIC_STACK)
     end
     return DMG
-end 
+end
 
 function tryBuildResistance(mod, target)
 

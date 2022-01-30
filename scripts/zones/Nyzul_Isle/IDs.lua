@@ -26,7 +26,7 @@ zones[tpz.zone.NYZUL_ISLE] =
         MISSION_FAILED                = 7304, -- The mission has failed. Leaving area.
         TIME_REMAINING_MINUTES        = 7308, -- Time remaining: <number> [minute/minutes] (Earth time).
         TIME_REMAINING_SECONDS        = 7309, -- Time remaining: <number> [second/seconds] (Earth time).
-        PARTY_FALLEN                  = 7311, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
+        PARTY_FALLEN                  = 7311, -- All party members have fallen in battle. Mission failure in <number> [minute/minutes].
         OBJECTIVE_COMPLETE            = 7348, -- Floor <number> objective complete. Rune of Transfer activated.
         CERTIFICATION_REQUIRED        = 7350, -- The certification code for all party members is required to activate this lamp.  Your certification code has been registered
         CERTIFICATION_REGISTERED      = 7351, -- Your certification code has been registered.
@@ -46,7 +46,6 @@ zones[tpz.zone.NYZUL_ISLE] =
         TIME_REDUCED_BY_MINUTES       = 7368, -- <red> Time reduced by <number> minutes.
         SECURITY_FIELD_MALFUNCTION    = 7369, -- <red> Security field malfunction.
         POTENTIAL_TOKENS_REDUCED      = 7370, -- <red> Potential token reward reduced
-        PARTY_FALLEN                  = 7311, -- All party members have fallen in battle. Mission failure in <number> [minute/minutes].
         PLAYER_OBTAINS_TEMP_ITEM      = 7320, -- <Player> obtains temporary item: <item>
         PLAYER_OBTAINS_ITEM           = 7322, -- <Player> obtains <item>.
         TEMP_ITEM_OBTAINED            = 7344, -- Obtained temporary item: <item>.
@@ -107,7 +106,7 @@ zones[tpz.zone.NYZUL_ISLE] =
         BRD_RESTRICTION_REMOVED       = 7379, -- Song restriction has been removed
         BRD_RESTRICTED                = 7380, -- Songs are restricted
         NIN_RESTRICTION_REMOVED       = 7381, -- yNinjutsu restriction has been removed
-        NIN_RESTRICTED                = 7382, -- Ninjutsu is restricted 
+        NIN_RESTRICTED                = 7382, -- Ninjutsu is restricted
         SMN_RESTRICTION_REMOVED       = 7383, -- Summon magic restriction has been removed
         SMN_RESTRICTED                = 7384, -- Summon magic is restricted
         BLU_RESTRICTION_REMOVED       = 7385, -- Blue magic restriction has been removed
@@ -158,19 +157,22 @@ zones[tpz.zone.NYZUL_ISLE] =
 
     mob = {
         -- Path of Darkness
+        [51] = {
+            QIQIRN_MINE         = 17092962,
+        },
         [58] = {
-            AMNAF_BLU          = 17093132,
-            AMNAF_PSYCHEFLAYER = 17093133,
-            IMPERIAL_GEAR1     = 17093134,
-            IMPERIAL_GEAR2     = 17093135,
-            IMPERIAL_GEAR3     = 17093136,
-            IMPERIAL_GEAR4     = 17093137,
-            NAJA               = 17093142,
+            AMNAF_BLU           = 17093132,
+            AMNAF_PSYCHEFLAYER  = 17093133,
+            IMPERIAL_GEAR1      = 17093134,
+            IMPERIAL_GEAR2      = 17093135,
+            IMPERIAL_GEAR3      = 17093136,
+            IMPERIAL_GEAR4      = 17093137,
+            NAJA                = 17093142,
         },
         [59] = {
-            RAZFAHD = 17093143,
-            ALEXANDER = 17093144,
-            RAUBAHN = 17093145,
+            RAZFAHD             = 17093143,
+            ALEXANDER           = 17093144,
+            RAUBAHN             = 17093145,
         }
     },
 

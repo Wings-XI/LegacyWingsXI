@@ -138,6 +138,7 @@ tpz.mob.additionalEffect =
     TERROR     = 20,
     TP_DRAIN   = 21,
     DISEASE    = 22,
+    DOOM       = 23,
 }
 tpz.mob.ae = tpz.mob.additionalEffect
 
@@ -397,6 +398,18 @@ local additionalEffects =
         duration = 30,
         minDuration = 1,
         maxDuration = 30,
+    },
+    [tpz.mob.ae.DOOM] =
+    {
+        chance = 25,
+        ele = tpz.magic.ele.DARK,
+        sub = tpz.subEffect.CURSE,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.DOOM,
+        power = 10,
+        tick = 3,
+        duration = 30,
     },
 }
 

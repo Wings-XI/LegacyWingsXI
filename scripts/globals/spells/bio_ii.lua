@@ -54,12 +54,14 @@ function onSpellCast(caster, target, spell)
     -- Calculate DoT effect
     -- http://wiki.ffo.jp/html/1954.html
     -- This formula gives correct values for every breakpoint listed on that site
+    -- Caps at 8 dmg/tick (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=110731&id=1954)
     local dotdmg = math.floor((skillLvl + 29) / 40)
     dotdmg = utils.clamp(dotdmg, 3, 8)
 
     -- Do it!
     target:delStatusEffect(tpz.effect.DIA)
-    target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 15, 2)
+    -- Bio II's attack down effect in era is 10.1% (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=110731&id=1954)
+    target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 10, 2)
     spell:setMsg(tpz.msg.basic.MAGIC_DMG)
 
     return final

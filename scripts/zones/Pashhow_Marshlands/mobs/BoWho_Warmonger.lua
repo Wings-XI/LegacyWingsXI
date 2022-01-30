@@ -14,9 +14,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.DMGMAGIC,-50)
 
     local chance = math.random(1,2)
-    print(chance)
     if chance == 1 then
-        print("chanceTriggered")
         GetMobByID(ID.mob.BOWHO_GUARD1):setSpawn(mob:getXPos()+2, mob:getYPos(), mob:getZPos())
         GetMobByID(ID.mob.BOWHO_GUARD2):setSpawn(mob:getXPos()+4, mob:getYPos(), mob:getZPos())
         SpawnMob(ID.mob.BOWHO_GUARD1)
@@ -28,7 +26,7 @@ function onMobEngage(mob, target)
     local mobId = mob:getID()
 
     for i = 1, 2 do
-        local guard = GetMobByID(i)
+        local guard = GetMobByID(mobId + i)
         if guard:isSpawned() then
             guard:updateEnmity(target)
         end

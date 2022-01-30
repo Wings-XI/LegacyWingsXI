@@ -30,7 +30,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4.7 or 3.6
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.08 or 2.08
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -51,8 +51,10 @@ function onSpellCast(caster, target, spell)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
-        target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, duration*resist) -- https://www.bg-wiki.com/bg/Mind_Blast 20%
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, duration*resist) -- https://www.bg-wiki.com/bg/Mind_Blast 20%
+        end
     end
 
     return damage

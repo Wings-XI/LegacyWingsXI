@@ -16,6 +16,11 @@ end
 
 function onPetAbility(target, pet, skill, summoner)
     local dMND = pet:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLOWRES) >= 100 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return tpz.effect.SLOW
+    end
     
     --Power
     -- Lowest ~7.3%

@@ -1,10 +1,9 @@
 -----------------------------------
 -- Area: Nyzul Isle
---   NM: Bloodtear Baldurf
+--  Mob: Zizzy_Zillah
 -----------------------------------
-require("scripts/globals/titles")
+mixins = {require("scripts/mixins/families/ziz")}
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(tpz.title.THE_HORNSPLITTER)
 end

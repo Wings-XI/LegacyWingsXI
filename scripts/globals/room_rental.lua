@@ -1,7 +1,34 @@
+-------------------------------------------
+-- Room rental NPCs                      --
+-- Initial version by Caelic             --
+-- Complete rewrite by Twilight          --
+-- (c) 2021 Wings Open Source Project.   --
+-- Licensed under AGPLv3                 --
+-------------------------------------------
 
---require("scripts/globals/zone")
+function rrGetPartyMemberByID(player, memberid)
+    -- Basically a regular get player by ID but only checks
+    -- the player's current alliance.
+    if memberid < 0 then
+        return nil
+    end
+    if memberid == 0 then
+        return player
+    end
+    local party = player:getAlliance()
+    if party == nil then
+        return nil
+    end
+    local memberid16 = bit.band(memberid, 0xFFFF)
+    for key, member in pairs(party) do
+        if bit.band(member:getID(), 0xFFFF) == memberid16 then
+            return member
+        end
+    end
+    return nil
+end
 
-function isInSameTown(from, to)
+function rrIsInSameTown(from, to)
     if from == 243 or from == 244 or from == 245 or from == 246 then -- jeuno
         if to == 243 or to == 244 or to == 245 or to == 246 then
             return true
@@ -35,20 +62,43 @@ function isInSameTown(from, to)
     return false
 end
 
-function tryMoveToLeaderMH(player)
-    local leaderid = player:getLeaderID()
-    
-    if leaderid == nil or leaderid == player:getID() then
+function rrTryMoveToOpenMH(player, residentid)
+
+    if residentid == nil or residentid < 1 or residentid > 0xFFFF then
         return
     end
     
-    local leader = GetPlayerByID(leaderid)
-    
-    if leader == nil or leader:getOpenMH() == false or isInSameTown(player:getZoneID(),leader:getZoneID()) == false then
+    local residentplayer = rrGetPartyMemberByID(player, residentid)
+    if residentplayer == nil or residentplayer:getID() == player:getID() then
         return
     end
     
-    player:gotoPlayer(leader:getName())
+    local residentname = residentplayer:getName()
+    if residentplayer:getOpenMH() == false or residentplayer:isInMogHouse() == false or rrIsInSameTown(player:getZoneID(),residentplayer:getZoneID()) == false then
+        return
+    end
+    
+    player:gotoPlayer(residentname)
     
     return
+end
+
+function rrOnTrigger(player, npc, csid, param1)
+    if param1 ~= nil then
+        player:startEvent(csid, player:getNation(), param1)
+    else
+        player:startEvent(csid, player:getNation())
+    end
+end
+
+function rrOnEventFinish(player, csid, option)
+    local psize = player:getPartySize()
+    if psize <= 1 then
+        -- Options are meaningless when not in a party and
+        -- we'd crash if we tried to use them.
+        return
+    end
+    if option > 0 and option <= 0xFFFF then
+        rrTryMoveToOpenMH(player, option)
+    end
 end

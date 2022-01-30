@@ -183,6 +183,9 @@ struct map_config_t
     uint16  daily_tally_limit;        // Upper limit of daily tally points for Gobbie Mystery Box
     bool   mission_storage_recovery;  // Recalculate inventory sizes according to mission progress on login
     bool   helpdesk_enabled;          // GM tickets through helpdesk menu enabled
+    bool   autotarget_qol;            // Enable radial autotargeting
+    bool  instances_treat_GMs_as_players; // Set to 1 to allow characters with GM Level 2 or greater to count towards getChars inside an instance
+
 };
 
 /************************************************************************

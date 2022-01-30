@@ -279,6 +279,7 @@ namespace charutils
     void LoadHelpDeskMessage(CCharEntity* PChar);
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
+    void RemoveGuestsFromMogHouse(CCharEntity* PChar); // Remove all guests invited through Open Mog
 
     EYellCheckResult CanUseYell(CCharEntity* PChar);
     bool IsYellSpamFiltered(CCharEntity* PChar);

@@ -61,6 +61,10 @@ zones[tpz.zone.CAEDARVA_MIRE] =
         TYGER                 = 17101203,
         MAHJLAEF_THE_PAINTORN = 17101204,
         EXPERIMENTAL_LAMIA    = 17101205,
+        VIDHUWA_PH            =
+        {
+            [17101162] = 17101158, -- 608.020 -9.593 368.036
+        },
     },
     npc =
     {

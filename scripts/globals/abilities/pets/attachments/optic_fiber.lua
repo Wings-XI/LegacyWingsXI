@@ -23,7 +23,7 @@ function onManeuverGain(pet, maneuvers)
     end
     local master = pet:getMaster()
     if master then
-        master:updateAttachments()
+        master:updateAttachments(true)
     end
 end
 
@@ -37,6 +37,6 @@ function onManeuverLose(pet, maneuvers)
     end
     local master = pet:getMaster()
     if master then
-        master:updateAttachments()
+        master:updateAttachments(false)
     end
 end

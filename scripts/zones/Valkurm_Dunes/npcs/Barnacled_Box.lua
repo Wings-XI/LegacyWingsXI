@@ -85,6 +85,8 @@ end
     end
     
     function onTrigger(player, npc)
+        local chestOwner = npc:getLocalVar("leaderID")
+
          -- First reward is 1 item from the item1 pool
         local boxitem1 = weightedRandomSelect(w_item1)
         -- Second reward is 1 item from the item2 pool
@@ -94,7 +96,7 @@ end
         -- Final reward is the Albatross Ring
         local boxitem4 = weightedRandomSelect(w_item4)
         --Distribute rewards
-        if npc:getLocalVar("open") == 0 then
+        if npc:getLocalVar("open") == 0 and player:getLeaderID() == chestOwner then
             npc:entityAnimationPacket("open")
             npc:setLocalVar("open", 1)
             npc:timer(15000, function(npc) npc:entityAnimationPacket("kesu") end)

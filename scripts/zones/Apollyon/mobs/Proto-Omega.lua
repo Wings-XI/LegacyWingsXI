@@ -22,30 +22,17 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
 
-function onMobWeaponSkillPrepare(mob, target)
-
-    local mobID = mob:getID()
-
-    if mob:getLocalVar("form") == 2 and math.random(1,4) == 4 and (os.time() - mob:getLocalVar("podTime")) >= 30 then
-        if not GetMobByID(mobID + 1):isSpawned() then
-            mob:setLocalVar("podTime", os.time())
-            local move = 1532
-            return move
-        end
-    end
-
-end
-
 function onMobFight(mob, target)
     local mobID = mob:getID()
     local formTime = mob:getLocalVar("formWait")
     local lifePercent = mob:getHPP()
     local currentForm = mob:getLocalVar("form")
+    local timer = mob:getBattleTime()
 
-    if lifePercent < 70 and currentForm < 1 then
+    if timer > 120 and currentForm < 1 then
         currentForm = 1
         mob:setLocalVar("form", currentForm)
-        formTime = os.time()
+        formTime = os.time() + 120
         mob:setMod(tpz.mod.UDMGPHYS, 0)
         mob:setMod(tpz.mod.UDMGRANGE, 0)
         mob:setMod(tpz.mod.UDMGMAGIC, -75)
@@ -62,26 +49,34 @@ function onMobFight(mob, target)
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
                 mob:AnimationSub(1)
             end
-            mob:setLocalVar("formWait", os.time() + 60)
-        end
+            mob:setLocalVar("formWait", os.time() + 120)
+        end        
+    end
 
-        if lifePercent < 30 then
-            if not GetMobByID(mobID + 1):isSpawned() then
-                mob:useMobAbility(1532)
-                mob:setLocalVar("podTime", os.time())
-            end
-            mob:AnimationSub(2)
-            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
-            mob:setMod(tpz.mod.UDMGPHYS, -50)
-            mob:setMod(tpz.mod.UDMGRANGE, -50)
-            mob:setMod(tpz.mod.UDMGMAGIC, -50)
-            mob:setMod(tpz.mod.MOVE, 100)
-            mob:addStatusEffect(tpz.effect.REGAIN,7,3,0) -- The final form has Regain,
-            mob:getStatusEffect(tpz.effect.REGAIN):setFlag(tpz.effectFlag.DEATH)
-            currentForm = 2
-            mob:setLocalVar("form", currentForm)
+    if lifePercent < 30 and currentForm < 2 then
+        if not GetMobByID(mobID + 1):isSpawned() then
+            mob:setLocalVar("podTime", os.time())
+            mob:useMobAbility(1532)
+        end
+        mob:AnimationSub(2)
+        mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+        mob:setMod(tpz.mod.UDMGPHYS, -50)
+        mob:setMod(tpz.mod.UDMGRANGE, -50)
+        mob:setMod(tpz.mod.UDMGMAGIC, -50)
+        mob:setMod(tpz.mod.MOVE, 100)
+        mob:addStatusEffect(tpz.effect.REGAIN,7,3,0) -- The final form has Regain,
+        mob:getStatusEffect(tpz.effect.REGAIN):setFlag(tpz.effectFlag.DEATH)
+        currentForm = 2
+        mob:setLocalVar("form", currentForm)
+    end
+
+    if currentForm == 2 and (os.time() - mob:getLocalVar("podTime")) >= 300 then
+        if not GetMobByID(mobID + 1):isSpawned() then
+            mob:setLocalVar("podTime", os.time() + 300)
+            mob:useMobAbility(1532)
         end
     end
+
 end
 
 function onAdditionalEffect(mob, target, damage)

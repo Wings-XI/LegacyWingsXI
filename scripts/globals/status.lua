@@ -823,7 +823,9 @@ tpz.effect =
     SUPER_JUMP               = 804, -- Description
     GM_HIDE                  = 805,
     GM_IMMORTAL              = 806,
-    -- 807-1022
+    SOLDIERS_DRINK           = 807,
+    BRAINJACK                = 808,
+    -- 809-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -1085,8 +1087,8 @@ tpz.mod =
     DMGPHYS                   = 161, -- Physical Damage Taken %
     DMGPHYS_II                = 190, -- Physical Damage Taken II % (Burtgang)
     DMGBREATH                 = 162, -- Breath Damage Taken %
-    DMGMAGIC                  = 163, -- Magic Damage Taken %
-    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Aegis)
+    DMGMAGIC                  = 163, -- Magic Damage Taken % (Used with 2010 Era Aegis)
+    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Used with OOE Aegis, and Lvl 99+ Aegis)
     DMGRANGE                  = 164, -- Range Damage Taken %
 
     UDMGPHYS                  = 387, -- Uncapped Damage Multipliers
@@ -1166,6 +1168,7 @@ tpz.mod =
     LUMINION_KILLER           = 238, -- Enhances "Luminion Killer" effect
 
     -- Resistances to enfeebles - Traits/Job Ability
+    -- Values specified greater than or equal to 100 will be fully immune (No Effect)
     STATUSRES                 = 239, -- "Resistance to All Status Ailments"
     SLEEPRES                  = 240, -- Enhances "Resist Sleep" effect
     POISONRES                 = 241, -- Enhances "Resist Poison" effect
@@ -1496,6 +1499,8 @@ tpz.mod =
     TP_BONUS                  = 345, --
     SAVETP                    = 880, -- SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, -- Conserve TP trait, random chance between 10 and 200 TP
+
+    WYRMAL_ABJ_KILLER_EFFECT  = 53, -- Wyrmal Abjuration (Crimson/Blood) which makes players susceptible to Dragon Killer effects
 
     -- Rune Fencer
 
@@ -2614,7 +2619,7 @@ tpz.jobSpecialAbility =
     -- EES_?                = 2148,
     EES_TROLL            = 2252,
     -- EES_?                = 2941,
-    -- SPIRIT_SURGE         = 1893,
+    SPIRIT_SURGE_NM         = 1893,
     -- SPIRIT_SURGE         = 2255,
     AZURE_LORE           = 1933,
     -- AZURE_LORE           = 2006,

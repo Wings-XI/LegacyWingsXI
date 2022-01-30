@@ -250,6 +250,7 @@ public:
     uint32          nextFishTime;       // When char is allowed to fish again     
     uint32          lastCastTime;       // When char last cast their rod
     uint32          fishingToken;       // To track fishing process
+    time_point      fishingStrike[5];   // fishing anticheat strikes (5 in an hour = fishban)
 
     GMCall_t m_GMCall;          // If the player opens a helpdesk ticket the details go here
     uint32 m_HelpDeskMessageID; // ID of the helpdesk ticket being answered
@@ -313,6 +314,7 @@ public:
 
     CItemContainer*   PGuildShop;					// текущий магазин гильдии, в котором персонаж производит закупки
     CItemContainer*	  getStorage(uint8 LocationID);	// получение указателя на соответствующее хранилище
+    bool              hasAccessToStorage(uint8 LocationID); // Does the character have access to a certain storage location
 
     CTradeContainer*  TradeContainer;               // Container used specifically for trading.
     CTradeContainer*  Container;                    // универсальный контейнер для обмена, синтеза, магазина и т.д.

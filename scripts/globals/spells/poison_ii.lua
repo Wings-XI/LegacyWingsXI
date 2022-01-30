@@ -11,13 +11,20 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.POISONRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.POISON
+    end
+    
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
     local skill = caster:getSkillLevel(tpz.skill.ENFEEBLING_MAGIC)
-    local power = math.max(skill / 20, 4)
-    if skill > 400 then
-        power = math.floor(skill * 49 / 183 - 55) -- No cap can be reached yet
-    end
+
+    -- Rough Estimated Cap for 2010 is 10/tick (https://www.bg-wiki.com/index.php?title=Poison_II&oldid=54561 and https://ffxiclopedia.fandom.com/wiki/Poison_II?oldid=988334)
+    -- Previous caps were not implemented until 2012.
+    -- Increased floor of Poison II to 5 (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=129421&id=833)
+    local power = math.floor((skill / 30), 5, 10)
     power = calculatePotency(power, spell:getSkillType(), caster, target)
 
     local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)

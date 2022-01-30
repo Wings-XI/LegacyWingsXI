@@ -4098,6 +4098,14 @@ namespace luautils
         {
             PZone->ForEachChar([](CCharEntity* PChar)
             {
+                if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id) {
+                    PChar->loc.boundary = 0;
+                    PChar->loc.p.x = 0;
+                    PChar->loc.p.y = 0;
+                    PChar->loc.p.z = 0;
+                    PChar->loc.p.rotation = 0;
+                    PChar->m_moghouseID = 0;
+                }
                 charutils::SaveCharPosition(PChar);
                 charutils::SaveCharStats(PChar);
                 charutils::SaveCharExp(PChar, PChar->GetMJob());

@@ -6,6 +6,14 @@
 require("scripts/globals/status")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:addMod(tpz.mod.MACC, 50)
+    mob:addMod(tpz.mod.ACC, 50)
+    mob:addMod(tpz.mod.UFASTCAST, 25)
+    -- Increasing Gravity Res Compared to ZM8 due to difficulty and elemental seal buffs.
+    mob:addMod(tpz.mod.GRAVITYRES, 90)
+end
+
 local skillToAbsorb =
 {
     [823] = tpz.mod.FIRE_ABSORB,  -- fire_blade
@@ -68,6 +76,7 @@ function onMobWeaponSkill(target, mob, skill)
         if wsCount < wsMax then
             mob:setLocalVar("wsCount", wsCount + 1)
             mob:setTP(1000)
+            mob:useMobAbility(skillId)
         else
             mob:setLocalVar("wsCount", 0)
         end

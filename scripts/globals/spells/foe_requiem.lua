@@ -11,6 +11,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getID() == (17035282 or 17035283 or 17035284 or 17035285 or 17035286 or 17035287 or 17035288 or 17035289 or 17035290 or 17035291) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT) -- no effect
+        return tpz.effect.REQUIEM
+    end
+    
     local effect = tpz.effect.REQUIEM
     local duration = 63
     local power = 1

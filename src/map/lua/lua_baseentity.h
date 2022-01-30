@@ -81,6 +81,7 @@ public:
     int32 startEventString(lua_State*);     // Begins Event with string param (0x33 packet)
     int32 updateEvent(lua_State*);          // Updates event
     int32 updateEventString(lua_State*);    // (string, string, string, string, uint32, ...)
+    int32 getEventID(lua_State* L);
     int32 getEventTarget(lua_State*);       //
     int32 release(lua_State*);              // Stops event
 
@@ -159,6 +160,7 @@ public:
     int32 getCurrentRegion(lua_State*);      // Get Entity conquest region
     int32 getContinentID(lua_State*);        // узнаем континент, на котором находится сущность
     int32 isInMogHouse(lua_State*);          // Check if entity inside a mog house
+    int32 getMogHouseID(lua_State*);         // Get the current mog house ID (player ID if in own MH, zero if outside)
 
     int32 getPlayerRegionInZone(lua_State*); // Returns the player's current region in the zone. (regions made with registerRegion)
     int32 updateToEntireZone(lua_State*);    // Forces an update packet to update the NPC entity zone-wide

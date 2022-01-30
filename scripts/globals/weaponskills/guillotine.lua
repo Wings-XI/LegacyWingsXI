@@ -31,10 +31,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-
-    if (damage > 0 and target:hasStatusEffect(tpz.effect.SILENCE) == false) then
-        local duration = (30 + (tp/1000 * 30)) * applyResistanceAddEffect(player, target, tpz.magic.ele.WIND, 0)
-        target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.SILENCERES) < 100 then
+        if (damage > 0 and target:hasStatusEffect(tpz.effect.SILENCE) == false) then
+            local duration = (30 + (tp/1000 * 30)) * applyResistanceAddEffect(player, target, tpz.magic.ele.WIND, 0)
+            target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration)
+        end
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.SCYTHE, tpHits+extraHits) end
 	if damage > 0 then target:tryInterruptSpell(player, tpHits+extraHits) end

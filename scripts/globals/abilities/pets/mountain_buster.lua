@@ -33,8 +33,10 @@ function onPetAbility(target, pet, skill)
     end
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,tpz.skill.ENFEEBLING_MAGIC,bonus)
     local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if resist >= 0.5 and totaldamage > 0 then
-        target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
+        if resist >= 0.5 and totaldamage > 0 then
+            target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+        end
     end
     
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)

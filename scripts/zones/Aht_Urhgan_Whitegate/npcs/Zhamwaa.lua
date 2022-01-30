@@ -10,12 +10,13 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(500)
+    rrOnTrigger(player, npc, 500, 7)
 end
 
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
+    -- No open mog here
+    -- rrOnEventFinish(player, csid, option)
 end

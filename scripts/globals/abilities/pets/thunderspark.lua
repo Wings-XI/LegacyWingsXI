@@ -47,9 +47,11 @@ function onPetAbility(target, pet, skill)
     end
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.LIGHTNING,tpz.skill.ENFEEBLING_MAGIC,bonus)
     local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
-    if resist >= 0.25 then
-        target:delStatusEffect(tpz.effect.PARALYSIS)
-        target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
+        if resist >= 0.25 then
+            target:delStatusEffect(tpz.effect.PARALYSIS)
+            target:addStatusEffect(tpz.effect.PARALYSIS, 25, 0, duration)
+        end
     end
 
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING)

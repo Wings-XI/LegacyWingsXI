@@ -8,7 +8,7 @@ tpz = tpz or {}
 tpz.nyzul_isle_data = tpz.nyzul_isle_data or {}
 
 tpz.nyzul_isle_data.mobType =
-{   
+{
     "AQUANS", -- first set of floor - 1
     "AMORPHS_1",
     "ARCANA_1",
@@ -111,13 +111,6 @@ tpz.nyzul_isle_data.mobsByType =
         Friars_Lantern = {17092661, 17092662, 17092665, 17092666},
         Sweeping_Cluster = {17092663, 17092664},
     },
-    ARCANA_1 = {
-        Killing_Weapon = {17092655, 17092656},
-        Ominous_Weapon = {17092657, 17092658},
-        Magic_Flagon = {17092659, 17092660},
-        Friars_Lantern = {17092661, 17092662, 17092665, 17092666},
-        Sweeping_Cluster = {17092663, 17092664},
-    },
     UNDEAD = {
         Garm = {17092667, 17092668, 17092669},
         Tainted_Flesh = {17092670, 17092671, 17092672},
@@ -173,7 +166,8 @@ tpz.nyzul_isle_data.mobsByType =
         Mousse = {17092785, 17092786},
     },
     MIXED_2 = {
-        Draugar = {17092787, 17092788, 17092789, 17092790, 17092791, 17092792, 17092793, 17092794, 17092795, 17092796},
+        Draugar_Blm = {17092787, 17092788, 17092789, 17092790, 17092791},
+        Draugar_Thf = {17092792, 17092793, 17092794, 17092795, 17092796},
         Mousse = {17092797, 17092798},
     },
     AMORPHS_3 = {
@@ -420,7 +414,7 @@ tpz.nyzul_isle_data.centralFloorLayouts =
         Rooms = {"CENTRAL_S", "CENTRAL_P", "CENTRAL_L", "CENTRAL_M", "CENTRAL_F", "CENTRAL_I", "CENTRAL_J", "CENTRAL_N"},
         RuneOfTransferSpawnPoint = {x = 20, y = -2, z = -20.25},
         DoorsToClose = {17093392, 17093398, 17093390},
-        DoorsToOpen = {17093393, 17093394}
+        DoorsToOpen = {17093391, 17093393, 17093394}
     },
     FLOOR_CENTRAL_5 = { -- East side reverse C, starts in CENTRAL_J
         Rooms = {"CENTRAL_D", "CENTRAL_E", "CENTRAL_F", "CENTRAL_I", "CENTRAL_L", "CENTRAL_M", "CENTRAL_N"},
@@ -585,79 +579,79 @@ tpz.nyzul_isle_data.southWestFloorLayouts =
 
 tpz.nyzul_isle_data.roomConfigurations = {
     NE_A = { -- contains the connected east and west "elbow" hallways
-        MobSpawnPoints = {{x = 420, y = 0, z = 500}, {x = 500, y = 0, z = 500}, {x = 460, y = 0, z = 509}, {x = 469, y = 0, z = 500}, {x = 451, y = 0, z = 500}}, 
+        MobSpawnPoints = {{x = 420, y = 0, z = 500}, {x = 500, y = 0, z = 500}, {x = 460, y = 0, z = 509}, {x = 469, y = 0, z = 500}, {x = 451, y = 0, z = 500}},
         LampSpawnPoints = {{x = 460, y = 0, z = 500}, {x = 460, y = 0, z = 491}}
     },
     NE_B = {
-        MobSpawnPoints = {{x = 433.5, y = 0, z = 446.5}, {x = 406.5, y = 0, z = 451}, {x = 406.5, y = 0, z = 473.5}, {x = 415.5, y = 0, z = 464.5}, {x = 415.5, y = 0, z = 455.5}}, 
+        MobSpawnPoints = {{x = 433.5, y = 0, z = 446.5}, {x = 406.5, y = 0, z = 451}, {x = 406.5, y = 0, z = 473.5}, {x = 415.5, y = 0, z = 464.5}, {x = 415.5, y = 0, z = 455.5}},
         LampSpawnPoints = {{x = 424.5, y = 0, z = 460}, {x = 433.5, y = 0, z = 473.5}}
     },
     NE_C = {
-        MobSpawnPoints = {{x = 460, y = 0, z = 451}, {x = 469, y = 0, z = 451}, {x = 451, y = 0, z = 460}, {x = 451, y = 0, z = 469}, {x = 469, y = 0, z = 469}}, 
+        MobSpawnPoints = {{x = 460, y = 0, z = 451}, {x = 469, y = 0, z = 451}, {x = 451, y = 0, z = 460}, {x = 451, y = 0, z = 469}, {x = 469, y = 0, z = 469}},
         LampSpawnPoints = {{x = 460, y = 0, z = 469}, {x = 473.5, y = 0, z = 473.5}}
     },
     NE_D = {
-        MobSpawnPoints = {{x = 504.5, y = 0, z = 455.5}, {x = 504.5, y = 0, z = 464.5}, {x = 488.5, y = 0, z = 473.5}, {x = 490.5, y = 0, z = 446.5}, {x = 513.5, y = 0, z = 473.5}}, 
+        MobSpawnPoints = {{x = 504.5, y = 0, z = 455.5}, {x = 504.5, y = 0, z = 464.5}, {x = 488.5, y = 0, z = 473.5}, {x = 490.5, y = 0, z = 446.5}, {x = 513.5, y = 0, z = 473.5}},
         LampSpawnPoints = {{x = 513.5, y = 0, z = 446.5}, {x = 495, y = 0, z = 460}}
     },
     NE_E = {
-        MobSpawnPoints = {{x = 473.5, y = 0, z = 406.5}, {x = 460, y = 0, z = 420}, {x = 460, y = 0, z = 429}, {x = 446.5, y = 0, z = 433.5}, {x = 455.5, y = 0, z = 415.5}}, 
+        MobSpawnPoints = {{x = 473.5, y = 0, z = 406.5}, {x = 460, y = 0, z = 420}, {x = 460, y = 0, z = 429}, {x = 446.5, y = 0, z = 433.5}, {x = 455.5, y = 0, z = 415.5}},
         LampSpawnPoints = {{x = 460, y = 0, z = 420}, {x = 446.5, y = 0, z = 406.5}}
     },
     NE_F = {
-        MobSpawnPoints = {{x = 495.5, y = 0, z = 415.5}, {x = 505.5, y = 0, z = 415.5}, {x = 513.5, y = 0, z = 406.5}, {x = 513.5, y = 0, z = 433.5}, {x = 486.5, y = 0, z = 433.5}}, 
+        MobSpawnPoints = {{x = 495.5, y = 0, z = 415.5}, {x = 505.5, y = 0, z = 415.5}, {x = 513.5, y = 0, z = 406.5}, {x = 513.5, y = 0, z = 433.5}, {x = 486.5, y = 0, z = 433.5}},
         LampSpawnPoints = {{x = 500, y = 0, z = 433.5}, {x = 500, y = 0, z = 424.5}}
     },
     NE_G = {
-        MobSpawnPoints = {{x = 540, y = 0, z = 411}, {x = 535.5, y = 0, z = 424.5}, {x = 553.5, y = 0, z = 433.5}, {x = 549, y = 0, z = 420}, {x = 526.5, y = 0, z = 415.5}}, 
+        MobSpawnPoints = {{x = 540, y = 0, z = 411}, {x = 535.5, y = 0, z = 424.5}, {x = 553.5, y = 0, z = 433.5}, {x = 549, y = 0, z = 420}, {x = 526.5, y = 0, z = 415.5}},
         LampSpawnPoints = {{x = 540, y = 0, z = 420}, {x = 533.5, y = 0, z = 433.5}}
     },
     NE_H = {
-        MobSpawnPoints = {{x = 500, y = 0, z = 380}, {x = 491, y = 0, z = 389}, {x = 491, y = 0, z = 371}, {x = 509, y = 0, z = 389}, {x = 509, y = 0, z = 371}}, 
+        MobSpawnPoints = {{x = 500, y = 0, z = 380}, {x = 491, y = 0, z = 389}, {x = 491, y = 0, z = 371}, {x = 509, y = 0, z = 389}, {x = 509, y = 0, z = 371}},
         LampSpawnPoints = {{x = 500, y = 0, z = 380}, {x = 486.5, y = 0, z = 366.5}}
     },
     NE_I = {
-        MobSpawnPoints = {{x = 540, y = 0, z = 371}, {x = 549, y = 0, z = 380}, {x = 531, y = 0, z = 380}, {x = 553.5, y = 0, z = 366.5}, {x = 540, y = 0, z = 393.5}}, 
+        MobSpawnPoints = {{x = 540, y = 0, z = 371}, {x = 549, y = 0, z = 380}, {x = 531, y = 0, z = 380}, {x = 553.5, y = 0, z = 366.5}, {x = 540, y = 0, z = 393.5}},
         LampSpawnPoints = {{x = 540, y = 0, z = 389}, {x = 526.5, y = 0, z = 366.5}}
     },
     NE_J = {
-        MobSpawnPoints = {{x = 584.5, y = 0, z = 375.5}, {x = 584.5, y = 0, z = 384.5}, {x = 589, y = 0, z = 393.5}, {x = 566.5, y = 0, z = 389}, {x = 580, y = 0, z = 393.5}}, 
+        MobSpawnPoints = {{x = 584.5, y = 0, z = 375.5}, {x = 584.5, y = 0, z = 384.5}, {x = 589, y = 0, z = 393.5}, {x = 566.5, y = 0, z = 389}, {x = 580, y = 0, z = 393.5}},
         LampSpawnPoints = {{x = 580, y = 0, z = 393.5}, {x = 575.5, y = 0, z = 380}}
     },
     NE_K = {
-        MobSpawnPoints = {{x = 460, y = 0, z = 344.5}, {x = 451, y = 0, z = 340}, {x = 469, y = 0, z = 340}, {x = 464.5, y = 0, z = 331}, {x = 455.5, y = 0, z = 331}}, 
+        MobSpawnPoints = {{x = 460, y = 0, z = 344.5}, {x = 451, y = 0, z = 340}, {x = 469, y = 0, z = 340}, {x = 464.5, y = 0, z = 331}, {x = 455.5, y = 0, z = 331}},
         LampSpawnPoints = {{x = 460, y = 0, z = 340}, {x = 460, y = 0, z = 349}}
     },
     NE_L = {
-        MobSpawnPoints = {{x = 486.5, y = 0, z = 353.5}, {x = 495.5, y = 0, z = 340}, {x = 504.5, y = 0, z = 340}, {x = 509, y = 0, z = 353.5}, {x = 513.5, y = 0, z = 326.5}}, 
+        MobSpawnPoints = {{x = 486.5, y = 0, z = 353.5}, {x = 495.5, y = 0, z = 340}, {x = 504.5, y = 0, z = 340}, {x = 509, y = 0, z = 353.5}, {x = 513.5, y = 0, z = 326.5}},
         LampSpawnPoints = {{x = 500, y = 0, z = 335.5}, {x = 486.5, y = 0, z = 326.5}}
     },
     NE_M = {
-        MobSpawnPoints = {{x = 540, y = 0, z = 340}, {x = 540, y = 0, z = 349}, {x = 531, y = 0, z = 340}, {x = 549, y = 0, z = 340}, {x = 553.5, y = 0, z = 326.5}}, 
+        MobSpawnPoints = {{x = 540, y = 0, z = 340}, {x = 540, y = 0, z = 349}, {x = 531, y = 0, z = 340}, {x = 549, y = 0, z = 340}, {x = 553.5, y = 0, z = 326.5}},
         LampSpawnPoints = {{x = 540, y = 0, z = 340}, {x = 540, y = 0, z = 331}}
     },
     NE_N = { -- contains the connected north and south "elbow" hallways
-        MobSpawnPoints = {{x = 420, y = 0, z = 340}, {x = 420, y = 0, z = 260}, {x = 433.5, y = 0, z = 300}, {x = 406.5, y = 0, z = 309}, {x = 411, y = 0, z = 295.5}}, 
+        MobSpawnPoints = {{x = 420, y = 0, z = 340}, {x = 420, y = 0, z = 260}, {x = 433.5, y = 0, z = 300}, {x = 406.5, y = 0, z = 309}, {x = 411, y = 0, z = 295.5}},
         LampSpawnPoints = {{x = 424.5, y = 0, z = 300}, {x = 433.5, y = 0, z = 286.5}}
     },
     NE_O = {
-        MobSpawnPoints = {{x = 451, y = 0, z = 309}, {x = 460, y = 0, z = 309}, {x = 451, y = 0, z = 291}, {x = 460, y = 0, z = 291}, {x = 469, y = 0, z = 300}}, 
+        MobSpawnPoints = {{x = 451, y = 0, z = 309}, {x = 460, y = 0, z = 309}, {x = 451, y = 0, z = 291}, {x = 460, y = 0, z = 291}, {x = 469, y = 0, z = 300}},
         LampSpawnPoints = {{x = 446.5, y = 0, z = 313.5}, {x = 451, y = 0, z = 300}}
     },
     NE_P = {
-        MobSpawnPoints = {{x = 491, y = 0, z = 286.5}, {x = 491, y = 0, z = 313.5}, {x = 513.5, y = 0, z = 304.5}, {x = 500, y = 0, z = 304.5}, {x = 513, y = 0, z = 291}}, 
+        MobSpawnPoints = {{x = 491, y = 0, z = 286.5}, {x = 491, y = 0, z = 313.5}, {x = 513.5, y = 0, z = 304.5}, {x = 500, y = 0, z = 304.5}, {x = 513, y = 0, z = 291}},
         LampSpawnPoints = {{x = 495.5, y = 0, z = 300}, {x = 486.5, y = 0, z = 300}}
     },
     NE_Q = {
-        MobSpawnPoints = {{x = 460, y = 0, z = 260}, {x = 455.5, y = 0, z = 264.5}, {x = 464.5, y = 0, z = 255.5}, {x = 455.5, y = 0, z = 255.5}, {x = 464.5, y = 0, z = 264.5}}, 
+        MobSpawnPoints = {{x = 460, y = 0, z = 260}, {x = 455.5, y = 0, z = 264.5}, {x = 464.5, y = 0, z = 255.5}, {x = 455.5, y = 0, z = 255.5}, {x = 464.5, y = 0, z = 264.5}},
         LampSpawnPoints = {{x = 460, y = 0, z = 269}, {x = 460, y = 0, z = 251}}
     },
     EAST_A = {
-        MobSpawnPoints = {{x = 509, y = 0, z = 100}, {x = 491, y = 0, z = 100}, {x = 491, y = 0, z = 91}, {x = 491, y = 0, z = 109}, {x = 500, y = 0, z = 91}}, 
+        MobSpawnPoints = {{x = 509, y = 0, z = 100}, {x = 491, y = 0, z = 100}, {x = 491, y = 0, z = 91}, {x = 491, y = 0, z = 109}, {x = 500, y = 0, z = 91}},
         LampSpawnPoints = {{x = 500, y = 0, z = 109}, {x = 509, y = 0, z = 109}}
     },
     EAST_B = {
-        MobSpawnPoints = {{x = 455.5, y = 0, z = 64.5}, {x = 455.5, y = 0, z = 55.5}, {x = 451, y = 0, z = 46.5}, {x = 473.5, y = 0, z = 51}, {x = 446.5, y = 0, z = 73.5}}, 
+        MobSpawnPoints = {{x = 455.5, y = 0, z = 64.5}, {x = 455.5, y = 0, z = 55.5}, {x = 451, y = 0, z = 46.5}, {x = 473.5, y = 0, z = 51}, {x = 446.5, y = 0, z = 73.5}},
         LampSpawnPoints = {{x = 446.5, y = 0, z = 73.5}, {x = 464.5, y = 0, z = 60}}
     },
     EAST_C = {
@@ -669,39 +663,39 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = 500, y = 0, z = 20}, {x = 500, y = 0, z = 20}} -- yes these entries are identical
     },
     EAST_D = {
-        MobSpawnPoints = {{x = 540, y = 0, z = 55.5}, {x = 544.5, y = 0, z = 73.5}, {x = 553.5, y = 0, z = 64.5}, {x = 549, y = 0, z = 46.5}, {x = 531, y = 0, z = 73.5}}, 
+        MobSpawnPoints = {{x = 540, y = 0, z = 55.5}, {x = 544.5, y = 0, z = 73.5}, {x = 553.5, y = 0, z = 64.5}, {x = 549, y = 0, z = 46.5}, {x = 531, y = 0, z = 73.5}},
         LampSpawnPoints = {{x = 526.5, y = 0, z = 60}, {x = 540, y = 0, z = 55.5}}
     },
     EAST_E = {
-        MobSpawnPoints = {{x = 375.5, y = 0, z = 20}, {x = 400, y = 0, z = 0}, {x = 400, y = 0, z = 40}, {x = 406.5, y = 0, z = 20}, {x = 393.5, y = 0, z = 20}}, 
+        MobSpawnPoints = {{x = 375.5, y = 0, z = 20}, {x = 400, y = 0, z = 0}, {x = 400, y = 0, z = 40}, {x = 406.5, y = 0, z = 20}, {x = 393.5, y = 0, z = 20}},
         LampSpawnPoints = {{x = 393.5, y = 0, z = 20}, {x = 375.5, y = 0, z = 20}}
     },
     EAST_F = {
-        MobSpawnPoints = {{x = 473.5, y = 0, z = 33.5}, {x = 468.5, y = 0, z = 24.5}, {x = 464.5, y = 0, z = 15.5}, {x = 473.5, y = 0, z = 11}, {x = 469, y = 0, z = 6.5}}, 
+        MobSpawnPoints = {{x = 473.5, y = 0, z = 33.5}, {x = 468.5, y = 0, z = 24.5}, {x = 464.5, y = 0, z = 15.5}, {x = 473.5, y = 0, z = 11}, {x = 469, y = 0, z = 6.5}},
         LampSpawnPoints = {{x = 455.5, y = 0, z = 20}, {x = 446.5, y = 0, z = 33.5}}
     },
     EAST_G = {
-        MobSpawnPoints = {{x = 526.5, y = 0, z = 15.5}, {x = 526.5, y = 0, z = 24.5}, {x = 540, y = 0, z = 20}, {x = 553.5, y = 0, z = 33.5}, {x = 553.5, y = 0, z = 6.5}}, 
+        MobSpawnPoints = {{x = 526.5, y = 0, z = 15.5}, {x = 526.5, y = 0, z = 24.5}, {x = 540, y = 0, z = 20}, {x = 553.5, y = 0, z = 33.5}, {x = 553.5, y = 0, z = 6.5}},
         LampSpawnPoints = {{x = 531, y = 0, z = 29}, {x = 531, y = 0, z = 11}}
     },
     EAST_H = {
-        MobSpawnPoints = {{x = 571, y = 0, z = 33.5}, {x = 575.5, y = 0, z = 6.5}, {x = 575.5, y = 0, z = 24.5}, {x = 584.5, y = 0, z = 24.5}, {x = 589, y = 0, z = 6.5}}, 
+        MobSpawnPoints = {{x = 571, y = 0, z = 33.5}, {x = 575.5, y = 0, z = 6.5}, {x = 575.5, y = 0, z = 24.5}, {x = 584.5, y = 0, z = 24.5}, {x = 589, y = 0, z = 6.5}},
         LampSpawnPoints = {{x = 566.5, y = 0, z = 11}, {x = 566.5, y = 0, z = 29}}
     },
     EAST_I = {
-        MobSpawnPoints = {{x = 500, y = 0, z = -11}, {x = 495.5, y = 0, z = -15.5}, {x = 504.5, y = 0, z = -24.5}, {x = 495.5, y = 0, z = -24.5}, {x = 504.5, y = 0, z = -15.5}}, 
+        MobSpawnPoints = {{x = 500, y = 0, z = -11}, {x = 495.5, y = 0, z = -15.5}, {x = 504.5, y = 0, z = -24.5}, {x = 495.5, y = 0, z = -24.5}, {x = 504.5, y = 0, z = -15.5}},
         LampSpawnPoints = {{x = 500, y = 0, z = -20}, {x = 500, y = 0, z = -11}}
     },
     EAST_J = {
-        MobSpawnPoints = {{x = 553.5, y = 0, z = -11}, {x = 553.5, y = 0, z = -33.5}, {x = 544.5, y = 0, z = -15.5}, {x = 535.5, y = 0, z = -29}, {x = 526.5, y = 0, z = -33.5}}, 
+        MobSpawnPoints = {{x = 553.5, y = 0, z = -11}, {x = 553.5, y = 0, z = -33.5}, {x = 544.5, y = 0, z = -15.5}, {x = 535.5, y = 0, z = -29}, {x = 526.5, y = 0, z = -33.5}},
         LampSpawnPoints = {{x = 540, y = 0, z = -15.5}, {x = 553.5, y = 0, z = -20}}
     },
     EAST_K = {
-        MobSpawnPoints = {{x = 633.5, y = 0, z = -15.5}, {x = 633.5, y = 0, z = -24.5}, {x = 611, y = 0, z = -29}, {x = 611, y = 0, z = -11}, {x = 613, y = 0, z = -20}}, 
+        MobSpawnPoints = {{x = 633.5, y = 0, z = -15.5}, {x = 633.5, y = 0, z = -24.5}, {x = 611, y = 0, z = -29}, {x = 611, y = 0, z = -11}, {x = 613, y = 0, z = -20}},
         LampSpawnPoints = {{x = 606.5, y = 0, z = -20}, {x = 629, y = 0, z = -20}}
     },
     EAST_L = {
-        MobSpawnPoints = {{x = 504.5, y = 0, z = -55.5}, {x = 504.5, y = 0, z = -64.5}, {x = 500, y = 0, z = -46.5}, {x = 513.5, y = 0, z = -60}, {x = 513.5, y = 0, z = -73.5}}, 
+        MobSpawnPoints = {{x = 504.5, y = 0, z = -55.5}, {x = 504.5, y = 0, z = -64.5}, {x = 500, y = 0, z = -46.5}, {x = 513.5, y = 0, z = -60}, {x = 513.5, y = 0, z = -73.5}},
         LampSpawnPoints = {{x = 500, y = 0, z = -55.5}, {x = 500, y = 0, z = -64.5}}
     },
     EAST_M = {
@@ -713,63 +707,63 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = 500, y = 0, z = -140}, {x = 500, y = 0, z = -140}} -- yes these are identical
     },
     EAST_N = {
-        MobSpawnPoints = {{x = 553.5, y = 0, z = -109}, {x = 544.5, y = 0, z = -113.5}, {x = 526.5, y = 0, z = -113.5}, {x = 531, y = 0, z = -86.5}, {x = 544.5, y = 0, z = -100}}, 
+        MobSpawnPoints = {{x = 553.5, y = 0, z = -109}, {x = 544.5, y = 0, z = -113.5}, {x = 526.5, y = 0, z = -113.5}, {x = 531, y = 0, z = -86.5}, {x = 544.5, y = 0, z = -100}},
         LampSpawnPoints = {{x = 526.5, y = 0, z = -113.5}, {x = 540, y = 0, z = -104.5}}
     },
     EAST_O = {
-        MobSpawnPoints = {{x = 633.5, y = 0, z = -109}, {x = 633.5, y = 0, z = -91}, {x = 620, y = 0, z = -91}, {x = 611, y = 0, z = -109}, {x = 606.5, y = 0, z = -86.5}}, 
+        MobSpawnPoints = {{x = 633.5, y = 0, z = -109}, {x = 633.5, y = 0, z = -91}, {x = 620, y = 0, z = -91}, {x = 611, y = 0, z = -109}, {x = 606.5, y = 0, z = -86.5}},
         LampSpawnPoints = {{x = 611, y = 0, z = -100}, {x = 629, y = 0, z = -100}}
     },
     EAST_P = {
-        MobSpawnPoints = {{x = 381.5, y = 0, z = -140}, {x = 393.5, y = 0, z = -152}, {x = 406.5, y = 0, z = -166.5}, {x = 407, y = 0, z = -129}, {x = 393.5, y = 0, z = -113.5}}, 
+        MobSpawnPoints = {{x = 381.5, y = 0, z = -140}, {x = 393.5, y = 0, z = -152}, {x = 406.5, y = 0, z = -166.5}, {x = 407, y = 0, z = -129}, {x = 393.5, y = 0, z = -113.5}},
         LampSpawnPoints = {{x = 375.5, y = 0, z = -140}, {x = 400, y = 0, z = -140}}
     },
     EAST_Q = {
-        MobSpawnPoints = {{x = 446.5, y = 0, z = -131}, {x = 450.5, y = 0, z = -153.5}, {x = 473, y = 0, z = -149}, {x = 464.5, y = 0, z = -144.5}, {x = 464.5, y = 0, z = -135.5}}, 
+        MobSpawnPoints = {{x = 446.5, y = 0, z = -131}, {x = 450.5, y = 0, z = -153.5}, {x = 473, y = 0, z = -149}, {x = 464.5, y = 0, z = -144.5}, {x = 464.5, y = 0, z = -135.5}},
         LampSpawnPoints = {{x = 446.5, y = 0, z = -126.5}, {x = 455, y = 0, z = -140}}
     },
     EAST_R = {
-        MobSpawnPoints = {{x = 540, y = 0, z = -140}, {x = 526.5, y = 0, z = -126.5}, {x = 526.5, y = 0, z = -153.5}, {x = 535.5, y = 0, z = -149}, {x = 549, y = 0, z = -131}}, 
+        MobSpawnPoints = {{x = 540, y = 0, z = -140}, {x = 526.5, y = 0, z = -126.5}, {x = 526.5, y = 0, z = -153.5}, {x = 535.5, y = 0, z = -149}, {x = 549, y = 0, z = -131}},
         LampSpawnPoints = {{x = 540, y = 0, z = -140}, {x = 531, y = 0, z = -140}}
     },
     EAST_S = {
-        MobSpawnPoints = {{x = 584.5, y = 0, z = -135.5}, {x = 575.5, y = 0, z = -126.5}, {x = 566.5, y = 0, z = -131}, {x = 566.5, y = 0, z = -149}, {x = 589, y = 0, z = -153.5}}, 
+        MobSpawnPoints = {{x = 584.5, y = 0, z = -135.5}, {x = 575.5, y = 0, z = -126.5}, {x = 566.5, y = 0, z = -131}, {x = 566.5, y = 0, z = -149}, {x = 589, y = 0, z = -153.5}},
         LampSpawnPoints = {{x = 566.5, y = 0, z = -140}, {x = 580, y = 0, z = -144.5}}
     },
     EAST_T = {
-        MobSpawnPoints = {{x = 473.5, y = 0, z = -184.5}, {x = 473.5, y = 0, z = -166.5}, {x = 446.5, y = 0, z = -175.5}, {x = 460, y = 0, z = -175.5}, {x = 451, y = 0, z = -184.5}}, 
+        MobSpawnPoints = {{x = 473.5, y = 0, z = -184.5}, {x = 473.5, y = 0, z = -166.5}, {x = 446.5, y = 0, z = -175.5}, {x = 460, y = 0, z = -175.5}, {x = 451, y = 0, z = -184.5}},
         LampSpawnPoints = {{x = 464.5, y = 0, z = -180}, {x = 473.5, y = 0, z = -193.5}}
     },
     EAST_U = {
-        MobSpawnPoints = {{x = 500, y = 0, z = -180}, {x = 509, y = 0, z = -171}, {x = 491, y = 0, z = -189}, {x = 513.5, y = 0, z = -193.5}, {x = 486.5, y = 0, z = -166.5}}, 
+        MobSpawnPoints = {{x = 500, y = 0, z = -180}, {x = 509, y = 0, z = -171}, {x = 491, y = 0, z = -189}, {x = 513.5, y = 0, z = -193.5}, {x = 486.5, y = 0, z = -166.5}},
         LampSpawnPoints = {{x = 509, y = 0, z = -189}, {x = 491, y = 0, z = -171}}
     },
     EAST_V = {
-        MobSpawnPoints = {{x = 544.5, y = 0, z = -193.5}, {x = 544.5, y = 0, z = -184.5}, {x = 540, y = 0, z = -175.5}, {x = 535.5, y = 0, z = -184.5}, {x = 535.5, y = 0, z = -193.5}}, 
+        MobSpawnPoints = {{x = 544.5, y = 0, z = -193.5}, {x = 544.5, y = 0, z = -184.5}, {x = 540, y = 0, z = -175.5}, {x = 535.5, y = 0, z = -184.5}, {x = 535.5, y = 0, z = -193.5}},
         LampSpawnPoints = {{x = 526.5, y = 0, z = -193.5}, {x = 553.5, y = 0, z = -193.5}}
     },
     EAST_W = {
-        MobSpawnPoints = {{x = 495.5, y = 0, z = -211}, {x = 495.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -211}, {x = 491, y = 0, z = -220}}, 
+        MobSpawnPoints = {{x = 495.5, y = 0, z = -211}, {x = 495.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -229}, {x = 504.5, y = 0, z = -211}, {x = 491, y = 0, z = -220}},
         LampSpawnPoints = {{x = 509, y = 0, z = -220}, {x = 513.5, y = 0, z = -220}}
     },
 	SE_A = {
-        MobSpawnPoints = {{x = 460, y = 0, z = -446.5}, {x = 460, y = 0, z = -433.5}, {x = 433.5, y = 0, z = -433.5}, {x = 486.5, y = 0, z = -433.5}, {x = 460, y = 0, z = -429}}, 
+        MobSpawnPoints = {{x = 460, y = 0, z = -446.5}, {x = 460, y = 0, z = -433.5}, {x = 433.5, y = 0, z = -433.5}, {x = 486.5, y = 0, z = -433.5}, {x = 460, y = 0, z = -429}},
         LampSpawnPoints = {{x = 480, y = 0, z = -440}, {x = 460, y = 0, z = -440}, {x = 440, y = 0, z = -440}}
     },
 	SE_B = {
-        MobSpawnPoints = {{x = 406.5, y = 0, z = -513.5}, {x = 433.5, y = 0, z = -509}, {x = 433.5, y = 0, z = -486.5}, {x = 424.5, y = 0, z = -495.5}, {x = 415.5, y = 0, z = -495.5}}, 
+        MobSpawnPoints = {{x = 406.5, y = 0, z = -513.5}, {x = 433.5, y = 0, z = -509}, {x = 433.5, y = 0, z = -486.5}, {x = 424.5, y = 0, z = -495.5}, {x = 415.5, y = 0, z = -495.5}},
         LampSpawnPoints = {{x = 420, y = 0, z = -504.5}, {x = 411, y = 0, z = -513.5}}
     },
 	SE_C = {
-        MobSpawnPoints = {{x = 473.5, y = 0, z = -486.5}, {x = 446.5, y = 0, z = -486.5}, {x = 455.5, y = 0, z = -495.5}, {x = 464.5, y = 0, z = -500}, {x = 455.5, y = 0, z = -513.5}}, 
+        MobSpawnPoints = {{x = 473.5, y = 0, z = -486.5}, {x = 446.5, y = 0, z = -486.5}, {x = 455.5, y = 0, z = -495.5}, {x = 464.5, y = 0, z = -500}, {x = 455.5, y = 0, z = -513.5}},
         LampSpawnPoints = {{x = 451, y = 0, z = -486.5}, {x = 469, y = 0, z = -486.5}}
     },
 	SE_D = {
-        MobSpawnPoints = {{x = 509, y = 0, z = -500}, {x = 491, y = 0, z = -500}, {x = 491, y = 0, z = -509}, {x = 486.5, y = 0, z = -513.5}, {x = 500, y = 0, z = -486.5}}, 
+        MobSpawnPoints = {{x = 509, y = 0, z = -500}, {x = 491, y = 0, z = -500}, {x = 491, y = 0, z = -509}, {x = 486.5, y = 0, z = -513.5}, {x = 500, y = 0, z = -486.5}},
         LampSpawnPoints = {{x = 491, y = 0, z = -500}, {x = 500, y = 0, z = -509}}
     },
 	SE_E_NE_HALF = { -- hideable walls - the only two I've found in Nyzul Isle - can split Room E in half diagonally
-        MobSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}, {x = 393.5, y = 0, z = -526.5}, {x = 380, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -540}}, 
+        MobSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}, {x = 393.5, y = 0, z = -526.5}, {x = 380, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -540}},
         LampSpawnPoints = {{x = 366.5, y = 0, z = -526.5}, {x = 393.5, y = 0, z = -553.5}}
     },
 	SE_E_SW_HALF = { -- hideable walls - the only two I've found in Nyzul Isle - can split Room E in half diagonally
@@ -777,270 +771,270 @@ tpz.nyzul_isle_data.roomConfigurations = {
         LampSpawnPoints = {{x = 366.5, y = 0, z = -535.5}, {x = 366.5, y = 0, z = -535.5}}
     },
 	SE_F = {
-        MobSpawnPoints = {{x = 433.5, y = 0, z = -553.5}, {x = 415.5, y = 0, z = -535.5}, {x = 429, y = 0, z = -531}, {x = 411, y = 0, z = -549}, {x = 420, y = 0, z = -540}}, 
+        MobSpawnPoints = {{x = 433.5, y = 0, z = -553.5}, {x = 415.5, y = 0, z = -535.5}, {x = 429, y = 0, z = -531}, {x = 411, y = 0, z = -549}, {x = 420, y = 0, z = -540}},
         LampSpawnPoints = {{x = 420, y = 0, z = -540}, {x = 429, y = 0, z = -549}}
     },
 	SE_G = {
-        MobSpawnPoints = {{x = 500, y = 0, z = -540}, {x = 509, y = 0, z = -531}, {x = 491, y = 0, z = -549}, {x = 491, y = 0, z = -531}, {x = 509, y = 0, z = -549}}, 
+        MobSpawnPoints = {{x = 500, y = 0, z = -540}, {x = 509, y = 0, z = -531}, {x = 491, y = 0, z = -549}, {x = 491, y = 0, z = -531}, {x = 509, y = 0, z = -549}},
         LampSpawnPoints = {{x = 491, y = 0, z = -540}, {x = 509, y = 0, z = -540}}
     },
 	SE_H = {
-        MobSpawnPoints = {{x = 553, y = 0, z = -560}, {x = 560, y = 0, z = -552.5}, {x = 560, y = 0, z = -527.5}, {x = 553.5, y = 0, z = -513.5}, {x = 553.5, y = 0, z = -540}}, 
+        MobSpawnPoints = {{x = 553, y = 0, z = -560}, {x = 560, y = 0, z = -552.5}, {x = 560, y = 0, z = -527.5}, {x = 553.5, y = 0, z = -513.5}, {x = 553.5, y = 0, z = -540}},
         LampSpawnPoints = {{x = 560, y = 0, z = -540}, {x = 560, y = 0, z = -520}, {x = 560, y = 0, z = -560}}
     },
 	SE_I = {
-        MobSpawnPoints = {{x = 424.5, y = 0, z = -575.5}, {x = 415.5, y = 0, z = -580}, {x = 411, y = 0, z = -593.5}, {x = 406.5, y = 0, z = -566.5}, {x = 429, y = 0, z = -566.5}}, 
-        LampSpawnPoints = {{x = 424.5, y = 0, z = -580}, {x = 520, y = 0, z = -575.5}}
+        MobSpawnPoints = {{x = 424.5, y = 0, z = -575.5}, {x = 415.5, y = 0, z = -580}, {x = 411, y = 0, z = -593.5}, {x = 406.5, y = 0, z = -566.5}, {x = 429, y = 0, z = -566.5}},
+        LampSpawnPoints = {{x = 424.5, y = 0, z = -580}, {x = 420, y = 0, z = -575.5}}
     },
 	SE_J = {
-        MobSpawnPoints = {{x = 464.5, y = 0, z = -566.5}, {x = 464.5, y = 0, z = -580}, {x = 455.5, y = 0, z = -584.5}, {x = 455.5, y = 0, z = -566.5}, {x = 446.5, y = 0, z = -571}}, 
+        MobSpawnPoints = {{x = 464.5, y = 0, z = -566.5}, {x = 464.5, y = 0, z = -580}, {x = 455.5, y = 0, z = -584.5}, {x = 455.5, y = 0, z = -566.5}, {x = 446.5, y = 0, z = -571}},
         LampSpawnPoints = {{x = 446.5, y = 0, z = -566.5}, {x = 473.5, y = 0, z = -566.5}}
     },
 	SE_K = {
-        MobSpawnPoints = {{x = 513.5, y = 0, z = -593.5}, {x = 505.5, y = 0, z = -585.5}, {x = 491, y = 0, z = -571}, {x = 486.5, y = 0, z = -566.5}, {x = 486.5, y = 0, z = -593.5}}, 
+        MobSpawnPoints = {{x = 513.5, y = 0, z = -593.5}, {x = 505.5, y = 0, z = -585.5}, {x = 491, y = 0, z = -571}, {x = 486.5, y = 0, z = -566.5}, {x = 486.5, y = 0, z = -593.5}},
         LampSpawnPoints = {{x = 509, y = 0, z = -589}, {x = 491, y = 0, z = -580}}
     },
 	SE_L = {
-        MobSpawnPoints = {{x = 460, y = 0, z = -640}, {x = 486.5, y = 0, z = -646.5}, {x = 433.5, y = 0, z = -646.5}, {x = 486.5, y = 0, z = -633.5}, {x = 433.5, y = 0, z = -633.5}}, 
+        MobSpawnPoints = {{x = 460, y = 0, z = -640}, {x = 486.5, y = 0, z = -646.5}, {x = 433.5, y = 0, z = -646.5}, {x = 486.5, y = 0, z = -633.5}, {x = 433.5, y = 0, z = -633.5}},
         LampSpawnPoints = {{x = 460, y = 0, z = -646.5}, {x = 460, y = 0, z = -633.5}}
     },
     -- consider creating "rooms" for the "elbow" hallways.  Would allow for some very high density small floors
 	SOUTH_A = {
-        MobSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -29, y = 0, z = -260}, {x = -20, y = 0, z = -251}, {x = -11, y = 0, z = -260}, {x = -20, y = 0, z = -269}}, 
+        MobSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -29, y = 0, z = -260}, {x = -20, y = 0, z = -251}, {x = -11, y = 0, z = -260}, {x = -20, y = 0, z = -269}},
         LampSpawnPoints = {{x = -20, y = 0, z = -260}, {x = -20, y = 0, z = -269}}
     },
 	SOUTH_B = {
-        MobSpawnPoints = {{x = -51, y = 0, z = -286.5}, {x = -46.5, y = 0, z = -309}, {x = -55.5, y = 0, z = -304.5}, {x = -64.5, y = 0, z = -295.5}, {x = -69, y = 0, z = -286.5}}, 
+        MobSpawnPoints = {{x = -51, y = 0, z = -286.5}, {x = -46.5, y = 0, z = -309}, {x = -55.5, y = 0, z = -304.5}, {x = -64.5, y = 0, z = -295.5}, {x = -69, y = 0, z = -286.5}},
         LampSpawnPoints = {{x = -46.5, y = 0, z = -300}, {x = -55.5, y = 0, z = -300}}
     },
 	SOUTH_C = {
-        MobSpawnPoints = {{x = -20, y = 0, z = -300}, {x = -11, y = 0, z = -300}, {x = -29, y = 0, z = -300}, {x = -11, y = 0, z = -291}, {x = -29, y = 0, z = -309}}, 
+        MobSpawnPoints = {{x = -20, y = 0, z = -300}, {x = -11, y = 0, z = -300}, {x = -29, y = 0, z = -300}, {x = -11, y = 0, z = -291}, {x = -29, y = 0, z = -309}},
         LampSpawnPoints = {{x = -20, y = 0, z = -309}, {x = -20, y = 0, z = -291}}
     },
 	SOUTH_D = {
-        MobSpawnPoints = {{x = 29, y = 0, z = -286.5}, {x = 33.5, y = 0, z = -309}, {x = 24.5, y = 0, z = -300}, {x = 15.5, y = 0, z = -304.5}, {x = 6.5, y = 0, z = -309}}, 
+        MobSpawnPoints = {{x = 29, y = 0, z = -286.5}, {x = 33.5, y = 0, z = -309}, {x = 24.5, y = 0, z = -300}, {x = 15.5, y = 0, z = -304.5}, {x = 6.5, y = 0, z = -309}},
         LampSpawnPoints = {{x = 6.5, y = 0, z = -286.5}, {x = 15, y = 0, z = -286.5}}
     },
 	SOUTH_E = {
-        MobSpawnPoints = {{x = 60, y = 0, z = -335.5}, {x = 69, y = 0, z = -326.5}, {x = 46, y = 0, z = -331}, {x = 55.5, y = 0, z = -353.5}, {x = 64.5, y = 0, z = -349}}, 
+        MobSpawnPoints = {{x = 60, y = 0, z = -335.5}, {x = 69, y = 0, z = -326.5}, {x = 46, y = 0, z = -331}, {x = 55.5, y = 0, z = -353.5}, {x = 64.5, y = 0, z = -349}},
         LampSpawnPoints = {{x = 64.5, y = 0, z = -340}, {x = 55.5, y = 0, z = -340}}
     },
     -- SOUTH_F is not in this list - it is BOSS_ROOM_1.  I have never seen a capture where the boss rooms are used for anything but boss floors - so ommitting non-boss configurations
 	SOUTH_G = {
-        MobSpawnPoints = {{x = 29, y = 0, z = -371}, {x = 20, y = 0, z = -371}, {x = 11, y = 0, z = -380}, {x = 20, y = 0, z = -389}, {x = 29, y = 0, z = -389}}, 
+        MobSpawnPoints = {{x = 29, y = 0, z = -371}, {x = 20, y = 0, z = -371}, {x = 11, y = 0, z = -380}, {x = 20, y = 0, z = -389}, {x = 29, y = 0, z = -389}},
         LampSpawnPoints = {{x = 29, y = 0, z = -380}, {x = 33.5, y = 0, z = -380}}
     },
 	SOUTH_H = {
-        MobSpawnPoints = {{x = 100, y = 0, z = -380}, {x = 104.5, y = 0, z = -375.5}, {x = 104.5, y = 0, z = -384.5}, {x = 94.5, y = 0, z = -375.5}, {x = 94.5, y = 0, z = -384.5}}, 
+        MobSpawnPoints = {{x = 100, y = 0, z = -380}, {x = 104.5, y = 0, z = -375.5}, {x = 104.5, y = 0, z = -384.5}, {x = 94.5, y = 0, z = -375.5}, {x = 94.5, y = 0, z = -384.5}},
         LampSpawnPoints = {{x = 91, y = 0, z = -380}, {x = 109, y = 0, z = -380}}
     },
 	SOUTH_I = {
-        MobSpawnPoints = {{x = 46.5, y = 0, z = -406.5}, {x = 51, y = 0, z = -433.5}, {x = 73.5, y = 0, z = -429}, {x = 64.5, y = 0, z = -411}, {x = 55.5, y = 0, z = -420.5}}, 
+        MobSpawnPoints = {{x = 46.5, y = 0, z = -406.5}, {x = 51, y = 0, z = -433.5}, {x = 73.5, y = 0, z = -429}, {x = 64.5, y = 0, z = -411}, {x = 55.5, y = 0, z = -420.5}},
         LampSpawnPoints = {{x = 73.5, y = 0, z = -420}, {x = 60, y = 0, z = -424.5}}
     },
 	SOUTH_J = {
-        MobSpawnPoints = {{x = -46.5, y = 0, z = -446.5}, {x = -69, y = 0, z = -446.5}, {x = -60, y = 0, z = -455.5}, {x = -55.5, y = 0, z = -460}, {x = -73.5, y = 0, z = -469}}, 
+        MobSpawnPoints = {{x = -46.5, y = 0, z = -446.5}, {x = -69, y = 0, z = -446.5}, {x = -60, y = 0, z = -455.5}, {x = -55.5, y = 0, z = -460}, {x = -73.5, y = 0, z = -469}},
         LampSpawnPoints = {{x = -55.5, y = 0, z = -473.5}, {x = -46.5, y = 0, z = -473.5}}
     },
 	SOUTH_K = {
-        MobSpawnPoints = {{x = -33.5, y = 0, z = -473.5}, {x = -6.5, y = 0, z = -446.5}, {x = -24.5, y = 0, z = -455.5}, {x = -15.5, y = 0, z = -464.5}, {x = -11, y = 0, z = -460}}, 
+        MobSpawnPoints = {{x = -33.5, y = 0, z = -473.5}, {x = -6.5, y = 0, z = -446.5}, {x = -24.5, y = 0, z = -455.5}, {x = -15.5, y = 0, z = -464.5}, {x = -11, y = 0, z = -460}},
         LampSpawnPoints = {{x = -11, y = 0, z = -451}, {x = -29, y = 0, z = -469}}
     },
 	SOUTH_L = {
-        MobSpawnPoints = {{x = 33.5, y = 0, z = -473.5}, {x = 33.5, y = 0, z = -451}, {x = 24.5, y = 0, z = -460}, {x = 15.5, y = 0, z = -451}, {x = 6.5, y = 0, z = -469}}, 
+        MobSpawnPoints = {{x = 33.5, y = 0, z = -473.5}, {x = 33.5, y = 0, z = -451}, {x = 24.5, y = 0, z = -460}, {x = 15.5, y = 0, z = -451}, {x = 6.5, y = 0, z = -469}},
         LampSpawnPoints = {{x = 6.5, y = 0, z = -473.5}, {x = 15.5, y = 0, z = -473.5}}
     },
 	SOUTH_M = {
-        MobSpawnPoints = {{x = -29, y = 0, z = -504.5}, {x = -29, y = 0, z = -495.5}, {x = -20, y = 0, z = -509}, {x = -20, y = 0, z = -491}, {x = -11, y = 0, z = -500}}, 
+        MobSpawnPoints = {{x = -29, y = 0, z = -504.5}, {x = -29, y = 0, z = -495.5}, {x = -20, y = 0, z = -509}, {x = -20, y = 0, z = -491}, {x = -11, y = 0, z = -500}},
         LampSpawnPoints = {{x = -20, y = 0, z = -500}, {x = -29, y = 0, z = -500}}
     },
-    -- The corner long hallways ("Rooms" Q, R, S, and T) are each their own room.  They are too big to leave blank.  
+    -- The corner long hallways ("Rooms" Q, R, S, and T) are each their own room.  They are too big to leave blank.
 	CENTRAL_A = {
-        MobSpawnPoints = {{x = -33.5, y = -4, z = 166.5}, {x = -6.5, y = -4, z = 171}, {x = -15.5, y = -4, z = 189}, {x = -24.5, y = -4, z = 175.5}, {x = -24.5, y = -4, z = 193.5}}, 
+        MobSpawnPoints = {{x = -33.5, y = -4, z = 166.5}, {x = -6.5, y = -4, z = 171}, {x = -15.5, y = -4, z = 189}, {x = -24.5, y = -4, z = 175.5}, {x = -24.5, y = -4, z = 193.5}},
         LampSpawnPoints = {{x = -20, y = -4, z = 175.5}, {x = -20, y = -4, z = 166.5}}
     },
     CENTRAL_B = {
-        MobSpawnPoints = {{x = -20, y = -4, z = 149}, {x = -29, y = -4, z = 140}, {x = -11, y = -4, z = 140}, {x = -29, y = -4, z = 131}, {x = -11, y = -4, z = 131}}, 
+        MobSpawnPoints = {{x = -20, y = -4, z = 149}, {x = -29, y = -4, z = 140}, {x = -11, y = -4, z = 140}, {x = -29, y = -4, z = 131}, {x = -11, y = -4, z = 131}},
         LampSpawnPoints = {{x = -20, y = -4, z = 140}, {x = -20, y = -4, z = 131}}
     },
     CENTRAL_C = {
-        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}, {x = xxx, y = 0, z = xxx}}, 
+        MobSpawnPoints = {{x = -69, y = 0, z = 91}, {x = -51, y = 0, z = 91}, {x = -73.5, y = 0, z = 100}, {x = -46.5, y = 0, z = 86.5}, {x = -46.5, y = 0, z = 113.5}},
         LampSpawnPoints = {{x = -51, y = 0, z = 109}, {x = -51, y = 0, z = 91}}
     },
     CENTRAL_D = {
-        MobSpawnPoints = {{x = -29, y = 0, z = 100}, {x = -20, y = 0, z = 104.5}, {x = -20, y = 0, z = 95.5}, {x = -6.5, y = 0, z = 109}, {x = -11, y = 0, z = 91}}, 
+        MobSpawnPoints = {{x = -29, y = 0, z = 100}, {x = -20, y = 0, z = 104.5}, {x = -20, y = 0, z = 95.5}, {x = -6.5, y = 0, z = 109}, {x = -11, y = 0, z = 91}},
         LampSpawnPoints = {{x = -29, y = 0, z = 109}, {x = -29, y = 0, z = 91}}
     },
     CENTRAL_E = {
-        MobSpawnPoints = {{x = 20, y = 0, z = 104.5}, {x = 33.5, y = 0, z = 113.5}, {x = 6.5, y = 0, z = 91}, {x = 15.5, y = 0, z = 100}, {x = 24.5, y = 0, z = 86.5}}, 
+        MobSpawnPoints = {{x = 20, y = 0, z = 104.5}, {x = 33.5, y = 0, z = 113.5}, {x = 6.5, y = 0, z = 91}, {x = 15.5, y = 0, z = 100}, {x = 24.5, y = 0, z = 86.5}},
         LampSpawnPoints = {{x = 20, y = 0, z = 104.5}, {x = 29, y = 0, z = 113.5}}
     },
     CENTRAL_F = {
-        MobSpawnPoints = {{x = 64.5, y = 0, z = 113.5}, {x = 64.5, y = 0, z = 106.5}, {x = 51, y = 0, z = 91}, {x = 73.5, y = 0, z = 86.5}, {x = 66.5, y = 0, z = 95.5}}, 
+        MobSpawnPoints = {{x = 64.5, y = 0, z = 113.5}, {x = 64.5, y = 0, z = 106.5}, {x = 51, y = 0, z = 91}, {x = 73.5, y = 0, z = 86.5}, {x = 66.5, y = 0, z = 95.5}},
         LampSpawnPoints = {{x = 69, y = 0, z = 109}, {x = 60, y = 0, z = 109}}
     },
     CENTRAL_G = {
-        MobSpawnPoints = {{x = -113.5, y = 0, z = 55.5}, {x = -95.5, y = 0, z = 60}, {x = -109, y = 0, z = 64.5}, {x = -91, y = 0, z = 73.5}, {x = -86.5, y = 0, z = 46.5}}, 
+        MobSpawnPoints = {{x = -113.5, y = 0, z = 55.5}, {x = -95.5, y = 0, z = 60}, {x = -109, y = 0, z = 64.5}, {x = -91, y = 0, z = 73.5}, {x = -86.5, y = 0, z = 46.5}},
         LampSpawnPoints = {{x = -113.5, y = 0, z = 73.5}, {x = -113.5, y = 0, z = 46.5}}
     },
     CENTRAL_H = {
-        MobSpawnPoints = {{x = -60, y = 0, z = 64.5}, {x = -55.5, y = 0, z = 55.5}, {x = -69, y = 0, z = 46.5}, {x = -73.5, y = 0, z = 69}, {x = -46.5, y = 0, z = 73.5}}, 
+        MobSpawnPoints = {{x = -60, y = 0, z = 64.5}, {x = -55.5, y = 0, z = 55.5}, {x = -69, y = 0, z = 46.5}, {x = -73.5, y = 0, z = 69}, {x = -46.5, y = 0, z = 73.5}},
         LampSpawnPoints = {{x = -64.5, y = 0, z = 60}, {x = -73.5, y = 0, z = 60}}
     },
     CENTRAL_I = {
-        MobSpawnPoints = {{x = 73.5, y = 0, z = 60}, {x = 64.5, y = 0, z = 60}, {x = 55.5, y = 0, z = 64.5}, {x = 51, y = 0, z = 55.5}, {x = 46.5, y = 0, z = 69}}, 
+        MobSpawnPoints = {{x = 73.5, y = 0, z = 60}, {x = 64.5, y = 0, z = 60}, {x = 55.5, y = 0, z = 64.5}, {x = 51, y = 0, z = 55.5}, {x = 46.5, y = 0, z = 69}},
         LampSpawnPoints = {{x = 73.5, y = 0, z = 73.5}, {x = 73.5, y = 0, z = 46.5}}
     },
     CENTRAL_J = {
-        MobSpawnPoints = {{x = 104.5, y = 0, z = 64.5}, {x = 100, y = 0, z = 55.5}, {x = 113.5, y = 0, z = 51}, {x = 86.5, y = 0, z = 46.5}, {x = 91, y = 0, z = 73.5}}, 
+        MobSpawnPoints = {{x = 104.5, y = 0, z = 64.5}, {x = 100, y = 0, z = 55.5}, {x = 113.5, y = 0, z = 51}, {x = 86.5, y = 0, z = 46.5}, {x = 91, y = 0, z = 73.5}},
         LampSpawnPoints = {{x = 95.5, y = 0, z = 60}, {x = 113.5, y = 0, z = 73.5}}
     },
     CENTRAL_K = {
-        MobSpawnPoints = {{x = -73.5, y = 0, z = 33.5}, {x = -69, y = 0, z = 11}, {x = -55.5, y = 0, z = 15.5}, {x = -51, y = 0, z = 29}, {x = -64.5, y = 0, z = 26.5}}, 
+        MobSpawnPoints = {{x = -73.5, y = 0, z = 33.5}, {x = -69, y = 0, z = 11}, {x = -55.5, y = 0, z = 15.5}, {x = -51, y = 0, z = 29}, {x = -64.5, y = 0, z = 26.5}},
         LampSpawnPoints = {{x = -69, y = 0, z = 20}, {x = -51, y = 0, z = 20}}
     },
     CENTRAL_L = {
-        MobSpawnPoints = {{x = -33.5, y = 0, z = 6.5}, {x = -29, y = 0, z = 24.5}, {x = -15.5, y = 0, z = 10.5}, {x = -11, y = 0, z = 29}, {x = -24.5, y = 0, z = 15.5}}, 
+        MobSpawnPoints = {{x = -33.5, y = 0, z = 6.5}, {x = -29, y = 0, z = 24.5}, {x = -15.5, y = 0, z = 10.5}, {x = -11, y = 0, z = 29}, {x = -24.5, y = 0, z = 15.5}},
         LampSpawnPoints = {{x = -20, y = 0, z = 20}, {x = -29, y = 0, z = 11}}
     },
     CENTRAL_M = {
-        MobSpawnPoints = {{x = 15.5, y = 0, z = 15.5}, {x = 24.5, y = 0, z = 20}, {x = 29, y = 0, z = 33.5}, {x = 29, y = 0, z = 6.5}, {x = 6.5, y = 0, z = 6.5}}, 
+        MobSpawnPoints = {{x = 15.5, y = 0, z = 15.5}, {x = 24.5, y = 0, z = 20}, {x = 29, y = 0, z = 33.5}, {x = 29, y = 0, z = 6.5}, {x = 6.5, y = 0, z = 6.5}},
         LampSpawnPoints = {{x = 20, y = 0, z = 15.5}, {x = 15.5, y = 0, z = 20}}
     },
     CENTRAL_N = {
-        MobSpawnPoints = {{x = 69, y = 0, z = 15.5}, {x = 69, y = 0, z = 29}, {x = 46.5, y = 0, z = 33.5}, {x = 51, y = 0, z = 11}, {x = 69, y = 0, z = 6.5}}, 
+        MobSpawnPoints = {{x = 69, y = 0, z = 15.5}, {x = 69, y = 0, z = 29}, {x = 46.5, y = 0, z = 33.5}, {x = 51, y = 0, z = 11}, {x = 69, y = 0, z = 6.5}},
         LampSpawnPoints = {{x = 60, y = 0, z = 11}, {x = 60, y = 0, z = 29}}
     },
     -- CENTRAL_O ommitted - this is the entrance lobby.
     CENTRAL_P = {
-        MobSpawnPoints = {{x = -15.5, y = -4, z = -60}, {x = -24.5, y = -4, z = -55.5}, {x = -24.5, y = -4, z = -73.5}, {x = -33.5, y = -4, z = -69}, {x = -33.5, y = -4, z = -46.5}}, 
+        MobSpawnPoints = {{x = -15.5, y = -4, z = -60}, {x = -24.5, y = -4, z = -55.5}, {x = -24.5, y = -4, z = -73.5}, {x = -33.5, y = -4, z = -69}, {x = -33.5, y = -4, z = -46.5}},
         LampSpawnPoints = {{x = -6.5, y = -4, z = -60}, {x = -20, y = -4, z = -55.5}}
     },
     CENTRAL_Q = {
-        MobSpawnPoints = {{x = -60, y = -4, z = 151.5}, {x = -60, y = 0, z = 128}, {x = -63, y = -1, z = 136}, {x = -57, y = -2, z = 139.5}, {x = -63, y = -3.5, z = 144}}, 
+        MobSpawnPoints = {{x = -60, y = -4, z = 151.5}, {x = -60, y = 0, z = 128}, {x = -63, y = -1, z = 136}, {x = -57, y = -2, z = 139.5}, {x = -63, y = -3.5, z = 144}},
         LampSpawnPoints = {{x = -60, y = 0, z = 126.5}, {x = -60, y = -2, z = 140}}
     },
     CENTRAL_R = {
-        MobSpawnPoints = {{x = 20, y = -4, z = 153.5}, {x = 20, y = 0, z = 128.5}, {x = 17, y = -2, z = 140}, {x = 23, y = -3.5, z = 144}, {x = 23, y = -1, z = 136}}, 
+        MobSpawnPoints = {{x = 20, y = -4, z = 153.5}, {x = 20, y = 0, z = 128.5}, {x = 17, y = -2, z = 140}, {x = 23, y = -3.5, z = 144}, {x = 23, y = -1, z = 136}},
         LampSpawnPoints = {{x = 20, y = 0, z = 126.5}, {x = 20, y = -2, z = 140}}
     },
     CENTRAL_S = {
-        MobSpawnPoints = {{x = -60, y = -4, z = -31.5}, {x = -60, y = 0, z = -8.5}, {x = -63, y = -1, z = -17}, {x = -63, y = -3.5, z = -24}, {x = -57, y = -2, z = -20}}, 
+        MobSpawnPoints = {{x = -60, y = -4, z = -31.5}, {x = -60, y = 0, z = -8.5}, {x = -63, y = -1, z = -17}, {x = -63, y = -3.5, z = -24}, {x = -57, y = -2, z = -20}},
         LampSpawnPoints = {{x = -60, y = 0, z = -6.5}, {x = -60, y = -2, z = -20}}
     },
     CENTRAL_T = {
-        MobSpawnPoints = {{x = 20, y = -4, z = -31.5}, {x = 20, y = 0, z = -8.5}, {x = 23, y = -1, z = -17}, {x = 23, y = -3.5, z = -24}, {x = 17, y = -2, z = -20}}, 
+        MobSpawnPoints = {{x = 20, y = -4, z = -31.5}, {x = 20, y = 0, z = -8.5}, {x = 23, y = -1, z = -17}, {x = 23, y = -3.5, z = -24}, {x = 17, y = -2, z = -20}},
         LampSpawnPoints = {{x = 20, y = 0, z = -6.5}, {x = 20, y = -2, z = -20}}
     },
 	SW_A = {
-        MobSpawnPoints = {{x = -495.5, y = -4, z = -184.5}, {x = -504.5, y = -4, z = -175.5}, {x = -509, y = -4, z = -189}, {x = -491, y = -4, z = -171}, {x = -500, y = -4, z = -180}}, 
+        MobSpawnPoints = {{x = -495.5, y = -4, z = -184.5}, {x = -504.5, y = -4, z = -175.5}, {x = -509, y = -4, z = -189}, {x = -491, y = -4, z = -171}, {x = -500, y = -4, z = -180}},
         LampSpawnPoints = {{x = -509, y = -4, z = -171}, {x = -491, y = -4, z = -189}}
     },
 	SW_B = {
-        MobSpawnPoints = {{x = -455.5, y = -4, z = -175.5}, {x = -464.5, y = -4, z = -180}, {x = -460, y = -4, z = -189}, {x = -455.5, y = -4, z = 184.5}, {x = -446.5, y = -4, z = -166.5}}, 
+        MobSpawnPoints = {{x = -455.5, y = -4, z = -175.5}, {x = -464.5, y = -4, z = -180}, {x = -460, y = -4, z = -189}, {x = -455.5, y = -4, z = -184.5}, {x = -446.5, y = -4, z = -166.5}},
         LampSpawnPoints = {{x = -460, y = -4, z = -180}, {x = -460, y = -4, z = -171}}
     },
 	SW_C = {
-        MobSpawnPoints = {{x = -415.5, y = -4, z = -184.5}, {x = -406.5, y = -4, z = -175.5}, {x = -420, y = -4, z = -166.5}, {x = -420, y = -4, z = -189}, {x = -424.5, y = -4, z = -180}}, 
+        MobSpawnPoints = {{x = -415.5, y = -4, z = -184.5}, {x = -406.5, y = -4, z = -175.5}, {x = -420, y = -4, z = -166.5}, {x = -420, y = -4, z = -189}, {x = -424.5, y = -4, z = -180}},
         LampSpawnPoints = {{x = -411, y = -4, z = -180}, {x = -420, y = -4, z = -180}}
     },
 	-- SW_D omitted - Boss Room
 	SW_E = { -- includes the hallway to the east
-        MobSpawnPoints = {{x = -473.5, y = -4, z = -260}, {x = -464.5, y = -4, z = -260}, {x = -451, y = -4, z = -246.5}, {x = -446.5, y = -4, z = -273.5}, {x = -429, y = -4, z = -260}, {x = -411, y = 0, z = -260}}, 
+        MobSpawnPoints = {{x = -473.5, y = -4, z = -260}, {x = -464.5, y = -4, z = -260}, {x = -451, y = -4, z = -246.5}, {x = -446.5, y = -4, z = -273.5}, {x = -429, y = -4, z = -260}, {x = -411, y = 0, z = -260}},
         LampSpawnPoints = {{x = -420.25, y = -2, z = -260}, {x = -460, y = -4, z = -264.5}}
     },
 	SW_F = {
-        MobSpawnPoints = {{x = -375.5, y = 0, z = -264.5}, {x = -366.5, y = 0, z = -251}, {x = -389, y = 0, z = -260}, {x = -393.5, y = 0, z = -251}, {x = -393.5, y = 0, z = -273.5}}, 
+        MobSpawnPoints = {{x = -375.5, y = 0, z = -264.5}, {x = -366.5, y = 0, z = -251}, {x = -389, y = 0, z = -260}, {x = -393.5, y = 0, z = -251}, {x = -393.5, y = 0, z = -273.5}},
         LampSpawnPoints = {{x = -380, y = 0, z = -260}, {x = -371, y = 0, z = -260}}
     },
 	SW_G = {
-        MobSpawnPoints = {{x = -389, y = 0, z = -286.5}, {x = -380, y = 0, z = -295.5}, {x = -393.5, y = 0, z = -313.5}, {x = -371, y = 0, z = -313.5}, {x = -366.5, y = 0, z = -291}}, 
+        MobSpawnPoints = {{x = -389, y = 0, z = -286.5}, {x = -380, y = 0, z = -295.5}, {x = -393.5, y = 0, z = -313.5}, {x = -371, y = 0, z = -313.5}, {x = -366.5, y = 0, z = -291}},
         LampSpawnPoints = {{x = -393.5, y = 0, z = -304.5}, {x = -393.5, y = 0, z = -295.5}}
     },
 	SW_H = {
-        MobSpawnPoints = {{x = -344.5, y = 0, z = -309}, {x = -331, y = 0, z = -295.5}, {x = -349, y = 0, z = -291}, {x = -340, y = 0, z = -300}, {x = -353.5, y = 0, z = -286.5}}, 
+        MobSpawnPoints = {{x = -344.5, y = 0, z = -309}, {x = -331, y = 0, z = -295.5}, {x = -349, y = 0, z = -291}, {x = -340, y = 0, z = -300}, {x = -353.5, y = 0, z = -286.5}},
         LampSpawnPoints = {{x = -331, y = 0, z = -309}, {x = -340, y = 0, z = -300}}
     },
 	SW_I = { -- includes the hallway to the east
-        MobSpawnPoints = {{x = -553.5, y = -4, z = -340}, {x = -544.5, y = -4, z = -331}, {x = -544.5, y = -4, z = -344.5}, {x = -535.5, y = -4, z = -349}, {x = -535.5, y = -4, z = -335.5}, {x = -500.25, y = -2, z = -340}}, 
+        MobSpawnPoints = {{x = -553.5, y = -4, z = -340}, {x = -544.5, y = -4, z = -331}, {x = -544.5, y = -4, z = -344.5}, {x = -535.5, y = -4, z = -349}, {x = -535.5, y = -4, z = -335.5}, {x = -500.25, y = -2, z = -340}},
         LampSpawnPoints = {{x = -549, y = -4, z = -340}, {x = -500.25, y = -2, z = -340}}
     },
 	SW_J = {
-        MobSpawnPoints = {{x = -460, y = 0, z = -344.5}, {x = -451, y = 0, z = -353.5}, {x = -473.5, y = 0, z = -353.5}, {x = -469, y = 0, z = -326.5}, {x = -446.5, y = 0, z = -331}}, 
+        MobSpawnPoints = {{x = -460, y = 0, z = -344.5}, {x = -451, y = 0, z = -353.5}, {x = -473.5, y = 0, z = -353.5}, {x = -469, y = 0, z = -326.5}, {x = -446.5, y = 0, z = -331}},
         LampSpawnPoints = {{x = -446.5, y = 0, z = -344.5}, {x = -464.5, y = 0, z = -340}}
     },
 	SW_K = {
-        MobSpawnPoints = {{x = -313.5, y = 0, z = -326.5}, {x = -286.5, y = 0, z = -353.5}, {x = -309, y = 0, z = -340}, {x = -300, y = 0, z = -331}, {x = -286.5, y = 0, z = -326.5}}, 
+        MobSpawnPoints = {{x = -313.5, y = 0, z = -326.5}, {x = -286.5, y = 0, z = -353.5}, {x = -309, y = 0, z = -340}, {x = -300, y = 0, z = -331}, {x = -286.5, y = 0, z = -326.5}},
         LampSpawnPoints = {{x = -309, y = 0, z = -331}, {x = -291, y = 0, z = -349}}
     },
 	SW_L = {
-        MobSpawnPoints = {{x = -544.5, y = -4, z = -366.5}, {x = -526.5, y = -4, z = -371}, {x = -549, y = -4, z = -393.5}, {x = -544.5, y = -4, z = -384.5}, {x = -540, y = -4, z = -375.5}}, 
+        MobSpawnPoints = {{x = -544.5, y = -4, z = -366.5}, {x = -526.5, y = -4, z = -371}, {x = -549, y = -4, z = -393.5}, {x = -544.5, y = -4, z = -384.5}, {x = -540, y = -4, z = -375.5}},
         LampSpawnPoints = {{x = -553.5, y = -4, z = -366.5}, {x = -535.5, y = -4, z = -380}}
     },
 	SW_M = {
-        MobSpawnPoints = {{x = -495.5, y = -4, z = -384.5}, {x = -486.5, y = -4, z = -375.5}, {x = -504.5, y = -4, z = -375.5}, {x = -509, y = -4, z = -389}, {x = -500, y = -4, z = -380}}, 
+        MobSpawnPoints = {{x = -495.5, y = -4, z = -384.5}, {x = -486.5, y = -4, z = -375.5}, {x = -504.5, y = -4, z = -375.5}, {x = -509, y = -4, z = -389}, {x = -500, y = -4, z = -380}},
         LampSpawnPoints = {{x = -491, y = -4, z = -380}, {x = -500, y = -4, z = -380}}
     },
 	SW_N = {
-        MobSpawnPoints = {{x = -446.5, y = 0, z = -366.5}, {x = -460, y = 0, z = -380}, {x = -473.5, y = 0, z = -393.5}, {x = -464.5, y = 0, z = -371}, {x = -473.5, y = 0, z = -366.5}}, 
+        MobSpawnPoints = {{x = -446.5, y = 0, z = -366.5}, {x = -460, y = 0, z = -380}, {x = -473.5, y = 0, z = -393.5}, {x = -464.5, y = 0, z = -371}, {x = -473.5, y = 0, z = -366.5}},
         LampSpawnPoints = {{x = -469, y = 0, z = -380}, {x = -451, y = 0, z = -371}}
     },
 	-- SW_O omitted - Boss Room
 	SW_P = {
-        MobSpawnPoints = {{x = -304.5, y = 0, z = -380}, {x = -291, y = 0, z = -384.5}, {x = -286.5, y = 0, z = -375.5}, {x = -313.5, y = 0, z = -366.5}, {x = -309, y = 0, z = -393.5}}, 
+        MobSpawnPoints = {{x = -304.5, y = 0, z = -380}, {x = -291, y = 0, z = -384.5}, {x = -286.5, y = 0, z = -375.5}, {x = -313.5, y = 0, z = -366.5}, {x = -309, y = 0, z = -393.5}},
         LampSpawnPoints = {{x = -300, y = 0, z = -384.5}, {x = -300, y = 0, z = -375.5}}
     },
 	SW_Q = {
-        MobSpawnPoints = {{x = -260, y = 0, z = -340}, {x = -260, y = 0, z = -420}, {x = -255.5, y = 0, z = -375.5}, {x = -260, y = 0, z = -380}, {x = -264.5, y = 0, z = -384.5}}, 
+        MobSpawnPoints = {{x = -260, y = 0, z = -340}, {x = -260, y = 0, z = -420}, {x = -255.5, y = 0, z = -375.5}, {x = -260, y = 0, z = -380}, {x = -264.5, y = 0, z = -384.5}},
         LampSpawnPoints = {{x = -251, y = 0, z = -380}, {x = -269, y = 0, z = -380}}
     },
 	SW_R = { -- includes hallway to the east
-        MobSpawnPoints = {{x = -535.5, y = -4, z = -415.5}, {x = -544.5, y = -4, z = -424.5}, {x = -509, y = -4, z = -420}, {x = -500.25, y = -2, z = -423}, {x = -486.5, y = 0, z = -420}}, 
+        MobSpawnPoints = {{x = -535.5, y = -4, z = -415.5}, {x = -544.5, y = -4, z = -424.5}, {x = -509, y = -4, z = -420}, {x = -500.25, y = -2, z = -423}, {x = -486.5, y = 0, z = -420}},
         LampSpawnPoints = {{x = -540, y = -4, z = -420}, {x = -500.25, y = -2, z = -420}}
     },
 	SW_S = {
-        MobSpawnPoints = {{x = -455.5, y = 0, z = -424.5}, {x = -446.5, y = 0, z = -433.5}, {x = -473.5, y = 0, z = -429}, {x = -469, y = 0, z = -406.5}, {x = -446.5, y = 0, z = -415.5}}, 
+        MobSpawnPoints = {{x = -455.5, y = 0, z = -424.5}, {x = -446.5, y = 0, z = -433.5}, {x = -473.5, y = 0, z = -429}, {x = -469, y = 0, z = -406.5}, {x = -446.5, y = 0, z = -415.5}},
         LampSpawnPoints = {{x = -473.5, y = 0, z = -420}, {x = -464.5, y = 0, z = -420}}
     },
 	SW_T = {
-        MobSpawnPoints = {{x = -291, y = 0, z = -433.5}, {x = -313.5, y = 0, z = -433.5}, {x = -309, y = 0, z = -429}, {x = -313.5, y = 0, z = -411}, {x = -309, y = 0, z = -411}}, 
+        MobSpawnPoints = {{x = -291, y = 0, z = -433.5}, {x = -313.5, y = 0, z = -433.5}, {x = -309, y = 0, z = -429}, {x = -313.5, y = 0, z = -411}, {x = -309, y = 0, z = -411}},
         LampSpawnPoints = {{x = -300, y = 0, z = -429}, {x = -309, y = 0, z = -420}}
     },
 	SW_U = {
-        MobSpawnPoints = {{x = -380, y = 0, z = -455.5}, {x = -380, y = 0, z = -464.5}, {x = -389, y = 0, z = -473.5}, {x = -389, y = 0, z = -446.5}, {x = -366.5, y = 0, z = -473.5}}, 
+        MobSpawnPoints = {{x = -380, y = 0, z = -455.5}, {x = -380, y = 0, z = -464.5}, {x = -389, y = 0, z = -473.5}, {x = -389, y = 0, z = -446.5}, {x = -366.5, y = 0, z = -473.5}},
         LampSpawnPoints = {{x = -389, y = 0, z = -455.5}, {x = -389, y = 0, z = -464.5}}
     },
 	SW_V = {
-        MobSpawnPoints = {{x = -344.5, y = 0, z = -451}, {x = -331, y = 0, z = -464.5}, {x = -349, y = 0, z = -469}, {x = -326.5, y = 0, z = -446.5}, {x = -335.5, y = 0, z = -455.5}}, 
+        MobSpawnPoints = {{x = -344.5, y = 0, z = -451}, {x = -331, y = 0, z = -464.5}, {x = -349, y = 0, z = -469}, {x = -326.5, y = 0, z = -446.5}, {x = -335.5, y = 0, z = -455.5}},
         LampSpawnPoints = {{x = -331, y = 0, z = -451}, {x = -340, y = 0, z = -460}}
     },
 	-- SW_W omitted - Boss Room
 	SW_X = { -- includes hallway to the east
-        MobSpawnPoints = {{x = -406.5, y = 0, z = -500}, {x = -433.5, y = -4, z = -500}, {x = -464.5, y = -4, z = -513.5}, {x = -455.5, y = -4, z = -504.5}, {x = -451, y = -4, z = -486.5}}, 
+        MobSpawnPoints = {{x = -406.5, y = 0, z = -500}, {x = -433.5, y = -4, z = -500}, {x = -464.5, y = -4, z = -513.5}, {x = -455.5, y = -4, z = -504.5}, {x = -451, y = -4, z = -486.5}},
         LampSpawnPoints = {{x = -420.25, y = -2, z = -500}, {x = -460, y = -4, z = -495.5}}
     },
 	SW_Y = {
-        MobSpawnPoints = {{x = -371, y = 0, z = -513.5}, {x = -394.5, y = 0, z = -513.5}, {x = -389, y = 0, z = -500}, {x = -375.5, y = 0, z = -495.5}, {x = -366.5, y = 0, z = -486.5}}, 
+        MobSpawnPoints = {{x = -371, y = 0, z = -513.5}, {x = -394.5, y = 0, z = -513.5}, {x = -389, y = 0, z = -500}, {x = -375.5, y = 0, z = -495.5}, {x = -366.5, y = 0, z = -486.5}},
         LampSpawnPoints = {{x = -380, y = 0, z = -509}, {x = -380, y = 0, z = -513.5}}
     },
 	SW_Z = {
-        MobSpawnPoints = {{x = -496.5, y = -4, z = -584.5}, {x = -486.5, y = -4, z = -593.5}, {x = -509, y = -4, z = -589}, {x = -504.5, y = -4, z = -571}, {x = -495.5, y = -4, z = -575.5}}, 
+        MobSpawnPoints = {{x = -496.5, y = -4, z = -584.5}, {x = -486.5, y = -4, z = -593.5}, {x = -509, y = -4, z = -589}, {x = -504.5, y = -4, z = -571}, {x = -495.5, y = -4, z = -575.5}},
         LampSpawnPoints = {{x = -500, y = -4, z = -580}, {x = -491, y = -4, z = -589}}
     },
 	SW_ZA = {
-        MobSpawnPoints = {{x = -451, y = -4, z = -593.5}, {x = -469, y = -4, z = -584.5}, {x = -455.5, y = -4, z = -584.5}, {x = -455.5, y = -4, z = -571}, {x = -473.5, y = -4, z = -566.5}}, 
+        MobSpawnPoints = {{x = -451, y = -4, z = -593.5}, {x = -469, y = -4, z = -584.5}, {x = -455.5, y = -4, z = -584.5}, {x = -455.5, y = -4, z = -571}, {x = -473.5, y = -4, z = -566.5}},
         LampSpawnPoints = {{x = -460, y = -4, z = -580}, {x = -460, y = -4, z = -593.5}}
     },
 	SW_ZB = {
-        MobSpawnPoints = {{x = -415.5, y = -4, z = -580}, {x = -424.5, y = -4, z = -590}, {x = -430, y = -4, z = -571}, {x = -406.5, y = -4, z = -566.5}, {x = -433.5, y = -4, z = -593.5}}, 
+        MobSpawnPoints = {{x = -415.5, y = -4, z = -580}, {x = -424.5, y = -4, z = -590}, {x = -430, y = -4, z = -571}, {x = -406.5, y = -4, z = -566.5}, {x = -433.5, y = -4, z = -593.5}},
         LampSpawnPoints = {{x = -411, y = -4, z = -580}, {x = -406.5, y = -4, z = -580}}
     },
 	SW_ZC = {
-        MobSpawnPoints = {{x = -431.5, y = -4, z = -220}, {x = -408.5, y = 0, z = -220}, {x = -420, y = -2, z = -223}, {x = -417, y = -1, z = -217}, {x = -423, y = -3, z = -217}}, 
+        MobSpawnPoints = {{x = -431.5, y = -4, z = -220}, {x = -408.5, y = 0, z = -220}, {x = -420, y = -2, z = -223}, {x = -417, y = -1, z = -217}, {x = -423, y = -3, z = -217}},
         LampSpawnPoints = {{x = -406.5, y = 0, z = -220}, {x = -420.25, y = -2, z =-220}}
     },
 	SW_ZD = {
-        MobSpawnPoints = {{x = -408.5, y = 0, z = -540}, {x = -431.5, y = -4, z = -540}, {x = -420, y = -2, z = -537}, {x = -417, y = -1, z = -543}, {x = -423, y = -3, z = -543}}, 
+        MobSpawnPoints = {{x = -408.5, y = 0, z = -540}, {x = -431.5, y = -4, z = -540}, {x = -420, y = -2, z = -537}, {x = -417, y = -1, z = -543}, {x = -423, y = -3, z = -543}},
         LampSpawnPoints = {{x = -406.5, y = 0, z = -540}, {x = -420.25, y = -2, z = -540}}
     }
 }

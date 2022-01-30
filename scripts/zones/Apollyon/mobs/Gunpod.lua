@@ -103,3 +103,9 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end
+
+function onMobDespawn(mob)
+    omega = GetMobByID(mob:getID() - 1)
+
+    omega:setLocalVar("podTime", os.time())
+end

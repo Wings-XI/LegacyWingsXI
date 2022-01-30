@@ -12,8 +12,8 @@ SKILL_317_INDEX = 10
 -- Avatar Favor buffs scale per tock (~9 seconds) to a max value based on current summoning skill
 -- Index 1 is the initial value
 -- Index 6 is the value for the low skill tier
--- Index 9 is the value for ~level 75, up to 317 skill
--- Index 10 is the value for having 318 or more skill
+-- Index 9 is the value for ~level 75, up to 316 skill
+-- Index 10 is the value for having 317 or more skill
 -- This can be extended for servers who are higher than 75 cap by adding additional values to the "arrays" and new skill tier logic (and Siren)
 local avatarsFavorEffect = {
     [tpz.pet.id.CARBUNCLE] = -- Regen
@@ -68,7 +68,7 @@ local avatarsFavorEffect = {
     },
 }
 
-function applyAvatarsFavorAuraToPet(target, effect) 
+function applyAvatarsFavorAuraToPet(target, effect)
     local petId = target:getPetID()
     if shouldAvatarsFavorBeApplied(petId) then
         local power = avatarsFavorEffect[petId].scaling[effect:getPower()]

@@ -27,9 +27,9 @@ local path =
 }
 
 function onSpawn(npc)
-    npc:initNpcAi()
-    npc:setPos(tpz.path.first(path))
-    onPath(npc)
+    -- npc:initNpcAi()
+    -- npc:setPos(tpz.path.first(path))
+    -- onPath(npc)
 end
 
 function onPath(npc)

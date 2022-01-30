@@ -37,9 +37,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     -- tpz.effect.WEIGHT power value is equal to lead breath as per bg-wiki: http://www.bg-wiki.com/bg/Rudra%27s_Storm
-    if damage > 0 then
-        if not target:hasStatusEffect(tpz.effect.WEIGHT) then
-            target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, 60)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+        if damage > 0 then
+            if not target:hasStatusEffect(tpz.effect.WEIGHT) then
+                target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, 60)
+            end
         end
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.DAGGER, tpHits+extraHits) end

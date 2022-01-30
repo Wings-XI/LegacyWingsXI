@@ -25,6 +25,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.LULLABYRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SLEEP_I
+    end
+
     local params = {}
     params.eco = ECO_BIRD
     params.diff = caster:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR)

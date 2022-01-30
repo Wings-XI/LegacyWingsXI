@@ -347,7 +347,12 @@ void CParty::DelMember(CBattleEntity* PEntity)
         if (PEntity->objtype == TYPE_PC) {
             ((CCharEntity*)PEntity)->DropBattlefieldIfOutside();
         }
-        RemovePartyLeader(PEntity);
+        bool party_exists = RemovePartyLeader(PEntity);
+        if (!party_exists) {
+            // Party object has been cleared, return here so ReloadParty doesn't
+            // get called (guaranteed to crash).
+            return;
+        }
     }
     else
     {
@@ -423,6 +428,9 @@ void CParty::PopMember(CBattleEntity* PEntity)
         if (PEntity == members.at(i))
         {
             members.erase(members.begin() + i);
+            if (PEntity == m_PLeader) {
+                m_PLeader = nullptr;
+            }
         }
     }
     //free memory, party will re reinsatiated when they zone back in
@@ -451,10 +459,11 @@ void CParty::PopMember(CBattleEntity* PEntity)
 *																		*
 ************************************************************************/
 
-void CParty::RemovePartyLeader(CBattleEntity* PEntity)
+bool CParty::RemovePartyLeader(CBattleEntity* PEntity)
 {
     TPZ_DEBUG_BREAK_IF(members.empty());
 
+    bool party_exists = true;
     int ret = Sql_Query(SqlHandle, "SELECT charname FROM accounts_sessions JOIN chars ON accounts_sessions.charid = chars.charid \
                                     JOIN accounts_parties ON accounts_parties.charid = chars.charid WHERE partyid = %u AND NOT partyflag & %d \
                                     ORDER BY timestamp ASC LIMIT 1;", m_PartyID, PARTY_LEADER);
@@ -466,11 +475,13 @@ void CParty::RemovePartyLeader(CBattleEntity* PEntity)
     if (m_PLeader == PEntity)
     {
         DisbandParty();
+        party_exists = false;
     }
     else
     {
         RemoveMember(PEntity);
     }
+    return party_exists;
 }
 
 std::vector<CParty::partyInfo_t> CParty::GetPartyInfo()
@@ -802,13 +813,15 @@ void CParty::ReloadParty()
 
                     // Inject the party leader's trusts into the party list
                     CBattleEntity* PLeader = GetLeader();
-                    if (PLeader != nullptr)
+                    if ((PLeader != nullptr) && (((CCharEntity*)PLeader)->PTrusts.size() > 0))
                     {
                         for (auto PTrust : ((CCharEntity*)PLeader)->PTrusts)
                         {
-                            j++;
-                            // trusts don't persist over zonelines, so we know their zone has be the same as the leader.
-                            PChar->pushPacket(new CPartyMemberUpdatePacket(PTrust, j));
+                            if (PTrust) {
+                                j++;
+                                // trusts don't persist over zonelines, so we know their zone has be the same as the leader.
+                                PChar->pushPacket(new CPartyMemberUpdatePacket(PTrust, j));
+                            }
                         }
                     }
                 }

@@ -25,7 +25,7 @@ function onAdditionalEffect(player, target, damage)
         end
         local params = {}
         params.bonusmab = 0
-        params.includemab = true
+        params.includemab = false
         dmg = addBonusesAbility(player, tpz.magic.ele.LIGHT, target, dmg, params)
         dmg = adjustForTarget(target, dmg, tpz.magic.ele.LIGHT)
         dmg = finalMagicNonSpellAdjustments(player, target, tpz.magic.ele.LIGHT, dmg)

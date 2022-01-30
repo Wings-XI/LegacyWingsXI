@@ -17,7 +17,7 @@ tpz.nyzul_isle_armoury_crates = tpz.nyzul_isle_armoury_crates or {}
 --------------------------------------------------------
 -- Constants for configuring randomness
 --------------------------------------------------------
-local ARMOURY_CRATE_CHANCE = 50 -- chance for a non-NM to drop an Armoury Crate with temp items
+local ARMOURY_CRATE_CHANCE = 5 -- chance for a non-NM to drop an Armoury Crate with temp items
 local numTempItemsInFreeFloorChance = {100, 95, 75, 50, 30, 20, 10, 5} -- chance to see 1, 2, 3... 8, items in a chest on a free floor
 
 --------------------------------------------------------
@@ -339,6 +339,12 @@ tpz.nyzul_isle_armoury_crates.onTrigger = function(player, npc)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, appraisalMappings[nmCrateID].id)
         end
     else
+        local locked = npc:getLocalVar("Nyzul_ArmouryCrateLock")
+        if (locked > 0) then
+            player:PrintToPlayer("Armoury Crates are locked while players are using the Rune Of Transfer.", 0x1F)
+            return
+        end
+
         local item1 = getTempItemFromCrate(npc, 1)
         local item2 = 0
         if (item1 > 0) then item2 = getTempItemFromCrate(npc, 2) end

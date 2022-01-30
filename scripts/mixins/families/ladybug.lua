@@ -10,21 +10,27 @@ g_mixins = g_mixins or {}
 g_mixins.families = g_mixins.families or {}
 
 local function night(mob)
-    mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
-    mob:setMobMod(tpz.mobMod.ROAM_COOL, 10)
-    mob:setMod(tpz.mod.TRIPLE_ATTACK, 0)
-    mob:setMod(tpz.mod.EVA, 0)
-    mob:setMod(tpz.mod.ACC, 0)
-    mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]nightSkillList"))
+    if mob:getLocalVar("Phase") == 0 then
+        mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
+        mob:setMobMod(tpz.mobMod.ROAM_COOL, 10)
+        mob:delMod(tpz.mod.EVA, 15)
+        mob:delMod(tpz.mod.ACC, 15)
+        mob:setMod(tpz.mod.DELAY, -400)
+        mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]nightSkillList"))
+        mob:setLocalVar("Phase", 1)
+    end
 end
 
 local function day(mob)
-    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
-    mob:setMobMod(tpz.mobMod.ROAM_COOL, 0)
-    mob:setMod(tpz.mod.TRIPLE_ATTACK, 20)
-    mob:setMod(tpz.mod.EVA, 15)
-    mob:setMod(tpz.mod.ACC, 15)
-    mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]daySkillList"))
+    if mob:getLocalVar("Phase") == 1 then
+        mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
+        mob:setMobMod(tpz.mobMod.ROAM_COOL, 0)
+        mob:addMod(tpz.mod.EVA, 15)
+        mob:addMod(tpz.mod.ACC, 15)
+        mob:setMod(tpz.mod.DELAY, 0)
+        mob:setMobMod(tpz.mobMod.SKILL_LIST, mob:getLocalVar("[ladybug]daySkillList"))
+        mob:setLocalVar("Phase", 0)
+    end
 end
 
 tpz.mix.ladybug.config = function(mob, params)

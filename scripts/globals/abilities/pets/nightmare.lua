@@ -15,7 +15,12 @@ end
 function onPetAbility(target, pet, skill, summoner)
 
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
-        spell:setMsg(tpz.msg.basic.SKILL_MISS)
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
+        return tpz.effect.SLEEP_I
+    end
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         return tpz.effect.SLEEP_I
     end
 
@@ -23,7 +28,7 @@ function onPetAbility(target, pet, skill, summoner)
 
     local effect = tpz.effect.SLEEP_I
     local resist = applyPlayerResistance(pet,-1,target, dINT, -5, tpz.magic.ele.DARK)
-    
+
     local duration = math.ceil(60 + math.floor(31*math.random()) * resist * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target)) -- wiki: duration variable from 30 to 90. can be thought of random 60-90 with possible half resist making it range 30-90
     if resist >= 0.5 then
         target:delStatusEffectSilent(effect)
