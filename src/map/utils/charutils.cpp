@@ -4097,6 +4097,18 @@ namespace charutils
                         return;
                     }
 
+                                        
+                    if (PMob->m_ExpPenalty > map_config.pl_penalty * 3)
+                    {
+                        exp = std::max<float>(0.0, exp - PMob->m_ExpPenalty - (map_config.pl_penalty * 3));
+
+                        if (exp == 0.0f)
+                        {
+                            // No experience points gained.
+                            PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 21));
+                        }
+                    }
+
                     exp = charutils::AddExpBonus(PMember, exp);
 
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
