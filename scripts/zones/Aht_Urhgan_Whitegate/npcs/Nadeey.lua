@@ -12,10 +12,10 @@ require("scripts/globals/npc_util")
     Custom TOAU_CUSTOM_RING_REACQUISITION logic
     - TOAU_RING_REACQ_STATUS 0   -   Quest not started (or quest complete)
     - TOAU_RING_REACQ_STATUS 1   -   Iniital discussion with Nadeey, waiting on payment
-    - TOAU_RING_REACQ_STATUS 2   -   Payment recieved, waiting for Alex re-run
-    - TOAU_RING_REACQ_STATUS 3   -   Alex Win
+    - TOAU_RING_REACQ_STATUS 2   -   Payment recieved, waiting for Nashmeira's Plea re-run
+    - TOAU_RING_REACQ_STATUS 3   -   Nashmeira's Plea win
     - TOAU_RING_REACQ_STATUS 4   -   Ring reacquisition CS seen, but did not choose a ring
-    - TOAU_RING_REACQ_STATUS 0   -   Was given a ring - conquest tally var gets set
+    - TOAU_RING_REACQ_STATUS 0   -   Was given a ring - 28 day wait var gets set
 ]]
 
 local BALRAHNS_RING = 15807
