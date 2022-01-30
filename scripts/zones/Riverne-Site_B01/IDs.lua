@@ -42,10 +42,17 @@ zones[tpz.zone.RIVERNE_SITE_B01] =
         },
         UNSTABLE_CLUSTER = 16896155,
         BOROKA = 16896131,
+        BAHAMUT_V2 = 16896157,
     },
     npc =
     {
         DISPLACEMENT_OFFSET = 16896183,
+    },
+    Bv2 = 
+    {
+        [1] = {
+            WYRMS = { 16896158, 16896159, 16896160, 16896161 }
+        },
     },
 }
 

@@ -16719,7 +16719,21 @@ INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4109, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4110, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
 
-
+-- Bahamut v2 drops
+INSERT INTO `mob_droplist` VALUES(3223, 1, 1, 1000, 17598, 231); -- Bahamut Staff
+INSERT INTO `mob_droplist` VALUES(3223, 1, 1, 1000, 17597, 769); -- Dragon Staff
+INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 15264, 318); -- Bahamut Mask
+INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 18061, 268); -- Bahamut Zaghnal
+INSERT INTO `mob_droplist` VALUES(3223, 1, 2, 1000, 15599, 414); -- Bahamut Hose
+INSERT INTO `mob_droplist` VALUES(3223, 1, 3, 712, 1704, 1000); -- Kunwu Iron
+INSERT INTO `mob_droplist` VALUES(3223, 1, 4, 678, 1703, 1000); -- Kunwu Ore
+INSERT INTO `mob_droplist` VALUES(3223, 1, 5, 864, 647, 1000); -- Moly Ore
+INSERT INTO `mob_droplist` VALUES(3223, 1, 6, 763, 647, 1000); -- Moly Ore
+INSERT INTO `mob_droplist` VALUES(3223, 1, 7, 576, 1714, 1000); -- Cashmere Cloth
+INSERT INTO `mob_droplist` VALUES(3223, 1, 8, 593, 1713, 1000); -- Cashmere Thread
+INSERT INTO `mob_droplist` VALUES(3223, 1, 9, 746, 1816, 1000); -- Wyrm Horn
+INSERT INTO `mob_droplist` VALUES(3223, 1, 10, 864, 722, 1000); -- Divine Log
+INSERT INTO `mob_droplist` VALUES(3223, 1, 10, 864, 1313, 1000); -- Sirens Hair
 
 --
 -- Indexes for dumped tables

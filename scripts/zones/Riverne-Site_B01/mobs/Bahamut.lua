@@ -7,15 +7,25 @@ require("scripts/globals/quests")
 require("scripts/globals/status")
 
 
-function onMobInitialise(mob)
-    mob:setMobMod(tpz.mobMod.HP_STANDBACK, -1)
+function onMobInitialise(mob)    
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 20)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50)
+    mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 10)
+    mob:addMod(tpz.mod.REGAIN, 200)
     mob:addStatusEffect(tpz.effect.PHALANX, 35, 0, 180)
     mob:addStatusEffect(tpz.effect.STONESKIN, 350, 0, 300)
     mob:addStatusEffect(tpz.effect.PROTECT, 175, 0, 1800)
     mob:addStatusEffect(tpz.effect.SHELL, 24, 0, 1800)
+    mob:setMod(tpz.mod.ATT, 500)
+end
+
+function onMobEngaged(mob, target)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 end
 
 function onMobFight(mob, target)
