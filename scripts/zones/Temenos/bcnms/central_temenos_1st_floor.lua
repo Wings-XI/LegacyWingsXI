@@ -24,7 +24,6 @@ end
 function onBattlefieldEnter(player, battlefield)
     player:delKeyItem(tpz.ki.COSMOCLEANSE)
     player:delKeyItem(tpz.ki.WHITE_CARD)
-    player:setCharVar("Cosmo_Cleanse_TIME", os.time())
 end
 
 function onBattlefieldDestroy(battlefield)
