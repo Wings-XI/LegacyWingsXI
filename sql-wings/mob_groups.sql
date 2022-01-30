@@ -912,7 +912,7 @@ INSERT INTO `mob_groups` VALUES(14, 708, 29, 'Chemical_Cook_Chemachiq', 0, 128, 
 INSERT INTO `mob_groups` VALUES(15, 503, 29, 'Book_Browser_Bokabraq', 0, 128, 0, 0, 0, 55, 55, 0);
 INSERT INTO `mob_groups` VALUES(16, 4102, 29, 'Unstable_Cluster', 0, 128, 2523, 10000, 0, 56, 57, 0);
 INSERT INTO `mob_groups` VALUES(17, 325, 29, 'Bahamut', 0, 128, 0, 26000, 20000, 83, 83, 0);
-INSERT INTO `mob_groups` VALUES(28, 325, 29, 'Bahamutv2', 0, 128, 3223, 34000, 20000, 92, 92, 0);
+INSERT INTO `mob_groups` VALUES(28, 325, 29, 'Bahamutv2', 0, 128, 3230, 34000, 20000, 92, 92, 0);
 INSERT INTO `mob_groups` VALUES(18, 3070, 29, 'Ouryu', 0, 128, 0, 6000, 15000, 88, 88, 0);
 INSERT INTO `mob_groups` VALUES(19, 3916, 29, 'Tiamat', 0, 128, 0, 6500, 15000, 88, 88, 0);
 INSERT INTO `mob_groups` VALUES(20, 2156, 29, 'Jormungand', 0, 128, 0, 6500, 15000, 88, 88, 0);
