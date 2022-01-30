@@ -1282,9 +1282,9 @@ namespace battleutils
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
                     uint8 multiplier = (uint8)(3 + (5.5f * (power - 1)));
-                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100);
-                    uint16 sambaMin = (uint16)ceil((delay + 100.0f) / 1000.0f * sambaMax);
-                    int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1)); //+1
+                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100.0f);
+                    uint16 sambaMin = (uint16)ceil(sambaMax / 2.0f);
+                    int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1));
 
                     // Greater level penalty
                     int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel());
@@ -1322,9 +1322,9 @@ namespace battleutils
                 }
                 else if (daze == EFFECT_ASPIR_DAZE)
                 {
-                    uint8 multiplier = 1 + (2 * (power - 1));
-                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100);
-                    uint16 sambaMin = (uint16)ceil((delay + 100.0f) / 2000.0f * sambaMax);
+                    uint8 multiplier = 2 + power - 1;
+                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100.0f);
+                    uint16 sambaMin = (uint16)ceil(sambaMax / 2.0f);
                     int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1));
 
                     if (finaldamage <= 1)
