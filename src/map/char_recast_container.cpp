@@ -39,7 +39,7 @@ CCharRecastContainer::CCharRecastContainer(CCharEntity* PChar) : CRecastContaine
 
 /************************************************************************
 *                                                                       *
-*  Добавляем запись в контейнер                                         *
+*  Add an entry to the container                                        *
 *                                                                       *
 ************************************************************************/
 
@@ -56,7 +56,7 @@ void CCharRecastContainer::Add(RECASTTYPE type, uint16 id, uint32 duration, uint
 
 /************************************************************************
 *                                                                       *
-*  Удаляем все элементы указанного типа                                 *
+*  Remove all elements of the specified type                            *
 *                                                                       *
 ************************************************************************/
 
@@ -71,7 +71,7 @@ void CCharRecastContainer::Del(RECASTTYPE type)
 
 /************************************************************************
 *                                                                       *
-*  Удаляем указанный элемент указанного типа                            *
+*  Removed specified element of the specified type                      *
 *                                                                       *
 ************************************************************************/
 

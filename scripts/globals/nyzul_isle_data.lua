@@ -111,13 +111,6 @@ tpz.nyzul_isle_data.mobsByType =
         Friars_Lantern = {17092661, 17092662, 17092665, 17092666},
         Sweeping_Cluster = {17092663, 17092664},
     },
-    ARCANA_1 = {
-        Killing_Weapon = {17092655, 17092656},
-        Ominous_Weapon = {17092657, 17092658},
-        Magic_Flagon = {17092659, 17092660},
-        Friars_Lantern = {17092661, 17092662, 17092665, 17092666},
-        Sweeping_Cluster = {17092663, 17092664},
-    },
     UNDEAD = {
         Garm = {17092667, 17092668, 17092669},
         Tainted_Flesh = {17092670, 17092671, 17092672},

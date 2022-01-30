@@ -95,10 +95,10 @@ enum LATENT
 
 /************************************************************************
 *																		*
-*  Нерешенные задачи:													*
+*  Unsolved problems:													*
 *																		*
-*  - сохранение ID сущности, добавившей эффект							*
-*  - обновление эффекта (например перезапись protect 1 на protect 2)    *
+*  - Storing the ID of the entity that added the effect					*
+*  - Updating effect (Ex: Overwrite protect 1 with protect 2)           *
 *																		*
 ************************************************************************/
 

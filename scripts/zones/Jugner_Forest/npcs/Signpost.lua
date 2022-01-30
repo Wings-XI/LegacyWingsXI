@@ -38,8 +38,6 @@ function onTrigger(player, npc)
         else
             player:startEvent(4)
         end
-    else
-        print("Unknown Signpost")
     end
 end
 

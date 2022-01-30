@@ -41,8 +41,6 @@ function onTrigger(player, npc)
         end
     elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
         player:startEvent(18)
-    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.LIGHT_IN_THE_DARKNESS) == QUEST_ACCEPTED) then
-        player:startEvent(18)
     elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.BURDEN_OF_SUSPICION) == QUEST_ACCEPTED) then
         if (player:getCharVar("BurdenOfSuspicion") == 1) then
             player:startEvent(32)

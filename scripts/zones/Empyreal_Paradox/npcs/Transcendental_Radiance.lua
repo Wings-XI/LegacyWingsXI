@@ -26,7 +26,8 @@ function onTrigger(player, npc)
     elseif player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
         player:getCharVar('ApocalypseNigh') == 3 then
         player:startEvent(4)
-    elseif (EventTriggerBCNM(player, npc)) then
+    else
+        EventTriggerBCNM(player, npc)
     end
 end
 

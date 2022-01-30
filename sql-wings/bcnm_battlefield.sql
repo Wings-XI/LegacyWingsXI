@@ -1304,6 +1304,8 @@ INSERT INTO `bcnm_battlefield` VALUES(1056, 2, 16924675, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 2, 16924676, 2);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 3, 16924677, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 3, 16924678, 2);
+INSERT INTO `bcnm_battlefield` VALUES(1057, 1, 16924679, 3); -- Apoc Nigh Kamlanaut
+INSERT INTO `bcnm_battlefield` VALUES(1057, 1, 16924680, 3); -- Apoc Nigh Ealdnarche
 INSERT INTO `bcnm_battlefield` VALUES(1090, 1, 17010719, 3); -- puppetmaster blues
 INSERT INTO `bcnm_battlefield` VALUES(1090, 2, 17010720, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1090, 3, 17010721, 3);
