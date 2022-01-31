@@ -25,20 +25,20 @@ end
 
 -- lockValue >0 locks, 0 unlocks
 local function updateLobbyNpcLocks(instance, lockValue)
-    local vendingBox = GetNPCByID(VENDING_BOX, instance)
-    vendingBox:setLocalVar("Nyzul_VendingBoxLock", lockValue)
     local startingRuneOfTransfer = GetNPCByID(STARTING_RUNE_OF_TRANSFER_ID, instance)
     startingRuneOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+    local vendingBox = GetNPCByID(VENDING_BOX, instance)
+    vendingBox:setLocalVar("Nyzul_VendingBoxLock", lockValue)
 end
 
 local function updateFloorNpcLocks(instance, lockValue, runeOfTransfer)
+    runeOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+
     -- dont have to lock NM crates - they dont create events
     for _,armouryCrateID in pairs(tpz.nyzul_isle_data.npcLists.Armoury_Crates) do
         local armouryCrate = GetNPCByID(armouryCrateID, instance)
         armouryCrate:setLocalVar("Nyzul_ArmouryCrateLock", lockValue)
     end
-
-    runeOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
 end
 
 function onTrigger(player, npc)
