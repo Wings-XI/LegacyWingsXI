@@ -500,9 +500,7 @@ INSERT INTO `mob_family_mods` VALUES(58, 63, 20, 0);
 INSERT INTO `mob_family_mods` VALUES(57, 63, 20, 0);
 INSERT INTO `mob_family_mods` VALUES(208, 63, 20, 0);
 INSERT INTO `mob_family_mods` VALUES(2, 63, 20, 0);
-INSERT INTO `mob_family_mods` VALUES(180, 63, 20, 0);
 INSERT INTO `mob_family_mods` VALUES(245, 63, 20, 0);
-INSERT INTO `mob_family_mods` VALUES(59, 63, 20, 0);
 INSERT INTO `mob_family_mods` VALUES(213, 20, 128, 0);
 INSERT INTO `mob_family_mods` VALUES(32, 56, -1, 1);
 INSERT INTO `mob_family_mods` VALUES(33, 56, -1, 1);
@@ -576,6 +574,23 @@ INSERT INTO `mob_family_mods` VALUES(240, 63, -20, 0);
 INSERT INTO `mob_family_mods` VALUES(240, 68, -10, 0);
 INSERT INTO `mob_family_mods` VALUES(57, 62, 10, 0);
 INSERT INTO `mob_family_mods` VALUES(58, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(26, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(26, 63, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(357, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(357, 63, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(188, 68, 22, 0);
+INSERT INTO `mob_family_mods` VALUES(253, 63, 12, 0);
+INSERT INTO `mob_family_mods` VALUES(176, 68, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(177, 68, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(285, 68, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(233, 63, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(74, 63, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(64, 62, -50, 0);
+INSERT INTO `mob_family_mods` VALUES(64, 63, -20, 0);
+INSERT INTO `mob_family_mods` VALUES(64, 68, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(180, 68, -10, 0);
+INSERT INTO `mob_family_mods` VALUES(371, 68, -10, 0);
+INSERT INTO `mob_family_mods` VALUES(59, 68, -10, 0);
 
 --
 -- Indexes for dumped tables

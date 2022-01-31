@@ -172,8 +172,8 @@ INSERT INTO `mob_family_system` VALUES(103, 'Elemental-Ice', 11, 'Elemental', 0,
 INSERT INTO `mob_family_system` VALUES(104, 'Elemental-Light', 11, 'Elemental', 0, 40, 100, 120, 4, 3, 4, 4, 2, 3, 3, 3, 3, 3, 3, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 0.05, 1.5, 7, 32, 0);
 INSERT INTO `mob_family_system` VALUES(105, 'Elemental-Lightning', 11, 'Elemental', 0, 40, 100, 120, 4, 3, 4, 4, 2, 3, 3, 3, 3, 3, 3, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1.5, 0.05, 0.05, 1, 1, 5, 32, 0);
 INSERT INTO `mob_family_system` VALUES(106, 'Elemental-Water', 11, 'Elemental', 0, 40, 100, 120, 4, 3, 4, 4, 2, 3, 3, 3, 3, 3, 3, 0.25, 0.25, 0.25, 0.25, 0.05, 1, 1, 1, 1.5, 0.05, 1, 1, 6, 32, 0);
-INSERT INTO `mob_family_system` VALUES(107, 'Eruca', 20, 'Vermin', 1, 40, 91, 120, 1, 3, 4, 3, 3, 6, 5, 3, 5, 3, 3, 1, 1, 1, 1, 0.85, 1.15, 1.15, 1, 1.15, 1.3, 1, 1.5, 1, 258, 1);
-INSERT INTO `mob_family_system` VALUES(108, 'Eruca', 20, 'Vermin', 1, 40, 91, 120, 1, 3, 4, 3, 3, 6, 5, 3, 5, 3, 3, 0, 1, 1, 0, 0.85, 1.15, 1.15, 1, 1.15, 1.3, 1, 1.5, 1, 258, 1);
+INSERT INTO `mob_family_system` VALUES(107, 'Eruca', 20, 'Vermin', 1, 40, 91, 120, 1, 3, 4, 3, 3, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.85, 1.15, 1.15, 1, 1.15, 1.3, 1, 1.5, 1, 258, 1);
+INSERT INTO `mob_family_system` VALUES(108, 'Eruca', 20, 'Vermin', 1, 40, 91, 120, 1, 3, 4, 3, 3, 6, 5, 3, 3, 3, 3, 0, 1, 1, 0, 0.85, 1.15, 1.15, 1, 1.15, 1.3, 1, 1.5, 1, 258, 1);
 INSERT INTO `mob_family_system` VALUES(109, 'Euvhi', 15, 'Luminian', 0, 40, 100, 140, 3, 3, 4, 4, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.25, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);
 INSERT INTO `mob_family_system` VALUES(110, 'EvilWeapon', 3, 'Arcana', 0, 40, 105, 120, 3, 3, 5, 4, 3, 3, 4, 3, 5, 3, 3, 1, 1, 1, 1, 1.5, 1, 1.3, 1.3, 1.3, 1.3, 1.5, 1, 3, 34, 0);
 INSERT INTO `mob_family_system` VALUES(112, 'Flan', 1, 'Amorph', 1, 40, 70, 140, 5, 4, 4, 4, 3, 5, 3, 3, 3, 3, 3, 0.875, 1, 0.75, 0.75, 1.15, 0.85, 0.85, 0.85, 1.15, 0.6, 1.15, 0.7, 6, 129, 0);
