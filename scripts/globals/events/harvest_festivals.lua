@@ -13,12 +13,13 @@ function isHalloweenEnabled()
     if (month == 10 and day >= 20 or month == 11 and day == 1 or HALLOWEEN_YEAR_ROUND ~= 0) then -- According to wiki Harvest Fest is Oct 20 - Nov 1.
         if (HALLOWEEN_2005 == 1) then
             option = 1
-        elseif (HALLOWEEN_2008 == 1) then
-            option = 2
-        elseif (HALLOWEEN_2009 == 1) then
-            option = 3
-        elseif (HALLOWEEN_2010 == 1) then
-            option = 4
+        -- Commented out additional years until they are developed
+        -- elseif (HALLOWEEN_2008 == 1) then
+        --     option = 2
+        -- elseif (HALLOWEEN_2009 == 1) then
+        --     option = 3
+        -- elseif (HALLOWEEN_2010 == 1) then
+        --     option = 4
         end
     end
 
@@ -149,9 +150,9 @@ function onHalloweenTrade(player, trade, npc)
                     harvestFestTreats = player:getCharVar(varName) --  this is the second list
                     itemInList = itemInList - 32
                 end
-                
+
                 if (itemReward ~= 0 and player:getFreeSlotsCount() >= 1 and math.random(1, 3) < 2) then -- Math.random added so you have 33% chance on getting item
-                    
+
                     player:messageSpecial(ID.text.THANK_YOU_TREAT)
                     player:addItem(itemReward)
                     player:messageSpecial(ID.text.ITEM_OBTAINED, itemReward)

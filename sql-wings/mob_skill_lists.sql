@@ -3383,7 +3383,14 @@ INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 475);
 INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 476);
 INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 477);
 INSERT INTO `mob_skill_lists` VALUES('Ghost', 5018, 1339);
-
+-- Apoc Nigh
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1143,829); -- Great Wheel
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1143,830); -- Light Blade
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,985); -- Stellar Burst
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,986); -- Vortex
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,988); -- Warp In (Works the same as Ealdnarche's)
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,989); -- Warp Out (Works the same as Ealdnarche's)
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,1006); -- Omega Javelin
 
 --
 -- Indexes for dumped tables

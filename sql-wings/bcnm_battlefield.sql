@@ -1219,6 +1219,23 @@ INSERT INTO `bcnm_battlefield` VALUES(865, 3, 16871472, 0);
 INSERT INTO `bcnm_battlefield` VALUES(865, 3, 16871473, 0);
 INSERT INTO `bcnm_battlefield` VALUES(865, 3, 16871474, 0);
 INSERT INTO `bcnm_battlefield` VALUES(896, 1, 16896156, 3);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896157, 3);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896158, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896159, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896160, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896161, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896162, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896163, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896164, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896165, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896166, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896167, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896168, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896169, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896170, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896171, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896172, 0);
+INSERT INTO `bcnm_battlefield` VALUES(897, 1, 16896173, 0);
 INSERT INTO `bcnm_battlefield` VALUES(960, 1, 16904193, 3);
 INSERT INTO `bcnm_battlefield` VALUES(960, 1, 16904194, 3);
 INSERT INTO `bcnm_battlefield` VALUES(960, 1, 16904195, 3);
@@ -1304,6 +1321,8 @@ INSERT INTO `bcnm_battlefield` VALUES(1056, 2, 16924675, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 2, 16924676, 2);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 3, 16924677, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1056, 3, 16924678, 2);
+INSERT INTO `bcnm_battlefield` VALUES(1057, 1, 16924679, 3); -- Apoc Nigh Kamlanaut
+INSERT INTO `bcnm_battlefield` VALUES(1057, 1, 16924680, 3); -- Apoc Nigh Ealdnarche
 INSERT INTO `bcnm_battlefield` VALUES(1090, 1, 17010719, 3); -- puppetmaster blues
 INSERT INTO `bcnm_battlefield` VALUES(1090, 2, 17010720, 3);
 INSERT INTO `bcnm_battlefield` VALUES(1090, 3, 17010721, 3);

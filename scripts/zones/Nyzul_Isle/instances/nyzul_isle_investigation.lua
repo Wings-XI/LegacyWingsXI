@@ -72,10 +72,10 @@ function onInstanceComplete(instance)
     local startingFloor = instance:getLocalVar("Nyzul_StartingFloor")
     local endingFloor = instance:getStage()
     local beatFloor100 = instance:getLocalVar("Nyzul_BeatFloor100")
-    local tokenPenlty = instance:getLocalVar("Nyzul_TokenPenalty")
+    local tokenPenalty = instance:getLocalVar("Nyzul_TokenPenalty")
     local numberOfPlayers = instance:getLocalVar("Nyzul_NumberOfPlayers")
-    printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
-    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenlty, numberOfPlayers)
+    --printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
+    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenalty, numberOfPlayers)
 
     for _,char in pairs(chars) do
         -- save runic disc progress

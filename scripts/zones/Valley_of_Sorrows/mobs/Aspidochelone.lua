@@ -55,7 +55,6 @@ function onMobSpawn(mob)
         local damageTaken = mob:getLocalVar("DamageTaken")
         local waitTime = mob:getLocalVar("waitTime")
         damageTaken = damageTaken + amount
-        print(damageTaken)
         if damageTaken > 2000 then
             mob:setLocalVar("DamageTaken", 0)
             if mob:AnimationSub() == 1 and os.time() > waitTime then
@@ -73,7 +72,6 @@ end
 
 function onMobFight(mob, target)
     local changeHP = mob:getLocalVar("changeHP")
-    -- print(changeHP)
     local waitTime = mob:getLocalVar("waitTime")
 
     if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then

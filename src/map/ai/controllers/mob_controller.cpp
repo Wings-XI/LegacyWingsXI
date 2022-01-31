@@ -955,6 +955,11 @@ void CMobController::DoRoamTick(time_point tick)
                     else
                     {
                         FollowRoamPath();
+                        
+                        if (PMob->m_ExpPenalty > 0)
+                        {
+                            PMob->m_ExpPenalty = 0;
+                        }
                     }
                 }
                 else

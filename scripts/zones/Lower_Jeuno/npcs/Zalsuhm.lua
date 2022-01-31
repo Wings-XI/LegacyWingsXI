@@ -43,11 +43,11 @@ function onTrade(player, npc, trade)
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()
                 local requiredWsPoints = getRequiredWsPoints(nyzulFloorProgress)
 
-                if wsPoints <= (requiredWsPoints / 4) then
+                if wsPoints <= (requiredWsPoints / 3) then
                     player:startEvent(10091)
-                elseif wsPoints <= (requiredWsPoints / 2) then
+                elseif wsPoints <= ((requiredWsPoints *2) / 3) then
                     player:startEvent(10092)
-                elseif wsPoints <= ((requiredWsPoints *3) / 4) then
+                elseif wsPoints < requiredWsPoints then
                     player:startEvent(10093)
                 elseif wsPoints >= requiredWsPoints then
                     player:startEvent(10088, i)

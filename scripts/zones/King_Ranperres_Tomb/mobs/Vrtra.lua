@@ -48,19 +48,23 @@ function onMobFight(mob, target)
         mob:useMobAbility(710)
         mob:setLocalVar("twohourTime", fifteenBlock + math.random(4, 6))
     elseif fifteenBlock > spawnTime then
-        local mobId = mob:getID()
+        mob:entityAnimationPacket("casm")
+        mob:timer(3000, function(mob)
+            local mobId = mob:getID()
+            for i, offset in ipairs(offsets) do
+                local pet = GetMobByID(mobId + offset)
 
-        for i, offset in ipairs(offsets) do
-            local pet = GetMobByID(mobId + offset)
+                if not pet:isSpawned() then
+                        mob:entityAnimationPacket("shsm")
+                        pet:spawn(60)
+                        local pos = mob:getPos()
+                        pet:setPos(pos.x, pos.y, pos.z)
+                        pet:updateEnmity(mob:getTarget())   
 
-            if not pet:isSpawned() then
-                pet:spawn(60)
-                local pos = mob:getPos()
-                pet:setPos(pos.x, pos.y, pos.z)
-                pet:updateEnmity(target)
-                break
+                    break
+                end
             end
-        end
+        end)
         mob:setLocalVar("spawnTime", fifteenBlock + 4)
     end
 end

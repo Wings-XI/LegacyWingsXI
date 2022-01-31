@@ -211,7 +211,7 @@ end
 -- TP_DMG_BONUS and TP=100, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 300
 -- TP_DMG_BONUS and TP=200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 600
 
-function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, accmod)
+function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, accMod)
     returninfo = {}
     --get all the stuff we need
     local resist = 1
@@ -253,7 +253,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     end
 
     if (accMod and accMod > 0) then
-        totalAccBonus = totalAccBonus + accmod
+        totalAccBonus = totalAccBonus + accMod
     end
 
     resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), totalAccBonus, element)

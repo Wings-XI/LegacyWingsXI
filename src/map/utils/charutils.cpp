@@ -4097,6 +4097,18 @@ namespace charutils
                         return;
                     }
 
+                                        
+                    if (PMob->m_ExpPenalty > map_config.pl_penalty * 3)
+                    {
+                        exp = std::max<float>(0.0, exp - PMob->m_ExpPenalty - (map_config.pl_penalty * 3));
+
+                        if (exp == 0.0f)
+                        {
+                            // No experience points gained.
+                            PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 21));
+                        }
+                    }
+
                     exp = charutils::AddExpBonus(PMember, exp);
 
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
@@ -4684,10 +4696,8 @@ namespace charutils
             afterMW2 += 4;
         if (HasCompletedMission(PChar, 3, 28))
             afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 30))
-            afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 31))
-            afterMW2 += 12;
+        if (HasCompletedMission(PChar, 3, 30)) // Awakening (Set to 16 as the Last Verse cannot be completed.)
+            afterMW2 += 16;
 
 
 
@@ -4771,10 +4781,8 @@ namespace charutils
             afterMW3 += 2;
         if (HasCompletedMission(PChar, 6, 828)) //WHEN_ANGELS_FALL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 840)) //DAWN
-            afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 850)) //THE_LAST_VERSE
-            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 840)) //DAWN (Set to 6 as the Last Verse cannot be completed.)
+            afterMW3 += 6;
 
         uint8 AU = 0;
         while (AU < 48)
