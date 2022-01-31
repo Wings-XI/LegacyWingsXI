@@ -567,6 +567,15 @@ INSERT INTO `mob_family_mods` VALUES(195, 31, 5000, 1);
 INSERT INTO `mob_family_mods` VALUES(195, 51, 5, 1);
 INSERT INTO `mob_family_mods` VALUES(195, 36, 60, 1);
 INSERT INTO `mob_family_mods` VALUES(63, 1240, 1000, 0);
+INSERT INTO `mob_family_mods` VALUES(72, 68, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(208, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(242, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(179, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(217, 62, 20, 0);
+INSERT INTO `mob_family_mods` VALUES(240, 63, -20, 0);
+INSERT INTO `mob_family_mods` VALUES(240, 68, -10, 0);
+INSERT INTO `mob_family_mods` VALUES(57, 62, 10, 0);
+INSERT INTO `mob_family_mods` VALUES(58, 62, 10, 0);
 
 --
 -- Indexes for dumped tables
