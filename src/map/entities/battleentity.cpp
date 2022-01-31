@@ -1865,6 +1865,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
     if (this->objtype == TYPE_MOB)
     {
+        CMobEntity* PMob = (CMobEntity*)this;
+        if (charutils::CheckMob(PTarget->m_mlvl, PMob->m_mlvl) == EMobDifficulty::TooWeak)
+        {
+            PMob->m_ExpPenalty = ((PMob->m_ExpPenalty + map_config.pl_penalty) < UINT16_MAX-1) ? PMob->m_ExpPenalty + map_config.pl_penalty : UINT16_MAX-1;
+        }
+
         auto PCoverTarget = battleutils::getCoverTarget(PTarget, this);
         if (PCoverTarget)
         {
