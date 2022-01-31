@@ -162,6 +162,8 @@ function floorObjectiveComplete(instance)
             player:messageSpecial(ID.text.OBJECTIVE_COMPLETE, instance:getStage())
         end
     end
+
+    instance:setStage(instance:getStage()+1)
 end
 
 function evaluateEliminateAll(instance)

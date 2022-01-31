@@ -113,6 +113,7 @@ function onEventFinish(player, csid, option, npc)
             player:delAssaultPoint(cost, NYZUL_ISLE_ASSAULT_POINT) -- Remove from NYZUL_ISLE_ASSAULT_POINT
             instance:setLocalVar("Nyzul_StartingFloor", floorSelected)
             instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
+            instance:setStage(floorSelected)
             bubbleWarpThePlayers(player, instance, floorSelected)
             local chars = instance:getChars()
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
@@ -144,7 +145,8 @@ function onEventFinish(player, csid, option, npc)
                 instance:setLocalVar("Nyzul_DeterminePathos", 0)
             end
 
-            bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
+            -- stage is set on start or on floor complete
+            bubbleWarpThePlayers(player, instance, instance:getStage())
             updateFloorNpcLocks(instance, 0, npc)
         end
     elseif (csid == 200) then
@@ -171,14 +173,14 @@ function bubbleWarpThePlayers(player, instance, stage)
     -- locking mechanism to prevent mutiple players from trying to go up a floor all at once
     if (instance:getLocalVar("Nyzul_TransferInitiated") == 0) then    
         instance:setLocalVar("Nyzul_TransferInitiated", player:getID())
-        instance:setStage(stage)
+
         -- select the floor we are headed to
         selectNextFloor(stage, instance)
         player:startEvent(95)
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
-                char:setLocalVar("Nyzul_BubbleWarQuit", os.time() + 2)
-                while(char:getEventID() ~= -1 and os.time() <= char:getLocalVar("Nyzul_BubbleWarQuit")) do
+                char:setLocalVar("Nyzul_BubbleWarpQuit", os.time() + 2)
+                while(char:getEventID() ~= -1 and os.time() <= char:getLocalVar("Nyzul_BubbleWarpQuit")) do
                     char:release()
                 end
                 char:startEvent(95)
