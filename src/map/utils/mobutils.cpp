@@ -411,16 +411,16 @@ void CalculateStats(CMobEntity * PMob)
     PMob->stats.MND = fMND + mMND + sMND;
     PMob->stats.CHR = fCHR + mCHR + sCHR;
 
-    if(isNM)
-    {
-        PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
-        PMob->addModifier(Mod::DEFP, 20);
-    }
+    // if(isNM)
+    // {
+    //     PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
+    //     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
+    //     PMob->addModifier(Mod::DEFP, 20);
+    // }
 
     // special case, give spell list to my pet
     if(PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
