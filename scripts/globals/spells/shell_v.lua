@@ -7,6 +7,12 @@ require("scripts/globals/status")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    if caster:isMob() == true and target:hasStatusEffect(tpz.effect.SHELL) then
+        return 1
+    else
+        return 0
+    end
+
     return 0
 end
 

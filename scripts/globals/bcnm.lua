@@ -87,8 +87,8 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_B01] =
     {
-     -- { 0,  896,    0},   -- Storms of Fate (Quest)
-     -- { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
+      { 0,  896,    0},   -- Storms of Fate (Quest)
+      { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
     },
 
     [tpz.zone.RIVERNE_SITE_A01] =

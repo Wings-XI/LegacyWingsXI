@@ -11,6 +11,12 @@ require("scripts/globals/utils")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    if caster:isMob() == true and caster:hasStatusEffect(tpz.effect.STONESKIN) then
+        return 1
+    else
+        return 0
+    end
+
     return 0
 end
 
