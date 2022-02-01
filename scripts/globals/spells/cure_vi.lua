@@ -102,8 +102,6 @@ function onSpellCast(caster, target, spell)
             dmg = adjustForTarget(target, dmg, spell:getElement())
             dmg = finalMagicAdjustments(caster, target, spell, dmg)
             final = dmg
-            target:takeDamage(final, caster, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
-            target:updateEnmityFromDamage(caster, final)
         elseif (caster:getObjType() == tpz.objType.PC) then
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
         else
