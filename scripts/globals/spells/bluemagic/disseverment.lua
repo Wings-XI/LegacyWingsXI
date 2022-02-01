@@ -37,7 +37,7 @@ function onSpellCast(caster, target, spell)
     params.att0 = 0.9
     params.att150 = 0.9
     params.att300 = 0.9
-    params.azuretp = 0.9
+    params.azureatt = 0.9
     params.str_wsc = 0.2
     params.dex_wsc = 0.2
     params.vit_wsc = 0.0
