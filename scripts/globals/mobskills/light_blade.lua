@@ -19,6 +19,12 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 7
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.RANGED, tpz.damageType.SLASHING, info.hitslanded)
+    if mob:getID() == 16924679 then -- Apoc Nigh Damage Change
+        -- Adding in a clamp to set minimum damage. This is due to the way the skill
+        -- is currently setup as at times it will do little to no damage.
+        -- https://www.youtube.com/watch?v=mG-qyhGOqNY&ab_channel=Smackdownbob
+        dmg = utils.clamp(dmg, 450, 1200)
+    end
     -- TODO: There's no MOBPARAM_RANGED, but MOBPARAM doesn't appear to do anything?
     -- Guessing ~40-100% damage based on range (20/50+).
     -- TODO: Find better data?

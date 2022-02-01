@@ -1199,10 +1199,19 @@ namespace battleutils
         {
             // Generic drain for anyone able to do melee damage to a dazed target
             // TODO: ignore dazes from dancers outside party
-            int16 delay = PAttacker->GetWeaponDelay(true) * 60 / 1000;
-
             if (PAttacker->PMaster == nullptr || PAttacker->objtype == TYPE_TRUST)
             {
+                int16 delay = PAttacker->GetWeaponDelay(false);
+                auto sub_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_SUB]);
+
+                // Cut delay in half if dual wielding or using h2h
+                if (sub_weapon && sub_weapon->getDmgType() > DAMAGE_NONE && sub_weapon->getDmgType() < DAMAGE_H2H || weapon->getSkillType() == SKILL_HAND_TO_HAND)
+                {
+                    delay /= 2;
+                }
+
+                delay = floor(delay * 60.0f / 1000.0f);
+
                 // TODO: All of this is very ugly, but is fairly fragile, be careful refactoring!
                 EFFECT daze = EFFECT_NONE;
                 uint16 power = 0;
@@ -1272,24 +1281,29 @@ namespace battleutils
 
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
-                    uint16 multiplier = (uint16)(3 + (5.5f * (power - 1)));
-                    int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
+                    uint8 multiplier = (uint8)(3 + (5.5f * (power - 1)));
+                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100.0f);
+                    uint16 sambaMin = (uint16)ceil(sambaMax / 2.0f);
+                    int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1));
 
-                    // vary damage based on lvl diff
-                    int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel()) / 2;
-
-                    if (lvlDiff < -5) {
-                        lvlDiff = -5;
+                    // Greater level penalty
+                    int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel());
+                    if (lvlDiff > 0)
+                    {
+                        if (lvlDiff > 5)
+                        {
+                            lvlDiff = 5;
+                        }
+                        Samba -= ceil(Samba * lvlDiff * .04); // 4% penalty per level
                     }
 
-                    Samba -= lvlDiff;
-
-                    if (Samba > (finaldamage / 2)) {
-                        Samba = finaldamage / 2;
-                    }
-
-                    if (finaldamage <= 2) {
+                    if (finaldamage <= 1)
+                    {
                         Samba = 0;
+                    }
+                    else if (Samba > (finaldamage / 2))
+                    {
+                        Samba = finaldamage / 2;
                     }
 
                     if (Samba < 0)
@@ -1308,14 +1322,24 @@ namespace battleutils
                 }
                 else if (daze == EFFECT_ASPIR_DAZE)
                 {
-                    uint16 multiplier = 1 + (2 * power - 1);
-                    int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
+                    uint8 multiplier = 2 + power - 1;
+                    uint16 sambaMax = (uint16)floor(delay * multiplier / 100.0f);
+                    uint16 sambaMin = (uint16)ceil(sambaMax / 2.0f);
+                    int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1));
 
-                    if (Samba >= finaldamage / 4) { Samba = finaldamage / 4; }
+                    if (finaldamage <= 1)
+                    {
+                        Samba = 0;
+                    }
+                    else if (Samba > (finaldamage / 4))
+                    {
+                        Samba = finaldamage / 4;
+                    }
 
-                    if (finaldamage <= 2) { Samba = 0; }
-
-                    if (Samba < 0) { Samba = 0; }
+                    if (Samba < 0)
+                    {
+                        Samba = 0;
+                    }
 
                     Action->additionalEffect = SUBEFFECT_MP_DRAIN;
                     Action->addEffectMessage = 162;

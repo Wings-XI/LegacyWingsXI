@@ -56,6 +56,9 @@ function onInstanceComplete(instance)
         if v:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and v:getCharVar("AhtUrganStatus") == 1 then
             v:setCharVar("AhtUrganStatus", 2)
         end
+        if (v:getCharVar("TOAU_RING_REACQ_STATUS") == 2) then
+            v:setCharVar("TOAU_RING_REACQ_STATUS", 3)
+        end
 
         v:setPos(0, 0, 0, 0, 72)
     end

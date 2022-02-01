@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 2
     local accmod = 1
     local dmgmod = 1
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.FIRE, dmgmod, TP_DMG_VARIES, 1, 2, 3)
+    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.FIRE, dmgmod, TP_DMG_VARIES, 1, 2)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, info.hitslanded)
     local typeEffect = tpz.effect.PLAGUE
 

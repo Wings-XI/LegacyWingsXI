@@ -1059,45 +1059,60 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
         CMobEntity* PMob = (CMobEntity*)it->second;
 
         if (PMob->PBattlefield && PMob->PBattlefield->CanCleanup())
-        {
             continue;
+
+        if (PMob->PRecastContainer)
+            PMob->PRecastContainer->Check();
+
+        if (PMob->StatusEffectContainer)
+        {
+            PMob->StatusEffectContainer->CheckEffectsExpiry(tick);
+            if (tick > m_EffectCheckTime)
+            {
+                PMob->StatusEffectContainer->TickRegen(tick);
+                PMob->StatusEffectContainer->TickEffects(tick);
+            }
         }
 
-        PMob->PRecastContainer->Check();
-        PMob->StatusEffectContainer->CheckEffectsExpiry(tick);
-        if(tick > m_EffectCheckTime)
-        {
-            PMob->StatusEffectContainer->TickRegen(tick);
-            PMob->StatusEffectContainer->TickEffects(tick);
-        }
-        PMob->PAI->Tick(tick);
+        if (PMob->PAI)
+            PMob->PAI->Tick(tick);
     }
 
     for (EntityList_t::const_iterator it = m_npcList.begin(); it != m_npcList.end(); ++it)
     {
         CNpcEntity* PNpc = (CNpcEntity*)it->second;
 
-        PNpc->PAI->Tick(tick);
+        if (PNpc->PAI)
+            PNpc->PAI->Tick(tick);
     }
 
     EntityList_t::const_iterator pit = m_petList.begin();
     while (pit != m_petList.end())
     {
         CPetEntity* PPet = (CPetEntity*)pit->second;
-        PPet->PRecastContainer->Check();
-        PPet->StatusEffectContainer->CheckEffectsExpiry(tick);
-        if(tick > m_EffectCheckTime)
+        if (PPet->PRecastContainer)
+            PPet->PRecastContainer->Check();
+
+        if (PPet->StatusEffectContainer)
         {
-            PPet->StatusEffectContainer->TickRegen(tick);
-            PPet->StatusEffectContainer->TickEffects(tick);
+            PPet->StatusEffectContainer->CheckEffectsExpiry(tick);
+            if (tick > m_EffectCheckTime)
+            {
+                PPet->StatusEffectContainer->TickRegen(tick);
+                PPet->StatusEffectContainer->TickEffects(tick);
+            }
         }
-        PPet->PAI->Tick(tick);
+
+        if (PPet->PAI)
+            PPet->PAI->Tick(tick);
+
         if (PPet->status == STATUS_DISAPPEAR)
         {
             for (auto PMobIt : m_mobList)
             {
                 CMobEntity* PCurrentMob = (CMobEntity*)PMobIt.second;
-                PCurrentMob->PEnmityContainer->Clear(PPet->id);
+                if (PCurrentMob->PEnmityContainer)
+                    PCurrentMob->PEnmityContainer->Clear(PPet->id);
             }
             if (PPet->getPetType() != PETTYPE_AUTOMATON || !PPet->PMaster)
             {
@@ -1115,20 +1130,29 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
     {
         if (CTrustEntity* PTrust = dynamic_cast<CTrustEntity*>(trustit->second))
         {
-            PTrust->PRecastContainer->Check();
-            PTrust->StatusEffectContainer->CheckEffectsExpiry(tick);
-            if (tick > m_EffectCheckTime)
+            if (PTrust->PRecastContainer)
+                PTrust->PRecastContainer->Check();
+
+            if (PTrust->StatusEffectContainer)
             {
-                PTrust->StatusEffectContainer->TickRegen(tick);
-                PTrust->StatusEffectContainer->TickEffects(tick);
+                PTrust->StatusEffectContainer->CheckEffectsExpiry(tick);
+                if (tick > m_EffectCheckTime)
+                {
+                    PTrust->StatusEffectContainer->TickRegen(tick);
+                    PTrust->StatusEffectContainer->TickEffects(tick);
+                }
             }
-            PTrust->PAI->Tick(tick);
+
+            if (PTrust->PAI)
+                PTrust->PAI->Tick(tick);
+
             if (PTrust->status == STATUS_DISAPPEAR)
             {
                 for (auto PMobIt : m_mobList)
                 {
                     CMobEntity* PCurrentMob = (CMobEntity*)PMobIt.second;
-                    PCurrentMob->PEnmityContainer->Clear(PTrust->id);
+                    if (PCurrentMob->PEnmityContainer)
+                        PCurrentMob->PEnmityContainer->Clear(PTrust->id);
                 }
 
                 for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
@@ -1161,15 +1185,25 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
 
         if (PChar->status != STATUS_SHUTDOWN)
         {
-            PChar->PRecastContainer->Check();
-            PChar->StatusEffectContainer->CheckEffectsExpiry(tick);
-            if (tick > m_EffectCheckTime)
+            if (PChar->PRecastContainer)
+                PChar->PRecastContainer->Check();
+
+            if (PChar->StatusEffectContainer)
             {
-                PChar->StatusEffectContainer->TickRegen(tick);
-                PChar->StatusEffectContainer->TickEffects(tick);
+                PChar->StatusEffectContainer->CheckEffectsExpiry(tick);
+                if (tick > m_EffectCheckTime)
+                {
+                    PChar->StatusEffectContainer->TickRegen(tick);
+                    PChar->StatusEffectContainer->TickEffects(tick);
+                }
             }
-            PChar->PAI->Tick(tick);
-            PChar->PTreasurePool->CheckItems(tick);
+
+            if (PChar->PAI)
+                PChar->PAI->Tick(tick);
+
+            if (PChar->PTreasurePool)
+                PChar->PTreasurePool->CheckItems(tick);
+
             if (check_regions)
             {
                 m_zone->CheckRegions(PChar);

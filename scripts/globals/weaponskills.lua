@@ -839,8 +839,6 @@ function fTP(tp, ftp1, ftp2, ftp3)
     elseif (tp >= 2000 and tp <= 3000) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
         return ftp2 + ( ((ftp3-ftp2)/1000) * (tp-2000))
-    else
-        print("fTP error: TP value is not between 1000-3000!")
     end
     return 1 -- no ftp mod
 end

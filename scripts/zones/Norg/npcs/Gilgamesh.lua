@@ -81,12 +81,15 @@ function onEventFinish(player, csid, option)
                 item = reward,
                 var = {"ApocalypseNigh", "Apoc_Nigh_Reward", "Apoc_Nigh_RewardCS1"}
             }) then
+                player:completeQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH)
                 player:completeMission(COP, tpz.mission.id.cop.DAWN)
                 player:addMission(COP, tpz.mission.id.cop.THE_LAST_VERSE)
                 player:setCharVar("PromathiaStatus", 0)
-                player:completeMission(ZILART, tpz.mission.id.cop.AWAKENING)
+                player:completeMission(ZILART, tpz.mission.id.zilart.AWAKENING)
                 player:addMission(ZILART, tpz.mission.id.zilart.THE_LAST_VERSE)
                 player:setCharVar("ZilartStatus", 0)
+                player:additem(reward)
+                player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
             end
         end
     end
