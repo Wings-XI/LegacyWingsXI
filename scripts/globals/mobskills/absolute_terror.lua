@@ -30,7 +30,7 @@ function onMobWeaponSkill(target, mob, skill)
     -- Three minutes is WAY too long, especially on Wyrms. Reduced to Wiki's definition of 'long time'. Reference: http://wiki.ffxiclopedia.org/wiki/Absolute_Terror
     local duration
     if skill:isAoE() then
-        duration = 10
+        duration = math.random(10,18) -- Found video that shows 18s
     else
         duration = 10 + math.random(0,40)
     end

@@ -93,7 +93,7 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_A01] =
     {
-     -- { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
+      { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
     },
 
     [tpz.zone.MONARCH_LINN] =
