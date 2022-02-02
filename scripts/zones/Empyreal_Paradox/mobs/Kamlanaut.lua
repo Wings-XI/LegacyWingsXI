@@ -11,7 +11,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.ACC, 50)
     mob:addMod(tpz.mod.UFASTCAST, 25)
     -- Increasing Gravity Res Compared to ZM8 due to difficulty and elemental seal buffs.
-    mob:addMod(tpz.mod.GRAVITYRES, 90)
+    mob:setMod(tpz.mod.GRAVITYRES, 90)
 end
 
 local skillToAbsorb =

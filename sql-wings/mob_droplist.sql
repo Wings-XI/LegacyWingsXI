@@ -10331,8 +10331,30 @@ INSERT INTO `mob_droplist` VALUES(1961, 0, 0, 1000, 2825, 100);
 INSERT INTO `mob_droplist` VALUES(1961, 0, 0, 1000, 2825, 50);
 INSERT INTO `mob_droplist` VALUES(1961, 0, 0, 1000, 2825, 30);
 INSERT INTO `mob_droplist` VALUES(1961, 0, 0, 1000, 19280, 100);
-INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1133, 10);
-INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1703, 100);
+-- Ouryu Cometh BCNM
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 1110, 190); -- Beetle Blood
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 655, 90); -- Adaman Ingot
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 860, 50); -- Behemoth Hide
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 836, 140); -- Damascene Cloth
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 658, 100); -- Damascus Ingot
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 722, 95); -- Divine Log
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 837, 185); -- Malboro Fiber
+INSERT INTO `mob_droplist` VALUES(1962, 1, 1, 794, 1313, 150); -- Siren's Hair
+INSERT INTO `mob_droplist` VALUES(1962, 1, 2, 775, 1133, 250); -- Dragon Blood
+INSERT INTO `mob_droplist` VALUES(1962, 1, 2, 775, 4272, 600); -- Dragon Meat
+INSERT INTO `mob_droplist` VALUES(1962, 1, 2, 775, 903, 150); -- Dragon Talon
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1703, 1000); -- Kunwu Ore
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1703, 1000); -- Kunwu Ore
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1703, 1000); -- Kunwu Ore
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 2108, 1000); -- Monarch's Orb
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 17658, 1000); -- Tutelary
+INSERT INTO `mob_droplist` VALUES(1962, 0, 0, 1000, 1816, 1000); -- Wyrm Horn
+INSERT INTO `mob_droplist` VALUES(1962, 1, 3, 361, 4486, 200); -- Dragon Heart
+INSERT INTO `mob_droplist` VALUES(1962, 1, 3, 361, 836, 200); -- Damascene Cloth
+INSERT INTO `mob_droplist` VALUES(1962, 1, 3, 361, 17799, 600); -- Imanotsurugi
+INSERT INTO `mob_droplist` VALUES(1962, 1, 4, 216, 1133, 600); -- Dragon Blood
+INSERT INTO `mob_droplist` VALUES(1962, 1, 4, 216, 903, 250); -- Dragon Talon
+INSERT INTO `mob_droplist` VALUES(1962, 1, 4, 216, 1311, 150); -- Oxblood
 INSERT INTO `mob_droplist` VALUES(1963, 0, 0, 1000, 799, 110);
 INSERT INTO `mob_droplist` VALUES(1963, 0, 0, 1000, 842, 170);
 INSERT INTO `mob_droplist` VALUES(1963, 0, 0, 1000, 843, 140);
@@ -14996,7 +15018,7 @@ INSERT INTO `mob_droplist` VALUES(2803, 0, 0, 1000, 1533, 30);
 INSERT INTO `mob_droplist` VALUES(2803, 2, 0, 1000, 4569, 0);
 INSERT INTO `mob_droplist` VALUES(2803, 0, 0, 1000, 12474, 10);
 INSERT INTO `mob_droplist` VALUES(2803, 0, 0, 1000, 12986, 30);
-INSERT INTO `mob_droplist` VALUES(2804, 0, 0, 1000, 1830, 100);
+INSERT INTO `mob_droplist` VALUES(2804, 0, 0, 1000, 1831, 917); -- Worm Mulch drops during Ouryu fight from Ziryu
 INSERT INTO `mob_droplist` VALUES(2805, 2, 0, 1000, 842, 0);
 INSERT INTO `mob_droplist` VALUES(2805, 0, 0, 1000, 842, 100);
 INSERT INTO `mob_droplist` VALUES(2805, 0, 0, 1000, 5581, 80);
@@ -16821,7 +16843,7 @@ INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 18617, 233); -- Cracked Staf
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 16302, 167); -- Bloodbead Gorget
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 15772, 167); -- Scintillant Ingot
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 747, 100); -- Orichalcum Ingot
--- Bahamut v2 drops
+-- Bahamut v2 BCNM
 INSERT INTO `mob_droplist` VALUES(3230, 1, 1, 1000, 17598, 231); -- Bahamut Staff
 INSERT INTO `mob_droplist` VALUES(3230, 1, 1, 1000, 17597, 769); -- Dragon Staff
 INSERT INTO `mob_droplist` VALUES(3230, 1, 2, 1000, 15264, 318); -- Bahamut Mask
@@ -16836,6 +16858,8 @@ INSERT INTO `mob_droplist` VALUES(3230, 1, 8, 593, 1713, 1000); -- Cashmere Thre
 INSERT INTO `mob_droplist` VALUES(3230, 1, 9, 746, 1816, 1000); -- Wyrm Horn
 INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 722, 1000); -- Divine Log
 INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 1313, 1000); -- Sirens Hair
+INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Worm Mulch
+INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Lugworm Sand
 
 --
 -- Indexes for dumped tables

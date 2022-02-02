@@ -167,6 +167,9 @@ STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festi
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
 Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
 
+-- CUSTOM BEHAVIOR OUTSIDE ERA
+TOAU_CUSTOM_RING_REACQUISITION = 0 -- Set to 1 to turn on the custom ToAU ring reacquisition quest.
+
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
 RIVERNE_PORTERS = 120 -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.

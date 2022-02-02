@@ -411,16 +411,16 @@ void CalculateStats(CMobEntity * PMob)
     PMob->stats.MND = fMND + mMND + sMND;
     PMob->stats.CHR = fCHR + mCHR + sCHR;
 
-    if(isNM)
-    {
-        PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
-        PMob->addModifier(Mod::DEFP, 20);
-    }
+    // if(isNM)
+    // {
+    //     PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
+    //     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
+    //     PMob->addModifier(Mod::DEFP, 20);
+    // }
 
     // special case, give spell list to my pet
     if(PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
@@ -525,48 +525,6 @@ void CalculateStats(CMobEntity * PMob)
     }
 
     PMob->m_Type& MOBTYPE_NOTORIOUS ? PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 110) : PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 100);
-
-    // family-specific changes here, thank you Jimmay
-    switch (PMob->m_Family)
-    {
-    case 72: // colibri
-        PMob->addModifier(Mod::EVA, 5);
-    case 136: // goobbue
-    case 208: // ram
-    case 242: // tiger
-    case 179: // manticore
-        PMob->addModifier(Mod::ATTP, 10);
-    case 217: // scorp
-        PMob->addModifier(Mod::ATTP, 20);
-    case 240: // tauri
-        PMob->addModifier(Mod::DEFP, -20);
-        PMob->addModifier(Mod::EVA, -10);
-    case 57: // buffalo
-    case 58: // bugard
-    case 26:  // antlion
-    case 357: // antlion
-        PMob->addModifier(Mod::DEFP, 20);
-        PMob->addModifier(Mod::ATTP, 10);
-    case 188: // opo
-        PMob->addModifier(Mod::EVA, 25);
-    case 253: // wamoura
-        PMob->addModifier(Mod::DEFP, 12);
-    case 176: // mamoolja
-    case 177: // mamoolja
-    case 285: // mamoolja
-        PMob->addModifier(Mod::EVA, 10);
-    case 233: // soulflayer
-    case 74: // corse
-        PMob->addModifier(Mod::DEFP, 20);
-    case 64: // chigoe
-        PMob->addModifier(Mod::ATTP, -50);
-        PMob->addModifier(Mod::DEFP, -20);
-        PMob->addModifier(Mod::EVA, 10);
-    case 180: // marid
-    case 371: // marid
-    case 59:  // bugbear
-        PMob->addModifier(Mod::EVA, -10);
-    }
 
     // Check for possible miss-setups
     if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 && PMob->getMobMod(MOBMOD_SPECIAL_COOL) == 0)

@@ -917,9 +917,9 @@ INSERT INTO `mob_groups` VALUES(18, 3070, 29, 'Ouryu', 0, 128, 0, 6000, 15000, 8
 INSERT INTO `mob_groups` VALUES(19, 3916, 29, 'Tiamat', 0, 128, 0, 6500, 15000, 88, 88, 0);
 INSERT INTO `mob_groups` VALUES(20, 2156, 29, 'Jormungand', 0, 128, 0, 6500, 15000, 88, 88, 0);
 INSERT INTO `mob_groups` VALUES(21, 4261, 29, 'Vrtra', 0, 128, 0, 5500, 15000, 88, 88, 0);
-INSERT INTO `mob_groups` VALUES(22, 4507, 29, 'Ziryu', 0, 128, 2804, 5000, 15000, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(23, 4309, 29, 'Water_Elemental', 0, 128, 0, 0, 15000, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(24, 1160, 29, 'Earth_Elemental', 0, 128, 0, 0, 15000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(22, 4507, 29, 'Ziryu', 0, 128, 3233, 5000, 15000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(23, 4309, 29, 'Water_Elemental', 0, 128, 0, 4000, 15000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(24, 1160, 29, 'Earth_Elemental', 0, 128, 0, 4000, 15000, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(25, 3124, 29, 'Pey', 0, 128, 0, 0, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(26, 2105, 29, 'Iruci', 0, 128, 0, 0, 15000, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(27, 70, 29, 'Airi', 0, 128, 0, 0, 15000, 78, 80, 0);
@@ -937,10 +937,10 @@ INSERT INTO `mob_groups` VALUES(11, 1355, 30, 'Flamedrake', 300, 0, 841, 0, 0, 4
 INSERT INTO `mob_groups` VALUES(12, 641, 30, 'Carmine_Dobsonfly', 86400, 0, 418, 1550, 0, 44, 45, 0);
 INSERT INTO `mob_groups` VALUES(13, 1901, 30, 'Hawker', 300, 0, 142, 0, 0, 45, 48, 0);
 INSERT INTO `mob_groups` VALUES(14, 68, 30, 'Aiatar', 0, 32, 35, 5400, 0, 44, 45, 0);
-INSERT INTO `mob_groups` VALUES(15, 4309, 30, 'Water_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(16, 1160, 30, 'Earth_Elemental', 0, 128, 0, 0, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(17, 3070, 30, 'Ouryu', 0, 128, 1962, 50000, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(18, 4507, 30, 'Ziryu', 0, 128, 2804, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(15, 4309, 30, 'Water_Elemental', 0, 128, 0, 4000, 10000, 72, 74, 0);
+INSERT INTO `mob_groups` VALUES(16, 1160, 30, 'Earth_Elemental', 0, 128, 0, 4000, 10000, 72, 74, 0);
+INSERT INTO `mob_groups` VALUES(17, 6888, 30, 'Ouryu', 0, 128, 1962, 50000, 20000, 90, 90, 0);
+INSERT INTO `mob_groups` VALUES(18, 4507, 30, 'Ziryu', 0, 128, 2804, 4000, 10000, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(19, 215, 30, 'Arcane_Phantasm', 0, 128, 0, 0, 0, 44, 45, 0);
 INSERT INTO `mob_groups` VALUES(20, 3596, 30, 'Shieldtrap', 0, 128, 2235, 0, 0, 39, 44, 0);
 INSERT INTO `mob_groups` VALUES(1, 2499, 31, 'Mammet-19_Epsilon', 0, 128, 1585, 4000, 0, 43, 44, 0);

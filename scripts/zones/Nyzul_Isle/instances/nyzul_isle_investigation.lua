@@ -71,6 +71,12 @@ function onInstanceComplete(instance)
     local chars = instance:getChars()
     local startingFloor = instance:getLocalVar("Nyzul_StartingFloor")
     local endingFloor = instance:getStage()
+    -- stage is advanced on floor complete - so reduce the ending floor by 1
+    if (endingFloor == 1 and instance:setLocalVar("Nyzul_BeatFloor100") > 0) then
+        endingFloor = 100
+    else
+        endingFloor = endingFloor - 1
+    end
     local beatFloor100 = instance:getLocalVar("Nyzul_BeatFloor100")
     local tokenPenalty = instance:getLocalVar("Nyzul_TokenPenalty")
     local numberOfPlayers = instance:getLocalVar("Nyzul_NumberOfPlayers")
@@ -162,6 +168,8 @@ function floorObjectiveComplete(instance)
             player:messageSpecial(ID.text.OBJECTIVE_COMPLETE, instance:getStage())
         end
     end
+
+    instance:setStage(instance:getStage()+1)
 end
 
 function evaluateEliminateAll(instance)

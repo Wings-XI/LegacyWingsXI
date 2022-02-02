@@ -40,7 +40,8 @@ function onTrigger(player, npc)
         availableInstances = availableInstances - PATH_OF_DARKNESS
     end
 
-    if player:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and player:hasKeyItem(tpz.ki.MYTHRIL_MIRROR) and player:getCharVar("AhtUrganStatus") == 1 then
+    if (player:getCurrentMission(TOAU) == tpz.mission.id.toau.NASHMEIRAS_PLEA and player:hasKeyItem(tpz.ki.MYTHRIL_MIRROR) and player:getCharVar("AhtUrganStatus") == 1)
+        or (player:getCharVar("TOAU_RING_REACQ_STATUS") == 2) then
         availableInstances = availableInstances - NASHMEIRAS_PLEA
     end
 
