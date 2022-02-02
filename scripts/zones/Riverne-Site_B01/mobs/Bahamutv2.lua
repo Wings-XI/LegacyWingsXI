@@ -185,6 +185,13 @@ function onMobWeaponSkill(target, mob, skill)
      end   
 end
 
+function onMobDisengage(mob)
+    -- In case of wipe during Flares, this will reset Bahamut
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetAutoAttackEnabled(true)
+end
+
 function onMobDeath(mob, player, isKiller)
     if isKiller then
         mob:messageText(mob, ID.text.BAHAMUT_TAUNT + 17)
