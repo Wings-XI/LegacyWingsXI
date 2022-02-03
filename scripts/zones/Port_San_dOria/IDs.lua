@@ -41,17 +41,17 @@ zones[tpz.zone.PORT_SAN_DORIA] =
         PICKPOCKET_CORIBALGEANT        = 7631, -- I'd like to just to take a moogle and-- Ah, pardon me, I was lost in thought. No, I haven't seen anyone suspicious.
         PICKPOCKET_PARCARIN            = 7794, -- Long live King Destin! Huh? Pickpockets? Can't you see I'm in the middle of something here?
         PICKPOCKET_SOLGIERTE           = 7797, -- Confound them! Give me a sword and... Eh? A pickpocket? Do I look like I hang out with that sort?
-        PORTAURE_DIALOG                = 7824, -- What's this? A magic shop? Hmm...I could use a new line of work, and magic just might be the ticket!
+        FFR_PORTAURE                   = 7824, -- What's this? A magic shop? Hmm...I could use a new line of work, and magic just might be the ticket!
         PICKPOCKET_SHERIDAN            = 7828, -- What? A pickpocket? Hey! I may be a loafer, but I'm no thief!
-        ANSWALD_DIALOG                 = 7844, -- A magic shop? Oh, it's right near here. I'll go check it out sometime.
+        FFR_ANSWALD                    = 7844, -- A magic shop? Oh, it's right near here. I'll go check it out sometime.
         PICKPOCKET_ANSWALD             = 7845, -- A pickpocket!? Whew, my wallet's safe. It takes money to be an adventurer!
         PICKPOCKET_ARTINIEN            = 7854, -- My grandpa always said that only a thief would take other people's things! If I find that pickpocket... Wham! Wham!
         PICKPOCKET_BRIFALIEN           = 7855, -- My grandpa always said that the only stuff thieves take are other people's things! If I find that pickpocket, he's chocobo-feed!
-        PRIETTA_DIALOG                 = 7868, -- This is the first I've heard of a magic shop here in San d'Oria. Such arts have never been popular in the Kingdom.
+        FFR_PRIETTA                    = 7868, -- This is the first I've heard of a magic shop here in San d'Oria. Such arts have never been popular in the Kingdom.
         PICKPOCKET_MAUNADOLACE         = 7872, -- A pickpocket? I would have detained anyone suspicious coming this way.
-        AUVARE_DIALOG                  = 7875, -- What have I got here? Look, I can't read, but I takes what I gets, and you ain't getting it back!
+        FFR_AUVARE                     = 7875, -- What have I got here? Look, I can't read, but I takes what I gets, and you ain't getting it back!
         ALBINIE_SHOP_DIALOG            = 7888, -- Welcome to my simple shop.
-        MIENE_DIALOG                   = 7928, -- Oh, a magic shop... Here in San d'Oria? I'd take a look if I got more allowance.
+        FFR_MIENE                      = 7928, -- Oh, a magic shop... Here in San d'Oria? I'd take a look if I got more allowance.
         COULLAVE_SHOP_DIALOG           = 7934, -- Can I help you?
         CROUMANGUE_SHOP_DIALOG         = 7935, -- Can't fight on an empty stomach. How about some nourishment?
         FIVA_OPEN_DIALOG               = 7936, -- I've got imports from Kolshushu!
@@ -74,12 +74,12 @@ zones[tpz.zone.PORT_SAN_DORIA] =
         NIMIA_OPEN_DIALOG              = 8287, -- Hello, friend! Can I interest you in specialty goods from the Elshimo Lowlands?
         PATOLLE_OPEN_DIALOG            = 8288, -- Hey, [mister/miss]! How about some specialty goods from Kuzotz?
         BONMAURIEUT_OPEN_DIALOG        = 8289, -- My shipment is in! Would you like to see what has just arrived from the Elshimo Uplands?
-        ANSWALD_MESSAGE                = 8426, -- Answald looks over curiously for a moment.
+        FFR_LOOKS_CURIOUSLY_BASE       = 8426, -- Answald looks over curiously for a moment.
         PRIETTA_MESSAGE                = 8427, -- Prietta looks over curiously for a moment.
         MIENE_MESSAGE                  = 8428, -- Miene looks over curiously for a moment.
         PORTAURE_MESSAGE               = 8429, -- Portaure looks over curiously for a moment.
         AUVARE_MESSAGE                 = 8430, -- Auvare looks over curiously for a moment.
-        -- Starlight Celebration Dialog -- 
+        -- Starlight Celebration Dialog --
         GIFT_THANK_YOU                 = 8583, -- Thank you! Thank you! Thank you!
         ONLY_TWO_HANDS                 = 8586, -- Another present? Sorry, but I only have two hands, (Player Gender)≻[Mr./Ms.] Adventurer!
         JOY_TO_CHILDREN                = 8590, -- You've brought joy to the children of Vana'diel!
@@ -90,7 +90,7 @@ zones[tpz.zone.PORT_SAN_DORIA] =
     },
     npc =
     {
-        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        DOLL_FESTIVAL_DECORATIONS =
         {
             [17727636] = 17727636,  -- Doll Festival Cherry Blossom
             [17727637] = 17727637,  -- Doll Festival Cherry Blossom
@@ -102,7 +102,7 @@ zones[tpz.zone.PORT_SAN_DORIA] =
             [17727643] = 17727643,  -- Doll Festival Cherry Blossom
             [17727644] = 17727644,  -- Doll Festival Cherry Blossom
         },
-        SUNBREEZE_FESTIVAL_DECORATIONS = 
+        SUNBREEZE_FESTIVAL_DECORATIONS =
         {
             [17727645] = 17727645,  -- Sunbreeze Festival Fireworks
         },

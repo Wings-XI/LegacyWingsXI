@@ -7,15 +7,28 @@ require("scripts/globals/quests")
 require("scripts/globals/status")
 
 
-function onMobInitialise(mob)
-    mob:setMobMod(tpz.mobMod.HP_STANDBACK, -1)
+function onMobInitialise(mob)    
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 20)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50)
+    mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 10)
+    mob:addMod(tpz.mod.REGAIN, 200)
     mob:addStatusEffect(tpz.effect.PHALANX, 35, 0, 180)
     mob:addStatusEffect(tpz.effect.STONESKIN, 350, 0, 300)
     mob:addStatusEffect(tpz.effect.PROTECT, 175, 0, 1800)
     mob:addStatusEffect(tpz.effect.SHELL, 24, 0, 1800)
+    mob:setMod(tpz.mod.ATT, 500)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetAutoAttackEnabled(true)
+end
+
+function onMobEngaged(mob, target)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 end
 
 function onMobFight(mob, target)
@@ -82,7 +95,7 @@ function onMobFight(mob, target)
             end
         elseif (MegaFlareQueue == 0 and mobHPP < 10 and GigaFlare < 1 and mob:checkDistance(target) <= 15) then  -- All of the scripted Megaflares are to happen before Gigaflare.
             if (tauntShown == 0) then
-                target:showText(mob, ID.text.BAHAMUT_TAUNT + 2)
+                target:showText(mob, ID.text.BAHAMUT_TAUNT + 1)
                 mob:setLocalVar("tauntShown", 3) -- again, taunt won't show again until the move is successfully used.
             end
             if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- default behaviour
@@ -91,6 +104,13 @@ function onMobFight(mob, target)
             mob:useMobAbility(1552)
         end
     end
+end
+
+function onMobDisengage(mob)
+    -- In case of wipe during Flares, this will reset Bahamut
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetAutoAttackEnabled(true)
 end
 
 function onMobDeath(mob, player, isKiller)

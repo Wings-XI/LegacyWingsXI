@@ -41,12 +41,19 @@ function onTrigger(player, npc)
             local currentDay = tonumber(os.date("%j"))
             local ringsTaken = player:getCharVar("COP-ringsTakenbr")
             local dateObtained = player:getCharVar("COP-lastRingday")
+            local playerHasWaited28days = false
+
+            if ((currentDay - dateObtained) > 28) then
+                playerHasWaited28days = true -- player has waited 28 days
+            elseif ((currentDay < dateObtained) and (currentDay + (365 - dateObtained) > 28)) then 
+                playerHasWaited28days = true -- wrapped around the year change
+            end
 
             if (ringsTaken == 0) then
                 player:startEvent(84, ring[1], ring[2], ring[3])
             elseif (ringsTaken == 1) then -- First time you throw away, no wait
                 player:startEvent(204, ring[1], ring[2], ring[3])
-            elseif (ringsTaken > 1 and (currentDay - dateObtained) >= 28) then -- Wait time is >= 28 days, not 26
+            elseif (ringsTaken > 1 and (playerHasWaited28days)) then -- Wait time is >= 28 days, not 26
                 player:startEvent(204, ring[1], ring[2], ring[3])
             else
                 MarbleEateryDoorCheck(player)

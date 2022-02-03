@@ -25,7 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.DARK, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_WIPE_SHADOWS)
 
-    if mob:GetMobByID() >= 16933021 and mob:GetMobByID() <= 16933030 then
+    if mob:getID() >= 16933021 and mob:getID() <= 16933030 then
         dmg = dmg * 2
     end
 

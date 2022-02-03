@@ -181,7 +181,7 @@ function BluePhysicalSpell(caster, target, spell, params)
         -- implies that pre-2014, player attack has NO effect on BLU spell damage. one of the physical spells stated it did more damage based on skill, so let's use that
         local skill = caster:getSkillLevel(tpz.skill.BLUE_MAGIC)
         if skill > 200 then
-            params.offcratiomod = 215 + (skill-200)*0.9 + caster:getStat(tpz.mod.STR)*0.75
+            params.offcratiomod = 215 + (skill-200)*0.9 + caster:getStat(tpz.mod.STR)*0.5
         else
             params.offcratiomod = skill + 15 + caster:getStat(tpz.mod.STR)*0.75
         end
@@ -568,8 +568,6 @@ end
 function BluefTP(tp, ftp0, ftp15, ftp30)
     if tp >= 0 and tp <= 3000 then
         return ftp0 + (ftp15 - ftp0) * math.min(tp, 1500)/1500 + (ftp30-ftp15) * math.min(0, tp-1500)/1500
-    else
-        --print("blue fTP error: TP value is not between 0-3000!")
     end
     return 1 -- no ftp mod
 end
@@ -589,7 +587,7 @@ function BluefSTR(dSTR)
 
     -- fSTR for BLU caps at 22
     -- https://www.bg-wiki.com/ffxi/Calculating_Blue_Magic_Damage
-    if fSTR2 > 22 then fSTR2 = 12 end -- dSTR caps once you have more than 84 STR than the mob's VIT
+    if fSTR2 > 22 then fSTR2 = 22 end -- dSTR caps once you have more than 84 STR than the mob's VIT
     if fSTR2 < -22 then fSTR2 = -22 end -- and the lower bound will be met at 84 STR *under* the mob's VIT
     return math.floor(fSTR2)
 end

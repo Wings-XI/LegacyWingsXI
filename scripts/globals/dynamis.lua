@@ -754,6 +754,41 @@ dynamis.setMobStats = function(mob)
     mob:setMod(tpz.mod.DEFP, 10)
     mob:setTrueDetection(1)
 
+    local familyEES =
+    {
+        [  3] = tpz.jsa.EES_AERN,    -- Aern
+        [ 25] = tpz.jsa.EES_ANTICA,  -- Antica
+        [115] = tpz.jsa.EES_SHADE,   -- Fomor
+        [126] = tpz.jsa.EES_GIGA,    -- Gigas
+        [127] = tpz.jsa.EES_GIGA,    -- Gigas
+        [128] = tpz.jsa.EES_GIGA,    -- Gigas
+        [129] = tpz.jsa.EES_GIGA,    -- Gigas
+        [130] = tpz.jsa.EES_GIGA,    -- Gigas
+        [133] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [169] = tpz.jsa.EES_KINDRED, -- Kindred
+        [171] = tpz.jsa.EES_LAMIA,   -- Lamiae
+        [182] = tpz.jsa.EES_MERROW,  -- Merrow
+        [184] = tpz.jsa.EES_GOBLIN,  -- Moblin
+        [189] = tpz.jsa.EES_ORC,     -- Orc
+        [200] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [201] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [202] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [221] = tpz.jsa.EES_SHADE,   -- Shadow
+        [222] = tpz.jsa.EES_SHADE,   -- Shadow
+        [223] = tpz.jsa.EES_SHADE,   -- Shadow
+        [246] = tpz.jsa.EES_TROLL,   -- Troll
+        [270] = tpz.jsa.EES_YAGUDO,  -- Yagudo
+        [327] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [328] = tpz.jsa.EES_GIGA,    -- Gigas
+        [334] = tpz.jsa.EES_ORC,     -- OrcNM
+        [335] = tpz.jsa.EES_MAAT,    -- Maat
+        [337] = tpz.jsa.EES_QUADAV,  -- QuadavNM
+        [358] = tpz.jsa.EES_KINDRED, -- Kindred
+        [359] = tpz.jsa.EES_SHADE,   -- Fomor
+        [360] = tpz.jsa.EES_YAGUDO,  -- YagudoNM
+        [373] = tpz.jsa.EES_GOBLIN,  -- Goblin_Armored
+    }
+
     if     job == tpz.job.WAR then
         mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
         local params = { }

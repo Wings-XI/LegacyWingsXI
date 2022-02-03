@@ -215,7 +215,7 @@ function generateStandardFloor(floorNumber, instance, previousFloorInfo)
 
     generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
 
-    return selectedFloorLayout.RuneOfTransferSpawnPoint, objectiveMobs
+    return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
 ------------------------------------------------------------------
@@ -254,7 +254,7 @@ function selectSubObjective(instance, previousSubObjective)
 
     local subObjectiveKey = math.random(#tpz.nyzul_isle_data.subObjectiveType)
     instance:setLocalVar("Nyzul_SubObjective", subObjectiveKey)
-    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,2,3))
+    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,3))
     return tpz.nyzul_isle_data.subObjectiveType[subObjectiveKey]
 end
 
@@ -377,8 +377,6 @@ function generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjec
     end
 
     spawnMobsForFloor(instance, mobsToSpawn, selectedFloorLayout.Rooms)
-
-    return
 end
 
 --------------------------------------------------------------

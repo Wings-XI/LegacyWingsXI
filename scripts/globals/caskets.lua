@@ -383,7 +383,7 @@ local function checkRemainingAttempts(player, npc, remaining, correctNumber)
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
 
     if remaining == 1 then
-        messagePlayer(player, "CORRECT_NUMBER_WAS", correctNumber, 0, 0, 0, 0)
+        messagePlayer(player, "CORRECT_NUMBER_WAS", correctNumber, 0, 0, 0)
         messageParty(player, "UNABLE_TO_OPEN_LOCK")
         removeChest(npc)
     end
@@ -988,7 +988,7 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
                         if locked == 0 then
                             messagePlayer(player, "NO_COMBINATION", 0, 0, 0, 0)
                         else
-                            messagePlayer(player, "HUNCH_MORE_THAN", inputNumber, 0, 0, 0, 0)
+                            messagePlayer(player, "HUNCH_MORE_THAN", inputNumber, 0, 0, 0)
                             npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                             checkRemainingAttempts(player, npc, remainingAttempts, correctNumber)
                         end
@@ -996,7 +996,7 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
                         if locked == 0 then
                             messagePlayer(player, "NO_COMBINATION", 0, 0, 0, 0)
                         else
-                            messagePlayer(player, "HUNCH_LESS_THAN", inputNumber, 1, 0, 0, 0)
+                            messagePlayer(player, "HUNCH_LESS_THAN", inputNumber, 1, 0, 0)
                             npc:setLocalVar("[caskets]FAILED_ATEMPTS", failedAtempts +1)
                             checkRemainingAttempts(player, npc, remainingAttempts, correctNumber)
                         end

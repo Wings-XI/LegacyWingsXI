@@ -12,8 +12,6 @@ function onTrade(player, npc, trade)
     local tradeWindow = GetServerVariable("SkullTradeTimer")
     local active = npc:getLocalVar("BrazierActive")
 
-    print(os.time() - active)
-
     if npcUtil.tradeHas(trade, 768) then
         if os.time() < tradeWindow and os.time() > active then
             npc:setLocalVar("BrazierActive", os.time() + 10)

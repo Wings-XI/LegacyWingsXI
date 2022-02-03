@@ -2770,6 +2770,7 @@ int32 map_config_default()
     map_config.helpdesk_enabled = false;
     map_config.autotarget_qol = true;
     map_config.instances_treat_GMs_as_players = true;
+    map_config.pl_penalty = 10;
     return 0;
 }
 
@@ -3326,6 +3327,9 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
                 map_config.instances_treat_GMs_as_players = atoi(w2);
+            } else if (strcmp(w1, "pl_penalty") == 0)
+            {
+                map_config.pl_penalty = atoi(w2);
             }
             else
             {

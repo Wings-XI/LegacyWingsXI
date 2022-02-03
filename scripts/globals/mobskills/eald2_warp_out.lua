@@ -17,7 +17,13 @@ function onMobWeaponSkill(target, mob, skill)
     local t = battletarget:getPos()
     t.rot = battletarget:getRotPos()
     local angle = math.random() * math.pi
-    local pos = NearLocation(t, 1.5, angle)
+    local pos = 0
+    if mob:getID() == 16924680 then
+        local dist = math.random(1.5, 10.0)
+        pos = NearLocation(t, dist, angle)
+    else
+        pos = NearLocation(t, 1.5, angle)
+    end
     mob:teleport(pos, battletarget)
     skill:setMsg(tpz.msg.basic.NONE)
     return 0

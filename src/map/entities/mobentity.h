@@ -249,6 +249,8 @@ public:
     uint16    m_MobSkillList;             // Mob skill list defined from mob_pools
     uint32    m_Pool;                     // pool the mob came from
 
+    uint32    m_ExpPenalty = 0;           // Total exp penalty applied when this mob dies
+
     CMobSpellList*        m_SpellListContainer;        // The spells list container for this mob
     std::map<uint16, uint16>    m_UsedSkillIds;        // mob skill ids used (key) along with mob level (value)
 
