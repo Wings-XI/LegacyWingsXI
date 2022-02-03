@@ -16020,13 +16020,20 @@ inline int32 CLuaBaseEntity::getStealItem(lua_State *L)
 
         if (PDropList && !PMob->m_ItemStolen)
         {
+            std::vector<uint16> Items;
+
             for (const DropItem_t& drop : PDropList->Items)
             {
                 if (drop.DropType == DROP_STEAL)
                 {
-                    lua_pushinteger(L, drop.ItemID);
-                    return 1;
+                    Items.emplace_back(drop.ItemID);
                 }
+            }
+
+            if (!Items.empty())
+            {
+                lua_pushinteger(L, Items[tpzrand::GetRandomNumber(Items.size())]);
+                return 1;
             }
         }
     }
