@@ -171,7 +171,7 @@ dynamis.entryInfo =
         csFirst = 22,
         csWin = 28,
         csDyna = 3,
-        enabled = false,
+        enabled = true,
         winVar = "DynaQufim_Win",
         hasEnteredVar = "DynaQufim_HasEntered",
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
@@ -335,6 +335,23 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_QUFIM_INTERLOPER,
         entryPos = {-19, -17, 104, 253, tpz.zone.DYNAMIS_QUFIM},
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
+        sjRestriction = true,
+        sjRestrictionNPC = 16945638,
+        sjRestrictionLocation =
+        {
+            [1] = {-264.498, -19.255, 401.465, 54},
+            [2] = {-264.655, -19.268, 240.580, 71},
+            [3] = {-77.771, -19.068, 258.666, 50},
+            [4] = {-137.127, -19.976, 228.789, 101},
+            [5] = {-61.647, -19.868, 152.935, 35},
+            [6] = {27.973, -20.270, 191.907, 195},
+            [7] = {107.445, -20.368, 149.587, 64},
+            [8] = {99.884, -19.557, 51.518, 27},
+            [9] = {-29.895, -21.095, -57.154, 209},
+            [10] = {88.474, -20.621, -49.333, 4},
+            [11] = {-192.540, -20.477, -11.055, 151},
+            [12] = {-340.976, -20.421, 31.154, 66},
+        }
     },
     [tpz.zone.QUFIM_ISLAND] =
     {
@@ -518,7 +535,13 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
 end
 
 dynamis.zoneOnInitialize = function(zone)
-
+    local zoneId = zone:getID()
+    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+        local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
+        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
+        sjRestrictionNPC:setPos(pos)
+        sjRestrictionNPC:setStatus(tpz.status.NORMAL)
+    end
 end
 
 dynamis.zoneOnZoneIn = function(player, prevZone)
@@ -536,7 +559,11 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
         end)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
-        player:setCharVar("DynaInflictWeakness", 0)
+            player:setCharVar("DynaInflictWeakness", 0)
+        if dynamis.dynaInfo[zoneId].sjRestriction == true then
+            player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+        end
+
     end
 
     return -1
@@ -740,6 +767,21 @@ dynamis.qmOnTrigger = function(player, npc)
         end
     else
         printf("[dynamis.qmOnTrigger] called on npc %i (%s) in zone %i that does not have a QM group in its IDs.", npcId, npc:getName(), zoneId)
+    end
+end
+
+dynamis.sjQMOnTrigger = function(player, npc)
+    local zoneId = npc:getZoneID()
+    
+    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+        print("I'm here")
+        for _, member in pairs(player:getAlliance()) do
+            if member:getZoneID() == player:getZoneID() then
+                if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
+                    member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
+                end
+            end
+        end
     end
 end
 
