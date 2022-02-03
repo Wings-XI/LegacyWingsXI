@@ -98,7 +98,7 @@ mobList[zone] =
     [EMB+0  ] = { id =  EMB+0  }, -- Water Elemental (043)
     [DMB+134] = { id =  DMB+134}, -- Scolopendra (040)
     -- Southwest Area
-    [EMB+49 ] = { id =  EMB+49 }, -- Fire Elemental (044)
+    [SMB+518] = { id =  SMB+518}, -- Fire Elemental (044)
     -- Giant Bat Area
     [EMB+3  ] = { id =  EMB+3  }, -- Thunder Elemental (045)
     [DMB+167] = { id =  DMB+167}, -- Stringes (041)
@@ -110,7 +110,7 @@ mobList[zone] =
     [DMB+0  ] = { id =  DMB+0  }, -- Antaeus (064)
     -- Golem NM Area
     [EMB+7  ] = { id =  EMB+7  }, -- Earth Elemental (049)
-    [EMB+55 ] = { id =  EMB+55 }, -- Dark Elemental (050)
+    [SMB+524] = { id =  SMB+524}, -- Dark Elemental (050)
     [DMB+228] = { id =  DMB+228}, -- Suttung (042)
 
     -- Initial Statues based on https://enedin.be/dyna/html/zone/frame_quf1.htm
@@ -449,7 +449,6 @@ mobList[zone] =
     [SMB+486] = { id =  SMB+486},
     [SMB+496] = { id =  SMB+496},
     [SMB+484] = { id =  SMB+484},
-    [SMB+525] = { id =  SMB+525},
     [SMB+489] = { id =  SMB+489},
     [SMB+499] = { id =  SMB+499},
     [SMB+495] = { id =  SMB+495},
@@ -568,13 +567,13 @@ mobList[zone][DMB+167].pos = { 149.787, 21.221, -409.158, 185  } -- ( 041 )
 mobList[zone][DMB+0  ].pos = { -257.040, -20.000, 319.628, 254 } -- ( 064 )
 mobList[zone][DMB+228].pos = { -535.544, -13.042, 386.895, 51  } -- ( 042 )
 mobList[zone][EMB+0  ].pos = { -278.296, -19.902, 74.020, 57   } -- ( 043 )
-mobList[zone][EMB+49 ].pos = { 19.150, -19.260, -86.259, 193   } -- ( 044 )
+mobList[zone][SMB+518].pos = { 19.150, -19.260, -86.259, 193   } -- ( 044 )
 mobList[zone][EMB+3  ].pos = { 158.148, 20.219, -230.048, 184  } -- ( 045 )
 mobList[zone][EMB+4  ].pos = { 163.632, -19.481, 133.232, 94   } -- ( 046 )
 mobList[zone][EMB+5  ].pos = { 29.825, -19.906, 288.771, 77    } -- ( 047 )
 mobList[zone][EMB+6  ].pos = { -214.001, -19.742, 392.671, 60  } -- ( 048 )
 mobList[zone][EMB+7  ].pos = { -338.197, -12.949, 531.737, 70  } -- ( 049 )
-mobList[zone][EMB+55 ].pos = { -428.031, -12.956, 337.849, 136 } -- ( 050 )
+mobList[zone][SMB+524].pos = { -428.031, -12.956, 337.849, 136 } -- ( 050 )
 -- Wave 2 Nightmare Mobs Based on https://enedin.be/dyna/html/zone/frame_quf2.htm
 mobList[zone][DMB+135].pos = { -121.628, -19.756, 208.912, 96  } -- ( 076 )
 mobList[zone][DMB+136].pos = { -118.396, -19.617, 211.675, 96  } -- ( 076 )
@@ -872,7 +871,7 @@ mobList[zone][DMB+316].waves = { 1, nil, nil}
 -- Wave 1 Elementals and NMs
 mobList[zone][EMB+0  ].waves = { 1, nil, nil} -- Water Elemental (43)
 mobList[zone][DMB+134].waves = { 1, nil, nil} -- Scolopendra (40)
-mobList[zone][EMB+49 ].waves = { 1, nil, nil} -- Fire Elemental (44)
+mobList[zone][SMB+518].waves = { 1, nil, nil} -- Fire Elemental (44)
 mobList[zone][EMB+3  ].waves = { 1, nil, nil} -- Thunder Elemental (45)
 mobList[zone][DMB+167].waves = { 1, nil, nil} -- Stringes (41)
 mobList[zone][EMB+4  ].waves = { 1, nil, nil} -- Air Elemental (46)
@@ -880,7 +879,7 @@ mobList[zone][EMB+5  ].waves = { 1, nil, nil} -- Light Elemental (47)
 mobList[zone][EMB+6  ].waves = { 1, nil, nil} -- Ice Elemental (48)
 mobList[zone][DMB+0  ].waves = { 1, nil, nil} -- Antaeus (64)
 mobList[zone][EMB+7  ].waves = { 1, nil, nil} -- Earth Elemental (49)
-mobList[zone][EMB+55 ].waves = { 1, nil, nil} -- Dark Elemental (50)
+mobList[zone][SMB+524].waves = { 1, nil, nil} -- Dark Elemental (50)
 mobList[zone][DMB+228].waves = { 1, nil, nil} -- Suttung (42)
 -- Wave 2 Nightmare Mobs
 mobList[zone][DMB+135].waves = { nil, 2, nil}
@@ -1110,5 +1109,5 @@ mobList[zone][SMB+485].specificChildren = { true, SMB+495, SMB+501, SMB+493, SMB
 -- example: [5151] = { id = 5151, spawnAtStart = true },
 npcList[zone] = 
 {
-    
+    [16945638] = { id = 16945638, spawnAtStart = true},
 }

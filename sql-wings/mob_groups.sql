@@ -1677,7 +1677,7 @@ INSERT INTO `mob_groups` VALUES(191, 2859, 40, 'Nightmare_Mandragora', 600, 128,
 INSERT INTO `mob_groups` VALUES(192, 2848, 40, 'Nightmare_Crawler', 600, 128, 1798, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(193, 2863, 40, 'Nightmare_Raven', 600, 128, 1798, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(194, 2851, 40, 'Nightmare_Eft', 600, 128, 1789, 5000, 0, 94, 96, 0);
-INSERT INTO `mob_groups` VALUES(1, 162, 41, 'Antaeus', 0, 128, 112, 3232, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(1, 162, 41, 'Antaeus', 0, 128, 3132, 37000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(2, 4150, 41, 'Vanguard_Footsoldier', 600, 128, 2546, 4000, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(3, 4135, 41, 'Vanguard_Amputator', 600, 128, 2546, 4000, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(4, 4195, 41, 'Vanguard_Vexer', 600, 128, 2546, 4000, 0, 75, 77, 0);

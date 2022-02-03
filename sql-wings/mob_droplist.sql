@@ -16835,6 +16835,7 @@ INSERT INTO `mob_droplist` VALUES(3230, 1, 9, 746, 1816, 1000); -- Wyrm Horn
 INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 722, 1000); -- Divine Log
 INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 1313, 1000); -- Sirens Hair
 -- Nightmare Gaylas, Kraken, Raptor, Roc, Snoll Qufim
+-- Adding -1 Gear per http://www.dynamisbums.com/strategy/quf.html
 INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1459, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1452, 133); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1459, 133); -- Whiteshell
@@ -16844,7 +16845,28 @@ INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15920, 33); -- Commodore Bel
 INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15873, 33); -- Duelist's Belt
 INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15879, 33); -- Saotome Koshi-Ate
 INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15876, 33); -- Scout's Belt
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2037, 15); -- warriors_calligae_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2042, 15); -- melee_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2047, 15); -- clerics_duckbills_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2052, 15); -- sorcerers_sabots_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2057, 15); -- duelists_boots_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2062, 15); -- assassins_poulaines_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2067, 15); -- valor_leggings_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2072, 15); -- abyss_sollerets_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2077, 15); -- monster_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2082, 15); -- bards_slippers_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2087, 15); -- scouts_socks_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2092, 15); -- saotome_sune-ate_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2097, 15); -- koga_kyahan_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2102, 15); -- wyrm_greaves_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2107, 15); -- summoners_pigaches_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2666, 15); -- mirage_charuqs_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2671, 15); -- commodore_bottes_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2676, 15); -- pantin_babouches_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2722, 15); -- etoile_toe_shoes_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2727, 15); -- argute_loafers_-1
 -- Nightmare Diremite, Stirge, Tiger, Weapon Qufim
+-- Adding -1 Gear per http://www.dynamisbums.com/strategy/quf.html
 INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1459, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1452, 133); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1459, 133); -- Whiteshell
@@ -16855,6 +16877,26 @@ INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15875, 33); -- Monster Belt
 INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 16245, 33); -- Pantin Cape
 INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15484, 33); -- Summoner's Cape
 INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15878, 33); -- Wyrm Belt
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2037, 15); -- warriors_calligae_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2042, 15); -- melee_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2047, 15); -- clerics_duckbills_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2052, 15); -- sorcerers_sabots_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2057, 15); -- duelists_boots_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2062, 15); -- assassins_poulaines_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2067, 15); -- valor_leggings_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2072, 15); -- abyss_sollerets_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2077, 15); -- monster_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2082, 15); -- bards_slippers_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2087, 15); -- scouts_socks_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2092, 15); -- saotome_sune-ate_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2097, 15); -- koga_kyahan_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2102, 15); -- wyrm_greaves_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2107, 15); -- summoners_pigaches_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2666, 15); -- mirage_charuqs_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2671, 15); -- commodore_bottes_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2676, 15); -- pantin_babouches_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2722, 15); -- etoile_toe_shoes_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2727, 15); -- argute_loafers_-1
 
 INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Worm Mulch
 INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Lugworm Sand
