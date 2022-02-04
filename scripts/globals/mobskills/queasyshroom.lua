@@ -16,14 +16,14 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getMobMod(tpz.mobMod.VAR) == 0) then
+    if (mob:AnimationSub() == 0) or (mob:AnimationSub() == 4)  then
         return 0
     end
     return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    mob:setMobMod(tpz.mobMod.VAR, 1)
+    mob:AnimationSub(1) -- Removes a cap from it's head
     local numhits = 1
     local accmod = 1
     local dmgmod = 2

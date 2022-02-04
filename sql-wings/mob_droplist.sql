@@ -2010,6 +2010,8 @@ INSERT INTO `mob_droplist` VALUES(345, 0, 0, 1000, 4468, 110);
 INSERT INTO `mob_droplist` VALUES(345, 0, 0, 1000, 5322, 100);
 INSERT INTO `mob_droplist` VALUES(345, 0, 0, 1000, 17296, 100);
 INSERT INTO `mob_droplist` VALUES(346, 2, 0, 1000, 4373, 0);
+INSERT INTO `mob_droplist` VALUES(346, 2, 0, 1000, 4375, 0);
+INSERT INTO `mob_droplist` VALUES(346, 2, 0, 1000, 5680, 0);
 INSERT INTO `mob_droplist` VALUES(346, 0, 0, 1000, 5680, 50);
 INSERT INTO `mob_droplist` VALUES(347, 0, 0, 1000, 2626, 1000);
 INSERT INTO `mob_droplist` VALUES(347, 0, 0, 1000, 15018, 280);

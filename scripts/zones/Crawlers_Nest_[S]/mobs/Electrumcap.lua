@@ -1,15 +1,14 @@
 -----------------------------------
--- Area: North Gustaberg [S]
---  Mob: Coppercap
--- Note: PH for Gloomanita
+-- Area: Crawlers' Nest [S]
+--  Mob: Electrumcap
 -- Note: Items stolen removes caps from head
 -----------------------------------
-local ID = require("scripts/zones/North_Gustaberg_[S]/IDs")
 require("scripts/globals/mobs")
 require("scripts/globals/world")
 -----------------------------------
 
 function onMobSpawn(mob)
+    updateRegen(mob)
 end
 
 function onMobEngaged(mob, target)
@@ -24,9 +23,24 @@ function onMobEngaged(mob, target)
     end)
 end
 
+function onMobFight(mob)
+    updateRegen(mob)
+end
+
+function onMobRoam(mob)
+    updateRegen(mob)
+end
+
+function updateRegen(mob)
+    if mob:getWeather() == tpz.weather.RAIN or mob:getWeather() == tpz.weather.SQUALL then
+        mob:setMod(tpz.mod.REGEN, 9) -- 1% per 12s from retail capture
+    else
+        mob:setMod(tpz.mod.REGEN, 0)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.GLOOMANITA_PH, 10, 3600) -- 1 hour
 end

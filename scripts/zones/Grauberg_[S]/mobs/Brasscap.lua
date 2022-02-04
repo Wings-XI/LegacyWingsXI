@@ -1,12 +1,10 @@
 -----------------------------------
--- Area: North Gustaberg [S]
---  Mob: Coppercap
--- Note: PH for Gloomanita
+-- Area: Grauberg [S]
+--  Mob: Brasscap
 -- Note: Items stolen removes caps from head
 -----------------------------------
-local ID = require("scripts/zones/North_Gustaberg_[S]/IDs")
+local ID = require("scripts/zones/Grauberg_[S]/IDs")
 require("scripts/globals/mobs")
-require("scripts/globals/world")
 -----------------------------------
 
 function onMobSpawn(mob)
@@ -28,5 +26,4 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.GLOOMANITA_PH, 10, 3600) -- 1 hour
 end
