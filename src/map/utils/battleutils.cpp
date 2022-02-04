@@ -152,7 +152,7 @@ namespace battleutils
     void LoadWeaponSkillsList()
     {
         const char* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, "
-                            "animationTime, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, main_only, unlock_id "
+                            "animationTime, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, main_only, unlock_id, req_level "
                             "FROM weapon_skills "
                             "WHERE weaponskillid < %u "
                             "ORDER BY type, skilllevel ASC";
@@ -179,6 +179,7 @@ namespace battleutils
                 PWeaponSkill->setTertiarySkillchain(Sql_GetIntData(SqlHandle, 12));
                 PWeaponSkill->setMainOnly(Sql_GetIntData(SqlHandle, 13));
                 PWeaponSkill->setUnlockId(Sql_GetIntData(SqlHandle, 14));
+                PWeaponSkill->setRequiredLevel(Sql_GetIntData(SqlHandle, 15));
 
                 g_PWeaponSkillList[PWeaponSkill->getID()] = PWeaponSkill;
                 g_PWeaponSkillsList[PWeaponSkill->getType()].push_back(PWeaponSkill);
@@ -347,7 +348,8 @@ namespace battleutils
         if ((((PSkill->getSkillLevel() > 0 && PChar->GetSkill(PSkill->getType()) >= PSkill->getSkillLevel() &&
             (PSkill->getUnlockId() == 0 || charutils::hasLearnedWeaponskill(PChar, PSkill->getUnlockId()))) ||
             (PSkill->getSkillLevel() == 0 && (PSkill->getUnlockId() == 0 || charutils::hasLearnedWeaponskill(PChar, PSkill->getUnlockId())))) &&
-            (PSkill->getJob(PChar->GetMJob()) > 0 || (PSkill->getJob(PChar->GetSJob()) > 0 && !PSkill->mainOnly()))))
+            (PSkill->getJob(PChar->GetMJob()) > 0 || (PSkill->getJob(PChar->GetSJob()) > 0 && !PSkill->mainOnly())))
+            && PChar->GetMLevel() >= PSkill->getRequiredLevel())
         {
             return true;
         }
