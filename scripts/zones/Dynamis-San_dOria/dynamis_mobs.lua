@@ -1023,7 +1023,6 @@ mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion 
 -- add mob patrol paths for statues that are supposed to patrol
 -- mobList[zone][mob].patrolPath = { }
 --Wave 1 pathing
-mobList[zone][SMB+1  ].patrolPath = { 138, -2, 105,		148, -2, 116,	138, -2, 105 	}
 mobList[zone][SMB+4  ].patrolPath = { 116, 0, 91,		124, 0, 99, 	116, 0, 91  	}
 mobList[zone][SMB+8  ].patrolPath = { 123, 0, 84,		132, 0, 93, 	123, 0, 84  	}
 mobList[zone][SMB+42 ].patrolPath = { 97, 4, 22, 		98, 4, 66,		97, 4, 22  		}
