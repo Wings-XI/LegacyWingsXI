@@ -95,6 +95,7 @@ CMobEntity::CMobEntity()
     m_HiPartySize = 0;
     m_THLvl = 0;
     m_ItemStolen = false;
+    m_StealItemID = 0;
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
 
@@ -716,6 +717,7 @@ void CMobEntity::Spawn()
     m_HiPartySize = 0;
     m_THLvl = 0;
     m_ItemStolen = false;
+    m_StealItemID = 0;
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
     m_DropItemTime = 1000;
