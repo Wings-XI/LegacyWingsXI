@@ -2447,12 +2447,7 @@ INSERT INTO `item_latents` VALUES(17950, 391, 2, 58, 0);    -- charm +2
 -- -------------------------------------------------------
 -- Sirius Axe
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES(17952, 160, 2, 15, 2);    -- DMG increases by 2 per member
-INSERT INTO `item_latents` VALUES(17952, 160, 2, 15, 3);    -- DMG increases by 2 per member
-INSERT INTO `item_latents` VALUES(17952, 160, 2, 15, 4);    -- DMG increases by 2 per member
-INSERT INTO `item_latents` VALUES(17952, 160, 2, 15, 5);    -- DMG increases by 2 per member
-INSERT INTO `item_latents` VALUES(17952, 160, 2, 15, 6);    -- DMG increases by 2 per member
-INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 3);
+INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 3);	-- Main hand dmg increases by 2 per pt member
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 4);
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 5);
 INSERT INTO `item_latents` VALUES(17952, 366, 2, 16, 6);

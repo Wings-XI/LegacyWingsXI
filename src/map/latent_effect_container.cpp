@@ -508,7 +508,10 @@ void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
                     }
                 }
 
-                if (inZone == latentEffect.GetConditionsValue())
+                // All of our latent effects are based on tiers, adding non-cumlative bonuses per party memeber.
+                // i.e. 3 PT members = +1 stat. 4 PT members = +1 stat. 5 PT members = +1 stat.    5 in PT = +3 stat total
+                // not  3 PT members = +1 stat. 4 PT members = +2 stat. 5 PT members = +3 stat.
+                if (inZone >= latentEffect.GetConditionsValue())
                 {
                     return latentEffect.Activate();
                 }

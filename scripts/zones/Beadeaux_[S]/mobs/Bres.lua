@@ -43,7 +43,6 @@ function onMobFight(mob, target)
     local nextSkill = mob:getLocalVar("nextSkill")
 
     if hpp <= 50 and boost_attack == 0 then
-        print("boost attack")
         mob:setMod(tpz.mod.ATTP, 200)
         mob:setLocalVar('boost_attack', boost_attack + 1)
     end

@@ -10,6 +10,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.EMPYREAN)
 
     local ftpmp = fTP(tp, 0.2, 0.4, 0.6)
-	player:trySkillUp(target, tpz.skill.STAFF, tpHits+extraHits)
+	player:trySkillUp(target, tpz.skill.STAFF)
     return 1, 0, false, ftpmp * player:getMaxMP()
 end

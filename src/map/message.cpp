@@ -843,7 +843,7 @@ namespace message
             {
                 exit(EXIT_FAILURE);
             }
-            Sql_Keepalive(SqlHandle);
+            Sql_Keepalive(SqlHandle, "mqhandler");
         }
         return true;
     }
@@ -930,7 +930,7 @@ namespace message
         {
             exit(EXIT_FAILURE);
         }
-        Sql_Keepalive(SqlHandle);
+        Sql_Keepalive(SqlHandle, "message");
 
         uint64 ipp = map_ip.s_addr;
         uint64 port = map_port;

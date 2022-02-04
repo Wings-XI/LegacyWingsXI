@@ -410,6 +410,7 @@ namespace fishingutils
     fishingarea_t* GetFishingArea(CCharEntity* PChar);
     void StartFishing(CCharEntity* PChar);
     void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32 special);
-};
+    uint8 AddFishingStrike(CCharEntity* PChar); // returns number of active strikes after adding this one
+    };
 
 #endif

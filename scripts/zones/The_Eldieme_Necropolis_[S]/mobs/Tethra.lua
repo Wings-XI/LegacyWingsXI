@@ -145,6 +145,10 @@ function onMobFight(mob, target)
                 mob:setMod(tpz.mod.UFASTCAST, 0)
                 mob:AnimationSub(0)
             end
+        else
+            if mob:getCurrentAction() ~= 30 then
+                mob:setMod(tpz.mod.UFASTCAST, 0)
+            end
         end
     end)
 

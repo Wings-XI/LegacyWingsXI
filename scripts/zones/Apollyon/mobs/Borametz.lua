@@ -19,9 +19,6 @@ function onMobDeath(mob, player, isKiller, noKiller)
             elseif randomF1 == 4 or randomF1 == 5 then
                 battlefield:setLocalVar("randomF2", ID.mob.APOLLYON_NE_MOB[2]+math.random(0,2))
                 tpz.limbus.handleDoors(battlefield, true, ID.npc.APOLLYON_NE_PORTAL[1])
-                local boss = math.random(0,3)
-                GetMobByID(ID.mob.APOLLYON_NE_MOB[2] + boss):setMobLevel(82)
-                GetMobByID(ID.mob.APOLLYON_NE_MOB[2] + boss):setMaxHPP(350)
             end
         end
     end

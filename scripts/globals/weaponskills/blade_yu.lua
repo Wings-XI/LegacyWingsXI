@@ -37,6 +37,6 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         target:addStatusEffect(tpz.effect.POISON, 10, 0, duration)
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.KATANA, tpHits+extraHits) end
-    return tpHits, extraHits, criticalHit, damage
+    return tpHits, extraHits, damage
 
 end

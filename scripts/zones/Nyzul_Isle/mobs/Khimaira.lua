@@ -11,9 +11,9 @@ function onMobDeath(mob, player, isKiller)
         local lootPool = 0
 
         -- can only spawn on 60 or 80 or 100
-        if (floor == 60) then
+        if (floor == 60 or floor == 61) then
             lootPool = 164
-        elseif (floor == 80) then
+        elseif (floor == 80 or floor == 81) then
             lootPool = 181
         else -- floor 100
             lootPool = 303

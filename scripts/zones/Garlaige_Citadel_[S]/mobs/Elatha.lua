@@ -104,10 +104,10 @@ function onMobFight(mob, target)
     mob:addListener("COMBAT_TICK", "ELATHA_CTICK", function(mob)
         local retaliate = mob:getLocalVar("ERetaliate")
         local efollowup = mob:getLocalVar("EBloodWeaponFollow")
-
+        
         if mob:AnimationSub() == 1 then
             -- Retaliation Should Cause Level Up And Always Be Blizzard IV With Instant Cast (https://ffxiclopedia.fandom.com/wiki/Elatha)
-            if retaliate > 0 and not mob:hasStatusEffect(tpz.effect.SILENCE) then
+            if retaliate > 0 then
                 -- Perform Retalitory Blizzard IV
                 mob:setMod(tpz.mod.UFASTCAST, 100)
                 mob:castSpell(152)
@@ -132,6 +132,10 @@ function onMobFight(mob, target)
                 mob:setLocalVar("EBloodWeaponFollow", 0)
                 mob:setMod(tpz.mod.UFASTCAST, 0)
                 mob:AnimationSub(0)
+            end
+        else
+            if mob:getCurrentAction() ~= 30 then
+                mob:setMod(tpz.mod.UFASTCAST, 0)
             end
         end
     end)

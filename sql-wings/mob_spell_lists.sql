@@ -1205,8 +1205,11 @@ INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 360, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 361, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 54, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 190, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 357, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 190, 1, 80);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 191, 80, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 255, 80, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 357, 1, 80);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 365, 80, 255);
 INSERT INTO `mob_spell_lists` VALUES('Pasuk', 110, 245, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Pasuk', 110, 247, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jormungand', 111, 250, 1, 255);
@@ -4264,6 +4267,24 @@ INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 162, 1, 255); -- Black Magic: Stone IV
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
 INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
+-- Apoc Nigh
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,356,76,255); -- paralyaga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,357,75,255); -- slowga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,359,75,255); -- silencega
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,360,75,255); -- dispelga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,366,76,255); -- graviga
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 176, 75, 255);-- firaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 181, 75, 255);-- blizzaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 186, 75, 255);-- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 191, 75, 255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 196, 75, 255);-- thundaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 201, 75, 255);-- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 274, 75, 255);-- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 362, 75, 255);-- bindga
+-- Ouryu Cometh
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 191, 1, 255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 210, 1, 255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 54, 1, 255); -- Stoneskin
 
 
 --

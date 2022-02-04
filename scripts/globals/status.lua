@@ -1087,8 +1087,8 @@ tpz.mod =
     DMGPHYS                   = 161, -- Physical Damage Taken %
     DMGPHYS_II                = 190, -- Physical Damage Taken II % (Burtgang)
     DMGBREATH                 = 162, -- Breath Damage Taken %
-    DMGMAGIC                  = 163, -- Magic Damage Taken %
-    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Aegis)
+    DMGMAGIC                  = 163, -- Magic Damage Taken % (Used with 2010 Era Aegis)
+    DMGMAGIC_II               = 831, -- Magic Damage Taken II % (Used with OOE Aegis, and Lvl 99+ Aegis)
     DMGRANGE                  = 164, -- Range Damage Taken %
 
     UDMGPHYS                  = 387, -- Uncapped Damage Multipliers
@@ -1537,6 +1537,7 @@ tpz.mod =
     -- Special Modifier+
     ADDS_WEAPONSKILL          = 355, --
     ADDS_WEAPONSKILL_DYN      = 356, -- In Dynamis
+    ADDS_NYZUL_BASE_WS        = 830, -- Allows ws to be used prior to completing Unlocking a Myth
 
     STEALTH                   = 358, --
     SNEAK_DURATION            = 946, -- Additional duration in seconds

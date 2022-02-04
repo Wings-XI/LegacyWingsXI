@@ -123,8 +123,8 @@ bool CLatentEffect::Activate()
 {
     if (!IsActivated())
     {
-        //additional effect/dmg latents add mod to weapon, not player
-        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::DMG)
+        //additional effect latents add mod to weapon, not player
+        if (GetModValue() == Mod::ADDITIONAL_EFFECT)
         {
             CCharEntity* PChar = (CCharEntity*)m_POwner;
             CItemWeapon* weapon = (CItemWeapon*)PChar->getEquip((SLOTTYPE)GetSlot());
@@ -163,7 +163,7 @@ bool CLatentEffect::Deactivate()
     if (IsActivated())
     {
         //remove the modifier from weapon, not player
-        if (GetModValue() == Mod::ADDITIONAL_EFFECT || GetModValue() == Mod::DMG)
+        if (GetModValue() == Mod::ADDITIONAL_EFFECT)
         {
             CCharEntity* PChar = (CCharEntity*)m_POwner;
 			CItemWeapon* weapon = (CItemWeapon*)PChar->getEquip((SLOTTYPE)GetSlot());
@@ -172,23 +172,15 @@ bool CLatentEffect::Deactivate()
 
             if (weapon != nullptr && (weapon->isType(ITEM_EQUIPMENT) || weapon->isType(ITEM_WEAPON)))
             {
-                if (GetModValue() == Mod::ADDITIONAL_EFFECT)
+                for (uint8 i = 0; i < weapon->modList.size(); ++i)
                 {
-                    for (uint8 i = 0; i < weapon->modList.size(); ++i)
+                    //ensure the additional effect is fully removed from the weapon
+                    if (weapon->modList.at(i).getModID() == Mod::ADDITIONAL_EFFECT)
                     {
-                        //ensure the additional effect is fully removed from the weapon
-                        if (weapon->modList.at(i).getModID() == Mod::ADDITIONAL_EFFECT)
-                        {
-                            weapon->modList.at(i).setModAmount(0);
-                        }
+                        weapon->modList.at(i).setModAmount(0);
                     }
                 }
-                else
-                {
-                    weapon->addModifier(CModifier(GetModValue(), -modPower));
-                }
             }
-
         }
         else if (GetModForPetLatentMod(GetModValue()) != Mod::NONE)
         {

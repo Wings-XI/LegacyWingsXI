@@ -71,11 +71,17 @@ function onInstanceComplete(instance)
     local chars = instance:getChars()
     local startingFloor = instance:getLocalVar("Nyzul_StartingFloor")
     local endingFloor = instance:getStage()
+    -- stage is advanced on floor complete - so reduce the ending floor by 1
+    if (endingFloor == 1 and instance:setLocalVar("Nyzul_BeatFloor100") > 0) then
+        endingFloor = 100
+    else
+        endingFloor = endingFloor - 1
+    end
     local beatFloor100 = instance:getLocalVar("Nyzul_BeatFloor100")
-    local tokenPenlty = instance:getLocalVar("Nyzul_TokenPenalty")
+    local tokenPenalty = instance:getLocalVar("Nyzul_TokenPenalty")
     local numberOfPlayers = instance:getLocalVar("Nyzul_NumberOfPlayers")
-    printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
-    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenlty, numberOfPlayers)
+    --printf("calculateTokenReward - startingFloor %s endingFloor %s tokenPenalty %s numberOfPlayers %s beatFloor100 %s", startingFloor, endingFloor, tokenPenalty, numberOfPlayers, beatFloor100)
+    local tokenReward = calculateTokenReward(startingFloor, endingFloor, beatFloor100, tokenPenalty, numberOfPlayers)
 
     for _,char in pairs(chars) do
         -- save runic disc progress
@@ -162,6 +168,8 @@ function floorObjectiveComplete(instance)
             player:messageSpecial(ID.text.OBJECTIVE_COMPLETE, instance:getStage())
         end
     end
+
+    instance:setStage(instance:getStage()+1)
 end
 
 function evaluateEliminateAll(instance)

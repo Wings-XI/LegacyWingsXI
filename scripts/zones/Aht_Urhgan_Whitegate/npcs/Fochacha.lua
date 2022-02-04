@@ -45,7 +45,7 @@ function onEventFinish(player, csid, option)
         player:addQuest(AHT_URHGAN, tpz.quest.id.ahtUrhgan.DELIVERING_THE_GOODS)
         player:setCharVar("deliveringTheGoodsCS", 1)
     elseif csid == 41 and npcUtil.completeQuest(player, AHT_URHGAN, tpz.quest.id.ahtUrhgan.DELIVERING_THE_GOODS, { item = { { 2184, 3 } }, var = "deliveringTheGoodsCS"}) then
-        player:setCharVar("VANISHING_ACT_waitJPMidnight", getMidnight())
+        player:setCharVar("VANISHING_ACT_waitJPMidnight", JstMidnight())
     elseif csid == 43 then
         player:setCharVar("vanishingactCS", 3)
     end

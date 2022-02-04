@@ -61,7 +61,7 @@ tpz.artisan.moogleOnUpdate = function(player, csid, option)
     elseif option == 3 then -- Client requests sack + scroll status
         local scrollAvail = 0
         if ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then
-            scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+            scrollAvail = player:getCharVar("[artisan]nextScroll") < JstMidnight() and 1 or 0
         end
         local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
         if sackSize > 0 then sackSize = sackSize + 1 end
@@ -70,7 +70,7 @@ tpz.artisan.moogleOnUpdate = function(player, csid, option)
     elseif option == 4 then -- Main dialogue
         local scrollAvail = 0
         if ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then
-            scrollAvail = player:getCharVar("[artisan]nextScroll") < getMidnight() and 1 or 0
+            scrollAvail = player:getCharVar("[artisan]nextScroll") < JstMidnight() and 1 or 0
         end
         local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
         if sackSize > 0 then sackSize = sackSize + 1 end
@@ -82,10 +82,10 @@ tpz.artisan.moogleOnFinish = function(player, csid, option)
     local zone = zones[player:getZoneID()]
 
     if option == 99 and ARTISAN_MOOGLES_GIVE_SCROLLS == 1 then -- Get Scroll
-        if player:getCharVar("[artisan]nextScroll") < getMidnight() then
+        if player:getCharVar("[artisan]nextScroll") < JstMidnight() then
             if player:addItem(4181) then
                 player:messageSpecial(zone.text.ITEM_OBTAINED, 4181)
-                player:setCharVar("[artisan]nextScroll", getMidnight())
+                player:setCharVar("[artisan]nextScroll", JstMidnight())
             else
                 player:messageSpecial(zone.text.ITEM_CANNOT_BE_OBTAINED, 4181)
             end
