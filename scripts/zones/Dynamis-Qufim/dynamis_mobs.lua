@@ -746,12 +746,12 @@ mobList[zone][DMB+524].pos = { 159.472, 20.000, -233.529, 209  } -- ( 138 )
 -- mobList[zone][SMB+1].path.pos = { x, y, z, r} { 11, 22, 33, 66, 77, 88, }
 
 -- set statue eye color
-mobList[zone][SMB+90 ].eyes = dynamis.eyes.GREEN
-mobList[zone][SMB+91 ].eyes = dynamis.eyes.BLUE
-mobList[zone][SMB+92 ].eyes = dynamis.eyes.GREEN
-mobList[zone][SMB+346].eyes = dynamis.eyes.GREEN
-mobList[zone][SMB+347].eyes = dynamis.eyes.BLUE
-mobList[zone][SMB+520].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+90 ].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+91 ].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+92 ].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+346].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+347].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+520].eyes = dynamis.eyes.BLUE
 
 -- set time extensions
 mobList[zone][DMB+0  ].timeExtension = 60
