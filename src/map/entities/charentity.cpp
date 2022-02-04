@@ -2070,16 +2070,19 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     if (PItem->getAoE())
     {
         //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
-        for each (CBattleEntity* PMember in PTarget->PParty->members)
+        if (PTarget->PParty)
         {
-            // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
-            if (this->id == PMember->id)
-                continue;
-            if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
+            for each (CBattleEntity* PMember in PTarget->PParty->members)
             {
-                luautils::OnItemUse(PMember, PItem, this);
-            }
-        };
+                // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
+                if (this->id == PMember->id)
+                    continue;
+                if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
+                {
+                    luautils::OnItemUse(PMember, PItem, this);
+                }
+            };
+        }
         // Triggering for item user
         luautils::OnItemUse(this, PItem, this);
     }
