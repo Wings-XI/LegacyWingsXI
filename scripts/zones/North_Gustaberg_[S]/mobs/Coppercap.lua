@@ -2,6 +2,7 @@
 -- Area: North Gustaberg [S]
 --  Mob: Coppercap
 -- Note: PH for Gloomanita
+-- Note: Items stolen removes caps from head
 -----------------------------------
 local ID = require("scripts/zones/North_Gustaberg_[S]/IDs")
 require("scripts/globals/mobs")
@@ -9,35 +10,18 @@ require("scripts/globals/world")
 -----------------------------------
 
 function onMobSpawn(mob)
-    updateRegen(mob)
-    updateRegain(mob)
 end
 
-function onMobFight(mob)
-    updateRegen(mob)
-    updateRegain(mob)
-end
-
-function onMobRoam(mob)
-    updateRegen(mob)
-    updateRegain(mob)
-end
-
-function updateRegen(mob)
-    if mob:getWeather() == tpz.weather.RAIN or mob:getWeather() == tpz.weather.SQUALL then
-        mob:setMod(tpz.mod.REGEN, 1)
-    else
-        mob:setMod(tpz.mod.REGEN, 0)
-    end
-end
-
-function updateRegain(mob)
-    local hour = VanadielHour()
-    if hour < 4 or hour >= 20 then
-        mob:setMod(tpz.mod.REGAIN, 10)
-    elseif hour >= 4 or hour < 20 then
-        mob:setMod(tpz.mod.REGAIN, 0)
-    end
+function onMobEngaged(mob, target)
+    mob:addListener("ITEM_STOLEN", "SHROOM_ITEM_STOLEN", function(mob, player, itemId)
+        if itemId == 4373 then
+            mob:AnimationSub(1)
+        elseif itemId == 4375 then 
+            mob:AnimationSub(2)
+        elseif itemId == 5680 then
+            mob:AnimationSub(3)
+        end
+    end)
 end
 
 function onMobDeath(mob, player, isKiller)
