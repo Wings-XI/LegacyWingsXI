@@ -372,6 +372,7 @@ public:
     time_point        m_ZoneAggroImmunity;
     uint32            m_fomorHate;
     uint32            m_pixieHate;
+    uint32            m_nyzulProgress;              // Nyzul floor progress - required to determine mythic weaponskill access on weapon equip
 
     int8			  getShieldSize();
 
