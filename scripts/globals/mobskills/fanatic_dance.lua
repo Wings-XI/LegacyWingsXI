@@ -14,16 +14,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getID() == 17534978 or
-        mob:getID() == 17534979 or
-        mob:getID() == 17535006 or
-        mob:getID() == 17535032 or
-        mob:getID() == 17535044 or
-        mob:getID() == 17535207 or
-        mob:getID() == 17535208 or
-        mob:getID() == 17535209 or
-        mob:getID() == 17535210 or
-        mob:getID() == 17535211) then
+    if (mob:isInDynamis() and mob:isMobType(MOBTYPE_NOTORIOUS)) then
         return 0
     end
     return 1
