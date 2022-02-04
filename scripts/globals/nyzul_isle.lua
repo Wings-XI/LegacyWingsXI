@@ -127,7 +127,7 @@ function generateFreeFloor(floorNumber, instance)
     end
 
     -- light the run of transfer
-    activeRuneOfTransfer:AnimationSub(1)
+    floorObjectiveComplete(instance)
     return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
