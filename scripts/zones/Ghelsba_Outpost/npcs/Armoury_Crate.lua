@@ -141,17 +141,20 @@ local loot =
     [36] =
     {
         {
-            {itemid =  4386, droprate = 1000}, -- king_truffle
+            {itemid =  4373, droprate = 1000}, -- woozyshroom
         },
         {
-            {itemid = 17880, droprate = 1000}, -- jug_of_seedbed_soil
+            {itemid = 65535, droprate = 1000, amount = 4000}, -- gil
         },
         {
             {itemid =     0, droprate =  200}, -- nothing
-            {itemid = 12403, droprate =  200}, -- magicians_shield
-            {itemid = 12389, droprate =  200}, -- mercenarys_targe
-            {itemid = 12399, droprate =  200}, -- beaters_aspis
-            {itemid = 12394, droprate =  200}, -- pilferers_aspis
+            {itemid = 12403, droprate =  150}, -- magicians_shield
+            {itemid = 12389, droprate =  150}, -- mercenarys_targe
+            {itemid = 12399, droprate =  150}, -- beaters_aspis
+            {itemid = 12394, droprate =  150}, -- pilferers_aspis
+            {itemid =   806, droprate =   70}, -- tourmaline
+            {itemid =   814, droprate =   70}, -- amber
+            {itemid =   795, droprate =   60}, -- lapis_lazuli
         },
         {
             {itemid =     0, droprate =  250}, -- nothing
@@ -160,16 +163,21 @@ local loot =
             {itemid = 13663, droprate =  250}, -- warlocks_mantle
         },
         {
-            {itemid =     0, droprate =  625}, -- nothing
-            {itemid =  4947, droprate =  125}, -- scroll_of_utsusemi_ni
+            {itemid =     0, droprate =  325}, -- nothing
+            {itemid =  4947, droprate =  100}, -- scroll_of_utsusemi_ni
             {itemid =  4714, droprate =  125}, -- scroll_of_phalanx
             {itemid =  4751, droprate =  125}, -- scroll_of_erase
+            {itemid = 17880, droprate =  150}, -- jug_of_seedbed_soil
+            {itemid =   645, droprate =   50}, -- darksteel_ore
+            {itemid =  4374, droprate =  150}, -- sleepshroom
         },
         {
-            {itemid =     0, droprate =  250}, -- nothing
-            {itemid =  1601, droprate =  250}, -- mannequin_head
-            {itemid =  1602, droprate =  250}, -- mannequin_body
-            {itemid =  1603, droprate =  250}, -- mannequin_hands
+            {itemid =     0, droprate =  150}, -- nothing
+            {itemid =  1601, droprate =  200}, -- mannequin_head
+            {itemid =  1602, droprate =  200}, -- mannequin_body
+            {itemid =  1603, droprate =  200}, -- mannequin_hands
+            {itemid =  4868, droprate =  150}, -- scroll_of_dispel
+            {itemid =  4386, droprate =  100}, -- king_truffle
         },
     },
 }

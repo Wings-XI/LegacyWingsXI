@@ -11,6 +11,7 @@ require("scripts/globals/titles")
 require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
+require("scripts/globals/pathfind")
 ------------------------------------
 
 dynamis = {}
@@ -335,6 +336,23 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_QUFIM_INTERLOPER,
         entryPos = {-19, -17, 104, 253, tpz.zone.DYNAMIS_QUFIM},
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
+        sjRestriction = true,
+        sjRestrictionNPC = 16945638,
+        sjRestrictionLocation =
+        {
+            [1] = {-264.498, -19.255, 401.465, 54},
+            [2] = {-264.655, -19.268, 240.580, 71},
+            [3] = {-77.771, -19.068, 258.666, 50},
+            [4] = {-137.127, -19.976, 228.789, 101},
+            [5] = {-61.647, -19.868, 152.935, 35},
+            [6] = {27.973, -20.270, 191.907, 195},
+            [7] = {107.445, -20.368, 149.587, 64},
+            [8] = {99.884, -19.557, 51.518, 27},
+            [9] = {-29.895, -21.095, -57.154, 209},
+            [10] = {88.474, -20.621, -49.333, 4},
+            [11] = {-192.540, -20.477, -11.055, 151},
+            [12] = {-340.976, -20.421, 31.154, 66},
+        }
     },
     [tpz.zone.QUFIM_ISLAND] =
     {
@@ -518,7 +536,13 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
 end
 
 dynamis.zoneOnInitialize = function(zone)
-
+    local zoneId = zone:getID()
+    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+        local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
+        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
+        sjRestrictionNPC:setPos(pos)
+        sjRestrictionNPC:setStatus(tpz.status.NORMAL)
+    end
 end
 
 dynamis.zoneOnZoneIn = function(player, prevZone)
@@ -536,7 +560,11 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
         end)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
-        player:setCharVar("DynaInflictWeakness", 0)
+            player:setCharVar("DynaInflictWeakness", 0)
+        if dynamis.dynaInfo[zoneId].sjRestriction == true then
+            player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+        end
+
     end
 
     return -1
@@ -569,7 +597,7 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
         local players = zone:getPlayers()
         for name, player in pairs(players) do
             if mob:checkDistance(player) < 30 then
-                if eyes == dynamis.eyes.BLUE then
+                if eyes == dynamis.eyes.GREEN then
                     local amt = player:getMaxMP() - player:getMP()
                     player:restoreMP(amt)
                     player:messageBasic(tpz.msg.basic.RECOVERS_MP, 0, amt)
@@ -613,23 +641,23 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         i = i + 1
     end
     i = 1
-    while randomChildrenList ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
-        local originalRoll = math.random(1,#randomChildrenList)
+    while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+        local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
         local roll = originalRoll
-        while GetMobByID(randomChildrenList[roll]):isSpawned() == true and roll ~= nil do
+        while  GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
             roll = roll + 1
-            if roll > #randomChildrenList then roll = 1 end
+            if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
             if roll == originalRoll then roll = nil end
         end
         if roll ~= nil then
-            local child = GetMobByID(randomChildrenList[roll])
+            local child = GetMobByID(randomChildrenList[randomChildrenCount][roll])
             local home = child:getSpawnPos()
             local randomSpawn = false
             if home.x == 1 and home.y == 1 and home.z == 1 then
                 child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
                 randomSpawn = true
             end
-            SpawnMob(randomChildrenList[roll]):updateEnmity(target)
+            SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
             if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
         else
             break
@@ -667,7 +695,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
     end
 
     if mobFound == true then
-        --print(string.format("mob's defeat is a requirement for wave number %u",i))
+        -- print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
         local allReqsMet = true
         while mobList.waveDefeatRequirements[i][j] ~= nil do
@@ -679,13 +707,36 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
         end
         if allReqsMet == true then dynamis.spawnWave(mobList, i) end
     end
+    -- miniWave is used when the same mobID needs to be used twice for a waveDefeatRequirement
+    local mobID = mob:getID()
+    local miniWave = nil
+    if mobList[mobID] ~= nil then
+        miniWave = mobList[mobID].miniWave
+    end
+    local forceLink = false
+    local i = 1
+
+    while miniWave ~= nil and miniWave[i] ~= nil do
+        if type(miniWave[i]) == "boolean" then forceLink = miniWave[i]
+        else
+            local child = GetMobByID(miniWave[i])
+            if mobList[miniWave[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
+            SpawnMob(miniWave[i])
+            if forceLink == true then child:updateEnmity(target) end
+        end
+        i = i + 1
+    end
 end
 
 dynamis.mobOnRoam = function(mob)
     local home = mob:getSpawnPos()
     local location = mob:getPos()
-    mob:pathTo(home.x, home.y, home.z)
-    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then mob:setPos(location.x, location.y, location.z, home.rot) end
+
+    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
+        mob:setPos(location.x, location.y, location.z, home.rot)
+    else
+        mob:pathTo(home.x, home.y, home.z)
+    end
 end
 
 dynamis.qmOnTrade = function(player, npc, trade) -- i think this is for Xarcabard, so remember to update this once we start work on that
@@ -740,6 +791,21 @@ dynamis.qmOnTrigger = function(player, npc)
         end
     else
         printf("[dynamis.qmOnTrigger] called on npc %i (%s) in zone %i that does not have a QM group in its IDs.", npcId, npc:getName(), zoneId)
+    end
+end
+
+dynamis.sjQMOnTrigger = function(player, npc)
+    local zoneId = npc:getZoneID()
+    
+    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+        print("I'm here")
+        for _, member in pairs(player:getAlliance()) do
+            if member:getZoneID() == player:getZoneID() then
+                if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
+                    member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
+                end
+            end
+        end
     end
 end
 

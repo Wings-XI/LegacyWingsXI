@@ -21,7 +21,7 @@ npcList = npcList or { }
 
 -- remember, statues 87, 157, 164, 243, 246, 368 are Warchief Tombstones instead of Serjeant, which are RDM instead of BLM. IDs are 17535463, 17535533, 17535540, 17535619, 17535622, 17535744
 
-mobList[zone] = 
+mobList[zone] =
 {
     [17534977] = { id =  DMB+1 }, --	Overlords_Tombstone
     [17534978] = { id =  DMB+2 }, --	Battlechoir_Gitchfotch
@@ -867,19 +867,19 @@ mobList[zone].zoneID = tpz.zone.DYNAMIS_SAN_DORIA
 
 -- set positions for mobs that have placements (x,y,z,rot) and rotation is required
 -- child monsters' positions are optional. if left unset, they are randomly placed closely around their parent monster when the parent mob engages
-mobList[zone][SMB+1  ].pos = { 137.0790, -2.0000,  105.1504, 226   } -- Residential Area
-mobList[zone][SMB+4  ].pos = { 120.0731,  0.0000,   98.3560, 192   } -- Lion Square Fount. N
-mobList[zone][SMB+8  ].pos = { 128.9389,  0.0000,   88.0389, 0     } -- Lion Square Fount. E
-mobList[zone][SMB+12 ].pos = { 119.9486,  0.0000,   78.9593, 64    } -- Lion Square Fount. S
-mobList[zone][SMB+16 ].pos = { 111.0925,  0.0000,   88.0319, 128   } -- Lion Square Fount. W
+mobList[zone][SMB+1  ].pos = { 137.0790, -2.0000,  105.1504, 225   } -- Residential Area
+mobList[zone][SMB+4  ].pos = { 116.4000,  0.0000,   91.6443, 225   } -- Lion Square Fount. N
+mobList[zone][SMB+8  ].pos = { 123.5808,  0.0000,   84.2734, 225     } -- Lion Square Fount. E
+mobList[zone][SMB+12 ].pos = { 119.8963,  0.0000,   80.3786, 225    } -- Lion Square Fount. S
+mobList[zone][SMB+16 ].pos = { 112.5138,  0.0000,   87.5595, 225   } -- Lion Square Fount. W
 mobList[zone][SMB+20 ].pos = { 100.0876,  1.0000,  103.6861, 32    } -- Lion Tavern
 mobList[zone][SMB+24 ].pos = { 104.0628,  1.9165,   72.0631, 226   } -- on stair, SW of Lion Square Fount.
 mobList[zone][SMB+25 ].pos = {  92.8329,  4.0000,   63.6029, 255   } -- Helbort's Blades N
 mobList[zone][SMB+28 ].pos = {  93.7486,  4.0000,   56.9143, 255   } -- Helbort's Blades S
-mobList[zone][SMB+31 ].pos = { 104.0748,  3.0000,   50.0187, 128   } -- Door Across Helbort's Blades
+mobList[zone][SMB+31 ].pos = { 101.2500,  4.0000,   50.0912, 128   } -- Door Across Helbort's Blades
 mobList[zone][SMB+42 ].pos = {  97.8056,  4.0000,   45.2697, 194   } -- Alleyway, Btw. Wep+Armor Shops
-mobList[zone][SMB+39 ].pos = { 104.2288,  3.0000,   32.0337, 128   } -- Door Across Rosel's Armour
-mobList[zone][SMB+34 ].pos = {  91.6005,  3.0000,   37.9516, 0     } -- Rosel's Armour
+mobList[zone][SMB+39 ].pos = { 101.4410,  4.0000,   32.0477, 128   } -- Door Across Rosel's Armour
+mobList[zone][SMB+34 ].pos = {  94.8431,  4.0000,   38.0928, 0     } -- Rosel's Armour
 mobList[zone][SMB+58 ].pos = { 140.8978,  0.0000,   55.7513, 165   } -- Sq.Alley N
 mobList[zone][SMB+59 ].pos = { 144.9005,  0.0000,   59.3423, 161   } -- Sq.Alley Northern Bldg.
 mobList[zone][SMB+45 ].pos = { 142.4358,  0.0000,   69.3664, 70    } -- Sq.Alley Under Staircase
@@ -888,9 +888,9 @@ mobList[zone][SMB+50 ].pos = { 156.4780, -1.0000,   41.9830, 128   } -- Sq.Alley
 mobList[zone][SMB+60 ].pos = { 143.5072,  0.0000,   27.3608, 94    } -- Sq.Alley S
 mobList[zone][SMB+61 ].pos = { 130.5417,  0.0000,   14.2169, 127   } -- Sq.Alley SW
 mobList[zone][SMB+64 ].pos = { 112.9542,  2.0000,   14.0701, 127   } -- Sq.Alley SW2
-mobList[zone][SMB+69 ].pos = {  80.5337,  2.0000,   11.8965, 230   } -- Cavalry Way Stair W
+mobList[zone][SMB+69 ].pos = {  80.5337,  2.0000,   11.8965, 30    } -- Cavalry Way Stair W
 mobList[zone][SMB+71 ].pos = {  86.0373,  2.0000,    6.8098, 224   } -- Cavalry Way Stair C
-mobList[zone][SMB+67 ].pos = {  91.7898,  2.0000,    1.3265, 218   } -- Cavalry Way Stair E
+mobList[zone][SMB+67 ].pos = {  91.7898,  2.0000,    1.3265, 160   } -- Cavalry Way Stair E
 mobList[zone][SMB+152].pos = {  55.7694, -8.6001,  -30.0464, 192   } -- W of Eastgate Entrance
 mobList[zone][SMB+74 ].pos = {  86.5500, -6.8616,  -14.6200, 160   } -- Eastgate Atop E
 mobList[zone][SMB+77 ].pos = {  78.7389, -7.4000,  -23.0058, 160   } -- Eastgate Atop C
@@ -904,7 +904,7 @@ mobList[zone][SMB+100].pos = {  93.3493,  1.0000,  -53.3296, 166   } -- Eastgate
 mobList[zone][SMB+101].pos = {  85.4025,  1.0000,  -70.3379, 188   } -- Eastgate Far Corner
 mobList[zone][SMB+131].pos = {  40.0124,  2.0000,  -29.8986, 232   } -- Near AH: Choco Tunnel E
 mobList[zone][SMB+134].pos = {  28.0243,  2.0000,  -18.3093, 64    } -- Near AH: E Tent
-mobList[zone][SMB+139].pos = {  -0.0834,  2.0000,   -8.9377, 12    } -- Near AH: Between Tents
+mobList[zone][SMB+139].pos = {  -0.0834,  2.0000,   -8.9377, 64    } -- Near AH: Between Tents
 mobList[zone][SMB+144].pos = { -28.0377,  2.0000,  -17.1347, 64    } -- Near AH: W Tent
 mobList[zone][SMB+149].pos = { -39.8505,  2.0000,  -29.8840, 150   } -- Near AH: Choco Tunnel W
 mobList[zone][SMB+118].pos = {  14.0580,  1.7000,  -28.4680, 192   } -- AH: E
@@ -913,13 +913,13 @@ mobList[zone][SMB+121].pos = { -13.9513,  1.7000,  -29.0579, 192   } -- AH: W
 mobList[zone][SMB+127].pos = {  11.0112, -3.0000,  -33.8374, 192   } -- AH: Atop E
 mobList[zone][SMB+124].pos = {  -1.0120, -3.0000,  -35.0168, 192   } -- AH: Atop C
 mobList[zone][SMB+129].pos = { -11.0031, -3.0000,  -33.8110, 192   } -- AH: Atop W
-mobList[zone][SMB+190].pos = {  20.9320,  2.1000,   -1.5109, 64    } -- Victory Square SE
-mobList[zone][SMB+196].pos = { -20.4887,  2.1000,    0.0671, 64    } -- Victory Square SW
-mobList[zone][SMB+199].pos = { -26.4408,  2.1000,   14.6410, 32    } -- Victory Square NW
-mobList[zone][SMB+193].pos = {  26.7441,  2.1000,   14.6658, 96    } -- Victory Square NE
-mobList[zone][SMB+175].pos = {   0.0329,  0.4826,   13.0260, 64    } -- Victory Square Main Path C
-mobList[zone][SMB+180].pos = {   5.0159,  1.6237,    6.1766, 64    } -- Victory Square Main Path E
-mobList[zone][SMB+185].pos = {  -5.0079,  1.6670,    5.9172, 64    } -- Victory Square Main Path W
+mobList[zone][SMB+190].pos = {  20.0000,  2.0000,    5.0000, 64    } -- Victory Square SE
+mobList[zone][SMB+196].pos = { -20.0000,  2.0000,    5.0000, 64    } -- Victory Square SW
+mobList[zone][SMB+199].pos = { -20.0000,  0.0000,   24.0000, 64    } -- Victory Square NW
+mobList[zone][SMB+193].pos = {  20.0000,  0.0000,   24.0000, 64    } -- Victory Square NE
+mobList[zone][SMB+175].pos = {   0.0000,  0.5000,   13.0000, 64    } -- Victory Square Main Path C
+mobList[zone][SMB+180].pos = {   5.0000,  0.0000,   22.0000, 64    } -- Victory Square Main Path E
+mobList[zone][SMB+185].pos = {  -5.0000,  0.0000,   22.0000, 64    } -- Victory Square Main Path W
 mobList[zone][SMB+107].pos = {   5.4815,  2.0000,  -74.6288, 241   } -- Choco Stable E
 mobList[zone][SMB+102].pos = {  -7.7872,  2.0000,  -80.4531, 240   } -- Choco Stable S
 mobList[zone][SMB+105].pos = { -12.3592,  2.0000,  -73.7705, 249   } -- Choco Stable W
@@ -1019,10 +1019,52 @@ mobList[zone][SMB+10 ].pos = { 130.6248, -1.2500,  105.9016, 96    } -- W4 Lion 
 mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion Square Stairs S
 
 
-
 -- instead of standing still, i will patrol across these given points (triplets of x,y,z)
--- todo: this is not yet functional, this will most likely use dynamis.mobOnRoamAction
--- mobList[zone][SMB+1].path = { 11, 22, 33, 66, 77, 88, }
+-- add mob patrol paths for statues that are supposed to patrol
+-- mobList[zone][mob].patrolPath = { }
+--Wave 1 pathing
+mobList[zone][SMB+4  ].patrolPath = { 116, 0, 91,		124, 0, 99, 	116, 0, 91  	}
+mobList[zone][SMB+8  ].patrolPath = { 123, 0, 84,		132, 0, 93, 	123, 0, 84  	}
+mobList[zone][SMB+42 ].patrolPath = { 97, 4, 22, 		98, 4, 66,		97, 4, 22  		}
+mobList[zone][SMB+54 ].patrolPath = { 148, 0, 35, 		147, 0, 51,		148, 0, 35 		}
+mobList[zone][SMB+60 ].patrolPath = { 148, 0, 32, 		134, 0, 15,		148, 0, 32 		}
+mobList[zone][SMB+61 ].patrolPath = { 130, 0, 14, 		116, 2, 14,		130, 0, 14 		}
+mobList[zone][SMB+64 ].patrolPath = { 100, 4, 15, 		113, 2, 14,		100, 4, 15 		}
+mobList[zone][SMB+71 ].patrolPath = { 95, 4, 15, 		77, 2, -4,		95, 4, 15  		}
+mobList[zone][SMB+92 ].patrolPath = { 87, 2, -32, 		72, 2, -16,		87, 2, -32 		}
+mobList[zone][SMB+95 ].patrolPath = { 65, 2, -26, 		80, 2, -41,		65, 2, -26 		}
+mobList[zone][SMB+99 ].patrolPath = { 80, 2, -8, 		94, 2, -23,		80, 2, -8  		}
+mobList[zone][SMB+149].patrolPath = { -40, 2, -24,		-40, 2, -50,	-40, 2, -24 	}
+mobList[zone][SMB+131].patrolPath = { 40, 2, -24, 		40, 2, -50,		40, 2, -24 		}
+mobList[zone][SMB+134].patrolPath = { 34, 2, -18, 		14, 2, -18,		34, 2, -18 		}
+mobList[zone][SMB+144].patrolPath = { -34, 2, -18, 		-14, 2, -18,	-34, 2, -18 	}
+mobList[zone][SMB+139].patrolPath = { 0, 2, -10, 		0, 2, -22,		0, 2, -10 		}
+mobList[zone][SMB+175].patrolPath = { -0, 1, 9, 		-0, -2, 43,		-0, 1, 9 		}
+mobList[zone][SMB+180].patrolPath = { 5, 0, 22,         5, 2, -15,      5, 0, 22,       } -- Victory Square Main Path E
+mobList[zone][SMB+185].patrolPath = { -5, 0, 22,        -5, 2, -15,     -5, 0, 22,      } -- Victory Square Main Path W
+mobList[zone][SMB+190].patrolPath = { 20, 2, 5,         20, 2, -13,     20, 2, 5        }
+mobList[zone][SMB+193].patrolPath = { 20, 0, 24,        20, 2, 8,       20, 0, 24       }
+mobList[zone][SMB+199].patrolPath = { -20, 0, 24,       -20, 2, 8,      -20, 0, 24      }
+mobList[zone][SMB+196].patrolPath = { -20, 2, 5,        -20, 2, -13,    -20, 2, 5       }
+mobList[zone][SMB+243].patrolPath = { -96, -2, 17, 		-83, -2, 3,		-96, -2, 17 	}
+mobList[zone][SMB+257].patrolPath = { -94, 2, -21, 		-81, 2, -8,		-94, 2, -21 	}
+mobList[zone][SMB+258].patrolPath = { -72, 2, -16, 		-86, 2, -30,	-72, 2, -16 	}
+mobList[zone][SMB+259].patrolPath = { -78, 2, -37, 		-64, 2, -24,	-78, 2, -37 	}
+mobList[zone][SMB+261].patrolPath = { -118, -2, 12, 	-99, -2, 27,	-118, -2, 12 	}
+mobList[zone][SMB+264].patrolPath = { -118, -2, 19, 	-136, -2, 18,	-118, -2, 19 	}
+mobList[zone][SMB+267].patrolPath = { -140, -2, 18, 	-163, -1, 17,	-140, -2, 18 	}
+mobList[zone][SMB+293].patrolPath = { -190, -1, 43, 	-193, -1, 55,	-190, -1, 43 	}
+mobList[zone][SMB+298].patrolPath = { -193, -2, 61, 	-194, -2, 78,	-193, -2, 61 	}
+mobList[zone][SMB+313].patrolPath = { -196, -2, 81, 	-210, -2, 95,	-196, -2, 81 	}
+mobList[zone][SMB+316].patrolPath = { -231, -2, 97, 	-213, -2, 98,	-231, -2, 97 	}
+mobList[zone][SMB+320].patrolPath = { -240, -4, 98, 	-259, -4, 98,	-240, -4, 98 	}
+mobList[zone][SMB+330].patrolPath = { -94, -6, 75, 		-105, -6, 84,	-94, -6, 75 	}
+mobList[zone][SMB+335].patrolPath = { -90, -6, 57, 		-93, -6, 71,	-90, -6, 57 	}
+mobList[zone][SMB+345].patrolPath = { -106, -6, 87, 	-125, -6, 88,	-106, -6, 87 	}
+
+--Wave 2 pathing
+mobList[zone][SMB+309].patrolPath = { -212, -2, 96, 	-229, -2, 98,	-212, -2, 96 	}
+mobList[zone][SMB+305].patrolPath = { -200, -2, 87, 	-193, -2, 69,	-200, -2, 87 	}
 
 -- set statue eye color
 mobList[zone][SMB+20 ].eyes = dynamis.eyes.GREEN
@@ -1081,148 +1123,148 @@ mobList[zone][DMB+68 ].timeExtension = 30 -- Voidstreaker Butchnotch
 -- list of mobs to spawn the wave. ALL of them must be defeated (in any order)
 mobList[zone].waveDefeatRequirements = { }
 mobList[zone].waveDefeatRequirements[1] = { } -- always leave this empty
-mobList[zone].waveDefeatRequirements[2] = { DMB+68 } -- kill Voidstreaker to spawn megaboss + alley repops
+mobList[zone].waveDefeatRequirements[2] = { DMB+68 } -- kill Voidstreaker to spawn random statues
 mobList[zone].waveDefeatRequirements[3] = { DMB+1 } -- megaboss kill does a mass repop of the zone
-mobList[zone].waveDefeatRequirements[4] = { DMB+56 } -- kill of Voidstreaker Butchnotch spawns 4x L.Square
+mobList[zone].waveDefeatRequirements[4] = { DMB+30, DMB+56 } -- kill of Wyrmgnasher Bjakdek and Reapertongue_Gadgquok to spawn Overlords Tombstone
+
+-- miniWave is used when the same mobID needs to be used twice for a spawn wave or smaller size-waves
+mobList[zone][DMB+30].miniWave = { SMB+14, SMB+18 } -- Kill of Reapertongue_Gadgquok spawns 2x statue near entrance
+mobList[zone][DMB+56].miniWave = { SMB+10, SMB+6 } -- kill of Wyrmgnasher Bjakdek spawns 2x statue near entrance
 
 -- set which waves this monster will spawn on (can be multiple)
 -- wave 1 is spawned on the creation of the dynamis instance
-mobList[zone][SMB+1  ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+4  ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+8  ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+12 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+16 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+20 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+24 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+25 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+28 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+31 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+42 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+39 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+34 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+58 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+59 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+54 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+60 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+61 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+64 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+69 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+71 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+67 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+152].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+74 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+77 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+80 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+99 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+92 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+95 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+87 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+98 ].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+100].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+101].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+131].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+134].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+139].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+144].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+149].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+118].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+114].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+121].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+127].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+124].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+129].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+190].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+196].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+199].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+193].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+175].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+180].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+185].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+107].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+102].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+105].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+109].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+112].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+113].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+153].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+227].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+222].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+217].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+214].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+259].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+258].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+257].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+246].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+251].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+254].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+260].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+243].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+234].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+231].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+261].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+237].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+264].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+267].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+270].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+283].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+286].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+273].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+278].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+292].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+291].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+293].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+298].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+313].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+301].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+316].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+320].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+368].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+349].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+346].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+335].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+330].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+345].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+323].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+365].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+340].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+352].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+360].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+357].waves = {  1 ,nil,nil,nil }
-mobList[zone][SMB+309].waves = { nil, 2 ,nil,nil }
-mobList[zone][SMB+305].waves = { nil, 2 ,nil,nil }
-mobList[zone][DMB+1  ].waves = { nil, 2 ,nil,nil }
-mobList[zone][SMB+207].waves = { nil, 2 ,nil,nil }
-mobList[zone][SMB+202].waves = { nil, 2 ,nil,nil }
-mobList[zone][SMB+83 ].waves = { nil, 2 ,nil,nil }
-mobList[zone][SMB+444].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+469].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+464].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+439].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+432].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+427].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+423].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+419].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+415].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+481].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+475].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+494].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+488].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+501].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+451].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+457].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+392].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+396].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+408].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+404].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+400].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+384].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+380].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+376].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+388].waves = { nil,nil, 3 ,nil }
-mobList[zone][SMB+14 ].waves = { nil,nil,nil, 4  }
-mobList[zone][SMB+18 ].waves = { nil,nil,nil, 4  }
-mobList[zone][SMB+10 ].waves = { nil,nil,nil, 4  }
-mobList[zone][SMB+6  ].waves = { nil,nil,nil, 4  }
+mobList[zone][SMB+1  ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+4  ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+8  ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+12 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+16 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+20 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+24 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+25 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+28 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+31 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+42 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+39 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+34 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+58 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+59 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+54 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+60 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+61 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+64 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+69 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+71 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+67 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+152].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+74 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+77 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+80 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+99 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+92 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+95 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+87 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+98 ].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+100].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+101].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+131].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+134].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+139].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+144].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+149].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+118].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+114].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+121].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+127].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+124].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+129].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+190].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+196].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+199].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+193].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+175].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+180].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+185].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+107].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+102].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+105].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+109].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+112].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+113].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+153].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+227].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+222].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+217].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+214].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+259].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+258].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+257].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+246].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+251].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+254].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+260].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+243].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+234].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+231].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+261].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+237].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+264].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+267].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+270].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+283].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+286].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+273].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+278].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+292].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+291].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+293].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+298].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+313].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+301].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+316].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+320].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+368].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+349].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+346].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+335].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+330].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+345].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+323].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+365].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+340].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+352].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+360].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+357].waves = {  1 ,nil,nil,nil  }
+mobList[zone][SMB+309].waves = { nil, 2 ,nil,nil  }
+mobList[zone][SMB+305].waves = { nil, 2 ,nil,nil  }
+mobList[zone][SMB+207].waves = { nil, 2 ,nil,nil  }
+mobList[zone][SMB+202].waves = { nil, 2 ,nil,nil  }
+mobList[zone][SMB+83 ].waves = { nil, 2 ,nil,nil  }
+mobList[zone][SMB+444].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+469].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+464].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+439].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+432].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+427].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+423].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+419].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+415].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+481].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+475].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+494].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+488].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+501].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+451].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+457].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+392].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+396].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+408].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+404].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+400].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+384].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+380].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+376].waves = { nil,nil, 3 ,nil  }
+mobList[zone][SMB+388].waves = { nil,nil, 3 ,nil  }
+mobList[zone][DMB+1  ].waves = { nil,nil,nil, 4   }
 
 -- set what mobIDs i will spawn when i engage (such as NMs or other statues) boolean value = forceLink enabled yes/no (default no if unspecified)
 mobList[zone][SMB+58 ].specificChildren = { SMB+45 } -- Squire Square N, Spawns another statue
@@ -1236,877 +1278,530 @@ mobList[zone][SMB+172].specificChildren = { true, SMB+174 } -- Megaboss's W stat
 mobList[zone][SMB+171].specificChildren = { true, SMB+173 } -- Megaboss's E statue spawns an extra blue eyes
 mobList[zone][SMB+207].specificChildren = { SMB+212, SMB+213 } -- W3 W Tent Pops 2 stats Btw. Tents
 
--- set how many random children i will spawn when i engage
+-- set how many mobs pop from each statue
 mobList[zone][SMB+1  ].randomChildrenCount = 2
 mobList[zone][SMB+4  ].randomChildrenCount = 1
+mobList[zone][SMB+6  ].randomChildrenCount = 1
 mobList[zone][SMB+8  ].randomChildrenCount = 1
+mobList[zone][SMB+10 ].randomChildrenCount = 1
 mobList[zone][SMB+12 ].randomChildrenCount = 1
+mobList[zone][SMB+14 ].randomChildrenCount = 1
 mobList[zone][SMB+16 ].randomChildrenCount = 1
+mobList[zone][SMB+18 ].randomChildrenCount = 1
 mobList[zone][SMB+20 ].randomChildrenCount = 3
 mobList[zone][SMB+24 ].randomChildrenCount = 0
 mobList[zone][SMB+25 ].randomChildrenCount = 2
 mobList[zone][SMB+28 ].randomChildrenCount = 2
 mobList[zone][SMB+31 ].randomChildrenCount = 2
-mobList[zone][SMB+42 ].randomChildrenCount = 2
-mobList[zone][SMB+39 ].randomChildrenCount = 2
 mobList[zone][SMB+34 ].randomChildrenCount = 2
+mobList[zone][SMB+39 ].randomChildrenCount = 2
+mobList[zone][SMB+42 ].randomChildrenCount = 2
+mobList[zone][SMB+45 ].randomChildrenCount = 3
+mobList[zone][SMB+50 ].randomChildrenCount = 3
+mobList[zone][SMB+54 ].randomChildrenCount = 3
 mobList[zone][SMB+58 ].randomChildrenCount = 0
 mobList[zone][SMB+59 ].randomChildrenCount = 0
-mobList[zone][SMB+45 ].randomChildrenCount = 3
-mobList[zone][SMB+54 ].randomChildrenCount = 3
-mobList[zone][SMB+50 ].randomChildrenCount = 3
 mobList[zone][SMB+60 ].randomChildrenCount = 0
 mobList[zone][SMB+61 ].randomChildrenCount = 2
 mobList[zone][SMB+64 ].randomChildrenCount = 2
+mobList[zone][SMB+67 ].randomChildrenCount = 1
 mobList[zone][SMB+69 ].randomChildrenCount = 1
 mobList[zone][SMB+71 ].randomChildrenCount = 2
-mobList[zone][SMB+67 ].randomChildrenCount = 1
-mobList[zone][SMB+152].randomChildrenCount = 0
 mobList[zone][SMB+74 ].randomChildrenCount = 2
 mobList[zone][SMB+77 ].randomChildrenCount = 2
 mobList[zone][SMB+80 ].randomChildrenCount = 2
-mobList[zone][SMB+99 ].randomChildrenCount = 0
+mobList[zone][SMB+83 ].randomChildrenCount = 3
+mobList[zone][SMB+87 ].randomChildrenCount = 2
 mobList[zone][SMB+92 ].randomChildrenCount = 2
 mobList[zone][SMB+95 ].randomChildrenCount = 2
-mobList[zone][SMB+87 ].randomChildrenCount = 2
 mobList[zone][SMB+98 ].randomChildrenCount = 0
+mobList[zone][SMB+99 ].randomChildrenCount = 0
 mobList[zone][SMB+100].randomChildrenCount = 0
 mobList[zone][SMB+101].randomChildrenCount = 0
+mobList[zone][SMB+102].randomChildrenCount = 2
+mobList[zone][SMB+105].randomChildrenCount = 1
+mobList[zone][SMB+107].randomChildrenCount = 1
+mobList[zone][SMB+109].randomChildrenCount = 2
+mobList[zone][SMB+112].randomChildrenCount = 0
+mobList[zone][SMB+113].randomChildrenCount = 0
+mobList[zone][SMB+114].randomChildrenCount = 3
+mobList[zone][SMB+118].randomChildrenCount = 2
+mobList[zone][SMB+121].randomChildrenCount = 2
+mobList[zone][SMB+124].randomChildrenCount = 2
+mobList[zone][SMB+127].randomChildrenCount = 1
+mobList[zone][SMB+129].randomChildrenCount = 1
 mobList[zone][SMB+131].randomChildrenCount = 2
 mobList[zone][SMB+134].randomChildrenCount = 2
 mobList[zone][SMB+139].randomChildrenCount = 2
 mobList[zone][SMB+144].randomChildrenCount = 2
 mobList[zone][SMB+149].randomChildrenCount = 2
-mobList[zone][SMB+118].randomChildrenCount = 2
-mobList[zone][SMB+114].randomChildrenCount = 3
-mobList[zone][SMB+121].randomChildrenCount = 2
-mobList[zone][SMB+127].randomChildrenCount = 1
-mobList[zone][SMB+124].randomChildrenCount = 2
-mobList[zone][SMB+129].randomChildrenCount = 1
-mobList[zone][SMB+190].randomChildrenCount = 2
-mobList[zone][SMB+196].randomChildrenCount = 2
-mobList[zone][SMB+199].randomChildrenCount = 2
-mobList[zone][SMB+193].randomChildrenCount = 2
+mobList[zone][SMB+152].randomChildrenCount = 0
+mobList[zone][SMB+153].randomChildrenCount = 0
+mobList[zone][SMB+157].randomChildrenCount = 3
+mobList[zone][SMB+164].randomChildrenCount = 3
+mobList[zone][SMB+171].randomChildrenCount = 0
+mobList[zone][SMB+172].randomChildrenCount = 0
+mobList[zone][SMB+173].randomChildrenCount = 0
+mobList[zone][SMB+174].randomChildrenCount = 0
 mobList[zone][SMB+175].randomChildrenCount = 2
 mobList[zone][SMB+180].randomChildrenCount = 2
 mobList[zone][SMB+185].randomChildrenCount = 2
-mobList[zone][SMB+107].randomChildrenCount = 1
-mobList[zone][SMB+102].randomChildrenCount = 2
-mobList[zone][SMB+105].randomChildrenCount = 1
-mobList[zone][SMB+109].randomChildrenCount = 2
-mobList[zone][SMB+112].randomChildrenCount = 0
-mobList[zone][SMB+113].randomChildrenCount = 0
-mobList[zone][SMB+153].randomChildrenCount = 0
-mobList[zone][SMB+227].randomChildrenCount = 3
-mobList[zone][SMB+222].randomChildrenCount = 2
-mobList[zone][SMB+217].randomChildrenCount = 2
+mobList[zone][SMB+190].randomChildrenCount = 2
+mobList[zone][SMB+193].randomChildrenCount = 2
+mobList[zone][SMB+196].randomChildrenCount = 2
+mobList[zone][SMB+199].randomChildrenCount = 2
+mobList[zone][SMB+202].randomChildrenCount = 2
+mobList[zone][SMB+207].randomChildrenCount = 2
+mobList[zone][SMB+212].randomChildrenCount = 0
+mobList[zone][SMB+213].randomChildrenCount = 0
 mobList[zone][SMB+214].randomChildrenCount = 2
-mobList[zone][SMB+259].randomChildrenCount = 0
-mobList[zone][SMB+258].randomChildrenCount = 0
-mobList[zone][SMB+257].randomChildrenCount = 0
+mobList[zone][SMB+217].randomChildrenCount = 2
+mobList[zone][SMB+222].randomChildrenCount = 2
+mobList[zone][SMB+227].randomChildrenCount = 3
+mobList[zone][SMB+231].randomChildrenCount = 2
+mobList[zone][SMB+234].randomChildrenCount = 2
+mobList[zone][SMB+237].randomChildrenCount = 5
+mobList[zone][SMB+243].randomChildrenCount = 2
 mobList[zone][SMB+246].randomChildrenCount = 2
 mobList[zone][SMB+251].randomChildrenCount = 2
 mobList[zone][SMB+254].randomChildrenCount = 2
+mobList[zone][SMB+257].randomChildrenCount = 0
+mobList[zone][SMB+258].randomChildrenCount = 0
+mobList[zone][SMB+259].randomChildrenCount = 0
 mobList[zone][SMB+260].randomChildrenCount = 0
-mobList[zone][SMB+243].randomChildrenCount = 2
-mobList[zone][SMB+234].randomChildrenCount = 2
-mobList[zone][SMB+231].randomChildrenCount = 2
 mobList[zone][SMB+261].randomChildrenCount = 2
-mobList[zone][SMB+237].randomChildrenCount = 5
 mobList[zone][SMB+264].randomChildrenCount = 2
 mobList[zone][SMB+267].randomChildrenCount = 2
 mobList[zone][SMB+270].randomChildrenCount = 2
-mobList[zone][SMB+283].randomChildrenCount = 1
-mobList[zone][SMB+286].randomChildrenCount = 2
 mobList[zone][SMB+273].randomChildrenCount = 2
 mobList[zone][SMB+278].randomChildrenCount = 2
-mobList[zone][SMB+292].randomChildrenCount = 0
+mobList[zone][SMB+283].randomChildrenCount = 1
+mobList[zone][SMB+286].randomChildrenCount = 2
 mobList[zone][SMB+291].randomChildrenCount = 0
+mobList[zone][SMB+292].randomChildrenCount = 0
 mobList[zone][SMB+293].randomChildrenCount = 4
 mobList[zone][SMB+298].randomChildrenCount = 2
-mobList[zone][SMB+313].randomChildrenCount = 2
 mobList[zone][SMB+301].randomChildrenCount = 3
+mobList[zone][SMB+305].randomChildrenCount = 3
+mobList[zone][SMB+309].randomChildrenCount = 3
+mobList[zone][SMB+313].randomChildrenCount = 2
 mobList[zone][SMB+316].randomChildrenCount = 3
 mobList[zone][SMB+320].randomChildrenCount = 2
+mobList[zone][SMB+323].randomChildrenCount = 4
+mobList[zone][SMB+330].randomChildrenCount = 4
+mobList[zone][SMB+335].randomChildrenCount = 4
+mobList[zone][SMB+340].randomChildrenCount = 0
+mobList[zone][SMB+341].randomChildrenCount = 1
+mobList[zone][SMB+343].randomChildrenCount = 1
+mobList[zone][SMB+345].randomChildrenCount = 0
+mobList[zone][SMB+346].randomChildrenCount = 2
+mobList[zone][SMB+349].randomChildrenCount = 2
+mobList[zone][SMB+352].randomChildrenCount = 2
+mobList[zone][SMB+357].randomChildrenCount = 2
+mobList[zone][SMB+360].randomChildrenCount = 2
+mobList[zone][SMB+365].randomChildrenCount = 2
 mobList[zone][SMB+368].randomChildrenCount = 0
 mobList[zone][SMB+370].randomChildrenCount = 2
 mobList[zone][SMB+373].randomChildrenCount = 2
-mobList[zone][SMB+349].randomChildrenCount = 2
-mobList[zone][SMB+346].randomChildrenCount = 2
-mobList[zone][SMB+335].randomChildrenCount = 4
-mobList[zone][SMB+330].randomChildrenCount = 4
-mobList[zone][SMB+345].randomChildrenCount = 0
-mobList[zone][SMB+323].randomChildrenCount = 4
-mobList[zone][SMB+341].randomChildrenCount = 1
-mobList[zone][SMB+343].randomChildrenCount = 1
-mobList[zone][SMB+365].randomChildrenCount = 2
-mobList[zone][SMB+340].randomChildrenCount = 0
-mobList[zone][SMB+352].randomChildrenCount = 2
-mobList[zone][SMB+360].randomChildrenCount = 2
-mobList[zone][SMB+357].randomChildrenCount = 2
-mobList[zone][SMB+309].randomChildrenCount = 3
-mobList[zone][SMB+305].randomChildrenCount = 3
-mobList[zone][DMB+1  ].randomChildrenCount = 0
-mobList[zone][SMB+207].randomChildrenCount = 2
-mobList[zone][SMB+202].randomChildrenCount = 2
-mobList[zone][SMB+212].randomChildrenCount = 0
-mobList[zone][SMB+213].randomChildrenCount = 0
-mobList[zone][SMB+83 ].randomChildrenCount = 3
-mobList[zone][SMB+157].randomChildrenCount = 3
-mobList[zone][SMB+164].randomChildrenCount = 3
-mobList[zone][SMB+172].randomChildrenCount = 0
-mobList[zone][SMB+174].randomChildrenCount = 0
-mobList[zone][SMB+171].randomChildrenCount = 0
-mobList[zone][SMB+173].randomChildrenCount = 0
-mobList[zone][SMB+444].randomChildrenCount = 4
-mobList[zone][SMB+469].randomChildrenCount = 5
-mobList[zone][SMB+464].randomChildrenCount = 4
-mobList[zone][SMB+439].randomChildrenCount = 3
-mobList[zone][SMB+432].randomChildrenCount = 2
-mobList[zone][SMB+427].randomChildrenCount = 4
-mobList[zone][SMB+423].randomChildrenCount = 3
-mobList[zone][SMB+419].randomChildrenCount = 3
-mobList[zone][SMB+415].randomChildrenCount = 3
-mobList[zone][SMB+481].randomChildrenCount = 3
-mobList[zone][SMB+475].randomChildrenCount = 5
-mobList[zone][SMB+494].randomChildrenCount = 6
-mobList[zone][SMB+488].randomChildrenCount = 5
-mobList[zone][SMB+501].randomChildrenCount = 3
-mobList[zone][SMB+451].randomChildrenCount = 5
-mobList[zone][SMB+457].randomChildrenCount = 6
+mobList[zone][SMB+376].randomChildrenCount = 3
+mobList[zone][SMB+380].randomChildrenCount = 3
+mobList[zone][SMB+384].randomChildrenCount = 3
+mobList[zone][SMB+388].randomChildrenCount = 3
 mobList[zone][SMB+392].randomChildrenCount = 3
 mobList[zone][SMB+396].randomChildrenCount = 3
-mobList[zone][SMB+408].randomChildrenCount = 3
-mobList[zone][SMB+404].randomChildrenCount = 3
 mobList[zone][SMB+400].randomChildrenCount = 3
-mobList[zone][SMB+384].randomChildrenCount = 3
-mobList[zone][SMB+380].randomChildrenCount = 3
-mobList[zone][SMB+376].randomChildrenCount = 3
-mobList[zone][SMB+388].randomChildrenCount = 3
-mobList[zone][SMB+14 ].randomChildrenCount = 1
-mobList[zone][SMB+18 ].randomChildrenCount = 1
-mobList[zone][SMB+10 ].randomChildrenCount = 1
-mobList[zone][SMB+6  ].randomChildrenCount = 1
+mobList[zone][SMB+404].randomChildrenCount = 3
+mobList[zone][SMB+408].randomChildrenCount = 3
+mobList[zone][SMB+415].randomChildrenCount = 3
+mobList[zone][SMB+419].randomChildrenCount = 3
+mobList[zone][SMB+423].randomChildrenCount = 3
+mobList[zone][SMB+427].randomChildrenCount = 4
+mobList[zone][SMB+432].randomChildrenCount = 2
+mobList[zone][SMB+439].randomChildrenCount = 3
+mobList[zone][SMB+444].randomChildrenCount = 4
+mobList[zone][SMB+451].randomChildrenCount = 5
+mobList[zone][SMB+457].randomChildrenCount = 6
+mobList[zone][SMB+464].randomChildrenCount = 4
+mobList[zone][SMB+469].randomChildrenCount = 5
+mobList[zone][SMB+475].randomChildrenCount = 5
+mobList[zone][SMB+481].randomChildrenCount = 3
+mobList[zone][SMB+488].randomChildrenCount = 5
+mobList[zone][SMB+494].randomChildrenCount = 6
+mobList[zone][SMB+501].randomChildrenCount = 3
+mobList[zone][DMB+1  ].randomChildrenCount = 0
 
--- set my random children list i will pick from
-mobList[zone][SMB+1  ].randomChildrenList = 1
-mobList[zone][SMB+4  ].randomChildrenList = 1
-mobList[zone][SMB+8  ].randomChildrenList = 1
-mobList[zone][SMB+12 ].randomChildrenList = 1
-mobList[zone][SMB+16 ].randomChildrenList = 1
-mobList[zone][SMB+20 ].randomChildrenList = 1
-mobList[zone][SMB+24 ].randomChildrenList = 1
-mobList[zone][SMB+25 ].randomChildrenList = 1
-mobList[zone][SMB+28 ].randomChildrenList = 1
-mobList[zone][SMB+31 ].randomChildrenList = 1
-mobList[zone][SMB+42 ].randomChildrenList = 1
-mobList[zone][SMB+39 ].randomChildrenList = 1
-mobList[zone][SMB+34 ].randomChildrenList = 1
-mobList[zone][SMB+58 ].randomChildrenList = 1
-mobList[zone][SMB+59 ].randomChildrenList = 1
-mobList[zone][SMB+45 ].randomChildrenList = 1
-mobList[zone][SMB+54 ].randomChildrenList = 1
-mobList[zone][SMB+50 ].randomChildrenList = 1
-mobList[zone][SMB+60 ].randomChildrenList = 1
-mobList[zone][SMB+61 ].randomChildrenList = 1
-mobList[zone][SMB+64 ].randomChildrenList = 4
-mobList[zone][SMB+69 ].randomChildrenList = 1
-mobList[zone][SMB+71 ].randomChildrenList = 1
-mobList[zone][SMB+67 ].randomChildrenList = 1
-mobList[zone][SMB+152].randomChildrenList = 1
-mobList[zone][SMB+74 ].randomChildrenList = 1
-mobList[zone][SMB+77 ].randomChildrenList = 1
-mobList[zone][SMB+80 ].randomChildrenList = 1
-mobList[zone][SMB+99 ].randomChildrenList = 1
-mobList[zone][SMB+92 ].randomChildrenList = 1
-mobList[zone][SMB+95 ].randomChildrenList = 1
-mobList[zone][SMB+87 ].randomChildrenList = 1
-mobList[zone][SMB+98 ].randomChildrenList = 1
-mobList[zone][SMB+100].randomChildrenList = 1
-mobList[zone][SMB+101].randomChildrenList = 1
-mobList[zone][SMB+131].randomChildrenList = 1
-mobList[zone][SMB+134].randomChildrenList = 6
-mobList[zone][SMB+139].randomChildrenList = 5
-mobList[zone][SMB+144].randomChildrenList = 6
-mobList[zone][SMB+149].randomChildrenList = 1
-mobList[zone][SMB+118].randomChildrenList = 1
-mobList[zone][SMB+114].randomChildrenList = 1
-mobList[zone][SMB+121].randomChildrenList = 1
-mobList[zone][SMB+127].randomChildrenList = 1
-mobList[zone][SMB+124].randomChildrenList = 1
-mobList[zone][SMB+129].randomChildrenList = 1
-mobList[zone][SMB+190].randomChildrenList = 1
-mobList[zone][SMB+196].randomChildrenList = 4
-mobList[zone][SMB+199].randomChildrenList = 1
-mobList[zone][SMB+193].randomChildrenList = 4
-mobList[zone][SMB+175].randomChildrenList = 5
-mobList[zone][SMB+180].randomChildrenList = 5
-mobList[zone][SMB+185].randomChildrenList = 5
-mobList[zone][SMB+107].randomChildrenList = 1
-mobList[zone][SMB+102].randomChildrenList = 1
-mobList[zone][SMB+105].randomChildrenList = 1
-mobList[zone][SMB+109].randomChildrenList = 1
-mobList[zone][SMB+112].randomChildrenList = 1
-mobList[zone][SMB+113].randomChildrenList = 1
-mobList[zone][SMB+153].randomChildrenList = 1
-mobList[zone][SMB+227].randomChildrenList = 1
-mobList[zone][SMB+222].randomChildrenList = 6
-mobList[zone][SMB+217].randomChildrenList = 1
-mobList[zone][SMB+214].randomChildrenList = 1
-mobList[zone][SMB+259].randomChildrenList = 1
-mobList[zone][SMB+258].randomChildrenList = 1
-mobList[zone][SMB+257].randomChildrenList = 1
-mobList[zone][SMB+246].randomChildrenList = 1
-mobList[zone][SMB+251].randomChildrenList = 1
-mobList[zone][SMB+254].randomChildrenList = 1
-mobList[zone][SMB+260].randomChildrenList = 1
-mobList[zone][SMB+243].randomChildrenList = 1
-mobList[zone][SMB+234].randomChildrenList = 1
-mobList[zone][SMB+231].randomChildrenList = 4
-mobList[zone][SMB+261].randomChildrenList = 1
-mobList[zone][SMB+237].randomChildrenList = 1
-mobList[zone][SMB+264].randomChildrenList = 1
-mobList[zone][SMB+267].randomChildrenList = 1
-mobList[zone][SMB+270].randomChildrenList = 1
-mobList[zone][SMB+283].randomChildrenList = 6
-mobList[zone][SMB+286].randomChildrenList = 6
-mobList[zone][SMB+273].randomChildrenList = 6
-mobList[zone][SMB+278].randomChildrenList = 6
-mobList[zone][SMB+292].randomChildrenList = 1
-mobList[zone][SMB+291].randomChildrenList = 1
-mobList[zone][SMB+293].randomChildrenList = 1
-mobList[zone][SMB+298].randomChildrenList = 1
-mobList[zone][SMB+313].randomChildrenList = 1
-mobList[zone][SMB+301].randomChildrenList = 1
-mobList[zone][SMB+316].randomChildrenList = 1
-mobList[zone][SMB+320].randomChildrenList = 1
-mobList[zone][SMB+368].randomChildrenList = 1
-mobList[zone][SMB+370].randomChildrenList = 4
-mobList[zone][SMB+373].randomChildrenList = 4
-mobList[zone][SMB+349].randomChildrenList = 1
-mobList[zone][SMB+346].randomChildrenList = 4
-mobList[zone][SMB+335].randomChildrenList = 1
-mobList[zone][SMB+330].randomChildrenList = 1
-mobList[zone][SMB+345].randomChildrenList = 1
-mobList[zone][SMB+323].randomChildrenList = 1
-mobList[zone][SMB+341].randomChildrenList = 1
-mobList[zone][SMB+343].randomChildrenList = 1
-mobList[zone][SMB+365].randomChildrenList = 1
-mobList[zone][SMB+340].randomChildrenList = 1
-mobList[zone][SMB+352].randomChildrenList = 1
-mobList[zone][SMB+360].randomChildrenList = 1
-mobList[zone][SMB+357].randomChildrenList = 1
-mobList[zone][SMB+309].randomChildrenList = 1
-mobList[zone][SMB+305].randomChildrenList = 1
-mobList[zone][DMB+1  ].randomChildrenList = 1
-mobList[zone][SMB+207].randomChildrenList = 5
-mobList[zone][SMB+202].randomChildrenList = 5
-mobList[zone][SMB+212].randomChildrenList = 1
-mobList[zone][SMB+213].randomChildrenList = 1
-mobList[zone][SMB+83 ].randomChildrenList = 1
-mobList[zone][SMB+157].randomChildrenList = 1
-mobList[zone][SMB+164].randomChildrenList = 5
-mobList[zone][SMB+172].randomChildrenList = 1
-mobList[zone][SMB+174].randomChildrenList = 1
-mobList[zone][SMB+171].randomChildrenList = 1
-mobList[zone][SMB+173].randomChildrenList = 1
-mobList[zone][SMB+444].randomChildrenList = 2
-mobList[zone][SMB+469].randomChildrenList = 1
-mobList[zone][SMB+464].randomChildrenList = 1
-mobList[zone][SMB+439].randomChildrenList = 1
-mobList[zone][SMB+432].randomChildrenList = 5
-mobList[zone][SMB+427].randomChildrenList = 4
-mobList[zone][SMB+423].randomChildrenList = 1
-mobList[zone][SMB+419].randomChildrenList = 1
-mobList[zone][SMB+415].randomChildrenList = 1
-mobList[zone][SMB+481].randomChildrenList = 6
-mobList[zone][SMB+475].randomChildrenList = 1
-mobList[zone][SMB+494].randomChildrenList = 1
-mobList[zone][SMB+488].randomChildrenList = 1
-mobList[zone][SMB+501].randomChildrenList = 1
-mobList[zone][SMB+451].randomChildrenList = 1
-mobList[zone][SMB+457].randomChildrenList = 1
-mobList[zone][SMB+392].randomChildrenList = 1
-mobList[zone][SMB+396].randomChildrenList = 1
-mobList[zone][SMB+496].randomChildrenList = 1
-mobList[zone][SMB+408].randomChildrenList = 6
-mobList[zone][SMB+404].randomChildrenList = 1
-mobList[zone][SMB+400].randomChildrenList = 1
-mobList[zone][SMB+384].randomChildrenList = 1
-mobList[zone][SMB+380].randomChildrenList = 1
-mobList[zone][SMB+376].randomChildrenList = 1
-mobList[zone][SMB+388].randomChildrenList = 1
-mobList[zone][SMB+14 ].randomChildrenList = 1
-mobList[zone][SMB+18 ].randomChildrenList = 1
-mobList[zone][SMB+10 ].randomChildrenList = 1
-mobList[zone][SMB+6  ].randomChildrenList = 1
 
--- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
-randomChildrenList[zone] = 
+-- set which mobs will spawn from each statue
+mobList[zone][SMB+1  ].randomChildrenList = { 5, 5 }
+mobList[zone][DMB+1  ].randomChildrenList = { 5, 5 }
+mobList[zone][SMB+4  ].randomChildrenList = { 6 }
+mobList[zone][SMB+6  ].randomChildrenList = { 7 }
+mobList[zone][SMB+8  ].randomChildrenList = { 6 }
+mobList[zone][SMB+10 ].randomChildrenList = { 7 }
+mobList[zone][SMB+12 ].randomChildrenList = { 15 }
+mobList[zone][SMB+14 ].randomChildrenList = { 6 }
+mobList[zone][SMB+16 ].randomChildrenList = { 15 }
+mobList[zone][SMB+18 ].randomChildrenList = { 6 }
+mobList[zone][SMB+20 ].randomChildrenList = { 6, 6, 6 }
+mobList[zone][SMB+25 ].randomChildrenList = { 14, 11 }
+mobList[zone][SMB+28 ].randomChildrenList = { 5, 5 }
+mobList[zone][SMB+31 ].randomChildrenList = { 15, 15 }
+mobList[zone][SMB+34 ].randomChildrenList = { 9, 9 }
+mobList[zone][SMB+39 ].randomChildrenList = { 1, 1 }
+mobList[zone][SMB+42 ].randomChildrenList = { 12, 12 }
+mobList[zone][SMB+45 ].randomChildrenList = { 8, 10, 10 }
+mobList[zone][SMB+50 ].randomChildrenList = { 14, 13, 13 }
+mobList[zone][SMB+54 ].randomChildrenList = { 6, 10, 10 }
+mobList[zone][SMB+61 ].randomChildrenList = { 7, 7 }
+mobList[zone][SMB+64 ].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+67 ].randomChildrenList = { 12 }
+mobList[zone][SMB+69 ].randomChildrenList = { 12 }
+mobList[zone][SMB+71 ].randomChildrenList = { 1, 10 }
+mobList[zone][SMB+99 ].randomChildrenList = { 12, 3 } -- Changed to SMB+99 as per era video (map doesnt show correct positions)
+mobList[zone][SMB+92 ].randomChildrenList = { 12, 3 } -- Changed to SMB+92 as per era video (map doesnt show correct positions)
+mobList[zone][SMB+95 ].randomChildrenList = { 12, 3 } -- Changed to SMB+95 as per era video (map doesnt show correct positions)
+mobList[zone][SMB+83 ].randomChildrenList = { 12, 12, 3 }
+mobList[zone][SMB+87 ].randomChildrenList = { 11, 11 }
+mobList[zone][SMB+92 ].randomChildrenList = { 13, 13 }
+mobList[zone][SMB+95 ].randomChildrenList = { 1, 1 }
+mobList[zone][SMB+102].randomChildrenList = { 12, 12 }
+mobList[zone][SMB+105].randomChildrenList = { 1 }
+mobList[zone][SMB+107].randomChildrenList = { 1 }
+mobList[zone][SMB+109].randomChildrenList = { 14, 14 }
+mobList[zone][SMB+114].randomChildrenList = { 14, 5, 5 }
+mobList[zone][SMB+118].randomChildrenList = { 6, 5 }
+mobList[zone][SMB+121].randomChildrenList = { 6, 5 }
+mobList[zone][SMB+124].randomChildrenList = { 13, 13 }
+mobList[zone][SMB+127].randomChildrenList = { 1 }
+mobList[zone][SMB+129].randomChildrenList = { 1 }
+mobList[zone][SMB+131].randomChildrenList = { 7, 7 }
+mobList[zone][SMB+134].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+139].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+144].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+149].randomChildrenList = { 7, 7 }
+mobList[zone][SMB+157].randomChildrenList = { 9, 9, 9 }
+mobList[zone][SMB+164].randomChildrenList = { 4, 4, 4 }
+mobList[zone][SMB+175].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+180].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+185].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+190].randomChildrenList = { 13, 13 }
+mobList[zone][SMB+193].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+196].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+199].randomChildrenList = { 13, 13 }
+mobList[zone][SMB+202].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+207].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+259].randomChildrenList = { 11, 11 }
+mobList[zone][SMB+258].randomChildrenList = { 9, 9 }
+mobList[zone][SMB+257].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+227].randomChildrenList = { 6, 6, 3 }
+mobList[zone][SMB+231].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+234].randomChildrenList = { 7, 7 }
+mobList[zone][SMB+237].randomChildrenList = { 1, 1, 13, 13, 13 }
+mobList[zone][SMB+243].randomChildrenList = { 7, 2 }
+mobList[zone][SMB+246].randomChildrenList = { 6, 6 }
+mobList[zone][SMB+251].randomChildrenList = { 15, 15 }
+mobList[zone][SMB+254].randomChildrenList = { 10, 10 }
+mobList[zone][SMB+261].randomChildrenList = { 11, 11 }
+mobList[zone][SMB+264].randomChildrenList = { 10, 10 }
+mobList[zone][SMB+267].randomChildrenList = { 1, 1 }
+mobList[zone][SMB+270].randomChildrenList = { 15, 15 }
+mobList[zone][SMB+273].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+278].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+283].randomChildrenList = { 8 }
+mobList[zone][SMB+286].randomChildrenList = { 8, 8 }
+mobList[zone][SMB+293].randomChildrenList = { 15, 15, 10, 10 }
+mobList[zone][SMB+298].randomChildrenList = { 14, 14 }
+mobList[zone][SMB+301].randomChildrenList = { 13, 13, 13 }
+mobList[zone][SMB+305].randomChildrenList = { 14, 14, 14 }
+mobList[zone][SMB+309].randomChildrenList = { 11, 11, 11 }
+mobList[zone][SMB+313].randomChildrenList = { 11, 11 }
+mobList[zone][SMB+316].randomChildrenList = { 15, 5, 5 }
+mobList[zone][SMB+320].randomChildrenList = { 3, 3 }
+mobList[zone][SMB+323].randomChildrenList = { 9, 9, 5, 5 }
+mobList[zone][SMB+330].randomChildrenList = { 11, 11, 15, 15 }
+mobList[zone][SMB+335].randomChildrenList = { 5, 5, 14, 14 }
+mobList[zone][SMB+341].randomChildrenList = { 3 }
+mobList[zone][SMB+343].randomChildrenList = { 3 }
+mobList[zone][SMB+346].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+349].randomChildrenList = { 7, 7 }
+mobList[zone][SMB+352].randomChildrenList = { 9, 9 }
+mobList[zone][SMB+357].randomChildrenList = { 13, 13 }
+mobList[zone][SMB+360].randomChildrenList = { 9, 9 }
+mobList[zone][SMB+365].randomChildrenList = { 14, 14 }
+mobList[zone][SMB+370].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+373].randomChildrenList = { 2, 2 }
+mobList[zone][SMB+376].randomChildrenList = { 5, 5, 5 }
+mobList[zone][SMB+380].randomChildrenList = { 6, 6, 6 }
+mobList[zone][SMB+384].randomChildrenList = { 1, 1, 1 }
+mobList[zone][SMB+388].randomChildrenList = { 10, 10, 10 }
+mobList[zone][SMB+392].randomChildrenList = { 15, 15, 15 }
+mobList[zone][SMB+396].randomChildrenList = { 12, 12, 12 }
+mobList[zone][SMB+400].randomChildrenList = { 14, 14, 14 }
+mobList[zone][SMB+404].randomChildrenList = { 11, 11, 11 }
+mobList[zone][SMB+408].randomChildrenList = { 8, 8, 8 }
+mobList[zone][SMB+415].randomChildrenList = { 3, 3, 3 }
+mobList[zone][SMB+419].randomChildrenList = { 13, 13, 13 }
+mobList[zone][SMB+423].randomChildrenList = { 7, 7, 7 }
+mobList[zone][SMB+427].randomChildrenList = { 2, 2, 2, 2 }
+mobList[zone][SMB+432].randomChildrenList = { 9, 9, 9 }
+mobList[zone][SMB+439].randomChildrenList = { 4, 4 }
+mobList[zone][SMB+444].randomChildrenList = { 4, 4, 3, 3 }
+mobList[zone][SMB+451].randomChildrenList = { 12, 12, 12, 3, 3 }
+mobList[zone][SMB+457].randomChildrenList = { 7, 7, 15, 15, 10, 10 }
+mobList[zone][SMB+464].randomChildrenList = { 5, 5, 1, 1 }
+mobList[zone][SMB+469].randomChildrenList = { 6, 6, 6, 1, 1 }
+mobList[zone][SMB+475].randomChildrenList = { 11, 11, 11, 10, 10 }
+mobList[zone][SMB+481].randomChildrenList = { 8, 8, 8 }
+mobList[zone][SMB+488].randomChildrenList = { 14, 14, 14, 12, 12 }
+mobList[zone][SMB+494].randomChildrenList = { 7, 7, 15, 15, 3, 3 }
+mobList[zone][SMB+501].randomChildrenList = { 9, 9, 9 }
+
+-- random children list - groups assigned to specific mob groups
+randomChildrenList[zone] =
 {
-    [1] = -- all jobs except SMN and BST and NIN (the main list)
+    [1] = -- Vanguard_Amputator
     {
-        17534980, --	Vanguard_Footsoldier
-        17534981, --	Vanguard_Trooper
-        17534982, --	Vanguard_Amputator
-        17534983, --	Vanguard_Vexer
-        17534984, --	Vanguard_Pillager
-        17534985, --	Vanguard_Mesmerizer
-        17534986, --	Vanguard_Grappler
-        17534987, --	Vanguard_Neckchopper
-        17534988, --	Vanguard_Mesmerizer
-        17534989, --	Vanguard_Bugler
-        17534990, --	Vanguard_Gutslasher
-        17534991, --	Vanguard_Impaler
-        17534998, --	Vanguard_Vexer
-        17534999, --	Vanguard_Predator
-        17535000, --	Vanguard_Footsoldier
-        17535001, --	Vanguard_Grappler
-        17535002, --	Vanguard_Predator
-        17535008, --	Vanguard_Trooper
-        17535009, --	Vanguard_Amputator
-        17535012, --	Vanguard_Footsoldier
-        17535014, --	Vanguard_Impaler
-        17535016, --	Vanguard_Footsoldier
-        17535017, --	Vanguard_Grappler
-        17535018, --	Vanguard_Amputator
-        17535019, --	Vanguard_Trooper
-        17535020, --	Vanguard_Neckchopper
-        17535021, --	Vanguard_Pillager
-        17535022, --	Vanguard_Bugler
-        17535023, --	Vanguard_Predator
-        17535024, --	Vanguard_Vexer
-        17535025, --	Vanguard_Trooper
-        17535027, --	Vanguard_Bugler
-        17535030, --	Vanguard_Gutslasher
-        17535034, --	Vanguard_Footsoldier
-        17535035, --	Vanguard_Grappler
-        17535036, --	Vanguard_Pillager
-        17535037, --	Vanguard_Trooper
-        17535038, --	Vanguard_Neckchopper
-        17535039, --	Vanguard_Predator
-        17535040, --	Vanguard_Gutslasher
-        17535042, --	Vanguard_Impaler
-        17535045, --	Vanguard_Amputator
-        17535046, --	Vanguard_Mesmerizer
-        17535047, --	Vanguard_Vexer
-        17535048, --	Vanguard_Bugler
-        17535051, --	Vanguard_Mesmerizer
-        17535052, --	Vanguard_Bugler
-        17535053, --	Vanguard_Neckchopper
-        17535054, --	Vanguard_Pillager
-        17535055, --	Vanguard_Vexer
-        17535056, --	Vanguard_Trooper
-        17535058, --	Vanguard_Footsoldier
-        17535059, --	Vanguard_Grappler
-        17535060, --	Vanguard_Amputator
-        17535061, --	Vanguard_Mesmerizer
-        17535062, --	Vanguard_Vexer
-        17535063, --	Vanguard_Pillager
-        17535064, --	Vanguard_Trooper
-        17535065, --	Vanguard_Neckchopper
-        17535068, --	Vanguard_Bugler
-        17535069, --	Vanguard_Predator
-        17535070, --	Vanguard_Gutslasher
-        17535072, --	Vanguard_Impaler
-        17535078, --	Vanguard_Bugler
-        17535079, --	Vanguard_Grappler
-        17535080, --	Vanguard_Mesmerizer
-        17535081, --	Vanguard_Pillager
-        17535082, --	Vanguard_Gutslasher
-        17535084, --	Vanguard_Trooper
-        17535085, --	Vanguard_Footsoldier
-        17535086, --	Vanguard_Amputator
-        17535087, --	Vanguard_Neckchopper
-        17535088, --	Vanguard_Bugler
-        17535089, --	Vanguard_Predator
-        17535091, --	Vanguard_Grappler
-        17535092, --	Vanguard_Gutslasher
-        17535093, --	Vanguard_Predator
-        17535096, --	Vanguard_Impaler
-        17535098, --	Vanguard_Footsoldier
-        17535099, --	Vanguard_Amputator
-        17535100, --	Vanguard_Bugler
-        17535101, --	Vanguard_Predator
-        17535103, --	Vanguard_Grappler
-        17535104, --	Vanguard_Gutslasher
-        17535105, --	Vanguard_Trooper
-        17535106, --	Vanguard_Predator
-        17535107, --	Vanguard_Mesmerizer
-        17535108, --	Vanguard_Vexer
-        17535109, --	Vanguard_Neckchopper
-        17535116, --	Vanguard_Footsoldier
-        17535117, --	Vanguard_Amputator
-        17535118, --	Vanguard_Bugler
-        17535119, --	Vanguard_Predator
-        17535120, --	Vanguard_Predator
-        17535121, --	Vanguard_Vexer
-        17535122, --	Vanguard_Neckchopper
-        17535124, --	Vanguard_Grappler
-        17535125, --	Vanguard_Trooper
-        17535126, --	Vanguard_Vexer
-        17535127, --	Vanguard_Trooper
-        17535129, --	Vanguard_Vexer
-        17535130, --	Vanguard_Trooper
-        17535132, --	Vanguard_Vexer
-        17535133, --	Vanguard_Mesmerizer
-        17535134, --	Vanguard_Footsoldier
-        17535135, --	Vanguard_Pillager
-        17535136, --	Vanguard_Predator
-        17535137, --	Vanguard_Vexer
-        17535138, --	Vanguard_Trooper
-        17535140, --	Vanguard_Footsoldier
-        17535141, --	Vanguard_Amputator
-        17535142, --	Vanguard_Trooper
-        17535143, --	Vanguard_Gutslasher
-        17535144, --	Vanguard_Footsoldier
-        17535145, --	Vanguard_Grappler
-        17535146, --	Vanguard_Pillager
-        17535147, --	Vanguard_Trooper
-        17535148, --	Vanguard_Neckchopper
-        17535151, --	Vanguard_Predator
-        17535152, --	Vanguard_Impaler
-        17535156, --	Vanguard_Footsoldier
-        17535157, --	Vanguard_Grappler
-        17535158, --	Vanguard_Pillager
-        17535159, --	Vanguard_Trooper
-        17535160, --	Vanguard_Neckchopper
-        17535163, --	Vanguard_Predator
-        17535164, --	Vanguard_Impaler
-        17535168, --	Vanguard_Gutslasher
-        17535169, --	Vanguard_Gutslasher
-        17535170, --	Vanguard_Footsoldier
-        17535171, --	Vanguard_Pillager
-        17535172, --	Vanguard_Neckchopper
-        17535177, --	Vanguard_Grappler
-        17535178, --	Vanguard_Trooper
-        17535179, --	Vanguard_Impaler
-        17535183, --	Vanguard_Amputator
-        17535184, --	Vanguard_Amputator
-        17535185, --	Vanguard_Mesmerizer
-        17535186, --	Vanguard_Mesmerizer
-        17535187, --	Vanguard_Vexer
-        17535188, --	Vanguard_Vexer
-        17535189, --	Vanguard_Bugler
-        17535190, --	Vanguard_Bugler
-        17535195, --	Vanguard_Amputator
-        17535196, --	Vanguard_Amputator
-        17535197, --	Vanguard_Mesmerizer
-        17535198, --	Vanguard_Mesmerizer
-        17535199, --	Vanguard_Vexer
-        17535200, --	Vanguard_Vexer
-        17535201, --	Vanguard_Bugler
-        17535202  --	Vanguard_Bugler
+        DMB+6, -- Vanguard_Amputator
+        DMB+33, -- Vanguard_Amputator
+        DMB+42, -- Vanguard_Amputator
+        DMB+69, -- Vanguard_Amputator
+        DMB+84, -- Vanguard_Amputator
+        DMB+110, -- Vanguard_Amputator
+        DMB+123, -- Vanguard_Amputator
+        DMB+141, -- Vanguard_Amputator
+        DMB+165, -- Vanguard_Amputator
+        DMB+207, -- Vanguard_Amputator
+        DMB+208, -- Vanguard_Amputator
+        DMB+219, -- Vanguard_Amputator
+        DMB+220, -- Vanguard_Amputator
     },
-    
-    [2] = -- list 1, including SMNs (Astral Flow very dangerous), SMN 3x as likely
+
+    [2] = -- Vanguard_Backstabber
     {
-        17534980, --	Vanguard_Footsoldier
-        17534981, --	Vanguard_Trooper
-        17534982, --	Vanguard_Amputator
-        17534983, --	Vanguard_Vexer
-        17534984, --	Vanguard_Pillager
-        17534985, --	Vanguard_Mesmerizer
-        17534986, --	Vanguard_Grappler
-        17534987, --	Vanguard_Neckchopper
-        17534988, --	Vanguard_Mesmerizer
-        17534989, --	Vanguard_Bugler
-        17534990, --	Vanguard_Gutslasher
-        17534991, --	Vanguard_Impaler
-        17534993, --	Vanguard_Backstabber
-        17534996, --	Vanguard_Dollmaster
-        17534996, --	Vanguard_Dollmaster
-        17534996, --	Vanguard_Dollmaster
-        17534998, --	Vanguard_Vexer
-        17534999, --	Vanguard_Predator
-        17535000, --	Vanguard_Footsoldier
-        17535001, --	Vanguard_Grappler
-        17535002, --	Vanguard_Predator
-        17535008, --	Vanguard_Trooper
-        17535009, --	Vanguard_Amputator
-        17535010, --	Vanguard_Dollmaster
-        17535010, --	Vanguard_Dollmaster
-        17535010, --	Vanguard_Dollmaster
-        17535012, --	Vanguard_Footsoldier
-        17535013, --	Vanguard_Backstabber
-        17535014, --	Vanguard_Impaler
-        17535016, --	Vanguard_Footsoldier
-        17535017, --	Vanguard_Grappler
-        17535018, --	Vanguard_Amputator
-        17535019, --	Vanguard_Trooper
-        17535020, --	Vanguard_Neckchopper
-        17535021, --	Vanguard_Pillager
-        17535022, --	Vanguard_Bugler
-        17535023, --	Vanguard_Predator
-        17535024, --	Vanguard_Vexer
-        17535025, --	Vanguard_Trooper
-        17535027, --	Vanguard_Bugler
-        17535030, --	Vanguard_Gutslasher
-        17535031, --	Vanguard_Backstabber
-        17535034, --	Vanguard_Footsoldier
-        17535035, --	Vanguard_Grappler
-        17535036, --	Vanguard_Pillager
-        17535037, --	Vanguard_Trooper
-        17535038, --	Vanguard_Neckchopper
-        17535039, --	Vanguard_Predator
-        17535040, --	Vanguard_Gutslasher
-        17535041, --	Vanguard_Backstabber
-        17535042, --	Vanguard_Impaler
-        17535045, --	Vanguard_Amputator
-        17535046, --	Vanguard_Mesmerizer
-        17535047, --	Vanguard_Vexer
-        17535048, --	Vanguard_Bugler
-        17535049, --	Vanguard_Dollmaster
-        17535049, --	Vanguard_Dollmaster
-        17535049, --	Vanguard_Dollmaster
-        17535051, --	Vanguard_Mesmerizer
-        17535052, --	Vanguard_Bugler
-        17535053, --	Vanguard_Neckchopper
-        17535054, --	Vanguard_Pillager
-        17535055, --	Vanguard_Vexer
-        17535056, --	Vanguard_Trooper
-        17535058, --	Vanguard_Footsoldier
-        17535059, --	Vanguard_Grappler
-        17535060, --	Vanguard_Amputator
-        17535061, --	Vanguard_Mesmerizer
-        17535062, --	Vanguard_Vexer
-        17535063, --	Vanguard_Pillager
-        17535064, --	Vanguard_Trooper
-        17535065, --	Vanguard_Neckchopper
-        17535068, --	Vanguard_Bugler
-        17535069, --	Vanguard_Predator
-        17535070, --	Vanguard_Gutslasher
-        17535071, --	Vanguard_Backstabber
-        17535072, --	Vanguard_Impaler
-        17535074, --	Vanguard_Dollmaster
-        17535074, --	Vanguard_Dollmaster
-        17535074, --	Vanguard_Dollmaster
-        17535078, --	Vanguard_Bugler
-        17535079, --	Vanguard_Grappler
-        17535080, --	Vanguard_Mesmerizer
-        17535081, --	Vanguard_Pillager
-        17535082, --	Vanguard_Gutslasher
-        17535083, --	Vanguard_Backstabber
-        17535084, --	Vanguard_Trooper
-        17535085, --	Vanguard_Footsoldier
-        17535086, --	Vanguard_Amputator
-        17535087, --	Vanguard_Neckchopper
-        17535088, --	Vanguard_Bugler
-        17535089, --	Vanguard_Predator
-        17535090, --	Vanguard_Backstabber
-        17535091, --	Vanguard_Grappler
-        17535092, --	Vanguard_Gutslasher
-        17535093, --	Vanguard_Predator
-        17535096, --	Vanguard_Impaler
-        17535098, --	Vanguard_Footsoldier
-        17535099, --	Vanguard_Amputator
-        17535100, --	Vanguard_Bugler
-        17535101, --	Vanguard_Predator
-        17535102, --	Vanguard_Backstabber
-        17535103, --	Vanguard_Grappler
-        17535104, --	Vanguard_Gutslasher
-        17535105, --	Vanguard_Trooper
-        17535106, --	Vanguard_Predator
-        17535107, --	Vanguard_Mesmerizer
-        17535108, --	Vanguard_Vexer
-        17535109, --	Vanguard_Neckchopper
-        17535110, --	Vanguard_Dollmaster
-        17535110, --	Vanguard_Dollmaster
-        17535110, --	Vanguard_Dollmaster
-        17535112, --	Vanguard_Backstabber
-        17535116, --	Vanguard_Footsoldier
-        17535117, --	Vanguard_Amputator
-        17535118, --	Vanguard_Bugler
-        17535119, --	Vanguard_Predator
-        17535120, --	Vanguard_Predator
-        17535121, --	Vanguard_Vexer
-        17535122, --	Vanguard_Neckchopper
-        17535123, --	Vanguard_Backstabber
-        17535124, --	Vanguard_Grappler
-        17535125, --	Vanguard_Trooper
-        17535126, --	Vanguard_Vexer
-        17535127, --	Vanguard_Trooper
-        17535129, --	Vanguard_Vexer
-        17535130, --	Vanguard_Trooper
-        17535132, --	Vanguard_Vexer
-        17535133, --	Vanguard_Mesmerizer
-        17535134, --	Vanguard_Footsoldier
-        17535135, --	Vanguard_Pillager
-        17535136, --	Vanguard_Predator
-        17535137, --	Vanguard_Vexer
-        17535138, --	Vanguard_Trooper
-        17535140, --	Vanguard_Footsoldier
-        17535141, --	Vanguard_Amputator
-        17535142, --	Vanguard_Trooper
-        17535143, --	Vanguard_Gutslasher
-        17535144, --	Vanguard_Footsoldier
-        17535145, --	Vanguard_Grappler
-        17535146, --	Vanguard_Pillager
-        17535147, --	Vanguard_Trooper
-        17535148, --	Vanguard_Neckchopper
-        17535151, --	Vanguard_Predator
-        17535152, --	Vanguard_Impaler
-        17535156, --	Vanguard_Footsoldier
-        17535157, --	Vanguard_Grappler
-        17535158, --	Vanguard_Pillager
-        17535159, --	Vanguard_Trooper
-        17535160, --	Vanguard_Neckchopper
-        17535163, --	Vanguard_Predator
-        17535164, --	Vanguard_Impaler
-        17535168, --	Vanguard_Gutslasher
-        17535169, --	Vanguard_Gutslasher
-        17535170, --	Vanguard_Footsoldier
-        17535171, --	Vanguard_Pillager
-        17535172, --	Vanguard_Neckchopper
-        17535175, --	Vanguard_Backstabber
-        17535176, --	Vanguard_Backstabber
-        17535177, --	Vanguard_Grappler
-        17535178, --	Vanguard_Trooper
-        17535179, --	Vanguard_Impaler
-        17535181, --	Vanguard_Dollmaster
-        17535181, --	Vanguard_Dollmaster
-        17535181, --	Vanguard_Dollmaster
-        17535183, --	Vanguard_Amputator
-        17535184, --	Vanguard_Amputator
-        17535185, --	Vanguard_Mesmerizer
-        17535186, --	Vanguard_Mesmerizer
-        17535187, --	Vanguard_Vexer
-        17535188, --	Vanguard_Vexer
-        17535189, --	Vanguard_Bugler
-        17535190, --	Vanguard_Bugler
-        17535191, --	Vanguard_Dollmaster
-        17535191, --	Vanguard_Dollmaster
-        17535191, --	Vanguard_Dollmaster
-        17535195, --	Vanguard_Amputator
-        17535196, --	Vanguard_Amputator
-        17535197, --	Vanguard_Mesmerizer
-        17535198, --	Vanguard_Mesmerizer
-        17535199, --	Vanguard_Vexer
-        17535200, --	Vanguard_Vexer
-        17535201, --	Vanguard_Bugler
-        17535202, --	Vanguard_Bugler
-        17535203, --	Vanguard_Dollmaster
-        17535203, --	Vanguard_Dollmaster
-        17535203  --	Vanguard_Dollmaster
+        DMB+17, -- Vanguard_Backstabber
+        DMB+37, -- Vanguard_Backstabber
+        DMB+55, -- Vanguard_Backstabber
+        DMB+65, -- Vanguard_Backstabber
+        DMB+95, -- Vanguard_Backstabber
+        DMB+107, -- Vanguard_Backstabber
+        DMB+114, -- Vanguard_Backstabber
+        DMB+126, -- Vanguard_Backstabber
+        DMB+136, -- Vanguard_Backstabber
+        DMB+147, -- Vanguard_Backstabber
+        DMB+199, -- Vanguard_Backstabber
+        DMB+200, -- Vanguard_Backstabber
     },
-    
-    [3] = -- list 1, including BSTs which only occur near LW guild/Taumila's/Raimbroy's
+
+    [3] = -- Vanguard_Bugler
     {
-        17534980, --	Vanguard_Footsoldier
-        17534981, --	Vanguard_Trooper
-        17534982, --	Vanguard_Amputator
-        17534983, --	Vanguard_Vexer
-        17534984, --	Vanguard_Pillager
-        17534985, --	Vanguard_Mesmerizer
-        17534986, --	Vanguard_Grappler
-        17534987, --	Vanguard_Neckchopper
-        17534988, --	Vanguard_Mesmerizer
-        17534989, --	Vanguard_Bugler
-        17534990, --	Vanguard_Gutslasher
-        17534991, --	Vanguard_Impaler
-        17534993, --	Vanguard_Backstabber
-        17534994, --	Vanguard_Hawker
-        17534998, --	Vanguard_Vexer
-        17534999, --	Vanguard_Predator
-        17535000, --	Vanguard_Footsoldier
-        17535001, --	Vanguard_Grappler
-        17535002, --	Vanguard_Predator
-        17535008, --	Vanguard_Trooper
-        17535009, --	Vanguard_Amputator
-        17535012, --	Vanguard_Footsoldier
-        17535013, --	Vanguard_Backstabber
-        17535014, --	Vanguard_Impaler
-        17535016, --	Vanguard_Footsoldier
-        17535017, --	Vanguard_Grappler
-        17535018, --	Vanguard_Amputator
-        17535019, --	Vanguard_Trooper
-        17535020, --	Vanguard_Neckchopper
-        17535021, --	Vanguard_Pillager
-        17535022, --	Vanguard_Bugler
-        17535023, --	Vanguard_Predator
-        17535024, --	Vanguard_Vexer
-        17535025, --	Vanguard_Trooper
-        17535027, --	Vanguard_Bugler
-        17535028, --	Vanguard_Hawker
-        17535030, --	Vanguard_Gutslasher
-        17535031, --	Vanguard_Backstabber
-        17535034, --	Vanguard_Footsoldier
-        17535035, --	Vanguard_Grappler
-        17535036, --	Vanguard_Pillager
-        17535037, --	Vanguard_Trooper
-        17535038, --	Vanguard_Neckchopper
-        17535039, --	Vanguard_Predator
-        17535040, --	Vanguard_Gutslasher
-        17535041, --	Vanguard_Backstabber
-        17535042, --	Vanguard_Impaler
-        17535045, --	Vanguard_Amputator
-        17535046, --	Vanguard_Mesmerizer
-        17535047, --	Vanguard_Vexer
-        17535048, --	Vanguard_Bugler
-        17535051, --	Vanguard_Mesmerizer
-        17535052, --	Vanguard_Bugler
-        17535053, --	Vanguard_Neckchopper
-        17535054, --	Vanguard_Pillager
-        17535055, --	Vanguard_Vexer
-        17535056, --	Vanguard_Trooper
-        17535058, --	Vanguard_Footsoldier
-        17535059, --	Vanguard_Grappler
-        17535060, --	Vanguard_Amputator
-        17535061, --	Vanguard_Mesmerizer
-        17535062, --	Vanguard_Vexer
-        17535063, --	Vanguard_Pillager
-        17535064, --	Vanguard_Trooper
-        17535065, --	Vanguard_Neckchopper
-        17535066, --	Vanguard_Hawker
-        17535068, --	Vanguard_Bugler
-        17535069, --	Vanguard_Predator
-        17535070, --	Vanguard_Gutslasher
-        17535071, --	Vanguard_Backstabber
-        17535072, --	Vanguard_Impaler
-        17535076, --	Vanguard_Hawker
-        17535078, --	Vanguard_Bugler
-        17535079, --	Vanguard_Grappler
-        17535080, --	Vanguard_Mesmerizer
-        17535081, --	Vanguard_Pillager
-        17535082, --	Vanguard_Gutslasher
-        17535083, --	Vanguard_Backstabber
-        17535084, --	Vanguard_Trooper
-        17535085, --	Vanguard_Footsoldier
-        17535086, --	Vanguard_Amputator
-        17535087, --	Vanguard_Neckchopper
-        17535088, --	Vanguard_Bugler
-        17535089, --	Vanguard_Predator
-        17535090, --	Vanguard_Backstabber
-        17535091, --	Vanguard_Grappler
-        17535092, --	Vanguard_Gutslasher
-        17535093, --	Vanguard_Predator
-        17535094, --	Vanguard_Hawker
-        17535096, --	Vanguard_Impaler
-        17535098, --	Vanguard_Footsoldier
-        17535099, --	Vanguard_Amputator
-        17535100, --	Vanguard_Bugler
-        17535101, --	Vanguard_Predator
-        17535102, --	Vanguard_Backstabber
-        17535103, --	Vanguard_Grappler
-        17535104, --	Vanguard_Gutslasher
-        17535105, --	Vanguard_Trooper
-        17535106, --	Vanguard_Predator
-        17535107, --	Vanguard_Mesmerizer
-        17535108, --	Vanguard_Vexer
-        17535109, --	Vanguard_Neckchopper
-        17535112, --	Vanguard_Backstabber
-        17535116, --	Vanguard_Footsoldier
-        17535117, --	Vanguard_Amputator
-        17535118, --	Vanguard_Bugler
-        17535119, --	Vanguard_Predator
-        17535120, --	Vanguard_Predator
-        17535121, --	Vanguard_Vexer
-        17535122, --	Vanguard_Neckchopper
-        17535123, --	Vanguard_Backstabber
-        17535124, --	Vanguard_Grappler
-        17535125, --	Vanguard_Trooper
-        17535126, --	Vanguard_Vexer
-        17535127, --	Vanguard_Trooper
-        17535129, --	Vanguard_Vexer
-        17535130, --	Vanguard_Trooper
-        17535132, --	Vanguard_Vexer
-        17535133, --	Vanguard_Mesmerizer
-        17535134, --	Vanguard_Footsoldier
-        17535135, --	Vanguard_Pillager
-        17535136, --	Vanguard_Predator
-        17535137, --	Vanguard_Vexer
-        17535138, --	Vanguard_Trooper
-        17535140, --	Vanguard_Footsoldier
-        17535141, --	Vanguard_Amputator
-        17535142, --	Vanguard_Trooper
-        17535143, --	Vanguard_Gutslasher
-        17535144, --	Vanguard_Footsoldier
-        17535145, --	Vanguard_Grappler
-        17535146, --	Vanguard_Pillager
-        17535147, --	Vanguard_Trooper
-        17535148, --	Vanguard_Neckchopper
-        17535149, --	Vanguard_Hawker
-        17535151, --	Vanguard_Predator
-        17535152, --	Vanguard_Impaler
-        17535156, --	Vanguard_Footsoldier
-        17535157, --	Vanguard_Grappler
-        17535158, --	Vanguard_Pillager
-        17535159, --	Vanguard_Trooper
-        17535160, --	Vanguard_Neckchopper
-        17535161, --	Vanguard_Hawker
-        17535163, --	Vanguard_Predator
-        17535164, --	Vanguard_Impaler
-        17535168, --	Vanguard_Gutslasher
-        17535169, --	Vanguard_Gutslasher
-        17535170, --	Vanguard_Footsoldier
-        17535171, --	Vanguard_Pillager
-        17535172, --	Vanguard_Neckchopper
-        17535173, --	Vanguard_Hawker
-        17535175, --	Vanguard_Backstabber
-        17535176, --	Vanguard_Backstabber
-        17535177, --	Vanguard_Grappler
-        17535178, --	Vanguard_Trooper
-        17535179, --	Vanguard_Impaler
-        17535183, --	Vanguard_Amputator
-        17535184, --	Vanguard_Amputator
-        17535185, --	Vanguard_Mesmerizer
-        17535186, --	Vanguard_Mesmerizer
-        17535187, --	Vanguard_Vexer
-        17535188, --	Vanguard_Vexer
-        17535189, --	Vanguard_Bugler
-        17535190, --	Vanguard_Bugler
-        17535195, --	Vanguard_Amputator
-        17535196, --	Vanguard_Amputator
-        17535197, --	Vanguard_Mesmerizer
-        17535198, --	Vanguard_Mesmerizer
-        17535199, --	Vanguard_Vexer
-        17535200, --	Vanguard_Vexer
-        17535201, --	Vanguard_Bugler
-        17535202  --	Vanguard_Bugler
+        DMB+13, -- Vanguard_Bugler
+        DMB+46, -- Vanguard_Bugler
+        DMB+51, -- Vanguard_Bugler
+        DMB+72, -- Vanguard_Bugler
+        DMB+76, -- Vanguard_Bugler
+        DMB+92, -- Vanguard_Bugler
+        DMB+102, -- Vanguard_Bugler
+        DMB+112, -- Vanguard_Bugler
+        DMB+124, -- Vanguard_Bugler
+        DMB+142, -- Vanguard_Bugler
+        DMB+213, -- Vanguard_Bugler
+        DMB+214, -- Vanguard_Bugler
+        DMB+225, -- Vanguard_Bugler
+        DMB+226, -- Vanguard_Bugler
     },
-    
-    [4] = -- NINs ONLY. for manor area
+
+    [4] = -- Vanguard_Dollmaster
     {
-        17534993, --	Vanguard_Backstabber
-        17535013, --	Vanguard_Backstabber
-        17535031, --	Vanguard_Backstabber
-        17535041, --	Vanguard_Backstabber
-        17535071, --	Vanguard_Backstabber
-        17535083, --	Vanguard_Backstabber
-        17535090, --	Vanguard_Backstabber
-        17535102, --	Vanguard_Backstabber
-        17535112, --	Vanguard_Backstabber
-        17535123, --	Vanguard_Backstabber
-        17535175, --	Vanguard_Backstabber
-        17535176  --	Vanguard_Backstabber
+        DMB+20, -- Vanguard_Dollmaster
+        DMB+34, -- Vanguard_Dollmaster
+        DMB+73, -- Vanguard_Dollmaster
+        DMB+98, -- Vanguard_Dollmaster
+        DMB+134, -- Vanguard_Dollmaster
+        DMB+205, -- Vanguard_Dollmaster
+        DMB+215, -- Vanguard_Dollmaster
+        DMB+227, -- Vanguard_Dollmaster
     },
-    
-    [5] = -- SMNs ONLY, i.e. center of Victory Square
+
+    [5] = -- Vanguard_Footsoldier
     {
-        17534996, --	Vanguard_Dollmaster
-        17535010, --	Vanguard_Dollmaster
-        17535049, --	Vanguard_Dollmaster
-        17535074, --	Vanguard_Dollmaster
-        17535110, --	Vanguard_Dollmaster
-        17535181, --	Vanguard_Dollmaster
-        17535191, --	Vanguard_Dollmaster
-        17535203  --	Vanguard_Dollmaster
+        DMB+4, -- Vanguard_Footsoldier
+        DMB+24, -- Vanguard_Footsoldier
+        DMB+36, -- Vanguard_Footsoldier
+        DMB+40, -- Vanguard_Footsoldier
+        DMB+58, -- Vanguard_Footsoldier
+        DMB+82, -- Vanguard_Footsoldier
+        DMB+109, -- Vanguard_Footsoldier
+        DMB+122, -- Vanguard_Footsoldier
+        DMB+140, -- Vanguard_Footsoldier
+        DMB+158, -- Vanguard_Footsoldier
+        DMB+164, -- Vanguard_Footsoldier
+        DMB+168, -- Vanguard_Footsoldier
+        DMB+180, -- Vanguard_Footsoldier
+        DMB+194, -- Vanguard_Footsoldier
     },
-    
-    [6] = -- BSTs ONLY
+
+    [6] = -- Vanguard_Grappler
     {
-        17534994, --	Vanguard_Hawker
-        17535028, --	Vanguard_Hawker
-        17535066, --	Vanguard_Hawker
-        17535076, --	Vanguard_Hawker
-        17535094, --	Vanguard_Hawker
-        17535149  --	Vanguard_Hawker
+        DMB+10, -- Vanguard_Grappler
+        DMB+25, -- Vanguard_Grappler
+        DMB+41, -- Vanguard_Grappler
+        DMB+59, -- Vanguard_Grappler
+        DMB+83, -- Vanguard_Grappler
+        DMB+103, -- Vanguard_Grappler
+        DMB+115, -- Vanguard_Grappler
+        DMB+127, -- Vanguard_Grappler
+        DMB+148, -- Vanguard_Grappler
+        DMB+169, -- Vanguard_Grappler
+        DMB+181, -- Vanguard_Grappler
+        DMB+201, -- Vanguard_Grappler
+    },
+
+    [7] = -- Vanguard_Gutslasher
+    {
+        DMB+14, -- Vanguard_Gutslasher
+        DMB+54, -- Vanguard_Gutslasher
+        DMB+64, -- Vanguard_Gutslasher
+        DMB+94, -- Vanguard_Gutslasher
+        DMB+106, -- Vanguard_Gutslasher
+        DMB+116, -- Vanguard_Gutslasher
+        DMB+128, -- Vanguard_Gutslasher
+        DMB+167, -- Vanguard_Gutslasher
+        DMB+192, -- Vanguard_Gutslasher
+        DMB+193, -- Vanguard_Gutslasher
+    },
+
+    [8] = -- Vanguard_Hawker
+    {
+        DMB+18, -- Vanguard_Hawker
+        DMB+52, -- Vanguard_Hawker
+        DMB+90, -- Vanguard_Hawker
+        DMB+100, -- Vanguard_Hawker
+        DMB+118, -- Vanguard_Hawker
+        DMB+173, -- Vanguard_Hawker
+        DMB+185, -- Vanguard_Hawker
+        DMB+197, -- Vanguard_Hawker
+    },
+
+    [9] = -- Vanguard_Impaler
+    {
+        DMB+15, -- Vanguard_Impaler
+        DMB+38, -- Vanguard_Impaler
+        DMB+66, -- Vanguard_Impaler
+        DMB+96, -- Vanguard_Impaler
+        DMB+120, -- Vanguard_Impaler
+        DMB+176, -- Vanguard_Impaler
+        DMB+188, -- Vanguard_Impaler
+        DMB+203, -- Vanguard_Impaler
+    },
+
+    [10] = -- Vanguard_Mesmerizer
+    {
+        DMB+9, -- Vanguard_Mesmerizer
+        DMB+12, -- Vanguard_Mesmerizer
+        DMB+70, -- Vanguard_Mesmerizer
+        DMB+75, -- Vanguard_Mesmerizer
+        DMB+85, -- Vanguard_Mesmerizer
+        DMB+104, -- Vanguard_Mesmerizer
+        DMB+131, -- Vanguard_Mesmerizer
+        DMB+157, -- Vanguard_Mesmerizer
+        DMB+209, -- Vanguard_Mesmerizer
+        DMB+210, -- Vanguard_Mesmerizer
+        DMB+221, -- Vanguard_Mesmerizer
+        DMB+222, -- Vanguard_Mesmerizer
+    },
+
+    [11] = -- Vanguard_Neckchopper
+    {
+        DMB+11, -- Vanguard_Neckchopper
+        DMB+44, -- Vanguard_Neckchopper
+        DMB+62, -- Vanguard_Neckchopper
+        DMB+77, -- Vanguard_Neckchopper
+        DMB+89, -- Vanguard_Neckchopper
+        DMB+111, -- Vanguard_Neckchopper
+        DMB+133, -- Vanguard_Neckchopper
+        DMB+146, -- Vanguard_Neckchopper
+        DMB+172, -- Vanguard_Neckchopper
+        DMB+184, -- Vanguard_Neckchopper
+        DMB+196, -- Vanguard_Neckchopper
+    },
+
+    [12] = -- Vanguard_Pillager
+    {
+        DMB+8, -- Vanguard_Pillager
+        DMB+45, -- Vanguard_Pillager
+        DMB+60, -- Vanguard_Pillager
+        DMB+78, -- Vanguard_Pillager
+        DMB+87, -- Vanguard_Pillager
+        DMB+105, -- Vanguard_Pillager
+        DMB+159, -- Vanguard_Pillager
+        DMB+170, -- Vanguard_Pillager
+        DMB+182, -- Vanguard_Pillager
+        DMB+195, -- Vanguard_Pillager
+    },
+
+    [13] = -- Vanguard_Predator
+    {
+        DMB+23, -- Vanguard_Predator
+        DMB+26, -- Vanguard_Predator
+        DMB+47, -- Vanguard_Predator
+        DMB+63, -- Vanguard_Predator
+        DMB+93, -- Vanguard_Predator
+        DMB+113, -- Vanguard_Predator
+        DMB+117, -- Vanguard_Predator
+        DMB+125, -- Vanguard_Predator
+        DMB+130, -- Vanguard_Predator
+        DMB+143, -- Vanguard_Predator
+        DMB+144, -- Vanguard_Predator
+        DMB+160, -- Vanguard_Predator
+        DMB+175, -- Vanguard_Predator
+        DMB+187, -- Vanguard_Predator
+    },
+
+    [14] = -- Vanguard_Trooper
+    {
+        DMB+5, -- Vanguard_Trooper
+        DMB+32, -- Vanguard_Trooper
+        DMB+43, -- Vanguard_Trooper
+        DMB+49, -- Vanguard_Trooper
+        DMB+61, -- Vanguard_Trooper
+        DMB+80, -- Vanguard_Trooper
+        DMB+88, -- Vanguard_Trooper
+        DMB+108, -- Vanguard_Trooper
+        DMB+129, -- Vanguard_Trooper
+        DMB+149, -- Vanguard_Trooper
+        DMB+151, -- Vanguard_Trooper
+        DMB+154, -- Vanguard_Trooper
+        DMB+162, -- Vanguard_Trooper
+        DMB+166, -- Vanguard_Trooper
+        DMB+171, -- Vanguard_Trooper
+        DMB+183, -- Vanguard_Trooper
+        DMB+202, -- Vanguard_Trooper
+    },
+
+    [15] = -- Vanguard_Vexer
+    {
+        DMB+7, -- Vanguard_Vexer
+        DMB+22, -- Vanguard_Vexer
+        DMB+48, -- Vanguard_Vexer
+        DMB+71, -- Vanguard_Vexer
+        DMB+79, -- Vanguard_Vexer
+        DMB+86, -- Vanguard_Vexer
+        DMB+132, -- Vanguard_Vexer
+        DMB+145, -- Vanguard_Vexer
+        DMB+150, -- Vanguard_Vexer
+        DMB+153, -- Vanguard_Vexer
+        DMB+156, -- Vanguard_Vexer
+        DMB+161, -- Vanguard_Vexer
+        DMB+211, -- Vanguard_Vexer
+        DMB+212, -- Vanguard_Vexer
+        DMB+223, -- Vanguard_Vexer
+        DMB+224, -- Vanguard_Vexer
     }
 }
 
 -- NPC list, only really need to add NPCs that need to be spawned at the start
 -- example: [5151] = { id = 5151, spawnAtStart = true },
-npcList[zone] = 
+npcList[zone] =
 {
-    
+
 }
