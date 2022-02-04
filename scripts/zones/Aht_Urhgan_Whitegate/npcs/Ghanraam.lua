@@ -332,7 +332,7 @@ function onTrade(player, npc, trade)
                 player:confirmTrade()
                 player:setCharVar("Ghanraam_CraftingInProgress", itemToBeCrafted)
                 -- in era pickup is Midnight
-                player:setCharVar("Ghanraam_PickUp", getMidnight())
+                player:setCharVar("Ghanraam_PickUp", JstMidnight())
                 player:startEvent(816, currentSet - 1, equipSlot - 1, 5)
             else
                 -- all 3 pieces not stored 

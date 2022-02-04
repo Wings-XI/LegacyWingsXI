@@ -128,7 +128,7 @@ function onEventFinish(player, csid, option)
 
         if npcUtil.giveItem(player, {{card, 5}}) then
             player:addQuest(JEUNO, tpz.quest.id.jeuno.ALL_IN_THE_CARDS)
-            player:setCharVar("AllInTheCards_date", getMidnight())
+            player:setCharVar("AllInTheCards_date", JstMidnight())
             player:setLocalVar("Cardstemp", 1)
         end
     elseif csid == 10111 then -- same day, have to return later

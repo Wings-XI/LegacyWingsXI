@@ -82,7 +82,7 @@ function getConquestTally()
     end
 
     -- Midnight + daysToTally * a day worth of seconds.
-    return getMidnight() + daysToTally * 86400
+    return JstMidnight() + daysToTally * 86400
 end
 
 -----------------------------------
