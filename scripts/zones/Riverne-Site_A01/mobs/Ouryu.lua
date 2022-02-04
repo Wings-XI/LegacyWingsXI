@@ -16,8 +16,7 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
     mob:setLocalVar("savageDmgMultipliers", 1)
     mob:setLocalVar("twoHour", 0)
-
-    -- mods put fight in line with retail difficulty
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50)
     mob:addMod(tpz.mod.EARTHRES, 1000)
     mob:addMod(tpz.mod.BLINDRESTRAIT, 25)
     mob:addMod(tpz.mod.PARALYZERESTRAIT, 25)
@@ -37,17 +36,15 @@ function onMobEngaged(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 end
 
---Ouryu cuts ranged and magic damage by 50% and has the ability to fly.
-
 function onMobFight(mob, target)
     local twohourTime = mob:getLocalVar("twohour")
-    -- use 2hr
+    -- use 2hr on 10 min cooldown
     if (mob:getBattleTime()/15 > twohourTime) then
         mob:useMobAbility(694)
-        mob:setLocalVar("twohour", math.random((mob:getBattleTime()/15)+4, (mob:getBattleTime()/15)+8))
+        mob:setLocalVar("twohour", math.random((mob:getBattleTime()/15)+36, (mob:getBattleTime()/15)+40))
     end
 
-    if (mob:hasStatusEffect(tpz.effect.INVINCIBLE) == false and mob:actionQueueEmpty() == true) then
+    if (mob:actionQueueEmpty() == true) then
         local changeTime = mob:getLocalVar("changeTime")
         
         -- first flight

@@ -12,7 +12,9 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setTrueDetection(3)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 20)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 20)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50)
     mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 10)

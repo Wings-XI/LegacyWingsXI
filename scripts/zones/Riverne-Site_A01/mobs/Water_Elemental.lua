@@ -10,6 +10,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.RESBUILD_SLEEP, 10)
 end
 
 function onMobFight(mob, target)
