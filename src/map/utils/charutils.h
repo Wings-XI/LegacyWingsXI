@@ -102,6 +102,7 @@ namespace charutils
     void	BuildingCharAbilityTable(CCharEntity* PChar);
     void	BuildingCharTraitsTable(CCharEntity* PChar);
     void    BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID);
+    int     MythicWeaponSkillUsableOnBaseWeapon(CCharEntity* PChar, CItemWeapon* PItem);
 
     uint32  DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID = 0);
     bool    CanTrade(CCharEntity* PChar, CCharEntity* PTarget);
