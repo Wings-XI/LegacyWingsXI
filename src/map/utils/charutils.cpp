@@ -896,6 +896,7 @@ namespace charutils
         PChar->StatusEffectContainer->LoadStatusEffects();
         PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
+        PChar->m_nyzulProgress = GetCharVar(PChar, "Nyzul_RunicDiscProgress");
 
         charutils::LoadEquip(PChar);
         luautils::CheckForGearSet(PChar);
@@ -2319,7 +2320,7 @@ namespace charutils
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
             return;
-
+        
         if (equipSlotID == SLOT_SUB && PItem && !PItem->IsShield() && ((CItemWeapon*)PItem)->getSkillType() == SKILL_NONE && slotID != 0)
         {
             CItemEquipment* PMainItem = PChar->getEquip(SLOT_MAIN);
@@ -2658,7 +2659,7 @@ namespace charutils
             if (battleutils::CanUseWeaponskill(PChar, PSkill) ||
                 PSkill->getID() == main_ws ||
                 (isInDynamis && (PSkill->getID() == main_ws_dyn)) ||
-                MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID())
+                (PSkill->getRequiredLevel() == 75 && MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID()))
             {
                 addWeaponSkill(PChar, PSkill->getID());
             }
@@ -2675,7 +2676,7 @@ namespace charutils
                 if ((battleutils::CanUseWeaponskill(PChar, PSkill)) ||
                     PSkill->getID() == range_ws ||
                     (isInDynamis && (PSkill->getID() == range_ws_dyn)) ||
-                    MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID())
+                    (PSkill->getRequiredLevel() == 75 && MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID()))
                 {
                     addWeaponSkill(PChar, PSkill->getID());
                 }
@@ -2697,13 +2698,13 @@ namespace charutils
         int ws = battleutils::GetScaledItemModifier(PChar, PItem, Mod::ADDS_NYZUL_BASE_WS);
         if (ws == 0)
             return 0;
-
+        
         // Ordered by Job
         int nyzulBaseWeapons[20] = { 18492, 18753, 18851, 18589, 17742, 18003, 17744, 18944, 17956, 18034, 18719, 18443, 18426, 18120, 18590, 17743, 18720, 18754, 19102, 18592 };
         int questID = 102 + PChar->GetMJob() - 1; // UNLOCKING_A_MYTH_WARRIOR is 102
         int current = PChar->m_questLog[3].current[questID / 8] & (1 << (questID % 8));
         int requiredPoints = 16000;
-        int nyzulFloorProgress = charutils::GetCharVar(PChar, "Nyzul_RunicDiscProgress");
+        int nyzulFloorProgress = PChar->m_nyzulProgress;
 
         if (nyzulFloorProgress == 100)
             requiredPoints = 250;
@@ -2717,7 +2718,7 @@ namespace charutils
             requiredPoints = 4000 + (160 * (39 - nyzulFloorProgress));
         else if (nyzulFloorProgress > 0)
             requiredPoints = 8000 + (320 * (19 - nyzulFloorProgress));
-
+        
         // if weapon && if weapon is a mythic base for the player job && the Unlocking A Myth (Job) quest is active && enough points
         if (PItem && PItem->getID() == nyzulBaseWeapons[PChar->GetMJob() - 1] && current != 0 && PItem->getCurrentUnlockPoints() >= requiredPoints)
         {
