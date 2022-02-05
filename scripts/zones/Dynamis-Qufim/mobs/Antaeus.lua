@@ -98,21 +98,21 @@ function onMobFight(mob)
     -- Scolopendra Kill Reduces Auto Regen
     if not scolopendra:isAlive() then
         if mob:getLocalVar("AntaeusRegen") == 1 then
-            mob:delMod(tpz.mod.REGEN)
+            mob:setMod(tpz.mod.REGEN, 0)
             mob:setLocalVar("AntaeusRegen", 0)
         end
     -- Stringes Kill Reduces Crit Hit Rate
     elseif not stringes:isAlive() then
         if mob:getLocalVar("AntaeusCrit") == 1 then
-            mob:delMod(tpz.mod.CRITHITRATE)
+            mob:setMod(tpz.mod.CRITHITRATE, 5)
             mob:setLocalVar("AntaeusCrit", 0)
         end
     -- Suttung Kill Removes Damage Taken Reduction
     elseif not suttung:isAlive() then
         if mob:getLocalVar("AntaeusDMG") == 1 then
-            mob:delMod(tpz.mod.UDMGRANGE)
-            mob:delMod(tpz.mod.UDMGPHYS)
-            mob:delMod(tpz.mod.UDMGBREATH)
+            mob:setMod(tpz.mod.UDMGRANGE, 0)
+            mob:setMod(tpz.mod.UDMGPHYS, 0)
+            mob:setMod(tpz.mod.UDMGBREATH, 0)
             mob:setLocalVar("AntaeusDMG", 0)
         end
     -- Elemental Kills

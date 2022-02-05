@@ -16142,27 +16142,26 @@ INSERT INTO `mob_droplist` VALUES(3131, 0, 0, 1000, 1455, 250); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3131, 0, 0, 1000, 1450, 20); -- Jadeshell
 INSERT INTO `mob_droplist` VALUES(3131, 0, 0, 1000, 1453, 20); -- Silverpiece
 INSERT INTO `mob_droplist` VALUES(3131, 0, 0, 1000, 1456, 20); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3131, 1, 0, 1000, 3496, 150); -- Forgotten Journey
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2037, 15); -- warriors_calligae_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2042, 15); -- melee_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2047, 15); -- clerics_duckbills_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2052, 15); -- sorcerers_sabots_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2057, 15); -- duelists_boots_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2062, 15); -- assassins_poulaines_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2067, 15); -- valor_leggings_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2072, 15); -- abyss_sollerets_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2077, 15); -- monster_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2082, 15); -- bards_slippers_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2087, 15); -- scouts_socks_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2092, 15); -- saotome_sune-ate_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2097, 15); -- koga_kyahan_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2102, 15); -- wyrm_greaves_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 1, 1000, 2107, 15); -- summoners_pigaches_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 1000, 2666, 15); -- mirage_charuqs_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 1000, 2671, 15); -- commodore_bottes_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 1000, 2676, 15); -- pantin_babouches_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 1000, 2722, 15); -- etoile_toe_shoes_-1
-INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 1000, 2727, 15); -- argute_loafers_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2037, 67); -- warriors_calligae_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2042, 66); -- melee_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2047, 67); -- clerics_duckbills_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2052, 67); -- sorcerers_sabots_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2057, 67); -- duelists_boots_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2062, 67); -- assassins_poulaines_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2067, 67); -- valor_leggings_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2072, 66); -- abyss_sollerets_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2077, 67); -- monster_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2082, 66); -- bards_slippers_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2087, 67); -- scouts_socks_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2092, 66); -- saotome_sune-ate_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2097, 67); -- koga_kyahan_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2102, 66); -- wyrm_greaves_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 3, 8, 2107, 67); -- summoners_pigaches_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 8, 2666, 200); -- mirage_charuqs_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 8, 2671, 200); -- commodore_bottes_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 8, 2676, 200); -- pantin_babouches_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 8, 2722, 200); -- etoile_toe_shoes_-1
+INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 8, 2727, 200); -- argute_loafers_-1
 INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1450, 20); -- Jadeshell
 INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1453, 20); -- Silverpiece
 INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1456, 20); -- Hundred Byne
@@ -16838,67 +16837,67 @@ INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 722, 1000); -- Divine Log
 INSERT INTO `mob_droplist` VALUES(3230, 1, 10, 864, 1313, 1000); -- Sirens Hair
 -- Nightmare Gaylas, Kraken, Raptor, Roc, Snoll Qufim
 -- Adding -1 Gear per http://www.dynamisbums.com/strategy/quf.html
-INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1459, 133); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1452, 133); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1459, 133); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15479, 33); -- Abyss Cape
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15480, 33); -- Assassin's Cape
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15920, 33); -- Commodore Belt
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15873, 33); -- Duelist's Belt
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15879, 33); -- Saotome Koshi-Ate
-INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 1000, 15876, 33); -- Scout's Belt
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2037, 15); -- warriors_calligae_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2042, 15); -- melee_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2047, 15); -- clerics_duckbills_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2052, 15); -- sorcerers_sabots_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2057, 15); -- duelists_boots_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2062, 15); -- assassins_poulaines_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2067, 15); -- valor_leggings_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2072, 15); -- abyss_sollerets_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2077, 15); -- monster_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2082, 15); -- bards_slippers_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2087, 15); -- scouts_socks_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2092, 15); -- saotome_sune-ate_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2097, 15); -- koga_kyahan_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2102, 15); -- wyrm_greaves_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 1000, 2107, 15); -- summoners_pigaches_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2666, 15); -- mirage_charuqs_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2671, 15); -- commodore_bottes_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2676, 15); -- pantin_babouches_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2722, 15); -- etoile_toe_shoes_-1
-INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 1000, 2727, 15); -- argute_loafers_-1
+INSERT INTO `mob_droplist` VALUES(3231, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15479, 167); -- Abyss Cape
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15480, 166); -- Assassin's Cape
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15920, 167); -- Commodore Belt
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15873, 167); -- Duelist's Belt
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15879, 166); -- Saotome Koshi-Ate
+INSERT INTO `mob_droplist` VALUES(3231, 1, 1, 8, 15876, 167); -- Scout's Belt
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2037, 67); -- warriors_calligae_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2042, 66); -- melee_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2047, 67); -- clerics_duckbills_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2052, 67); -- sorcerers_sabots_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2057, 67); -- duelists_boots_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2062, 67); -- assassins_poulaines_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2067, 67); -- valor_leggings_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2072, 66); -- abyss_sollerets_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2077, 67); -- monster_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2082, 66); -- bards_slippers_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2087, 67); -- scouts_socks_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2092, 66); -- saotome_sune-ate_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2097, 67); -- koga_kyahan_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2102, 66); -- wyrm_greaves_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 3, 8, 2107, 67); -- summoners_pigaches_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 8, 2666, 200); -- mirage_charuqs_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 8, 2671, 200); -- commodore_bottes_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 8, 2676, 200); -- pantin_babouches_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 8, 2722, 200); -- etoile_toe_shoes_-1
+INSERT INTO `mob_droplist` VALUES(3231, 1, 2, 8, 2727, 200); -- argute_loafers_-1
 -- Nightmare Diremite, Stirge, Tiger, Weapon Qufim
 -- Adding -1 Gear per http://www.dynamisbums.com/strategy/quf.html
-INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1459, 133); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1452, 133); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1459, 133); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15925, 33); -- Argute Belt
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15872, 33); -- Cleric's Belt
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15478, 33); -- Melee Cape
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15875, 33); -- Monster Belt
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 16245, 33); -- Pantin Cape
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15484, 33); -- Summoner's Cape
-INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 1000, 15878, 33); -- Wyrm Belt
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2037, 15); -- warriors_calligae_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2042, 15); -- melee_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2047, 15); -- clerics_duckbills_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2052, 15); -- sorcerers_sabots_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2057, 15); -- duelists_boots_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2062, 15); -- assassins_poulaines_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2067, 15); -- valor_leggings_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2072, 15); -- abyss_sollerets_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2077, 15); -- monster_gaiters_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2082, 15); -- bards_slippers_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2087, 15); -- scouts_socks_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2092, 15); -- saotome_sune-ate_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2097, 15); -- koga_kyahan_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2102, 15); -- wyrm_greaves_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 1000, 2107, 15); -- summoners_pigaches_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2666, 15); -- mirage_charuqs_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2671, 15); -- commodore_bottes_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2676, 15); -- pantin_babouches_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2722, 15); -- etoile_toe_shoes_-1
-INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 1000, 2727, 15); -- argute_loafers_-1
+INSERT INTO `mob_droplist` VALUES(3232, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15925, 143); -- Argute Belt
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15872, 143); -- Cleric's Belt
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15478, 143); -- Melee Cape
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15875, 143); -- Monster Belt
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 16245, 142); -- Pantin Cape
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15484, 143); -- Summoner's Cape
+INSERT INTO `mob_droplist` VALUES(3232, 1, 1, 8, 15878, 143); -- Wyrm Belt
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2037, 67); -- warriors_calligae_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2042, 66); -- melee_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2047, 67); -- clerics_duckbills_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2052, 67); -- sorcerers_sabots_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2057, 67); -- duelists_boots_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2062, 67); -- assassins_poulaines_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2067, 67); -- valor_leggings_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2072, 66); -- abyss_sollerets_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2077, 67); -- monster_gaiters_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2082, 66); -- bards_slippers_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2087, 67); -- scouts_socks_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2092, 66); -- saotome_sune-ate_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2097, 67); -- koga_kyahan_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2102, 66); -- wyrm_greaves_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 3, 8, 2107, 67); -- summoners_pigaches_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 8, 2666, 200); -- mirage_charuqs_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 8, 2671, 200); -- commodore_bottes_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 8, 2676, 200); -- pantin_babouches_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 8, 2722, 200); -- etoile_toe_shoes_-1
+INSERT INTO `mob_droplist` VALUES(3232, 1, 2, 8, 2727, 200); -- argute_loafers_-1
 
 INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Worm Mulch
 INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Lugworm Sand

@@ -562,7 +562,9 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
             player:setCharVar("DynaInflictWeakness", 0)
         if dynamis.dynaInfo[zoneId].sjRestriction == true then
-            player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+            if os.time() > player:getCharVar("SJUnlockTime") then
+                player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+            end
         end
 
     end
@@ -803,6 +805,7 @@ dynamis.sjQMOnTrigger = function(player, npc)
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
+                    player:getCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
                 end
             end
         end
