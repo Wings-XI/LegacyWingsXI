@@ -4209,7 +4209,7 @@ INSERT INTO `mob_pools` VALUES(4145, 'Vanguard_Dragon', 'Vanguard_Dragon', 87, _
 INSERT INTO `mob_pools` VALUES(4146, 'Vanguard_Drakekeeper', 'Vanguard_Drakekeeper', 337, _binary 0x00001d0400000000000000000000000000000000, 14, 14, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 337);
 INSERT INTO `mob_pools` VALUES(4147, 'Vanguard_Enchanter', 'Vanguard_Enchanter', 327, _binary 0x00003f0400000000000000000000000000000000, 5, 5, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 3, 0, 0, 327);
 INSERT INTO `mob_pools` VALUES(4148, 'Vanguard_Exemplar', 'Vanguard_Exemplar', 360, _binary 0x00003a0400000000000000000000000000000000, 7, 7, 10, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 4, 0, 0, 360);
-INSERT INTO `mob_pools` VALUES(4149, 'Vanguard_Eye', 'Vanguard_Eye', 4, _binary 0x0000090100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 1, 2, 6673, 0, 7, 131, 16, 0, 11, 0, 0, 4);
+INSERT INTO `mob_pools` VALUES(4149, 'Vanguard_Eye', 'Vanguard_Eye', 4, _binary 0x0000090100000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 0, 1, 1, 6673, 0, 7, 131, 16, 0, 11, 0, 0, 4);
 INSERT INTO `mob_pools` VALUES(4150, 'Vanguard_Footsoldier', 'Vanguard_Footsoldier', 334, _binary 0x0000170400000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(4151, 'Vanguard_Grappler', 'Vanguard_Grappler', 334, _binary 0x0000160400000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(4152, 'Vanguard_Gutslasher', 'Vanguard_Gutslasher', 334, _binary 0x0000170400000000000000000000000000000000, 12, 12, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 334);
