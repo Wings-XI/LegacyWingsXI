@@ -1760,7 +1760,7 @@ INSERT INTO `mob_groups` VALUES(80, 2853, 41, 'Nightmare_Gaylas', 600, 128, 3231
 INSERT INTO `mob_groups` VALUES(81, 2871, 41, 'Nightmare_Tiger', 600, 128, 3232, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(82, 2850, 41, 'Nightmare_Diremite', 600, 128, 3232, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(83, 2864, 41, 'Nightmare_Roc', 600, 128, 3231, 5000, 0, 78, 80, 0);
-INSERT INTO `mob_groups` VALUES(84, 2862, 41, 'Nightmare_Raptor', 600, 128, 3231, 5000, 0, 78, 80,, 0);
+INSERT INTO `mob_groups` VALUES(84, 2862, 41, 'Nightmare_Raptor', 600, 128, 3231, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(85, 3814, 41, 'Suttung', 1200, 128, 3131, 20000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(86, 2868, 41, 'Nightmare_Snoll', 600, 128, 3231, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(87, 5119, 41, 'Lost_Scolopendra', 0, 128, 3134, 0, 0, 100, 100, 0);

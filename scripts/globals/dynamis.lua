@@ -819,7 +819,6 @@ dynamis.setMobStats = function(mob)
 
     mob:setMaxHPP(132)
     mob:setMobType(MOBTYPE_NORMAL)
-    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 1)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.DEFP, 10)
     mob:setTrueDetection(1)
@@ -977,6 +976,8 @@ dynamis.setMobStats = function(mob)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
         mob:addMod(tpz.mod.DEFP, -10)
     end
+    -- Add Check After Calcs
+    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
 end
 
 dynamis.setNMStats = function(mob)

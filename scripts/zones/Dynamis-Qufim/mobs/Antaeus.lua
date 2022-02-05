@@ -84,74 +84,81 @@ end
 function onMobFight(mob)
 -- Remove Mods Per NM or Elemental Kill
     -- IDs for Kills
-    local scolopendra = GetMobByID(16945287)
-    local stringes = GetMobByID(16945320)
-    local suttung = GetMobByID(16945320)
-    local fireele = GetMobByID(16945641)
-    local iceele = GetMobByID(16945635)
-    local airele = GetMobByID(16945633)
-    local earthele = GetMobByID(16945636)
-    local thunderele = GetMobByID(16945632)
-    local waterele = GetMobByID(16945629)
-    local lightele = GetMobByID(16945634)
-    local darkele = GetMobByID(16945642)
     -- Scolopendra Kill Reduces Auto Regen
-    if not scolopendra:isAlive() then
+    if GetMobByID(16945287):getStatus() == 2 then
         if mob:getLocalVar("AntaeusRegen") == 1 then
             mob:setMod(tpz.mod.REGEN, 0)
             mob:setLocalVar("AntaeusRegen", 0)
         end
+    end
     -- Stringes Kill Reduces Crit Hit Rate
-    elseif not stringes:isAlive() then
+    if GetMobByID(16945320):getStatus() == 2 then
         if mob:getLocalVar("AntaeusCrit") == 1 then
-            mob:setMod(tpz.mod.CRITHITRATE, 5)
+            mob:setMod(tpz.mod.CRITHITRATE, 10)
             mob:setLocalVar("AntaeusCrit", 0)
         end
+    end
     -- Suttung Kill Removes Damage Taken Reduction
-    elseif not suttung:isAlive() then
+    if GetMobByID(16945381):getStatus() == 2 then
         if mob:getLocalVar("AntaeusDMG") == 1 then
             mob:setMod(tpz.mod.UDMGRANGE, 0)
             mob:setMod(tpz.mod.UDMGPHYS, 0)
             mob:setMod(tpz.mod.UDMGBREATH, 0)
             mob:setLocalVar("AntaeusDMG", 0)
         end
+    end
     -- Elemental Kills
-    elseif not fireele:isAlive() then
+    -- Fire
+    if GetMobByID(16945641):getStatus() == 2 then
         if mob:getLocalVar("AntaeusFire") == 1 then
             mob:setMod(tpz.mod.FIRERES, 0)
             mob:setLocalVar("AntaeusFire", 0)
         end
-    elseif not iceele:isAlive() then
+    end
+    -- Ice
+    if GetMobByID(16945635):getStatus() == 2 then
         if mob:getLocalVar("AntaeusIce") == 1 then
             mob:setMod(tpz.mod.ICERES, 0)
             mob:setLocalVar("AntaeusIce", 0)
         end
-    elseif not airele:isAlive() then
+    end
+    -- Wind
+    if GetMobByID(16945633):getStatus() == 2 then
         if mob:getLocalVar("AntaeusWind") == 1 then
             mob:setMod(tpz.mod.WINDRES, 0)
             mob:setLocalVar("AntaeusWind", 0)
         end
-    elseif not earthele:isAlive() then
+    end
+    -- Earth
+    if GetMobByID(16945636):getStatus() == 2 then
         if mob:getLocalVar("AntaeusEarth") == 1 then
             mob:setMod(tpz.mod.EARTHRES, 0)
             mob:setLocalVar("AntaeusEarth", 0)
         end
-    elseif not thunderele:isAlive() then
+    end
+    -- Lightning
+    if GetMobByID(16945632):getStatus() == 2 then
         if mob:getLocalVar("AntaeusThunder") == 1 then
             mob:setMod(tpz.mod.THUNDERRES, 0)
             mob:setLocalVar("AntaeusThunder", 0)
         end
-    elseif not waterele:isAlive() then
+    end
+    -- Water
+    if GetMobByID(16945629):getStatus() == 2 then
         if mob:getLocalVar("AntaeusWater") == 1 then
             mob:setMod(tpz.mod.WATERRES, 0)
             mob:setLocalVar("AntaeusWater", 0)
         end
-    elseif not lightele:isAlive() then
+    end
+    -- Light
+    if GetMobByID(16945634):getStatus() == 2 then
         if mob:getLocalVar("AntaeusLight") == 1 then
             mob:setMod(tpz.mod.LIGHTRES, 0)
             mob:setLocalVar("AntaeusLight", 0)
         end
-    elseif not darkele:isAlive() then
+    end
+    -- Dark
+    if GetMobByID(16945642):getStatus() == 2 then
         if mob:getLocalVar("AntaeusDark") == 1 then
             mob:setMod(tpz.mod.DARKRES, 0)
             mob:setLocalVar("AntaeusDark", 0)

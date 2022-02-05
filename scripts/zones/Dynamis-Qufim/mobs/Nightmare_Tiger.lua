@@ -31,4 +31,8 @@ function onMobRoam(mob)
 end
 
 function onMobEngaged(mob, target)
+    require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
+    randomChildrenListArg = nil
+    if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
+    dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
 end
