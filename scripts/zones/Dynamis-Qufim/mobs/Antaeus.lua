@@ -9,6 +9,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 local zone = 41
+local ID = zones[tpz.zone.DYNAMIS_QUFIM]
 
 function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
@@ -85,21 +86,21 @@ function onMobFight(mob)
 -- Remove Mods Per NM or Elemental Kill
     -- IDs for Kills
     -- Scolopendra Kill Reduces Auto Regen
-    if GetMobByID(16945287):getStatus() == 2 then
+    if GetMobByID(ID.mob.scolopendra):getStatus() == 2 then
         if mob:getLocalVar("AntaeusRegen") == 1 then
             mob:setMod(tpz.mod.REGEN, 0)
             mob:setLocalVar("AntaeusRegen", 0)
         end
     end
     -- Stringes Kill Reduces Crit Hit Rate
-    if GetMobByID(16945320):getStatus() == 2 then
+    if GetMobByID(ID.mob.stringes):getStatus() == 2 then
         if mob:getLocalVar("AntaeusCrit") == 1 then
             mob:setMod(tpz.mod.CRITHITRATE, 10)
             mob:setLocalVar("AntaeusCrit", 0)
         end
     end
     -- Suttung Kill Removes Damage Taken Reduction
-    if GetMobByID(16945381):getStatus() == 2 then
+    if GetMobByID(ID.mob.suttung):getStatus() == 2 then
         if mob:getLocalVar("AntaeusDMG") == 1 then
             mob:setMod(tpz.mod.UDMGRANGE, 0)
             mob:setMod(tpz.mod.UDMGPHYS, 0)
@@ -109,56 +110,56 @@ function onMobFight(mob)
     end
     -- Elemental Kills
     -- Fire
-    if GetMobByID(16945641):getStatus() == 2 then
+    if GetMobByID(ID.mob.fire_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusFire") == 1 then
             mob:setMod(tpz.mod.FIRERES, 0)
             mob:setLocalVar("AntaeusFire", 0)
         end
     end
     -- Ice
-    if GetMobByID(16945635):getStatus() == 2 then
+    if GetMobByID(ID.mob.ice_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusIce") == 1 then
             mob:setMod(tpz.mod.ICERES, 0)
             mob:setLocalVar("AntaeusIce", 0)
         end
     end
     -- Wind
-    if GetMobByID(16945633):getStatus() == 2 then
+    if GetMobByID(ID.mob.air_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusWind") == 1 then
             mob:setMod(tpz.mod.WINDRES, 0)
             mob:setLocalVar("AntaeusWind", 0)
         end
     end
     -- Earth
-    if GetMobByID(16945636):getStatus() == 2 then
+    if GetMobByID(ID.mob.earth_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusEarth") == 1 then
             mob:setMod(tpz.mod.EARTHRES, 0)
             mob:setLocalVar("AntaeusEarth", 0)
         end
     end
     -- Lightning
-    if GetMobByID(16945632):getStatus() == 2 then
+    if GetMobByID(ID.mob.thunder_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusThunder") == 1 then
             mob:setMod(tpz.mod.THUNDERRES, 0)
             mob:setLocalVar("AntaeusThunder", 0)
         end
     end
     -- Water
-    if GetMobByID(16945629):getStatus() == 2 then
+    if GetMobByID(ID.mob.water_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusWater") == 1 then
             mob:setMod(tpz.mod.WATERRES, 0)
             mob:setLocalVar("AntaeusWater", 0)
         end
     end
     -- Light
-    if GetMobByID(16945634):getStatus() == 2 then
+    if GetMobByID(ID.mob.light_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusLight") == 1 then
             mob:setMod(tpz.mod.LIGHTRES, 0)
             mob:setLocalVar("AntaeusLight", 0)
         end
     end
     -- Dark
-    if GetMobByID(16945642):getStatus() == 2 then
+    if GetMobByID(ID.mob.dark_elemental):getStatus() == 2 then
         if mob:getLocalVar("AntaeusDark") == 1 then
             mob:setMod(tpz.mod.DARKRES, 0)
             mob:setLocalVar("AntaeusDark", 0)
