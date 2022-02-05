@@ -335,6 +335,7 @@ void search_config_default()
     search_config.expire_days = 3;
     search_config.expire_interval = 3600;
     search_config.search_server_port = "54002";
+    search_config.inv_search_sort = true;
 }
 
 /************************************************************************
@@ -405,6 +406,10 @@ void search_config_read(const int8* file)
         else if (strcmp(w1, "search_server_port") == 0)
         {
             search_config.search_server_port = std::string(w2);
+        }
+        else if (strcmp(w1, "inv_search_sort") == 0)
+        {
+            search_config.inv_search_sort = atoi(w2);
         }
         else
         {
@@ -584,6 +589,12 @@ void HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
     uint32 totalResults = (uint32)SearchList.size();
     uint32 currentResult = 0;
 
+    // Sort the list by main job level when doing an invite search
+    if (sr.flags && search_config.inv_search_sort)
+    {
+        SearchList.sort([](const SearchEntity * a, const SearchEntity * b) {return a->mlvl < b->mlvl;});
+    }
+
     // Iterate through the search list, splitting up the results into
     // smaller chunks.
     std::list<SearchEntity*>::iterator it = SearchList.begin();
@@ -603,7 +614,7 @@ void HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
 
         if (currentResult == totalResults) PSearchPacket.SetFinal();
 
-        // PrintPacket((int8*)PSearchPacket->GetData(), PSearchPacket->GetSize());
+        //PrintPacket((char*)PTCPRequest.GetData(), PTCPRequest.GetSize());
         auto ret = PTCPRequest.SendToSocket(PSearchPacket.GetData(), PSearchPacket.GetSize());
         if (ret <= 0) break;
     } while (currentResult < totalResults);
