@@ -12,6 +12,7 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
+    dynamis.setMobStats(mob)
 end
 
 function onMobDeath(mob, player, isKiller)

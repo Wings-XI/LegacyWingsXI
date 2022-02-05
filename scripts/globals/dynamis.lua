@@ -172,7 +172,7 @@ dynamis.entryInfo =
         csFirst = 22,
         csWin = 28,
         csDyna = 3,
-        enabled = false,
+        enabled = true,
         winVar = "DynaQufim_Win",
         hasEnteredVar = "DynaQufim_HasEntered",
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
@@ -336,6 +336,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_QUFIM_INTERLOPER,
         entryPos = {-19, -17, 104, 253, tpz.zone.DYNAMIS_QUFIM},
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
+        noMobLevelCorrection = true,
         sjRestriction = true,
         sjRestrictionNPC = 16945638,
         sjRestrictionLocation =
@@ -817,9 +818,9 @@ dynamis.setMobStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
+    mob:setMobType(MOBTYPE_NORMAL)
+    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 1)
     mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.STR, -30)
-    mob:setMod(tpz.mod.VIT, -15)
     mob:setMod(tpz.mod.DEFP, 10)
     mob:setTrueDetection(1)
 
