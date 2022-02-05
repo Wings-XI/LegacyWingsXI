@@ -805,7 +805,7 @@ dynamis.sjQMOnTrigger = function(player, npc)
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
-                    player:getCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
+                    player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
                 end
             end
         end
