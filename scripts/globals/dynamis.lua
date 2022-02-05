@@ -975,8 +975,10 @@ dynamis.setMobStats = function(mob)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
         mob:addMod(tpz.mod.DEFP, -10)
     end
+
     -- Add Check After Calcs
     mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
+    
 end
 
 dynamis.setNMStats = function(mob)
