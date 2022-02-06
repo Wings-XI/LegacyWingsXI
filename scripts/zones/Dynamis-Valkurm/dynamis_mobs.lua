@@ -61,11 +61,11 @@ mobList[zone] =
     [DMB+667] = { id =  DMB+667}, -- Nightmare_Hippogryph ( 030 )
     [DMB+668] = { id =  DMB+668}, -- Nightmare_Hippogryph ( 030 )
     [DMB+356] = { id =  DMB+356}, -- Nightmare_Sabotender ( 031 )
-    [DMB+668] = { id =  DMB+668}, -- Nightmare_Sabotender ( 031 )
     [DMB+669] = { id =  DMB+669}, -- Nightmare_Sabotender ( 031 )
+    [DMB+670] = { id =  DMB+670}, -- Nightmare_Sabotender ( 031 )
     [DMB+664] = { id =  DMB+664}, -- Nightmare_Sheep ( 032 )
-    [DMB+670] = { id =  DMB+670}, -- Nightmare_Sheep ( 032 )
     [DMB+671] = { id =  DMB+671}, -- Nightmare_Sheep ( 032 )
+    [DMB+672] = { id =  DMB+672}, -- Nightmare_Sheep ( 032 )
 
     -- Initial Statues based on https://enedin.be/dyna/html/zone/frame_val1.htm
     -- Funguar NM Area
@@ -352,7 +352,126 @@ mobList[zone] =
     [DMB+642] = { id =  DMB+642}, -- Nightmare_Sabotender ( 058 )
 
     -- All Statue Spawnable Mobs
-    [SMB+107] = { id =  SMB+107},
+    [SMB+68 ] = { id =  SMB+107},
+    [SMB+58 ] = { id =  SMB+107},
+    [SMB+60 ] = { id =  SMB+107},
+    [SMB+37 ] = { id =  SMB+107},
+    [SMB+34 ] = { id =  SMB+107},
+    [SMB+38 ] = { id =  SMB+107},
+    [SMB+20 ] = { id =  SMB+107},
+    [SMB+17 ] = { id =  SMB+107},
+    [SMB+23 ] = { id =  SMB+107},
+    [SMB-17 ] = { id =  SMB+107},
+    [SMB-6  ] = { id =  SMB+107},
+    [SMB-2  ] = { id =  SMB+107},
+    [SMB+40 ] = { id =  SMB+107},
+    [SMB+47 ] = { id =  SMB+107},
+    [SMB+36 ] = { id =  SMB+107},
+    [SMB+33 ] = { id =  SMB+107},
+    [SMB+48 ] = { id =  SMB+107},
+    [SMB+44 ] = { id =  SMB+107},
+    [SMB+42 ] = { id =  SMB+107},
+    [SMB+43 ] = { id =  SMB+107},
+    [SMB+45 ] = { id =  SMB+107},
+    [SMB+32 ] = { id =  SMB+107},
+    [SMB+41 ] = { id =  SMB+107},
+    [SMB+46 ] = { id =  SMB+107},
+    [SMB+65 ] = { id =  SMB+107},
+    [SMB+73 ] = { id =  SMB+107},
+    [SMB+69 ] = { id =  SMB+107},
+    [SMB+71 ] = { id =  SMB+107},
+    [SMB+70 ] = { id =  SMB+107},
+    [SMB+64 ] = { id =  SMB+107},
+    [SMB+67 ] = { id =  SMB+107},
+    [SMB+66 ] = { id =  SMB+107},
+    [SMB+62 ] = { id =  SMB+107},
+    [SMB+57 ] = { id =  SMB+107},
+    [SMB+72 ] = { id =  SMB+107},
+    [SMB+63 ] = { id =  SMB+107},
+    [SMB-14 ] = { id =  SMB+107},
+    [SMB-8  ] = { id =  SMB+107},
+    [SMB-13 ] = { id =  SMB+107},
+    [SMB-18 ] = { id =  SMB+107},
+    [SMB-16 ] = { id =  SMB+107},
+    [SMB-4  ] = { id =  SMB+107},
+    [SMB-10 ] = { id =  SMB+107},
+    [SMB-3  ] = { id =  SMB+107},
+    [SMB-7  ] = { id =  SMB+107},
+    [SMB-12 ] = { id =  SMB+107},
+    [SMB-11 ] = { id =  SMB+107},
+    [SMB-15 ] = { id =  SMB+107},
+    [SMB+19 ] = { id =  SMB+107},
+    [SMB+10 ] = { id =  SMB+107},
+    [SMB+13 ] = { id =  SMB+107},
+    [SMB+7  ] = { id =  SMB+107},
+    [SMB+16 ] = { id =  SMB+107},
+    [SMB+15 ] = { id =  SMB+107},
+    [SMB+21 ] = { id =  SMB+107},
+    [SMB+8  ] = { id =  SMB+107},
+    [SMB+22 ] = { id =  SMB+107},
+    [SMB+9  ] = { id =  SMB+107},
+    [SMB+11 ] = { id =  SMB+107},
+    [SMB+14 ] = { id =  SMB+107},
+    [SMB+318] = { id =  SMB+107},
+    [SMB+325] = { id =  SMB+107},
+    [SMB+319] = { id =  SMB+107},
+    [SMB+326] = { id =  SMB+107},
+    [SMB+333] = { id =  SMB+107},
+    [SMB+323] = { id =  SMB+107},
+    [SMB+327] = { id =  SMB+107},
+    [SMB+331] = { id =  SMB+107},
+    [SMB+328] = { id =  SMB+107},
+    [SMB+320] = { id =  SMB+107},
+    [SMB+334] = { id =  SMB+107},
+    [SMB+332] = { id =  SMB+107},
+    [SMB+324] = { id =  SMB+107},
+    [SMB+329] = { id =  SMB+107},
+    [SMB+321] = { id =  SMB+107},
+    [SMB+343] = { id =  SMB+107},
+    [SMB+346] = { id =  SMB+107},
+    [SMB+350] = { id =  SMB+107},
+    [SMB+345] = { id =  SMB+107},
+    [SMB+358] = { id =  SMB+107},
+    [SMB+344] = { id =  SMB+107},
+    [SMB+355] = { id =  SMB+107},
+    [SMB+349] = { id =  SMB+107},
+    [SMB+352] = { id =  SMB+107},
+    [SMB+357] = { id =  SMB+107},
+    [SMB+353] = { id =  SMB+107},
+    [SMB+356] = { id =  SMB+107},
+    [SMB+351] = { id =  SMB+107},
+    [SMB+359] = { id =  SMB+107},
+    [SMB+347] = { id =  SMB+107},
+    [SMB+268] = { id =  SMB+107},
+    [SMB+276] = { id =  SMB+107},
+    [SMB+281] = { id =  SMB+107},
+    [SMB+280] = { id =  SMB+107},
+    [SMB+277] = { id =  SMB+107},
+    [SMB+274] = { id =  SMB+107},
+    [SMB+282] = { id =  SMB+107},
+    [SMB+275] = { id =  SMB+107},
+    [SMB+283] = { id =  SMB+107},
+    [SMB+271] = { id =  SMB+107},
+    [SMB+278] = { id =  SMB+107},
+    [SMB+270] = { id =  SMB+107},
+    [SMB+269] = { id =  SMB+107},
+    [SMB+284] = { id =  SMB+107},
+    [SMB+272] = { id =  SMB+107},
+    [SMB+293] = { id =  SMB+107},
+    [SMB+297] = { id =  SMB+107},
+    [SMB+307] = { id =  SMB+107},
+    [SMB+300] = { id =  SMB+107},
+    [SMB+295] = { id =  SMB+107},
+    [SMB+296] = { id =  SMB+107},
+    [SMB+308] = { id =  SMB+107},
+    [SMB+304] = { id =  SMB+107},
+    [SMB+306] = { id =  SMB+107},
+    [SMB+305] = { id =  SMB+107},
+    [SMB+298] = { id =  SMB+107},
+    [SMB+294] = { id =  SMB+107},
+    [SMB+301] = { id =  SMB+107},
+    [SMB+302] = { id =  SMB+107},
+    [SMB+309] = { id =  SMB+107},
     
 }
 
@@ -361,6 +480,136 @@ mobList[zone].zoneID = tpz.zone.DYNAMIS_VALKURM
 -- set positions for mobs that have placements (x,y,z,rot) and rotation is required
 -- child monsters' positions are optional. if left unset, they are randomly placed closely around their parent monster when the parent mob engages
 -- mobList[zone][SMB+1  ].pos = { 81.7644, 0.0000, -71.8662, 0   } -- example
+
+-- Wave 1
+-- Boss Pull
+mobList[zone][DMB+0  ].pos = { x, y, z, r } -- ( 024 )
+mobList[zone][SMB+79 ].pos = { x, y, z, r } -- (025-G)
+mobList[zone][SMB+54 ].pos = { x, y, z, r } -- (026-Y)
+mobList[zone][SMB+29 ].pos = { x, y, z, r } -- (027-Q)
+mobList[zone][SMB+4  ].pos = { x, y, z, r } -- (028-O)
+mobList[zone][DMB+655].pos = { x, y, z, r } -- ( 029 )
+mobList[zone][DMB+433].pos = { x, y, z, r } -- ( 030 )
+mobList[zone][DMB+356].pos = { x, y, z, r } -- ( 031 )
+mobList[zone][DMB+664].pos = { x, y, z, r } -- ( 032 )
+-- Initial Statues
+mobList[zone][SMB+50 ].pos = { x, y, z, r } -- (001-Y)
+mobList[zone][SMB+51 ].pos = { x, y, z, r } -- (002-Y)
+mobList[zone][SMB+52 ].pos = { x, y, z, r } -- (003-Y)
+mobList[zone][SMB+53 ].pos = { x, y, z, r } -- (004-Y)
+mobList[zone][SMB+75 ].pos = { x, y, z, r } -- (006-G)
+mobList[zone][SMB+76 ].pos = { x, y, z, r } -- (007-G)
+mobList[zone][SMB+77 ].pos = { x, y, z, r } -- (008-G)
+mobList[zone][SMB+78 ].pos = { x, y, z, r } -- (009-G)
+mobList[zone][SMB+0  ].pos = { x, y, z, r } -- (011-O)
+mobList[zone][SMB+1  ].pos = { x, y, z, r } -- (012-O)
+mobList[zone][SMB+2  ].pos = { x, y, z, r } -- (013-O)
+mobList[zone][SMB+3  ].pos = { x, y, z, r } -- (014-O)
+mobList[zone][SMB+25 ].pos = { x, y, z, r } -- (016-Q)
+mobList[zone][SMB+26 ].pos = { x, y, z, r } -- (017-Q)
+mobList[zone][SMB+27 ].pos = { x, y, z, r } -- (018-Q)
+mobList[zone][SMB+28 ].pos = { x, y, z, r } -- (019-Q)
+mobList[zone][SMB+55 ].pos = { x, y, z, r } -- (033-Y)
+mobList[zone][SMB+336].pos = { x, y, z, r } -- (034-Y)
+mobList[zone][SMB+337].pos = { x, y, z, r } -- (035-Y)
+mobList[zone][SMB+338].pos = { x, y, z, r } -- (036-Y)
+mobList[zone][SMB+339].pos = { x, y, z, r } -- (037-Y)
+mobList[zone][SMB+80 ].pos = { x, y, z, r } -- (038-G)
+mobList[zone][SMB+361].pos = { x, y, z, r } -- (039-G)
+mobList[zone][SMB+362].pos = { x, y, z, r } -- (040-G)
+mobList[zone][SMB+363].pos = { x, y, z, r } -- (041-G)
+mobList[zone][SMB+364].pos = { x, y, z, r } -- (042-G)
+mobList[zone][SMB+5  ].pos = { x, y, z, r } -- (043-O)
+mobList[zone][SMB+286].pos = { x, y, z, r } -- (044-O)
+mobList[zone][SMB+287].pos = { x, y, z, r } -- (045-O)
+mobList[zone][SMB+288].pos = { x, y, z, r } -- (046-O)
+mobList[zone][SMB+289].pos = { x, y, z, r } -- (047-O)
+mobList[zone][SMB+30 ].pos = { x, y, z, r } -- (048-Q)
+mobList[zone][SMB+311].pos = { x, y, z, r } -- (049-Q)
+mobList[zone][SMB+312].pos = { x, y, z, r } -- (050-Q)
+mobList[zone][SMB+313].pos = { x, y, z, r } -- (051-Q)
+mobList[zone][SMB+314].pos = { x, y, z, r } -- (052-Q)
+-- Nightmare Mobs
+mobList[zone][DMB+51 ].pos = { x, y, z, r } -- ( 021 )
+mobList[zone][DMB+52 ].pos = { x, y, z, r } -- ( 022 )
+mobList[zone][DMB+53 ].pos = { x, y, z, r } -- ( 023 )
+mobList[zone][DMB+363].pos = { x, y, z, r } -- ( 053 )
+mobList[zone][DMB+366].pos = { x, y, z, r } -- ( 054 )
+mobList[zone][DMB+369].pos = { x, y, z, r } -- ( 055 )
+mobList[zone][DMB+372].pos = { x, y, z, r } -- ( 056 )
+mobList[zone][DMB+637].pos = { x, y, z, r } -- ( 057 )
+mobList[zone][DMB+640].pos = { x, y, z, r } -- ( 058 )
+mobList[zone][DMB+1  ].pos = { x, y, z, r } -- ( 059 )
+mobList[zone][DMB+4  ].pos = { x, y, z, r } -- ( 060 )
+mobList[zone][DMB+7  ].pos = { x, y, z, r } -- ( 061 )
+mobList[zone][DMB+10 ].pos = { x, y, z, r } -- ( 062 )
+mobList[zone][DMB+13 ].pos = { x, y, z, r } -- ( 063 )
+mobList[zone][DMB+16 ].pos = { x, y, z, r } -- ( 064 )
+mobList[zone][DMB+19 ].pos = { x, y, z, r } -- ( 065 )
+mobList[zone][DMB+22 ].pos = { x, y, z, r } -- ( 066 )
+mobList[zone][DMB+25 ].pos = { x, y, z, r } -- ( 067 )
+mobList[zone][DMB+415].pos = { x, y, z, r } -- ( 068 )
+mobList[zone][DMB+418].pos = { x, y, z, r } -- ( 069 )
+mobList[zone][DMB+421].pos = { x, y, z, r } -- ( 070 )
+mobList[zone][DMB+424].pos = { x, y, z, r } -- ( 071 )
+mobList[zone][DMB+427].pos = { x, y, z, r } -- ( 072 )
+mobList[zone][DMB+430].pos = { x, y, z, r } -- ( 073 )
+mobList[zone][DMB+154].pos = { x, y, z, r } -- ( 074 )
+mobList[zone][DMB+157].pos = { x, y, z, r } -- ( 075 )
+mobList[zone][DMB+160].pos = { x, y, z, r } -- ( 076 )
+mobList[zone][DMB+163].pos = { x, y, z, r } -- ( 077 )
+mobList[zone][DMB+166].pos = { x, y, z, r } -- ( 078 )
+mobList[zone][DMB+169].pos = { x, y, z, r } -- ( 079 )
+mobList[zone][DMB+172].pos = { x, y, z, r } -- ( 080 )
+mobList[zone][DMB+175].pos = { x, y, z, r } -- ( 081 )
+mobList[zone][DMB+178].pos = { x, y, z, r } -- ( 082 )
+mobList[zone][DMB+353].pos = { x, y, z, r } -- ( 083 )
+mobList[zone][DMB+626].pos = { x, y, z, r } -- ( 084 )
+mobList[zone][DMB+629].pos = { x, y, z, r } -- ( 085 )
+mobList[zone][DMB+632].pos = { x, y, z, r } -- ( 086 )
+mobList[zone][DMB+204].pos = { x, y, z, r } -- ( 087 )
+mobList[zone][DMB+207].pos = { x, y, z, r } -- ( 088 )
+mobList[zone][DMB+210].pos = { x, y, z, r } -- ( 089 )
+mobList[zone][DMB+213].pos = { x, y, z, r } -- ( 090 )
+mobList[zone][DMB+216].pos = { x, y, z, r } -- ( 091 )
+mobList[zone][DMB+219].pos = { x, y, z, r } -- ( 092 )
+mobList[zone][DMB+222].pos = { x, y, z, r } -- ( 093 )
+mobList[zone][DMB+224].pos = { x, y, z, r } -- ( 094 )
+mobList[zone][DMB+226].pos = { x, y, z, r } -- ( 095 )
+mobList[zone][DMB+228].pos = { x, y, z, r } -- ( 096 )
+mobList[zone][DMB+473].pos = { x, y, z, r } -- ( 097 )
+mobList[zone][DMB+475].pos = { x, y, z, r } -- ( 098 )
+mobList[zone][DMB+477].pos = { x, y, z, r } -- ( 099 )
+mobList[zone][DMB+479].pos = { x, y, z, r } -- ( 100 )
+mobList[zone][DMB+481].pos = { x, y, z, r } -- ( 101 )
+mobList[zone][DMB+483].pos = { x, y, z, r } -- ( 102 )
+mobList[zone][DMB+485].pos = { x, y, z, r } -- ( 103 )
+mobList[zone][DMB+487].pos = { x, y, z, r } -- ( 104 )
+mobList[zone][DMB+489].pos = { x, y, z, r } -- ( 105 )
+mobList[zone][DMB+491].pos = { x, y, z, r } -- ( 106 )
+mobList[zone][DMB+493].pos = { x, y, z, r } -- ( 107 )
+mobList[zone][DMB+658].pos = { x, y, z, r } -- ( 108 )
+mobList[zone][DMB+661].pos = { x, y, z, r } -- ( 109 )
+mobList[zone][DMB+26 ].pos = { x, y, z, r } -- ( 110 )
+mobList[zone][DMB+29 ].pos = { x, y, z, r } -- ( 111 )
+mobList[zone][DMB+32 ].pos = { x, y, z, r } -- ( 112 )
+mobList[zone][DMB+35 ].pos = { x, y, z, r } -- ( 113 )
+mobList[zone][DMB+38 ].pos = { x, y, z, r } -- ( 114 )
+mobList[zone][DMB+41 ].pos = { x, y, z, r } -- ( 115 )
+mobList[zone][DMB+44 ].pos = { x, y, z, r } -- ( 116 )
+mobList[zone][DMB+47 ].pos = { x, y, z, r } -- ( 117 )
+mobList[zone][DMB+50 ].pos = { x, y, z, r } -- ( 118 )
+mobList[zone][DMB+396].pos = { x, y, z, r } -- ( 119 )
+mobList[zone][DMB+400].pos = { x, y, z, r } -- ( 120 )
+mobList[zone][DMB+404].pos = { x, y, z, r } -- ( 121 )
+mobList[zone][DMB+408].pos = { x, y, z, r } -- ( 122 )
+mobList[zone][DMB+411].pos = { x, y, z, r } -- ( 123 )
+mobList[zone][DMB+643].pos = { x, y, z, r } -- ( 124 )
+mobList[zone][DMB+646].pos = { x, y, z, r } -- ( 125 )
+mobList[zone][DMB+649].pos = { x, y, z, r } -- ( 126 )
+mobList[zone][DMB+652].pos = { x, y, z, r } -- ( 127 )
+mobList[zone][DMB+357].pos = { x, y, z, r } -- ( 128 )
+mobList[zone][DMB+360].pos = { x, y, z, r } -- ( 129 )
 
 -- set statue eye color
 mobList[zone][SMB+75 ].eyes = dynamis.eyes.BLUE
@@ -516,6 +765,135 @@ mobList[zone][DMB+640].waves = { nil, nil, nil, nil, 5 }
 
 -- set what mobIDs i will spawn when i engage (such as NMs or other statues)
 -- mobList[zone][SMB+1  ].specificChildren = { SMB+2, SMB+3, SMB+4 } -- example
+-- Wave 1
+-- Boss Pull
+mobList[zone][DMB+0  ].specificChildren = { SMB+79, SMB+54, SMB+29, SMB+4, DMB+655, DMB+433, DMB+356, DMB+664 } -- Megaboss      ( 024 )
+mobList[zone][SMB+79 ].specificChildren = { SMB+68, SMB+58, SMB+60                                            } -- THF, DRG, SMN (025-G)
+mobList[zone][SMB+54 ].specificChildren = { SMB+37, SMB+34, SMB+38                                            } -- THF, DRG, SMN (026-Y)
+mobList[zone][SMB+29 ].specificChildren = { SMB+20, SMB+17, SMB+23                                            } -- THF, DRG, SMN (027-Q)
+mobList[zone][SMB+4  ].specificChildren = { SMB-17, SMB-6, SMB-2                                              } -- THF, DRG, SMN (028-O)
+mobList[zone][DMB+655].specificChildren = { DMB+665, DMB+666                                                  } -- Manticore     ( 029 )
+mobList[zone][DMB+433].specificChildren = { DMB+667, DMB+668                                                  } -- Hippogryph    ( 030 )
+mobList[zone][DMB+356].specificChildren = { DMB+669, DMB+670                                                  } -- Sabotender    ( 031 )
+mobList[zone][DMB+664].specificChildren = { DMB+671, DMB+672                                                  } -- Sheep         ( 032 )
+-- Initial Statues
+mobList[zone][SMB+50 ].specificChildren = { SMB+40, SMB+47, SMB+36                                            } -- WHM, NIN, MNK (001-Y)
+mobList[zone][SMB+51 ].specificChildren = { SMB+33, SMB+48, SMB+44                                            } -- BRD, BST, DRK (002-Y)
+mobList[zone][SMB+52 ].specificChildren = { SMB+42, SMB+43, SMB+45                                            } -- PLD, BLM, SAM (003-Y)
+mobList[zone][SMB+53 ].specificChildren = { SMB+32, SMB+41, SMB+46                                            } -- WAR, RNG, RDM (004-Y)
+mobList[zone][SMB+75 ].specificChildren = { SMB+65, SMB+73, SMB+69                                            } -- BRD, BST, DRK (006-G)
+mobList[zone][SMB+76 ].specificChildren = { SMB+71, SMB+70, SMB+64                                            } -- PLD, BLM, SAM (007-G)
+mobList[zone][SMB+77 ].specificChildren = { SMB+67, SMB+66, SMB+62                                            } -- WHM, NIN, MNK (008-G)
+mobList[zone][SMB+78 ].specificChildren = { SMB+57, SMB+72, SMB+63                                            } -- WAR, RNG, RDM (009-G)
+mobList[zone][SMB+0  ].specificChildren = { SMB-14, SMB-8, SMB-13                                             } -- PLD, BLM, SAM (011-O)
+mobList[zone][SMB+1  ].specificChildren = { SMB-18, SMB-16, SMB-4                                             } -- WAR, RNG, RDM (012-O)
+mobList[zone][SMB+2  ].specificChildren = { SMB-10, SMB-3, SMB-7                                              } -- BST, BRD, DRK (013-O)
+mobList[zone][SMB+3  ].specificChildren = { SMB-12, SMB-11, SMB-15                                            } -- WHM, NIN, MNK (014-O)
+mobList[zone][SMB+25 ].specificChildren = { SMB+19, SMB+10, SMB+13                                            } -- WHM, NIN, MNK (016-Q)
+mobList[zone][SMB+26 ].specificChildren = { SMB+7, SMB+16, SMB+15                                             } -- WAR, RNG, RDM (017-Q)
+mobList[zone][SMB+27 ].specificChildren = { SMB+21, SMB+8, SMB+22                                             } -- PLD, BLM, SAM (018-Q)
+mobList[zone][SMB+28 ].specificChildren = { SMB+9, SMB+11, SMB+14                                             } -- BRD, BST, DRK (019-Q)
+mobList[zone][SMB+55 ].specificChildren = { SMB+318, SMB+325, SMB+319                                         } -- WAR, RNG, RDM (033-Y)
+mobList[zone][SMB+336].specificChildren = { SMB+326, SMB+333, SMB+323                                         } -- WHM, NIN, MNK (034-Y)
+mobList[zone][SMB+337].specificChildren = { SMB+327, SMB+331, SMB+328                                         } -- PLD, BLM, SAM (035-Y)
+mobList[zone][SMB+338].specificChildren = { SMB+320, SMB+334, SMB+332                                         } -- BRD, BST, DRK (036-Y)
+mobList[zone][SMB+339].specificChildren = { SMB+324, SMB+329, SMB+321                                         } -- THF, DRG, SMN (037-Y)
+mobList[zone][SMB+80 ].specificChildren = { SMB+343, SMB+346, SMB+350                                         } -- WAR, RNG, RDM (038-G)
+mobList[zone][SMB+361].specificChildren = { SMB+345, SMB+358, SMB+344                                         } -- WHM, NIN, MNK (039-G)
+mobList[zone][SMB+362].specificChildren = { SMB+355, SMB+349, SMB+352                                         } -- PLD, BLM, SAM (040-G)
+mobList[zone][SMB+363].specificChildren = { SMB+357, SMB+353, SMB+356                                         } -- BRD, BST, DRK (041-G)
+mobList[zone][SMB+364].specificChildren = { SMB+351, SMB+359, SMB+347                                         } -- THF, DRG, SMN (042-G)
+mobList[zone][SMB+5  ].specificChildren = { SMB+268, SMB+276, SMB+281                                         } -- WAR, RNG, RDM (043-O)
+mobList[zone][SMB+286].specificChildren = { SMB+280, SMB+277, SMB+274                                         } -- WHM, NIN, MNK (044-O)
+mobList[zone][SMB+287].specificChildren = { SMB+282, SMB+275, SMB+283                                         } -- PLD, BLM, SAM (045-O)
+mobList[zone][SMB+288].specificChildren = { SMB+271, SMB+278, SMB+270                                         } -- BRD, BST, DRK (046-O)
+mobList[zone][SMB+289].specificChildren = { SMB+269, SMB+284, SMB+272                                         } -- THF, DRG, SMN (047-O)
+mobList[zone][SMB+30 ].specificChildren = { SMB+293, SMB+297, SMB+307                                         } -- WAR, RNG, RDM (048-Q)
+mobList[zone][SMB+311].specificChildren = { SMB+300, SMB+295, SMB+296                                         } -- WHM, NIN, MNK (049-Q)
+mobList[zone][SMB+312].specificChildren = { SMB+308, SMB+304, SMB+306                                         } -- PLD, BLM, SAM (050-Q)
+mobList[zone][SMB+313].specificChildren = { SMB+305, SMB+298, SMB+294                                         } -- BRD, BST, DRK (051-Q)
+mobList[zone][SMB+314].specificChildren = { SMB+301, SMB+302, SMB+309                                         } -- THF, DRG, SMN (052-Q)
+-- Nightmare Mobs
+mobList[zone][DMB+51 ].specificChildren = { DMB+54, DMB+55                                                    } -- Fly           ( 021 )
+mobList[zone][DMB+52 ].specificChildren = { DMB+56, DMB+57                                                    } -- Fly           ( 022 )
+mobList[zone][DMB+53 ].specificChildren = { DMB+58, DMB+59                                                    } -- Fly           ( 023 )
+mobList[zone][DMB+363].specificChildren = { DMB+364, DMB+365                                                  } -- Sabotender    ( 053 )
+mobList[zone][DMB+366].specificChildren = { DMB+367, DMB+368                                                  } -- Sabotender    ( 054 )
+mobList[zone][DMB+369].specificChildren = { DMB+370, DMB+371                                                  } -- Sabotender    ( 055 )
+mobList[zone][DMB+372].specificChildren = { DMB+635, DMB+636                                                  } -- Sabotender    ( 056 )
+mobList[zone][DMB+637].specificChildren = { DMB+638, DMB+639                                                  } -- Sabotender    ( 057 )
+mobList[zone][DMB+640].specificChildren = { DMB+641, DMB+642                                                  } -- Sabotender    ( 058 )
+mobList[zone][DMB+1  ].specificChildren = { DMB+2, DMB+3                                                      } -- Hippogryph    ( 059 )
+mobList[zone][DMB+4  ].specificChildren = { DMB+5, DMB+6                                                      } -- Hippogryph    ( 060 )
+mobList[zone][DMB+7  ].specificChildren = { DMB+8, DMB+9                                                      } -- Hippogryph    ( 061 )
+mobList[zone][DMB+10 ].specificChildren = { DMB+11, DMB+12                                                    } -- Hippogryph    ( 062 )
+mobList[zone][DMB+13 ].specificChildren = { DMB+14, DMB+15                                                    } -- Hippogryph    ( 063 )
+mobList[zone][DMB+16 ].specificChildren = { DMB+17, DMB+18                                                    } -- Hippogryph    ( 064 )
+mobList[zone][DMB+19 ].specificChildren = { DMB+20, DMB+21                                                    } -- Hippogryph    ( 065 )
+mobList[zone][DMB+22 ].specificChildren = { DMB+23, DMB+24                                                    } -- Hippogryph    ( 066 )
+mobList[zone][DMB+25 ].specificChildren = { DMB+413, DMB+414                                                  } -- Hippogryph    ( 067 )
+mobList[zone][DMB+415].specificChildren = { DMB+416, DMB+417                                                  } -- Hippogryph    ( 068 )
+mobList[zone][DMB+418].specificChildren = { DMB+419, DMB+420                                                  } -- Hippogryph    ( 069 )
+mobList[zone][DMB+421].specificChildren = { DMB+422, DMB+423                                                  } -- Hippogryph    ( 070 )
+mobList[zone][DMB+424].specificChildren = { DMB+425, DMB+426                                                  } -- Hippogryph    ( 071 )
+mobList[zone][DMB+427].specificChildren = { DMB+428, DMB+429                                                  } -- Hippogryph    ( 072 )
+mobList[zone][DMB+430].specificChildren = { DMB+431, DMB+432                                                  } -- Hippogryph    ( 073 )
+mobList[zone][DMB+154].specificChildren = { DMB+155, DMB+156                                                  } -- Sabotender    ( 074 )
+mobList[zone][DMB+157].specificChildren = { DMB+158, DMB+159                                                  } -- Sabotender    ( 075 )
+mobList[zone][DMB+160].specificChildren = { DMB+161, DMB+162                                                  } -- Sabotender    ( 076 )
+mobList[zone][DMB+163].specificChildren = { DMB+164, DMB+165                                                  } -- Sabotender    ( 077 )
+mobList[zone][DMB+166].specificChildren = { DMB+167, DMB+168                                                  } -- Sabotender    ( 078 )
+mobList[zone][DMB+169].specificChildren = { DMB+170, DMB+171                                                  } -- Sabotender    ( 079 )
+mobList[zone][DMB+172].specificChildren = { DMB+173, DMB+174                                                  } -- Sabotender    ( 080 )
+mobList[zone][DMB+175].specificChildren = { DMB+176, DMB+177                                                  } -- Sabotender    ( 081 )
+mobList[zone][DMB+178].specificChildren = { DMB+351, DMB+352                                                  } -- Sabotender    ( 082 )
+mobList[zone][DMB+353].specificChildren = { DMB+354, DMB+355                                                  } -- Sabotender    ( 083 )
+mobList[zone][DMB+626].specificChildren = { DMB+627, DMB+628                                                  } -- Hippogryph    ( 084 )
+mobList[zone][DMB+629].specificChildren = { DMB+630, DMB+631                                                  } -- Hippogryph    ( 085 )
+mobList[zone][DMB+632].specificChildren = { DMB+633, DMB+634                                                  } -- Hippogryph    ( 086 )
+mobList[zone][DMB+204].specificChildren = { DMB+205, DMB+206                                                  } -- Sheep         ( 087 )
+mobList[zone][DMB+207].specificChildren = { DMB+208, DMB+209                                                  } -- Sheep         ( 088 )
+mobList[zone][DMB+210].specificChildren = { DMB+211, DMB+212                                                  } -- Sheep         ( 089 )
+mobList[zone][DMB+213].specificChildren = { DMB+214, DMB+215                                                  } -- Sheep         ( 090 )
+mobList[zone][DMB+216].specificChildren = { DMB+217, DMB+218                                                  } -- Sheep         ( 091 )
+mobList[zone][DMB+219].specificChildren = { DMB+220, DMB+221                                                  } -- Sheep         ( 092 )
+mobList[zone][DMB+222].specificChildren = { DMB+223                                                           } -- Sheep         ( 093 )
+mobList[zone][DMB+224].specificChildren = { DMB+225                                                           } -- Sheep         ( 094 )
+mobList[zone][DMB+226].specificChildren = { DMB+227                                                           } -- Sheep         ( 095 )
+mobList[zone][DMB+228].specificChildren = { DMB+472                                                           } -- Sheep         ( 096 )
+mobList[zone][DMB+473].specificChildren = { DMB+474                                                           } -- Sheep         ( 097 )
+mobList[zone][DMB+475].specificChildren = { DMB+476                                                           } -- Sheep         ( 098 )
+mobList[zone][DMB+477].specificChildren = { DMB+478                                                           } -- Sheep         ( 099 )
+mobList[zone][DMB+479].specificChildren = { DMB+480                                                           } -- Sheep         ( 100 )
+mobList[zone][DMB+481].specificChildren = { DMB+482                                                           } -- Sheep         ( 101 )
+mobList[zone][DMB+483].specificChildren = { DMB+484                                                           } -- Sheep         ( 102 )
+mobList[zone][DMB+485].specificChildren = { DMB+486                                                           } -- Sheep         ( 103 )
+mobList[zone][DMB+487].specificChildren = { DMB+488                                                           } -- Sheep         ( 104 )
+mobList[zone][DMB+489].specificChildren = { DMB+490                                                           } -- Sheep         ( 105 )
+mobList[zone][DMB+491].specificChildren = { DMB+492                                                           } -- Sheep         ( 106 )
+mobList[zone][DMB+493].specificChildren = { DMB+656, DMB+657                                                  } -- Sheep         ( 107 )
+mobList[zone][DMB+658].specificChildren = { DMB+659, DMB+660                                                  } -- Sheep         ( 108 )
+mobList[zone][DMB+661].specificChildren = { DMB+662, DMB+663                                                  } -- Sheep         ( 109 )
+mobList[zone][DMB+26 ].specificChildren = { DMB+27, DMB+28                                                    } -- Manticore     ( 110 )
+mobList[zone][DMB+29 ].specificChildren = { DMB+30, DMB+31                                                    } -- Manticore     ( 111 )
+mobList[zone][DMB+32 ].specificChildren = { DMB+33, DMB+34                                                    } -- Manticore     ( 112 )
+mobList[zone][DMB+35 ].specificChildren = { DMB+36, DMB+37                                                    } -- Manticore     ( 113 )
+mobList[zone][DMB+38 ].specificChildren = { DMB+39, DMB+40                                                    } -- Manticore     ( 114 )
+mobList[zone][DMB+41 ].specificChildren = { DMB+42, DMB+43                                                    } -- Manticore     ( 115 )
+mobList[zone][DMB+44 ].specificChildren = { DMB+45, DMB+46                                                    } -- Manticore     ( 116 )
+mobList[zone][DMB+47 ].specificChildren = { DMB+48, DMB+49                                                    } -- Manticore     ( 117 )
+mobList[zone][DMB+50 ].specificChildren = { DMB+394, DMB+395                                                  } -- Manticore     ( 118 )
+mobList[zone][DMB+396].specificChildren = { DMB+397, DMB+398, DMB+399                                         } -- Manticore     ( 119 )
+mobList[zone][DMB+400].specificChildren = { DMB+401, DMB+402, DMB+403                                         } -- Manticore     ( 120 )
+mobList[zone][DMB+404].specificChildren = { DMB+405, DMB+406, DMB+407                                         } -- Manticore     ( 121 )
+mobList[zone][DMB+408].specificChildren = { DMB+409, DMB+410                                                  } -- Manticore     ( 122 )
+mobList[zone][DMB+411].specificChildren = { DMB+412, DMB+413                                                  } -- Manticore     ( 123 )
+mobList[zone][DMB+643].specificChildren = { DMB+644, DMB+645                                                  } -- Manticore     ( 124 )
+mobList[zone][DMB+646].specificChildren = { DMB+647, DMB+648                                                  } -- Manticore     ( 125 )
+mobList[zone][DMB+649].specificChildren = { DMB+650, DMB+651                                                  } -- Manticore     ( 126 )
+mobList[zone][DMB+652].specificChildren = { DMB+653, DMB+654                                                  } -- Manticore     ( 127 )
+mobList[zone][DMB+357].specificChildren = { DMB+358, DMB+359                                                  } -- Sabotender    ( 128 )
+mobList[zone][DMB+360].specificChildren = { DMB+361, DMB+362                                                  } -- Sabotender    ( 129 )
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
 randomChildrenList[zone] = 
