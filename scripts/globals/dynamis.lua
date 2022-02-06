@@ -820,6 +820,11 @@ dynamis.setMobStats = function(mob)
     mob:setMobType(MOBTYPE_NORMAL)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.DEFP, 10)
+    mob:setMobMod(tpz.mobMod.NO_DESPAWN, 1)
+    mob:setMobMod(tpz.mobMod.HP_HEAL_CHANCE, 50)
+    mob:setMobMod(tpz.mobMod.HEAL_CHANCE, 40)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 0)
+    mob:setMobMod(tpz.mobMod.CHARMABLE, 0)
     mob:setTrueDetection(1)
 
     local familyEES =
