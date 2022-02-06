@@ -16,7 +16,7 @@ tpz.nyzul_isle = tpz.nyzul_isle or {}
 --------------------------------------------------------
 -- Constants for configuring randomness
 --------------------------------------------------------
-local FREE_FLOOR_CHANCE = 5 -- 5% chance of a free floor
+local FREE_FLOOR_CHANCE = 100 -- 5% chance of a free floor
 local GEAR_SUB_OBJECTIVE_CHANCE = 5 -- 5% chance of having a gear related sub objective
 local NM_1_CHANCE = 75 -- chance to see 1 NM
 local NM_2_CHANCE = 50 -- chance to see 2 NMs
@@ -126,8 +126,10 @@ function generateFreeFloor(floorNumber, instance)
         table.remove(remainingSpawnPoints, index)
     end
 
-    -- light the run of transfer
-    floorObjectiveComplete(instance)
+    -- light the rune of transfer
+    activeRuneOfTransfer:timer(3500, function(activeRuneOfTransfer)
+        floorObjectiveComplete(activeRuneOfTransfer:getInstance())
+    end)
     return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
