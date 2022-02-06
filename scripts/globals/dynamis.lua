@@ -823,7 +823,6 @@ dynamis.setMobStats = function(mob)
     mob:setMobMod(tpz.mobMod.NO_DESPAWN, 1)
     mob:setMobMod(tpz.mobMod.HP_HEAL_CHANCE, 50)
     mob:setMobMod(tpz.mobMod.HEAL_CHANCE, 40)
-    mob:setMobMod(tpz.mobMod.GIL_MAX, 0)
     mob:setMobMod(tpz.mobMod.CHARMABLE, 0)
     mob:setTrueDetection(1)
 
