@@ -1163,7 +1163,7 @@ INSERT INTO `mob_pools` VALUES(1099, 'Dragonfly', 'Dragonfly', 113, _binary 0x00
 INSERT INTO `mob_pools` VALUES(1100, 'Dragonian_Berzerker', 'Dragonian_Berzerker', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 1, 1, 18, 0, 0, 297, 129, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(1101, 'Dragonian_Minstrel', 'Dragonian_Minstrel', 87, _binary 0x0000a40100000000000000000000000000000000, 10, 10, 12, 240, 100, 1024, 1, 1, 1, 18, 0, 0, 3614, 129, 0, 0, 76, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(1102, 'Dragonscaled_Bugaal_Ja', 'Dragonscaled_Bugaal_Ja', 176, _binary 0x06004e0600000000000000000000000000000000, 9, 9, 2, 280, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 176);
-INSERT INTO `mob_pools` VALUES(1103, 'Dragontrap', 'Dragontrap', 114, _binary 0x0000410500000000000000000000000000000000, 1, 1, 8, 200, 100, 0, 1, 1, 1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 114);
+INSERT INTO `mob_pools` VALUES(1103, 'Dragontrap', 'Dragontrap', 17, _binary 0x0000410500000000000000000000000000000000, 1, 1, 8, 200, 100, 0, 1, 1, 1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 114);
 INSERT INTO `mob_pools` VALUES(1104, 'Lost_Stcemqestcint', 'Lost_Stcemqestcint', 245, _binary 0x0000840100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(1105, 'Lost_Fairy_Ring', 'Lost_Fairy_Ring', 116, _binary 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 116);
 INSERT INTO `mob_pools` VALUES(1106, 'Dragua', 'Dragua', 259, _binary 0x0000620200000000000000000000000000000000, 7, 4, 3, 240, 100, 1024, 0, 0, 0, 2, 0, 0, 1, 135, 0, 0, 262, 0, 0, 938);

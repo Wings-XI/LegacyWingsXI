@@ -45,6 +45,18 @@ zones[tpz.zone.DYNAMIS_VALKURM] =
             -- [16937588] = {trade = {{item = 3462, mob = 16937415}}}, -- Lost Stcemqestcint
         },
     },
+    mobs =
+    {
+        Nightmare_Fly_1 = 16937012,
+        Nightmare_Fly_2 = 16937013,
+        Nightmare_Fly_3 = 16937013,
+        Nantina = 16937077,
+        Stcemqestcint = 16937051,
+        Fairy_Ring = 16937100,
+        Dragontrap_1 = 16937576,
+        Dragontrap_2 = 16937577,
+        Dragontrap_3 = 16937578,
+    },
 }
 
 return zones[tpz.zone.DYNAMIS_VALKURM]

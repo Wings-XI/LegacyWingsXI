@@ -7,6 +7,7 @@ require("scripts/globals/dynamis")
 -----------------------------------
 
 local zone = 39
+local zoneID = zones[tpz.zone.DYNAMIS_VALKRUM]
 
 function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Valkrum/dynamis_mobs")
@@ -20,6 +21,26 @@ function onMobDeath(mob, player, isKiller)
     local ID = require("scripts/zones/Dynamis-Valkrum/IDs")
     dynamis.statueOnDeath(mob, player, isKiller)
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
+    -- Spawn QM0
+    -- If Nightmare FLy 1 was last alive:
+    if GetMobByID(zoneID.mobs.Nightmare_Fly_2):getStatus() == 2 and GetMobByID(zoneID.mobs.Nightmare_Fly_3):getStatus() == 2 then
+        local sjQM = GetNPCByID(16937585)
+        local pos = mob:getPos()
+        sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
+        sjQM:setStatus(tpz.status.NORMAL)
+    -- If Nightmare Fly 2 was last alive:
+    elseif GetMobByID(zoneID.mobs.Nightmare_Fly_1):getStatus() == 2 and GetMobByID(zoneID.mobs.Nightmare_Fly_3):getStatus() == 2 then
+        local sjQM = GetNPCByID(16937585)
+        local pos = mob:getPos()
+        sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
+        sjQM:setStatus(tpz.status.NORMAL)
+    -- If Nightmare Fly 3 was last alive:
+    elseif GetMobByID(zoneID.mobs.Nightmare_Fly_2):getStatus() == 2 and GetMobByID(zoneID.mobs.Nightmare_Fly_1):getStatus() == 2 then
+        local sjQM = GetNPCByID(16937585)
+        local pos = mob:getPos()
+        sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
+        sjQM:setStatus(tpz.status.NORMAL)
+    end
 end
 
 function onMobRoamAction(mob)

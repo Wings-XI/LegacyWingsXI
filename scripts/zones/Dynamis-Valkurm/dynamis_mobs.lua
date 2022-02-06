@@ -11,8 +11,8 @@ require("scripts/globals/zone")
 -----------------------------------
 
 local zone = tpz.zone.DYNAMIS_VALKURM
-local DMB = 0 -- dynamis mob base, where zone's mob targetid = 0
-local SMB = 0 -- statue mob base to allow mobID represented as format SMB + db where db is the dynamisbums.com identifier
+local DMB = 16936961 -- dynamis mob base, where zone's mob targetid = 0
+local SMB = 16937208 -- statue mob base to allow mobID represented as format SMB + db where db is the dynamisbums.com identifier
 
 mobList = mobList or { }
 randomChildrenList = randomChildrenList or { }
