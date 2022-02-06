@@ -12,8 +12,8 @@ require("scripts/globals/missions")
 require("scripts/globals/zone")
 -----------------------------------
 
-function onChocoboDig(player, precheck)
-    return tpz.chocoboDig.start(player, precheck)
+function onChocoboDig(player)
+    return tpz.chocoboDig.start(player)
 end
 
 function onInitialize(zone)
