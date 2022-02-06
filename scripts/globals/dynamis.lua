@@ -138,7 +138,7 @@ dynamis.entryInfo =
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
-        enabled = false,
+        enabled = true,
         winVar = "DynaValkurm_Win",
         hasEnteredVar = "DynaValkurm_HasEntered",
         hasSeenWinCSVar = "DynaValkurm_HasSeenWinCS",
@@ -306,6 +306,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_VALKURM_INTERLOPER,
         entryPos = {100, -8, 131, 47, tpz.zone.DYNAMIS_VALKURM},
         ejectPos = {119, -9, 131, 52, tpz.zone.VALKURM_DUNES},
+        sjRestriction = true,
     },
     [tpz.zone.VALKURM_DUNES] =
     {
