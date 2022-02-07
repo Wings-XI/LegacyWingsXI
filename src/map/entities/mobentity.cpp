@@ -112,6 +112,7 @@ CMobEntity::CMobEntity()
     m_dmgMult = 100;
 
     m_giveExp = false;
+    m_ExpPenalty = 0;
     m_neutral = false;
     m_Aggro = false;
     m_TrueDetection = 0;
@@ -712,6 +713,7 @@ void CMobEntity::Spawn()
 {
     CBattleEntity::Spawn();
     m_giveExp = true;
+    m_ExpPenalty = 0;
     m_HiPCLvl = 0;
     m_HiPartySize = 0;
     m_THLvl = 0;
