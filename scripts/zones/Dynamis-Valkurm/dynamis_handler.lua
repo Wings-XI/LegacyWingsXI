@@ -43,7 +43,14 @@ function onDynamisNewInstance()
                 mob:setSpawn(mobList[zone][i].pos[1],mobList[zone][i].pos[2],mobList[zone][i].pos[3],mobList[zone][i].pos[4])
                 if mobList[zone][i].waves ~= nil and mobList[zone][i].waves[1] ~= nil then SpawnMob(i) end
             else mob:setSpawn(1,1,1,0) end
-            mob:addRoamFlag(256) -- scripted pathing only
+            if mob:getFamily() == 94 or mob:getID() == 16936961 then
+                print("Statue or NM")
+                mob:addRoamFlag(256) -- scripted pathing only
+            else
+                print("Nightmare Mob")
+                mob:addMobMod(tpz.mobMod.ROAM_DISTANCE, 10)
+                mob:addRoamFlag(0) -- Roam Freely
+            end
         elseif npcList[zone][i] ~= nil and npcList[zone][i].spawnAtStart ~= nil then
             GetNPCByID(i):setStatus(tpz.status.NORMAL)
         end

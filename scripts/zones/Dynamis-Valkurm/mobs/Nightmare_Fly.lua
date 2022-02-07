@@ -7,18 +7,18 @@ require("scripts/globals/dynamis")
 -----------------------------------
 
 local zone = 39
-local zoneID = zones[tpz.zone.DYNAMIS_VALKRUM]
+local zoneID = zones[tpz.zone.DYNAMIS_Valkurm]
 
 function onMobSpawn(mob)
-    require("scripts/zones/Dynamis-Valkrum/dynamis_mobs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
     dynamis.setMobStats(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    require("scripts/zones/Dynamis-Valkrum/dynamis_mobs")
-    local ID = require("scripts/zones/Dynamis-Valkrum/IDs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
+    local ID = require("scripts/zones/Dynamis-Valkurm/IDs")
     dynamis.statueOnDeath(mob, player, isKiller)
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
     -- Spawn QM0
@@ -52,7 +52,7 @@ function onMobRoam(mob)
 end
 
 function onMobEngaged(mob, target)
-    require("scripts/zones/Dynamis-Valkrum/dynamis_mobs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
     randomChildrenListArg = nil
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)

@@ -12,8 +12,8 @@ mixins =
 local zone = 39
 
 function onMobDeath(mob, player, isKiller)
-    require("scripts/zones/Dynamis-Valkrum/dynamis_mobs")
-    local ID = require("scripts/zones/Dynamis-Valkrum/IDs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
+    local ID = require("scripts/zones/Dynamis-Valkurm/IDs")
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 

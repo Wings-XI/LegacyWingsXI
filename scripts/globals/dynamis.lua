@@ -134,7 +134,7 @@ dynamis.entryInfo =
     [tpz.zone.VALKURM_DUNES] =
     {
         csBit = 7,
-        csRegisterGlass = 57,
+        csRegisterGlass = 15,
         csFirst = 33,
         csWin = 39,
         csDyna = 58,

@@ -26,7 +26,7 @@ function onMobDeath(mob, player, isKiller)
     local pos = mob:getPos()
     winQM:setPos(pos.x,pos.y,pos.z,pos.rot)
     winQM:setStatus(tpz.status.NORMAL)
-    player:addTitle(tpz.title.DYNAMIS_VALKRUM_INTERLOPER)
+    player:addTitle(tpz.title.DYNAMIS_VALKURM_INTERLOPER)
 end
 
 function onMobRoamAction(mob)
