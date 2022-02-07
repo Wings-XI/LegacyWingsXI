@@ -13,7 +13,7 @@ local zone = 41
 
 function onMobDeath(mob, player, isKiller)
     require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
-    local ID = require("scripts/zones/Dynamis-Beaucedine/IDs")
+    local ID = require("scripts/zones/Dynamis-Qufim/IDs")
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 

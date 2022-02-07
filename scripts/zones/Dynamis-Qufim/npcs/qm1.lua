@@ -18,7 +18,7 @@ function onTrigger(player, npc)
     
     local nearbyPlayers = npc:getPlayersInRange(50)
     if nearbyPlayers == nil then return end
-    local ID = require("scripts/zones/Dynamis-Bastok/IDs")
+    local ID = require("scripts/zones/Dynamis-Qufim/IDs")
     
     for _,v in ipairs(nearbyPlayers) do
         if v:hasKeyItem(tpz.ki.DYNAMIS_QUFIM_SLIVER) == false then
