@@ -16,11 +16,9 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobRoamAction(mob)
-    dynamis.mobOnRoamAction(mob)
 end
 
 function onMobRoam(mob)
-    dynamis.mobOnRoam(mob)
 end
 
 function onMobEngaged(mob, target)
