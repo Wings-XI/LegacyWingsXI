@@ -26,7 +26,7 @@ function onPetAbility(target, pet, skill)
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
     target:updateEnmityFromDamage(pet, totaldamage)
     if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
-        if (AvatarPhysicalHit(skill, totalDamage) and target:hasStatusEffect(tpz.effect.POISON) == false) then
+        if (AvatarPhysicalHit(skill, totaldamage) and target:hasStatusEffect(tpz.effect.POISON) == false) then
             target:addStatusEffect(tpz.effect.POISON, 1, 3, 60)
         end
     end
