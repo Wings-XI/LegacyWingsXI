@@ -12,6 +12,7 @@ function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
+    dynamis.setMobStats(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -30,4 +31,8 @@ function onMobRoam(mob)
 end
 
 function onMobEngaged(mob, target)
+    require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
+    randomChildrenListArg = nil
+    if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
+    dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
 end
