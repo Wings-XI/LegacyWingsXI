@@ -7,7 +7,7 @@ require("scripts/globals/dynamis")
 -----------------------------------
 
 local zone = 39
-local zoneID = zones[tpz.zone.DYNAMIS_Valkurm]
+local zoneID = zones[zone]
 
 function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
@@ -44,11 +44,9 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobRoamAction(mob)
-    dynamis.mobOnRoamAction(mob)
 end
 
 function onMobRoam(mob)
-    dynamis.mobOnRoam(mob)
 end
 
 function onMobEngaged(mob, target)

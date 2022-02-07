@@ -48,7 +48,9 @@ function onDynamisNewInstance()
                 mob:addRoamFlag(256) -- scripted pathing only
             else
                 print("Nightmare Mob")
-                mob:addMobMod(tpz.mobMod.ROAM_DISTANCE, 10)
+                mob:addMobMod(tpz.mobMod.ROAM_DISTANCE, 8)
+                mob:addMobMod(tpz.mobMod.ROAM_COOL, 5)
+                mob:addMobMod(tpz.mobmod.ROAM_RATE, 3)
                 mob:addRoamFlag(0) -- Roam Freely
             end
         elseif npcList[zone][i] ~= nil and npcList[zone][i].spawnAtStart ~= nil then
