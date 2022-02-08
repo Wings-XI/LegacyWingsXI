@@ -3389,13 +3389,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1143,830); -- Ligh
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,985); -- Stellar Burst
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,986); -- Vortex
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,1006); -- Omega Javelin
--- Aries (KS30 Todays Horoscope)
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 265);
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 266);
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 267);
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 268);
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 269);
-INSERT INTO `mob_skill_lists` VALUES('Aries', 5019, 404);
 
 --
 -- Indexes for dumped tables
