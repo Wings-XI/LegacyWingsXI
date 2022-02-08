@@ -26,7 +26,7 @@ end
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
         local name, clearTime, partySize = battlefield:getRecord()
-        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
+        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"))
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002)
     end

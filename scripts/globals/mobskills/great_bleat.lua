@@ -19,7 +19,11 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.MAX_HP_DOWN
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 30, 0, 60))
+    if mob:getName() == 'Aries' then
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 75, 0, 90)) -- 75% HP Reduction for 90s
+    else
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 30, 0, 60))
+    end
 
     return typeEffect
 end

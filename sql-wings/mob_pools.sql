@@ -290,7 +290,7 @@ INSERT INTO `mob_pools` VALUES(226, 'Arch_Demon', 'Arch_Demon', 169, _binary 0x0
 INSERT INTO `mob_pools` VALUES(227, 'Areuhat', 'Areuhat', 145, _binary 0x01001a0400108720873087408750776100700080, 7, 7, 3, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 0, 0, 145);
 INSERT INTO `mob_pools` VALUES(228, 'Argus', 'Argus', 139, _binary 0x0000800100000000000000000000000000000000, 4, 4, 12, 280, 100, 0, 1, 0, 0, 2, 0, 32, 217, 1183, 0, 0, 10, 0, 0, 139);
 INSERT INTO `mob_pools` VALUES(229, 'Arid_Limule', 'Arid_Limule', 173, _binary 0x00004d0900000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 1, 0, 0, 0, 0, 0, 1, 1667, 0, 0, 0, 0, 0, 173);
-INSERT INTO `mob_pools` VALUES(230, 'Aries', 'Aries', 208, _binary 0x0000580100000000000000000000000000000000, 1, 5, 7, 300, 100, 0, 1, 1, 0, 16, 0, 32, 2880, 1183, 0, 0, 0, 0, 0, 208);
+INSERT INTO `mob_pools` VALUES(230, 'Aries', 'Aries', 208, _binary 0x0000580100000000000000000000000000000000, 1, 5, 7, 150, 100, 0, 1, 1, 0, 16, 952, 32, 2880, 1183, 0, 0, 524, 0, 0, 208);
 INSERT INTO `mob_pools` VALUES(231, 'Ariesian_Caster', 'Ariesian_Caster', 153, _binary 0x01000c0613101320133013401350e86024700080, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 153);
 INSERT INTO `mob_pools` VALUES(232, 'Arimaspi', 'Arimaspi', 4, _binary 0x0000090100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 165, 0, 0, 4);
 INSERT INTO `mob_pools` VALUES(233, 'Arioch', 'Arioch', 46, _binary 0x0000010100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 46);
