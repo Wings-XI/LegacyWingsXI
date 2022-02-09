@@ -63,13 +63,9 @@ function onSpellCast(caster, target, spell)
     local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
     
     if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.SLOW) then
+        -- per all wikis and studio gobli - flat 15%
+        -- Cannot find durtaion listed anywhere - 30s feels low
         local power = 1500
-        local cMND = caster:getStat(tpz.mod.MND)
-        local tMND = target:getStat(tpz.mod.MND)
-        if cMND < tMND then
-            power = power - (tMND - cMND)*40
-            if power < 300 then power = 300 end
-        end
 
         target:addStatusEffect(tpz.effect.SLOW, power, 0, duration+bonus)
     end

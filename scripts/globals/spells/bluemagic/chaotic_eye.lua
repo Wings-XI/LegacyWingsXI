@@ -34,10 +34,13 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.effect = tpz.effect.SILENCE
     
     local resist = applyResistanceEffect(caster, target, spell, params)
-    local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
+    -- Per wiki "Roughly equivalent to the Enfeebling Magic spell, Silence."
+    -- Per bgwiki - 5-120 seconds
+    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_SILENCE, target))
     if resist >= 0.5 then
         if target:isFacing(caster) then
             if target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration*resist) then

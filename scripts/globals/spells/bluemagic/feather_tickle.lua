@@ -27,6 +27,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_BIRD
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
+    params.bonus = caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistance(caster, target, spell, params)
     local power = math.random(200, 300)
 

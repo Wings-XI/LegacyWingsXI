@@ -439,7 +439,6 @@ void CalculateTraits(CCharEntity* PChar)
 
                 if (PTrait && PTrait->getCategory() == category)
                 {
-
                     bool add = true;
 
                     for (uint8 j = 0; j < PChar->TraitList.size(); ++j)
@@ -448,10 +447,15 @@ void CalculateTraits(CCharEntity* PChar)
 
                         if (PExistingTrait->getID() == PTrait->getID())
                         {
+                            // get->Level() == 0 is being used as a psuedo "is this is a blue trait.
                             if (PExistingTrait->getLevel() == 0 && ((CBlueTrait*)PExistingTrait)->getCategory() == PTrait->getCategory())
                             {
-                                add = false;
-                                break;
+                                // we have dual mods for category 16 and 8 (acc and attack)
+                                if ((category != 16) && (category != 8))
+                                {
+                                    add = false;
+                                    break;
+                                }
                             }
                             if (PExistingTrait->getRank() < PTrait->getRank())
                             {
@@ -483,7 +487,9 @@ void CalculateTraits(CCharEntity* PChar)
                         PChar->TraitList.push_back(PTrait);
                         PChar->addModifier(PTrait->getMod(), PTrait->getValue());
 
-                        break;
+                        // we have dual mods for category 16 and 8 (acc and attack)
+                        if ((category != 16) && (category != 8))
+                            break;
                     }
                 }
 	        }
