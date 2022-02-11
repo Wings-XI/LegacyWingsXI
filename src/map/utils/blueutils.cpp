@@ -399,6 +399,9 @@ void ValidateBlueSpells(CCharEntity* PChar)
 
 void CalculateTraits(CCharEntity* PChar)
 {
+    int TRAIT_CATEGORY_ACC = 16;
+    int TRAIT_CATEGORY_ATT = 8;
+
     TraitList_t* PTraitsList = traits::GetTraits(JOB_BLU);
     std::map<uint8, uint8> points;
 
@@ -451,7 +454,7 @@ void CalculateTraits(CCharEntity* PChar)
                             if (PExistingTrait->getLevel() == 0 && ((CBlueTrait*)PExistingTrait)->getCategory() == PTrait->getCategory())
                             {
                                 // we have dual mods for category 16 and 8 (acc and attack)
-                                if ((category != 16) && (category != 8))
+                                if ((category != TRAIT_CATEGORY_ACC) && (category != TRAIT_CATEGORY_ATT))
                                 {
                                     add = false;
                                     break;
@@ -488,7 +491,7 @@ void CalculateTraits(CCharEntity* PChar)
                         PChar->addModifier(PTrait->getMod(), PTrait->getValue());
 
                         // we have dual mods for category 16 and 8 (acc and attack)
-                        if ((category != 16) && (category != 8))
+                        if ((category != TRAIT_CATEGORY_ACC) && (category != TRAIT_CATEGORY_ATT))
                             break;
                     }
                 }
