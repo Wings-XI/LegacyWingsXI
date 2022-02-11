@@ -25,7 +25,7 @@ function onUseAbility(player, target, ability, action)
     local params = {}
     params.includemab = true
     -- player:getRangedDmg() includes ammo
-    local dmg = (2 * (player:getRangedDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
+    local dmg = 2 * (player:getRangedDmg() + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
     dmg  = addBonusesAbility(player, tpz.magic.ele.EARTH, target, dmg, params)
     local bonusAcc = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI)) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC) - 23
     dmg = dmg * applyResistanceAbility(player, target, tpz.magic.ele.EARTH, tpz.skill.NONE, bonusAcc)
