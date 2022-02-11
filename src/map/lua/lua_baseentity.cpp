@@ -16020,11 +16020,28 @@ inline int32 CLuaBaseEntity::getStealItem(lua_State *L)
 
         if (PDropList && !PMob->m_ItemStolen)
         {
-            for (const DropItem_t& drop : PDropList->Items)
+            // Steal a specified item
+            if (PMob->m_StealItemID > 0)
             {
-                if (drop.DropType == DROP_STEAL)
+                lua_pushinteger(L, PMob->m_StealItemID);
+                return 1;
+            }
+            else
+            {
+                // Steal item randomly selected from steal drop table
+                std::vector<uint16> Items;
+
+                for (const DropItem_t& drop : PDropList->Items)
                 {
-                    lua_pushinteger(L, drop.ItemID);
+                    if (drop.DropType == DROP_STEAL)
+                    {
+                        Items.emplace_back(drop.ItemID);
+                    }
+                }
+
+                if (!Items.empty())
+                {
+                    lua_pushinteger(L, Items[tpzrand::GetRandomNumber(Items.size())]);
                     return 1;
                 }
             }
@@ -16103,7 +16120,38 @@ inline int32 CLuaBaseEntity::itemStolen(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
 
-    ((CMobEntity*)m_PBaseEntity)->m_ItemStolen = true;
+    CMobEntity* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob)
+    {
+        PMob->m_ItemStolen = true;
+    }
+
+    lua_pushboolean(L, 1);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setStealItemID()
+*  Purpose : Sets a mob's item to be stolen
+*  Example : target:setStealItemID(1234)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setStealItemID(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CMobEntity* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob)
+    {
+        PMob->m_StealItemID = (uint16)lua_tointeger(L, 1);
+        PMob->m_ItemStolen = false;
+    }
+
     lua_pushboolean(L, 1);
     return 1;
 }
@@ -18879,6 +18927,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDespoilItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDespoilDebuff),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,itemStolen),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStealItemID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTHlevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPlayerRegionInZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateToEntireZone),

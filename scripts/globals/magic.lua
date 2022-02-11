@@ -1305,7 +1305,7 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     if hasMultipleTargetReduction == true then
         MTDR = 0.90 - spell:getTotalTargets() * 0.05
-        if MTDR == 0.85 then -- 1 target, stay at 1.0
+        if MTDR >= 0.85 then -- 1 target, stay at 1.0
             MTDR = 1.0
         elseif MTDR < 0.4 then
             MTDR = 0.4

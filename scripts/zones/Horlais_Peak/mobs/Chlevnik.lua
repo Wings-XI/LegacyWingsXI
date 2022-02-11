@@ -44,7 +44,11 @@ function onMobFight(mob, target)
         end
 
     if mob:getLocalVar("Meteor") == 1 then
-        mob:useMobAbility(634) -- Final Meteor
+        if mob:checkDistance(target) > 40 then
+            mob:resetEnmity(target)
+        else
+            mob:useMobAbility(634) -- Final Meteor
+        end
     end
 end
 

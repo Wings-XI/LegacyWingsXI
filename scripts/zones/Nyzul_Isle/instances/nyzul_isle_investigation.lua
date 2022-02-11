@@ -72,7 +72,7 @@ function onInstanceComplete(instance)
     local startingFloor = instance:getLocalVar("Nyzul_StartingFloor")
     local endingFloor = instance:getStage()
     -- stage is advanced on floor complete - so reduce the ending floor by 1
-    if (endingFloor == 1 and instance:setLocalVar("Nyzul_BeatFloor100") > 0) then
+    if (endingFloor == 1 and instance:getLocalVar("Nyzul_BeatFloor100") > 0) then
         endingFloor = 100
     else
         endingFloor = endingFloor - 1
