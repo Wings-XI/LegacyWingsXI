@@ -335,7 +335,7 @@ void search_config_default()
     search_config.expire_days = 3;
     search_config.expire_interval = 3600;
     search_config.search_server_port = "54002";
-    search_config.inv_search_sort = true;
+    search_config.inv_search_sort = false;
 }
 
 /************************************************************************
