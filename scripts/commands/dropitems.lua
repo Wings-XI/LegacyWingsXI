@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
--- func: 
--- desc: 
+-- func:
+-- desc:
 ---------------------------------------------------------------------------------------------------
 
 cmdprops =
@@ -15,16 +15,13 @@ function error(player, msg)
 end
 
 function onTrigger(player)
-    return
     -- defunct, use Aluh Jambiya for godTH
-    
+
     local tookEffect = player:forceDropItems()
-    
+
     if tookEffect == true then
-        
+
     else
         player:PrintToPlayer("Your current cursor target must be a monster type entity.")
     end
-    
-    return
 end

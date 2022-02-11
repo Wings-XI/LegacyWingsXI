@@ -39,8 +39,6 @@ function onEventUpdate(player, csid, option)
         local ItemID =0
         if (option == 4456449) then
             ItemID = 19327
-        elseif (option == 4456449) then
-            ItemID = 19327
         end
         magianOrangeEventUpdate(player, ItemID, csid, option)
     end

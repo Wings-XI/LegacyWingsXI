@@ -37,9 +37,6 @@ SomethingFishy = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.SOMETHING
         end
     elseif (SomethingFishy == QUEST_AVAILABLE) then
         player:startEvent(208, 0, 4360)
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.BLAST_FROM_THE_PAST) == QUEST_ACCEPTED and player:getCharVar("BlastFromThePast_Prog") == 0) then
-        player:startEvent(318)
-        player:setCharVar("BlastFromThePast_Prog", 1)
     else
         player:startEvent(207)
     end
