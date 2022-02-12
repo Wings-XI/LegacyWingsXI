@@ -320,8 +320,12 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-
-    calcParams.firstHitRateBonus = 50
+    
+    if (wsID == 0) then
+        calcParams.firstHitRateBonus = 0
+    else
+        calcParams.firstHitRateBonus = 50
+    end
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- allow crit if building flourish is on (3+ moves)
