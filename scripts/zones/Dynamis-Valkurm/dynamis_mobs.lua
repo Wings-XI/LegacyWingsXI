@@ -472,6 +472,8 @@ mobList[zone] =
     [SMB+301] = { id =  SMB+301},
     [SMB+302] = { id =  SMB+302},
     [SMB+309] = { id =  SMB+309},
+    [DMB+673] = { id =  DMB+673},
+    [DMB+674] = { id =  DMB+674},
 }
 
 mobList[zone].zoneID = tpz.zone.DYNAMIS_VALKURM

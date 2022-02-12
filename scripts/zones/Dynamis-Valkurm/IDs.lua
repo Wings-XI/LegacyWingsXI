@@ -57,6 +57,8 @@ zones[tpz.zone.DYNAMIS_VALKURM] =
         Dragontrap_2 = 16937577,
         Dragontrap_3 = 16937578,
         Megaboss = 16936961,
+        Nightmare_Morbol_1 = 16937634,
+        Nightmare_Morbol_2 = 16937635,
     },
 }
 

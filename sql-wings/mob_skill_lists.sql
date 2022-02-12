@@ -3389,6 +3389,29 @@ INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1143,830); -- Ligh
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,985); -- Stellar Burst
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,986); -- Vortex
 INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1144,1006); -- Omega Javelin
+-- Dynamis - Valkurm
+INSERT INTO `mob_skill_lists` VALUES('Cirrate_Christelle', 5019, 1605); -- Miasmic Breath
+INSERT INTO `mob_skill_lists` VALUES('Cirrate_Christelle', 5019, 1607); -- Fragrant Breath
+INSERT INTO `mob_skill_lists` VALUES('Cirrate_Christelle', 5019, 1609); -- Putrid Breath
+INSERT INTO `mob_skill_lists` VALUES('Cirrate_Christelle', 5019, 1610); -- Extremely Bad Breath
+INSERT INTO `mob_skill_lists` VALUES('Cirrate_Christelle', 5019, 1611); -- Vampiric Lash
+INSERT INTO `mob_skill_lists` VALUES('Nantina', 5020, 1617); -- Blow
+INSERT INTO `mob_skill_lists` VALUES('Nantina', 5020, 1618); -- Uppercut
+INSERT INTO `mob_skill_lists` VALUES('Nantina', 5020, 1619); -- Attractant
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 308); -- Frogkick
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 309); -- Spore
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 310); -- Queasyshroom
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 311); -- Numbshroom
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 312); -- Shakeshroom
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 314); -- Silence Gas
+INSERT INTO `mob_skill_lists` VALUES('Fairy_Ring', 5021, 315); -- Dark Spore
+INSERT INTO `mob_skill_lists` VALUES('Dragontrap', 5022, 434); -- Soporific
+INSERT INTO `mob_skill_lists` VALUES('Dragontrap', 5022, 435); -- Palsy Pollen
+INSERT INTO `mob_skill_lists` VALUES('Dragontrap', 5022, 436); -- Gloeosuccus
+INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 329); -- Pinecone Bomb
+INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 328); -- Drill Branch
+INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 331); -- Leafstorm
+INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 332); -- Entangle
 
 --
 -- Indexes for dumped tables

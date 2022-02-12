@@ -1484,6 +1484,7 @@ INSERT INTO `mob_groups` VALUES(173, 1104, 39, 'Lost_Stcemqestcint', 0, 128, 312
 INSERT INTO `mob_groups` VALUES(174, 400, 39, 'Lost_Nantina', 0, 128, 3127, 0, 0, 100, 100, 0);
 INSERT INTO `mob_groups` VALUES(175, 354, 39, 'Arch_Christelle', 0, 128, 3128, 0, 0, 105, 105, 0);
 INSERT INTO `mob_groups` VALUES(176, 1103, 39, 'Dragontrap', 1200, 128, 806, 20000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(186, 2861, 39, 'Nightmare_Morbol', 0, 128, 472, 18500, 0, 82, 82, 0);
 INSERT INTO `mob_groups` VALUES(1, 198, 40, 'Apocalyptic_Beast', 0, 128, 146, 27000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(2, 4170, 40, 'Vanguard_Pathfinder', 600, 128, 2540, 4000, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(3, 4189, 40, 'Vanguards_Slime', 0, 128, 0, 2400, 1000, 75, 77, 0);
