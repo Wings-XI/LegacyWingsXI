@@ -31,6 +31,8 @@ function onMobWeaponSkill(target, mob, skill)
         else
             skill:setMsg(tpz.msg.basic.SKILL_MISS)
         end
+        
+        return effect
     else
         local typeEffect = tpz.effect.SLEEP_I
 
