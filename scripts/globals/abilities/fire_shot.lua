@@ -24,15 +24,14 @@ end
 function onUseAbility(player, target, ability, action)
     local params = {}
     params.includemab = true
-    local dmg = (2 * (player:getRangedDmg() + player:getAmmoDmg()) + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
+    -- player:getRangedDmg() includes ammo
+    local dmg = 2 * (player:getRangedDmg() + player:getMod(tpz.mod.QUICK_DRAW_DMG)) * (1 + player:getMod(tpz.mod.QUICK_DRAW_DMG_PERCENT) / 100)
     dmg  = addBonusesAbility(player, tpz.magic.ele.FIRE, target, dmg, params)
     local bonusAcc = (player:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI)) / 2 + player:getMerit(tpz.merit.QUICK_DRAW_ACCURACY) + player:getMod(tpz.mod.QUICK_DRAW_MACC) - 23
     dmg = dmg * applyResistanceAbility(player,target, tpz.magic.ele.FIRE, tpz.skill.NONE, bonusAcc)
     dmg = adjustForTarget(target, dmg, tpz.magic.ele.FIRE)
-
     params.targetTPMult = 0 -- Quick Draw does not feed TP
     dmg = takeAbilityDamage(target, player, params, true, dmg, tpz.attackType.MAGICAL, tpz.damageType.FIRE, tpz.slot.RANGED, 0, 0, 0, 0, action, nil)
-
     if dmg > 0 then
         local effects = {}
         local burn = target:getStatusEffect(tpz.effect.BURN)
