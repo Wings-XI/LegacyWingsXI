@@ -22,7 +22,7 @@ function onMobWeaponSkill(target, mob, skill)
             target:delStatusEffectSilent(tpz.effect.LULLABY)
             target:delStatusEffectSilent(tpz.effect.SLEEP_I)
             target:delStatusEffectSilent(tpz.effect.POISON)
-            local dotdmg = 20
+            local dotdmg = 50
             if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
                 target:addStatusEffect(tpz.effect.POISON, dotdmg, 3, duration, 0, 15, 2)
                 skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
