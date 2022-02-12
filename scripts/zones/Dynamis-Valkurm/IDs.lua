@@ -56,6 +56,7 @@ zones[tpz.zone.DYNAMIS_VALKURM] =
         Dragontrap_1 = 16937576,
         Dragontrap_2 = 16937577,
         Dragontrap_3 = 16937578,
+        Megaboss = 16936961,
     },
 }
 

@@ -58,6 +58,7 @@ zones[tpz.zone.DYNAMIS_QUFIM] =
         water_elemental = 16945629,
         light_elemental = 16945634,
         dark_elemental = 16945642,
+        megaboss = 16945153,
     }
 }
 
