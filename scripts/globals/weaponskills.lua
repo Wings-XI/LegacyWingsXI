@@ -788,7 +788,6 @@ function getMeleeDmg(attacker, weaponType, kick)
         end
 
         mainhandDamage = mainhandDamage + h2hSkill
-        mainhandDamage = math.floor(mainhandDamage * 1.23)
         offhandDamage = mainhandDamage
     end
 

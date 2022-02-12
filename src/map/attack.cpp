@@ -503,8 +503,6 @@ void CAttack::ProcessDamage()
         }
         m_damage = (uint32)(m_baseDamage + m_naturalH2hDamage + m_trickAttackDamage +
             battleutils::GetFSTR(m_attacker, m_victim, slot));
-        if (m_attacker->objtype == TYPE_PC)
-            m_damage = (int32)((float)m_damage * 1.23f);
         m_damage = (int32)((float)m_damage * m_damageRatio);
     }
     else if (slot == SLOT_MAIN)
