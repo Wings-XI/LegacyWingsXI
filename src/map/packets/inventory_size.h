@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -39,6 +39,8 @@ class CInventorySizePacket: public CBasicPacket
 public:
 
 	CInventorySizePacket(CCharEntity* PChar);
+
+    virtual void ClientVerFixup(const CCharEntity* PChar);
 
 private:
     void GetSizeAndBuff(CCharEntity* PChar, uint8 location, uint8 sizeOffset, uint8 buffOffset);

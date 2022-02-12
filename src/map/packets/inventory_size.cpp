@@ -117,6 +117,18 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     */
 }
 
+void CInventorySizePacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needInventoryFix) {
+        this->size = 0x32;
+        // Buff location changed
+        memmove(this->data + 0x24, this->data + 0x14, 26);
+        // Disable the currently unsupported storage locations
+        memset(this->data + 0x3E, 0, 10);
+        memset(this->data + 0x11, 0, 19);
+    }
+}
+
 void CInventorySizePacket::GetSizeAndBuff(CCharEntity* PChar, uint8 location, uint8 sizeOffset, uint8 buffOffset)
 {
     uint8 storageSize = PChar->getStorage(location)->GetSize();
