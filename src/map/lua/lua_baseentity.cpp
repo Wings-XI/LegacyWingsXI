@@ -13333,8 +13333,8 @@ inline int32 CLuaBaseEntity::getOffhandDmgRank(lua_State *L)
 /************************************************************************
 *  Function: getRangedDmg()
 *  Purpose : Returns the damage rating for the weapon in the Ranged slot
-*  Example : local dmg = (2 * player:getRangedDmg() + player:getAmmoDmg())
-*  Notes   :
+*  Example : local dmg = (2 * player:getRangedDmg())
+*  Notes   : Includes the damage contribution from ammo
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getRangedDmg(lua_State *L)
@@ -13370,7 +13370,7 @@ inline int32 CLuaBaseEntity::getRangedDmgRank(lua_State *L)
 *  Function: getAmmoDmg()
 *  Purpose : Returns the damage rating for the weapon in Ammo slot
 *  Example : local dmg = (2 * player:getRangedDmg() + player:getAmmoDmg()
-*  Notes   :
+*  Notes   : Take care when using this with getRangedDmg() as ammo dmg is already included
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::getAmmoDmg(lua_State *L)

@@ -8798,7 +8798,7 @@ INSERT INTO `mob_groups` VALUES(30, 1500, 139, 'Gerjis', 0, 128, 0, 0, 0, 50, 50
 INSERT INTO `mob_groups` VALUES(31, 3026, 139, 'Orcish_Onager', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(32, 1100, 139, 'Dragonian_Berzerker', 0, 128, 0, 9250, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(33, 1101, 139, 'Dragonian_Minstrel', 0, 128, 0, 9250, 0, 75, 75, 0);
-INSERT INTO `mob_groups` VALUES(34, 230, 139, 'Aries', 0, 128, 0, 0, 0, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(34, 230, 139, 'Aries', 0, 128, 0, 14000, 8000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(35, 1265, 139, 'Evil_Oscar', 0, 128, 0, 12500, 0, 75, 75, 0);
 INSERT INTO `mob_groups` VALUES(36, 2405, 139, 'Lhu_Mhakaracca', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7714, 2226, 139, 'Kilhwch', 0, 0, 0, 0, 0, 0, 0, 0);
@@ -8829,8 +8829,8 @@ INSERT INTO `mob_groups` VALUES(23, 3023, 140, 'Orcish_Neckchopper', 300, 0, 192
 INSERT INTO `mob_groups` VALUES(24, 3899, 140, 'Thousandarm_Deshglesh', 0, 32, 2400, 0, 0, 11, 13, 0);
 INSERT INTO `mob_groups` VALUES(25, 1513, 140, 'Ghelsba_Pugil', 300, 0, 975, 0, 0, 3, 6, 0);
 INSERT INTO `mob_groups` VALUES(26, 884, 140, 'Cyranuce_M_Cutauleon', 0, 128, 0, 0, 0, 40, 40, 0);
-INSERT INTO `mob_groups` VALUES(27, 766, 140, 'Colo-colo', 0, 128, 0, 0, 0, 20, 20, 0);
-INSERT INTO `mob_groups` VALUES(28, 1441, 140, 'Furies', 0, 128, 0, 0, 0, 20, 20, 0);
+INSERT INTO `mob_groups` VALUES(27, 766, 140, 'Colo-colo', 0, 128, 0, 850, 0, 20, 21, 0);
+INSERT INTO `mob_groups` VALUES(28, 1441, 140, 'Furies', 0, 128, 0, 700, 0, 19, 20, 0);
 INSERT INTO `mob_groups` VALUES(30, 2181, 140, 'Kalamainu', 0, 128, 0, 0, 0, 30, 30, 0);
 INSERT INTO `mob_groups` VALUES(31, 2227, 140, 'Kilioa', 0, 128, 0, 0, 0, 30, 30, 0);
 INSERT INTO `mob_groups` VALUES(32, 3937, 140, 'Toadpillow', 0, 128, 0, 0, 0, 30, 30, 0);

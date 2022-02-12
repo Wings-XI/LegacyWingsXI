@@ -354,7 +354,7 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 
 bool CMobEntity::CanDeaggro()
 {
-    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD);
+    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD || isInDynamis() == true );
 }
 
 bool CMobEntity::IsFarFromHome()

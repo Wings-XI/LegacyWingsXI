@@ -45,11 +45,14 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
     params.effect = nil
-
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
+    
     local resist = applyResistanceEffect(caster, target, spell, params)
 
     if resist >= 0.5 and target:canGainStatusEffect(tpz.effect.ACCURACY_DOWN) then
-        target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 10, 3, 30*resist)
+        -- BG wiki lists acc down effect as -25
+        -- Neither Studio Globi nor ffxiwiki have a value
+        target:addStatusEffect(tpz.effect.ACCURACY_DOWN, 25, 3, 30*resist)
     end
 
     return damage
