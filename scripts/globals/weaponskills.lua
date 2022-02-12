@@ -1268,6 +1268,10 @@ function handleWSGorgetBelt(attacker)
         local neck = attacker:getEquipID(tpz.slot.NECK)
         local belt = attacker:getEquipID(tpz.slot.WAIST)
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
+        -- Some things are treated as WS but don't have properties, such as jumps
+        if SCProp1 == nil then
+            return 0, 0
+        end
         for i,v in ipairs(elementalGorget) do
             if neck == v then
                 if
