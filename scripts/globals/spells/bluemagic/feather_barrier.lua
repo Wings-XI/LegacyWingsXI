@@ -30,8 +30,8 @@ function onSpellCast(caster, target, spell)
         --duration = duration + duration * caster:getMeritCount(tpz.merit.DIFFUSION)/100 -- OOE Buff from May 16, 2012 update
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
-
-    if target:addStatusEffect(tpz.effect.EVASION_BOOST, 20, 0, duration) == false then
+    -- per bgwiki and wikiwiki.jp 25 eva boost, 30s
+    if target:addStatusEffect(tpz.effect.EVASION_BOOST, 25, 0, duration) == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end
 

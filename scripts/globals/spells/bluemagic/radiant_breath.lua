@@ -43,7 +43,8 @@ function onSpellCast(caster, target, spell)
     
     local damage = BlueMagicalSpell(caster, target, spell, params, nil)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-    
+
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
     params.effect = tpz.effect.SLOW
