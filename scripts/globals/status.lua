@@ -1539,6 +1539,7 @@ tpz.mod =
     -- Special Modifier+
     ADDS_WEAPONSKILL          = 355, --
     ADDS_WEAPONSKILL_DYN      = 356, -- In Dynamis
+    ADDS_NYZUL_BASE_WS        = 830, -- Allows ws to be used prior to completing Unlocking a Myth
 
     STEALTH                   = 358, --
     SNEAK_DURATION            = 946, -- Additional duration in seconds

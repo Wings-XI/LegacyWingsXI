@@ -45,6 +45,20 @@ zones[tpz.zone.DYNAMIS_QUFIM] =
             -- [16945641] = {trade = {{item = 3469, mob = 16945470}}}, -- Lost Suttung
         },
     },
+    mob =
+    {
+        scolopendra = 16945287,
+        stringes = 16945320,
+        suttung = 16945381,
+        fire_elemental = 16945641,
+        ice_elemental  = 16945635,
+        air_elemental = 16945633,
+        earth_elemental = 16945636,
+        thunder_elemental = 16945632,
+        water_elemental = 16945629,
+        light_elemental = 16945634,
+        dark_elemental = 16945642,
+    }
 }
 
 return zones[tpz.zone.DYNAMIS_QUFIM]

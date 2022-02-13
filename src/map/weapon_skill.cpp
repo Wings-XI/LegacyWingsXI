@@ -37,6 +37,7 @@ CWeaponSkill::CWeaponSkill(uint16 id)
     m_AOE = 0;
     m_mainOnly = 0;
     m_unlockId = 0;
+    m_RequiredLevel = 0;
 }
 
 void CWeaponSkill::setID(uint16 id)
@@ -130,6 +131,11 @@ void CWeaponSkill::setRange(uint8 range)
 	m_Range = range;
 }
 
+void CWeaponSkill::setRequiredLevel(uint8 requiredLevel)
+{
+    m_RequiredLevel = requiredLevel;
+}
+
 uint16 CWeaponSkill::getID()
 {
 	return m_ID;
@@ -183,6 +189,11 @@ uint8 CWeaponSkill::getAoe()
 uint8 CWeaponSkill::getRange()
 {
 	return m_Range;
+}
+
+uint8 CWeaponSkill::getRequiredLevel()
+{
+    return m_RequiredLevel;
 }
 
 uint8 CWeaponSkill::getPrimarySkillchain()

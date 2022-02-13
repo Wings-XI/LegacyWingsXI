@@ -93,7 +93,7 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_A01] =
     {
-     -- { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
+      { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
     },
 
     [tpz.zone.MONARCH_LINN] =
@@ -210,7 +210,7 @@ local battlefields = {
     [tpz.zone.LA_VAULE_S] =
     {
      -- { 0,    ?,    0},   -- Splitting Heirs (S)
-     -- { 1,    1500,    0},   -- Purple, The New Black
+        { 1,    1500,    0},   -- Purple, The New Black
      -- { 2,    ?,    0},   -- The Blood-bathed Crown
     },
 

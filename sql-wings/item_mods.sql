@@ -52200,6 +52200,26 @@ INSERT INTO `item_mods` VALUES (14319,1182,5);    -- Enhances Tame Success Rate 
 INSERT INTO `item_mods` VALUES (14320,1182,5);    -- Enhances Tame Success Rate for Brave's Kecks
 INSERT INTO `item_mods` VALUES (15645,1182,5);    -- Enhances Tame Success Rate for Khimaira Kecks
 INSERT INTO `item_mods` VALUES (15646,1182,5);    -- Enhances Tame Success Rate for Stout Kecks
+INSERT INTO `item_mods` VALUES (18492,830,90);    -- WS allowance on nyzul base weapons start
+INSERT INTO `item_mods` VALUES (18753,830,11);
+INSERT INTO `item_mods` VALUES (18851,830,171);
+INSERT INTO `item_mods` VALUES (18589,830,186);
+INSERT INTO `item_mods` VALUES (17742,830,44);
+INSERT INTO `item_mods` VALUES (18003,830,27);
+INSERT INTO `item_mods` VALUES (17744,830,45);
+INSERT INTO `item_mods` VALUES (18944,830,106);
+INSERT INTO `item_mods` VALUES (17956,830,74);
+INSERT INTO `item_mods` VALUES (18034,830,28);
+INSERT INTO `item_mods` VALUES (18719,830,217);
+INSERT INTO `item_mods` VALUES (18443,830,154);
+INSERT INTO `item_mods` VALUES (18426,830,138);
+INSERT INTO `item_mods` VALUES (18120,830,122);
+INSERT INTO `item_mods` VALUES (18590,830,187);
+INSERT INTO `item_mods` VALUES (17743,830,46);
+INSERT INTO `item_mods` VALUES (18720,830,218);
+INSERT INTO `item_mods` VALUES (18754,830,12);
+INSERT INTO `item_mods` VALUES (19102,830,29);
+INSERT INTO `item_mods` VALUES (18592,830,188);  -- WS allowance on nyzul base weapons end
 
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;

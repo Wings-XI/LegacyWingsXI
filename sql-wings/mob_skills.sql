@@ -148,11 +148,11 @@ INSERT INTO `mob_skills` VALUES(306, 50, 'scream', 1, 15.0, 2000, 1500, 4, 0, 0,
 INSERT INTO `mob_skills` VALUES(307, 439, 'substitute', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(308, 52, 'frogkick', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(309, 53, 'spore', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(310, 54, 'queasyshroom', 0, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(311, 55, 'numbshroom', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(312, 56, 'shakeshroom', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(314, 58, 'silence_gas', 4, 13.5, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(315, 59, 'dark_spore', 4, 13.5, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(310, 54, 'queasyshroom', 0, 14.7, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(311, 55, 'numbshroom', 0, 14.7, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(312, 56, 'shakeshroom', 0, 14.7, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(314, 58, 'silence_gas', 4, 17.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(315, 59, 'dark_spore', 4, 17.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(316, 60, 'impale', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(317, 61, 'vampiric_lash', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(318, 401, 'somersault', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -909,7 +909,7 @@ INSERT INTO `mob_skills` VALUES(1301, 965, 'geotic_breath', 4, 18.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(1302, 656, 'touchdown', 1, 30.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1303, 967, 'ochre_blast', 1, 23.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1304, 658, 'bai_wing', 1, 30.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1305, 659, 'absolute_terror', 0, 18.0, 4000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1305, 659, 'absolute_terror', 1, 15.0, 4000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1306, 660, 'horrid_roar_3', 0, 18.0, 4000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1309, 653, 'cyclone_wing', 1, 30.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1310, 654, 'spike_flail', 1, 23.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
@@ -1051,7 +1051,7 @@ INSERT INTO `mob_skills` VALUES(1546, 1135, 'prodigious_spike', 0, 15.0, 2000, 1
 INSERT INTO `mob_skills` VALUES(1547, 1141, 'impulsion', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1548, 1143, 'absolute_terror', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1549, 1142, 'horrible_roar', 0, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1550, 1144, 'summon_wyrm', 0, 15.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0); -- Animation only, used by Bahamut when summoning Wyrms
+INSERT INTO `mob_skills` VALUES(1550, 1144, 'summon_wyrm', 0, 15.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0); -- Animation only, used by Bahamut when summoning Wyrms
 INSERT INTO `mob_skills` VALUES(1551, 1136, 'megaflare', 4, 15.0, 6000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1552, 1137, 'gigaflare', 1, 20.0, 6000, 1900, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1553, 1138, 'teraflare', 1, 25.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);

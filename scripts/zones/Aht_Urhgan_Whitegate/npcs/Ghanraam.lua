@@ -267,7 +267,7 @@ function onTrade(player, npc, trade)
         weaponIndex = checkForWeapon(trade, true)
         if (weaponIndex > 0) then
             local storedWeapons = player:getCharVar("Ghanraam_StoredWeapons")
-            if (bit.band(storedWeapons, weaponIndex) > 0) then
+            if (bit.band(storedWeapons, bit.lshift(1, weaponIndex- 1)) > 0) then
                 -- player has this weapon stored
                 player:startEvent(816, 0, 0, 10)
             else
@@ -332,7 +332,7 @@ function onTrade(player, npc, trade)
                 player:confirmTrade()
                 player:setCharVar("Ghanraam_CraftingInProgress", itemToBeCrafted)
                 -- in era pickup is Midnight
-                player:setCharVar("Ghanraam_PickUp", getMidnight())
+                player:setCharVar("Ghanraam_PickUp", JstMidnight())
                 player:startEvent(816, currentSet - 1, equipSlot - 1, 5)
             else
                 -- all 3 pieces not stored 

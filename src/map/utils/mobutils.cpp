@@ -509,7 +509,7 @@ void CalculateStats(CMobEntity * PMob)
         SetupDynamisMob(PMob);
     }
 
-    if(PMob->m_Type & MOBTYPE_NOTORIOUS)
+    if((PMob->m_Type & MOBTYPE_NOTORIOUS) || (PMob->isInDynamis() == true ))
     {
         SetupNMMob(PMob);
     }

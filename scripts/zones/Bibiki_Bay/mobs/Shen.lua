@@ -47,7 +47,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("[Shen]timeInShellMax", 70)
     mob:setLocalVar("[Shen]inShellRegen", 100)
     mob:setLocalVar("[Shen]shellTimer", shellTimer)
-    exitShell(mob)
+    exitShell()
 end
 
 function onMobFight(mob, target)
@@ -61,11 +61,11 @@ function onMobFight(mob, target)
     if os.time() > timeToShell then
         mob:setLocalVar("[Shen]inShell", 1)
         if inShell == 1 and mob:AnimationSub() == 0 then
-            enterShell(mob)
+            enterShell()
 
             local timeInShell = math.random(mob:getLocalVar("[Shen]timeInShellMin"), mob:getLocalVar("[Shen]timeInShellMax"))
             mob:timer(timeInShell * 1000, function(mob)
-                exitShell(mob)
+                exitShell()
                 local shellTimer = os.time() + 60
                 mob:setLocalVar("[Shen]shellTimer", shellTimer)
                 mob:setLocalVar("[Shen]inShell", 0)
@@ -81,7 +81,7 @@ function onMobFight(mob, target)
     -- Based on capture, Shen exits shell if a pet dies so that it can respawn it
     local petDeath = GetServerVariable("[Shen]Filtrate Death")
     if petDeath == 1 then
-        exitShell(mob)
+        exitShell()
         local shellTimer = os.time() + 60
         mob:setLocalVar("[Shen]shellTimer", shellTimer)
         SetServerVariable("[Shen]Filtrate Death", 0)

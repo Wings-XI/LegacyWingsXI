@@ -100,8 +100,6 @@ function onTrigger(player, npc)
         else
             player:startEvent(700)
         end
-    elseif (player:hasKeyItem(tpz.ki.YASINS_SWORD)) then -- The Doorman
-        player:startEvent(750)
     else
         player:startEvent(700)
     end

@@ -27,13 +27,6 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_2_SHADOW)
 
-    if mob:getID() == 16924679 then -- Apoc Nigh Damage Change
-        -- Clamping to ensure consistent ws.
-        -- Should deal around 350.
-        -- https://www.youtube.com/watch?v=mG-qyhGOqNY&ab_channel=Smackdownbob
-        dmg = utils.clamp(dmg, 250, 400)
-    end
-
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
     mob:resetEnmity(target)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end

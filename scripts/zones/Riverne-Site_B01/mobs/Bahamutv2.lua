@@ -12,13 +12,15 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setTrueDetection(3)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 20)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 20)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50)
     mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 10)
     mob:addMod(tpz.mod.REGAIN, 300)
     mob:addMod(tpz.mod.REGEN, 50)
-    mob:addMod(tpz.mod.MDEF, 50)
+    mob:addMod(tpz.mod.MDEF, 80)
     mob:setMod(tpz.mod.ATT, 200)
     mob:setMod(tpz.mod.ATTP, 100)
     mob:addStatusEffect(tpz.effect.PHALANX, 35, 0, 180)
@@ -183,6 +185,13 @@ function onMobWeaponSkill(target, mob, skill)
         x = shuffled[y]
         y = y + 1
      end   
+end
+
+function onMobDisengage(mob)
+    -- In case of wipe during Flares, this will reset Bahamut
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetAutoAttackEnabled(true)
 end
 
 function onMobDeath(mob, player, isKiller)

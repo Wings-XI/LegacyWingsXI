@@ -84,7 +84,11 @@ function onMobFight(mob, target)
         target:setPos(152.955, -15.000, 272.959)
         mob:messageBasic(232, 0, 0, target)
         mob:setLocalVar("DrawInWait", os.time() + 2)
-    elseif (target:getYPos() < -18.00 and player:getXPos() > 137.00) and os.time() > drawInWait then
+    elseif target:getXPos() < 151.00 and os.time() > drawInWait then
+        target:setPos(152.955, -15.000, 272.959)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif target:getXPos() < 151.00 and target:getXPos() > 118.00 then
         target:setPos(152.955, -15.000, 272.959)
         mob:messageBasic(232, 0, 0, target)
         mob:setLocalVar("DrawInWait", os.time() + 2)

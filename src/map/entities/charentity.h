@@ -372,6 +372,7 @@ public:
     time_point        m_ZoneAggroImmunity;
     uint32            m_fomorHate;
     uint32            m_pixieHate;
+    uint32            m_nyzulProgress;              // Nyzul floor progress - required to determine mythic weaponskill access on weapon equip
 
     int8			  getShieldSize();
 
@@ -400,6 +401,7 @@ public:
     bool              m_needChatFix;                // Does he use a newer version of the game client, which has modified chat packets
     bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
     bool              m_needMasterLvFix;            // Does he use a newer version of the game client, which has several packet changes due to master levels
+    bool              m_needInventoryFix;           // Does he use a newer version of the game client, which has inventory packet changes (wardrobes 5-8, recycle)
     time_t            m_distanceLastCheckTime;
     float             m_distanceFromLastCheck;
     time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover

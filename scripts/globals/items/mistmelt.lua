@@ -12,7 +12,7 @@ function onItemCheck(target, param, player)
     local result = 0
 	local id = target:getID()
 
-	if id ~= 16904202 then -- ouryu
+	if id ~= 16904202 and id ~= 16900314 then -- ouryu
         result = tpz.msg.basic.ITEM_UNABLE_TO_USE
     elseif target:checkDistance(player) > 10 then
         result = tpz.msg.basic.TOO_FAR_AWAY

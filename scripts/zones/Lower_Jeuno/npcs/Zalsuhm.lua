@@ -42,10 +42,10 @@ function onTrade(player, npc, trade)
                 local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()
                 local requiredWsPoints = getRequiredWsPoints(nyzulFloorProgress)
-
-                if wsPoints <= (requiredWsPoints / 3) then
+                -- table located at https://ffxiclopedia.fandom.com/wiki/Unlocking_a_Myth_(Warrior)
+                if wsPoints < (requiredWsPoints / 5) then
                     player:startEvent(10091)
-                elseif wsPoints <= ((requiredWsPoints *2) / 3) then
+                elseif wsPoints <= ((requiredWsPoints *4) / 5) then
                     player:startEvent(10092)
                 elseif wsPoints < requiredWsPoints then
                     player:startEvent(10093)
@@ -125,7 +125,7 @@ function onEventFinish(player, csid, option)
         local skill = jobs[option]
 
         player:completeQuest(JEUNO, questId)
-        player:messageSpecial(ID.text.MYTHIC_LEARNED, player:getMainJob())
+        player:messageSpecial(ID.text.MYTHIC_LEARNED, option)
         player:addLearnedWeaponskill(skill)
     end
 end
