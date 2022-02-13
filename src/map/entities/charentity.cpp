@@ -393,7 +393,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
                     it = PacketList.erase(it);
                     break;
                 }
-                
+
             }
             else
             {
@@ -401,7 +401,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-    
+
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -1482,7 +1482,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 // aggressive action
                 if (PAbility->getID() != ABILITY_ASSAULT)
                     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-                else 
+                else
                     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK) {
@@ -1968,12 +1968,12 @@ void CCharEntity::OnRaise()
         }
 
         //add weakness effect (75% reduction in HP/MP)
-        if (GetLocalVar("MijinGakure") == 0 && m_hasRaise <= 5)
+        if ((GetLocalVar("MijinGakure") == 0 || GetLocalVar("Shantottofication") == 0) && m_hasRaise <= 5)
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 300);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
         }
-        else if (GetLocalVar("MijinGakure") == 0 && m_hasRaise == 4) // arise, 3min
+        else if ((GetLocalVar("MijinGakure") == 0 || GetLocalVar("Shantottofication") == 0) && m_hasRaise == 4) // arise, 3min
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 180);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
@@ -2056,6 +2056,7 @@ void CCharEntity::OnRaise()
         }
 
         SetLocalVar("MijinGakure", 0);
+        SetLocalVar("Shantottofication", 0);
 
         m_hasRaise = 0;
     }

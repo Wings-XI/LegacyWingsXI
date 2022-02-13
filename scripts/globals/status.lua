@@ -1341,6 +1341,7 @@ tpz.mod =
     SHADOW_BIND_EXT           = 425, -- Extends the time of shadowbind
     SCAVENGE_EFFECT           = 312, --
     SHARPSHOT                 = 314, --
+    BARRAGE_COUNT             = 138, -- Increases Barrage shots by 1
 
     -- Samurai
     WARDING_CIRCLE_DURATION   = 95,  -- Warding Circle extended duration in seconds
@@ -1458,6 +1459,7 @@ tpz.mod =
     SAMBA_PDURATION           = 498, -- Samba percent duration bonus
     SPECTRAL_JIG_DURATION     = 502, -- Spectral Jig duration bonus in percents
     REVERSE_FLOURISH_EFFECT   = 836, -- Reverse Flourish effect in tenths of squared term multiplier
+    WALTZ_COST                = 139, -- Reduce Waltz cost by 5%
 
     -- Scholar
     BLACK_MAGIC_COST          = 393, -- MP cost for black magic (light/dark arts)

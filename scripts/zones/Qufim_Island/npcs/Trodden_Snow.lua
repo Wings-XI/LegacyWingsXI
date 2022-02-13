@@ -40,6 +40,8 @@ function onTrigger(player, npc)
             player:setCharVar("ASA_Status", completedSeals)
             player:startEvent(45)
         end
+    else
+        player:messageSpecial(ID.text.ASA_SNOW)
     end
 end
 
