@@ -346,7 +346,7 @@ function checkArtifactProgress(player, job)
     if job < tpz.job.BLU then -- Boring jobs
         if player:hasCompletedQuest(afQuestInfo[job].questcity2, afQuestInfo[job].quest2) and player:hasCompletedQuest(afQuestInfo[job].questcity3, afQuestInfo[job].quest3) then
             -- Note - we do not currently have a way to tell if the player has gotten all of their coffer AF
-            -- In fact - I think players can continuously get coffer AF
+            -- In fact - Players can continuously get coffer AF if they toss it and get another coffer key
             return true
         end
     elseif job <= tpz.job.SCH then -- Cool jobs
