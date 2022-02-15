@@ -139,11 +139,10 @@ function onEventFinish(player, csid, option)
         player:completeQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
         player:needToZone(true)
         player:addFame(WINDURST, 20)
-    elseif (csid == 199) then -- Star Struck finished by trading Torn Epistle
+    elseif (csid == 199) then -- Star Struck trading Torn Epistle - does not complete the quest
         player:tradeComplete()
         player:messageSpecial(ID.text.GIL_OBTAINED, 50)
         player:addGil(50)
-        player:completeQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
     elseif (csid == 197 and option == 0) then
         player:addQuest(WINDURST, tpz.quest.id.windurst.STAR_STRUCK)
     elseif (csid == 214 and option == 0) then
