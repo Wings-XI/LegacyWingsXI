@@ -27,6 +27,7 @@ function onDynamisNewInstance()
     local iStart = 4096*4096+(4096*zone)
     local i = iStart
     local iEnd = iStart + 1023
+    local ID = zones[zone]
     
     if npcList == nil then print("npcList was nil") end
     if npcList[zone] == nil then print("npcList[zone] was nil") end
@@ -45,10 +46,12 @@ function onDynamisNewInstance()
             else mob:setSpawn(1,1,1,0) end
             if mob:getFamily() == 94 then
                 mob:addRoamFlag(256) -- scripted pathing only
+            elseif mob:getID() == (ID.mob.scolopendra or ID.mob.stringes or ID.mob.suttung or ID.mob.megaboss) then -- NM
+                mob:addRoamFlag(256) -- scripted pathing only
             else
                 mob:addMobMod(tpz.mobMod.ROAM_DISTANCE, 8)
                 mob:addMobMod(tpz.mobMod.ROAM_COOL, 5)
-                mob:addMobMod(tpz.mobmod.ROAM_RATE, 3)
+                mob:addMobMod(tpz.mobMod.ROAM_RATE, 3)
                 mob:addRoamFlag(0) -- Roam Freely
             end
         elseif npcList[zone][i] ~= nil and npcList[zone][i].spawnAtStart ~= nil then
