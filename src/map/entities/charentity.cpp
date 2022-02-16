@@ -242,6 +242,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_needMasterLvFix = 0;
+    m_needInventoryFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();

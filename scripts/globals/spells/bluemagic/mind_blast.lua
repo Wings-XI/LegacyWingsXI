@@ -50,7 +50,8 @@ function onSpellCast(caster, target, spell)
     local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
-    local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
+    -- Per BG wiki and wikiwiki.jp - 90s duration
+    local duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_PARALYZE, target))
     if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.PARALYZERES) < 100 then
         if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.PARALYSIS) then
             target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, duration*resist) -- https://www.bg-wiki.com/bg/Mind_Blast 20%

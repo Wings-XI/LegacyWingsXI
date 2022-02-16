@@ -126,8 +126,10 @@ function generateFreeFloor(floorNumber, instance)
         table.remove(remainingSpawnPoints, index)
     end
 
-    -- light the run of transfer
-    activeRuneOfTransfer:AnimationSub(1)
+    -- light the rune of transfer
+    activeRuneOfTransfer:timer(3500, function(activeRuneOfTransfer)
+        floorObjectiveComplete(activeRuneOfTransfer:getInstance())
+    end)
     return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 

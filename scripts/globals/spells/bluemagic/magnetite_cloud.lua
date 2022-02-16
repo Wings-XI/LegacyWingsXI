@@ -49,6 +49,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.effect = tpz.effect.WEIGHT
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistanceEffect(caster, target, spell, params)
     
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))

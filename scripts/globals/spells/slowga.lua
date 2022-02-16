@@ -24,7 +24,7 @@ function onSpellCast(caster, target, spell)
     -- Lowest ~7.3%
     -- Highest ~29.2%
     local power = utils.clamp(math.floor(dMND * 73 / 5) + 1825, 730, 2920)
-    power = calculatePotency(power, dMND, spell:getSkillType(), caster, target)
+    power = calculatePotency(power, dMND, spell:getSkillType(), caster)
 
     --Duration, including resistance
     local duration = calculateDuration(120, spell:getSkillType(), spell:getSpellGroup(), caster, target)

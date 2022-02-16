@@ -134,7 +134,7 @@ dynamis.entryInfo =
     [tpz.zone.VALKURM_DUNES] =
     {
         csBit = 7,
-        csRegisterGlass = 57,
+        csRegisterGlass = 15,
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
@@ -216,6 +216,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_SAN_DORIA_INTERLOPER,
         entryPos = {161.838, -2.000, 161.673, 93, tpz.zone.DYNAMIS_SAN_DORIA},
         ejectPos = {161.000, -2.000, 161.000, 94, tpz.zone.SOUTHERN_SAN_DORIA},
+        updatedRoam = true,
     },
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
@@ -261,6 +262,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_JEUNO_INTERLOPER,
         entryPos = {48.930, 10.002, -71.032, 195, tpz.zone.DYNAMIS_JEUNO},
         ejectPos = {48.930, 10.002, -71.032, 195, tpz.zone.RULUDE_GARDENS},
+        updatedRoam = true,
     },
     [tpz.zone.RULUDE_GARDENS] =
     {
@@ -306,6 +308,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_VALKURM_INTERLOPER,
         entryPos = {100, -8, 131, 47, tpz.zone.DYNAMIS_VALKURM},
         ejectPos = {119, -9, 131, 52, tpz.zone.VALKURM_DUNES},
+        sjRestriction = true,
     },
     [tpz.zone.VALKURM_DUNES] =
     {
@@ -537,7 +540,7 @@ end
 
 dynamis.zoneOnInitialize = function(zone)
     local zoneId = zone:getID()
-    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+    if dynamis.dynaInfo[zoneId].sjRestriction == true and dynamis.dynaInfo[zoneId].sjRestrictionNPC ~= nil then
         local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
         local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
         sjRestrictionNPC:setPos(pos)
@@ -562,7 +565,9 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
             player:setCharVar("DynaInflictWeakness", 0)
         if dynamis.dynaInfo[zoneId].sjRestriction == true then
-            player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+            if os.time() > player:getCharVar("SJUnlockTime") then
+                player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+            end
         end
 
     end
@@ -729,13 +734,22 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
 end
 
 dynamis.mobOnRoam = function(mob)
-    local home = mob:getSpawnPos()
-    local location = mob:getPos()
-
-    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
-        mob:setPos(location.x, location.y, location.z, home.rot)
+    zone = mob:getZoneID()
+    if dynamis.dynaInfo[zone].updatedRoam == true then
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        else
+            mob:pathTo(home.x, home.y, home.z)
+        end
     else
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
         mob:pathTo(home.x, home.y, home.z)
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        end
     end
 end
 
@@ -798,11 +812,11 @@ dynamis.sjQMOnTrigger = function(player, npc)
     local zoneId = npc:getZoneID()
     
     if dynamis.dynaInfo[zoneId].sjRestriction == true then
-        print("I'm here")
         for _, member in pairs(player:getAlliance()) do
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
+                    player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
                 end
             end
         end
@@ -814,9 +828,8 @@ dynamis.setMobStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
+    mob:setMobType(MOBTYPE_NORMAL)
     mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.STR, -30)
-    mob:setMod(tpz.mod.VIT, -15)
     mob:setMod(tpz.mod.DEFP, 10)
     mob:setTrueDetection(1)
 
@@ -973,6 +986,10 @@ dynamis.setMobStats = function(mob)
         mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
         mob:addMod(tpz.mod.DEFP, -10)
     end
+
+    -- Add Check After Calcs
+    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
+    
 end
 
 dynamis.setNMStats = function(mob)

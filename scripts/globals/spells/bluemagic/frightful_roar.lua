@@ -29,10 +29,12 @@ function onSpellCast(caster, target, spell)
     params.skillType = tpz.skill.BLUE_MAGIC
     params.effect = tpz.effect.DEFENSE_DOWN
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistance(caster, target, spell, params)
 
     if resist >= 0.5 then -- Do it!
-        if target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 10, 0, 60*resist) then
+        -- per wikiwiki.jp/bgwiki in history - duration 3mins
+        if target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 10, 0, 180*resist) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)

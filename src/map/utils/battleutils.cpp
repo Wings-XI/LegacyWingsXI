@@ -921,7 +921,7 @@ namespace battleutils
         }
 
         uint8 delta = PTarget->getMod(mod);
-        if (((CMobEntity*)PTarget)->m_Type & MOBTYPE_NOTORIOUS && delta == 0)
+        if ((((CMobEntity*)PTarget)->m_Type & MOBTYPE_NOTORIOUS && delta == 0) || (PTarget->isInDynamis() == true && delta == 0))
         {
             switch (mod)
             {
@@ -1807,7 +1807,7 @@ namespace battleutils
 
         auto levelCorrect = PAttacker->GetMLevel() - PDefender->GetMLevel();
         float nmMod = 1.0f;
-        if (PDefender->objtype == TYPE_MOB && ((CMobEntity*)PDefender)->m_Type & MOBTYPE_NOTORIOUS)
+        if ((PDefender->objtype == TYPE_MOB && ((CMobEntity*)PDefender)->m_Type & MOBTYPE_NOTORIOUS) || (PDefender->objtype == TYPE_MOB && PDefender->isInDynamis() == true ))
         {
             if (levelCorrect < 0)
             {

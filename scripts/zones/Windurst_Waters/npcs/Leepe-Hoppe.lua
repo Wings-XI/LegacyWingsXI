@@ -116,9 +116,6 @@ function onTrigger(player, npc)
     elseif tuningOut == QUEST_ACCEPTED then
         player:startEvent(889) -- Reminder to go help Ildy in Kazham
 
-    elseif moonlitPath == QUEST_COMPLETED then
-        player:startEvent(847, 0, 1125) -- Having completed Moonlit Path, this will indefinitely replace his standard dialogue!
-
     else
         player:startEvent(345) -- Standard Dialogue?
     end

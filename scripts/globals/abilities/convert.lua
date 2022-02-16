@@ -9,7 +9,11 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0, 0
+    if player:getMP() > 0 then
+        return 0, 0
+    else
+        return tpz.msg.basic.CANNOT_PERFORM_ACTION, 0
+    end 
 end
 
 function onUseAbility(player, target, ability)
