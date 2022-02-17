@@ -1528,6 +1528,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     bool IsMagicCovered= false;
     bool cover = false;
 
+    if (!PActionTarget) {
+        return;
+    }
+
     if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
     {
         auto PCoverTarget = battleutils::getCoverTarget(PActionTarget, this);

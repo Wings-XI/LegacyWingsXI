@@ -1474,6 +1474,8 @@ namespace luautils
             return -1;
         }
 
+        PChar->lastZoneTimer = (uint32)CVanaTime::getInstance()->getVanaTime();
+
         CLuaBaseEntity LuaBaseEntity(PChar);
         Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
 

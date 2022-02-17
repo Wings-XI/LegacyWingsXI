@@ -220,6 +220,8 @@ public:
     bool      m_disableScent;             // stop detecting by scent
     float     m_maxRoamDistance;          // maximum distance mob can be from spawn before despawning
 
+    uint32    aggroTimer;                 // when the mob can aggro again, used for BST's Leave command so they dont get aggro right after
+
     uint8     m_Type;                     // mob type
     bool      m_Aggro;
     uint8    m_TrueDetection;             // Has true sight or sound
