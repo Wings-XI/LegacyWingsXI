@@ -234,6 +234,11 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_CANNOT_SEE));
                 return false;
             }
+            if (distance(PChar->loc.p, PTarget->loc.p) > PWeaponSkill->getRange())
+            {
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_TOO_FAR_AWAY));
+                return false;
+            }
             roeutils::event(ROE_WSKILL_USE, PChar, RoeDatagramList{});
 
             m_lastWeaponSkill = PWeaponSkill;

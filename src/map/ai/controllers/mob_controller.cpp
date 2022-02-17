@@ -1176,6 +1176,12 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
         return false;
     }
 
+    // Don't aggro I was recently released by a BST with the Leave command
+    if (PMob->aggroTimer > (uint32)CVanaTime::getInstance()->getVanaTime())
+    {
+        return false;
+    }
+
     // Don't aggro I'm an underground worm
     if ((PMob->m_roamFlags & ROAMFLAG_WORM) && PMob->IsNameHidden())
     {
