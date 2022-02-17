@@ -33,6 +33,7 @@ struct search_config_t
     uint8       expire_days;        // Number of days to keep stuff on the auction house
     int16       expire_interval;    // How often the task should run (time * 1000) in seconds
     std::string search_server_port;     // search_server_port   -> 54002
+    bool        inv_search_sort;    // If true, sort party flagged player searches by their main level
 };
 
 struct search_req

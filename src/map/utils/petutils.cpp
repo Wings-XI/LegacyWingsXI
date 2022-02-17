@@ -1125,6 +1125,7 @@ namespace petutils
                 auto state = dynamic_cast<CAbilityState*>(PMaster->PAI->GetCurrentState());
                 if ((state && state->GetAbility()->getID() == ABILITY_LEAVE) || PChar->loc.zoning || PChar->isDead())
                 {
+                    PMob->aggroTimer = (uint32)CVanaTime::getInstance()->getVanaTime() + 5;
                     PMob->PEnmityContainer->Clear();
                     PMob->m_OwnerID.clean();
                     PMob->updatemask |= UPDATE_STATUS;

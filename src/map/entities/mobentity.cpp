@@ -124,6 +124,7 @@ CMobEntity::CMobEntity()
     m_bcnmID = 0;
 
     m_maxRoamDistance = 50.0f;
+    aggroTimer = 1;
     m_disableScent = false;
 
     memset(&m_SpawnPoint, 0, sizeof(m_SpawnPoint));
@@ -354,7 +355,7 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 
 bool CMobEntity::CanDeaggro()
 {
-    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD);
+    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD || isInDynamis() == true );
 }
 
 bool CMobEntity::IsFarFromHome()

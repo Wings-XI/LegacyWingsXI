@@ -4285,6 +4285,9 @@ INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 362, 75, 255
 INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 191, 1, 255);-- stonega_iii
 INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 210, 1, 255); -- Quake
 INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 54, 1, 255); -- Stoneskin
+-- Todays Horoscope KS30
+INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 356, 1, 255);-- paralyga
+INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 54, 1, 255); -- stoneskin
 
 
 --

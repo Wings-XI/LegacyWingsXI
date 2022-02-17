@@ -846,7 +846,7 @@ INSERT INTO `mob_skills` VALUES(1218, 835, 'vacuous_osculation', 0, 7.0, 2000, 1
 INSERT INTO `mob_skills` VALUES(1219, 836, 'hexagon_belt', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1220, 837, 'auroral_drape', 1, 13.7, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1228, 845, 'memory_of_dark', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1229, 918, 'brain_spike', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1229, 919, 'brain_spike', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1230, 920, 'empty_thrash', 0, 10.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1231, 921, 'promyvion_brume', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1232, 922, 'murk', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -922,6 +922,7 @@ INSERT INTO `mob_skills` VALUES(1322, 14, 'gerjis_grip', 0, 7.0, 2000, 1500, 4, 
 INSERT INTO `mob_skills` VALUES(1326, 988, 'final_retribution', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1329, 990, 'gala_macabre', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1330, 910, 'hoof_volley', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1332, 63, 'extremely_bad_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1336, 289, 'frenzied_rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1338, 234, 'infernal_pestilence', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1347, 998, 'dual_strike', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
@@ -1061,6 +1062,14 @@ INSERT INTO `mob_skills` VALUES(1572, 862, 'venom_shell', 1, 15.0, 2000, 2000, 4
 INSERT INTO `mob_skills` VALUES(1573, 863, 'palsynyxis', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1574, 864, 'painful_whip', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1575, 865, 'suctorial_tentacle', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1605, 63, 'miasmic_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1607, 63, 'fragrant_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1609, 63, 'putrid_breath', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1610, 63, 'extremely_bad_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1611, 61, 'vampiric_lash', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1617, 325, 'blow', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1618, 328, 'uppercut', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1619, 331, 'attractant', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1625, 1369, '2000_needles', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1626, 1370, '4000_needles', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1644, 878, 'hypothermal_combustion', 1, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);

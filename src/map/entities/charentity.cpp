@@ -142,6 +142,8 @@ CCharEntity::CCharEntity()
     memset(&m_WeaponSkills, 0, sizeof(m_WeaponSkills));
     memset(&m_SetBlueSpells, 0, sizeof(m_SetBlueSpells));
     memset(&m_unlockedAttachments, 0, sizeof(m_unlockedAttachments));
+    lastInCombat = 1;
+    lastZoneTimer = 0;
 
     memset(&m_questLog, 0, sizeof(m_questLog));
     memset(&m_missionLog, 0, sizeof(m_missionLog));
@@ -242,6 +244,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_needMasterLvFix = 0;
+    m_needInventoryFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
@@ -1060,6 +1063,8 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
@@ -1077,6 +1082,12 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     auto PSpell = state.GetSpell();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    if (PTarget->id != this->id && !PSpell->isHeal() && !PSpell->isBuff())
+    {
+        this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+    }
+
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 
     for (auto&& actionList : action.actionLists)
@@ -1190,6 +1201,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 {
     CBattleEntity::OnCastInterrupted(state, action, msg);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto message = state.GetErrorMsg();
 
     if (message)
@@ -1201,6 +1214,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
     CBattleEntity::OnWeaponSkillFinished(state, action);
+
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
 
     auto PWeaponSkill = state.GetSkill();
     auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
@@ -1676,6 +1691,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
 
     int32 damage = 0;
     int32 totalDamage = 0;

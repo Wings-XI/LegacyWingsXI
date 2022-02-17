@@ -1528,6 +1528,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     bool IsMagicCovered= false;
     bool cover = false;
 
+    if (!PActionTarget) {
+        return;
+    }
+
     if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
     {
         auto PCoverTarget = battleutils::getCoverTarget(PActionTarget, this);
@@ -1998,8 +2002,6 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
                         auto damage = (int32)(PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN));
-                        if (h2h && PTarget->objtype == TYPE_PC)
-                            damage = (int32)((float)damage * 1.23f);
                         damage = (int32)((float)damage * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;
