@@ -618,6 +618,7 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
+    local zoneId = mob:getZoneID()
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
         local eyes = mob:getLocalVar("eyeColor")
         mob:AnimationSub(eyes)
@@ -647,11 +648,11 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         i = i + 1
     end
     i = 1
-    if dynamis.dynaInfo[zone].specifiedChildren == true then
+    if dynamis.dynaInfo[zoneId].specifiedChildren == true then
         while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
             local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
             local roll = originalRoll
-            while  GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
+            while GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
                 roll = roll + 1
                 if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
                 if roll == originalRoll then roll = nil end
@@ -747,6 +748,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
     end
     local forceLink = false
     local i = 1
+    local target = mob:getTarget()
 
     while miniWave ~= nil and miniWave[i] ~= nil do
         if type(miniWave[i]) == "boolean" then forceLink = miniWave[i]
@@ -761,8 +763,8 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
 end
 
 dynamis.mobOnRoam = function(mob)
-    zone = mob:getZoneID()
-    if dynamis.dynaInfo[zone].updatedRoam == true then
+    local zoneId = mob:getZoneID()
+    if dynamis.dynaInfo[zoneId].updatedRoam == true then
         local home = mob:getSpawnPos()
         local location = mob:getPos()
         if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
