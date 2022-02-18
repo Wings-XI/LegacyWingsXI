@@ -854,12 +854,10 @@ end
 
 dynamis.setMobStats = function(mob)
     local job = mob:getMainJob()
-    local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
     mob:setMobType(MOBTYPE_NORMAL)
-    mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.DEFP, 10)
+    mob:setMobLevel(math.random(78,80))
     mob:setTrueDetection(1)
 
     local familyEES =
@@ -898,7 +896,6 @@ dynamis.setMobStats = function(mob)
     }
 
     if     job == tpz.job.WAR then
-        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -906,7 +903,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.MNK then
-        mob:addMod(tpz.mod.VIT, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -914,8 +910,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,70)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.WHM then
-        mob:addMod(tpz.mod.MND, 20)
-        mob:addMod(tpz.mod.DEFP, -10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -923,9 +917,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(40,60)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BLM then
-        mob:addMod(tpz.mod.SLEEPRES, 40)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
-        mob:addMod(tpz.mod.DEFP, -10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -933,7 +924,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RDM then
-        mob:addMod(tpz.mod.UFASTCAST, 25)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -941,9 +931,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.THF then
-        mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
-        mob:addMod(tpz.mod.AGI, 20)
-        mob:addMod(tpz.mod.DEFP, -8)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -951,9 +938,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.PLD then
-        mob:addMod(tpz.mod.DEFP, 10)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
-        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -961,8 +945,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRK then
-        mob:addMod(tpz.mod.ATTP, 10)
-        mob:addMod(tpz.mod.RATTP, 10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -970,11 +952,7 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BST then
-        mob:addMod(tpz.mod.CHR, 20)
     elseif job == tpz.job.BRD then
-        mob:addMod(tpz.mod.LULLABYRES, 40)
-        mob:addMod(tpz.mod.LULLABYRES, 15)
-        mob:addMod(tpz.mod.DEFP, -5)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -982,8 +960,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RNG then
-        mob:addMod(tpz.mod.RACC, 20)
-        mob:addMod(tpz.mod.DEFP, -5)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -991,7 +967,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.SAM then
-        mob:addMod(tpz.mod.STORETP, 40)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -999,8 +974,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.NIN then
-        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
-        mob:addMod(tpz.mod.RATTP, -25)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -1008,12 +981,7 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(25,35)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRG then
-        mob:addMod(tpz.mod.ACC, 20)
     elseif job == tpz.job.SMN then
-        mob:addMod(tpz.mod.UFASTCAST, 90)
-        mob:addMod(tpz.mod.REFRESH, 3)
-        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
-        mob:addMod(tpz.mod.DEFP, -10)
     end
 
     -- Add Check After Calcs
@@ -1026,70 +994,20 @@ dynamis.setNMStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
-    mob:setMobLevel(math.random(85,86))
+    mob:setMobLevel(math.random(80,82))
     mob:setMod(tpz.mod.STR, -15)
     mob:setMod(tpz.mod.VIT, -5)
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 15)
-    mob:setMod(tpz.mod.DEFP, 20)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
     mob:setTrueDetection(1)
 
-    if     job == tpz.job.WAR then
-        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
-    elseif job == tpz.job.MNK then
-        mob:addMod(tpz.mod.VIT, 20)
-    elseif job == tpz.job.WHM then
-        mob:addMod(tpz.mod.MND, 20)
-    elseif job == tpz.job.BLM then
-        mob:addMod(tpz.mod.SLEEPRES, 40)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
-    elseif job == tpz.job.RDM then
-        mob:addMod(tpz.mod.FASTCAST, 25)
-    elseif job == tpz.job.THF then
-        mob:addMod(tpz.mod.AGI, 20)
-    elseif job == tpz.job.PLD then
-        mob:addMod(tpz.mod.DEFP, 10)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
-        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
-    elseif job == tpz.job.DRK then
-        mob:addMod(tpz.mod.ATTP, 10)
-        mob:addMod(tpz.mod.RATTP, 10)
-    elseif job == tpz.job.BST then
-        mob:addMod(tpz.mod.CHR, 20)
-    elseif job == tpz.job.BRD then
-        mob:addMod(tpz.mod.LULLABYRES, 40)
-        mob:addMod(tpz.mod.LULLABYRES, 15)
-    elseif job == tpz.job.RNG then
-        mob:addMod(tpz.mod.RACC, 20)
-    elseif job == tpz.job.SAM then
-        mob:addMod(tpz.mod.STORETP, 40)
-    elseif job == tpz.job.NIN then
-        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
-        mob:addMod(tpz.mod.STR, -10)
-    elseif job == tpz.job.DRG then
-        mob:addMod(tpz.mod.ACC, 20)
-    elseif job == tpz.job.SMN then
-        mob:addMod(tpz.mod.UFASTCAST, 90)
-        mob:addMod(tpz.mod.REFRESH, 3)
-        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
+    if job == tpz.job.NIN then
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MIJIN_GAKURE
+        params.specials.skill.hpp = math.random(15,25)
+        tpz.mix.jobSpecial.config(mob, params)
     end
-
 end
 
 dynamis.setStatueStats = function(mob)
@@ -1099,22 +1017,6 @@ dynamis.setStatueStats = function(mob)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 25)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
     mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DMGPHYS, -50)
@@ -1123,7 +1025,6 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.MDEF, 0)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.MPHEAL, 0)
-    mob:setMod(tpz.mod.CLEAR_MIND, 0)
 
     mob:setTrueDetection(1)
 
@@ -1135,23 +1036,6 @@ dynamis.setMegaBossStats = function(mob)
 
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
-    mob:setMod(tpz.mod.RATTP, 20)
-    mob:setMod(tpz.mod.ATTP, 20)
-    mob:setMod(tpz.mod.DEFP, 25)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 25)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 25)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 25)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 25)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 33)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 33)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 33)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 33)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 15)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 15)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 15)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
     mob:setTrueDetection(1)
 
 end
@@ -1159,7 +1043,7 @@ end
 dynamis.setPetStats = function(mob)
     local zone = mob:getZoneID()
 
-    mob:setMobLevel(80)
+    mob:setMobLevel(78)
     mob:setMod(tpz.mod.STR, -40)
     mob:setMod(tpz.mod.VIT, -20)
     mob:setMod(tpz.mod.RATTP, -20)
@@ -1189,26 +1073,7 @@ dynamis.setEyeStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 25)
     mob:setMod(tpz.mod.DEF, 420)
-
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
-
     mob:addMod(tpz.mod.MDEF, 150)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
 
