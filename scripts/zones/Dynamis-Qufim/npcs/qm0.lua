@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Dynamis-Qufim
 --  NPC: ??? (qm0)
--- Note: Spawns Antaeus / Arch Antaeus
+-- Note: Removes SJ Restriction
 -----------------------------------
 require("scripts/globals/dynamis")
 -----------------------------------
@@ -11,5 +11,5 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    dynamis.qmOnTrigger(player, npc)
+    dynamis.sjQMOnTrigger(player, npc)
 end

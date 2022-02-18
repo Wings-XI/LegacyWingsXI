@@ -872,6 +872,7 @@ void CMobController::DoRoamTick(time_point tick)
                     PMob->m_HiPCLvl = 0;
                     PMob->m_HiPartySize = 0;
                     PMob->m_giveExp = true;
+                    PMob->m_ExpPenalty = 0;    
                 }
             }
 
@@ -955,11 +956,6 @@ void CMobController::DoRoamTick(time_point tick)
                     else
                     {
                         FollowRoamPath();
-                        
-                        if (PMob->m_ExpPenalty > 0)
-                        {
-                            PMob->m_ExpPenalty = 0;
-                        }
                     }
                 }
                 else
@@ -1176,6 +1172,12 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
 
     // Don't aggro I'm special
     if (PMob->getMobMod(MOBMOD_NO_AGGRO) > 0)
+    {
+        return false;
+    }
+
+    // Don't aggro I was recently released by a BST with the Leave command
+    if (PMob->aggroTimer > (uint32)CVanaTime::getInstance()->getVanaTime())
     {
         return false;
     }

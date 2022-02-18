@@ -31,6 +31,7 @@ function onSpellCast(caster, target, spell)
         caster:delStatusEffect(tpz.effect.DIFFUSION)
     end
 
+    -- ToDo - does not currently fade down over the duration
     if target:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 40, 0, duration) == false then
         spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
     end

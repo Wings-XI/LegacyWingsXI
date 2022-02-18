@@ -113,6 +113,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
 const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
 const std::string MASTER_LV_PACKET_CHANGE_VER("302111xx_x");
+const std::string INVENTORY_PACKET_CHANGE_VER("302202xx_x");
 
 
 /************************************************************************
@@ -494,6 +495,7 @@ namespace charutils
             PChar->m_needChatFix = ((!clientVer.empty()) && (clientVer >= CHAT_PACKET_CHANGE_VER));
             PChar->m_needTellFix = ((!clientVer.empty()) && (clientVer >= TELL_PACKET_CHANGE_VER));
             PChar->m_needMasterLvFix = ((!clientVer.empty()) && (clientVer >= MASTER_LV_PACKET_CHANGE_VER));
+            PChar->m_needInventoryFix = ((!clientVer.empty()) && (clientVer >= INVENTORY_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);
@@ -1253,6 +1255,10 @@ namespace charutils
                         PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
                     }
                 }
+            }
+            if (PChar->m_needInventoryFix) {
+                // New clients this sent after each storage type
+                PChar->pushPacket(new CInventoryFinishPacket(LocationID));
             }
         };
 
@@ -3320,6 +3326,12 @@ namespace charutils
 
         // This usually happens after a crash
         TPZ_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
+
+        if (PChar->objtype != TYPE_PC)
+        {
+            //ShowDebug(CL_CYAN"INVALID CLIENT %s CANNOT SKILLUP ID %i: NOT A PLAYER CHARACTER\n" CL_RESET, PChar->GetName(), SkillID);
+            return;
+        }
 
         if ((PChar->WorkingSkills.rank[SkillID] != 0) && !(PChar->WorkingSkills.skill[SkillID] & 0x8000))
         {

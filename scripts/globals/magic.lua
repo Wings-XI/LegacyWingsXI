@@ -958,8 +958,12 @@ function addBonuses(caster, spell, target, dmg, params)
                 mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
             end
         end
-        if params.attackType == tpz.attackType.BREATH then mab = params.bonusmab end -- BLU breaths only affected by correlation bonuses
-        mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        if params.attackType == tpz.attackType.BREATH then
+            mab = params.bonusmab -- BLU breaths only affected by correlation bonuses
+            mabbonus = (100 + mab) / 100 -- Breath attacks are not impacted by MDEF see https://ffxiclopedia.fandom.com/wiki/Frost_Breath
+        else
+            mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        end
     end
 
     if mabbonus < 0 then mabbonus = 0 end
@@ -1305,7 +1309,7 @@ function doElementalNuke(caster, spell, target, spellParams)
 
     if hasMultipleTargetReduction == true then
         MTDR = 0.90 - spell:getTotalTargets() * 0.05
-        if MTDR == 0.85 then -- 1 target, stay at 1.0
+        if MTDR >= 0.85 then -- 1 target, stay at 1.0
             MTDR = 1.0
         elseif MTDR < 0.4 then
             MTDR = 0.4

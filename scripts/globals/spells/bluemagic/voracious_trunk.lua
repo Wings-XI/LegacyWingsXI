@@ -22,7 +22,9 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local resist = applyResistanceAbility(caster, target, tpz.magic.ele.WIND, 0, caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower())
+    local bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    bonus = bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
+    local resist = applyResistanceAbility(caster, target, tpz.magic.ele.WIND, 0, bonus)
     local stolen = 0
 
     if resist >= 0.25 and math.random() < 0.8 then

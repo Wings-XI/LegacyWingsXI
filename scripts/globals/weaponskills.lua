@@ -320,8 +320,12 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-
-    calcParams.firstHitRateBonus = 50
+    
+    if (wsID == 0) then
+        calcParams.firstHitRateBonus = 0
+    else
+        calcParams.firstHitRateBonus = 50
+    end
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- allow crit if building flourish is on (3+ moves)
@@ -784,7 +788,6 @@ function getMeleeDmg(attacker, weaponType, kick)
         end
 
         mainhandDamage = mainhandDamage + h2hSkill
-        mainhandDamage = math.floor(mainhandDamage * 1.23)
         offhandDamage = mainhandDamage
     end
 
@@ -1268,6 +1271,10 @@ function handleWSGorgetBelt(attacker)
         local neck = attacker:getEquipID(tpz.slot.NECK)
         local belt = attacker:getEquipID(tpz.slot.WAIST)
         local SCProp1, SCProp2, SCProp3 = attacker:getWSSkillchainProp()
+        -- Some things are treated as WS but don't have properties, such as jumps
+        if SCProp1 == nil then
+            return 0, 0
+        end
         for i,v in ipairs(elementalGorget) do
             if neck == v then
                 if

@@ -36,7 +36,7 @@ function onMobSpawn(mob)
     -- adjust drops based on number of HQ Aern Organs traded to QM
     local qm = GetNPCByID(ID.npc.IXAERN_MNK_QM)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
-    if math.random(0, 1) > 0 then
+    if math.random(0, 3) > 0 then
         SetDropRate(2845, 1851, chance * 10) -- Deed Of Placidity
         SetDropRate(2845, 1901, 0)
     else

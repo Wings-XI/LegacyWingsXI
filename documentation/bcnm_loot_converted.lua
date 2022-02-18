@@ -5,6 +5,8 @@
 
 -- you'll need to look up these ids in bcnm_loot table to find any bcnms theyre associated with
 -- 10
+local loot =
+{
 [10] =
 {
     {
@@ -73,7 +75,7 @@
         {itemid = 776, droprate = 30}, -- White Rock
         {itemid = 810, droprate = 50}, -- Fluorite
     },
-}
+},
 -- 100
 [100] =
 {
@@ -123,7 +125,7 @@
         {itemid = 1122, droprate = 14}, -- Wyvern Skin
         {itemid = 866, droprate = 14}, -- Handful Of Wyvern Scales
     },
-}
+},
 -- 104
 [104] =
 {
@@ -184,7 +186,7 @@
         {itemid = 5070, droprate = 200}, -- Scroll Of Magic Finale
         {itemid = 4947, droprate = 100}, -- Scroll Of Utsusemi Ni
     },
-}
+},
 -- 105
 [105] =
 {
@@ -226,7 +228,7 @@
         {itemid = 4853, droprate = 250}, -- Scroll Of Drain
         {itemid = 930, droprate = 190}, -- Vial Of Beastman Blood
     },
-}
+},
 -- 107
 [107] =
 {
@@ -330,7 +332,7 @@
         {itemid = 844, droprate = 196}, -- Phoenix Feather
         {itemid = 1132, droprate = 225}, -- Square Of Raxa
     },
-}
+},
 -- 11
 [11] =
 {
@@ -440,7 +442,7 @@
         {itemid = 658, droprate = 42}, -- Damascus Ingot
         {itemid = 1110, droprate = 85}, -- Vial Of Black Beetle Blood
     },
-}
+},
 -- 110
 [110] =
 {
@@ -469,7 +471,7 @@
         {itemid = 2659, droprate = 62}, -- Square Of Canvas Toile
         {itemid = 2715, droprate = 407}, -- Gold Stud
     },
-}
+},
 -- 111
 [111] =
 {
@@ -499,7 +501,7 @@
         {itemid = 2659, droprate = 100}, -- Square Of Canvas Toile
         {itemid = 2715, droprate = 120}, -- Gold Stud
     },
-}
+},
 -- 112
 [112] =
 {
@@ -531,7 +533,7 @@
         {itemid = 646, droprate = 20}, -- Chunk Of Adaman Ore
         {itemid = 1931, droprate = 200}, -- Argyro Rivet
     },
-}
+},
 -- 113
 [113] =
 {
@@ -568,7 +570,7 @@
         {itemid = 2127, droprate = 59}, -- Metal Chip
         {itemid = 1875, droprate = 100}, -- Ancient Beastcoin
     },
-}
+},
 -- 114
 [114] =
 {
@@ -598,7 +600,7 @@
         {itemid = 2717, droprate = 482}, -- Electrum Stud
         {itemid = 1947, droprate = 18}, -- Fetid Lanolin Cube
     },
-}
+},
 -- 115
 [115] =
 {
@@ -627,7 +629,7 @@
         {itemid = 1939, droprate = 112}, -- Square Of Cardinal Cloth
         {itemid = 2657, droprate = 477}, -- Square Of Flameshun Cloth
     },
-}
+},
 -- 116
 [116] =
 {
@@ -666,7 +668,7 @@
         {itemid = 1883, droprate = 40}, -- Ponze Of Shell Powder
         {itemid = 2004, droprate = 20}, -- Ponze Of Carapace Powder
     },
-}
+},
 -- 117
 [117] =
 {
@@ -698,7 +700,7 @@
         {itemid = 1955, droprate = 256}, -- Pot Of Ebony Lacquer
         {itemid = 2659, droprate = 326}, -- Square Of Canvas Toile
     },
-}
+},
 -- 118
 [118] =
 {
@@ -730,7 +732,7 @@
     {
         {itemid = 1910, droprate = 1000}, -- Smoky Chip
     },
-}
+},
 -- 119
 [119] =
 {
@@ -758,7 +760,7 @@
         {itemid = 2717, droprate = 111}, -- Electrum Stud
         {itemid = 1935, droprate = 107}, -- Spool Of Benedict Yarn
     },
-}
+},
 -- 12
 [12] =
 {
@@ -798,7 +800,7 @@
         {itemid = 690, droprate = 90}, -- Elm Log
         {itemid = 1602, droprate = 70}, -- Mannequin Body
     },
-}
+},
 -- 120
 [120] =
 {
@@ -825,7 +827,7 @@
         {itemid = 2659, droprate = 423}, -- Square Of Canvas Toile
         {itemid = 1957, droprate = 110}, -- Blue Rivet
     },
-}
+},
 -- 121
 [121] =
 {
@@ -864,7 +866,7 @@
         {itemid = 646, droprate = 31}, -- Chunk Of Adaman Ore
         {itemid = 821, droprate = 63}, -- Spool Of Rainbow Thread
     },
-}
+},
 -- 122
 [122] =
 {
@@ -901,7 +903,7 @@
         {itemid = 2127, droprate = 59}, -- Metal Chip
         {itemid = 1875, droprate = 100}, -- Ancient Beastcoin
     },
-}
+},
 -- 123
 [123] =
 {
@@ -921,7 +923,7 @@
         {itemid = 1931, droprate = 225}, -- Argyro Rivet
         {itemid = 1935, droprate = 50}, -- Spool Of Benedict Yarn
     },
-}
+},
 -- 124
 [124] =
 {
@@ -940,7 +942,7 @@
         {itemid = 1959, droprate = 176}, -- Square Of Astral Leather
         {itemid = 1935, droprate = 110}, -- Spool Of Benedict Yarn
     },
-}
+},
 -- 125
 [125] =
 {
@@ -977,7 +979,7 @@
         {itemid = 821, droprate = 50}, -- Spool Of Rainbow Thread
         {itemid = 1883, droprate = 50}, -- Ponze Of Shell Powder
     },
-}
+},
 -- 126
 [126] =
 {
@@ -1023,7 +1025,7 @@
         {itemid = 2715, droprate = 123}, -- Gold Stud
         {itemid = 1935, droprate = 48}, -- Spool Of Benedict Yarn
     },
-}
+},
 -- 127
 [127] =
 {
@@ -1075,7 +1077,7 @@
         {itemid = 2127, droprate = 59}, -- Metal Chip
         {itemid = 1875, droprate = 100}, -- Ancient Beastcoin
     },
-}
+},
 -- 128
 [128] =
 {
@@ -1110,7 +1112,7 @@
         {itemid = 1926, droprate = 265}, -- Piece Of Omegas Heart
         {itemid = 1875, droprate = 100}, -- Ancient Beastcoin
     },
-}
+},
 -- 129
 [129] =
 {
@@ -1150,7 +1152,7 @@
         {itemid = 821, droprate = 50}, -- Spool Of Rainbow Thread
         {itemid = 1883, droprate = 50}, -- Ponze Of Shell Powder
     },
-}
+},
 -- 130
 [130] =
 {
@@ -1172,7 +1174,7 @@
         {itemid = 2658, droprate = 220}, -- Spool Of Silkworm Thread
         {itemid = 2716, droprate = 98}, -- Square Of Brilliantine
     },
-}
+},
 -- 131
 [131] =
 {
@@ -1197,7 +1199,7 @@
         {itemid = 2656, droprate = 67}, -- Spool Of Luminian Thread
         {itemid = 1956, droprate = 167}, -- Sheet Of Cobalt Mythril
     },
-}
+},
 -- 132
 [132] =
 {
@@ -1225,7 +1227,7 @@
         {itemid = 2658, droprate = 270}, -- Spool Of Silkworm Thread
         {itemid = 2714, droprate = 108}, -- Square Of Filet Lace
     },
-}
+},
 -- 133
 [133] =
 {
@@ -1250,7 +1252,7 @@
         {itemid = 2656, droprate = 27}, -- Spool Of Luminian Thread
         {itemid = 2658, droprate = 261}, -- Spool Of Silkworm Thread
     },
-}
+},
 -- 134
 [134] =
 {
@@ -1278,7 +1280,7 @@
         {itemid = 2716, droprate = 100}, -- Square Of Brilliantine
         {itemid = 2714, droprate = 110}, -- Square Of Filet Lace
     },
-}
+},
 -- 135
 [135] =
 {
@@ -1307,7 +1309,7 @@
         {itemid = 1950, droprate = 158}, -- Spool Of Chameleon Yarn
         {itemid = 2716, droprate = 105}, -- Square Of Brilliantine
     },
-}
+},
 -- 136
 [136] =
 {
@@ -1347,7 +1349,7 @@
     {
         {itemid = 1904, droprate = 1000}, -- Ivory Chip
     },
-}
+},
 -- 137
 [137] =
 {
@@ -1377,7 +1379,7 @@
         {itemid = 1930, droprate = 241}, -- Square Of Ecarlate Cloth
         {itemid = 2656, droprate = 172}, -- Spool Of Luminian Thread
     },
-}
+},
 -- 138
 [138] =
 {
@@ -1408,7 +1410,7 @@
         {itemid = 1930, droprate = 143}, -- Square Of Ecarlate Cloth
         {itemid = 2660, droprate = 143}, -- Pantin Wire
     },
-}
+},
 -- 139
 [139] =
 {
@@ -1443,7 +1445,7 @@
         {itemid = 2656, droprate = 250}, -- Spool Of Luminian Thread
         {itemid = 2716, droprate = 350}, -- Square Of Brilliantine
     },
-}
+},
 -- 14
 [14] =
 {
@@ -1497,7 +1499,7 @@
         {itemid = 859, droprate = 59}, -- Ram Skin
         {itemid = 746, droprate = 90}, -- Platinum Ingot
     },
-}
+},
 -- 140
 [140] =
 {
@@ -1526,7 +1528,7 @@
         {itemid = 1930, droprate = 133}, -- Square Of Ecarlate Cloth
         {itemid = 2660, droprate = 33}, -- Pantin Wire
     },
-}
+},
 -- 141
 [141] =
 {
@@ -1562,7 +1564,7 @@
         {itemid = 1932, droprate = 118}, -- Utopian Gold Thread
         {itemid = 2656, droprate = 294}, -- Spool Of Luminian Thread
     },
-}
+},
 -- 142
 [142] =
 {
@@ -1597,7 +1599,7 @@
         {itemid = 1944, droprate = 60}, -- Dark Orichalcum Ingot
         {itemid = 1952, droprate = 200}, -- Spool Of Scarlet Odoshi
     },
-}
+},
 -- 143
 [143] =
 {
@@ -1634,7 +1636,7 @@
     {
         {itemid = 1906, droprate = 1000}, -- Emerald Chip
     },
-}
+},
 -- 144
 [144] =
 {
@@ -1667,7 +1669,7 @@
         {itemid = 2716, droprate = 190}, -- Square Of Brilliantine
         {itemid = 2656, droprate = 210}, -- Spool Of Luminian Thread
     },
-}
+},
 -- 145
 [145] =
 {
@@ -1704,7 +1706,7 @@
         {itemid = 2658, droprate = 67}, -- Spool Of Silkworm Thread
         {itemid = 1946, droprate = 133}, -- Square Of Smalt Leather
     },
-}
+},
 -- 146
 [146] =
 {
@@ -1743,7 +1745,7 @@
         {itemid = 1948, droprate = 42}, -- Spool Of Coiled Yarn
         {itemid = 2660, droprate = 292}, -- Pantin Wire
     },
-}
+},
 -- 147
 [147] =
 {
@@ -1778,7 +1780,7 @@
         {itemid = 1952, droprate = 42}, -- Spool Of Scarlet Odoshi
         {itemid = 2658, droprate = 83}, -- Spool Of Silkworm Thread
     },
-}
+},
 -- 148
 [148] =
 {
@@ -1817,7 +1819,7 @@
         {itemid = 1950, droprate = 167}, -- Spool Of Chameleon Yarn
         {itemid = 2714, droprate = 458}, -- Square Of Filet Lace
     },
-}
+},
 -- 149
 [149] =
 {
@@ -1855,7 +1857,7 @@
         {itemid = 2714, droprate = 370}, -- Square Of Filet Lace
         {itemid = 1946, droprate = 333}, -- Square Of Smalt Leather
     },
-}
+},
 -- 15
 [15] =
 {
@@ -1914,7 +1916,7 @@
         {itemid = 1132, droprate = 288}, -- Square Of Raxa
         {itemid = 1110, droprate = 41}, -- Vial Of Black Beetle Blood
     },
-}
+},
 -- 150
 [150] =
 {
@@ -1955,7 +1957,7 @@
     {
         {itemid = 1905, droprate = 1000}, -- Scarlet Chip
     },
-}
+},
 -- 151
 [151] =
 {
@@ -1991,7 +1993,7 @@
     {
         {itemid = 1986, droprate = 1000}, -- Orchid Chip
     },
-}
+},
 -- 152
 [152] =
 {
@@ -2028,7 +2030,7 @@
     {
         {itemid = 1908, droprate = 1000}, -- Cerulean Chip
     },
-}
+},
 -- 153
 [153] =
 {
@@ -2066,7 +2068,7 @@
     {
         {itemid = 1907, droprate = 1000}, -- Silver Chip
     },
-}
+},
 -- 154
 [154] =
 {
@@ -2107,7 +2109,7 @@
         {itemid = 1921, droprate = 265}, -- Piece Of Ultimas Heart
         {itemid = 1875, droprate = 100}, -- Ancient Beastcoin
     },
-}
+},
 -- 155
 [155] =
 {
@@ -2136,7 +2138,7 @@
         {itemid = 2658, droprate = 400}, -- Spool Of Silkworm Thread
         {itemid = 1940, droprate = 200}, -- Square Of Supple Skin
     },
-}
+},
 -- 156
 [156] =
 {
@@ -2195,7 +2197,7 @@
         {itemid = 775, droprate = 30}, -- Black Rock
         {itemid = 774, droprate = 30}, -- Purple Rock
     },
-}
+},
 -- 16
 [16] =
 {
@@ -2263,7 +2265,7 @@
         {itemid = 939, droprate = 1000}, -- Hecteyes Eye
         {itemid = 914, droprate = 1000}, -- Vial Of Mercury
     },
-}
+},
 -- 17
 [17] =
 {
@@ -2322,7 +2324,7 @@
         {itemid = 844, droprate = 246}, -- Phoenix Feather
         {itemid = 1132, droprate = 159}, -- Square Of Raxa
     },
-}
+},
 -- 179
 [179] =
 {
@@ -2346,7 +2348,7 @@
         {itemid = 16976, droprate = 100}, -- Onimaru
         {itemid = 4990, droprate = 230}, -- Scroll Of Armys Paeon V
     },
-}
+},
 -- 180
 [180] =
 {
@@ -2370,7 +2372,7 @@
         {itemid = 18098, droprate = 153}, -- Martial Lance
         {itemid = 4748, droprate = 271}, -- Scroll Of Raise Iii
     },
-}
+},
 -- 34
 [34] =
 {
@@ -2411,7 +2413,7 @@
         {itemid = 922, droprate = 444}, -- Bat Wing
         {itemid = 0, droprate = 600}, --
     },
-}
+},
 -- 35
 [35] =
 {
@@ -2498,7 +2500,7 @@
         {itemid = 806, droprate = 131}, -- Tourmaline
         {itemid = 0, droprate = 600}, --
     },
-}
+},
 -- 73
 [73] =
 {
@@ -2545,7 +2547,7 @@
         {itemid = 736, droprate = 80}, -- Chunk Of Silver Ore
         {itemid = 744, droprate = 75}, -- Silver Ingot
     },
-}
+},
 -- 76
 [76] =
 {
@@ -2656,7 +2658,7 @@
         {itemid = 703, droprate = 337}, -- Petrified Log
         {itemid = 831, droprate = 149}, -- Square Of Shining Cloth
     },
-}
+},
 -- 79
 [79] =
 {
@@ -2707,7 +2709,7 @@
         {itemid = 15185, droprate = 55}, -- Walkure Mask
         {itemid = 17440, droprate = 13}, -- Kraken Club
     },
-}
+},
 -- 81
 [81] =
 {
@@ -2769,7 +2771,7 @@
         {itemid = 844, droprate = 276}, -- Phoenix Feather
         {itemid = 1132, droprate = 209}, -- Square Of Raxa
     },
-}
+},
 -- 82
 [82] =
 {
@@ -2826,4 +2828,5 @@
         {itemid = 844, droprate = 246}, -- Phoenix Feather
         {itemid = 1132, droprate = 159}, -- Square Of Raxa
     },
+}
 }

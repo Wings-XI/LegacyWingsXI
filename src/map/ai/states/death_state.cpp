@@ -57,6 +57,12 @@ bool CDeathState::Update(time_point tick)
     {
         return true;
     }
+    else if (m_PEntity->objtype == TYPE_PC && static_cast<CCharEntity*>(m_PEntity)->health.hp > 0)
+    {
+        Complete();
+        m_PEntity->animation = ANIMATION_NONE;
+        static_cast<CCharEntity*>(m_PEntity)->updatemask |= UPDATE_ALL_CHAR;
+    }
     else if (tick > GetEntryTime() + m_deathTime && !IsCompleted())
     {
         Complete();

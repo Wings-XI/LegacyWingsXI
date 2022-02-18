@@ -95,6 +95,7 @@ CMobEntity::CMobEntity()
     m_HiPartySize = 0;
     m_THLvl = 0;
     m_ItemStolen = false;
+    m_StealItemID = 0;
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
 
@@ -112,6 +113,7 @@ CMobEntity::CMobEntity()
     m_dmgMult = 100;
 
     m_giveExp = false;
+    m_ExpPenalty = 0;
     m_neutral = false;
     m_Aggro = false;
     m_TrueDetection = 0;
@@ -122,6 +124,7 @@ CMobEntity::CMobEntity()
     m_bcnmID = 0;
 
     m_maxRoamDistance = 50.0f;
+    aggroTimer = 1;
     m_disableScent = false;
 
     memset(&m_SpawnPoint, 0, sizeof(m_SpawnPoint));
@@ -352,7 +355,7 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 
 bool CMobEntity::CanDeaggro()
 {
-    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD);
+    return !(m_Type & MOBTYPE_NOTORIOUS || m_Type & MOBTYPE_BATTLEFIELD || isInDynamis() == true );
 }
 
 bool CMobEntity::IsFarFromHome()
@@ -712,10 +715,12 @@ void CMobEntity::Spawn()
 {
     CBattleEntity::Spawn();
     m_giveExp = true;
+    m_ExpPenalty = 0;
     m_HiPCLvl = 0;
     m_HiPartySize = 0;
     m_THLvl = 0;
     m_ItemStolen = false;
+    m_StealItemID = 0;
     m_autoTargetReady = true;
     m_autoTargetKiller = nullptr;
     m_DropItemTime = 1000;

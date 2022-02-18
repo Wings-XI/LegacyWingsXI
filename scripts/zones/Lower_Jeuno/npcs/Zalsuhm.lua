@@ -125,7 +125,7 @@ function onEventFinish(player, csid, option)
         local skill = jobs[option]
 
         player:completeQuest(JEUNO, questId)
-        player:messageSpecial(ID.text.MYTHIC_LEARNED, player:getMainJob())
+        player:messageSpecial(ID.text.MYTHIC_LEARNED, option)
         player:addLearnedWeaponskill(skill)
     end
 end

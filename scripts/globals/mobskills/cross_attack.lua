@@ -13,6 +13,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 2
+    if mob:getID() == 16945287 then -- Scolopendra
+        numhits = 3
+    end
     local accmod = 1
     local dmgmod = 1.5
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
