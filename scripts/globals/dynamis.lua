@@ -216,6 +216,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_SAN_DORIA_INTERLOPER,
         entryPos = {161.838, -2.000, 161.673, 93, tpz.zone.DYNAMIS_SAN_DORIA},
         ejectPos = {161.000, -2.000, 161.000, 94, tpz.zone.SOUTHERN_SAN_DORIA},
+        specifiedChildren = true,
         updatedRoam = true,
     },
     [tpz.zone.SOUTHERN_SAN_DORIA] =
@@ -617,6 +618,7 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
+    local zoneId = mob:getZoneID()
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
         local eyes = mob:getLocalVar("eyeColor")
         mob:AnimationSub(eyes)
@@ -646,28 +648,54 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         i = i + 1
     end
     i = 1
-    while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
-        local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
-        local roll = originalRoll
-        while  GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
-            roll = roll + 1
-            if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
-            if roll == originalRoll then roll = nil end
-        end
-        if roll ~= nil then
-            local child = GetMobByID(randomChildrenList[randomChildrenCount][roll])
-            local home = child:getSpawnPos()
-            local randomSpawn = false
-            if home.x == 1 and home.y == 1 and home.z == 1 then
-                child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
-                randomSpawn = true
+    if dynamis.dynaInfo[zoneId].specifiedChildren == true then
+        while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+            local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
+            local roll = originalRoll
+            while GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
+                roll = roll + 1
+                if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
+                if roll == originalRoll then roll = nil end
             end
-            SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
-            if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
-        else
-            break
+            if roll ~= nil then
+                local child = GetMobByID(randomChildrenList[randomChildrenCount][roll])
+                local home = child:getSpawnPos()
+                local randomSpawn = false
+                if home.x == 1 and home.y == 1 and home.z == 1 then
+                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    randomSpawn = true
+                end
+                SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
+                if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
+            else
+                break
+            end
+            randomChildrenCount = randomChildrenCount - 1
         end
-        randomChildrenCount = randomChildrenCount - 1
+    else
+        while randomChildrenList ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+            local originalRoll = math.random(1,#randomChildrenList)
+            local roll = originalRoll
+            while GetMobByID(randomChildrenList[roll]):isSpawned() == true and roll ~= nil do
+                roll = roll + 1
+                if roll > #randomChildrenList then roll = 1 end
+                if roll == originalRoll then roll = nil end
+            end
+            if roll ~= nil then
+                local child = GetMobByID(randomChildrenList[roll])
+                local home = child:getSpawnPos()
+                local randomSpawn = false
+                if home.x == 1 and home.y == 1 and home.z == 1 then
+                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    randomSpawn = true
+                end
+                SpawnMob(randomChildrenList[roll]):updateEnmity(target)
+                if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
+            else
+                break
+            end
+            randomChildrenCount = randomChildrenCount - 1
+        end
     end
 end
 
@@ -720,6 +748,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
     end
     local forceLink = false
     local i = 1
+    local target = mob:getTarget()
 
     while miniWave ~= nil and miniWave[i] ~= nil do
         if type(miniWave[i]) == "boolean" then forceLink = miniWave[i]
@@ -734,8 +763,8 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
 end
 
 dynamis.mobOnRoam = function(mob)
-    zone = mob:getZoneID()
-    if dynamis.dynaInfo[zone].updatedRoam == true then
+    local zoneId = mob:getZoneID()
+    if dynamis.dynaInfo[zoneId].updatedRoam == true then
         local home = mob:getSpawnPos()
         local location = mob:getPos()
         if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
@@ -810,7 +839,7 @@ end
 
 dynamis.sjQMOnTrigger = function(player, npc)
     local zoneId = npc:getZoneID()
-    
+
     if dynamis.dynaInfo[zoneId].sjRestriction == true then
         for _, member in pairs(player:getAlliance()) do
             if member:getZoneID() == player:getZoneID() then
@@ -989,7 +1018,7 @@ dynamis.setMobStats = function(mob)
 
     -- Add Check After Calcs
     mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
-    
+
 end
 
 dynamis.setNMStats = function(mob)
