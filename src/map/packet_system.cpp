@@ -442,7 +442,7 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
     // respawn any pets from last zone
     if (PChar->petZoningInfo.respawnPet == true)
     {
-        // only repawn pet in valid zones
+        // only respawn pet in valid zones
         if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->m_moghouseID)
         {
             switch (PChar->petZoningInfo.petType)
@@ -633,15 +633,6 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
     }
 
     // todo: kill player til theyre dead and bsod
-    const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
-    int32       ret      = Sql_Query(SqlHandle, fmtQuery, PChar->id);
-    if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-    {
-        // On zone change, only sending a version message if mismatch
-        // if ((bool)Sql_GetUIntData(SqlHandle, 0))
-        // PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
-    }
-    return;
 }
 
 /************************************************************************
@@ -882,7 +873,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x02: // attack
         {
-            if (PChar->animation == ANIMATION_HEALING)
+            if (PChar->isSitting())
                 return;
 
             if (PChar->isMounted())
@@ -6871,6 +6862,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->health.mp = PChar->GetMaxMP();
         PChar->updatemask |= UPDATE_HP;
 
+        charutils::CheckValidEquipment(PChar);
         charutils::SaveCharStats(PChar);
 
         PChar->pushPacket(new CCharJobsPacket(PChar));

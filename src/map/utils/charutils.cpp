@@ -3327,6 +3327,12 @@ namespace charutils
         // This usually happens after a crash
         TPZ_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
 
+        if (PChar->objtype != TYPE_PC)
+        {
+            //ShowDebug(CL_CYAN"INVALID CLIENT %s CANNOT SKILLUP ID %i: NOT A PLAYER CHARACTER\n" CL_RESET, PChar->GetName(), SkillID);
+            return;
+        }
+
         if ((PChar->WorkingSkills.rank[SkillID] != 0) && !(PChar->WorkingSkills.skill[SkillID] & 0x8000))
         {
             uint16 CurSkill = PChar->RealSkills.skill[SkillID];
