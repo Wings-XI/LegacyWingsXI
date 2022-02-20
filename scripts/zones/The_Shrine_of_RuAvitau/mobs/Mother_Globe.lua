@@ -168,8 +168,6 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:setRespawnTime(math.random(10800, 21600)) -- respawn 3-6 hrs
-
     for i = ID.mob.MOTHER_GLOBE.SLAVE_START, ID.mob.MOTHER_GLOBE.SLAVE_END do
         local pet = GetMobByID(i)
         if pet:isSpawned() then
