@@ -28,7 +28,7 @@ function onTrigger(player, npc)
     -- end
 
     if (medalRank == 0) then
-        player:startEvent(111)
+        player:startEvent(111, 1)
     elseif player:getCampaignAllegiance() == 1 then
         -- Event Option 1 Denotes San d'Oria Allegience --
         player:startEvent(110, 1, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)

@@ -86,6 +86,7 @@ zones[tpz.zone.VALKURM_DUNES] =
         PIRATE_CHART_TARU = 17199741,
         BARNACLED_BOX     = 17199605,
         SHIMMERING_POINT  = 17199742,
+        QM_WHMAF          = 17199727,
     },
 }
 

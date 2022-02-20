@@ -68,5 +68,9 @@ function onEventFinish(player, csid, option)
         player:setPos(-226.193, -46.459, -280.046, 127, 14) -- To Hall of Transference {R}
     elseif csid == 50 then
         player:setCharVar("FirstPromyvionDem", 0)
+    elseif csid >= 30 and csid <= 45 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+        end
     end
 end
