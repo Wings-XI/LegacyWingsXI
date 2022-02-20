@@ -120,11 +120,13 @@
 #include "../packets/guild_menu_buy.h"
 #include "../packets/independant_animation.h"
 #include "../packets/instance_entry.h"
+#include "../packets/inventory_assign.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/inventory_modify.h"
 #include "../packets/inventory_size.h"
 #include "../packets/inventory_item.h"
 #include "../packets/key_items.h"
+#include "../packets/linkshell_equip.h"
 #include "../packets/menu_mog.h"
 #include "../packets/menu_merit.h"
 #include "../packets/menu_raisetractor.h"
@@ -4199,6 +4201,130 @@ inline int32 CLuaBaseEntity::addUsedItem(lua_State *L)
         }
     }
     lua_pushboolean(L, (SlotID != ERROR_SLOTID));
+    return 1;
+}
+
+/************************************************************************
+*  Function: addLinkpearl()
+*  Purpose : Adds an linkpearl to a player's inventory
+*  Example : player:addLinkpearl(2) -- a pearl for a linkshell with ID 2
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addLinkpearl(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || (!lua_isnumber(L, 1) && !lua_isstring(L, 1)));
+
+
+    uint16 shellID = 0;
+    if (lua_isnumber(L, 1)) {
+        shellID = (uint16)lua_tointeger(L, 1);
+    }
+    else {
+        const char* lsName = lua_tostring(L, 1);
+        shellID = linkshell::GetLinkshellId((const int8*)lsName);
+    }
+    if (shellID == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CLinkshell* PLinkshell = linkshell::GetLinkshell(shellID);
+    if (!PLinkshell) {
+        PLinkshell = linkshell::LoadLinkshell(shellID);
+        if (!PLinkshell) {
+            lua_pushboolean(L, false);
+            return 1;
+        }
+    }
+    CItemLinkshell* PLinkpearl = linkshell::CreatePearl(PLinkshell);
+    if (!PLinkpearl) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    uint8 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PLinkpearl);
+    if (SlotID == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    int8     DecodedName[21];
+    DecodeStringLinkshell(PLinkshell->getName(), DecodedName);
+    char extra[sizeof(PLinkpearl->m_extra) * 2 + 1];
+    Sql_EscapeStringLen(SqlHandle, extra, (const char*)PLinkpearl->m_extra, sizeof(PLinkpearl->m_extra));
+    const char* Query = "UPDATE char_inventory SET signature = '%s', extra = '%s', itemId = 515 WHERE charid = %u AND location = 0 AND slot = %u LIMIT 1";
+
+    if (Sql_Query(SqlHandle, Query, DecodedName, extra, PChar->id, SlotID) != SQL_ERROR &&
+        Sql_AffectedRows(SqlHandle) != 0)
+    {
+        PChar->pushPacket(new CInventoryItemPacket(PLinkpearl, LOC_INVENTORY, SlotID));
+    }
+
+    uint8 lsNum = 0;
+    if (lua_isnumber(L, 2)) {
+        lsNum = (uint8)lua_tointeger(L, 2);
+    }
+    if (lsNum == 1 || lsNum == 2) {
+
+        SLOTTYPE slot = SLOT_LINK1;
+        CLinkshell* OldLinkshell = PChar->PLinkshell1;
+        if (lsNum == 2)
+        {
+            slot = SLOT_LINK2;
+            OldLinkshell = PChar->PLinkshell2;
+        }
+
+        if (PLinkpearl->GetLSID() == 0) // linkshell no exists, item is unusable
+        {
+            PChar->pushPacket(new CMessageSystemPacket(0, 0, 110));
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        if (OldLinkshell != nullptr) // switching linkshell group
+        {
+            CItemLinkshell* POldItemLinkshell = (CItemLinkshell*)PChar->getEquip(slot);
+
+            if (POldItemLinkshell != nullptr && POldItemLinkshell->isType(ITEM_LINKSHELL))
+            {
+                linkshell::DelOnlineMember(PChar, POldItemLinkshell);
+
+                POldItemLinkshell->setSubType(ITEM_UNLOCKED);
+                PChar->pushPacket(new CInventoryAssignPacket(POldItemLinkshell, INV_NORMAL));
+            }
+        }
+        linkshell::AddOnlineMember(PChar, PLinkpearl, lsNum);
+
+        PLinkpearl->setSubType(ITEM_LOCKED);
+
+        PChar->equip[slot] = SlotID;
+        PChar->equipLoc[slot] = LOC_INVENTORY;
+        if (lsNum == 1)
+        {
+            PChar->nameflags.flags |= FLAG_LINKSHELL;
+            PChar->updatemask |= UPDATE_HP;
+        }
+
+        PChar->pushPacket(new CInventoryAssignPacket(PLinkpearl, INV_LINKSHELL));
+
+        charutils::SaveCharStats(PChar);
+        charutils::SaveCharEquip(PChar);
+
+        PChar->pushPacket(new CLinkshellEquipPacket(PChar, lsNum));
+        PChar->pushPacket(new CInventoryItemPacket(PLinkpearl, LOC_INVENTORY, SlotID));
+
+        PLinkshell->PushLinkshellMessage(PChar, lsNum == 1);
+    }
+
+    PChar->pushPacket(new CInventoryFinishPacket());
+    PChar->pushPacket(new CCharUpdatePacket(PChar));
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
@@ -18373,6 +18499,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addUsedItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addLinkpearl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasWornItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createWornItem),
 

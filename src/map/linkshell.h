@@ -88,12 +88,14 @@ namespace linkshell
 {
     CLinkshell* LoadLinkshell(uint32 id);
     void UnloadLinkshell(uint32 id);
+    CItemLinkshell* CreatePearl(CLinkshell* PLinkshell);
 
     bool AddOnlineMember(CCharEntity* PChar, CItemLinkshell* PItemLinkshell, uint8 lsNum);
     bool DelOnlineMember(CCharEntity* PChar, CItemLinkshell* PItemLinkshell);
 
     uint32 RegisterNewLinkshell(const int8* name, uint16 color);
-	CLinkshell* GetLinkshell(uint32 id);
+    CLinkshell* GetLinkshell(uint32 id);
+    uint8 GetLinkshellId(const int8* name);
 };
 
 #endif

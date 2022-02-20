@@ -135,6 +135,13 @@ local function CharCreate(player)
        player:setGil(START_GIL)
     end
 
+    if (SERVER_LINKSHELL ~= nil and SERVER_LINKSHELL ~= 0) then
+        -- Add server linkshell pearl
+        if not player:hasItem(513) and not player:hasItem(514) and not player:hasItem(515) then
+            player:addLinkpearl(SERVER_LINKSHELL, 1)
+        end
+    end
+
     player:addItem(536) -- adventurer coupon
     player:addTitle(tpz.title.NEW_ADVENTURER)
     -- player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
