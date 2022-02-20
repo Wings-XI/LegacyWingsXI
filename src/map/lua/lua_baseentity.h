@@ -201,6 +201,7 @@ public:
     int32 delItem(lua_State*);
     int32 addUsedItem(lua_State*);           // Add charged item with timer already on full cooldown
     int32 addTempItem(lua_State*);           // Add temp item to Entity Temp inventory
+    int32 addLinkpearl(lua_State *L);        // Add a linkshell pearl
     int32 hasWornItem(lua_State*);           // Check if the item is already worn (player:hasWornItem(itemid))
     int32 createWornItem(lua_State*);        // Update this item in worn item (player:createWornItem(itemid))
 
