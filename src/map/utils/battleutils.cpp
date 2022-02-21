@@ -1686,7 +1686,7 @@ namespace battleutils
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
-        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
+        // ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
 
         return pDIF;
     }
@@ -2590,7 +2590,7 @@ namespace battleutils
     *                                                                       *
     ************************************************************************/
 
-    uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack)
+    uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack, bool isRanged)
     {
         int32 crithitrate = 5;
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES, 0) ||
@@ -2648,11 +2648,18 @@ namespace battleutils
 
             int32 attackerdex = PAttacker->DEX();
             int32 defenderagi = PDefender->AGI();
-
-            crithitrate += GetDexCritBonus(PAttacker, PDefender);
+            int32 dAGI = PAttacker->AGI() - defenderagi;
+            if (isRanged && dAGI > 0)
+            {
+                crithitrate += dAGI/10; // The floor from integer division is intended
+            }
+            else
+            {
+                crithitrate += GetDexCritBonus(PAttacker, PDefender);
+            }
             crithitrate += PAttacker->getMod(Mod::CRITHITRATE);
             crithitrate += PDefender->getMod(Mod::ENEMYCRITRATE);
-            crithitrate = std::clamp(crithitrate, 0, 100);
+            crithitrate = std::clamp(crithitrate, 5, 100);
         }
         return (uint8)crithitrate;
     }
@@ -2663,44 +2670,36 @@ namespace battleutils
         int32 attackerdex = PAttacker->DEX();
         int32 defenderagi = PDefender->AGI();
         int32 dDex = attackerdex - defenderagi;
-        int32 dDexAbs = std::abs(dDex);
-        int32 sign = 1;
-
-        if (dDex < 0)
-        {
-            // Target has higher AGI so this will be a decrease to crit rate
-            sign = -1;
-        }
 
         // Default to +0 crit rate for a delta of 0-6
         int32 critRate = 0;
-        if (dDexAbs > 39)
+        if (dDex > 39)
         {
             // 40-50: (dDEX-35)
-            critRate = dDexAbs - (int32)35;
+            critRate = dDex - (int32)35;
         }
-        else if (dDexAbs > 29)
+        else if (dDex > 29)
         {
             // 30-39: +4
             critRate = 4;
         }
-        else if (dDexAbs > 19)
+        else if (dDex > 19)
         {
             // 20-29: +3
             critRate = 3;
         }
-        else if (dDexAbs > 13)
+        else if (dDex > 13)
         {
             // 14-19: +2
             critRate = 2;
         }
-        else if (dDexAbs > 6)
+        else if (dDex > 6)
         {
             critRate = 1;
         }
 
-        // Crit rate delta from stats caps at +-15
-        return std::min(critRate, static_cast<int32>(15)) * sign;
+        // Crit rate delta from stats caps at +15
+        return std::min(critRate, static_cast<int32>(15));
     }
 
     /************************************************************************
