@@ -874,7 +874,7 @@ mobList[zone][SMB+12 ].pos = { 119.8963,  0.0000,   80.3786, 225    } -- Lion Sq
 mobList[zone][SMB+16 ].pos = { 112.5138,  0.0000,   87.5595, 225   } -- Lion Square Fount. W
 mobList[zone][SMB+20 ].pos = { 100.0876,  1.0000,  103.6861, 32    } -- Lion Tavern
 mobList[zone][SMB+24 ].pos = { 104.0628,  1.9165,   72.0631, 226   } -- on stair, SW of Lion Square Fount.
-mobList[zone][SMB+25 ].pos = {  92.8329,  4.0000,   63.6029, 255   } -- Helbort's Blades N
+mobList[zone][SMB+25 ].pos = {  98.8329,  4.0000,   68.6029, 255   } -- Helbort's Blades N
 mobList[zone][SMB+28 ].pos = {  93.7486,  4.0000,   56.9143, 255   } -- Helbort's Blades S
 mobList[zone][SMB+31 ].pos = { 101.2500,  4.0000,   50.0912, 160   } -- Door Across Helbort's Blades
 mobList[zone][SMB+42 ].pos = {  97.8056,  4.0000,   45.2697, 194   } -- Alleyway, Btw. Wep+Armor Shops
@@ -973,7 +973,7 @@ mobList[zone][SMB+365].pos = {-137.6403,-10.8000,   65.0534, 32    } -- Courtyar
 mobList[zone][SMB+340].pos = {-132.2272, -4.0000,   70.2963, 64    } -- Courtyard to WD Alley Connector
 mobList[zone][SMB+352].pos = {-152.3566, -2.0000,   54.9211, 133   } -- Courtyard SE
 mobList[zone][SMB+360].pos = {-166.8674, -2.0000,   54.1991, 142   } -- Courtyard SW
-mobList[zone][SMB+357].pos = {-161.2271, -2.0000,   62.6593, 113   } -- Courtyard N
+mobList[zone][SMB+357].pos = {-159.2271, -2.0000,   67.6593, 113   } -- Courtyard N
 mobList[zone][SMB+309].pos = {-210.2554, -2.0000,   95.1729, 130   } -- W2 Pikeman's Way N
 mobList[zone][SMB+305].pos = {-202.6147, -2.0000,   85.8321, 157   } -- W2 Pikeman's Way C
 mobList[zone][DMB+1  ].pos = {   0.0735, -2.0000,   44.0171, 64    } -- W2 Megaboss
@@ -1013,8 +1013,8 @@ mobList[zone][SMB+384].pos = { 101.5461,  4.0000,   25.6043, 91    } -- W3 Caval
 mobList[zone][SMB+380].pos = { 103.6767,  4.0000,   40.9239, 126   } -- W3 Across Rosel's Armour Shop
 mobList[zone][SMB+376].pos = {  92.4537,  4.0000,   47.9614, 1     } -- W3 Between Rosel's/Helbort's
 mobList[zone][SMB+388].pos = { 133.0893,  0.0000,    9.8870, 193   } -- W3 Cavalry Way Ramp Entrance
-mobList[zone][SMB+14 ].pos = { 119.5853,  0.0000,   76.9059, 96    } -- W4 Lion Square Fountain S
-mobList[zone][SMB+18 ].pos = { 108.8902,  0.0000,   87.6102, 96    } -- W4 Lion Square Fountain W
+mobList[zone][SMB+14 ].pos = { 116.5853,  0.0000,   74.9059, 96    } -- W4 Lion Square Fountain S
+mobList[zone][SMB+18 ].pos = { 108.8902,  0.0000,   85.6102, 96    } -- W4 Lion Square Fountain W
 mobList[zone][SMB+10 ].pos = { 130.6248, -1.2500,  105.9016, 96    } -- W4 Lion Square Stairs W
 mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion Square Stairs S
 
@@ -1025,7 +1025,10 @@ mobList[zone][SMB+6  ].pos = { 137.5452, -1.0000,   98.5752, 96    } -- W4 Lion 
 --Wave 1 pathing
 mobList[zone][SMB+4  ].patrolPath = { 121, 0, 96,		127, 0, 102, 	121, 0, 96  	}
 mobList[zone][SMB+8  ].patrolPath = { 128, 0, 89,		134, 0, 95, 	128, 0, 89  	}
-mobList[zone][SMB+42 ].patrolPath = { 97, 4, 16, 		97, 4, 67,		97, 4, 16  		}
+mobList[zone][SMB+16 ].patrolPath = { 112, 0, 87,		106, 0, 82, 	112, 0, 87  	}
+mobList[zone][SMB+12 ].patrolPath = { 119, 0, 80,		113, 0, 75, 	119, 0, 80  	}
+mobList[zone][SMB+25 ].patrolPath = { 98, 4, 68,		98, 4, 62, 	    98, 4, 68   	}
+mobList[zone][SMB+42 ].patrolPath = { 98, 4, 16, 		98, 4, 56,		98, 4, 16  		}
 mobList[zone][SMB+58 ].patrolPath = { 130, 0, 68, 		152, 0, 45,		130, 0, 68 		}
 mobList[zone][SMB+54 ].patrolPath = { 148, 0, 49, 		148, 0, 33,		148, 0, 49 		}
 mobList[zone][SMB+60 ].patrolPath = { 146, 0, 30, 		135, 0, 18,		146, 0, 30 		}
@@ -1038,6 +1041,9 @@ mobList[zone][SMB+95 ].patrolPath = { 75, 2, -35, 		81, 2, -41,		75, 2, -35 		}
 mobList[zone][SMB+80 ].patrolPath = { 60, 2, -20, 		72, 2, -32,		60, 2, -20 		}
 mobList[zone][SMB+99 ].patrolPath = { 91, 2, -19, 		98, 2, -26,		91, 2, -19 		}
 mobList[zone][SMB+74 ].patrolPath = { 76, 2, -4, 		88, 2, -16,		76, 2, -4 		}
+mobList[zone][SMB+107].patrolPath = { 5, 2, -74, 		18, 2, -74,		5, 2, -74 		}
+mobList[zone][SMB+105].patrolPath = { 2, 2, -74, 	    -12, 2, -74,	2, 2, -74 		}
+mobList[zone][SMB+102].patrolPath = { -8, 2, -80, 	    -23, 2, -80,	-8, 2, -80 		}
 mobList[zone][SMB+149].patrolPath = { -40, 2, -17,		-40, 2, -38,	-40, 2, -17 	}
 mobList[zone][SMB+131].patrolPath = { 40, 2, -17, 		40, 2, -37,		40, 2, -17 		}
 mobList[zone][SMB+133].patrolPath = { 25, 2, 23, 		25, 2, 1,		25, 2, 23 		}
@@ -1047,8 +1053,8 @@ mobList[zone][SMB+139].patrolPath = { 0, 2, -21, 		0, 2, -4,		0, 2, -21 		}
 mobList[zone][SMB+141].patrolPath = { 125, 0, 104, 		129, 0, 100,	125, 0, 104		}
 mobList[zone][SMB+142].patrolPath = { 132, 0, 97, 		136, 0, 93,		132, 0, 97 		}
 mobList[zone][SMB+175].patrolPath = { 0, 0, 26, 		0, 2, 3,		0, 0, 26 		}
-mobList[zone][SMB+180].patrolPath = { 5, 0, 19,         5, 2, -9,      5, 0, 19,        } -- Victory Square Main Path E
-mobList[zone][SMB+185].patrolPath = { -5, 0, 19,        -5, 2, -9,     -5, 0, 19,       } -- Victory Square Main Path W
+mobList[zone][SMB+180].patrolPath = { 5, 0, 19,         5, 2, -9,       5, 0, 19        } -- Victory Square Main Path E
+mobList[zone][SMB+185].patrolPath = { -5, 0, 19,        -5, 2, -9,      -5, 0, 19       } -- Victory Square Main Path W
 mobList[zone][SMB+190].patrolPath = { 20, 2, 5,         20, 2, -13,     20, 2, 5        }
 mobList[zone][SMB+193].patrolPath = { 20, 0, 24,        20, 2, 8,       20, 0, 24       }
 mobList[zone][SMB+199].patrolPath = { -24, 2, 15,       -24, 2, 0,      -24, 2, 15      }
@@ -1070,13 +1076,22 @@ mobList[zone][SMB+316].patrolPath = { -231, -2, 98, 	-213, -2, 98,	-231, -2, 98 
 mobList[zone][SMB+320].patrolPath = { -240, -4, 98, 	-260, -4, 98,	-240, -4, 98 	}
 mobList[zone][SMB+330].patrolPath = { -94, -6, 74, 		-104, -6, 84,	-94, -6, 74 	}
 mobList[zone][SMB+335].patrolPath = { -90, -6, 57, 		-93, -6, 71,	-90, -6, 57 	}
+mobList[zone][SMB+340].patrolPath = { -132, -4, 72, 	-132, -4, 63,	-132, -4, 72 	}
 mobList[zone][SMB+345].patrolPath = { -106, -6, 88, 	-128, -6, 88,	-106, -6, 88 	}
+mobList[zone][SMB+346].patrolPath = { -90, -4, 46, 	    -90, -4, 56,    -90, -4, 46 	}
 mobList[zone][SMB+349].patrolPath = { -101, 2, 34, 	    -91, 4, 44,	    -101, 2, 34 	}
+mobList[zone][SMB+352].patrolPath = { -144, -2, 60,	    -154, -2, 60,	-144, -2, 60 	}
+mobList[zone][SMB+360].patrolPath = { -169, -2, 60, 	-156, -2, 60,	-169, -2, 60 	}
 
 
 --Wave 2 pathing
 mobList[zone][SMB+309].patrolPath = { -212, -2, 96, 	-229, -2, 98,	-212, -2, 96 	}
 mobList[zone][SMB+305].patrolPath = { -200, -2, 87, 	-193, -2, 69,	-200, -2, 87 	}
+mobList[zone][SMB+18 ].patrolPath = {  110, 0, 80, 	     104, 0, 87,	 110, 0, 80 	}
+mobList[zone][SMB+14 ].patrolPath = {  118, 0, 71, 	     112, 0, 78,	 118, 0, 71 	}
+mobList[zone][SMB+10 ].patrolPath = {  132, -1, 103, 	 128, -1, 107,	 132, -1, 103 	}
+mobList[zone][SMB+6  ].patrolPath = {  135, -1, 100, 	 139, -1, 96,	 135, -1, 100 	}
+
 
 -- set statue eye color
 mobList[zone][SMB+20 ].eyes = dynamis.eyes.GREEN
