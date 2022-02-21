@@ -12,6 +12,13 @@ mixins = {require("scripts/mixins/job_special")}
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.MIJIN_GAKURE, hpp = math.random(3,8)},
+        },
+    })
 end
 
 function onMobEngaged(mob, target)
