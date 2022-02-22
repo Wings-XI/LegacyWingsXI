@@ -26,7 +26,30 @@ function onMobRoamAction(mob)
 end
 
 function onMobRoam(mob)
-    dynamis.mobOnRoam(mob)
+    local mobID = mob:getID()
+    local patrolPath = nil
+    if mobList[zone][mobID].patrolPath ~= nil then
+        patrolPath = mobList[zone][mobID].patrolPath
+    end
+
+    if mob:isFollowingPath() == false then
+        if patrolPath ~= nil then
+            mob:pathThrough(tpz.path.first(patrolPath))
+        else
+            dynamis.mobOnRoam(mob, mobList[zone])
+        end
+    end
+end
+
+function onPath(mob)
+    local mobID = mob:getID()
+    local patrolPath = nil
+    if mobList[zone][mobID].patrolPath ~= nil then
+        patrolPath = mobList[zone][mobID].patrolPath
+    end
+    if patrolPath ~= nil then
+        tpz.path.patrol(mob, patrolPath)
+    end
 end
 
 function onMobEngaged(mob, target)
