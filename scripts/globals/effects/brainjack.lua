@@ -4,12 +4,12 @@
 -----------------------------------
 
 function onEffectGain(target, effect)
-    target:delMod(tpz.mod.REGEN, effect:getPower())
+    target:addMod(tpz.mod.REGEN_DOWN, effect:getPower())
 end
 
 function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-    target:addMod(tpz.mod.REGEN, effect:getPower())
+    target:delMod(tpz.mod.REGEN_DOWN, effect:getPower())
 end
