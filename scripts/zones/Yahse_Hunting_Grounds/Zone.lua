@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Yahse_Hunting_Grounds/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -27,6 +28,10 @@ local function triggerUncannySensationMessage(player)
             player:setLocalVar("GEO_DWL_Locus_Area", 1)
         end
     end
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

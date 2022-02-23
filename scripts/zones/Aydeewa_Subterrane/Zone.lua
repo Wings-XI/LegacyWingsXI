@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
@@ -28,6 +29,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

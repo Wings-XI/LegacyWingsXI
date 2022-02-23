@@ -8529,6 +8529,7 @@ inline int32 CLuaBaseEntity::addCP(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), cp);
+    CConquestPacket::CMFlushCache();
     PChar->pushPacket(new CConquestPacket(PChar));
 
     return 0;
@@ -8552,6 +8553,7 @@ inline int32 CLuaBaseEntity::delCP(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), -cp);
+    CConquestPacket::CMFlushCache();
     PChar->pushPacket(new CConquestPacket(PChar));
 
     return 0;

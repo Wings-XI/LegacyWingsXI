@@ -23,6 +23,7 @@ zones[tpz.zone.WINDURST_WATERS_S] =
         LOGIN_NUMBER               = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET     = 7049, -- You can't fish here.
         PELFTRIX_SHOP_DIALOG       = 7200, -- Boodlix's Emporium open for business! Boodlix's gots whats you wants, at the price yous likes! It's okay, we takes yours gils, too!
+        CONQUEST_BASE              = 7226, -- Tallying conquest results...
         MOG_LOCKER_OFFSET          = 7460, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         REGIME_CANCELED            = 7730, -- Current training regime canceled.
         HUNT_ACCEPTED              = 7748, -- Hunt accepted!

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/La_Vaule_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
 require("scripts/globals/titles")
@@ -23,6 +24,10 @@ function onZoneIn(player, prevZone)
         cs = 6
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

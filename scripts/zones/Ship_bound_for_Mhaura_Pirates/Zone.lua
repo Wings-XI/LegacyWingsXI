@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Ship_bound_for_Mhaura_Pirates/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/zone")
 require("scripts/globals/pirates")
 require("scripts/globals/sea_creatures")
@@ -39,6 +40,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onGameHour(zone)

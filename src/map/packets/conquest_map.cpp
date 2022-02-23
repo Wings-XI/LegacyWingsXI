@@ -30,78 +30,139 @@
 
 #include "conquest_map.h"
 
+time_t CConquestPacket::m_CMCacheExpires = 0;
+uint8 CConquestPacket::m_SadoriaRegions = 0;
+uint8 CConquestPacket::m_BastokRegions = 0;
+uint8 CConquestPacket::m_WindurstRegions = 0;
+uint8 CConquestPacket::m_SadoriaPrev = 0;
+uint8 CConquestPacket::m_BastokPrev = 0;
+uint8 CConquestPacket::m_WindurstPrev = 0;
+uint8 CConquestPacket::m_Balance = 0;
+uint8 CConquestPacket::m_Alliance = 0;
+uint8 CConquestPacket::m_NextTally = 0;
+uint8 CConquestPacket::m_IsCalculating = 0;
+std::vector<std::vector<int64>> CConquestPacket::m_CMCachedData;
 
 CConquestPacket::CConquestPacket(CCharEntity * PChar)
 {
 	this->type = 0x5E;
 	this->size = 0x5A;
 
-    const char* Query = "SELECT region_id, region_control, region_control_prev, \
+    if (time(NULL) > m_CMCacheExpires) {
+        const char* Query = "SELECT region_id, region_control, region_control_prev, \
                          sandoria_influence, bastok_influence, windurst_influence, \
                          beastmen_influence FROM conquest_system;";
 
-    int32 ret = Sql_Query(SqlHandle, Query);
+        int32 ret = Sql_Query(SqlHandle, Query);
 
-    uint8 sandoria_regions = 0;
-    uint8 bastok_regions = 0;
-    uint8 windurst_regions = 0;
-    uint8 sandoria_prev = 0;
-    uint8 bastok_prev = 0;
-    uint8 windurst_prev = 0;
+        m_SadoriaRegions = 0;
+        m_BastokRegions = 0;
+        m_WindurstRegions = 0;
+        m_SadoriaPrev = 0;
+        m_BastokPrev = 0;
+        m_WindurstPrev = 0;
+        std::vector<int64> regionInfo;
 
-    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
-    {
-        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
         {
-            int regionid = Sql_GetIntData(SqlHandle, 0);
-            int region_control = Sql_GetIntData(SqlHandle, 1);
-            int region_control_prev = Sql_GetIntData(SqlHandle, 2);
-
-            if (region_control == 0)
-                sandoria_regions++;
-            else if (region_control == 1)
-                bastok_regions++;
-            else if (region_control == 2)
-                windurst_regions++;
-
-            if (region_control_prev == 0)
-                sandoria_prev++;
-            else if (region_control_prev == 1)
-                bastok_prev++;
-            else if (region_control_prev == 2)
-                windurst_prev++;
-
-            int32 san_inf = Sql_GetIntData(SqlHandle, 3);
-            int32 bas_inf = Sql_GetIntData(SqlHandle, 4);
-            int32 win_inf = Sql_GetIntData(SqlHandle, 5);
-            int32 bst_inf = Sql_GetIntData(SqlHandle, 6);
-            ref<uint8>(0x1A + regionid * 4) = conquest::GetInfluenceRanking(san_inf, bas_inf, win_inf, bst_inf);
-            ref<uint8>(0x1B + regionid * 4) = conquest::GetInfluenceRanking(san_inf, bas_inf, win_inf);
-            ref<uint8>(0x1C + regionid * 4) = conquest::GetInfluenceGraphics(san_inf, bas_inf, win_inf, bst_inf);
-            ref<uint8>(0x1D + regionid * 4) = region_control+1;
-
-            int64 total = san_inf + bas_inf + win_inf;
-            int64 totalBeastmen = total + bst_inf;
-
-            if (PChar->loc.zone->GetRegionID() == regionid)
+            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
             {
-                ref<uint8>(0x86) = (uint8)((san_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
-                ref<uint8>(0x87) = (uint8)((bas_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
-                ref<uint8>(0x88) = (uint8)((win_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
-                ref<uint8>(0x89) = (uint8)((san_inf * 100) / (total == 0 ? 1 : total));
-                ref<uint8>(0x8A) = (uint8)((bas_inf * 100) / (total == 0 ? 1 : total));
-                ref<uint8>(0x8B) = (uint8)((win_inf * 100) / (total == 0 ? 1 : total));
-                ref<uint8>(0x94) = (uint8)((bst_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
+                regionInfo.clear();
+
+                int regionid = Sql_GetIntData(SqlHandle, 0);
+                regionInfo.push_back(regionid); // [0]
+                int region_control = Sql_GetIntData(SqlHandle, 1);
+                regionInfo.push_back(region_control); // [1]
+                int region_control_prev = Sql_GetIntData(SqlHandle, 2);
+                regionInfo.push_back(region_control_prev); // [2]
+
+                if (region_control == 0)
+                    m_SadoriaRegions++;
+                else if (region_control == 1)
+                    m_BastokRegions++;
+                else if (region_control == 2)
+                    m_WindurstRegions++;
+
+                if (region_control_prev == 0)
+                    m_SadoriaPrev++;
+                else if (region_control_prev == 1)
+                    m_BastokPrev++;
+                else if (region_control_prev == 2)
+                    m_WindurstPrev++;
+
+                int32 SandoriaInf = Sql_GetIntData(SqlHandle, 3);
+                regionInfo.push_back(SandoriaInf); // [3]
+                int32 BastokInf = Sql_GetIntData(SqlHandle, 4);
+                regionInfo.push_back(BastokInf); // [4]
+                int32 WindurstInf = Sql_GetIntData(SqlHandle, 5);
+                regionInfo.push_back(WindurstInf); // [5]
+                int32 BeastmenInf = Sql_GetIntData(SqlHandle, 6);
+                regionInfo.push_back(BeastmenInf); // [6]
+                int32 all_inf_rank = conquest::GetInfluenceRanking(SandoriaInf, BastokInf, WindurstInf, BeastmenInf);
+                regionInfo.push_back(all_inf_rank); // [7]
+                int32 nation_inf_rank = conquest::GetInfluenceRanking(SandoriaInf, BastokInf, WindurstInf);
+                regionInfo.push_back(nation_inf_rank); // [8]
+                int32 all_inf_graph = conquest::GetInfluenceGraphics(SandoriaInf, BastokInf, WindurstInf, BeastmenInf);
+                regionInfo.push_back(all_inf_graph); // [9]
+                uint8 regcon_off1 = region_control+1;
+                regionInfo.push_back(regcon_off1); // [10]
+
+                int64 totalInf = SandoriaInf + BastokInf + WindurstInf;
+                regionInfo.push_back(totalInf); // [11]
+                int64 totalBeastmenInf = totalInf + BeastmenInf;
+                regionInfo.push_back(totalBeastmenInf); // [12]
+
+                m_CMCachedData.push_back(regionInfo);
             }
+        }
+
+        m_Balance = conquest::GetBalance(m_SadoriaRegions, m_BastokRegions, m_WindurstRegions, m_SadoriaPrev, m_BastokPrev, m_WindurstPrev);
+        m_Alliance = conquest::GetAlliance(m_SadoriaRegions, m_BastokRegions, m_WindurstRegions, m_SadoriaPrev, m_BastokPrev, m_WindurstPrev);
+
+        m_NextTally = conquest::GetNexTally();
+        m_IsCalculating = conquest::IsCalculatingTally() ? 1 : 0;
+
+        m_CMCacheExpires = time(NULL) + 60;
+    }
+
+    for (int i = 0; i < m_CMCachedData.size(); i++)
+    {
+        std::vector<int64>& regionInfo = m_CMCachedData[i];
+        int regionid = regionInfo[0];
+        int region_control = regionInfo[1];
+        int region_control_prev = regionInfo[2];
+
+        int32 san_inf = regionInfo[3];
+        int32 bas_inf = regionInfo[4];
+        int32 win_inf = regionInfo[5];
+        int32 bst_inf = regionInfo[6];
+        ref<uint8>(0x1A + regionid * 4) = regionInfo[7];
+        ref<uint8>(0x1B + regionid * 4) = regionInfo[8];
+        ref<uint8>(0x1C + regionid * 4) = regionInfo[9];
+        ref<uint8>(0x1D + regionid * 4) = regionInfo[10];
+
+        int64 total = regionInfo[11];
+        int64 totalBeastmen = regionInfo[12];
+
+        if (PChar->loc.zone->GetRegionID() == regionid)
+        {
+            ref<uint8>(0x86) = (uint8)((san_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
+            ref<uint8>(0x87) = (uint8)((bas_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
+            ref<uint8>(0x88) = (uint8)((win_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
+            ref<uint8>(0x89) = (uint8)((san_inf * 100) / (total == 0 ? 1 : total));
+            ref<uint8>(0x8A) = (uint8)((bas_inf * 100) / (total == 0 ? 1 : total));
+            ref<uint8>(0x8B) = (uint8)((win_inf * 100) / (total == 0 ? 1 : total));
+            ref<uint8>(0x94) = (uint8)((bst_inf * 100) / (totalBeastmen == 0 ? 1 : totalBeastmen));
         }
     }
 
-	ref<uint8>(0x04) = conquest::GetBalance(sandoria_regions, bastok_regions, windurst_regions, sandoria_prev, bastok_prev, windurst_prev);
-    ref<uint8>(0x05) = conquest::GetAlliance(sandoria_regions, bastok_regions, windurst_regions, sandoria_prev, bastok_prev, windurst_prev);
+    ref<uint8>(0x04) = m_Balance;
+    ref<uint8>(0x05) = m_Alliance;
 
-	ref<uint8>(0x8C) = conquest::GetNexTally();
+    ref<uint8>(0x8C) = m_NextTally;
     ref<uint32>(0x90) = charutils::GetPoints(PChar, charutils::GetConquestPointsName(PChar).c_str());
-	ref<uint8>(0x9C) = 0x01;
+    ref<uint8>(0x98) = m_IsCalculating;
+    ref<uint8>(0x9C) = 0x01;
 
 	//uint8 packet[] =
     //{
@@ -129,4 +190,9 @@ CConquestPacket::CConquestPacket(CCharEntity * PChar)
 	ref<uint8>(0xAF) = 0;
 
 	ref<uint32>(0xB0) = charutils::GetPoints(PChar, "imperial_standing");
+}
+
+void CConquestPacket::CMFlushCache()
+{
+    m_CMCacheExpires = 0;
 }

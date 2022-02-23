@@ -19,6 +19,7 @@ zones[tpz.zone.LA_VAULE_S] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7049, -- You can't fish here.
+        CONQUEST_BASE                 = 7226, -- Tallying conquest results...
     },
     mob =
     {

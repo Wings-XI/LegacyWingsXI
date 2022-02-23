@@ -25,6 +25,8 @@
 #include "../../common/cbasetypes.h"
 
 #include "basic.h"
+#include <vector>
+#include <ime.h>
 
 /************************************************************************
 *																		*
@@ -39,6 +41,27 @@ class CConquestPacket : public CBasicPacket
 public:
 
 	CConquestPacket(CCharEntity* PChar);
+
+    // Forces a reload of the packet data from DB
+    static void CMFlushCache();
+
+private:
+
+    // Cached data, avoid resource intensive DB queries each time
+    // this packet is constructed.
+    static std::vector<std::vector<int64>> m_CMCachedData;
+    static uint8 m_SadoriaRegions;
+    static uint8 m_BastokRegions;
+    static uint8 m_WindurstRegions;
+    static uint8 m_SadoriaPrev;
+    static uint8 m_BastokPrev;
+    static uint8 m_WindurstPrev;
+    static uint8 m_Balance;
+    static uint8 m_Alliance;
+    static uint8 m_NextTally;
+    static uint8 m_IsCalculating;
+    // Time to refresh cache from DB
+    static time_t m_CMCacheExpires;
 };
 
 #endif

@@ -17,7 +17,7 @@ function onChocoboDig(player)
 end
 
 function onInitialize(zone)
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 
     tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
 end

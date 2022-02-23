@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Promyvion-Vahzl/IDs")
 require("scripts/globals/promyvion")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -32,6 +33,10 @@ function afterZoneIn(player)
     if ENABLE_COP_ZONE_CAP == 1 then
         player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 50, 0, 0)
     end
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

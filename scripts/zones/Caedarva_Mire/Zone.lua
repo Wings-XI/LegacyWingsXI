@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/titles")
 require("scripts/globals/helm")
@@ -49,6 +50,10 @@ function afterZoneIn(player)
     player:entityVisualPacket("2pb1")
     player:entityVisualPacket("1pd1")
     player:entityVisualPacket("2pc1")
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

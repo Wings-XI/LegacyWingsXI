@@ -21,6 +21,7 @@ zones[tpz.zone.APOLLYON] =
         TIME_EXCEEDED                 = 7054, -- You have exceeded the time limit. Exiting Limbus now.
         WIPE_KICK                     = 7347, -- All party members in Limbus have fallen in battle. Exiting now.
         WIPE                          = 7355, -- All party members in Limbus have fallen in battle. Exiting in <number> [minute/minutes].
+        CONQUEST_BASE                 = 7366, -- Tallying conquest results...
         CONDITION_FOR_LIMBUS          = 7055, -- You have clearance to enter Limbus, but cannot enter while you or a party member is engaged in battle.
         HUM                           = 7067, -- You hear a faint hum.
         NO_KEY                        = 7072, -- There are several six-sided indentations and a thin slot in the center of the circular dais here.

@@ -12,7 +12,7 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onZoneIn(player, prevZone)

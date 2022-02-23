@@ -26,6 +26,7 @@ zones[tpz.zone.BHAFLAU_THICKETS] =
         STAGING_POINT_MAMOOL          = 7312, -- Mamool Ja Staging Point.
         DIG_THROW_AWAY                = 7062, -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                  = 7064, -- You dig and you dig, but find nothing.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         CANNOT_LEAVE                  = 7320, -- You cannot leave this area while in the possession of <assault>
         RESPONSE                      = 7329, -- There is no response...
         HARVESTING_IS_POSSIBLE_HERE   = 7561, -- Harvesting is possible here if you have <item>.

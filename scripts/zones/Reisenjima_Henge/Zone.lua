@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Reisenjima_Henge/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -20,6 +21,7 @@ function onZoneIn(player, prevZone)
 end
 
 function onConquestUpdate(zone, updatetype)
+    -- Disabled: Can't pinpoint the DAT files for this zone
 end
 
 function onRegionEnter(player, region)

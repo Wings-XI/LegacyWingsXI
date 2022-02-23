@@ -19,6 +19,7 @@ zones[tpz.zone.EAST_RONFAURE_S] =
         LOGIN_CAMPAIGN_UNDERWAY  = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER             = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         LOGGING_IS_POSSIBLE_HERE = 7146, -- Logging is possible here if you have <item>.
+        CONQUEST_BASE            = 7345, -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET   = 7730, -- You can't fish here.
         COMMON_SENSE_SURVIVAL    = 8957, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },

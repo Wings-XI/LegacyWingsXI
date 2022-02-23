@@ -20,6 +20,7 @@ zones[tpz.zone.EASTERN_ADOULIN] =
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         YOU_CAN_NOW_BECOME      = 7009, -- You can now become a <geomancer/rune fencer>!
         MOG_LOCKER_OFFSET       = 7569, -- Your Mog Locker lease is valid until <timestamp>, kupo.
+        CONQUEST_BASE           = 8105, -- Tallying conquest results...
         HOMEPOINT_SET           = 8285, -- Home point set!
         LS_CONCIERGE_LISTING_CANCEL = 13657, -- It was my pleasure to meet with you this fine day. May you encounter many friendly faces throughout your travels.
         LS_CONCIERGE_SAME_DAY       = 13661, -- In the interest of fairness, I am unable to distribute multiple linkpearls to someone on the same day. Please come back tomorrow.

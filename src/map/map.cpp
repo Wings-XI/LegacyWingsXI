@@ -2771,6 +2771,7 @@ int32 map_config_default()
     map_config.autotarget_qol = true;
     map_config.instances_treat_GMs_as_players = true;
     map_config.pl_penalty = 10;
+    map_config.conquest_auth_zone = 245; // Lower Jeuno
     return 0;
 }
 
@@ -3330,6 +3331,9 @@ int32 map_config_read(const int8* cfgName)
             } else if (strcmp(w1, "pl_penalty") == 0)
             {
                 map_config.pl_penalty = atoi(w2);
+            } else if (strcmp(w1, "conquest_auth_zone") == 0)
+            {
+                map_config.conquest_auth_zone = atoi(w2);
             }
             else
             {

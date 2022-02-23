@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/West_Sarutabaruta_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/helm")
 -----------------------------------
 
@@ -17,6 +18,10 @@ function onZoneIn(player, prevZone)
         player:setPos(320.018, -6.684, -45.166, 189)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

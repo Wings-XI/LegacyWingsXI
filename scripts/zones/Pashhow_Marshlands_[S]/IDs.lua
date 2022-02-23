@@ -20,6 +20,7 @@ zones[tpz.zone.PASHHOW_MARSHLANDS_S] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7146, -- You can't fish here.
+        CONQUEST_BASE                 = 7246, -- Tallying conquest results...
         THERE_IS_NO_REPONSE           = 7866, -- There is no response...
         ALREADY_OBTAINED_TELE         = 7691, -- You already possess the gate crystal for this telepoint.
         CANNOT_ENTER                  = 7875, -- You cannot enter at this time. Please wait a moment and try again.

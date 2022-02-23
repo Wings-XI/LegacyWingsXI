@@ -19,6 +19,7 @@ zones[tpz.zone.VUNKERL_INLET_S] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
+        CONQUEST_BASE           = 7226, -- Tallying conquest results...
         THERE_IS_NO_REPONSE     = 7672, -- There is no response...
         COMMON_SENSE_SURVIVAL   = 9018, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
