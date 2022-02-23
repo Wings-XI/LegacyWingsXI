@@ -21,6 +21,7 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     player:delStatusEffect(tpz.effect.LEVEL_RESTRICTION) -- can't be capped at 50 for this fight !
+    player:timer (1000 , function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
