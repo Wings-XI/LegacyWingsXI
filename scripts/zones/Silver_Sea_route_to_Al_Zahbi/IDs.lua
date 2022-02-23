@@ -18,6 +18,7 @@ zones[tpz.zone.SILVER_SEA_ROUTE_TO_AL_ZAHBI] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
+        CONQUEST_BASE           = 7149, -- Tallying conquest results...
         DOCKING_IN_AL_ZAHBI     = 7309, -- We are now docking in Al Zahbi.
         NEARING_AL_ZAHBI        = 7310, -- We are nearing Al Zahbi.
         ON_WAY_TO_AL_ZAHBI      = 7308, -- We are on our way to Al Zahbi. We should arrive in [less than an hour/about 1 hour/about 2 hours/about 3 hours/about 4 hours/about 5 hours/about 6 hours/about 7 hours] (# [minute/minutes] in Earth time).

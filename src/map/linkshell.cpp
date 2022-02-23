@@ -527,6 +527,27 @@ namespace linkshell
 
     /************************************************************************
     *                                                                       *
+    *  Obtain Linkshell ID of a linkshell given by name                     *
+    *                                                                       *
+    ************************************************************************/
+
+    uint8 GetLinkshellId(const int8* name)
+    {
+        char EscapedName[21] = { 0 };
+        size_t len = strlen((char*)name);
+        if (len > sizeof(EscapedName) - 1) {
+            len = sizeof(EscapedName) - 1;
+        }
+        Sql_EscapeStringLen(SqlHandle, EscapedName, (const char*)name, len);
+        auto ret = Sql_Query(SqlHandle, "SELECT linkshellid FROM linkshells WHERE name = '%s';", EscapedName);
+        if (ret == SQL_ERROR || Sql_NumRows(SqlHandle) == 0 || Sql_NextRow(SqlHandle) != 0) {
+            return 0;
+        }
+        return (uint8)Sql_GetUIntData(SqlHandle, 0);
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Registering a new linkshell                                          *
     *                                                                       *
     ************************************************************************/
@@ -554,4 +575,37 @@ namespace linkshell
 			return nullptr;
 		}
 	}
+
+    /************************************************************************
+    *                                                                       *
+    *  Create a pearl for an existing shell                                 *
+    *                                                                       *
+    ************************************************************************/
+
+    CItemLinkshell* CreatePearl(CLinkshell* PLinkshell)
+    {
+        uint32   LinkshellID = PLinkshell->getID();
+        uint16   LinkshellColor = PLinkshell->getColor();
+        int8     EncodedName[16];
+
+        int8     DecodedName[21];
+        DecodeStringLinkshell(PLinkshell->getName(), DecodedName);
+        EncodeStringLinkshell(DecodedName, EncodedName);
+
+        CItemLinkshell* PItemLinkpearl = (CItemLinkshell*)itemutils::GetItem(515);
+        if (!PItemLinkpearl) {
+            return nullptr;
+        }
+        PItemLinkpearl->setQuantity(1);
+        PItemLinkpearl->SetLSID(LinkshellID);
+        PItemLinkpearl->SetLSType(LSTYPE_LINKPEARL);
+        PItemLinkpearl->setSignature(EncodedName);
+        PItemLinkpearl->SetLSColor(LinkshellColor);
+
+        char extra[sizeof(PItemLinkpearl->m_extra) * 2 + 1];
+        Sql_EscapeStringLen(SqlHandle, extra, (const char*)PItemLinkpearl->m_extra, sizeof(PItemLinkpearl->m_extra));
+
+        return PItemLinkpearl;
+    }
+
 };

@@ -21,6 +21,7 @@ zones[tpz.zone.MOUNT_ZHAYOLM] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7049, -- You can't fish here.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         MOVE_CLOSER                   = 7309, -- You must move closer.
         IMPERIAL_CONTROL              = 7310, -- This gate guards an area under Imperial control.
         STAGING_POINT_HALVUNG         = 7313, -- Halvung Staging Point.

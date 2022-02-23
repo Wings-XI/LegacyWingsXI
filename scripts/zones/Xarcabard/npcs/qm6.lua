@@ -27,7 +27,7 @@ end
 function onEventFinish(player, csid, option)
     if csid == 6 then
         player:setCharVar("unbridledPassion", 6)
-    elseif csid == 7 and npcUtil.giveItem(player, 17323) then
+    elseif csid == 7 and npcUtil.giveItem(player, {{17323, 99}}) then -- Add 99 ice arrows
         player:setCharVar("unbridledPassion", 7)
     end
 end

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Mount_Kamihr/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -17,6 +18,11 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    -- Disabled: Maybe doesn't have conquest messages in DATs.
+    -- tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

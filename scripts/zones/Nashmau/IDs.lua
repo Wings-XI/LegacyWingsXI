@@ -20,6 +20,7 @@ zones[tpz.zone.NASHMAU] =
         LOGIN_CAMPAIGN_UNDERWAY  = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER             = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET   = 7049, -- You can't fish here.
+        CONQUEST_BASE            = 7149, -- Tallying conquest results...
         HOMEPOINT_SET            = 7310, -- Home point set!
         NOMAD_MOOGLE_DIALOG      = 7330, -- I'm a traveling moogle, kupo. I help adventurers in the Outlands access items they have stored in a Mog House elsewhere, kupo.
         REGIME_CANCELED          = 7345, -- Current training regime canceled.

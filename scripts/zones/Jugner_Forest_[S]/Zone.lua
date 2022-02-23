@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Jugner_Forest_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/quests")
 require("scripts/globals/helm")
@@ -29,6 +30,10 @@ function onZoneIn(player, prevZone)
 
     return cs
 
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

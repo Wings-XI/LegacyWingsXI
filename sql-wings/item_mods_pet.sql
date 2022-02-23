@@ -183,6 +183,7 @@ INSERT INTO `item_mods_pet` VALUES(17857, 2, 40, 7);
 INSERT INTO `item_mods_pet` VALUES(17857, 5, 60, 7);
 INSERT INTO `item_mods_pet` VALUES(17961, 1, 10, 0);
 INSERT INTO `item_mods_pet` VALUES(18547, 370, 3, 0);
+INSERT INTO `item_mods_pet` VALUES(18584, 1, 10, 1);
 INSERT INTO `item_mods_pet` VALUES(18745, 3, 1, 3);
 INSERT INTO `item_mods_pet` VALUES(18746, 3, 2, 3);
 INSERT INTO `item_mods_pet` VALUES(18778, 369, 1, 3);

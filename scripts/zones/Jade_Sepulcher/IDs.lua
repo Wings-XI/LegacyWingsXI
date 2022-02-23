@@ -18,6 +18,7 @@ zones[tpz.zone.JADE_SEPULCHER] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         ORB_MESSAGE_OFFSET            = 7623, -- There is a crack in the <item>. It no longer contains a monster.
     },
     mob =

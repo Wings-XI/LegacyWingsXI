@@ -19,6 +19,7 @@ zones[tpz.zone.MAMOOL_JA_TRAINING_GROUNDS] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         PLAYER_OBTAINS_ITEM           = 7311, -- <name> obtains <item>!
         ASSAULT_START_OFFSET          = 7446, -- USED ONLY to chose the right starting text for the right assault
         TIME_TO_COMPLETE              = 7507, -- You have <number> [minute/minutes] (Earth time) to complete this mission.

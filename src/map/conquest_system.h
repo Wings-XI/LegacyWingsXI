@@ -51,7 +51,7 @@ namespace conquest
 {
 	void	UpdateConquestSystem();										// Update conquest information in the DB
 
-    void    UpdateInfluencePoints(int points, unsigned int nation, unsigned int region);
+    void    UpdateInfluencePoints(int points, unsigned int nation, REGIONTYPE region);
 	void	GainInfluencePoints(CCharEntity* PChar, uint32 points);		// Gain influence for player's nation (+1)
 	void	LoseInfluencePoints(CCharEntity* PChar);					// Lose influence for player's nation and gain for beastmen influence
 
@@ -62,6 +62,7 @@ namespace conquest
 
     void	UpdateConquestGM(ConquestUpdate type);						// Update conquest system by GM (modify in the DB and use @updateconquest)
 	void	UpdateWeekConquest();										// Update conquest system every sunday
+    int32   FinishUpdateWeekConquest(time_point tick, CTaskMgr::CTask* PTask); // Finish conquest calculation (automatically invoked 2:30 mins after UpdateWeekConquest)
 
     uint8	GetBalance(uint8 sandoria, uint8 bastok, uint8 windurst,	// Ranking for 3 nations
                        uint8 sandoria_prev, uint8 bastok_prev, uint8 windurst_prev);
@@ -71,6 +72,7 @@ namespace conquest
         uint8 sandoria_prev, uint8 bastok_prev, uint8 windurst_prev);
     bool    IsAlliance();                                               // Determine if losing nations are allied
 	uint8	GetNexTally();												// Next tally (weekly or every hour ?)
+    bool    IsCalculatingTally();                                       // Are we currently in the middle of tally?
     uint8	GetRegionOwner(REGIONTYPE RegionID);						// Get owner of the region
 
     uint32	AddConquestPoints(CCharEntity* PChar, uint32 exp);			// Add conquest points

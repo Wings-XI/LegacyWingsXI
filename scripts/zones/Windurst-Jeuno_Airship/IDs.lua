@@ -21,6 +21,7 @@ zones[tpz.zone.WINDURST_JEUNO_AIRSHIP] =
         WILL_REACH_WINDURST     = 7050, -- The airship will reach Windurst in [less than an hour/about 1 hour/about 2 hours/about 3 hours/about 4 hours/about 5 hours/about 6 hours/about 7 hours] (# [minute/minutes] in Earth time).
         IN_JEUNO_MOMENTARILY    = 7051, -- We will be arriving in Jeuno momentarily.
         IN_WINDURST_MOMENTARILY = 7052, -- We will be arriving in Windurst momentarily.
+        CONQUEST_BASE           = 7067, -- Tallying conquest results...
     },
     mob =
     {

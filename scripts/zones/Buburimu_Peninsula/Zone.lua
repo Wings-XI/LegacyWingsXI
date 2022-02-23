@@ -22,7 +22,7 @@ function onInitialize(zone)
         GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
     end
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
 end

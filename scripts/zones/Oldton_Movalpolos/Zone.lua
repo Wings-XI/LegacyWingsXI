@@ -11,7 +11,7 @@ require("scripts/globals/helm")
 -----------------------------------
 
 function onInitialize(zone)
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
     tpz.treasure.initZone(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
 end

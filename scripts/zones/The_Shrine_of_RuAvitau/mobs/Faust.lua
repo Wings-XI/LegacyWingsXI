@@ -38,7 +38,7 @@ function onMobRoam(mob)
     local roam = mob:getLocalVar("roam")
     local faustPos = mob:getPos()
     -- Stationary looking back and forth every 9 seconds
-    if (roam >= 2 and faustPos.x == 740 and faustPos.y == 0 and faustPos.z == -99) then
+    if (roam >= 2 and faustPos.x == 740 and faustPos.z == -99) then
         mob:setLocalVar("roam", 0)
         if (faustPos.rot ~= 255) then
             faustPos.rot = 255

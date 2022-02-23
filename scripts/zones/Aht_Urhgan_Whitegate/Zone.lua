@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
@@ -48,6 +49,10 @@ end
 
 function afterZoneIn(player)
     player:entityVisualPacket("1pb1")
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

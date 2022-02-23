@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Silver_Sea_Remnants/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
     player:addTempItem(5401)
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

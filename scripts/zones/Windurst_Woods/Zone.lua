@@ -13,9 +13,10 @@ require("scripts/globals/events/starlight_festivals")
 -----------------------------------
 
 function onInitialize(zone)
-   applyHalloweenNpcCostumes(zone:getID())
-   applyHalloweenDecorations(zone:getID())
-   applyStarlightDecorations(zone:getID())
+    applyHalloweenNpcCostumes(zone:getID())
+    applyHalloweenDecorations(zone:getID())
+    applyStarlightDecorations(zone:getID())
+    tpz.conq.setConquestCircus(2, 2)
     tpz.chocobo.initZone(zone)
 end
 
@@ -46,29 +47,6 @@ function onZoneIn(player, prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         local position = math.random(1, 5) + 37
         player:setPos(-138, -10, position, 0)
-    end
-
-    -- Move Troupe Valeriano (Circus) --
-    if getNationRank(tpz.nation.WINDURST) == 1 then
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.NORMAL)
-                end
-            end
-        end
-    else
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.DISAPPEAR)
-                end
-            end
-        end
     end
 
     return cs

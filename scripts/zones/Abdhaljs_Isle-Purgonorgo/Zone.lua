@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abdhaljs_Isle-Purgonorgo/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 -----------------------------------
 
@@ -23,6 +24,10 @@ end
 function afterZoneIn(player)
     -- Apply level cap in case of active tournaments
     -- player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION,40,0,0); -- LV40 cap
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

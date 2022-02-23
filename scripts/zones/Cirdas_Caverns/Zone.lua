@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Cirdas_Caverns/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-180, 30, -314, 203)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
