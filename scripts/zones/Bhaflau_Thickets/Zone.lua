@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Bhaflau_Thickets/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo_digging")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
@@ -34,6 +35,10 @@ end
 function afterZoneIn(player)
     player:entityVisualPacket("1pb1")
     player:entityVisualPacket("2pb1")
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

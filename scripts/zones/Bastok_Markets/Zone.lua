@@ -3,6 +3,7 @@
 -- Zone: Bastok_Markets (235)
 --
 -----------------------------------
+require("scripts/globals/conquest")
 require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/missions")
 require("scripts/globals/settings")

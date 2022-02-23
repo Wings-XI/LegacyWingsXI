@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Spire_of_Mea/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-1.539, -2.049, 293.640, 64) -- {R}
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

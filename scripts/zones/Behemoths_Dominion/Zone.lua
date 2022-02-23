@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Behemoths_Dominion/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/zone")
 -----------------------------------

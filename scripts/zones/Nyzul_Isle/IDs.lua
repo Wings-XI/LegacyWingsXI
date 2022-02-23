@@ -21,6 +21,7 @@ zones[tpz.zone.NYZUL_ISLE] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         COMMENCING_ASSAULT            = 7293, -- Commencing <AssultID> -- Nyzul Isle is 51
         TIME_TO_COMPLETE              = 7303, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED                = 7304, -- The mission has failed. Leaving area.

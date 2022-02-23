@@ -19,6 +19,7 @@ zones[tpz.zone.ALZADAAL_UNDERSEA_RUINS] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         MOVE_CLOSER                   = 7209, -- You must move closer.
         IMPERIAL_CONTROL              = 7210, -- This gate guards an area under Imperial control.
         STAGING_POINT_NYZUL           = 7216, -- Nyzul Isle Staging Point.

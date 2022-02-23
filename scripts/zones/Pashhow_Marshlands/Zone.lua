@@ -19,7 +19,7 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.BOWHO_WARMONGER)
     GetMobByID(ID.mob.BOWHO_WARMONGER):setRespawnTime(75600 + math.random(600, 900)) -- 21 hours, plus 10 to 15 min
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onZoneIn(player, prevZone)

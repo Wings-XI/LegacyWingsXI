@@ -19,6 +19,7 @@ zones[tpz.zone.BASTOK_MARKETS_S] =
         LOGIN_NUMBER             = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET   = 7049, -- You can't fish here.
         BLINGBRIX_SHOP_DIALOG    = 7199, -- Blingbrix good Gobbie from Boodlix's! Boodlix's Emporium help fighting fighters and maging mages. Gil okay, okay?
+        CONQUEST_BASE            = 7226, -- Tallying conquest results...
         MOG_LOCKER_OFFSET        = 7460, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         REGIME_CANCELED          = 7698, -- Current training regime canceled.
         HUNT_ACCEPTED            = 7716, -- Hunt accepted!

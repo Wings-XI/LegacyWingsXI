@@ -3,6 +3,7 @@
 -- Zone: Ceizak Battlegrounds (261)
 --
 -----------------------------------
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/status")
@@ -40,6 +41,10 @@ local function triggerUncannySensationMessage(player)
             player:setLocalVar("GEO_DWL_Locus_Area", 1)
         end
     end
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

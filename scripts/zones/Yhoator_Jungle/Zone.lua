@@ -30,7 +30,7 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.BRIGHT_HANDED_KUNBERRY)
     GetMobByID(ID.mob.BRIGHT_HANDED_KUNBERRY):setRespawnTime(math.random(900, 10800))
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 
     tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)

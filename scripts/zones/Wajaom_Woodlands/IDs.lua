@@ -20,6 +20,7 @@ zones[tpz.zone.WAJAOM_WOODLANDS] =
         LOGIN_CAMPAIGN_UNDERWAY     = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET      = 7049, -- You can't fish here.
+        CONQUEST_BASE               = 7149, -- Tallying conquest results...
         DIG_THROW_AWAY              = 7062, -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                = 7064, -- You dig and you dig, but find nothing.
         PLACE_HYDROGAUGE            = 7342, -- You set the <item> in the glowing trench.

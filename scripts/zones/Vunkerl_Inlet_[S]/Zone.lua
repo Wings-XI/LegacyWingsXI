@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Vunkerl_Inlet_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -16,6 +17,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-393.238, -50.034, 741.199, 2)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onZoneWeatherChange(weather)

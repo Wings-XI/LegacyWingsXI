@@ -20,6 +20,7 @@ zones[tpz.zone.SPIRE_OF_VAHZL] =
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FAINT_SCRAPING                = 7081, -- You can hear a faint scraping sound from within, but the way is barred by some strange membrane...
         ORB_MESSAGE_OFFSET            = 7364, -- There is a crack in the <item>. It no longer contains a monster.
+        CONQUEST_BASE                 = 7439, -- Tallying conquest results...
     },
     mob =
     {

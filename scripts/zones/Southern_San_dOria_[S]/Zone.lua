@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Southern_San_dOria_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/chocobo")
@@ -34,6 +35,10 @@ function onZoneIn(player, prevZone)
         player:setPos(161, -2, 161, 94)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

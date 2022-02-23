@@ -18,7 +18,7 @@ function onInitialize(zone)
 
     tpz.treasure.initZone(zone)
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onConquestUpdate(zone, updatetype)

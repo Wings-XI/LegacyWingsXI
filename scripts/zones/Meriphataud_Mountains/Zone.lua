@@ -22,7 +22,7 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.COO_KEJA_THE_UNSEEN)
     GetMobByID(ID.mob.COO_KEJA_THE_UNSEEN):setRespawnTime(math.random(900, 10800))
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onZoneIn(player, prevZone)

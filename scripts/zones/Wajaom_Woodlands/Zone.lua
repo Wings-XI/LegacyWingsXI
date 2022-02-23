@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Wajaom_Woodlands/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo_digging")
 require("scripts/globals/settings")
 require("scripts/globals/missions")
@@ -46,6 +47,10 @@ function onZoneIn(player, prevZone)
         cs = 513
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

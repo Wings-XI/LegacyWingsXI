@@ -10,6 +10,7 @@
 -- EventID 2181 DEBUG Menu
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Konschtat/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/quests")
 -----------------------------------
 
@@ -28,6 +29,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

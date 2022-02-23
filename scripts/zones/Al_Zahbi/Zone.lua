@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Al_Zahbi/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 -----------------------------------
 
@@ -19,6 +20,10 @@ function onZoneIn(player, prevZone)
         player:setPos(position, 0, -62, 192)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
