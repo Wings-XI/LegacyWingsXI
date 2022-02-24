@@ -118,7 +118,7 @@ end
 -- Sanraku's Fauna - Specific NMs/Mobs
 -----------------------------------
 tpz.znm.faunaKeys = tpz.znm.faunaKeys or {}
--- Please update this whenever new content is added that enabled new fauna
+-- Please update this whenever new content is added that enabled new fauna.  New assaults, salvage, einherjar, ISNM, Ashu Talif, etc
 tpz.znm.faunaKeys = {0, 1, 2, 3, 8, 34, 35, 36, 37, 38, 39, 52, 53, 54} 
 
 tpz.znm.fauna = tpz.znm.fauna or {}
@@ -130,16 +130,14 @@ tpz.znm.fauna[2] = {16986355} -- a hydra that dwells in the Wajaom Woodlands.
 --== Assault - Ilrusi Atoll ==
 tpz.znm.fauna[3] = {17002505, 17002506, 17002507, 17002508, 17002509, 17002510,
                     17002511, 17002512, 17002513, 17002514, 17002515, 17002516} -- a mimic that dwells in the Ilrusi Atoll. - Golden Salvage
-
 --[[4 - an imp that dwells in the Ilrusi Atoll. - Demolition Duty
 5 - an orobon that dwells in the Ilrusi Atoll. - Desperately Seeking Cephalopods
 6 - a khimaira that dwells in the Ilrusi Atoll. - Bellerophon's Bliss
-7 - a Moblin that dwells in the Ilrusi Atoll. - Bellerophon's Bliss
+7 - a Moblin that dwells in the Ilrusi Atoll. - Bellerophon's Bliss]]
 
-== Assault - Periqia ==]]
+--== Assault - Periqia ==
 tpz.znm.fauna[8] = {17006594, 17006595, 17006596, 17006597, 17006598,
                     17006599, 17006600, 17006601, 17006602} -- a crab that dwells in Periqia. - Seagull Grounded 
-
 --[[9 - a ghost that dwells in Periqia. - Requiem 
 10 - an imp that dwells in Periqia. - Shooting Down the Baron
 11 - a Qiqirn that dwells in Periqia. - Defuse the Threat
@@ -174,9 +172,9 @@ tpz.znm.fauna[8] = {17006594, 17006595, 17006596, 17006597, 17006598,
 30 - a wamoura larvae that dwells in the Navukgo Execution Chamber. - Tough Nut to Crack
 31 - a flan that dwells in the Navukgo Execution Chamber. - Happy Caster
 32 - a colibri that dwells in the Jade Sepulcher. - Making a Mockery
-33 - a puk that dwells in the Jade Sepulcher. - Shadows of the Mind
+33 - a puk that dwells in the Jade Sepulcher. - Shadows of the Mind]]
 
-== Nyzul Isle ==]]
+--== Nyzul Isle ==
 tpz.znm.fauna[34] = {17092999} -- a adamantoise that dwells in Nyzul Isle.
 tpz.znm.fauna[35] = {17093000} -- a behemoth that dwells in Nyzul Isle.
 tpz.znm.fauna[36] = {17093001} -- a wyrm that dwells in Nyzul Isle.
@@ -198,9 +196,9 @@ tpz.znm.fauna[39] = {17093003} -- a hydra that dwells in Nyzul Isle.
 48 - the creature guarding the first wing of the Hazhalm Testing Grounds.
 49 - the creature guarding the second wing of the Hazhalm Testing Grounds.
 50 - the creature guarding the third wing of the Hazhalm Testing Grounds.
-51 - the legendary creature that dwells deep within the Hazhalm Testing Grounds.
+51 - the legendary creature that dwells deep within the Hazhalm Testing Grounds.]]
 
---== Besieged Leaders ==]]
+--== Besieged Leaders ==
 tpz.znm.fauna[52] = {17043875} -- the shimmering scales of an overlord of the Mamool Ja Savages.
 tpz.znm.fauna[53] = {17031592} -- the rippling physique of a general of the Troll Mercenaries.
 tpz.znm.fauna[54] = {16998862} -- the bewitching beauty of a general of the Undead Swarm.
