@@ -6151,18 +6151,20 @@ namespace charutils
 
         if (PWeapon && PWeapon->isUnlockable() && !PWeapon->isUnlocked())
         {
+            // Handle unlocking nyzul ws based on floor progress
+            int wsid = MythicWeaponSkillUsableOnBaseWeapon(PChar, PWeapon);
+            if (wsid > 0 && hasWeaponSkill(PChar, wsid) == 0)
+            {
+                addWeaponSkill(PChar, wsid);
+                PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+            }
+
+            // Handle all other unlock weapons
             if (PWeapon->addWsPoints(wspoints))
             {
                 // weapon is now broken
                 PChar->PLatentEffectContainer->CheckLatentsWeaponBreak(slotid);
                 PChar->pushPacket(new CCharStatsPacket(PChar));
-
-                int wsid = MythicWeaponSkillUsableOnBaseWeapon(PChar, PWeapon);
-                if (wsid > 0 && hasWeaponSkill(PChar, wsid) == 0)
-                {
-                    addWeaponSkill(PChar, wsid);
-                    PChar->pushPacket(new CCharAbilitiesPacket(PChar));   
-                }
             }
             
             char extra[sizeof(PWeapon->m_extra) * 2 + 1];
