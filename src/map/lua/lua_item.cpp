@@ -389,12 +389,12 @@ inline int32 CLuaItem::setSoulPlateData(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
 
     std::string name = lua_tostring(L, 1);
-    uint16 mobFamily = (uint16) lua_tointeger(L, 2);
+    uint32 mobID = (uint32)lua_tointeger(L, 2);
     uint8 zeni = (uint8) lua_tointeger(L, 3);
     uint16 skillIndex = (uint16) lua_tointeger(L, 4);
     uint8 fp = (uint8) lua_tointeger(L, 5);
 
-    m_PLuaItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+    m_PLuaItem->setSoulPlateData(name, mobID, zeni, skillIndex, fp);
 
     return 1;
 }
@@ -412,7 +412,7 @@ inline int32 CLuaItem::getSoulPlateData(lua_State* L)
     lua_setfield(L, newTable, "name");
 
     lua_pushinteger(L, std::get<1>(data));
-    lua_setfield(L, newTable, "mobFamily");
+    lua_setfield(L, newTable, "mobID");
 
     lua_pushinteger(L, std::get<2>(data));
     lua_setfield(L, newTable, "zeni");

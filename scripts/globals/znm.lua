@@ -105,13 +105,15 @@ tpz.znm.subjectsOfInterest[56] = {310, 171, 469} -- lamia
 tpz.znm.subjectsOfInterest[57] = {182} -- merrow
 tpz.znm.subjectsOfInterest[58] = {288, 199} -- qiqirn
 tpz.znm.subjectsOfInterest[59] = {308, 246, 326} -- troll
-tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub -- we treat these as undead
+tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub -- we treat these as undead famliy
 -- demon part 2
 tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
 
 
-tpz.znm.subjectsOfInterest.changeSubjectOfInterest = function()
-    printf("changeSubjectOfInterest")
+tpz.znm.subjectsOfInterest.changeSubjectsOfInterest = function()
+    local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
+    printf("subjectsOfInterestKey %s", subjectsOfInterestKey)
+    SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
 end
 
 -----------------------------------
@@ -204,8 +206,11 @@ tpz.znm.fauna[53] = {17031592} -- the rippling physique of a general of the Trol
 tpz.znm.fauna[54] = {16998862} -- the bewitching beauty of a general of the Undead Swarm.
 
 tpz.znm.fauna.changeFauna = function()
-    printf("changeFauna")
+    local faunaKey = math.random(#tpz.znm.faunaKeys)
+    printf("faunaKey %s", faunaKey)
+    SetServerVariable("[ZNM]Fauna", faunaKey)
 end
+
 -----------------------------------
 -- Soultrapper
 -----------------------------------
@@ -231,29 +236,30 @@ tpz.znm.soultrapper.onItemCheck = function(target, user)
     return 0
 end
 
+-- Good source for in era values https://www.bluegartr.com/threads/63949-Zeni-per-Image-rates
 tpz.znm.soultrapper.getZeniValue = function(target, user, item)
     local hpp = target:getHPP()
-    local system = target:getSystem()
-    local isNM = target:isNM()
+    local isNM = target:isNM() -- ToDo consider if we should handle things like MOBTYPE_EVENT, MOBTYPE_BATTLEFIELD, and CHECK_AS_NM
     local distance = user:checkDistance(target)
     local isFacing = target:isFacing(user)
+
+    -- no claim  = little to no zeni
+    if (not user:isMobOwner(target)) then
+        return  math.random(1,5)
+    end
 
     -- Starting value
     local zeni = 5
 
+    -- Level Component
+    -- TODO there appears to be a level component
+
     -- HP% Component
     local hpMultiplier = math.min(100 / hpp, 5)
     if hpp <= 5 then
-        hpMultiplier = 10
+        hpMultiplier = 10 -- ToDo this is too high - some in era values were sub 30 for  mob with hp under 5%
     end
     zeni = zeni * hpMultiplier
-
-    -- In-Demand System Component
-    -- TODO: Make rotating server var
-    local inDemandSystem = tpz.ecosystem.DRAGON
-    if system == inDemandSystem then
-        zeni = zeni * 1.5
-    end
 
     -- NM/Rarity Component
     if isNM then
@@ -269,9 +275,11 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, item)
     end
 
     -- Bonus for HS Soul Plate
-    if user:getEquipID(tpz.slot.AMMO) == tpz.items.BLANK_HIGH_SPEED_SOUL_PLATE then
+    -- per bgwiki - https://www.bg-wiki.com/ffxi/Category:Pankration#Purchasing_Items
+    -- HS Soul Plate should allow for faster activation - not a bonus on points
+    --[[if user:getEquipID(tpz.slot.AMMO) == tpz.items.BLANK_HIGH_SPEED_SOUL_PLATE then
         zeni = zeni * 1.5
-    end
+    end]]
 
     -- Add a little randomness
     zeni = zeni + math.random(0, 5)
@@ -280,6 +288,7 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, item)
     zeni = math.floor(zeni) -- Remove any floating point information
     zeni = utils.clamp(zeni, 1, 100)
 
+    printf("zeni is %s", zeni)
     return zeni
 end
 
@@ -292,8 +301,8 @@ tpz.znm.soultrapper.onItemUse = function(target, item, user)
     local skillIndex, skillEntry = utils.randomEntry(tpz.pankration.feralSkills)
 
     -- Add plate
-    local plate = user:addSoulPlate(target:getName(), target:getFamily(), zeni, skillIndex, skillEntry.fp)
-    local data = plate:getSoulPlateData()
+    local plate = user:addSoulPlate(target:getName(), target:getID(), zeni, skillIndex, skillEntry.fp)
+    -- local data = plate:getSoulPlateData()
     -- utils.unused(data)
 end
 
@@ -317,7 +326,6 @@ tpz.znm.ryo.onTrigger = function(player, npc)
 end
 
 tpz.znm.ryo.onEventUpdate = function(player, csid, option)
-    printf("CSID %s OPTION %s", csid, option)
     if csid == 914 then
         local zeniValue = player:getLocalVar("[ZNM][Ryo]SoulPlateValue")
         player:setLocalVar("[ZNM][Ryo]SoulPlateValue", 0)
@@ -325,12 +333,15 @@ tpz.znm.ryo.onEventUpdate = function(player, csid, option)
     elseif csid == 913 then
         if option == 300 then
             player:updateEvent(player:getCurrency("zeni_point"), 0)
-        else
-            -- 200 is family
-            -- 201 is fauna
-            -- 402 is islets
-            -- get option and update with possible values
-            player:updateEvent(1, 0)
+        elseif option == 200 then
+            -- SubjectsOfInterest
+            player:updateEvent(GetServerVariable("[ZNM]SubjectsOfInterest"))
+        elseif option == 201 then
+            -- Fauna
+            player:updateEvent(GetServerVariable("[ZNM]Fauna"))
+        elseif option == 400 then
+            -- Islets dialog
+             player:setLocalVar("[ZNM][Ryo]IsletDiscussion", 1)
         end
     end
 end
@@ -356,10 +367,48 @@ local platesTradedToday = function(player)
     return player:getCharVar("[ZNM][Sanraku]TradedPlates")
 end
 
+local calculateZeniBonus = function(plateData)
+    local zeni = plateData.zeni
+    local targetID = plateData.mobID
+    local faunaKey = GetServerVariable("[ZNM]SubjectsOfInterest")
+    local subjectsOfInterestKey = GetServerVariable("[ZNM]Fauna")
+
+    if (faunaKey == 0) then
+        faunaKey = 1 -- if there is no subject of interest var, take the first index for now
+    end
+
+     -- Fauna Component
+    local isCurrentFauna = false
+    for k,v in pairs(tpz.znm.fauna[tpz.znm.faunaKeys[faunaKey]]) do
+        if targetID == v then
+            isCurrentFauna = true
+            break
+        end
+    end
+
+    -- SubjectsOfInterest Component
+    local isCurrentSubjectsOfInterest = false
+    for k,v in pairs(tpz.znm.subjectsOfInterest[subjectsOfInterestKey]) do
+        if family == v then
+            isCurrentSubjectsOfInterest = true
+            break
+        end
+    end
+
+    -- this needs to be done on trade
+    if isCurrentSubjectsOfInterest then
+        zeni = zeni * 1.25
+    elseif isCurrentFauna then
+        zeni = zeni * 1.5
+    end
+
+    return zeni, isCurrentSubjectsOfInterest, isCurrentFauna
+end
+
 tpz.znm.sanraku.onTrade = function(player, npc, trade)
     if not player:hasKeyItem(tpz.ki.RHAPSODY_IN_AZURE) then
         if platesTradedToday(player) >= 10 then
-            -- TODO: A message here?
+            -- TODO: A message here? -- no message found in events
             return
         end
     else -- If you have the KI, clear out the tracking vars!
@@ -371,14 +420,22 @@ tpz.znm.sanraku.onTrade = function(player, npc, trade)
         -- Cache the soulplate value on the player
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
-        player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", plateData.zeni)
-        player:startEvent(910, plateData.zeni)
+        local zeni, isCurrentSubjectsOfInterest, isCurrentFauna = calculateZeniBonus(plateData)
+        player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", zeni)
+        if (isCurrentSubjectsOfInterest) then
+            -- Check to update (assumed to be a limit of turn ins or paid out zeni)
+        end
+
+        if (isCurrentFauna) then
+            -- Check to update (assumed to be a limit of turn ins or paid out zeni)
+        end
+        player:startEvent(910, zeni)
     end
 end
 
 tpz.znm.sanraku.onTrigger = function(player, npc)
     -- 908: First time introduction
-    -- 909: Further interactions
+    -- 909: Further interactions - param0 = 1 - allow IsletDiscussion
 end
 
 tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
