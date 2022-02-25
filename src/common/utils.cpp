@@ -604,7 +604,7 @@ void PackSoultrapperName(std::string name, uint8 output[])
     uint8 shift   = 1;
     uint8 loops   = 0;
     uint8 total   = (uint8)name.length();
-    uint8 maxSize = 12; // capped at 12 based on examples like GoblinBountyH
+    uint8 maxSize = 13; // capped at 13 based on examples like GoblinBountyH
 
     // Pack and shift 8-bit to 7-bit
     for (uint8 i = 0; i <= maxSize; ++i)
