@@ -118,6 +118,7 @@ public:
 
     void QueueAction(queueAction_t&&);
     bool QueueEmpty();
+    void ClearActionQueue();
 
     // stores all events and their associated lua callbacks
     CAIEventHandler EventHandler;
