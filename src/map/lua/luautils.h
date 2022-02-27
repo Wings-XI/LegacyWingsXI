@@ -327,6 +327,8 @@ namespace luautils
 
     int32 GetCharVarByName(lua_State* L);
     int32 SetCharVarByName(lua_State* L);
+
+    int32 IsCustomizationEnabled(lua_State* L);                                             // Check if certain custom behaviors are enabed in the server configuration. 
 };
 
 #endif //- _LUAUTILS_H -
