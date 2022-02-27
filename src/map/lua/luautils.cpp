@@ -182,6 +182,8 @@ namespace luautils
         lua_register(LuaHandle, "GetCharVarByName", luautils::GetCharVarByName);
         lua_register(LuaHandle, "SetCharVarByName", luautils::SetCharVarByName);
 
+        lua_register(LuaHandle, "IsCustomizationEnabled", luautils::IsCustomizationEnabled);
+
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
         Lunar<CLuaBaseEntity>::Register(LuaHandle);
@@ -5854,6 +5856,21 @@ namespace luautils
         }
 
         lua_pushnil(L);
+        return 1;
+    }
+
+    int32 IsCustomizationEnabled(lua_State* L)
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+        uint32 customization = lua_tointeger(L, 1);
+        bool enabled = false;
+
+        // Initial implementation is a stub, will be populated as the
+        // various customizations are pushed.
+
+        lua_pushboolean(L, enabled);
+
         return 1;
     }
 
