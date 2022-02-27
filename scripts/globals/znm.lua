@@ -355,6 +355,11 @@ tpz.znm.soultrapper.onItemCheck = function(target, user)
 end
 
 -- Good source for in era values https://www.bluegartr.com/threads/63949-Zeni-per-Image-rates
+-- Key rate points
+-- Aw'Euvhi Card NMs - 65-67ish - never match sub/fauna
+-- Genbu - no match, Mid 80s
+-- High Level large mobs - mid 40s no match sub/fauna
+-- Bees/etc - 16ish with no match
 tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
     local hpp = target:getHPP()
     local isFacing = target:isFacing(user)
