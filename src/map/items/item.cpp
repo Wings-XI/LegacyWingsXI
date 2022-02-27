@@ -375,15 +375,15 @@ bool CItem::isSoultrapper() const
     return m_id == 18721 || m_id == 18724;
 }
 
-void CItem::setSoulPlateData(std::string name, uint32 mobID, uint8 zeni, uint16 skillIndex, uint8 fp)
+void CItem::setSoulPlateData(std::string name, uint8 fauna, uint8 subOfInterest, uint8 ecoSystem, uint8 zeni, uint16 skillIndex, uint8 fp)
 {
     PackSoultrapperName(name, m_extra);
 
     // Hack: Artificially chop off extremely long names, so we can pack the mobID info into m_extra
-    m_extra[15] = (mobID & 0xFF000000) >> 24;
-    m_extra[16] = (mobID & 0xFF0000) >> 16;
-    m_extra[17] = (mobID & 0xFF00) >> 8;
-    m_extra[18] = mobID & 0x00FF;
+    m_extra[15] = 0;
+    m_extra[16] = fauna;
+    m_extra[17] = subOfInterest;
+    m_extra[18] = ecoSystem;
 
     m_extra[19] = zeni;
 
@@ -395,12 +395,14 @@ void CItem::setSoulPlateData(std::string name, uint32 mobID, uint8 zeni, uint16 
     m_extra[23] = (0x03 << 4) & fp;
 }
 
-auto CItem::getSoulPlateData() -> std::tuple<std::string, uint32, uint8, uint16, uint8>
+auto CItem::getSoulPlateData() -> std::tuple<std::string, uint8, uint8, uint8, uint8, uint16, uint8>
 {
     auto   name = "";
-    uint32 mobID = ((m_extra[15] << 24)) + (m_extra[16] << 16) + (m_extra[17] << 8) + m_extra[18];
+    uint8 fauna = m_extra[16];
+    uint8 subOfInterest = m_extra[17];
+    uint8 ecoSystem = m_extra[18];
     uint8  zeni       = m_extra[19];
     uint16 skillIndex = (m_extra[20] >> 7) + (m_extra[21] << 1) + ((m_extra[22] & 0x03) << 9);
     uint8  fp         = (m_extra[22] >> 3) + ((m_extra[23] & 0x03) << 4);
-    return std::tuple(name, mobID, zeni, skillIndex, fp);
+    return std::tuple(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
 }

@@ -226,3 +226,13 @@ function onEventFinish(player, csid, option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LIFE_FLOAT)
     end
 end
+
+function onGameDay()
+    -- every other day, prices reduce for zeni pops down to their base.
+    -- might even be based on the exact time the pop was bought according to some forum posts
+    printf("onGameDay")
+    printf("onGameDay maths %s %s", VanadielDayOfTheWeek(), VanadielDayOfTheWeek() % 2)
+    if (VanadielDayOfTheWeek() % 2) == 0 then
+        tpz.znm.updatePopItemCosts()
+    end
+end

@@ -17,7 +17,34 @@ require("scripts/globals/msg")
 require("scripts/globals/npc_util")
 require("scripts/globals/pankration")
 require("scripts/globals/utils")
------------------------------------
+---------------------------------------------------------------------------------
+local FAUNA_LIMIT = 10000 -- Zeni handed out per Fauna
+local SUBJECT_OF_INTEREST_LIMIT = 10000 -- Zeni handed out per SubjectsOfInterest
+---------------------------------------------------------------------------------
+
+local lures =
+{
+    2580, 2581, 2582, 2577, 2578, 2579, 2574, 2575, 2576,
+    2573, 2590, 2591, 2592, 2587, 2588, 2589, 2584, 2585,
+    2586, 2583, 2600, 2601, 2602, 2597, 2598, 2599, 2594,
+    2595, 2596, 2593, 2572
+}
+
+local seals =
+{
+    tpz.ki.MAROON_SEAL, tpz.ki.MAROON_SEAL, tpz.ki.MAROON_SEAL,
+    tpz.ki.APPLE_GREEN_SEAL,tpz.ki.APPLE_GREEN_SEAL,tpz.ki.APPLE_GREEN_SEAL,
+    tpz.ki.CHARCOAL_GREY_SEAL, tpz.ki.DEEP_PURPLE_SEAL, tpz.ki.CHESTNUT_COLORED_SEAL,
+    tpz.ki.LILAC_COLORED_SEAL,
+    tpz.ki.CERISE_SEAL,tpz.ki.CERISE_SEAL,tpz.ki.CERISE_SEAL,
+    tpz.ki.SALMON_COLORED_SEAL,tpz.ki.SALMON_COLORED_SEAL,tpz.ki.SALMON_COLORED_SEAL,
+    tpz.ki.PURPLISH_GREY_SEAL, tpz.ki.GOLD_COLORED_SEAL, tpz.ki.COPPER_COLORED_SEAL,
+    tpz.ki.BRIGHT_BLUE_SEAL,
+    tpz.ki.PINE_GREEN_SEAL,tpz.ki.PINE_GREEN_SEAL,tpz.ki.PINE_GREEN_SEAL,
+    tpz.ki.AMBER_COLORED_SEAL,tpz.ki.AMBER_COLORED_SEAL,tpz.ki.AMBER_COLORED_SEAL,
+    tpz.ki.FALLOW_COLORED_SEAL,tpz.ki.TAUPE_COLORED_SEAL,tpz.ki.SIENNA_COLORED_SEAL,
+    tpz.ki.LAVENDER_COLORED_SEAL
+}
 
 tpz = tpz or {}
 tpz.znm = tpz.znm or {}
@@ -27,6 +54,16 @@ tpz.items["BLANK_SOUL_PLATE"] = 18722
 tpz.items["BLANK_HIGH_SPEED_SOUL_PLATE"] = 18725
 tpz.items["SOUL_PLATE"] = 2477
 
+
+tpz.znm.updatePopItemCosts = function()
+    for k,item in pairs(lures) do
+        local itemVarName = string.format("[ZNM]PopItemCost" ..item.. "")
+        local currentUpcharge = GetServerVariable(itemVarName)
+        if (currentUpcharge > 0) then
+            SetServerVariable(itemVarName, currentUpcharge - 100)
+        end
+    end
+end
 
 -----------------------------------
 -- Sanraku's Interests - Genus
@@ -105,17 +142,59 @@ tpz.znm.subjectsOfInterest[56] = {310, 171, 469} -- lamia
 tpz.znm.subjectsOfInterest[57] = {182} -- merrow
 tpz.znm.subjectsOfInterest[58] = {288, 199} -- qiqirn
 tpz.znm.subjectsOfInterest[59] = {308, 246, 326} -- troll
-tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub -- we treat these as undead famliy
+-- undead part 2
+tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub
 -- demon part 2
 tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
 
 
-tpz.znm.subjectsOfInterest.changeSubjectsOfInterest = function()
+local function changeSubjectsOfInterest()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
     printf("subjectsOfInterestKey %s", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
+    SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
+
+    local ecosystem = tpz.ecosystem.ERROR
+    if (subjectsOfInterestKey >= 0 and subjectsOfInterestKey <= 3) then
+        ecosystem = tpz.ecosystem.AQUAN
+    elseif (subjectsOfInterestKey >= 4 and subjectsOfInterestKey <= 7) then
+        ecosystem = tpz.ecosystem.AMORPH
+    elseif (subjectsOfInterestKey >= 8 and subjectsOfInterestKey <= 9) then
+        ecosystem = tpz.ecosystem.ARCANA
+    elseif (subjectsOfInterestKey >= 10 and subjectsOfInterestKey <= 12) or (subjectsOfInterestKey == 60) then
+        ecosystem = tpz.ecosystem.UNDEAD
+    elseif (subjectsOfInterestKey >= 13 and subjectsOfInterestKey <= 21) then
+        ecosystem = tpz.ecosystem.VERMIN
+    elseif (subjectsOfInterestKey == 22 or subjectsOfInterestKey == 61) then
+        ecosystem = tpz.ecosystem.DEMON
+    elseif (subjectsOfInterestKey >= 23 and subjectsOfInterestKey <= 25) then
+        ecosystem = tpz.ecosystem.DRAGON
+    elseif (subjectsOfInterestKey >= 26 and subjectsOfInterestKey <= 31) then
+        ecosystem = tpz.ecosystem.BIRD
+    elseif (subjectsOfInterestKey >= 32 and subjectsOfInterestKey <= 35) then
+        ecosystem = tpz.ecosystem.BEAST
+    elseif (subjectsOfInterestKey >= 36 and subjectsOfInterestKey <= 40) then
+        ecosystem = tpz.ecosystem.PLANTOID
+    elseif (subjectsOfInterestKey >= 41 and subjectsOfInterestKey <= 44) then
+        ecosystem = tpz.ecosystem.LIZARD
+    elseif (subjectsOfInterestKey >= 45 and subjectsOfInterestKey <= 51) then
+        ecosystem = tpz.ecosystem.ELEMENTAL
+    elseif (subjectsOfInterestKey >= 52 and subjectsOfInterestKey <= 59) then
+        ecosystem = tpz.ecosystem.BEASTMEN
+    end
+
+    SetServerVariable("[ZNM]Ecosystem", ecosystem)
 end
 
+local function updateSubOfInterestLimit(zeni)
+    local remainingLimit = GetServerVariable("[ZNM]SubOfInterestLimit")
+    remainingLimit = remainingLimit - zeni
+    if (remainingLimit > 0) then
+        SetServerVariable("[ZNM]SubOfInterestLimit", remainingLimit)
+    else
+        changeSubjectsOfInterest()
+    end
+end
 -----------------------------------
 -- Sanraku's Fauna - Specific NMs/Mobs
 -----------------------------------
@@ -205,10 +284,49 @@ tpz.znm.fauna[52] = {17043875} -- the shimmering scales of an overlord of the Ma
 tpz.znm.fauna[53] = {17031592} -- the rippling physique of a general of the Troll Mercenaries.
 tpz.znm.fauna[54] = {16998862} -- the bewitching beauty of a general of the Undead Swarm.
 
-tpz.znm.fauna.changeFauna = function()
+local function changeFauna()
     local faunaKey = math.random(#tpz.znm.faunaKeys)
     printf("faunaKey %s", faunaKey)
     SetServerVariable("[ZNM]Fauna", faunaKey)
+    SetServerVariable("[ZNM]FaunaLimit", FAUNA_LIMIT)
+end
+
+local function updateFaunaLimit(zeni)
+    local remainingLimit = GetServerVariable("[ZNM]FaunaLimit")
+    remainingLimit = remainingLimit - zeni
+    if (remainingLimit > 0) then
+        SetServerVariable("[ZNM]FaunaLimit", remainingLimit)
+    else
+        changeFauna()
+    end
+end
+
+--------------------------------------------------------------------
+-- Gets the Fauna and Subject of Interest that will match on turn in
+--------------------------------------------------------------------
+local function getMatchingFaunaAndSubjectsOfInterest(target)
+    local faunaMatch = 62 -- 61 is max possible match
+    local subjectsOfInterestMatch = 55 -- 54 is max possible match
+    local familyID = target:getFamily()
+    local mobID = target:getID()
+
+    for i=1, #tpz.znm.faunaKeys do
+        for k,v in pairs(tpz.znm.fauna[tpz.znm.faunaKeys[i]]) do
+            if (mobID == v) then
+                faunaMatch = i
+            end
+        end
+    end
+
+    for i=0, #tpz.znm.subjectsOfInterest do
+        for k,v in pairs(tpz.znm.subjectsOfInterest[i]) do
+            if (familyID == v) then
+                subjectsOfInterestMatch = i
+            end
+        end
+    end
+
+    return faunaMatch, subjectsOfInterestMatch
 end
 
 -----------------------------------
@@ -242,14 +360,21 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, item)
     local isNM = target:isNM() -- ToDo consider if we should handle things like MOBTYPE_EVENT, MOBTYPE_BATTLEFIELD, and CHECK_AS_NM
     local distance = user:checkDistance(target)
     local isFacing = target:isFacing(user)
+    local modelSize = target:getModelSize()
 
     -- no claim  = little to no zeni
-    if (not user:isMobOwner(target)) then
-        return  math.random(1,5)
+    if (not user:isMobOwner(target) or hpp == 100) then
+        return math.random(1,5)
     end
 
     -- Starting value
-    local zeni = 5
+    local zeni = 0
+
+    if (modelSize == 0) then
+        zeni = 16
+    else
+        zeni = 50
+    end
 
     -- Level Component
     -- TODO there appears to be a level component
@@ -257,7 +382,7 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, item)
     -- HP% Component
     local hpMultiplier = math.min(100 / hpp, 5)
     if hpp <= 5 then
-        hpMultiplier = 10 -- ToDo this is too high - some in era values were sub 30 for  mob with hp under 5%
+        hpMultiplier = 1
     end
     zeni = zeni * hpMultiplier
 
@@ -274,21 +399,16 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, item)
         zeni = zeni * 1.5
     end
 
-    -- Bonus for HS Soul Plate
     -- per bgwiki - https://www.bg-wiki.com/ffxi/Category:Pankration#Purchasing_Items
     -- HS Soul Plate should allow for faster activation - not a bonus on points
     --[[if user:getEquipID(tpz.slot.AMMO) == tpz.items.BLANK_HIGH_SPEED_SOUL_PLATE then
         zeni = zeni * 1.5
     end]]
 
-    -- Add a little randomness
-    zeni = zeni + math.random(0, 5)
-
     -- Sanitize Zeni
     zeni = math.floor(zeni) -- Remove any floating point information
-    zeni = utils.clamp(zeni, 1, 100)
 
-    printf("zeni is %s", zeni)
+    printf("zeni on pic taken is %s", zeni)
     return zeni
 end
 
@@ -300,9 +420,12 @@ tpz.znm.soultrapper.onItemUse = function(target, item, user)
     -- Pick a skill totally at random...
     local skillIndex, skillEntry = utils.randomEntry(tpz.pankration.feralSkills)
 
+    local faunaMatch, subjectsOfInterestMatch = getMatchingFaunaAndSubjectsOfInterest(target)
+
     -- Add plate
-    local plate = user:addSoulPlate(target:getName(), target:getID(), zeni, skillIndex, skillEntry.fp)
-    -- local data = plate:getSoulPlateData()
+    local plate = user:addSoulPlate(target:getName(), faunaMatch, subjectsOfInterestMatch, target:getSystem(), zeni, skillIndex, skillEntry.fp)
+    local data = plate:getSoulPlateData()
+    printf("After pic fauna %s, subOfInterest %s, ecosystem %s", data.fauna, data.subOfInterest, data.ecoSystem)
     -- utils.unused(data)
 end
 
@@ -367,9 +490,12 @@ local platesTradedToday = function(player)
     return player:getCharVar("[ZNM][Sanraku]TradedPlates")
 end
 
-local calculateZeniBonus = function(plateData)
+local function calculateZeniBonus(plateData)
     local zeni = plateData.zeni
-    local targetID = plateData.mobID
+    local faunaMatch = plateData.fauna
+    local subOfInterestMatch = plateData.subOfInterest
+    local ecosystem = plateData.ecoSystem
+
     local faunaKey = GetServerVariable("[ZNM]SubjectsOfInterest")
     local subjectsOfInterestKey = GetServerVariable("[ZNM]Fauna")
 
@@ -377,32 +503,33 @@ local calculateZeniBonus = function(plateData)
         faunaKey = 1 -- if there is no subject of interest var, take the first index for now
     end
 
-     -- Fauna Component
     local isCurrentFauna = false
-    for k,v in pairs(tpz.znm.fauna[tpz.znm.faunaKeys[faunaKey]]) do
-        if targetID == v then
-            isCurrentFauna = true
-            break
-        end
-    end
-
-    -- SubjectsOfInterest Component
     local isCurrentSubjectsOfInterest = false
-    for k,v in pairs(tpz.znm.subjectsOfInterest[subjectsOfInterestKey]) do
-        if family == v then
-            isCurrentSubjectsOfInterest = true
-            break
-        end
+    local isCurrentEcoSytem = false
+
+    if (GetServerVariable("[ZNM]SubjectsOfInterest") == subOfInterestMatch) then
+        isCurrentSubjectsOfInterest = true
+        zeni = zeni + 25
     end
 
-    -- this needs to be done on trade
-    if isCurrentSubjectsOfInterest then
-        zeni = zeni * 1.25
-    elseif isCurrentFauna then
-        zeni = zeni * 1.5
+    if (GetServerVariable("[ZNM]Ecosystem") == ecosystem) then
+        isCurrentEcoSytem = true
+        zeni = zeni + 25
     end
 
-    return zeni, isCurrentSubjectsOfInterest, isCurrentFauna
+    if (GetServerVariable("[ZNM]Fauna") == faunaMatch) then
+        isCurrentFauna = true
+        zeni = zeni + 50
+    end
+
+    -- Sanitize Zeni
+    zeni = math.floor(zeni) -- Remove any floating point information
+    -- Add a little randomness
+    zeni = zeni + math.random(-5, 5)
+    -- clamp - highest reports in era are ~100ish
+    zeni = utils.clamp(zeni, 1, 105)
+
+    return zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem
 end
 
 tpz.znm.sanraku.onTrade = function(player, npc, trade)
@@ -420,25 +547,195 @@ tpz.znm.sanraku.onTrade = function(player, npc, trade)
         -- Cache the soulplate value on the player
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
-        local zeni, isCurrentSubjectsOfInterest, isCurrentFauna = calculateZeniBonus(plateData)
+        local zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem = calculateZeniBonus(plateData)
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", zeni)
-        if (isCurrentSubjectsOfInterest) then
-            -- Check to update (assumed to be a limit of turn ins or paid out zeni)
+
+        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem) then
+            updateSubOfInterestLimit(zeni)
         end
 
         if (isCurrentFauna) then
-            -- Check to update (assumed to be a limit of turn ins or paid out zeni)
+            updateFaunaLimit(zeni)
         end
         player:startEvent(910, zeni)
+    else
+        -- taken from sanraku.lua
+        znm = -1
+        found = false
+
+        while znm <= 30 and not(found) do
+            znm = znm + 1
+            found = trade:hasItemQty(trophies[znm + 1],1)
+        end
+
+        if (found) then
+            znm = znm + 1
+
+            if player:hasKeyItem(seals[znm]) == false then
+                player:tradeComplete()
+                player:addKeyItem(seals[znm])
+                player:startEvent(912, 0, 0, 0, seals[znm])
+            else
+                player:messageSpecial(ID.text.SANCTION + 8,seals[znm]) -- You already possess .. (not sure this is authentic)
+            end
+        end
     end
 end
 
+------------------------------------------------------------
+-- Gets the allowed ZNMs for a player based on KIs
+-- pulled from Sanraku.lua
+------------------------------------------------------------
+local function getAllowedZNMs(player)
+    local param = 2140136440 -- Defaut bitmask, Tier 1 ZNM Menu + don't ask option
+
+    -- Tinnin Path
+    if player:hasKeyItem(tpz.ki.MAROON_SEAL) then
+        param = param - 0x38 -- unlocks Tinnin path tier 2 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.APPLE_GREEN_SEAL) then
+        param = param - 0x1C0 -- unlocks Tinnin path tier 3 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.CHARCOAL_GREY_SEAL) and player:hasKeyItem(tpz.ki.DEEP_PURPLE_SEAL) and player:hasKeyItem(tpz.ki.CHESTNUT_COLORED_SEAL) then
+        param = param - 0x200 -- unlocks Tinnin.
+    end
+
+    -- Sarameya Path
+    if player:hasKeyItem(tpz.ki.CERISE_SEAL) then
+        param = param - 0xE000 -- unlocks Sarameya path tier 2 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.SALMON_COLORED_SEAL) then
+        param = param - 0x70000 -- unlocks Sarameya path tier 3 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.PURPLISH_GREY_SEAL) and player:hasKeyItem(tpz.ki.GOLD_COLORED_SEAL) and player:hasKeyItem(tpz.ki.COPPER_COLORED_SEAL) then
+        param = param - 0x80000 -- unlocks Sarameya.
+    end
+
+    -- Tyger Path
+    if player:hasKeyItem(tpz.ki.PINE_GREEN_SEAL) then
+        param = param - 0x3800000 -- unlocks Tyger path tier 2 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.AMBER_COLORED_SEAL) then
+        param = param - 0x1C000000 -- unlocks Tyger path tier 3 ZNMs.
+    end
+    if player:hasKeyItem(tpz.ki.TAUPE_COLORED_SEAL) and player:hasKeyItem(tpz.ki.FALLOW_COLORED_SEAL) and player:hasKeyItem(tpz.ki.SIENNA_COLORED_SEAL) then
+        param = param - 0x20000000 -- unlocks Tyger.
+    end
+
+    if player:hasKeyItem(tpz.ki.LILAC_COLORED_SEAL) and player:hasKeyItem(tpz.ki.BRIGHT_BLUE_SEAL) and player:hasKeyItem(tpz.ki.LAVENDER_COLORED_SEAL) then
+        param = param - 0x40000000 -- unlocks Pandemonium Warden.
+    end
+
+    return param
+end
+
 tpz.znm.sanraku.onTrigger = function(player, npc)
-    -- 908: First time introduction
-    -- 909: Further interactions - param0 = 1 - allow IsletDiscussion
+    if (player:getCharVar("[ZNM]SanrakuIntro") == 0) then
+        -- 908: First time introduction
+        player:startEvent(908)
+    else
+        -- 909: Further interactions - param0 = 1 - allowed mobs filter param1 = reduce costs from 500 to 50
+        local param = getAllowedZNMs(player)
+        player:startEvent(909, param)
+    end
 end
 
 tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
+    -- taken from sanraku.lua
+     if csid == 909 then
+        local zeni = player:getCurrency("zeni_point")
+
+        if option >= 300 and option <= 302 then
+            if option == 300 then
+                salt = tpz.ki.SICKLEMOON_SALT
+            elseif option == 301 then
+                salt = tpz.ki.SILVER_SEA_SALT
+            elseif option == 302 then
+                salt = tpz.ki.CYAN_DEEP_SALT
+            end
+            if zeni < 500 then
+                player:updateEvent(2,500) -- not enough zeni
+            elseif player:hasKeyItem(salt) then
+                player:updateEvent(3,500) -- has salt already
+            else
+                player:updateEvent(1,500,0,salt)
+                player:addKeyItem(salt)
+                player:delCurrency("zeni_point", 500)
+            end
+        else -- player is interested in buying a pop item.
+            
+
+            n = option % 10
+            printf("option %s", option)
+            if n <= 2 then
+                if option == 130 or option == 440 then
+                    tier = 5
+                else
+                    tier = 1
+                end
+            elseif n >= 3 and n <= 5 then
+                tier = 2
+            elseif n >= 6 and n <= 8 then
+                tier = 3
+            else
+                tier = 4
+            end
+           
+
+            if option >= 100 and option <= 130 then
+                item = lures[option-99]
+                local itemVarName = string.format("[ZNM]PopItemCost" ..item.. "")
+                printf("itemVarName %s", itemVarName)
+                cost = tier * 1000 +  GetServerVariable(itemVarName)
+                player:updateEvent(0,0,0,0,0,0,cost)
+
+            elseif option >= 400 and option <=440 then
+                if option == 440 then
+                    option = 430
+                end
+
+                item = lures[option-399]
+
+                if option == 430 then -- Pandemonium Warden
+                    keyitem1 = tpz.ki.LILAC_COLORED_SEAL keyitem2 = tpz.ki.BRIGHT_BLUE_SEAL keyitem3 = tpz.ki.LAVENDER_COLORED_SEAL
+                elseif option == 409 then -- Tinnin
+                    keyitem1 = tpz.ki.CHARCOAL_GREY_SEAL keyitem2 = tpz.ki.DEEP_PURPLE_SEAL keyitem3 = tpz.ki.CHESTNUT_COLORED_SEAL
+                elseif option == 419 then -- Sarameya
+                    keyitem1 = tpz.ki.PURPLISH_GREY_SEAL keyitem2 = tpz.ki.GOLD_COLORED_SEAL keyitem3 = tpz.ki.COPPER_COLORED_SEAL
+                elseif option == 429 then -- Tyger
+                    keyitem1 = tpz.ki.TAUPE_COLORED_SEAL keyitem2 = tpz.ki.FALLOW_COLORED_SEAL keyitem3 = tpz.ki.SIENNA_COLORED_SEAL
+                else
+                    keyitem1 = seals[option - 402] keyitem2 = nil keyitem3 = nil
+                end
+
+                if cost > zeni then
+                    player:updateEvent(2, cost, item, keyitem1,keyitem2,keyitem3) -- you don't have enough zeni.
+                elseif player:addItem(item) then
+                    if keyitem1 ~= nil then
+                        player:delKeyItem(keyitem1)
+                    end
+                    if keyitem2 ~= nil then
+                        player:delKeyItem(keyitem2)
+                    end
+                    if keyitem3 ~= nil then
+                        player:delKeyItem(keyitem3)
+                    end
+
+                    player:updateEvent(1, cost, item, keyitem1,keyitem2,keyitem3)
+                    player:delCurrency("zeni_point", cost)
+                    local itemVarName = string.format("[ZNM]PopItemCost" ..item.. "")
+                    local currentUpcharge = GetServerVariable(itemVarName)
+                    SetServerVariable(itemVarName, currentUpcharge + 100)
+                else
+                    player:updateEvent(4, cost, item, keyitem1,keyitem2,keyitem3) -- Cannot obtain.
+                end
+            elseif option == 500 or option == 1 then -- player has declined to buy a pop item
+                local allowIslet = 0
+                allowIslet = player:getCharVar("[ZNM][Ryo]IsletDiscussion")
+                player:updateEvent(allowIslet)
+            end
+        end
+    end
 end
 
 tpz.znm.sanraku.onEventFinish = function(player, csid, option)
@@ -451,5 +748,8 @@ tpz.znm.sanraku.onEventFinish = function(player, csid, option)
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", 0)
 
         player:addCurrency("zeni_point", zeniValue)
+    elseif csid == 908 then
+        player:setCharVar("[ZNM]SanrakuIntro", 1)
     end
+
 end

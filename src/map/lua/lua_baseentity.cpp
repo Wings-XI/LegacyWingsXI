@@ -4576,14 +4576,18 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 7));
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         std::string name = lua_tostring(L, 1);
-        uint32 mobID = (uint32) lua_tointeger(L, 2);
-        uint8 zeni = (uint8) lua_tointeger(L, 3);
-        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
-        uint8 fp = (uint8) lua_tointeger(L, 5);
+        uint8 fauna = (uint8)lua_tointeger(L, 2);
+        uint8 subOfInterest = (uint8)lua_tointeger(L, 3);
+        uint8 ecoSystem = (uint8)lua_tointeger(L, 4);
+        uint8 zeni = (uint8) lua_tointeger(L, 5);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 6);
+        uint8 fp = (uint8) lua_tointeger(L, 7);
 
         // Deduct Blank Plate
         if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
@@ -4597,7 +4601,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         // Used Soul Plate
         CItem* PItem = itemutils::GetItem(2477);
         PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, mobID, zeni, skillIndex, fp);
+        PItem->setSoulPlateData(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {

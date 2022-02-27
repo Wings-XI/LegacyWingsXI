@@ -384,17 +384,21 @@ inline int32 CLuaItem::setSoulPlateData(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PLuaItem == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 7));
 
     std::string name = lua_tostring(L, 1);
-    uint32 mobID = (uint32)lua_tointeger(L, 2);
-    uint8 zeni = (uint8) lua_tointeger(L, 3);
-    uint16 skillIndex = (uint16) lua_tointeger(L, 4);
-    uint8 fp = (uint8) lua_tointeger(L, 5);
+    uint8 fauna = (uint8)lua_tointeger(L, 2);
+    uint8 subOfInterest = (uint8)lua_tointeger(L, 3);
+    uint8 ecosystem = (uint8)lua_tointeger(L, 4);
+    uint8 zeni = (uint8) lua_tointeger(L, 5);
+    uint16 skillIndex = (uint16) lua_tointeger(L, 6);
+    uint8 fp = (uint8) lua_tointeger(L, 7);
 
-    m_PLuaItem->setSoulPlateData(name, mobID, zeni, skillIndex, fp);
+    m_PLuaItem->setSoulPlateData(name, fauna, subOfInterest, ecosystem, zeni, skillIndex, fp);
 
     return 1;
 }
@@ -412,15 +416,21 @@ inline int32 CLuaItem::getSoulPlateData(lua_State* L)
     lua_setfield(L, newTable, "name");
 
     lua_pushinteger(L, std::get<1>(data));
-    lua_setfield(L, newTable, "mobID");
+    lua_setfield(L, newTable, "fauna");
 
     lua_pushinteger(L, std::get<2>(data));
-    lua_setfield(L, newTable, "zeni");
+    lua_setfield(L, newTable, "subOfInterest");
 
     lua_pushinteger(L, std::get<3>(data));
-    lua_setfield(L, newTable, "skillIndex");
+    lua_setfield(L, newTable, "ecoSystem");
 
     lua_pushinteger(L, std::get<4>(data));
+    lua_setfield(L, newTable, "zeni");
+
+    lua_pushinteger(L, std::get<5>(data));
+    lua_setfield(L, newTable, "skillIndex");
+
+    lua_pushinteger(L, std::get<6>(data));
     lua_setfield(L, newTable, "fp");
 
     return 1;
