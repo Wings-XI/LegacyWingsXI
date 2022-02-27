@@ -150,7 +150,6 @@ tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
 
 local function changeSubjectsOfInterest()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
-    printf("subjectsOfInterestKey %s", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
 
@@ -286,7 +285,6 @@ tpz.znm.fauna[54] = {16998862} -- the bewitching beauty of a general of the Unde
 
 local function changeFauna()
     local faunaKey = math.random(#tpz.znm.faunaKeys)
-    printf("faunaKey %s", faunaKey)
     SetServerVariable("[ZNM]Fauna", faunaKey)
     SetServerVariable("[ZNM]FaunaLimit", FAUNA_LIMIT)
 end
@@ -455,7 +453,6 @@ tpz.znm.soultrapper.onItemUse = function(target, item, user)
     -- Add plate
     local plate = user:addSoulPlate(target:getName(), faunaMatch, subjectsOfInterestMatch, target:getSystem(), zeni, skillIndex, skillEntry.fp)
     local data = plate:getSoulPlateData()
-    printf("After pic fauna %s, subOfInterest %s, ecosystem %s", data.fauna, data.subOfInterest, data.ecoSystem)
     -- utils.unused(data)
 end
 
@@ -696,7 +693,6 @@ tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
             
 
             n = option % 10
-            printf("option %s", option)
             if n <= 2 then
                 if option == 130 or option == 440 then
                     tier = 5
@@ -715,7 +711,6 @@ tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
             if option >= 100 and option <= 130 then
                 item = lures[option-99]
                 local itemVarName = string.format("[ZNM]PopItemCost" ..item.. "")
-                printf("itemVarName %s", itemVarName)
                 cost = tier * 1000 +  GetServerVariable(itemVarName)
                 player:updateEvent(0,0,0,0,0,0,cost)
 
