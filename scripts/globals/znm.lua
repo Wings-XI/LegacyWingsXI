@@ -355,67 +355,92 @@ tpz.znm.soultrapper.onItemCheck = function(target, user)
 end
 
 -- Good source for in era values https://www.bluegartr.com/threads/63949-Zeni-per-Image-rates
-tpz.znm.soultrapper.getZeniValue = function(target, user, item)
+tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
     local hpp = target:getHPP()
+    local isFacing = target:isFacing(user)
+    local targetLevel = target:getMainLvl()
     local isNM = target:isNM() -- ToDo consider if we should handle things like MOBTYPE_EVENT, MOBTYPE_BATTLEFIELD, and CHECK_AS_NM
     local distance = user:checkDistance(target)
-    local isFacing = target:isFacing(user)
     local modelSize = target:getModelSize()
 
+    if (showDebugMessage == nil) then
+        showDebugMessage = false
+    end
+
+    local zeni = 0
     -- no claim  = little to no zeni
     if (not user:isMobOwner(target) or hpp == 100) then
-        return math.random(1,5)
-    end
-
-    -- Starting value
-    local zeni = 0
-
-    if (modelSize == 0) then
-        zeni = 16
+        zeni = math.random(1,5)
     else
-        zeni = 50
+        -- base for small size mobs
+        zeni = 16 
+        -- large model mobs get a bonus, possibly up to 50 but based on working backwards from known subjects (Genbu, Aw'euvhi, etc it appears to be 2.5x)
+        if (modelSize > 0) then
+            zeni = zeni * 2.5
+        end
+
+        -- Level Component
+        if (targetLevel > 75) then
+            zeni = zeni + (targetLevel - 75)
+        end
+
+        -- HP% Component    
+        if (hpp > 50) then
+            zeni = zeni * 0.25
+        elseif (hpp > 25) then
+            zeni = zeni * 0.50
+        elseif (hpp > 5) then
+            zeni = zeni * 0.75
+        end
+
+        -- NM/Rarity Component -- appears to be very substantial, outweighing even SubjectsOfInterest partial matches
+        if isNM then
+            local nmBonus = 0
+            if (modelSize > 0) then
+                nmBonus = 30
+            else
+                -- seems that small NMs get a bit bigger bonus, perhaps to offset the low base to begin with
+                nmBonus = 40
+            end
+            zeni = zeni + nmBonus
+        end
+
+        -- Distance Component
+        if (distance > 5) then
+            zeni = zeni * 0.5
+        end
+
+        -- Angle/Facing Component
+        if not isFacing then
+            zeni = zeni * 0.5
+        end
+
+        -- per bgwiki - https://www.bg-wiki.com/ffxi/Category:Pankration#Purchasing_Items
+        -- HS Soul Plate should allow for faster activation - not a bonus on points
+        --[[if user:getEquipID(tpz.slot.AMMO) == tpz.items.BLANK_HIGH_SPEED_SOUL_PLATE then
+            zeni = zeni * 1.5
+        end]]
+
+        -- safeguard, should never be possible but lets not deduct zeni, eh?
+        if (zeni <= 0) then
+            zeni = math.random(1, 5)
+        end
+        -- Sanitize Zeni
+        zeni = math.floor(zeni) -- Remove any floating point information
+    end
+    
+    if (showDebugMessage) then
+        user:PrintToPlayer(string.format( "Zeni for Mob %s is %d!  \nMobSize [%d] HPP: [%d] isFacing: [%s] LevelOffset: [%d] Distance: [%d] isNM: [%s] hasClaim: [%s]",
+                                           target:getName(), zeni, modelSize, hpp, isFacing, (targetLevel - 75), distance, isNM, (not user:isMobOwner(target) or hpp == 100) ))
     end
 
-    -- Level Component
-    -- TODO there appears to be a level component
-
-    -- HP% Component
-    local hpMultiplier = math.min(100 / hpp, 5)
-    if hpp <= 5 then
-        hpMultiplier = 1
-    end
-    zeni = zeni * hpMultiplier
-
-    -- NM/Rarity Component
-    if isNM then
-        zeni = zeni * 1.5
-    end
-
-    -- Distance Component
-    zeni = zeni * utils.clamp((1 / distance) * 2, 1, 2)
-
-    -- Angle/Facing Component
-    if isFacing then
-        zeni = zeni * 1.5
-    end
-
-    -- per bgwiki - https://www.bg-wiki.com/ffxi/Category:Pankration#Purchasing_Items
-    -- HS Soul Plate should allow for faster activation - not a bonus on points
-    --[[if user:getEquipID(tpz.slot.AMMO) == tpz.items.BLANK_HIGH_SPEED_SOUL_PLATE then
-        zeni = zeni * 1.5
-    end]]
-
-    -- Sanitize Zeni
-    zeni = math.floor(zeni) -- Remove any floating point information
-
-    printf("zeni on pic taken is %s", zeni)
     return zeni
 end
 
 tpz.znm.soultrapper.onItemUse = function(target, item, user)
     -- TODO: There should be a failure chance - but finding any kind of rate seems difficult
     -- Determine Zeni starting value
-    local zeni = tpz.znm.soultrapper.getZeniValue(target, user, item)
+    local zeni = tpz.znm.soultrapper.getZeniValue(target, user)
 
     -- Pick a skill totally at random...
     local skillIndex, skillEntry = utils.randomEntry(tpz.pankration.feralSkills)
