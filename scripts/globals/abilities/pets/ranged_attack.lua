@@ -30,6 +30,18 @@ function onPetAbility(target, automaton, skill, master, action)
         chr_wsc = 0.0
     }
 
+    if automaton:getMod(tpz.mod.AUTOMATON_CAN_BARRAGE) == 1 and master:getLocalVar("lastAutoBarrageUsed") + 180 < os.time() and math.random() < 0.6 then
+        local maneuvers = master:countEffect(tpz.effect.WIND_MANEUVER)
+        if maneuvers > 0 then
+            params.numHits = maneuvers + 2
+            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            master:setLocalVar("lastAutoBarrageUsed",os.time())
+        end
+    end
+
     local damage = doAutoRangedWeaponskill(automaton, target, 0, params, 1000, true, skill, action)
 
     return damage
