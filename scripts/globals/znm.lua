@@ -365,6 +365,7 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
     local isNM = target:isNM() -- ToDo consider if we should handle things like MOBTYPE_EVENT, MOBTYPE_BATTLEFIELD, and CHECK_AS_NM
     local distance = user:checkDistance(target)
     local modelSize = target:getModelSize()
+    local isBeingIrresponsible = (user:getInstance() ~= nil) or (user:getBattlefield() ~= nil)
 
     if (showDebugMessage == nil) then
         showDebugMessage = false
@@ -387,15 +388,6 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
             zeni = zeni + (targetLevel - 75)
         end
 
-        -- HP% Component    
-        if (hpp > 50) then
-            zeni = zeni * 0.25
-        elseif (hpp > 25) then
-            zeni = zeni * 0.50
-        elseif (hpp > 5) then
-            zeni = zeni * 0.75
-        end
-
         -- NM/Rarity Component -- appears to be very substantial, outweighing even SubjectsOfInterest partial matches
         if isNM then
             local nmBonus = 0
@@ -406,6 +398,12 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
                 nmBonus = 40
             end
             zeni = zeni + nmBonus
+
+            if isBeingIrresponsible then
+                -- what are you doing taking pictures? you are in a battle?!
+                -- proto-omega, salvalge bosses, etc all give more points than would be expected
+                zeni = zeni + 20
+            end
         end
 
         -- Distance Component
@@ -416,6 +414,15 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
         -- Angle/Facing Component
         if not isFacing then
             zeni = zeni * 0.5
+        end
+
+         -- HP% Component    
+        if (hpp > 50) then
+            zeni = zeni * 0.25
+        elseif (hpp > 25) then
+            zeni = zeni * 0.50
+        elseif (hpp > 5) then
+            zeni = zeni * 0.75
         end
 
         -- per bgwiki - https://www.bg-wiki.com/ffxi/Category:Pankration#Purchasing_Items
@@ -433,8 +440,9 @@ tpz.znm.soultrapper.getZeniValue = function(target, user, showDebugMessage)
     end
     
     if (showDebugMessage) then
-        user:PrintToPlayer(string.format( "Zeni for Mob %s is %d!  \nMobSize [%d] HPP: [%d] isFacing: [%s] LevelOffset: [%d] Distance: [%d] isNM: [%s] hasClaim: [%s]",
-                                           target:getName(), zeni, modelSize, hpp, isFacing, (targetLevel - 75), distance, isNM, (not user:isMobOwner(target) or hpp == 100) ))
+        user:PrintToPlayer(string.format( "Zeni for Mob %s is %d!", target:getName(), zeni))
+        user:PrintToPlayer(string.format( "MobSize [%d] HPP: [%d] isFacing: [%s] LevelOffset: [%d] Distance: [%d] isNM: [%s] hasClaim: [%s] isBeingIrresponsible: [%s]",
+                                           modelSize, hpp, isFacing, (targetLevel - 75), distance, isNM, not (not user:isMobOwner(target) or hpp == 100), isBeingIrresponsible ))
     end
 
     return zeni
