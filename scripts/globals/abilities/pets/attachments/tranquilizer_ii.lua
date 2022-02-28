@@ -3,6 +3,7 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+-- http://wiki.ffo.jp/html/9248.html
 
 function onEquip(pet)
     pet:addMod(tpz.mod.MACC, 20)
@@ -16,7 +17,7 @@ function onManeuverGain(pet, maneuvers)
     if maneuvers == 1 then
         pet:addMod(tpz.mod.MACC, 20)
     elseif maneuvers == 2 then
-        pet:addMod(tpz.mod.MACC, 10)
+        pet:addMod(tpz.mod.MACC, 15)
     elseif maneuvers == 3 then
         pet:addMod(tpz.mod.MACC, 15)
     end
@@ -26,7 +27,7 @@ function onManeuverLose(pet, maneuvers)
     if maneuvers == 1 then
         pet:delMod(tpz.mod.MACC, 20)
     elseif maneuvers == 2 then
-        pet:delMod(tpz.mod.MACC, 10)
+        pet:delMod(tpz.mod.MACC, 15)
     elseif maneuvers == 3 then
         pet:delMod(tpz.mod.MACC, 15)
     end
