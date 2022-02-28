@@ -550,6 +550,7 @@ public:
     int32 updateClaim(lua_State*);             // Adds Enmity to player for specified mob and claims
     int32 hasEnmity(lua_State*);               // Does the player have any enmity at all from any source
     int32 getNotorietyList(lua_State*);        // Returns a table with all of the entities on a chars notoriety list
+    int32 isMobOwner(lua_State*);              // Returns if the player is the owner of the mob
 
     // Status Effects
     int32 addStatusEffect(lua_State*);         // Adds status effect to character

@@ -4674,14 +4674,18 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 7));
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         std::string name = lua_tostring(L, 1);
-        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
-        uint8 zeni = (uint8) lua_tointeger(L, 3);
-        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
-        uint8 fp = (uint8) lua_tointeger(L, 5);
+        uint8 fauna = (uint8)lua_tointeger(L, 2);
+        uint8 subOfInterest = (uint8)lua_tointeger(L, 3);
+        uint8 ecoSystem = (uint8)lua_tointeger(L, 4);
+        uint8 zeni = (uint8) lua_tointeger(L, 5);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 6);
+        uint8 fp = (uint8) lua_tointeger(L, 7);
 
         // Deduct Blank Plate
         if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
@@ -4695,7 +4699,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         // Used Soul Plate
         CItem* PItem = itemutils::GetItem(2477);
         PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        PItem->setSoulPlateData(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {
@@ -12188,6 +12192,33 @@ inline int32 CLuaBaseEntity::getNotorietyList(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: isMobOwner()
+ *  Purpose : Check if a player is the owner of a mob or if the mob is unowned
+ *  Example : if player:isMobOwner(mob) then ...
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::isMobOwner(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity->GetBaseEntity()->objtype != TYPE_MOB);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CMobEntity* PMob = (CMobEntity*)PLuaBaseEntity->GetBaseEntity();
+    bool isOwner = PChar->IsMobOwner((CBattleEntity*)PMob);
+
+    lua_pushboolean(L, isOwner);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: addStatusEffect(effect, power, tick, duration)
 *  Purpose : Adds a specified Status Effect to the Entity
 *  Example : target:addStatusEffect(EFFECT_ACCURACY_DOWN,20,3,60)
@@ -18967,6 +18998,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateClaim),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasEnmity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getNotorietyList),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMobOwner),
 
     // Status Effects
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addStatusEffect),
