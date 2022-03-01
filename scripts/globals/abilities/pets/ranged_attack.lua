@@ -34,10 +34,9 @@ function onPetAbility(target, automaton, skill, master, action)
         local maneuvers = master:countEffect(tpz.effect.WIND_MANEUVER)
         if maneuvers > 0 then
             params.numHits = maneuvers + 2
-            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
-            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
-            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
-            master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            for i = 1, maneuvers do
+                master:delStatusEffect(tpz.effect.WIND_MANEUVER)
+            end
             master:setLocalVar("lastAutoBarrageUsed",os.time())
         end
     end
