@@ -1226,20 +1226,23 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                             (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
                         {
                             CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
-                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
-                            { // mob is targeting me or my pet
-                                priorityNum = 1;
-                                PSmallPacket->priorityNumOverride = 1;
-                                break;
-                            }
-                            if (POwner->animation == ANIMATION_ATTACK &&
-                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
-                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
-                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
-                            { // mob is targeting my party member or a party member's pet
-                                priorityNum = 4;
-                                PSmallPacket->priorityNumOverride = 4;
-                                break;
+                            if (PMobTarget)
+                            {
+                                if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
+                                { // mob is targeting me or my pet
+                                    priorityNum = 1;
+                                    PSmallPacket->priorityNumOverride = 1;
+                                    break;
+                                }
+                                if (POwner->animation == ANIMATION_ATTACK &&
+                                    ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
+                                    ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
+                                        PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
+                                { // mob is targeting my party member or a party member's pet
+                                    priorityNum = 4;
+                                    PSmallPacket->priorityNumOverride = 4;
+                                    break;
+                                }
                             }
                             priorityNum = 11;
                             PSmallPacket->priorityNumOverride = 11;
