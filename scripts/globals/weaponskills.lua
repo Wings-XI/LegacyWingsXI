@@ -17,10 +17,10 @@ require("scripts/globals/msg")
 
 -- Function to calculate if a hit in a WS misses, criticals, and the respective damage done
 -- dmg parameter is ( D + fSTR + WSC) * fTP, also sometimes referred to as WD
-function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
     local criticalHit = false
     local finaldmg = 0
-
+ 
     local testEntity = attacker
     if not attacker:isPC() and attacker:isPet() and (attacker:getMaster()):isPC() then
         testEntity = attacker:getMaster()
@@ -47,9 +47,9 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or calcParams.forcedFirstCrit or calcParams.mightyStrikesApplicable
             if criticalHit == true then
                 calcParams.criticalHit = true
-                calcParams.pdif = generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], isRanged)
             else
-                calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], isRanged)
             end
             -- attacker:PrintToPlayer(string.format("final pdif %f", calcParams.pdif))
             finaldmg = dmg * calcParams.pdif
@@ -161,7 +161,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
          attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) * calcParams.alpha
     -- (D + fSTR + WSC)
     local mainBase = calcParams.weaponDamage[1] + wsMods + calcParams.bonusWSmods
-
+    
     -- Calculate fTP multiplier
     local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
 
@@ -212,8 +212,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.shadowsAbsorbed = 0
 
     -- Calculate the damage from the first hit
-    local dmg = mainBase * ftp
-    hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+    local dmg = math.floor(mainBase * ftp)
+    hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
     finaldmg = finaldmg + hitdmg
 
     -- Have to calculate added bonus for SA/TA here since it is done outside of the fTP multiplier
@@ -246,7 +246,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Do the extra hit for our offhand if applicable
     if calcParams.melee == true and calcParams.extraOffhandHit == true then
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
     end
 
@@ -262,7 +262,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.useOAXTimes = wsParams.useOAXTimes
 
     while (hitsDone < numHits) do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
         hitsDone = hitsDone + 1
     end
@@ -270,7 +270,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.hitsLanded = 0
     while (offHitsDone < numOffhandHits) do
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
         offHitsDone = offHitsDone + 1
         --print("offhand while loop")
@@ -1223,10 +1223,10 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
     return ret1, offHandHits
 end
 
-function generatePdif (cratiomin, cratiomax, melee)
+function generatePdif (cratiomin, cratiomax, isRanged)
     local pDIF = math.random(cratiomin*1000, cratiomax*1000) / 1000.0
 
-    if melee then
+    if (isRanged ~= nil) and (isRanged == false) then
         pDIF = pDIF * (math.random(100, 105)/100.0)
     end
 
