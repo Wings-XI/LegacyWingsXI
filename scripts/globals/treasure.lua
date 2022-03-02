@@ -1419,6 +1419,7 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
         not player:hasKeyItem(tpz.ki.OLD_GAUNTLETS)
     then
         player:messageSpecial(msgBase)
+        player:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)        -- Success - Remove sneak, invisible, deodorize
         npcUtil.giveKeyItem(player, tpz.ki.OLD_GAUNTLETS)
         player:confirmTrade()
         moveChest(npc, zoneId, chestType)
@@ -1434,6 +1435,7 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
         not player:hasItem(info.af[mJob].reward)
     then
         player:messageSpecial(msgBase)
+        player:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)        -- Success - Remove sneak, invisible, deodorize
         if npcUtil.giveItem(player, info.af[mJob].reward) then
             player:confirmTrade()
             moveChest(npc, zoneId, chestType)
@@ -1446,6 +1448,7 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
         for _, v in pairs(info.misc) do
             if v.test(player) then
                 player:messageSpecial(msgBase)
+                player:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE) -- Success - Remove sneak, invisible, deodorize
                 v.code(player)
                 player:confirmTrade()
                 moveChest(npc, zoneId, chestType)
@@ -1457,6 +1460,7 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
     -- map
     if info.map and not player:hasKeyItem(info.map) then
         player:messageSpecial(msgBase)
+        player:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)        -- Success - Remove sneak, invisible, deodorize
         npcUtil.giveKeyItem(player, info.map)
         player:confirmTrade()
         moveChest(npc, zoneId, chestType)
@@ -1469,6 +1473,9 @@ tpz.treasure.onTrade = function(player, npc, trade, chestType)
         moveChest(npc, zoneId, chestType, false, true)
         return
     end
+
+    -- All options from this point forward are considered a success, so remove detectable status effects
+    player:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
 
     -- non-quest reward
     player:messageSpecial(msgBase)
