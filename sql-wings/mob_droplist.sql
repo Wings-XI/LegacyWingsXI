@@ -16804,7 +16804,7 @@ INSERT INTO `mob_droplist` VALUES(3228, 0, 2, 1000, 2858, 520); -- Wolfram Steel
 INSERT INTO `mob_droplist` VALUES(3228, 0, 3, 1000, 2859, 200); -- Chunk of Cobalt Ore
 INSERT INTO `mob_droplist` VALUES(3228, 0, 4, 1000, 19128, 200); -- Edgeless Knife
 INSERT INTO `mob_droplist` VALUES(3228, 0, 5, 1000, 16376, 200); -- Bahram Cuisses
-INSERT INTO `mob_droplist` VALUES(3228, 0, 6, 1000, 15772, 200); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3228, 0, 6, 1000, 2275, 200); -- Scintillant Ingot
 INSERT INTO `mob_droplist` VALUES(3228, 0, 7, 1000, 747, 50); -- Orichalcum Ingot
 -- Tethra
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel Ingot
@@ -16813,7 +16813,7 @@ INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2858, 550); -- Wolfram Steel
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2859, 430); -- Chunk of Cobalt Ore
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 18617, 233); -- Cracked Staff
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 16302, 167); -- Bloodbead Gorget
-INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 15772, 167); -- Scintillant Ingot
+INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 2275, 167); -- Scintillant Ingot
 INSERT INTO `mob_droplist` VALUES(3229, 0, 0, 1000, 747, 100); -- Orichalcum Ingot
 -- Bahamut v2 BCNM
 INSERT INTO `mob_droplist` VALUES(3230, 1, 1, 1000, 17598, 231); -- Bahamut Staff
