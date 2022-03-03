@@ -188,6 +188,7 @@ FORCE_SPAWN_QM_RESET_TIME = 300 -- Number of seconds the ??? remains hidden for 
 GOBBIE_BOX_MIN_AGE  = 45 -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 ARTISAN_MOOGLES_GIVE_SCROLLS = 0 -- Do Artisan Moogles give free instant warp scrolls
 SERVER_LINKSHELL = 0 -- ID of a serverwide linkshell (added to players on character creation)
+VENDORS_IGNORE_CONQUEST = 0 -- Vendors sell all items regardless of nation's conquest status
 
 -- LINKSHELL CONCIERGE
 LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type
