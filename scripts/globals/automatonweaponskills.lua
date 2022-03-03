@@ -111,9 +111,10 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
         ['damageType'] = tpz.damageType.PIERCING
     }
     local calcParams =  {}
+    
     calcParams.weaponDamage = {wsParams.weaponDamage or attacker:getRangedDmg()}
 
-    calcParams.fSTR = utils.clamp(attacker:getStat(tpz.mod.STR) - target:getStat(tpz.mod.VIT), -10, 10)
+    calcParams.fSTR = fSTR2(attacker:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT), attacker:getRangedDmgRank())
     calcParams.cratio = cratio
     calcParams.ccritratio = ccritratio
     calcParams.accStat = attacker:getRACC()
@@ -127,14 +128,14 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
     calcParams.extraOffhandHit = false
     calcParams.flourishEffect = false
     calcParams.alpha = 1
-    calcParams.bonusWSmods = math.max(attacker:getMainLvl() - target:getMainLvl(), 0)
+    calcParams.bonusWSmods = 0
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = flameHolderFTP or 0
     calcParams.bonusAcc = (wsParams.accBonus or 0) + attacker:getMod(tpz.mod.WSACC)
     calcParams.hitRate = getAutoHitRate(attacker, target, true, calcParams.bonusAcc, calcParams.melee)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
-    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
+    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, true)
     local finaldmg = calcParams.finalDmg
 
     -- Calculate reductions
@@ -190,7 +191,7 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
 
     cratio = cratio * levelcorr
     cratio = utils.clamp(cratio, 0, melee and 4.0 or 3.0)
-
+    
     local pdif = {}
     local pdifcrit = {}
 
@@ -288,7 +289,7 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
 
 
     else
-        --[[
+        
         -- max
         local pdifmax = 0
         if cratio < 0.9 then
@@ -320,8 +321,8 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = pdifmin * (100 + critbonus) / 100
         pdifcrit[2] = pdifmax * (100 + critbonus) / 100
-        ]]
-
+        
+        --[[
         pdifmax = cratio * 1.25
         pdifmin = pdifmax * 0.675 + 1/6
         if pdifmin > pdifmax - 0.1 then
@@ -334,8 +335,8 @@ function getAutocRatio(attacker, defender, params, ignoredDef, melee)
         local critbonus = attacker:getMod(tpz.mod.CRIT_DMG_INCREASE) - defender:getMod(tpz.mod.CRIT_DEF_BONUS)
         critbonus = utils.clamp(critbonus, 0, 100)
         pdifcrit[1] = (pdifmin + 1) * (100 + critbonus) / 100
-        pdifcrit[2] = (pdifmax + 1) * (100 + critbonus) / 100
+        pdifcrit[2] = (pdifmax + 1) * (100 + critbonus) / 100]]
     end
-
+    
     return pdif, pdifcrit
 end

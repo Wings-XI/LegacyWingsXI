@@ -781,10 +781,32 @@ namespace petutils
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petStats->cmbDelay / 60.0f)))); //every pet should use this eventually
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3); // This may be accurate - need to source it
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 3);
+
+        uint8 levelScalingD = 0;
+        if (mlvl <= 15)
+        {
+            levelScalingD = mlvl / 1 - 1; // 14 at level 15
+        }
+        else if (mlvl <= 37)
+        {
+            levelScalingD = 14 + (mlvl - 15) / 3; // 21 at 37
+        }
+        else if (mlvl <= 50)
+        {
+            levelScalingD = 21 + (mlvl - 37) / 5; // 23 at 50
+        }
+        else if (mlvl <= 60)
+        {
+            levelScalingD = 26; // 26 at 60
+        }
+        else if (mlvl == 75)
+        {
+            levelScalingD = 27; // 27 at 75
+        }
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + levelScalingD);
 
         CAutomatonEntity* PAutomaton = (CAutomatonEntity*)PPet;
 
