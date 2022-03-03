@@ -200,3 +200,6 @@ IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you e
 IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
 ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior
+
+-- HOOKS
+HOOK_FILE_NAME = "" -- Create a file named "hook-<name>.lua" and set the value to "<name>" to enable
