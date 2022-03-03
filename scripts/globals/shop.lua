@@ -102,7 +102,8 @@ tpz.shop =
             if
                 (stock[i+2] == 1 and player:getNation() == nation and rank == 1) or
                 (stock[i+2] == 2 and rank <= 2) or
-                (stock[i+2] == 3)
+                (stock[i+2] == 3) or
+                (VENDORS_IGNORE_CONQUEST ~= nil and VENDORS_IGNORE_CONQUEST ~= 0)
             then
                 table.insert(newStock, stock[i])
                 table.insert(newStock, stock[i+1])
