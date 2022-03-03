@@ -1915,11 +1915,13 @@ namespace battleutils
         return (int8)std::clamp((int32)((base + (int32)skillmodifier) * blockRateMod), 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 * blockRateMod), 100)));
     }
 
-    uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
+     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
-        if ((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 &&
-            PWeapon->getSkillType() != SKILL_HAND_TO_HAND) && PDefender->PAI->IsEngaged())
+        // An Entity using not using HtH and not a mob (weapon ID 0 signifies a mob/pet)
+        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) || 
+             (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)) // Valoredge Puppet
+            && PDefender->PAI->IsEngaged()) // Everyone has to be engaged to parry
         {
             JOBTYPE job = PDefender->GetMJob();
 
@@ -1935,6 +1937,12 @@ namespace battleutils
                 // {(Parry Skill x .125) + ([Player Agi - Enemy Dex] x .125)} x Diff
 
                 float skill = (float)(PDefender->GetSkill(SKILL_PARRY) + PDefender->getMod(Mod::PARRY) + PWeapon->getILvlParry());
+
+                // Somewhat redundant check but if the enclosing if ever changes...
+                if (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)
+                {
+                    skill = PDefender->GetSkill(SKILL_AUTOMATON_MELEE); // Not aware of anyway for a puppet to get a bonus beyond skill.  Automatons use melee skill for everything
+                }
 
                 float diff = 1.0f + (((float)PDefender->GetMLevel() - PAttacker->GetMLevel()) / 15.0f);
 
@@ -6032,16 +6040,12 @@ namespace battleutils
                 cost += (int16)(base * (PEntity->getMod(Mod::WHITE_MAGIC_COST) / 100.0f));
             }
         }
-        if (PEntity->objtype == TYPE_PET && ((CPetEntity*)PEntity)->getPetType() == PETTYPE_AUTOMATON) {
-            cost = (int16)((float)cost * ((float)(PEntity->getMod(Mod::AUTOMATON_MAGIC_COST)) + 100.0f) / 100.0f);
-        }
         if (tpzrand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
         {
             cost = 0;
         }
         return std::clamp<int16>(cost, 0, 9999);
     }
-
     uint32 CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
     {
         if (PSpell == nullptr)
