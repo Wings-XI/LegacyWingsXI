@@ -16,7 +16,7 @@ function onChocoboDig(player, precheck)
 end
 
 function onInitialize(zone)
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onZoneIn(player, prevZone)
@@ -66,5 +66,18 @@ function onZoneWeatherChange(weather)
         qm1:setStatus(tpz.status.NORMAL)
     else
         qm1:setStatus(tpz.status.DISAPPEAR)
+    end
+end
+
+function onGameHour(zone)
+    local currentTime = VanadielHour()
+    local npc = GetNPCByID(ID.npc.QM_WHMAF) -- WHM AF ??? Spawned between 18 to 5
+
+    if (npc ~= nil) then
+        if currentTime >= 18 or currentTime <= 5 then
+            npc:setStatus(tpz.status.NORMAL)
+        else
+            npc:setStatus(tpz.status.DISAPPEAR)
+        end
     end
 end

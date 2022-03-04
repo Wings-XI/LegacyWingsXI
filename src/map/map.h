@@ -186,7 +186,7 @@ struct map_config_t
     bool   autotarget_qol;            // Enable radial autotargeting
     bool  instances_treat_GMs_as_players; // Set to 1 to allow characters with GM Level 2 or greater to count towards getChars inside an instance
     uint16 pl_penalty;
-
+    uint16 conquest_auth_zone;        // Instance containing this zone does conquest tally calculation
 };
 
 /************************************************************************

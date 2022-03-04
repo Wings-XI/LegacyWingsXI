@@ -17,6 +17,10 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
+end
+
 function onRegionEnter(player, region)
 end
 

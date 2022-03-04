@@ -17,10 +17,10 @@ require("scripts/globals/msg")
 
 -- Function to calculate if a hit in a WS misses, criticals, and the respective damage done
 -- dmg parameter is ( D + fSTR + WSC) * fTP, also sometimes referred to as WD
-function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
     local criticalHit = false
     local finaldmg = 0
-
+ 
     local testEntity = attacker
     if not attacker:isPC() and attacker:isPet() and (attacker:getMaster()):isPC() then
         testEntity = attacker:getMaster()
@@ -47,9 +47,9 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
             criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or calcParams.forcedFirstCrit or calcParams.mightyStrikesApplicable
             if criticalHit == true then
                 calcParams.criticalHit = true
-                calcParams.pdif = generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], isRanged)
             else
-                calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], true)
+                calcParams.pdif = generatePdif(calcParams.cratio[1], calcParams.cratio[2], isRanged)
             end
             -- attacker:PrintToPlayer(string.format("final pdif %f", calcParams.pdif))
             finaldmg = dmg * calcParams.pdif
@@ -79,6 +79,25 @@ function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
     return finaldmg, calcParams
 end
 
+
+function getDexCritBonus(dDEX)
+    local nativeCrit = 0
+    if dDEX > 50 then -- Caps at 15% maximum benefit from dDEX
+        nativeCrit = 0.15
+    elseif (dDEX > 39) then
+        nativeCrit = (dDEX-35)/100
+    elseif (dDEX > 29) then
+        nativeCrit = 0.04
+    elseif (dDEX > 19) then
+        nativeCrit = 0.03
+    elseif (dDEX > 13) then
+        nativeCrit = 0.02
+    elseif (dDEX > 6) then
+        nativeCrit = 0.01
+    end
+    return nativeCrit
+end
+
 -- Calculates the raw damage for a weaponskill, used by both doPhysicalWeaponskill and doRangedWeaponskill.
 -- Behavior of damage calculations can vary based on the passed in calcParams, which are determined by the calling function
 -- depending on the type of weaponskill being done, and any special cases for that weaponskill
@@ -87,7 +106,7 @@ end
 -- acc100, acc200, acc300, ignoresDef, ignore100, ignore200, ignore300, atk100, atk200, atk300, kick, hybridWS, hitsHigh, formless
 --
 -- See doPhysicalWeaponskill or doRangedWeaponskill for how calcParams are determined.
-function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
+function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, isRanged)
 
     -- Recalculate accuracy if it varies with TP, applied to all hits
     if wsParams.acc100 ~= 0 then
@@ -142,7 +161,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
          attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) * calcParams.alpha
     -- (D + fSTR + WSC)
     local mainBase = calcParams.weaponDamage[1] + wsMods + calcParams.bonusWSmods
-
+    
     -- Calculate fTP multiplier
     local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
 
@@ -150,14 +169,20 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     local critRate = 0
 
     if wsParams.canCrit then -- Work out critical hit ratios
-        local nativecrit = 0
+        local nativecrit = 0.05
         critRate = fTP(tp, wsParams.crit100, wsParams.crit200, wsParams.crit300)
 
-        -- Add on native crit hit rate (guesstimated, it actually follows an exponential curve)
-        nativecrit = (attacker:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI))*0.005 -- assumes +0.5% crit rate per 1 dDEX
-        if (nativecrit > 0.2) then -- caps only apply to base rate, not merits and mods
-            nativecrit = 0.2
-        elseif (nativecrit < 0.05) then
+        if isRanged then -- use dAGI
+            local dAGI = (attacker:getStat(tpz.mod.AGI) - target:getStat(tpz.mod.AGI))
+            if dAGI > 0 then
+                nativecrit = nativecrit + math.floor(dAGI/10)/100 -- no known cap
+            end
+        else
+            local dDEX = (attacker:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI))
+            nativecrit = nativecrit + getDexCritBonus(dDEX)
+        end
+        -- Always minimum 5% native crit
+        if nativecrit < 0.05 then
             nativecrit = 0.05
         end
 
@@ -170,6 +195,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
             nativecrit = nativecrit + attacker:getStatusEffect(tpz.effect.INNIN):getPower()
         end
 
+        -- attacker:PrintToPlayer(string.format("native crit rate was %d", nativecrit*100))
+
         critRate = critRate + nativecrit
 
         if calcParams.flourishEffect and calcParams.flourishEffect:getPower() > 2 then
@@ -177,7 +204,6 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         end
     end
     calcParams.critRate = critRate
-    --print(string.format("critrate = %f",critRate))
 
     -- Start the WS
     local hitdmg = 0
@@ -186,8 +212,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.shadowsAbsorbed = 0
 
     -- Calculate the damage from the first hit
-    local dmg = mainBase * ftp
-    hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+    local dmg = math.floor(mainBase * ftp)
+    hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
     finaldmg = finaldmg + hitdmg
 
     -- Have to calculate added bonus for SA/TA here since it is done outside of the fTP multiplier
@@ -220,7 +246,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- Do the extra hit for our offhand if applicable
     if calcParams.melee == true and calcParams.extraOffhandHit == true then
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
     end
 
@@ -236,7 +262,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.useOAXTimes = wsParams.useOAXTimes
 
     while (hitsDone < numHits) do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
         hitsDone = hitsDone + 1
     end
@@ -244,7 +270,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.hitsLanded = 0
     while (offHitsDone < numOffhandHits) do
         local offhandDmg = (calcParams.weaponDamage[2] + wsMods) * ftp
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, offhandDmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
         offHitsDone = offHitsDone + 1
         --print("offhand while loop")
@@ -332,7 +358,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     if calcParams.flourishEffect ~= nil and calcParams.flourishEffect:getPower() > 2 then wsParams.canCrit = true end
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
-    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
+    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, false)
     local finaldmg = calcParams.finalDmg
 
     -- Delete statuses that may have been spent by the WS
@@ -466,7 +492,7 @@ end
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, true)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
-    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
+    calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, true)
     local finaldmg = calcParams.finalDmg
 
     -- Calculate reductions
@@ -1197,10 +1223,10 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
     return ret1, offHandHits
 end
 
-function generatePdif (cratiomin, cratiomax, melee)
+function generatePdif (cratiomin, cratiomax, isRanged)
     local pDIF = math.random(cratiomin*1000, cratiomax*1000) / 1000.0
 
-    if melee then
+    if (isRanged ~= nil) and (isRanged == false) then
         pDIF = pDIF * (math.random(100, 105)/100.0)
     end
 

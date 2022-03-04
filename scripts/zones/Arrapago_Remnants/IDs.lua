@@ -22,6 +22,7 @@ zones[tpz.zone.ARRAPAGO_REMNANTS] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         SALVAGE_START                 = 7235, -- You feel an incredible pressure bearing down on you. This area appears to be blanketed in some sort of intense psionic field...
         TIME_TO_COMPLETE              = 7442, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED                = 7443, -- The mission has failed. Leaving area.

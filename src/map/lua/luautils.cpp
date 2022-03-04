@@ -182,6 +182,8 @@ namespace luautils
         lua_register(LuaHandle, "GetCharVarByName", luautils::GetCharVarByName);
         lua_register(LuaHandle, "SetCharVarByName", luautils::SetCharVarByName);
 
+        lua_register(LuaHandle, "IsCustomizationEnabled", luautils::IsCustomizationEnabled);
+
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
         Lunar<CLuaBaseEntity>::Register(LuaHandle);
@@ -617,7 +619,7 @@ namespace luautils
     *                                                                       *
     ************************************************************************/
 
-    int32 SetRegionalConquestOverseers(uint8 regionID)
+    int32 SetRegionalConquestOverseers(uint8 regionID, uint8 updateType)
     {
         char File[255];
         memset(File, 0, sizeof(File));
@@ -659,10 +661,75 @@ namespace luautils
         }
 
         lua_pushinteger(LuaHandle, regionID);
+        lua_pushinteger(LuaHandle, updateType);
 
-        if (lua_pcall(LuaHandle, 1, 0, 0))
+        if (lua_pcall(LuaHandle, 2, 0, 0))
         {
             ShowError("luautils::SetRegionalConquestOverseers: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 3);
+            return -1;
+        }
+        else
+        {
+            lua_pop(LuaHandle, 2);
+        }
+
+        return 0;
+    }
+
+    /************************************************************************
+    *                                                                       *
+    * SetRegionalConquestOverseers() used for updating conquest guards      *
+    *                                                                       *
+    ************************************************************************/
+
+    int32 SetConquestCircus(uint8 city, uint8 updateType)
+    {
+        char File[255];
+        memset(File, 0, sizeof(File));
+
+        lua_pushnil(LuaHandle);
+        lua_setglobal(LuaHandle, "SetConquestCircus");
+
+        snprintf(File, sizeof(File), "scripts/globals/conquest.lua");
+
+        if (luaL_loadfile(LuaHandle, File) || lua_pcall(LuaHandle, 0, 0, 0))
+        {
+            ShowError("luautils::SetConquestCircus: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        lua_getglobal(LuaHandle, "tpz");
+        if (lua_isnil(LuaHandle, -1))
+        {
+            lua_pop(LuaHandle, 1);
+            ShowError("luautils::SetConquestCircus: undefined global tpz\n");
+            return -1;
+        }
+
+        lua_getfield(LuaHandle,-1,"conquest");
+        if (lua_isnil(LuaHandle, -1))
+        {
+            lua_pop(LuaHandle, 2);
+            ShowError("luautils::SetConquestCircus: undefined field tpz.conquest\n");
+            return -1;
+        }
+
+        lua_getfield(LuaHandle,-1,"setConquestCircus");
+        if (lua_isnil(LuaHandle, -1))
+        {
+            lua_pop(LuaHandle, 3);
+            ShowError("luautils::SetConquestCircus: undefined procedure tpz.conquest.setConquestCircus\n");
+            return -1;
+        }
+
+        lua_pushinteger(LuaHandle, city);
+        lua_pushinteger(LuaHandle, updateType);
+
+        if (lua_pcall(LuaHandle, 2, 0, 0))
+        {
+            ShowError("luautils::SetConquestCircus: %s\n", lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 3);
             return -1;
         }
@@ -5789,6 +5856,21 @@ namespace luautils
         }
 
         lua_pushnil(L);
+        return 1;
+    }
+
+    int32 IsCustomizationEnabled(lua_State* L)
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+        uint32 customization = lua_tointeger(L, 1);
+        bool enabled = false;
+
+        // Initial implementation is a stub, will be populated as the
+        // various customizations are pushed.
+
+        lua_pushboolean(L, enabled);
+
         return 1;
     }
 

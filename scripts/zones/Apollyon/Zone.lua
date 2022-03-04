@@ -51,6 +51,10 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
+end
+
 function onRegionEnter(player,region)
     local regionID = region:GetRegionID()
     switch (regionID): caseof
@@ -140,5 +144,10 @@ function onEventFinish(player,csid,option)
         player:setCharVar("ApollyonEntrance", 0)
     elseif (csid == 32001 or csid == 32002) and player:getCharVar("ApollyonEntrance") == 0 then
         player:setPos(-646.000, 0.000, -616.000) -- West
+    end
+    if csid >= 200 and csid <= 219 then
+        for _, entry in pairs(player:getNotorietyList()) do
+			entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+		end
     end
 end

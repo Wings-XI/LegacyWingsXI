@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Meriphataud_Mountains_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/status")
 -----------------------------------
@@ -18,6 +19,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-454.135, 28.409, 657.79, 49)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

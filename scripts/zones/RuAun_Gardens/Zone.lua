@@ -18,7 +18,7 @@ function onInitialize(zone)
 
     tpz.treasure.initZone(zone)
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -90,5 +90,9 @@ function onEventFinish(player, csid, option)
         player:setCharVar("ZilartStatus", 0)
         player:completeMission(ZILART, tpz.mission.id.zilart.THE_GATE_OF_THE_GODS)
         player:addMission(ZILART, tpz.mission.id.zilart.ARK_ANGELS)
+    elseif csid >= 1 and csid <= 40 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+        end
     end
 end

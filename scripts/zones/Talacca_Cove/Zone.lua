@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Talacca_Cove/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
@@ -23,6 +24,10 @@ function onZoneIn(player, prevZone)
         player:setPos(64.007, -9.281, -99.988, 88)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

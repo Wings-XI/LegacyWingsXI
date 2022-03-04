@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Attohwa/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/quests")
 -----------------------------------
 
@@ -22,6 +23,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

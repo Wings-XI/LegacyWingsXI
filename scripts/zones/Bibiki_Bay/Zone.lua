@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Bibiki_Bay/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo_digging")
 require("scripts/globals/manaclipper")
 require("scripts/globals/zone")

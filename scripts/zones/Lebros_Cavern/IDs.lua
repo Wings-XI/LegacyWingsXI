@@ -21,6 +21,7 @@ zones[tpz.zone.LEBROS_CAVERN] =
         ITEMS_OBTAINED                = 6397, -- You obtain <number> <item>
         MINE_COUNTDOWN                = 6980, -- <number>...
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         PLAYER_OBTAINS_TEM_ITEM       = 7209, -- <Player> obtains the temporary item: <item>!
         TEMP_ITEM                     = 7210, -- Obtained temporary item: <item>!
         PLAYER_OBTAINS_ITEM           = 7211, -- <name> obtains <item>!

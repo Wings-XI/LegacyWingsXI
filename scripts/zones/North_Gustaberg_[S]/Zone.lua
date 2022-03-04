@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/North_Gustaberg_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/helm")
@@ -23,6 +24,10 @@ function onZoneIn(player, prevZone)
         cs = 1
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

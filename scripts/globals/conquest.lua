@@ -892,7 +892,7 @@ tpz.conquest.canTeleportToOutpost = function(player, region)
     return true
 end
 
-tpz.conquest.setRegionalConquestOverseers = function(region)
+tpz.conquest.setRegionalConquestOverseers = function(region, updateType)
     local zone = outposts[region].zone
 
     if zone then
@@ -907,23 +907,80 @@ tpz.conquest.setRegionalConquestOverseers = function(region)
                 local npc = GetNPCByID(base + v.offset)
 
                 if npc then
-                    if v.nation == owner then
-                        npc:setStatus(tpz.status.NORMAL)
-                    else
+                    
+                    if updateType == 1 then
+                        -- Make them all vanish
                         npc:setStatus(tpz.status.DISAPPEAR)
-                    end
-
-                    if v.nation == tpz.nation.OTHER then
-                        if owner ~= tpz.nation.BEASTMEN then
+                    elseif updateType == 2 then
+                        -- Spawn the new NPCs
+                        if v.nation == owner then
                             npc:setStatus(tpz.status.NORMAL)
                         else
                             npc:setStatus(tpz.status.DISAPPEAR)
+                        end
+
+                        if v.nation == tpz.nation.OTHER then
+                            if owner ~= tpz.nation.BEASTMEN then
+                                npc:setStatus(tpz.status.NORMAL)
+                            else
+                                npc:setStatus(tpz.status.DISAPPEAR)
+                            end
                         end
                     end
                 end
             end
         end
     end
+end
+
+tpz.conquest.setConquestCircus = function(city, updateType)
+    local zone
+    if city == 0 then
+        -- San d'Oria
+        zone = tpz.zone.SOUTHERN_SAN_DORIA
+    elseif city == 1 then
+        -- Bastok
+        zone = tpz.zone.PORT_BASTOK
+    elseif city == 2 then
+        -- Windurst
+        zone = tpz.zone.WINDURST_WOODS
+    else
+        return
+    end
+    
+    local is_first = false
+    local sandoria_rank = getNationRank(tpz.nation.SANDORIA)
+    local bastok_rank = getNationRank(tpz.nation.BASTOK)
+    local windurst_rank = getNationRank(tpz.nation.WINDURST)
+    -- For this purpose ties for 1st do not count
+    if  (city == 0 and sandoria_rank == 1 and bastok_rank ~= 1 and windurst_rank ~= 1) or
+        (city == 1 and sandoria_rank ~= 1 and bastok_rank == 1 and windurst_rank ~= 1) or
+        (city == 2 and sandoria_rank ~= 1 and bastok_rank ~= 1 and windurst_rank == 1) then
+        is_first = true
+    end
+    
+    for i,v in pairs(zones[zone].npc.CIRCUS) do
+    
+        local npc = GetNPCByID(v)
+        
+        if npc then
+            
+            if updateType == 1 then
+                -- Make them all vanish
+                npc:setStatus(tpz.status.DISAPPEAR)
+            elseif updateType == 2 then
+                -- Spawn only in 1st place nation
+                if is_first then
+                    npc:setStatus(tpz.status.NORMAL)
+                else
+                    npc:setStatus(tpz.status.DISAPPEAR)
+                end
+            end
+
+        end
+        
+    end
+    
 end
 
 -----------------------------------
@@ -1221,10 +1278,10 @@ tpz.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
         end
     elseif option == 6 then
         --player:delCP(fee)
-		--player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
-		if player:delGil(fee) then
+        --player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
+        if player:delGil(fee) then
             player:PrintToPlayer("Conquest point fees for teleports are out-of-WotG-era. The gil fee option has been used instead.",29)
-			player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
+            player:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.HOME_NATION, 0, 1, 0, region)
         end
     end
 end
@@ -1263,12 +1320,12 @@ tpz.conquest.teleporterOnEventFinish = function(player, csid, option, teleporter
     if csid == teleporterEvent then
         -- TELEPORT WITH GIL
         -- if option >= 5 and option <= 23 then
-			local region = option - 5
-			
-			if option >= 1029 and option <= 1047 then
-				player:PrintToPlayer("Conquest point fees for teleports are out-of-WotG-era. The gil fee option has been used instead.",29)
-				region = option - 1029
-			end
+            local region = option - 5
+            
+            if option >= 1029 and option <= 1047 then
+                player:PrintToPlayer("Conquest point fees for teleports are out-of-WotG-era. The gil fee option has been used instead.",29)
+                region = option - 1029
+            end
             
             local fee = tpz.conquest.outpostFee(player, region)
 
@@ -1297,13 +1354,94 @@ end
 -- (PUBLIC) conquest messages
 -----------------------------------
 
+tpz.conquest.getMessageOffsetByRank = function(sandoria_rank, bastok_rank, windurst_rank)
+    local offset = 0
+    
+    -- Sanitize bad input: Someone has to be first
+    while sandoria_rank > 1 and bastok_rank > 1 and windurst_rank > 1 do
+        sandoria_rank = sandoria_rank - 1
+        bastok_rank = bastok_rank - 1
+        windurst_rank = windurst_rank - 1
+    end
+    
+    if sandoria_rank == 1 then
+        offset = offset + 7 -- 7 (San d'Oria 1st, Windurst 2nd, Bastok 3rd)
+        if windurst_rank == 1 then
+            offset = offset + 1 -- 8 (All tied 1st)
+            if bastok_rank ~= 1 then
+                offset = offset + 1 -- 9 (San d'Oria and Windurst tied 1st, Bastok 3rd)
+            end
+        elseif bastok_rank == 2 then
+            offset = offset + 3 -- 10 (San d'Oria 1st, Bastok and Windurst tied 2nd)
+            if windurst_rank == 3 then
+                offset = offset + 1 -- 11 (San d'Oria 1st, Bastok 2nd, Windurst 3rd)
+            end
+        elseif bastok_rank == 1 then
+            offset = offset + 5 -- 12 (All tied 1st, for some reason that message shows up twice in DATs)
+            if windurst_rank ~= 1 then
+                offset = offset + 1 -- 13 (San d'Oria and Bastok tied 1st, Windurst 3rd)
+            end
+        elseif windurst_rank == 3 then
+            offset = offset + 3 -- 10 (San d'Oria 1st, Bastok and Windurst tied 2nd)
+        end
+    elseif bastok_rank == 1 then
+        offset = offset + 15 -- 15 (Bastok 1st, San d'Oria 2nd, Windurst 3rd)
+        if windurst_rank == 2 then
+            offset = offset + 3 -- 18 (Bastok 1st, San d'Oria and Windurst tied 2nd)
+            if sandoria_rank == 3 then
+                offset = offset + 1 -- 19 (Bastok 1st, Windurst 2nd, San d'Oria 3rd)
+            end
+        elseif windurst_rank == 1 then
+            offset = offset + 6 -- 21 (Bastok and Windurst tied 1st, San d'Oria 3rd)
+        elseif sandoria_rank == 3 then
+            offset = offset + 3 -- 18 (Bastok 1st, San d'Oria and Windurst tied 2nd)
+        end
+    elseif windurst_rank == 1 then
+        offset = offset + 23 -- 23 (Windurst 1st, San d'Oria 2nd, Bastok 3rd)
+        if bastok_rank == 2 then
+            offset = offset + 3 -- 26 (Windurst 1st, San d'Oria and Bastok tied 2nd)
+            if sandoria_rank == 3 then
+                offset = offset + 1 -- 27 (Windurst 1st, Bastok 2nd, San d'Oria 3rd)
+            end
+        elseif sandoria_rank == 3 then
+            offset = offset + 3 -- 26 (Windurst 1st, San d'Oria and Bastok tied 2nd)
+        end
+    end
+    
+    return offset
+end
+
 tpz.conquest.onConquestUpdate = function(zone, updatetype)
     local region = zone:getRegionID()
-    local owner = GetRegionOwner(region)
+    local owner = 0xFF
+    if region <= 18 then
+        owner = GetRegionOwner(region)
+    elseif region == 19 then
+        owner = 0
+    elseif region == 20 then
+        owner = 1
+    elseif region == 21 then
+        owner = 2
+    end
     local players = zone:getPlayers()
     local messageBase = zones[zone:getID()].text.CONQUEST_BASE
     local ranking = getConquestBalance()
+    local windurst_rank = bit.rshift(bit.band(ranking, 0x30), 4)
+    local bastok_rank = bit.rshift(bit.band(ranking, 0x0C), 2)
+    local sandoria_rank = bit.band(ranking, 0x03)
 
+    -- There are very few zones that don't have conquest messages,
+    -- so don't announce in those regions.
+    if messageBase == nil then
+        return
+    end
+    -- Zones that are not subject to conquest do not receive regular
+    -- updates every earth hour, they only receive an update on
+    -- the actual weekly tally.
+    if region > 18 and updatetype ~= CONQUEST_TALLY_START and updatetype ~= CONQUEST_TALLY_END then
+        return
+    end
+    
     for _, player in pairs(players) do
 
         -- CONQUEST TALLY START
@@ -1316,54 +1454,20 @@ tpz.conquest.onConquestUpdate = function(zone, updatetype)
 
             if owner <= 3 then
                 player:messageText(player, messageBase + 2 + owner, 5) -- This region is currently under {NATION} control.
-            else
-                player:messageText(player, messageBase + 6, 5) -- This region is currently under beastman control.
+            elseif owner == 4 then
+                player:messageText(player, messageBase + 6, 5) -- This region is currently neutral.
             end
 
-            local offset = 0
-            if bit.band(ranking, 0x03) == 0x01 then
-                offset = offset + 7 -- 7
-                if bit.band(ranking, 0x30) == 0x10 then
-                    offset = offset + 1 -- 8
-                    if bit.band(ranking, 0x0C) == 0x0C then
-                        offset = offset + 1 -- 9
-                    end
-                elseif bit.band(ranking, 0x0C) == 0x08 then
-                    offset = offset + 3 -- 10
-                    if bit.band(ranking, 0x30) == 0x30 then
-                        offset = offset + 1 -- 11
-                    end
-                elseif bit.band(ranking, 0x0C) == 0x04 then
-                    offset = offset + 6 -- 13
-                end
-            elseif bit.band(ranking, 0x0C) == 0x04 then
-                offset = offset + 15 -- 15
-                if bit.band(ranking, 0x30) == 0x02 then
-                    offset = offset + 3 -- 18
-                    if bit.band(ranking, 0x03) == 0x03 then
-                        offset = offset + 1 -- 19
-                    end
-                elseif bit.band(ranking, 0x30) == 0x10 then
-                    offset = offset + 6 -- 21
-                end
-            elseif bit.band(ranking, 0x30) == 0x10 then
-                offset = offset + 23 -- 23
-                if bit.band(ranking, 0x0C) == 0x08 then
-                    offset = offset + 3 -- 26
-                    if bit.band(ranking, 0x30) == 0x30 then
-                        offset = offset + 1 -- 27
-                    end
-                end
-            end
-
+            local offset = tpz.conquest.getMessageOffsetByRank(sandoria_rank, bastok_rank, windurst_rank)
+            
             player:messageText(player, messageBase + offset, 5) -- Global balance of power:
 
             if isConquestAlliance() then
-                if bit.band(ranking, 0x03) == 0x01 then
+                if sandoria_rank == 1 then
                     player:messageText(player, messageBase + 50, 5) -- Bastok and Windurst have formed an alliance.
-                elseif bit.band(ranking, 0x0C) == 0x04 then
+                elseif bastok_rank == 1 then
                     player:messageText(player, messageBase + 51, 5) -- San d'Oria and Windurst have formed an alliance.
-                elseif bit.band(ranking, 0x30) == 0x10 then
+                elseif windurst_rank == 1 then
                     player:messageText(player, messageBase + 52, 5) -- San d'Oria and Bastok have formed an alliance.
                 end
             end
@@ -1393,11 +1497,11 @@ tpz.conquest.onConquestUpdate = function(zone, updatetype)
             end
 
             if isConquestAlliance() then
-                if bit.band(ranking, 0x03) == 0x01 then
+                if sandoria_rank == 1 then
                     player:messageText(player, messageBase + 53, 5) -- Bastok and Windurst are currently allies.
-                elseif bit.band(ranking, 0x0C) == 0x04 then
+                elseif bastok_rank == 1 then
                     player:messageText(player, messageBase + 54, 5) -- San d'Oria and Windurst are currently allies.
-                elseif bit.band(ranking, 0x30) == 0x10 then
+                elseif windurst_rank == 1 then
                     player:messageText(player, messageBase + 55, 5) -- San d'Oria and Bastok are currently allies.
                 end
             end

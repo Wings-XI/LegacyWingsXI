@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Bearclaw_Pinnacle/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)

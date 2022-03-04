@@ -21,6 +21,7 @@ zones[tpz.zone.THE_ASHU_TALIF] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         TIME_TO_COMPLETE              = 7403, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED                = 7404, -- The mission has failed. Leaving area.
         TIME_REMAINING_MINUTES        = 7408, -- ime remaining: <number> [minute/minutes] (Earth time).

@@ -16,5 +16,5 @@ end
 
 function onMobDespawn(mob)
     mob:setRespawnTime(7200) -- 2 hours
-    SetServerVariable("SteamCleaner_Respawn", (os.time() + respawn))
+    SetServerVariable("SteamCleaner_Respawn", (os.time() + 7200))
 end

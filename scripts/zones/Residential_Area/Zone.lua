@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Residential_Area/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -16,6 +17,10 @@ function onZoneIn(player, prevZone)
     player:setPos(0, 0, 0, 192)
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    -- Disabled: Mog Houses actually use message offsets of the parent zone
 end
 
 function onRegionEnter(player, region)

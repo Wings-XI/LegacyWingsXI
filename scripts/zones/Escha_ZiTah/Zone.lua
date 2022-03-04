@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Escha_ZiTah/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 -----------------------------------
 
@@ -25,6 +26,7 @@ function onZoneIn(player, prevZone)
 end
 
 function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

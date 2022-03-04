@@ -20,6 +20,7 @@ zones[tpz.zone.JUGNER_FOREST_S] =
         LOGIN_CAMPAIGN_UNDERWAY  = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER             = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         LOGGING_IS_POSSIBLE_HERE = 7069, -- Logging is possible here if you have <item>.
+        CONQUEST_BASE            = 7268, -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET   = 7362, -- You can't fish here.
         ALREADY_OBTAINED_TELE    = 7698, -- You already possess the gate crystal for this telepoint.
         VOKBROKGREG_THREE_TIMES  = 7799, -- Vokbrokgreg! Vokbrokgreg! Vokbrokgreg

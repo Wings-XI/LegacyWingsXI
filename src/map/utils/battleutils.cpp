@@ -1686,7 +1686,7 @@ namespace battleutils
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
-        ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
+        // ShowDebug("pdif min: %f ... pdif max: %f ... ratio: %f ... pDIF final: %f\n", lowerLimit, upperLimit, cRatio, pDIF);
 
         return pDIF;
     }
@@ -1915,11 +1915,13 @@ namespace battleutils
         return (int8)std::clamp((int32)((base + (int32)skillmodifier) * blockRateMod), 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 * blockRateMod), 100)));
     }
 
-    uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
+     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
-        if ((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 &&
-            PWeapon->getSkillType() != SKILL_HAND_TO_HAND) && PDefender->PAI->IsEngaged())
+        // An Entity using not using HtH and not a mob (weapon ID 0 signifies a mob/pet)
+        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) || 
+             (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)) // Valoredge Puppet
+            && PDefender->PAI->IsEngaged()) // Everyone has to be engaged to parry
         {
             JOBTYPE job = PDefender->GetMJob();
 
@@ -1935,6 +1937,12 @@ namespace battleutils
                 // {(Parry Skill x .125) + ([Player Agi - Enemy Dex] x .125)} x Diff
 
                 float skill = (float)(PDefender->GetSkill(SKILL_PARRY) + PDefender->getMod(Mod::PARRY) + PWeapon->getILvlParry());
+
+                // Somewhat redundant check but if the enclosing if ever changes...
+                if (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)
+                {
+                    skill = PDefender->GetSkill(SKILL_AUTOMATON_MELEE); // Not aware of anyway for a puppet to get a bonus beyond skill.  Automatons use melee skill for everything
+                }
 
                 float diff = 1.0f + (((float)PDefender->GetMLevel() - PAttacker->GetMLevel()) / 15.0f);
 
@@ -2590,7 +2598,7 @@ namespace battleutils
     *                                                                       *
     ************************************************************************/
 
-    uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack)
+    uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack, bool isRanged)
     {
         int32 crithitrate = 5;
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES, 0) ||
@@ -2648,11 +2656,18 @@ namespace battleutils
 
             int32 attackerdex = PAttacker->DEX();
             int32 defenderagi = PDefender->AGI();
-
-            crithitrate += GetDexCritBonus(PAttacker, PDefender);
+            int32 dAGI = PAttacker->AGI() - defenderagi;
+            if (isRanged && dAGI > 0)
+            {
+                crithitrate += dAGI/10; // The floor from integer division is intended
+            }
+            else
+            {
+                crithitrate += GetDexCritBonus(PAttacker, PDefender);
+            }
             crithitrate += PAttacker->getMod(Mod::CRITHITRATE);
             crithitrate += PDefender->getMod(Mod::ENEMYCRITRATE);
-            crithitrate = std::clamp(crithitrate, 0, 100);
+            crithitrate = std::clamp(crithitrate, 5, 100);
         }
         return (uint8)crithitrate;
     }
@@ -2663,44 +2678,36 @@ namespace battleutils
         int32 attackerdex = PAttacker->DEX();
         int32 defenderagi = PDefender->AGI();
         int32 dDex = attackerdex - defenderagi;
-        int32 dDexAbs = std::abs(dDex);
-        int32 sign = 1;
-
-        if (dDex < 0)
-        {
-            // Target has higher AGI so this will be a decrease to crit rate
-            sign = -1;
-        }
 
         // Default to +0 crit rate for a delta of 0-6
         int32 critRate = 0;
-        if (dDexAbs > 39)
+        if (dDex > 39)
         {
             // 40-50: (dDEX-35)
-            critRate = dDexAbs - (int32)35;
+            critRate = dDex - (int32)35;
         }
-        else if (dDexAbs > 29)
+        else if (dDex > 29)
         {
             // 30-39: +4
             critRate = 4;
         }
-        else if (dDexAbs > 19)
+        else if (dDex > 19)
         {
             // 20-29: +3
             critRate = 3;
         }
-        else if (dDexAbs > 13)
+        else if (dDex > 13)
         {
             // 14-19: +2
             critRate = 2;
         }
-        else if (dDexAbs > 6)
+        else if (dDex > 6)
         {
             critRate = 1;
         }
 
-        // Crit rate delta from stats caps at +-15
-        return std::min(critRate, static_cast<int32>(15)) * sign;
+        // Crit rate delta from stats caps at +15
+        return std::min(critRate, static_cast<int32>(15));
     }
 
     /************************************************************************
@@ -6510,34 +6517,18 @@ namespace battleutils
         {
             PChar = (CCharEntity*)PEntity;
         }
-        else // im an automaton, use xbow values
+        else // im an automaton, use throwing values as per https://ffxiclopedia.fandom.com/wiki/Sharpshot_Frame?oldid=1086352
         {
-            // dist 0~1
-            if (distance < 1.0f)
-                return 0.65f;
-
-            // linear 65% to 75% dist 1~3
-            if (distance < 3.0f)
-                return 0.65f + (distance - 1.0f) * 5.0f / 100.0f;
-
-            // linear 75% to 87.5% dist 3~5
-            if (distance < 5.0f)
-                return 0.75f + (distance - 3.0f) * 6.25f / 100.0f;
-
-            // linear 87.5% to 100% dist 5~6
-            if (distance < 6.0f)
-                return 0.875f + (distance - 5.0f) * 12.5f / 100.0f;
-
-            // constant 100% dist 6~10
-            if (distance < 10.0f)
+            // dist 0~3
+            if (distance <= 3.0f) // on wings, the automaton runs up and stops around 2.7 so not punishing players for an auto who stops short.
                 return 1.0f;
 
-            // linear 100% to 84% dist 10~25
-            if (distance < 25.0f)
-                return 1.0f - (distance - 10.0f) * 1.0666f / 100.0f;
+            // linear drop off 1% per yalm
+            if (distance <= 25.0f)
+                return 1.0f - (distance / 100.0f);
 
-            // constant 84% dist 25+
-            return 0.84f;
+            // constant 75% dist 25+
+            return 0.75f;
         }
 
         // 352 = normal ... 576 = squarely ... 577 = strikes true ... 353 = critical ... 354 = miss

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Nashmau/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/zone")
@@ -28,6 +29,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

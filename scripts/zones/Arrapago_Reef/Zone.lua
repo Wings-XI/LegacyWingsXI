@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Arrapago_Reef/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
@@ -42,6 +43,10 @@ end
 function afterZoneIn(player)
     player:entityVisualPacket("1pb1")
     player:entityVisualPacket("2pb1")
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

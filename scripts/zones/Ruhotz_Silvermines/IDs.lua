@@ -22,6 +22,7 @@ zones[tpz.zone.RUHOTZ_SILVERMINES] =
         TIME_REMAINING_MINUTES        = 7150, -- Time remaining: ≺Numeric Parameter 0≻ ≺Singular/Plural Choice (Parameter 0)≻[minute/minutes] (Earth time).
         TIME_REMAINING_SECONDS        = 7151, -- Time remaining: ≺Numeric Parameter 0≻ ≺Singular/Plural Choice (Parameter 0)≻[second/seconds] (Earth time).
         PARTY_FALLEN                  = 7152, -- All party members have fallen in battle. Exiting in ≺Numeric Parameter 0≻ ≺Singular/Plural Choice (Parameter 0)≻[minute/minutes].
+        CONQUEST_BASE                 = 7154, -- Tallying conquest results...
         MADE_YOUR_PEACE               = 7492, -- Have you made your peace with the Goddess?
         STUDENT_BECOME_MASTER         = 7493, -- Inconceivable!  The student has become...the master...
         UNLEARNT_SPRAT                = 7494, -- You unlearnt sprat!   Excessive studies are hampering your progress!    Ahahaha!

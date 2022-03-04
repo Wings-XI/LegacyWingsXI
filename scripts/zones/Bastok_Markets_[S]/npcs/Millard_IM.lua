@@ -28,7 +28,7 @@ function onTrigger(player, npc)
     -- end
 
     if (medalRank == 0) then
-        player:startEvent(14)
+        player:startEvent(14, 1)
     elseif player:getCampaignAllegiance() == 2 then
         -- Event Option 2 Denotes Bastok Allegience --
         player:startEvent(13, 2, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)

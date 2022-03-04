@@ -16,6 +16,7 @@ zones[tpz.zone.ILRUSI_ATOLL] =
         GIL_OBTAINED                  = 6389, -- Obtained <number> gil.
         KEYITEM_OBTAINED              = 6391, -- Obtained key item: <keyitem>.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         PLAYER_OBTAINS_ITEM           = 7311, -- <name> obtains <item>!
         ASSAULT_START_OFFSET          = 7446, -- USE ONLY to chose the right starting text for the right assault
         TIME_TO_COMPLETE              = 7507, -- You have <number> [minute/minutes] (Earth time) to complete this mission.

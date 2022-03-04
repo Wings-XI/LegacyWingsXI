@@ -52,6 +52,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/char_update.h"
 #include "../packets/chat_message.h"
 #include "../packets/conquest_map.h"
+#include "../packets/campaign_map.h"
 #include "../packets/delivery_box.h"
 #include "../packets/inventory_item.h"
 #include "../packets/inventory_assign.h"
@@ -4379,6 +4380,7 @@ namespace charutils
                 (region >= 28 && region <= 32))
             {
                 charutils::AddPoints(PChar, "imperial_standing", (int32)(exp * 0.1f));
+                CConquestPacket::CMFlushCache();
                 PChar->pushPacket(new CConquestPacket(PChar));
             }
 
@@ -4388,7 +4390,8 @@ namespace charutils
                 (region >= 33 && region <= 40))
             {
                 charutils::AddPoints(PChar, "allied_notes", (int32)(exp * 0.1f));
-                PChar->pushPacket(new CConquestPacket(PChar));
+                PChar->pushPacket(new CCampaignPacket(PChar, 0));
+                PChar->pushPacket(new CCampaignPacket(PChar, 1));
             }
 
             // Cruor Drops in Abyssea zones.
@@ -6151,18 +6154,20 @@ namespace charutils
 
         if (PWeapon && PWeapon->isUnlockable() && !PWeapon->isUnlocked())
         {
+            // Handle unlocking nyzul ws based on floor progress
+            int wsid = MythicWeaponSkillUsableOnBaseWeapon(PChar, PWeapon);
+            if (wsid > 0 && hasWeaponSkill(PChar, wsid) == 0)
+            {
+                addWeaponSkill(PChar, wsid);
+                PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+            }
+
+            // Handle all other unlock weapons
             if (PWeapon->addWsPoints(wspoints))
             {
                 // weapon is now broken
                 PChar->PLatentEffectContainer->CheckLatentsWeaponBreak(slotid);
                 PChar->pushPacket(new CCharStatsPacket(PChar));
-
-                int wsid = MythicWeaponSkillUsableOnBaseWeapon(PChar, PWeapon);
-                if (wsid > 0 && hasWeaponSkill(PChar, wsid) == 0)
-                {
-                    addWeaponSkill(PChar, wsid);
-                    PChar->pushPacket(new CCharAbilitiesPacket(PChar));   
-                }
             }
             
             char extra[sizeof(PWeapon->m_extra) * 2 + 1];

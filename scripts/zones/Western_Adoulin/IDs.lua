@@ -23,6 +23,7 @@ zones[tpz.zone.WESTERN_ADOULIN] =
         YOU_CAN_NOW_BECOME      = 7009, -- You can now become a <geomancer/rune fencer>!
         MOG_LOCKER_OFFSET       = 7569, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         RETRIEVE_DIALOG_ID      = 7742, -- You retrieve <item> from the porter moogle's care.
+        CONQUEST_BASE           = 8121, -- Tallying conquest results...
         HOMEPOINT_SET           = 8301, -- Home point set!
         HUJETTE_SHOP_TEXT       = 9790, -- How about indulging in some regional delicacies while taking a load off those tired feet of yours?
         PRETERIG_SHOP_TEXT      = 9791, -- Want a way to beat the heat? Try some of the tasty beverages we have on hand.
