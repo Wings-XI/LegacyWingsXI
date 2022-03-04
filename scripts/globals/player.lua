@@ -2,6 +2,7 @@ require("scripts/globals/gear_sets")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/hook")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
@@ -149,6 +150,12 @@ local function CharCreate(player)
     player:setCharVar("spokePyropox", 1) -- Pyropox introduction
     player:setCharVar("TutorialProgress", 1) -- Has not started tutorial
     player:setNewPlayer(true) -- apply new player flag
+    
+    -- If we have a hook for extra customizations call it now
+    if hookOnCharCreate ~= nil then
+        hookOnCharCreate(player)
+    end
+
 end
 
 -----------------------------------

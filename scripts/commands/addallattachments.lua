@@ -22,7 +22,10 @@ local ValidAttachments = {
 }
 
 local function AddAllAttachments(player)
-    player:setPetName(tpz.pet.type.AUTOMATON, 118)
+    local petName = player:getAutomatonName()
+    if petName == nil or petName == "" then
+        player:setPetName(tpz.pet.type.AUTOMATON, 118)
+    end
     for i = 1, #ValidAttachments do
         player:unlockAttachment(ValidAttachments[i])
     end

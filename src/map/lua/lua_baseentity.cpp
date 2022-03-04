@@ -331,8 +331,9 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 
     CHAT_MESSAGE_TYPE messageType = (lua_isnil(L, 2) || !lua_isnumber(L, 2)) ? MESSAGE_SYSTEM_1 : (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2);
     std::string name = (lua_isnil(L, 3) || !lua_isstring(L, 3)) ? std::string() : lua_tostring(L, 3);
+    int priority = lua_isnumber(L, 4) ? (int)lua_tointeger(L, 4) : 0xFF;
 
-    ((CCharEntity*)m_PBaseEntity)->pushPacket(new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1), name));
+    ((CCharEntity*)m_PBaseEntity)->pushPacket(new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1), name), priority);
     return 0;
 }
 
@@ -1583,6 +1584,40 @@ inline int32 CLuaBaseEntity::getID(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getGroupID()
+*  Purpose : Get Entity's (mob's) group ID
+*  Example : npc:getGroupID(); target:getGroupID()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGroupID(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    const char* Query = "SELECT groupid FROM mob_spawn_points WHERE mobid = %u;";
+
+    int32 ret = Sql_Query(SqlHandle, Query, (uint32)m_PBaseEntity->id);
+
+    if (ret == SQL_ERROR)
+    {
+        return 0;
+    }
+
+    if (Sql_NextRow(SqlHandle) != SQL_SUCCESS)
+    {
+        return 0;
+    }
+
+    lua_pushinteger(L, Sql_GetUIntData(SqlHandle, 0));
+    return 1;
+}
+
+/************************************************************************
 *  Function: getShortID()
 *  Purpose : Gets the ID of a Target
 *  Example : mob:getShortID(); pet:getShortID()
@@ -1847,6 +1882,69 @@ inline int32 CLuaBaseEntity::getCurrentAction(lua_State* L)
     {
         lua_pushnil(L);
     }
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getAggro()
+*  Purpose : true if aggressive, false if not
+*  Example : mob:getAggro()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getAggro(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushboolean(L, ((CMobEntity*)m_PBaseEntity)->m_Aggro);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getLink()
+*  Purpose : true if links, false if not
+*  Example : mob:getLink()
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getLink(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushboolean(L, ((CMobEntity*)m_PBaseEntity)->m_Link);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getDetectionType(type)
+*  Purpose : Check how the mob detects players (for aggro / link)
+*  Example : mob:getDetectionType(1)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getDetectionType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushinteger(L, ((CMobEntity*)m_PBaseEntity)->m_Detects);
 
     return 1;
 }
@@ -4576,14 +4674,18 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 7));
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         std::string name = lua_tostring(L, 1);
-        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
-        uint8 zeni = (uint8) lua_tointeger(L, 3);
-        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
-        uint8 fp = (uint8) lua_tointeger(L, 5);
+        uint8 fauna = (uint8)lua_tointeger(L, 2);
+        uint8 subOfInterest = (uint8)lua_tointeger(L, 3);
+        uint8 ecoSystem = (uint8)lua_tointeger(L, 4);
+        uint8 zeni = (uint8) lua_tointeger(L, 5);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 6);
+        uint8 fp = (uint8) lua_tointeger(L, 7);
 
         // Deduct Blank Plate
         if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
@@ -4597,7 +4699,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         // Used Soul Plate
         CItem* PItem = itemutils::GetItem(2477);
         PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        PItem->setSoulPlateData(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {
@@ -12090,6 +12192,33 @@ inline int32 CLuaBaseEntity::getNotorietyList(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: isMobOwner()
+ *  Purpose : Check if a player is the owner of a mob or if the mob is unowned
+ *  Example : if player:isMobOwner(mob) then ...
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::isMobOwner(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity->GetBaseEntity()->objtype != TYPE_MOB);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CMobEntity* PMob = (CMobEntity*)PLuaBaseEntity->GetBaseEntity();
+    bool isOwner = PChar->IsMobOwner((CBattleEntity*)PMob);
+
+    lua_pushboolean(L, isOwner);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: addStatusEffect(effect, power, tick, duration)
 *  Purpose : Adds a specified Status Effect to the Entity
 *  Example : target:addStatusEffect(EFFECT_ACCURACY_DOWN,20,3,60)
@@ -16769,6 +16898,21 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
 }
 
 /************************************************************************
+*  Function: checkVersionMismatch()
+*  Purpose : Checks for a client version mismatch
+*  Example : player:checkVersionMismatch()
+*  Notes   : no args
+************************************************************************/
+inline int32 CLuaBaseEntity::checkVersionMismatch(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    lua_pushboolean(L, PChar->m_clientVerMismatch);
+    return 1;
+}
+
+/************************************************************************
 *  Function: setMobLevelRange(minlv,maxlv)
 *  Purpose : Used by developer GMs to set a mob's level range
 *  Example : target:setMobLevelRange(1,3)
@@ -18401,6 +18545,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     // Object Identification
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getID),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGroupID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getShortID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCursorTarget),
 
@@ -18417,6 +18562,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentAction),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAggro),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLink),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDetectionType),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,lookAt),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearTargID),
@@ -18850,6 +18998,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateClaim),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasEnmity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getNotorietyList),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMobOwner),
 
     // Status Effects
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addStatusEffect),
@@ -19107,6 +19256,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeUpdate),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeRegister),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeCancel),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, checkVersionMismatch),
 
     {nullptr,nullptr}
 };

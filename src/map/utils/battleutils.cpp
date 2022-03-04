@@ -1915,11 +1915,13 @@ namespace battleutils
         return (int8)std::clamp((int32)((base + (int32)skillmodifier) * blockRateMod), 5, (shieldSize == 6 ? 100 : std::max<int32>((int32)(65 * blockRateMod), 100)));
     }
 
-    uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
+     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
-        if ((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 &&
-            PWeapon->getSkillType() != SKILL_HAND_TO_HAND) && PDefender->PAI->IsEngaged())
+        // An Entity using not using HtH and not a mob (weapon ID 0 signifies a mob/pet)
+        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) || 
+             (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)) // Valoredge Puppet
+            && PDefender->PAI->IsEngaged()) // Everyone has to be engaged to parry
         {
             JOBTYPE job = PDefender->GetMJob();
 
@@ -1935,6 +1937,12 @@ namespace battleutils
                 // {(Parry Skill x .125) + ([Player Agi - Enemy Dex] x .125)} x Diff
 
                 float skill = (float)(PDefender->GetSkill(SKILL_PARRY) + PDefender->getMod(Mod::PARRY) + PWeapon->getILvlParry());
+
+                // Somewhat redundant check but if the enclosing if ever changes...
+                if (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)
+                {
+                    skill = PDefender->GetSkill(SKILL_AUTOMATON_MELEE); // Not aware of anyway for a puppet to get a bonus beyond skill.  Automatons use melee skill for everything
+                }
 
                 float diff = 1.0f + (((float)PDefender->GetMLevel() - PAttacker->GetMLevel()) / 15.0f);
 
@@ -6509,34 +6517,18 @@ namespace battleutils
         {
             PChar = (CCharEntity*)PEntity;
         }
-        else // im an automaton, use xbow values
+        else // im an automaton, use throwing values as per https://ffxiclopedia.fandom.com/wiki/Sharpshot_Frame?oldid=1086352
         {
-            // dist 0~1
-            if (distance < 1.0f)
-                return 0.65f;
-
-            // linear 65% to 75% dist 1~3
-            if (distance < 3.0f)
-                return 0.65f + (distance - 1.0f) * 5.0f / 100.0f;
-
-            // linear 75% to 87.5% dist 3~5
-            if (distance < 5.0f)
-                return 0.75f + (distance - 3.0f) * 6.25f / 100.0f;
-
-            // linear 87.5% to 100% dist 5~6
-            if (distance < 6.0f)
-                return 0.875f + (distance - 5.0f) * 12.5f / 100.0f;
-
-            // constant 100% dist 6~10
-            if (distance < 10.0f)
+            // dist 0~3
+            if (distance <= 3.0f) // on wings, the automaton runs up and stops around 2.7 so not punishing players for an auto who stops short.
                 return 1.0f;
 
-            // linear 100% to 84% dist 10~25
-            if (distance < 25.0f)
-                return 1.0f - (distance - 10.0f) * 1.0666f / 100.0f;
+            // linear drop off 1% per yalm
+            if (distance <= 25.0f)
+                return 1.0f - (distance / 100.0f);
 
-            // constant 84% dist 25+
-            return 0.84f;
+            // constant 75% dist 25+
+            return 0.75f;
         }
 
         // 352 = normal ... 576 = squarely ... 577 = strikes true ... 353 = critical ... 354 = miss
