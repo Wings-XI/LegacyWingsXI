@@ -2769,7 +2769,7 @@ INSERT INTO `mob_groups` VALUES(60, 2659, 65, 'Mikiruru', 0, 128, 0, 0, 0, 58, 6
 INSERT INTO `mob_groups` VALUES(61, 2881, 65, 'Nikilulu', 0, 128, 0, 0, 0, 58, 63, 0);
 INSERT INTO `mob_groups` VALUES(62, 2657, 65, 'Mikiluru', 0, 128, 0, 0, 0, 58, 63, 0);
 INSERT INTO `mob_groups` VALUES(63, 2658, 65, 'Mikirulu', 0, 128, 0, 0, 0, 58, 63, 0);
-INSERT INTO `mob_groups` VALUES(64, 691, 65, 'Chamrosh', 0, 128, 450, 9000, 0, 78, 80, 0);
+INSERT INTO `mob_groups` VALUES(64, 691, 65, 'Chamrosh', 0, 128, 450, 14000, 10000, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(65, 2089, 65, 'Iriri_Samariri', 0, 128, 1367, 28000, 0, 84, 84, 0);
 INSERT INTO `mob_groups` VALUES(66, 4295, 65, 'Wartkin', 0, 128, 0, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(67, 2541, 65, 'Mamool_Jas_Wyvern', 300, 128, 0, 0, 0, 77, 78, 0);
