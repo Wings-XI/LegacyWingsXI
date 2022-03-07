@@ -26,6 +26,7 @@ local elementalSpells = {{235,144},     -- burn, fire
 -----------------------------------
 
 function onMobInitialize(mob)
+    mob:setUnkillable(false)
     mob:setMobMod(tpz.mobMod.MP_BASE, 300)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 30)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
