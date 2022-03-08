@@ -368,6 +368,7 @@ int32 do_init(int32 argc, char** argv)
     mobutils::LoadCustomMods();
     daily::LoadDailyItems();
     roeutils::init();
+    conquest::RefreshInfluenceMultipliers();
 
     ShowStatus("do_init: loading zones");
     zoneutils::LoadZoneList();
@@ -2775,6 +2776,7 @@ int32 map_config_default()
     map_config.instances_treat_GMs_as_players = true;
     map_config.pl_penalty = 10;
     map_config.conquest_auth_zone = 245; // Lower Jeuno
+    map_config.enable_influence_boost = false;
     return 0;
 }
 
@@ -3331,12 +3333,18 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
                 map_config.instances_treat_GMs_as_players = atoi(w2);
-            } else if (strcmp(w1, "pl_penalty") == 0)
+            }
+            else if (strcmp(w1, "pl_penalty") == 0)
             {
                 map_config.pl_penalty = atoi(w2);
-            } else if (strcmp(w1, "conquest_auth_zone") == 0)
+            }
+            else if (strcmp(w1, "conquest_auth_zone") == 0)
             {
                 map_config.conquest_auth_zone = atoi(w2);
+            }
+            else if (strcmp(w1, "enable_influence_boost") == 0)
+            {
+                map_config.enable_influence_boost = atoi(w2);
             }
             else
             {

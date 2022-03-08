@@ -41,6 +41,10 @@ namespace conquest
 
     bool g_is_mid_tally = false;
 
+    float g_sandoria_influence_mult = 1.0;
+    float g_bastok_influence_mult = 1.0;
+    float g_windurst_influence_mult = 1.0;
+
 	/************************************************************************
     *                                                                       *
     *	UpdateConquestSystem		                                        *
@@ -122,6 +126,9 @@ namespace conquest
     void GainInfluencePoints(CCharEntity* PChar, uint32 points)
     {
         points += (uint32)(PChar->getMod(Mod::CONQUEST_REGION_BONUS) / 100.0);
+        if (map_config.enable_influence_boost) {
+            points = (uint32)((float)points * GetInfluenceMultiplier(PChar->profile.nation));
+        }
         conquest::UpdateInfluencePoints(points, PChar->profile.nation, PChar->loc.zone->GetRegionID());
     }
 
@@ -291,7 +298,79 @@ namespace conquest
         return GetInfluenceRanking(san_inf, bas_inf, win_inf, 0);
     }
 
-	/************************************************************************
+
+    /************************************************************************
+    *   GetInfluenceMultiplier                                              *
+    *	In case custom influence boost is enabled, get the current          *
+    *   influence boost of a given nation.                                  *
+    ************************************************************************/
+
+    float GetInfluenceMultiplier(uint8 nation)
+    {
+        if (!map_config.enable_influence_boost) {
+            return 1.0;
+        }
+        switch (nation) {
+        case 0:
+            // San d'Oira
+            return g_sandoria_influence_mult;
+        case 1:
+            return g_bastok_influence_mult;
+        case 2:
+            return g_windurst_influence_mult;
+        default:
+            return 1.0;
+        }
+    }
+
+    /************************************************************************
+    *   GetInfluenceMultiplier                                              *
+    *	In case custom influence boost is enabled, get the current          *
+    *   influence boost of a given nation.                                  *
+    ************************************************************************/
+
+    void RefreshInfluenceMultipliers()
+    {
+        if (!map_config.enable_influence_boost) {
+            return;
+        }
+        std::string Query = "SELECT tally_time, sandoria_rank, bastok_rank, windurst_rank FROM conquest_record ORDER BY tally_time DESC;";
+
+        int32 ret = Sql_Query(SqlHandle, Query.c_str());
+        // For the sake of this check if a nation hasn't had 1st place
+        // for over 10 weeks it's as if it never had 1st place at all.
+        uint8 sandoria_first = 10;
+        uint8 bastok_first = 10;
+        uint8 windurst_first = 10;
+        uint8 i = 0;
+
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+        {
+            while ((Sql_NextRow(SqlHandle) == SQL_SUCCESS) && (i < 10))
+            {
+                uint8 sandoria_rank = Sql_GetIntData(SqlHandle, 1);
+                uint8 bastok_rank = Sql_GetIntData(SqlHandle, 2);
+                uint8 windurst_rank = Sql_GetIntData(SqlHandle, 3);
+
+                if (sandoria_rank == 1 && sandoria_first > i) {
+                    sandoria_first = i;
+                }
+                if (bastok_rank == 1 && bastok_first > i) {
+                    bastok_first = i;
+                }
+                if (windurst_rank == 1 && windurst_first > i) {
+                    windurst_first = i;
+                }
+
+                i++;
+            }
+            g_sandoria_influence_mult = 1.0 + (0.5 * sandoria_first);
+            g_bastok_influence_mult = 1.0 + (0.5 * bastok_first);
+            g_windurst_influence_mult = 1.0 + (0.5 * windurst_first);
+        }
+    }
+
+    /************************************************************************
     *   UpdateConquestGM                                                    *
     *	Update region control		                                        *
     *   just used by GM command			                                    *
@@ -399,6 +478,8 @@ namespace conquest
                 PChar->PLatentEffectContainer->CheckLatentsZone();
             });
         });
+
+        RefreshInfluenceMultipliers();
 
 		ShowDebug(CL_CYAN"Conquest Weekly Update is finished\n" CL_RESET);
 

@@ -806,6 +806,7 @@ public:
     int32 lsConciergeCancel(lua_State *L);   // handle Concierge's Linkshell Cancellation
 
     int32 checkVersionMismatch(lua_State* L);  // Check whether the player is using the correct client version
+    int32 getInfluenceMult(lua_State*);        // If influence boost is enabled, get the boost of the player's nation
 };
 
 #endif
