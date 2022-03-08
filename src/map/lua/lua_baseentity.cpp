@@ -61,6 +61,7 @@
 #include "../treasure_pool.h"
 #include "../weapon_skill.h"
 #include "../rpcmapper.h"
+#include "../conquest_system.h"
 
 #include "../ai/ai_container.h"
 
@@ -16430,6 +16431,34 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
     return 1;
 }
 
+
+/************************************************************************
+*  Function: getInfluenceMult()
+*  Purpose : If influence boost is enabled, get the influence boost of the player's nation.
+*  Example : local mult = player:getInfluenceMult()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getInfluenceMult(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (PChar == nullptr && PChar->objtype != TYPE_PC) {
+        return 0;
+    }
+
+    std::string line;
+    if (map_config.enable_influence_boost) {
+        lua_pushnumber(L, conquest::GetInfluenceMultiplier(PChar->profile.nation));
+    }
+    else {
+        lua_pushnumber(L, 1.0);
+    }
+
+    return 1;
+}
+
+
 /************************************************************************
 *  Function: friendListMain()
 *  Purpose : where it begins
@@ -19258,6 +19287,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeCancel),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, checkVersionMismatch),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getInfluenceMult),
 
     {nullptr,nullptr}
 };
