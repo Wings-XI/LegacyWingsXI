@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer(msg)
     player:PrintToPlayer("!setcontainer {container} {size} {player}")
     player:PrintToPlayer("Inventories: 4 (Mog Locker), 5 (Mog Satchel), 6 (Mog Sack), 7 (Mog Case)")
-    player:PrintToPlayer("Wardroves: 8 (inventory 1), 10 (inventory 2), 11 (inventory 3), 12 (inventory 4)")
+    player:PrintToPlayer("Wardrobes: 8 (Wardrobe 1), 10 (Wardrobe 2), 11 (Wardrobe 3), 12 (Wardrobe 4)")
 end
 
 function onTrigger(player, inventory, inventorySize, target)
@@ -23,7 +23,7 @@ function onTrigger(player, inventory, inventorySize, target)
     if inventory == nil and inventorySize == nil then
         player:PrintToPlayer("!setcontainer {container} {size} {player}")
         player:PrintToPlayer("Inventories: 4 (Mog Locker), 5 (Mog Satchel), 6 (Mog Sack), 7 (Mog Case)")
-        player:PrintToPlayer("Wardroves: 8 (inventory 1), 10 (inventory 2), 11 (inventory 3), 12 (inventory 4)")
+        player:PrintToPlayer("Wardrobes: 8 (Wardrobe 1), 10 (Wardrobe 2), 11 (Wardrobe 3), 12 (Wardrobe 4)")
         return
     elseif inventorySize == nil then
         player:PrintToPlayer("Please specify a inventory size.")
