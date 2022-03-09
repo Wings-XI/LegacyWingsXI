@@ -31,7 +31,7 @@ function onTrigger(player, npc)
         player:startEvent(288, 0, 4387)
 
     -- ONION RINGS
-    elseif player:getCharVar("OnionRings") == 1 then
+    elseif player:getCharVar("OnionRings") == 1 and player:hasKeyItem(tpz.ki.OLD_RING) then
         player:startEvent(289)
 
     -- WILD CARD

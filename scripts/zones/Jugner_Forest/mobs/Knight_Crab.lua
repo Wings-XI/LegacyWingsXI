@@ -7,6 +7,10 @@ mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
 -----------------------------------
 
+function onMobInitialize(mob)    
+    mob:setMobMod(tpz.mobMod.CHARMABLE, 0)
+end
+
 function onMobSpawn(mob)
     -- If respawn and variable is not 0, then it respawned before someone killed all 10 crabs
     local KingArthro = GetMobByID(ID.mob.KING_ARTHRO)

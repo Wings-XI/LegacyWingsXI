@@ -41,11 +41,11 @@ zones[tpz.zone.YUHTUNGA_JUNGLE] =
         HARVESTING_IS_POSSIBLE_HERE = 7704,  -- Harvesting is possible here if you have <item>.
         SOMETHING_IS_BURIED_HERE    = 7747,  -- It looks like something is buried here. If you had <item> you could dig it up.
         SWARM_APPEARED              = 7820, -- A swarm has appeared!
-        PLAYER_OBTAINS_ITEM         = 7860,  -- <name> obtains <item>!
-        UNABLE_TO_OBTAIN_ITEM       = 7861,  -- You were unable to obtain the item.
-        PLAYER_OBTAINS_TEMP_ITEM    = 7862,  -- <name> obtains the temporary item: <item>!
-        ALREADY_POSSESS_TEMP        = 7863,  -- You already possess that temporary item.
-        NO_COMBINATION              = 7868,  -- You were unable to enter a combination.
+        PLAYER_OBTAINS_ITEM         = 7865,  -- <name> obtains <item>!
+        UNABLE_TO_OBTAIN_ITEM       = 7866,  -- You were unable to obtain the item.
+        PLAYER_OBTAINS_TEMP_ITEM    = 7867,  -- <name> obtains the temporary item: <item>!
+        ALREADY_POSSESS_TEMP        = 7868,  -- You already possess that temporary item.
+        NO_COMBINATION              = 7873,  -- You were unable to enter a combination.
         REGIME_REGISTERED           = 10046, -- New training regime registered!
         COMMON_SENSE_SURVIVAL       = 12040, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },

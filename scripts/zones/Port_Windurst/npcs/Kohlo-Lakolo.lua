@@ -104,7 +104,7 @@ Fame       = player:getFameLevel(WINDURST);
             player:startEvent(498);
         end
     elseif (OnionRings == QUEST_COMPLETED) then
-        if (NeedToZone == false and Fame >= 5) then
+        if (NeedToZone == false) then
             player:startEvent(496);
         else
             player:startEvent(440);

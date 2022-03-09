@@ -13958,7 +13958,13 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         // setup AI
         PPet->Spawn();
-
+        
+        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
+        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
+        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+        {
+            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
+        }
     }
     return 0;
 }
