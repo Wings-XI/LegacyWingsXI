@@ -543,18 +543,12 @@ void CCharEntity::setPetZoningInfo()
 {
     if (PPet->objtype == TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
+        if (TYPE_PET != PETTYPE_JUG_PET)
         {
-        case PETTYPE_JUG_PET:
-        case PETTYPE_AUTOMATON:
-        case PETTYPE_WYVERN:
             petZoningInfo.petHP = PPet->health.hp;
             petZoningInfo.petTP = PPet->health.tp;
             petZoningInfo.petMP = PPet->health.mp;
             petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-            break;
-        default:
-            break;
         }
     }
 }

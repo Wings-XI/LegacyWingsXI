@@ -445,16 +445,9 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
         // only respawn pet in valid zones
         if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->m_moghouseID)
         {
-            switch (PChar->petZoningInfo.petType)
+            if (PChar->petZoningInfo.petType != PETTYPE_JUG_PET)
             {
-                case PETTYPE_AUTOMATON:
-                case PETTYPE_JUG_PET:
-                case PETTYPE_WYVERN:
-                    petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
-                    break;
-
-                default:
-                    break;
+                petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
             }
         }
     }
