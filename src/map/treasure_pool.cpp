@@ -190,7 +190,7 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity, CDynamisHandle
     if (PDynamisHandler && PDynamisHandler->DynamisGetCurrencyAutoDistribute() && this->GetPoolType() == TREASUREPOOL_ZONE)
     {
         CItem* PItem = itemutils::GetItemPointer(ItemID);
-        if (PItem && !(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)))
+        if (PItem && (PItem->isRare() == false) && (PItem->isEx() == false))
         {
             for (uint32 i = 0; i < members.size(); ++i)
             {
@@ -218,7 +218,7 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity, CDynamisHandle
         for (SlotID = 0; SlotID < 10; ++SlotID)
         {
             CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
-            if ((PItem) && (!(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest))
+            if ((PItem) && (PItem->isRare() == false) && (PItem->isEx() == false) && m_PoolItems[SlotID].TimeStamp < oldest)
             {
                 FreeSlotID = SlotID;
                 oldest = m_PoolItems[SlotID].TimeStamp;
@@ -230,7 +230,7 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity, CDynamisHandle
             for (SlotID = 0; SlotID < 10; ++SlotID)
             {
                 CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
-                if ((PItem) && (!(PItem->getFlag() & (ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest))
+                if ((PItem) && (PItem->isEx() == false) && m_PoolItems[SlotID].TimeStamp < oldest)
                 {
                     FreeSlotID = SlotID;
                     oldest = m_PoolItems[SlotID].TimeStamp;
@@ -517,7 +517,7 @@ void CTreasurePool::CheckTreasureItem(time_point tick, uint8 SlotID, CCharEntity
             std::vector<CCharEntity*> candidates;
             for (uint8 i = 0; i < members.size(); ++i)
             {
-                if (itemutils::GetItem(m_PoolItems[SlotID].ID)->getFlag() & ITEM_FLAG_RARE && charutils::HasItem(members[i], m_PoolItems[SlotID].ID))
+                if (itemutils::GetItem(m_PoolItems[SlotID].ID)->isRare() && charutils::HasItem(members[i], m_PoolItems[SlotID].ID))
                     continue;
 
                 if (members[i]->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && !HasPassedItem(members[i], SlotID))

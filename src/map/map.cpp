@@ -2777,6 +2777,10 @@ int32 map_config_default()
     map_config.pl_penalty = 10;
     map_config.conquest_auth_zone = 245; // Lower Jeuno
     map_config.enable_influence_boost = false;
+    map_config.disable_rare_item_limit = false;
+    map_config.storage_mission_unlock = true;
+    map_config.storage_ignore_features = false;
+    map_config.force_enable_mog_locker = false;
     return 0;
 }
 
@@ -3345,6 +3349,22 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "enable_influence_boost") == 0)
             {
                 map_config.enable_influence_boost = atoi(w2);
+            }
+            else if (strcmp(w1, "disable_rare_item_limit") == 0)
+            {
+                map_config.disable_rare_item_limit = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_mission_unlock") == 0)
+            {
+                map_config.storage_mission_unlock = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_ignore_features") == 0)
+            {
+                map_config.storage_ignore_features = atoi(w2);
+            }
+            else if (strcmp(w1, "force_enable_mog_locker") == 0)
+            {
+                map_config.force_enable_mog_locker = atoi(w2);
             }
             else
             {

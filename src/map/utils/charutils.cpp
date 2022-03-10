@@ -1348,7 +1348,7 @@ namespace charutils
             delete PItem;
             return 0;
         }
-        if (PItem->getFlag() & ITEM_FLAG_RARE)
+        if (PItem->isRare())
         {
             if (HasItem(PChar, PItem->getID()))
             {
@@ -1666,8 +1666,11 @@ namespace charutils
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
         {
             CItem* PItem = PChar->UContainer->GetItem(slotid);
+            if (!PItem) {
+                continue;
+            }
 
-            if (PItem != nullptr && PItem->getFlag() & ITEM_FLAG_RARE)
+            if (PItem->isRare())
             {
                 if (HasItem(PTarget, PItem->getID()))
                 {
@@ -4661,6 +4664,10 @@ namespace charutils
 
     void UpdateMissionStorage(CCharEntity* PChar, bool recovery)
     {
+        if (!map_config.storage_mission_unlock) {
+            return;
+        }
+
         uint8 currentMW1 = 0;
         uint8 currentMW2 = 0;
         uint8 currentMW3 = 0;
@@ -5581,6 +5588,9 @@ namespace charutils
     }
 
     bool hasMogLockerAccess(CCharEntity* PChar) {
+        if (map_config.force_enable_mog_locker) {
+            return true;
+        }
         char fmtQuery[] = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' ";
         Sql_Query(SqlHandle, fmtQuery, PChar->id, "mog-locker-expiry-timestamp");
 

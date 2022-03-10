@@ -97,6 +97,9 @@ public:
     bool        isType(ITEM_TYPE);
     bool        isSubType(ITEM_SUBTYPE);
 
+    bool        isRare();
+    bool        isEx();
+
     void        setID(uint16 );
     void        setSubID(uint16);
     void        setSubType(uint8);
