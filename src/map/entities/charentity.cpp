@@ -635,21 +635,21 @@ bool CCharEntity::hasAccessToStorage(uint8 LocationID)
     }
     if (LocationID == LOC_MOGSATCHEL) {
         // Requires secure account (2FA)
-        if (m_accountFeatures & 0x01) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x01) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE3) {
         // Requires account feature
-        if (m_accountFeatures & 0x04) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x04) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE4) {
         // Requires account feature
-        if (m_accountFeatures & 0x08) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x08) {
             return true;
         }
         return false;

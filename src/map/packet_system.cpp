@@ -1601,7 +1601,7 @@ void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PCh
         if (PItem != nullptr && PItem->getID() == itemID && quantity + PItem->getReserve() <= PItem->getQuantity())
         {
             // whoever commented above lied about ex items
-            if (PItem->getFlag() & ITEM_FLAG_EX)
+            if (PItem->isEx())
                 return;
 
             if (PItem->isSubType(ITEM_LOCKED))
@@ -2952,7 +2952,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             if ((PItem != nullptr) &&
                 !(PItem->isSubType(ITEM_LOCKED)) &&
                 !(PItem->getFlag() & ITEM_FLAG_NOAUCTION) &&
-                !(PItem->getFlag() & ITEM_FLAG_EX) &&
+                (PItem->isEx() == false) &&
                 (PItem->getAHCat() != 0) &&
                 (PItem->getQuantity() >= quantity))
             {
@@ -3052,7 +3052,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                 if (PItem != nullptr)
                 {
-                    if (PItem->getFlag() & ITEM_FLAG_RARE)
+                    if (PItem->isRare())
                     {
                         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
                         {
@@ -7265,7 +7265,7 @@ void SmallPacket0x10A(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    if ((PItem != nullptr) && !(PItem->getFlag() & ITEM_FLAG_EX) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
+    if ((PItem != nullptr) && (PItem->isEx() == false) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
     {
         Sql_Query(SqlHandle, "UPDATE char_inventory SET bazaar = %u WHERE charid = %u AND location = 0 AND slot = %u;", price, PChar->id, slotID);
 
