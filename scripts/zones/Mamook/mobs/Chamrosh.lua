@@ -139,7 +139,7 @@ function determineSpellUpgrade(spellID)
         return spellID + 1
     elseif (spellID >= 421 and spellID <= 422) then -- Elegy
         return spellID + 1
-        
+    end
 
     return spellID
 end
