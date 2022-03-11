@@ -450,6 +450,9 @@ end
 
 tpz.znm.soultrapper.onItemUse = function(target, item, user)
     -- TODO: There should be a failure chance - but finding any kind of rate seems difficult
+    -- https://wikiwiki.jp/ffxi/NM/%E8%8A%B1%E9%B3%A5%E9%A2%A8%E6%9C%88#p1c57836
+    -- Is there a message?
+
     -- Determine Zeni starting value
     local zeni = tpz.znm.soultrapper.getZeniValue(target, user)
 
