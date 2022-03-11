@@ -7,7 +7,7 @@ require("scripts/globals/status")
 cmdprops =
 {
     permission = 3,
-    parameters = "iis"
+    parameters = "is"
 }
 
 function error(player, msg)
@@ -42,6 +42,6 @@ function onTrigger(player, slot, target)
     end
 
     -- get weaponskill points
-    player:PrintToPlayer(string.format('Weapon %s has %s weapon skill points.', item:getName(), item:getWeaponskillPoints()))
+    player:PrintToPlayer(string.format('%s\'s weapon %s has %s weapon skill points.', target:getName(), item:getName(), item:getWeaponskillPoints()))
     
 end

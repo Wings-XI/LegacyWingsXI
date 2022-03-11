@@ -187,6 +187,11 @@ struct map_config_t
     bool  instances_treat_GMs_as_players; // Set to 1 to allow characters with GM Level 2 or greater to count towards getChars inside an instance
     uint16 pl_penalty;
     uint16 conquest_auth_zone;        // Instance containing this zone does conquest tally calculation
+    bool  enable_influence_boost;     // Nations that have not had 1st place for a long time receive an influence boost
+    bool   disable_rare_item_limit;   // Disable all limits on rare items (can hold multiple)
+    bool   storage_mission_unlock;    // Storage unlocks with mission progress
+    bool   storage_ignore_features;   // Ignore the account features for Mog Satchel and Mog Wardrobe 3+4
+    bool   force_enable_mog_locker;   // Mog locker always enabled
 };
 
 /************************************************************************

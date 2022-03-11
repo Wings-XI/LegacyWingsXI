@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/settings")
+require("scripts/globals/status")
 
 cmdprops =
 {
@@ -21,6 +22,11 @@ function onTrigger(player)
     player:PrintToPlayer("== SERVER HELP MENU ==", 29, "", -1)
     player:PrintToPlayer("!help", 29, "", -1)
     player:PrintToPlayer("  Displays this help message.", 29, "", -1)
+    if IsCustomizationEnabled(tpz.cuztomization.INFLUENCE) then
+        player:PrintToPlayer("!influence", 29, "", -1)
+        player:PrintToPlayer("  Displays your nation's current influence multiplier. Nations that", 29, "", -1)
+        player:PrintToPlayer("  repeatably come in 2nd or 3rd in conquest will accumulate a bonus.", 29, "", -1)
+    end
     player:PrintToPlayer("!flist", 29, "", -1)
     player:PrintToPlayer("  The custom in-game friends list. Type !flist help for a list", 29, "", -1)
     player:PrintToPlayer("!unstuck", 29, "", -1)

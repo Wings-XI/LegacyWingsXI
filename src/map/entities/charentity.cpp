@@ -543,18 +543,12 @@ void CCharEntity::setPetZoningInfo()
 {
     if (PPet->objtype == TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
+        if (TYPE_PET != PETTYPE_JUG_PET)
         {
-        case PETTYPE_JUG_PET:
-        case PETTYPE_AUTOMATON:
-        case PETTYPE_WYVERN:
             petZoningInfo.petHP = PPet->health.hp;
             petZoningInfo.petTP = PPet->health.tp;
             petZoningInfo.petMP = PPet->health.mp;
             petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-            break;
-        default:
-            break;
         }
     }
 }
@@ -641,21 +635,21 @@ bool CCharEntity::hasAccessToStorage(uint8 LocationID)
     }
     if (LocationID == LOC_MOGSATCHEL) {
         // Requires secure account (2FA)
-        if (m_accountFeatures & 0x01) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x01) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE3) {
         // Requires account feature
-        if (m_accountFeatures & 0x04) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x04) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE4) {
         // Requires account feature
-        if (m_accountFeatures & 0x08) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x08) {
             return true;
         }
         return false;
