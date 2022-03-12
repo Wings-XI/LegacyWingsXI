@@ -30,8 +30,15 @@ function onMobWeaponSkill(target, mob, skill)
         end
     end
 
-    local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*wDmgMultiplier, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
+    local baseDmg = mob:getWeaponDmg()*wDmgMultiplier
 
+    if (mob:getID() >= 17072173 and mob:getID() <= 17072177) then -- Cheese Hoarder Gigiroon
+        dmgmod = 1
+        -- Cheese's bombs do flat dmg pre-shell and barfira (500 or 100)
+        baseDmg = mob:getLocalVar("MineDamage")
+    end
+
+    local info = MobMagicalMove(mob, target, skill, baseDmg, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
     return dmg
