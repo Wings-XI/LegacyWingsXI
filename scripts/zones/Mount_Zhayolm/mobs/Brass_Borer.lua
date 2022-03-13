@@ -50,6 +50,9 @@ function onMobFight(mob, target)
             mob:delMod(tpz.mod.MDEF, 10)
             mob:setLocalVar("formTime", os.time() + math.random(43, 47))
         end
+        if (mob:getMobMod(tpz.mobMod.SPECIAL_SKILL) ~= 0) then
+            mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 0)
+        end
     else
         -- Cannonball Mode
         if mob:AnimationSub() == 0 then -- ball up
@@ -67,14 +70,9 @@ function onMobFight(mob, target)
             mob:setLocalVar("usedDefBoost", 1)
         end
 
-        if mob:getLocalVar("usedDefBoost") > 0 and os.time() > mob:getLocalVar("CannonballTime") and mob:checkDistance(target) <= 20 then
-            mob:useMobAbility(1818) -- Cannonball
-            local volleyNumber = mob:getLocalVar("volleyNumber")
-            if (volleyNumber >= 3) then
-                mob:setLocalVar("volleyNumber", 0)
-                volleyNumber = 0
-            end
-            mob:setLocalVar("CannonballTime", os.time() + 5 + volleyNumber * 5)
+        -- Cannonball Mode attacks with Cannonball
+        if (mob:getMobMod(tpz.mobMod.SPECIAL_SKILL) ~= 1818) then
+            mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 1818)
         end
     end
 
