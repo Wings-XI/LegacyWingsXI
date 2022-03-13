@@ -6268,6 +6268,8 @@ INSERT INTO `mob_pools` VALUES(6893, 'Ice_Elemental', 'Ice_Elemental', 103, _bin
 INSERT INTO `mob_pools` VALUES(6894, 'Earth_Elemental', 'Earth_Elemental', 101, _binary 0x00000b0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 1, 0, 24, 0, 508, 1155, 0, 0, 13, 0, 256, 101);
 INSERT INTO `mob_pools` VALUES(6895, 'Dark_Elemental', 'Dark_Elemental', 100, _binary 0x00000f0000000000000000000000000000000000, 8, 8, 11, 240, 100, 0, 1, 0, 0, 0, 65, 0, 291, 131, 0, 0, 18, 0, 0, 100);
 INSERT INTO `mob_pools` VALUES(6896, 'Water_Elemental', 'Water_Elemental', 106, _binary 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 1, 0, 16, 0, 343, 131, 0, 0, 15, 0, 256, 106);
+INSERT INTO `mob_pools` VALUES(6897, 'Shatterskull_Mippdapp', 'Shatterskull_Mippdapp', 334, _binary 0x0000020800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 1, 32, 3835, 157, 0, 0, 0, 0, 0, 334);
+
 --
 -- Indexes for dumped tables
 --
