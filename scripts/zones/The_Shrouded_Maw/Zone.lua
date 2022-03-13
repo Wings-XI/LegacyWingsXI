@@ -15,7 +15,8 @@ function onZoneIn(player, prevZone)
     local cs = -1
     
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(-300, -1.5, -220, 62)
+        player:setPos(-302.185, -2.5, -260.060, 62)
+--        player:setPos(-300, -1.5, -220, 62)
     end
 
     if (player:getCurrentMission(COP) == tpz.mission.id.cop.DARKNESS_NAMED and  player:getCharVar("PromathiaStatus") == 1) then
