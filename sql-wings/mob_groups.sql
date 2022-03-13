@@ -4335,7 +4335,7 @@ INSERT INTO `mob_groups` VALUES(18, 3912, 85, 'Thunder_Elemental', 300, 0, 0, 30
 INSERT INTO `mob_groups` VALUES(19, 3011, 85, 'Orcish_Firebelcher', 300, 0, 0, 13000, 5000, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(20, 5554, 85, 'Ashmaker_Gotblut', 0, 32, 177, 0, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(21, 5559, 85, 'Orcish_Warlord', 300, 0, 0, 8500, 9000, 79, 81, 0);
-INSERT INTO `mob_groups` VALUES(22, 3588, 85, 'Shatterskull_Mippdapp', 300, 0, 2232, 20000, 9000, 82, 82, 0);
+INSERT INTO `mob_groups` VALUES(22, 6897, 85, 'Shatterskull_Mippdapp', 0, 32, 2232, 10000, 9000, 82, 82, 0);
 INSERT INTO `mob_groups` VALUES(23, 3031, 85, 'Orcish_Protector', 300, 0, 0, 9000, 5000, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(24, 5230, 85, 'Orcish_Dreadnought_S', 300, 0, 0, 10000, 9000, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(25, 3036, 85, 'Orcish_Strategist', 300, 0, 0, 9000, 9000, 81, 83, 0);
@@ -4490,7 +4490,6 @@ INSERT INTO `mob_groups` VALUES(3683, 3566, 85, 'Shadowhand_Cuirassier', 0, 0, 0
 INSERT INTO `mob_groups` VALUES(3684, 3569, 85, 'Shadowhorn', 0, 128, 2220, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(3685, 3570, 85, 'Shadowhorn_Stormer', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3686, 3576, 85, 'Shadow_Eye', 0, 128, 0, 0, 0, 75, 80, 0);
-INSERT INTO `mob_groups` VALUES(3687, 3588, 85, 'Shatterskull_Mippdapp', 86400, 0, 2232, 0, 0, 84, 86, 0);
 INSERT INTO `mob_groups` VALUES(3688, 3672, 85, 'Slitherword_Razghogg', 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3689, 3730, 85, 'Spinebeak_Neckchopper', 0, 128, 0, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3690, 3765, 85, 'Steelbiter_Gudrud', 0, 128, 2328, 0, 0, 75, 80, 0);
