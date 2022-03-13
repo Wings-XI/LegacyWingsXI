@@ -22,6 +22,8 @@ function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:setMobMod(tpz.mobMod.ENCROACH_PLAYER, 1)
     mob:addMod(tpz.mod.REGAIN, 100) -- can be seen TPing with little to no interaction from players
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
 end
 
 function onMobFight(mob, target)
