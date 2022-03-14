@@ -30,6 +30,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/chat_message.h"
 #include "../packets/inventory_size.h"
 
+#include <vector>
+
 class CPetEntity;
 class CMobEntity;
 class CMeritPoints;
@@ -285,6 +287,10 @@ namespace charutils
     EYellCheckResult CanUseYell(CCharEntity* PChar);
     bool IsYellSpamFiltered(CCharEntity* PChar);
     void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason);
+
+    std::vector<uint32> GetConnectedChars();
+    int32 LogGil(time_point tick, CTaskMgr::CTask* PTask); // Log everyone connected player's current gil into a dedicated table
+
 };
 
 #endif // _CHARUTILS_H
