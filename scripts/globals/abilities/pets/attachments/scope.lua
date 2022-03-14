@@ -26,10 +26,10 @@ function onUpdate(pet, maneuvers)
     if maneuvers == 0 then
         updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 10)
     elseif maneuvers == 1 then
-        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 10)
+        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 20)
     elseif maneuvers == 2 then
-        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 10)
+        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 30)
     elseif maneuvers == 3 then
-        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 10)
+        updateModPerformance(pet, tpz.mod.RACC, 'scope_mod', 40)
     end
 end
