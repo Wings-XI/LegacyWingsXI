@@ -6818,4 +6818,50 @@ void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason)
     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, reason));
 }
 
+std::vector<uint32> GetConnectedChars()
+{
+    std::vector<uint32> charlist;
+
+    zoneutils::ForEachZone([&charlist](CZone* PZone)
+    {
+        PZone->ForEachChar([&charlist](CCharEntity* PChar)
+        {
+            charlist.push_back(PChar->id);
+        });
+    });
+
+    return charlist;
+}
+
+int32 LogGil(time_point tick, CTaskMgr::CTask* PTask)
+{
+    std::vector<uint32> charlist = GetConnectedChars();
+    uint32 num_chars = charlist.size();
+
+    if (num_chars == 0) {
+        // Nobody's home
+        ShowDebug("LogGil: Skipping, no players connected to server.\n");
+        return 0;
+    }
+
+    // Build a string representation of the character IDs
+    // currently connected in a format which can be used
+    // in a "WHERE IN" SQL statement.
+    std::string charlist_str = "(";
+    for (uint32 i = 0; i < num_chars; i++) {
+        if (i != 0) {
+            charlist_str += ", ";
+        }
+        charlist_str += std::to_string(charlist[i]);
+    }
+    charlist_str += ")";
+
+    // Yes, it can be done in a single query
+    std::string Query = "INSERT INTO char_gillog (charid, logtime, gil) (SELECT charid, NOW(), quantity FROM char_inventory WHERE charid IN " + charlist_str + " AND itemId = 65535);";
+    Sql_Query(SqlHandle, Query.c_str());
+    ShowDebug("LogGil: Logged gil of %u players.\n", num_chars);
+
+    return 0;
+}
+
 }; // namespace charutils
