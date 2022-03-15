@@ -117,6 +117,8 @@ end
 
 local function setupHarlequin(mob)
     mob:setLocalVar("CurrentFrame", harlequinFrameModelId)
+    mob:setModelId(mob:getLocalVar("CurrentFrame"))
+    mob:SetMagicCastingEnabled(true)
     mob:setMod(tpz.mod.UDMGPHYS, -50)
     mob:setMod(tpz.mod.UDMGRANGE, -50)
     mob:setMod(tpz.mod.UDMGMAGIC, -50)
@@ -226,6 +228,7 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    setupHarlequin(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
