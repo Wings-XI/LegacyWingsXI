@@ -120,7 +120,7 @@ local function setupHarlequin(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -50)
     mob:setMod(tpz.mod.UDMGRANGE, -50)
     mob:setMod(tpz.mod.UDMGMAGIC, -50)
-    mob:setSpellList(3) -- generic rdm - cureIV, dia, enfeebles
+    mob:setSpellList(525)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 35)
     mob:setMod(tpz.mod.UFASTCAST, 25)
     mob:setBehaviour(0) -- Standback disabled
