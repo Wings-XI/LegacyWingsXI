@@ -2397,7 +2397,7 @@ INSERT INTO `mob_groups` VALUES(85, 3057, 54, 'Ornery_Orobon', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(86, 2345, 54, 'Lamia_No19', 0, 128, 2996, 18000, 9000, 78, 78, 0);
 INSERT INTO `mob_groups` VALUES(87, 2360, 54, 'Lamias_Skeleton', 0, 128, 0, 5000, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(88, 2417, 54, 'Lil_Apkallu', 0, 128, 1523, 15000, 0, 82, 83, 0);
-INSERT INTO `mob_groups` VALUES(89, 4217, 54, 'Velionis', 0, 128, 2571, 15000, 0, 78, 80, 0);
+INSERT INTO `mob_groups` VALUES(89, 4217, 54, 'Velionis', 0, 128, 2571, 15000, 10000, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(90, 4490, 54, 'Zareehkl_the_Jubilant', 0, 128, 2794, 75000, 0, 85, 86, 0);
 INSERT INTO `mob_groups` VALUES(91, 2920, 54, 'Nuhn', 0, 128, 1828, 36000, 0, 86, 86, 0);
 INSERT INTO `mob_groups` VALUES(92, 5198, 54, 'Dimgruzub', 0, 128, 0, 0, 5000, 95, 95, 0);
