@@ -59,10 +59,12 @@ namespace conquest
     uint8	GetInfluenceGraphics(REGIONTYPE RegionID);	                // Get number for graphics in conquest menu (arrows)
     uint8   GetInfluenceRanking(int32 san_inf, int32 bas_inf, int32 win_inf, int32 bst_inf);
     uint8   GetInfluenceRanking(int32 san_inf, int32 bas_inf, int32 win_inf);
+    float   GetInfluenceMultiplier(uint8 nation);                       // If influence boost is enabled, get the current multiplier for a nation
 
     void	UpdateConquestGM(ConquestUpdate type);						// Update conquest system by GM (modify in the DB and use @updateconquest)
 	void	UpdateWeekConquest();										// Update conquest system every sunday
     int32   FinishUpdateWeekConquest(time_point tick, CTaskMgr::CTask* PTask); // Finish conquest calculation (automatically invoked 2:30 mins after UpdateWeekConquest)
+    void    RefreshInfluenceMultipliers();                              // If influence boost is enabled, refresh boost values from the database
 
     uint8	GetBalance(uint8 sandoria, uint8 bastok, uint8 windurst,	// Ranking for 3 nations
                        uint8 sandoria_prev, uint8 bastok_prev, uint8 windurst_prev);

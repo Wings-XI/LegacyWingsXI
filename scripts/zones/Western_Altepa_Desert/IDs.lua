@@ -34,11 +34,11 @@ zones[tpz.zone.WESTERN_ALTEPA_DESERT] =
         ZILART_MONUMENT            = 7349,  -- It is an ancient Zilart monument.
         SENSE_OMINOUS_PRESENCE     = 7390,  -- You sense an ominous presence...
         SOMETHING_IS_BURIED_HERE   = 7408,  -- It looks like something is buried here. If you had <item> you could dig it up.
-        PLAYER_OBTAINS_ITEM        = 7621,  -- <name> obtains <item>!
-        UNABLE_TO_OBTAIN_ITEM      = 7622,  -- You were unable to obtain the item.
-        PLAYER_OBTAINS_TEMP_ITEM   = 7623,  -- <name> obtains the temporary item: <item>!
-        ALREADY_POSSESS_TEMP       = 7624,  -- You already possess that temporary item.
-        NO_COMBINATION             = 7629,  -- You were unable to enter a combination.
+        PLAYER_OBTAINS_ITEM        = 7626,  -- <name> obtains <item>!
+        UNABLE_TO_OBTAIN_ITEM      = 7627,  -- You were unable to obtain the item.
+        PLAYER_OBTAINS_TEMP_ITEM   = 7628,  -- <name> obtains the temporary item: <item>!
+        ALREADY_POSSESS_TEMP       = 7629,  -- You already possess that temporary item.
+        NO_COMBINATION             = 7634,  -- You were unable to enter a combination.
         REGIME_REGISTERED          = 9807,  -- New training regime registered!
         COMMON_SENSE_SURVIVAL      = 11796, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },

@@ -77,6 +77,13 @@ namespace luautils
 {
     extern struct lua_State* LuaHandle;
 
+    enum ServerCustomization : uint8
+    {
+        // Nations that have not had 1st place for a long time receive influence boost
+        CUSTOMIZATION_INFLUENCE = 0,
+        CUSTOMIZATION_LAST
+    };
+
     int32 init();
     int32 free();
     int32 garbageCollect(); // performs a full garbage collecting cycle

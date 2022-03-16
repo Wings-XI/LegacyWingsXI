@@ -23,6 +23,7 @@
 
 #include "item.h"
 #include "../../common/utils.h"
+#include "../map.h"
 
 /************************************************************************
 *                                                                       *
@@ -150,6 +151,19 @@ void CItem::setSubType(uint8 subtype)
 bool CItem::isSubType(ITEM_SUBTYPE subtype)
 {
     return (m_subtype & subtype);
+}
+
+bool CItem::isRare()
+{
+    if (map_config.disable_rare_item_limit) {
+        return false;
+    }
+    return m_flag & ITEM_FLAG_RARE ? true : false;
+}
+
+bool CItem::isEx()
+{
+    return m_flag & ITEM_FLAG_EX ? true : false;
 }
 
 /************************************************************************

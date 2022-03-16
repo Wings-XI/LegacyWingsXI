@@ -727,7 +727,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 928] = function() return ( player:hasCompletedMission(COP, mi.cop.ANCIENT_VOWS) or (cop == mi.cop.ANCIENT_VOWS and copStat >= 2)                  ) end, -- Quest: Ouryu Cometh
         [1057] = function() return ( player:hasCompletedQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) or
                                    ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-                                     player:getCharVar('ApocalypseNigh') == 4)                                                                              ) end, -- Quest: Apocalypse Nigh
+                                     player:getCharVar('ApocalypseNigh') >= 4)                                                                              ) end, -- Quest: Apocalypse Nigh
         [1290] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- NW Apollyon
         [1291] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- SW Apollyon
         [1292] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.BLACK_CARD) and npcid == getEntranceOffset(1)      ) end, -- NE Apollyon
@@ -1013,7 +1013,7 @@ end
 
 function EventTriggerBCNM(player, npc)
     -- player:PrintToPlayer("EventTriggerBCNM")
-    
+
     -- don't allow players under level sync to enter
     if player:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
         local sync_error = BCNMGetLevelSyncError(player)
@@ -1058,7 +1058,7 @@ end
 -----------------------------------------------
 
 function EventUpdateBCNM(player, csid, option, extras)
-    --print(string.format("EventUpdateBCNM csid=%i option=%i", csid, option))
+    -- player:PrintToPlayer(string.format("EventUpdateBCNM csid=%i option=%i", csid, option))
 
     -- requesting a battlefield
     if csid == 32000 then
@@ -1082,8 +1082,6 @@ function EventUpdateBCNM(player, csid, option, extras)
         local partySize = 1
         switch (battlefieldId): caseof
         {
-            [704]  = function() area = math.random(1, 3) end, -- CoP 3-5, possible tile layouts
-            [706]  = function() area = math.random(1, 3) end -- Waking Dreams, possible tile layouts
             [1290] = function() area = 2 end, -- NW_Apollyon
             [1291] = function() area = 1 end, -- SW_Apollyon
             [1292] = function() area = 4 end, -- NE_Apollyon
@@ -1099,7 +1097,6 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
-
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
