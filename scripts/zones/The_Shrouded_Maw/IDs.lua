@@ -32,8 +32,8 @@ zones[tpz.zone.THE_SHROUDED_MAW] =
     spawn =
     {
             {-300.212,  -48.0177,    220.050 },  -- Player spawn points for area 1
-            {-60.222,   -8.0162,     -59.998 }   -- Player spawn points for area 2
-            {219.955,   31.9897,     -340.014 }  -- Player spawn points for area 3
+            {-60.222,   -8.0162,     -59.998 },   -- Player spawn points for area 2
+            {219.955,   31.9897,     -340.014}  -- Player spawn points for area 3
     },
 }
 
