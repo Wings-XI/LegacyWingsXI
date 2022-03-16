@@ -14,26 +14,21 @@ local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
 -- TODO: Diabolos Prime
 -- Note: Diabolos Prime fight drops all tiles at once.
 
-function closeAllTiles(mob)
-    -- Doesn't work so just close all tiles in all battlefields cause tile drops are disabled for now anyway
-    --local inst = mob:getBattlefield():getArea()
-    local inst = 0
-    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
-    for i = tile, tile + 21 do
-        local tilenpc = GetNPCByID(i)
-        if tilenpc then
-            tilenpc:setAnimation(tpz.anim.CLOSE_DOOR)
-        end
-    end
-end
 
 function onMobSpawn(mob)
-    closeAllTiles(mob)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:addMod(tpz.mod.ACC, 10)
+     local dBase = ID.mob.DIABOLOS_OFFSET
+    local dPrimeBase = dBase + 27
+    local triggerVal = math.random(35,75)
+    if mob:getID() >= dPrimeBase then dBase = dPrimeBase end  -- Prime "block" of mobs is offset 27 from CoP mobs
+        
+    local area = utils.clamp((mob:getID() - dBase) / 7 + 1, 1, 3)
+
+    mob:setLocalVar("TileTriggerHPP", triggerVal) -- Starting point for tile drops
+    mob:setLocalVar("Area", area)
+
     -- Only add these for the CoP Diabolos NOT Prime
     local copDiabolos = ID.mob.DIABOLOS_OFFSET
-    if mob:getID() == copDiabolos then
+    if mob:getID() >= copDiabolos and mob:getID() <= copDiabolos + 14 then  -- three possible instances of Diabolos
         mob:addMod(tpz.mod.INT, -50)
         mob:addMod(tpz.mod.MND, -50)
         mob:addMod(tpz.mod.ATTP, -15)
@@ -43,37 +38,41 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
-    local mobOffset = mob:getID() - ID.mob.DIABOLOS_OFFSET
-    if (mobOffset >= 0 and mobOffset <= 14) then
-        local inst = math.floor(mobOffset/7)
-
-        local tileDrops =
-        {
-            {10, "byc1", "bya1", "byY1"},
-            {20, "byc2", "bya2", "byY2"},
-            {30, "byc3", "bya3", "byY3"},
-            {40, "byc4", "bya4", "byY4"},
-            {50, "byc5", "bya5", "byY5"},
-            {65, "byc6", "bya6", "byY6"},
-            {75, "byc7", "bya7", "byY7"},
-            {90, "byc8", "bya8", "byY8"},
+    local area = mob:getLocalVar("Area") - 1 
+    local trigger = mob:getLocalVar("TileTriggerHPP")
+    
+    local tileDrops =
+        {   -- {Animation Area 1, Animation Area 2, Animation Area 3}
+            {"byc8", "bya8", "byb8"},
+            {"byc7", "bya7", "byb7"},
+            {"byc6", "bya6", "byb6"},
+            {"byc5", "bya5", "byb5"},
+            {"byc4", "bya4", "byb4"},
+            {"byc3", "bya3", "byb3"},
+            {"byc2", "bya2", "byb2"},
+            {"byc1", "bya1", "byb1"},
         }
 
-        local hpp = ((mob:getHP()/mob:getMaxHP())*100)
-        --for k, v in pairs(tileDrops) do
-        --    if (hpp < v[1]) then
-        --        local tileId = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst * 8) + (k - 1)
-        --        local tile = GetNPCByID(tileId)
-        --        if (tile:getAnimation() == tpz.anim.CLOSE_DOOR) then
-        --            SendEntityVisualPacket(tileId, v[inst+2])  -- Animation for floor dropping
-        --            SendEntityVisualPacket(tileId, "s123")     -- Tile dropping sound
-        --            tile:timer(5000, function(tile)
-        --                tile:setAnimation(tpz.anim.OPEN_DOOR)     -- Floor opens
-        --            end)
-        --        end
-        --        break
-        --    end
-        --end
+          local hpp = math.floor(mob:getHP()*100/mob:getMaxHP())
+
+    if hpp < trigger then   -- Trigger the tile drop events
+        mob:setLocalVar("TileTriggerHPP", -1)            -- Prevent tiles from being dropped twice
+        local tileBase = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area) * 8
+ 
+        for offset, animationSet in ipairs(tileDrops) do
+            local tileId = tileBase + offset - 1
+            local tile = GetNPCByID(tileId)
+
+            if tile:getLocalVar("Dropped") ~= 1 then
+                tile:setLocalVar("Dropped", 1)
+                SendEntityVisualPacket(tileId, animationSet[area + 1])     -- Animation for floor dropping
+                SendEntityVisualPacket(tileId, "s123")          -- Tile dropping sound
+ 
+                tile:timer(2750, function(tile)                 -- 2.7s second delay (ish)
+                    tile:setAnimation(tpz.anim.OPEN_DOOR)       -- Floor opens
+                end)
+            end
+        end
     end
 end
 
