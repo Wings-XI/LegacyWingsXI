@@ -29,12 +29,6 @@ zones[tpz.zone.THE_SHROUDED_MAW] =
     {
         DARKNESS_NAMED_TILE_OFFSET = 16818259, -- _0a0 in npc_list
     },
-    spawn =
-    {
-            {-300.212,  -48.0177,    220.050 },  -- Player spawn points for area 1
-            {-60.222,   -8.0162,     -59.998 }   -- Player spawn points for area 2
-            {219.955,   31.9897,     -340.014 }  -- Player spawn points for area 3
-    },
 }
 
 return zones[tpz.zone.THE_SHROUDED_MAW]

@@ -14,16 +14,10 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    local area = battlefield:getArea()
-    player:setLocalVar("Area", area)
-    local battlefieldId = battlefield:getID()
-
-    print(string.format("BattlefieldID: %s", battlefieldID))
-    -- Reset the tiles in that area to be closed, and tell them that they're closed
-    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
+    local inst = battlefield:getArea()
+    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
     for i = tile, tile + 7 do
         GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
-        GetNPCByID(i):setLocalVar("Dropped", 0)
     end
 end
 
