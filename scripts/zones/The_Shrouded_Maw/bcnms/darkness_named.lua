@@ -21,6 +21,7 @@ function onBattlefieldRegister(player, battlefield)
     local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
     for i = tile, tile + 7 do
         GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
+        GetNPCByID(i):setLocalVar("Dropped", 0)
     end
 end
 
