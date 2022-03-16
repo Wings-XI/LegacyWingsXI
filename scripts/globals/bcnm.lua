@@ -1082,6 +1082,8 @@ function EventUpdateBCNM(player, csid, option, extras)
         local partySize = 1
         switch (battlefieldId): caseof
         {
+            [704]  = function() area = math.random(1, 3) end, -- CoP 3-5, possible tile layouts
+            [706]  = function() area = math.random(1, 3) end, -- Waking Dreams, possible tile layouts
             [1290] = function() area = 2 end, -- NW_Apollyon
             [1291] = function() area = 1 end, -- SW_Apollyon
             [1292] = function() area = 4 end, -- NE_Apollyon
