@@ -9,19 +9,16 @@ require("scripts/globals/keyitems")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
+
 function onBattlefieldTick(battlefield, tick)
     tpz.battlefield.onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    local area = battlefield:getArea()
-    player:setLocalVar("Area", area)
-
-    -- Reset the tiles in that area to be closed, and tell them that they're closed
-    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
+    local inst = player:getBattlefield():getArea()
+    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
     for i = tile, tile + 7 do
         GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
-        GetNPCByID(i):setLocalVar("Dropped", 0)
     end
 end
 
@@ -49,5 +46,4 @@ function onEventFinish(player, csid, option)
         end
         player:addTitle(tpz.title.HEIR_TO_THE_REALM_OF_DREAMS)
     end
-    
 end
