@@ -237,6 +237,13 @@ function onTrigger(player, npc)
             player:startEvent(265) -- you go back for your automaton
         end
     elseif NoStringsAttached == QUEST_COMPLETED and player:getMainJob() == tpz.job.PUP then
+
+        player:PrintToPlayer("NOTICE: WOTG Requested items for PUP upgrades are different.",29)
+        player:PrintToPlayer("NOTICE: Valoredge frame will always be asked for, however you can turn in items.",29)
+        player:PrintToPlayer("For the frame you actually want.",29)
+        player:PrintToPlayer("Valoredge Turn in Change: Tigerfangs is needed not Patas.",29)
+        player:PrintToPlayer("Sharpshot Turn in Change: Repeating Crossbow is needed not Heavy Crossbow.",29)
+
         if attachments == 0 and attachmentStatus == 0 and playerLvl >= 10 then
             player:startEventString(620, automatonName, automatonName, automatonName, automatonName, attachments, 0, 0, 0, 0, 2185, 3, unlockedAttachments)
         elseif attachments == 0 and attachmentStatus == 1 then

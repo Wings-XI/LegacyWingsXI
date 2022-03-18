@@ -368,6 +368,7 @@ int32 do_init(int32 argc, char** argv)
     mobutils::LoadCustomMods();
     daily::LoadDailyItems();
     roeutils::init();
+    conquest::RefreshInfluenceMultipliers();
 
     ShowStatus("do_init: loading zones");
     zoneutils::LoadZoneList();
@@ -391,6 +392,9 @@ int32 do_init(int32 argc, char** argv)
     CTaskMgr::getInstance()->AddTask("garbage_collect", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, map_garbage_collect, 15min);
     CTaskMgr::getInstance()->AddTask("crash_recovery_end", server_clock::now() + 2s, nullptr, CTaskMgr::TASK_ONCE, crash_recovery_end);
     CTaskMgr::getInstance()->AddTask("disableForceCreateSession", server_clock::now() + 4s, nullptr, CTaskMgr::TASK_ONCE, disableForceCreateSession);
+    if (map_config.log_gil_period > 0) {
+        CTaskMgr::getInstance()->AddTask("log_gil", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, charutils::LogGil, std::chrono::minutes(map_config.log_gil_period));
+    }
 
     //ShowDebug("prunedSessionsList size is %u\n", (uint32)prunedSessionsList.size());
     if (prunedSessionsList.size() >= map_config.zone_crash_recovery_min_players)
@@ -2775,6 +2779,12 @@ int32 map_config_default()
     map_config.instances_treat_GMs_as_players = true;
     map_config.pl_penalty = 10;
     map_config.conquest_auth_zone = 245; // Lower Jeuno
+    map_config.enable_influence_boost = false;
+    map_config.disable_rare_item_limit = false;
+    map_config.storage_mission_unlock = true;
+    map_config.storage_ignore_features = false;
+    map_config.force_enable_mog_locker = false;
+    map_config.log_gil_period = 0;
     return 0;
 }
 
@@ -3331,12 +3341,38 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
             {
                 map_config.instances_treat_GMs_as_players = atoi(w2);
-            } else if (strcmp(w1, "pl_penalty") == 0)
+            }
+            else if (strcmp(w1, "pl_penalty") == 0)
             {
                 map_config.pl_penalty = atoi(w2);
-            } else if (strcmp(w1, "conquest_auth_zone") == 0)
+            }
+            else if (strcmp(w1, "conquest_auth_zone") == 0)
             {
                 map_config.conquest_auth_zone = atoi(w2);
+            }
+            else if (strcmp(w1, "enable_influence_boost") == 0)
+            {
+                map_config.enable_influence_boost = atoi(w2);
+            }
+            else if (strcmp(w1, "disable_rare_item_limit") == 0)
+            {
+                map_config.disable_rare_item_limit = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_mission_unlock") == 0)
+            {
+                map_config.storage_mission_unlock = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_ignore_features") == 0)
+            {
+                map_config.storage_ignore_features = atoi(w2);
+            }
+            else if (strcmp(w1, "force_enable_mog_locker") == 0)
+            {
+                map_config.force_enable_mog_locker = atoi(w2);
+            }
+            else if (strcmp(w1, "log_gil_period") == 0)
+            {
+                map_config.log_gil_period = atoi(w2);
             }
             else
             {

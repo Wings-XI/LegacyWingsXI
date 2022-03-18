@@ -331,7 +331,7 @@ function onTrigger(player, npc)
     local filter = 8388606 -- this hides everything but "I have changed my mind".  Noteably - this also hides GEO and RUN.
 
     for i=tpz.job.WAR, tpz.job.SCH do
-        if checkArtifactProgress(player, i) and checkArtifactGear(player, i) then
+        if checkArtifactProgress(player, i) then
             filter = filter - (bit.lshift(1, i))
         end
     end

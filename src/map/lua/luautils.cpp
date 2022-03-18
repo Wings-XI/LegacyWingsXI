@@ -5866,8 +5866,14 @@ namespace luautils
         uint32 customization = lua_tointeger(L, 1);
         bool enabled = false;
 
-        // Initial implementation is a stub, will be populated as the
-        // various customizations are pushed.
+        switch (static_cast<ServerCustomization>(customization))
+        {
+        case CUSTOMIZATION_INFLUENCE:
+            enabled = map_config.enable_influence_boost;
+            break;
+        default:
+            enabled = false;
+        }
 
         lua_pushboolean(L, enabled);
 

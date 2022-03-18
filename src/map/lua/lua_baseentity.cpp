@@ -61,6 +61,7 @@
 #include "../treasure_pool.h"
 #include "../weapon_skill.h"
 #include "../rpcmapper.h"
+#include "../conquest_system.h"
 
 #include "../ai/ai_container.h"
 
@@ -13957,7 +13958,13 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         // setup AI
         PPet->Spawn();
-
+        
+        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
+        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
+        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+        {
+            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
+        }
     }
     return 0;
 }
@@ -16429,6 +16436,34 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
     lua_pushinteger(L, PMob->isDead() ? PMob->m_THLvl : PMob->PEnmityContainer->GetHighestTH());
     return 1;
 }
+
+
+/************************************************************************
+*  Function: getInfluenceMult()
+*  Purpose : If influence boost is enabled, get the influence boost of the player's nation.
+*  Example : local mult = player:getInfluenceMult()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getInfluenceMult(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (PChar == nullptr && PChar->objtype != TYPE_PC) {
+        return 0;
+    }
+
+    std::string line;
+    if (map_config.enable_influence_boost) {
+        lua_pushnumber(L, conquest::GetInfluenceMultiplier(PChar->profile.nation));
+    }
+    else {
+        lua_pushnumber(L, 1.0);
+    }
+
+    return 1;
+}
+
 
 /************************************************************************
 *  Function: friendListMain()
@@ -19258,6 +19293,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeCancel),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, checkVersionMismatch),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getInfluenceMult),
 
     {nullptr,nullptr}
 };

@@ -1348,7 +1348,7 @@ namespace charutils
             delete PItem;
             return 0;
         }
-        if (PItem->getFlag() & ITEM_FLAG_RARE)
+        if (PItem->isRare())
         {
             if (HasItem(PChar, PItem->getID()))
             {
@@ -1666,8 +1666,11 @@ namespace charutils
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
         {
             CItem* PItem = PChar->UContainer->GetItem(slotid);
+            if (!PItem) {
+                continue;
+            }
 
-            if (PItem != nullptr && PItem->getFlag() & ITEM_FLAG_RARE)
+            if (PItem->isRare())
             {
                 if (HasItem(PTarget, PItem->getID()))
                 {
@@ -4661,6 +4664,10 @@ namespace charutils
 
     void UpdateMissionStorage(CCharEntity* PChar, bool recovery)
     {
+        if (!map_config.storage_mission_unlock) {
+            return;
+        }
+
         uint8 currentMW1 = 0;
         uint8 currentMW2 = 0;
         uint8 currentMW3 = 0;
@@ -5581,6 +5588,9 @@ namespace charutils
     }
 
     bool hasMogLockerAccess(CCharEntity* PChar) {
+        if (map_config.force_enable_mog_locker) {
+            return true;
+        }
         char fmtQuery[] = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' ";
         Sql_Query(SqlHandle, fmtQuery, PChar->id, "mog-locker-expiry-timestamp");
 
@@ -6806,6 +6816,52 @@ void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason)
         reason = "The use of the command failed for an unknown reason. If the issue persists please open a GM ticket.";
     }
     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, reason));
+}
+
+std::vector<uint32> GetConnectedChars()
+{
+    std::vector<uint32> charlist;
+
+    zoneutils::ForEachZone([&charlist](CZone* PZone)
+    {
+        PZone->ForEachChar([&charlist](CCharEntity* PChar)
+        {
+            charlist.push_back(PChar->id);
+        });
+    });
+
+    return charlist;
+}
+
+int32 LogGil(time_point tick, CTaskMgr::CTask* PTask)
+{
+    std::vector<uint32> charlist = GetConnectedChars();
+    uint32 num_chars = charlist.size();
+
+    if (num_chars == 0) {
+        // Nobody's home
+        ShowDebug("LogGil: Skipping, no players connected to server.\n");
+        return 0;
+    }
+
+    // Build a string representation of the character IDs
+    // currently connected in a format which can be used
+    // in a "WHERE IN" SQL statement.
+    std::string charlist_str = "(";
+    for (uint32 i = 0; i < num_chars; i++) {
+        if (i != 0) {
+            charlist_str += ", ";
+        }
+        charlist_str += std::to_string(charlist[i]);
+    }
+    charlist_str += ")";
+
+    // Yes, it can be done in a single query
+    std::string Query = "INSERT INTO char_gillog (charid, logtime, gil) (SELECT charid, NOW(), quantity FROM char_inventory WHERE charid IN " + charlist_str + " AND itemId = 65535);";
+    Sql_Query(SqlHandle, Query.c_str());
+    ShowDebug("LogGil: Logged gil of %u players.\n", num_chars);
+
+    return 0;
 }
 
 }; // namespace charutils
