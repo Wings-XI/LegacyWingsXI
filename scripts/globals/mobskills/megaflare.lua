@@ -24,6 +24,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local MegaFlareQueue = mob:getLocalVar("MegaFlareQueue") - 1 -- decrement the amount of queued Megaflares.
+    if MegaFlareQueue > 8 then
+        MegaFlareQueue = 0
+    end
     mob:setLocalVar("MegaFlareQueue", MegaFlareQueue)
     mob:setLocalVar("FlareWait", 0) -- reset the variables for Megaflare.
     mob:setLocalVar("tauntShown", 0)
