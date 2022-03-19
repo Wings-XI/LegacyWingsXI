@@ -20,6 +20,9 @@ function onMobInitialize(mob)
         mob:addStatusEffect(tpz.effect.BLAZE_SPIKES, 250, 0, 0)
         mob:getStatusEffect(tpz.effect.BLAZE_SPIKES):setFlag(tpz.effectFlag.DEATH)
     end)
+
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
 end
 
 function onMobSpawn(mob)
