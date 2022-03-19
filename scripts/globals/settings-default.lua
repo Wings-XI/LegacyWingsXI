@@ -200,7 +200,11 @@ UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being telepor
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
 IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
-ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior and Tier 1 ZNMs
+ZNM_Tier2 = 0 -- Disallows ZNM T2
+ZNM_Tier3 = 0 -- Disallows ZNM T3
+ZNM_Tier4 = 0 -- Disallows ZNM T4
+ZNM_Tier5 = 0 -- Disallows ZNM T5
 
 -- HOOKS
 HOOK_FILE_NAME = "" -- Create a file named "hook-<name>.lua" and set the value to "<name>" to enable
