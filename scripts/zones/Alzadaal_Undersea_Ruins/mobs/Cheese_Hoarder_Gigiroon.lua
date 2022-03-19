@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Alzadaal Undersea Ruins
---  ZNM: Cheese Hoarder Gigiroon
+--  ZNM T1: Cheese Hoarder Gigiroon
 -- Cheese's mines: 17072173, 17072174, 17072175, 17072176, 17072177
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}

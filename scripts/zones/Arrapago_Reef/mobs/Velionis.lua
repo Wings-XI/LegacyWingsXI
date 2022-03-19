@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Arrapago Reef
---  ZNM: Velionis
+--  ZNM T1: Velionis
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")

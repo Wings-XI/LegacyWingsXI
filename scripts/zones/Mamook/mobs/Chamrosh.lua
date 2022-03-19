@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mamook
---  ZNM: Chamrosh (Tier-1 ZNM)
+--  ZNM T1: Chamrosh (Tier-1 ZNM)
 -- Does not use normal colibri mimic mechanics, changes form every
 -- 2.5 mins. st form mimics all spells 2nd form cast spells from list only
 -----------------------------------

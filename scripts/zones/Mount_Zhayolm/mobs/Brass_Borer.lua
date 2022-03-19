@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mount Zhayolm
---  ZNM: Brass Borer
+--  ZNM T1: Brass Borer
 -- TODO: Halting movement during stance change.
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}

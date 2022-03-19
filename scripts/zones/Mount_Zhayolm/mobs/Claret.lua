@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mount Zhayolm
---  ZNM: Claret
+--  ZNM T1: Claret
 -- !pos 501 -9 53
 -- Spawned with Pectin: !additem 2591
 -- Wiki: http://ffxiclopedia.wikia.com/wiki/Claret

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Aydeewa Subterrane
---  ZNM: Chigre
+--  ZNM T1: Chigre
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
