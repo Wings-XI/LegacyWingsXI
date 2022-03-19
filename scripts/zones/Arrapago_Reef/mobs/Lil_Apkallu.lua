@@ -53,6 +53,14 @@ function onMobFight(mob, target)
         end
     end
 
+    if (mob:getLocalVar("QueueAction") == 1 and mob:checkDistance(target) < 5) then
+        mob:setLocalVar("QueueAction", 0)
+        if(mob:getHPP() <= 35) then
+            mob:useMobAbility(690)
+        else
+            mob:useMobAbility(1717)
+        end
+    end
 
     if (mob:getLocalVar("Running") == 0) then -- not running
         if (now > mob:getLocalVar("TimeToRun")) then
@@ -60,20 +68,16 @@ function onMobFight(mob, target)
             mob:setLocalVar("Running", 1)
             mob:SetAutoAttackEnabled(false)
             mob:setLocalVar("RunDestination", math.random(#runningPoints))
-            mob:setLocalVar("TimeToStop", now + math.random(25, 65))
+            mob:setLocalVar("TimeToStop", now + math.random(25, 60))
         end
      else -- running
         if (now > mob:getLocalVar("TimeToStop")) then
             -- done running for now
-            mob:pathTo(target:getPos().x, target:getPos().y, target:getPos().z, 9)
+            --mob:pathTo(target:getPos().x, target:getPos().y, target:getPos().z, 9)
             mob:setLocalVar("Running", 0)
             mob:SetAutoAttackEnabled(true)
-            mob:setLocalVar("TimeToRun", now + math.random(90,120))
-            if(mob:getHPP() <= 35) then
-                mob:useMobAbility(690)
-            else
-                mob:useMobAbility(1717)
-            end
+            mob:setLocalVar("TimeToRun", now + math.random(75,95))
+            mob:setLocalVar("QueueAction", 1)
         else
             runForIt(mob)
         end
