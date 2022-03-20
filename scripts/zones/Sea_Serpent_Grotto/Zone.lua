@@ -15,6 +15,12 @@ function onInitialize(zone)
     DespawnMob(keys[math.random(#keys)])
 
     tpz.treasure.initZone(zone)
+    local ocean_sahagin_respawn = GetServerVariable("Ocean_Sahagin_Respawn")
+    if os.time() < ocean_sahagin_respawn then
+		GetMobByID(ID.mob.OCEAN_SAHAGIN):setRespawnTime(ocean_sahagin_respawn - os.time())
+	else
+		SpawnMob(ID.mob.OCEAN_SAHAGIN)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

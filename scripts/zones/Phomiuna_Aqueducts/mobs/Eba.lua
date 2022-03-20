@@ -13,5 +13,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(28800, 43200)) -- 8 to 12 hours
+    local respawn = math.random(28800, 43200)
+    mob:setRespawnTime(respawn) -- 8 to 12 hours 
+    SetServerVariable("Eba_Respawn", (os.time() + respawn))
 end

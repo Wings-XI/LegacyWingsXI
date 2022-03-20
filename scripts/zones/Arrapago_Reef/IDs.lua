@@ -57,6 +57,11 @@ zones[tpz.zone.ARRAPAGO_REEF] =
         VELIONIS              = 16998872,
         ZAREEHKL_THE_JUBILANT = 16998873,
         NUHN                  = 16998874,
+        EURYALE               = 16998696,
+        LAMIE_NO7             = 16998520,
+        LAMIE_NO8             = 16998481,
+        LAMIE_NO9             = 16998742,
+        MERROW_NO5            = 16998560,
     },
     npc =
     {

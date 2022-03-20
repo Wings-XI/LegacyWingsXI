@@ -33,7 +33,14 @@ zones[tpz.zone.BEADEAUX_S] =
         {
             [17154095] = 17154195, -- -37.741 0.344 -127.037
         },
-        BRES = 17154357,
+        BRES                = 17154357,
+        BLIFNIX_OILYCHEEKS  = 17154364,
+        DI_ZHO_SPONGESHELL  = 17154358,
+        GA_LHU_NEVERMOLT    = 17154356,
+        MU_NHI_THIMBLETAIL  = 17154360,
+        OBSERVANT_ZEKKA     = 17154359,
+        RA_DHA_SCARSCUTE    = 17154371,
+        VA_GHO_BLOODBASKED  = 17154370,
     },
     npc =
     {

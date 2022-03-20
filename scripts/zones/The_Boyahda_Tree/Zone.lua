@@ -10,6 +10,12 @@ require("scripts/globals/treasure")
 
 function onInitialize(zone)
     tpz.treasure.initZone(zone)
+    local ancient_goobbue_respawn = GetServerVariable("Ancient_Goobbue_Respawn")
+	if os.time() < ancient_goobbue_respawn then
+		GetMobByID(ID.mob.ANCIENT_GOOBBUE):setRespawnTime(ancient_goobbue_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ANCIENT_GOOBBUE)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

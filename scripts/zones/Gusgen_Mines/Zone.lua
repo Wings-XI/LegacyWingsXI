@@ -12,6 +12,12 @@ require("scripts/globals/helm")
 function onInitialize(zone)
     tpz.treasure.initZone(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
+    local juggler_respawn = GetServerVariable("Juggler_Hecatomb_Respawn")
+	if os.time() < juggler_respawn then
+		GetMobByID(ID.mob.JUGGLER_HECATOMB):setRespawnTime(juggler_respawn - os.time())
+	else
+		SpawnMob(ID.mob.JUGGLER_HECATOMB)
+    end
 end
 
 function onZoneIn(player, prevZone)

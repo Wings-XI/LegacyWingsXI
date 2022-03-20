@@ -63,4 +63,7 @@ end
 
 function onMobDespawn(mob)
     for i = 1, 4 do DespawnMob(ID.mob.MEDUSA + i) end
+    local respawn = 259200
+    mob:setRespawnTime(respawn) -- 72 hours
+    SetServerVariable("Medusa_Respawn", (os.time() + respawn))
 end

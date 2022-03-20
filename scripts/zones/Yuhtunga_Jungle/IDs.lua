@@ -63,6 +63,7 @@ zones[tpz.zone.YUHTUNGA_JUNGLE] =
         NASUS_OFFSET            = 17281491,
         SIREN                   = 17281547,
         PYUU_THE_SPATEMAKER     = 17281296,
+        MEWW_THE_TURTLERIDER    = 17281281,
     },
     npc =
     {
