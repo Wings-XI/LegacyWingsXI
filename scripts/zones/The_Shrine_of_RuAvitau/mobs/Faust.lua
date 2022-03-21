@@ -14,7 +14,7 @@ function onMobFight(mob, target)
     if mob:getHPP() >= 50 and mob:getBattleTime() - changeTime >= 15 and mob:checkDistance(mob:getTarget()) <= 10 then
         mob:useMobAbility(539)
         mob:timer(4000, function(faust)
-            if faust:checkDistance(faust:getTarget()) <= 10 then
+            if faust:getTarget() ~= nil and faust:checkDistance(faust:getTarget()) <= 10 then
                 faust:useMobAbility(539)
             end
         end)
