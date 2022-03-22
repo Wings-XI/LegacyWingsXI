@@ -9,6 +9,11 @@ require("scripts/globals/mobs")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+end
+
+function onMobSpawn(mob)
+    GetNPCByID(ID.npc.SUZAKU_PORTAL):setAnimation(tpz.animation.CLOSE_DOOR)
 end
 
 -- Return the selected spell ID.
@@ -34,4 +39,8 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:showText(mob, ID.text.SKY_GOD_OFFSET + 8)
+end
+
+function onMobDespawn(mob)
+    GetNPCByID(ID.npc.SUZAKU_PORTAL):setAnimation(tpz.animation.OPEN_DOOR)
 end

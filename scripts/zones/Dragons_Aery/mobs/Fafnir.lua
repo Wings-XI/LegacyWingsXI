@@ -9,6 +9,10 @@ require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+end
+
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 20)

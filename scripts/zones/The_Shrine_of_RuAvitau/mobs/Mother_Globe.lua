@@ -41,6 +41,9 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetMobAbilityEnabled(true)
     local now = os.time()
     mob:addStatusEffectEx(tpz.effect.SHOCK_SPIKES, 0, 60, 0, 0) -- ~60 damage
     mob:setLocalVar("Initial_SlaveTimer", now)
