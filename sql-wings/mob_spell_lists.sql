@@ -1114,7 +1114,6 @@ INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 359, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 360, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 362, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 365, 10, 255);
-INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 367, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 4, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 9, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 21, 55, 98);
