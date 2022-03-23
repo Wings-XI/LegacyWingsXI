@@ -3412,6 +3412,21 @@ INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 329); -- Pinecone Bo
 INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 328); -- Drill Branch
 INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 331); -- Leafstorm
 INSERT INTO `mob_skill_lists` VALUES('Stcemqestcint', 5023, 332); -- Entangle
+INSERT INTO `mob_skill_lists` VALUES('Automaton_EmptyHanded', 2027, 1943); -- Slapstick
+INSERT INTO `mob_skill_lists` VALUES('Automaton_EmptyHanded', 2027, 2067); -- Knockout
+INSERT INTO `mob_skill_lists` VALUES('Automaton_EmptyHanded', 2027, 2301); -- Magic Mortar
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Sharpshot', 2028, 1942); -- Arcuballista
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Sharpshot', 2028, 2066); -- Daze
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Sharpshot', 2028, 2300); -- Armor Piercer
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 1940); -- Chimera Ripper
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 1941); -- String Clipper
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 2065); -- Cannibal Blade
+INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 2299); -- Bone Crusher
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2223);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2224);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2225);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2226);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2227);
 
 --
 -- Indexes for dumped tables

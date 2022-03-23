@@ -1389,6 +1389,11 @@ INSERT INTO `mob_skills` VALUES(2216, 1597, 'nocturnal_combustion', 1, 20.0, 200
 INSERT INTO `mob_skills` VALUES(2217, 1598, 'berserk', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2218, 1599, 'penumbral_impact', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2219, 1600, 'dark_wave', 1, 10.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2223, 1557, 'ore_toss', 0, 7.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2224, 1558, 'head_butt', 0, 7.0, 2000, 2000, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2225, 1559, 'shell_bash', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2226, 1560, 'shell_guard', 0, 7.0, 2000, 3000, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2227, 354, 'howl', 1, 20.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2242, 432, 'mighty_strikes', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2248, 432, 'invincible', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2249, 432, 'blood_weapon', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
