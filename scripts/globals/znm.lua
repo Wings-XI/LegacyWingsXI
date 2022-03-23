@@ -628,35 +628,35 @@ local function getAllowedZNMs(player)
     local param = 2140136440 -- Defaut bitmask, Tier 1 ZNM Menu + don't ask option
 
     -- Tinnin Path
-    if player:hasKeyItem(tpz.ki.MAROON_SEAL) and ZNM_Tier2 = 1 then
+    if player:hasKeyItem(tpz.ki.MAROON_SEAL) and ZNM_Tier2 == 1 then
         param = param - 0x38 -- unlocks Tinnin path tier 2 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.APPLE_GREEN_SEAL) and ZNM_Tier3 = 1 then
+    if player:hasKeyItem(tpz.ki.APPLE_GREEN_SEAL) and ZNM_Tier3 == 1 then
         param = param - 0x1C0 -- unlocks Tinnin path tier 3 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.CHARCOAL_GREY_SEAL) and player:hasKeyItem(tpz.ki.DEEP_PURPLE_SEAL) and player:hasKeyItem(tpz.ki.CHESTNUT_COLORED_SEAL) and ZNM_Tier4 = 1 then
+    if player:hasKeyItem(tpz.ki.CHARCOAL_GREY_SEAL) and player:hasKeyItem(tpz.ki.DEEP_PURPLE_SEAL) and player:hasKeyItem(tpz.ki.CHESTNUT_COLORED_SEAL) and ZNM_Tier4 == 1 then
         param = param - 0x200 -- unlocks Tinnin.
     end
 
     -- Sarameya Path
-    if player:hasKeyItem(tpz.ki.CERISE_SEAL) and ZNM_Tier2 = 1 then
+    if player:hasKeyItem(tpz.ki.CERISE_SEAL) and ZNM_Tier2 == 1 then
         param = param - 0xE000 -- unlocks Sarameya path tier 2 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.SALMON_COLORED_SEAL) and ZNM_Tier3 = 1 then
+    if player:hasKeyItem(tpz.ki.SALMON_COLORED_SEAL) and ZNM_Tier3 == 1 then
         param = param - 0x70000 -- unlocks Sarameya path tier 3 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.PURPLISH_GREY_SEAL) and player:hasKeyItem(tpz.ki.GOLD_COLORED_SEAL) and player:hasKeyItem(tpz.ki.COPPER_COLORED_SEAL) and ZNM_Tier4 = 1 then
+    if player:hasKeyItem(tpz.ki.PURPLISH_GREY_SEAL) and player:hasKeyItem(tpz.ki.GOLD_COLORED_SEAL) and player:hasKeyItem(tpz.ki.COPPER_COLORED_SEAL) and ZNM_Tier4 == 1 then
         param = param - 0x80000 -- unlocks Sarameya.
     end
 
     -- Tyger Path
-    if player:hasKeyItem(tpz.ki.PINE_GREEN_SEAL) and ZNM_Tier2 = 1 then
+    if player:hasKeyItem(tpz.ki.PINE_GREEN_SEAL) and ZNM_Tier2 == 1 then
         param = param - 0x3800000 -- unlocks Tyger path tier 2 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.AMBER_COLORED_SEAL) and ZNM_Tier3 = 1 then
+    if player:hasKeyItem(tpz.ki.AMBER_COLORED_SEAL) and ZNM_Tier3 == 1 then
         param = param - 0x1C000000 -- unlocks Tyger path tier 3 ZNMs.
     end
-    if player:hasKeyItem(tpz.ki.TAUPE_COLORED_SEAL) and player:hasKeyItem(tpz.ki.FALLOW_COLORED_SEAL) and player:hasKeyItem(tpz.ki.SIENNA_COLORED_SEAL) and ZNM_Tier4 = 1 then
+    if player:hasKeyItem(tpz.ki.TAUPE_COLORED_SEAL) and player:hasKeyItem(tpz.ki.FALLOW_COLORED_SEAL) and player:hasKeyItem(tpz.ki.SIENNA_COLORED_SEAL) and ZNM_Tier4 == 1 then
         param = param - 0x20000000 -- unlocks Tyger.
     end
 
