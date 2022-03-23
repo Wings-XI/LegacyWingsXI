@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Arrapago_Remnants/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -30,6 +31,10 @@ function onInstanceZoneIn(player, instance)
     end
 
     player:addTempItem(5399)
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

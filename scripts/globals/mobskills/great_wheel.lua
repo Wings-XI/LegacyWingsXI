@@ -19,6 +19,11 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 2
     local accmod = 1
     local dmgmod = 1.1
+    if mob:getID() == 16924679 then -- Apoc Nigh Damage Change
+        -- Should deal around 300-350.
+        -- https://www.youtube.com/watch?v=mG-qyhGOqNY&ab_channel=Smackdownbob
+        dmgmod = 2.5
+    end
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_2_SHADOW)
 

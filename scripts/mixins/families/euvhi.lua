@@ -72,16 +72,6 @@ g_mixins.families.euvhi = function(mob)
     end)
 
     mob:addListener("ROAM_TICK", "EUVHI_RTICK", function(mob)
-        local roamTime = mob:getLocalVar("roamTime")
-        if mob:AnimationSub() == 0 and os.time() - roamTime > 60 then
-            mob:AnimationSub(2)
-            mob:setLocalVar("roamTime", os.time())
-            mob:setAggressive(1)
-        elseif mob:AnimationSub() == 2 and os.time() - roamTime > 60 then
-            mob:AnimationSub(0)
-            mob:setAggressive(0)
-            mob:setLocalVar("roamTime", os.time())
-        end
         if mob:getHPP() == 100 then
             mob:setLocalVar("PhysicalDamage", 0)
             mob:setLocalVar("MagicalDamage", 0)

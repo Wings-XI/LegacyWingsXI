@@ -22,6 +22,7 @@ zones[tpz.zone.CAEDARVA_MIRE] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7049, -- You can't fish here.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         MOVE_CLOSER                   = 7309, -- You must move closer.
         IMPERIAL_CONTROL              = 7310, -- This gate guards an area under Imperial control.
         STAGING_POINT_AZOUPH          = 7311, -- Azouph Isle Staging Point.
@@ -61,6 +62,10 @@ zones[tpz.zone.CAEDARVA_MIRE] =
         TYGER                 = 17101203,
         MAHJLAEF_THE_PAINTORN = 17101204,
         EXPERIMENTAL_LAMIA    = 17101205,
+        VIDHUWA_PH            =
+        {
+            [17101162] = 17101158, -- 608.020 -9.593 368.036
+        },
     },
     npc =
     {

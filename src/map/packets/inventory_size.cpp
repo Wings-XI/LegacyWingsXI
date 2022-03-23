@@ -41,6 +41,10 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     GetSizeAndBuff(PChar, LOC_INVENTORY, 0x04, 0x14);
     GetSizeAndBuff(PChar, LOC_MOGSAFE, 0x05, 0x16);
     GetSizeAndBuff(PChar, LOC_STORAGE, 0x06, 0x18);
+    if (!PChar->hasAccessToStorage(LOC_STORAGE)) {
+        // Block access from room rentals
+        ref<uint16>(0x18) = 0x00;
+    }
     GetSizeAndBuff(PChar, LOC_TEMPITEMS, 0x07, 0x1A);
     GetSizeAndBuff(PChar, LOC_MOGLOCKER, 0x08, 0x1C);
     if (!charutils::hasMogLockerAccess(PChar)) {
@@ -48,7 +52,7 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
         ref<uint16>(0x1C) = 0x00;
     }
     GetSizeAndBuff(PChar, LOC_MOGSATCHEL, 0x09, 0x1E);
-    if (!(PChar->m_accountFeatures & 0x01)) {
+    if (!PChar->hasAccessToStorage(LOC_MOGSATCHEL)) {
         // Has no mog satchel access (greyed out)
         ref<uint8>(0x09) = 0x00;
         ref<uint16>(0x1E) = 0x00;
@@ -59,14 +63,23 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     GetSizeAndBuff(PChar, LOC_MOGSAFE2, 0x0D, 0x26);
     GetSizeAndBuff(PChar, LOC_WARDROBE2, 0x0E, 0x28);
     GetSizeAndBuff(PChar, LOC_WARDROBE3, 0x0F, 0x2A);
-    if (!(PChar->m_accountFeatures & 0x04)) {
+    if (!PChar->hasAccessToStorage(LOC_WARDROBE3)) {
         // Has no wardrobe 3 access (can still view)
         ref<uint16>(0x2A) = 0x00;
     }
     GetSizeAndBuff(PChar, LOC_WARDROBE4, 0x10, 0x2C);
-    if (!(PChar->m_accountFeatures & 0x08)) {
+    if (!PChar->hasAccessToStorage(LOC_WARDROBE4)) {
         // Has no wardrobe 4 access (can still view)
         ref<uint16>(0x2C) = 0x00;
+    }
+
+    if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id) {
+        // Block access to mog safe / safe 2 when
+        // in other people's open mog
+        //ref<uint8>(0x05) = 0;
+        ref<uint16>(0x16) = 0;
+        //ref<uint8>(0x0D) = 0;
+        ref<uint16>(0x26) = 0;
     }
 
     /*
@@ -102,6 +115,18 @@ CInventorySizePacket::CInventorySizePacket(CCharEntity* PChar)
     ref<uint16>(0x2A) = 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
     ref<uint16>(0x2C) = 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
     */
+}
+
+void CInventorySizePacket::ClientVerFixup(const CCharEntity* PChar)
+{
+    if (PChar->m_needInventoryFix) {
+        this->size = 0x32;
+        // Buff location changed
+        memmove(this->data + 0x24, this->data + 0x14, 26);
+        // Disable the currently unsupported storage locations
+        memset(this->data + 0x3E, 0, 10);
+        memset(this->data + 0x11, 0, 19);
+    }
 }
 
 void CInventorySizePacket::GetSizeAndBuff(CCharEntity* PChar, uint8 location, uint8 sizeOffset, uint8 buffOffset)

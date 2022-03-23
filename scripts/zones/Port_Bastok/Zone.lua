@@ -17,6 +17,7 @@ function onInitialize(zone)
     zone:registerRegion(1, -112, -3, -17, -96, 3, -3)--event COP
     zone:registerRegion(2, 53.5, 5, -165.3, 66.5, 6, -72)--drawbridge area
     applyStarlightDecorations(zone:getID())
+    tpz.conq.setConquestCircus(1, 2)
 end
 
 function onConquestUpdate(zone, updatetype)
@@ -52,29 +53,6 @@ function onZoneIn(player, prevZone)
         else
             local position = math.random(1, 5) + 57
             player:setPos(position, 8.5, -239, 192)
-        end
-    end
-
-    -- Move Troupe Valeriano (Circus) --
-    if getNationRank(tpz.nation.BASTOK) == 1 then
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.NORMAL)
-                end
-            end
-        end
-    else
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.DISAPPEAR)
-                end
-            end
         end
     end
 

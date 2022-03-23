@@ -2,7 +2,7 @@
 -- Ability: Hundred Fists
 -- Speeds up attacks.
 -- Obtained: Monk Level 1
--- Recast Time: 1:00:00
+-- Recast Time: 2:00:00
 -- Duration: 0:00:45
 -----------------------------------
 require("scripts/globals/settings")

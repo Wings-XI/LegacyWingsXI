@@ -582,7 +582,7 @@ void DecodeStringSignature(const int8* signature, int8* target)
 
 // Take a regular string of 8-bit wide chars and packs it down into an
 // array of 7-bit wide chars.
-void PackSoultrapperName(std::string name, uint8 output[], uint8 size)
+void PackSoultrapperName(std::string name, uint8 output[])
 {
     // Before anything else, sanitize the name string
     // If contains underscore character
@@ -604,7 +604,7 @@ void PackSoultrapperName(std::string name, uint8 output[], uint8 size)
     uint8 shift   = 1;
     uint8 loops   = 0;
     uint8 total   = (uint8)name.length();
-    uint8 maxSize = std::max((uint8)20, size);
+    uint8 maxSize = 13; // capped at 13 based on examples like GoblinBountyH
 
     // Pack and shift 8-bit to 7-bit
     for (uint8 i = 0; i <= maxSize; ++i)

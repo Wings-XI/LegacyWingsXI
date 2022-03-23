@@ -115,29 +115,49 @@ uint16 GetEvasion(CMobEntity* PMob)
 /************************************************************************
 *                                                                       *
 *  Базовое значение для расчера характеристик                           *
-*  (на название не хватило фантазии)                                    *
+*  (на название не хватило фантазии)
+*  Base stat rank conversions                                           *
 *                                                                       *
 ************************************************************************/
 
-uint16 GetBaseToRank(uint8 rank, uint16 lvl)
+uint16 GetBaseToRank(CMobEntity * PMob, uint8 rank)
 {
-    switch (rank)
+    uint8 lvl = PMob->GetMLevel();
+    bool isNM = PMob->m_Type & MOBTYPE_NOTORIOUS;
+    bool isEventMob = PMob->m_Type & MOBTYPE_EVENT;
+    if (isNM || isEventMob)
     {
-        case 1: return (5+((lvl-1)*50)/100); // A
-        case 2: return (4+((lvl-1)*45)/100); // B
-        case 3: return (4+((lvl-1)*40)/100); // C
-        case 4: return (3+((lvl-1)*35)/100); // D
-        case 5: return (3+((lvl-1)*30)/100); // E
-        case 6: return (2+((lvl-1)*25)/100); // F
-        case 7: return (2+((lvl-1)*20)/100); // G
+        switch (rank)
+        {
+            case 1: return (5+((lvl-1)*64)/100); // A
+            case 2: return (4+((lvl-1)*59)/100); // B
+            case 3: return (4+((lvl-1)*54)/100); // C
+            case 4: return (2+((lvl-1)*47)/100); // D
+            case 5: return (1+((lvl-1)*43)/100); // E
+            case 6: return (2+((lvl-1)*42)/100); // F
+            case 7: return (2+((lvl-1)*39)/100); // G
+        }
+    } else { // Normal mob curves
+        switch (rank)
+        {
+            case 1: return (5+((lvl-1)*50)/100); // A
+            case 2: return (4+((lvl-1)*45)/100); // B
+            case 3: return (4+((lvl-1)*40)/100); // C
+            case 4: return (3+((lvl-1)*35)/100); // D
+            case 5: return (3+((lvl-1)*30)/100); // E
+            case 6: return (2+((lvl-1)*25)/100); // F
+            case 7: return (2+((lvl-1)*20)/100); // G
+        }
     }
+
     return 0;
 }
 
 /************************************************************************
 *                                                                       *
 *  Базовое значение для расчерта защиты и уклонения                     *
-*  (на название не хватило фантазии)                                    *
+*  (на название не хватило фантазии)        
+*  This is used for acc, att, eva, def                                  *
 *                                                                       *
 ************************************************************************/
 
@@ -151,15 +171,15 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
             case 2: // B
                 return (uint16)(147 + (lvl - 50) * 4.9f);
             case 3: // C
-                return (uint16)(136 + (lvl - 50) * 4.8f);
+                return (uint16)(142 + (lvl - 50) * 4.8f);
             case 4: // D
-                return (uint16)(126 + (lvl - 50) * 4.7f);
+                return (uint16)(136 + (lvl - 50) * 4.7f);
             case 5: // E
-                return (uint16)(116 + (lvl - 50) * 4.5f);
+                return (uint16)(126 + (lvl - 50) * 4.5f);
             case 6: // F
-                return (uint16)(106 + (lvl - 50) * 4.4f);
+                return (uint16)(116 + (lvl - 50) * 4.4f);
             case 7: // G
-                return (uint16)(96 + (lvl - 50) * 4.3f);
+                return (uint16)(106 + (lvl - 50) * 4.3f);
         }
     } else {
         switch(rank){
@@ -325,29 +345,29 @@ void CalculateStats(CMobEntity * PMob)
         PMob->m_dualWield = true;
     }
 
-    uint16 fSTR = GetBaseToRank(PMob->strRank, mLvl);
-    uint16 fDEX = GetBaseToRank(PMob->dexRank, mLvl);
-    uint16 fVIT = GetBaseToRank(PMob->vitRank, mLvl);
-    uint16 fAGI = GetBaseToRank(PMob->agiRank, mLvl);
-    uint16 fINT = GetBaseToRank(PMob->intRank, mLvl);
-    uint16 fMND = GetBaseToRank(PMob->mndRank, mLvl);
-    uint16 fCHR = GetBaseToRank(PMob->chrRank, mLvl);
+    uint16 fSTR = GetBaseToRank(PMob, PMob->strRank);
+    uint16 fDEX = GetBaseToRank(PMob, PMob->dexRank);
+    uint16 fVIT = GetBaseToRank(PMob, PMob->vitRank);
+    uint16 fAGI = GetBaseToRank(PMob, PMob->agiRank);
+    uint16 fINT = GetBaseToRank(PMob, PMob->intRank);
+    uint16 fMND = GetBaseToRank(PMob, PMob->mndRank);
+    uint16 fCHR = GetBaseToRank(PMob, PMob->chrRank);
 
-    uint16 mSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),2), mLvl);
-    uint16 mDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),3), mLvl);
-    uint16 mVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),4), mLvl);
-    uint16 mAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),5), mLvl);
-    uint16 mINT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),6), mLvl);
-    uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),7), mLvl);
-    uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(),8), mLvl);
+    uint16 mSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),2));
+    uint16 mDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),3));
+    uint16 mVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),4));
+    uint16 mAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),5));
+    uint16 mINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),6));
+    uint16 mMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),7));
+    uint16 mCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(),8));
 
-    uint16 sSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),2), mLvl);
-    uint16 sDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),3), mLvl);
-    uint16 sVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),4), mLvl);
-    uint16 sAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),5), mLvl);
-    uint16 sINT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),6), mLvl);
-    uint16 sMND = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),7), mLvl);
-    uint16 sCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(),8), mLvl);
+    uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),2));
+    uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),3));
+    uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),4));
+    uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),5));
+    uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),6));
+    uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),7));
+    uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(),8));
 
     // subjob stat scaling
 
@@ -391,16 +411,16 @@ void CalculateStats(CMobEntity * PMob)
     PMob->stats.MND = fMND + mMND + sMND;
     PMob->stats.CHR = fCHR + mCHR + sCHR;
 
-    if(isNM)
-    {
-        PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
-        PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
-        PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
-        PMob->addModifier(Mod::DEFP, 20);
-    }
+    // if(isNM)
+    // {
+    //     PMob->addModifier(Mod::EVA, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::ACC, PMob->GetMLevel() / 5);
+    //     PMob->addModifier(Mod::MEVA, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::MACC, PMob->GetMLevel() / 10);
+    //     PMob->addModifier(Mod::ATT, PMob->stats.STR / 4);
+    //     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob) + mLvl / 4);
+    //     PMob->addModifier(Mod::DEFP, 20);
+    // }
 
     // special case, give spell list to my pet
     if(PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
@@ -489,7 +509,7 @@ void CalculateStats(CMobEntity * PMob)
         SetupDynamisMob(PMob);
     }
 
-    if(PMob->m_Type & MOBTYPE_NOTORIOUS)
+    if((PMob->m_Type & MOBTYPE_NOTORIOUS) || (PMob->isInDynamis() == true ))
     {
         SetupNMMob(PMob);
     }
@@ -505,48 +525,6 @@ void CalculateStats(CMobEntity * PMob)
     }
 
     PMob->m_Type& MOBTYPE_NOTORIOUS ? PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 110) : PMob->defaultMobMod(MOBMOD_DAMAGE_ENMITY_PERC, 100);
-
-    // family-specific changes here, thank you Jimmay
-    switch (PMob->m_Family)
-    {
-    case 72: // colibri
-        PMob->addModifier(Mod::EVA, 5);
-    case 136: // goobbue
-    case 208: // ram
-    case 242: // tiger
-    case 179: // manticore
-        PMob->addModifier(Mod::ATTP, 10);
-    case 217: // scorp
-        PMob->addModifier(Mod::ATTP, 20);
-    case 240: // tauri
-        PMob->addModifier(Mod::DEFP, -20);
-        PMob->addModifier(Mod::EVA, -10);
-    case 57: // buffalo
-    case 58: // bugard
-    case 26:  // antlion
-    case 357: // antlion
-        PMob->addModifier(Mod::DEFP, 20);
-        PMob->addModifier(Mod::ATTP, 10);
-    case 188: // opo
-        PMob->addModifier(Mod::EVA, 25);
-    case 253: // wamoura
-        PMob->addModifier(Mod::DEFP, 12);
-    case 176: // mamoolja
-    case 177: // mamoolja
-    case 285: // mamoolja
-        PMob->addModifier(Mod::EVA, 10);
-    case 233: // soulflayer
-    case 74: // corse
-        PMob->addModifier(Mod::DEFP, 20);
-    case 64: // chigoe
-        PMob->addModifier(Mod::ATTP, -50);
-        PMob->addModifier(Mod::DEFP, -20);
-        PMob->addModifier(Mod::EVA, 10);
-    case 180: // marid
-    case 371: // marid
-    case 59:  // bugbear
-        PMob->addModifier(Mod::EVA, -10);
-    }
 
     // Check for possible miss-setups
     if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 && PMob->getMobMod(MOBMOD_SPECIAL_COOL) == 0)

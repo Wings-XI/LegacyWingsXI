@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Ship_bound_for_Selbina/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/sea_creatures")
 -----------------------------------
@@ -44,6 +45,10 @@ function onZoneIn(player, prevZone)
 
     return cs
 
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onGameHour(zone)

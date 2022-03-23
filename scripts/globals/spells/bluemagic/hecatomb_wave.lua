@@ -47,12 +47,15 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.effect = tpz.effect.BLINDNESS
     local resist = applyResistanceEffect(caster, target, spell, params)
     
-    local duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BLINDNESS) then
-        target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        local duration = math.ceil(90 * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.BLINDNESS) then
+            target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, duration*resist)
+        end
     end
 
     return damage

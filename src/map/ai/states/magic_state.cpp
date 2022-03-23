@@ -86,7 +86,15 @@ CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid,
     actionTarget.speceffect = SPECEFFECT_NONE;
     actionTarget.animation = 0;
     actionTarget.param = static_cast<uint16>(m_PSpell->getID());
-    actionTarget.messageID = 327; // starts casting
+    if (m_PEntity->objtype == TYPE_MOB)
+    {
+        actionTarget.messageID = 3; // starts casting
+    }
+    else
+    {
+        actionTarget.messageID = 327; // starts casting on <target>
+    }
+
     m_PEntity->PAI->EventHandler.triggerListener("MAGIC_START", m_PEntity, m_PSpell.get(), &action); //TODO: weaponskill lua object
 
     m_lastCancelCheck = server_clock::now();
@@ -135,7 +143,7 @@ bool CMagicState::Update(time_point tick)
         }
 
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
-            
+
         Complete();
     }
     else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
@@ -217,7 +225,7 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_CANNOT_USE_IN_AREA);
         return false;
     }
-    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA}))
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA}) || PreventedByPathos())
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_UNABLE_TO_CAST_SPELLS);
         return false;
@@ -240,7 +248,33 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_TOO_FAR_AWAY);
         return false;
     }
-    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
+    if (m_PSpell->getSpellGroup() == SPELLGROUP_BLUE && ((CBlueSpell*)GetSpell())->isPhysical() && m_PSpell->getAOE() == 0 && m_PSpell->getRange() <= 5)
+    {
+        float range = 4.6; // basic short range for physical spells
+
+        // ToDo: This is an approximation that works well enough especially for larger mob sizes like Behemoth
+        // More captures on retail on different mob sizes will help to dial this in
+        switch (PTarget->m_ModelSize)
+        {
+            case 5: 
+                range = 7.1;
+                break;
+            case 4: 
+                range = 6.1;
+                break;
+            case 3:
+            case 2:
+                range = 5.1;
+                break;
+        }
+
+        if (distance(m_PEntity->loc.p, PTarget->loc.p) > range)
+        {
+            m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
+            return false;
+        }
+    }
+    else if(m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
         return false;
@@ -410,4 +444,49 @@ void CMagicState::Interrupt()
 void CMagicState::ApplyMagicCoverEnmity(CBattleEntity* PCoverAbilityTarget, CBattleEntity* PCoverAbilityUser, CMobEntity* PMob)
 {
     PMob->PEnmityContainer->UpdateEnmityFromCover(PCoverAbilityTarget, PCoverAbilityUser);
+}
+
+/* PreventedByPathos
+*  Helper function to determine if any Pathos effect should stop the casting of the spell
+*/
+bool CMagicState::PreventedByPathos()
+{
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_PATHOS))
+    {
+        int effectPower = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_PATHOS)->GetPower();
+        switch (m_PSpell->getSpellGroup())
+        {
+            case SPELLGROUP_WHITE:
+                if (effectPower & 4)
+                    return true;
+                break;
+            case SPELLGROUP_BLACK:
+                if (effectPower & 8)
+                    return true;
+                break;
+            case SPELLGROUP_SONG:
+                if (effectPower & 16)
+                    return true;
+                break;
+            case SPELLGROUP_NINJUTSU:
+                if (effectPower & 32)
+                    return true;
+                break;
+            case SPELLGROUP_SUMMONING:
+                if (effectPower & 64)
+                    return true;
+                break;
+            case SPELLGROUP_BLUE:
+                if (effectPower & 128)
+                    return true;
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+    else
+    {
+        return false;
+    }
 }

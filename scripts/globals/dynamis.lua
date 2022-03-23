@@ -11,6 +11,7 @@ require("scripts/globals/titles")
 require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
+require("scripts/globals/pathfind")
 ------------------------------------
 
 dynamis = {}
@@ -133,7 +134,7 @@ dynamis.entryInfo =
     [tpz.zone.VALKURM_DUNES] =
     {
         csBit = 7,
-        csRegisterGlass = 57,
+        csRegisterGlass = 15,
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
@@ -215,6 +216,8 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_SAN_DORIA_INTERLOPER,
         entryPos = {161.838, -2.000, 161.673, 93, tpz.zone.DYNAMIS_SAN_DORIA},
         ejectPos = {161.000, -2.000, 161.000, 94, tpz.zone.SOUTHERN_SAN_DORIA},
+        specifiedChildren = true,
+        updatedRoam = true,
     },
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
@@ -260,6 +263,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_JEUNO_INTERLOPER,
         entryPos = {48.930, 10.002, -71.032, 195, tpz.zone.DYNAMIS_JEUNO},
         ejectPos = {48.930, 10.002, -71.032, 195, tpz.zone.RULUDE_GARDENS},
+        updatedRoam = true,
     },
     [tpz.zone.RULUDE_GARDENS] =
     {
@@ -305,6 +309,7 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_VALKURM_INTERLOPER,
         entryPos = {100, -8, 131, 47, tpz.zone.DYNAMIS_VALKURM},
         ejectPos = {119, -9, 131, 52, tpz.zone.VALKURM_DUNES},
+        sjRestriction = true,
     },
     [tpz.zone.VALKURM_DUNES] =
     {
@@ -335,6 +340,23 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_QUFIM_INTERLOPER,
         entryPos = {-19, -17, 104, 253, tpz.zone.DYNAMIS_QUFIM},
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
+        sjRestriction = true,
+        sjRestrictionNPC = 16945638,
+        sjRestrictionLocation =
+        {
+            [1] = {-264.498, -19.255, 401.465, 54},
+            [2] = {-264.655, -19.268, 240.580, 71},
+            [3] = {-77.771, -19.068, 258.666, 50},
+            [4] = {-137.127, -19.976, 228.789, 101},
+            [5] = {-61.647, -19.868, 152.935, 35},
+            [6] = {27.973, -20.270, 191.907, 195},
+            [7] = {107.445, -20.368, 149.587, 64},
+            [8] = {99.884, -19.557, 51.518, 27},
+            [9] = {-29.895, -21.095, -57.154, 209},
+            [10] = {88.474, -20.621, -49.333, 4},
+            [11] = {-192.540, -20.477, -11.055, 151},
+            [12] = {-340.976, -20.421, 31.154, 66},
+        }
     },
     [tpz.zone.QUFIM_ISLAND] =
     {
@@ -518,7 +540,13 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
 end
 
 dynamis.zoneOnInitialize = function(zone)
-
+    local zoneId = zone:getID()
+    if dynamis.dynaInfo[zoneId].sjRestriction == true and dynamis.dynaInfo[zoneId].sjRestrictionNPC ~= nil then
+        local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
+        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
+        sjRestrictionNPC:setPos(pos)
+        sjRestrictionNPC:setStatus(tpz.status.NORMAL)
+    end
 end
 
 dynamis.zoneOnZoneIn = function(player, prevZone)
@@ -535,8 +563,14 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
             player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, math.floor(GetDynaTimeRemaining(zoneId)/60), 1)
             if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
         end)
-        if player:getCharVar("DynaBypassWeakness") == 0 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
-        player:setCharVar("DynaBypassWeakness", 0)
+        if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
+            player:setCharVar("DynaInflictWeakness", 0)
+        if dynamis.dynaInfo[zoneId].sjRestriction == true then
+            if os.time() > player:getCharVar("SJUnlockTime") then
+                player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
+            end
+        end
+
     end
 
     return -1
@@ -555,7 +589,9 @@ end
 
 dynamis.statueOnSpawn = function(mob, eyes) -- says statue but this is also called by anything that spawn children mobs (like ahriman)
     mob:setLocalVar("dynaReadyToSpawnChildren", 1)
-    mob:AnimationSub(eyes)
+    if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
+        mob:setLocalVar("eyeColor", eyes)
+    end
 end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
@@ -567,7 +603,7 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
         local players = zone:getPlayers()
         for name, player in pairs(players) do
             if mob:checkDistance(player) < 30 then
-                if eyes == dynamis.eyes.BLUE then
+                if eyes == dynamis.eyes.GREEN then
                     local amt = player:getMaxMP() - player:getMP()
                     player:restoreMP(amt)
                     player:messageBasic(tpz.msg.basic.RECOVERS_MP, 0, amt)
@@ -582,6 +618,12 @@ dynamis.statueOnDeath = function(mob, player, isKiller)
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
+    local zoneId = mob:getZoneID()
+    if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
+        local eyes = mob:getLocalVar("eyeColor")
+        mob:AnimationSub(eyes)
+    end
+
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 0 then return end
     mob:setLocalVar("dynaReadyToSpawnChildren", 0)
 
@@ -606,28 +648,54 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
         i = i + 1
     end
     i = 1
-    while randomChildrenList ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
-        local originalRoll = math.random(1,#randomChildrenList)
-        local roll = originalRoll
-        while GetMobByID(randomChildrenList[roll]):isSpawned() == true and roll ~= nil do
-            roll = roll + 1
-            if roll > #randomChildrenList then roll = 1 end
-            if roll == originalRoll then roll = nil end
-        end
-        if roll ~= nil then
-            local child = GetMobByID(randomChildrenList[roll])
-            local home = child:getSpawnPos()
-            local randomSpawn = false
-            if home.x == 1 and home.y == 1 and home.z == 1 then
-                child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
-                randomSpawn = true
+    if dynamis.dynaInfo[zoneId].specifiedChildren == true then
+        while randomChildrenList[randomChildrenCount] ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+            local originalRoll = math.random(1,#randomChildrenList[randomChildrenCount])
+            local roll = originalRoll
+            while GetMobByID(randomChildrenList[randomChildrenCount][roll]):isSpawned() == true and roll ~= nil do
+                roll = roll + 1
+                if roll > #randomChildrenList[randomChildrenCount] then roll = 1 end
+                if roll == originalRoll then roll = nil end
             end
-            SpawnMob(randomChildrenList[roll]):updateEnmity(target)
-            if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
-        else
-            break
+            if roll ~= nil then
+                local child = GetMobByID(randomChildrenList[randomChildrenCount][roll])
+                local home = child:getSpawnPos()
+                local randomSpawn = false
+                if home.x == 1 and home.y == 1 and home.z == 1 then
+                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    randomSpawn = true
+                end
+                SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
+                if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
+            else
+                break
+            end
+            randomChildrenCount = randomChildrenCount - 1
         end
-        randomChildrenCount = randomChildrenCount - 1
+    else
+        while randomChildrenList ~= nil and randomChildrenCount ~= nil and randomChildrenCount > 0 do
+            local originalRoll = math.random(1,#randomChildrenList)
+            local roll = originalRoll
+            while GetMobByID(randomChildrenList[roll]):isSpawned() == true and roll ~= nil do
+                roll = roll + 1
+                if roll > #randomChildrenList then roll = 1 end
+                if roll == originalRoll then roll = nil end
+            end
+            if roll ~= nil then
+                local child = GetMobByID(randomChildrenList[roll])
+                local home = child:getSpawnPos()
+                local randomSpawn = false
+                if home.x == 1 and home.y == 1 and home.z == 1 then
+                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    randomSpawn = true
+                end
+                SpawnMob(randomChildrenList[roll]):updateEnmity(target)
+                if randomSpawn == true then child:setLocalVar("clearSpawnPosOnDeath", 1) end
+            else
+                break
+            end
+            randomChildrenCount = randomChildrenCount - 1
+        end
     end
 end
 
@@ -660,7 +728,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
     end
 
     if mobFound == true then
-        --print(string.format("mob's defeat is a requirement for wave number %u",i))
+        -- print(string.format("mob's defeat is a requirement for wave number %u",i))
         mob:setLocalVar("dynaIsDefeatedForWaveReq", 1)
         local allReqsMet = true
         while mobList.waveDefeatRequirements[i][j] ~= nil do
@@ -672,13 +740,46 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
         end
         if allReqsMet == true then dynamis.spawnWave(mobList, i) end
     end
+    -- miniWave is used when the same mobID needs to be used twice for a waveDefeatRequirement
+    local mobID = mob:getID()
+    local miniWave = nil
+    if mobList[mobID] ~= nil then
+        miniWave = mobList[mobID].miniWave
+    end
+    local forceLink = false
+    local i = 1
+    local target = mob:getTarget()
+
+    while miniWave ~= nil and miniWave[i] ~= nil do
+        if type(miniWave[i]) == "boolean" then forceLink = miniWave[i]
+        else
+            local child = GetMobByID(miniWave[i])
+            if mobList[miniWave[i]].pos == nil then child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos()) end
+            SpawnMob(miniWave[i])
+            if forceLink == true then child:updateEnmity(target) end
+        end
+        i = i + 1
+    end
 end
 
 dynamis.mobOnRoam = function(mob)
-    local home = mob:getSpawnPos()
-    local location = mob:getPos()
-    mob:pathTo(home.x, home.y, home.z)
-    if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then mob:setPos(location.x, location.y, location.z, home.rot) end
+    local zoneId = mob:getZoneID()
+    if dynamis.dynaInfo[zoneId].updatedRoam == true then
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        else
+            mob:pathTo(home.x, home.y, home.z)
+        end
+    else
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
+        mob:pathTo(home.x, home.y, home.z)
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        end
+    end
 end
 
 dynamis.qmOnTrade = function(player, npc, trade) -- i think this is for Xarcabard, so remember to update this once we start work on that
@@ -736,19 +837,65 @@ dynamis.qmOnTrigger = function(player, npc)
     end
 end
 
+dynamis.sjQMOnTrigger = function(player, npc)
+    local zoneId = npc:getZoneID()
+
+    if dynamis.dynaInfo[zoneId].sjRestriction == true then
+        for _, member in pairs(player:getAlliance()) do
+            if member:getZoneID() == player:getZoneID() then
+                if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
+                    member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
+                    player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
+                end
+            end
+        end
+    end
+end
+
 dynamis.setMobStats = function(mob)
     local job = mob:getMainJob()
-    local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
-    mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.STR, -30)
-    mob:setMod(tpz.mod.VIT, -15)
-    mob:setMod(tpz.mod.DEFP, 10)
+    mob:setMobType(MOBTYPE_NORMAL)
+    mob:setMobLevel(math.random(78,80))
     mob:setTrueDetection(1)
 
+    local familyEES =
+    {
+        [  3] = tpz.jsa.EES_AERN,    -- Aern
+        [ 25] = tpz.jsa.EES_ANTICA,  -- Antica
+        [115] = tpz.jsa.EES_SHADE,   -- Fomor
+        [126] = tpz.jsa.EES_GIGA,    -- Gigas
+        [127] = tpz.jsa.EES_GIGA,    -- Gigas
+        [128] = tpz.jsa.EES_GIGA,    -- Gigas
+        [129] = tpz.jsa.EES_GIGA,    -- Gigas
+        [130] = tpz.jsa.EES_GIGA,    -- Gigas
+        [133] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [169] = tpz.jsa.EES_KINDRED, -- Kindred
+        [171] = tpz.jsa.EES_LAMIA,   -- Lamiae
+        [182] = tpz.jsa.EES_MERROW,  -- Merrow
+        [184] = tpz.jsa.EES_GOBLIN,  -- Moblin
+        [189] = tpz.jsa.EES_ORC,     -- Orc
+        [200] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [201] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [202] = tpz.jsa.EES_QUADAV,  -- Quadav
+        [221] = tpz.jsa.EES_SHADE,   -- Shadow
+        [222] = tpz.jsa.EES_SHADE,   -- Shadow
+        [223] = tpz.jsa.EES_SHADE,   -- Shadow
+        [246] = tpz.jsa.EES_TROLL,   -- Troll
+        [270] = tpz.jsa.EES_YAGUDO,  -- Yagudo
+        [327] = tpz.jsa.EES_GOBLIN,  -- Goblin
+        [328] = tpz.jsa.EES_GIGA,    -- Gigas
+        [334] = tpz.jsa.EES_ORC,     -- OrcNM
+        [335] = tpz.jsa.EES_MAAT,    -- Maat
+        [337] = tpz.jsa.EES_QUADAV,  -- QuadavNM
+        [358] = tpz.jsa.EES_KINDRED, -- Kindred
+        [359] = tpz.jsa.EES_SHADE,   -- Fomor
+        [360] = tpz.jsa.EES_YAGUDO,  -- YagudoNM
+        [373] = tpz.jsa.EES_GOBLIN,  -- Goblin_Armored
+    }
+
     if     job == tpz.job.WAR then
-        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -756,7 +903,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.MNK then
-        mob:addMod(tpz.mod.VIT, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -764,8 +910,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,70)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.WHM then
-        mob:addMod(tpz.mod.MND, 20)
-        mob:addMod(tpz.mod.DEFP, -10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -773,9 +917,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(40,60)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BLM then
-        mob:addMod(tpz.mod.SLEEPRES, 40)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
-        mob:addMod(tpz.mod.DEFP, -10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -783,7 +924,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RDM then
-        mob:addMod(tpz.mod.UFASTCAST, 25)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -791,9 +931,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.THF then
-        mob:addMod(tpz.mod.TRIPLE_ATTACK, 10)
-        mob:addMod(tpz.mod.AGI, 20)
-        mob:addMod(tpz.mod.DEFP, -8)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -801,9 +938,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.PLD then
-        mob:addMod(tpz.mod.DEFP, 10)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
-        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -811,8 +945,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRK then
-        mob:addMod(tpz.mod.ATTP, 10)
-        mob:addMod(tpz.mod.RATTP, 10)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -820,11 +952,7 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.BST then
-        mob:addMod(tpz.mod.CHR, 20)
     elseif job == tpz.job.BRD then
-        mob:addMod(tpz.mod.LULLABYRES, 40)
-        mob:addMod(tpz.mod.LULLABYRES, 15)
-        mob:addMod(tpz.mod.DEFP, -5)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -832,8 +960,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.RNG then
-        mob:addMod(tpz.mod.RACC, 20)
-        mob:addMod(tpz.mod.DEFP, -5)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -841,7 +967,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,75)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.SAM then
-        mob:addMod(tpz.mod.STORETP, 40)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -849,8 +974,6 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(55,80)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.NIN then
-        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
-        mob:addMod(tpz.mod.RATTP, -25)
         local params = { }
         params.specials = { }
         params.specials.skill = { }
@@ -858,13 +981,12 @@ dynamis.setMobStats = function(mob)
         params.specials.skill.hpp = math.random(25,35)
         tpz.mix.jobSpecial.config(mob, params)
     elseif job == tpz.job.DRG then
-        mob:addMod(tpz.mod.ACC, 20)
     elseif job == tpz.job.SMN then
-        mob:addMod(tpz.mod.UFASTCAST, 90)
-        mob:addMod(tpz.mod.REFRESH, 3)
-        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
-        mob:addMod(tpz.mod.DEFP, -10)
     end
+
+    -- Add Check After Calcs
+    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
+
 end
 
 dynamis.setNMStats = function(mob)
@@ -872,70 +994,20 @@ dynamis.setNMStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMaxHPP(132)
-    mob:setMobLevel(math.random(85,86))
+    mob:setMobLevel(math.random(80,82))
     mob:setMod(tpz.mod.STR, -15)
     mob:setMod(tpz.mod.VIT, -5)
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 15)
-    mob:setMod(tpz.mod.DEFP, 20)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
     mob:setTrueDetection(1)
 
-    if     job == tpz.job.WAR then
-        mob:addMod(tpz.mod.DOUBLE_ATTACK, 20)
-    elseif job == tpz.job.MNK then
-        mob:addMod(tpz.mod.VIT, 20)
-    elseif job == tpz.job.WHM then
-        mob:addMod(tpz.mod.MND, 20)
-    elseif job == tpz.job.BLM then
-        mob:addMod(tpz.mod.SLEEPRES, 40)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 15)
-    elseif job == tpz.job.RDM then
-        mob:addMod(tpz.mod.FASTCAST, 25)
-    elseif job == tpz.job.THF then
-        mob:addMod(tpz.mod.AGI, 20)
-    elseif job == tpz.job.PLD then
-        mob:addMod(tpz.mod.DEFP, 10)
-        mob:addMod(tpz.mod.SLEEPRESTRAIT, 20)
-        mob:addMod(tpz.mod.LULLABYRESTRAIT, 20)
-    elseif job == tpz.job.DRK then
-        mob:addMod(tpz.mod.ATTP, 10)
-        mob:addMod(tpz.mod.RATTP, 10)
-    elseif job == tpz.job.BST then
-        mob:addMod(tpz.mod.CHR, 20)
-    elseif job == tpz.job.BRD then
-        mob:addMod(tpz.mod.LULLABYRES, 40)
-        mob:addMod(tpz.mod.LULLABYRES, 15)
-    elseif job == tpz.job.RNG then
-        mob:addMod(tpz.mod.RACC, 20)
-    elseif job == tpz.job.SAM then
-        mob:addMod(tpz.mod.STORETP, 40)
-    elseif job == tpz.job.NIN then
-        mob:addMod(tpz.mod.BINDRESTRAIT, 30)
-        mob:addMod(tpz.mod.STR, -10)
-    elseif job == tpz.job.DRG then
-        mob:addMod(tpz.mod.ACC, 20)
-    elseif job == tpz.job.SMN then
-        mob:addMod(tpz.mod.UFASTCAST, 90)
-        mob:addMod(tpz.mod.REFRESH, 3)
-        mob:addMod(tpz.mod.SLOWRESTRAIT, 30)
+    if job == tpz.job.NIN then
+        local params = { }
+        params.specials = { }
+        params.specials.skill = { }
+        params.specials.skill.id = tpz.jsa.MIJIN_GAKURE
+        params.specials.skill.hpp = math.random(15,25)
+        tpz.mix.jobSpecial.config(mob, params)
     end
-
 end
 
 dynamis.setStatueStats = function(mob)
@@ -945,22 +1017,6 @@ dynamis.setStatueStats = function(mob)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 25)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
 
     mob:setMod(tpz.mod.DMGMAGIC, -50)
     mob:setMod(tpz.mod.DMGPHYS, -50)
@@ -969,7 +1025,6 @@ dynamis.setStatueStats = function(mob)
     mob:setMod(tpz.mod.MDEF, 0)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.MPHEAL, 0)
-    mob:setMod(tp.mod.CLEAR_MIND, 0)
 
     mob:setTrueDetection(1)
 
@@ -981,23 +1036,6 @@ dynamis.setMegaBossStats = function(mob)
 
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
-    mob:setMod(tpz.mod.RATTP, 20)
-    mob:setMod(tpz.mod.ATTP, 20)
-    mob:setMod(tpz.mod.DEFP, 25)
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 25)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 25)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 25)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 25)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 33)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 33)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 33)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 33)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 15)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 15)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 15)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 33)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 15)
     mob:setTrueDetection(1)
 
 end
@@ -1005,7 +1043,7 @@ end
 dynamis.setPetStats = function(mob)
     local zone = mob:getZoneID()
 
-    mob:setMobLevel(80)
+    mob:setMobLevel(78)
     mob:setMod(tpz.mod.STR, -40)
     mob:setMod(tpz.mod.VIT, -20)
     mob:setMod(tpz.mod.RATTP, -20)
@@ -1035,26 +1073,7 @@ dynamis.setEyeStats = function(mob)
     local zone = mob:getZoneID()
 
     mob:setMobLevel(math.random(82,84))
-    mob:setMod(tpz.mod.RATTP, 15)
-    mob:setMod(tpz.mod.ATTP, 25)
     mob:setMod(tpz.mod.DEF, 420)
-
-    mob:setMod(tpz.mod.SLEEPRESTRAIT, 20)
-    mob:setMod(tpz.mod.LULLABYRESTRAIT, 20)
-    mob:setMod(tpz.mod.BINDRESTRAIT, 20)
-    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 20)
-
-    mob:setMod(tpz.mod.RESBUILD_SLEEP, 25)
-    mob:setMod(tpz.mod.RESBUILD_LULLABY, 25)
-    mob:setMod(tpz.mod.RESBUILD_BIND, 25)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 25)
-    mob:setMod(tpz.mod.RESBUILD_POISON, 10)
-    mob:setMod(tpz.mod.RESBUILD_PARALYZE, 10)
-    mob:setMod(tpz.mod.RESBUILD_BLIND, 10)
-    mob:setMod(tpz.mod.RESBUILD_SILENCE, 25)
-    mob:setMod(tpz.mod.RESBUILD_STUN, 5)
-    mob:setMod(tpz.mod.RESBUILD_SLOW, 10)
-
     mob:addMod(tpz.mod.MDEF, 150)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
 

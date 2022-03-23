@@ -51,12 +51,14 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.POISON
     params.diff = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
     params.attribute = tpz.mod.INT
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(60 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
-        local power = 3 + math.floor(BLUlvl/15)
-        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
+            local power = 3 + math.floor(BLUlvl/15)
+            target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist)
+        end
     end
 
     return damage

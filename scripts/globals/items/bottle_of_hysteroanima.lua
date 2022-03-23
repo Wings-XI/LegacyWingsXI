@@ -22,7 +22,9 @@ function onItemCheck(target, param, player)
 end
 
 function onItemUse(target)
-    target:delStatusEffectSilent(tpz.effect.AMNESIA)
-	target:addStatusEffect(tpz.effect.AMNESIA, 1, 0, math.random(25,32))
-	target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.AMNESIA)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.AMNESIARES) < 100 then
+        target:delStatusEffectSilent(tpz.effect.AMNESIA)
+        target:addStatusEffect(tpz.effect.AMNESIA, 1, 0, math.random(25,32))
+        target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.AMNESIA)
+    end
 end

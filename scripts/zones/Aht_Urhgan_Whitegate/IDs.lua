@@ -21,6 +21,7 @@ zones[tpz.zone.AHT_URHGAN_WHITEGATE] =
         LOGIN_CAMPAIGN_UNDERWAY       = 837, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 838, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET        = 886, -- You can't fish here.
+        CONQUEST_BASE                 = 986, -- Tallying conquest results...
         MOG_LOCKER_OFFSET             = 1225, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         HOMEPOINT_SET                 = 1366, -- Home point set!
         IMAGE_SUPPORT_ACTIVE          = 1405, -- You have to wait a bit longer before asking for synthesis image support again.

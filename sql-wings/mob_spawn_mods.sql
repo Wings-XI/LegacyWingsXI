@@ -563,9 +563,6 @@ INSERT INTO `mob_spawn_mods` VALUES(17490101, 2, 20000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17490101, 15, 2000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17489980, 1, 15000, 1);
 INSERT INTO `mob_spawn_mods` VALUES(17489980, 2, 25000, 1);
-INSERT INTO `mob_spawn_mods` VALUES(17027458, 12, 15, 1); -- Draw in for Cerberus
-INSERT INTO `mob_spawn_mods` VALUES(17101201, 12, 15, 1); -- Draw in for Khimaira
-INSERT INTO `mob_spawn_mods` VALUES(16986355, 12, 15, 1); -- Draw in for Hydra
 
 --
 -- Indexes for dumped tables

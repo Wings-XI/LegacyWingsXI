@@ -8,6 +8,7 @@ require("scripts/globals/instance")
 require("scripts/globals/npc_util")
 require("scripts/globals/nyzul_isle_data")
 require("scripts/globals/nyzul_isle_armoury_crates")
+local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ---------------------------------------------------
 tpz = tpz or {}
 tpz.nyzul_isle = tpz.nyzul_isle or {}
@@ -21,37 +22,57 @@ local NM_1_CHANCE = 75 -- chance to see 1 NM
 local NM_2_CHANCE = 50 -- chance to see 2 NMs
 local NM_3_CHANCE = 25 -- chance to see 3 NMs
 local LAMP_FLOOR_CHANCE = 20 -- chance to get a lamp floor 4 non-lamp objectives and 1 lamp = 20%
+local PATHOS_DEBUFF_CHANCE = 33 -- chance to get a negative pathos after a split path (left/right) 
+local PATHOS_BUFF_CHANCE = 33 -- chance to get a positive pathos after a split path (left/right)
+-- No Pathos buff or debuff = (100 - PATHOS_DEBUFF_CHANCE - PATHOS_BUFF_CHANCE)
+
+--------------------------------------------------------
+-- Selects the next floor and sets RoT spawn point
+--------------------------------------------------------
+function selectNextFloor(floorNumber, instance)
+    local selectedFloorLayout
+    previousMap = instance:getLocalVar("Nyzul_Map")
+
+    -- select the next map and store the SpawnPoint, Map, and Floor
+    if (floorNumber % 20 == 0) then
+        -- randomize a boss floor
+        local floorKey = math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.bossFloorLayouts[tpz.nyzul_isle_data.bossFloorTableKeys[floorKey]]
+        instance:setLocalVar("Nyzul_FloorKey", floorKey)
+    else
+        -- randomize a non-boss floor
+        selectedFloorLayout = selectFloorLayout(instance, previousMap)
+    end
+
+    setRuneOfTransferSpawnPoint(instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+end
+
 
 ------------------------------------------------------------------------------------------
 -- Generates the Nyzul Isle Floor
--- Returns: List of Mobs
---          The list of mobs required to be killed for objective clear (can be empty)
+-- Returns: Rune of Transfer Spawn Point
 ------------------------------------------------------------------------------------------
 function generateFloor(floorNumber, instance)
     local runeOfTransferSpawnPoint
     local floor = instance:getLocalVar("Nyzul_Floor")
 
-    
+    -- lock to only generate a new floor once
     if (floor == floorNumber) then
-        local existingRuneOfTransferSpawnPoint = {x = 0, y = 0, z = 0}
-        existingRuneOfTransferSpawnPoint.x = instance:getLocalVar("Nyzul_RuneOfTransferX")
-        existingRuneOfTransferSpawnPoint.y = instance:getLocalVar("Nyzul_RuneOfTransferY")
-        existingRuneOfTransferSpawnPoint.z = instance:getLocalVar("Nyzul_RuneOfTransferZ")
-
-        return existingRuneOfTransferSpawnPoint
+        return getRuneOfTransferSpawnPoint(instance)
     end
-
     instance:setLocalVar("Nyzul_Floor", floorNumber)
 
     local previousFloorInfo = {
         objective = instance:getLocalVar("Nyzul_Objective"),
         subObjective = instance:getLocalVar("Nyzul_SubObjective"),
-        previousMap = instance:getLocalVar("Nyzul_Map"),
         previousMobType = instance:getLocalVar("Nyzul_MobType")
     }
 
     -- clean up the previous floor that players are leaving
     cleanUpPreviousFloor(instance)
+
+    -- determine if we have a new Pathos to add
+    determinePathos(instance)
 
     -- if this is a boss floor (20, 40, 60, 80, 100, "120", "140", etc) generate a boss floor
     if (floorNumber % 20 == 0) then
@@ -59,20 +80,15 @@ function generateFloor(floorNumber, instance)
         instance:setLocalVar("Nyzul_CheckWin", 1)
         return runeOfTransferSpawnPoint
     end
-    
+
     -- randomly generate a free floor if this is not the first floor in a run
     if (math.random(1, 100) < FREE_FLOOR_CHANCE and (floorNumber ~= 1)) then
-        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance, previousFloorInfo)
+        runeOfTransferSpawnPoint = generateFreeFloor(floorNumber, instance)
         return runeOfTransferSpawnPoint, {} -- no mobs on free floor
     end
 
     --otherwise generate a standard floor
     runeOfTransferSpawnPoint = generateStandardFloor(floorNumber, instance, previousFloorInfo)
-
-    -- set the runeOfTransferSpawnPoint
-    instance:setLocalVar("Nyzul_RuneOfTransferX", runeOfTransferSpawnPoint.x)
-    instance:setLocalVar("Nyzul_RuneOfTransferY", runeOfTransferSpawnPoint.y)
-    instance:setLocalVar("Nyzul_RuneOfTransferZ", runeOfTransferSpawnPoint.z)
 
     instance:setLocalVar("Nyzul_CheckWin", 1)
     return runeOfTransferSpawnPoint
@@ -82,12 +98,13 @@ end
 -- Performs all work for generating a Free Floor
 --
 -------------------------------------------------------
-function generateFreeFloor(floorNumber, instance, previousFloorInfo)
+function generateFreeFloor(floorNumber, instance)
     -- set objectives
     instance:setLocalVar("Nyzul_Objective", 0) -- FREE_FLOOR
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on free floors
     -- pick a floor
-    local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
+    local selectedFloorLayout = getFloorLayout(instance)
+
     -- get rune of transfer
     local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
     setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
@@ -102,15 +119,17 @@ function generateFreeFloor(floorNumber, instance, previousFloorInfo)
         end
     end
 
-    for i=1,numberOfCrates do        
+    for i=1,numberOfCrates do
         index = math.random(#remainingSpawnPoints)
         spawnPoint = remainingSpawnPoints[index]
         tpz.nyzul_isle_armoury_crates.spawnArmouryCrateForFreeFloor(instance, spawnPoint)
         table.remove(remainingSpawnPoints, index)
     end
 
-    -- light the run of transfer
-    activeRuneOfTransfer:AnimationSub(1)
+    -- light the rune of transfer
+    activeRuneOfTransfer:timer(1000, function(activeRuneOfTransfer)
+        floorObjectiveComplete(activeRuneOfTransfer:getInstance())
+    end)
     return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
@@ -122,8 +141,8 @@ function generateBossFloor(floorNumber, instance)
     instance:setLocalVar("Nyzul_Objective", 2) -- ELIMINATE_ENEMY_LEADER
     instance:setLocalVar("Nyzul_SubObjective", 0) -- No gears on boss floors
     -- randomize a boss floor
-    local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
-    local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[bossFloorKey]
+    --local bossFloorKey = tpz.nyzul_isle_data.bossFloorTableKeys[math.random(#tpz.nyzul_isle_data.bossFloorTableKeys)]
+    local bossFloor = tpz.nyzul_isle_data.bossFloorLayouts[tpz.nyzul_isle_data.bossFloorTableKeys[instance:getLocalVar("Nyzul_FloorKey")]]
 
     -- update the current map
     if (bossFloorKey == 1) then
@@ -150,7 +169,7 @@ function generateBossFloor(floorNumber, instance)
     -- randomize a boss spawn point
     local bossSpawnPointIndex = math.random(#bossFloor.BossSpawnPoints)
     local bossSpawnPoint = bossFloor.BossSpawnPoints[bossSpawnPointIndex]
-    
+
     -- randomize an archaicRampart spawn, excluding the boss spawn point
     local remainingSpawnPoints = {}
     for key, value in pairs(bossFloor.RampartSpawnPoints) do
@@ -168,21 +187,37 @@ function generateBossFloor(floorNumber, instance)
     return bossFloor.RuneOfTransferSpawnPoint, bossID
 end
 
+
+function setRuneOfTransferSpawnPoint(instance, spawnPoint)
+    instance:setLocalVar("Nyzul_RuneOfTransferX", spawnPoint.x)
+    instance:setLocalVar("Nyzul_RuneOfTransferY", spawnPoint.y)
+    instance:setLocalVar("Nyzul_RuneOfTransferZ", spawnPoint.z)
+end
+
+function getRuneOfTransferSpawnPoint(instance)
+    local runeOfTransferSpawnPoint = { x = 0, y = 0, z = 0}
+    runeOfTransferSpawnPoint.x = instance:getLocalVar("Nyzul_RuneOfTransferX")
+    runeOfTransferSpawnPoint.y = instance:getLocalVar("Nyzul_RuneOfTransferY")
+    runeOfTransferSpawnPoint.z = instance:getLocalVar("Nyzul_RuneOfTransferZ")
+
+    return runeOfTransferSpawnPoint
+end
+
 -------------------------------------------------------
 -- Performs all work for generating a Standard Floor
 -------------------------------------------------------
-function generateStandardFloor(floorNumber, instance, previousFloorInfo) 
-   local objective = selectObjective(instance, previousFloorInfo.objective)
-   local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
-   local selectedFloorLayout = selectFloorLayout(instance, previousFloorInfo.previousMap)
-   local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
-   setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
-   
-   generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
+function generateStandardFloor(floorNumber, instance, previousFloorInfo)
+    local selectedFloorLayout = getFloorLayout(instance)
+    local objective = selectObjective(instance, previousFloorInfo.objective)
+    local subObjective = selectSubObjective(instance, previousFloorInfo.subObjective)
+    local activeRuneOfTransfer = selectRuneOfTransfer(floorNumber, instance, selectedFloorLayout.RuneOfTransferSpawnPoint)
+    setDoorAnimations(instance, selectedFloorLayout.DoorsToOpen, true, false)
 
-   generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
+    generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjective, selectedFloorLayout, previousFloorInfo.previousMobType)
 
-   return selectedFloorLayout.RuneOfTransferSpawnPoint, objectiveMobs
+    generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
+
+    return selectedFloorLayout.RuneOfTransferSpawnPoint
 end
 
 ------------------------------------------------------------------
@@ -192,7 +227,7 @@ function selectObjective(instance, previousObjective)
     -- based on capture videos, it appears that all lamp objectives are combined into one item which is weighted against the rest.
     -- i.e. 1/5 chance and never back to back
     local objectiveKey = 0
-    
+
     if (math.random(100) < LAMP_FLOOR_CHANCE) and (previousObjective < 5) then
         -- lamp objective is gated to not be allowed back to back.
         -- there is no gate on getting the same lamp related objective back to back on say floor 1 and floor 3.
@@ -201,7 +236,7 @@ function selectObjective(instance, previousObjective)
         objectiveKey = math.random(1,4) -- non lamps are 1 to 4
         -- somewhat ugly but simple way to ensure we do not repeat an objective back to back
         while objectiveKey == previousObjective do
-            objectiveKey = math.random(1,4) 
+            objectiveKey = math.random(1,4)
         end
     end
 
@@ -221,7 +256,7 @@ function selectSubObjective(instance, previousSubObjective)
 
     local subObjectiveKey = math.random(#tpz.nyzul_isle_data.subObjectiveType)
     instance:setLocalVar("Nyzul_SubObjective", subObjectiveKey)
-    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,2))
+    instance:setLocalVar("Nyzul_GearPenalty", math.random(1,3))
     return tpz.nyzul_isle_data.subObjectiveType[subObjectiveKey]
 end
 
@@ -236,25 +271,57 @@ function selectFloorLayout(instance, previousMap)
             selectedMap = math.random(1,6)
         end
     end
-    instance:setLocalVar("Nyzul_Map", selectedMap)
 
     local selectedFloorLayout
+    local floorKey
     -- choose a floor from the map
     if (selectedMap == 1) then
-        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[math.random(#tpz.nyzul_isle_data.northEastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.northEastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[floorKey]]
     elseif (selectedMap == 2) then
-        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[math.random(#tpz.nyzul_isle_data.eastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.eastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[floorKey]]
     elseif (selectedMap == 3) then
-        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[math.random(#tpz.nyzul_isle_data.centralFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.centralFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[floorKey]]
     elseif (selectedMap == 4) then
-        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[math.random(#tpz.nyzul_isle_data.southEastFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southEastFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[floorKey]]
     elseif (selectedMap == 5) then
-        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[math.random(#tpz.nyzul_isle_data.southFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[floorKey]]
     else
-        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[math.random(#tpz.nyzul_isle_data.southWestFloorTableKeys)]]
+        floorKey = math.random(#tpz.nyzul_isle_data.southWestFloorTableKeys)
+        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[floorKey]]
+    end
+
+    instance:setLocalVar("Nyzul_Map", selectedMap)
+    instance:setLocalVar("Nyzul_FloorKey", floorKey)
+    return selectedFloorLayout
+end
+
+function getFloorLayout(instance)
+    local selectedMap = instance:getLocalVar("Nyzul_Map")
+    local floorKey = instance:getLocalVar("Nyzul_FloorKey")
+
+     local selectedFloorLayout
+    -- choose a floor from the map
+    if (selectedMap == 1) then
+        selectedFloorLayout = tpz.nyzul_isle_data.northEastFloorLayouts[tpz.nyzul_isle_data.northEastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 2) then
+        selectedFloorLayout = tpz.nyzul_isle_data.eastFloorLayouts[tpz.nyzul_isle_data.eastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 3) then
+        selectedFloorLayout = tpz.nyzul_isle_data.centralFloorLayouts[tpz.nyzul_isle_data.centralFloorTableKeys[floorKey]]
+    elseif (selectedMap == 4) then
+        selectedFloorLayout = tpz.nyzul_isle_data.southEastFloorLayouts[tpz.nyzul_isle_data.southEastFloorTableKeys[floorKey]]
+    elseif (selectedMap == 5) then
+        selectedFloorLayout = tpz.nyzul_isle_data.southFloorLayouts[tpz.nyzul_isle_data.southFloorTableKeys[floorKey]]
+    else
+        selectedFloorLayout = tpz.nyzul_isle_data.southWestFloorLayouts[tpz.nyzul_isle_data.southWestFloorTableKeys[floorKey]]
     end
 
     return selectedFloorLayout
+
 end
 
 --------------------------------------------------------------------
@@ -312,8 +379,6 @@ function generateAndSpawnRequiredMobs(instance, floorNumber, objective, subObjec
     end
 
     spawnMobsForFloor(instance, mobsToSpawn, selectedFloorLayout.Rooms)
-
-    return
 end
 
 --------------------------------------------------------------
@@ -394,7 +459,7 @@ function selectNotoriusMonsters(floorNumber)
     end
 
     -- this is about the limit of using this method for random selection without replacement
-    -- there are 18 NMs per grouping so selecting 3 has a reasonable chance of collision 
+    -- there are 18 NMs per grouping so selecting 3 has a reasonable chance of collision
     if (randomRoll < NM_3_CHANCE ) then
         nm3 = possibleNMs[math.random(#possibleNMs)]
         while (nm3 == nm1 or nm3 == nm2) do
@@ -473,7 +538,7 @@ function setDoorAnimations(instance, doorsTable, openDoors, allDoors)
     local firstDoorID = 17093353
     local lastDoorID = 17093416
     local npc
-    
+
     local animationID = tpz.animation.CLOSE_DOOR
     if (openDoors) then
         animationID = tpz.animation.OPEN_DOOR
@@ -494,6 +559,73 @@ function setDoorAnimations(instance, doorsTable, openDoors, allDoors)
 end
 
 ----------------------------------------------------------------------
+-- Sets local vars to tell Qiqrn Thfs where to run away to
+----------------------------------------------------------------------
+function setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
+    if (not spawnPoint) then
+        return
+    end
+
+    local mob = GetMobByID(mobID, instance)
+    local roomSpawnPoints
+    -- find the spawn points associated to the room the QiQirn will spawn in
+    for key,value in pairs(rooms) do
+        for nestedKey, nestedValue in pairs(tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints) do
+            if (spawnPoint.x == nestedValue.x) and (spawnPoint.y == nestedValue.y) and (spawnPoint.z == nestedValue.z) then
+                roomSpawnPoints = tpz.nyzul_isle_data.roomConfigurations[value].MobSpawnPoints
+                break
+            end
+        end
+        if (roomSpawnPoints ~= nil) then
+            break
+        end
+    end
+
+    local runAwayPoint
+    local greatestDistance = 0
+    -- pick the furthest away point to run to
+    for i = 1, #roomSpawnPoints do
+        local diffX = spawnPoint.x - roomSpawnPoints[i].x
+        local diffY = spawnPoint.y - roomSpawnPoints[i].y
+        local diffZ = spawnPoint.z - roomSpawnPoints[i].z
+
+        local currentDistance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
+        if (currentDistance > greatestDistance) then
+            greatestDistance = currentDistance
+            runAwayPoint = roomSpawnPoints[i]
+        end
+    end
+
+    if (runAwayPoint) then
+        -- set local vars used by the mob
+        -- localVars are stored as unit32s so usings two vars to represent mob locations which are negative
+        if (runAwayPoint.x >= 0) then
+            mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x)
+            mob:setLocalVar("QQ_RunAwayX_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayX", runAwayPoint.x * -1)
+            mob:setLocalVar("QQ_RunAwayX_Negative", 1)
+        end
+
+        if (runAwayPoint.y >= 0) then
+            mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y)
+            mob:setLocalVar("QQ_RunAwayY_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayY", runAwayPoint.y * -1)
+            mob:setLocalVar("QQ_RunAwayY_Negative", 1)
+        end
+
+        if (runAwayPoint.z >= 0) then
+            mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z)
+            mob:setLocalVar("QQ_RunAwayZ_Negative", 0)
+        else
+            mob:setLocalVar("QQ_RunAwayZ", runAwayPoint.z * -1)
+            mob:setLocalVar("QQ_RunAwayZ_Negative", 1)
+        end
+    end
+end
+
+----------------------------------------------------------------------
 -- Find spawn points and spawn all mobs
 ----------------------------------------------------------------------
 function spawnMobsForFloor(instance, mobsToSpawn, rooms)
@@ -505,7 +637,7 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
             table.insert(spawnPoints, nestedValue)
         end
     end
-    
+
     -- set and spawn all mobs
     for key, mobID in pairs(mobsToSpawn) do
         if (#spawnPoints == 0) then
@@ -515,6 +647,10 @@ function spawnMobsForFloor(instance, mobsToSpawn, rooms)
         spawnPoint = spawnPoints[index]
         setSpawnPointAndSpawnMob(mobID, spawnPoint, instance)
         table.remove(spawnPoints, index)
+        -- Qiqirn Thf mobs run around and drop mines.  Given the current spawn system they require additional informat to know where to run
+        if (mobID == 17092989 or mobID == 17092990 or mobID == 17092961) then
+            setQiqirnThfRunAwayPos(mobID, spawnPoint, instance, rooms)
+        end
     end
 end
 
@@ -526,10 +662,10 @@ function generateAndSpawnRequiredLamps(instance, objective, selectedFloorLayout)
     -- default to 5
     local lampObjective = 5
     local numberOfLamps = math.random(3, 5)
-    
+
     if (objective == "ACTIVATE_ALL_LAMPS_CERTIFICATION") then
         numberOfLamps = 1
-        lampObjective = 5 
+        lampObjective = 5
     elseif (objective == "ACTIVATE_ALL_LAMPS_SAME_TIME") then
         lampObjective = 6
     elseif (objective == "ACTIVATE_ALL_LAMPS_ORDERED") then
@@ -614,7 +750,7 @@ end
 function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     local runeOfTransfer
     local oldRuneOfTransfer
-    
+
     -- choose the alternating runeOfTransfer
     if ((floorNumber % 2) == 0) then -- even floor
         runeOfTransfer = GetNPCByID(17093330, instance)
@@ -625,6 +761,7 @@ function selectRuneOfTransfer(floorNumber, instance, runeOfTransferSpawnPoint)
     end
 
     runeOfTransfer:setPos(runeOfTransferSpawnPoint.x, runeOfTransferSpawnPoint.y, runeOfTransferSpawnPoint.z, 1)
+    runeOfTransfer:setLocalVar("Nyzul_SplitPathChance", math.random(1, 100))
 
     -- make the rune of transfer visible
     runeOfTransfer:setStatus(tpz.status.NORMAL)
@@ -681,6 +818,16 @@ function addTableListsTogether(table1, table2)
     return returnTable
 end
 
+---------------------------------------------
+-- clear mob hate if needed
+---------------------------------------------
+function clearHateIfRequired(mob)
+    local enmityList = mob:getEnmityList()
+    if enmityList and #enmityList > 0 then
+        mob:deaggroAll()
+    end
+end
+
 --------------------------------------------------------------------
 -- Cleans up the previous floor as players teleport to the new floor
 --------------------------------------------------------------------
@@ -692,7 +839,7 @@ function cleanUpPreviousFloor(instance)
     -- Despawn Mobs
     for _,mob in pairs(instance:getMobs()) do
         local mobID = mob:getID()
-        mob:deaggroAll()
+        clearHateIfRequired(mob)
         DespawnMob(mobID, instance)
     end
 
@@ -791,6 +938,263 @@ function setNyzulMobTypesAndTraits(instance)
         -- NMs
         elseif (mobID >= 17092824 and mobID <= 17092998) or (mobID >= 17092629 and mobID <= 17092630) then
             mob:setMobType(2)
+        end
+
+        -- Temp hack to ensure Bull Bugards and Carmine Eruca are not true sound aggro - they currently share mob pools with Besieged mobs who are true detection
+        if (mobID >= 17092757 and mobID <= 17092760) or (mobID >= 17092679 and mobID <= 17092681) then
+            mob:setTrueDetection(0)
+        end
+    end
+end
+
+------------------------------------------------------------------
+-- Shows the objective(s) for the floor to the player
+------------------------------------------------------------------
+function showNyzulObjectivesAndPathos(player, showPathos)
+    local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_ENEMY_LEADER, ID.text.ELIMINATE_SPECIFIED_ENEMY, ID.text.ELIMINATE_SPECIFIED_ENEMIES,
+                              ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS}
+    local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
+
+    local instance = player:getInstance()
+    local objective = instance:getLocalVar("Nyzul_Objective")
+    local subObjective = instance:getLocalVar("Nyzul_SubObjective")
+
+    if (objective > 0) then
+        player:messageSpecial(objectiveToStringMap[objective])
+    end
+
+    if (subObjective > 0) then
+        player:messageSpecial(subObjectiveToStringMap[subObjective])
+    end
+
+    if (showPathos) then
+        -- Show the update and apply/remove
+        updatePlayerPathos(player, instance)
+    end
+end
+
+-------------------------------------------------------------------
+-- Determine Pathos during floor change
+--  Called once per new floor generation
+-------------------------------------------------------------------
+function determinePathos(instance)
+    local pathosRandom = math.random(100)
+
+    -- Track the previous Pathos - used to determine which buffs to remove
+    instance:setLocalVar("Nyzul_PreviousPathos", instance:getLocalVar("Nyzul_CurrentPathos"))
+
+    if (instance:getLocalVar("Nyzul_DeterminePathos") == 0) then
+        -- Not flagged to create a new Pathos - ensure current is cleared
+        instance:setLocalVar("Nyzul_CurrentPathos", 0)
+        return
+    end
+
+    if (pathosRandom <= PATHOS_DEBUFF_CHANCE) then
+        -- 17 possible debuffs
+        instance:setLocalVar("Nyzul_CurrentPathos", math.random(1,17))
+    elseif (pathosRandom <= (PATHOS_DEBUFF_CHANCE + PATHOS_BUFF_CHANCE)) then
+        -- 12 possible buffs
+        instance:setLocalVar("Nyzul_CurrentPathos", math.random(18,29))
+    else
+        instance:setLocalVar("Nyzul_CurrentPathos", 0)
+    end
+end
+
+-------------------------------------------------------------------
+-- Update Player Pathos
+--  This is used to update pathos effects for a player on floor transfer
+-------------------------------------------------------------------
+function updatePlayerPathos(player, instance)
+    -- Notify player of Pathos Removal
+    if (player:hasStatusEffect(tpz.effect.PATHOS)) then
+        local effect = player:getStatusEffect(tpz.effect.PATHOS)
+        local power = effect:getPower()
+        -- 10 debuffs under Pathos
+        for debuff = 0, 9 do
+            if (bit.band(power, (bit.lshift(1, debuff))) > 0) then
+                -- player has this debuff
+                player:messageSpecial(ID.text.JA_RESTRICTION_REMOVED + (2 * debuff))
+            end
+        end
+    end
+    -- Remove Pathos
+    player:delStatusEffectSilent(tpz.effect.PATHOS)
+
+    -- Notify player of Debilitation Removal
+    if (player:hasStatusEffect(tpz.effect.DEBILITATION)) then
+        local effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+        local power = effect:getPower()
+        -- 7 debuffs under Debilitation
+        for debuff = 0, 6 do
+            if (bit.band(power, (bit.lshift(1, debuff))) > 0) then
+                -- player has this debuff
+                player:messageSpecial(ID.text.STR_DOWN_REMOVED + (2 * debuff))
+            end
+        end
+    end
+    -- Remove Debilitation
+    player:delStatusEffectSilent(tpz.effect.DEBILITATION)
+
+    -- Remove buffs
+    removePathosBuff(player, instance)
+
+    -- Apply new Pathos
+    local newPathos = instance:getLocalVar("Nyzul_CurrentPathos")
+    if (newPathos > 0 and newPathos <= 17) then
+        addPathosDebuff(player, newPathos)
+    elseif (newPathos > 17 and newPathos <= 29) then
+        addPathosBuff(player, newPathos)
+    end
+    
+end
+
+-------------------------------------------------------------------
+-- Add Pathos Debuff
+--  This is used to add a pathos debuff to a player
+-------------------------------------------------------------------
+function addPathosDebuff(player, newPathos)
+    -- On this path, we have just cleared all debuffs and we may be adding a new one
+    -- We do not have to consider any existing debuffs
+    local effect
+    if (newPathos <= 10) then
+        -- Pathos
+        player:addStatusEffectEx(tpz.effect.PATHOS, tpz.effect.PATHOS, bit.lshift(1, newPathos - 1), 0, 0)
+        effect = player:getStatusEffect(tpz.effect.PATHOS)
+    else
+        -- Debilitation
+        player:addStatusEffectEx(tpz.effect.DEBILITATION, tpz.effect.DEBILITATION, bit.lshift(1, newPathos-11), 0, 0)
+        effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+    end
+
+    -- we dont want any of these effects to get out of Nyzul
+    if (effect) then
+        effect:setFlag(tpz.effectFlag.ON_ZONE)
+    end
+
+    player:messageSpecial(ID.text.JA_RESTRICTED + (2 * (newPathos - 1)))
+end
+
+-------------------------------------------------------------------
+-- Add Pathos Buff
+--  This is used to add a pathos buff to a player
+--  These buffs could all use a capture for:
+    -- potency (stats are +30 - but the rest?)
+    -- interaction between refresh/sublimation
+    -- if they can be removed
+-------------------------------------------------------------------
+function addPathosBuff(player, newPathos)
+    local buff = newPathos - 17
+    local effect
+    if (buff == 1) then
+        player:addStatusEffectEx(tpz.effect.REGAIN, tpz.effect.REGAIN, 50, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REGAIN)
+    elseif (buff == 2) then
+        player:addStatusEffectEx(tpz.effect.REGEN, tpz.effect.REGEN, 10, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REGEN)
+    elseif (buff == 3) then
+        player:addStatusEffectEx(tpz.effect.REFRESH, tpz.effect.REFRESH, 5, 3, 0)
+        effect = player:getStatusEffect(tpz.effect.REFRESH)
+    elseif (buff == 4) then
+        player:addStatusEffectEx(tpz.effect.FLURRY, tpz.effect.FLURRY, 2500, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.FLURRY)
+    elseif (buff == 5) then
+        player:addStatusEffectEx(tpz.effect.CONCENTRATION, tpz.effect.CONCENTRATION, 25, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.CONCENTRATION)
+    elseif (buff > 5) then
+        player:addStatusEffectEx(tpz.effect.STR_BOOST + (buff - 6), tpz.effect.STR_BOOST + (buff - 6), 30, 0, 0)
+        effect = player:getStatusEffect(tpz.effect.STR_BOOST + (buff - 6))
+    end
+
+    -- we dont want any of these effects getting out of Nyzul
+    if (effect) then
+        effect:setFlag(tpz.effectFlag.ON_ZONE)
+    end
+
+    player:messageSpecial(ID.text.REGAIN_RECIEVED + (2 * (buff - 1)))
+end
+
+-------------------------------------------------------------------
+-- Removes any Pathos buffs from a player
+-------------------------------------------------------------------
+function removePathosBuff(player, instance)
+    if (player:hasStatusEffect(tpz.effect.REGAIN) and instance:getLocalVar("Nyzul_PreviousPathos") == 18) then
+        player:delStatusEffectSilent(tpz.effect.REGAIN)
+        player:messageSpecial(ID.text.REGAIN_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.REGEN) and instance:getLocalVar("Nyzul_PreviousPathos") == 19) then
+        player:delStatusEffectSilent(tpz.effect.REGEN)
+        player:messageSpecial(ID.text.REGEN_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.REFRESH) and instance:getLocalVar("Nyzul_PreviousPathos") == 20) then
+        player:delStatusEffectSilent(tpz.effect.REFRESH)
+        player:messageSpecial(ID.text.REFRESH_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.FLURRY)) then
+        player:delStatusEffectSilent(tpz.effect.FLURRY)
+        player:messageSpecial(ID.text.FLURRY_REMOVED)
+    elseif (player:hasStatusEffect(tpz.effect.CONCENTRATION)) then
+        player:delStatusEffectSilent(tpz.effect.CONCENTRATION)
+        player:messageSpecial(ID.text.CONCENTRATION_REMOVED)
+    else
+        for i = tpz.effect.STR_BOOST, tpz.effect.CHR_BOOST do
+            if (player:hasStatusEffect(i)) then
+                player:delStatusEffectSilent(i)
+                player:messageSpecial(ID.text.STR_BOOST_REMOVED + (2 * (i - tpz.effect.STR_BOOST)))
+            end
+        end
+    end
+end
+
+-------------------------------------------------------------------
+-- Add Penalty Pathos
+--  This is used to determine a new debuff and add the debuff to all players
+-------------------------------------------------------------------
+function addPenaltyPathos(instance)
+    -- Get a Player and record current Pathos
+    local chars = instance:getChars()
+    local player = chars[1]
+    local possiblePathos = {}
+    local pathosPower = 0
+    local debilitationPower = 0
+
+    -- Pathos has effects 1 through 10
+    if (player:hasStatusEffect(tpz.effect.PATHOS)) then
+        pathosPower = player:getStatusEffect(tpz.effect.PATHOS):getPower()
+        for i = 1, 10 do
+            if (bit.band(pathosPower, (bit.lshift(1, i - 1))) == 0) then
+                table.insert(possiblePathos, i)
+            end
+        end
+    else
+        for i = 1, 10 do
+            table.insert(possiblePathos, i)
+        end
+    end
+
+    -- Debilitation has effects 11 through 17
+    if (player:hasStatusEffect(tpz.effect.DEBILITATION)) then
+        debilitationPower = player:getStatusEffect(tpz.effect.DEBILITATION):getPower()
+        for i = 1, 7 do
+            if (bit.band(debilitationPower, (bit.lshift(1, i - 1))) == 0) then
+                table.insert(possiblePathos, i + 10)
+            end
+        end
+    else
+        for i = 11, 17 do
+            table.insert(possiblePathos, i)
+        end
+    end
+
+    -- add the new debilitation
+    if (#possiblePathos > 0) then
+        local newPathos = possiblePathos[math.random(#possiblePathos)]
+        for _,player in pairs(chars) do
+            if (newPathos <= 10) then
+                player:addStatusEffectEx(tpz.effect.PATHOS, tpz.effect.PATHOS, pathosPower + bit.lshift(1, newPathos - 1), 0, 0)
+                effect = player:getStatusEffect(tpz.effect.PATHOS)
+            else
+                player:addStatusEffectEx(tpz.effect.DEBILITATION, tpz.effect.DEBILITATION, debilitationPower + bit.lshift(1, newPathos-11), 0, 0)
+                effect = player:getStatusEffect(tpz.effect.DEBILITATION)
+            end
+            effect:setFlag(tpz.effectFlag.ON_ZONE)
+            player:messageSpecial(ID.text.JA_RESTRICTED + (2 * (newPathos - 1)))
         end
     end
 end

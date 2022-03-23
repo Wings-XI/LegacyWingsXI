@@ -1,4 +1,4 @@
-#include "daily_system.h"
+﻿#include "daily_system.h"
 #include "items/item.h"
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
@@ -52,7 +52,7 @@ namespace daily
         do
         {
             selection = std::rand() % dialItems.size();
-        } while ((itemutils::GetItem(dialItems[selection])->getFlag() & ITEM_FLAG_RARE) > 0 && charutils::HasItem(player, dialItems[selection]));
+        } while (itemutils::GetItem(dialItems[selection])->isRare() && charutils::HasItem(player, dialItems[selection]));
         return dialItems[selection];
     }
 

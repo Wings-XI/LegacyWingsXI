@@ -35,6 +35,8 @@ function onSpellCast(caster, target, spell)
             local DOT = getElementalDebuffDOT(sINT)
             local effect = target:getStatusEffect(tpz.effect.CHOKE)
             local noeffect = false
+            local StatDown = getElementalDebuffStatDownFromDOT(DOT)
+
             if (effect ~= nil) then
                 if (effect:getPower() >= DOT) then
                     noeffect = true
@@ -53,7 +55,7 @@ function onSpellCast(caster, target, spell)
                 --local mbonus = caster:getMerit(tpz.merit.ELEMENTAL_DEBUFF_EFFECT)
                 --DOT = DOT + mbonus/2 -- Damage
 
-                target:addStatusEffect(tpz.effect.CHOKE, DOT, 3, duration)
+                target:addStatusEffect(tpz.effect.CHOKE, DOT, 3, duration, 0, StatDown, 3)
             end
         end
     end

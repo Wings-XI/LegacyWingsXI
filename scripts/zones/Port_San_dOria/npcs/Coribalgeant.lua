@@ -3,7 +3,6 @@
 --  NPC: Coribalgeant
 -----------------------------------
 local ID = require("scripts/zones/Port_San_dOria/IDs")
-require("scripts/globals/room_rental")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -21,5 +20,4 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    tryMoveToLeaderMH(player)
 end

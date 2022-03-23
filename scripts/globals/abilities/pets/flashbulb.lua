@@ -12,6 +12,12 @@ function onMobSkillCheck(target, automaton, skill)
 end
 
 function onPetAbility(target, automaton, skill, master, action)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.BLINDRES) >= 100 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return tpz.effect.FLASH
+    end
+
     automaton:addRecast(tpz.recast.ABILITY, skill:getID(), 45)
     local highest = automaton:getSkillLevel(tpz.skill.AUTOMATON_MELEE)
     local highestskill = 22

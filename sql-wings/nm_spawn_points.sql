@@ -897,6 +897,7 @@ INSERT INTO `nm_spawn_points` VALUES(17121576, 0, -153.108, -10.397, 15.353);
 INSERT INTO `nm_spawn_points` VALUES(17121603, 0, 137.000, 8.500, -472.000);
 INSERT INTO `nm_spawn_points` VALUES(17125433, 0, 358.667, -0.500, -181.406);
 INSERT INTO `nm_spawn_points` VALUES(17125452, 0, 137.606, 3.346, -279.050);
+INSERT INTO `nm_spawn_points` VALUES(17125494, 0, -61.291, -0.524, 61.806);
 INSERT INTO `nm_spawn_points` VALUES(17137705, 0, 678.599, -10.219, 532.811);
 INSERT INTO `nm_spawn_points` VALUES(17137821, 0, 49.650, 1.692, 630.371);
 INSERT INTO `nm_spawn_points` VALUES(17141962, 0, -23.892, -24.139, 327.721);
@@ -6881,7 +6882,12 @@ INSERT INTO `nm_spawn_points` VALUES(17224104, 5, 541.942, 25.00, -197.276);
 INSERT INTO `nm_spawn_points` VALUES(17224104, 6, 469.023, 25.00, -179.605);
 INSERT INTO `nm_spawn_points` VALUES(17224104, 7, 458.250, 25.00, -222.287);
 INSERT INTO `nm_spawn_points` VALUES(17224104, 8, 419.067, 25.00, -244.065);
-
+INSERT INTO `nm_spawn_points` VALUES(17203414, 0, -232.30, -8.18, -571.66);
+INSERT INTO `nm_spawn_points` VALUES(17203414, 1, -229.10, -7.65, -556.17);
+INSERT INTO `nm_spawn_points` VALUES(17203414, 2, -218.12, -8.00, -566.11);
+INSERT INTO `nm_spawn_points` VALUES(17203414, 3, -217.61, -8.57, -551.96);
+INSERT INTO `nm_spawn_points` VALUES(17203414, 4, -205.58, -7.81, -553.79);
+-- INSERT INTO `nm_spawn_points` VALUES(17477708, 1, -196.076, -0.447, 220.810);
 
 --
 -- Indexes for dumped tables

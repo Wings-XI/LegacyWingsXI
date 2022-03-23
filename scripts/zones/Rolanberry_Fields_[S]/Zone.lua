@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Rolanberry_Fields_[S]/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -18,6 +19,10 @@ function onZoneIn(player, prevZone)
 		cs = 700
 	end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

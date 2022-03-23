@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Riverne Site #B01
 -- Name: Storms of Fate
--- !pos 299 -123 345 146
+-- !pos -610 4 690 29
 -----------------------------------
 local ID = require("scripts/zones/Riverne-Site_B01/IDs")
 require("scripts/globals/battlefield")
@@ -21,6 +21,7 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     player:delStatusEffect(tpz.effect.LEVEL_RESTRICTION) -- can't be capped at 50 for this fight !
+    player:timer (1000 , function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -44,6 +45,10 @@ function onEventFinish(player, csid, option)
             player:setCharVar('StormsOfFate', 3)
             player:addTitle(tpz.title.CONQUEROR_OF_FATE)
         end
+        if ENABLE_COP_ZONE_CAP == 1 then
+            player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 50, 0, 0)
+        end
+    elseif csid == 32002 then
         if ENABLE_COP_ZONE_CAP == 1 then
             player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 50, 0, 0)
         end

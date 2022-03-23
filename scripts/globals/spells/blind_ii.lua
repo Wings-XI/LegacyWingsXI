@@ -12,15 +12,24 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.BLINDRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.BLINDNESS
+    end
+    
     -- Pull base stats.
     local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.MND) -- blind uses caster INT vs target MND
 
     -- Base power
     -- Min cap: 15 at -80 dINT
     -- Max cap: 90 at 120 dINT
-    local basePotency = utils.clamp(math.floor(dINT / 3 * 8 + 45), 15, 90)
+    -- +1 Effect/merit sources: (https://ffxiclopedia.fandom.com/wiki/Blind_II?oldid=880850)
+    local merits = caster:getMerit(tpz.merit.BLIND_II)
+    -- Formula changed to an era formula (http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=82951&id=3449)
+    local potency = math.floor(((dINT + 100)/4) + merits)
 
-    local potency = calculatePotency(basePotency, spell:getSkillType(), caster, target)
+    potency = calculatePotency(potency, spell:getSkillType(), caster, target)
     
     local params = {}
     params.diff = dINT

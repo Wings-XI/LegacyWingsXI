@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/La_Vaule_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
 require("scripts/globals/titles")
@@ -25,6 +26,10 @@ function onZoneIn(player, prevZone)
     return cs
 end
 
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
+end
+
 function onRegionEnter(player, region)
 end
 
@@ -39,6 +44,7 @@ function onEventFinish(player, csid, option)
         player:completeMission(WOTG, tpz.mission.id.wotg.PURPLE_THE_NEW_BLACK)
         player:setCharVar("PurpleTheNewBlackProgress", 0)
         player:addTitle(tpz.title.TRAVERSER_OF_TIME)
-        player:addMission(WOTG, tpz.mission.id.wotg.IN_THE_NAME_OF_THE_FATHER) 
+        player:addMission(WOTG, tpz.mission.id.wotg.IN_THE_NAME_OF_THE_FATHER)
+        player:PrintToPlayer("WotG mission progress stops here for now.", 0x1F)
     end
 end

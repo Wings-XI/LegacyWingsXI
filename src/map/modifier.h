@@ -287,6 +287,7 @@ enum class Mod
     LUMINION_KILLER           = 238, // Enhances "Luminion Killer" effect
 
     // Resistances to enfeebles - Traits/Job Ability
+    // Values specified greater than or equal to 100 will be fully immune (No Effect)
     STATUSRES                 = 239, // "Resistance to All Status Ailments"
     SLEEPRES                  = 240, // Enhances "Resist Sleep" effect
     POISONRES                 = 241, // Enhances "Resist Poison" effect
@@ -618,6 +619,7 @@ enum class Mod
     SAVETP                    = 880, // SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP               = 944, // Conserve TP trait, random chance between 10 and 200 TP
 
+    WYRMAL_ABJ_KILLER_EFFECT  = 53,  // Wyrmal Abjuration(Crimson / Blood) which makes players susceptible to Dragon Killer effects
     // Rune Fencer
 
     INQUARTATA                = 963, // increases parry rate by a flat %.
@@ -653,6 +655,7 @@ enum class Mod
     // Special Modifier+
     ADDS_WEAPONSKILL          = 355, //
     ADDS_WEAPONSKILL_DYN      = 356, // In Dynamis
+    ADDS_NYZUL_BASE_WS        = 830, // Allows ws to be used prior to completing Unlocking a Myth
 
     STEALTH                   = 358, //
     SNEAK_DURATION            = 946, // Additional duration in seconds
@@ -903,6 +906,9 @@ enum class Mod
     LUMORIAN_CIRCLE = 1237,
     LUMINION_CIRCLE = 1238,
 
+    AUTOMATON_MAGIC_COST      = 1300,
+    AUTOMATON_CAN_BARRAGE     = 1301,
+
     // These mods should not be directly set.  These are used to apply pet mods via latent effects
     PET_ATT_LATENT = 970, // Pet Attack bonus used for latents
     PET_ACC_LATENT = 971 // Pet Acc bonus used for latents
@@ -911,6 +917,13 @@ enum class Mod
     // 570 through 825 used by WS DMG mods these are not spares.
 
     // super jump taking up 988
+    /*
+    * The following appear to be open mod IDs - please verify via a code search prior to using (min item_latents and item_mods)
+      Please remove from this list if you find any used mods/take a mod:
+        74-79, 140-143, 152-159, 192-223, 261-287
+        950-953, 961-962, 968, 973, 975, 977, 986-987, 989-992, 994, 996-999
+        832 - Enhances Aquaveil Effect?
+    */
 };
 
 //temporary workaround for using enum class as unordered_map key until compilers support it

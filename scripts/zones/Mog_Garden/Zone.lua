@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Mog_Garden/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-2.517, 0.452, -5.068, 190)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

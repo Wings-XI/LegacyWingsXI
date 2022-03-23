@@ -19,6 +19,7 @@ zones[tpz.zone.GRAUBERG_S] =
         LOGIN_CAMPAIGN_UNDERWAY     = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET      = 7049, -- You can't fish here.
+        CONQUEST_BASE               = 7226, -- Tallying conquest results...
         THERE_IS_NO_RESPONSE        = 7671, -- There is no response...
         CHOSEN_NOT_ENTER            = 7678, -- You have chosen not to enter ≺Multiple Choice (Parameter 0)≻[Everbloom Hollow/the Ruhotz Silvermines/Ghoyu's Reverie].
         CANNOT_ENTER                = 7680, -- You cannot enter at this time. Please wait a moment and try again.

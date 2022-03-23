@@ -34,10 +34,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     if (damage > 0) then
-        local resist = applyResistanceAddEffect(player, target, tpz.magic.ele.ICE, 0)
-        if (target:hasStatusEffect(tpz.effect.BIND) == false and resist >= 0.5) then
-            local duration = (5 + (tp/1000 * 5)) * resist
-            target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+        if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
+            local resist = applyResistanceAddEffect(player, target, tpz.magic.ele.ICE, 0)
+            if (target:hasStatusEffect(tpz.effect.BIND) == false and resist >= 0.5) then
+                local duration = (5 + (tp/1000 * 5)) * resist
+                target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+            end
         end
     end
 	if damage > 0 then player:trySkillUp(target, tpz.skill.DAGGER, tpHits+extraHits) end

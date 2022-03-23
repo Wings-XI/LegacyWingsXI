@@ -16,6 +16,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
     local params = {}
     params.numHits = 1
     local ftp = 1
@@ -32,6 +37,7 @@ function onUseAbility(player, target, ability, action)
     params.targetTPMult = 0
     params.hitsHigh = true
     params.useOAXTimes = true
+    params.useAutoTPFormula = 2
 
     if (target:isMob()) then
         local enmityShed = 50

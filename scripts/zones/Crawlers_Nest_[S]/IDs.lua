@@ -10,6 +10,7 @@ zones[tpz.zone.CRAWLERS_NEST_S] =
 {
     text =
     {
+        CONQUEST_BASE           = 77,   -- Tallying conquest results...
         ITEM_CANNOT_BE_OBTAINED = 6904, -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED           = 6910, -- Obtained: <item>.
         GIL_OBTAINED            = 6911, -- Obtained <number> gil.
@@ -19,6 +20,7 @@ zones[tpz.zone.CRAWLERS_NEST_S] =
         LOGIN_NUMBER            = 7523, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         ITEM_DELIVERY_DIALOG    = 7677, -- Hello! Any packages to sendy-wend?
         COMMON_SENSE_SURVIVAL   = 8642, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        NM_DESPAWN              = 7768, -- You have lost sight of the monster and can no longer sense its presence.
     },
     mob =
     {

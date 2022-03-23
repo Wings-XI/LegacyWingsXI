@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Batallia_Downs/IDs")
 require("scripts/quests/full_speed_ahead")
 require("scripts/quests/i_can_hear_a_rainbow")
 require("scripts/globals/chocobo_digging")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
 -----------------------------------

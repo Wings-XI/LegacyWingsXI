@@ -38,6 +38,9 @@ public:
     uint8       getTraitWeight();
     uint8       getPrimarySkillchain();
     uint8       getSecondarySkillchain();
+    uint8       getKnockback();
+    bool        isPhysical();
+    bool        isMagical();
 
 	void		setMonsterSkillId(uint16 skillid);
     void        setSetPoints(uint8 setpoints);
@@ -47,6 +50,9 @@ public:
     void        setPrimarySkillchain(uint8 sc);
     void        setSecondarySkillchain(uint8 sc);
     void		addModifier(CModifier modifier);
+    void        setKnockback(uint8 knockback);
+    void        setPhysical(uint8 isPhysical);
+    
 
 	std::vector<CModifier> modList;					// modifiers added when blue spell is equipped
 
@@ -59,6 +65,8 @@ private:
     uint8       m_traitWeight {};
     uint8       m_PrimarySkillchain {};
     uint8       m_SecondarySkillchain {};
+    uint8       m_knockback {};
+    bool        m_isPhysical {};
 
 };
 

@@ -20,6 +20,7 @@ zones[tpz.zone.FORT_KARUGO_NARUGO_S] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         SPONDULIX_SHOP_DIALOG         = 7204, -- Spondulix comes all the way from Boodlix's Emporium to help Tarutaru and Mithra. I can help you, too! You have gil, no?
+        CONQUEST_BASE                 = 7226, -- Tallying conquest results...
         LOGGING_IS_POSSIBLE_HERE      = 7671, -- Logging is possible here if you have <item>.
         THERE_IS_NO_REPONSE           = 7672, -- There is no response...
         CANNOT_ENTER                  = 7696, -- You cannot enter at this time. Please wait a moment and try again.

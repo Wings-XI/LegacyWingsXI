@@ -27,8 +27,10 @@ function onPetAbility(target, pet, skill)
 
     local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
 
-    if duration > 0 and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
-        target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
+        if duration > 0 and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
+            target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+        end
     end
     
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)

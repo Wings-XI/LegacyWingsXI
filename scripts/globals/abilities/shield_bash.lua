@@ -20,6 +20,11 @@ end
 
 function onUseAbility(player, target, ability)
 
+    -- Mob IDs That Are Immune to JA Damage
+    if target:getID() == (17449008) then
+        return 0
+    end
+
     local shieldSize = player:getShieldSize()
     local damage = 0
     local chance = 112
@@ -63,8 +68,10 @@ function onUseAbility(player, target, ability)
     --print(string.format("chance = %u",chance))
     --print(string.format("player:getMainJob() = %u",player:getMainJob()))
     tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
-    if math.random()*100 < chance then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if math.random()*100 < chance then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, math.random(4,6))
+        end
     end
 
     -- Randomize damage

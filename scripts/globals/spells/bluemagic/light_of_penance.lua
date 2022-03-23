@@ -35,7 +35,8 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
-    
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
+
     params.effect = tpz.effect.BLINDNESS
     local blindResist = applyResistanceEffect(caster, target, spell, params)
     local blindDuration = math.ceil(30 * blindResist * tryBuildResistance(tpz.mod.RESBUILD_BLIND, target))
@@ -44,17 +45,21 @@ function onSpellCast(caster, target, spell)
     local bindResist = applyResistanceEffect(caster, target, spell, params)
     local bindDuration = math.ceil(30 * bindResist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
     
-    if blindResist >= 0.5 then
-        target:delTP(100*blindResist)
-        if not target:hasStatusEffect(tpz.effect.BLINDNESS) and target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, blindDuration) then
-            returnEffect = tpz.effect.BLINDNESS
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BLINDRES) < 100 then
+        if blindResist >= 0.5 then
+            target:delTP(100*blindResist)
+            if not target:hasStatusEffect(tpz.effect.BLINDNESS) and target:addStatusEffect(tpz.effect.BLINDNESS, 25, 0, blindDuration) then
+                returnEffect = tpz.effect.BLINDNESS
+            end
         end
     end
     
-    if bindResist >= 0.5 then
-        target:delTP(100*bindResist)
-        if not target:hasStatusEffect(tpz.effect.BIND) and target:addStatusEffect(tpz.effect.BIND, 1, 0, bindDuration) then
-            returnEffect = tpz.effect.BIND
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
+        if bindResist >= 0.5 then
+            target:delTP(100*bindResist)
+            if not target:hasStatusEffect(tpz.effect.BIND) and target:addStatusEffect(tpz.effect.BIND, 1, 0, bindDuration) then
+                returnEffect = tpz.effect.BIND
+            end
         end
     end
     

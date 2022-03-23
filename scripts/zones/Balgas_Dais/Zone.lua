@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Balgas_Dais/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/settings")
 -----------------------------------
 

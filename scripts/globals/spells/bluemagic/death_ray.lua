@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_AMORPH
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.DARK
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 6.2 or 4.2
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.625 or 1.625
     params.tMultiplier = 1.0
     params.duppercap = 51
     params.str_wsc = 0.0

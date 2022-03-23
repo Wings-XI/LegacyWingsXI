@@ -23,6 +23,7 @@
 
 #include "item.h"
 #include "../../common/utils.h"
+#include "../map.h"
 
 /************************************************************************
 *                                                                       *
@@ -150,6 +151,19 @@ void CItem::setSubType(uint8 subtype)
 bool CItem::isSubType(ITEM_SUBTYPE subtype)
 {
     return (m_subtype & subtype);
+}
+
+bool CItem::isRare()
+{
+    if (map_config.disable_rare_item_limit) {
+        return false;
+    }
+    return m_flag & ITEM_FLAG_RARE ? true : false;
+}
+
+bool CItem::isEx()
+{
+    return m_flag & ITEM_FLAG_EX ? true : false;
 }
 
 /************************************************************************
@@ -375,13 +389,15 @@ bool CItem::isSoultrapper() const
     return m_id == 18721 || m_id == 18724;
 }
 
-void CItem::setSoulPlateData(std::string name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp)
+void CItem::setSoulPlateData(std::string name, uint8 fauna, uint8 subOfInterest, uint8 ecoSystem, uint8 zeni, uint16 skillIndex, uint8 fp)
 {
-    PackSoultrapperName(name, m_extra, name.size());
+    PackSoultrapperName(name, m_extra);
 
-    // Hack: Artificially chop off extremely long names, so we can pack the mobFamily info into m_extra
-    m_extra[17] = (mobFamily & 0xFF00) >> 8;
-    m_extra[18] = mobFamily & 0x00FF;
+    // Hack: Artificially chop off extremely long names, so we can pack the mobID info into m_extra
+    m_extra[15] = 0;
+    m_extra[16] = fauna;
+    m_extra[17] = subOfInterest;
+    m_extra[18] = ecoSystem;
 
     m_extra[19] = zeni;
 
@@ -393,12 +409,14 @@ void CItem::setSoulPlateData(std::string name, uint16 mobFamily, uint8 zeni, uin
     m_extra[23] = (0x03 << 4) & fp;
 }
 
-auto CItem::getSoulPlateData() -> std::tuple<std::string, uint16, uint8, uint16, uint8>
+auto CItem::getSoulPlateData() -> std::tuple<std::string, uint8, uint8, uint8, uint8, uint16, uint8>
 {
     auto   name = "";
-    uint16 mobFamily  = (m_extra[17] << 8) + m_extra[18];
+    uint8 fauna = m_extra[16];
+    uint8 subOfInterest = m_extra[17];
+    uint8 ecoSystem = m_extra[18];
     uint8  zeni       = m_extra[19];
     uint16 skillIndex = (m_extra[20] >> 7) + (m_extra[21] << 1) + ((m_extra[22] & 0x03) << 9);
     uint8  fp         = (m_extra[22] >> 3) + ((m_extra[23] & 0x03) << 4);
-    return std::tuple(name, mobFamily, zeni, skillIndex, fp);
+    return std::tuple(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
 }

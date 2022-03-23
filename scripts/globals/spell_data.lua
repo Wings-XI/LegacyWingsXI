@@ -791,7 +791,7 @@ tpz.magic.spell =
     KAKKA_ICHI            =  509,
     MIGAWARI_ICHI         =  510,
     HASTE_II              =  511,
-
+    STUNGA                =  512,
     VENOM_SHELL           =  513,
 
     MAELSTROM             =  515,

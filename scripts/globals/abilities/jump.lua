@@ -16,6 +16,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability, action)
+
+    if target:getID() == (17449008) then
+        return 0
+    end
+    
     local params = {}
     params.numHits = 1
     local ftp = 1 + (player:getStat(tpz.mod.VIT) / 256)
@@ -32,6 +37,7 @@ function onUseAbility(player, target, ability, action)
     params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
     params.hitsHigh = true
     params.useOAXTimes = true
+    params.useAutoTPFormula = 2
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Beaucedine_Glacier_[S]/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-180, -81.85, 280, 44)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

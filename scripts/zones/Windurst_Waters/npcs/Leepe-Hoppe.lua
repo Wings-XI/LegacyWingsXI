@@ -116,9 +116,6 @@ function onTrigger(player, npc)
     elseif tuningOut == QUEST_ACCEPTED then
         player:startEvent(889) -- Reminder to go help Ildy in Kazham
 
-    elseif moonlitPath == QUEST_COMPLETED then
-        player:startEvent(847, 0, 1125) -- Having completed Moonlit Path, this will indefinitely replace his standard dialogue!
-
     else
         player:startEvent(345) -- Standard Dialogue?
     end
@@ -230,6 +227,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
         end
     elseif (csid == 848) then
+        player:delQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
+        player:addQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
         player:addKeyItem(tpz.ki.MOON_BAUBLE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MOON_BAUBLE)
     elseif (csid == 734) then

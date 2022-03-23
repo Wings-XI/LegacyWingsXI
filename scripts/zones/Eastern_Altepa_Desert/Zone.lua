@@ -29,7 +29,7 @@ function onInitialize(zone)
         SpawnMob(ID.mob.CENTURIO_XII_I)
     end
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
     tpz.chocobo.initZone(zone)
 end
 

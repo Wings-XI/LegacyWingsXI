@@ -22,35 +22,70 @@ function onMobSpawn(mob)
 
     if skin == 1161 then -- Fire
         mob:setSpellList(470)
-        mob:setMod(tpz.mod.ICERES, 27)
+        mob:setMod(tpz.mod.ICEDEF, 180)
+        mob:setMod(tpz.mod.ICERES, 80)
+        mob:setMod(tpz.mod.PARALYZERES, 99)
+        mob:setMod(tpz.mod.BINDRES, 99)
+        mob:setMod(tpz.mod.FIREDEF, 256)
+        mob:setMod(tpz.mod.FIRERES, 100)
         mob:setMod(tpz.mod.WATERRES, -27)
-    elseif skin == 1162 then --Earth
-        mob:setSpellList(467)
-        mob:setMod(tpz.mod.THUNDERRES, 27)
-        mob:setMod(tpz.mod.WINDRES, -27)
-    elseif skin == 1163 then -- Water
-        mob:setSpellList(469)
-        mob:setMod(tpz.mod.THUNDERRES, -27)
-        mob:setMod(tpz.mod.FIRERES, 27)
-    elseif skin == 1164 then -- Wind
-        mob:setSpellList(466)
-        mob:setMod(tpz.mod.ICERES, -27)
-        mob:setMod(tpz.mod.EARTHRES, 27)
-    elseif skin == 1165 then --Ice
+    elseif skin == 1162 then -- Ice
         mob:setSpellList(465)
-        mob:setMod(tpz.mod.WINDRES, 27)
+        mob:setMod(tpz.mod.WINDDEF, 180)
+        mob:setMod(tpz.mod.WINDRES, 80)
+        mob:setMod(tpz.mod.GRAVITYRES, 99)
+        mob:setMod(tpz.mod.SILENCERES, 99)
+        mob:setMod(tpz.mod.ICEDEF, 256)
+        mob:setMod(tpz.mod.ICERES, 100)
+        mob:setMod(tpz.mod.PARALYZERES, 100)
+        mob:setMod(tpz.mod.BINDRES, 100)
         mob:setMod(tpz.mod.FIRERES, -27)
-    elseif skin == 1166 then --Lightning
+    elseif skin == 1163 then -- Wind
+        mob:setSpellList(466)
+        mob:setMod(tpz.mod.EARTHDEF, 180)
+        mob:setMod(tpz.mod.SLOWRES, 99)
+        mob:setMod(tpz.mod.WINDDEF, 256)
+        mob:setMod(tpz.mod.WINDRES, 100)
+        mob:setMod(tpz.mod.GRAVITYRES, 100)
+        mob:setMod(tpz.mod.SILENCERES, 100)
+        mob:setMod(tpz.mod.ICERES, -27)
+    elseif skin == 1164 then -- Earth
+        mob:setSpellList(467)
+        mob:setMod(tpz.mod.THUNDERDEF, 180)
+        mob:setMod(tpz.mod.THUNDERRES, 80)
+        mob:setMod(tpz.mod.STUNRES, 99)
+        mob:setMod(tpz.mod.EARTHDEF, 256)
+        mob:setMod(tpz.mod.EARTHRES, 100)
+        mob:setMod(tpz.mod.SLOWRES, 100)
+        mob:setMod(tpz.mod.WINDRES, -27)
+    elseif skin == 1165 then -- Lightning
         mob:setSpellList(468)
-        mob:setMod(tpz.mod.WATERRES, 27)
+        mob:setMod(tpz.mod.WATERDEF, 180)
+        mob:setMod(tpz.mod.WATERRES, 80)
+        mob:setMod(tpz.mod.POISONRES, 99)
+        mob:setMod(tpz.mod.THUNDERDEF, 256)
+        mob:setMod(tpz.mod.THUNDERRES, 100)
+        mob:setMod(tpz.mod.STUNRES, 100)
         mob:setMod(tpz.mod.EARTHRES, -27)
-    elseif skin == 1167 then --Light
+    elseif skin == 1166 then -- Water
+        mob:setSpellList(469)
+        mob:setMod(tpz.mod.FIREDEF, 256)
+        mob:setMod(tpz.mod.FIRERES, 80)
+        mob:setMod(tpz.mod.WATERDEF, 256)
+        mob:setMod(tpz.mod.WATERRES, 100)
+        mob:setMod(tpz.mod.POISONRES, 100)
+        mob:setMod(tpz.mod.THUNDERRES, -27)
+    elseif skin == 1167 then -- Light
         mob:setSpellList(464)
-        mob:setMod(tpz.mod.LIGHTRES, 27)
+        mob:setMod(tpz.mod.LIGHTDEF, 256)
+        mob:setMod(tpz.mod.LIGHTRES, 100)
+        mob:setMod(tpz.mod.LULLABYRES, 100)
         mob:setMod(tpz.mod.DARKRES, -27)
-    elseif skin == 1168 then --Dark
+    elseif skin == 1168 then -- Dark
         mob:setSpellList(463)
-        mob:setMod(tpz.mod.DARKRES, 27)
+        mob:setMod(tpz.mod.DARKDEF, 256)
+        mob:setMod(tpz.mod.DARKRES, 100)
+        mob:setMod(tpz.mod.SLEEPRES, 100)
         mob:setMod(tpz.mod.LIGHTRES, -27)
     end
 end

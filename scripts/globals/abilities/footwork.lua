@@ -13,5 +13,5 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.FOOTWORK, 0, 0, 60*5)
+    player:addStatusEffect(tpz.effect.FOOTWORK, 0, 0, 300)
 end

@@ -55,8 +55,15 @@ function onTrigger(player, target, forceZone)
             player:setCharVar( "inJail", jail_cell )
         end
 
+        -- check for an instance
+        if (targ and (targ:getInstance() ~= nil)) then
+            -- Disabling until futher testing is done
+            --local instance = targ:getInstance()
+            --player:setInstance(instance)
+        end
+
         player:setPos(targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos(), forceZone == 1 and targ:getZoneID() or nil)
     elseif not player:gotoPlayer(target) then
-        error(player, string.format("Player named: %s not found!"), target)
+        error(player, string.format("Player named: %s not found!"))
     end
 end

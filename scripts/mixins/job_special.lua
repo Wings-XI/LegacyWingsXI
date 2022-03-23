@@ -299,9 +299,18 @@ g_mixins.job_special = function(mob)
             local i = abilities[math.random(#abilities)]
             local ability = mob:getLocalVar("[jobSpecial]ability_" .. i)
             local now = os.time()
+            local mJob = mob:getMainJob()
 
             if mob:getLocalVar("[jobSpecial]begCode_" .. i) == 1 then
                 mob:triggerListener("JOB_SPECIAL_BEG_" .. i, mob)
+            end
+
+            if mJob == tpz.job.BST and mob:isInDynamis() then -- Dyna BSTs use Charm instead of Familiar if their pet is dead
+                local pet = mob:getID() + 1
+
+                if GetMobByID(pet):isAlive() == false then
+                    ability = 710
+                end
             end
 
             mob:useMobAbility(ability)

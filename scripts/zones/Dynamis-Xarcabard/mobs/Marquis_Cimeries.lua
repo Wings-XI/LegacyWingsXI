@@ -28,7 +28,6 @@ function onMobDeath(mob, player, isKiller)
             local demons = GetMobByID(v)
             if demons:getLocalVar("dynaIsDefeatedForWaveReq") == 1 then
                 table.insert(demonsKilled, v)
-                print(demonsKilled)
             end
         end
         if #demonsKilled == 15 then

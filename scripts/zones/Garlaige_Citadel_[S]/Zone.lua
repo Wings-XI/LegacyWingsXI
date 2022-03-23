@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Garlaige_Citadel_[S]/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-300, -13.548, 157, 64)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

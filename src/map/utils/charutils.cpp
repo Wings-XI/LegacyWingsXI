@@ -52,6 +52,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/char_update.h"
 #include "../packets/chat_message.h"
 #include "../packets/conquest_map.h"
+#include "../packets/campaign_map.h"
 #include "../packets/delivery_box.h"
 #include "../packets/inventory_item.h"
 #include "../packets/inventory_assign.h"
@@ -113,6 +114,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 const std::string CHAT_PACKET_CHANGE_VER("302009xx_x");
 const std::string TELL_PACKET_CHANGE_VER("302011xx_x");
 const std::string MASTER_LV_PACKET_CHANGE_VER("302111xx_x");
+const std::string INVENTORY_PACKET_CHANGE_VER("302202xx_x");
 
 
 /************************************************************************
@@ -494,6 +496,7 @@ namespace charutils
             PChar->m_needChatFix = ((!clientVer.empty()) && (clientVer >= CHAT_PACKET_CHANGE_VER));
             PChar->m_needTellFix = ((!clientVer.empty()) && (clientVer >= TELL_PACKET_CHANGE_VER));
             PChar->m_needMasterLvFix = ((!clientVer.empty()) && (clientVer >= MASTER_LV_PACKET_CHANGE_VER));
+            PChar->m_needInventoryFix = ((!clientVer.empty()) && (clientVer >= INVENTORY_PACKET_CHANGE_VER));
         }
 
         roeutils::onCharLoad(PChar);
@@ -896,6 +899,7 @@ namespace charutils
         PChar->StatusEffectContainer->LoadStatusEffects();
         PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
+        PChar->m_nyzulProgress = GetCharVar(PChar, "Nyzul_RunicDiscProgress");
 
         charutils::LoadEquip(PChar);
         luautils::CheckForGearSet(PChar);
@@ -1216,18 +1220,46 @@ namespace charutils
     {
         auto pushContainer = [&](auto LocationID)
         {
-            CItemContainer* container = PChar->getStorage(LocationID);
-            if (container == nullptr)
-                return;
-
-            uint8 size = container->GetSize();
-            for (uint8 slotID = 0; slotID <= size; ++slotID)
-            {
-                CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
-                if (PItem != nullptr)
-                {
-                    PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+            if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id && (LocationID == LOC_MOGSAFE || LocationID == LOC_MOGSAFE2)) {
+                // Open Mog, in another person's moghouse, so send *their* furniture
+                CCharEntity* PResident = zoneutils::GetChar(PChar->m_moghouseID);
+                if (PResident) {
+                    CItemContainer* container = PResident->getStorage(LocationID);
+                    if (container) {
+                        uint8 size = container->GetSize();
+                        uint8 virtual_slot = 1;
+                        for (uint8 slotID = 0; slotID <= size; ++slotID) {
+                            CItem* PItem = PResident->getStorage(LocationID)->GetItem(slotID);
+                            if (PItem != nullptr && PItem->isType(ITEM_FURNISHING) && ((CItemFurnishing*)PItem)->isInstalled())
+                            {
+                                CInventoryItemPacket* furniture_packet = new CInventoryItemPacket(PItem, LocationID, slotID);
+                                // Replace slot ID with virtual slot so the numbers are sequential
+                                furniture_packet->getData()[0x0F] = virtual_slot;
+                                virtual_slot++;
+                                PChar->pushPacket(furniture_packet);
+                            }
+                        }
+                    }
                 }
+            }
+            else {
+                CItemContainer* container = PChar->getStorage(LocationID);
+                if (container == nullptr)
+                    return;
+
+                uint8 size = container->GetSize();
+                for (uint8 slotID = 0; slotID <= size; ++slotID)
+                {
+                    CItem* PItem = PChar->getStorage(LocationID)->GetItem(slotID);
+                    if (PItem != nullptr)
+                    {
+                        PChar->pushPacket(new CInventoryItemPacket(PItem, LocationID, slotID));
+                    }
+                }
+            }
+            if (PChar->m_needInventoryFix) {
+                // New clients this sent after each storage type
+                PChar->pushPacket(new CInventoryFinishPacket(LocationID));
             }
         };
 
@@ -1316,7 +1348,7 @@ namespace charutils
             delete PItem;
             return 0;
         }
-        if (PItem->getFlag() & ITEM_FLAG_RARE)
+        if (PItem->isRare())
         {
             if (HasItem(PChar, PItem->getID()))
             {
@@ -1634,8 +1666,11 @@ namespace charutils
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
         {
             CItem* PItem = PChar->UContainer->GetItem(slotid);
+            if (!PItem) {
+                continue;
+            }
 
-            if (PItem != nullptr && PItem->getFlag() & ITEM_FLAG_RARE)
+            if (PItem->isRare())
             {
                 if (HasItem(PTarget, PItem->getID()))
                 {
@@ -1691,7 +1726,7 @@ namespace charutils
                 if (PItem->getID() == 4237)
                     checkHG = true;
                 UpdateItem(PChar, LOC_INVENTORY, PItem->getSlotID(), (int32)(0 - amount));
-                
+
                 PChar->UContainer->ClearSlot(slotid);
             }
         }
@@ -2295,7 +2330,7 @@ namespace charutils
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
             return;
-
+        
         if (equipSlotID == SLOT_SUB && PItem && !PItem->IsShield() && ((CItemWeapon*)PItem)->getSkillType() == SKILL_NONE && slotID != 0)
         {
             CItemEquipment* PMainItem = PChar->getEquip(SLOT_MAIN);
@@ -2633,7 +2668,8 @@ namespace charutils
         {
             if (battleutils::CanUseWeaponskill(PChar, PSkill) ||
                 PSkill->getID() == main_ws ||
-                (isInDynamis && (PSkill->getID() == main_ws_dyn)))
+                (isInDynamis && (PSkill->getID() == main_ws_dyn)) ||
+                (PSkill->getRequiredLevel() == 75 && MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID()))
             {
                 addWeaponSkill(PChar, PSkill->getID());
             }
@@ -2649,12 +2685,57 @@ namespace charutils
             {
                 if ((battleutils::CanUseWeaponskill(PChar, PSkill)) ||
                     PSkill->getID() == range_ws ||
-                    (isInDynamis && (PSkill->getID() == range_ws_dyn)))
+                    (isInDynamis && (PSkill->getID() == range_ws_dyn)) ||
+                    (PSkill->getRequiredLevel() == 75 && MythicWeaponSkillUsableOnBaseWeapon(PChar, PItem) == PSkill->getID()))
                 {
                     addWeaponSkill(PChar, PSkill->getID());
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Checks if a player should be able to use a mythic weaponskill with the base nyzul weapon equipped
+    /// </summary>
+    /// <param name="PChar"></param>
+    /// <param name="PItem"></param>
+    /// <returns>Returns the wsid enabled or 0 if none enabled</returns>
+    int MythicWeaponSkillUsableOnBaseWeapon(CCharEntity* PChar, CItemWeapon* PItem)
+    {
+        if (!PItem || PChar->GetMJob() > 20)
+            return 0;
+
+        int ws = battleutils::GetScaledItemModifier(PChar, PItem, Mod::ADDS_NYZUL_BASE_WS);
+        if (ws == 0)
+            return 0;
+        
+        // Ordered by Job
+        int nyzulBaseWeapons[20] = { 18492, 18753, 18851, 18589, 17742, 18003, 17744, 18944, 17956, 18034, 18719, 18443, 18426, 18120, 18590, 17743, 18720, 18754, 19102, 18592 };
+        int questID = 102 + PChar->GetMJob() - 1; // UNLOCKING_A_MYTH_WARRIOR is 102
+        int current = PChar->m_questLog[3].current[questID / 8] & (1 << (questID % 8));
+        int requiredPoints = 16000;
+        int nyzulFloorProgress = PChar->m_nyzulProgress;
+
+        if (nyzulFloorProgress == 100)
+            requiredPoints = 250;
+        else if (nyzulFloorProgress >= 80)
+            requiredPoints = 500 + (20 * (99 - nyzulFloorProgress));
+        else if (nyzulFloorProgress >= 60)
+            requiredPoints = 1000 + (40 * (79 - nyzulFloorProgress));
+        else if (nyzulFloorProgress >= 40)
+            requiredPoints = 2000 + (80 * (59 - nyzulFloorProgress));
+        else if (nyzulFloorProgress >= 20)
+            requiredPoints = 4000 + (160 * (39 - nyzulFloorProgress));
+        else if (nyzulFloorProgress > 0)
+            requiredPoints = 8000 + (320 * (19 - nyzulFloorProgress));
+        
+        // if weapon && if weapon is a mythic base for the player job && the Unlocking A Myth (Job) quest is active && enough points
+        if (PItem && PItem->getID() == nyzulBaseWeapons[PChar->GetMJob() - 1] && current != 0 && PItem->getCurrentUnlockPoints() >= requiredPoints)
+        {
+            return ws;
+        }
+
+        return 0;
     }
 
     void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID) {
@@ -2712,7 +2793,7 @@ namespace charutils
         {
             /*
             auto skillList {battleutils::GetMobSkillList(PPet->m_MobSkillList)};
-            
+
             for (auto&& abilityid : skillList)
             {
                 addPetAbility(PChar, abilityid - ABILITY_HEALING_RUBY);
@@ -3005,7 +3086,15 @@ namespace charutils
                     auto maxCharges = 0;
                     if (charge)
                     {
-                        chargeTime = charge->chargeTime - PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
+                        uint16 meritRecastReduction = PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar);
+
+                        // Ready is 2sec/merit (Sic is 4sec/merit so divide by 2)
+                        if (PAbility->getMeritModID() == 902)
+                        {
+                            meritRecastReduction /= 2;
+                        }
+
+                        chargeTime = charge->chargeTime - meritRecastReduction;
                         maxCharges = charge->maxCharges;
                     }
                     if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
@@ -3241,6 +3330,12 @@ namespace charutils
 
         // This usually happens after a crash
         TPZ_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
+
+        if (PChar->objtype != TYPE_PC)
+        {
+            //ShowDebug(CL_CYAN"INVALID CLIENT %s CANNOT SKILLUP ID %i: NOT A PLAYER CHARACTER\n" CL_RESET, PChar->GetName(), SkillID);
+            return;
+        }
 
         if ((PChar->WorkingSkills.rank[SkillID] != 0) && !(PChar->WorkingSkills.skill[SkillID] & 0x8000))
         {
@@ -4065,6 +4160,18 @@ namespace charutils
                         return;
                     }
 
+                                        
+                    if (PMob->m_ExpPenalty > map_config.pl_penalty * 3)
+                    {
+                        exp = std::max<float>(0.0, exp - PMob->m_ExpPenalty - (map_config.pl_penalty * 3));
+
+                        if (exp == 0.0f)
+                        {
+                            // No experience points gained.
+                            PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 21));
+                        }
+                    }
+
                     exp = charutils::AddExpBonus(PMember, exp);
 
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
@@ -4276,6 +4383,7 @@ namespace charutils
                 (region >= 28 && region <= 32))
             {
                 charutils::AddPoints(PChar, "imperial_standing", (int32)(exp * 0.1f));
+                CConquestPacket::CMFlushCache();
                 PChar->pushPacket(new CConquestPacket(PChar));
             }
 
@@ -4285,7 +4393,8 @@ namespace charutils
                 (region >= 33 && region <= 40))
             {
                 charutils::AddPoints(PChar, "allied_notes", (int32)(exp * 0.1f));
-                PChar->pushPacket(new CConquestPacket(PChar));
+                PChar->pushPacket(new CCampaignPacket(PChar, 0));
+                PChar->pushPacket(new CCampaignPacket(PChar, 1));
             }
 
             // Cruor Drops in Abyssea zones.
@@ -4428,6 +4537,7 @@ namespace charutils
             "pos_x = %.3f,"
             "pos_y = %.3f,"
             "pos_z = %.3f,"
+            "moghouse = %u,"
             "boundary = %u "
             "WHERE charid = %u;";
 
@@ -4436,6 +4546,7 @@ namespace charutils
             PChar->loc.p.x,
             PChar->loc.p.y,
             PChar->loc.p.z,
+            PChar->m_moghouseID,
             PChar->loc.boundary,
             PChar->id);
     }
@@ -4553,6 +4664,10 @@ namespace charutils
 
     void UpdateMissionStorage(CCharEntity* PChar, bool recovery)
     {
+        if (!map_config.storage_mission_unlock) {
+            return;
+        }
+
         uint8 currentMW1 = 0;
         uint8 currentMW2 = 0;
         uint8 currentMW3 = 0;
@@ -4650,10 +4765,8 @@ namespace charutils
             afterMW2 += 4;
         if (HasCompletedMission(PChar, 3, 28))
             afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 30))
-            afterMW2 += 4;
-        if (HasCompletedMission(PChar, 3, 31))
-            afterMW2 += 12;
+        if (HasCompletedMission(PChar, 3, 30)) // Awakening (Set to 16 as the Last Verse cannot be completed.)
+            afterMW2 += 16;
 
 
 
@@ -4737,10 +4850,8 @@ namespace charutils
             afterMW3 += 2;
         if (HasCompletedMission(PChar, 6, 828)) //WHEN_ANGELS_FALL
             afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 840)) //DAWN
-            afterMW3 += 2;
-        if (HasCompletedMission(PChar, 6, 850)) //THE_LAST_VERSE
-            afterMW3 += 2;
+        if (HasCompletedMission(PChar, 6, 840)) //DAWN (Set to 6 as the Last Verse cannot be completed.)
+            afterMW3 += 6;
 
         uint8 AU = 0;
         while (AU < 48)
@@ -5477,6 +5588,9 @@ namespace charutils
     }
 
     bool hasMogLockerAccess(CCharEntity* PChar) {
+        if (map_config.force_enable_mog_locker) {
+            return true;
+        }
         char fmtQuery[] = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' ";
         Sql_Query(SqlHandle, fmtQuery, PChar->id, "mog-locker-expiry-timestamp");
 
@@ -5520,13 +5634,13 @@ namespace charutils
             WEATHER_AURORAS,
             WEATHER_GLOOM};
 
-        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element;
+        uint8 element = ((CPetEntity*)(PChar->PPet))->m_Element-1;
 
-        TPZ_DEBUG_BREAK_IF(element > 8);
+        TPZ_DEBUG_BREAK_IF(element > 7);
 
         reduction = reduction + PChar->getMod(strong[element]);
 
-        if (battleutils::GetDayElement() == element)
+        if (battleutils::GetDayElement() == element + 1)
         {
             reduction = reduction + PChar->getMod(Mod::DAY_REDUCTION);
         }
@@ -5976,6 +6090,7 @@ namespace charutils
                 PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
                 return;
             }
+            PChar->SetLocalVar("NoRemoveOpenMH", 1);
             Sql_Query(SqlHandle, "UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
                 (uint32)ipp, (uint32)(ipp >> 32), PChar->id);
 
@@ -6049,12 +6164,22 @@ namespace charutils
 
         if (PWeapon && PWeapon->isUnlockable() && !PWeapon->isUnlocked())
         {
+            // Handle unlocking nyzul ws based on floor progress
+            int wsid = MythicWeaponSkillUsableOnBaseWeapon(PChar, PWeapon);
+            if (wsid > 0 && hasWeaponSkill(PChar, wsid) == 0)
+            {
+                addWeaponSkill(PChar, wsid);
+                PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+            }
+
+            // Handle all other unlock weapons
             if (PWeapon->addWsPoints(wspoints))
             {
                 // weapon is now broken
                 PChar->PLatentEffectContainer->CheckLatentsWeaponBreak(slotid);
                 PChar->pushPacket(new CCharStatsPacket(PChar));
             }
+            
             char extra[sizeof(PWeapon->m_extra) * 2 + 1];
             Sql_EscapeStringLen(SqlHandle, extra, (const char*)PWeapon->m_extra, sizeof(PWeapon->m_extra));
 
@@ -6548,6 +6673,37 @@ bool VerifyHoldsValidHourglass(CCharEntity* PChar)
     return valid;
 }
 
+void RemoveGuestsFromMogHouse(CCharEntity* PChar)
+{
+    if (!PChar) {
+        return;
+    }
+    uint32 charid = PChar->id;
+    if (PChar->m_moghouseID == 0 || PChar->m_moghouseID != charid) {
+        return;
+    }
+
+    CZone* PZone = PChar->loc.zone;
+    if (!PZone) {
+        return;
+    }
+    uint16 zoneid = PZone->GetID();
+    PZone->ForEachChar([&PChar, charid, zoneid](CCharEntity* PZoneChar) {
+        if (PZoneChar->id != charid && PZoneChar->m_moghouseID == charid && PZoneChar->GetLocalVar("NoRemoveOpenMH") == 0) {
+            PZoneChar->loc.destination = zoneid;
+            PZoneChar->loc.p.x = 0;
+            PZoneChar->loc.p.y = 0;
+            PZoneChar->loc.p.z = 0;
+            PZoneChar->loc.p.rotation = 0;
+            PZoneChar->status = STATUS_DISAPPEAR;
+            PZoneChar->loc.boundary = 0;
+            PZoneChar->m_moghouseID = 0;
+            PZoneChar->clearPacketList();
+            charutils::SendToZone(PZoneChar, 2, zoneutils::GetZoneIPP(zoneid));
+        }
+    });
+}
+
 int32 DelayedRaiseMenu(time_point tick, CTaskMgr::CTask* PTask)
 {
     CCharEntity* PChar = std::any_cast<CCharEntity*>(PTask->m_data);
@@ -6660,6 +6816,52 @@ void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason)
         reason = "The use of the command failed for an unknown reason. If the issue persists please open a GM ticket.";
     }
     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, reason));
+}
+
+std::vector<uint32> GetConnectedChars()
+{
+    std::vector<uint32> charlist;
+
+    zoneutils::ForEachZone([&charlist](CZone* PZone)
+    {
+        PZone->ForEachChar([&charlist](CCharEntity* PChar)
+        {
+            charlist.push_back(PChar->id);
+        });
+    });
+
+    return charlist;
+}
+
+int32 LogGil(time_point tick, CTaskMgr::CTask* PTask)
+{
+    std::vector<uint32> charlist = GetConnectedChars();
+    uint32 num_chars = charlist.size();
+
+    if (num_chars == 0) {
+        // Nobody's home
+        ShowDebug("LogGil: Skipping, no players connected to server.\n");
+        return 0;
+    }
+
+    // Build a string representation of the character IDs
+    // currently connected in a format which can be used
+    // in a "WHERE IN" SQL statement.
+    std::string charlist_str = "(";
+    for (uint32 i = 0; i < num_chars; i++) {
+        if (i != 0) {
+            charlist_str += ", ";
+        }
+        charlist_str += std::to_string(charlist[i]);
+    }
+    charlist_str += ")";
+
+    // Yes, it can be done in a single query
+    std::string Query = "INSERT INTO char_gillog (charid, logtime, gil) (SELECT charid, NOW(), quantity FROM char_inventory WHERE charid IN " + charlist_str + " AND itemId = 65535);";
+    Sql_Query(SqlHandle, Query.c_str());
+    ShowDebug("LogGil: Logged gil of %u players.\n", num_chars);
+
+    return 0;
 }
 
 }; // namespace charutils

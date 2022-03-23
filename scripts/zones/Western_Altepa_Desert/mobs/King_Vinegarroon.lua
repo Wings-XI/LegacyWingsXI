@@ -13,7 +13,7 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CLAIM_SHIELD, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
-    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
 end
 
 function onMobInitialize(mob)
@@ -22,10 +22,10 @@ end
 
 function onMobDrawIn(mob, target)
     local battleTarget = mob:getTarget()
-    
-    if target:getID() == battleTarget:getID() then
-        mob:useMobAbility(({354,722,723})[math.random(1,3)])
-        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if target:getID() == battleTarget:getID() and os.time() > drawInWait then
+        mob:addTP(3000)
     end
 end
 
@@ -41,6 +41,24 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.VINEGAR_EVAPORATOR)
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if (skill:getID() == 354 or skill:getID() == 355 or skill:getID() == 722 or skill:getID() == 723) and os.time() > drawInWait then
+        local chance = math.random(1,2)
+        if chance == 1 then
+            for _, member in pairs(target:getAlliance()) do
+                mob:triggerDrawIn(false, 1, 35, member)
+            end
+        else
+            mob:triggerDrawIn(false, 1, 35, target)
+        end
+
+        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 end
 
 function onMobDespawn(mob)
@@ -67,8 +85,22 @@ function updateRegen(mob)
     end
 end
 
-function onMobFight(mob)
+function onMobFight(mob, target)
     updateRegen(mob)
+
+    local drawInWait = mob:getLocalVar("DrawInWait")
+
+    if target:getZPos() > -540 and os.time() > drawInWait then -- Northern Draw In
+        local rot = target:getRotPos()
+        target:setPos(target:getXPos(),target:getYPos(),-542,rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    elseif target:getXPos() < -350 and os.time() > drawInWait then  -- Southern Draw In
+        local rot = target:getRotPos()
+        target:setPos(-348,target:getYPos(),target:getZPos(),rot)
+        mob:messageBasic(232, 0, 0, target)
+        mob:setLocalVar("DrawInWait", os.time() + 2)
+    end
 end
 
 function onMobRoam(mob)

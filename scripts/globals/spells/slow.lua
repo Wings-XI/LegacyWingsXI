@@ -12,6 +12,17 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:hasStatusEffect(tpz.effect.HASTE) then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SLOW
+    end
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLOWRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.SLOW
+    end
+
     local dMND = caster:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
     
     local params = {}
@@ -24,9 +35,6 @@ function onSpellCast(caster, target, spell)
     local calcDuration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
     local duration = math.ceil(calcDuration * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
     
-    if target:hasStatusEffect(tpz.effect.HASTE) then
-        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
-    else
         if resist >= 0.5 then --Do it!
             -- Lowest ~7.3%
             -- Highest ~29.2%
@@ -41,7 +49,6 @@ function onSpellCast(caster, target, spell)
         else
             spell:setMsg(tpz.msg.basic.MAGIC_RESIST)
         end
-    end
 
     return params.effect
 end

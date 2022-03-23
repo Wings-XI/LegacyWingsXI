@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Mamook/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/helm")
 -----------------------------------
 
@@ -17,6 +18,10 @@ function onZoneIn(player, prevZone)
         player:setPos(-117.491, -20.115, -299.997, 6)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

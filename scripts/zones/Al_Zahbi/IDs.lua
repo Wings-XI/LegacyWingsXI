@@ -18,6 +18,7 @@ zones[tpz.zone.AL_ZAHBI] =
         LOGIN_CAMPAIGN_UNDERWAY   = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER              = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET    = 7049, -- You can't fish here.
+        CONQUEST_BASE             = 7149, -- Tallying conquest results...
         MOG_LOCKER_OFFSET         = 7383, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         HOMEPOINT_SET             = 7529, -- Home point set!
         IMAGE_SUPPORT_ACTIVE      = 7552, -- You have to wait a bit longer before asking for synthesis image support again.

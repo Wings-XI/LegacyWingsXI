@@ -11947,11 +11947,13 @@ INSERT INTO `item_mods` VALUES (13908,2,20);
 INSERT INTO `item_mods` VALUES (13908,5,20);
 INSERT INTO `item_mods` VALUES (13908,114,10);
 INSERT INTO `item_mods` VALUES (13908,370,1);
+INSERT INTO `item_mods` VALUES (13908,53,1);
 INSERT INTO `item_mods` VALUES (13909,1,35);
 INSERT INTO `item_mods` VALUES (13909,2,22);
 INSERT INTO `item_mods` VALUES (13909,5,22);
 INSERT INTO `item_mods` VALUES (13909,114,11);
 INSERT INTO `item_mods` VALUES (13909,370,1);
+INSERT INTO `item_mods` VALUES (13909,53,1);
 INSERT INTO `item_mods` VALUES (13911,1,41);
 INSERT INTO `item_mods` VALUES (13911,2,32);
 INSERT INTO `item_mods` VALUES (13911,8,-6);
@@ -12474,12 +12476,14 @@ INSERT INTO `item_mods` VALUES (14058,5,20);
 INSERT INTO `item_mods` VALUES (14058,24,10);
 INSERT INTO `item_mods` VALUES (14058,26,10);
 INSERT INTO `item_mods` VALUES (14058,116,10);
+INSERT INTO `item_mods` VALUES (14058,53,1);
 INSERT INTO `item_mods` VALUES (14059,1,27);
 INSERT INTO `item_mods` VALUES (14059,2,22);
 INSERT INTO `item_mods` VALUES (14059,5,22);
 INSERT INTO `item_mods` VALUES (14059,24,11);
 INSERT INTO `item_mods` VALUES (14059,26,11);
 INSERT INTO `item_mods` VALUES (14059,116,11);
+INSERT INTO `item_mods` VALUES (14059,53,1);
 INSERT INTO `item_mods` VALUES (14060,1,21);
 INSERT INTO `item_mods` VALUES (14060,8,4);
 INSERT INTO `item_mods` VALUES (14060,289,-6);
@@ -12608,11 +12612,11 @@ INSERT INTO `item_mods` VALUES (14095,1,14);
 INSERT INTO `item_mods` VALUES (14095,2,15);
 INSERT INTO `item_mods` VALUES (14095,14,5);
 INSERT INTO `item_mods` VALUES (14095,109,10);
-INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14095,857,30);    -- Holy Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14096,1,10);
 INSERT INTO `item_mods` VALUES (14096,2,15);
 INSERT INTO `item_mods` VALUES (14096,13,5);
-INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +90 seconds
+INSERT INTO `item_mods` VALUES (14096,858,30);    -- Arcane Circle duration +30 seconds
 INSERT INTO `item_mods` VALUES (14097,1,10);
 INSERT INTO `item_mods` VALUES (14097,2,11);
 INSERT INTO `item_mods` VALUES (14097,11,3);
@@ -12817,6 +12821,7 @@ INSERT INTO `item_mods` VALUES (14160,55,20);
 INSERT INTO `item_mods` VALUES (14160,56,20);
 INSERT INTO `item_mods` VALUES (14160,57,20);
 INSERT INTO `item_mods` VALUES (14160,60,20);
+INSERT INTO `item_mods` VALUES (14160,53,1);
 INSERT INTO `item_mods` VALUES (14161,1,25);
 INSERT INTO `item_mods` VALUES (14161,2,17);
 INSERT INTO `item_mods` VALUES (14161,5,17);
@@ -12826,6 +12831,7 @@ INSERT INTO `item_mods` VALUES (14161,55,21);
 INSERT INTO `item_mods` VALUES (14161,56,21);
 INSERT INTO `item_mods` VALUES (14161,57,21);
 INSERT INTO `item_mods` VALUES (14161,60,21);
+INSERT INTO `item_mods` VALUES (14161,53,1);
 INSERT INTO `item_mods` VALUES (14162,1,15);
 INSERT INTO `item_mods` VALUES (14162,8,4);
 INSERT INTO `item_mods` VALUES (14162,25,3);
@@ -13288,6 +13294,7 @@ INSERT INTO `item_mods` VALUES (14280,58,20);
 INSERT INTO `item_mods` VALUES (14280,59,20);
 INSERT INTO `item_mods` VALUES (14280,61,20);
 INSERT INTO `item_mods` VALUES (14280,169,12);
+INSERT INTO `item_mods` VALUES (14280,53,1);
 INSERT INTO `item_mods` VALUES (14281,1,44);
 INSERT INTO `item_mods` VALUES (14281,2,27);
 INSERT INTO `item_mods` VALUES (14281,5,27);
@@ -13296,6 +13303,7 @@ INSERT INTO `item_mods` VALUES (14281,58,21);
 INSERT INTO `item_mods` VALUES (14281,59,21);
 INSERT INTO `item_mods` VALUES (14281,61,21);
 INSERT INTO `item_mods` VALUES (14281,169,12);
+INSERT INTO `item_mods` VALUES (14281,53,1);
 INSERT INTO `item_mods` VALUES (14282,1,42);      -- arcane_slops DEF:+42
 INSERT INTO `item_mods` VALUES (14282,5,25);      -- MP+25
 INSERT INTO `item_mods` VALUES (14282,13,8);      -- MND+8
@@ -13623,12 +13631,14 @@ INSERT INTO `item_mods` VALUES (14367,5,40);
 INSERT INTO `item_mods` VALUES (14367,12,10);
 INSERT INTO `item_mods` VALUES (14367,13,10);
 INSERT INTO `item_mods` VALUES (14367,162,-10);
+INSERT INTO `item_mods` VALUES (14367,53,1);
 INSERT INTO `item_mods` VALUES (14368,1,53);
 INSERT INTO `item_mods` VALUES (14368,2,42);
 INSERT INTO `item_mods` VALUES (14368,5,42);
 INSERT INTO `item_mods` VALUES (14368,12,11);
 INSERT INTO `item_mods` VALUES (14368,13,11);
 INSERT INTO `item_mods` VALUES (14368,162,-11);
+INSERT INTO `item_mods` VALUES (14368,53,1);
 INSERT INTO `item_mods` VALUES (14369,1,51);      -- arcane_robe DEF:+51
 INSERT INTO `item_mods` VALUES (14369,5,30);      -- MP+30
 INSERT INTO `item_mods` VALUES (14369,12,10);     -- INT+10
@@ -16278,7 +16288,7 @@ INSERT INTO `item_mods` VALUES (15133,1,15);
 INSERT INTO `item_mods` VALUES (15133,3,4);
 INSERT INTO `item_mods` VALUES (15133,9,4);
 INSERT INTO `item_mods` VALUES (15133,107,12);
-INSERT INTO `item_mods` VALUES (15133,543,5);
+INSERT INTO `item_mods` VALUES (15133,543,10);
 INSERT INTO `item_mods` VALUES (15134,1,15);
 INSERT INTO `item_mods` VALUES (15134,5,18);
 INSERT INTO `item_mods` VALUES (15134,13,5);
@@ -18045,7 +18055,7 @@ INSERT INTO `item_mods` VALUES (15666,1,16);
 INSERT INTO `item_mods` VALUES (15666,3,4);
 INSERT INTO `item_mods` VALUES (15666,9,5);
 INSERT INTO `item_mods` VALUES (15666,107,14);
-INSERT INTO `item_mods` VALUES (15666,543,5);
+INSERT INTO `item_mods` VALUES (15666,543,10);
 INSERT INTO `item_mods` VALUES (15667,1,16);
 INSERT INTO `item_mods` VALUES (15667,5,18);
 INSERT INTO `item_mods` VALUES (15667,13,6);
@@ -23474,7 +23484,7 @@ INSERT INTO `item_mods` VALUES (19022,2,20);
 INSERT INTO `item_mods` VALUES (19022,8,3);
 INSERT INTO `item_mods` VALUES (19023,5,20);
 INSERT INTO `item_mods` VALUES (19023,27,-2);
-INSERT INTO `item_mods` VALUES (19024,380,3);    -- Sword Strap: Delay -3%
+INSERT INTO `item_mods` VALUES (19024,380,-3);    -- Sword Strap: Delay -3%
 INSERT INTO `item_mods` VALUES (19025,288,2);
 INSERT INTO `item_mods` VALUES (19026,2,10);
 INSERT INTO `item_mods` VALUES (19026,5,10);
@@ -52189,6 +52199,26 @@ INSERT INTO `item_mods` VALUES (14319,1182,5);    -- Enhances Tame Success Rate 
 INSERT INTO `item_mods` VALUES (14320,1182,5);    -- Enhances Tame Success Rate for Brave's Kecks
 INSERT INTO `item_mods` VALUES (15645,1182,5);    -- Enhances Tame Success Rate for Khimaira Kecks
 INSERT INTO `item_mods` VALUES (15646,1182,5);    -- Enhances Tame Success Rate for Stout Kecks
+INSERT INTO `item_mods` VALUES (18492,830,90);    -- WS allowance on nyzul base weapons start
+INSERT INTO `item_mods` VALUES (18753,830,11);
+INSERT INTO `item_mods` VALUES (18851,830,171);
+INSERT INTO `item_mods` VALUES (18589,830,186);
+INSERT INTO `item_mods` VALUES (17742,830,44);
+INSERT INTO `item_mods` VALUES (18003,830,27);
+INSERT INTO `item_mods` VALUES (17744,830,45);
+INSERT INTO `item_mods` VALUES (18944,830,106);
+INSERT INTO `item_mods` VALUES (17956,830,74);
+INSERT INTO `item_mods` VALUES (18034,830,28);
+INSERT INTO `item_mods` VALUES (18719,830,217);
+INSERT INTO `item_mods` VALUES (18443,830,154);
+INSERT INTO `item_mods` VALUES (18426,830,138);
+INSERT INTO `item_mods` VALUES (18120,830,122);
+INSERT INTO `item_mods` VALUES (18590,830,187);
+INSERT INTO `item_mods` VALUES (17743,830,46);
+INSERT INTO `item_mods` VALUES (18720,830,218);
+INSERT INTO `item_mods` VALUES (18754,830,12);
+INSERT INTO `item_mods` VALUES (19102,830,29);
+INSERT INTO `item_mods` VALUES (18592,830,188);  -- WS allowance on nyzul base weapons end
 
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;

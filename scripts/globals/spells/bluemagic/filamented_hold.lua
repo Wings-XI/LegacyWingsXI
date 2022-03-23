@@ -29,18 +29,15 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.effect = tpz.effect.SLOW
     
     local resist = applyResistanceEffect(caster, target, spell, params)
+    -- per wikiwiki.jp duration 2 mins
     local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target))
     if resist >= 0.5 then
+        -- per all wikis - slow is a flat ~25%
         local power = 2500
-        local cMND = caster:getStat(tpz.mod.MND)
-        local tMND = target:getStat(tpz.mod.MND)
-        if cMND < tMND then
-            power = power - (tMND - cMND)*50
-            if power < 300 then power = 300 end
-        end
         
         if target:addStatusEffect(tpz.effect.SLOW, power, 0, duration) then
             spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)

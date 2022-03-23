@@ -87,13 +87,13 @@ local battlefields = {
 
     [tpz.zone.RIVERNE_SITE_B01] =
     {
-     -- { 0,  896,    0},   -- Storms of Fate (Quest)
-     -- { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
+      { 0,  896,    0},   -- Storms of Fate (Quest)
+      { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
     },
 
     [tpz.zone.RIVERNE_SITE_A01] =
     {
-     -- { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
+      { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
     },
 
     [tpz.zone.MONARCH_LINN] =
@@ -210,7 +210,7 @@ local battlefields = {
     [tpz.zone.LA_VAULE_S] =
     {
      -- { 0,    ?,    0},   -- Splitting Heirs (S)
-     -- { 1,    1500,    0},   -- Purple, The New Black
+        { 1,    1500,    0},   -- Purple, The New Black
      -- { 2,    ?,    0},   -- The Blood-bathed Crown
     },
 
@@ -484,7 +484,7 @@ local battlefields = {
      -- {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
      -- {14,  526, 1177},   -- Idol Thoughts (BS50)
      -- {15,  527, 1177},   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
-     -- {16,  528, 1130},   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
+        {16,  528, 1130},   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
      -- {19,  531,    0},   -- Clash of the Comrades (Quest)
@@ -727,7 +727,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 928] = function() return ( player:hasCompletedMission(COP, mi.cop.ANCIENT_VOWS) or (cop == mi.cop.ANCIENT_VOWS and copStat >= 2)                  ) end, -- Quest: Ouryu Cometh
         [1057] = function() return ( player:hasCompletedQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) or
                                    ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-                                     player:getCharVar('ApocalypseNigh') == 4)                                                                              ) end, -- Quest: Apocalypse Nigh
+                                     player:getCharVar('ApocalypseNigh') >= 4)                                                                              ) end, -- Quest: Apocalypse Nigh
         [1290] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- NW Apollyon
         [1291] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- SW Apollyon
         [1292] = function() return ( player:hasKeyItem(tpz.ki.COSMOCLEANSE) and player:hasKeyItem(tpz.ki.BLACK_CARD) and npcid == getEntranceOffset(1)      ) end, -- NE Apollyon

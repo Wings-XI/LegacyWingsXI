@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_ARCANA
     params.attackType = tpz.damageType.MAGICAL
     params.damageType = tpz.damageType.LIGHTNING
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 4.3 or 3.5
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 1.375 or 1.375
     params.tMultiplier = 1.0
     params.duppercap = 61
     params.str_wsc = 0.0
@@ -44,12 +44,17 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
-    
-    local duration = math.ceil(4 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+
+    -- wikiwiki.jp https://wikiwiki.jp/ffxi/%E9%9D%92%E9%AD%94%E6%B3%95
+    -- Stun may last up to 15s.  regular wiki says "signigicantly longer than other blu stuns"
+    local duration = math.ceil(15 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+        end
     end
 
     return damage

@@ -17,6 +17,8 @@ function onAdditionalEffect(player, target, damage)
     end
     if ((math.random(0, 100) > chance) or (resist < 0.5)) then
         return 0, 0, 0
+    elseif target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
+        return 0, 0, 0
     else
         local duration = math.random(15,30)  * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target)
         if not (target:hasStatusEffect(tpz.effect.SLEEP_I) or target:hasStatusEffect(tpz.effect.SLEEP_II) or target:hasStatusEffect(tpz.effect.LULLABY)) then

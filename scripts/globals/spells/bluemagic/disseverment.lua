@@ -29,11 +29,15 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_DISTORTION
     params.spellLevel = 72
     params.numhits = 5
-    params.multiplier = 3.0
-    params.tp150 = 3.0
-    params.tp300 = 3.0
-    params.azuretp = 3.0
+    params.multiplier = 1.50
+    params.tp150 = 1.50
+    params.tp300 = 1.50
+    params.azuretp = 1.50
     params.duppercap = 100
+    params.att0 = 1.0
+    params.att150 = 1.0
+    params.att300 = 1.0
+    params.azureatt = 1.0
     params.str_wsc = 0.2
     params.dex_wsc = 0.2
     params.vit_wsc = 0.0
@@ -59,9 +63,11 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.POISON
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(180 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
-    if resist >= 0.5 and target:getStatusEffect(tpz.effect.POISON) == nil then
-        local power = caster:getMainLvl()/5 + 3
-        target:addStatusEffect(tpz.effect.POISON, power, 3, duration*resist)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if resist >= 0.5 and target:getStatusEffect(tpz.effect.POISON) == nil then
+            local power = caster:getMainLvl()/5 + 3
+            target:addStatusEffect(tpz.effect.POISON, power, 3, duration*resist)
+        end
     end
 
     return damage

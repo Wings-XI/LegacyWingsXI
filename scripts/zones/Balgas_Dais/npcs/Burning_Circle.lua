@@ -46,7 +46,6 @@ function onEventUpdate(player, csid, option)
     -- printf("onUpdate CSID: %u", csid)
     -- printf("onUpdate RESULT: %u", option)
     local res = EventUpdateBCNM(player, csid, option)
-    print(res)
     return res
 end
 

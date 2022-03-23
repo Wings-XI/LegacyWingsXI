@@ -294,7 +294,7 @@ int32 do_init(int32 argc, char** argv)
     {
         do_final(EXIT_FAILURE);
     }
-    Sql_Keepalive(SqlHandle);
+    Sql_Keepalive(SqlHandle, "map");
 
     // crash recovery, save pruned sessions to RAM before clearing SQL
     inCrashRecoveryLoop = false;
@@ -368,6 +368,7 @@ int32 do_init(int32 argc, char** argv)
     mobutils::LoadCustomMods();
     daily::LoadDailyItems();
     roeutils::init();
+    conquest::RefreshInfluenceMultipliers();
 
     ShowStatus("do_init: loading zones");
     zoneutils::LoadZoneList();
@@ -391,6 +392,9 @@ int32 do_init(int32 argc, char** argv)
     CTaskMgr::getInstance()->AddTask("garbage_collect", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, map_garbage_collect, 15min);
     CTaskMgr::getInstance()->AddTask("crash_recovery_end", server_clock::now() + 2s, nullptr, CTaskMgr::TASK_ONCE, crash_recovery_end);
     CTaskMgr::getInstance()->AddTask("disableForceCreateSession", server_clock::now() + 4s, nullptr, CTaskMgr::TASK_ONCE, disableForceCreateSession);
+    if (map_config.log_gil_period > 0) {
+        CTaskMgr::getInstance()->AddTask("log_gil", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, charutils::LogGil, std::chrono::minutes(map_config.log_gil_period));
+    }
 
     //ShowDebug("prunedSessionsList size is %u\n", (uint32)prunedSessionsList.size());
     if (prunedSessionsList.size() >= map_config.zone_crash_recovery_min_players)
@@ -526,7 +530,7 @@ int32 do_sockets(fd_set* rfd, duration next)
         {
             exit(EXIT_FAILURE);
         }
-        Sql_Keepalive(SqlHandle);
+        Sql_Keepalive(SqlHandle, "map");
     }
 
     if (sFD_ISSET(map_fd, rfd))
@@ -953,7 +957,8 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         // for non-ordered, they will be randomized so that entities update somewhat uniformly
         std::deque<CBasicPacket*> priority0;   // char's own actions
         std::deque<CBasicPacket*> priority1;   // actions performed on char by enemies/party/alliance, tells/party chat
-        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities, party list updates
+        std::deque<CBasicPacket*> priority2;   // party's/alliance's actions on other entities
+        std::deque<CBasicPacket*> partyList;   // party list updates. the packets in this list REMAIN IN ORDER and are between prio2 and 3. uses prio num 25 (like "2.5")
         std::deque<CBasicPacket*> priority3;   // positional updates of party/alliance (chance to hop to prio1)
         std::deque<CBasicPacket*> priority4;   // actions performed on party/alliance by enemies
         std::deque<CBasicPacket*> priority5;   // 
@@ -1225,20 +1230,23 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                             (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
                         {
                             CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
-                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
-                            { // mob is targeting me or my pet
-                                priorityNum = 1;
-                                PSmallPacket->priorityNumOverride = 1;
-                                break;
-                            }
-                            if (POwner->animation == ANIMATION_ATTACK &&
-                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
-                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
-                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
-                            { // mob is targeting my party member or a party member's pet
-                                priorityNum = 4;
-                                PSmallPacket->priorityNumOverride = 4;
-                                break;
+                            if (PMobTarget)
+                            {
+                                if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
+                                { // mob is targeting me or my pet
+                                    priorityNum = 1;
+                                    PSmallPacket->priorityNumOverride = 1;
+                                    break;
+                                }
+                                if (POwner->animation == ANIMATION_ATTACK &&
+                                    ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
+                                    ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
+                                        PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
+                                { // mob is targeting my party member or a party member's pet
+                                    priorityNum = 4;
+                                    PSmallPacket->priorityNumOverride = 4;
+                                    break;
+                                }
                             }
                             priorityNum = 11;
                             PSmallPacket->priorityNumOverride = 11;
@@ -1333,68 +1341,6 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                         priorityNum = 12; // PC outside our pt
                         PSmallPacket->priorityNumOverride = 12;
                         break;
-                    }
-                    case 0x39: // visual
-                    {
-                        // if i'm not mistaken, this is very similar to anim packet
-                        CBaseEntity* POwner = zoneutils::GetEntity(ref<uint32>(PSmallPacket->getData(), 0x04));
-                        POwner = POwner ? POwner : zoneutils::GetChar(ref<uint32>(PSmallPacket->getData(), 0x04));
-                        if (!POwner)
-                        {
-                            priorityNum = 12;
-                            PSmallPacket->priorityNumOverride = 12;
-                            PSmallPacket->recyclePacket = false;
-                            break;
-                        }
-                        if (POwner->id == PChar->id || (PChar->PPet && POwner->id == PChar->PPet->id))
-                        {
-                            priorityNum = -1;
-                            PSmallPacket->priorityNumOverride = -1;
-                            break;
-                        }
-                        if (POwner->id == CursorTargetID || POwner->id == CursorTargetPetID)
-                        {
-                            priorityNum = 0;
-                            PSmallPacket->priorityNumOverride = 0;
-                            break;
-                        }
-                        if ((POwner->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)POwner)) ||
-                            ((POwner->objtype == TYPE_MOB || POwner->objtype == TYPE_PET) && ((CBattleEntity*)POwner)->PMaster &&
-                             ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)((CBattleEntity*)POwner)->PMaster))))
-                        { // animation user is my party member or a party member's pet
-                            priorityNum = 2;
-                            PSmallPacket->priorityNumOverride = 2;
-                            break;
-                        }
-                        if (POwner->objtype == TYPE_MOB ||
-                            (POwner->objtype == TYPE_PET && ((CBattleEntity*)POwner)->PMaster && ((CBattleEntity*)POwner)->PMaster->objtype == TYPE_MOB))
-                        {
-                            CBattleEntity* PMobTarget = (CBattleEntity*)(POwner->GetEntity(((CMobEntity*)POwner)->GetBattleTargetID()));
-                            if (POwner->animation == ANIMATION_ATTACK && (PMobTarget->id == PChar->id || (PChar->PPet && PMobTarget->id == PChar->PPet->id)))
-                            { // mob is targeting me or my pet
-                                priorityNum = 1;
-                                PSmallPacket->priorityNumOverride = 1;
-                                break;
-                            }
-                            if (POwner->animation == ANIMATION_ATTACK &&
-                                ((PMobTarget->objtype == TYPE_PC && PChar->IsPartiedWith(((CCharEntity*)PMobTarget))) ||
-                                 ((PMobTarget->objtype == TYPE_MOB || PMobTarget->objtype == TYPE_PET) && PMobTarget->PMaster &&
-                                  PMobTarget->PMaster->objtype == TYPE_PC && PChar->IsPartiedWith((CCharEntity*)(PMobTarget->PMaster)))))
-                            { // mob is targeting my party member or a party member's pet
-                                priorityNum = 4;
-                                PSmallPacket->priorityNumOverride = 4;
-                                break;
-                            }
-                            priorityNum = 11;
-                            PSmallPacket->priorityNumOverride = 11;
-                            break;
-                        }
-                        if (POwner->objtype == TYPE_PC)
-                        {
-                            priorityNum = 12;
-                            PSmallPacket->priorityNumOverride = 12;
-                            break;
-                        }
                     }
                     case 0X0E: // entity update
                     {
@@ -1881,6 +1827,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0x5D: // event string update
                     case 0x65: // self-position (on zone-in or on event finish)
                     case 0x52: // event release
+                    case 0x39: // entity visual
                     {
                         // order matters for these.
                         // if the game client is crashing on specific packets, they should be added to this list.
@@ -2045,19 +1992,18 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     case 0xC8:
                     {
                         // party list reload packet. fixed size
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0x76:
                     case 0xDD:
                     {
-                        // party effect icons update
+                        // party effect icons update/party member update packet (job,hp,mp,etc)
                         // this is a fairly large packet; sadly no way to optimize its prio since the client doesn't send a packet notifying server of /focustarget
-
-                        // and: party member update packet (job,hp,mp,etc)
-                        priorityNum = 2;
-                        PSmallPacket->priorityNumOverride = 2;
+                        
+                        priorityNum = 25; // "2.5"
+                        PSmallPacket->priorityNumOverride = 25; // "2.5"
                         break;
                     }
                     case 0xA0:
@@ -2129,6 +2075,9 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
                     break;
                 case 2:
                     priority2.push_back(PSmallPacket);
+                    break;
+                case 25: // "2.5"
+                    partyList.push_back(PSmallPacket);
                     break;
                 case 3:
                     priority3.push_back(PSmallPacket);
@@ -2207,6 +2156,11 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         {
             orderedList.push_back(priority2.front());
             priority2.pop_front();
+        }
+        while (!partyList.empty())
+        {
+            orderedList.push_back(partyList.front());
+            partyList.pop_front();
         }
         while (!priority3.empty())
         {
@@ -2509,6 +2463,7 @@ int32 map_close_session(time_point tick, map_session_data_t* map_session_data)
         map_session_data->PChar != nullptr)
     {
         charutils::SavePlayTime(map_session_data->PChar);
+        charutils::RemoveGuestsFromMogHouse(map_session_data->PChar);
 
         //clear accounts_sessions if character is logging out (not when zoning)
         if (map_session_data->shuttingDown == 1)
@@ -2601,7 +2556,16 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                         }
 
                         PChar->StatusEffectContainer->SaveStatusEffects(true);
+                        if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id) {
+                            PChar->loc.boundary = 0;
+                            PChar->loc.p.x = 0;
+                            PChar->loc.p.y = 0;
+                            PChar->loc.p.z = 0;
+                            PChar->loc.p.rotation = 0;
+                            PChar->m_moghouseID = 0;
+                        }
                         charutils::SaveCharPosition(PChar);
+                        charutils::RemoveGuestsFromMogHouse(PChar);
 
                         ShowDebug(CL_CYAN"map_cleanup: %s timed out, closing session\n" CL_RESET, PChar->GetName());
 
@@ -2811,6 +2775,16 @@ int32 map_config_default()
     map_config.daily_tally_limit = 50000;
     map_config.mission_storage_recovery = false;
     map_config.helpdesk_enabled = false;
+    map_config.autotarget_qol = true;
+    map_config.instances_treat_GMs_as_players = true;
+    map_config.pl_penalty = 10;
+    map_config.conquest_auth_zone = 245; // Lower Jeuno
+    map_config.enable_influence_boost = false;
+    map_config.disable_rare_item_limit = false;
+    map_config.storage_mission_unlock = true;
+    map_config.storage_ignore_features = false;
+    map_config.force_enable_mog_locker = false;
+    map_config.log_gil_period = 0;
     return 0;
 }
 
@@ -2844,6 +2818,8 @@ int32 map_config_read(const int8* cfgName)
         return 1;
     }
 
+    bool knownSetting = true;
+
     while (fgets(line, sizeof(line), fp))
     {
         char* ptr;
@@ -2863,6 +2839,9 @@ int32 map_config_read(const int8* cfgName)
         ptr++;
         *ptr = '\0';
 
+        // TODO: Refactor these blocks of ifs 
+        // There is a compiler-enforced limitation of no more than 128 nested ifs so this is split once the limitation is reached
+        // https://docs.microsoft.com/en-us/cpp/error-messages/compiler-errors-1/fatal-error-c1061?view=msvc-170
         if (strcmpi(w1, "timestamp_format") == 0)
         {
             strncpy(timestamp_format, w2, 20);
@@ -3343,14 +3322,64 @@ int32 map_config_read(const int8* cfgName)
         {
         map_config.mission_storage_recovery = atoi(w2);
         }
-        else if (strcmp(w1, "helpdesk_enabled") == 0)
-        {
-        map_config.helpdesk_enabled = atoi(w2);
-        }
         else
         {
-            ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, cfgName);
+            knownSetting = false;
         }
+
+        // Breaking previous if statement block as a workaround for else-if clause limitatation of 128
+        if (!knownSetting)
+        {
+            if (strcmp(w1, "helpdesk_enabled") == 0)
+            {
+                map_config.helpdesk_enabled = atoi(w2);
+            }
+            else if (strcmp(w1, "autotarget_qol") == 0)
+            {
+                map_config.autotarget_qol = atoi(w2);
+            }
+            else if (strcmp(w1, "instances_treat_GMs_as_players") == 0)
+            {
+                map_config.instances_treat_GMs_as_players = atoi(w2);
+            }
+            else if (strcmp(w1, "pl_penalty") == 0)
+            {
+                map_config.pl_penalty = atoi(w2);
+            }
+            else if (strcmp(w1, "conquest_auth_zone") == 0)
+            {
+                map_config.conquest_auth_zone = atoi(w2);
+            }
+            else if (strcmp(w1, "enable_influence_boost") == 0)
+            {
+                map_config.enable_influence_boost = atoi(w2);
+            }
+            else if (strcmp(w1, "disable_rare_item_limit") == 0)
+            {
+                map_config.disable_rare_item_limit = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_mission_unlock") == 0)
+            {
+                map_config.storage_mission_unlock = atoi(w2);
+            }
+            else if (strcmp(w1, "storage_ignore_features") == 0)
+            {
+                map_config.storage_ignore_features = atoi(w2);
+            }
+            else if (strcmp(w1, "force_enable_mog_locker") == 0)
+            {
+                map_config.force_enable_mog_locker = atoi(w2);
+            }
+            else if (strcmp(w1, "log_gil_period") == 0)
+            {
+                map_config.log_gil_period = atoi(w2);
+            }
+            else
+            {
+                ShowWarning(CL_YELLOW"Unknown setting '%s' in file %s\n" CL_RESET, w1, cfgName);
+            }
+        }
+        knownSetting = true;
     }
 
     fclose(fp);

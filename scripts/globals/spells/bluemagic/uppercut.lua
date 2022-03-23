@@ -30,10 +30,14 @@ function onSpellCast(caster, target, spell)
     params.scattr2 = SC_IMPACTION
     params.spellLevel = 38
     params.numhits = 1
-    params.multiplier = 3.2
-    params.tp150 = 3.8
-    params.tp300 = 4.4
-    params.azuretp = 4.6
+    params.multiplier = 1.5
+    params.tp150 = 1.5
+    params.tp300 = 1.5
+    params.azuretp = 1.5
+    params.att0 = 1.0
+    params.att150 = 1.5
+    params.att300 = 2.0
+    params.azureatt = 2.25
     params.duppercap = 39
     params.str_wsc = 0.35
     params.dex_wsc = 0.0
@@ -48,6 +52,8 @@ function onSpellCast(caster, target, spell)
     damage, hitslanded, taChar = BluePhysicalSpell(caster, target, spell, params)
     if hitslanded == 0 then return 0 end
     damage = BlueFinalAdjustments(caster, target, spell, damage, params, taChar)
-    
+
+    -- TODO: Knockback
+
     return damage
 end

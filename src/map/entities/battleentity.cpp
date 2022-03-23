@@ -194,7 +194,14 @@ void CBattleEntity::UpdateHealth()
 
 uint8 CBattleEntity::GetHPP()
 {
-    return (uint8)ceil(((float)health.hp / (float)GetMaxHP()) * 100);
+    uint8 hpp = (uint8)floor(((float)health.hp / (float)GetMaxHP()) * 100);
+    // handle the edge case where a floor would show a mob with 1/1000 hp as 0
+    if (hpp == 0 && health.hp > 0)
+    {
+        hpp = 1;
+    }
+
+    return hpp;
 }
 
 int32 CBattleEntity::GetMaxHP()
@@ -291,6 +298,18 @@ float CBattleEntity::GetStoreTPMultiplier()
     return 1.0f + 0.01f * (float)((getMod(Mod::STORETP) + samuraiMeritBonus));
 }
 
+float CBattleEntity::GetJumpTPBonus()
+{
+    if ((float)getMod(Mod::JUMP_TP_BONUS) != 0)
+    {
+        return ((float)(getMod(Mod::JUMP_TP_BONUS)) / 10);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
     uint16 WeaponDelay = 9999;
@@ -301,6 +320,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         if (weapon->isHandToHand())
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
+            MinimumDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
         }
         else if (auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]); subweapon && subweapon->getDmgType() > 0 &&
             subweapon->getDmgType() < 4)
@@ -310,7 +330,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             //apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
-        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK) && !(this->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS)))
+        if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             WeaponDelay = 480 * 1000 / 60;
         //apply haste and delay reductions that don't affect tp
         if (!tp)
@@ -391,6 +411,7 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 {
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 dmg = weapon->getDamage();
@@ -409,6 +430,7 @@ uint16 CBattleEntity::GetSubWeaponDmg()
 {
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 dmg = weapon->getDamage();
@@ -428,6 +450,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
     uint16 dmg = 0;
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
     {
+        // Level sync scaling
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 scaleddmg = weapon->getDamage();
@@ -441,6 +464,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
     }
     if (auto ammo = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_AMMO]))
     {
+        // Level sync scaling
         if ((ammo->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
             uint16 scaleddmg = ammo->getDamage();
@@ -862,7 +886,7 @@ uint16 CBattleEntity::DEF()
     int32 DEF = 1;
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
-        DEF = 8 + this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
+        DEF = this->VIT() / 2 + this->StatusEffectContainer->GetTotalMinneBonus();
         if (m_modStat[Mod::DEFP] < 0)
             DEF = DEF + (DEF * m_modStat[Mod::DEFP]) / 100;
         return DEF;
@@ -1511,6 +1535,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     bool IsMagicCovered= false;
     bool cover = false;
 
+    if (!PActionTarget) {
+        return;
+    }
+
     if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
     {
         auto PCoverTarget = battleutils::getCoverTarget(PActionTarget, this);
@@ -1696,6 +1724,14 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
         {
             luautils::OnMagicHit(this, PTarget, PSpell);
+
+            if (PSpell->getSpellGroup() == SPELLGROUP_BLUE && ((CBlueSpell*)PSpell)->isPhysical() && msg != MSGBASIC_MAGIC_FAIL)
+            {
+                // ToDo Regurgitation is a magical spell that has bind + knockback
+                actionTarget.reaction = REACTION::REACTION_HIT;
+                actionTarget.speceffect = SPECEFFECT::SPECEFFECT_RECOIL;
+                actionTarget.knockback = ((CBlueSpell*)PSpell)->getKnockback();
+            }
         }
     }
     this->StatusEffectContainer->DelStatusEffect(EFFECT_CONVERGENCE);
@@ -1840,6 +1876,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
     if (this->objtype == TYPE_MOB)
     {
+        CMobEntity* PMob = (CMobEntity*)this;
+        if (charutils::CheckMob(PTarget->m_mlvl, PMob->m_mlvl) == EMobDifficulty::TooWeak)
+        {
+            PMob->m_ExpPenalty = ((PMob->m_ExpPenalty + map_config.pl_penalty) < UINT16_MAX-1) ? PMob->m_ExpPenalty + map_config.pl_penalty : UINT16_MAX-1;
+        }
+
         auto PCoverTarget = battleutils::getCoverTarget(PTarget, this);
         if (PCoverTarget)
         {
@@ -1957,18 +1999,14 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     else
                     {
                         int16 naturalh2hDMG = 0;
-                        bool h2h = false;
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
-                           (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
+                           (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) && PTarget->objtype != TYPE_MOB)
                         {
                             naturalh2hDMG = (int16)((PTarget->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) + 3);
-                            bool h2h = true;
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);
                         auto damage = (int32)(PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN));
-                        if (h2h && PTarget->objtype == TYPE_PC)
-                            damage = (int32)((float)damage * 1.23f);
                         damage = (int32)((float)damage * DamageRatio);
                         actionTarget.spikesParam = battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
                         actionTarget.spikesMessage = 33;

@@ -26,6 +26,7 @@ function onMobInitialize(mob)
                 local target = mob:getTarget()
                 mob:timer(9000, function(mob)
                     mob:setHP(mob:getMaxHP())
+                    mob:setMP(mob:getMaxMP())
                     mob:AnimationSub(3)
                     mob:resetAI()
                     mob:stun(3000)
@@ -57,7 +58,7 @@ function onMobInitialize(mob)
                 DespawnMob(aernA)
                 DespawnMob(aernB)
             end
-        end    
+        end
     end)
     mob:addListener("AERN_RERAISE", "IX_DRK_RERAISE", function(mob)
         mob:timer(5000, function(mob)
@@ -81,8 +82,8 @@ function onMobSpawn(mob)
 
     tpz.mix.jobSpecial.config(mob, {
         delay = 60,
-        specials = 
-        { 
+        specials =
+        {
             {
                 id = tpz.jsa.BLOOD_WEAPON_IXDRK,
                 hpp = 100,

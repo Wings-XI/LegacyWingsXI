@@ -22,8 +22,9 @@ require("scripts/globals/weaponskills")
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 2 params.ftp200 = 2 params.ftp300 = 2
-    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
-    params.mnd_wsc = 0.4 params.chr_wsc = 0.0
+    -- https://w.atwiki.jp/studiogobli/pages/77.html 2009 for mods
+    params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
+    params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.STAFF
     params.includemab = true
@@ -36,7 +37,12 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     -- Apply Aftermath
     tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local mythicMagicWsParams = {}
+    mythicMagicWsParams.attackerStat = tpz.mod.MND
+    mythicMagicWsParams.defenderStat = tpz.mod.MND
+    mythicMagicWsParams.magnification = 2.0
+
+    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary, mythicMagicWsParams)
     if damage > 0 then
         if not target:hasStatusEffect(tpz.effect.DEFENSE_DOWN) then
             local duration = (30 + tp / 1000 * 30) * applyResistanceAddEffect(player, target, tpz.magic.ele.WIND, 0)

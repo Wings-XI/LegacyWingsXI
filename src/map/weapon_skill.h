@@ -50,6 +50,7 @@ public:
     duration    getAnimationTime();
 	uint8       getType();
     uint8       getUnlockId();
+    uint8       getRequiredLevel();
 
 	void		setID(uint16 id);
 	void		setJob(int8* jobs);
@@ -65,6 +66,7 @@ public:
 	void		setType(uint8 type);
     void        setMainOnly(uint8 main);
     void        setUnlockId(uint8 id);
+    void        setRequiredLevel(uint8 requiredLevel);
 
     uint8       getPrimarySkillchain();
     uint8       getSecondarySkillchain();
@@ -89,6 +91,7 @@ private:
 	uint8       m_AOE;
     uint8       m_mainOnly;
     uint8       m_unlockId;
+    uint8       m_RequiredLevel;
 
 	string_t	m_name;
 };

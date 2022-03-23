@@ -1,10 +1,11 @@
 ---------------------------------------------------
 -- BrainJack
---
+-- Charms a player and inflicts a 25/tick dot while charmed
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
+require("scripts/globals/msg")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
@@ -12,15 +13,21 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local numhits = 1
-    local accmod = 1
-    local dmgmod = 2.3
-    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, info.hitslanded)
+    local typeEffect = tpz.effect.CHARM_I
+    local power = 0
 
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.CHARM_I, 0, 0, 60)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+    if (not target:isPC()) then
+        skill:setMsg(tpz.msg.basic.SKILL_MISS)
+        return typeEffect
+    end
 
-    return dmg
+    local msg = MobStatusEffectMove(mob, target, typeEffect, power, 3, 90)
+    if (msg == tpz.msg.basic.SKILL_ENFEEB_IS) then
+        mob:charm(target)
+        target:addStatusEffectEx(tpz.effect.BRAINJACK, 0, 25, 3, 90)
+        mob:resetEnmity(target)
+    end
+    skill:setMsg(msg)
+
+    return typeEffect
 end

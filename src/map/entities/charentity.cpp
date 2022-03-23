@@ -142,6 +142,8 @@ CCharEntity::CCharEntity()
     memset(&m_WeaponSkills, 0, sizeof(m_WeaponSkills));
     memset(&m_SetBlueSpells, 0, sizeof(m_SetBlueSpells));
     memset(&m_unlockedAttachments, 0, sizeof(m_unlockedAttachments));
+    lastInCombat = 1;
+    lastZoneTimer = 0;
 
     memset(&m_questLog, 0, sizeof(m_questLog));
     memset(&m_missionLog, 0, sizeof(m_missionLog));
@@ -242,6 +244,7 @@ CCharEntity::CCharEntity()
     m_needChatFix = 0;
     m_needTellFix = 0;
     m_needMasterLvFix = 0;
+    m_needInventoryFix = 0;
     m_lastPacketTime = time(NULL);
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
@@ -254,6 +257,11 @@ CCharEntity::CCharEntity()
     lastCastTime = 0;
     nextFishTime = 0;
     fishingToken = 0;
+    fishingStrike[0] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[1] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[2] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[3] = std::chrono::system_clock::now() - 8760h;
+    fishingStrike[4] = std::chrono::system_clock::now() - 8760h;
 
     m_ZoneAggroImmunity = server_clock::now() + 12s;
     m_fomorHate = 0;
@@ -535,18 +543,12 @@ void CCharEntity::setPetZoningInfo()
 {
     if (PPet->objtype == TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
+        if (TYPE_PET != PETTYPE_JUG_PET)
         {
-        case PETTYPE_JUG_PET:
-        case PETTYPE_AUTOMATON:
-        case PETTYPE_WYVERN:
             petZoningInfo.petHP = PPet->health.hp;
             petZoningInfo.petTP = PPet->health.tp;
             petZoningInfo.petMP = PPet->health.mp;
             petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-            break;
-        default:
-            break;
         }
     }
 }
@@ -591,6 +593,69 @@ CItemContainer* CCharEntity::getStorage(uint8 LocationID)
 
     TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);	// неразрешенный ID хранилища
     return 0;
+}
+
+bool CCharEntity::hasAccessToStorage(uint8 LocationID)
+{
+    TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);
+    if (LocationID >= MAX_CONTAINER_ID) {
+        // Invalid container
+        return false;
+    }
+    if (LocationID == LOC_MOGSAFE || LocationID == LOC_MOGSAFE2) {
+        // Can use in your own mog house / rent-a-room (not in open mog)
+        // or in zones that have nomad moogles.
+        if (m_moghouseID == id) {
+            return true;
+        }
+        if (loc.zone) {
+            return loc.zone->CanUseMisc(MISC_MOGMENU);
+        }
+        return false;
+    }
+    if (LocationID == LOC_STORAGE) {
+        // Only accessible from own mog house or rent-a-room
+        if (m_moghouseID == id) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_MOGLOCKER) {
+        // Check for expiry
+        bool safe_access = (m_moghouseID == id);
+        if (loc.zone) {
+            if (loc.zone->CanUseMisc(MISC_MOGMENU)) {
+                safe_access = true;
+            }
+        }
+        if (safe_access && charutils::hasMogLockerAccess(this)) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_MOGSATCHEL) {
+        // Requires secure account (2FA)
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x01) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_WARDROBE3) {
+        // Requires account feature
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x04) {
+            return true;
+        }
+        return false;
+    }
+    if (LocationID == LOC_WARDROBE4) {
+        // Requires account feature
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x08) {
+            return true;
+        }
+        return false;
+    }
+    // Inventory, sack, case, wardrobe 1 and wardrobe 2 always accessible
+    return true;
 }
 
 int8 CCharEntity::getShieldSize()
@@ -992,6 +1057,8 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
@@ -1009,6 +1076,12 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     auto PSpell = state.GetSpell();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    if (PTarget->id != this->id && !PSpell->isHeal() && !PSpell->isBuff())
+    {
+        this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+    }
+
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 
     for (auto&& actionList : action.actionLists)
@@ -1122,6 +1195,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 {
     CBattleEntity::OnCastInterrupted(state, action, msg);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto message = state.GetErrorMsg();
 
     if (message)
@@ -1133,6 +1208,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
     CBattleEntity::OnWeaponSkillFinished(state, action);
+
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
 
     auto PWeaponSkill = state.GetSkill();
     auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
@@ -1276,6 +1353,16 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
     auto PAbility = state.GetAbility();
+
+    // Check if user is the right job and level
+    if ((PAbility->getJob() != this->GetMJob() && PAbility->getJob() != this->GetSJob()) ||
+        (PAbility->getJob() == this->GetMJob() && PAbility->getLevel() > this->GetMLevel()) ||
+        (PAbility->getJob() == this->GetSJob() && PAbility->getLevel() > this->GetSLevel() && this->GetMJob() != this->GetSJob()))
+    {
+        pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
+        return;
+    }
+
     if (this->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
     {
         pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_WAIT_LONGER));
@@ -1335,9 +1422,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         // get any available merit recast reduction
         uint16 meritRecastReduction = 0;
         uint16 id = PAbility->getID();
+        uint8 chargeTime = 0;
 
         //Ignore SMN Group 2 Merits/Tomahawk specifically until we can long term fix merits that serve dual purpose
-        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631 && id != 150)
+        if (PAbility->getMeritModID() > 0 && id != 551 && id != 567 && id != 583 && id != 599 && id != 615 && id != 631 && id != 150 && id != 152)
         {
             MERIT_TYPE meritmod = (MERIT_TYPE)PAbility->getMeritModID();
             meritRecastReduction = PMeritPoints->GetMeritValue(meritmod, this);
@@ -1346,12 +1434,20 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         auto charge = ability::GetCharge(this, PAbility->getRecastId());
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+            // Ready is 2sec/merit (Sic is 4sec/merit so divide by 2)
+            if (PAbility->getMeritModID() == 902)
+            {
+                meritRecastReduction /= 2;
+            }
+
+            chargeTime = charge->chargeTime - meritRecastReduction;
 
             //Quickdraw Reduction
             if (id >= ABILITY_FIRE_SHOT && id <= ABILITY_DARK_SHOT) {
-                action.recast -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
+                chargeTime -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
             }
+
+            action.recast = chargeTime * PAbility->getRecastTime();
         }
         else
         {
@@ -1551,7 +1647,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
 
-        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 
         // innin and yonin share recasts
         if (PAbility->getRecastId() == 146)
@@ -1589,6 +1685,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
 
     int32 damage = 0;
     int32 totalDamage = 0;
@@ -1645,14 +1743,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
-        if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0))
-        {
-            actionTarget.messageID = 32;
-            actionTarget.reaction = REACTION_EVADE;
-            actionTarget.speceffect = SPECEFFECT_NONE;
-            hitCount = i; // end barrage, shot missed
-        }
-        else if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
+        if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
             if (battleutils::IsAbsorbByShadow(PTarget, this))
@@ -1661,7 +1752,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             }
             else
             {
-                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
+                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true, true);
                 float pdif = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
 
                 if (isCritical)
@@ -1982,13 +2073,22 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     //#TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())
     {
-        PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
+        //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
+        if (PTarget->PParty)
         {
-            if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
+            for each (CBattleEntity* PMember in PTarget->PParty->members)
             {
-                luautils::OnItemUse(PMember, PItem, this);
-            }
-        });
+                // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
+                if (this->id == PMember->id)
+                    continue;
+                if (!PMember->isDead() && distanceSquared(PTarget->loc.p, PMember->loc.p) < 10.0f * 10.0f)
+                {
+                    luautils::OnItemUse(PMember, PItem, this);
+                }
+            };
+        }
+        // Triggering for item user
+        luautils::OnItemUse(this, PItem, this);
     }
     else
     {

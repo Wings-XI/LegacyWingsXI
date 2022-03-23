@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -251,11 +251,22 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
     bool detectSight = (detects & DETECT_SIGHT) || forceSight;
     bool hasInvisible = false;
     bool hasSneak = false;
-
-    if (!PMob->m_TrueDetection)
-    {
-        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE);
-        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK);
+    if (PMob->m_TrueDetection == 0) // No True Detection
+    { 
+        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK); // Does not ignore sneak.
+        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE); // Does not ignore invisible.
+    }
+    if (PMob->m_TrueDetection == 1) // True Sight and Hearing
+    { 
+        // Ignores Invisible and Sneak
+    }
+    if (PMob->m_TrueDetection == 2) // True Sight
+    { 
+        hasSneak = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK); // Does not ignore sneak.
+    }
+    if (PMob->m_TrueDetection == 3) // True Hearing
+    { 
+        hasInvisible = PTarget->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE); // Does not ignore invisible.
     }
 
     auto angle = PMob->getMobMod(MOBMOD_SIGHT_ANGLE);
@@ -861,6 +872,7 @@ void CMobController::DoRoamTick(time_point tick)
                     PMob->m_HiPCLvl = 0;
                     PMob->m_HiPartySize = 0;
                     PMob->m_giveExp = true;
+                    PMob->m_ExpPenalty = 0;    
                 }
             }
 
@@ -1160,6 +1172,12 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
 
     // Don't aggro I'm special
     if (PMob->getMobMod(MOBMOD_NO_AGGRO) > 0)
+    {
+        return false;
+    }
+
+    // Don't aggro I was recently released by a BST with the Leave command
+    if (PMob->aggroTimer > (uint32)CVanaTime::getInstance()->getVanaTime())
     {
         return false;
     }

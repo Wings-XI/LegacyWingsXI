@@ -21,6 +21,7 @@ function onInitialize(zone)
     applyHalloweenNpcCostumes(zone:getID())
     applyHalloweenDecorations(zone:getID())
     applyStarlightDecorations(zone:getID())
+	tpz.conq.setConquestCircus(0, 2)
     tpz.chocobo.initZone(zone)
 end
 
@@ -52,30 +53,6 @@ function onZoneIn(player, prevZone)
     -- MOG HOUSE EXIT
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(161, -2, 161, 94)
-    end
-
-    -- Move Troupe Valeriano (Circus) --
-    if getNationRank(tpz.nation.SANDORIA) == 1 then
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.NORMAL)
-                end
-            end
-        end
-    else
-        local circus = ID.npc.CIRCUS
-        if circus then
-            for id, circus in pairs(circus) do
-                local npc = GetNPCByID(id)
-                if npc then
-                    npc:setStatus(tpz.status.DISAPPEAR)
-                end
-            end
-        end
-
     end
 
     return cs

@@ -27,6 +27,7 @@ function onDynamisNewInstance()
     local iStart = 4096*4096+(4096*zone)
     local i = iStart
     local iEnd = iStart + 1023
+    local ID = zones[zone]
     
     if npcList == nil then print("npcList was nil") end
     if npcList[zone] == nil then print("npcList[zone] was nil") end
@@ -43,7 +44,16 @@ function onDynamisNewInstance()
                 mob:setSpawn(mobList[zone][i].pos[1],mobList[zone][i].pos[2],mobList[zone][i].pos[3],mobList[zone][i].pos[4])
                 if mobList[zone][i].waves ~= nil and mobList[zone][i].waves[1] ~= nil then SpawnMob(i) end
             else mob:setSpawn(1,1,1,0) end
-            mob:addRoamFlag(256) -- scripted pathing only
+            if mob:getFamily() == 94 then
+                mob:addRoamFlag(256) -- scripted pathing only
+            elseif mob:getID() == (ID.mob.scolopendra or ID.mob.stringes or ID.mob.suttung or ID.mob.megaboss) then -- NM
+                mob:addRoamFlag(256) -- scripted pathing only
+            else
+                mob:addMobMod(tpz.mobMod.ROAM_DISTANCE, 8)
+                mob:addMobMod(tpz.mobMod.ROAM_COOL, 5)
+                mob:addMobMod(tpz.mobMod.ROAM_RATE, 3)
+                mob:addRoamFlag(0) -- Roam Freely
+            end
         elseif npcList[zone][i] ~= nil and npcList[zone][i].spawnAtStart ~= nil then
             GetNPCByID(i):setStatus(tpz.status.NORMAL)
         end
@@ -81,8 +91,8 @@ function onDynamisEjectPlayer(player, immediate)
     else
         if ID.text.NO_LONGER_HAVE_CLEARANCE ~= nil then player:timer(1000, function(player) player:messageSpecial(ID.text.NO_LONGER_HAVE_CLEARANCE, 0, 30) end) end
         player:timer(25000, function(player)
-            player:addHP(9999) -- there is currently a bug where if a dead player gets force-zoned, they cannot homepoint
-            player:addMP(9999)
+            -- player:addHP(9999) -- there is currently a bug where if a dead player gets force-zoned, they cannot homepoint
+            -- player:addMP(9999) -- unable to reproduce the bug - commenting these for now (2022-01-18)
             player:startEvent(100)
         end)
         player:timer(30000, function(player) player:setPos(ejectPos[1],ejectPos[2],ejectPos[3],ejectPos[4],ejectPos[5]) end)

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -69,6 +69,9 @@ protected:
     bool m_interrupted {false};
     bool m_instantCast {false};
     uint8 m_flags {0};
+
+private:
+    bool PreventedByPathos();
 };
 
 #endif

@@ -24,8 +24,10 @@ end
 
 function onUseAbility(player, target, ability)
     -- Stun rate
-    if (math.random() < 0.99) then
-        target:addStatusEffect(tpz.effect.STUN,1,0,math.random(4,6))
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if (math.random() < 0.99) then
+            target:addStatusEffect(tpz.effect.STUN,1,0,math.random(4,6))
+        end
     end
     tryBuildResistance(tpz.mod.RESBUILD_STUN, target)
 
@@ -38,8 +40,10 @@ function onUseAbility(player, target, ability)
     --target:updateEnmityFromDamage(player, damage)
 
     -- Applying Plague based on merit level.
-    if (math.random() < 0.65) then
-        target:addStatusEffect(tpz.effect.PLAGUE, 5, 0, 30)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.VIRUSRES) < 100 then
+        if (math.random() < 0.65) then
+            target:addStatusEffect(tpz.effect.PLAGUE, 5, 0, 30)
+        end
     end
 
     --ability:setMsg(tpz.msg.basic.JA_DAMAGE)

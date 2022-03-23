@@ -726,8 +726,10 @@ enum EFFECT
     EFFECT_FULL_SPEED_AHEAD         = 803, // Used to track Full Speed Ahead quest minigame
     EFFECT_SUPER_JUMP               = 804,
     EFFECT_GM_HIDE                  = 805,
-    EFFECT_GM_IMMORTAL              = 806
-    // 807-1022
+    EFFECT_GM_IMMORTAL              = 806,
+    EFFECT_SOLDIERS_DRINK           = 807,
+    EFFECT_BRAINJACK                = 808,
+    // 809-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 

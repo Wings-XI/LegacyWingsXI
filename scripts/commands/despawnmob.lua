@@ -30,7 +30,11 @@ function onTrigger(player, mobId)
             error(player, "The specified mob ID is out of range.")
             return
         end
-        targ = GetMobByID(mobId)
+        if (player:getInstance() == nil) then
+            targ = GetMobByID(mobId)
+        else
+            targ = GetMobByID(mobId, player:getInstance())
+        end
         if targ == nil then
             error(player, "Invalid mobID.")
             return
@@ -38,7 +42,11 @@ function onTrigger(player, mobId)
     end
 
     -- despawn mob
-    DespawnMob(targ:getID(), 0)
+    if (player:getInstance() == nil) then
+        DespawnMob(targ:getID(), 0)
+    else
+        DespawnMob(targ:getID(), player:getInstance())
+    end
     player:PrintToPlayer(string.format("Despawned %s %i.", targ:getName(), targ:getID()))
 
 end

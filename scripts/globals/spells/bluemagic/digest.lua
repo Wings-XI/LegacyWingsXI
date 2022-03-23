@@ -34,7 +34,7 @@ function onSpellCast(caster, target, spell)
     params.diff = caster:getStat(tpz.mod.MND)-target:getStat(tpz.mod.MND)
     params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.BLUE_MAGIC
-    params.bonus = 0
+    params.bonus = caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistance(caster, target, spell, params)
     dmg = dmg*resist
     dmg = addBonuses(caster, spell, target, dmg)

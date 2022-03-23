@@ -11,6 +11,12 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+
+    if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.POISONRES) >= 100 then
+        spell:setMsg(tpz.msg.basic.MAGIC_NO_EFFECT)
+        return tpz.effect.POISON
+    end
+
     local effect = tpz.effect.POISON
 
     local duration = 180
@@ -37,7 +43,7 @@ function onSpellCast(caster, target, spell)
     params.effect = effect
 
     local resist = applyResistanceEffect(caster, target, spell, params)
-    if (resist == 1 or resist == 0.5) then -- effect taken
+    if (resist >= 0.5) then -- effect taken
         duration = duration * resist
 
         if (target:addStatusEffect(effect, power, 3, duration)) then

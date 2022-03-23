@@ -30,6 +30,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     params.effect = nil
     local resist = applyResistanceEffect(caster, target, spell, params)
     
@@ -42,7 +43,6 @@ function onSpellCast(caster, target, spell)
         local BLUlvl = caster:getMainLvl()
         if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
         local power = 3 + math.floor(BLUlvl/5) -- bgwiki
-        print(power)
         target:addStatusEffect(tpz.effect.FROST, math.floor(power/3), 9, 90*resist, 0, power*2, 0) -- sadly regen_down is hard-coded to be per-3-seconds regardless of tick, so divide power by 3 for now...
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else

@@ -26,7 +26,7 @@ function onSpellCast(caster, target, spell)
     params.eco = ECO_AQUAN
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 9.0 or 7.0
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.375 or 2.375
     params.tMultiplier = 1.5
     params.duppercap = 69
     params.str_wsc = 0.0
@@ -44,6 +44,7 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.INT
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
+    params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
 
     local resist = applyResistance(caster, target, spell, params)
 

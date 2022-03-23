@@ -13,7 +13,11 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    local power = 12.5 + (0.10 * player:getMod(tpz.mod.BOOST_EFFECT))
+    local power = 12.5
+
+    if player:getMod(tpz.mod.BOOST_EFFECT) > 0 then
+        power = power + 6.25
+    end
 
     if (player:hasStatusEffect(tpz.effect.BOOST) == true) then
         local effect = player:getStatusEffect(tpz.effect.BOOST)
@@ -23,4 +27,8 @@ function onUseAbility(player, target, ability)
         player:delStatusEffect(tpz.effect.WARCRY)
         player:addStatusEffect(tpz.effect.BOOST, power, 1, 180)
     end
+
+    local BoostCounter = -1
+    BoostCounter = target:getLocalVar("BoostCounter")
+    target:setLocalVar("BoostCounter", BoostCounter + 1)
 end

@@ -53,7 +53,7 @@ function onEventFinish(player, csid, option)
         player:delKeyItem(tpz.ki.VIAL_OF_LUMINOUS_WATER)
     elseif csid == 527 then
         player:setCharVar("gotitallCS", 7)
-        player:setCharVar("Wait1DayForgotitallCS_date", getMidnight())
+        player:setCharVar("Wait1DayForgotitallCS_date", JstMidnight())
         player:needToZone(true)
     elseif csid == 539 then
         player:setCharVar("gotitallCS", 8)

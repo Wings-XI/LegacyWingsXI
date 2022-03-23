@@ -22,15 +22,16 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
+    
     local params = {}
     params.eco = ECO_PLANTOID
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_DARK
     params.numhits = 1
-    params.multiplier = 1.25
-    params.tp150 = 1.25
-    params.tp300 = 1.25
+    params.multiplier = 1.75
+    params.tp150 = 1.75
+    params.tp300 = 1.75
     params.azuretp = 1.25
     params.duppercap = 15
     params.str_wsc = 0.0
@@ -62,11 +63,13 @@ function onSpellCast(caster, target, spell)
     local duration = math.ceil(30 * tryBuildResistance(tpz.mod.RESBUILD_POISON, target))
     local bonus = resist * (caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 70 or (caster:hasStatusEffect(tpz.effect.CHAIN_AFFINITY) and caster:getTP()/50 or 0))
 
-    if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
-        local BLUlvl = caster:getMainLvl()
-        if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
-        local power = 3 + math.floor(BLUlvl/15)
-        target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist + bonus)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.POISONRES) < 100 then
+        if resist >= 0.5 and not target:hasStatusEffect(tpz.effect.POISON) then
+            local BLUlvl = caster:getMainLvl()
+            if caster:getMainJob() ~= tpz.job.BLU then BLUlvl = caster:getSubLvl() end
+            local power = 3 + math.floor(BLUlvl/15)
+            target:addStatusEffect(tpz.effect.POISON, power, 0, duration*resist + bonus)
+        end
     end
 
     return damage

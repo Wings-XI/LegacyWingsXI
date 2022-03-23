@@ -35,10 +35,10 @@ function onSpellCast(caster, target, spell)
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_DETONATION
     params.numhits = 1
-    params.multiplier = 1.0
-    params.tp150 = 1.25
-    params.tp300 = 1.50
-    params.azuretp = 1.55
+    params.multiplier = 1.5
+    params.tp150 = 2.5
+    params.tp300 = 3.0
+    params.azuretp = 3.25
     params.duppercap = 100
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
@@ -49,9 +49,10 @@ function onSpellCast(caster, target, spell)
     params.chr_wsc = 0.0
     local damage = BluePhysicalSpell(caster, target, spell, params)
     damage = BlueFinalAdjustments(caster, target, spell, damage, params)
-
-    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, 20 * resist) -- wiki says 20 sec max
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, 20 * resist) -- wiki says 20 sec max
+        end
     end
 
     return damage

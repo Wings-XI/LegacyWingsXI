@@ -3,6 +3,7 @@
 -- Zone: Hazhalm_Testing_Grounds (78)
 --
 -----------------------------------
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 local ID = require("scripts/zones/Hazhalm_Testing_Grounds/IDs")
@@ -22,6 +23,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

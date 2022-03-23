@@ -442,19 +442,12 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
     // respawn any pets from last zone
     if (PChar->petZoningInfo.respawnPet == true)
     {
-        // only repawn pet in valid zones
+        // only respawn pet in valid zones
         if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->m_moghouseID)
         {
-            switch (PChar->petZoningInfo.petType)
+            if (PChar->petZoningInfo.petType != PETTYPE_JUG_PET)
             {
-                case PETTYPE_AUTOMATON:
-                case PETTYPE_JUG_PET:
-                case PETTYPE_WYVERN:
-                    petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
-                    break;
-
-                default:
-                    break;
+                petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
             }
         }
     }
@@ -532,8 +525,19 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->setPetZoningInfo();
         }
 
+        if (PChar->m_moghouseID && PChar->m_moghouseID != PChar->id && PChar->GetLocalVar("NoRemoveOpenMH") == 0) {
+            PChar->loc.boundary = 0;
+            PChar->loc.p.x = 0;
+            PChar->loc.p.y = 0;
+            PChar->loc.p.z = 0;
+            PChar->loc.p.rotation = 0;
+            PChar->m_moghouseID = 0;
+            charutils::SaveCharPosition(PChar);
+        }
+
         PSession->shuttingDown = 1;
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
+
     }
     else
     {
@@ -622,15 +626,6 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
     }
 
     // todo: kill player til theyre dead and bsod
-    const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
-    int32       ret      = Sql_Query(SqlHandle, fmtQuery, PChar->id);
-    if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-    {
-        // On zone change, only sending a version message if mismatch
-        // if ((bool)Sql_GetUIntData(SqlHandle, 0))
-        // PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
-    }
-    return;
 }
 
 /************************************************************************
@@ -871,7 +866,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x02: // attack
         {
-            if (PChar->animation == ANIMATION_HEALING)
+            if (PChar->isSitting())
                 return;
 
             if (PChar->isMounted())
@@ -1231,6 +1226,10 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowExploit(CL_YELLOW "SmallPacket0x028: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
     }
+    if (!PChar->hasAccessToStorage(container)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
 
     CItem* PItem = PChar->getStorage(container)->GetItem(slotID);
 
@@ -1280,8 +1279,14 @@ void SmallPacket0x029(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8  FromSlotID     = data.ref<uint8>(0x0A);
     uint8  ToSlotID       = data.ref<uint8>(0x0B);
 
-    if (ToLocationID >= MAX_CONTAINER_ID || FromLocationID >= MAX_CONTAINER_ID)
+    if (ToLocationID >= MAX_CONTAINER_ID || FromLocationID >= MAX_CONTAINER_ID) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: Invalid container ID passed to packet by %s\n" CL_RESET, PChar->GetName());
         return;
+    }
+    if (!PChar->hasAccessToStorage(FromLocationID) || !PChar->hasAccessToStorage(ToLocationID)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
 
     CItem* PItem = PChar->getStorage(FromLocationID)->GetItem(FromSlotID);
 
@@ -1596,7 +1601,7 @@ void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PCh
         if (PItem != nullptr && PItem->getID() == itemID && quantity + PItem->getReserve() <= PItem->getQuantity())
         {
             // whoever commented above lied about ex items
-            if (PItem->getFlag() & ITEM_FLAG_EX)
+            if (PItem->isEx())
                 return;
 
             if (PItem->isSubType(ITEM_LOCKED))
@@ -1749,6 +1754,11 @@ void SmallPacket0x03A(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowExploit(CL_YELLOW "SmallPacket0x03A: Invalid container ID passed to packet %u by %s\n" CL_RESET, container, PChar->GetName());
         return;
     }
+    if (!PChar->hasAccessToStorage(container)) {
+        ShowExploit(CL_YELLOW "SmallPacket0x028: %s trying to access a storage container in an invalid zone.\n" CL_RESET, PChar->GetName());
+        return;
+    }
+
 
     CItemContainer* PItemContainer = PChar->getStorage(container);
 
@@ -2781,10 +2791,6 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 PChar->UContainer->Clean();
             }
-            else
-            {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
-            }
         }
         break;
     }
@@ -2946,7 +2952,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             if ((PItem != nullptr) &&
                 !(PItem->isSubType(ITEM_LOCKED)) &&
                 !(PItem->getFlag() & ITEM_FLAG_NOAUCTION) &&
-                !(PItem->getFlag() & ITEM_FLAG_EX) &&
+                (PItem->isEx() == false) &&
                 (PItem->getAHCat() != 0) &&
                 (PItem->getQuantity() >= quantity))
             {
@@ -3046,7 +3052,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                 if (PItem != nullptr)
                 {
-                    if (PItem->getFlag() & ITEM_FLAG_RARE)
+                    if (PItem->isRare())
                     {
                         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
                         {
@@ -3642,6 +3648,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
             // Validate travel
             if (moghouseExitRegular || moghouseExitQuestZoneline || moghouseExitMogGardenZoneline)
             {
+                charutils::RemoveGuestsFromMogHouse(PChar);
                 PChar->m_moghouseID    = 0;
                 PChar->loc.destination = destinationZone;
                 memset(&PChar->loc.p, 0, sizeof(PChar->loc.p));
@@ -5211,11 +5218,13 @@ void SmallPacket0x0B6(map_session_data_t* const PSession, CCharEntity* const PCh
         messageContentOffset = 21;
     }
     string_t RecipientName = string_t((const char*)data[recipientNameOffset], 15);
+    string_t MessageContent = string_t((const char*)data[messageContentOffset], data.length() - messageContentOffset);
 
     int8 packetData[64];
     strncpy((char*)packetData + 4, RecipientName.c_str(), RecipientName.length() + 1);
     ref<uint32>(packetData, 0) = PChar->id;
-    CChatMessagePacket* NewMessage = new CChatMessagePacket(PChar, MESSAGE_TELL, (const char*)data[messageContentOffset]);
+    
+    CChatMessagePacket* NewMessage = new CChatMessagePacket(PChar, MESSAGE_TELL, MessageContent);
     if (map_config.audit_chat == 1 && ((map_config.audit_tell == 1) || (PChar->m_logChat)))
     {
         NewMessage->LogChat(RecipientName.c_str(), nullptr);
@@ -5248,7 +5257,7 @@ void SmallPacket0x0BE(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 3: // change merit
         {
-            if (PChar->m_moghouseID)
+            if (PChar->m_moghouseID == PChar->id)
             {
                 MERIT_TYPE merit = (MERIT_TYPE)(data.ref<uint16>(0x06) << 1);
 
@@ -5491,7 +5500,16 @@ void SmallPacket0x0CB(map_session_data_t* const PSession, CCharEntity* const PCh
     TracyZoneScoped;
     if (data.ref<uint8>(0x04) == 1)
     {
-        PChar->m_openMH = true; // open
+        REGIONTYPE currentRegion = zoneutils::GetCurrentRegion(PChar->getZone());
+        if ((currentRegion == REGION_SANDORIA && PChar->profile.nation == 0) ||
+            (currentRegion == REGION_BASTOK && PChar->profile.nation == 1) ||
+            (currentRegion == REGION_WINDURST && PChar->profile.nation == 2)) {
+            PChar->m_openMH = true; // open
+        }
+        else {
+            ShowWarning(CL_RED "Player %s trying to use open mog function outside their own nation.\n" CL_RESET, PChar->name);
+            return;
+        }
     }
     else if (data.ref<uint8>(0x04) == 2)
     {
@@ -5502,6 +5520,9 @@ void SmallPacket0x0CB(map_session_data_t* const PSession, CCharEntity* const PCh
         ShowWarning(CL_RED "SmallPacket0x0CB : unknown byte <%.2X>\n" CL_RESET, data.ref<uint8>(0x04));
     }
     PChar->pushPacket(new CCharSyncPacket(PChar));
+    if (PChar->PParty) {
+        PChar->PParty->ReloadParty();
+    }
 }
 
 /************************************************************************
@@ -6098,6 +6119,7 @@ void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 1)
     {
+        charutils::RemoveGuestsFromMogHouse(PChar);
         PChar->status = STATUS_SHUTDOWN;
         charutils::SendToZone(PChar, 1, 0);
     }
@@ -6341,6 +6363,9 @@ void SmallPacket0x0FA(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         return;
     }
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemFurnishing* PItem = (CItemFurnishing*)PChar->getStorage(containerID)->GetItem(slotID);
 
@@ -6441,6 +6466,9 @@ void SmallPacket0x0FB(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         return;
     }
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
 
@@ -6519,6 +6547,9 @@ void SmallPacket0x0FC(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if ((potContainerID != LOC_MOGSAFE && potContainerID != LOC_MOGSAFE2) || (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2))
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PPotItemContainer = PChar->getStorage(potContainerID);
     CItemFlowerpot* PPotItem          = (CItemFlowerpot*)PPotItemContainer->GetItem(potSlotID);
@@ -6586,6 +6617,9 @@ void SmallPacket0x0FD(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6645,6 +6679,9 @@ void SmallPacket0x0FE(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6710,6 +6747,9 @@ void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 containerID = data.ref<uint8>(0x07);
     if (containerID != LOC_MOGSAFE && containerID != LOC_MOGSAFE2)
         return;
+    if (PChar->m_moghouseID != PChar->id) {
+        return;
+    }
 
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
@@ -6739,7 +6779,7 @@ void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || PChar->m_moghouseID)
+    if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || (PChar->m_moghouseID == PChar->id))
     {
         uint8 mjob = data.ref<uint8>(0x04);
         uint8 sjob = data.ref<uint8>(0x05);
@@ -6815,6 +6855,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->health.mp = PChar->GetMaxMP();
         PChar->updatemask |= UPDATE_HP;
 
+        charutils::CheckValidEquipment(PChar);
         charutils::SaveCharStats(PChar);
 
         PChar->pushPacket(new CCharJobsPacket(PChar));
@@ -7224,7 +7265,7 @@ void SmallPacket0x10A(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    if ((PItem != nullptr) && !(PItem->getFlag() & ITEM_FLAG_EX) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
+    if ((PItem != nullptr) && (PItem->isEx() == false) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
     {
         Sql_Query(SqlHandle, "UPDATE char_inventory SET bazaar = %u WHERE charid = %u AND location = 0 AND slot = %u;", price, PChar->id, slotID);
 

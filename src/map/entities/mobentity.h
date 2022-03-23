@@ -220,9 +220,11 @@ public:
     bool      m_disableScent;             // stop detecting by scent
     float     m_maxRoamDistance;          // maximum distance mob can be from spawn before despawning
 
+    uint32    aggroTimer;                 // when the mob can aggro again, used for BST's Leave command so they dont get aggro right after
+
     uint8     m_Type;                     // mob type
     bool      m_Aggro;
-    bool      m_TrueDetection;   // Has true sight or sound
+    uint8    m_TrueDetection;             // Has true sight or sound
     uint16    m_Detects;                // mobs detection methods, sight, sound, etc
     uint8     m_Link;                     // link with mobs of it's family
     uint16    m_Behaviour;                // mob behaviour
@@ -244,10 +246,13 @@ public:
     uint8     m_HiPartySize;              // Largest party size that hit the Monster
     int16     m_THLvl;                    // Highest Level of Treasure Hunter that apply to drops
     bool      m_ItemStolen;               // if true, mob has already been robbed. reset on respawn. also used for thf maat fight
+    uint16    m_StealItemID;              // Specify what item will be stolen
     uint16    m_Family;
     string_t  m_FamilyName;
     uint16    m_MobSkillList;             // Mob skill list defined from mob_pools
     uint32    m_Pool;                     // pool the mob came from
+
+    uint32    m_ExpPenalty;           // Total exp penalty applied when this mob dies
 
     CMobSpellList*        m_SpellListContainer;        // The spells list container for this mob
     std::map<uint16, uint16>    m_UsedSkillIds;        // mob skill ids used (key) along with mob level (value)

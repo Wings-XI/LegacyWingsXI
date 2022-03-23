@@ -35,5 +35,9 @@ function onEventFinish(player, csid, option)
         if ENABLE_COP_ZONE_CAP == 1 and option == 4 then
             player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, 50, 0, 0)
         end
+    elseif csid >= 2 and csid <= 41 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+        end
     end
 end

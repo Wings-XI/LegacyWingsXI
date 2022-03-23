@@ -24,7 +24,7 @@ function onPetAbility(target, automaton, skill, master, action)
         acc200 = 0.0,
         acc300 = 0.0,
         str_wsc = 0.0,
-        dex_wsc = 0.5,
+        dex_wsc = 0.0,
         vit_wsc = 0.0,
         agi_wsc = 0.0,
         int_wsc = 0.0,

@@ -6,6 +6,7 @@
 -------------------------------------
 require("scripts/globals/npc_util")
 require("scripts/globals/settings")
+local ID = require("scripts/zones/Windurst_Woods/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)

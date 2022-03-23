@@ -30,6 +30,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/chat_message.h"
 #include "../packets/inventory_size.h"
 
+#include <vector>
+
 class CPetEntity;
 class CMobEntity;
 class CMeritPoints;
@@ -102,6 +104,7 @@ namespace charutils
     void	BuildingCharAbilityTable(CCharEntity* PChar);
     void	BuildingCharTraitsTable(CCharEntity* PChar);
     void    BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID);
+    int     MythicWeaponSkillUsableOnBaseWeapon(CCharEntity* PChar, CItemWeapon* PItem);
 
     uint32  DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID = 0);
     bool    CanTrade(CCharEntity* PChar, CCharEntity* PTarget);
@@ -279,10 +282,15 @@ namespace charutils
     void LoadHelpDeskMessage(CCharEntity* PChar);
 
     bool VerifyHoldsValidHourglass(CCharEntity* PChar); // called after dropping/bazaaring Perpetual Hourglass, if player no longer has a valid glass, boot them from dyna
+    void RemoveGuestsFromMogHouse(CCharEntity* PChar); // Remove all guests invited through Open Mog
 
     EYellCheckResult CanUseYell(CCharEntity* PChar);
     bool IsYellSpamFiltered(CCharEntity* PChar);
     void SendYellDeclineMessage(CCharEntity* PChar, EYellCheckResult Reason);
+
+    std::vector<uint32> GetConnectedChars();
+    int32 LogGil(time_point tick, CTaskMgr::CTask* PTask); // Log everyone connected player's current gil into a dedicated table
+
 };
 
 #endif // _CHARUTILS_H

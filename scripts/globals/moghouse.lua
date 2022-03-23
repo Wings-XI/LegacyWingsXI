@@ -72,15 +72,15 @@ function moogleTrade(player, npc, trade)
         -- Mog Safe Expansion Quest 1 - Give a Moogle a Break - Trading Power Bow and Beetle Ring
         if giveMoogleABreak == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {17161, 13457}) then
             player:startEvent(30007)
-            player:setCharVar("MogSafe_waitJPMidnight", getMidnight())
+            player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         -- Mog Safe Expansion Quest 2 - The Moogle's Picnic! - Trading Selbina Butter and Shrimp Lure 
         elseif theMooglePicnic == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {17402, 615}) then
             player:startEvent(30011)
-            player:setCharVar("MogSafe_waitJPMidnight", getMidnight())
+            player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         -- Mog Safe Expansion Quest 3 - Moogles in the Wild - Trading Raptor Mantle and Wool Hat 
         elseif moogleInTheWild == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {13593, 12474}) then
             player:startEvent(30015)
-            player:setCharVar("MogSafe_waitJPMidnight", getMidnight())
+            player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         end
         return true
     end

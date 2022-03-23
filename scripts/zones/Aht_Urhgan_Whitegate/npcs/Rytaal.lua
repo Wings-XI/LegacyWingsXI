@@ -119,14 +119,20 @@ function onEventFinish(player, csid, option)
             player:setCharVar("lastTagTime", os.time() + 86400)
         end
         player:setCurrency("id_tags", tagStock - 1)
-    elseif csid == 268 and option == 2 and hasOrders(player) and not player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) then
-        local currentAssault = player:getCurrentAssault()
-        for _, v in pairs(assaultOrders) do
-            if player:hasKeyItem(v.KI) then
-                player:delKeyItem(v.KI)
+    elseif csid == 268 and option == 2 then
+        -- normal case
+        if ((hasOrders(player) and not player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG)) 
+            -- handles the speficic case where a player crashes entering an assault and is left in an intermediate state
+            -- while we should work on resolving assault entry issues this temp case will allow players a self service option to at least get their tag back
+            or (not hasOrders(player) and not player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) and player:getCurrentAssault() ~= 0 and player:getCharVar("assaultEntered") == 0)) then 
+            local currentAssault = player:getCurrentAssault()
+            for _, v in pairs(assaultOrders) do
+                if player:hasKeyItem(v.KI) then
+                    player:delKeyItem(v.KI)
+                end
             end
+            npcUtil.giveKeyItem(player, tpz.ki.IMPERIAL_ARMY_ID_TAG)
+            player:delAssault(currentAssault)
         end
-        npcUtil.giveKeyItem(player, tpz.ki.IMPERIAL_ARMY_ID_TAG)
-        player:delAssault(currentAssault)
     end
 end

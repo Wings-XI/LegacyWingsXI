@@ -8,9 +8,6 @@ require("scripts/globals/battlefield")
 require("scripts/globals/utils")
 -----------------------------------
 
-function onMobInitialize(mob)
-end
-
 function onMobSpawn(mob)
     local position = math.random(1,8)
 
@@ -33,7 +30,7 @@ function onMobEngaged(mob, target)
     GetMobByID(ID.pullingThePlug[bfID].BLUE_ID):spawn()
     GetMobByID(ID.pullingThePlug[bfID].TEAL_ID):spawn()
 
-    mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setMod(tpz.mod.REGAIN, 400)
     mob:setLocalVar("drawInTime", os.time() + 20)
     mob:setLocalVar("moveTime", os.time() + 30)
 end
@@ -41,15 +38,17 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local bfID = mob:getBattlefield():getArea()
     local tpNumber = mob:getLocalVar("tpNumber")
+    local tpDelay = mob:getLocalVar("tpDelay")
 
     if tpNumber < 2 then
         local addTP = tpNumber + 1
         mob:setLocalVar("tpNumber", addTP)
-    elseif tpNumber >= 2 then
+    elseif tpNumber >= 2 and os.time() > tpDelay then
         GetMobByID(ID.pullingThePlug[bfID].GREEN_ID):useMobAbility(542)
         GetMobByID(ID.pullingThePlug[bfID].BLUE_ID):useMobAbility(542)
         GetMobByID(ID.pullingThePlug[bfID].TEAL_ID):useMobAbility(542)
         mob:setLocalVar("tpNumber", 0)
+        mob:setLocalVar("tpDelay", os.time() + 10)
     end
 end
 
@@ -74,12 +73,13 @@ function onMobFight(mob, target)
     end
 
     -- Spawned orbs move to a random location every 30 seconds
-    local moveTime = mob:getLocalVar("moveTime")
+    local battlefield = mob:getBattlefield()
+    local moveTime = battlefield:getLocalVar("moveTime")
 
     if os.time() > moveTime then
         local i = math.random(1,8)
-        mob:setLocalVar("moveTime", os.time() + 30)
-        mob:setLocalVar("positionNum", i)
+        battlefield:setLocalVar("moveTime", os.time() + 30)
+        battlefield:setLocalVar("positionNum", i)
     end
 
     -- If an orb dies, remove its associated immunity
@@ -92,9 +92,6 @@ function onMobFight(mob, target)
     if mob:getBattlefield():getLocalVar("TealDead") == 1 then
         mob:setMod(tpz.mod.UDMGPHYS, 0) -- Remove melee immunity
     end
-end
-
-function onMobRoam(mob)
 end
 
 function onMobDeath(mob, player, isKiller)

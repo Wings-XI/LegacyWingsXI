@@ -23,7 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
     local baiwingMultiplier = mob:getLocalVar("savageDmgMultipliers")
     
     if baiwingMultiplier == 1 then
-        baiwingMultiplier = 4.65
+        baiwingMultiplier = 3.5
     else
         baiwingMultiplier = 5
     end
@@ -31,7 +31,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = baiwingMultiplier
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.EARTH, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, MOBPARAM_WIPE_SHADOWS)
-    MobStatusEffectMove(mob, target, tpz.effect.SLOW, 3000, 0, 120)
+    MobStatusEffectMove(mob, target, tpz.effect.SLOW, 6000, 0, 120)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.EARTH)
 
     return dmg

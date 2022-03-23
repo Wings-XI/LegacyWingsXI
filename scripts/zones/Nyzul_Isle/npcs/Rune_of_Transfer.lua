@@ -5,20 +5,54 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/besieged")
+require("scripts/globals/nyzul_isle")
+require("scripts/globals/nyzul_isle_data")
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 ------------------------------------------------
 local STARTING_RUNE_OF_TRANSFER_ID = 17093429
-local SPLIT_PATH_CHANCE = 5 -- percent chance to have a split path (choose left or right)
-
-local objectiveToStringMap = {ID.text.ELIMINATE_ALL_ENEMIES, ID.text.ELIMINATE_ENEMY_LEADER, ID.text.ELIMINATE_SPECIFIED_ENEMY, ID.text.ELIMINATE_SPECIFIED_ENEMIES,
-                              ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS, ID.text.ACTIVATE_ALL_LAMPS}
-local subObjectiveToStringMap = {ID.text.DO_NOT_DESTROY_GEARS, ID.text.AVOID_DISCOVERY_GEARS}
+local VENDING_BOX = 17093430
+local SPLIT_PATH_CHANCE = 10 -- percent chance to have a split path (choose left or right)
 local floorWarpCosts = {0, 500, 550, 600, 650, 700, 750, 800, 850, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900}
+
+local function releaseOtherPlayers(player)
+    local instance = player:getInstance()
+    for _,char in pairs(instance:getChars()) do
+        if char:getID() ~= player:getID() then
+            char:release()
+        end
+    end
+end
+
+-- lockValue >0 locks, 0 unlocks
+local function updateLobbyNpcLocks(instance, lockValue)
+    local startingRuneOfTransfer = GetNPCByID(STARTING_RUNE_OF_TRANSFER_ID, instance)
+    startingRuneOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+    local vendingBox = GetNPCByID(VENDING_BOX, instance)
+    vendingBox:setLocalVar("Nyzul_VendingBoxLock", lockValue)
+end
+
+local function updateFloorNpcLocks(instance, lockValue, runeOfTransfer)
+    runeOfTransfer:setLocalVar("Nyzul_RuneOfTransferLock", lockValue)
+
+    -- dont have to lock NM crates - they dont create events
+    for _,armouryCrateID in pairs(tpz.nyzul_isle_data.npcLists.Armoury_Crates) do
+        local armouryCrate = GetNPCByID(armouryCrateID, instance)
+        armouryCrate:setLocalVar("Nyzul_ArmouryCrateLock", lockValue)
+    end
+end
 
 function onTrigger(player, npc)
     -- Rune of Transfer in the starting room
     if (npc:getID() == STARTING_RUNE_OF_TRANSFER_ID) then
         if (player:hasKeyItem(tpz.ki.RUNIC_DISC)) then
+            if (npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0 and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
+                player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
+                return
+            end
+            -- Lock the vending box
+            updateLobbyNpcLocks(player:getInstance(), player:getID())
+            -- Force players out of other menus
+            releaseOtherPlayers(player)
             -- 0 if never set before, up to 100 for runic key
             local floorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
             local floorBitMask = 2097151 -- 111111111111111111111 - hides all floors (and the None option)
@@ -42,15 +76,23 @@ function onTrigger(player, npc)
     else
         -- Rune of Transfer on any floor but the entrance
         if (npc:AnimationSub() ~= 1) then
-            -- not lit up - so repeat the objective
-            showObjectives(player)
+            -- not lit up - so repeat the objective but dont show pathos
+            showNyzulObjectivesAndPathos(player, false)
         else
+            if(npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= 0 and npc:getLocalVar("Nyzul_RuneOfTransferLock") ~= player:getID()) then
+                player:PrintToPlayer("Only one player may access this Rune Of Transfer at a time.", 0x1F)
+                return
+            end
+
+            -- Lock to single player only
+            updateFloorNpcLocks(player:getInstance(), player:getID(), npc)
+            releaseOtherPlayers(player)
             -- Rune is lit up - allow transfer (200 and 201 appear to be interchangeable
             -- Exit/Go Up dialog
             -- Param 1 = bitflag to show menu options.
                 -- 1 = Not yet, 2 = Exit, 4 = Travel to next floor, 8 = Go Right, 16 = Go Left, 32 = Travel to floor <Param 2>., 64 = Travel to floor ???
             -- Param 2 = Floor number to be shown in Menu item "Travel to floor <number>"
-            if (math.random(100) < SPLIT_PATH_CHANCE) then
+            if (npc:getLocalVar("Nyzul_SplitPathChance") < SPLIT_PATH_CHANCE) then
                 player:startEvent(200, 27)
             else
                 player:startEvent(200, 7)
@@ -70,33 +112,51 @@ function onEventFinish(player, csid, option, npc)
         if (cost <= tokens) then
             player:delAssaultPoint(cost, NYZUL_ISLE_ASSAULT_POINT) -- Remove from NYZUL_ISLE_ASSAULT_POINT
             instance:setLocalVar("Nyzul_StartingFloor", floorSelected)
+            instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
+            instance:setStage(floorSelected)
             bubbleWarpThePlayers(player, instance, floorSelected)
             local chars = instance:getChars()
             instance:setLocalVar("Nyzul_NumberOfPlayers", #chars)
         else
+            -- Unlock the vending box
+            updateLobbyNpcLocks(instance, 0)
             player:messageSpecial(ID.text.INSUFFCIENT_TOKENS)
         end
+    elseif (csid == 94) then
+        -- Unlock the vending box
+        updateLobbyNpcLocks(instance, 0)
     end
 
     -- any non-entrance lamp
     if (csid == 200 and option > 0 and option <= 4) then
         -- 1 = Exit     2 = Go Up      3 = Travel to the right     4 = Travel to the Left
         for _,mob in pairs(instance:getMobs()) do
-            mob:deaggroAll()
+            clearHateIfRequired(mob)
         end
 
         -- players choose to exit
         if (option == 1) then
             instance:complete()
         else
-            bubbleWarpThePlayers(player, instance, instance:getStage() + 1)
+            if (option >= 3 and option <= 4) then
+                -- split path, flag the instance to determine a Pathos
+                instance:setLocalVar("Nyzul_DeterminePathos", 1)
+            else
+                instance:setLocalVar("Nyzul_DeterminePathos", 0)
+            end
+
+            -- stage is set on start or on floor complete
+            bubbleWarpThePlayers(player, instance, instance:getStage())
+            updateFloorNpcLocks(instance, 0, npc)
         end
+    elseif (csid == 200) then
+        updateFloorNpcLocks(instance, 0, npc)
     end
 
     -- bubble warp
     if (csid == 95) then
         player:messageSpecial(ID.text.TRANSFER_COMPLETE, instance:getStage())
-        showObjectives(player)
+        showNyzulObjectivesAndPathos(player, true)
         
         if (instance:getLocalVar("Nyzul_TransferInitiated") == player:getID()) then
             instance:setLocalVar("Nyzul_TransferInitiated", 0)
@@ -113,29 +173,18 @@ function bubbleWarpThePlayers(player, instance, stage)
     -- locking mechanism to prevent mutiple players from trying to go up a floor all at once
     if (instance:getLocalVar("Nyzul_TransferInitiated") == 0) then    
         instance:setLocalVar("Nyzul_TransferInitiated", player:getID())
-        instance:setStage(stage)
-        
+
+        -- select the floor we are headed to
+        selectNextFloor(stage, instance)
         player:startEvent(95)
-        instance:setLocalVar("Nyzul_DiscUserJob", player:getMainJob())
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
-                char:release()
+                char:setLocalVar("Nyzul_BubbleWarpQuit", os.time() + 2)
+                while(char:getEventID() ~= -1 and os.time() <= char:getLocalVar("Nyzul_BubbleWarpQuit")) do
+                    char:release()
+                end
                 char:startEvent(95)
             end
         end
-    end
-end
-
-function showObjectives(player)
-    local instance = player:getInstance()
-    local objective = instance:getLocalVar("Nyzul_Objective")
-    local subObjective = instance:getLocalVar("Nyzul_SubObjective")
-
-    if (objective > 0) then
-        player:messageSpecial(objectiveToStringMap[objective])
-    end
-
-    if (subObjective > 0) then
-        player:messageSpecial(subObjectiveToStringMap[subObjective])
     end
 end

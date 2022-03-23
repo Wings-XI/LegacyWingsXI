@@ -14,5 +14,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.PANZER_PERCIVAL_PH, 10, 3600) -- 1 hour
+    tpz.mob.phOnDespawn(mob, ID.mob.PANZER_PERCIVAL_PH, 10, 1) -- Pure lottery, no minimum
 end

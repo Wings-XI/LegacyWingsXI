@@ -24,7 +24,7 @@ function onTrigger(player, npc)
         rank = 5
     end
     
-    if (player:getCurrentMission(TOAU) == tpz.mission.id.toau.ETERNAL_MERCENARY) and EternalDialogue == 0 then
+    if (player:hasCompletedMission(TOAU, tpz.mission.id.toau.ETERNAL_MERCENARY) and EternalDialogue == 0) then
         player:startEvent(3154, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         player:setLocalVar("TOAU_ETERNAL_DIALOGUE", 1)
     else 

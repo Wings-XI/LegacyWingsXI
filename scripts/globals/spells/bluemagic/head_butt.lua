@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_IMPACTION
     params.spellLevel = 12
     params.numhits = 1
-    params.multiplier = 1.8
-    params.tp150 = 2.0
-    params.tp300 = 2.2
-    params.azuretp = 2.27
+    params.multiplier = 1.75
+    params.tp150 = 2.125
+    params.tp300 = 2.25
+    params.azuretp = 2.375
     params.duppercap = 17
     params.str_wsc = 0.2
     params.dex_wsc = 0.0
@@ -57,8 +57,10 @@ function onSpellCast(caster, target, spell)
     params.effect = tpz.effect.STUN
     local resist = applyResistanceEffect(caster, target, spell, params)
     local duration = math.ceil(4 * resist * tryBuildResistance(tpz.mod.RESBUILD_STUN, target))
-    if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
-        target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.STUNRES) < 100 then
+        if resist >= 0.25 and not target:hasStatusEffect(tpz.effect.STUN) then
+            target:addStatusEffect(tpz.effect.STUN, 1, 0, duration)
+        end
     end
     
     return damage

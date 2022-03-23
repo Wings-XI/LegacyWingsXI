@@ -1205,8 +1205,11 @@ INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 360, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Club', 108, 361, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 54, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 190, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 357, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 190, 1, 80);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 191, 80, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 255, 80, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 357, 1, 80);
+INSERT INTO `mob_spell_lists` VALUES('Ouryu', 109, 365, 80, 255);
 INSERT INTO `mob_spell_lists` VALUES('Pasuk', 110, 245, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Pasuk', 110, 247, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Jormungand', 111, 250, 1, 255);
@@ -1439,25 +1442,14 @@ INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 176, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 181, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 186, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 191, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 196, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 201, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 152, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 147, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 157, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 162, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 167, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 172, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 227, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 360, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 365, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 362, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 361, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 366, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Oupire', 150, 274, 1, 255);
+-- Oupire Spell List (Non-Elemental)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 274, 1, 255); -- Sleepga II
 INSERT INTO `mob_spell_lists` VALUES('Wake_Warder_Wanda', 151, 240, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Lord_of_Onzozo', 152, 201, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Lord_of_Onzozo', 152, 361, 1, 255);
@@ -4165,6 +4157,139 @@ INSERT INTO `mob_spell_lists` VALUES('Ogmios', 507, 360, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 356, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Cemetery_Cherry', 508, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Dirtyhanded_Gochakzuk', 509, 273, 1, 255);
+-- Oupire Spell List (Ice)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 181, 1, 255); -- Blizzaga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 152, 1, 255); -- Blizzard IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Ice', 510, 274, 1, 255); -- Sleepga II
+-- Oupire Spell List (Wind)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 186, 1, 255); -- Aeroga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 157, 1, 255); -- Aero IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Wind', 511, 274, 1, 255); -- Sleepga II
+-- Oupire Spell List (Earth)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 191, 1, 255); -- Stonega III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 162, 1, 255); -- Stone IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Earth', 512, 274, 1, 255); -- Sleepga II
+-- Oupire Spell List (Thunder)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 196, 1, 255); -- Thundaga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 167, 1, 255); -- Thunder IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Thunder', 513, 274, 1, 255); -- Sleepga II
+-- Oupire Spell List (Water)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 201, 1, 255); -- Waterga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 172, 1, 255); -- Water IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Water', 514, 274, 1, 255); -- Sleepga II
+-- Oupire Spell List (Fire)
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 176, 1, 255); -- Firaga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 147, 1, 255); -- Fire IV
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 227, 1, 255); -- Poisonga III
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 365, 1, 255); -- Breakga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 362, 1, 255); -- Bindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 366, 1, 255); -- Graviga
+INSERT INTO `mob_spell_lists` VALUES ('Oupire_Fire', 515, 274, 1, 255); -- Sleepga II
+-- Buarainech
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 532, 1, 255); -- Blue Magic: Blitzstrahl
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 644, 1, 255); -- Blue Magic: Mind Blast
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 616, 1, 255); -- Blue Magic: Temporal Shift
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 615, 1, 255); -- Blue Magic: Plasma Charge
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 212, 1, 255); -- Black Magic: Burst
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 196, 1, 255); -- Black Magic: Thundaga III
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 167, 1, 255); -- Black Magic: Thunder IV
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 512, 1, 252); -- Stun
+INSERT INTO `mob_spell_lists` VALUES('Buarainech', 516, 57, 1, 252); -- Haste
+-- Elatha
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 531, 1, 255); -- Blue Magic: Ice Break
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 535, 1, 255); -- Blue Magic: Cold Wave
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 608, 1, 255); -- Blue Magic: Frost Breath
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 206, 1, 255); -- Black Magic: Freeze
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 181, 1, 255); -- Black Magic: Blizzaga III
+INSERT INTO `mob_spell_lists` VALUES('Elatha', 517, 152, 1, 255); -- Black Magic: Blizzard IV
+-- Lugh
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 588, 1, 255); -- Blue Magic: Lowing
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 591, 1, 255); -- Blue Magic: Heat Breath
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 645, 1, 255); -- Blue Magic: Exuviation
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 204, 1, 255); -- Black Magic: Flare
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 176, 1, 255); -- Black Magic: Firaga III
+INSERT INTO `mob_spell_lists` VALUES('Lugh', 518, 147, 1, 255); -- Black Magic: Fire IV
+-- Ethniu
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 563, 1, 255); -- Blue Magic: Hecatomb Wave
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 647, 1, 255); -- Blue Magic: Zephyr Mantle
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 561, 1, 255); -- Blue Magic: Frightful Roar
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 208, 1, 255); -- Black Magic: Tornado
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 186, 1, 255); -- Black Magic: Aeroga III
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 157, 1, 255); -- Black Magic: Aero IV
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 359, 1, 255); -- White Magic: Silencega
+INSERT INTO `mob_spell_lists` VALUES('Ethniu', 519, 366, 1, 255); -- Black Magic: Graviga
+-- Tethra
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 524, 1, 255); -- Blue Magic: Sandspin
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 548, 1, 255); -- Blue Magic: Filamented Hold
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 555, 1, 255); -- Blue Magic: Magnetite Cloud
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 210, 1, 255); -- Black Magic: Quake
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 191, 1, 255); -- Black Magic: Stonega III
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 162, 1, 255); -- Black Magic: Stone IV
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 357, 1, 255); -- White Magic: Slowga
+INSERT INTO `mob_spell_lists` VALUES('Tethra', 520, 365, 1, 255); -- Black Magic: Breakga
+-- Apoc Nigh
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,356,76,255); -- paralyaga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,357,75,255); -- slowga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,359,75,255); -- silencega
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,360,75,255); -- dispelga
+INSERT INTO `mob_spell_lists` VALUES('Kamlanaut (Apoc Nigh)', 521,366,76,255); -- graviga
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 176, 75, 255);-- firaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 181, 75, 255);-- blizzaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 186, 75, 255);-- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 191, 75, 255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 196, 75, 255);-- thundaga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 201, 75, 255);-- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 274, 75, 255);-- sleepga_ii
+INSERT INTO `mob_spell_lists` VALUES('EaldNarche (Apoc Nigh)', 522, 362, 75, 255);-- bindga
+-- Ouryu Cometh
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 191, 1, 255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 210, 1, 255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 54, 1, 255); -- Stoneskin
+-- Todays Horoscope KS30
+INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 356, 1, 255);-- paralyga
+INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 54, 1, 255); -- stoneskin
+
+
 --
 -- Indexes for dumped tables
 --

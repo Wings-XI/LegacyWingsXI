@@ -211,7 +211,7 @@ end
 -- TP_DMG_BONUS and TP=100, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 300
 -- TP_DMG_BONUS and TP=200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 600
 
-function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue)
+function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, accMod)
     returninfo = {}
     --get all the stuff we need
     local resist = 1
@@ -244,15 +244,19 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     finaldmg = damage * mab * dmgmod
 
     -- get resistence
-    local avatarAccBonus = 0
+    local totalAccBonus = 0
     if (mob:isPet() and mob:getMaster() ~= nil) then
         local master = mob:getMaster()
         if (master:getPetID() >= 0 and master:getPetID() <= 20 and master:isPC()) then -- check to ensure pet is avatar
-            avatarAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200) + master:getMerit(1284) -- avatar magic acc merit
+            totalAccBonus = utils.clamp(master:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - master:getMaxSkillLevel(mob:getMainLvl(), tpz.job.SMN, tpz.skill.SUMMONING_MAGIC), 0, 200) + master:getMerit(1284) -- avatar magic acc merit
         end
     end
-    
-    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), avatarAccBonus, element)
+
+    if (accMod and accMod > 0) then
+        totalAccBonus = totalAccBonus + accMod
+    end
+
+    resist = applyPlayerResistance(mob, nil, target, mob:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), totalAccBonus, element)
 
     local magicDefense = getElementalDamageReduction(target, element)
 
