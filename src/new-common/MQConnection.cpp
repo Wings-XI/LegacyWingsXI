@@ -240,7 +240,13 @@ void MQConnection::Run()
             // There are senders waiting to send data so give them some time to do their business
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
-        LOCK_MQCONNECTION;
+        std::unique_lock<std::recursive_timed_mutex> lk(*GetMutex(), std::defer_lock);
+        if (!lk.try_lock_for(std::chrono::seconds(1))) {
+            // We need to continue monitoring mbShutdown even while we're waiting
+            // for the mutex, otherwise this can result in a deadlock if a signal
+            // is raised while processing a message.
+            continue;
+        }
 
         tv.tv_sec = tv_orig.tv_sec;
         tv.tv_usec = tv_orig.tv_usec;

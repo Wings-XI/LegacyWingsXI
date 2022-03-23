@@ -18,7 +18,7 @@ function onInitialize(zone)
     Kreutzet:setLocalVar("cooldown", os.time() + Kreutzet:getRespawnTime()/1000)
     DisallowRespawn(Kreutzet:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onConquestUpdate(zone, updatetype)

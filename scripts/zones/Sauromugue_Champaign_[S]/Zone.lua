@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Sauromugue_Champaign_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/quests")
 require("scripts/globals/zone")
 -----------------------------------
@@ -25,6 +26,10 @@ function onZoneIn(player, prevZone)
 		cs = 700
 	end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

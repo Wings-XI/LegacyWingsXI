@@ -2,6 +2,7 @@ require("scripts/globals/gear_sets")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/hook")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
@@ -135,6 +136,13 @@ local function CharCreate(player)
        player:setGil(START_GIL)
     end
 
+    if (SERVER_LINKSHELL ~= nil and SERVER_LINKSHELL ~= 0) then
+        -- Add server linkshell pearl
+        if not player:hasItem(513) and not player:hasItem(514) and not player:hasItem(515) then
+            player:addLinkpearl(SERVER_LINKSHELL, 1)
+        end
+    end
+
     player:addItem(536) -- adventurer coupon
     player:addTitle(tpz.title.NEW_ADVENTURER)
     -- player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
@@ -142,6 +150,12 @@ local function CharCreate(player)
     player:setCharVar("spokePyropox", 1) -- Pyropox introduction
     player:setCharVar("TutorialProgress", 1) -- Has not started tutorial
     player:setNewPlayer(true) -- apply new player flag
+    
+    -- If we have a hook for extra customizations call it now
+    if hookOnCharCreate ~= nil then
+        hookOnCharCreate(player)
+    end
+
 end
 
 -----------------------------------

@@ -19,6 +19,7 @@ zones[tpz.zone.TALACCA_COVE] =
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET        = 7049, -- You can't fish here.
+        CONQUEST_BASE                 = 7149, -- Tallying conquest results...
         ORB_MESSAGE_OFFSET            = 7623, -- There is a crack in the <item>. It no longer contains a monster.
         YOU_CAN_NOW_BECOME_A_CORSAIR  = 7781, -- You can now become a corsair!
         VALKENG_MELEE_CHANGE_FRAME    = 7852, -- Confirming status...Damage from melee attacks...≺Numeric Parameter 0≻%.Changing frame...

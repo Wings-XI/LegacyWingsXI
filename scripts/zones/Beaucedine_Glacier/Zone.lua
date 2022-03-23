@@ -14,7 +14,7 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.HUMBABA)
     GetMobByID(ID.mob.HUMBABA):setRespawnTime(math.random(3600, 4200))
 
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 end
 
 function onZoneIn(player, prevZone)

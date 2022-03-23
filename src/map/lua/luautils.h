@@ -77,6 +77,13 @@ namespace luautils
 {
     extern struct lua_State* LuaHandle;
 
+    enum ServerCustomization : uint8
+    {
+        // Nations that have not had 1st place for a long time receive influence boost
+        CUSTOMIZATION_INFLUENCE = 0,
+        CUSTOMIZATION_LAST
+    };
+
     int32 init();
     int32 free();
     int32 garbageCollect(); // performs a full garbage collecting cycle
@@ -137,7 +144,8 @@ namespace luautils
     int32 getNationRank(lua_State* L);
     int32 getConquestBalance(lua_State* L);
     int32 isConquestAlliance(lua_State* L);
-    int32 SetRegionalConquestOverseers(uint8 regionID);                         // Update NPC Conquest Guard
+    int32 SetRegionalConquestOverseers(uint8 regionID, uint8 updateType);       // Update NPC Conquest Guard
+    int32 SetConquestCircus(uint8 city, uint8 updateType);                      // Move the circus and traveling merchants
     int32 setMobPos(lua_State*);                                                // set a mobs position (only if mob is not in combat)
 
     int32 GetHealingTickDelay(lua_State* L);                                    // Returns the configured healing tick delay
@@ -326,6 +334,8 @@ namespace luautils
 
     int32 GetCharVarByName(lua_State* L);
     int32 SetCharVarByName(lua_State* L);
+
+    int32 IsCustomizationEnabled(lua_State* L);                                             // Check if certain custom behaviors are enabed in the server configuration. 
 };
 
 #endif //- _LUAUTILS_H -

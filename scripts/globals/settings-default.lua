@@ -187,6 +187,8 @@ ENM_COOLDOWN = 120  -- Number of hours before a player can obtain same KI for EN
 FORCE_SPAWN_QM_RESET_TIME = 300 -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
 GOBBIE_BOX_MIN_AGE  = 45 -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 ARTISAN_MOOGLES_GIVE_SCROLLS = 0 -- Do Artisan Moogles give free instant warp scrolls
+SERVER_LINKSHELL = 0 -- ID of a serverwide linkshell (added to players on character creation)
+VENDORS_IGNORE_CONQUEST = 0 -- Vendors sell all items regardless of nation's conquest status
 
 -- LINKSHELL CONCIERGE
 LINKSHELL_CONCIERGE_SHARE = 0 ; -- 0 = Retail behaviour, each NPC has his/her own list and type  --  1 = Shared Stock, All NPCs share stock, but will only have "Do everything" type
@@ -199,3 +201,6 @@ IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you e
 IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
 ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior
+
+-- HOOKS
+HOOK_FILE_NAME = "" -- Create a file named "hook-<name>.lua" and set the value to "<name>" to enable

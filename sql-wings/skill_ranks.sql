@@ -62,9 +62,9 @@ CREATE TABLE `skill_ranks` (
 
 INSERT INTO `skill_ranks` VALUES(1, 'hand2hand', 9, 1, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 3, 9, 0, 0, 0);
 INSERT INTO `skill_ranks` VALUES(2, 'dagger', 5, 0, 0, 9, 4, 2, 8, 7, 6, 5, 5, 10, 6, 10, 10, 0, 3, 8, 3, 9, 8, 0);
-INSERT INTO `skill_ranks` VALUES(3, 'sword', 4, 0, 0, 0, 4, 9, 1, 5, 10, 8, 9, 6, 7, 8, 0, 1, 5, 0, 9, 0, 0, 2);
+INSERT INTO `skill_ranks` VALUES(3, 'sword', 4, 0, 0, 0, 4, 9, 1, 5, 10, 8, 9, 6, 7, 8, 0, 2, 5, 0, 9, 0, 0, 2);
 INSERT INTO `skill_ranks` VALUES(4, 'great sword', 3, 0, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `skill_ranks` VALUES(5, 'axe', 2, 0, 0, 0, 0, 0, 0, 5, 1, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5);
+INSERT INTO `skill_ranks` VALUES(5, 'axe', 2, 0, 0, 0, 0, 0, 0, 5, 2, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5);
 INSERT INTO `skill_ranks` VALUES(6, 'great axe', 1, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4);
 INSERT INTO `skill_ranks` VALUES(7, 'scythe', 3, 0, 0, 10, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `skill_ranks` VALUES(8, 'polearm', 5, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -92,6 +92,14 @@ INSERT INTO `skill_ranks` VALUES(41, 'string', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 
 INSERT INTO `skill_ranks` VALUES(42, 'wind', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `skill_ranks` VALUES(43, 'blue', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `skill_ranks` VALUES(44, 'geomancy', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0);
+
+--
+-- Skill Level Reference
+--
+-- A+  1		B+  3		C+  6		D  9
+--          B   4		C   7		E  10
+-- A-  2		B-  5		C-  8		F  11
+--
 
 --
 -- Indexes for dumped tables

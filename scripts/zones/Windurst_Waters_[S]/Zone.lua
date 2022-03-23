@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Windurst_Waters_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/npc_util")
 require("scripts/globals/keyitems")
@@ -29,6 +30,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

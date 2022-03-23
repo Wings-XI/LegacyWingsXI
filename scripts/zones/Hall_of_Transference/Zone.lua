@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Hall_of_Transference/IDs")
 require("scripts/globals/teleports")
+require("scripts/globals/conquest")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
@@ -47,6 +48,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

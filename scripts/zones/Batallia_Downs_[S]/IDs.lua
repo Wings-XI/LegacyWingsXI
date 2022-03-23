@@ -19,6 +19,7 @@ zones[tpz.zone.BATALLIA_DOWNS_S] =
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         LYCOPODIUM_ENTRANCED    = 7056, -- The lycopodium is entranced by a sparkling light...
         FISHING_MESSAGE_OFFSET  = 7069, -- You can't fish here.
+        CONQUEST_BASE           = 7246, -- Tallying conquest results...
         COMMON_SENSE_SURVIVAL   = 9583, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =

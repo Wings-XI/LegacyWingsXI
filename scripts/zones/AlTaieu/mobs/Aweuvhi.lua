@@ -7,6 +7,15 @@ local ID = require("scripts/zones/AlTaieu/IDs")
 require("scripts/globals/keyitems")
 -----------------------------------
 
+function onMobInitialize(mob)
+    -- These are NMs - currently they use the same pool as indoor Aw'euvhi
+    mob:setMobType(2)
+end
+
+function onMobSpawn(mob)
+    mob:setMobType(2)
+end
+
 function onMobDeath(mob, player, isKiller)
     local mobID = mob:getID()
 

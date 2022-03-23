@@ -18,6 +18,7 @@ zones[tpz.zone.NAVUKGO_EXECUTION_CHAMBER] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                  = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
+        CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         ORB_MESSAGE_OFFSET            = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         KARABABA_FIGHT                = 7625, -- I do love a good fight! Gives me the chance to exercise my might!
         KARABABA_ENOUGH               = 7628, -- That's quite enough...

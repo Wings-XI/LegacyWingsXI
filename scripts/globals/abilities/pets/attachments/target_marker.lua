@@ -3,6 +3,7 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+-- Needs a rework to remove level diff calcs http://wiki.ffo.jp/html/9133.html
 
 function onEquip(pet)
     pet:addListener("ENGAGE", "AUTO_TARGETMARKER_ENGAGE", function(pet, target)

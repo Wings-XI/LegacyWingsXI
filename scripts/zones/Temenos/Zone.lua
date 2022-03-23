@@ -81,6 +81,11 @@ function onEventUpdate(player, csid, option)
     if csid == 32001 or csid == 32002 then
         player:messageSpecial(ID.text.HUM+1)
     end
+    if csid >= 100 and csid <= 120 then
+        for _, entry in pairs(player:getNotorietyList()) do
+			entry:deaggroPlayer(player:getName()) -- reset hate on player entering next level
+		end
+    end
 end
 
 function onEventFinish(player, csid, option)

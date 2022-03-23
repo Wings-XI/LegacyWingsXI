@@ -142,6 +142,8 @@ CCharEntity::CCharEntity()
     memset(&m_WeaponSkills, 0, sizeof(m_WeaponSkills));
     memset(&m_SetBlueSpells, 0, sizeof(m_SetBlueSpells));
     memset(&m_unlockedAttachments, 0, sizeof(m_unlockedAttachments));
+    lastInCombat = 1;
+    lastZoneTimer = 0;
 
     memset(&m_questLog, 0, sizeof(m_questLog));
     memset(&m_missionLog, 0, sizeof(m_missionLog));
@@ -541,18 +543,12 @@ void CCharEntity::setPetZoningInfo()
 {
     if (PPet->objtype == TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
+        if (TYPE_PET != PETTYPE_JUG_PET)
         {
-        case PETTYPE_JUG_PET:
-        case PETTYPE_AUTOMATON:
-        case PETTYPE_WYVERN:
             petZoningInfo.petHP = PPet->health.hp;
             petZoningInfo.petTP = PPet->health.tp;
             petZoningInfo.petMP = PPet->health.mp;
             petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-            break;
-        default:
-            break;
         }
     }
 }
@@ -639,21 +635,21 @@ bool CCharEntity::hasAccessToStorage(uint8 LocationID)
     }
     if (LocationID == LOC_MOGSATCHEL) {
         // Requires secure account (2FA)
-        if (m_accountFeatures & 0x01) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x01) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE3) {
         // Requires account feature
-        if (m_accountFeatures & 0x04) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x04) {
             return true;
         }
         return false;
     }
     if (LocationID == LOC_WARDROBE4) {
         // Requires account feature
-        if (m_accountFeatures & 0x08) {
+        if (map_config.storage_ignore_features || m_accountFeatures & 0x08) {
             return true;
         }
         return false;
@@ -1061,6 +1057,8 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     if (PTarget->isDead() && PTarget->objtype == TYPE_MOB)
@@ -1078,6 +1076,12 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     auto PSpell = state.GetSpell();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    if (PTarget->id != this->id && !PSpell->isHeal() && !PSpell->isBuff())
+    {
+        this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+    }
+
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 
     for (auto&& actionList : action.actionLists)
@@ -1191,6 +1195,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 {
     CBattleEntity::OnCastInterrupted(state, action, msg);
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     auto message = state.GetErrorMsg();
 
     if (message)
@@ -1202,6 +1208,8 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
     CBattleEntity::OnWeaponSkillFinished(state, action);
+
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
 
     auto PWeaponSkill = state.GetSkill();
     auto PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
@@ -1678,6 +1686,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
+    this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
+
     int32 damage = 0;
     int32 totalDamage = 0;
 
@@ -1733,14 +1743,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
-        if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0))
-        {
-            actionTarget.messageID = 32;
-            actionTarget.reaction = REACTION_EVADE;
-            actionTarget.speceffect = SPECEFFECT_NONE;
-            hitCount = i; // end barrage, shot missed
-        }
-        else if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
+        if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
             if (battleutils::IsAbsorbByShadow(PTarget, this))
@@ -1749,7 +1752,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             }
             else
             {
-                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
+                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true, true);
                 float pdif = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
 
                 if (isCritical)

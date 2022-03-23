@@ -124,6 +124,7 @@ CMobEntity::CMobEntity()
     m_bcnmID = 0;
 
     m_maxRoamDistance = 50.0f;
+    aggroTimer = 1;
     m_disableScent = false;
 
     memset(&m_SpawnPoint, 0, sizeof(m_SpawnPoint));
@@ -1485,6 +1486,7 @@ void CMobEntity::OnDespawn()
     m_AutoClaimed = false;
     PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
     luautils::OnMobDespawn(this);
+    PAI->ClearActionQueue();
     //#event despawn
     PAI->EventHandler.triggerListener("DESPAWN", this);
 }
@@ -1517,6 +1519,7 @@ void CMobEntity::Die()
 
             DistributeRewards();
             m_OwnerID.clean();
+            PAI->ClearActionQueue();
         }
     }));
     if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)

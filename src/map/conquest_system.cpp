@@ -38,6 +38,13 @@
 
 namespace conquest
 {
+
+    bool g_is_mid_tally = false;
+
+    float g_sandoria_influence_mult = 1.0;
+    float g_bastok_influence_mult = 1.0;
+    float g_windurst_influence_mult = 1.0;
+
 	/************************************************************************
     *                                                                       *
     *	UpdateConquestSystem		                                        *
@@ -47,6 +54,7 @@ namespace conquest
 	void UpdateConquestSystem()
 	{
         TracyZoneScoped;
+        CConquestPacket::CMFlushCache();
 		zoneutils::ForEachZone([](CZone* PZone)
 		{
             //only find chars for zones that have had conquest updated
@@ -105,6 +113,8 @@ namespace conquest
 
         Sql_Query(SqlHandle, "UPDATE conquest_system SET sandoria_influence = %d, bastok_influence = %d, "
             "windurst_influence = %d, beastmen_influence = %d WHERE region_id = %u;", influences[0], influences[1], influences[2], influences[3], static_cast<uint8>(region));
+
+        CConquestPacket::CMFlushCache();
     }
 
     /************************************************************************
@@ -116,6 +126,9 @@ namespace conquest
     void GainInfluencePoints(CCharEntity* PChar, uint32 points)
     {
         points += (uint32)(PChar->getMod(Mod::CONQUEST_REGION_BONUS) / 100.0);
+        if (map_config.enable_influence_boost) {
+            points = (uint32)((float)points * GetInfluenceMultiplier(PChar->profile.nation));
+        }
         conquest::UpdateInfluencePoints(points, PChar->profile.nation, PChar->loc.zone->GetRegionID());
     }
 
@@ -285,7 +298,79 @@ namespace conquest
         return GetInfluenceRanking(san_inf, bas_inf, win_inf, 0);
     }
 
-	/************************************************************************
+
+    /************************************************************************
+    *   GetInfluenceMultiplier                                              *
+    *	In case custom influence boost is enabled, get the current          *
+    *   influence boost of a given nation.                                  *
+    ************************************************************************/
+
+    float GetInfluenceMultiplier(uint8 nation)
+    {
+        if (!map_config.enable_influence_boost) {
+            return 1.0;
+        }
+        switch (nation) {
+        case 0:
+            // San d'Oira
+            return g_sandoria_influence_mult;
+        case 1:
+            return g_bastok_influence_mult;
+        case 2:
+            return g_windurst_influence_mult;
+        default:
+            return 1.0;
+        }
+    }
+
+    /************************************************************************
+    *   GetInfluenceMultiplier                                              *
+    *	In case custom influence boost is enabled, get the current          *
+    *   influence boost of a given nation.                                  *
+    ************************************************************************/
+
+    void RefreshInfluenceMultipliers()
+    {
+        if (!map_config.enable_influence_boost) {
+            return;
+        }
+        std::string Query = "SELECT tally_time, sandoria_rank, bastok_rank, windurst_rank FROM conquest_record ORDER BY tally_time DESC;";
+
+        int32 ret = Sql_Query(SqlHandle, Query.c_str());
+        // For the sake of this check if a nation hasn't had 1st place
+        // for over 10 weeks it's as if it never had 1st place at all.
+        uint8 sandoria_first = 10;
+        uint8 bastok_first = 10;
+        uint8 windurst_first = 10;
+        uint8 i = 0;
+
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+        {
+            while ((Sql_NextRow(SqlHandle) == SQL_SUCCESS) && (i < 10))
+            {
+                uint8 sandoria_rank = Sql_GetIntData(SqlHandle, 1);
+                uint8 bastok_rank = Sql_GetIntData(SqlHandle, 2);
+                uint8 windurst_rank = Sql_GetIntData(SqlHandle, 3);
+
+                if (sandoria_rank == 1 && sandoria_first > i) {
+                    sandoria_first = i;
+                }
+                if (bastok_rank == 1 && bastok_first > i) {
+                    bastok_first = i;
+                }
+                if (windurst_rank == 1 && windurst_first > i) {
+                    windurst_first = i;
+                }
+
+                i++;
+            }
+            g_sandoria_influence_mult = 1.0 + (0.5 * sandoria_first);
+            g_bastok_influence_mult = 1.0 + (0.5 * bastok_first);
+            g_windurst_influence_mult = 1.0 + (0.5 * windurst_first);
+        }
+    }
+
+    /************************************************************************
     *   UpdateConquestGM                                                    *
     *	Update region control		                                        *
     *   just used by GM command			                                    *
@@ -305,52 +390,100 @@ namespace conquest
     *   update 1 time per week			                                    *
     ************************************************************************/
 
-	void UpdateWeekConquest()
-	{
+    void UpdateWeekConquest()
+    {
         TracyZoneScoped;
-		//TODO: move to lobby server
-		//launch conquest message in all zone (monday server midnight)
+        //TODO: move to lobby server
+        //launch conquest message in all zone (monday server midnight)
+
+        ShowDebug(CL_CYAN"Beginning to calculate Conquest Weekly Update\n" CL_RESET);
+
+        // Set all zones on region map to question marks
+        g_is_mid_tally = true;
+        CConquestPacket::CMFlushCache();
 
         zoneutils::ForEachZone([](CZone* PZone)
         {
-            //only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= 18)
+            luautils::OnConquestUpdate(PZone, Conquest_Tally_Start);
+            // Clear players' region maps
+            PZone->ForEachChar([](CCharEntity* PChar)
             {
-                luautils::OnConquestUpdate(PZone, Conquest_Tally_Start);
-            }
+                PChar->pushPacket(new CConquestPacket(PChar));
+            });
         });
 
-        const char* Query = "UPDATE conquest_system SET region_control = \
-                            IF(sandoria_influence > bastok_influence AND sandoria_influence > windurst_influence AND \
-                            sandoria_influence > beastmen_influence, 0, \
-                            IF(bastok_influence > sandoria_influence AND bastok_influence > windurst_influence AND \
-                            bastok_influence > beastmen_influence, 1, \
-                            IF(windurst_influence > bastok_influence AND windurst_influence > sandoria_influence AND \
-                            windurst_influence > beastmen_influence, 2, 3)));";
+        // This needs to be done only once
+        if (zoneutils::GetZone(map_config.conquest_auth_zone)) {
 
-        Sql_Query(SqlHandle, Query);
+            std::string Query = "UPDATE conquest_system SET region_control_prev = region_control;";
+            Sql_Query(SqlHandle, Query.c_str());
 
-		//update conquest overseers
+            Query = "UPDATE conquest_system SET region_control = \
+                     IF(sandoria_influence > bastok_influence AND sandoria_influence > windurst_influence AND \
+                     sandoria_influence > beastmen_influence, 0, \
+                     IF(bastok_influence > sandoria_influence AND bastok_influence > windurst_influence AND \
+                     bastok_influence > beastmen_influence, 1, \
+                     IF(windurst_influence > bastok_influence AND windurst_influence > sandoria_influence AND \
+                     windurst_influence > beastmen_influence, 2, 3)));";
+
+            Sql_Query(SqlHandle, Query.c_str());
+
+            uint8 new_ranks = GetBalance();
+            uint8 sandoria_rank = new_ranks & 0x03;
+            uint8 bastok_rank = (new_ranks & 0x0C) >> 2;
+            uint8 windurst_rank = new_ranks >> 4;
+            Query = "INSERT INTO conquest_record (sandoria_rank, bastok_rank, windurst_rank) VALUES (%u, %u, %u);";
+            Sql_Query(SqlHandle, Query.c_str(), sandoria_rank, bastok_rank, windurst_rank);
+        }
+
+        // All conquest overseers need to vanish while we calculate tally
+        for (uint8 i = 0; i <= 18; i++)
+        {
+            luautils::SetRegionalConquestOverseers(i, 1);
+        }
+        // Remove circus and traveling merchants from cities
+        luautils::SetConquestCircus(0, 1);
+        luautils::SetConquestCircus(1, 1);
+        luautils::SetConquestCircus(2, 1);
+
+        // Wait 2:30 minutes for all server instances to update their stats then notify players of the tally results
+        // 2:30 because this is the retail value and because the client seems to keep the conquest map in cache for
+        // about two minutes and ignores any incoming conquest packets until the cache expires.
+        CTaskMgr::getInstance()->AddTask("FinishUpdateWeekConquest", server_clock::now() + 150s, nullptr, CTaskMgr::TASK_ONCE, FinishUpdateWeekConquest);
+
+    }
+
+    int32 FinishUpdateWeekConquest(time_point tick, CTaskMgr::CTask* PTask)
+    {
+        // Go back to sending real conquest packets
+        g_is_mid_tally = false;
+        CConquestPacket::CMFlushCache();
+
+        //update conquest overseers
 		for (uint8 i=0; i <= 18; i++)
 		{
-            luautils::SetRegionalConquestOverseers(i);
+            luautils::SetRegionalConquestOverseers(i, 2);
 		}
+        // Add circus and traveling merchants to 1st place city
+        luautils::SetConquestCircus(0, 2);
+        luautils::SetConquestCircus(1, 2);
+        luautils::SetConquestCircus(2, 2);
 
         zoneutils::ForEachZone([](CZone* PZone)
         {
-            //only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= 18)
+            luautils::OnConquestUpdate(PZone, Conquest_Tally_End);
+            PZone->ForEachChar([](CCharEntity* PChar)
             {
-                luautils::OnConquestUpdate(PZone, Conquest_Tally_End);
-                PZone->ForEachChar([](CCharEntity* PChar)
-                {
-                    PChar->pushPacket(new CConquestPacket(PChar));
-                    PChar->PLatentEffectContainer->CheckLatentsZone();
-                });
-            }
+                PChar->pushPacket(new CConquestPacket(PChar));
+                PChar->PLatentEffectContainer->CheckLatentsZone();
+            });
         });
 
+        RefreshInfluenceMultipliers();
+
 		ShowDebug(CL_CYAN"Conquest Weekly Update is finished\n" CL_RESET);
+
+        return 0;
 	}
 
 	/************************************************************************
@@ -386,6 +519,9 @@ namespace conquest
         if (windurst >= bastok)
 			ranking -= 16;
 
+        /*
+        // Disabled because we have no reference for this happeing on retail.
+
         if (GetAlliance(sandoria_prev, bastok_prev, windurst_prev) != 0)
         {
             //there was an alliance last conquest week, so the allied nations will be tied for first (unless they didn't pass the other nation)
@@ -402,6 +538,7 @@ namespace conquest
                 ranking = 0x35;
             }
         }
+        */
 
 		return ranking;
     }
@@ -543,6 +680,17 @@ namespace conquest
         uint8 dayspassed = (weekday == 0 ? 6 : weekday - 1) * 25;
         dayspassed += ((CVanaTime::getInstance()->getSysHour() * 60 + CVanaTime::getInstance()->getSysMinute()) * 25 ) / 1440;
         return (uint8)(175 - dayspassed);
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Are we currently in the middle of conquest tally processing          *
+    *                                                                       *
+    ************************************************************************/
+
+    bool IsCalculatingTally()
+    {
+        return g_is_mid_tally;
     }
 
     /************************************************************************

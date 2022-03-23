@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Fort_Karugo-Narugo_[S]/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/status")
 require("scripts/globals/helm")
 -----------------------------------
@@ -18,6 +19,10 @@ function onZoneIn(player, prevZone)
         player:setPos(820, 25.782, 117.991, 66)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

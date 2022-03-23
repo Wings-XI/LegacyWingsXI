@@ -3,6 +3,7 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+-- Needs a rework to ignore level difference in pdif http://wiki.ffo.jp/html/9132.html
 
 function onEquip(pet)
     pet:addListener("ENGAGE", "AUTO_ATTUNER_ENGAGE", function(pet, target)

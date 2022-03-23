@@ -30,7 +30,7 @@ function onTrigger(player, npc)
     -- end
 
     if medalRank == 0 then
-        player:startEvent(14)
+        player:startEvent(14, 1)
     elseif player:getCampaignAllegiance() == 3 then
         -- Event Option 3 Denotes Windurst Allegience --
         player:startEvent(13, 3, notes, freelances, avilableCiphers, medalRank, bonusEffects, timeStamp, 0)

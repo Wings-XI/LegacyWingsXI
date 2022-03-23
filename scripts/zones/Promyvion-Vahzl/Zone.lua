@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Promyvion-Vahzl/IDs")
 require("scripts/globals/promyvion")
+require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -34,6 +35,10 @@ function afterZoneIn(player)
     end
 end
 
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
+end
+
 function onRegionEnter(player, region)
     tpz.promyvion.onRegionEnter(player, region)
 end
@@ -53,5 +58,9 @@ function onEventFinish(player, csid, option)
         player:messageSpecial(ID.text.LIGHT_OF_VAHZL, tpz.ki.LIGHT_OF_VAHZL)
     elseif csid == 45 and option == 1 then
         player:setPos(-379.947, 48.045, 334.059, 192, 9) -- To Pso'Xja {R}
+    elseif csid >= 30 and csid <= 44 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+        end
     end
 end

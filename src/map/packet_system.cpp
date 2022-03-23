@@ -442,19 +442,12 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
     // respawn any pets from last zone
     if (PChar->petZoningInfo.respawnPet == true)
     {
-        // only repawn pet in valid zones
+        // only respawn pet in valid zones
         if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->m_moghouseID)
         {
-            switch (PChar->petZoningInfo.petType)
+            if (PChar->petZoningInfo.petType != PETTYPE_JUG_PET)
             {
-                case PETTYPE_AUTOMATON:
-                case PETTYPE_JUG_PET:
-                case PETTYPE_WYVERN:
-                    petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
-                    break;
-
-                default:
-                    break;
+                petutils::SpawnPet(PChar, PChar->petZoningInfo.petID, true, nullptr);
             }
         }
     }
@@ -633,15 +626,6 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
     }
 
     // todo: kill player til theyre dead and bsod
-    const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
-    int32       ret      = Sql_Query(SqlHandle, fmtQuery, PChar->id);
-    if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-    {
-        // On zone change, only sending a version message if mismatch
-        // if ((bool)Sql_GetUIntData(SqlHandle, 0))
-        // PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
-    }
-    return;
 }
 
 /************************************************************************
@@ -882,7 +866,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x02: // attack
         {
-            if (PChar->animation == ANIMATION_HEALING)
+            if (PChar->isSitting())
                 return;
 
             if (PChar->isMounted())
@@ -1617,7 +1601,7 @@ void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PCh
         if (PItem != nullptr && PItem->getID() == itemID && quantity + PItem->getReserve() <= PItem->getQuantity())
         {
             // whoever commented above lied about ex items
-            if (PItem->getFlag() & ITEM_FLAG_EX)
+            if (PItem->isEx())
                 return;
 
             if (PItem->isSubType(ITEM_LOCKED))
@@ -2968,7 +2952,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             if ((PItem != nullptr) &&
                 !(PItem->isSubType(ITEM_LOCKED)) &&
                 !(PItem->getFlag() & ITEM_FLAG_NOAUCTION) &&
-                !(PItem->getFlag() & ITEM_FLAG_EX) &&
+                (PItem->isEx() == false) &&
                 (PItem->getAHCat() != 0) &&
                 (PItem->getQuantity() >= quantity))
             {
@@ -3068,7 +3052,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                 if (PItem != nullptr)
                 {
-                    if (PItem->getFlag() & ITEM_FLAG_RARE)
+                    if (PItem->isRare())
                     {
                         for (uint8 LocID = 0; LocID < MAX_CONTAINER_ID; ++LocID)
                         {
@@ -6871,6 +6855,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->health.mp = PChar->GetMaxMP();
         PChar->updatemask |= UPDATE_HP;
 
+        charutils::CheckValidEquipment(PChar);
         charutils::SaveCharStats(PChar);
 
         PChar->pushPacket(new CCharJobsPacket(PChar));
@@ -7280,7 +7265,7 @@ void SmallPacket0x10A(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    if ((PItem != nullptr) && !(PItem->getFlag() & ITEM_FLAG_EX) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
+    if ((PItem != nullptr) && (PItem->isEx() == false) && (!PItem->isSubType(ITEM_LOCKED) || PItem->getCharPrice() != 0))
     {
         Sql_Query(SqlHandle, "UPDATE char_inventory SET bazaar = %u WHERE charid = %u AND location = 0 AND slot = %u;", price, PChar->id, slotID);
 

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Open_sea_route_to_Al_Zahbi/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -16,6 +17,10 @@ function onZoneIn(player, prevZone)
         player:setPos(position, -2.100, 3.250, 64)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onTransportEvent(player, transport)

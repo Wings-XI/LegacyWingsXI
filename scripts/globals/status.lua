@@ -1788,7 +1788,10 @@ tpz.mod =
     EMPTY_CIRCLE = 1235,
     HUMANOID_CIRCLE = 1236,
     LUMORIAN_CIRCLE = 1237,
-    LUMINION_CIRCLE = 1238
+    LUMINION_CIRCLE = 1238,
+
+    AUTOMATON_MAGIC_COST      = 1300,
+    AUTOMATON_CAN_BARRAGE     = 1301
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 through 825 used by WS DMG mods these are not spares.
@@ -3129,4 +3132,13 @@ tpz.relicTiers =
     {
         15070, 16195, 16196, 16197, 16198, 11927, 16200
     },
+}
+
+------------------------------------
+-- Server customization
+------------------------------------
+
+tpz.cuztomization =
+{
+    INFLUENCE = 0,
 }

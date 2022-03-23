@@ -21,8 +21,9 @@ require("scripts/globals/weaponskills")
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 4 params.ftp200 = 4.25 params.ftp300 = 4.75
-    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
-    params.mnd_wsc = 0.0 params.chr_wsc = 0.3
+    -- https://w.atwiki.jp/studiogobli/pages/77.html 2009 for mods
+    params.str_wsc = 0.0 params.dex_wsc = 0.3 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
+    params.mnd_wsc = 0.0 params.chr_wsc = 0.4
     params.ele = tpz.magic.ele.LIGHT
     params.skill = tpz.skill.AXE
     params.includemab = true

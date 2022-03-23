@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Halvung/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/helm")
 -----------------------------------
 
@@ -17,6 +18,10 @@ function onZoneIn(player, prevZone)
         player:setPos(160.54, -22.001, 139.988, 244)
     end
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

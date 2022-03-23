@@ -91,6 +91,7 @@ public:
 
     // Object Identification
     int32 getID(lua_State *L);              // Gets Entity Id
+    int32 getGroupID(lua_State *L);         // Gets mob groupid
     int32 getShortID(lua_State *L);
     int32 getCursorTarget(lua_State *L);    // Returns the ID any object under players in game cursor.
 
@@ -107,6 +108,9 @@ public:
     int32 getStatus(lua_State*);
     int32 setStatus(lua_State*);             // Sets Character's Status
     int32 getCurrentAction(lua_State* L);
+    int32 getAggro(lua_State* L);
+    int32 getLink(lua_State*);
+    int32 getDetectionType(lua_State*);
 
     int32 lookAt(lua_State* L);              // look at given position
     int32 clearTargID(lua_State*);           // clears target of entity
@@ -201,6 +205,7 @@ public:
     int32 delItem(lua_State*);
     int32 addUsedItem(lua_State*);           // Add charged item with timer already on full cooldown
     int32 addTempItem(lua_State*);           // Add temp item to Entity Temp inventory
+    int32 addLinkpearl(lua_State *L);        // Add a linkshell pearl
     int32 hasWornItem(lua_State*);           // Check if the item is already worn (player:hasWornItem(itemid))
     int32 createWornItem(lua_State*);        // Update this item in worn item (player:createWornItem(itemid))
 
@@ -545,6 +550,7 @@ public:
     int32 updateClaim(lua_State*);             // Adds Enmity to player for specified mob and claims
     int32 hasEnmity(lua_State*);               // Does the player have any enmity at all from any source
     int32 getNotorietyList(lua_State*);        // Returns a table with all of the entities on a chars notoriety list
+    int32 isMobOwner(lua_State*);              // Returns if the player is the owner of the mob
 
     // Status Effects
     int32 addStatusEffect(lua_State*);         // Adds status effect to character
@@ -798,6 +804,9 @@ public:
     int32 lsConciergeUpdate(lua_State *L);   // handle Concierge's onEventUpdate (listing and distribution)
     int32 lsConciergeRegister(lua_State *L); // handle Concierge's Linkshell Registration
     int32 lsConciergeCancel(lua_State *L);   // handle Concierge's Linkshell Cancellation
+
+    int32 checkVersionMismatch(lua_State* L);  // Check whether the player is using the correct client version
+    int32 getInfluenceMult(lua_State*);        // If influence boost is enabled, get the boost of the player's nation
 };
 
 #endif

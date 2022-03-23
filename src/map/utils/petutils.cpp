@@ -781,10 +781,32 @@ namespace petutils
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petStats->cmbDelay / 60.0f)))); //every pet should use this eventually
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3); // This may be accurate - need to source it
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 3);
+
+        uint8 levelScalingD = 0;
+        if (mlvl <= 15)
+        {
+            levelScalingD = mlvl / 1 - 1; // 14 at level 15
+        }
+        else if (mlvl <= 37)
+        {
+            levelScalingD = 14 + (mlvl - 15) / 3; // 21 at 37
+        }
+        else if (mlvl <= 50)
+        {
+            levelScalingD = 21 + (mlvl - 37) / 5; // 23 at 50
+        }
+        else if (mlvl <= 60)
+        {
+            levelScalingD = 26; // 26 at 60
+        }
+        else if (mlvl == 75)
+        {
+            levelScalingD = 27; // 27 at 75
+        }
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + levelScalingD);
 
         CAutomatonEntity* PAutomaton = (CAutomatonEntity*)PPet;
 
@@ -1125,6 +1147,7 @@ namespace petutils
                 auto state = dynamic_cast<CAbilityState*>(PMaster->PAI->GetCurrentState());
                 if ((state && state->GetAbility()->getID() == ABILITY_LEAVE) || PChar->loc.zoning || PChar->isDead())
                 {
+                    PMob->aggroTimer = (uint32)CVanaTime::getInstance()->getVanaTime() + 5;
                     PMob->PEnmityContainer->Clear();
                     PMob->m_OwnerID.clean();
                     PMob->updatemask |= UPDATE_STATUS;
@@ -1461,6 +1484,24 @@ namespace petutils
         if (petType == PETTYPE_AUTOMATON && PMaster->objtype == TYPE_PC)
         {
             PPet = ((CCharEntity*)PMaster)->PAutomaton;
+            
+            if (PetID == PETID_HARLEQUINFRAME)
+            {
+                PPet->setModifier(Mod::DMG, -6); // -6% phys and -6% magical per http://wiki.ffo.jp/html/8477.html
+            }
+            else if (PetID == PETID_VALOREDGEFRAME)
+            {
+                PPet->setModifier(Mod::DMGPHYS, -12);  // -12.5% phys dmg taken per http://wiki.ffo.jp/html/8478.html#comment_1
+            }
+            else if (PetID == PETID_SHARPSHOTFRAME)
+            {
+                PPet->setModifier(Mod::PIERCERES, 875); // -12.5% pierce dmg taken per http://wiki.ffo.jp/html/8481.html
+                PPet->setModifier(Mod::DMGMAGIC, -12); // -12.5% magic dmg taken
+            }
+            else if (PetID == PETID_STORMWAKERFRAME)
+            {
+                PPet->setModifier(Mod::DMGMAGIC, -24); // -24.2% magic dmg taken per http://wiki.ffo.jp/wiki.cgi?Command=HDetail&articleid=133971&id=8502
+            }
             PPet->PAI->SetController(std::make_unique<CAutomatonController>(static_cast<CAutomatonEntity*>(PPet)));
         }
         else

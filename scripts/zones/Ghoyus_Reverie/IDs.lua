@@ -23,6 +23,7 @@ zones[tpz.zone.GHOYUS_REVERIE] =
         TIME_REMAINING_SECONDS        = 7051, -- Time remaining: ≺Numeric Parameter 0≻ ≺Singular/Plural Choice (Parameter 0)≻[second/seconds] (Earth time).
         PARTY_FALLEN                  = 7052, -- All party members have fallen in battle. Exiting in ≺Numeric Parameter 0≻ ≺Singular/Plural Choice (Parameter 0)≻[minute/minutes].
         OPERATION_FAILED              = 7053, -- The operation has failed.≺Prompt≻
+        CONQUEST_BASE                 = 7054, -- Tallying conquest results...
     },
     mob =
     {

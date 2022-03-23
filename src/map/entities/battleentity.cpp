@@ -194,7 +194,14 @@ void CBattleEntity::UpdateHealth()
 
 uint8 CBattleEntity::GetHPP()
 {
-    return (uint8)ceil(((float)health.hp / (float)GetMaxHP()) * 100);
+    uint8 hpp = (uint8)floor(((float)health.hp / (float)GetMaxHP()) * 100);
+    // handle the edge case where a floor would show a mob with 1/1000 hp as 0
+    if (hpp == 0 && health.hp > 0)
+    {
+        hpp = 1;
+    }
+
+    return hpp;
 }
 
 int32 CBattleEntity::GetMaxHP()
@@ -1528,6 +1535,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     bool IsMagicCovered= false;
     bool cover = false;
 
+    if (!PActionTarget) {
+        return;
+    }
+
     if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
     {
         auto PCoverTarget = battleutils::getCoverTarget(PActionTarget, this);
@@ -1988,12 +1999,10 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     else
                     {
                         int16 naturalh2hDMG = 0;
-                        bool h2h = false;
                         if (auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
-                           (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) || (PTarget->objtype == TYPE_MOB && PTarget->GetMJob() == JOB_MNK))
+                           (targ_weapon && targ_weapon->getSkillType() == SKILL_HAND_TO_HAND) && PTarget->objtype != TYPE_MOB)
                         {
                             naturalh2hDMG = (int16)((PTarget->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) + 3);
-                            bool h2h = true;
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), 0.f);

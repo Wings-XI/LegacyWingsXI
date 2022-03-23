@@ -32,7 +32,7 @@ function onInitialize(zone)
 		end
 	end
 	
-    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
 	

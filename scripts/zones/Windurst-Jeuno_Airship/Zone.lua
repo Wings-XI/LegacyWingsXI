@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Windurst-Jeuno_Airship/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/zone")
 -----------------------------------
 
@@ -18,6 +19,10 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onTransportEvent(player, transport)

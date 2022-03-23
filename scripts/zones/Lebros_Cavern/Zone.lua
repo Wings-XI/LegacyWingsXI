@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Lebros_Cavern/IDs")
+require("scripts/globals/conquest")
 require("scripts/globals/status")
 require("scripts/globals/zone")
 -----------------------------------
@@ -25,6 +26,10 @@ function onInstanceZoneIn(player, instance)
     end
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)

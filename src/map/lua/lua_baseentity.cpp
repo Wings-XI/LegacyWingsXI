@@ -61,6 +61,7 @@
 #include "../treasure_pool.h"
 #include "../weapon_skill.h"
 #include "../rpcmapper.h"
+#include "../conquest_system.h"
 
 #include "../ai/ai_container.h"
 
@@ -120,11 +121,13 @@
 #include "../packets/guild_menu_buy.h"
 #include "../packets/independant_animation.h"
 #include "../packets/instance_entry.h"
+#include "../packets/inventory_assign.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/inventory_modify.h"
 #include "../packets/inventory_size.h"
 #include "../packets/inventory_item.h"
 #include "../packets/key_items.h"
+#include "../packets/linkshell_equip.h"
 #include "../packets/menu_mog.h"
 #include "../packets/menu_merit.h"
 #include "../packets/menu_raisetractor.h"
@@ -329,8 +332,9 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 
     CHAT_MESSAGE_TYPE messageType = (lua_isnil(L, 2) || !lua_isnumber(L, 2)) ? MESSAGE_SYSTEM_1 : (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2);
     std::string name = (lua_isnil(L, 3) || !lua_isstring(L, 3)) ? std::string() : lua_tostring(L, 3);
+    int priority = lua_isnumber(L, 4) ? (int)lua_tointeger(L, 4) : 0xFF;
 
-    ((CCharEntity*)m_PBaseEntity)->pushPacket(new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1), name));
+    ((CCharEntity*)m_PBaseEntity)->pushPacket(new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1), name), priority);
     return 0;
 }
 
@@ -1581,6 +1585,40 @@ inline int32 CLuaBaseEntity::getID(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getGroupID()
+*  Purpose : Get Entity's (mob's) group ID
+*  Example : npc:getGroupID(); target:getGroupID()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getGroupID(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    const char* Query = "SELECT groupid FROM mob_spawn_points WHERE mobid = %u;";
+
+    int32 ret = Sql_Query(SqlHandle, Query, (uint32)m_PBaseEntity->id);
+
+    if (ret == SQL_ERROR)
+    {
+        return 0;
+    }
+
+    if (Sql_NextRow(SqlHandle) != SQL_SUCCESS)
+    {
+        return 0;
+    }
+
+    lua_pushinteger(L, Sql_GetUIntData(SqlHandle, 0));
+    return 1;
+}
+
+/************************************************************************
 *  Function: getShortID()
 *  Purpose : Gets the ID of a Target
 *  Example : mob:getShortID(); pet:getShortID()
@@ -1845,6 +1883,69 @@ inline int32 CLuaBaseEntity::getCurrentAction(lua_State* L)
     {
         lua_pushnil(L);
     }
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getAggro()
+*  Purpose : true if aggressive, false if not
+*  Example : mob:getAggro()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getAggro(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushboolean(L, ((CMobEntity*)m_PBaseEntity)->m_Aggro);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getLink()
+*  Purpose : true if links, false if not
+*  Example : mob:getLink()
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getLink(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushboolean(L, ((CMobEntity*)m_PBaseEntity)->m_Link);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getDetectionType(type)
+*  Purpose : Check how the mob detects players (for aggro / link)
+*  Example : mob:getDetectionType(1)
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getDetectionType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return 0;
+    }
+
+    lua_pushinteger(L, ((CMobEntity*)m_PBaseEntity)->m_Detects);
 
     return 1;
 }
@@ -4203,6 +4304,130 @@ inline int32 CLuaBaseEntity::addUsedItem(lua_State *L)
 }
 
 /************************************************************************
+*  Function: addLinkpearl()
+*  Purpose : Adds an linkpearl to a player's inventory
+*  Example : player:addLinkpearl(2) -- a pearl for a linkshell with ID 2
+************************************************************************/
+
+inline int32 CLuaBaseEntity::addLinkpearl(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || (!lua_isnumber(L, 1) && !lua_isstring(L, 1)));
+
+
+    uint16 shellID = 0;
+    if (lua_isnumber(L, 1)) {
+        shellID = (uint16)lua_tointeger(L, 1);
+    }
+    else {
+        const char* lsName = lua_tostring(L, 1);
+        shellID = linkshell::GetLinkshellId((const int8*)lsName);
+    }
+    if (shellID == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (!PChar) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    CLinkshell* PLinkshell = linkshell::GetLinkshell(shellID);
+    if (!PLinkshell) {
+        PLinkshell = linkshell::LoadLinkshell(shellID);
+        if (!PLinkshell) {
+            lua_pushboolean(L, false);
+            return 1;
+        }
+    }
+    CItemLinkshell* PLinkpearl = linkshell::CreatePearl(PLinkshell);
+    if (!PLinkpearl) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    uint8 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PLinkpearl);
+    if (SlotID == 0) {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+    int8     DecodedName[21];
+    DecodeStringLinkshell(PLinkshell->getName(), DecodedName);
+    char extra[sizeof(PLinkpearl->m_extra) * 2 + 1];
+    Sql_EscapeStringLen(SqlHandle, extra, (const char*)PLinkpearl->m_extra, sizeof(PLinkpearl->m_extra));
+    const char* Query = "UPDATE char_inventory SET signature = '%s', extra = '%s', itemId = 515 WHERE charid = %u AND location = 0 AND slot = %u LIMIT 1";
+
+    if (Sql_Query(SqlHandle, Query, DecodedName, extra, PChar->id, SlotID) != SQL_ERROR &&
+        Sql_AffectedRows(SqlHandle) != 0)
+    {
+        PChar->pushPacket(new CInventoryItemPacket(PLinkpearl, LOC_INVENTORY, SlotID));
+    }
+
+    uint8 lsNum = 0;
+    if (lua_isnumber(L, 2)) {
+        lsNum = (uint8)lua_tointeger(L, 2);
+    }
+    if (lsNum == 1 || lsNum == 2) {
+
+        SLOTTYPE slot = SLOT_LINK1;
+        CLinkshell* OldLinkshell = PChar->PLinkshell1;
+        if (lsNum == 2)
+        {
+            slot = SLOT_LINK2;
+            OldLinkshell = PChar->PLinkshell2;
+        }
+
+        if (PLinkpearl->GetLSID() == 0) // linkshell no exists, item is unusable
+        {
+            PChar->pushPacket(new CMessageSystemPacket(0, 0, 110));
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        if (OldLinkshell != nullptr) // switching linkshell group
+        {
+            CItemLinkshell* POldItemLinkshell = (CItemLinkshell*)PChar->getEquip(slot);
+
+            if (POldItemLinkshell != nullptr && POldItemLinkshell->isType(ITEM_LINKSHELL))
+            {
+                linkshell::DelOnlineMember(PChar, POldItemLinkshell);
+
+                POldItemLinkshell->setSubType(ITEM_UNLOCKED);
+                PChar->pushPacket(new CInventoryAssignPacket(POldItemLinkshell, INV_NORMAL));
+            }
+        }
+        linkshell::AddOnlineMember(PChar, PLinkpearl, lsNum);
+
+        PLinkpearl->setSubType(ITEM_LOCKED);
+
+        PChar->equip[slot] = SlotID;
+        PChar->equipLoc[slot] = LOC_INVENTORY;
+        if (lsNum == 1)
+        {
+            PChar->nameflags.flags |= FLAG_LINKSHELL;
+            PChar->updatemask |= UPDATE_HP;
+        }
+
+        PChar->pushPacket(new CInventoryAssignPacket(PLinkpearl, INV_LINKSHELL));
+
+        charutils::SaveCharStats(PChar);
+        charutils::SaveCharEquip(PChar);
+
+        PChar->pushPacket(new CLinkshellEquipPacket(PChar, lsNum));
+        PChar->pushPacket(new CInventoryItemPacket(PLinkpearl, LOC_INVENTORY, SlotID));
+
+        PLinkshell->PushLinkshellMessage(PChar, lsNum == 1);
+    }
+
+    PChar->pushPacket(new CInventoryFinishPacket());
+    PChar->pushPacket(new CCharUpdatePacket(PChar));
+
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+/************************************************************************
 *  Function: hasWornItem()
 *  Purpose : Returns true if a player has a worn (unusable) item
 *  Example : if (player:hasWornItem(trade:getItemId())) then
@@ -4450,14 +4675,18 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 6));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 7));
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
         std::string name = lua_tostring(L, 1);
-        uint16 mobFamily = (uint16) lua_tointeger(L, 2);
-        uint8 zeni = (uint8) lua_tointeger(L, 3);
-        uint16 skillIndex = (uint16) lua_tointeger(L, 4);
-        uint8 fp = (uint8) lua_tointeger(L, 5);
+        uint8 fauna = (uint8)lua_tointeger(L, 2);
+        uint8 subOfInterest = (uint8)lua_tointeger(L, 3);
+        uint8 ecoSystem = (uint8)lua_tointeger(L, 4);
+        uint8 zeni = (uint8) lua_tointeger(L, 5);
+        uint16 skillIndex = (uint16) lua_tointeger(L, 6);
+        uint8 fp = (uint8) lua_tointeger(L, 7);
 
         // Deduct Blank Plate
         if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
@@ -4471,7 +4700,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         // Used Soul Plate
         CItem* PItem = itemutils::GetItem(2477);
         PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, mobFamily, zeni, skillIndex, fp);
+        PItem->setSoulPlateData(name, fauna, subOfInterest, ecoSystem, zeni, skillIndex, fp);
         auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
         if (SlotID == ERROR_SLOTID)
         {
@@ -8403,6 +8632,7 @@ inline int32 CLuaBaseEntity::addCP(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), cp);
+    CConquestPacket::CMFlushCache();
     PChar->pushPacket(new CConquestPacket(PChar));
 
     return 0;
@@ -8426,6 +8656,7 @@ inline int32 CLuaBaseEntity::delCP(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
     charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), -cp);
+    CConquestPacket::CMFlushCache();
     PChar->pushPacket(new CConquestPacket(PChar));
 
     return 0;
@@ -11962,6 +12193,33 @@ inline int32 CLuaBaseEntity::getNotorietyList(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: isMobOwner()
+ *  Purpose : Check if a player is the owner of a mob or if the mob is unowned
+ *  Example : if player:isMobOwner(mob) then ...
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::isMobOwner(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity->GetBaseEntity()->objtype != TYPE_MOB);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CMobEntity* PMob = (CMobEntity*)PLuaBaseEntity->GetBaseEntity();
+    bool isOwner = PChar->IsMobOwner((CBattleEntity*)PMob);
+
+    lua_pushboolean(L, isOwner);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: addStatusEffect(effect, power, tick, duration)
 *  Purpose : Adds a specified Status Effect to the Entity
 *  Example : target:addStatusEffect(EFFECT_ACCURACY_DOWN,20,3,60)
@@ -13700,7 +13958,13 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         // setup AI
         PPet->Spawn();
-
+        
+        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
+        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
+        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+        {
+            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
+        }
     }
     return 0;
 }
@@ -16173,6 +16437,34 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
     return 1;
 }
 
+
+/************************************************************************
+*  Function: getInfluenceMult()
+*  Purpose : If influence boost is enabled, get the influence boost of the player's nation.
+*  Example : local mult = player:getInfluenceMult()
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getInfluenceMult(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (PChar == nullptr && PChar->objtype != TYPE_PC) {
+        return 0;
+    }
+
+    std::string line;
+    if (map_config.enable_influence_boost) {
+        lua_pushnumber(L, conquest::GetInfluenceMultiplier(PChar->profile.nation));
+    }
+    else {
+        lua_pushnumber(L, 1.0);
+    }
+
+    return 1;
+}
+
+
 /************************************************************************
 *  Function: friendListMain()
 *  Purpose : where it begins
@@ -16638,6 +16930,21 @@ inline int32 CLuaBaseEntity::friendListMain(lua_State* L)
     PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)sChannel, "Use '!flist help' for a list of commands.", ""), -1);
     return 2;
 
+}
+
+/************************************************************************
+*  Function: checkVersionMismatch()
+*  Purpose : Checks for a client version mismatch
+*  Example : player:checkVersionMismatch()
+*  Notes   : no args
+************************************************************************/
+inline int32 CLuaBaseEntity::checkVersionMismatch(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    lua_pushboolean(L, PChar->m_clientVerMismatch);
+    return 1;
 }
 
 /************************************************************************
@@ -18273,6 +18580,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     // Object Identification
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getID),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getGroupID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getShortID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCursorTarget),
 
@@ -18289,6 +18597,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentAction),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAggro),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLink),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getDetectionType),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,lookAt),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearTargID),
@@ -18373,6 +18684,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addUsedItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addLinkpearl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasWornItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createWornItem),
 
@@ -18721,6 +19033,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateClaim),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasEnmity),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getNotorietyList),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,isMobOwner),
 
     // Status Effects
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addStatusEffect),
@@ -18978,6 +19291,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeUpdate),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeRegister),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, lsConciergeCancel),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, checkVersionMismatch),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getInfluenceMult),
 
     {nullptr,nullptr}
 };

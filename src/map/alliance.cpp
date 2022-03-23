@@ -94,12 +94,16 @@ void CAlliance::dissolveAlliance(bool playerInitiated)
             party->ReloadParty();
         }
 
-        party = this->partyList.at(0);
-        this->partyList.clear();
+        if (!this->partyList.empty())
+        {
+            party = this->partyList.at(0);
+            this->partyList.clear();
 
-        party->m_PAlliance = nullptr;
+            party->m_PAlliance = nullptr;
 
-        party->ReloadParty();
+            party->ReloadParty();
+
+        }
 
         delete this;
     }

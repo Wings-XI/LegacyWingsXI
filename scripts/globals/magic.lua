@@ -958,8 +958,12 @@ function addBonuses(caster, spell, target, dmg, params)
                 mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
             end
         end
-        if params.attackType == tpz.attackType.BREATH then mab = params.bonusmab end -- BLU breaths only affected by correlation bonuses
-        mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        if params.attackType == tpz.attackType.BREATH then
+            mab = params.bonusmab -- BLU breaths only affected by correlation bonuses
+            mabbonus = (100 + mab) / 100 -- Breath attacks are not impacted by MDEF see https://ffxiclopedia.fandom.com/wiki/Frost_Breath
+        else
+            mabbonus = (100 + mab) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
+        end
     end
 
     if mabbonus < 0 then mabbonus = 0 end

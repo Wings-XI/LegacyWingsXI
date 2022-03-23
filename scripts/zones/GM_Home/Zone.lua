@@ -13,6 +13,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/GM_Home/IDs")
+require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
@@ -22,6 +23,12 @@ function onZoneIn( player, prevZone)
     local cs = -1
 
     return cs
+end
+
+function onConquestUpdate(zone, updatetype)
+    -- Disabled: GM Home does not seem to have conquest update messages
+    -- in the client data files.
+    -- tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onEventUpdate( player, csid, option)

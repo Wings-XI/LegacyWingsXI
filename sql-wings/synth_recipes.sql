@@ -4023,6 +4023,10 @@ INSERT INTO `synth_recipes` VALUES(4589, 1, 0, 0, 91, 0, 0, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4590, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13414, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_Desynth');
 INSERT INTO `synth_recipes` VALUES(4591, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 14719, 0, 0, 0, 0, 0, 0, 0, 813, 813, 746, 746, 1, 1, 1, 2, 'Heavens_Earring_+1_Desynth');
 INSERT INTO `synth_recipes` VALUES(4592, 0, 0, 0, 0, 0, 0, 0, 0, 39, 0, 4101, 4243, 637, 913, 2513, 0, 0, 0, 0, 0, 1023, 1023, 1023, 1023, 3, 6, 9, 12, 'Living Key');
+INSERT INTO `synth_recipes` VALUES(4593, 1, 0, 0, 0, 0, 36, 0, 0, 0, 0, 4100, 4242, 12842, 0, 0, 0, 0, 0, 0, 0, 819, 819, 819, 819, 3, 6, 6, 6, 'Soil_Sitabaki_Desynth');
+INSERT INTO `synth_recipes` VALUES(4594, 0, 0, 0, 0, 0, 33, 0, 0, 48, 0, 4101, 4243, 529, 529, 914, 0, 0, 0, 0, 0, 5352, 5352, 5352, 5352, 3, 6, 9, 9, 'Spectral_Serum');
+INSERT INTO `synth_recipes` VALUES(4595, 1, 0, 0, 0, 0, 0, 74, 0, 0, 0, 4100, 4242, 16213, 0, 0, 0, 0, 0, 0, 0, 2296, 1869, 1869, 1869, 1, 1, 2, 2, 'Lamia_Mantle_Desynth');
+INSERT INTO `synth_recipes` VALUES(4596, 1, 0, 0, 0, 0, 0, 85, 0, 0, 0, 4100, 4242, 16235, 0, 0, 0, 0, 0, 0, 0, 820, 2512, 2512, 2512, 1, 1, 1, 1, 'Lynx_Mantle_Desynth)');
 
 -- -----------
 -- RECIPES END

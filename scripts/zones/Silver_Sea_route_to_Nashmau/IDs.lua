@@ -18,6 +18,7 @@ zones[tpz.zone.SILVER_SEA_ROUTE_TO_NASHMAU] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
+        CONQUEST_BASE           = 7149, -- Tallying conquest results...
         DOCKING_IN_NASHMAU      = 7309, -- We are now docking in Nashmau.
         NEARING_NASHMAU         = 7310, -- We are nearing Nashmau.
         ON_WAY_TO_NASHMAU       = 7308, -- We should arrive in ≺Multiple Choice (Parameter 1)≻[less than an hour/about 1 hour/about 2 hours/about 3 hours/about 4 hours/about 5 hours/about 6 hours/about 7 hours]
