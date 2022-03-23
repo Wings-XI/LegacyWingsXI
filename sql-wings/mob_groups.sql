@@ -11049,7 +11049,7 @@ INSERT INTO `mob_groups` VALUES(9, 439, 194, 'Black_Slime', 660, 0, 15, 0, 0, 23
 INSERT INTO `mob_groups` VALUES(10, 439, 194, 'Black_Slime', 660, 0, 15, 0, 0, 23, 25, 0);
 INSERT INTO `mob_groups` VALUES(11, 1517, 194, 'Ghoul', 660, 0, 961, 0, 0, 23, 26, 0);
 INSERT INTO `mob_groups` VALUES(12, 771, 194, 'Combat', 660, 0, 82, 0, 0, 20, 23, 0);
-INSERT INTO `mob_groups` VALUES(13, 4568, 194, 'Ah_Puch', 0, 32, 2836, 0, 0, 29, 30, 0);
+INSERT INTO `mob_groups` VALUES(13, 4568, 194, 'Ah_Puch', 0, 32, 2836, 950, 0, 29, 30, 0);
 INSERT INTO `mob_groups` VALUES(8, 3775, 194, 'Stink_Bats', 480, 0, 241, 0, 0, 15, 18, 0);
 INSERT INTO `mob_groups` VALUES(15, 4061, 194, 'Two_of_Cups', 900, 0, 2506, 0, 0, 1, 5, 0);
 INSERT INTO `mob_groups` VALUES(16, 4059, 194, 'Two_of_Batons', 900, 0, 2504, 0, 0, 1, 5, 0);
