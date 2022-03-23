@@ -660,7 +660,7 @@ local function getAllowedZNMs(player)
         param = param - 0x20000000 -- unlocks Tyger.
     end
 
-    if player:hasKeyItem(tpz.ki.LILAC_COLORED_SEAL) and player:hasKeyItem(tpz.ki.BRIGHT_BLUE_SEAL) and player:hasKeyItem(tpz.ki.LAVENDER_COLORED_SEAL) and ZNM_Tier5 = 1 then
+    if player:hasKeyItem(tpz.ki.LILAC_COLORED_SEAL) and player:hasKeyItem(tpz.ki.BRIGHT_BLUE_SEAL) and player:hasKeyItem(tpz.ki.LAVENDER_COLORED_SEAL) and ZNM_Tier5 == 1 then
         param = param - 0x40000000 -- unlocks Pandemonium Warden.
     end
 
