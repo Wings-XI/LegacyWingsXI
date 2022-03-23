@@ -9959,7 +9959,7 @@ INSERT INTO `mob_groups` VALUES(31, 1958, 169, 'Hinge_Oil', 960, 0, 0, 0, 0, 65,
 INSERT INTO `mob_groups` VALUES(34, 1044, 169, 'Dire_Bat', 960, 0, 663, 0, 0, 62, 64, 0);
 INSERT INTO `mob_groups` VALUES(35, 1083, 169, 'Doom_Mage', 960, 0, 679, 0, 0, 65, 67, 0);
 INSERT INTO `mob_groups` VALUES(36, 1085, 169, 'Doom_Soldier', 960, 0, 685, 0, 0, 65, 67, 0);
-INSERT INTO `mob_groups` VALUES(37, 5757, 169, 'Brazen_Bones', 0, 128, 2868, 0, 0, 82, 82, 0);
+INSERT INTO `mob_groups` VALUES(37, 5757, 169, 'Brazen_Bones', 28800, 0, 2868, 20000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(38, 3755, 169, 'Starmite', 960, 0, 2325, 0, 0, 65, 67, 0);
 INSERT INTO `mob_groups` VALUES(39, 2664, 169, 'Mimic', 0, 128, 1684, 0, 0, 65, 67, 0);
 INSERT INTO `mob_groups` VALUES(8820, 871, 169, 'Cutlass_Scorpion', 960, 0, 551, 0, 0, 64, 66, 0);
