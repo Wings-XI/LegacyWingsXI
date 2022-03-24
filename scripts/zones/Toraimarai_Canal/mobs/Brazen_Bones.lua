@@ -12,11 +12,10 @@ mixins = {require("scripts/mixins/rage")}
 --  - Confirm enblizzard undispelable
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.AUTO_SPIKES, 1)
     mob:addStatusEffect(tpz.effect.ICE_SPIKES, 45, 0, 0)
-    mob:getStatusEffect(tpz.effect.ICE_SPIKES):unsetFlag(tpz.effectFlag.DISPELABLE)
-    mob:addStatusEffect(tpz.effect.ENBLIZZARD_II, 50, 0, 0)
-    mob:getStatusEffect(tpz.effect.ENBLIZZARD_II):unsetFlag(tpz.effectFlag.DISPELABLE)
-    doEnspell(mob, mob, nil, )
+    mob:getStatusEffect(tpz.effect.ICE_SPIKES):setFlag(tpz.effectFlag.DEATH)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.ICEDEF, 256)
     mob:setMod(tpz.mod.ICERES, 100)
     mob:setMod(tpz.mod.PARALYZERES, 100)
@@ -44,6 +43,10 @@ function onSpikesDamage(mob, target, damage)
     end
 
     return tpz.subEffect.ICE_SPIKES, tpz.msg.basic.SPIKES_EFFECT_DMG, dmg
+end
+
+function onAdditionalEffect(mob, target, damage)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENBLIZZARD)
 end
 
 function onMobFight(mob, target)
