@@ -196,7 +196,9 @@ function spawnPetInBattle(mob, pet)
             mob:SetMagicCastingEnabled(true)
             mob:SetMobAbilityEnabled(true)
             pet:spawn()
-            pet:updateEnmity(mob:getTarget())
+            if mob:getTarget() ~= nil then
+                pet:updateEnmity(mob:getTarget())
+            end
         end
     end)
 end
