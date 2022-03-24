@@ -2991,7 +2991,7 @@ INSERT INTO `mob_pools` VALUES(2927, 'Nuu_Kofu_the_Gentle', 'Nuu_Kofu_the_Gentle
 INSERT INTO `mob_pools` VALUES(2928, 'NuBhi_Spiraleye', 'NuBhi_Spiraleye', 337, _binary 0x00001f0400000000000000000000000000000000, 10, 10, 9, 265, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 6, 0, 0, 705);
 INSERT INTO `mob_pools` VALUES(2929, 'Nyumomo', 'Nyumomo', 153, _binary 0x01000b0673107320733073407350696100700000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 153);
 INSERT INTO `mob_pools` VALUES(2930, 'Oasis_Amoeban', 'Oasis_Amoeban', 5, _binary 0x00005c0900000000000000000000000000000000, 4, 8, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 5);
-INSERT INTO `mob_pools` VALUES(2931, 'Ob', 'Ob', 291, _binary 0x0600b90700000000000000000000000000000000, 1, 1, 5, 320, 100, 0, 1, 1, 0, 2, 16, 32, 59, 1181, 0, 0, 0, 0, 0, 291);
+INSERT INTO `mob_pools` VALUES(2931, 'Ob', 'Ob', 291, _binary 0x0600b90700000000000000000000000000000000, 5, 5, 5, 320, 100, 0, 1, 1, 0, 2, 16, 32, 59, 1181, 0, 0, 525, 0, 0, 2027);
 INSERT INTO `mob_pools` VALUES(2932, 'Observant_Zekka', 'Observant_Zekka', 165, _binary 0x0000bc0800000000000000000000000000000000, 4, 4, 9, 240, 100, 0, 1, 2, 1, 2, 7, 32, 178, 1693, 12, 0, 2, 0, 0, 165);
 INSERT INTO `mob_pools` VALUES(2933, 'Observer', 'Observer', 234, _binary 0x00003a0100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 235);
 INSERT INTO `mob_pools` VALUES(2934, 'Ocean_Crab', 'Ocean_Crab', 77, _binary 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1300, 1155, 0, 0, 0, 0, 0, 77);

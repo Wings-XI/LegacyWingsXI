@@ -13,7 +13,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getFamily() == 316 and mob:getModelId() == 1746) then
+    if (mob:getFamily() == 316 and mob:getModelId() == 1746) or (mob:getFamily() == 286) then
         return 0
     else
         return 1
@@ -21,7 +21,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dmgmod = 1
+    local dmgmod = 2
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2.5, tpz.magic.ele.WIND, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
 

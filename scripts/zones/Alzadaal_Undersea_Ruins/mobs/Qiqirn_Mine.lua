@@ -1,5 +1,5 @@
 ------------------------------------------
--- Qiqirn Mine in Nyzul Isle
+-- Qiqirn Mine
 --  blows up 8-9 seconds after spawn using entityAnimationPacket mai1
 ------------------------------------------
 require("scripts/globals/status")
@@ -8,6 +8,7 @@ function onMobInitialize(mob)
     mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
     mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
     mob:setMod(tpz.mod.STUNRESTRAIT, 100)
+    mob:setMobType(2) -- to ensure there is no neutral time on spawn
     mob:untargetable(true)
     mob:SetAutoAttackEnabled(false)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
@@ -29,11 +30,14 @@ function onMobRoam(mob)
         mob:entityAnimationPacket("mai1")
         mob:setHP(0)
         mob:timer(500, function(mob)
-            DespawnMob(mob:getID(), mob:getInstance())
+            DespawnMob(mob:getID())
         end)
     else
         mob:setLocalVar("SelfDestructCountdown", mob:getLocalVar("SelfDestructCountdown") - 1)
     end
+end
+
+function onMobEngaged(mob, target)
 end
 
 function onMobSpawn(mob)
@@ -44,7 +48,7 @@ end
 function onMobSkillFinished(mob, target, skill)
     mob:setHP(0)
     mob:timer(500, function(mob)
-        DespawnMob(mob:getID(), mob:getInstance())
+        DespawnMob(mob:getID())
     end)
 end
 

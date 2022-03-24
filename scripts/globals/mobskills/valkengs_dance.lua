@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Valkeng's Dance
--- Dummy Skill that makes Valkeng perform a dance animation.
+-- Dummy Skill that makes Valkeng/Ob perform a dance animation.
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")

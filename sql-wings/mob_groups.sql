@@ -2397,7 +2397,7 @@ INSERT INTO `mob_groups` VALUES(85, 3057, 54, 'Ornery_Orobon', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(86, 2345, 54, 'Lamia_No19', 0, 128, 2996, 18000, 9000, 78, 78, 0);
 INSERT INTO `mob_groups` VALUES(87, 2360, 54, 'Lamias_Skeleton', 0, 128, 0, 5000, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(88, 2417, 54, 'Lil_Apkallu', 0, 128, 1523, 15000, 0, 82, 83, 0);
-INSERT INTO `mob_groups` VALUES(89, 4217, 54, 'Velionis', 0, 128, 2571, 15000, 0, 78, 80, 0);
+INSERT INTO `mob_groups` VALUES(89, 4217, 54, 'Velionis', 0, 128, 2571, 15000, 10000, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(90, 4490, 54, 'Zareehkl_the_Jubilant', 0, 128, 2794, 75000, 0, 85, 86, 0);
 INSERT INTO `mob_groups` VALUES(91, 2920, 54, 'Nuhn', 0, 128, 1828, 36000, 0, 86, 86, 0);
 INSERT INTO `mob_groups` VALUES(92, 5198, 54, 'Dimgruzub', 0, 128, 0, 0, 5000, 95, 95, 0);
@@ -2769,7 +2769,7 @@ INSERT INTO `mob_groups` VALUES(60, 2659, 65, 'Mikiruru', 0, 128, 0, 0, 0, 58, 6
 INSERT INTO `mob_groups` VALUES(61, 2881, 65, 'Nikilulu', 0, 128, 0, 0, 0, 58, 63, 0);
 INSERT INTO `mob_groups` VALUES(62, 2657, 65, 'Mikiluru', 0, 128, 0, 0, 0, 58, 63, 0);
 INSERT INTO `mob_groups` VALUES(63, 2658, 65, 'Mikirulu', 0, 128, 0, 0, 0, 58, 63, 0);
-INSERT INTO `mob_groups` VALUES(64, 691, 65, 'Chamrosh', 0, 128, 450, 9000, 0, 78, 80, 0);
+INSERT INTO `mob_groups` VALUES(64, 691, 65, 'Chamrosh', 0, 128, 450, 14000, 10000, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(65, 2089, 65, 'Iriri_Samariri', 0, 128, 1367, 28000, 0, 84, 84, 0);
 INSERT INTO `mob_groups` VALUES(66, 4295, 65, 'Wartkin', 0, 128, 0, 0, 0, 72, 73, 0);
 INSERT INTO `mob_groups` VALUES(67, 2541, 65, 'Mamool_Jas_Wyvern', 300, 128, 0, 0, 0, 77, 78, 0);
@@ -2924,8 +2924,8 @@ INSERT INTO `mob_groups` VALUES(4, 3258, 72, 'Qiqirn_Mine', 0, 128, 0, 0, 0, 75,
 INSERT INTO `mob_groups` VALUES(5, 504, 72, 'Boompadu', 0, 0, 339, 0, 0, 82, 82, 0);
 INSERT INTO `mob_groups` VALUES(6, 783, 72, 'Cookieduster_Lipiroon', 0, 32, 507, 15000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(7, 3069, 72, 'Oupire', 14400, 128, 1961, 0, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(8, 2931, 72, 'Ob', 0, 128, 1832, 15000, 0, 78, 80, 0);
-INSERT INTO `mob_groups` VALUES(9, 705, 72, 'Cheese_Hoarder_Gigiroon', 0, 128, 460, 15000, 0, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(8, 2931, 72, 'Ob', 0, 128, 1832, 15000, 10000, 78, 80, 0);
+INSERT INTO `mob_groups` VALUES(9, 705, 72, 'Cheese_Hoarder_Gigiroon', 0, 128, 460, 14000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(10, 243, 72, 'Armed_Gears', 0, 128, 168, 32000, 0, 86, 88, 0);
 INSERT INTO `mob_groups` VALUES(11, 4594, 72, 'Wulgaru', 0, 128, 2828, 32000, 0, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(2362, 82, 72, 'Alexander', 0, 0, 0, 0, 0, 0, 0, 0);
