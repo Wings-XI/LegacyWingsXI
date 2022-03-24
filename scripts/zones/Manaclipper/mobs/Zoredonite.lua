@@ -2,7 +2,10 @@
 -- Area: Manaclipper
 --   NM: Zoredonite
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
+mixins = {
+    require("scripts/mixins/job_special"),
+    require("scripts/mixins/families/uragnite")
+}
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
