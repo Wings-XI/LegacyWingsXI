@@ -7334,7 +7334,7 @@ INSERT INTO `mob_groups` VALUES(4, 77, 117, 'Akbaba', 300, 0, 43, 0, 0, 9, 13, 0
 INSERT INTO `mob_groups` VALUES(5, 3647, 117, 'Skeleton_Warrior', 300, 1, 2264, 0, 0, 10, 12, 0);
 INSERT INTO `mob_groups` VALUES(6, 3646, 117, 'Skeleton_Sorcerer', 300, 1, 2264, 0, 0, 11, 13, 0);
 INSERT INTO `mob_groups` VALUES(7, 1514, 117, 'Ghost', 300, 1, 956, 0, 0, 15, 17, 0);
-INSERT INTO `mob_groups` VALUES(8, 4570, 117, 'Habrok', 0, 128, 2976, 0, 0, 16, 18, 0);
+INSERT INTO `mob_groups` VALUES(8, 4570, 117, 'Habrok', 0, 128, 2976, 600, 0, 16, 18, 0);
 INSERT INTO `mob_groups` VALUES(9, 2228, 117, 'Killer_Bee', 300, 0, 1439, 0, 0, 8, 12, 0);
 INSERT INTO `mob_groups` VALUES(10, 624, 117, 'Canyon_Crawler', 300, 0, 405, 0, 0, 11, 13, 0);
 INSERT INTO `mob_groups` VALUES(11, 1737, 117, 'Goblin_Thug', 300, 0, 1172, 0, 0, 8, 10, 0);
@@ -7345,7 +7345,7 @@ INSERT INTO `mob_groups` VALUES(15, 1643, 117, 'Goblin_Butcher', 300, 0, 1032, 0
 INSERT INTO `mob_groups` VALUES(16, 71, 117, 'Air_Elemental', 300, 4, 38, 0, 0, 18, 20, 0);
 INSERT INTO `mob_groups` VALUES(17, 4341, 117, 'Wild_Dhalmel', 300, 0, 2655, 0, 0, 14, 16, 0);
 INSERT INTO `mob_groups` VALUES(18, 342, 117, 'Barghest', 300, 1, 226, 0, 0, 8, 11, 0);
-INSERT INTO `mob_groups` VALUES(19, 3550, 117, 'Serpopard_Ishtar', 0, 32, 2204, 0, 0, 19, 20, 0);
+INSERT INTO `mob_groups` VALUES(19, 3550, 117, 'Serpopard_Ishtar', 0, 32, 2204, 650, 0, 19, 20, 0);
 INSERT INTO `mob_groups` VALUES(20, 4426, 117, 'Yagudo_Initiate', 300, 0, 2717, 0, 0, 8, 10, 0);
 INSERT INTO `mob_groups` VALUES(21, 4432, 117, 'Yagudo_Mendicant', 300, 0, 2731, 0, 0, 12, 16, 0);
 INSERT INTO `mob_groups` VALUES(22, 4454, 117, 'Yagudos_Elemental', 0, 128, 0, 0, 0, 8, 9, 0);
@@ -7356,7 +7356,7 @@ INSERT INTO `mob_groups` VALUES(26, 4439, 117, 'Yagudo_Persecutor', 300, 0, 2731
 INSERT INTO `mob_groups` VALUES(27, 1160, 117, 'Earth_Elemental', 300, 4, 733, 0, 0, 18, 20, 0);
 INSERT INTO `mob_groups` VALUES(28, 1812, 117, 'Grenade', 300, 8, 0, 0, 0, 15, 17, 0);
 INSERT INTO `mob_groups` VALUES(29, 3170, 117, 'Poltergeist', 300, 0, 0, 0, 0, 18, 20, 0);
-INSERT INTO `mob_groups` VALUES(30, 4571, 117, 'Herbage_Hunter', 0, 32, 2983, 0, 0, 29, 29, 0);
+INSERT INTO `mob_groups` VALUES(30, 4571, 117, 'Herbage_Hunter', 0, 32, 2983, 1100, 0, 29, 29, 0);
 INSERT INTO `mob_groups` VALUES(31, 1648, 117, 'Goblin_Digger', 300, 0, 1039, 0, 0, 11, 14, 0);
 INSERT INTO `mob_groups` VALUES(32, 1636, 117, 'Goblin_Archaeologist', 0, 128, 3104, 0, 0, 30, 75, 0);
 INSERT INTO `mob_groups` VALUES(33, 4466, 117, 'Yara_Ma_Yha_Who', 0, 128, 2779, 0, 0, 15, 20, 0);
