@@ -328,7 +328,7 @@ INSERT INTO `mob_pools` VALUES(264, 'Ashu_Talif_Marine', 'Ashu_Talif_Marine', 35
 INSERT INTO `mob_pools` VALUES(265, 'Ash_Dragon', 'Ash_Dragon', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 0, 7, 1157, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(266, 'Ash_Lizard', 'Ash_Lizard', 174, _binary 0x0000490100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 291, 1155, 0, 0, 0, 0, 0, 174);
 INSERT INTO `mob_pools` VALUES(267, 'Asphyxiated_Amsel', 'Asphyxiated_Amsel', 121, _binary 0x0000700100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 28, 0, 0, 121);
-INSERT INTO `mob_pools` VALUES(268, 'Aspidochelone', 'Aspidochelone', 2, _binary 0x0000910100000000000000000000000000000000, 7, 4, 7, 250, 125, 0, 1, 1, 0, 2, 1, 0, 363, 1155, 0, 0, 0, 0, 0, 2);
+INSERT INTO `mob_pools` VALUES(268, 'Aspidochelone', 'Aspidochelone', 2, _binary 0x0000910100000000000000000000000000000000, 7, 4, 7, 250, 125, 0, 1, 1, 0, 2, 1, 0, 363, 1157, 0, 0, 0, 0, 0, 2);
 INSERT INTO `mob_pools` VALUES(269, 'Asrai', 'Asrai', 114, _binary 0x0000410500000000000000000000000000000000, 1, 1, 8, 200, 100, 0, 0, 0, 0, 6, 0, 32, 6585, 1179, 0, 0, 0, 0, 0, 114);
 INSERT INTO `mob_pools` VALUES(270, 'Assailer_Chariot', 'Assailer_Chariot', 63, _binary 0x0000200700000000000000000000000000000000, 4, 4, 12, 240, 100, 1024, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 281, 0, 0, 978);
 INSERT INTO `mob_pools` VALUES(271, 'Assassin_Fly', 'Assassin_Fly', 113, _binary 0x0000c10100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 0, 0, 1, 0, 0, 0, 616, 1669, 0, 0, 0, 0, 0, 113);
