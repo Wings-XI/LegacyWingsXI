@@ -1382,6 +1382,7 @@ INSERT INTO `mob_skills` VALUES(2199, 1587, 'cyclonic_turmoil', 1, 15.0, 2000, 1
 INSERT INTO `mob_skills` VALUES(2200, 1588, 'cyclonic_torrent', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2201, 1555, 'orcish_counterstance', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2202, 1556, 'berserker_dance', 0, 7.0, 3000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2203, 1563, 'diamond_shell', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2207, 1606, 'disorienting_waul', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2209, 1607, 'blink_of_peril', 0, 7.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2210, 1603, 'petal_pirouette', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -1394,6 +1395,7 @@ INSERT INTO `mob_skills` VALUES(2224, 1558, 'head_butt', 0, 7.0, 2000, 2000, 4, 
 INSERT INTO `mob_skills` VALUES(2225, 1559, 'shell_bash', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2226, 1560, 'shell_guard', 0, 7.0, 2000, 3000, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2227, 354, 'howl', 1, 20.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2233, 1608, 'diamond_shell', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2242, 432, 'mighty_strikes', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2248, 432, 'invincible', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2249, 432, 'blood_weapon', 0, 18.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
