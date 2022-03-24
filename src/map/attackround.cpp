@@ -404,8 +404,6 @@ void CAttackRound::CreateKickAttacks()
 {
     if (m_attacker->objtype == TYPE_PC || m_attacker->objtype == TYPE_MOB)
     {
-        if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
-            return;
 
         if (m_attacker->objtype == TYPE_MOB)
         {
