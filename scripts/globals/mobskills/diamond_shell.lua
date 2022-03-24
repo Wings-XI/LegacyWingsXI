@@ -1,6 +1,6 @@
 ---------------------------------------------
--- Granite Skin
--- Gives Undispellable Physical Immunity for the front Arc
+-- Diamond Shell
+-- Gives Undispellable Physical Immunity for attacks from behind
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -12,8 +12,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    -- power 3 PHYSICAL_SHIELD grants 100% guard rate and guard dmg reduction
-    mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 3, 0, 60)
+    -- power 4 PHYSICAL_SHIELD grants physical immunity to damage in the rear cone
+    mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 4, 0, 60)
     mob:getStatusEffect(tpz.effect.PHYSICAL_SHIELD):unsetFlag(tpz.effectFlag.DISPELABLE)
     skill:setMsg(tpz.msg.basic.NONE)
     return typeEffect
