@@ -4369,54 +4369,59 @@ namespace battleutils
 
         // player charming mob
         CMobEntity* PMob = dynamic_cast<CMobEntity*>(PVictim);
+        const EMobDifficulty mobCheck = charutils::CheckMob(PCharmer->GetMLevel(), PVictim->GetMLevel());
         if (PMob && PCharmer->objtype == TYPE_PC)
         {
-            //Bind uncharmable mobs and pets for 1 to 5 seconds
-            if (((CMobEntity*)PVictim)->getMobMod(MOBMOD_CHARMABLE) == 0  ||  PVictim->PMaster != nullptr)
-            {
-                PVictim->StatusEffectContainer->AddStatusEffect(
-                    new CStatusEffect(EFFECT_BIND, EFFECT_BIND, 1, 0, tpzrand::GetRandomNumber(1, 5)));
-                return;
-            }
-
-            // mob is charmable
-            const EMobDifficulty mobCheck = charutils::CheckMob(PCharmer->GetMLevel(), PVictim->GetMLevel());
-            switch (mobCheck)
-            {
-            case EMobDifficulty::TooWeak:
+            if (((CCharEntity*)PCharmer)->m_GMSuperpowers) {
                 CharmTime = 1800;
-                break;
-
-            case EMobDifficulty::IncrediblyEasyPrey:
-            case EMobDifficulty::EasyPrey:
-                CharmTime = 1200;
-                break;
-
-            case EMobDifficulty::DecentChallenge:
-                CharmTime = 600;
-                break;
-
-            case EMobDifficulty::EvenMatch:
-                CharmTime = 180;
-                break;
-
-            case EMobDifficulty::Tough:
-                CharmTime = 90;
-                break;
-
-            case EMobDifficulty::VeryTough:
-                CharmTime = 45;
-                break;
-
-            case EMobDifficulty::IncrediblyTough:
-                CharmTime = 20;
-                break;
-
-            default:
-                // no-op
-                break;
             }
+            else {
+                //Bind uncharmable mobs and pets for 1 to 5 seconds
+                if (((CMobEntity*)PVictim)->getMobMod(MOBMOD_CHARMABLE) == 0  ||  PVictim->PMaster != nullptr)
+                {
+                    PVictim->StatusEffectContainer->AddStatusEffect(
+                        new CStatusEffect(EFFECT_BIND, EFFECT_BIND, 1, 0, tpzrand::GetRandomNumber(1, 5)));
+                    return;
+                }
 
+                // mob is charmable
+                switch (mobCheck)
+                {
+                case EMobDifficulty::TooWeak:
+                    CharmTime = 1800;
+                    break;
+
+                case EMobDifficulty::IncrediblyEasyPrey:
+                case EMobDifficulty::EasyPrey:
+                    CharmTime = 1200;
+                    break;
+
+                case EMobDifficulty::DecentChallenge:
+                    CharmTime = 600;
+                    break;
+
+                case EMobDifficulty::EvenMatch:
+                    CharmTime = 180;
+                    break;
+
+                case EMobDifficulty::Tough:
+                    CharmTime = 90;
+                    break;
+
+                case EMobDifficulty::VeryTough:
+                    CharmTime = 45;
+                    break;
+
+                case EMobDifficulty::IncrediblyTough:
+                    CharmTime = 20;
+                    break;
+
+                default:
+                    // no-op
+                    break;
+                }
+
+            }
             //apply charm time extension from gear
             uint16 charmModValue = (PCharmer->getMod(Mod::CHARM_TIME));
             // adds 5% increase
@@ -4533,6 +4538,10 @@ namespace battleutils
         if (!PCharmer || !PTarget)
             return 0.f;
 
+        if (PCharmer->objtype == TYPE_PC && ((CCharEntity*)PCharmer)->m_GMSuperpowers) {
+            return 100.;
+        }
+
         // Can the target even be charmed?
         CMobEntity* PTargetAsMob = dynamic_cast<CMobEntity*>(PTarget);
         if (PTargetAsMob)
@@ -4619,6 +4628,10 @@ namespace battleutils
 
     bool TryCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim)
     {
+        if (PCharmer->objtype == TYPE_PC && ((CCharEntity*)PCharmer)->m_GMSuperpowers) {
+            return true;
+        }
+
         return GetCharmChance(PCharmer, PVictim) > tpzrand::GetRandomNumber(100.f);
     }
 
