@@ -3423,7 +3423,18 @@ INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 1940); -- Chim
 INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 1941); -- String Clipper
 INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 2065); -- Cannibal Blade
 INSERT INTO `mob_skill_lists` VALUES('Automaton_Valoredge', 2029, 2299); -- Bone Crusher
-
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2223);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2224);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2225);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2226);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2227);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG_Armored', 2030, 2203);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 611);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 612);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 613);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 614);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 633);
+INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 2233);
 --
 -- Indexes for dumped tables
 --

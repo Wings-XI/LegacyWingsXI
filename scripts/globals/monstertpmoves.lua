@@ -542,7 +542,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     if attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED then
 
-        dmg = target:physicalDmgTaken(dmg, damageType)
+        dmg = target:physicalDmgTaken(mob, dmg, damageType)
         if not target:isPC() then
             local h2hres = target:getMod(tpz.mod.H2HRES)
             local pierceres = target:getMod(tpz.mod.PIERCERES)
@@ -587,7 +587,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     elseif attackType == tpz.attackType.RANGED then
 
-        dmg = target:rangedDmgTaken(dmg)
+        dmg = target:rangedDmgTaken(mob, dmg)
 
     end
 

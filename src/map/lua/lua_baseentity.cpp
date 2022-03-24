@@ -13340,7 +13340,7 @@ inline int32 CLuaBaseEntity::isSpellAoE(lua_State* L)
 /************************************************************************
 *  Function: physicalDmgTaken()
 *  Purpose : Returns the value of Physical Damage taken after calculation
-*  Example : dmg = target:physicalDmgTaken(dmg, damageType)
+*  Example : dmg = target:physicalDmgTaken(attacker, dmg, damageType)
 *  Notes   : Passes argument to PhysicalDmgTaken member of battleutils.
 *            DamageType is optional and defaults to weapon type if not provided.
 ************************************************************************/
@@ -13349,12 +13349,16 @@ inline int32 CLuaBaseEntity::physicalDmgTaken(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
-    int16 damageType = !lua_isnil(L, 2) && lua_isnumber(L, 2) ? (int16)lua_tointeger(L, 2) : 0;
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
-    lua_pushinteger(L, battleutils::PhysicalDmgTaken((CBattleEntity*)m_PBaseEntity, (int32)lua_tointeger(L, 1), damageType));
+    int16 damageType = !lua_isnil(L, 3) && lua_isnumber(L, 3) ? (int16)lua_tointeger(L, 3) : 0;
+
+    lua_pushinteger(L, battleutils::PhysicalDmgTaken((CBattleEntity*)PLuaBaseEntity->GetBaseEntity(), (CBattleEntity*)m_PBaseEntity, (int32)lua_tointeger(L, 2), damageType));
     return 1;
 }
 
@@ -13383,7 +13387,7 @@ inline int32 CLuaBaseEntity::magicDmgTaken(lua_State *L)
 /************************************************************************
 *  Function: rangedDmgTaken()
 *  Purpose : Returns the value of Ranged Damage taken after calculation
-*  Example : dmg = target:rangedDmgTaken(dmg)
+*  Example : dmg = target:rangedDmgTaken(attacker, dmg, damageType)
 *  Notes   : Passes argument to RangedDmgTaken member of battleutils
 ************************************************************************/
 
@@ -13391,12 +13395,16 @@ inline int32 CLuaBaseEntity::rangedDmgTaken(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
-    int16 damageType = !lua_isnil(L, 2) && lua_isnumber(L, 2) ? (int16)lua_tointeger(L, 2) : 0;
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
-    lua_pushinteger(L, battleutils::RangedDmgTaken((CBattleEntity*)m_PBaseEntity, (int32)lua_tointeger(L, 1), damageType));
+    int16 damageType = !lua_isnil(L, 3) && lua_isnumber(L, 3) ? (int16)lua_tointeger(L, 3) : 0;
+
+    lua_pushinteger(L, battleutils::RangedDmgTaken((CBattleEntity*)PLuaBaseEntity->GetBaseEntity(), (CBattleEntity*)m_PBaseEntity, (int32)lua_tointeger(L, 2), damageType));
     return 1;
 }
 
