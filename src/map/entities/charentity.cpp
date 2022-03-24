@@ -1870,6 +1870,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         actionTarget.reaction = REACTION_EVADE;
         PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE_SELF, new CMessageBasicPacket(PTarget, PTarget, 0, shadowsTaken, MSGBASIC_SHADOW_ABSORB));
     }
+    // No hit, but unlimited shot is up, so don't consume ammo
+    else if (!hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
+    {
+        ammoConsumed = 0;  
+    }
 
     if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)
         actionTarget.speceffect = SPECEFFECT_RECOIL;
@@ -1886,8 +1891,10 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
+
     battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
+
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 
