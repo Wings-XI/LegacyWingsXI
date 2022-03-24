@@ -4288,7 +4288,17 @@ INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 54, 1, 255); -- Stoneskin
 -- Todays Horoscope KS30
 INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 356, 1, 255);-- paralyga
 INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 54, 1, 255); -- stoneskin
-
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 23, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 56, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 254, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 3, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 4, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 359, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 186, 1, 255);
 
 --
 -- Indexes for dumped tables
