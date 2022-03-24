@@ -46,10 +46,10 @@ function onRegionEnter(player, region)
 	local seiryuMob = GetMobByID(17309981)
 	local byakkoMob = GetMobByID(17309982)
 	
-	if p["suzaku"] ~= nil and suzakuMob:isAlive() and suzakuMob:isEngaged() then return end
-	if p["genbu"] ~= nil and genbuMob:isAlive() and genbuMob:isEngaged() then return end
-	if p["seiryu"] ~= nil and seiryuMob:isAlive() and seiryuMob:isEngaged() then return end
-	if p["byakko"] ~= nil and byakkoMob:isAlive() and byakkoMob:isEngaged() then return end
+	if p["suzaku"] ~= nil and suzakuMob:isAlive() then return end
+	if p["genbu"] ~= nil and genbuMob:isAlive() then return end
+	if p["seiryu"] ~= nil and seiryuMob:isAlive() then return end
+	if p["byakko"] ~= nil and byakkoMob:isAlive() then return end
 
     if (p["green"] ~= nil) then -- green portal
         if (player:getCharVar("skyShortcut") == 1) then
@@ -81,6 +81,11 @@ function onRegionLeave(player, region)
 end
 
 function onEventUpdate(player, csid, option)
+    if (csid >= 1 and csid <= 40 and option == 0) then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
+        end
+    end
 end
 
 function onEventFinish(player, csid, option)
@@ -90,9 +95,5 @@ function onEventFinish(player, csid, option)
         player:setCharVar("ZilartStatus", 0)
         player:completeMission(ZILART, tpz.mission.id.zilart.THE_GATE_OF_THE_GODS)
         player:addMission(ZILART, tpz.mission.id.zilart.ARK_ANGELS)
-    elseif csid >= 1 and csid <= 40 then
-        for _, entry in pairs(player:getNotorietyList()) do
-            entry:deaggroPlayer(player:getName()) -- reset hate on player after teleporting
-        end
     end
 end

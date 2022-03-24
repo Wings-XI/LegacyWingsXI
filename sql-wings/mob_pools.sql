@@ -328,7 +328,7 @@ INSERT INTO `mob_pools` VALUES(264, 'Ashu_Talif_Marine', 'Ashu_Talif_Marine', 35
 INSERT INTO `mob_pools` VALUES(265, 'Ash_Dragon', 'Ash_Dragon', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 0, 7, 1157, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(266, 'Ash_Lizard', 'Ash_Lizard', 174, _binary 0x0000490100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 291, 1155, 0, 0, 0, 0, 0, 174);
 INSERT INTO `mob_pools` VALUES(267, 'Asphyxiated_Amsel', 'Asphyxiated_Amsel', 121, _binary 0x0000700100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 28, 0, 0, 121);
-INSERT INTO `mob_pools` VALUES(268, 'Aspidochelone', 'Aspidochelone', 2, _binary 0x0000910100000000000000000000000000000000, 7, 4, 7, 250, 125, 0, 1, 1, 0, 2, 1, 0, 363, 1155, 0, 0, 0, 0, 0, 2);
+INSERT INTO `mob_pools` VALUES(268, 'Aspidochelone', 'Aspidochelone', 2, _binary 0x0000910100000000000000000000000000000000, 7, 4, 7, 250, 125, 0, 1, 1, 0, 2, 1, 0, 363, 1157, 0, 0, 0, 0, 0, 2);
 INSERT INTO `mob_pools` VALUES(269, 'Asrai', 'Asrai', 114, _binary 0x0000410500000000000000000000000000000000, 1, 1, 8, 200, 100, 0, 0, 0, 0, 6, 0, 32, 6585, 1179, 0, 0, 0, 0, 0, 114);
 INSERT INTO `mob_pools` VALUES(270, 'Assailer_Chariot', 'Assailer_Chariot', 63, _binary 0x0000200700000000000000000000000000000000, 4, 4, 12, 240, 100, 1024, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 281, 0, 0, 978);
 INSERT INTO `mob_pools` VALUES(271, 'Assassin_Fly', 'Assassin_Fly', 113, _binary 0x0000c10100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 0, 0, 1, 0, 0, 0, 616, 1669, 0, 0, 0, 0, 0, 113);
@@ -2359,7 +2359,7 @@ INSERT INTO `mob_pools` VALUES(2295, 'Kulili', 'Kulili', 87, _binary 0x0000a4010
 INSERT INTO `mob_pools` VALUES(2296, 'Kulshedra', 'Kulshedra', 218, _binary 0x0000610100000000000000000000000000000000, 2, 2, 7, 480, 100, 0, 1, 0, 0, 0, 0, 0, 290, 131, 0, 0, 0, 0, 0, 218);
 INSERT INTO `mob_pools` VALUES(2297, 'Kumbaba', 'Kumbaba', 245, _binary 0x0000840100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 32, 2526, 157, 0, 0, 0, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(2298, 'Kur', 'Kur', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 2, 6, 240, 100, 1024, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 967);
-INSERT INTO `mob_pools` VALUES(2299, 'Kurrea', 'Kurrea', 58, _binary 0x0000470500000000000000000000000000000000, 4, 5, 12, 300, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 2, 0, 0, 58);
+INSERT INTO `mob_pools` VALUES(2299, 'Kurrea', 'Kurrea', 58, _binary 0x0000470500000000000000000000000000000000, 4, 5, 12, 300, 100, 0, 1, 0, 0, 2, 0, 0, 0, 7, 0, 0, 526, 0, 0, 58);
 INSERT INTO `mob_pools` VALUES(2300, 'Kurt', 'Kurt', 149, _binary 0x01000f015810a220a230a240a250436100705980, 13, 13, 9, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 7, 0, 0, 149);
 INSERT INTO `mob_pools` VALUES(2301, 'Kusa', 'Kusa', 149, _binary 0x0500b20700000000000000000000000000000000, 13, 13, 9, 240, 100, 0, 1, 1, 1, 16, 0, 0, 1, 131, 0, 0, 7, 0, 0, 149);
 INSERT INTO `mob_pools` VALUES(2302, 'Kutharei', 'Kutharei', 450, _binary 0x0000a20800000000000000000000000000000000, 5, 4, 2, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 133, 0, 0, 157, 0, 0, 899);
@@ -6268,6 +6268,8 @@ INSERT INTO `mob_pools` VALUES(6893, 'Ice_Elemental', 'Ice_Elemental', 103, _bin
 INSERT INTO `mob_pools` VALUES(6894, 'Earth_Elemental', 'Earth_Elemental', 101, _binary 0x00000b0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 1, 0, 24, 0, 508, 1155, 0, 0, 13, 0, 256, 101);
 INSERT INTO `mob_pools` VALUES(6895, 'Dark_Elemental', 'Dark_Elemental', 100, _binary 0x00000f0000000000000000000000000000000000, 8, 8, 11, 240, 100, 0, 1, 0, 0, 0, 65, 0, 291, 131, 0, 0, 18, 0, 0, 100);
 INSERT INTO `mob_pools` VALUES(6896, 'Water_Elemental', 'Water_Elemental', 106, _binary 0x00000c0000000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 1, 1, 1, 0, 16, 0, 343, 131, 0, 0, 15, 0, 256, 106);
+INSERT INTO `mob_pools` VALUES(6897, 'Shatterskull_Mippdapp', 'Shatterskull_Mippdapp', 334, _binary 0x0000020800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 1, 32, 3835, 157, 0, 0, 0, 0, 0, 334);
+
 --
 -- Indexes for dumped tables
 --

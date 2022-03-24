@@ -12,3 +12,9 @@ end
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 246)
 end
+
+function onMobDespawn(mob)
+    local respawn = 5700
+    mob:setRespawnTime(respawn) -- 95 minutes
+    SetServerVariable("Bugbear_Muscleman_Respawn", (os.time() + respawn))
+end

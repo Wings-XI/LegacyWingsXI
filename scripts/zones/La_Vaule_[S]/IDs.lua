@@ -22,7 +22,7 @@ zones[tpz.zone.LA_VAULE_S] =
         CONQUEST_BASE                 = 7226, -- Tallying conquest results...
     },
     mob =
-    {
+    { 
         HAWKEYED_DNATBAT_PH =
         {
             [17125431] = 17125433, -- 375.737 0.272 -174.487
@@ -31,6 +31,20 @@ zones[tpz.zone.LA_VAULE_S] =
         {
             [17125450] = 17125452, -- 234.481 3.424 -241.751
         },
+        SHATTERSKULL_MIPPDAPP_PH = 
+        {
+            [17125492] = 17125494,  --  -61.291, -0.524, 61.806
+        },
+
+        
+        AGRIOS                 = 17125663,
+        ALL_SEEING             = 17125661,
+        COGTOOTH_SKAGNOGG      = 17125662,
+        COINBITER_CJAKNOKK     = 17125654,
+        DRAKETRADER_ZLODGODD   = 17125655,
+        FALSESPINNER_BHUDBRODD = 17125664,
+        FEEBLESCHEME_BHOGBIGG  = 17125656,
+        RUGAROO                = 17125665,
     },
     npc =
     {

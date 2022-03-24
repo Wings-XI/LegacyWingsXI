@@ -415,7 +415,11 @@ function spawnCaretaker(mob)
             caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
             mob:entityAnimationPacket("shsm")
             caretaker:spawn()
-            caretaker:updateEnmity(mob:getTarget())
+            if mob:getTarget() ~= nil then
+                caretaker:updateEnmity(mob:getTarget())
+            else
+                DespawnMob(caretaker:getID())
+            end
             mob:setLocalVar("petCount", petCount + 1)
             mob:setLocalVar("summoning", 0)
             mob:SetAutoAttackEnabled(true)
@@ -443,7 +447,9 @@ function spawnSteamCleaner(mob)
                   mob:entityAnimationPacket("shsm")
                   sc:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
                   sc:spawn()
-                  sc:updateEnmity(mob:getTarget())
+                    if mob:getTarget() ~= nil then
+                        sc:updateEnmity(mob:getTarget())
+                    end
                   mob:setLocalVar("iSpawnedSC", 1)
                   mob:setLocalVar("petCount", petCount + 1)
                   mob:setLocalVar("summoning", 0)

@@ -49,6 +49,9 @@ zones[tpz.zone.MAMOOK] =
         NIKILULU                 = 17043884,
         MIKILURU                 = 17043885,
         MIKIRULU                 = 17043886,
+        DARTING_KACHAAL_JA       = 17043736,
+        DRAGONSCALED_BUGAAL_JA   = 17043626,
+        HUNDREDFACED_HAPOOL_JA   = 17043665,
     },
     npc =
     {

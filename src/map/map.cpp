@@ -392,6 +392,9 @@ int32 do_init(int32 argc, char** argv)
     CTaskMgr::getInstance()->AddTask("garbage_collect", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, map_garbage_collect, 15min);
     CTaskMgr::getInstance()->AddTask("crash_recovery_end", server_clock::now() + 2s, nullptr, CTaskMgr::TASK_ONCE, crash_recovery_end);
     CTaskMgr::getInstance()->AddTask("disableForceCreateSession", server_clock::now() + 4s, nullptr, CTaskMgr::TASK_ONCE, disableForceCreateSession);
+    if (map_config.log_gil_period > 0) {
+        CTaskMgr::getInstance()->AddTask("log_gil", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, charutils::LogGil, std::chrono::minutes(map_config.log_gil_period));
+    }
 
     //ShowDebug("prunedSessionsList size is %u\n", (uint32)prunedSessionsList.size());
     if (prunedSessionsList.size() >= map_config.zone_crash_recovery_min_players)
@@ -2781,6 +2784,7 @@ int32 map_config_default()
     map_config.storage_mission_unlock = true;
     map_config.storage_ignore_features = false;
     map_config.force_enable_mog_locker = false;
+    map_config.log_gil_period = 0;
     return 0;
 }
 
@@ -3365,6 +3369,10 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "force_enable_mog_locker") == 0)
             {
                 map_config.force_enable_mog_locker = atoi(w2);
+            }
+            else if (strcmp(w1, "log_gil_period") == 0)
+            {
+                map_config.log_gil_period = atoi(w2);
             }
             else
             {

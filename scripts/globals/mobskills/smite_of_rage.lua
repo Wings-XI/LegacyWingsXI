@@ -12,7 +12,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if mob:getFamily() == 271 then -- Jailer of Love, uses only animation.
+    if mob:getFamily() == 271  or mob:getID() == 16875778 then -- Jailer of Love, uses only animation.
         skill:setMsg(tpz.msg.NONE)
         return 0
     end

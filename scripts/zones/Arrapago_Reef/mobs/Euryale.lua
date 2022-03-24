@@ -17,3 +17,9 @@ end
 function onMobDeath(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 474)
 end
+
+function onMobDespawn(mob)
+    local respawn = 7200
+    mob:setRespawnTime(respawn) -- 2 hours
+    SetServerVariable("Euryale_Respawn", (os.time() + respawn))
+end

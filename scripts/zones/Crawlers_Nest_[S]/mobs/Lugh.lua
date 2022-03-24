@@ -184,6 +184,10 @@ function onMobDespawn(mob)
         mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
+
+    local respawn = 14400
+    mob:setRespawnTime(respawn) -- 4 hours 
+    SetServerVariable("Lugh_Respawn", (os.time() + respawn))
 end
 
 function onMobDeath(mob, player, isKiller)

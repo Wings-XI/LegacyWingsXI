@@ -75,6 +75,7 @@ zones[tpz.zone.XARCABARD] =
         BOREAL_COEURL   = 17236203,
         BOREAL_TIGER    = 17236204,
         KOENIGSTIGER    = 17236205,
+        ERESHKIGAL      = 17236059,
     },
     npc =
     {

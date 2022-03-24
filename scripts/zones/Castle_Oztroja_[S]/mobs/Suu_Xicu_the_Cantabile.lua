@@ -82,5 +82,7 @@ function onMobDespawn(mob)
     end
 
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(14400, 18000)) -- 4 to 5 hours
+    local respawn = math.random(14400, 18000)
+    mob:setRespawnTime(respawn) -- 4 to 5 hours
+    SetServerVariable("Suu_Xicu_Respawn", (os.time() + respawn))
 end

@@ -23,7 +23,6 @@ function onMobFight(mob, target)
         mob:SetMagicCastingEnabled(false)
         mob:SetMobAbilityEnabled(false)
         mob:entityAnimationPacket("casm")
-
         mob:timer(3000, function(mob)
             if mob:isAlive() then
                 local petCount = mob:getLocalVar("petCount")
@@ -34,7 +33,11 @@ function onMobFight(mob, target)
                 local auraGear = GetMobByID(mob:getID() + 1)
                 auraGear:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
                 auraGear:spawn()
-                auraGear:updateEnmity(mob:getTarget())
+                    if mob:getTarget() ~= nil then
+                        auraGear:updateEnmity(mob:getTarget())
+                    else
+                        DespawnMob(auraGear:getID())
+                    end
                 mob:setLocalVar("petCount", petCount + 1)
                 mob:setLocalVar("summoning", 0)
             end

@@ -13,6 +13,12 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
+    local ereshkigal_respawn = GetServerVariable("Ereshkigal_Respawn")
+    if os.time() < ereshkigal_respawn then
+		GetMobByID(ID.mob.ERESHKIGAL):setRespawnTime(ereshkigal_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ERESHKIGAL)
+    end
 end
 
 function onZoneIn(player, prevZone)
