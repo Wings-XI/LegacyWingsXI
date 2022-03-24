@@ -10,6 +10,12 @@ require("scripts/globals/treasure")
 
 function onInitialize(zone)
     tpz.treasure.initZone(zone)
+    local oni_carcass_respawn = GetServerVariable("Oni_Carcass_Respawn")
+    if os.time() < oni_carcass_respawn then
+		GetMobByID(ID.mob.ONI_CARCASS):setRespawnTime(oni_carcass_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ONI_CARCASS)
+    end
 end
 
 function onZoneIn(player, prevZone)

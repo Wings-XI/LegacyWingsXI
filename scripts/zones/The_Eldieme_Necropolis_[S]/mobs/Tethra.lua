@@ -235,6 +235,10 @@ function onMobDespawn(mob)
         mob:showText(mob, zones[mob:getZoneID()].text.NM_DESPAWN)
         mob:setLocalVar("MobPoof", 0)
     end
+
+    local respawn = math.random(14400, 21600)
+    mob:setRespawnTime(respawn) -- 4-6 hours
+    SetServerVariable("Tethra_Respawn", (os.time() + respawn))
 end
 
 function onMobDeath(mob, player, isKiller)

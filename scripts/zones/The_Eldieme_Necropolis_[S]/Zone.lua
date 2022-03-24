@@ -8,6 +8,18 @@ require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
+    local ethniu_respawn = GetServerVariable("Ethniu_Respawn")
+    local tethra_respawn = GetServerVariable("Tethra_Respawn")
+    if os.time() < tethra_respawn then
+		GetMobByID(ID.mob.TETHRA):setRespawnTime(tethra_respawn - os.time())
+	else
+		SpawnMob(ID.mob.TETHRA)
+    end
+    if os.time() < ethniu_respawn then
+		GetMobByID(ID.mob.ETHNIU):setRespawnTime(ethniu_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ETHNIU)
+    end
 end
 
 function onZoneIn(player, prevZone)

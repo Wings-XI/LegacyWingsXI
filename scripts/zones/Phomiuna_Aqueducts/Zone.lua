@@ -12,6 +12,24 @@ require("scripts/globals/status")
 function onInitialize(zone)
     -- FFXI wiki has vague info of ~10mins realtime for Phomiuna Aqueducts
     GetNPCByID(ID.npc.SECRETS_OF_OVENS_LOST_QM):addPeriodicTrigger(0,250,0)
+    local eba_respawn = GetServerVariable("Eba_Respawn")
+    local mahisha_respawn = GetServerVariable("Mahisha_Respawn")
+    local duendes_respawn = GetServerVariable("Tres_Duendes_Respawn")
+	if os.time() < duendes_respawn then
+		GetMobByID(ID.mob.TRES_DUENDES):setRespawnTime(duendes_respawn - os.time())
+	else
+		SpawnMob(ID.mob.TRES_DUENDES)
+    end
+	if os.time() < mahisha_respawn then
+		GetMobByID(ID.mob.MAHISHA):setRespawnTime(mahisha_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MAHISHA)
+    end
+	if os.time() < eba_respawn then
+		GetMobByID(ID.mob.EBA):setRespawnTime(eba_respawn - os.time())
+	else
+		SpawnMob(ID.mob.EBA)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

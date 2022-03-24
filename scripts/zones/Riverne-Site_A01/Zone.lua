@@ -10,6 +10,17 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onInitialize(zone)
+    local carmine_respawn = GetServerVariable("Carmine_Dobsonfly_Respawn")
+    if os.time() < carmine_respawn then
+        for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
+            DisallowRespawn(i, false)
+            GetMobByID(i):setRespawnTime(carmine_respawn - os.time())
+        end
+	else
+        for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
+		    SpawnMob(i)
+        end
+    end
 end
 
 function onConquestUpdate(zone, updatetype)
