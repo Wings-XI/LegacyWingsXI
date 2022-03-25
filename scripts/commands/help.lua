@@ -27,6 +27,11 @@ function onTrigger(player)
         player:PrintToPlayer("  Displays your nation's current influence multiplier. Nations that", 29, "", -1)
         player:PrintToPlayer("  repeatably come in 2nd or 3rd in conquest will accumulate a bonus.", 29, "", -1)
     end
+    if IsCustomizationEnabled(tpz.cuztomization.LOW_LEVEL_XP) then
+        player:PrintToPlayer("!hc", 29, "", -1)
+        player:PrintToPlayer("  Toggles hardcore mode on/off.", 29, "", -1)
+        player:PrintToPlayer("  Hardcore mode disables the low-level experience gain boost.", 29, "", -1)
+    end
     player:PrintToPlayer("!flist", 29, "", -1)
     player:PrintToPlayer("  The custom in-game friends list. Type !flist help for a list", 29, "", -1)
     player:PrintToPlayer("!unstuck", 29, "", -1)
