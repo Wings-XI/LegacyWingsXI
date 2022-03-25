@@ -2691,6 +2691,7 @@ int32 map_config_default()
     map_config.ah_tax_rate_stacks = 0.5;
     map_config.ah_max_fee = 10000;
     map_config.ah_list_limit = 7;
+    map_config.max_level = 75;
     map_config.exp_rate = 1.0f;
     map_config.exp_loss_rate = 1.0f;
     map_config.exp_retain = 0.0f;
@@ -2780,6 +2781,7 @@ int32 map_config_default()
     map_config.pl_penalty = 10;
     map_config.conquest_auth_zone = 245; // Lower Jeuno
     map_config.enable_influence_boost = false;
+    map_config.enable_low_level_xp_boost = false;
     map_config.disable_rare_item_limit = false;
     map_config.storage_mission_unlock = true;
     map_config.storage_ignore_features = false;
@@ -2910,6 +2912,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "ah_list_limit") == 0)
         {
             map_config.ah_list_limit = atoi(w2);
+        }
+        else if (strcmp(w1, "max_level") == 0)
+        {
+            map_config.max_level = (float)atoi(w2);
         }
         else if (strcmp(w1, "exp_rate") == 0)
         {
@@ -3353,6 +3359,10 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "enable_influence_boost") == 0)
             {
                 map_config.enable_influence_boost = atoi(w2);
+            }
+            else if (strcmp(w1, "enable_low_level_xp_boost") == 0)
+            {
+                map_config.enable_low_level_xp_boost = atoi(w2);
             }
             else if (strcmp(w1, "disable_rare_item_limit") == 0)
             {

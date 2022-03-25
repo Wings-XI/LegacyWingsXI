@@ -4280,7 +4280,7 @@ namespace charutils
 
     void tryCompleteGK75(CCharEntity* PChar)
     {
-        if (PChar->jobs.genkai != 75 && (PChar->jobs.job[JOB_PUP] >= 70 || PChar->jobs.job[JOB_BLU] >= 70 || PChar->jobs.job[JOB_COR] >= 70 || PChar->jobs.job[JOB_DNC] >= 70 || PChar->jobs.job[JOB_SCH] >= 70))
+        if (PChar->jobs.genkai < 75 && (PChar->jobs.job[JOB_PUP] >= 70 || PChar->jobs.job[JOB_BLU] >= 70 || PChar->jobs.job[JOB_COR] >= 70 || PChar->jobs.job[JOB_DNC] >= 70 || PChar->jobs.job[JOB_SCH] >= 70))
         {
             PChar->jobs.genkai = 75;
 
@@ -4423,7 +4423,7 @@ namespace charutils
         // Player levels up
         if ((currentExp + exp) >= GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) && !onLimitMode)
         {
-            if (PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai)
+            if (PChar->jobs.job[PChar->GetMJob()] >= (PChar->jobs.genkai < map_config.max_level ? PChar->jobs.genkai : map_config.max_level))
             {
                 PChar->jobs.exp[PChar->GetMJob()] = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1;
                 if (PChar->PParty && PChar->PParty->GetSyncTarget() == PChar)
@@ -4439,6 +4439,23 @@ namespace charutils
                     PChar->jobs.exp[PChar->GetMJob()] = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()] + 1) - 1;
                 }
                 PChar->jobs.job[PChar->GetMJob()] += 1;
+                if (map_config.enable_low_level_xp_boost)
+                {
+                    if (PChar->jobs.job[PChar->GetMJob()] == map_config.max_level)
+                    {
+                        int32 boosted_jobs = charutils::GetCharVar(PChar->id, "BoostedJobs");
+                        int32 job_mask = (1 << (PChar->GetMJob() - 1));
+
+                        if ((boosted_jobs & job_mask) == 0)
+                        {
+                            // Player leveled the job all the way to cap in hardcore mode
+                            // Set a variable to indicte this achievement
+                            int32 hardcore_jobs = charutils::GetCharVar(PChar->id, "HardcoreJobs");
+                            hardcore_jobs |= job_mask;
+                            charutils::SetCharVar(PChar->id, "HardcoreJobs", hardcore_jobs);
+                        }
+                    }
+                }
 
                 if (PChar->m_LevelRestriction == 0 ||
                     PChar->m_LevelRestriction > PChar->GetMLevel())
@@ -5582,6 +5599,33 @@ namespace charutils
         else
         {
             exp = exp + bonus;
+        }
+
+        if (map_config.enable_low_level_xp_boost) {
+            bool hc = charutils::GetCharVar(PChar, "HardcoreMode") ? true : false;
+            bool got_boost = false;
+
+            if (!hc && PChar->jobs.job[PChar->GetMJob()] < 30)
+            {
+                exp = exp * 2;
+                got_boost = true;
+            }
+            else if (!hc && PChar->jobs.job[PChar->GetMJob()] < 40)
+            {
+                exp = exp * 1.5f;
+                got_boost = true;
+            }
+
+            if (got_boost)
+            {
+                int32 boosted_jobs = charutils::GetCharVar(PChar->id, "BoostedJobs");
+                int32 job_mask = (1 << (PChar->GetMJob() - 1));
+                if ((boosted_jobs & job_mask) == 0)
+                {
+                    boosted_jobs |= job_mask;
+                    charutils::SetCharVar(PChar->id, "BoostedJobs", boosted_jobs);
+                }
+            }
         }
 
         return exp;
