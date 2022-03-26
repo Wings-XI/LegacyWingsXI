@@ -495,6 +495,9 @@ end
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, true)
     local finaldmg = calcParams.finalDmg
 
+    -- Delete statuses that may have been spent by the WS
+    attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
+
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(attacker, finaldmg)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
