@@ -362,8 +362,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     local finaldmg = calcParams.finalDmg
 
     -- Delete statuses that may have been spent by the WS
-    attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
-    attacker:delStatusEffect(tpz.effect.SNEAK_ATTACK)
+    attacker:delStatusEffectsByFlag(tpz.effectFlag.ATTACK)
     attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
 
     local h2hres = target:getMod(tpz.mod.H2HRES)
@@ -496,7 +495,8 @@ end
     local finaldmg = calcParams.finalDmg
 
     -- Delete statuses that may have been spent by the WS
-    attacker:delStatusEffectsByFlag(tpz.effectFlag.DETECTABLE)
+    attacker:delStatusEffectsByFlag(tpz.effectFlag.ATTACK)
+    attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
 
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(attacker, finaldmg)
