@@ -113,7 +113,8 @@ end
 function checkThfAfQuest(player, target)
     local targid = target:getID()
 
-    if (player:getCharVar("theTenshodoShowdownCS") == 3) then
+    -- wiki explicitly states you can steal before getting the CS in Mhaura
+    if (player:getCharVar("theTenshodoShowdownCS") <= 3) and (player:getCharVar("theTenshodoShowdownCS") >= 1) then
         for key, value in pairs(validThfQuestMobs) do
             if value == targid then
                 return true
