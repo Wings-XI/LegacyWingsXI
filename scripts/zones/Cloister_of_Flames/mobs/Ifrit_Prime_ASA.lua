@@ -6,11 +6,13 @@
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/status")
+require("scripts/globals/utils")
 -----------------------------------
 
 function onMobSpawn(mob)
     -- ASA-4: Avatar is Unkillable Until Its Used Astral Flow At Least 5 times At Specified Intervals
     mob:setLocalVar("astralflows", 0)
+    mob:setMobMod(tpz.mobMod.ALWAYS_AGGRO, 1)
     mob:setUnkillable(true)
 end
 
@@ -37,7 +39,7 @@ function onMobFight(mob, target)
         end
     end
 
-    if astralFlows >= 5 then
+    if astralFlows >= 5 and utils.canUseAbility(mob) == true then
         mob:setUnkillable(false)
     end
 end

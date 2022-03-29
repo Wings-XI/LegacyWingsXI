@@ -8,14 +8,22 @@ require("scripts/globals/npc_util")
 local ID = require("scripts/zones/Gustav_Tunnel/IDs")
 
 function onTrigger(player, npc)
-    local spoken = player:getCharVar("ASA_spoken")
+    local phase = player:getCharVar("ASA_enemyPhase")
     if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and
-    player:hasKeyItem(tpz.ki.BLACK_BOOK) and spoken == 0 then
+    player:hasKeyItem(tpz.ki.BLACK_BOOK) and phase == 0 then
         player:startEvent(13)
-        player:setCharVar("ASA_spoken", 1)
+        player:setCharVar("ASA_enemyPhase", 1)
     elseif player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and
-    player:hasKeyItem(tpz.ki.BLACK_BOOK) and spoken == 1 then
+    player:hasKeyItem(tpz.ki.BLACK_BOOK) and phase == 1 then
         player:startEvent(15)
+    elseif player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and
+    phase == 2 then
+        -- Known issue with event 14 even on retail that black screens when using Windower/Ashita
+        -- Placed all logic into trigger to ensure players move to next mission
+        player:PrintToPlayer("NOTICE: Cutscene is not displayed due to a known issue from retail causing Ashita/Windower users to get locked in a black screen.",29)
+        player:PrintToPlayer("You are now on the mission Sugar Coated Subterfuge.",29)
+        player:completeMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II)
+        player:addMission(ASA, tpz.mission.id.asa.SUGAR_COATED_SUBTERFUGE)
     end
 end
 

@@ -17,27 +17,47 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED) then
-        player:addStatusEffect(tpz.effect.BARTHUNDER, 150, 0, 0)
+        player:addStatusEffectEx(tpz.effect.BARTHUNDER, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_GREED)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY) then
-        player:addStatusEffect(tpz.effect.BARBLIZZARD, 150, 0, 0)
+        if player:hasStatusEffect(tpz.effect.BARTHUNDER) then
+            player:setMod(tpz.mod.ICERES, 150)
+        else
+            player:addStatusEffectEx(tpz.effect.BARBLIZZARD, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        end
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY)
-    end 
+    end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE) then
-        player:addStatusEffect(tpz.effect.BARAERO, 150, 0, 0)
+        if player:hasStatusEffect(tpz.effect.BARBLIZZARD) then
+            player:setMod(tpz.mod.WINDRES, 150)
+        else
+            player:addStatusEffectEx(tpz.effect.BARAERO, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        end
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT) then
-        player:addStatusEffect(tpz.effect.BARSTONE, 150, 0, 0)
+        if player:hasStatusEffect(tpz.effect.BARAERO) then
+            player:setMod(tpz.mod.EARTHRES, 150)
+        else
+            player:addStatusEffectEx(tpz.effect.BARSTONE, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        end
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE) then
-        player:addStatusEffect(tpz.effect.BARFIRE, 150, 0, 0)
+        if player:hasStatusEffect(tpz.effect.BARSTONE) then
+            player:setMod(tpz.mod.FIRERES, 150)
+        else
+            player:addStatusEffectEx(tpz.effect.BARFIRE, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        end
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE) then
-        player:addStatusEffect(tpz.effect.BARWATER, 150, 0, 0)
+        if player:hasStatusEffect(tpz.effect.BARFIRE) then
+            player:setMod(tpz.mod.WATERRES, 150)
+        else
+            player:addStatusEffectEx(tpz.effect.BARWATER, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        end
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_BALE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) then
@@ -69,17 +89,18 @@ function onBattlefieldEnter(player, battlefield)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY) then
-        local hpBoost = player:getMaxHP() * 300
+        local hpBoost = player:getMaxHP() * 3
         player:addStatusEffect(tpz.effect.MAX_HP_BOOST, hpBoost, 0, 0)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT) then
-        local mpBoost = player:getMaxMP() * 300
+        local mpBoost = player:getMaxMP() * 3
         player:addStatusEffect(tpz.effect.MAX_MP_BOOST, mpBoost, 0, 0)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH) then
-        -- need to implement a reraise effect that gives no weakness
+        player:addStatusEffect(tpz.effect.RERAISE, 1, 0, 3600)
+        player:setLocalVar("Shantottofication", 1)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)
     end
 end
@@ -98,6 +119,11 @@ function onBattlefieldLeave(player, battlefield, leavecode)
     player:delStatusEffect(tpz.effect.BARSTONE)
     player:delStatusEffect(tpz.effect.BARFIRE)
     player:delStatusEffect(tpz.effect.BARWATER)
+    player:setMod(tpz.mod.ICERES, 0)
+    player:setMod(tpz.mod.WINDRES, 0)
+    player:setMod(tpz.mod.EARTHRES, 0)
+    player:setMod(tpz.mod.FIRERES, 0)
+    player:setMod(tpz.mod.WATERRES, 0)
     player:delStatusEffect(tpz.effect.STR_BOOST)
     player:delStatusEffect(tpz.effect.DEX_BOOST)
     player:delStatusEffect(tpz.effect.VIT_BOOST)
@@ -107,6 +133,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
     player:delStatusEffect(tpz.effect.CHR_BOOST)
     player:delStatusEffect(tpz.effect.MAX_HP_BOOST)
     player:delStatusEffect(tpz.effect.MAX_MP_BOOST)
+    player:setLocalVar("Shantottofication", 0)
 end
 
 function onEventUpdate(player, csid, option)

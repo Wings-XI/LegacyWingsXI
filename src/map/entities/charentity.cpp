@@ -1972,12 +1972,12 @@ void CCharEntity::OnRaise()
         }
 
         //add weakness effect (75% reduction in HP/MP)
-        if ((GetLocalVar("MijinGakure") == 0 || GetLocalVar("Shantottofication") == 0) && m_hasRaise <= 5)
+        if (GetLocalVar("MijinGakure") == 0 && GetLocalVar("Shantottofication") == 0 && m_hasRaise <= 5)
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 300);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
         }
-        else if ((GetLocalVar("MijinGakure") == 0 || GetLocalVar("Shantottofication") == 0) && m_hasRaise == 4) // arise, 3min
+        else if (GetLocalVar("MijinGakure") == 0 && GetLocalVar("Shantottofication") == 0 && m_hasRaise == 4) // arise, 3min
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 180);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
@@ -2002,13 +2002,13 @@ void CCharEntity::OnRaise()
         else if (m_hasRaise == 1)
         {
             actionTarget.animation = 511;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.1f);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0 || GetLocalVar("Shantottofication") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.1f);
             ratioReturned = 0.50f * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 2)
         {
             actionTarget.animation = 512;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.25f);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0 || GetLocalVar("Shantottofication") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.25f);
             ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 3)

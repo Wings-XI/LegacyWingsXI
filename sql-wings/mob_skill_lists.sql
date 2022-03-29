@@ -3267,6 +3267,27 @@ INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 665);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 666);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 667);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 710);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 177);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 178);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 182);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 180);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 184);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 2488);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 96);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 97);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 98);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 99);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 100);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 101);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 102);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 128);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 129);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 130);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 131);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 144);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 145);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 146);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 147);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade

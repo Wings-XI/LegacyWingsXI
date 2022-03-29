@@ -14,15 +14,23 @@ zones[tpz.zone.GUSTAV_TUNNEL] =
         ITEM_OBTAINED            = 6388,  -- Obtained: <item>.
         GIL_OBTAINED             = 6389,  -- Obtained <number> gil.
         KEYITEM_OBTAINED         = 6391,  -- Obtained key item: <keyitem>.
+        KEYITEM_LOST             = 6392,  -- Lost key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY  = 6402,  -- There is nothing out of the ordinary here.
         FELLOW_MESSAGE_OFFSET    = 6417,  -- I'm ready. I suppose.
-        CARRIED_OVER_POINTS      = 6999, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY  = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
-        LOGIN_NUMBER             = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CARRIED_OVER_POINTS      = 6999,  -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY  = 7000,  -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
+        LOGIN_NUMBER             = 7001,  -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         GEOMAGNETRON_ATTUNED     = 7010,  -- Your <keyitem> has been attuned to a geomagnetic fount in the corresponding locale.
         CONQUEST_BASE            = 7049,  -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET   = 7208,  -- You can't fish here.
         SENSE_OMINOUS_PRESENCE   = 7310,  -- You sense an ominous presence...
+        BATTLE_TIME              = 7397,  -- You have <min> (Earth time) remaining to complete the battle.
+        ASA_BATTLE_START         = 7489,  -- We don't know what you're doing here, but truth be told, we're not really interested.
+        ASA_MID_BATTLE           = 7490,  -- Putting up a fight, eh? Gorattz! Bompupu! Show [him/her] what the Tenshodo thinks of meddlesome adventurers!
+        ASA_RENFRED_DEATH        = 7491,  -- D-damn... I'm in way over my head...
+        ASA_GORATTZ_DEATH        = 7492,  -- Ugh... [He/She]'s tougher than [he/she] looks...
+        ASA_BOMPUPU_DEATH        = 7493,  -- Waaah! I didn't signy-wign up for this...
+        ASA_SHADOW_DEATH         = 7494,  -- [Renfred/Gorattz/Bompupu]'s shadow image disappears...
         REGIME_REGISTERED        = 9578,  -- New training regime registered!
         COMMON_SENSE_SURVIVAL    = 10662, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         PLAYER_OBTAINS_ITEM      = 10630, -- <name> obtains <item>!
@@ -75,10 +83,14 @@ zones[tpz.zone.GUSTAV_TUNNEL] =
         BUNE                      = 17645578,
         GIGAPLASM                 = 17645794,
         BARONIAL_BAT              = 17645809,
+        RENFRED                   = 17645810,
+        GORATTZ                   = 17645814,
+        BOMPUPU                   = 17645818,
     },
     npc =
     {
-        CASKET_BASE = 17645851,
+        CASKET_BASE    = 17645851,
+        OUTCROPPING_QM = 17645906,
     },
 }
 

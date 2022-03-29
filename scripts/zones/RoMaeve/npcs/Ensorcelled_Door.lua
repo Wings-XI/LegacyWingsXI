@@ -25,8 +25,8 @@ function onTrigger(player, npc)
         if completedFragment == 6 then
             -- Known issue with event 71 even on retail that black screens when using Windower/Ashita
             -- Placed all logic into trigger to ensure players move to next mission
-            player:PrintToPlayer("NOTICE: Please reset your game if you encounter a black screen. Mission will still progress.",29)
-            player:startEvent(71)
+            player:PrintToPlayer("NOTICE: Cutscene is not displayed due to a known issue from retail causing Ashita/Windower users to get locked in a black screen.",29)
+            player:PrintToPlayer("You are now on the mission Fountain of Trouble.",29)
 
             player:completeMission(ASA, tpz.mission.id.asa.SHANTOTTO_IN_CHAINS)
             player:addMission(ASA, tpz.mission.id.asa.FOUNTAIN_OF_TROUBLE)

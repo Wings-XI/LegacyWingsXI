@@ -10,50 +10,68 @@ local ID = require("scripts/zones/Norg/IDs")
 
 local mobList =
 {
-    "Bigclaw",
-    "Brook Sahagin",
-    "Riparian Sahagin",
-    "Rivulet Sahagin",
-    "Royal Leech",
-    "Undead Bats",
-    "Grotto Pugil",
-    "Sea Bonze",
-    "Grotto Pugil",
-    "Blubber Eyes",
-    "Bog Sahagin",
-    "Marsh Sahagin",
-    "Rock Crab",
-    "Razorjaw Pugil",
-    "Sahagin Parasite",
-    "Swamp Sahagin",
-    "Devil Manta",
-    "Dire Bat",
-    "Lagoon Sahagin",
-    "Delta Sahagin",
-    "Coastal Sahagin",
-    "Mousse",
-    "Robber Crab",
-    "Shore Sahagin"
+    {"Bigclaw", "Bigclaw"},
+    {"Brook Sahagin", "BrookSahagin"},
+    {"Riparian Sahagin", "RiparianSahagin"},
+    {"Rivulet Sahagin", "RivuletSahagin"},
+    {"Royal Leech", "RoyalLeech"},
+    {"Undead Bats", "UndeadBats"},
+    {"Grotto Pugil", "GrottoPugil"},
+    {"Sea Bonze", "SeaBonze"},
+    {"Blubber Eyes", "BlubberEyes"},
+    {"Bog Sahagin", "BogSahagin"},
+    {"Marsh Sahagin", "MarshSahagin"},
+    {"Rock Crab", "RockCrab"},
+    {"Razorjaw Pugil", "RazorjawPugil"},
+    {"Sahagin Parasite", "SahaginParasitd"},
+    {"Swamp Sahagin", "SwampSahagin"},
+    {"Devil Manta", "DevilManta"},
+    {"Dire Bat", "DireBat"},
+    {"Lagoon Sahagin", "LagoonSahagin"},
+    {"Delta Sahagin", "DeltaSahagin"},
+    {"Coastal Sahagin", "CoastalSahagin"},
+    {"Mousse", "Mousse"},
+    {"Robber Crab", "RobberCrab"},
+    {"Shore Sahagin", "ShoreSahagin"},
 }
 
 function onTrade(player, npc, trade)
-    if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I and npcUtil.tradeHas(trade, 2477) then -- Trading Soul Plate
-        local mobOne = player:getCharVar("ASA_MobOne")
+    local mobOne = player:getCharVar("ASA_MobOne")
+    if mobOne ~= 0 and npcUtil.tradeHasExactly(trade, 2477) then -- Trading Soul Plate
         local mobTwo = player:getCharVar("ASA_MobTwo")
         local mobThree = player:getCharVar("ASA_MobThree")
         local platesTraded = player:getCharVar("ASA_Plates")
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
 
-        if plateData.name == mobList[mobOne] or plateData.name == mobList[mobTwo] or plateData.name == mobList[mobThree] then
+        for value, data in pairs(mobList) do
+            if data[2] == plateData.name then
+                player:setLocalVar("ASA_Found", value)
+            end
+        end
+
+        local foundMob = player:getLocalVar("ASA_Found")
+        if foundMob == mobOne or foundMob == mobTwo or foundMob == mobThree then
+            if foundMob == mobOne then
+                player:setCharVar("ASA_MobOne", 99)
+            elseif foundMob == mobTwo then
+                player:setCharVar("ASA_MobTwo", 99)
+            elseif foundMob == mobThree then
+                player:setCharVar("ASA_MobThree", 99)
+            end
+
             if platesTraded == 0 then
                 player:startEvent(241)
                 player:setCharVar("ASA_Plates", 1)
+                player:confirmTrade()
             elseif platesTraded == 1 then
                 player:startEvent(241)
                 player:setCharVar("ASA_Plates", 2)
+                player:confirmTrade()
             elseif platesTraded == 2 then
                 player:startEvent(241)
+                player:setCharVar("ASA_Plates", 3)
+                player:confirmTrade()
             end
         else
             player:startEvent(242)
@@ -62,59 +80,169 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local andrause = player:getCharVar("AndrauseStage")
     local mobOne = player:getCharVar("ASA_MobOne")
+    local platesTraded = player:getCharVar("ASA_Plates")
 
-    if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I and andrause == 0 then
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I or (player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and not player:hasKeyItem(tpz.ki.BLACK_BOOK)) then
         if mobOne == 0 then
-            -- Selct mobs for player to get pictures of
-            mobOne = math.random(1,24)
-            local mobTwo = math.random(1,24)
+            -- Select mobs for player to get pictures of
+            mobOne = math.random(1,23)
+            local mobTwo = math.random(1,23)
             while mobTwo == mobOne do
-                mobTwo = math.random(1,24)
+                mobTwo = math.random(1,23)
             end
-            local mobThree = math.random(1,24)
+            local mobThree = math.random(1,23)
             while mobThree == mobOne or mobThree == mobTwo do
-                mobTwo = math.random(1,24)
+                mobTwo = math.random(1,23)
             end
             player:setCharVar("ASA_MobOne", mobOne)
             player:setCharVar("ASA_MobTwo", mobTwo)
             player:setCharVar("ASA_MobThree", mobThree)
-        end
 
-        player:startEvent(237, 18721, 18722)
-        -- player:startEvent(241)
+            if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I then
+                player:startEvent(237)
+            else
+                player:startEvent(237, 0)
+            end
+        elseif mobOne ~= 0 and platesTraded == 0 then
+            player:startEvent(238, 3)
+        elseif mobOne ~= 0 and platesTraded == 1 then
+            player:startEvent(238, 2)
+        elseif mobOne ~= 0 and platesTraded == 2 then
+            player:startEvent(238, 1)
+        end
+    elseif player:hasKeyItem(tpz.ki.BLACK_BOOK) then
+        player:startEvent(240)
     else -- Player isn't on ACP Mission
         player:startEvent(239)
     end
 end
 
 function onEventUpdate(player, csid, option)
-    -- local mobOne = player:getCharVar("ASA_MobOne")
-    -- local mobTwo = player:getCharVar("ASA_MobTwo")
-    -- local mobThree = player:getCharVar("ASA_MobThree")
+    local mobOne = player:getCharVar("ASA_MobOne")
+    local mobTwo = player:getCharVar("ASA_MobTwo")
+    local mobThree = player:getCharVar("ASA_MobThree")
+    local pickupReady = player:getCharVar("[ASA]Soulplate") < os.time()
+    local platesTraded = player:getCharVar("ASA_Plates")
 
-    -- print(option)
-    -- if csid == 237 and option == 2 then
-    --     player:updateEvent(18721, 18722, 570558701, 1216690211, -2138766590, 436539533, 4)
-    -- elseif csid == 237 and option == 1 then
-    --     -- player:updateEventString(mobList[mobOne], mobList[mobTwo], mobList[mobThree], '', 49284, 524420, 0, 0, 0, 0, 0, 0)
-    --     player:updateEvent(252, 18722, 2477, 570558701, 1216690211, -1474100478, 33890344, 0)
-    --     player:setCharVar("ASA_Plates", 0)
-    -- elseif csid == 237 and option == 4 then
-    --     player:updateEvent(18721, 18722, 2477, 570558701, 1216690211, -1474100478, 33890344, 0)
-    -- -- elseif csid == 237 and option == 6 then
-    -- --     player:updateEvent(18721, 18722, 757853, 1216690211, -1474100478, 33890344, 0)
-    -- -- elseif csid == 237 and option == 5 then
-    -- --     player:updateEvent(18722, 12, -1471806718, 570558701, 1216690211, 1612907266, 1241907437, 0)
-    -- end
+    -- event 237
+    -- option 2 = yes, ill do it
+    -- option 5 = buy the camera, doesnt appear to be a "not enough gil dialogue"
+    --player:PrintToPlayer(string.format( "onEventUpdate CSID %s OPTION %s", csid, option))
+    if (csid == 237 and option == 4) then
+        player:updateEvent(18721, 18722, 2477)
+    elseif (csid == 237 and option == 1) then
+        player:updateEventString(mobList[mobOne][1], mobList[mobTwo][1], mobList[mobThree][1], '', 49284, 524420, 0, 0, 0, 0, 0, 0)
+    elseif (csid == 237 and option == 6) then
+        -- Param 0 = allowed to buy a camera, >0 = "im out of stock"
+        -- param 3 = x .:(You have x) (maybe number of blank plates?)
+        player:updateEvent(0, 18721, 18722, player:getGil())
+    elseif (csid == 237 and option == 5) then
+        player:setCharVar("AndrauseBuy", 1)
+    end
+
+    -- 99 = Player completed trade
+    if (csid == 238 and option == 6) then
+        if platesTraded == 0 then
+            player:updateEventString(mobList[mobOne][1], mobList[mobTwo][1], mobList[mobThree][1])
+        elseif platesTraded == 1 then
+            if mobOne == 99 then
+                player:updateEventString(mobList[mobTwo][1], mobList[mobThree][1])
+            elseif mobTwo == 99 then
+                player:updateEventString(mobList[mobOne][1], mobList[mobThree][1])
+            elseif mobThree == 99 then
+                player:updateEventString(mobList[mobOne][1], mobList[mobTwo][1])
+            end
+        elseif platesTraded == 2 then
+            if mobOne == 99 and mobTwo == 99 then
+                player:updateEventString(mobList[mobThree][1])
+            elseif mobTwo == 99 and mobThree == 99 then
+                player:updateEventString(mobList[mobOne][1])
+            elseif mobOne == 99 and mobThree == 99 then
+                player:updateEventString(mobList[mobTwo][1])
+            end
+        end
+        if pickupReady then
+            player:updateEvent(0, 18721, 18722, player:getGil())
+        end
+    elseif (csid == 238 and option == 4) then
+        player:updateEvent(18721, 18722)
+    elseif (csid == 238 and option == 5) then
+        player:setCharVar("AndrauseBuy", 1)
+    end
+
+    if csid == 241 then
+        local foundMob = player:getLocalVar("ASA_Found")
+        if platesTraded == 1 then
+            if mobOne == 99 then
+                player:updateEvent(0, 3)
+                player:updateEventString(mobList[mobOne][1], mobList[mobTwo][1], mobList[mobThree][1])
+            elseif mobTwo == 99 then
+                player:updateEvent(0, 3)
+                player:updateEventString(mobList[mobTwo][1], mobList[mobOne][1], mobList[mobThree][1])
+            elseif mobThree == 99 then
+                player:updateEvent(0, 3)
+                player:updateEventString(mobList[mobThree][1], mobList[mobOne][1], mobList[mobTwo][1])
+            end
+        elseif platesTraded == 2 then
+            if mobOne == 99 and mobTwo == 99 then
+                player:updateEvent(0, 2)
+                player:updateEventString(mobList[foundMob][1],mobList[mobThree][1])
+            elseif mobTwo == 99 and mobThree == 99 then
+                player:updateEvent(0, 2)
+                player:updateEventString(mobList[foundMob][1],mobList[mobOne][1])
+            elseif mobOne == 99 and mobThree == 99 then
+                player:updateEvent(0, 2)
+                player:updateEventString(mobList[foundMob][1],mobList[mobTwo][1])
+            end
+        elseif platesTraded == 3 then
+            player:updateEvent(0, 1)
+            player:updateEventString(mobList[foundMob][1])
+        end
+    end
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 241 then
+    if csid == 237 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() > 800 then
+        player:delGil(800)
+        if not player:hasItem(18721) then
+            player:addItem(18721)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 18721) -- Soultrapper
+        end
+        player:addItem(18722, 12)
+        player:messageSpecial(ID.text.YOU_OBTAIN, 18722, 12) -- Soul Plates
+        player:setCharVar("AndrauseBuy", 0)
+        player:setCharVar("[ASA]Soulplate", JstMidnight())
+    elseif csid == 237 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() < 800 then
+        player:setCharVar("AndrauseBuy", 0)
+    end
+
+    if csid == 238 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() > 800 then
+        player:delGil(800)
+        if not player:hasItem(18721) then
+            player:addItem(18721)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 18721) -- Soultrapper
+        end
+        player:addItem(18722, 12)
+        player:messageSpecial(ID.text.YOU_OBTAIN, 18722, 12) -- Soul Plates
+        player:setCharVar("AndrauseBuy", 0)
+        player:setCharVar("[ASA]Soulplate", JstMidnight())
+    elseif csid == 238 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() < 800 then
+        player:setCharVar("AndrauseBuy", 0)
+    end
+
+    local platesTraded = player:getCharVar("ASA_Plates")
+    if csid == 241 and platesTraded == 3 then
         player:addKeyItem(tpz.ki.BLACK_BOOK)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLACK_BOOK)
-        player:completeMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I)
-        player:addMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II)
+        player:setCharVar("ASA_MobOne", 0)
+        player:setCharVar("ASA_MobTwo", 0)
+        player:setCharVar("ASA_MobThree", 0)
+        player:setCharVar("ASA_Plates", 0)
+
+        if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I then
+            player:completeMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I)
+            player:addMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II)
+        end
     end
 end
