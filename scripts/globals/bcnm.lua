@@ -1099,11 +1099,14 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
+    player:PrintToPlayer(string.format("START: area=%i option=%i index=%i id=%i", area, option, battlefieldIndex, battlefieldId))
+
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
             can_initiate = true
         end
+
         result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
@@ -1156,13 +1159,16 @@ function EventUpdateBCNM(player, csid, option, extras)
                         end
                     end
                 end
-
+                player:PrintToPlayer(string.format("INITIATOR: area=%i initiator=%i", area, initiatorId))
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
                         member:registerBattlefield(id, area, player:getID(), false)
                         member:addStatusEffect(effect)
                     end
                 end
+            elseif battlefieldId == 704 or battlefieldId == 706 then
+                area = battlefield:getArea()
+                player:PrintToPlayer(string.format("PARTY MEMBER: area=%i initiator=%i", area, initiatorId))
             end
         end
         player:updateEvent(result, battlefieldIndex, 0, clearTime, partySize, skip)
