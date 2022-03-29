@@ -23,6 +23,12 @@ function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
 
     tpz.bmt.updatePeddlestox(tpz.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    local turtlerider_respawn = GetServerVariable("Meww_Turtlerider_Respawn")
+	if os.time() < turtlerider_respawn then
+		GetMobByID(ID.mob.MEWW_THE_TURTLERIDER):setRespawnTime(turtlerider_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MEWW_THE_TURTLERIDER)
+    end
 end
 
 function onGameDay()

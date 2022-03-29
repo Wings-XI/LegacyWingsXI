@@ -28,6 +28,8 @@ zones[tpz.zone.CRAWLERS_NEST_S] =
         {
             [17477636] = 17477640, -- 61 0 -4
         },
+
+        LUGH        = 17477708,
     },
     npc =
     {

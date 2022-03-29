@@ -45,6 +45,7 @@ zones[tpz.zone.MISAREAUX_COAST] =
         GRATION          = 16879899,
         ZIPHIUS          = 16879900,
         ODQAN            = 16879737,
+        UPYRI            = 16879810,
     },
     npc =
     {

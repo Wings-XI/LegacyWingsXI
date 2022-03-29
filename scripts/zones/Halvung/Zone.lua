@@ -10,6 +10,12 @@ require("scripts/globals/helm")
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
+    local dorgerwor_respawn = GetServerVariable("Dorgerwor_Astute_Respawn")
+    if os.time() < dorgerwor_respawn then
+		GetMobByID(ID.mob.DORGERWOR_THE_ASTUTE):setRespawnTime(dorgerwor_respawn - os.time())
+	else
+		SpawnMob(ID.mob.DORGERWOR_THE_ASTUTE)
+    end
 end
 
 function onZoneIn(player, prevZone)

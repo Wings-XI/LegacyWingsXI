@@ -1114,7 +1114,6 @@ INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 359, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 360, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 362, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 365, 10, 255);
-INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 367, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 4, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 9, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 21, 55, 98);
@@ -4389,7 +4388,17 @@ INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 327, 40, 72);
 INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 330, 40, 72);
 INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 333, 40, 72);
 INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 336, 40, 72);
-
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 23, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 56, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 254, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 3, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 4, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 359, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 186, 1, 255);
 
 --
 -- Indexes for dumped tables

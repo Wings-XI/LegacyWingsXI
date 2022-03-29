@@ -133,6 +133,11 @@ bool CAttack::IsGuarded()
     m_isGuarded = attackutils::IsGuarded(m_attacker, m_victim);
     if (m_isGuarded)
     {
+        // Granite Skin 100% damage reduction
+        if (m_victim->objtype == TYPE_MOB && m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD) &&
+            m_victim->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD)->GetPower() == 3)
+            m_damageRatio = 0;
+
         if (m_damageRatio > 1.0f)
         {
             m_damageRatio -= 1.0f;

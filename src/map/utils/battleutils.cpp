@@ -1980,6 +1980,11 @@ namespace battleutils
 
     uint8 GetGuardRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
+        // Granite Skin 100% guard rate
+        if (PDefender->objtype == TYPE_MOB && PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD) &&
+            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD)->GetPower() == 3)
+            return 100;
+
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
 
         // Defender must have no weapon equipped, or a hand to hand weapon equipped to guard
@@ -2062,11 +2067,11 @@ namespace battleutils
             if (isRanged)
             {
                 attackType = ATTACK_RANGED;
-                damage = RangedDmgTaken(PDefender, damage, damageType, isCovered);
+                damage = RangedDmgTaken(PAttacker, PDefender, damage, damageType, isCovered);
             }
             else
             {
-                damage = PhysicalDmgTaken(PDefender, damage, damageType, isCovered);
+                damage = PhysicalDmgTaken(PAttacker, PDefender, damage, damageType, isCovered);
             }
 
             //absorb mods are handled in the above functions, but they do not affect counters
@@ -4914,6 +4919,19 @@ namespace battleutils
         return damage;
     }
 
+    int32 PhysicalDmgTaken(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
+    {
+        CStatusEffect* physicalShield = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD);
+        if (PAttacker && physicalShield && (physicalShield->GetPower() == 4 && behind(PAttacker->loc.p, PDefender->loc.p, 120)))
+        {
+            return 0;
+        }
+        else
+        {
+            return PhysicalDmgTaken(PDefender, damage, damageType, IsCovered);
+        }
+    }
+
     int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
     {
         float resist = 1.f + PDefender->getMod(Mod::UDMGPHYS) / 100.f;
@@ -4946,6 +4964,19 @@ namespace battleutils
         }
 
         return damage;
+    }
+
+    int32 RangedDmgTaken(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)
+    {
+        CStatusEffect* physicalShield = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD);
+        if (PAttacker && physicalShield && (physicalShield->GetPower() == 4 && behind(PAttacker->loc.p, PDefender->loc.p, 120)))
+        {
+            return 0;
+        }
+        else
+        {
+            return RangedDmgTaken(PDefender, damage, damageType, IsCovered);
+        }
     }
 
     int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, int16 damageType, bool IsCovered)

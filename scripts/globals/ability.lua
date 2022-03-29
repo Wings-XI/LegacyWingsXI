@@ -801,13 +801,13 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
     end
 
     if skilltype == tpz.attackType.PHYSICAL then
-        dmg = target:physicalDmgTaken(dmg, skillparam)
+        dmg = target:physicalDmgTaken(mob, dmg, skillparam)
     elseif skilltype == tpz.attackType.MAGICAL then
         dmg = target:magicDmgTaken(dmg)
     elseif skilltype == tpz.attackType.BREATH then
         dmg = target:breathDmgTaken(dmg)
     elseif skilltype == tpz.attackType.RANGED then
-        dmg = target:rangedDmgTaken(dmg)
+        dmg = target:rangedDmgTaken(mob, dmg)
     end
 
     --handling phalanx

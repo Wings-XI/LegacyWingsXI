@@ -3141,4 +3141,11 @@ tpz.relicTiers =
 tpz.cuztomization =
 {
     INFLUENCE = 0,
+    LOW_LEVEL_XP = 1,
 }
+
+------------------------------------
+-- Settings moved to map.conf
+-- Used for backwards compatibility
+------------------------------------
+MAX_LEVEL = GetMaxLevel()

@@ -29,6 +29,8 @@ zones[tpz.zone.THE_ELDIEME_NECROPOLIS_S] =
     },
     mob =
     {
+        ETHNIU        = 17494093,
+        TETHRA        = 17494213,
     },
     npc =
     {

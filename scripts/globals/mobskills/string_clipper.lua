@@ -8,8 +8,8 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------
+
 function onMobSkillCheck(target, mob, skill)
     return 0
 end
@@ -24,3 +24,5 @@ function onMobWeaponSkill(target, mob, skill)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     return dmg
 end
+
+target:addStatusEffect(tpz.effect.EVASION_DOWN, 10, 0, 30)

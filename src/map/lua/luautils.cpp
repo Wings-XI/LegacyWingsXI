@@ -171,6 +171,7 @@ namespace luautils
         lua_register(LuaHandle, "GetItemIDByName", luautils::GetItemIDByName);
         lua_register(LuaHandle, "terminate", luautils::terminate);
 
+        lua_register(LuaHandle, "GetMaxLevel", luautils::GetMaxLevel);
         lua_register(LuaHandle, "GetHealingTickDelay", luautils::GetHealingTickDelay);
         lua_register(LuaHandle, "GetItem", luautils::GetItem);
         lua_register(LuaHandle, "getAbility", luautils::getAbility);
@@ -4877,6 +4878,12 @@ namespace luautils
         return 0;
     }
 
+    int32 GetMaxLevel(lua_State* L)
+    {
+        lua_pushnumber(L, map_config.max_level);
+        return 1;
+    }
+
     int32 GetHealingTickDelay(lua_State* L) {
         lua_pushnumber(L, map_config.healing_tick_delay);
         return 1;
@@ -5870,6 +5877,9 @@ namespace luautils
         {
         case CUSTOMIZATION_INFLUENCE:
             enabled = map_config.enable_influence_boost;
+            break;
+        case CUSTOMIZATION_LOW_LEVEL_XP:
+            enabled = map_config.enable_low_level_xp_boost;
             break;
         default:
             enabled = false;

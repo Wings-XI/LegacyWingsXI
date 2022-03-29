@@ -15,6 +15,12 @@ function onInitialize(zone)
     GetMobByID(ID.mob.MYRADROSH):setRespawnTime(math.random(5400, 7200))
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+    local melusine_respawn = GetServerVariable("Melusine_Respawn")
+    if os.time() < melusine_respawn then
+		GetMobByID(ID.mob.MELUSINE):setRespawnTime(melusine_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MELUSINE)
+    end
 end
 
 function onZoneIn(player, prevZone)

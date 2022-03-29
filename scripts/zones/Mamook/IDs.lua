@@ -21,8 +21,8 @@ zones[tpz.zone.MAMOOK] =
         FISHING_MESSAGE_OFFSET   = 7049, -- You can't fish here.
         CONQUEST_BASE            = 7149, -- Tallying conquest results...
         LOGGING_IS_POSSIBLE_HERE = 7534, -- Logging is possible here if you have <item>.
-        SICKLY_SWEET             = 8662, -- A sickly sweet fragrance pervades the air...
-        DRAWS_NEAR               = 8666, -- Something draws near!
+        SICKLY_SWEET             = 8661, -- A sickly sweet fragrance pervades the air...
+        DRAWS_NEAR               = 8665, -- Something draws near!
         COMMON_SENSE_SURVIVAL    = 9537, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
@@ -49,6 +49,9 @@ zones[tpz.zone.MAMOOK] =
         NIKILULU                 = 17043884,
         MIKILURU                 = 17043885,
         MIKIRULU                 = 17043886,
+        DARTING_KACHAAL_JA       = 17043736,
+        DRAGONSCALED_BUGAAL_JA   = 17043626,
+        HUNDREDFACED_HAPOOL_JA   = 17043665,
     },
     npc =
     {

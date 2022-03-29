@@ -373,7 +373,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
 
     if not wsParams.formless then
-        finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
+        finaldmg = target:physicalDmgTaken(attacker, finaldmg, attack.damageType)
         if attack.weaponType == tpz.skill.HAND_TO_HAND then
             if h2hres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
@@ -496,7 +496,7 @@ end
     local finaldmg = calcParams.finalDmg
 
     -- Calculate reductions
-    finaldmg = target:rangedDmgTaken(finaldmg)
+    finaldmg = target:rangedDmgTaken(attacker, finaldmg)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
     local spdefdown = target:getMod(tpz.mod.SPDEF_DOWN)
     if pierceres < 1000 then
