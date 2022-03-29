@@ -15,6 +15,8 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
+    local respawn = math.random(75600, 86400) -- 21 to 24 hours
+    mob:setRespawnTime(respawn) -- 21 hrs then 10 min windows
+    SetServerVariable("Morbolger_Respawn", (os.time() + respawn))
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
 end
