@@ -63,4 +63,7 @@ end
 
 function onMobDespawn(mob)
     for i = 1, 4 do DespawnMob(ID.mob.GULOOL_JA_JA + i) end
+    local respawn = 259200
+    mob:setRespawnTime(respawn) -- 72 hours 
+    SetServerVariable("Gulool_Ja_Ja_Respawn", (os.time() + respawn))
 end

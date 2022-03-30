@@ -20,5 +20,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(7200, 7800)) -- 2 hours plus 10 minute window
+    local respawn = math.random(7200, 7800)
+    mob:setRespawnTime(respawn) -- 2h to 2h10m 
+    SetServerVariable("Coquecigrue_Respawn", (os.time() + respawn))
 end

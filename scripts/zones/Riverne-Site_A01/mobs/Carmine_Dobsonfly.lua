@@ -33,11 +33,12 @@ function onMobDespawn(mob)
     end
 
     if (allFliesDead) then
-        local respawnTime = math.random(75600, 86400)
+        local respawn = math.random(75600, 86400) -- 21 to 24 hours
         for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
             DisallowRespawn(i, false)
-            GetMobByID(i):setRespawnTime(respawnTime)
+            GetMobByID(i):setRespawnTime(respawn)
         end
+        SetServerVariable("Carmine_Dobsonfly_Respawn", (os.time() + respawn))
     else
         DisallowRespawn(mobID, true)
     end

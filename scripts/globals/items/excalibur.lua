@@ -17,7 +17,7 @@ function onAdditionalEffect(player, target, damage)
             local damageType = player:getWeaponDamageType(tpz.slot.MAIN)
             local physicalResist = target:getMod(tpz.mod.SLASHRES) / 1000
             finalDMG = finalDMG * physicalResist
-            finalDMG = target:physicalDmgTaken(finalDMG, damageType)
+            finalDMG = target:physicalDmgTaken(player, finalDMG, damageType)
             finalDMG = finalDMG - target:getMod(tpz.mod.PHALANX)
             finalDMG = utils.clamp(finalDMG, 0, 99999)
             finalDMG = utils.stoneskin(target, finalDMG)

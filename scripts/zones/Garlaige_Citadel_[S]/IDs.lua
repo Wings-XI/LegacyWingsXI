@@ -24,6 +24,8 @@ zones[tpz.zone.GARLAIGE_CITADEL_S] =
     },
     mob =
     {
+        BUARAINECH        = 17449017,
+        ELATHA            = 17449008,
     },
     npc =
     {

@@ -14,6 +14,12 @@ function onInitialize(zone)
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
     tpz.treasure.initZone(zone)
     tpz.helm.initZone(zone, tpz.helm.type.MINING)
+    local muscleman_respawn = GetServerVariable("Bugbear_Muscleman_Respawn")
+    if os.time() < muscleman_respawn then
+		GetMobByID(ID.mob.BUGBEAR_MUSCLEMAN):setRespawnTime(muscleman_respawn - os.time())
+	else
+		SpawnMob(ID.mob.BUGBEAR_MUSCLEMAN)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

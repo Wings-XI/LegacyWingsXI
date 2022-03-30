@@ -1045,6 +1045,7 @@ dynamis.setPetStats = function(mob)
 
     mob:setMobLevel(78)
     mob:setMod(tpz.mod.STR, -40)
+    mob:setMod(tpz.mod.INT, -30)
     mob:setMod(tpz.mod.VIT, -20)
     mob:setMod(tpz.mod.RATTP, -20)
     mob:setMod(tpz.mod.ATTP, -20)

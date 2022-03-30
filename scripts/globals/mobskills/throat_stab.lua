@@ -21,7 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
     -- Dolls for "A Reputation In Ruins" quest and Galarhigg in "Purple, the new black" only use this skill for an animation
     -- Remember if you find a mob using mobskill 604 to update this line with the mob family - or the skill will execute
     -- If a mob using skill 604 for animation is actually part of the tonberry families, perhaps use mobID
-    if mob:getFamily() == 83 or mob:getFamily() == 84 or mob:getFamily() == 271 or mob:getFamily() == 87 then 
+    if mob:getFamily() == 83 or mob:getFamily() == 84 or mob:getFamily() == 271 or mob:getFamily() == 87 or mob:getID() == 16875778 then 
         skill:setMsg(tpz.msg.basic.NONE)
         return 0
     end

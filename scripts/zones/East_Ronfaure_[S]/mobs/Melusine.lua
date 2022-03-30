@@ -10,5 +10,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(7200 + math.random(0, 10) * 60)
+    local respawn = 7200 + math.random(0, 20) * 60
+    mob:setRespawnTime(respawn) -- 2h to 2h 20m
+    SetServerVariable("Melusine_Respawn", (os.time() + respawn))
 end

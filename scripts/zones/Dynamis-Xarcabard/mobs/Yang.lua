@@ -50,6 +50,7 @@ function onMobDeath(mob, player, isKiller)
             mob:showText(mob, ID.text.YANG_DIALOG)
         else
             mob:showText(mob, ID.text.YANG_DIALOG +2)
+            SetServerVariable("MainDynaLord", ID.mob.DYNAMIS_LORD)
         end
     end
 

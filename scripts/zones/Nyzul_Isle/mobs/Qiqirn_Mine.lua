@@ -5,6 +5,9 @@
 require("scripts/globals/status")
 
 function onMobInitialize(mob)
+    mob:setMod(tpz.mod.LULLABYRESTRAIT, 100)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 100)
+    mob:setMod(tpz.mod.STUNRESTRAIT, 100)
     mob:untargetable(true)
     mob:SetAutoAttackEnabled(false)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)

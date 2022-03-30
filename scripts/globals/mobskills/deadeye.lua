@@ -29,7 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
     -- display defense down first, else magic defense down
     if (defDown == tpz.msg.basic.SKILL_ENFEEB_IS) then
         typeEffect = tpz.effect.DEFENSE_DOWN
-    elseif (mDefDown == tpz.msg.basic.NFEEB_IS) then
+    elseif (mDefDown == tpz.msg.basic.SKILL_ENFEEB_IS) then
         typeEffect = tpz.effect.MAGIC_DEF_DOWN
     else
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
