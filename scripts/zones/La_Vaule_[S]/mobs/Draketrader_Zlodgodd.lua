@@ -21,5 +21,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(7200, 18000)) -- 2 to 5 hours
+    local respawn = math.random(7200, 18000)
+    mob:setRespawnTime(respawn) -- 2 to 5 hours
+    SetServerVariable("Draketrader_Zlodgodd__Respawn", (os.time() + respawn))
 end

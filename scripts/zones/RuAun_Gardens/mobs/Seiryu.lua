@@ -10,10 +10,12 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
 end
 
 function onMobSpawn(mob)
 	mob:setMod(tpz.mod.REGAIN, 200)
+    GetNPCByID(ID.npc.SEIRYU_PORTAL):setAnimation(tpz.animation.CLOSE_DOOR)
 end
 
 function onMonsterMagicPrepare(mob, target)
@@ -38,4 +40,8 @@ end
 
 function onMobDeath(mob, player, isKiller)
     player:showText(mob, ID.text.SKY_GOD_OFFSET + 10)
+end
+
+function onMobDespawn(mob)
+    GetNPCByID(ID.npc.SEIRYU_PORTAL):setAnimation(tpz.animation.OPEN_DOOR)
 end

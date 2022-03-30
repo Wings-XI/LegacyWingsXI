@@ -16,6 +16,12 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.ODQAN)
     local Odqan = GetMobByID(ID.mob.ODQAN)
     DisallowRespawn(Odqan:getID(), true) -- prevents accidental 'pop' during no fog and immediate despawn
+    local upyri_respawn = GetServerVariable("Upyri_Respawn")
+	if os.time() < upyri_respawn then
+		GetMobByID(ID.mob.UPYRI):setRespawnTime(upyri_respawn - os.time())
+	else
+		SpawnMob(ID.mob.UPYRI)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

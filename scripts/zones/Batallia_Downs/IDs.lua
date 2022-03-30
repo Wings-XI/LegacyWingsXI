@@ -53,6 +53,7 @@ zones[tpz.zone.BATALLIA_DOWNS] =
         SUPARNA           = 17207697,
         SUPARNA_FLEDGLING = 17207698,
         VEGNIX_GREENTHUMB = 17207710,
+        WEEPING_WILLOW    = 17207302,
     },
     npc =
     {

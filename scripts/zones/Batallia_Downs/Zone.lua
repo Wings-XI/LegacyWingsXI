@@ -35,6 +35,13 @@ function onInitialize(zone)
         registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
     end
     registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
+
+    local weeping_respawn = GetServerVariable("Weeping_Willow_Respawn")
+	if os.time() < weeping_respawn then
+		GetMobByID(ID.mob.WEEPING_WILLOW):setRespawnTime(weeping_respawn - os.time())
+	else
+		SpawnMob(ID.mob.WEEPING_WILLOW)
+    end
 end
 
 function onZoneIn(player, prevZone)

@@ -3,6 +3,7 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
+require("scripts/globals/weaponskills")
 
 -- Foreword: A lot of this is good estimating since the FFXI playerbase has not found all of info for individual moves.
 --            What is known is that they roughly follow player Weaponskill calculations (pDIF, dMOD, ratio, etc) so this is what
@@ -39,6 +40,7 @@ TP_MACC_BONUS = 1
 TP_MAB_BONUS = 2
 TP_DMG_BONUS = 3
 TP_RANGED = 4
+TP_IGNORES_DEF = 5
 
 BOMB_TOSS_HPP = 1
 
@@ -87,6 +89,7 @@ end
 -- if TP_ACC_VARIES -> three values are acc %s (1.0 is 100% acc, 0.8 is 80% acc, 1.2 is 120% acc)
 -- if TP_ATK_VARIES -> three values are attack multiplier (1.5x 0.5x etc)
 -- if TP_DMG_VARIES -> three values are
+-- if TP_IGNORES_DEF -> 
 
 function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod)
     --dstr scaling per 2 diff is a bit high (should be per 4 diff) but it works out pretty well since the weapon damage of mobs on p.servers is a bit too high (about twice as high)
@@ -110,7 +113,13 @@ function MobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, tpeff
     if offcratiomod == nil then offcratiomod = mob:getStat(tpz.mod.ATT) end
     local lvldiff = mob:getMainLvl() - target:getMainLvl()
     if lvldiff < 0 then lvldiff = 0 end
-    local ratio = offcratiomod/target:getStat(tpz.mod.DEF) + lvldiff * 0.05
+
+    local targetDef = target:getStat(tpz.mod.DEF)
+    if (tpeffect == TP_IGNORES_DEF) then
+        targetDef = calculatedIgnoredDef(skill:getTP(), target:getStat(tpz.mod.DEF), mtp000, mtp150, mtp300)
+    end
+
+    local ratio = offcratiomod/targetDef + lvldiff * 0.05
     ratio = utils.clamp(ratio, 0, 4)
     
     --work out hit rate for mobs (bias towards them)
@@ -533,7 +542,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     if attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED then
 
-        dmg = target:physicalDmgTaken(dmg, damageType)
+        dmg = target:physicalDmgTaken(mob, dmg, damageType)
         if not target:isPC() then
             local h2hres = target:getMod(tpz.mod.H2HRES)
             local pierceres = target:getMod(tpz.mod.PIERCERES)
@@ -578,7 +587,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     elseif attackType == tpz.attackType.RANGED then
 
-        dmg = target:rangedDmgTaken(dmg)
+        dmg = target:rangedDmgTaken(mob, dmg)
 
     end
 

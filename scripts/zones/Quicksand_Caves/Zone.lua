@@ -38,6 +38,12 @@ function onInitialize(zone)
     tpz.treasure.initZone(zone)
 
     npcUtil.UpdateNPCSpawnPoint(ID.npc.ANTICAN_TAG_QM, 60, 120, ID.npc.ANTICAN_TAG_POSITIONS, "[POP]Antican_Tag")
+    local antican_consul_respawn = GetServerVariable("Consul_Respawn")
+	if os.time() < antican_consul_respawn then
+		GetMobByID(ID.mob.ANTICAN_CONSUL):setRespawnTime(antican_consul_respawn - os.time())
+	else
+		SpawnMob(ID.mob.ANTICAN_CONSUL)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

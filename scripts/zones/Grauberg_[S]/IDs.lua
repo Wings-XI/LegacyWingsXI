@@ -52,6 +52,7 @@ zones[tpz.zone.GRAUBERG_S] =
             [17141818] = 17141885,
         },    
         MIGRATORY_HIPPOGRYPH = 17142108,
+        SARCOPSYLLA          = 17141872,  
     },
     npc =
     {

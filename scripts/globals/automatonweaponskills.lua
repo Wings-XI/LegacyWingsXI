@@ -66,7 +66,7 @@ function doAutoPhysicalWeaponskill(attacker, target, wsID, tp, primaryMsg, actio
 
     -- Calculate reductions
     if not wsParams.formless then
-        finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
+        finaldmg = target:physicalDmgTaken(attacker, finaldmg, attack.damageType)
         if (attack.damageType == tpz.damageType.BLUNT) then
             finaldmg = finaldmg * target:getMod(tpz.mod.IMPACTRES) / 1000
         elseif (attack.damageType == tpz.damageType.PIERCING) then
@@ -139,7 +139,7 @@ function doAutoRangedWeaponskill(attacker, target, wsID, wsParams, tp, primaryMs
     local finaldmg = calcParams.finalDmg
 
     -- Calculate reductions
-    finaldmg = target:rangedDmgTaken(finaldmg)
+    finaldmg = target:rangedDmgTaken(attacker, finaldmg)
     finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus

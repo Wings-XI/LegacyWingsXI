@@ -9,5 +9,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(7200, 14400)) -- 2 to 4 hours
+    local respawn = math.random(7200, 14400)
+    mob:setRespawnTime(respawn) -- 2 to 4 hours
+    SetServerVariable("Cogtooth_Skagnogg_Respawn", (os.time() + respawn))
 end

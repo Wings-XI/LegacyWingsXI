@@ -541,7 +541,7 @@ function utils.canUseAbility(mob)
     if act == tpz.act.MOBABILITY_START or act == tpz.act.MOBABILITY_USING or act == tpz.act.MOBABILITY_FINISH
     or act == tpz.act.MAGIC_START or act == tpz.act.MAGIC_CASTING or mob:getStatusEffect(tpz.effect.STUN) ~= nil
     or mob:getStatusEffect(tpz.effect.PETRIFICATION) ~= nil or mob:getStatusEffect(tpz.effect.TERROR) ~= nil
-    or mob:getStatusEffect(tpz.effect.SLEEP) ~= nil or mob:getStatusEffect(tpz.effect.SLEEP_II) ~= nil
+    or mob:getStatusEffect(tpz.effect.SLEEP_I) ~= nil or mob:getStatusEffect(tpz.effect.SLEEP_II) ~= nil
     or mob:getStatusEffect(tpz.effect.AMNESIA) ~= nil or mob:getStatusEffect(tpz.effect.LULLABY) ~= nil then
         return false
     end

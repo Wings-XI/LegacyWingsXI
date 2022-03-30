@@ -22,7 +22,7 @@ function onMobSpawn(mob)
     end
 end
 
-function onMobEngage(mob, target)
+function onMobEngaged(mob, target)
     local mobId = mob:getID()
 
     for i = 1, 2 do

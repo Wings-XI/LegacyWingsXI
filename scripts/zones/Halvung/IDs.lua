@@ -30,6 +30,7 @@ zones[tpz.zone.HALVUNG] =
         DEXTROSE               = 17031598,
         REACTON                = 17031599,
         ACHAMOTH               = 17031600,
+        DORGERWOR_THE_ASTUTE   = 17031482,
     },
     npc =
     {

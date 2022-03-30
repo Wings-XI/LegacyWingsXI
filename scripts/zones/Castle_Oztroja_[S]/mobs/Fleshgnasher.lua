@@ -10,5 +10,7 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(7200, 14400)) -- 2 to 4 hours
+    local respawn = math.random(7200, 14400)
+    mob:setRespawnTime(respawn) -- 2 to 4 hrs
+    SetServerVariable("Fleshgnasher_Respawn", (os.time() + respawn))
 end

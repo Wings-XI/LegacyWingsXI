@@ -7,7 +7,7 @@ require("scripts/globals/quests")
 require("scripts/globals/status")
 
 
-function onMobInitialise(mob)    
+function onMobInitialize(mob)    
 end
 
 function onMobSpawn(mob)

@@ -61,12 +61,9 @@ end
 
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(36000)  -- 10h
-
-    --UpdateNMSpawnPoint(mob:getID())
-	--local respawn = 20  -- 10h
-    --mob:setRespawnTime(respawn)
-	--SetServerVariable("BresRespawn",(os.time() + respawn))
+    local respawn = 36000
+    mob:setRespawnTime(respawn) -- 10 hours
+    SetServerVariable("Bres_Respawn", (os.time() + respawn))
 end
 
 function onMobDeath(mob, player, isKiller)
