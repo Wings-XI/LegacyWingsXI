@@ -11,5 +11,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.AH_PUCH_PH, 20, math.random(3600, 10800)) -- 1 to 3 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.AH_PUCH_PH, 20, 1) -- Pure lottery
 end
