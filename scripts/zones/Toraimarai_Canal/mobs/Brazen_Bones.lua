@@ -6,11 +6,6 @@ require("scripts/globals/hunts")
 mixins = {require("scripts/mixins/rage")}
 ------------------------------
 
--- TODO: 
---  - Confirm spawn coordinates
---  - Confirm ice spikes damage and undispelable
---  - Confirm enblizzard undispelable
-
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.AUTO_SPIKES, 1)
     mob:addStatusEffect(tpz.effect.ICE_SPIKES, 45, 0, 0)
@@ -29,7 +24,7 @@ function onSpikesDamage(mob, target, damage)
         INT_diff = 20 + (INT_diff - 20) * 0.5 -- INT above 20 is half as effective.
     end
 
-    local dmg = (damage + INT_diff) * 2 -- INT adjustment and base damage averaged together.
+    local dmg = (damage + INT_diff) * 1.3 -- INT adjustment and base damage averaged together.
     local params = {}
     params.bonusmab = 0
     params.includemab = false
