@@ -333,16 +333,29 @@ namespace luautils
 
     int32 SendEntityVisualPacket(lua_State* L)
     {
+        GLOBAL_MESSAGE_TYPE range = CHAR_INRANGE;
+
         if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
         {
+
             uint32 npcid = (uint32)lua_tointeger(L, 1);
             const char* command = lua_tostring(L, 2);
-
+            if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
+            {
+                if ((uint32)lua_tointeger(L, 3) == 2)
+                    range = CHAR_INRANGE_SELF;
+                else if ((uint32)lua_tointeger(L, 3) == 3)
+                    range = CHAR_INSHOUT;
+                else if ((uint32)lua_tointeger(L, 3) == 4)
+                    range = CHAR_INZONE;
+                else
+                    range = CHAR_INRANGE;
+            }
             CBaseEntity* PNpc = zoneutils::GetEntity(npcid, TYPE_NPC);
 
             if (PNpc != nullptr)
             {
-                PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityVisualPacket(PNpc, command));
+                PNpc->loc.zone->PushPacket(PNpc, range, new CEntityVisualPacket(PNpc, command));
             }
             return 0;
         }
