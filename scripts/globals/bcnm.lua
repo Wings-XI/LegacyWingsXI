@@ -1070,7 +1070,8 @@ function EventUpdateBCNM(player, csid, option, extras)
             return 0
         end
         local area = player:getLocalVar("[battlefield]area")
-        area = area + 1
+        area = area + 1     -- To increment to the next available area
+
         local battlefieldIndex = bit.rshift(option, 4)
         local battlefieldId = getBattlefieldIdByBit(player, battlefieldIndex)
         local effect = player:getStatusEffect(tpz.effect.BATTLEFIELD)
@@ -1103,6 +1104,7 @@ function EventUpdateBCNM(player, csid, option, extras)
             can_initiate = true
         end
         result = player:registerBattlefield(id, area, 0, can_initiate)
+
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
             if result == tpz.battlefield.returnCode.INCREMENT_REQUEST then
@@ -1156,7 +1158,7 @@ function EventUpdateBCNM(player, csid, option, extras)
                 end
 
                 for _, member in pairs(player:getAlliance()) do
-                    if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
+                    if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then                
                         member:registerBattlefield(id, area, player:getID(), false)
                         member:addStatusEffect(effect)
                     end
