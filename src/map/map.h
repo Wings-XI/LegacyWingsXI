@@ -100,6 +100,7 @@ struct map_config_t
     uint32 ah_max_fee;                // Maximum total AH fees/taxes
     uint32 ah_list_limit;             // Maximum open AH listings per player
 
+    uint8  max_level;                 // Max level obtainable
     float  exp_rate;                  // множитель получаемого опыта
     float  exp_loss_rate;             // same as exp rate but applies when player dies
     uint8  exp_party_gap_penalties;   // if 1 Party Gap Penalties will apply
@@ -188,6 +189,7 @@ struct map_config_t
     uint16 pl_penalty;
     uint16 conquest_auth_zone;        // Instance containing this zone does conquest tally calculation
     bool  enable_influence_boost;     // Nations that have not had 1st place for a long time receive an influence boost
+    bool  enable_low_level_xp_boost;  // Players receive x2 experience gain under level 30 and 1.5x experience gain under level 40
     bool   disable_rare_item_limit;   // Disable all limits on rare items (can hold multiple)
     bool   storage_mission_unlock;    // Storage unlocks with mission progress
     bool   storage_ignore_features;   // Ignore the account features for Mog Satchel and Mog Wardrobe 3+4

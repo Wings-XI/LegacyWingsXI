@@ -411,7 +411,7 @@ void CItem::setSoulPlateData(std::string name, uint8 fauna, uint8 subOfInterest,
 
 auto CItem::getSoulPlateData() -> std::tuple<std::string, uint8, uint8, uint8, uint8, uint16, uint8>
 {
-    auto   name = "";
+    auto name = UnPackSoultrapperName(m_extra);
     uint8 fauna = m_extra[16];
     uint8 subOfInterest = m_extra[17];
     uint8 ecoSystem = m_extra[18];

@@ -48,6 +48,12 @@ zones[tpz.zone.DYNAMIS_XARCABARD] =
         ANIMATED_SHIELD_DIALOG       = 7777, -- I am Aegis, the impervious shield of everlasting.
         PRISON_OF_SOULS_HAS_SET_FREE = 7809, -- e prison of souls has set free its captive spirits!
     },
+    mob =
+    {
+        DYNAMIS_LORD = 17330177,
+        YING         = 17330183,
+        YANG         = 17330184,
+    },
     npc =
     {
         QM =

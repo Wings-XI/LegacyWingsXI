@@ -21,6 +21,9 @@ end
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.EXCAVATION)
     tpz.chocobo.initZone(zone)
+
+    DisallowRespawn(ID.Tahrongi_Canyon.SERPOPARD_ISHTAR_S, false)
+    DisallowRespawn(ID.Tahrongi_Canyon.SERPOPARD_ISHTAR_N, false)
 end
 
 function onZoneIn(player, prevZone)
