@@ -15,10 +15,15 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    local inst = player:getBattlefield():getArea()
-    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (inst - 1) * 8
+    player:setLocalVar("[battlefield]area", battlefield:getArea())
+end
+
+function onBattlefieldInitialise(battlefield)
+    local area = battlefield:getArea()
+    local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
     for i = tile, tile + 7 do
-        GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
+        GetNPCByID(i):updateToEntireZone(tpz.status.NORMAL, tpz.anim.CLOSE_DOOR) -- Status must be universal
+        GetNPCByID(i):setLocalVar("Dropped", tpz.anim.CLOSE_DOOR)
     end
 end
 

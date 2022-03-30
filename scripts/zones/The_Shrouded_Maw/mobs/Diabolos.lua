@@ -8,7 +8,7 @@ local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
 -- 1) Make the diremites in the pit all aggro said player that falls into region. Should have a respawn time of 10 seconds.
 -- 2) Diremites also shouldnt follow you back to the fight area if you make it there. Should despawn and respawn instantly if all players
 --    make it back to the Diabolos floor area.
--- 3) ANIMATION Packet ids for instance 2 and 3 are wrong (needs guesswork). Sounds working.  << FIXED >>
+-- 3) ANIMATION Packet ids for instance 2 and 3 are wrong (needs guesswork). Sounds working.
 --    Update 2018-01-02 these no longer seem to work for any instance. neither animation nor sound.
 
 -- TODO: Diabolos Prime
