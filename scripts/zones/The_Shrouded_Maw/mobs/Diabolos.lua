@@ -65,7 +65,7 @@ function onMobFight(mob, target)
             if tile:getLocalVar("Dropped") ~= tpz.anim.OPEN_DOOR then
                 tile:setLocalVar("Dropped", tpz.anim.OPEN_DOOR)
                 SendEntityVisualPacket(tileId, animationSet[area + 1], 4)     -- Animation for floor dropping
-                SendEntityVisualPacket(tileId, "s123")          -- Tile dropping sound
+                SendEntityVisualPacket(tileId, "s123", 4)          -- Tile dropping sound
  
                 tile:timer(2750, function(tile)                 -- 2.7s second delay (ish)
                     tile:updateToEntireZone(tpz.status.NORMAL, tpz.anim.OPEN_DOOR)       -- Floor opens
