@@ -17,7 +17,7 @@ end
 function onTrigger(player, npc)
 
     if (player:hasKeyItem(tpz.ki.LETTER_FROM_THE_TENSHODO)) then
-        player:startEvent(10021, 0, tpz.ki.LETTER_FROM_THE_TENSHODO) -- During Quest "The Tenshodo Showdown"
+        player:startEvent(10021, 0, tpz.ki.LETTER_FROM_THE_TENSHODO, tpz.ki.TENSHODO_ENVELOPE) -- During Quest "The Tenshodo Showdown"
     elseif (player:hasKeyItem(tpz.ki.SIGNED_ENVELOPE)) then
         player:startEvent(10022) -- Finish Quest "The Tenshodo Showdown"
     else

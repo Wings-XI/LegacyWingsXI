@@ -15674,7 +15674,7 @@ INSERT INTO `mob_droplist` VALUES(2985, 0, 0, 1000, 2522, 488);
 INSERT INTO `mob_droplist` VALUES(2985, 0, 0, 1000, 6019, 34);
 INSERT INTO `mob_droplist` VALUES(2986, 0, 0, 1000, 18767, 97);
 INSERT INTO `mob_droplist` VALUES(2987, 0, 0, 1000, 15942, 128);
-INSERT INTO `mob_droplist` VALUES(2988, 0, 0, 1000, 16185, 220);
+INSERT INTO `mob_droplist` VALUES(2988, 0, 0, 1000, 16185, 351);
 INSERT INTO `mob_droplist` VALUES(2989, 0, 0, 1000, 18604, 426);
 INSERT INTO `mob_droplist` VALUES(2990, 0, 0, 1000, 15850, 50);
 INSERT INTO `mob_droplist` VALUES(2991, 0, 0, 1000, 15851, 65);
@@ -15687,7 +15687,7 @@ INSERT INTO `mob_droplist` VALUES(2996, 0, 0, 1000, 15614, 100);
 INSERT INTO `mob_droplist` VALUES(2997, 0, 0, 1000, 2851, 273);
 INSERT INTO `mob_droplist` VALUES(2998, 0, 0, 1000, 11339, 340);
 INSERT INTO `mob_droplist` VALUES(2999, 0, 0, 1000, 11338, 111);
-INSERT INTO `mob_droplist` VALUES(3000, 0, 0, 1000, 19305, 425);
+INSERT INTO `mob_droplist` VALUES(3000, 0, 0, 1000, 19305, 361);
 INSERT INTO `mob_droplist` VALUES(3001, 0, 0, 1000, 2854, 307);
 INSERT INTO `mob_droplist` VALUES(3002, 0, 0, 1000, 16027, 242);
 INSERT INTO `mob_droplist` VALUES(3003, 0, 0, 1000, 16014, 173);
@@ -16768,7 +16768,7 @@ INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4110, 125);
 INSERT INTO `mob_droplist` VALUES(3222, 1, 1, 11, 4111, 125);
 INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,2512,123); -- Lynx Hide
 INSERT INTO `mob_droplist` VALUES (3223,0,0,1000,5667,122); -- Lynx Meat
-INSERT INTO `mob_droplist` VALUES(3224, 1, 1, 1000, 19234, 220); -- Lyft Hexagun
+INSERT INTO `mob_droplist` VALUES(3224, 0, 0, 1000, 19234, 220); -- Lyft Hexagun
 -- Buarainech
 INSERT INTO `mob_droplist` VALUES(3225, 0, 0, 1000, 2858, 250); -- Wolfram Steel Ingot
 INSERT INTO `mob_droplist` VALUES(3225, 0, 1, 1000, 2858, 250); -- Wolfram Steel Ingot

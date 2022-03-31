@@ -54,6 +54,8 @@ zones[tpz.zone.TAHRONGI_CANYON] =
             [17256560] = 17256563, -- -9.176 -8.191 -64.347 (south)
             [17256686] = 17256690, -- 22.360 23.757 281.584 (north)
         },
+        SERPOPARD_ISHTAR_N = 17256563,
+        SERPOPARD_ISHTAR_S = 17256690,
         HERBAGE_HUNTER_PH =
         {
             [17256835] = 17256836, -- -119.301, 24.087, 448.636

@@ -23,9 +23,9 @@ function onTrigger(player, npc)
     local hittingTheMarquisateHagainCS = player:getCharVar("hittingTheMarquisateHagainCS")
 
     if (hittingTheMarquisateHagainCS == 1) then -- start first part of miniquest thf af3
-        player:startEvent(10003, 0, tpz.ki.BOMB_INCENSE)
+        player:startEvent(10003, 0, tpz.ki.BOMB_INCENSE, 1091)
     elseif (hittingTheMarquisateHagainCS >= 2 and hittingTheMarquisateHagainCS < 9) then -- dialog during mini quest thf af3
-        player:startEvent(10004, 0, tpz.ki.BOMB_INCENSE)
+        player:startEvent(10004, 0, tpz.ki.BOMB_INCENSE, 1091)
     elseif (hittingTheMarquisateHagainCS == 9) then
         player:startEvent(10006)    -- after the mini quest
     else

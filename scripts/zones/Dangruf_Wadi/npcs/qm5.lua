@@ -24,7 +24,7 @@ function onTrade(player, npc, trade)
                 player:startEvent(138, 1092, 0, rand1, rand2) -- complete 3/3 gamble mini quest
             else
                 player:messageSpecial(ID.text.YOU_PLACE_ITEM, 0, 4362)
-                player:startEvent(141, 0, 0, rand1, rand2) -- player looses
+                player:startEvent(141, 1092, 0, rand1, rand2) -- player looses
             end
         elseif thickAsThievesGamblingCS < 4 then -- trading out of order
             player:messageSpecial(ID.text.JUST_WONT_DO)
