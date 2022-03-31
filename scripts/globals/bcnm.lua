@@ -1102,6 +1102,8 @@ function EventUpdateBCNM(player, csid, option, extras)
  
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
+
+        -- If the player already has a battlefield effect, they can't initiate another one
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
             can_initiate = true
         end

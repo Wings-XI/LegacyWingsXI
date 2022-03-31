@@ -16,7 +16,7 @@ local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
 
 
 function onMobSpawn(mob)
-     local dBase = ID.mob.DIABOLOS_OFFSET
+    local dBase = ID.mob.DIABOLOS_OFFSET
     local dPrimeBase = dBase + 27
     local triggerVal = math.random(35,75)
     if mob:getID() >= dPrimeBase then dBase = dPrimeBase end  -- Prime "block" of mobs is offset 27 from CoP mobs
