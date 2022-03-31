@@ -333,7 +333,7 @@ namespace luautils
 
     int32 SendEntityVisualPacket(lua_State* L)
     {
-        GLOBAL_MESSAGE_TYPE range
+        GLOBAL_MESSAGE_TYPE range;
 
         if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
         {
