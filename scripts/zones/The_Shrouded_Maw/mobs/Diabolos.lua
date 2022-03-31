@@ -25,7 +25,7 @@ function onMobSpawn(mob)
 
     mob:setLocalVar("TileTriggerHPP", triggerVal) -- Starting point for tile drops
     mob:setLocalVar("Area", area)
-    --mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 
     -- Only add these for the CoP Diabolos NOT Prime
     local copDiabolos = ID.mob.DIABOLOS_OFFSET
