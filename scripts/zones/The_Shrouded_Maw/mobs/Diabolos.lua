@@ -20,11 +20,12 @@ function onMobSpawn(mob)
     local dPrimeBase = dBase + 27
     local triggerVal = math.random(35,75)
     if mob:getID() >= dPrimeBase then dBase = dPrimeBase end  -- Prime "block" of mobs is offset 27 from CoP mobs
-        
+    
     local area = utils.clamp((mob:getID() - dBase) / 7 + 1, 1, 3)
 
     mob:setLocalVar("TileTriggerHPP", triggerVal) -- Starting point for tile drops
     mob:setLocalVar("Area", area)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 
     -- Only add these for the CoP Diabolos NOT Prime
     local copDiabolos = ID.mob.DIABOLOS_OFFSET
