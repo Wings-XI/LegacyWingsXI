@@ -13,16 +13,20 @@ function onBattlefieldTick(battlefield, tick)
     tpz.battlefield.onBattlefieldTick(battlefield, tick)
 end
 
-function onBattlefieldRegister(player, battlefield)
-    local area = battlefield:getArea()
-    player:setLocalVar("Area", area)
-
+function onBattlefieldInitialise(battlefield)
     -- Reset the tiles in that area to be closed, and tell them that they're closed
+    local area = battlefield:getArea()
     local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
+    
     for i = tile, tile + 7 do
-        GetNPCByID(i):setAnimation(tpz.anim.CLOSE_DOOR)
-        GetNPCByID(i):setLocalVar("Dropped", 0)
+        GetNPCByID(i):updateToEntireZone(tpz.status.NORMAL, tpz.anim.CLOSE_DOOR)
+        GetNPCByID(i):setLocalVar("Dropped", tpz.anim.CLOSE_DOOR)
     end
+end
+
+function onBattlefieldRegister(player, battlefield)
+    -- set player battlefield area
+     player:setLocalVar("[battlefield]area", battlefield:getArea())
 end
 
 function onBattlefieldEnter(player, battlefield)
