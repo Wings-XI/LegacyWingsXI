@@ -26,8 +26,8 @@ end
 
 function onMobDeath(mob, player, isKiller)
     for _, member in pairs(player:getParty()) do
-        local chance = math.random(1,10)
-        if chance < 5 and member:hasKeyItem(tpz.ki.LUMINOUS_YELLOW_FRAGMENT) == false and member:getCurrentMission(ASA) == tpz.mission.id.asa.SHANTOTTO_IN_CHAINS then
+        local chance = math.random(1,2)
+        if chance == 1 and member:hasKeyItem(tpz.ki.LUMINOUS_YELLOW_FRAGMENT) == false and member:getCurrentMission(ASA) == tpz.mission.id.asa.SHANTOTTO_IN_CHAINS then
             member:addKeyItem(tpz.ki.LUMINOUS_YELLOW_FRAGMENT)
             member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LUMINOUS_YELLOW_FRAGMENT)
         end

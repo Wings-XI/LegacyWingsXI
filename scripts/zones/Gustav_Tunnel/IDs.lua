@@ -24,6 +24,7 @@ zones[tpz.zone.GUSTAV_TUNNEL] =
         CONQUEST_BASE            = 7049,  -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET   = 7208,  -- You can't fish here.
         SENSE_OMINOUS_PRESENCE   = 7310,  -- You sense an ominous presence...
+        OUTCROPPING              = 7372,  -- You see several sets of restless footprints about the outcropping.
         BATTLE_TIME              = 7397,  -- You have <min> (Earth time) remaining to complete the battle.
         ASA_BATTLE_START         = 7489,  -- We don't know what you're doing here, but truth be told, we're not really interested.
         ASA_MID_BATTLE           = 7490,  -- Putting up a fight, eh? Gorattz! Bompupu! Show [him/her] what the Tenshodo thinks of meddlesome adventurers!

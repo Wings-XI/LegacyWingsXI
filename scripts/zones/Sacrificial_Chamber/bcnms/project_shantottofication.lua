@@ -3,6 +3,7 @@
 -- ASA13 Final Battle
 -----------------------------------
 require("scripts/globals/battlefield")
+local ID = require("scripts/zones/Sacrificial_Chamber/IDs")
 -----------------------------------
 
 function onBattlefieldInitialise(battlefield)
@@ -17,47 +18,33 @@ end
 
 function onBattlefieldEnter(player, battlefield)
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED) then
-        player:addStatusEffectEx(tpz.effect.BARTHUNDER, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
+        player:addStatusEffectEx(tpz.effect.BARTHUNDER, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.THUNDERRES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_GREED)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY) then
-        if player:hasStatusEffect(tpz.effect.BARTHUNDER) then
-            player:setMod(tpz.mod.ICERES, 150)
-        else
-            player:addStatusEffectEx(tpz.effect.BARBLIZZARD, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
-        end
+        player:addStatusEffectEx(tpz.effect.BARBLIZZARD, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.ICERES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE) then
-        if player:hasStatusEffect(tpz.effect.BARBLIZZARD) then
-            player:setMod(tpz.mod.WINDRES, 150)
-        else
-            player:addStatusEffectEx(tpz.effect.BARAERO, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
-        end
+        player:addStatusEffectEx(tpz.effect.BARAERO, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.WINDRES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT) then
-        if player:hasStatusEffect(tpz.effect.BARAERO) then
-            player:setMod(tpz.mod.EARTHRES, 150)
-        else
-            player:addStatusEffectEx(tpz.effect.BARSTONE, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
-        end
+        player:addStatusEffectEx(tpz.effect.BARSTONE, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.EARTHRES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE) then
-        if player:hasStatusEffect(tpz.effect.BARSTONE) then
-            player:setMod(tpz.mod.FIRERES, 150)
-        else
-            player:addStatusEffectEx(tpz.effect.BARFIRE, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
-        end
+        player:addStatusEffectEx(tpz.effect.BARFIRE, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.FIRERES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE) then
-        if player:hasStatusEffect(tpz.effect.BARFIRE) then
-            player:setMod(tpz.mod.WATERRES, 150)
-        else
-            player:addStatusEffectEx(tpz.effect.BARWATER, tpz.effect.MAGIC_DEF_BOOST, 150, 0, 0)
-        end
+        player:addStatusEffectEx(tpz.effect.BARWATER, tpz.effect.MAGIC_DEF_BOOST, 0, 0, 0)
+        player:setMod(tpz.mod.WATERRES, 150)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_BALE)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) then
@@ -103,12 +90,43 @@ function onBattlefieldEnter(player, battlefield)
         player:setLocalVar("Shantottofication", 1)
         player:delKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)
     end
+
+    player:getStatusEffect(tpz.effect.BARTHUNDER):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.BARBLIZZARD):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.BARAERO):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.BARSTONE):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.BARFIRE):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.BARWATER):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.STR_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.DEX_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.VIT_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.AGI_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.INT_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.MND_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.CHR_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.MAX_HP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
+    player:getStatusEffect(tpz.effect.MAX_MP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
 end
+
 
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
         local name, clearTime, partySize = battlefield:getRecord()
-        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), 0)
+        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 163, battlefield:getLocalVar("[cs]bit"), 0)
+
+        local now = tonumber(os.date("%j"))
+        local lastTonberry = player:getCharVar("LastTonberryKey")
+
+        player:addExp(750)
+
+        if player:getCharVar("ASA_BCNM") == 1 then
+            player:setCharVar("ASA_BCNM", 0)
+            if not player:hasKeyItem(tpz.ki.TONBERRY_KEY) and now ~= lastTonberry and player:getCurrentMission(ASA) >= tpz.mission.id.asa.BATTARU_ROYALE then
+                player:setCharVar("LastTonberryKey", os.date("%j"))
+                player:addKeyItem(tpz.ki.TONBERRY_KEY)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TONBERRY_KEY)
+            end
+        end
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002)
     end

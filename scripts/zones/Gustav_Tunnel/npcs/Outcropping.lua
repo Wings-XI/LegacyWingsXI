@@ -24,6 +24,8 @@ function onTrigger(player, npc)
         player:PrintToPlayer("You are now on the mission Sugar Coated Subterfuge.",29)
         player:completeMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II)
         player:addMission(ASA, tpz.mission.id.asa.SUGAR_COATED_SUBTERFUGE)
+    else
+        player:messageSpecial(ID.text.OUTCROPPING)
     end
 end
 

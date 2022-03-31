@@ -1478,8 +1478,10 @@ INSERT INTO `mob_skills` VALUES(2455, 1692, 'level-4-holy', 1, 7.0, 2000, 1000, 
 INSERT INTO `mob_skills` VALUES(2456, 1693, 'level-5-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2457, 1694, 'level-6-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2460, 1696, 'fomor_level_up', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2486, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2488, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2486, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 14, 9, 0);
+INSERT INTO `mob_skills` VALUES(2487, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);
+INSERT INTO `mob_skills` VALUES(2488, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);
+INSERT INTO `mob_skills` VALUES(2489, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 14, 9, 0);
 INSERT INTO `mob_skills` VALUES(2515, 2072, 'phason_beam', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2519, 1756, 'dexter_wing', 1, 18.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2520, 1757, 'sinister_wing', 1, 18.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);

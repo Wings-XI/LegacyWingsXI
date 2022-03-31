@@ -37,25 +37,49 @@ function onMobFight(mob, target)
         mob:castSpell(339, mob)
         mob:setLocalVar("utsuWaitTime", os.time() + 4)
         mob:setLocalVar("utsuSpam", utsuCount - 1)
-    elseif utsuCount == 1 and targetPhase == 0 and os.time() > utsuWait then
+        mob:setLocalVar("cloneTimer", os.time() + 1)
+    elseif utsuCount == 1 and targetPhase == 0 and os.time() > utsuWait and os.time() >= mob:getLocalVar("cloneTimer") then
         mob:setLocalVar("targetPhase", 1)
         mob:setLocalVar("utsuWaitTime", os.time() + 10)
+        mob:setLocalVar("cloneTimer", 0)
+        local pos = mob:getPos()
+        local move = 0
         for i = ID.mob.GORATTZ + 1, ID.mob.GORATTZ + 3 do
-            DisallowRespawn(i, false)
-            SpawnMob(i)
-            GetMobByID(i):updateEnmity(target)
-            GetMobByID(i):addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
+            move = move + 1
+            local clone = GetMobByID(i)
+            if not clone:isSpawned() then
+                clone:setSpawn(pos.x + move, pos.y - 0.5, pos.z - move, pos.rot)
+                clone:spawn()
+                clone:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
+                clone:updateEnmity(target)
+            end
         end
     end
 
-    if targetPhase >= 1 and os.time() > utsuWait then
-        for i = ID.mob.GORATTZ + 1, ID.mob.GORATTZ + 3 do
-            if not GetMobByID(i):isSpawned() then
-                mob:castSpell(339, mob)
-                SpawnMob(i)
-                GetMobByID(i):addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
-                GetMobByID(i):updateEnmity(target)
-                mob:setLocalVar("utsuWaitTime", os.time() + 10)
+    if targetPhase >= 1 and os.time() > utsuWait and
+       (not GetMobByID(ID.mob.GORATTZ + 1):isSpawned() or
+        not GetMobByID(ID.mob.GORATTZ + 2):isSpawned() or
+        not GetMobByID(ID.mob.GORATTZ + 3):isSpawned()) then
+
+        if mob:getLocalVar("cloneTimer") == 0 then
+            mob:castSpell(339, mob)
+            mob:setLocalVar("utsuWaitTime", os.time() + 10)
+            mob:setLocalVar("cloneTimer", os.time())
+        end
+        if os.time() > mob:getLocalVar("cloneTimer") then
+            mob:setLocalVar("utsuWaitTime", os.time() + 10)
+            mob:setLocalVar("cloneTimer", 0)
+            local pos = mob:getPos()
+            local move = 0
+            for i = ID.mob.GORATTZ + 1, ID.mob.GORATTZ + 3 do
+                move = move + 1
+                local clone = GetMobByID(i)
+                if not clone:isSpawned() then
+                    clone:setSpawn(pos.x + move, pos.y - 0.5, pos.z - move, pos.rot)
+                    clone:spawn()
+                    clone:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
+                    clone:updateEnmity(target)
+                end
             end
         end
     end
@@ -92,6 +116,13 @@ function onMobDeath(mob, player, isKiller)
         spawner:delPartyEffect(276) -- Remove Confrontation
         for _, member in pairs(spawner:getAlliance()) do
             member:setCharVar("ASA_enemyPhase", 2)
+            local now = tonumber(os.date("%j"))
+            local lastChocobo = member:getCharVar("LastCactuarKey")
+            if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastChocobo and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II then
+                member:setCharVar("LastCactuarKey", os.date("%j"))
+                member:addKeyItem(tpz.ki.CACTUAR_KEY)
+                member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
+            end
         end
     end
 end

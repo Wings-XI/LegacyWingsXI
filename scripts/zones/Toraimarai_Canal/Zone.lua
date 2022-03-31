@@ -75,12 +75,10 @@ end
 function onGameHour(zone)
     local sapMove = GetServerVariable("ASA_SapMoveTime")
     if os.time() > sapMove then
-        print("moving")
         sapMove = os.time() + math.random(18000,25200)
         SetServerVariable("ASA_SapMoveTime", sapMove)
 
         local position = math.random(1,3)
-        print(position.." new pos")
         if position == 1 then
             for offset = 1, 8 do
                 GetNPCByID(ID.npc.SAP_OFFSET + offset):setPos(posOne[offset][1], posOne[offset][2], posOne[offset][3])

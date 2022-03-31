@@ -9,7 +9,6 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:showText(mob, ID.text.ASA_BATTLE_START)
     mob:setLocalVar("UtsuSpam", 0)
     mob:setLocalVar("clonesDead", 0)
     mob:setLocalVar("targetPhase", 0)
@@ -25,6 +24,10 @@ function onMobSpawn(mob)
     mob:SetMagicCastingEnabled(true)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
     mob:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
+end
+
+function onMobEngaged(mob, target)
+    mob:showText(mob, ID.text.ASA_BATTLE_START)
 end
 
 function onMobFight(mob, target)
@@ -119,6 +122,13 @@ function onMobDeath(mob, player, isKiller)
         spawner:delPartyEffect(276) -- Remove Confrontation
         for _, member in pairs(spawner:getAlliance()) do
             member:setCharVar("ASA_enemyPhase", 2)
+            local now = tonumber(os.date("%j"))
+            local lastCactuar = member:getCharVar("LastCactuarKey")
+            if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastCactuar and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II then
+                member:setCharVar("LastCactuarKey", os.date("%j"))
+                member:addKeyItem(tpz.ki.CACTUAR_KEY)
+                member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
+            end
         end
     end
 end
