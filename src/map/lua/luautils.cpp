@@ -342,15 +342,26 @@ namespace luautils
             const char* command = lua_tostring(L, 2);
             if (!lua_isnil(L, 3) && lua_isnumber(L, 3))
             {
-                if ((uint32)lua_tointeger(L, 3) == 2)
-                    range = CHAR_INRANGE_SELF;
-                else if ((uint32)lua_tointeger(L, 3) == 3)
-                    range = CHAR_INSHOUT;
-                else if ((uint32)lua_tointeger(L, 3) == 4)
-                    range = CHAR_INZONE;
-                else
+                switch ((uint32)lua_tointeger(L, 3))
+                {
+                case 1:
                     range = CHAR_INRANGE;
+                    break;
+                case 2:
+                    range = CHAR_INRANGE_SELF;
+                    break;
+                case 3:
+                    range = CHAR_INSHOUT;
+                    break;
+                case 4:
+                    range = CHAR_INZONE;
+                    break;
+                default:
+                    range = CHAR_INRANGE;
+                    break;
+                }
             }
+
             CBaseEntity* PNpc = zoneutils::GetEntity(npcid, TYPE_NPC);
 
             if (PNpc != nullptr)

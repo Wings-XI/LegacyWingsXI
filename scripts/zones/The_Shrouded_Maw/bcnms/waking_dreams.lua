@@ -26,10 +26,8 @@ function onBattlefieldInitialise(battlefield)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    local area = battlefield:getArea()
-    player:setLocalVar("[battlefield]area", area)
-
-
+    -- set player battlefield area
+     player:setLocalVar("[battlefield]area", battlefield:getArea())
 end
 
 function onBattlefieldEnter(player, battlefield)

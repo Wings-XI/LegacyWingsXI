@@ -53,8 +53,7 @@ function onMobFight(mob, target)
             {"byc1", "bya1", "byb1"},
         }
 
-          local hpp = math.floor(mob:getHP()*100/mob:getMaxHP())
-
+    local hpp = math.floor(mob:getHP()*100/mob:getMaxHP())
     if hpp < trigger then   -- Trigger the tile drop events
         mob:setLocalVar("TileTriggerHPP", -1)            -- Prevent tiles from being dropped twice
         local tileBase = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area) * 8
@@ -63,8 +62,8 @@ function onMobFight(mob, target)
             local tileId = tileBase + offset - 1
             local tile = GetNPCByID(tileId)
 
-            if tile:getLocalVar("Dropped") ~= tpz.status.OPEN_DOOR then
-                tile:setLocalVar("Dropped", tpz.status.OPEN_DOOR)
+            if tile:getLocalVar("Dropped") ~= tpz.anim.OPEN_DOOR then
+                tile:setLocalVar("Dropped", tpz.anim.OPEN_DOOR)
                 SendEntityVisualPacket(tileId, animationSet[area + 1], 4)     -- Animation for floor dropping
                 SendEntityVisualPacket(tileId, "s123")          -- Tile dropping sound
  
