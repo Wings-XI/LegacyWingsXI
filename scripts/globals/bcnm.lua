@@ -1099,8 +1099,7 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
-    player:PrintToPlayer(string.format("START: area=%i option=%i index=%i id=%i", area, option, battlefieldIndex, battlefieldId))
-
+ 
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then

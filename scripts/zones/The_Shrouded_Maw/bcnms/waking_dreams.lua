@@ -16,7 +16,7 @@ end
 
 function onBattlefieldRegister(player, battlefield)
     local area = battlefield:getArea()
-    player:setLocalVar("Area", area)
+    player:setLocalVar("[battlefield]area", area)
 
     -- Reset the tiles in that area to be closed, and tell them that they're closed
     local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
