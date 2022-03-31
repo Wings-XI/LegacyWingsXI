@@ -1107,6 +1107,11 @@ function EventUpdateBCNM(player, csid, option, extras)
             can_initiate = true
         end
 
+        -- If this is a Shrouded Maw battlefield, and the player has been assigned an area, use it instead
+        if (battlefieldId == 704 or battlefieldId == 706) and player:getLocalVar("[battlefield]area") > 0 then
+            area = player:getLocalVar("[battlefield]area")
+        end
+
         result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
@@ -1159,16 +1164,12 @@ function EventUpdateBCNM(player, csid, option, extras)
                         end
                     end
                 end
-                player:PrintToPlayer(string.format("INITIATOR: area=%i initiator=%i", area, initiatorId))
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
                         member:registerBattlefield(id, area, player:getID(), false)
                         member:addStatusEffect(effect)
                     end
                 end
-            elseif battlefieldId == 704 or battlefieldId == 706 then
-                area = battlefield:getArea()
-                player:PrintToPlayer(string.format("PARTY MEMBER: area=%i initiator=%i", area, initiatorId))
             end
         end
         player:updateEvent(result, battlefieldIndex, 0, clearTime, partySize, skip)
