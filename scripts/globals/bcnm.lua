@@ -1108,6 +1108,8 @@ function EventUpdateBCNM(player, csid, option, extras)
         local partySize = 1
         switch (battlefieldId): caseof
         {
+            [704]  = function() area = math.random(1, 3) end, -- CoP 3-5, possible tile layouts
+            [706]  = function() area = math.random(1, 3) end, -- Waking Dreams, possible tile layouts
             [1290] = function() area = 2 end, -- NW_Apollyon
             [1291] = function() area = 1 end, -- SW_Apollyon
             [1292] = function() area = 4 end, -- NE_Apollyon
@@ -1123,11 +1125,20 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
+ 
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
+
+        -- If the player already has a battlefield effect, they can't initiate another one
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
             can_initiate = true
         end
+
+        -- If this is a Shrouded Maw battlefield, and the player has been assigned an area, use it instead
+        if (battlefieldId == 704 or battlefieldId == 706) and player:getLocalVar("[battlefield]area") > 0 then
+            area = player:getLocalVar("[battlefield]area")
+        end
+
         result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
@@ -1180,7 +1191,6 @@ function EventUpdateBCNM(player, csid, option, extras)
                         end
                     end
                 end
-
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
                         member:registerBattlefield(id, area, player:getID(), false)
