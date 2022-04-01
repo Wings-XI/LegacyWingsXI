@@ -7,7 +7,6 @@ mixins = {require("scripts/mixins/families/avatar")}
 
 function onMobSpawn(mob)
     local master = GetMobByID(mob:getID() - 1)
-    print(master:getName())
     if string.find(master:getName(), "Lights") then
         mob:setModelId(791)
     elseif string.find(master:getName(), "Shadows") then

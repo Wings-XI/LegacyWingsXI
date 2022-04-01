@@ -30,14 +30,10 @@ function onTrade(player, npc, trade)
     local uggalepihWhistle = trade:hasItemQty(1184, 1)
     local kit = player:getCharVar("ASA_kit")
     local enfeebKit = trade:hasItemQty(kit, 1)
-    if enfeebKit then
-        print("true")
-    end
 
     if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
         player:showText(npc, ID.text.GET_LOST)
     elseif enfeebKit and player:getCurrentMission(ASA) > tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION then -- Moogle Key
-        print("true2")
         if not player:hasKeyItem(tpz.ki.MOOGLE_KEY) and now ~= player:getCharVar("LastMoogleKey") then
             player:tradeComplete()
             player:addKeyItem(tpz.ki.MOOGLE_KEY)
@@ -86,7 +82,6 @@ end
 
 function onEventUpdate(player, csid, option)
     if csid == 323 then
-        print(option)
         if option == 100 then -- Viridian Key
             if player:hasKeyItem(tpz.ki.BOWL_OF_BLAND_GOBLIN_SALAD) and player:hasKeyItem(tpz.ki.JUG_OF_GREASY_GOBLIN_JUICE) and player:hasKeyItem(tpz.ki.CHUNK_OF_SMOKED_GOBLIN_GRUB) then
                 player:updateEvent(1)
