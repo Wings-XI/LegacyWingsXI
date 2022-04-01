@@ -55,11 +55,14 @@ zones[tpz.zone.THE_SANCTUARY_OF_ZITAH] =
             [17273276] = 17273278, -- -391.184 -0.269 -159.086
             [17273277] = 17273278, -- -378.456 0.425 -162.489
         },
-        GUARDIAN_TREANT = 17272838,
-        DOOMED_PILGRIMS = 17272839,
-        NOBLE_MOLD      = 17273278,
-        ISONADE         = 17273285,
-        GREENMAN        = 17273295,
+        SKELETON_SCUFFLER = 17273306,
+        BLEST_BONES       = 17273309,
+        HOLEY_HORROR      = 17273312,
+        GUARDIAN_TREANT   = 17272838,
+        DOOMED_PILGRIMS   = 17272839,
+        NOBLE_MOLD        = 17273278,
+        ISONADE           = 17273285,
+        GREENMAN          = 17273295,
     },
     npc =
     {

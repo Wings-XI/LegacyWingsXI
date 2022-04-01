@@ -20,7 +20,22 @@ zones[tpz.zone.SACRIFICIAL_CHAMBER] =
         CANNOT_ENTER_LEVEL_RESTRICTED = 7021, -- Your party is unable to participate because certain members' levels are restricted.
         CONQUEST_BASE                 = 7049, -- Tallying conquest results...
         ORB_MESSAGE_OFFSET            = 7523, -- There is a crack in the <item>. It no longer contains a monster.
-        DOOR_SHUT                     = 7690, -- The door is firmly shut.
+        DSHANTOTTO_ENGAGE             = 7622, -- We warmly welcome you to the place of your unmaking.
+        SHANTOTTO_ENGAGE              = 7623, -- From your ground bones, a loaf of bread we shall be baking.
+        DSHANTOTTO_75                 = 7624, -- We shall curse you unto death! Prepare to breathe your final breath!
+        SHANTOTTO_75                  = 7625, -- We will make you beg to die! Six fulms under you will lie!
+        DSHANTOTTO_50                 = 7626, -- Naughty children shall receive no quarter! Curl up and die, this is your empress's order!
+        SHANTOTTO_50                  = 7627, -- You've long overstayed your welcome! The punishment will be brutal and gruesome!
+        DSHANTOTTO_25                 = 7628, -- Which way do you like it--slow or fast? Should you lose a limb, be not aghast!
+        SHANTOTTO_25                  = 7629, -- You'll wish you were never born! From your torso limbs will be torn!
+        SHANTOTTO_METEOR1             = 7630, -- Steel yourself for a wicked fright!
+        SHANTOTTO_METEOR2             = 7631, -- We shall set your pants alight!
+        DSHANTOTTO_METEOR1            = 7632, -- The world shall bow before our might!
+        DSHANTOTTO_DEATH              = 7633, -- H-how could this be? This outcome, we did not foresee...
+        SHANTOTTO_DEATH               = 7634, -- Be this a dream? Or is it real? This ending falls sorely short of ideal...
+        DSHANTOTTO_DISENGAGE          = 7635, -- 'Twas high time you were made to know that your abilities are purely for show. O〜hohohohoho!
+        SHANTOTTO_DISENGAGE           = 7636, -- A fitting end for a talentless crew that tried to bite off more than it could chew. O〜hohohohoho!
+        DOOR_SHUT                     = 7689, -- The door is firmly shut.
     },
     mob =
     {

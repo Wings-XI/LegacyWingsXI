@@ -348,7 +348,7 @@ local battlefields = {
         { 0,  128,    0},   -- The Temple of Uggalepih (ZM4)
         { 1,  129, 1130},   -- Jungle Boogymen (BS60)
         { 2,  130, 1130},   -- Amphibian Assault (BS60)
-     -- { 3,  131,    0},   -- Project: Shantottofication (ASA13)
+        { 3,  131,    0},   -- Project: Shantottofication (ASA13)
      -- { 4,  132, 3352},   -- Whom Wilt Thou Call (KC50)
      -- { 5,    ?, 4063},   -- *Jungle Boogymen (SKC20)
      -- { 6,    ?, 4063},   -- *Amphibian Assault (SKC20)
@@ -387,7 +387,7 @@ local battlefields = {
         { 0,  224,    0},   -- The Moonlit Path (Quest)
         { 1,  225,    0},   -- Moon Reading (Windy 9-2)
      -- { 2,  226,    0},   -- Waking the Beast (Quest)
-     -- { 3,  227,    0},   -- Battaru Royale (ASA10)
+        { 3,  227,    0},   -- Battaru Royale (ASA10)
      -- { 4,    ?,    0},   -- *The Moonlit Path (HTMBF)
      -- { 5,    ?,    0},   -- *Waking the Beast (HTMBF)
     },
@@ -580,6 +580,14 @@ function checkReqs(player, npc, bfid, registrant)
         [ 103] = function() return ( mjob == tpz.job.SMN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SMN LB5)
         [ 116] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [ 128] = function() return ( roz == mi.zilart.THE_TEMPLE_OF_UGGALEPIH                                                                                               ) end, -- ZM4: The Temple of Uggalepih
+        [ 131] = function() return ( player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_REGRET) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RAGE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_AGONY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DOLOR) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RANCOR) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)                                    ) end, -- ASA13: Project: Shantottofication
         [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                          ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                           ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == tpz.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
@@ -589,6 +597,10 @@ function checkReqs(player, npc, bfid, registrant)
         [ 196] = function() return ( mjob == tpz.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
+        [ 227] = function() return ( player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
+                                     or player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL)
+                                     or player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)
+                                     or player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)                                             ) end, -- ASA10: Battaru Royale
         [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                            ) end, -- ZM8: Return to Delkfutt's Tower
         [ 262] = function() return ( player:hasKeyItem(tpz.ki.OMNIS_STONE) and not player:hasKeyItem(tpz.ki.EBON_KEY)                                                       ) end, -- ACP11: Ode of Life Bestowing
         [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(tpz.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
@@ -702,6 +714,18 @@ function checkReqs(player, npc, bfid, registrant)
     -- requirements to enter a battlefield already registered by a party member
     local enterReqs =
     {
+        [ 131] = function() return ( player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_REGRET) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RAGE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_AGONY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DOLOR) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RANCOR) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY) or
+                                     player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT) or player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)                    ) end, -- ASA13: Project: Shantottofication
+        [ 227] = function() return ( player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL) or
+                                     player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) or
+                                     player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL) or
+                                     player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)                                ) end, -- ASA10: Battaru Royale
         [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Follow the White Rabbit
         [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: When Hell Freezes Over
         [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Brothers
@@ -811,11 +835,13 @@ function checkSkip(player, bfid)
         [  67] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.ON_MY_WAY) or (basty == mi.bastok.ON_MY_WAY and natStat > 2)                                                       ) end, -- Basty 7-2: On My Way
         [  96] = function() return ( mission2_3c                                                                                                                                                     ) end, -- Mission 2-3
         [  99] = function() return ( player:hasCompletedMission(WINDURST, mi.windurst.SAINTLY_INVITATION) or (windy == mi.windurst.SAINTLY_INVITATION and natStat > 1)                               ) end, -- Windy 6-2: A Saintly Invitation
+        [ 131] = function() return ( player:hasCompletedMission(ASA, mi.asa.PROJECT_SHANTOTTOFICATION)                                                                                               ) end, -- ASA13: Project Shantottofication
         [ 160] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.SHADOW_LORD) or (nat == mi.nation.SHADOW_LORD and natStat > 3)                                         ) end, -- Mission 5-2
         [ 161] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.WHERE_TWO_PATHS_CONVERGE) or (basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat > 4)                         ) end, -- Basty 9-2: Where Two Paths Converge
         [ 192] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THROUGH_THE_QUICKSAND_CAVES)                                                                                       ) end, -- ZM6: Through the Quicksand Caves
         [ 224] = function() return ( player:hasCompletedQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) or player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)                                     ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( player:hasCompletedMission(WINDURST, mi.windurst.MOON_READING) or (windy == mi.windurst.MOON_READING and natStat > 4)                                           ) end, -- Windy 9-2: Moon Reading
+        [ 227] = function() return ( player:hasCompletedMission(ASA, mi.asa.BATTARU_ROYALE)                                                                                                          ) end, -- ASA10: Battaru Royale
         [ 256] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.RETURN_TO_DELKFUTTS_TOWER)                                                                                         ) end, -- ZM8: Return to Delkfutt's Tower
         [ 288] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.ARK_ANGELS)                                                                                                        ) end, -- ZM14: Ark Angels (Hume)
         [ 289] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.ARK_ANGELS)                                                                                                        ) end, -- ZM14: Ark Angels (Tarutaru)
@@ -1082,6 +1108,8 @@ function EventUpdateBCNM(player, csid, option, extras)
         local partySize = 1
         switch (battlefieldId): caseof
         {
+            [704]  = function() area = math.random(1, 3) end, -- CoP 3-5, possible tile layouts
+            [706]  = function() area = math.random(1, 3) end, -- Waking Dreams, possible tile layouts
             [1290] = function() area = 2 end, -- NW_Apollyon
             [1291] = function() area = 1 end, -- SW_Apollyon
             [1292] = function() area = 4 end, -- NE_Apollyon
@@ -1097,11 +1125,20 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
+ 
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
+
+        -- If the player already has a battlefield effect, they can't initiate another one
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
             can_initiate = true
         end
+
+        -- If this is a Shrouded Maw battlefield, and the player has been assigned an area, use it instead
+        if (battlefieldId == 704 or battlefieldId == 706) and player:getLocalVar("[battlefield]area") > 0 then
+            area = player:getLocalVar("[battlefield]area")
+        end
+
         result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
@@ -1154,7 +1191,6 @@ function EventUpdateBCNM(player, csid, option, extras)
                         end
                     end
                 end
-
                 for _, member in pairs(player:getAlliance()) do
                     if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
                         member:registerBattlefield(id, area, player:getID(), false)

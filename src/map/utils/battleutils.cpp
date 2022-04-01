@@ -1665,7 +1665,7 @@ namespace battleutils
             upperLimit = 1.0f;
         else if (cRatio <= 3.0f)
             upperLimit = cRatio;
-        
+
         if (cRatio < 0.9f)
             lowerLimit = cRatio;
         else if (cRatio < 1.1f)
@@ -2034,7 +2034,7 @@ namespace battleutils
         int32 baseDamage = damage;
         ATTACKTYPE attackType = ATTACK_PHYSICAL;
         DAMAGETYPE damageType = DAMAGE_NONE;
-            
+
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
         {
             attackType = ATTACK_SPECIAL;
@@ -2747,7 +2747,7 @@ namespace battleutils
         else
         {
             // TODO: This was left untouched in a rewrite of this function, unsure where this is sourced from
-            // or which entities it is used for. Possibly needs double checked for accuracy if it's mob or pet cRatio 
+            // or which entities it is used for. Possibly needs double checked for accuracy if it's mob or pet cRatio
             if (PAttacker->GetMLevel() > PDefender->GetMLevel())
             {
                 cRatio += 0.050f * (PAttacker->GetMLevel() - PDefender->GetMLevel());
@@ -2801,7 +2801,7 @@ namespace battleutils
         if (bernoulli)
         {
             pDIF = std::round(wRatio);
-        } else 
+        } else
         {
             pDIF = tpzrand::GetRandomNumber(lowerLimit, upperLimit);
         }
@@ -4166,14 +4166,6 @@ namespace battleutils
         if (PChar->GetSJob() == JOB_RNG)        // if rng is sub then use the sub level
             lvl = PChar->GetSLevel();
 
-        // Hunters bracers+1 will add an extra shot
-        // todo: convert this to a MOD
-        CItemEquipment* PItemHands = PChar->getEquip(SLOT_HANDS);
-
-
-        if (PItemHands && PItemHands->getID() == 14900)
-            shotCount++;
-
         if (lvl < 30)   return 0;
         else if (lvl < 50)  shotCount += 3;
         else if (lvl < 75)  shotCount += 4;
@@ -4181,6 +4173,8 @@ namespace battleutils
         else if (lvl < 99)  shotCount += 6;
         else if (lvl >= 99) shotCount += 7;
 
+        int mod = PChar->getMod(Mod::BARRAGE_COUNT);
+        shotCount = shotCount + mod;
 
         // make sure we have enough ammo for all these shots
         CItemWeapon* PAmmo = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
