@@ -112,6 +112,7 @@
 #include "../packets/entity_animation.h"
 #include "../packets/entity_enable_list.h"
 #include "../packets/entity_update.h"
+#include "../packets/fellow_despawn.h"
 #include "../packets/entity_visual.h"
 #include "../packets/event.h"
 #include "../packets/event_string.h"
@@ -157,6 +158,7 @@
 #include "../utils/jailutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/fellowutils.h"
 #include "../utils/puppetutils.h"
 #include "../utils/trustutils.h"
 #include "../utils/zoneutils.h"
@@ -785,6 +787,67 @@ inline int32 CLuaBaseEntity::resetLocalVars(lua_State* L)
     m_PBaseEntity->ResetLocalVars();
 
     return 0;
+}
+
+/************************************************************************
+ *  Function: getMaskBit()
+ *  Purpose : Returns a single bit from a masked player variable
+ *  Example : player:getMaskBit(player:getCharVar("CleanSignPost"),1)) then
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getMaskBit(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -2) || !lua_isnumber(L, -2));
+
+    uint8 bit = (uint8)lua_tointeger(L, -1);
+
+    TPZ_DEBUG_BREAK_IF(bit >= 32);
+
+    lua_pushboolean(L, (uint32)lua_tointeger(L, -2) & (1 << bit));
+    return 1;
+}
+
+/************************************************************************
+ *  Function: setMaskBit()
+ *  Purpose : Performs a bitwise operation and stores a single bit in var
+ *  Example : player:setMaskBit("Order_Up_NPCs", 8, true);
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setMaskBit(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isboolean(L, -1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -2) || !lua_isnumber(L, -2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, -3) || !lua_isstring(L, -3));
+
+    const char* varname = lua_tostring(L, -3);
+    int32 bit = (int32)lua_tointeger(L, -2);
+    bool state = (lua_toboolean(L, -1) == 0 ? false : true);
+
+    int32 value = (int32)lua_tointeger(L, -4);
+
+    if (state == true)
+    {
+        value |= (1 << bit); // Add
+    }
+    else
+    {
+        value &= ~(1 << bit); // Delete
+    }
+
+    const char* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;";
+
+    Sql_Query(SqlHandle, fmtQuery, m_PBaseEntity->id, varname, value, value);
+
+    lua_pushinteger(L, value);
+    return 1;
 }
 
 /************************************************************************
@@ -6390,6 +6453,7 @@ inline int32 CLuaBaseEntity::changeJob(lua_State *L)
         JOBTYPE prevjob = PChar->GetMJob();
 
         PChar->resetPetZoningInfo();
+        PChar->resetFellowZoningInfo();
 
         PChar->jobs.unlocked |= (1 << (uint8)lua_tointeger(L, 1));
         PChar->SetMJob((uint8)lua_tointeger(L, 1));
@@ -6821,6 +6885,13 @@ inline int32 CLuaBaseEntity::levelRestriction(lua_State* L)
                 {
                     petutils::DespawnPet(PChar);
                 }
+            }
+
+            if (PChar->m_PFellow != nullptr)
+            {
+                CBaseEntity* PFellow = (CBaseEntity*)PChar->m_PFellow;
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CFellowDespawnPacket(PFellow));
+                PChar->RemoveFellow();
             }
         }
     }
@@ -14870,6 +14941,212 @@ inline int32 CLuaBaseEntity::updateAttachments(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: spawnFellow()
+ *  Purpose : Spawns an NPC Fellow
+ *  Example : caster:spawnFellow(fellowid)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::spawnFellow(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+    {
+        uint8 fellowId = (uint8)lua_tointeger(L, 1);
+        fellowutils::SpawnFellow((CCharEntity*)m_PBaseEntity, fellowId, false);
+    }
+    else
+    {
+        ShowError(CL_RED "CLuaBaseEntity::spawnFellow : FellowID is NULL\n" CL_RESET);
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: despawnFellow()
+ *  Purpose : Despawns an NPC Fellow
+ *  Example : target:despawnFellow()
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::despawnFellow(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CBaseEntity* PFellow = (CBaseEntity*)PChar->m_PFellow;
+    if (PFellow != nullptr)
+    {
+        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CFellowDespawnPacket(PFellow));
+        PChar->RemoveFellow();
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: getFellow()
+ *  Purpose : Returns the Entity Object of a player's fellow entity
+ *  Example : local fellow = player:getFellow()
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getFellow(lua_State* L)
+{
+    if (((CCharEntity*)m_PBaseEntity)->m_PFellow != nullptr)
+    {
+        CFellowEntity* PFellow = ((CCharEntity*)m_PBaseEntity)->m_PFellow;
+
+        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, (void*)PFellow);
+        lua_pcall(L, 2, 1, 0);
+        return 1;
+    }
+    lua_pushnil(L);
+    return 1;
+}
+
+/************************************************************************
+ *  Function: triggerFellowChat()
+ *  Purpose : calls the Chat system when talking to a fellow
+ *  Example : player:triggerFellowChat(CHAT_GENERAL)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::triggerFellowChat(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+    {
+        uint8 chatType = (uint8)lua_tointeger(L, 1);
+        fellowutils::TriggerFellowChat((CCharEntity*)m_PBaseEntity, chatType);
+    }
+    else
+    {
+        ShowError(CL_RED "CLuaBaseEntity::triggerFellowChat : chatType is NULL\n" CL_RESET);
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: fellowAttack()
+ *  Purpose : forces the fellow to engage a target
+ *  Example : mob:fellowAttack(target)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::fellowAttack(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CFellowEntity* PFellow = ((CCharEntity*)m_PBaseEntity)->m_PFellow;
+
+    if (PFellow != nullptr)
+    {
+        fellowutils::AttackTarget((CBattleEntity*)m_PBaseEntity, (CBattleEntity*)PEntity->GetBaseEntity());
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: fellowRetreat()
+ *  Purpose : Disengages a fellow from battle, returns to master
+ *  Example : player:fellowRetreat()
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::fellowRetreat(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    CFellowEntity* PFellow = ((CCharEntity*)m_PBaseEntity)->m_PFellow;
+
+    if (PFellow != nullptr)
+    {
+        fellowutils::RetreatToMaster((CBattleEntity*)m_PBaseEntity);
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: getFellowValue()
+ *  Purpose : Returns the value for the passed column value option
+ *  Example : local name = player:getFellowValue("personality")
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getFellowValue(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    const char* Query = "SELECT %s FROM char_fellow WHERE charid = %u;";
+
+    const char* option = lua_tostring(L, 1);
+    int32 ret = Sql_Query(SqlHandle, Query, option, m_PBaseEntity->id);
+
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        lua_pushinteger(L, Sql_GetIntData(SqlHandle, 0));
+        return 1;
+    }
+    return 0;
+}
+
+/************************************************************************
+ *  Function: setFellowValue()
+ *  Purpose : char_fellow value manipulation
+ *  Example : player:setFellowValue("personality",option)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setFellowValue(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    const char* option = lua_tostring(L, 1);
+    uint32 value = (uint32)lua_tointeger(L, 2);
+
+    Sql_Query(SqlHandle, "INSERT INTO char_fellow SET charId = %u, %s = %u ON DUPLICATE KEY UPDATE %s = %u;", m_PBaseEntity->id, option, value, option, value);
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: delFellowValue()
+ *  Purpose : char_fellow deletion
+ *  Example : player:delFellowValue()
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::delFellowValue(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    Sql_Query(SqlHandle, "DELETE FROM char_fellow WHERE charId = %u LIMIT 1", m_PBaseEntity->id);
+
+    return 0;
+}
+
+
+/************************************************************************
 *  Function: setMobLevel()
 *  Purpose : Updates the monsters level and recalculates stats
 *  Example : mob:setMobLevel(125)
@@ -15990,7 +16267,7 @@ inline int32 CLuaBaseEntity::useJobAbility(lua_State* L)
 inline int32 CLuaBaseEntity::useMobAbility(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST && m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_PET);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST && m_PBaseEntity->objtype != TYPE_MOB && m_PBaseEntity->objtype != TYPE_PET && m_PBaseEntity->objtype != TYPE_FELLOW);
 
     if (lua_isnumber(L, 1))
     {
@@ -18563,6 +18840,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetLocalVars),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMaskBit),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMaskBit),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,countMaskBits),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastOnline),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setDrawInOffsetY),
@@ -19173,6 +19452,17 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSimpleGambit),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addFullGambit),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setTrustTPSkillSettings),
+
+    // Adventuring Fellow
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, spawnFellow),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, despawnFellow),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getFellow),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, triggerFellowChat),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, fellowAttack),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, fellowRetreat),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getFellowValue),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, setFellowValue),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, delFellowValue),
 
     // Mob Entity-Specific
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobLevel),

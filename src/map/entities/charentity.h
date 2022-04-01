@@ -45,6 +45,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 class CItemWeapon;
 class CTrustEntity;
+class CFellowEntity;
 
 struct jobs_t
 {
@@ -122,6 +123,14 @@ struct PetInfo_t
     int16		petHP;			// pets hp
     int16       petMP;
     float		petTP;			// pets tp
+};
+
+struct FellowInfo_t
+{
+    bool respawnFellow; // used for spawning fellow on zone
+    uint8 fellowID;     // id
+    int16 fellowHP;     // fellow hp
+    int16 fellowMP;     // fellow mp
 };
 
 struct UnlockedAttachments_t
@@ -241,12 +250,16 @@ public:
     PetInfo_t				petZoningInfo;					// used to repawn dragoons pets ect on zone
     void					setPetZoningInfo();				// set pet zoning info (when zoning and logging out)
     void					resetPetZoningInfo();			// reset pet zoning info (when changing job ect)
+    FellowInfo_t            fellowZoningInfo;               // used to repawn fellows on zone
+    void                    setFellowZoningInfo();          // set fellow zoning info (when zoning and logging out)
+    void                    resetFellowZoningInfo();        // reset fellow zoning info (when changing job ect)
     uint8					m_SetBlueSpells[20];			// The 0x200 offsetted blue magic spell IDs which the user has set. (1 byte per spell)
     uint32                  lastInCombat;                   // last time in combat, determined by the last time a spell was cast or an attack was done.
     uint32                  lastZoneTimer;                  // last time the player zoned.
 
     UnlockedAttachments_t	m_unlockedAttachments;			// Unlocked Automaton Attachments (1 bit per attachment)
     CAutomatonEntity*       PAutomaton;                     // Automaton statistics
+    CFellowEntity*          m_PFellow;
 
     fishresponse_t* hookedFish;         // Currently hooked fish/item/monster
     uint32          nextFishTime;       // When char is allowed to fish again     
@@ -432,6 +445,7 @@ public:
     bool        ReloadParty();
     void        ClearTrusts();
     void        RemoveTrust(CTrustEntity*);
+    void        RemoveFellow();
 
     virtual void Tick(time_point) override;
     void        PostTick() override;

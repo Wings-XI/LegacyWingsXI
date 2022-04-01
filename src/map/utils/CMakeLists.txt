@@ -13,6 +13,8 @@ set(SOURCES
     charutils.h
     chatfilter.cpp
     chatfilter.h
+	fellowutils.cpp
+	fellowutils.h
     fishingutils.cpp
     fishingutils.h
 	flistutils.cpp

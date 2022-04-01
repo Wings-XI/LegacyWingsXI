@@ -92,6 +92,8 @@ set(SOURCES
     event_update.h
     event_update_string.cpp
     event_update_string.h
+    fellow_despawn.cpp
+    fellow_despawn.h
     fishing.cpp
     fishing.h
     furniture_interact.cpp
@@ -152,6 +154,8 @@ set(SOURCES
     message_basic.h
     message_combat.cpp
     message_combat.h
+    message_debug.cpp
+    message_debug.h
     message_name.cpp
     message_name.h
     message_special.cpp
