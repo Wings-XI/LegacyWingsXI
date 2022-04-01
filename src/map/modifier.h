@@ -420,6 +420,7 @@ enum class Mod
     FERAL_HOWL_DURATION       = 503, // +20% duration per merit when wearing augmented Monster Jackcoat +2
     JUG_LEVEL_RANGE           = 564, // Decreases the level range of spawned jug pets. Maxes out at 2.
     CALL_BEAST_DELAY          = 572, // Lowers Call Beast recast
+    SIC_READY_DELAY           = 574, // Lowers Sic & Ready delay
 
     // Bard
     MINNE_EFFECT              = 433, //
@@ -508,6 +509,7 @@ enum class Mod
     JOB_BONUS_CHANCE          = 542, // Chance to apply job bonus to COR roll without having the job in the party.
     QUICK_DRAW_DELAY          = 571, // Lower Quick Draw recast
     RANDOM_DEAL_BONUS         = 573, // % chance to reset 2 abilities
+    PHANTOM_ROLL_DELAY        = 575, // Lower Phantom Roll recast
 
     DMG_REFLECT               = 316, // Tracks totals
     ROLL_ROGUES               = 317, // Tracks totals

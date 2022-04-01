@@ -58,6 +58,7 @@ function onEventFinish(player, csid, option)
             tpz.ki.DOMINAS_VIOLET_SEAL,
             tpz.ki.DOMINAS_AZURE_SEAL
         })
+        player:setCharVar("ASA_kit", 0)
 
         player:completeMission(ASA, tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD)
         player:addMission(ASA, tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE)

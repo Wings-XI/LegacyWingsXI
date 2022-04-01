@@ -1447,6 +1447,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 chargeTime -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
             }
 
+            if (id == ABILITY_READY) {
+                chargeTime -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
+            }
+
             action.recast = chargeTime * PAbility->getRecastTime();
         }
         else
@@ -1483,6 +1487,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         else if (id == ABILITY_CALL_BEAST) {
             action.recast -= std::min<int16>(getMod(Mod::CALL_BEAST_DELAY), 60);
         }
+
+        if (id >= ABILITY_PHANTOM_ROLL && id <= ABILITY_TACTICIANS_ROLL)
+            action.recast -= std::min<int16>(getMod(Mod::PHANTOM_ROLL_DELAY), 15);
+
+        if (id == ABILITY_SIC)
+            action.recast -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
 
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
@@ -1873,7 +1883,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // No hit, but unlimited shot is up, so don't consume ammo
     else if (!hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
     {
-        ammoConsumed = 0;  
+        ammoConsumed = 0;
     }
 
     if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)

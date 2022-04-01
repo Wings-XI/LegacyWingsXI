@@ -13,7 +13,7 @@ require("scripts/globals/msg")
 function onAbilityCheck(player, target, ability)
     local cost = 500
     if player:getMod(tpz.mod.WALTZ_COST) > 0 then
-        cost = cost - (cost * .05)
+        cost = cost - 20
     end
 
     if target:getHP() == 0 then
@@ -50,7 +50,7 @@ function onUseAbility(player, target, ability)
     if not player:hasStatusEffect(tpz.effect.TRANCE) then
         local cost = 500
         if player:getMod(tpz.mod.WALTZ_COST) > 0 then
-            player:delTP(cost - (cost * .05))
+            player:delTP(cost - 20)
         else
             player:delTP(cost)
         end

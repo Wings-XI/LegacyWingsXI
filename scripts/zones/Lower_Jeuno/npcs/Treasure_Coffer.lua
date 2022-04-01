@@ -105,8 +105,8 @@ local optionToAugment =
     },
     [3] = -- ASA
     {
-        [ 1] = {{augment =   1, power =  24}, {augment =   39, power =  3}}, -- HP+25 Enmity+4
-        [ 2] = {{augment =   9, power =  24}, {augment =   40, power =  3}}, -- MP+25 Enmity-4
+        [ 1] = {{augment =    1, power = 24}, {augment = 39, power =  3}}, -- HP+25 Enmity+4
+        [ 2] = {{augment =    9, power = 24}, {augment = 40, power =  3}}, -- MP+25 Enmity-4
         [ 3] = {{augment =   23, power =  6}}, -- Attack+7
         [ 4] = {{augment =   25, power =  6}}, -- Accuracy+7
         [ 5] = {{augment =   27, power =  6}}, -- Ranged Accuracy+7
@@ -124,16 +124,16 @@ local optionToAugment =
         [17] = {{augment =  334, power =  9}}, -- Magic Burst damage +10%
         [18] = {{augment =  194, power =  4}}, -- "Kick Attacks" +5
         [19] = {{augment =  329, power =  4}}, -- "Cure" potency +5%
-        [20] = {{augment =  336, power =  6}}, -- "Sic" & "Ready" ability delay -5  TODO IMPLEMENT
+        [20] = {{augment =  336, power =  4}}, -- "Sic" & "Ready" ability delay -5
         [21] = {{augment =  337, power =  2}}, -- Song Recast Delay -3
         [22] = {{augment =  338, power =  0}}, -- "Barrage" +1
         [23] = {{augment =  339, power = 19}}, -- "Elemental Siphon" +20
-        [24] = {{augment =  340, power =  6}}, -- "Phantom Roll" ability delay -5 TODO IMPLEMENT
+        [24] = {{augment =  340, power =  4}}, -- "Phantom Roll" ability delay -5
         [25] = {{augment =  341, power =  9}}, -- "Repair" potency +10%
-        [26] = {{augment =  342, power =  1}}, -- "Waltz" TP cost -5%
+        [26] = {{augment =  342, power =  1}}, -- "Waltz" TP cost -20
         [27] = {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
         [28] = {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
-        [29] = {{augment =  115, power =  7}, {augment =   116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
+        [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
         [30] = {{augment =  128, power =  6}}, -- Pet: Magic Accuracy +7
         [31] = {{augment =  913, power =  2}}, -- Movement Speed +8%
     },
@@ -590,19 +590,32 @@ function scenarioArmor(player, option, giveToPlayer)
     local gear = 0
     local addon = 0
 
-    if giveToPlayer then
-        option = option - 8388615 -- extra bit passed when recieving armor
-    end
+    -- if giveToPlayer then
+    --     local selection = player:getCharVar("expansionSelect")
+    --     if selection == 1 then -- ACP
+    --         option = option - 8388615 -- extra bit passed when recieving armor
+    --     elseif selection == 2 then -- AMK
+    --     elseif selection == 3 then -- ASA
+    --         option = option - 21 -- extra bit passed when recieving armor
+    --     end
+    -- end
 
-    aug2 = bit.rshift(option, 16)                               -- 5 bits for 2nd selected augment
-    aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
-    gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
-    addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
+    -- aug2 = bit.rshift(option, 16)                               -- 5 bits for 2nd selected augment
+    -- aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
+    -- gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
+    -- addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
+
+    aug2 = bit.band(bit.rshift(option, 16), 31) -- 5 bits for 2nd selected augment
+    aug1 = bit.band(bit.rshift(option, 11), 31) -- 5 bits for 1st selected augment
+    gear = bit.band(bit.rshift(option, 6), 31)  -- 5 bits for selected gear piece
+    addon = optionToGear[gear].addon            -- index of addon scenario the gear belongs to
+
+    -- if not giveToPlayer then
+    --     player:setCharVar("expansionSelect", addon)
+    -- end
 
     local augment1 = optionToAugment[addon][aug1]
     local augment2 = optionToAugment[addon][aug2]
-    print(augment1.."Aug1")
-    print(augment2)
 
     local addAug = {}
     if giveToPlayer then
@@ -638,6 +651,7 @@ function scenarioArmor(player, option, giveToPlayer)
         -- Each argument concats 2 different augments. For some reason, argument 1 contacts the string below.
         player:updateEvent(tonumber(addAug[1] .. "0000001100000010", 2), tonumber(addAug[2] .. addAug[3], 2), tonumber(addAug[4] .. addAug[5], 2))
     end
+
 end
 
 function intToBinary(x)
