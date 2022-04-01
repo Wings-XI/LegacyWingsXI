@@ -148,7 +148,7 @@ tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub
 tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
 
 
-local function changeSubjectsOfInterest()
+tpz.znm.changeSubjectsOfInterest = function()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
@@ -191,7 +191,7 @@ local function updateSubOfInterestLimit(zeni)
     if (remainingLimit > 0) then
         SetServerVariable("[ZNM]SubOfInterestLimit", remainingLimit)
     else
-        changeSubjectsOfInterest()
+        tpz.znm.changeSubjectsOfInterest()
     end
 end
 -----------------------------------
