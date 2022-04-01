@@ -34,6 +34,10 @@ function outOfShell(mob)
     mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
 end
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+end
+
 function onMobSpawn(mob)
     mob:SetMobAbilityEnabled(true)
     mob:SetAutoAttackEnabled(true)
@@ -44,7 +48,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.REGEN, 0)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMod(tpz.mod.DMGMAGIC, -30)
-    mob:setMod(tpz.mob.CURSERES, 100)
+    mob:setMod(tpz.mod.CURSERES, 100)
 
     local changeHP = mob:getHP() - (mob:getHP() * .05)
     mob:setLocalVar("changeHP", changeHP)

@@ -56,7 +56,6 @@ RESTRICT_CONTENT = 1
 
 -- CHARACTER CONFIG
 INITIAL_LEVEL_CAP = 50 -- The initial level cap for new players.  There seems to be a hardcap of 255.
-MAX_LEVEL = 75 -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
 NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0 -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0 -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
 START_GIL = 10 -- Amount of gil given to newly created characters.
@@ -200,7 +199,11 @@ UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being telepor
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
 IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
-ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior
+ZNM_Enabled = 0 -- Disallows ZNM NPC Behavior and Tier 1 ZNMs
+ZNM_Tier2 = 0 -- Disallows ZNM T2
+ZNM_Tier3 = 0 -- Disallows ZNM T3
+ZNM_Tier4 = 0 -- Disallows ZNM T4
+ZNM_Tier5 = 0 -- Disallows ZNM T5
 
 -- HOOKS
 HOOK_FILE_NAME = "" -- Create a file named "hook-<name>.lua" and set the value to "<name>" to enable

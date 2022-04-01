@@ -8,6 +8,12 @@ require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
+    local lugh_respawn = GetServerVariable("Lugh_Respawn")
+	if os.time() < lugh_respawn then
+		GetMobByID(ID.mob.LUGH):setRespawnTime(lugh_respawn - os.time())
+	else
+		SpawnMob(ID.mob.LUGH)
+    end
 end
 
 function onZoneIn(player, prevZone)

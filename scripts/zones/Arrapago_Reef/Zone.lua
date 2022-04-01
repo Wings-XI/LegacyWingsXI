@@ -15,6 +15,42 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     zone:registerRegion(1, -462, -4, -420, -455, -1, -392) -- approach the Cutter
+    local euryale_respawn = GetServerVariable("Euryale_Respawn")
+    local lamieno7_respawn = GetServerVariable("Lamie_No7_Respawn")
+    local lamieno8_respawn = GetServerVariable("Lamie_No8_Respawn")
+    local lamieno9_respawn = GetServerVariable("Lamie_No9_Respawn")
+    local medusa_respawn = GetServerVariable("Medusa_Respawn")
+    local merrowno5_respawn = GetServerVariable("Merrow_No5_Respawn")
+    if os.time() < merrowno5_respawn then
+		GetMobByID(ID.mob.MERROW_NO5):setRespawnTime(merrowno5_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MERROW_NO5)
+    end
+    if os.time() < medusa_respawn then
+		GetMobByID(ID.mob.MEDUSA):setRespawnTime(medusa_respawn - os.time())
+	else
+		SpawnMob(ID.mob.MEDUSA)
+    end
+    if os.time() < lamieno7_respawn then
+		GetMobByID(ID.mob.LAMIE_NO7):setRespawnTime(lamieno7_respawn - os.time())
+	else
+		SpawnMob(ID.mob.LAMIE_NO7)
+    end
+    if os.time() < lamieno8_respawn then
+		GetMobByID(ID.mob.LAMIE_NO8):setRespawnTime(lamieno8_respawn - os.time())
+	else
+		SpawnMob(ID.mob.LAMIE_NO8)
+    end
+    if os.time() < lamieno9_respawn then
+		GetMobByID(ID.mob.LAMIE_NO9):setRespawnTime(lamieno9_respawn - os.time())
+	else
+		SpawnMob(ID.mob.LAMIE_NO9)
+    end
+    if os.time() < euryale_respawn then
+		GetMobByID(ID.mob.EURYALE):setRespawnTime(euryale_respawn - os.time())
+	else
+		SpawnMob(ID.mob.EURYALE)
+    end
 end
 
 function onZoneIn(player, prevZone)

@@ -20,6 +20,12 @@ function onInitialize(zone)
     zone:registerRegion(3, 14, -7, -65, 37, -2, -41) -- TOAU Mission 1 CS area
     zone:registerRegion(4, 75, -3, 25, 90, 1, 59)
     zone:registerRegion(5, 73, -7, -137, 95, -3, -115) -- entering Shaharat Teahouse
+
+    if (ZNM_Enabled == 1) then
+        if (GetServerVariable("[ZNM]SubjectsOfInterest") == 0 or GetServerVariable("[ZNM]Ecosystem") == 0) then
+            tpz.znm.changeSubjectsOfInterest()
+        end
+    end
 end
 
 function onZoneIn(player, prevZone)
@@ -235,8 +241,6 @@ end
 function onGameDay()
     -- every other day, prices reduce for zeni pops down to their base.
     -- might even be based on the exact time the pop was bought according to some forum posts
-    printf("onGameDay")
-    printf("onGameDay maths %s %s", VanadielDayOfTheWeek(), VanadielDayOfTheWeek() % 2)
     if (VanadielDayOfTheWeek() % 2) == 0 then
         tpz.znm.updatePopItemCosts()
     end

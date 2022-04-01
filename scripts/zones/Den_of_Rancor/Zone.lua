@@ -10,6 +10,12 @@ require("scripts/globals/treasure")
 
 function onInitialize(zone)
     tpz.treasure.initZone(zone)
+    local pontifex_respawn = GetServerVariable("Pontifex_Respawn")
+    if os.time() < pontifex_respawn then
+		GetMobByID(ID.mob.TONBERRY_PONTIFEX):setRespawnTime(pontifex_respawn - os.time())
+	else
+		SpawnMob(ID.mob.TONBERRY_PONTIFEX)
+    end
 end
 
 function onConquestUpdate(zone, updatetype)

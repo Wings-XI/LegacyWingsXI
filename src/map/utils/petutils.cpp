@@ -229,14 +229,14 @@ namespace petutils
                 Pet->lightdef = 0;
                 Pet->darkdef = 0;
 
-                Pet->fireresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 31) - 1) * -100);
-                Pet->iceresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 32) - 1) * -100);
-                Pet->windresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 33) - 1) * -100);
-                Pet->earthresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 34) - 1) * -100);
-                Pet->thunderresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 35) - 1) * -100);
-                Pet->waterresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 36) - 1) * -100);
-                Pet->lightresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 37) - 1) * -100);
-                Pet->darkresSDT = (uint16)((Sql_GetFloatData(SqlHandle, 38) - 1) * -100);
+                Pet->fireresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 31) * 100);
+                Pet->iceresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 32) * 100);
+                Pet->windresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 33) * 100);
+                Pet->earthresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 34) * 100);
+                Pet->thunderresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 35) * 100);
+                Pet->waterresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 36) * 100);
+                Pet->lightresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 37) * 100);
+                Pet->darkresSDT = (uint16)(Sql_GetFloatData(SqlHandle, 38) * 100);
 
                 Pet->cmbDelay = (uint16)Sql_GetIntData(SqlHandle, 39);
                 Pet->name_prefix = (uint8)Sql_GetUIntData(SqlHandle, 40);

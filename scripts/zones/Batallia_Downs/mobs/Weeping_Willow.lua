@@ -23,4 +23,8 @@ function onMobDespawn(mob)
     -- In that case, it will walk back near where Willow was spawned at.
     GetMobByID(LUMBER_JACK):setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos())
     SpawnMob(LUMBER_JACK)
+
+    local respawn = math.random(75600, 86400)
+    mob:setRespawnTime(respawn) -- 21 to 24 hr
+    SetServerVariable("Weeping_Willow_Respawn", (os.time() + respawn))
 end

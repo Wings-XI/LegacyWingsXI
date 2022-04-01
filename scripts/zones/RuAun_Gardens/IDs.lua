@@ -65,6 +65,11 @@ zones[tpz.zone.RUAUN_GARDENS] =
     {
         CASKET_BASE     = 17310003,
         TREASURE_COFFER = 17310019,
+        GENBU_PORTAL    = 17310059,
+        SEIRYU_PORTAL   = 17310056,
+        BYAKKO_PORTAL   = 17310062,
+        SUZAKU_PORTAL   = 17310065,  
+
         PINCERSTONES =
         {
             [17310031] = 17310054, -- Main to Seriyu

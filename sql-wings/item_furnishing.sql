@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `item_furnishing` (
 INSERT INTO `item_furnishing` VALUES (1, 'pile_of_chocobo_bedding', 1, 520, 8, 2);
 INSERT INTO `item_furnishing` VALUES (2, 'simple_bed', 1, 520, 6, 3);
 INSERT INTO `item_furnishing` VALUES (3, 'oak_bed', 1, 520, 3, 5);
-INSERT INTO `item_furnishing` VALUES (4, 'mahogany_bed', 1, 520, 7, 6);
-INSERT INTO `item_furnishing` VALUES (5, 'bronze_bed', 1, 520, 2, 10);
+INSERT INTO `item_furnishing` VALUES (4, 'mahogany_bed', 1, 520, 7, 10);
+INSERT INTO `item_furnishing` VALUES (5, 'bronze_bed', 1, 520, 2, 6);
 INSERT INTO `item_furnishing` VALUES (6, 'nobles_bed', 1, 520, 5, 12);
 INSERT INTO `item_furnishing` VALUES (7, 'gold_bed', 1, 520, 1, 18);
 INSERT INTO `item_furnishing` VALUES (8, 'royal_bed', 2, 520, 8, 24);
@@ -81,7 +81,7 @@ INSERT INTO `item_furnishing` VALUES (93, 'water_cask', 1, 521, 6, 2);
 INSERT INTO `item_furnishing` VALUES (95, 'water_barrel', 6, 517, 6, 4);
 INSERT INTO `item_furnishing` VALUES (96, 'beverage_barrel', 1, 521, 6, 4);
 INSERT INTO `item_furnishing` VALUES (97, 'bookholder', 1, 522, 7, 1);
-INSERT INTO `item_furnishing` VALUES (98, 'scimitar_cactus', 1, 521, 7, 1);
+INSERT INTO `item_furnishing` VALUES (98, 'scimitar_cactus', 1, 521, 7, 6);
 INSERT INTO `item_furnishing` VALUES (99, 'elshimo_palm', 1, 521, 1, 2);
 INSERT INTO `item_furnishing` VALUES (100, 'okadomatsu', 2, 521, 4, 2);
 INSERT INTO `item_furnishing` VALUES (102, 'flower_stand', 1, 516, 5, 2);
@@ -102,7 +102,7 @@ INSERT INTO `item_furnishing` VALUES (118, 'lamp_egg', 1, 515, 4, 2);
 INSERT INTO `item_furnishing` VALUES (119, 'flower_egg', 1, 515, 4, 2);
 INSERT INTO `item_furnishing` VALUES (120, 'freshwater_aquarium', 1, 521, 6, 5);
 INSERT INTO `item_furnishing` VALUES (121, 'saltwater_aquarium', 1, 517, 6, 5);
-INSERT INTO `item_furnishing` VALUES (122, 'amir_bed', 1, 520, 1, 6);
+INSERT INTO `item_furnishing` VALUES (122, 'amir_bed', 1, 520, 1, 4);	-- Not present in era?
 INSERT INTO `item_furnishing` VALUES (123, 'athenienne', 1, 521, 6, 2);
 INSERT INTO `item_furnishing` VALUES (124, 'wardrobe', 10, 515, 4, 6);
 INSERT INTO `item_furnishing` VALUES (125, 'reliquary', 8, 512, 1, 2);
@@ -118,7 +118,7 @@ INSERT INTO `item_furnishing` VALUES (134, 'copy_of_emeralda', 1, 530, 5, 9);
 INSERT INTO `item_furnishing` VALUES (135, 'magic_tome_set', 1, 513, 2, 2);
 INSERT INTO `item_furnishing` VALUES (136, 'set_of_kaiserin_cosmetics', 1, 513, 2, 1);
 INSERT INTO `item_furnishing` VALUES (137, 'cordon_bleu_cooking_set', 1, 531, 3, 9);
-INSERT INTO `item_furnishing` VALUES (138, 'jeunoan_tree', 4, 532, 5, 3);
+INSERT INTO `item_furnishing` VALUES (138, 'jeunoan_tree', 4, 532, 2, 3);  -- Not present in era?
 INSERT INTO `item_furnishing` VALUES (139, 'star_globe', 1, 533, 8, 9);
 INSERT INTO `item_furnishing` VALUES (140, 'dream_platter', 2, 522, 5, 3);
 INSERT INTO `item_furnishing` VALUES (141, 'dream_coffer', 2, 522, 5, 3);
@@ -128,13 +128,13 @@ INSERT INTO `item_furnishing` VALUES (144, 'caisson', 5, 521, 4, 3);
 INSERT INTO `item_furnishing` VALUES (145, 'thurible', 1, 522, 5, 8);
 INSERT INTO `item_furnishing` VALUES (146, 'walahra_burner', 3, 522, 8, 4);
 INSERT INTO `item_furnishing` VALUES (147, 'imperial_tapestry', 2, 533, 1, 3);
-INSERT INTO `item_furnishing` VALUES (148, 'cartonnier', 20, 521, 1, 10);
+INSERT INTO `item_furnishing` VALUES (148, 'cartonnier', 20, 521, 1, 11);  
 INSERT INTO `item_furnishing` VALUES (149, 'set_of_alchemists_tools', 1, 522, 1, 4);
 INSERT INTO `item_furnishing` VALUES (150, 'leather_pot', 4, 515, 4, 1);
 INSERT INTO `item_furnishing` VALUES (151, 'stack_of_fools_gold', 1, 526, 7, 9);
 INSERT INTO `item_furnishing` VALUES (152, 'flowerpot', 1, 521, 7, 1);
 INSERT INTO `item_furnishing` VALUES (153, 'mastersmith_anvil', 1, 525, 1, 9);
-INSERT INTO `item_furnishing` VALUES (154, 'miniature_airship', 1, 520, 7, 8);
+INSERT INTO `item_furnishing` VALUES (154, 'miniature_airship', 1, 520, 7, 9);
 INSERT INTO `item_furnishing` VALUES (155, 'dream_stocking', 2, 522, 5, 3);
 INSERT INTO `item_furnishing` VALUES (176, 'snowman_knight', 4, 521, 2, 4);
 INSERT INTO `item_furnishing` VALUES (177, 'snowman_miner', 4, 521, 2, 4);
@@ -149,7 +149,7 @@ INSERT INTO `item_furnishing` VALUES (185, 'rook_banner', 1, 532, 1, 7);
 INSERT INTO `item_furnishing` VALUES (186, 'shield_plaque', 1, 533, 4, 3);
 INSERT INTO `item_furnishing` VALUES (187, 'buckler_plaque', 1, 533, 2, 4);
 INSERT INTO `item_furnishing` VALUES (188, 'copy_of_acolytes_grief', 1, 522, 8, 4);
-INSERT INTO `item_furnishing` VALUES (189, 'copy_of_autumns_end_in_gustaberg', 1, 519, 8, 4);
+INSERT INTO `item_furnishing` VALUES (189, 'copy_of_autumns_end_in_gustaberg', 1, 519, 8, 5);
 INSERT INTO `item_furnishing` VALUES (190, 'copy_of_lines_and_space', 1, 522, 8, 5);
 INSERT INTO `item_furnishing` VALUES (191, 'fishing_hole_map', 1, 523, 6, 9);
 INSERT INTO `item_furnishing` VALUES (192, 'copy_of_hoary_spire', 1, 538, 4, 3);
@@ -198,13 +198,13 @@ INSERT INTO `item_furnishing` VALUES (261, 'tarutaru_?_mannequin', 28, 518, 7, 6
 INSERT INTO `item_furnishing` VALUES (262, 'mithra_mannequin', 28, 518, 7, 6);
 INSERT INTO `item_furnishing` VALUES (263, 'galka_mannequin', 28, 518, 7, 6);
 INSERT INTO `item_furnishing` VALUES (264, 'stuffed_chocobo', 4, 538, 1, 4);
-INSERT INTO `item_furnishing` VALUES (265, 'adamantoise_statue', 4, 515, 4, 2);
+INSERT INTO `item_furnishing` VALUES (265, 'adamantoise_statue', 4, 515, 4, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (266, 'behemoth_statue', 4, 517, 6, 3);
 INSERT INTO `item_furnishing` VALUES (267, 'fafnir_statue', 4, 512, 1, 3);
 INSERT INTO `item_furnishing` VALUES (268, 'nomad_moogle_statue', 4, 518, 7, 3);
 INSERT INTO `item_furnishing` VALUES (269, 'shadow_lord_statue', 4, 519, 8, 3);
 INSERT INTO `item_furnishing` VALUES (270, 'odin_statue', 4, 519, 8, 3);
-INSERT INTO `item_furnishing` VALUES (271, 'alexander_statue', 4, 518, 7, 5);
+INSERT INTO `item_furnishing` VALUES (271, 'alexander_statue', 4, 518, 7, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (272, 'ark_angel_hm_statue', 1, 519, 8, 3);
 INSERT INTO `item_furnishing` VALUES (273, 'ark_angel_ev_statue', 1, 519, 8, 3);
 INSERT INTO `item_furnishing` VALUES (274, 'ark_angel_tt_statue', 1, 519, 8, 3);
@@ -236,7 +236,7 @@ INSERT INTO `item_furnishing` VALUES (315, '6-drawer_almirah', 15, 517, 6, 8);
 INSERT INTO `item_furnishing` VALUES (316, '3-drawer_almirah', 14, 517, 6, 7);
 INSERT INTO `item_furnishing` VALUES (317, 'bronze_rose', 1, 516, 5, 10);
 INSERT INTO `item_furnishing` VALUES (318, 'crystal_rose', 1, 518, 7, 9);
-INSERT INTO `item_furnishing` VALUES (319, 'shell_lamp', 1, 519, 8, 9);
+INSERT INTO `item_furnishing` VALUES (319, 'shell_lamp', 1, 519, 8, 10);
 INSERT INTO `item_furnishing` VALUES (320, 'harpsichord', 4, 538, 7, 3);
 INSERT INTO `item_furnishing` VALUES (321, 'mythril_bell', 1, 520, 5, 20);
 INSERT INTO `item_furnishing` VALUES (322, 'horn_trophy', 2, 532, 2, 4);
@@ -260,7 +260,7 @@ INSERT INTO `item_furnishing` VALUES (339, 'tanners_signboard', 1, 528, 2, 10);
 INSERT INTO `item_furnishing` VALUES (340, 'fishermans_signboard', 1, 523, 6, 10);
 INSERT INTO `item_furnishing` VALUES (341, 'carpenters_signboard', 1, 524, 4, 10);
 INSERT INTO `item_furnishing` VALUES (342, 'alchemists_signboard', 1, 530, 5, 10);
-INSERT INTO `item_furnishing` VALUES (343, 'harp_stool', 2, 515, 4, 2);
+INSERT INTO `item_furnishing` VALUES (343, 'harp_stool', 2, 515, 4, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (345, 'san_dorian_marriage_certificate', 1, 538, 7, 2);
 INSERT INTO `item_furnishing` VALUES (346, 'bastokan_marriage_certificate', 1, 538, 7, 2);
 INSERT INTO `item_furnishing` VALUES (347, 'windurstian_marriage_certificate', 1, 538, 7, 2);
@@ -269,7 +269,7 @@ INSERT INTO `item_furnishing` VALUES (349, 'royal_squires_bunk', 3, 520, 4, 4);
 INSERT INTO `item_furnishing` VALUES (350, 'republican_legionnaires_bedding', 4, 520, 8, 3);
 INSERT INTO `item_furnishing` VALUES (351, 'federal_mercenarys_hammock', 2, 520, 3, 6);
 INSERT INTO `item_furnishing` VALUES (352, 'half_partition', 1, 515, 4, 2);
-INSERT INTO `item_furnishing` VALUES (353, 'spence', 16, 516, 5, 9);
+INSERT INTO `item_furnishing` VALUES (353, 'spence', 16, 516, 5, 6);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (354, 'bookstack', 16, 532, 4, 8);
 INSERT INTO `item_furnishing` VALUES (355, 'bread_crock', 9, 519, 8, 6);
 INSERT INTO `item_furnishing` VALUES (356, 'set_of_guild_flyers', 1, 536, 5, 5);
@@ -277,20 +277,20 @@ INSERT INTO `item_furnishing` VALUES (357, 'partition', 1, 521, 2, 4);
 INSERT INTO `item_furnishing` VALUES (358, 'credenza', 7, 515, 4, 7);
 INSERT INTO `item_furnishing` VALUES (359, 'bahut', 8, 521, 4, 10);
 INSERT INTO `item_furnishing` VALUES (360, 'matka', 2, 515, 4, 7);
-INSERT INTO `item_furnishing` VALUES (361, 'gallipot', 8, 515, 4, 2);
+INSERT INTO `item_furnishing` VALUES (361, 'gallipot', 8, 515, 4, 6);
 INSERT INTO `item_furnishing` VALUES (362, 'fluoro-flora', 1, 522, 7, 5);
 INSERT INTO `item_furnishing` VALUES (363, 'amigo_cactus', 2, 533, 1, 4);
 INSERT INTO `item_furnishing` VALUES (364, 'amiga_cactus', 2, 532, 6, 4);
-INSERT INTO `item_furnishing` VALUES (365, 'poele_classique', 3, 512, 1, 4);
-INSERT INTO `item_furnishing` VALUES (366, 'kanonenofen', 3, 512, 1, 4);
-INSERT INTO `item_furnishing` VALUES (367, 'pot_topper', 3, 512, 1, 4);
+INSERT INTO `item_furnishing` VALUES (365, 'poele_classique', 3, 512, 1, 6);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (366, 'kanonenofen', 3, 512, 1, 6);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (367, 'pot_topper', 3, 512, 1, 6);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (368, 'san_dorian_tea_set', 1, 538, 1, 6);
 INSERT INTO `item_furnishing` VALUES (369, 'bastokan_tea_set', 1, 538, 6, 6);
 INSERT INTO `item_furnishing` VALUES (370, 'windurstian_tea_set', 1, 538, 3, 6);
 INSERT INTO `item_furnishing` VALUES (371, 'butterfly_cage', 3, 514, 3, 4);
 INSERT INTO `item_furnishing` VALUES (372, 'cricket_cage', 3, 516, 5, 4);
 INSERT INTO `item_furnishing` VALUES (373, 'glowfly_cage', 3, 519, 8, 4);
-INSERT INTO `item_furnishing` VALUES (374, 'parclose', 1, 515, 4, 6);
+INSERT INTO `item_furnishing` VALUES (374, 'parclose', 1, 515, 4, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (375, 'cs_gold_stand', 1, 515, 4, 1);
 INSERT INTO `item_furnishing` VALUES (376, 'cs_mythril_stand', 1, 515, 4, 1);
 INSERT INTO `item_furnishing` VALUES (377, 'cs_bronze_stand', 1, 515, 4, 1);
@@ -309,11 +309,11 @@ INSERT INTO `item_furnishing` VALUES (389, 'white_3-drawer_almirah', 14, 518, 7,
 INSERT INTO `item_furnishing` VALUES (390, 'carmine_desk', 1, 533, 1, 5);
 INSERT INTO `item_furnishing` VALUES (391, 'cerulean_desk', 1, 533, 2, 5);
 INSERT INTO `item_furnishing` VALUES (392, 'myrtle_desk', 1, 533, 5, 5);
-INSERT INTO `item_furnishing` VALUES (393, 'ecru_desk', 1, 533, 7, 5);
-INSERT INTO `item_furnishing` VALUES (394, 'blue_tarutaru_desk', 2, 513, 5, 4);
-INSERT INTO `item_furnishing` VALUES (395, 'green_tarutaru_desk', 2, 514, 4, 4);
-INSERT INTO `item_furnishing` VALUES (396, 'yellow_tarutaru_desk', 1, 515, 3, 4);
-INSERT INTO `item_furnishing` VALUES (397, 'white_tarutaru_desk', 2, 518, 7, 4);
+INSERT INTO `item_furnishing` VALUES (393, 'ecru_desk', 1, 533, 2, 5);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (394, 'blue_tarutaru_desk', 2, 513, 2, 4);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (395, 'green_tarutaru_desk', 2, 514, 3, 4);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (396, 'yellow_tarutaru_desk', 1, 515, 4, 4);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (397, 'white_tarutaru_desk', 2, 518, 7, 4);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (398, 'red_mahogany_bed', 1, 520, 1, 10);
 INSERT INTO `item_furnishing` VALUES (399, 'blue_mahogany_bed', 1, 520, 6, 10);
 INSERT INTO `item_furnishing` VALUES (400, 'green_mahogany_bed', 1, 520, 3, 10);
@@ -321,11 +321,11 @@ INSERT INTO `item_furnishing` VALUES (401, 'yellow_mahogany_bed', 1, 520, 4, 10)
 INSERT INTO `item_furnishing` VALUES (402, 'blue_nobles_bed', 1, 520, 6, 12);
 INSERT INTO `item_furnishing` VALUES (403, 'green_nobles_bed', 1, 520, 3, 12);
 INSERT INTO `item_furnishing` VALUES (404, 'yellow_nobles_bed', 1, 520, 4, 12);
-INSERT INTO `item_furnishing` VALUES (405, 'white_nobles_bed', 1, 520, 7, 12);
-INSERT INTO `item_furnishing` VALUES (406, 'blue_tarutaru_standing_screen', 1, 513, 5, 3);
-INSERT INTO `item_furnishing` VALUES (407, 'green_tarutaru_standing_screen', 1, 514, 4, 3);
-INSERT INTO `item_furnishing` VALUES (408, 'yellow_tarutaru_standing_screen', 1, 515, 2, 3);
-INSERT INTO `item_furnishing` VALUES (409, 'white_tarutaru_standing_screen', 1, 518, 7, 3);
+INSERT INTO `item_furnishing` VALUES (405, 'white_nobles_bed', 1, 520, 7, 15);
+INSERT INTO `item_furnishing` VALUES (406, 'blue_tarutaru_standing_screen', 1, 513, 2, 3);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (407, 'green_tarutaru_standing_screen', 1, 514, 3, 3);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (408, 'yellow_tarutaru_standing_screen', 1, 515, 4, 3);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (409, 'white_tarutaru_standing_screen', 1, 518, 7, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (410, 'red_round_table', 5, 512, 1, 3);
 INSERT INTO `item_furnishing` VALUES (411, 'blue_round_table', 5, 513, 2, 3);
 INSERT INTO `item_furnishing` VALUES (412, 'green_round_table', 5, 514, 3, 3);
@@ -337,27 +337,27 @@ INSERT INTO `item_furnishing` VALUES (417, 'storage_hutch', 12, 515, 4, 1);
 INSERT INTO `item_furnishing` VALUES (418, 'tidings_board', 4, 515, 2, 4);
 INSERT INTO `item_furnishing` VALUES (419, 'leisure_table', 2, 515, 2, 2);
 INSERT INTO `item_furnishing` VALUES (420, 'pot_of_meadsweet', 1, 514, 4, 4);
-INSERT INTO `item_furnishing` VALUES (421, 'vase_of_rulude_orchids', 1, 517, 3, 1);
+INSERT INTO `item_furnishing` VALUES (421, 'vase_of_rulude_orchids', 1, 517, 6, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (422, 'elshimo_pachira', 2, 512, 1, 2);
-INSERT INTO `item_furnishing` VALUES (423, 'tavern_bench', 4, 515, 2, 6);
-INSERT INTO `item_furnishing` VALUES (424, 'feasting_table', 7, 515, 2, 1);
-INSERT INTO `item_furnishing` VALUES (425, 'girandola', 3, 512, 1, 6);
+INSERT INTO `item_furnishing` VALUES (423, 'tavern_bench', 4, 515, 4, 6);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (424, 'feasting_table', 7, 515, 4, 7);  -- Not in era?
+INSERT INTO `item_furnishing` VALUES (425, 'girandola', 3, 512, 1, 4);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (426, 'orchestrion', 2, 516, 5, 6);
 INSERT INTO `item_furnishing` VALUES (427, 'rococo_table', 10, 517, 6, 3);
 INSERT INTO `item_furnishing` VALUES (428, 'semainier', 35, 516, 8, 3);
 INSERT INTO `item_furnishing` VALUES (429, 'red_storm_lantern', 1, 512, 1, 1);
 INSERT INTO `item_furnishing` VALUES (430, 'blue_storm_lantern', 1, 517, 6, 1);
 INSERT INTO `item_furnishing` VALUES (431, 'green_storm_lantern', 1, 514, 3, 1);
-INSERT INTO `item_furnishing` VALUES (432, 'yellow_storm_lantern', 1, 515, 4, 1);
+INSERT INTO `item_furnishing` VALUES (432, 'yellow_storm_lantern', 1, 515, 4, 2);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (433, 'white_storm_lantern', 1, 518, 7, 1);
 INSERT INTO `item_furnishing` VALUES (434, 'isula_sideboard', 10, 520, 5, 6);
 INSERT INTO `item_furnishing` VALUES (435, 'jeunoan_dresser', 55, 520, 5, 20);
 INSERT INTO `item_furnishing` VALUES (436, 'jeunoan_armoire', 30, 520, 5, 10);
 INSERT INTO `item_furnishing` VALUES (437, 'floral_nightstand', 1, 521, 7, 1);
-INSERT INTO `item_furnishing` VALUES (438, 'orblight', 1, 512, 1, 1);
+INSERT INTO `item_furnishing` VALUES (438, 'orblight', 1, 512, 1, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (439, 'planus_table', 5, 521, 7, 3);
 INSERT INTO `item_furnishing` VALUES (440, 'squat_desk', 4, 514, 4, 2);
-INSERT INTO `item_furnishing` VALUES (441, 'taru_tot_toyset', 2, 514, 4, 3);
+INSERT INTO `item_furnishing` VALUES (441, 'taru_tot_toyset', 2, 514, 3, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (442, 'gilded_chest', 20, 519, 8, 5);
 INSERT INTO `item_furnishing` VALUES (443, 'aureous_chest', 8, 519, 8, 2);
 INSERT INTO `item_furnishing` VALUES (444, 'luxurious_chest', 8, 519, 8, 2);
@@ -367,7 +367,7 @@ INSERT INTO `item_furnishing` VALUES (447, 'mensa_lunata', 11, 514, 3, 4);
 INSERT INTO `item_furnishing` VALUES (448, 'gueridon', 5, 514, 3, 3);
 INSERT INTO `item_furnishing` VALUES (449, 'personal_table', 7, 514, 3, 2);
 INSERT INTO `item_furnishing` VALUES (450, 'candelabrum', 1, 512, 1, 4);
-INSERT INTO `item_furnishing` VALUES (451, 'egg_stool', 2, 538, 4, 3);
+INSERT INTO `item_furnishing` VALUES (451, 'egg_stool', 2, 538, 4, 7);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (452, 'egg_table', 3, 538, 3, 6);
 INSERT INTO `item_furnishing` VALUES (453, 'egg_locker', 4, 538, 2, 6);
 INSERT INTO `item_furnishing` VALUES (454, 'egg_lantern', 1, 538, 1, 3);
@@ -376,11 +376,11 @@ INSERT INTO `item_furnishing` VALUES (456, 'pepo_lantern', 10, 519, 8, 6);
 INSERT INTO `item_furnishing` VALUES (457, 'cushaw_lantern', 6, 519, 8, 6);
 INSERT INTO `item_furnishing` VALUES (458, 'calabazilla_lantern', 2, 519, 8, 6);
 INSERT INTO `item_furnishing` VALUES (459, 'candle_holder', 1, 512, 1, 4);
-INSERT INTO `item_furnishing` VALUES (460, 'bakery_platter', 1, 532, 6, 3);
+INSERT INTO `item_furnishing` VALUES (460, 'bakery_platter', 1, 532, 5, 3);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (461, 'buffalo_milk_case', 4, 533, 7, 1);
 INSERT INTO `item_furnishing` VALUES (3584, 'panetiere', 65, 519, 8, 6);
 INSERT INTO `item_furnishing` VALUES (3585, 'galley_kitchen', 17, 534, 5, 6);
-INSERT INTO `item_furnishing` VALUES (3586, 'pot_of_red_viola', 4, 521, 1, 3);
+INSERT INTO `item_furnishing` VALUES (3586, 'pot_of_red_viola', 4, 521, 1, 1);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (3587, 'pot_of_blue_viola', 4, 521, 2, 3);
 INSERT INTO `item_furnishing` VALUES (3588, 'pot_of_yellow_viola', 4, 521, 4, 3);
 INSERT INTO `item_furnishing` VALUES (3589, 'pot_of_white_viola', 4, 521, 7, 3);
@@ -486,7 +486,7 @@ INSERT INTO `item_furnishing` VALUES (3701, 'awning', 1, 514, 3, 1);
 INSERT INTO `item_furnishing` VALUES (3702, 'triangular_jalousie', 1, 514, 3, 1);
 INSERT INTO `item_furnishing` VALUES (3703, 'square_jalousie', 1, 514, 3, 1);
 INSERT INTO `item_furnishing` VALUES (3704, 'transom', 1, 514, 3, 1);
-INSERT INTO `item_furnishing` VALUES (3705, 'far_east_hearth', 1, 541, 1, 16);
+INSERT INTO `item_furnishing` VALUES (3705, 'far_east_hearth', 1, 541, 1, 15);  -- Not in era?
 INSERT INTO `item_furnishing` VALUES (3706, 'vanaclock', 1, 542, 7, 16);
 INSERT INTO `item_furnishing` VALUES (3707, 'murrey_grisaille', 1, 562, 7, 18);
 INSERT INTO `item_furnishing` VALUES (3708, 'moss_green_grisaille', 1, 563, 7, 18);

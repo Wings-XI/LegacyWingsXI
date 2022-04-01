@@ -151,6 +151,11 @@ function onRegionLeave(player, region)
 end
 
 function onEventUpdate(player, csid, option)
+    if csid >= 1 and csid <= 19 and option == 0 then
+        for _, entry in pairs(player:getNotorietyList()) do
+			entry:deaggroPlayer(player:getName()) -- reset hate on player entering next level
+		end
+    end
 end
 
 function onEventFinish(player, csid, option)

@@ -38,6 +38,13 @@ function onInitialize(zone)
     zone:registerRegion(23, 382, -1, -582, 399, 1, -572)  -- mission 9 TOAU
     zone:registerRegion(24,  52, -1, 774, 67, 1, 778)  -- transformations (quest)
     zone:registerRegion(25, 134, -1, -584, 146, 1, -577)  -- transformations (quest)
+
+    local oupire_respawn = GetServerVariable("Oupire_Respawn")
+    if os.time() < oupire_respawn then
+		GetMobByID(ID.mob.OUPIRE):setRespawnTime(oupire_respawn - os.time())
+	else
+		SpawnMob(ID.mob.OUPIRE)
+    end
 end
 
 function onZoneIn(player, prevZone)

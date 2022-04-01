@@ -17,4 +17,5 @@ end
 
 function onMobDespawn(mob)
     tpz.mob.phOnDespawn(mob, ID.mob.CARMINE_TAILED_JANBERRY_PH, 5, 3600) -- 1 hour
+    tpz.mob.phOnDespawn(mob, ID.mob.SOZU_BLIBERRY_PH, 5, 21600) -- 6 hours
 end

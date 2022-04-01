@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mount Zhayolm
---  ZNM: Claret
+--  ZNM T1: Claret
 -- !pos 501 -9 53
 -- Spawned with Pectin: !additem 2591
 -- Wiki: http://ffxiclopedia.wikia.com/wiki/Claret
@@ -18,8 +18,12 @@ function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.REGEN, math.floor(mob:getMaxHP()*.004))
     mob:addMod(tpz.mod.BINDRES, 40)
-    mob:addMod(tpz.mod.MOVE, 15)
+    mob:addMod(tpz.mod.MOVE, 25) -- 25% faster than a player
     mob:SetAutoAttackEnabled(false)
+    mob:setMobMod(tpz.mobMod.ENCROACH_PLAYER, 1)
+    mob:addMod(tpz.mod.REGAIN, 100) -- can be seen TPing with little to no interaction from players
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
 end
 
 function onMobFight(mob, target)
