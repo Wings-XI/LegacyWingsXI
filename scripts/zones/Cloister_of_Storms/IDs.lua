@@ -23,6 +23,8 @@ zones[tpz.zone.CLOISTER_OF_STORMS] =
         PROTOCRYSTAL                     = 7234, -- It is a giant crystal.
         ORB_MESSAGE_OFFSET               = 7523, -- There is a crack in the <item>. It no longer contains a monster.
         RAMUH_UNLOCKED                   = 7568, -- You are now able to summon [Ifrit/Titan/Leviathan/Garuda/Shiva/Ramuh].
+        ATTACH_SEAL                      = 7746, -- {player} attaches <item> to the protocrystal.
+        POWER_STYMIES                    = 7747, -- An unseen power stymies your efforts to attach <item> to the protocrystal.
     },
     mob =
     {

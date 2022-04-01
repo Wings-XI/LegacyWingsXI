@@ -14,7 +14,23 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    EventTriggerBCNM(player, npc)
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.FOUNTAIN_OF_TROUBLE then
+        local sapsCollected =
+            (player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL)     and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)     and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)       and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL)      and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)      and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)     and 1 or 0) +
+            (player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL)      and 1 or 0)
+
+        if sapsCollected > 0 then
+            player:startEvent(63)
+        end
+    else
+        EventTriggerBCNM(player, npc)
+    end
 end
 
 function onEventUpdate(player, csid, option, extras)
@@ -26,5 +42,10 @@ end
 -----------------------------------
 
 function onEventFinish(player, csid, option)
-    EventFinishBCNM(player, csid, option)
+    if csid == 63 then
+        player:completeMission(ASA, tpz.mission.id.asa.FOUNTAIN_OF_TROUBLE)
+        player:addMission(ASA, tpz.mission.id.asa.BATTARU_ROYALE)
+    else
+        EventFinishBCNM(player, csid, option)
+    end
 end
