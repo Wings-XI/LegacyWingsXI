@@ -174,6 +174,9 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
         break;
         case TYPE_FELLOW:
         {
+            if (type == ENTITY_SPAWN)
+                ref<uint8>(0x0A) = 0x57;
+
             CFellowEntity* PFellow = (CFellowEntity*)PEntity;
             {
                 if (updatemask & UPDATE_HP)
