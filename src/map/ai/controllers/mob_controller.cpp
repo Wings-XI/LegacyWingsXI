@@ -846,6 +846,14 @@ void CMobController::DoRoamTick(time_point tick)
         if (PMob->PAI->PathFind->IsFollowingPath())
         {
             FollowRoamPath();
+                if (m_Tick >=m_LastActionTime + std::chrono::seconds(10) && PMob->CanRest())
+                {
+                    if (PMob->Rest(0.1f))
+                    {
+                        PMob->updatemask |= UPDATE_HP;
+                    }
+                    m_LastActionTime = m_Tick;
+                }
         }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {

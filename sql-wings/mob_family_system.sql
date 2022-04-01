@@ -217,7 +217,7 @@ INSERT INTO `mob_family_system` VALUES(149, 'Humanoid-Hume', 13, 'Humanoid', 0, 
 INSERT INTO `mob_family_system` VALUES(150, 'Humanoid-Hume', 13, 'Humanoid', 0, 64, 90, 110, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(151, 'Humanoid-Mithra', 13, 'Humanoid', 0, 40, 80, 110, 5, 1, 5, 2, 4, 5, 6, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(152, 'Humanoid-Mithra', 13, 'Humanoid', 0, 40, 80, 110, 5, 1, 5, 2, 4, 5, 6, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
-INSERT INTO `mob_family_system` VALUES(153, 'Humanoid-Tarutaru', 13, 'Humanoid', 0, 40, 70, 140, 6, 4, 5, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
+INSERT INTO `mob_family_system` VALUES(153, 'Humanoid-Tarutaru', 13, 'Humanoid', 0, 40, 70, 140, 6, 4, 5, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(154, 'Humanoid-Tarutaru', 13, 'Humanoid', 0, 40, 70, 140, 6, 4, 5, 3, 1, 5, 4, 3, 3, 3, 3, 0.75, 0.75, 0.75, 0.75, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
 INSERT INTO `mob_family_system` VALUES(155, 'HybridElemental-Air', 11, 'Elemental', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
 INSERT INTO `mob_family_system` VALUES(156, 'HybridElemental-Dark', 11, 'Elemental', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
@@ -537,6 +537,7 @@ INSERT INTO `mob_family_system` VALUES(504, 'Sidhe', 18, 'Unclassified', 0, 40, 
 INSERT INTO `mob_family_system` VALUES(505, 'Living_Crystal', 18, 'Unclassified', 0, 0, 100, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);
 INSERT INTO `mob_family_system` VALUES(506, 'MemoryReceptacleENM', 12, 'Empty', 2, 60, 130, 0, 1, 3, 5, 4, 2, 2, 5, 3, 3, 3, 3, 2, 2, 2, 2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 3, 0);
 INSERT INTO `mob_family_system` VALUES(507, 'Gigas', 7, 'Beastmen', 1, 40, 125, 100, 2, 4, 1, 5, 6, 4, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1.3, 0.5, 1, 1, 1, 2, 3, 0);
+INSERT INTO `mob_family_system` VALUES(508, 'Clones', 18, 'Unclassified', 0, 40, 105, 90, 3, 5, 4, 5, 2, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 0.5, 1, 1, 1, 1, 1.3, 0.5, 8, 6, 0);
 
 
 --

@@ -2,7 +2,7 @@
 -- Area: The_Shrouded_Maw
 -- NPC:  MementoCircle
 -----------------------------------
-
+local ID = require ("scripts/zones/The_Shrouded_Maw/IDs")
 require("scripts/globals/bcnm")
 
 function onTrade(player, npc, trade)
