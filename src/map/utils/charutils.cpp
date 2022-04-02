@@ -4181,9 +4181,9 @@ namespace charutils
                         }
                     }
                     // pet or companion exp penalty needs to be added here
-                    // if (PMember->m_PFellow != nullptr)
-                    // exp *= 0.7f;
-                    // Adventuring Fellows no longer reduce exp earned
+                    if (PMember->m_PFellow != nullptr)
+                        exp *= 0.7f;
+                    // Adventuring Fellows no longer reduce exp earned as of ~2014
 
                     if (distanceSquared(PMember->loc.p, PMob->loc.p) > 100*100)
                     {
