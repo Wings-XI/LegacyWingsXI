@@ -475,8 +475,10 @@ inline void dtSwapEndian(int* v)
 
 inline void dtSwapEndian(float* v)
 {
-	unsigned char* x = (unsigned char*)v;
-	dtSwapByte(x+0, x+3); dtSwapByte(x+1, x+2);
+    // cppcheck-suppress invalidPointerCast
+    unsigned char* x = (unsigned char*)v;
+    dtSwapByte(x + 0, x + 3);
+    dtSwapByte(x + 1, x + 2);
 }
 
 void dtRandomPointInConvexPoly(const float* pts, const int npts, float* areas,
