@@ -30,7 +30,7 @@ local function overloadRageDisengage(mob)
 
         -- intense regain, uses TP moves at will when raged
         mob:delMod(tpz.mod.REGAIN, 2000)
-        
+
     end
 end
 
@@ -99,7 +99,7 @@ local function changeToSharpshot(mob)
     if(mob:getLocalVar("CurrentFrame") == sharpshotFrameModelId) then
         return
     end
-    
+
     mob:setLocalVar("CurrentFrame", sharpshotFrameModelId)
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
@@ -122,7 +122,7 @@ local function setupHarlequin(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -50)
     mob:setMod(tpz.mod.UDMGRANGE, -50)
     mob:setMod(tpz.mod.UDMGMAGIC, -50)
-    mob:setSpellList(525)
+    mob:setSpellList(536)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 35)
     mob:setMod(tpz.mod.UFASTCAST, 25)
     mob:setBehaviour(0) -- Standback disabled
