@@ -311,15 +311,15 @@ function checkWeaponSkill(mob, target, fellowLvl)
                 },
             [tpz.skill.DAGGER] =
                 {
-                     [ ] = { 1, false}, -- wasp sting
-                     [ ] = {13, false}, -- gust slash
-                     [ ] = {23, false}, -- shadowstitch
-                     [ ] = {33, false}, -- viper bite
-                     [ ] = {41,  true}, -- cyclone
-                     [ ] = {49, false}, -- energy steal
-                     [ ] = {55, false}, -- energy drain
-                     [ ] = {60, false}, -- dancing edge
-                     [ ] = {66, false}, -- shark bite
+                     [16] = { 1, false}, -- wasp sting
+                     [17] = {13, false}, -- gust slash
+                     [18] = {23, false}, -- shadowstitch
+                     [19] = {33, false}, -- viper bite
+                     [21] = {41,  true}, -- cyclone
+                     [22] = {49, false}, -- energy steal
+                     [23] = {55, false}, -- energy drain
+                     [24] = {60, false}, -- dancing edge
+                     [25] = {66, false}, -- shark bite
                 }, --]]
             [tpz.skill.SWORD] =
                 {
@@ -336,103 +336,103 @@ function checkWeaponSkill(mob, target, fellowLvl)
                 }, --[[
             [tpz.skill.GREAT_SWORD] =
                 {
-                    [ ] = { 1, false}, -- hard slash
-                    [ ] = { 9, false}, -- power slash
-                    [ ] = {23, false}, -- frostbite
-                    [ ] = {33, false}, -- freezebite
-                    [ ] = {49,  true}, -- shockwave
-                    [ ] = {55, false}, -- crescent moon
-                    [ ] = {60, false}, -- sickle moon
-                    [ ] = {65, false}, -- spinning slash
+                    [48] = { 1, false}, -- hard slash
+                    [49] = { 9, false}, -- power slash
+                    [50] = {23, false}, -- frostbite
+                    [51] = {33, false}, -- freezebite
+                    [52] = {49,  true}, -- shockwave
+                    [53] = {55, false}, -- crescent moon
+                    [54] = {60, false}, -- sickle moon
+                    [55] = {65, false}, -- spinning slash
                 },
             [tpz.skill.AXE] =
                 {
-                    [ ] = { 1, false}, -- raging axe
-                    [ ] = {13, false}, -- smash axe
-                    [ ] = {23, false}, -- gale axe
-                    [ ] = {33, false}, -- avalanche axe
-                    [ ] = {49, false}, -- spinning axe
-                    [ ] = {55, false}, -- rampage
-                    [ ] = {60, false}, -- calamity
-                    [ ] = {66, false}, -- mistral axe
+                    [64] = { 1, false}, -- raging axe
+                    [65] = {13, false}, -- smash axe
+                    [66] = {23, false}, -- gale axe
+                    [67] = {33, false}, -- avalanche axe
+                    [68] = {49, false}, -- spinning axe
+                    [69] = {55, false}, -- rampage
+                    [70] = {60, false}, -- calamity
+                    [71] = {66, false}, -- mistral axe
                 },
             [tpz.skill.GREAT_AXE] =
                 {
-                    [ ] = { 1, false}, -- shield break
-                    [ ] = {13, false}, -- iron tempest
-                    [ ] = {23, false}, -- sturmwind
-                    [ ] = {33, false}, -- armor break
-                    [ ] = {49, false}, -- keen edge
-                    [ ] = {55, false}, -- weapon break
-                    [ ] = {60, false}, -- raging rush
-                    [ ] = {65, false}, -- full break
+                    [80] = { 1, false}, -- shield break
+                    [81] = {13, false}, -- iron tempest
+                    [82] = {23, false}, -- sturmwind
+                    [83] = {33, false}, -- armor break
+                    [84] = {49, false}, -- keen edge
+                    [85] = {55, false}, -- weapon break
+                    [86] = {60, false}, -- raging rush
+                    [87] = {65, false}, -- full break
                 },
             [tpz.skill.SCYTHE] =
                 {
-                    [ ] = { 1, false}, -- slice
-                    [ ] = { 9, false}, -- dark harvest
-                    [ ] = {23, false}, -- shadow of death
-                    [ ] = {33, false}, -- nightmare scythe
-                    [ ] = {41,  true}, -- spinning scythe
-                    [ ] = {49, false}, -- vorpal scythe
-                    [ ] = {60, false}, -- guillotine
-                    [ ] = {65, false}, -- cross reaper
+                    [96] = { 1, false}, -- slice
+                    [97] = { 9, false}, -- dark harvest
+                    [98] = {23, false}, -- shadow of death
+                    [99] = {33, false}, -- nightmare scythe
+                    [100] = {41,  true}, -- spinning scythe
+                    [101] = {49, false}, -- vorpal scythe
+                    [102] = {60, false}, -- guillotine
+                    [103] = {65, false}, -- cross reaper
                 },
             [tpz.skill.POLEARM] =
                 {
-                    [ ] = { 1, false}, -- double thrust
-                    [ ] = { 9, false}, -- thunder thrust
-                    [ ] = {23, false}, -- raiden thrust
-                    [ ] = {33, false}, -- leg sweep
-                    [ ] = {49, false}, -- penta thrust
-                    [ ] = {55, false}, -- vorpal thrust
-                    [ ] = {60, false}, -- skewer
-                    [ ] = {65, false}, -- wheeling thrust
+                    [112] = { 1, false}, -- double thrust
+                    [113] = { 9, false}, -- thunder thrust
+                    [114] = {23, false}, -- raiden thrust
+                    [115] = {33, false}, -- leg sweep
+                    [116] = {49, false}, -- penta thrust
+                    [117] = {55, false}, -- vorpal thrust
+                    [118] = {60, false}, -- skewer
+                    [119] = {65, false}, -- wheeling thrust
                 },
             [tpz.skill.KATANA] =
                 {
-                    [ ] = { 1, false}, -- blade: rin
-                    [ ] = { 9, false}, -- blade: retsu
-                    [ ] = {23, false}, -- blade: teki
-                    [ ] = {33, false}, -- blade: to
-                    [ ] = {49, false}, -- blade: chi
-                    [ ] = {55, false}, -- blade: ei
-                    [ ] = {60, false}, -- blade: jin
-                    [ ] = {66, false}, -- blade: ten
+                    [128] = { 1, false}, -- blade: rin
+                    [129] = { 9, false}, -- blade: retsu
+                    [130] = {23, false}, -- blade: teki
+                    [131] = {33, false}, -- blade: to
+                    [132] = {49, false}, -- blade: chi
+                    [133] = {55, false}, -- blade: ei
+                    [134] = {60, false}, -- blade: jin
+                    [135] = {66, false}, -- blade: ten
                 },
             [tpz.skill.GREAT_KATANA] =
                 {
-                    [ ] = { 1, false}, -- tachi: enpi
-                    [ ] = { 9, false}, -- tachi: hobaku
-                    [ ] = {23, false}, -- tachi: goten
-                    [ ] = {33, false}, -- tachi: kagero
-                    [ ] = {49, false}, -- tachi: jinpu
-                    [ ] = {55, false}, -- tachi: koki
-                    [ ] = {60, false}, -- tachi: yukikaze
-                    [ ] = {65, false}, -- tachi: gekko
+                    [144] = { 1, false}, -- tachi: enpi
+                    [145] = { 9, false}, -- tachi: hobaku
+                    [146] = {23, false}, -- tachi: goten
+                    [147] = {33, false}, -- tachi: kagero
+                    [148] = {49, false}, -- tachi: jinpu
+                    [149] = {55, false}, -- tachi: koki
+                    [150] = {60, false}, -- tachi: yukikaze
+                    [151] = {65, false}, -- tachi: gekko
                 },
             [tpz.skill.CLUB] =
                 {
-                    [ ] = { 1, false}, -- shining strike
-                    [ ] = {13, false}, -- seraph strike
-                    [ ] = {23, false}, -- brainshaker
-                    [ ] = {33, false}, -- starlight
-                    [ ] = {41, false}, -- moonlight
-                    [ ] = {49, false}, -- skullbreaker
-                    [ ] = {55, false}, -- true strike
-                    [ ] = {60, false}, -- judgment
-                    [ ] = {67, false}, -- hexa strike
+                    [160] = { 1, false}, -- shining strike
+                    [161] = {13, false}, -- seraph strike
+                    [162] = {23, false}, -- brainshaker
+                    [163] = {33, false}, -- starlight
+                    [164] = {41, false}, -- moonlight
+                    [165] = {49, false}, -- skullbreaker
+                    [166] = {55, false}, -- true strike
+                    [167] = {60, false}, -- judgment
+                    [168] = {67, false}, -- hexa strike
                 },
             [tpz.skill.STAFF] =
                 {
-                    [ ] = { 1, false}, -- heavy swing
-                    [ ] = {13, false}, -- rock crusher
-                    [ ] = {23,  true}, -- earth crusher
-                    [ ] = {33, false}, -- starburst
-                    [ ] = {49, false}, -- sunburst
-                    [ ] = {55, false}, -- shell crusher
-                    [ ] = {60, false}, -- full swing
-                    [ ] = {63, false}, -- spirit taker
+                    [176] = { 1, false}, -- heavy swing
+                    [177] = {13, false}, -- rock crusher
+                    [178] = {23,  true}, -- earth crusher
+                    [179] = {33, false}, -- starburst
+                    [180] = {49, false}, -- sunburst
+                    [181] = {55, false}, -- shell crusher
+                    [182] = {60, false}, -- full swing
+                    [183] = {63, false}, -- spirit taker
                 }, --]]
         }
 

@@ -1059,6 +1059,7 @@ void AddExperiencePoints(CFellowEntity* PFellow, CBaseEntity* PMob, uint32 exp, 
         }
         ShowDebug("fellowutils:: FINAL currentExp: %u currentLvl: %u\n", currentExp, currentLvl);
         SaveFellowExp(PMaster, currentLvl, currentExp);
+        charutils::AddPoints(PMaster, "fellow_point", exp / 2);
     }
 }
 
