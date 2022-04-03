@@ -15122,8 +15122,21 @@ inline int32 CLuaBaseEntity::setFellowValue(lua_State* L)
 
     const char* option = lua_tostring(L, 1);
     uint32 value = (uint32)lua_tointeger(L, 2);
-
+    if (option == "bond")
+    {
+        int bondCap = 30; // default cap
+        const char* Query = "SELECT bondcap FROM char_fellow WHERE charid = %u;";
+        int32 ret = Sql_Query(SqlHandle, Query, m_PBaseEntity->id);
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            bondCap = Sql_GetIntData(SqlHandle, 0);
+        }
+        if (value > bondCap)
+            return 0;
+    }
+    
     Sql_Query(SqlHandle, "INSERT INTO char_fellow SET charId = %u, %s = %u ON DUPLICATE KEY UPDATE %s = %u;", m_PBaseEntity->id, option, value, option, value);
+    
 
     return 0;
 }

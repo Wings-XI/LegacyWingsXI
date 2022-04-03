@@ -6209,6 +6209,16 @@ namespace charutils
                 PChar->m_moghouseID,
                 PChar->loc.boundary,
                 PChar->id);
+
+            if (PChar->PPet != nullptr)
+            {
+                PChar->setPetZoningInfo();
+            }
+
+            if (PChar->m_PFellow != nullptr)
+            {
+                PChar->setFellowZoningInfo();
+            }
         }
         else
         {

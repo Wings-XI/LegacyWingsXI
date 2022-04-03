@@ -463,7 +463,21 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
         // only repawn fellow in valid zones
         if (PChar->loc.zone->CanUseMisc(MISC_FELLOW) && !PChar->m_moghouseID)
         {
-            fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);
+            if (PChar->loc.zone->GetContinentID() == CONTINENTTYPE::THE_SHADOWREIGN_ERA)
+            {
+                const char* Query = "SELECT wotg_unlock FROM char_fellow WHERE charid = %u;";
+                int32 ret = Sql_Query(SqlHandle, Query, PChar->id);
+                if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    if (Sql_GetIntData(SqlHandle, 0) != 0)
+                        fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);    
+                }
+            }
+            else
+            {
+                fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);
+            }
+
             // reset the fellowZoning info
             PChar->resetFellowZoningInfo();
         }

@@ -678,6 +678,7 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
             ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setMaxHit((uint8)Sql_GetIntData(SqlHandle, 3));
             ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDelay(((uint16)Sql_GetIntData(SqlHandle, 4) * 1000) / 60);
             ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setBaseDelay(((uint16)Sql_GetIntData(SqlHandle, 4) * 1000) / 60);
+            // TODO: 
             if (mlvl >= 75)
                 ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage((uint8)Sql_GetIntData(SqlHandle, 5) + (mlvl / 2) + 3);
             else if (mlvl >= 60)
@@ -999,6 +1000,7 @@ void DistributeExperiencePoints(CFellowEntity* PFellow, CMobEntity* PMob, CCharE
     }
     // ShowDebug("fellowutils::Distribute... exp is: %u\n", exp);
     fellowutils::AddExperiencePoints(PFellow, PMob, (uint32)exp, PChar);
+    // Add fellow_points here
     fellowutils::AddKillCount(PChar);
 }
 

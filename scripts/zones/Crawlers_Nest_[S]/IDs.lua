@@ -15,6 +15,7 @@ zones[tpz.zone.CRAWLERS_NEST_S] =
         ITEM_OBTAINED           = 6910, -- Obtained: <item>.
         GIL_OBTAINED            = 6911, -- Obtained <number> gil.
         KEYITEM_OBTAINED        = 6913, -- Obtained key item: <keyitem>.
+        FELLOW_MESSAGE_OFFSET   = 6939, -- I'm ready. I suppose.
         CARRIED_OVER_POINTS     = 7521, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 7522, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7523, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.

@@ -16,6 +16,9 @@ function onTrigger(player,npc)
     local zone          = player:getZoneID()
     local optionsMask   = player:getFellowValue("optionsMask")
     local bond          = player:getFellowValue("bond")
+    if (bond == nil) then
+        return
+    end
     local menuParam     = 240 -- default chat, quests, battle options
         if bond >= 30 then menuParam = menuParam - 16 end -- appearances option
         if not player:hasItem(14810) then menuParam = menuParam - 32 end -- need pearl option
@@ -94,6 +97,11 @@ function onEventUpdate(player,csid,option)
 
     if csid == 10069 and option == 0xA000000 then -- call for fellow
         player:updateEvent(zone, 0, 0, 0, 0, styleParam, lookParam, fellowParam)
+        local lastBondFromChatTime = player:getCharVar("bondFromChatTime")
+        if (os.time() > lastBondFromChatTime) then
+            player:setCharVar("bondFromChatTime", JstMidnight())
+            player:setFellowValue("bond", bond + 1)
+        end
     elseif csid == 10069 and option == 0xA000004 then -- need signal pearl
         if npcUtil.giveItem(player,14810) then
             if bond >= 5 then
@@ -101,7 +109,7 @@ function onEventUpdate(player,csid,option)
             else
                 player:setFellowValue("bond", 0)
             end
-            player:setFellowValue("pearlTime", getMidnight()) -- 1 pearl per day
+            player:setFellowValue("pearlTime", JstMidnight()) -- 1 pearl per day
         end
     elseif csid == 10069 and (option == 0xA000006 or option == 0x5000006) then -- talk about quests
         player:updateEvent(zone, 0, questParam, tacticsParam, 0, styleParam, lookParam, fellowParam)

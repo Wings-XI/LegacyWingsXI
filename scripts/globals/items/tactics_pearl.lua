@@ -1,6 +1,6 @@
 -----------------------------------------
--- ID: 14810
--- Item: Signal Pearl
+-- ID: 14811
+-- Item: Tactics Pearl
 -- Calls forth an adventuring fellow
 -----------------------------------------
 require("scripts/globals/status")
