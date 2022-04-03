@@ -13,8 +13,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    if (EventTriggerBCNM(player, npc)) then
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.SISTERS_IN_ARMS then
+        player:startEvent(4)
+    elseif EventTriggerBCNM(player, npc) then
         return 1
     else
         player:messageSpecial(ID.text.DOOR_SHUT)
@@ -34,7 +35,10 @@ function onEventFinish(player, csid, option)
     -- printf("onFinish CSID: %u", csid)
     -- printf("onFinish RESULT: %u", option)
 
-    if (EventFinishBCNM(player, csid, option)) then
+    if csid == 4 then
+        player:completeMission(ASA, tpz.mission.id.asa.SISTERS_IN_ARMS)
+        player:addMission(ASA, tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION)
+    elseif EventFinishBCNM(player, csid, option) then
         return
     end
 

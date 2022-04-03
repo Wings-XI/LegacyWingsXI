@@ -30,6 +30,8 @@ function onMobWeaponSkill(target, mob, skill)
 
     if avatarOffsets[mobID] then
         avatar = mobID + avatarOffsets[mobID]
+    elseif string.find(mob:getName(), "Clone") then
+        avatar = mobID + 1
     else
         avatar = mobID + 2 -- default offset
     end

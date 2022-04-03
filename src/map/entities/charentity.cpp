@@ -404,7 +404,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
                     it = PacketList.erase(it);
                     break;
                 }
-                
+
             }
             else
             {
@@ -412,7 +412,7 @@ void CCharEntity::pushPacket(CBasicPacket* packet, int priorityNumOverride)
             }
         }
     }
-    
+
     if (packet->getType() == 0x0D)
     { // there can only be one of me. decide which one has the most up-to-date and most important information to send.
         packetUpdatesPosition = true;
@@ -1480,6 +1480,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 chargeTime -= std::min<int16>(getMod(Mod::QUICK_DRAW_DELAY), 15);
             }
 
+            if (id == ABILITY_READY) {
+                chargeTime -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
+            }
+
             action.recast = chargeTime * PAbility->getRecastTime();
         }
         else
@@ -1517,6 +1521,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             action.recast -= std::min<int16>(getMod(Mod::CALL_BEAST_DELAY), 60);
         }
 
+        if (id >= ABILITY_PHANTOM_ROLL && id <= ABILITY_TACTICIANS_ROLL)
+            action.recast -= std::min<int16>(getMod(Mod::PHANTOM_ROLL_DELAY), 15);
+
+        if (id == ABILITY_SIC)
+            action.recast -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
+
         // remove invisible if aggressive
         if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
         {
@@ -1524,7 +1534,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 // aggressive action
                 if (PAbility->getID() != ABILITY_ASSAULT)
                     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-                else 
+                else
                     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK) {
@@ -1906,7 +1916,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // No hit, but unlimited shot is up, so don't consume ammo
     else if (!hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
     {
-        ammoConsumed = 0;  
+        ammoConsumed = 0;
     }
 
     if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)
@@ -2041,12 +2051,12 @@ void CCharEntity::OnRaise()
         }
 
         //add weakness effect (75% reduction in HP/MP)
-        if (GetLocalVar("MijinGakure") == 0 && m_hasRaise <= 5)
+        if (GetLocalVar("MijinGakure") == 0 && GetLocalVar("Shantottofication") == 0 && m_hasRaise <= 5)
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 300);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
         }
-        else if (GetLocalVar("MijinGakure") == 0 && m_hasRaise == 4) // arise, 3min
+        else if (GetLocalVar("MijinGakure") == 0 && GetLocalVar("Shantottofication") == 0 && m_hasRaise == 4) // arise, 3min
         {
             CStatusEffect* PWeaknessEffect = new CStatusEffect(EFFECT_WEAKNESS, EFFECT_WEAKNESS, weaknessLvl, 0, 180);
             StatusEffectContainer->AddStatusEffect(PWeaknessEffect);
@@ -2071,13 +2081,13 @@ void CCharEntity::OnRaise()
         else if (m_hasRaise == 1)
         {
             actionTarget.animation = 511;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.1f);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0 || GetLocalVar("Shantottofication") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.1f);
             ratioReturned = 0.50f * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 2)
         {
             actionTarget.animation = 512;
-            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.25f);
+            hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0 || GetLocalVar("Shantottofication") != 0) ? GetMaxHP() * 0.5f : GetMaxHP() * 0.25f);
             ratioReturned = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1.0f - (map_config.exp_retain));
         }
         else if (m_hasRaise == 3)
@@ -2129,6 +2139,7 @@ void CCharEntity::OnRaise()
         }
 
         SetLocalVar("MijinGakure", 0);
+        SetLocalVar("Shantottofication", 0);
 
         m_hasRaise = 0;
     }

@@ -30,6 +30,7 @@ zones[tpz.zone.QUFIM_ISLAND] =
         AN_EMPTY_LIGHT_SWIRLS          = 7736,  -- An empty light swirls about the cave, eating away at the surroundings...
         NOTHER_OUT_OF_THE_ORDINARY     = 7738,  -- You find nothing out of the ordinary.
         GIGANTIC_FOOTPRINT             = 7820,  -- There is a gigantic footprint here.
+        ASA_SNOW                       = 7833,  -- You see the following words scrawled into the snow: Shantotto Empire Provisional Headquarters.
         DYNA_NPC_DEFAULT_MESSAGE       = 7834,  -- You hear a mysterious, floating voice: Bring forth the <item>...
         CONNECTING_WITH_THE_SERVER     = 7838,  -- Connecting with the server. Please wait.
         UNABLE_TO_CONNECT              = 7839,  -- Unable to connect

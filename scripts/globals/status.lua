@@ -1301,6 +1301,7 @@ tpz.mod =
     FERAL_HOWL_DURATION       = 503, -- +20% duration per merit when wearing augmented Monster Jackcoat +2
     JUG_LEVEL_RANGE           = 564, -- Decreases the level range of spawned jug pets. Maxes out at 2.
     CALL_BEAST_DELAY          = 572, -- Lowers Call Beast recast
+    SIC_READY_DELAY           = 574, -- Lowers Sic & Ready delay
 
     -- Bard
     MINNE_EFFECT              = 433, --
@@ -1330,6 +1331,7 @@ tpz.mod =
 
     -- Ranger
     CAMOUFLAGE_DURATION       = 98,  -- Camouflage duration in percents
+    BARRAGE_COUNT             = 138, -- Increases Barrage shots by 1
     RECYCLE                   = 305, -- Percent chance to recycle
     SNAP_SHOT                 = 365, -- Percent reduction to range attack delay
     RAPID_SHOT                = 359, -- Percent chance to proc rapid shot
@@ -1388,6 +1390,7 @@ tpz.mod =
     JOB_BONUS_CHANCE          = 542, -- Chance to apply job bonus to COR roll without having the job in the party.
     QUICK_DRAW_DELAY          = 571, -- Lowers Quick Draw recast
     RANDOM_DEAL_BONUS         = 573, -- % chance to reset 2 abilities
+    PHANTOM_ROLL_DELAY        = 575, -- Lower Phantom Roll recast
 
     DMG_REFLECT               = 316, -- Tracks totals
     ROLL_ROGUES               = 317, -- Tracks totals
@@ -1458,6 +1461,7 @@ tpz.mod =
     SAMBA_PDURATION           = 498, -- Samba percent duration bonus
     SPECTRAL_JIG_DURATION     = 502, -- Spectral Jig duration bonus in percents
     REVERSE_FLOURISH_EFFECT   = 836, -- Reverse Flourish effect in tenths of squared term multiplier
+    WALTZ_COST                = 139, -- Reduce Waltz cost by 5%
 
     -- Scholar
     BLACK_MAGIC_COST          = 393, -- MP cost for black magic (light/dark arts)

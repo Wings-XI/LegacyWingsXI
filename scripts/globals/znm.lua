@@ -18,7 +18,7 @@ require("scripts/globals/npc_util")
 require("scripts/globals/pankration")
 require("scripts/globals/utils")
 ---------------------------------------------------------------------------------
-local FAUNA_LIMIT = 10000 -- Zeni handed out per Fauna
+local FAUNA_LIMIT = 7500 -- Zeni handed out per Fauna (NM)
 local SUBJECT_OF_INTEREST_LIMIT = 10000 -- Zeni handed out per SubjectsOfInterest
 ---------------------------------------------------------------------------------
 
@@ -148,7 +148,7 @@ tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub
 tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
 
 
-local function changeSubjectsOfInterest()
+tpz.znm.changeSubjectsOfInterest = function()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
@@ -191,7 +191,7 @@ local function updateSubOfInterestLimit(zeni)
     if (remainingLimit > 0) then
         SetServerVariable("[ZNM]SubOfInterestLimit", remainingLimit)
     else
-        changeSubjectsOfInterest()
+        tpz.znm.changeSubjectsOfInterest()
     end
 end
 -----------------------------------
@@ -283,7 +283,7 @@ tpz.znm.fauna[52] = {17043875} -- the shimmering scales of an overlord of the Ma
 tpz.znm.fauna[53] = {17031592} -- the rippling physique of a general of the Troll Mercenaries.
 tpz.znm.fauna[54] = {16998862} -- the bewitching beauty of a general of the Undead Swarm.
 
-local function changeFauna()
+tpz.znm.changeFauna = function()
     local faunaKey = math.random(#tpz.znm.faunaKeys)
     SetServerVariable("[ZNM]Fauna", faunaKey)
     SetServerVariable("[ZNM]FaunaLimit", FAUNA_LIMIT)
@@ -295,7 +295,7 @@ local function updateFaunaLimit(zeni)
     if (remainingLimit > 0) then
         SetServerVariable("[ZNM]FaunaLimit", remainingLimit)
     else
-        changeFauna()
+        tpz.znm.changeFauna()
     end
 end
 

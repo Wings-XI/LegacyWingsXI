@@ -32,6 +32,57 @@ zones[tpz.zone.FULL_MOON_FOUNTAIN] =
     npc =
     {
     },
+    battaru_royale =
+    {
+        CLONE_OF_BOULDERS =
+        {
+            17473595,
+            17473611,
+            17473627,
+        },
+        CLONE_OF_FLAMES =
+        {
+            17473591,
+            17473607,
+            17473623,
+        },
+        CLONE_OF_GLACIERS =
+        {
+            17473601,
+            17473617,
+            17473633,
+        },
+        CLONE_OF_GUSTS =
+        {
+            17473597,
+            17473613,
+            17473629,
+        },
+        CLONE_OF_LIGHTS =
+        {
+            17473603,
+            17473619,
+            17473635,
+        },
+        CLONE_OF_SHADOWS =
+        {
+            17473605,
+            17473621,
+            17473637,
+        },
+        CLONE_OF_SPARKS =
+        {
+            17473599,
+            17473615,
+            17473631,
+        },
+        CLONE_OF_TORRENTS =
+        {
+            17473593,
+            17473609,
+            17473625,
+        },
+    },
 }
 
 return zones[tpz.zone.FULL_MOON_FOUNTAIN]

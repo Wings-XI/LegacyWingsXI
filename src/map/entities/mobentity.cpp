@@ -850,7 +850,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
     else if (PSkill->isJobAbility())
         action.actiontype = ACTION_JOBABILITY_FINISH;
-    else if (PSkill->getID() < 256)
+    else if (PSkill->getID() < 256 || (PSkill->getID() > 2485 && PSkill->getID() < 2490))
         action.actiontype = ACTION_WEAPONSKILL_FINISH;
     else
         action.actiontype = ACTION_MOBABILITY_FINISH;
@@ -1412,7 +1412,7 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
             float bonusRange = 2;
             if (PTarget->speed >= this->speed)
                 bonusRange = this->speed / PTarget->speed * 2;
-            
+
             // attempt to hit a running target, increase range slightly
             if (std::chrono::system_clock::now() > this->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < attack_range + bonusRange)
             {

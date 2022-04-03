@@ -30,6 +30,11 @@ function onZoneIn(player, prevZone)
         and (prevZone == tpz.zone.WINDURST_WATERS or prevZone == tpz.zone.WINDURST_WOODS) and player:getMainLvl()>=10
     then
         cs = 510
+    elseif
+        player:getCurrentMission(ASA) == tpz.mission.id.asa.AN_UNEASY_PEACE 
+        and (prevZone == tpz.zone.WINDURST_WATERS or prevZone == tpz.zone.WINDURST_WOODS)
+    then
+        cs = 511
     elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.MOON_READING and player:getCharVar("MissionStatus") == 4 then
         cs = 443
     end
@@ -71,6 +76,11 @@ function onEventFinish(player, csid, option)
         player:completeMission(ASA, tpz.mission.id.asa.A_SHANTOTTO_ASCENSION)
         player:addMission(ASA, tpz.mission.id.asa.BURGEONING_DREAD)
         player:setCharVar("ASA_Status", 0)
+    elseif csid == 511 then
+        player:completeMission(ASA, tpz.mission.id.asa.AN_UNEASY_PEACE)
+        player:addMission(ASA, tpz.mission.id.asa.A_SHANTOTTO_ASCENSION_FIN)
+        player:addKeyItem(tpz.ki.BEHEMOTH_KEY)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BEHEMOTH_KEY)
     elseif csid == 443 then
         player:completeMission(WINDURST, tpz.mission.id.windurst.MOON_READING)
         player:setCharVar("MissionStatus", 0)

@@ -11,13 +11,18 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
-    if (target:getHP() == 0) then
+    local cost = 500
+    if player:getMod(tpz.mod.WALTZ_COST) > 0 then
+        cost = cost - 20
+    end
+
+    if target:getHP() == 0 then
         return tpz.msg.basic.CANNOT_ON_THAT_TARG, 0
-    elseif (player:hasStatusEffect(tpz.effect.SABER_DANCE)) then
+    elseif player:hasStatusEffect(tpz.effect.SABER_DANCE) then
         return tpz.msg.basic.UNABLE_TO_USE_JA2, 0
-    elseif (player:hasStatusEffect(tpz.effect.TRANCE)) then
+    elseif player:hasStatusEffect(tpz.effect.TRANCE) then
         return 0, 0
-    elseif (player:getTP() < 500) then
+    elseif player:getTP() < cost then
         return tpz.msg.basic.NOT_ENOUGH_TP, 0
     else
         --[[ Apply "Waltz Ability Delay" reduction
@@ -43,7 +48,12 @@ end
 function onUseAbility(player, target, ability)
     -- Only remove TP if the player doesn't have Trance.
     if not player:hasStatusEffect(tpz.effect.TRANCE) then
-        player:delTP(500)
+        local cost = 500
+        if player:getMod(tpz.mod.WALTZ_COST) > 0 then
+            player:delTP(cost - 20)
+        else
+            player:delTP(cost)
+        end
     end
 
     --Grabbing variables.

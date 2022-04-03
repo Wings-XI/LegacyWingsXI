@@ -20,6 +20,17 @@ function onInitialize(zone)
     zone:registerRegion(3, 14, -7, -65, 37, -2, -41) -- TOAU Mission 1 CS area
     zone:registerRegion(4, 75, -3, 25, 90, 1, 59)
     zone:registerRegion(5, 73, -7, -137, 95, -3, -115) -- entering Shaharat Teahouse
+
+    if (ZNM_Enabled == 1) then
+        -- If server vars are set to the basic install values - trigger a change
+        if (GetServerVariable("[ZNM]SubjectsOfInterest") == 55) then
+            tpz.znm.changeSubjectsOfInterest()
+        end
+
+        if (GetServerVariable("[ZNM]Fauna") == 62) then
+            tpz.znm.changeFauna()
+        end
+    end
 end
 
 function onZoneIn(player, prevZone)

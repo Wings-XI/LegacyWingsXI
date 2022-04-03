@@ -58,3 +58,28 @@ end
 
 function onEventFinish(player, csid, option)
 end
+
+function onGameHour(zone)
+    local hour = VanadielHour()
+
+    if hour < 7 or hour >= 17 then
+        for mob = ID.mob.SKELETON_SCUFFLER, ID.mob.SKELETON_SCUFFLER + 2 do
+            local respawn = GetMobByID(mob):getLocalVar("respawn")
+            if not GetMobByID(mob):isSpawned() and os.time() > respawn then
+                SpawnMob(mob)
+            end
+        end
+        for mob = ID.mob.BLEST_BONES, ID.mob.BLEST_BONES + 2 do
+            local respawn = GetMobByID(mob):getLocalVar("respawn")
+            if not GetMobByID(mob):isSpawned() and os.time() > respawn then
+                SpawnMob(mob)
+            end
+        end
+        for mob = ID.mob.HOLEY_HORROR, ID.mob.HOLEY_HORROR + 2 do
+            local respawn = GetMobByID(mob):getLocalVar("respawn")
+            if not GetMobByID(mob):isSpawned() and os.time() > respawn then
+                SpawnMob(mob)
+            end
+        end
+    end
+end
