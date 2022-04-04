@@ -37,7 +37,8 @@ CREATE TABLE `char_fellow` (
   `tacticsTime` int(10) unsigned NOT NULL DEFAULT 0,
   `zone_hp` smallint(4) unsigned NOT NULL DEFAULT 0,
   `zone_mp` smallint(4) unsigned NOT NULL DEFAULT 0,
-  `wotg_unlock` tinyint(1) unsigned NOT NULL DEFAULT 0
+  `wotg_unlock` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `weaponlvl` tinyint(1) unsigned NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
 
 ALTER TABLE `char_fellow`
