@@ -9,7 +9,8 @@ require("scripts/globals/msg")
 
 function onItemCheck(target)
     if target:getFellow() ~= nil or target:hasStatusEffect(tpz.effect.LEVEL_RESTRICTION)
-        or target:hasStatusEffect(tpz.effect.LEVEL_SYNC) then
+        or target:hasStatusEffect(tpz.effect.LEVEL_SYNC) or
+        AdventuringFellow_Enabled == nil or AdventuringFellow_Enabled == 0 then
             return tpz.msg.basic.ITEM_UNABLE_TO_USE
     end
 

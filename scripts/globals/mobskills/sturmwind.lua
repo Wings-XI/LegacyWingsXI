@@ -1,5 +1,5 @@
 ---------------------------------------------
--- Fast Blade
+-- Sturmwind
 --
 -- Description: Two-hit attack. Damage varies with TP.
 -- Type: Physical
@@ -13,7 +13,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target,mob,skill)
-    mob:messageBasic(tpz.msg.basic.READIES_WS, 0, 168)
+    --mob:messageBasic(tpz.msg.basic.READIES_WS, 0, 168)
     return 0
 end
 

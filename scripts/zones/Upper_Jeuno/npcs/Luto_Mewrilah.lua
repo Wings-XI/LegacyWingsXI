@@ -35,7 +35,7 @@ function onTrigger(player, npc)
 
     if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(WildcatJeuno, 7)) then
         player:startEvent(10085)
-    elseif UnlistedQualities == QUEST_AVAILABLE and player:getRank() >= 4 then  -- Rank 4 not required after 2013
+    elseif UnlistedQualities == QUEST_AVAILABLE and player:getRank() >= 4 and AdventuringFellow_Enabled == 1 then  -- Rank 4 not required after 2013
         player:startEvent(10031)
     elseif UnlistedQualities == QUEST_ACCEPTED and UnlistedQualitiesProgress < 15 then
         player:startEvent(10033)

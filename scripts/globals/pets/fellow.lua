@@ -143,6 +143,10 @@ end
 
 function onMobFight(mob, target)
     local master        = mob:getMaster()
+    if (master == nil) then
+        return
+    end
+
     local ID            = require("scripts/zones/"..master:getZoneName().."/IDs")
     local personality   = checkPersonality(mob)
     local fellowType    = master:getFellowValue("job")
@@ -253,6 +257,9 @@ end
 
 function checkPersonality(mob)
     local master = mob:getMaster()
+    if (master == nil) then
+        return
+    end
     local personality   = master:getFellowValue("personality")
     switch (personality) : caseof
     {
@@ -275,7 +282,9 @@ end
 
 function checkProvoke(mob, target, fellowType)
     local master = mob:getMaster()
-
+    if (master == nil) then
+        return false
+    end
     if fellowType == FELLOW_TYPE_SHIELD or fellowType == FELLOW_TYPE_STALWART or master:getHPP() < 25 then
         if mob:actionQueueEmpty() and (mob:getHPP() > 25 or master:getHPP() < 10) then
             if target:isEngaged() then
@@ -297,7 +306,7 @@ end
 
 function checkWeaponSkill(mob, target, fellowLvl)
     local weaponskills =
-        { --[[
+        {
             [tpz.skill.HAND_TO_HAND] =
                 {
                      [1] = { 1, false}, -- combo
@@ -320,7 +329,7 @@ function checkWeaponSkill(mob, target, fellowLvl)
                      [23] = {55, false}, -- energy drain
                      [24] = {60, false}, -- dancing edge
                      [25] = {66, false}, -- shark bite
-                }, --]]
+                },
             [tpz.skill.SWORD] =
                 {
                     [32] = { 1, false}, -- fast blade
@@ -333,7 +342,7 @@ function checkWeaponSkill(mob, target, fellowLvl)
                     [39] = {55, false}, -- spirits within
                     [40] = {60, false}, -- vorpal blade
                     [41] = {65, false}, -- swift blade
-                }, --[[
+                },
             [tpz.skill.GREAT_SWORD] =
                 {
                     [48] = { 1, false}, -- hard slash
@@ -433,10 +442,13 @@ function checkWeaponSkill(mob, target, fellowLvl)
                     [181] = {55, false}, -- shell crusher
                     [182] = {60, false}, -- full swing
                     [183] = {63, false}, -- spirit taker
-                }, --]]
+                },
         }
 
     local master        = mob:getMaster()
+    if (master == nil) then
+        return false
+    end
     local skill         = mob:getWeaponSkillType(tpz.slot.MAIN)
     local optionsMask   = master:getFellowValue("optionsMask")
     local randomWS      = {}
@@ -450,7 +462,9 @@ function checkWeaponSkill(mob, target, fellowLvl)
     end
 
     if mob:actionQueueEmpty() then
-        mob:useMobAbility(randomWS[math.random(#randomWS)], target)
+        local ws = randomWS[math.random(#randomWS)]
+        mob:messageBasic(tpz.msg.basic.READIES_WS, 0, ws)
+        mob:useMobAbility(ws, target)
         mob:setLocalVar("wsReady", 0)
         return true
     end
@@ -459,6 +473,9 @@ function checkWeaponSkill(mob, target, fellowLvl)
 end
 
 function checkCure(mob, master, fellowLvl, mp, fellowType)
+    if (master == nil) then
+        return false
+    end
     local cureSpell = 0
     local cures =
     { -- spellid, lvl, mpcost
@@ -532,6 +549,9 @@ function checkCure(mob, master, fellowLvl, mp, fellowType)
 end
 
 function checkBuff(mob, master, fellowLvl, mp, fellowType)
+    if (master == nil) then
+        return false
+    end
     local mpp = mob:getMP() / mob:getMaxMP() * 100
     local pS = {}
     local sS = {}
@@ -602,6 +622,9 @@ function checkBuff(mob, master, fellowLvl, mp, fellowType)
 end
 
 function checkDebuff(mob, target, master, fellowLvl, mp)
+    if (master == nil) then
+        return false
+    end
     local dS = {}
     local dias =
     { -- spellid, lvl, mpcost
@@ -638,6 +661,10 @@ function checkDebuff(mob, target, master, fellowLvl, mp)
 end
 
 function checkAilment(mob, master, fellowLvl, mp)
+    if (master == nil) then
+        return false
+    end
+    
     local ailments =
     {                        -- spellid, lvl, mpcost, selfcast
         [tpz.effect.PETRIFICATION] = {18, 40, 12, false},
