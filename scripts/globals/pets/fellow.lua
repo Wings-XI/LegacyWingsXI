@@ -722,7 +722,7 @@ function onMobDespawn(mob)
             local kills         = master:getFellowValue("kills")
             print("master: "..mob:getLocalVar("masterID").." zoneKills: "..zoneKills.." total kills: "..kills)
             local armorLock     = master:getFellowValue("armorLock")
-            local region        = GetRegionOwner(mob:getCurrentRegion())
+            local regionOwner        = GetRegionOwner(mob:getCurrentRegion())
             local unlocked      = {}
             local armorTable    =
             {
@@ -737,26 +737,28 @@ function onMobDespawn(mob)
                 end
             end
             local randomArmor   = unlocked[math.random(#unlocked)]
-            local armor         =  master:getFellowValue(randomArmor)
-            if zoneKills >= 15 then
-                if maxKills == kills and kills ~= 0 then
-                    if region == math.floor(armor/100) then
-                        armor = armor + 1
+            if (randomArmor ~= nil) then -- if everything is locked - this has a bad time
+                local armor         =  master:getFellowValue(randomArmor)
+                if zoneKills >= 15 then
+                    if maxKills == kills and kills ~= 0 then
+                        if regionOwner == math.floor(armor/100) then
+                            armor = armor + 1
+                        else
+                            armor = 0 + (regionOwner * 100)
+                        end
+                        if armor % 100 == 12 then armor = 0 + (regionOwner * 100) end
                     else
-                        armor = 0 + (region * 100)
-                    end
-                    if armor % 100 == 12 then armor = 0 + (region * 100) end
-                else
-                    if region == math.floor(armor/100) then
-                        armor = (armor % 100) - 1
-                        if armor < 0 then armor = 0 end
-                        armor = armor + (region * 100)
-                    else
-                        armor = 0 + (region * 100)
+                        if regionOwner == math.floor(armor/100) then
+                            armor = (armor % 100) - 1
+                            if armor < 0 then armor = 0 end
+                            armor = armor + (regionOwner * 100)
+                        else
+                            armor = 0 + (regionOwner * 100)
+                        end
                     end
                 end
+                master:setFellowValue(randomArmor, armor)
             end
-            master:setFellowValue(randomArmor, armor)
         end
     master:removeListener("FELLOW_ENGAGE")
     master:removeListener("FELLOW_DISENGAGE")

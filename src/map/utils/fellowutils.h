@@ -109,6 +109,8 @@ uint8 GetPersonalityOffset(CCharEntity* PChar);
 void TriggerFellowChat(CCharEntity* PChar, uint8 option);
 void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget);
 void RetreatToMaster(CBattleEntity* PMaster);
+uint16 GetWeaponDmgByTypeAndLevel(SKILLTYPE skillType, uint8 level);
+uint16 GetWeaponDelayByTypeAndLevel(SKILLTYPE skillType, uint8 level);
 } // namespace fellowutils
 
 #endif

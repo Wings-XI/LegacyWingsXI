@@ -265,6 +265,9 @@ void LoadFellowStats(CFellowEntity* PFellow, uint8 type)
             break; // Galka
     }
 
+    // All fellows should be equivalent stats
+    race = 0;
+
     // give hp and mp boost every 10 levels after 25
     float HPgrowth = 1.006f;
     float MPgrowth = 1.06f;
@@ -554,7 +557,7 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
     {
         PFellow->look.sub = (uint16)Sql_GetIntData(SqlHandle, 0) + 0x7000;
     }
-    if ((uint16)Sql_GetIntData(SqlHandle, 1) == SKILL_HAND_TO_HAND)
+    if ((uint16)Sql_GetIntData(SqlHandle, 1) == SKILL_HAND_TO_HAND || ((uint16)Sql_GetIntData(SqlHandle, 1) == SKILL_KATANA && map_config.adventuring_fellow_dualwield))
     {
         PFellow->look.sub = PFellow->look.main + 0x1000;
     }
@@ -624,8 +627,6 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
             mlvl = PMaster->GetMLevel();
         PFellow->SetMLevel(mlvl);
         PFellow->SetSLevel(mlvl / 2);
-        //      PFellow->SetMLevel(PMaster->GetMLevel()); // temp to test scaling
-        //      PFellow->SetSLevel(PMaster->GetMLevel() / 2); // temp to test scaling
 
         uint8 job = 0;
         uint8 sjob = 0;
@@ -674,19 +675,26 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
                     WHERE char_fellow.main = item_weapon.itemId AND char_fellow.charid = %u";
         if (Sql_Query(SqlHandle, Query3, PMaster->id) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
+            uint16 delay = GetWeaponDelayByTypeAndLevel((SKILLTYPE)Sql_GetIntData(SqlHandle, 1), mlvl);
+            uint16 damage = GetWeaponDmgByTypeAndLevel((SKILLTYPE)Sql_GetIntData(SqlHandle, 1), mlvl);
             ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setSkillType((uint8)Sql_GetIntData(SqlHandle, 1));
             ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setMaxHit((uint8)Sql_GetIntData(SqlHandle, 3));
-            ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDelay(((uint16)Sql_GetIntData(SqlHandle, 4) * 1000) / 60);
-            ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setBaseDelay(((uint16)Sql_GetIntData(SqlHandle, 4) * 1000) / 60);
-            // TODO: 
-            if (mlvl >= 75)
-                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage((uint8)Sql_GetIntData(SqlHandle, 5) + (mlvl / 2) + 3);
-            else if (mlvl >= 60)
-                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage((uint8)Sql_GetIntData(SqlHandle, 5) + (mlvl / 2) + 2);
-            else if (mlvl >= 50)
-                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage((uint8)Sql_GetIntData(SqlHandle, 5) + (mlvl / 2) + 1);
-            else
-                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage((uint8)Sql_GetIntData(SqlHandle, 5) + (mlvl / 2));
+            ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDelay(delay);
+            ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setBaseDelay(delay);
+            ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDamage(damage);
+
+            if ((uint16)Sql_GetIntData(SqlHandle, 1) == SKILL_KATANA && map_config.adventuring_fellow_dualwield)
+            {
+                PFellow->m_dualWield = true;
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_SUB])->setSkillType((uint8)Sql_GetIntData(SqlHandle, 1));
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_SUB])->setMaxHit((uint8)Sql_GetIntData(SqlHandle, 3));
+                // the way mobs currently attack via dual wield is to attack twice on the base delay, sub is not considered.
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setDelay(delay*2);
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_MAIN])->setBaseDelay(delay * 2);
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_SUB])->setDelay(delay);
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_SUB])->setBaseDelay(delay);
+                ((CItemWeapon*)PFellow->m_Weapons[SLOT_SUB])->setDamage(damage);
+            }
         }
     }
 
@@ -746,6 +754,7 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
     // add traits for sub and main
     battleutils::AddTraits(PFellow, traits::GetTraits(mJob), mlvl);
     battleutils::AddTraits(PFellow, traits::GetTraits(PFellow->GetSJob()), PFellow->GetSLevel());
+    // ToDo: track down why these exist - and if fellows need some acc/att/etc since they dont get gear
     PFellow->addModifier(Mod::WSACC, 25);
     PFellow->addModifier(Mod::DEFP, 50);
     PFellow->addModifier(Mod::ALL_WSDMG_FIRST_HIT, 25);
@@ -1307,6 +1316,96 @@ void RetreatToMaster(CBattleEntity* PMaster)
     {
         PFellow->PAI->Disengage();
     }
+}
+
+uint16 GetWeaponDmgByTypeAndLevel(SKILLTYPE skillType, uint8 level)
+{
+    // Damage found by taking x/y level/damage at multiple points, excluding outliers (CrossCounters, Soboro, etc) and applying a linear line fit algorithm
+    uint16 damage = 6;
+    switch (skillType)
+    {
+        case SKILL_HAND_TO_HAND:
+            damage = floor(level * 0.6 + 2.5); // includes base dmg gained from skill, unique to HtH
+            break;
+        case SKILL_DAGGER:
+            damage = floor(level * 0.4 + 2.3);
+            break;
+        case SKILL_SWORD:
+            damage = floor((level * 0.5) + 5);
+            break;
+        case SKILL_GREAT_SWORD:
+            damage = floor((level * 1.05) + 12.5);
+            break;
+        case SKILL_AXE:
+            damage = floor((level * .58) + 7.8);
+            break;
+        case SKILL_GREAT_AXE:
+            damage = floor((level * 1.13) + 15.9);
+            break;
+        case SKILL_SCYTHE:
+            damage = floor((level * 1.19) + 15.5);
+            break;
+        case SKILL_POLEARM: // Assuming lance class
+            damage = floor((level * 1.12) + 13.29);
+            break;
+        case SKILL_KATANA:
+            damage = (level * 0.5) + 4;
+            break;
+        case SKILL_GREAT_KATANA:
+            damage = floor((level * 0.98) + 14.14);
+            break;
+        case SKILL_CLUB:
+            damage = floor((level * 0.51) + 4.8);
+            break;
+        case SKILL_STAFF: // Pole class
+            damage = floor((level * 0.71) + 8.39);
+            break;
+    }
+    return damage;
+}
+uint16 GetWeaponDelayByTypeAndLevel(SKILLTYPE skillType, uint8 level)
+{
+    uint16 delay = 236;
+    switch (skillType)
+    {
+        case SKILL_HAND_TO_HAND:
+            delay = 480;
+            break;
+        case SKILL_DAGGER:
+            delay = 195;
+            break;
+        case SKILL_SWORD:
+            delay = 236;
+            break;
+        case SKILL_GREAT_SWORD:
+            delay = 444;
+            break;
+        case SKILL_AXE:
+            delay = 276;
+            break;
+        case SKILL_GREAT_AXE:
+            delay = 504;
+            break;
+        case SKILL_SCYTHE:
+            delay = 528;
+            break;
+        case SKILL_POLEARM: // Assuming lance class
+            delay = 492;
+            break;
+        case SKILL_KATANA:
+            delay = 227;
+            break;
+        case SKILL_GREAT_KATANA:
+            delay = 450;
+            break;
+        case SKILL_CLUB:
+            delay = 300;
+            break;
+        case SKILL_STAFF: // Pole class
+            delay = 402;
+            break;
+    }
+    return (delay * 1000) / 60;
 }
 
 }; // namespace fellowutils

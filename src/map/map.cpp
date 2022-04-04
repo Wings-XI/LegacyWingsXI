@@ -2791,6 +2791,7 @@ int32 map_config_default()
     map_config.storage_ignore_features = false;
     map_config.force_enable_mog_locker = false;
     map_config.log_gil_period = 0;
+    map_config.adventuring_fellow_dualwield = true;
     return 0;
 }
 
@@ -3387,6 +3388,10 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "log_gil_period") == 0)
             {
                 map_config.log_gil_period = atoi(w2);
+            }
+            else if (strcmp(w1, "adventuring_fellow_dualwield") == 0)
+            {
+                map_config.adventuring_fellow_dualwield = atoi(w2);
             }
             else
             {
