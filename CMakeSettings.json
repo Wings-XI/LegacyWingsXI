@@ -9,7 +9,8 @@
       "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib\\libmariadb.lib\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x86" ]
+      "inheritEnvironments": [ "msvc_x86" ],
+      "variables": []
     },
     {
       "name": "x86-Release",
@@ -20,7 +21,8 @@
       "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib\\libmariadb.lib\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x86" ]
+      "inheritEnvironments": [ "msvc_x86" ],
+      "variables": []
     },
     {
       "name": "x64-Debug",
@@ -28,10 +30,11 @@
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib64\\libmariadb.lib\"",
+      "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib64\\libmariadb64.lib\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     },
     {
       "name": "x64-Release",
@@ -42,7 +45,8 @@
       "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib64\\libmariadb64.lib\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     },
     {
       "name": "x64-Debug-Tracy",
@@ -53,7 +57,8 @@
       "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib64\\libmariadb64.lib\" -DTRACY_ENABLE=ON",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     },
     {
       "name": "x64-Release-Tracy",
@@ -64,7 +69,8 @@
       "cmakeCommandArgs": "-DMYSQL_INCLUDE_DIR=\"${projectDir}\\ext\\include\\mysql\" -DMYSQL_LIBRARY=\"${projectDir}\\ext\\lib64\\libmariadb64.lib\" -DTRACY_ENABLE=ON",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     }
   ]
 }
