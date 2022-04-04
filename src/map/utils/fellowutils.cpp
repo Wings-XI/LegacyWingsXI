@@ -620,7 +620,7 @@ CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFr
     {
         PFellow->name.clear();
         PFellow->name.insert(0, (const char*)Sql_GetData(SqlHandle, 1));
-        ShowDebug("PMaster: %u Fellow name = %s ID = %u\n", PMaster->id, PFellow->name, FellowID);
+        //ShowDebug("PMaster: %u Fellow name = %s ID = %u\n", PMaster->id, PFellow->name, FellowID);
 
         uint8 mlvl = (uint8)Sql_GetIntData(SqlHandle, 2); // pull lvl from db
         if (PMaster->GetMLevel() < mlvl)
@@ -1032,12 +1032,12 @@ void AddExperiencePoints(CFellowEntity* PFellow, CBaseEntity* PMob, uint32 exp, 
         uint8 currentCap = (uint8)Sql_GetIntData(SqlHandle, 0);
         uint8 currentLvl = (uint8)Sql_GetIntData(SqlHandle, 1);
         uint32 currentExp = (uint32)Sql_GetIntData(SqlHandle, 2);
-        ShowDebug("fellowutils:: Cap: %u Lvl: %u Exp: %u\n", currentCap, currentLvl, currentExp);
+        //ShowDebug("fellowutils:: Cap: %u Lvl: %u Exp: %u\n", currentCap, currentLvl, currentExp);
 
         if (exp != 0)
             currentExp += exp; // add normal exp
 
-        ShowDebug("fellowutils::GetExpNEXTLevel is: %u\n", GetExpNEXTLevel(currentLvl));
+        //ShowDebug("fellowutils::GetExpNEXTLevel is: %u\n", GetExpNEXTLevel(currentLvl));
         if (GetExpNEXTLevel(currentLvl) != 0)
         {
             if (currentExp >= GetExpNEXTLevel(currentLvl))
@@ -1066,7 +1066,7 @@ void AddExperiencePoints(CFellowEntity* PFellow, CBaseEntity* PMob, uint32 exp, 
                 }
             }
         }
-        ShowDebug("fellowutils:: FINAL currentExp: %u currentLvl: %u\n", currentExp, currentLvl);
+        //ShowDebug("fellowutils:: FINAL currentExp: %u currentLvl: %u\n", currentExp, currentLvl);
         SaveFellowExp(PMaster, currentLvl, currentExp);
         charutils::AddPoints(PMaster, "fellow_point", exp / 2);
     }
@@ -1103,7 +1103,7 @@ void AddKillCount(CCharEntity* PMaster)
             maxKills = 25;
         else if (fellowBond >= 30)
             maxKills = 20;
-        ShowDebug("fellowutils:: kills: %u maxKills: %u\n", kills, maxKills);
+        //ShowDebug("fellowutils:: kills: %u maxKills: %u\n", kills, maxKills);
         PMaster->m_PFellow->SetLocalVar("maxKills", maxKills);
         PMaster->m_PFellow->SetLocalVar("zoneKills", PMaster->m_PFellow->zoneKills);
 
@@ -1173,7 +1173,7 @@ void TriggerFellowChat(CCharEntity* PChar, uint8 option)
 {
     uint16 message = 0;
     uint16 MessageOffset = GetMessageOffset(PChar->getZone());
-    ShowDebug("fellowutils:: MessageOffset: %u Zone: %u\n", MessageOffset, PChar->getZone());
+    //ShowDebug("fellowutils:: MessageOffset: %u Zone: %u\n", MessageOffset, PChar->getZone());
     uint8 currentCap = 0;
     uint8 currentLvl = 0;
     uint32 currentExp = 0;
@@ -1184,7 +1184,7 @@ void TriggerFellowChat(CCharEntity* PChar, uint8 option)
     uint16 kills = 0;
     uint8 chatCounter = PChar->GetLocalVar("chatCounter");
     uint8 roll = tpzrand::GetRandomNumber(3);
-    ShowDebug("fellowutils:: chatConter: %u roll: %u option: %u\n", chatCounter, roll, option);
+    //ShowDebug("fellowutils:: chatConter: %u roll: %u option: %u\n", chatCounter, roll, option);
 
     const char* fmtQuery = "SELECT\
                 char_fellow.lvlcap,\
