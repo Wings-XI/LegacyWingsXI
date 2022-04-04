@@ -67,7 +67,6 @@ function onTrigger(player, mob)
         player:timer(6000, function(player) player:despawnFellow() end)
     else
         player:triggerFellowChat(FELLOWCHAT_GENERAL)
-        printf("ID %s", mob:getID())
     end
 end
 

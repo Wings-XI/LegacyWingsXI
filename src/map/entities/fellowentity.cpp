@@ -65,7 +65,7 @@ void CFellowEntity::PostTick()
 
 void CFellowEntity::FadeOut()
 {
-    ShowDebug("fellowentity FadeOut DESPAWN. \n");
+    //ShowDebug("fellowentity FadeOut DESPAWN. \n");
     animation = ANIMATION_DESPAWN;
     CBaseEntity::FadeOut();
     loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_DESPAWN, UPDATE_NONE));

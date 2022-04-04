@@ -12,7 +12,6 @@ end
 
 function onTrigger(player,npc)
     local FellowQuest = player:getCharVar("[Quest]Unlisted_Qualities")
-    printf("FellowQuest %s", FellowQuest)
     if (player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.UNLISTED_QUALITIES) == QUEST_ACCEPTED and player:getMaskBit(FellowQuest,2) == false) then
         player:startEvent(20000,0,0,0,0,0,0,0,player:getFellowValue("fellowid"))
     else

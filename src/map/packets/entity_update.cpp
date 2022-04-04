@@ -68,7 +68,7 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
         {
             if (PEntity->objtype == TYPE_FELLOW)
             {
-                ShowDebug("Fellow Entity DESPAWN. \n");
+                //ShowDebug("Fellow Entity DESPAWN. \n");
                 ref<uint8>(0x28) = 0x08;
             }
             ref<uint8>(0x0A) = 0x30;

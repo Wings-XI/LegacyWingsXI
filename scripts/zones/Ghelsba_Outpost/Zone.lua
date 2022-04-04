@@ -44,18 +44,17 @@ end
 function onEventFinish(player, csid, option)
     if (player:getBattlefield():getID() == 37) then
         if csid == 32004 then
-        local mob = GetMobByID(ID.mob.CARRION_DRAGON + 1)
-        local players = player:getBattlefield():getPlayers()
-        mob:setHP(GetServerVariable("[Mirror_Mirror]BCNMmobHP"))
-        mob:setPos(-189, -10, 42)
-        for i,player in pairs(players) do
-            player:setLocalVar("triggerFellow", 1) -- no greeting on spawn
-            player:setLocalVar("FellowDisengage", 1) -- fellow cannot sync disengage
-            player:spawnFellow(player:getFellowValue("fellowid"))
-            printf("spawned")
-            player:getFellow():setPos(-197, -10, 40.5)
-            player:timer(20000, function(player) player:fellowAttack(mob) end)
+            local mob = GetMobByID(ID.mob.CARRION_DRAGON + 1)
+            local players = player:getBattlefield():getPlayers()
+            mob:setHP(GetServerVariable("[Mirror_Mirror]BCNMmobHP"))
+            mob:setPos(-189, -10, 42)
+            for i,player in pairs(players) do
+                player:setLocalVar("triggerFellow", 1) -- no greeting on spawn
+                player:setLocalVar("FellowDisengage", 1) -- fellow cannot sync disengage
+                player:spawnFellow(player:getFellowValue("fellowid"))
+                player:getFellow():setPos(-197, -10, 40.5)
+                player:timer(20000, function(player) player:fellowAttack(mob) end)
+            end
         end
-    end
     end
 end
