@@ -15122,7 +15122,7 @@ inline int32 CLuaBaseEntity::setFellowValue(lua_State* L)
 
     const char* option = lua_tostring(L, 1);
     uint32 value = (uint32)lua_tointeger(L, 2);
-    if (option == "bond")
+    if (strcmp(option, "bond") == 0)
     {
         int bondCap = 30; // default cap
         const char* Query = "SELECT bondcap FROM char_fellow WHERE charid = %u;";

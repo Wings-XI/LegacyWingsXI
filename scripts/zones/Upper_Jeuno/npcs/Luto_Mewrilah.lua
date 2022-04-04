@@ -204,28 +204,24 @@ function onTrigger(player, npc)
     elseif MirrorMirror == QUEST_COMPLETED and player:getLocalVar("StartOver") == 1 then
         player:startEvent(10053,244,14810,0,0,0,0,0,fellowParam)
     elseif MirrorMirror == QUEST_COMPLETED then
-        -- Need confirmation that player needs signal pear equipped
-        if (bond >= 10 and weaponlevel == 0) then
-            player:startEvent(10050, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 20 and weaponlevel == 1) then
-            player:startEvent(10051, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 40 and weaponlevel == 2) then
-            player:startEvent(10068, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 50 and weaponlevel == 3) then
-            player:startEvent(10069, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 60 and weaponlevel == 4) then
-            player:startEvent(10070, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 90 and weaponlevel == 5) then
-            player:startEvent(10076, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
-        elseif (bond >= 110 and weaponlevel == 6) then
-            player:startEvent(10077, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            return
+        if (player:getEquipID(tpz.slot.EAR1) == 14810 or player:getEquipID(tpz.slot.EAR2)) then
+            if (bond >= 10 and weaponlevel == 0) then
+                player:startEvent(10050, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 20 and weaponlevel == 1) then
+                player:startEvent(10051, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 40 and weaponlevel == 2) then
+                player:startEvent(10068, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 50 and weaponlevel == 3) then
+                player:startEvent(10069, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 60 and weaponlevel == 4) then
+                player:startEvent(10070, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 90 and weaponlevel == 5) then
+                player:startEvent(10076, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            elseif (bond >= 110 and weaponlevel == 6) then
+                player:startEvent(10077, 0, 0, 0, 0, 0, 0, 0, fellowParam)
+            else
+                player:startEvent(10047,244,14810,0,0,0,0,0,fellowParam)
+            end
         else
             player:startEvent(10047,244,14810,0,0,0,0,0,fellowParam)
         end
