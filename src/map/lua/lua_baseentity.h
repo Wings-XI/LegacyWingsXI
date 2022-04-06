@@ -66,6 +66,8 @@ public:
     int32 getLocalVar(lua_State*);
     int32 setLocalVar(lua_State*);
     int32 resetLocalVars(lua_State*);
+    int32 getMaskBit(lua_State*);           // Retrieves a single bit in a character variable
+    int32 setMaskBit(lua_State*);           // Sets a single bit in a character variable
     int32 countMaskBits(lua_State*);
     int32 getLastOnline(lua_State*);        // Returns the unix timestamp of last time the player logged out or zoned
     int32 setDrawInOffsetY(lua_State*);
@@ -679,6 +681,17 @@ public:
     int32 removeOldestManeuver(lua_State*);
     int32 removeAllManeuvers(lua_State*);
     int32 updateAttachments(lua_State*);
+
+    // Adventuring Fellow
+    int32 spawnFellow(lua_State*);       // Spawns NPC Fellow
+    int32 despawnFellow(lua_State*);     // deSpawns NPC Fellow
+    int32 getFellow(lua_State*);         // Creates an LUA reference to a fellow entity
+    int32 triggerFellowChat(lua_State*); // calls the Chat system when talking to a fellow
+    int32 fellowAttack(lua_State*);      // Forces Fellow to attack target
+    int32 fellowRetreat(lua_State*);     // Disengages Fellow
+    int32 getFellowValue(lua_State*);    // Manipulating DB Fellow Values
+    int32 setFellowValue(lua_State*);    // Manipulating DB Fellow Values
+    int32 delFellowValue(lua_State*);    // Clears Fellow from DB
 
     // Mob Entity-Specific
     int32 setMobLevel(lua_State*);

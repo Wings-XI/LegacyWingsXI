@@ -24,6 +24,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <math.h>
 #include "../../entities/charentity.h"
 #include "../../entities/mobentity.h"
+#include "../../entities/fellowentity.h"
 #include "../../entities/trustentity.h"
 #include "../../packets/action.h"
 #include "../../alliance.h"
@@ -122,6 +123,10 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
             {
                 // just add myself
                 addEntity(m_PMasterTarget, withPet);
+
+                // if i'm the target of my own aoe buff - add my fellow if they exist
+                if (m_PMasterTarget == m_PBattleEntity && ((CCharEntity*)m_PMasterTarget)->m_PFellow != nullptr)
+                    addEntity(((CCharEntity*)m_PMasterTarget)->m_PFellow, false);
             }
         }
         else 
@@ -259,6 +264,10 @@ void CTargetFind::addAllInParty(CBattleEntity* PTarget, bool withPet)
         static_cast<CCharEntity*>(PTarget)->ForPartyWithTrusts([this, withPet](CBattleEntity* PMember)
         {
             addEntity(PMember, withPet);
+            // if the caster is in the same the party as the aoe target, and has a fellow - include the fellow in the buff
+            // this covers AoEs orginated by the caster that target others (curaga, sch accession, divine veil)
+            if (PMember == m_PBattleEntity && ((CCharEntity*)m_PBattleEntity)->m_PFellow != nullptr)
+                addEntity(((CCharEntity*)m_PBattleEntity)->m_PFellow, false);
         });
     }
     else
@@ -427,7 +436,7 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
 
         }
         else if (m_findType == FIND_MONSTER_MONSTER || m_findType == FIND_PLAYER_PLAYER){
-            if (PTarget->objtype == TYPE_TRUST)
+            if (PTarget->objtype == TYPE_TRUST || PTarget->objtype == TYPE_FELLOW)
             {
                 return true;
             }
@@ -526,11 +535,28 @@ bool CTargetFind::canSee(position_t* point)
 
 CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint16 validTargetFlags)
 {
-    CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST);
+    CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST | TYPE_FELLOW);
 
     if (PTarget == nullptr)
     {
         return nullptr;
+    }
+
+     if (m_PBattleEntity->objtype == TYPE_FELLOW)
+    {
+        CFellowEntity* PFellow = static_cast<CFellowEntity*>(m_PBattleEntity);
+
+        if (PFellow->targid == actionTargetID)
+        {
+            return (CBattleEntity*)PFellow;
+        }
+    }
+
+    if (m_PBattleEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = static_cast<CCharEntity*>(m_PBattleEntity);
+        if (PChar->m_PFellow != nullptr && PChar->m_PFellow->targid == actionTargetID)
+            return (CBattleEntity*)PChar->m_PFellow;
     }
 
     if (validTargetFlags & TARGET_PET)
