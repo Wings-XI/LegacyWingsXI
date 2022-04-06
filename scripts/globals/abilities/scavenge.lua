@@ -7,9 +7,14 @@
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability, action)
+    -- Check for full inventory
+    if (player:getFreeSlotsCount() == 0) then
+        return tpz.msg.basic.FULL_INVENTORY, 0
+    end
     return 0, 0
 end
 
