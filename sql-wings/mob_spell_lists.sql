@@ -1441,6 +1441,7 @@ INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 361, 1, 255);
 -- Oupire Spell List (Non-Elemental)
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 227, 1, 255); -- Poisonga III
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 360, 1, 255); -- Dispelga

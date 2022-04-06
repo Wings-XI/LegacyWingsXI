@@ -421,7 +421,7 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, bool 
         if (PStatusEffect->GetDuration() < effects::EffectsParams[statusId].MinDuration) {
             PStatusEffect->SetDuration(effects::EffectsParams[statusId].MinDuration);
         }
-
+       
         // remove clean up other effects
         OverwriteStatusEffect(PStatusEffect);
 
@@ -706,9 +706,19 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
     {
         if (PStatusEffect->GetFlag() & flag)
         {
-            if ((flag & EFFECTFLAG_ON_SYNC) && (PStatusEffect->GetStatusID() == EFFECT_REFRESH || PStatusEffect->GetStatusID() == EFFECT_REGEN) && PStatusEffect->GetSubPower() == 128 && this->m_POwner && zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_OUTDOORS)
+            if ((flag & EFFECTFLAG_ON_SYNC)
+                && (PStatusEffect->GetStatusID() == EFFECT_REFRESH || PStatusEffect->GetStatusID() == EFFECT_REGEN)
+                && PStatusEffect->GetSubPower() == 128
+                && this->m_POwner
+                && zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_OUTDOORS)
+
                 continue; // book refresh/regen persists through level sync application
-            RemoveStatusEffect(PStatusEffect, silent);
+
+            // If this is a Nightmare effect flag, it needs to be removed explictly by a cure
+            if (flag & EFFECTFLAG_DAMAGE        // Only check this when removing effects by taking damage
+                && !(PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
+  
+                RemoveStatusEffect(PStatusEffect, silent);
         }
     }
 }
@@ -1327,6 +1337,12 @@ void CStatusEffectContainer::SetEffectParams(CStatusEffect* StatusEffect)
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
     }
+    // Determine if this is a Nightmare effect -- Sleep with a Bio sub id
+    else if ((effect == EFFECT_SLEEP && (StatusEffect->GetSubID() == (uint32)EFFECT_BIO)))
+    {
+        name.insert(0, "globals/effects/");
+        name.insert(name.size(), effects::EffectsParams[effect].Name);
+    }
     else {
         CItem* Ptem = itemutils::GetItemPointer(StatusEffect->GetSubID());
         if (Ptem != nullptr)
@@ -1684,7 +1700,7 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             {
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
-                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == 25)) // dots dont wake up from nightmare
+                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)) // dots dont wake up from nightmare
                     WakeUp();
             }
         }

@@ -1634,6 +1634,7 @@ INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1903);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1905);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1906);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1908);
+INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1909);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 906);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 907);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 908);

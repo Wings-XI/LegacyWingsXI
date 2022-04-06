@@ -876,6 +876,8 @@ tpz.effectFlag =
     OFFLINE_TICK    = 0x2000000,
     AURA            = 0x4000000,
     ON_SYNC         = 0x8000000,
+    LEVEL_RESTRICTION=0x10000000,
+    NO_WAKE         = 0x20000000,
 }
 
 ------------------------------------
