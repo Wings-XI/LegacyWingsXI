@@ -71,6 +71,7 @@ enum EFFECTFLAG
     EFFECTFLAG_AURA             = 0x4000000, // Is an aura type effect
     EFFECTFLAG_ON_SYNC          = 0x8000000, // lose this effect on sync
     EFFECTFLAG_LEVEL_RESTRICTION= 0x10000000, // Has Level Restriction
+    EFFECTFLAG_NO_WAKE          = 0x20000000, // Status prevents waking up
 };
 
 enum EFFECT
