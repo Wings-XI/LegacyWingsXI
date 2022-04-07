@@ -15,7 +15,7 @@ function onTrade(player, npc, trade)
     local MAX = 100000000
 
     if (trade:hasItemQty(2184, COUNT)) then
-        RESULT = 2*COUNT
+        RESULT = 1*COUNT
     elseif (trade:hasItemQty(2185, COUNT)) then
         RESULT = 10*COUNT
     elseif (trade:hasItemQty(2186, COUNT)) then
@@ -48,9 +48,9 @@ end
 function onEventFinish(player, csid, option)
 
     if (csid == 1900) then -- onTrigger
-
+        local shop = {}
         if ZNM_Enabled == 1 then
-            local shop =
+            shop =
             {
                 [1] = {itemID = 18721, price = 2, QTY = 1}, -- SoulTrapper
                 [257] = {itemID = 18724, price = 500, QTY = 1}, -- Soultrapper 2000
@@ -62,7 +62,7 @@ function onEventFinish(player, csid, option)
                 [197121] = {itemID = 16137, price = 5000, QTY = 1}  -- Cacaroon's Hood
             }
         else
-            local shop =
+            shop =
             {
                 [513] = {itemID = 16134, price = 5000, QTY = 1}, -- Zoraal Ja's Helm
                 [66049] = {itemID = 16135, price = 5000, QTY = 1}, -- Dartorgor's Coif
