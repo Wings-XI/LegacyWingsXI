@@ -7,19 +7,26 @@
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
 -----------------------------------
--- todo: when mimics a spell will cast the next tier spell
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
 end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
-    mob:setLocalVar("changeTime", 300)
+    mob:setLocalVar("changeTime", 135)
     mob:setLocalVar("useWise", math.random(25, 50))
     mob:addMod(tpz.mod.UFASTCAST, 150)
+    mob:AnimationSub(1)
+    mob:SetMagicCastingEnabled(false)
+end
+
+function onMobEngaged(mob, target)
+    mob:setLocalVar("changeTime", 135)
 end
 
 function onMobFight(mob, target)
@@ -41,15 +48,18 @@ function onMobFight(mob, target)
         mob:useMobAbility(1702)
         mob:setLocalVar("usedMainSpec", 1)
     end
+    printf("%s %s", mob:getBattleTime(), changeTime)
     if mob:getBattleTime() == changeTime then
         if mob:AnimationSub() == 0 then
             mob:AnimationSub(1)
             mob:setSpellList(0)
-            mob:setLocalVar("changeTime", mob:getBattleTime() + 300)
+            mob:SetMagicCastingEnabled(false)
+            mob:setLocalVar("changeTime", mob:getBattleTime() + 135)
         else
             mob:AnimationSub(0)
             mob:setSpellList(302)
-            mob:setLocalVar("changeTime", mob:getBattleTime() + 300)
+            mob:SetMagicCastingEnabled(true)
+            mob:setLocalVar("changeTime", mob:getBattleTime() + 135)
         end
     end
 end
@@ -103,7 +113,7 @@ function determineSpellUpgrade(spellID)
         return spellID + 1
     elseif (spellID >= 199 and spellID <= 200) then -- Waterga I & II
         return spellID + 1
-    elseif (spellID == 204 or spellID <= 206 or spellID <= 208 or spellID <= 210 or spellID <= 212) then -- AMs
+    elseif (spellID == 204 or spellID == 206 or spellID == 208 or spellID == 210 or spellID == 212) then -- AMs
         return spellID + 1
     elseif (spellID >= 220 and spellID <= 221) then -- Poison I & II
         return spellID + 1
@@ -147,8 +157,9 @@ function determineSpellUpgrade(spellID)
 end
 
 function onMagicHit(caster, target, spell)
+    local spellID = spell:getID()
     if spell:tookEffect() and target:AnimationSub() == 1 and (caster:isPC() or caster:isPet()) and (spellID ~= 533) then
-        target:setLocalVar("COPY_SPELL", determineSpellUpgrade(spell:getID()))
+        target:setLocalVar("COPY_SPELL", determineSpellUpgrade(spellID))
         target:setLocalVar("LAST_CAST", target:getBattleTime())
     end
 

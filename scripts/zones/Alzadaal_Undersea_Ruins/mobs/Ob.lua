@@ -22,8 +22,6 @@ local function overloadRageDisengage(mob)
         mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
         mob:delMod(tpz.mod.CRITHITRATE, 30)
         mob:delMod(tpz.mod.MEVA, 500)
-        mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
-        mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
         mob:delMod(tpz.mod.BINDRESTRAIT, 100)
         mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
         mob:delMod(tpz.mod.MOVE, 200)
@@ -43,8 +41,6 @@ local function overloadRageEngage(mob)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 75)
     mob:addMod(tpz.mod.CRITHITRATE, 30)
     mob:addMod(tpz.mod.MEVA, 500)
-    mob:addMod(tpz.mod.LULLABYRESTRAIT, 100)
-    mob:addMod(tpz.mod.SLEEPRESTRAIT, 100)
     mob:addMod(tpz.mod.BINDRESTRAIT, 100)
     mob:addMod(tpz.mod.GRAVITYRESTRAIT, 100)
     mob:addMod(tpz.mod.MOVE, 200)
@@ -228,6 +224,8 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
     setupHarlequin(mob)
 end
 
