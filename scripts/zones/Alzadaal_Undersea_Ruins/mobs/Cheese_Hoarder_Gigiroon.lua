@@ -20,8 +20,23 @@ local PathingPoints = {
     {x = -171.0, y = -8.0, z = -20.0},
     {x = -189.0, y = -8.0, z = -20.0},
     {x = -193.5, y = -8.0, z = -33.5},
-    {x = -166.5, y = -8.0, z = -33.5}
+    {x = -166.5, y = -8.0, z = -33.5},
+    {x = -60.0, y = -8.0, z = -60.0},
+    {x = -60.0, y = -8.0, z = 100}
 }
+
+local function pickStartingRunPoint(mob)
+    -- because of the curved nature of the undersea ruins - cheese gets stuck trying to path through the walls rather than around.
+    -- this position based choice route allows him to get back on track for most cases
+    local mobPos = mob:getPos()
+    if (mobPos.x > -120 and mobPos.x < -72 and mobPos.z <= 20 and mobPos.z > -29) then
+        mob:setLocalVar("RunDestination", 15)
+    elseif (mobPos.x > -120 and mobPos.x < -72 and mobPos.z <= 68 and mobPos.z > 20) then
+        mob:setLocalVar("RunDestination", 16)
+    else
+        mob:setLocalVar("RunDestination", math.random(1,14))
+    end
+end
 
 local function getAvailbleMine()
     local possibleMines = {17072173, 17072174, 17072175, 17072176, 17072177}
@@ -74,7 +89,11 @@ local function runForIt(mob)
             else
                 mob:setLocalVar("RunDestination", math.random(1, 6))
             end
-        else
+        elseif (destination == 15) then
+            mob:setLocalVar("RunDestination", math.random(9, 14))
+        elseif (destination == 16) then
+            mob:setLocalVar("RunDestination", math.random(1, 6))
+        else 
             mob:setLocalVar("RunDestination", math.random(7, 8))
         end
         mob:setLocalVar("PrevRunDest", destination)
@@ -95,6 +114,7 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setMod(tpz.mod.ATT, 400)
 end
 
 function onMobFight(mob, target)
@@ -105,8 +125,8 @@ function onMobFight(mob, target)
             local runType = math.random(1,2)
             mob:setLocalVar("RunType", runType)
             mob:setLocalVar("MineTime", now)
-            
-            mob:setLocalVar("RunDestination", math.random(#PathingPoints))
+
+            pickStartingRunPoint(mob)
 
             if (runType == 1) then
                 mob:setLocalVar("MineDelay", 12)
