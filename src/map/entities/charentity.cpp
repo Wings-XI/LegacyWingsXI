@@ -1528,7 +1528,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             action.recast -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
 
         // remove invisible if aggressive
-        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
+        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY && PAbility->getID() != ABILITY_GAUGE)
         {
             if (PAbility->getValidTarget() & TARGET_ENEMY) {
                 // aggressive action
