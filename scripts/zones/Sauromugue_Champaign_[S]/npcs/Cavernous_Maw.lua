@@ -23,26 +23,23 @@ function onTrigger(player, npc)
         local lookParam     = getLookParam(player)
         local fellowParam   = getFellowParam(player)
 
-        player:startEvent(265, 0, 0, 0, 0, 0, styleParam, lookParam, fellowParam)
+        player:startEvent(265, 0, 23, 1743, 0, 0, 9568257, 0, fellowParam)
     else
         tpz.maws.onTrigger(player, npc)
     end
 end
 
 function onEventUpdate(player, csid, option)
-    -- player:PrintToPlayer(string.format( "onEventUpdate csid %s option %s", csid, option ))
     if (csid == 265) then
         local styleParam    = getStyleParam(player)
         local lookParam     = getLookParam(player)
         local fellowParam   = getFellowParam(player)
 
-        -- ToDo: get actual look to display, not some rando galka
-        player:updateEvent(0, 0, 0, 0, 0, styleParam, lookParam, fellowParam)
+        player:updateEvent(0, 0, 1743, 0, 0, styleParam, lookParam, fellowParam)
     end
 end
 
 function onEventFinish(player, csid, option)
-    player:PrintToPlayer(string.format( "onEventFinish csid %s option %s", csid, option ))
     if (csid == 265) then
         player:messageSpecial(ID.text.CAN_SUMMON_FELLOW_WOTG)
         player:setFellowValue("wotg_unlock", 1)
