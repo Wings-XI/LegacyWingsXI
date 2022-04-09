@@ -157,7 +157,7 @@ function onEventUpdate(player, csid, option, target)
         if party ~= nil then
             for i, v in ipairs(party) do
                 if v:getID() ~= player:getID() then
-                    if not v:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) and v:getCurrentAssault() == assaultid then
+                    if not (v:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) and v:getCurrentAssault() == assaultid) then
                         player:messageText(target, ID.text.MEMBER_NO_REQS, false)
                         player:instanceEntry(target, 1)
                         return
