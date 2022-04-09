@@ -69,6 +69,8 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
     -- report or move position
     if (x == nil or y == nil or z == nil) then
         player:PrintToPlayer(string.format("%s's position:     [X] %.4f   [Y] %.4f   [Z] %.4f   [R] %i", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos() ))
+        --Uncomment below to be able to copy paste positions for use in mob or npc spawn points: Will print to console
+        print(string.format("%s's position: %.4f, %.4f, %.4f, %i", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos() ))
     else
         if (zoneId == nil) then
             zoneId = targ:getZoneID()

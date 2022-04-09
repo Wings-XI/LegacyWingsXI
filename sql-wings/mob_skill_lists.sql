@@ -3456,6 +3456,18 @@ INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 613);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 614);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 633);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 2233);
+-- Dynamis - Buburimu
+INSERT INTO `mob_skill_lists` VALUES('Alkla', 5024, 647); -- Chaos Blade
+INSERT INTO `mob_skill_lists` VALUES('Stihi', 5025, 642); -- Flame Breath
+INSERT INTO `mob_skill_lists` VALUES('Basilic', 5026, 648); -- Petro Eyes
+INSERT INTO `mob_skill_lists` VALUES('Jurik', 5027, 644); -- Wind Breath
+INSERT INTO `mob_skill_lists` VALUES('Barong', 5028, 645); -- Body Slam
+INSERT INTO `mob_skill_lists` VALUES('Tarasca', 5028, 646); -- Heavy Stomp
+INSERT INTO `mob_skill_lists` VALUES('Stollenwurm', 5028, 651); -- Lodesong
+INSERT INTO `mob_skill_lists` VALUES('Koschei', 5028, 650); -- Thornsong
+INSERT INTO `mob_skill_lists` VALUES('Aitvaras', 5028, 649); -- Voidsong
+INSERT INTO `mob_skill_lists` VALUES('Vishap', 5028, 643); -- Poison Breath
+
 --
 -- Indexes for dumped tables
 --

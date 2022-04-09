@@ -11,5 +11,5 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    dynamis.qmOnTrigger(player, npc)
+    dynamis.sjQMOnTrigger(player, npc)
 end
