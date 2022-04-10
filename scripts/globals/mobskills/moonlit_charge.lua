@@ -21,7 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
     totaldamage = MobFinalAdjustments(damage.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
     target:addStatusEffect(tpz.effect.BLINDNESS, 20, 0, 30)
     target:takeDamage(totaldamage, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+	if damage.dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, damage.hitslanded) end
 
     return totaldamage
 
