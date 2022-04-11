@@ -28,9 +28,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../zone.h"
 
 CPathFind::CPathFind(CBaseEntity* PTarget)
+: m_POwner(PTarget)
+, m_pathFlags(0)
+, m_carefulPathing(false)
 {
-    m_POwner   = PTarget;
-    m_pathFlags = 0;
     Clear();
 }
 
@@ -251,6 +252,13 @@ void CPathFind::FollowPath()
 
     m_onPoint = false;
     position_t& targetPoint = m_points[m_currentPoint];
+
+    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
+
+    if (m_carefulPathing)
+    {
+        m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
+    }
 
     if (m_maxDistance && m_distanceMoved >= m_maxDistance)
     {
@@ -500,6 +508,11 @@ bool CPathFind::CanSeePoint(const position_t& point, bool lookOffMesh)
 const position_t& CPathFind::GetDestination() const
 {
     return m_points.back();
+}
+
+void CPathFind::SetCarefulPathing(bool careful)
+{
+    m_carefulPathing = careful;
 }
 
 void CPathFind::Clear()
