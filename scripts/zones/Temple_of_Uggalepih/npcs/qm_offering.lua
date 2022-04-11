@@ -13,9 +13,21 @@ end
 function onTrigger(player, npc)
     if not player:hasItem(1183) then
         if npcUtil.giveItem(player, 1183) then -- Uggalepih Offering
+            local spawnPoints =
+                {
+                    {386.253,   -0.300,     269.696},
+                    {386.253,   -0.300,     250.342},
+                    {374.216,   -0.300,     272.746},
+                    {373.432,   -0.300,     250.259},
+                    {309.800,   0.000,      233.960},
+                    {292.989,   0.000,      231.168},
+                }
+            local point = spawnPoints[math.random(#spawnPoints)]
+            local delay = math.random(900, 7200) -- 15 minutes to 2 hours
+
             npc:setStatus(tpz.status.DISAPPEAR)
-            npc:updateNPCHideTime(math.random(900, 7200)) -- 15 minutes to 2 hours
-            -- TODO: ??? reappears at new position
+            npcUtil.queueMove(npc, point, delay)
+            npc:updateNPCHideTime(delay) 
         end
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)

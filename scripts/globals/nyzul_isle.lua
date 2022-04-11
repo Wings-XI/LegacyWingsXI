@@ -127,7 +127,7 @@ function generateFreeFloor(floorNumber, instance)
     end
 
     -- light the rune of transfer
-    activeRuneOfTransfer:timer(1000, function(activeRuneOfTransfer)
+    activeRuneOfTransfer:timer(15000, function(activeRuneOfTransfer)
         floorObjectiveComplete(activeRuneOfTransfer:getInstance())
     end)
     return selectedFloorLayout.RuneOfTransferSpawnPoint

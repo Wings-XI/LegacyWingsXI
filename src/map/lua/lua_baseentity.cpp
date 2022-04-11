@@ -9221,6 +9221,11 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         bool breakBind = true;
         bool removePetrify = false;
 
+        // Check to see if the target has a nightmare effect active
+        if (PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) &&
+            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)
+            wakeUp = false;
+
         if (!lua_isnil(L, 5) && lua_istable(L, 5))
         {
             // Attempt to wake up the target unless wakeUp is provided and is false.

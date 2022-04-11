@@ -25,7 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     target:takeDamage(totaldamage, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, damage.hitslanded) end
+	if damage.dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, damage.hitslanded) end
 
     return totaldamage
 
