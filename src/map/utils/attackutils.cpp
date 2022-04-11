@@ -119,7 +119,7 @@ namespace attackutils
     {
         if (facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
-            return(tpzrand::GetRandomNumber(100) <= battleutils::GetGuardRate(PAttacker, PDefender));
+            return(tpzrand::GetRandomNumber(100) < battleutils::GetGuardRate(PAttacker, PDefender));
         }
         return false;
     }
