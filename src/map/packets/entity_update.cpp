@@ -27,6 +27,7 @@
 #include "entity_update.h"
 
 #include "../entities/baseentity.h"
+#include "../entities/fellowentity.h"
 #include "../entities/mobentity.h"
 #include "../entities/trustentity.h"
 #include "../entities/npcentity.h"
@@ -65,14 +66,20 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
     {
         case ENTITY_DESPAWN:
         {
-            ref<uint8>(0x0A) = 0x20;
+            if (PEntity->objtype == TYPE_FELLOW)
+            {
+                //ShowDebug("Fellow Entity DESPAWN. \n");
+                ref<uint8>(0x28) = 0x08;
+            }
+            ref<uint8>(0x0A) = 0x30;
+            ref<uint8>(0x1F) = 0x02; // despawn animation
             updatemask |= UPDATE_ALL_MOB;
         }
         break;
         case ENTITY_SPAWN:
         {
             updatemask |= UPDATE_ALL_MOB;
-            if (PEntity->objtype == TYPE_PET)
+            if (PEntity->objtype == TYPE_PET || PEntity->objtype == TYPE_FELLOW)
             {
                 ref<uint8>(0x28) = 0x04;
             }
@@ -165,6 +172,36 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
             }
         }
         break;
+        case TYPE_FELLOW:
+        {
+            if (type == ENTITY_SPAWN)
+                ref<uint8>(0x0A) = 0x57;
+
+            CFellowEntity* PFellow = (CFellowEntity*)PEntity;
+            {
+                if (updatemask & UPDATE_HP)
+                {
+                    ref<uint8>(0x1E) = PFellow->GetHPP();
+                    ref<uint8>(0x1F) = PEntity->animation;
+                    ref<uint8>(0x28) |= (PFellow->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR) ? 0x10 : 0x00);
+                    ref<uint8>(0x28) |= PFellow->health.hp > 0 && PFellow->animation == ANIMATION_DEATH ? 0x08 : 0;
+                    ref<uint8>(0x29) = PEntity->allegiance;
+                }
+                if (updatemask & UPDATE_STATUS)
+                {
+                    ref<uint32>(0x2C) = PFellow->m_OwnerID.id;
+                }
+            }
+            this->size = 0x2A;
+            ref<uint8>(0x21) = 0x1b;
+            ref<uint8>(0x25) = 0x0c;
+            ref<uint8>(0x27) = 0x28;
+            ref<uint8>(0x28) |= 0x40;
+            ref<uint8>(0x2A) = 0x00;
+            ref<uint8>(0x2B) = 0x02;
+            memcpy(data + (0x44), PEntity->GetName(), PEntity->name.size());
+        }
+        break;
         default:
         {
             break;
@@ -194,7 +231,7 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
         case MODEL_EQUIPED:
         case MODEL_CHOCOBO:
         {
-            this->size = 0x24;
+            this->size = 0x2A;
 
             memcpy(data + (0x30), &(PEntity->look), 20);
         }

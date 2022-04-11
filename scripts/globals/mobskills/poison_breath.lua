@@ -18,6 +18,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.POISON
     local power = math.ceil(mob:getMainLvl() / 5)
+    mob:lookAt(target:getPos())
 
     MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
 

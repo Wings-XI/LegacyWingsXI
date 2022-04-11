@@ -1983,7 +1983,7 @@ namespace battleutils
         // Granite Skin 100% guard rate
         if (PDefender->objtype == TYPE_MOB && PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD) &&
             PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_PHYSICAL_SHIELD)->GetPower() == 3)
-            return 100;
+            return 101;
 
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
 

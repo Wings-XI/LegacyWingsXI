@@ -23,5 +23,9 @@ function onMobWeaponSkill(target, mob, skill)
     skill:setMsg(tpz.msg.basic.SKILL_RECOVERS_HP)
     -- Todo: verify/correct maths
     -- based on captures/videos of Vulpangue - *2 was too high
-    return MobHealMove(mob, math.floor(mob:getHP()/7)*1.5)
+    local healAmount = math.floor(mob:getHP()/7)*1.5
+    if (healAmount > 2000) then
+        healAmount = math.random(1800, 2000)
+    end
+    return MobHealMove(mob, healAmount)
 end

@@ -3,6 +3,8 @@ set(SOURCES
     automaton_controller.h
     controller.cpp
     controller.h
+    fellow_controller.cpp
+    fellow_controller.h
     mob_controller.cpp
     mob_controller.h
     pet_controller.cpp

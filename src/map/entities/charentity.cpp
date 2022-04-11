@@ -55,6 +55,7 @@
 
 #include "charentity.h"
 #include "automatonentity.h"
+#include "fellowentity.h"
 #include "trustentity.h"
 #include "../ability.h"
 #include "../battlefield.h"
@@ -227,6 +228,11 @@ CCharEntity::CCharEntity()
     petZoningInfo.petMP = 0;
     petZoningInfo.petTP = 0;
 
+    fellowZoningInfo.respawnFellow = false;
+    fellowZoningInfo.fellowID = 0;
+    fellowZoningInfo.fellowHP = 0;
+    fellowZoningInfo.fellowMP = 0;
+
     m_LastEngagedTargID = 0;
 
     m_PlayTime = 0;
@@ -265,6 +271,8 @@ CCharEntity::CCharEntity()
 
     m_ZoneAggroImmunity = server_clock::now() + 12s;
     m_fomorHate = 0;
+
+    m_PFellow = nullptr;
 
     PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
         std::make_unique<CTargetFind>(this));
@@ -562,6 +570,19 @@ void CCharEntity::resetPetZoningInfo()
     petZoningInfo.respawnPet = false;
     petZoningInfo.petType = PETTYPE_AVATAR;
 }
+
+void CCharEntity::setFellowZoningInfo()
+{
+    fellowZoningInfo.fellowHP = m_PFellow->health.hp;
+    fellowZoningInfo.fellowMP = m_PFellow->health.mp;
+}
+
+void CCharEntity::resetFellowZoningInfo()
+{
+    fellowZoningInfo.fellowHP = 0;
+    fellowZoningInfo.fellowMP = 0;
+    fellowZoningInfo.respawnFellow = false;
+}
 /************************************************************************
 *																		*
 *  Возвращаем контейнер с указанным ID. Если ID выходит за рамки, то	*
@@ -835,6 +856,18 @@ void CCharEntity::ClearTrusts()
 
     ReloadPartyInc();
 }
+
+void CCharEntity::RemoveFellow()
+{
+    if (m_PFellow == nullptr || !m_PFellow->PAI->IsSpawned())
+        return;
+
+    //    loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CFellowDespawnPacket(this));
+    m_PFellow->PAI->Despawn();
+    m_PFellow = nullptr;
+    pushPacket(new CCharUpdatePacket(this));
+}
+
 
 void CCharEntity::RefreshSpawns()
 {
@@ -1495,7 +1528,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             action.recast -= std::min<int16>(getMod(Mod::SIC_READY_DELAY), 15);
 
         // remove invisible if aggressive
-        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
+        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY && PAbility->getID() != ABILITY_GAUGE)
         {
             if (PAbility->getValidTarget() & TARGET_ENEMY) {
                 // aggressive action

@@ -23,7 +23,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32000 then
-
+    
         local area = player:getLocalVar("[battlefield]area")
         if area >= 1 and area <= 3 then
             -- Set spawn point by area

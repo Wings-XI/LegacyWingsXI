@@ -3,17 +3,13 @@
 --  Mob: Diabolos
 -----------------------------------
 local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
+mixins = {require("scripts/mixins/families/avatar_prime")}
 
 -- TODO: CoP Diabolos
 -- 1) Make the diremites in the pit all aggro said player that falls into region. Should have a respawn time of 10 seconds.
 -- 2) Diremites also shouldnt follow you back to the fight area if you make it there. Should despawn and respawn instantly if all players
 --    make it back to the Diabolos floor area.
--- 3) ANIMATION Packet ids for instance 2 and 3 are wrong (needs guesswork). Sounds working.
---    Update 2018-01-02 these no longer seem to work for any instance. neither animation nor sound.
-
--- TODO: Diabolos Prime
--- Note: Diabolos Prime fight drops all tiles at once.
-
+-- 3) (Update 2022-04-10) Sound animation packets not working
 
 function onMobSpawn(mob)
     local dBase = ID.mob.DIABOLOS_OFFSET
