@@ -81,7 +81,7 @@ g_mixins.animated_weapons = function(mob)
         local changeTime = mob:getLocalVar("changeTime")
         if battleTime - changeTime >= 0 then
             mob:setLocalVar("warp", 1)
-            mob:castSpell()
+            mob:castSpell(261)
             mob:setLocalVar("changeTime", mob:getBattleTime() + math.random(10, 15)) -- if interrupted, will try to warp again, this wait time starts onCast
         end
     end)

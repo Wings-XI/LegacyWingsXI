@@ -22,15 +22,13 @@ local function overloadRageDisengage(mob)
         mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
         mob:delMod(tpz.mod.CRITHITRATE, 30)
         mob:delMod(tpz.mod.MEVA, 500)
-        mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
-        mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
         mob:delMod(tpz.mod.BINDRESTRAIT, 100)
         mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
         mob:delMod(tpz.mod.MOVE, 200)
 
         -- intense regain, uses TP moves at will when raged
         mob:delMod(tpz.mod.REGAIN, 2000)
-        
+
     end
 end
 
@@ -43,8 +41,6 @@ local function overloadRageEngage(mob)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 75)
     mob:addMod(tpz.mod.CRITHITRATE, 30)
     mob:addMod(tpz.mod.MEVA, 500)
-    mob:addMod(tpz.mod.LULLABYRESTRAIT, 100)
-    mob:addMod(tpz.mod.SLEEPRESTRAIT, 100)
     mob:addMod(tpz.mod.BINDRESTRAIT, 100)
     mob:addMod(tpz.mod.GRAVITYRESTRAIT, 100)
     mob:addMod(tpz.mod.MOVE, 200)
@@ -99,7 +95,7 @@ local function changeToSharpshot(mob)
     if(mob:getLocalVar("CurrentFrame") == sharpshotFrameModelId) then
         return
     end
-    
+
     mob:setLocalVar("CurrentFrame", sharpshotFrameModelId)
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
@@ -122,7 +118,7 @@ local function setupHarlequin(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -50)
     mob:setMod(tpz.mod.UDMGRANGE, -50)
     mob:setMod(tpz.mod.UDMGMAGIC, -50)
-    mob:setSpellList(525)
+    mob:setSpellList(536)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 35)
     mob:setMod(tpz.mod.UFASTCAST, 25)
     mob:setBehaviour(0) -- Standback disabled
@@ -228,6 +224,8 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
     setupHarlequin(mob)
 end
 

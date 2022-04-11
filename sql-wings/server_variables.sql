@@ -323,6 +323,8 @@ INSERT INTO `server_variables` VALUES('TaisaiPicked1', 1);
 INSERT INTO `server_variables` VALUES('[POP]Bonnacon 16798056', 1609504692);
 INSERT INTO `server_variables` VALUES('[POP]Jaded_Jody 16986378', 1609480814);
 INSERT INTO `server_variables` VALUES('[POP]Bluestreak_Gyugyuroon 17056156', 1);
+INSERT INTO `server_variables` VALUES('[ZNM]SubjectsOfInterest', 55);
+INSERT INTO `server_variables` VALUES('[ZNM]Fauna', 62);
 
 --
 -- Indexes for dumped tables

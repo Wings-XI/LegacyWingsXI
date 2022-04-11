@@ -1,4 +1,5 @@
 ﻿#include "charutils.h"
+#include "fellowutils.h"
 /*
 ===========================================================================
 
@@ -706,13 +707,20 @@ namespace charutils
             limitPoints = (uint16)Sql_GetIntData(SqlHandle, 24);
         }
 
+        /*fmtQuery = "SELECT char_stats.nameflags, char_stats.mjob, char_stats.sjob, "
+                   "char_stats.hp, char_stats.mp, char_stats.mhflag, char_stats.title, "
+                   "char_stats.bazaar_message, char_stats.zoning, char_stats.pet_id, "
+                   "char_stats.pet_type, char_stats.pet_hp, char_stats.pet_mp, "
+                   "char_fellow.fellowid, char_fellow.zone_hp, char_fellow.zone_mp "
+                   "FROM char_stats, char_fellow WHERE char_stats.charid = char_fellow.charid AND char_stats.charid = %u;";*/
+
         fmtQuery = "SELECT nameflags, mjob, sjob, hp, mp, mhflag, title, bazaar_message, zoning, "
-            "pet_id, pet_type, pet_hp, pet_mp, seacom_type, search_message "
-            "FROM char_stats WHERE charid = %u;";
+                   "pet_id, pet_type, pet_hp, pet_mp, seacom_type, search_message "
+                   "FROM char_stats WHERE charid = %u;";
 
         ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
         uint8 zoning = 0;
-
+        
         if (ret != SQL_ERROR &&
             Sql_NumRows(SqlHandle) != 0 &&
             Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -755,6 +763,25 @@ namespace charutils
                 PChar->petZoningInfo.petMP = Sql_GetIntData(SqlHandle, 12);
                 PChar->petZoningInfo.petType = (PETTYPE)Sql_GetUIntData(SqlHandle, 10);
                 PChar->petZoningInfo.respawnPet = true;
+            }
+        }
+
+        fmtQuery = "SELECT fellowid, zone_hp, zone_mp "
+                   "FROM char_fellow WHERE charid = %u;";
+
+        ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
+        
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+        
+            // Determine if the fellow should be respawned.
+            int16 fellowHP = Sql_GetUIntData(SqlHandle, 1);
+            if (fellowHP)
+            {
+                PChar->fellowZoningInfo.fellowHP = fellowHP;
+                PChar->fellowZoningInfo.fellowID = Sql_GetUIntData(SqlHandle, 0);
+                PChar->fellowZoningInfo.fellowMP = Sql_GetIntData(SqlHandle, 2);
+                PChar->fellowZoningInfo.respawnFellow = true;
             }
         }
 
@@ -4154,6 +4181,10 @@ namespace charutils
                         }
                     }
                     // pet or companion exp penalty needs to be added here
+                    if (PMember->m_PFellow != nullptr)
+                        exp *= 0.7f;
+                    // Adventuring Fellows no longer reduce exp earned as of ~2014
+
                     if (distanceSquared(PMember->loc.p, PMob->loc.p) > 100*100)
                     {
                         PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 37));
@@ -4175,7 +4206,14 @@ namespace charutils
                     exp = charutils::AddExpBonus(PMember, exp);
 
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
+                    if (PMember->m_PFellow != nullptr)
+                        fellowutils::DistributeExperiencePoints(PMember->m_PFellow, PMob, PMember);
                 }
+            }
+            else if (PMember->m_PFellow != nullptr) // fellows get exp according to THEIR lvl; not master lvl
+            {
+                if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+                    fellowutils::DistributeExperiencePoints(PMember->m_PFellow, PMob, PMember);
             }
         });
     }
@@ -5251,6 +5289,16 @@ namespace charutils
             PChar->petZoningInfo.petHP,
             PChar->petZoningInfo.petMP,
             PChar->id);
+
+        const char* Query2 = "UPDATE char_fellow "
+                             "SET zone_hp = %u, zone_mp = %u "
+                             "WHERE charid = %u;";
+
+        Sql_Query(SqlHandle,
+            Query2,
+            PChar->fellowZoningInfo.fellowHP,
+            PChar->fellowZoningInfo.fellowMP,
+            PChar->id);
     }
 
     /************************************************************************
@@ -6161,6 +6209,16 @@ namespace charutils
                 PChar->m_moghouseID,
                 PChar->loc.boundary,
                 PChar->id);
+
+            if (PChar->PPet != nullptr)
+            {
+                PChar->setPetZoningInfo();
+            }
+
+            if (PChar->m_PFellow != nullptr)
+            {
+                PChar->setFellowZoningInfo();
+            }
         }
         else
         {

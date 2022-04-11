@@ -155,7 +155,7 @@ dynamis.entryInfo =
         csFirst = 40,
         csWin = 46,
         csDyna = 22,
-        enabled = false,
+        enabled = true,
         winVar = "DynaBuburimu_Win",
         hasEnteredVar = "DynaBuburimu_HasEntered",
         hasSeenWinCSVar = "DynaBuburimu_HasSeenWinCS",
@@ -325,6 +325,15 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_BUBURIMU_INTERLOPER,
         entryPos = {155, -1, -169, 170, tpz.zone.DYNAMIS_BUBURIMU},
         ejectPos = {154, -1, -170, 190, tpz.zone.BUBURIMU_PENINSULA},
+        sjRestriction = true,
+        sjRestrictionNPC = 16941676,
+        sjRestrictionLocation =
+        {
+            [1] = {-214.161, 15.360, -269.202, 54},
+            [2] = {620.425, 7.306, -266.427, 71},
+            [3] = {427.460, -0.308, 189.224, 50},
+            [4] = {320.489, -0.642, 366.648, 101},
+        }
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
@@ -700,7 +709,23 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
 end
 
 dynamis.mobOnRoamAction = function(mob)
-
+    local zoneId = mob:getZoneID()
+    if dynamis.dynaInfo[zoneId].updatedRoam == true then
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        else
+            mob:pathTo(home.x, home.y, home.z)
+        end
+    else
+        local home = mob:getSpawnPos()
+        local location = mob:getPos()
+        mob:pathTo(home.x, home.y, home.z)
+        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then
+            mob:setPos(location.x, location.y, location.z, home.rot)
+        end
+    end
 end
 
 dynamis.mobOnDeath = function (mob, mobList, msg)
@@ -763,23 +788,7 @@ dynamis.mobOnDeath = function (mob, mobList, msg)
 end
 
 dynamis.mobOnRoam = function(mob)
-    local zoneId = mob:getZoneID()
-    if dynamis.dynaInfo[zoneId].updatedRoam == true then
-        local home = mob:getSpawnPos()
-        local location = mob:getPos()
-        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot == home.rot then
-            mob:setPos(location.x, location.y, location.z, home.rot)
-        else
-            mob:pathTo(home.x, home.y, home.z)
-        end
-    else
-        local home = mob:getSpawnPos()
-        local location = mob:getPos()
-        mob:pathTo(home.x, home.y, home.z)
-        if location.x == home.x and location.y == home.y and location.z == home.z and location.rot ~= home.rot then
-            mob:setPos(location.x, location.y, location.z, home.rot)
-        end
-    end
+
 end
 
 dynamis.qmOnTrade = function(player, npc, trade) -- i think this is for Xarcabard, so remember to update this once we start work on that

@@ -18,8 +18,8 @@ end
 function onInitialize(zone)
     tpz.chocobo.initZone(zone)
 
-    DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_S, false)
-    DisallowRespawn(ID.Konschtat_Highlands.STRAY_MARY_N, false)
+    DisallowRespawn(ID.mob.STRAY_MARY_S, false)
+    DisallowRespawn(ID.mob.STRAY_MARY_N, false)
 end
 
 function onZoneIn( player, prevZone)

@@ -267,7 +267,7 @@ local battlefields = {
         { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
         { 3,   35, 1552},   -- Petrifying Pair (BS30)
      -- { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
-     -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
+        { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
 
     [tpz.zone.WAUGHROON_SHRINE] =
@@ -566,6 +566,7 @@ function checkReqs(player, npc, bfid, registrant)
         [  20] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [  32] = function() return ( sandy == mi.sandoria.SAVE_THE_CHILDREN and ((stc and natStat <= 2) or (not stc and natStat == 2))                                      ) end, -- Sandy 1-3: Save the Children
         [  33] = function() return ( player:hasKeyItem(tpz.ki.DRAGON_CURSE_REMEDY)                                                                                          ) end, -- Quest: The Holy Crest
+        [  37] = function() return ( player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.MIRROR_MIRROR) == QUEST_ACCEPTED and player:getCharVar("[Quest]Mirror_Mirror") == 2    ) end, -- Quest: Mirror Mirror
         [  64] = function() return ( (sandy == mi.sandoria.JOURNEY_TO_BASTOK2 or windy == mi.windurst.THE_THREE_KINGDOMS_BASTOK2) and natStat == 10                         ) end, -- Mission 2-3
         [  67] = function() return ( basty == mi.bastok.ON_MY_WAY and natStat == 2                                                                                          ) end, -- Basty 7-2: On My Way
         [  68] = function() return ( player:getCharVar("aThiefinNorgCS") == 6                                                                                               ) end, -- Quest: A Thief in Norg!?
@@ -1097,6 +1098,7 @@ function EventUpdateBCNM(player, csid, option, extras)
         end
         local area = player:getLocalVar("[battlefield]area")
         area = area + 1
+
         local battlefieldIndex = bit.rshift(option, 4)
         local battlefieldId = getBattlefieldIdByBit(player, battlefieldIndex)
         local effect = player:getStatusEffect(tpz.effect.BATTLEFIELD)
@@ -1108,6 +1110,8 @@ function EventUpdateBCNM(player, csid, option, extras)
         local partySize = 1
         switch (battlefieldId): caseof
         {
+            [704]  = function() area = math.random(1, 3) end, -- CoP 3-5, possible tile layouts
+            [706]  = function() area = math.random(1, 3) end, -- Waking Dreams, possible tile layouts
             [1290] = function() area = 2 end, -- NW_Apollyon
             [1291] = function() area = 1 end, -- SW_Apollyon
             [1292] = function() area = 4 end, -- NE_Apollyon
@@ -1123,11 +1127,20 @@ function EventUpdateBCNM(player, csid, option, extras)
             [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
             [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
         }
+ 
         local result = tpz.battlefield.returnCode.REQS_NOT_MET
         local can_initiate = false
+
+        -- If the player already has a battlefield effect, they can't initiate another one
         if not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
             can_initiate = true
         end
+
+        -- If this is a Shrouded Maw battlefield, and the player has been assigned an area, use it instead
+        if (battlefieldId == 704 or battlefieldId == 706) and player:getLocalVar("[battlefield]area") > 0 then
+            area = player:getLocalVar("[battlefield]area")
+        end
+
         result = player:registerBattlefield(id, area, 0, can_initiate)
         local status = tpz.battlefield.status.OPEN
         if result ~= tpz.battlefield.returnCode.CUTSCENE then
@@ -1180,9 +1193,8 @@ function EventUpdateBCNM(player, csid, option, extras)
                         end
                     end
                 end
-
                 for _, member in pairs(player:getAlliance()) do
-                    if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then
+                    if member:getZoneID() == zone and not member:hasStatusEffect(tpz.effect.BATTLEFIELD) and not member:getBattlefield() then                
                         member:registerBattlefield(id, area, player:getID(), false)
                         member:addStatusEffect(effect)
                     end

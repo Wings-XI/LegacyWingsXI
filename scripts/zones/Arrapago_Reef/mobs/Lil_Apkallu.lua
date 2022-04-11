@@ -35,6 +35,7 @@ end
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:SetAutoAttackEnabled(true)
+    mob:setMod(tpz.mod.SLOWRES, 100)
 end
 
 function onMobEngaged(mob, target)

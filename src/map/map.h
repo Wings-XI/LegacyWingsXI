@@ -195,6 +195,7 @@ struct map_config_t
     bool   storage_ignore_features;   // Ignore the account features for Mog Satchel and Mog Wardrobe 3+4
     bool   force_enable_mog_locker;   // Mog locker always enabled
     uint16 log_gil_period;            // Log all players' current gil periodically (specify in minutes, zero to disable)
+    bool adventuring_fellow_dualwield; // Adventuring fellows will dualwield katanas
 };
 
 /************************************************************************

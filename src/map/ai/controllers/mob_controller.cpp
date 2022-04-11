@@ -235,9 +235,9 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    if (verticalDistance > 8.0f)
+    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
     {
-        return false;
+        return false;   
     }
 
     if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
@@ -744,7 +744,7 @@ void CMobController::Move()
             }
             else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
-                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
+                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > closureDistance)
                 {
                     //path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
@@ -846,6 +846,14 @@ void CMobController::DoRoamTick(time_point tick)
         if (PMob->PAI->PathFind->IsFollowingPath())
         {
             FollowRoamPath();
+                if (m_Tick >=m_LastActionTime + std::chrono::seconds(10) && PMob->CanRest())
+                {
+                    if (PMob->Rest(0.1f))
+                    {
+                        PMob->updatemask |= UPDATE_HP;
+                    }
+                    m_LastActionTime = m_Tick;
+                }
         }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {

@@ -3,6 +3,7 @@
 --   NM: Zirnitra
 ------------------------------
 require("scripts/globals/hunts")
+mixins = {require("scripts/mixins/families/amphiptere")}
 ------------------------------
 
 function onMobDeath(mob, player, isKiller)
