@@ -4752,12 +4752,7 @@ inline int32 CLuaBaseEntity::addSoulPlate(lua_State *L)
         uint8 fp = (uint8) lua_tointeger(L, 7);
 
         // Deduct Blank Plate
-        if (charutils::UpdateItem(PChar, PChar->equipLoc[SLOT_AMMO], PChar->equip[SLOT_AMMO], -1) == 0)
-        {
-            // Couldn't remove a blank plate
-            lua_pushnil(L);
-            return 1;
-        }
+        battleutils::RemoveAmmo(PChar);
         PChar->pushPacket(new CInventoryFinishPacket());
 
         // Used Soul Plate
