@@ -87,6 +87,15 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         player:setCharVar("sapsCollected", 0)
         player:startEvent(32002)
     end
+
+    player:delKeyItem(tpz.ki.WATER_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.ICE_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.WIND_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.DARK_SAP_CRYSTAL)
 end
 
 function onEventUpdate(player, csid, option)
