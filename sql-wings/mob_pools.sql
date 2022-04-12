@@ -6325,6 +6325,7 @@ INSERT INTO `mob_pools` VALUES(6927, 'Stollenwurm', 'Stollenwurm', 87, _binary 0
 INSERT INTO `mob_pools` VALUES(6928, 'Koschei', 'Koschei', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(6929, 'Aitvaras', 'Aitvaras', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(6930, 'Vishap', 'Vishap', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 87);
+INSERT INTO `mob_pools` VALUES(6931, 'Nightmare_Cockatrice', 'Nightmare_Cockatrice', 70, _binary 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 1, 1, 0, 0, 0, 164, 643, 0, 0, 0, 0, 0, 70);
 
 --
 -- Indexes for dumped tables

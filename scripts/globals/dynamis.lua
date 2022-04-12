@@ -155,7 +155,7 @@ dynamis.entryInfo =
         csFirst = 40,
         csWin = 46,
         csDyna = 22,
-        enabled = true,
+        enabled = false,
         winVar = "DynaBuburimu_Win",
         hasEnteredVar = "DynaBuburimu_HasEntered",
         hasSeenWinCSVar = "DynaBuburimu_HasSeenWinCS",
@@ -327,6 +327,7 @@ dynamis.dynaInfo =
         ejectPos = {154, -1, -170, 190, tpz.zone.BUBURIMU_PENINSULA},
         sjRestriction = true,
         sjRestrictionNPC = 16941676,
+        sjRestrictionNPCNumber = 4,
         sjRestrictionLocation =
         {
             [1] = {-214.161, 15.360, -269.202, 54},
@@ -351,6 +352,7 @@ dynamis.dynaInfo =
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
         sjRestriction = true,
         sjRestrictionNPC = 16945638,
+        sjRestrictionNPCNumber = 12,
         sjRestrictionLocation =
         {
             [1] = {-264.498, -19.255, 401.465, 54},
@@ -552,7 +554,7 @@ dynamis.zoneOnInitialize = function(zone)
     local zoneId = zone:getID()
     if dynamis.dynaInfo[zoneId].sjRestriction == true and dynamis.dynaInfo[zoneId].sjRestrictionNPC ~= nil then
         local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
-        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
+        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random(1, dynamis.dynaInfo[zoneId].sjRestrictionNPCNumber)]
         sjRestrictionNPC:setPos(pos)
         sjRestrictionNPC:setStatus(tpz.status.NORMAL)
     end

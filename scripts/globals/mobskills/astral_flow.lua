@@ -24,6 +24,12 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+
+    if mob:getID() == 16941057 and mob:getLocalVar("astralflow") == 0 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return
+    end
+
     skill:setMsg(tpz.msg.basic.USES)
     local mobID = mob:getID()
     local avatar = 0

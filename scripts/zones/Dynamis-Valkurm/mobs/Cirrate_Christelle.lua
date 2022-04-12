@@ -11,7 +11,7 @@ require("scripts/globals/status")
 local zone = 39
 
 function onMobSpawn(mob)
-    require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
     dynamis.setMegaBossStats(mob)
@@ -30,8 +30,8 @@ function onMobSpawn(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    require("scripts/zones/Dynamis-Qufim/dynamis_mobs")
-    local ID = require("scripts/zones/Dynamis-Qufim/IDs")
+    require("scripts/zones/Dynamis-Valkurm/dynamis_mobs")
+    local ID = require("scripts/zones/Dynamis-Valkurm/IDs")
     dynamis.statueOnDeath(mob, player, isKiller)
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
     local winQM = GetNPCByID(16937586)
