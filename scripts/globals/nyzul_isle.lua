@@ -1086,7 +1086,8 @@ function addPathosBuff(player, newPathos)
     local buff = newPathos - 17
     local effect
     if (buff == 1) then
-        player:addStatusEffectEx(tpz.effect.REGAIN, tpz.effect.REGAIN, 50, 3, 0)
+        -- regain effect multiplies by 10, likely due to the old 100 tp to 1k tp update
+        player:addStatusEffectEx(tpz.effect.REGAIN, tpz.effect.REGAIN, 5, 3, 0)
         effect = player:getStatusEffect(tpz.effect.REGAIN)
     elseif (buff == 2) then
         player:addStatusEffectEx(tpz.effect.REGEN, tpz.effect.REGEN, 10, 3, 0)
