@@ -600,30 +600,13 @@ dynamis.statueOnSpawn = function(mob, eyes) -- says statue but this is also call
     mob:setLocalVar("dynaReadyToSpawnChildren", 1)
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
         mob:setLocalVar("eyeColor", eyes)
+        if eyes >= 2 then
+            mob:setUnkillable(true)
+        end
     end
 end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
-    local eyes = mob:AnimationSub()
-
-    if isKiller and (eyes == dynamis.eyes.BLUE or eyes == dynamis.eyes.GREEN) then
-        -- MP or HP refill
-        local zone = mob:getZone()
-        local players = zone:getPlayers()
-        for name, player in pairs(players) do
-            if mob:checkDistance(player) < 30 then
-                if eyes == dynamis.eyes.GREEN then
-                    local amt = player:getMaxMP() - player:getMP()
-                    player:restoreMP(amt)
-                    player:messageBasic(tpz.msg.basic.RECOVERS_MP, 0, amt)
-                else
-                    local amt = player:getMaxHP() - player:getHP()
-                    player:restoreHP(amt)
-                    player:messageBasic(tpz.msg.basic.RECOVERS_HP, 0, amt)
-                end
-            end
-        end
-    end
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)

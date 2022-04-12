@@ -905,9 +905,9 @@ INSERT INTO `mob_skills` VALUES(1120, 69, '10000_needles', 1, 10.0, 2000, 2000, 
 INSERT INTO `mob_skills` VALUES(1121, 770, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1122, 771, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1123, 355, 'ore_toss', 0, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1124, 772, 'regain_hp', 1, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1125, 773, 'regain_mp', 1, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1126, 773, 'regain_tp', 1, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1124, 772, 'regain_hp', 1, 30.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1125, 773, 'regain_mp', 1, 30.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1126, 773, 'regain_tp', 1, 30.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1127, 316, 'dynamic_implosion', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1128, 317, 'transfusion', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1129, 318, 'mana_storm', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
