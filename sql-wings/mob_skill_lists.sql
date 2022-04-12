@@ -3453,6 +3453,13 @@ INSERT INTO `mob_skill_lists` VALUES('Stollenwurm', 5028, 651); -- Lodesong
 INSERT INTO `mob_skill_lists` VALUES('Koschei', 5028, 650); -- Thornsong
 INSERT INTO `mob_skill_lists` VALUES('Aitvaras', 5028, 649); -- Voidsong
 INSERT INTO `mob_skill_lists` VALUES('Vishap', 5028, 643); -- Poison Breath
+-- Dynamis - Valkurm
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1626);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1120);
 
 --
 -- Indexes for dumped tables
