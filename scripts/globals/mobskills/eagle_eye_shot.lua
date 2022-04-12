@@ -10,6 +10,12 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+
+    if mob:getID() == 16941057 and mob:getLocalVar("eagleeyeshot") == 0 then
+        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
+        return
+    end
+
     local numhits = 1
     local accmod = 2
     local dmgmod = 9 + math.random()
