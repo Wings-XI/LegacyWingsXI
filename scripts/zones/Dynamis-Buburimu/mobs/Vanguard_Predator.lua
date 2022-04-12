@@ -11,9 +11,22 @@ local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
 require("scripts/globals/mobs")
 -----------------------------------
 
+local zone = 40
+
 function onMobDeath(mob, player, isKiller)
+    require("scripts/zones/Dynamis-Buburimu/dynamis_mobs")
+    local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
+    dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 end
 
-function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.LYNCEAN_JUWGNEG_PH, 10, 1200) -- 20 minutes
+function onMobRoamAction(mob)
+    dynamis.mobOnRoamAction(mob)
+end
+
+function onMobRoam(mob)
+    dynamis.mobOnRoam(mob)
+end
+
+function onMobSpawn(mob)
+    dynamis.setMobStats(mob)
 end

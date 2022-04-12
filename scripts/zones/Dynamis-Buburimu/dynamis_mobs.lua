@@ -74,19 +74,19 @@ mobList[zone] =
 [SMB+604] = { id =  SMB+604}, -- Adamantking Effigy (037-Q)
 -- Yagudos Statues
 [SMB+122] = { id =  SMB+122}, -- Manifest Icon      (038-Y)
-[SMB+123] = { id =  SMB+123}, -- Manifest Icon      (038-Y)
-[SMB+124] = { id =  SMB+124}, -- Manifest Icon      (038-Y)
-[SMB+140] = { id =  SMB+140}, -- Manifest Icon      (038-Y)
-[SMB+141] = { id =  SMB+141}, -- Manifest Icon      (038-Y)
-[SMB+142] = { id =  SMB+142}, -- Manifest Icon      (038-Y)
-[SMB+403] = { id =  SMB+403}, -- Manifest Icon      (038-Y)
-[SMB+404] = { id =  SMB+404}, -- Manifest Icon      (038-Y)
-[SMB+405] = { id =  SMB+405}, -- Manifest Icon      (038-Y)
-[SMB+417] = { id =  SMB+417}, -- Manifest Icon      (038-Y)
-[SMB+418] = { id =  SMB+418}, -- Manifest Icon      (038-Y)
-[SMB+419] = { id =  SMB+419}, -- Manifest Icon      (038-Y)
-[SMB+605] = { id =  SMB+605}, -- Manifest Icon      (038-Y)
-
+[SMB+123] = { id =  SMB+123}, -- Manifest Icon      (039-Y)
+[SMB+124] = { id =  SMB+124}, -- Manifest Icon      (040-Y)
+[SMB+140] = { id =  SMB+140}, -- Manifest Icon      (041-Y)
+[SMB+141] = { id =  SMB+141}, -- Manifest Icon      (042-Y)
+[SMB+142] = { id =  SMB+142}, -- Manifest Icon      (043-Y)
+[SMB+403] = { id =  SMB+403}, -- Manifest Icon      (044-Y)
+[SMB+404] = { id =  SMB+404}, -- Manifest Icon      (045-Y)
+[SMB+405] = { id =  SMB+405}, -- Manifest Icon      (046-Y)
+[SMB+417] = { id =  SMB+417}, -- Manifest Icon      (047-Y)
+[SMB+418] = { id =  SMB+418}, -- Manifest Icon      (048-Y)
+[SMB+419] = { id =  SMB+419}, -- Manifest Icon      (049-Y)
+[SMB+605] = { id =  SMB+605}, -- Manifest Icon      (050-Y)
+-- Nightmare Mobs
 [DMB+155] = { id =  DMB+155}, -- Nightmare Crab
 [DMB+156] = { id =  DMB+156}, -- Nightmare Crab
 [DMB+157] = { id =  DMB+157}, -- Nightmare Crab
@@ -107,8 +107,6 @@ mobList[zone] =
 [DMB+172] = { id =  DMB+172}, -- Nightmare Crab
 [DMB+173] = { id =  DMB+173}, -- Nightmare Crab
 [DMB+174] = { id =  DMB+174}, -- Nightmare Crab
-
-
 [DMB+175] = { id =  DMB+175}, -- Nightmare Dhamel
 [DMB+176] = { id =  DMB+176}, -- Nightmare Dhamel
 [DMB+177] = { id =  DMB+177}, -- Nightmare Dhamel
@@ -135,7 +133,6 @@ mobList[zone] =
 [DMB+447] = { id =  DMB+447}, -- Nightmare Dhamel
 [DMB+448] = { id =  DMB+448}, -- Nightmare Dhamel
 [DMB+449] = { id =  DMB+449}, -- Nightmare Dhamel
-
 [DMB+193] = { id =  DMB+193}, -- Nightmare Urganite
 [DMB+194] = { id =  DMB+194}, -- Nightmare Urganite
 [DMB+195] = { id =  DMB+195}, -- Nightmare Urganite
@@ -158,7 +155,6 @@ mobList[zone] =
 [DMB+467] = { id =  DMB+467}, -- Nightmare Urganite
 [DMB+468] = { id =  DMB+468}, -- Nightmare Urganite
 [DMB+469] = { id =  DMB+469}, -- Nightmare Urganite
-
 [DMB+209] = { id =  DMB+209}, -- Nightmare Scorpion
 [DMB+210] = { id =  DMB+210}, -- Nightmare Scorpion
 [DMB+211] = { id =  DMB+211}, -- Nightmare Scorpion
@@ -180,7 +176,6 @@ mobList[zone] =
 [DMB+477] = { id =  DMB+477}, -- Nightmare Scorpion
 [DMB+478] = { id =  DMB+478}, -- Nightmare Scorpion
 [DMB+479] = { id =  DMB+479}, -- Nightmare Scorpion
-
 [DMB+227] = { id =  DMB+227}, -- Nightmare Bunny
 [DMB+228] = { id =  DMB+228}, -- Nightmare Bunny
 [DMB+229] = { id =  DMB+229}, -- Nightmare Bunny
@@ -201,7 +196,6 @@ mobList[zone] =
 [DMB+497] = { id =  DMB+497}, -- Nightmare Bunny
 [DMB+498] = { id =  DMB+498}, -- Nightmare Bunny
 [DMB+499] = { id =  DMB+499}, -- Nightmare Bunny
-
 [DMB+520] = { id =  DMB+520}, -- Nightmare Mandragora
 [DMB+521] = { id =  DMB+521}, -- Nightmare Mandragora
 [DMB+522] = { id =  DMB+522}, -- Nightmare Mandragora
@@ -226,7 +220,6 @@ mobList[zone] =
 [DMB+541] = { id =  DMB+541}, -- Nightmare Mandragora
 [DMB+542] = { id =  DMB+542}, -- Nightmare Mandragora
 [DMB+543] = { id =  DMB+543}, -- Nightmare Mandragora
-
 [DMB+259] = { id =  DMB+259}, -- Nightmare Crawler
 [DMB+260] = { id =  DMB+260}, -- Nightmare Crawler
 [DMB+261] = { id =  DMB+261}, -- Nightmare Crawler
@@ -251,7 +244,6 @@ mobList[zone] =
 [DMB+563] = { id =  DMB+563}, -- Nightmare Crawler
 [DMB+564] = { id =  DMB+564}, -- Nightmare Crawler
 [DMB+565] = { id =  DMB+565}, -- Nightmare Crawler
-
 [DMB+269] = { id =  DMB+269}, -- Nightmare Raven
 [DMB+270] = { id =  DMB+270}, -- Nightmare Raven
 [DMB+271] = { id =  DMB+271}, -- Nightmare Raven
@@ -278,7 +270,6 @@ mobList[zone] =
 [DMB+575] = { id =  DMB+575}, -- Nightmare Raven
 [DMB+576] = { id =  DMB+576}, -- Nightmare Raven
 [DMB+577] = { id =  DMB+577}, -- Nightmare Raven
-
 [DMB+289] = { id =  DMB+289}, -- Nightmare Eft
 [DMB+290] = { id =  DMB+290}, -- Nightmare Eft
 [DMB+291] = { id =  DMB+291}, -- Nightmare Eft
@@ -299,8 +290,7 @@ mobList[zone] =
 [DMB+306] = { id =  DMB+306}, -- Nightmare Eft
 [DMB+590] = { id =  DMB+590}, -- Nightmare Eft
 [DMB+591] = { id =  DMB+591}, -- Nightmare Eft
-
-[DMB+620] = { id =  DMB+620}, -- Nightmare Cockatrice
+[DMB+643] = { id =  DMB+643}, -- Nightmare Cockatrice
 [DMB+621] = { id =  DMB+621}, -- Nightmare Cockatrice
 [DMB+622] = { id =  DMB+622}, -- Nightmare Cockatrice
 [DMB+623] = { id =  DMB+623}, -- Nightmare Cockatrice
@@ -320,613 +310,621 @@ mobList[zone] =
 [DMB+636] = { id =  DMB+636}, -- Nightmare Cockatrice
 [DMB+637] = { id =  DMB+637}, -- Nightmare Cockatrice
 [DMB+638] = { id =  DMB+638}, -- Nightmare Cockatrice
+-- All Statue Spawned Mobs
+[DMB+59 ] = { id =  DMB+59 },
+[DMB+47 ] = { id =  DMB+47 },
+[DMB+49 ] = { id =  DMB+49 },
+[DMB+54 ] = { id =  DMB+54 },
+[DMB+74 ] = { id =  DMB+74 },
+[DMB+52 ] = { id =  DMB+52 },
+[DMB+58 ] = { id =  DMB+58 },
+[DMB+65 ] = { id =  DMB+65 },
+[DMB+68 ] = { id =  DMB+68 },
+[DMB+55 ] = { id =  DMB+55 },
+[DMB+73 ] = { id =  DMB+73 },
+[DMB+45 ] = { id =  DMB+45 },
+[DMB+76 ] = { id =  DMB+76 },
+[DMB+56 ] = { id =  DMB+56 },
+[DMB+348] = { id =  DMB+348},
+[DMB+66 ] = { id =  DMB+66 },
+[DMB+50 ] = { id =  DMB+50 },
+[DMB+48 ] = { id =  DMB+48 },
+[DMB+72 ] = { id =  DMB+72 },
+[DMB+351] = { id =  DMB+351},
+[DMB+69 ] = { id =  DMB+69 },
+[DMB+77 ] = { id =  DMB+77 },
+[DMB+67 ] = { id =  DMB+67 },
+[DMB+360] = { id =  DMB+360},
+[DMB+70 ] = { id =  DMB+70 },
+[DMB+366] = { id =  DMB+366},
+[DMB+350] = { id =  DMB+350},
+[DMB+346] = { id =  DMB+346},
+[DMB+5  ] = { id =  DMB+5  },
+[DMB+40 ] = { id =  DMB+40 },
+[DMB+33 ] = { id =  DMB+33 },
+[DMB+35 ] = { id =  DMB+35 },
+[DMB+23 ] = { id =  DMB+23 },
+[DMB+22 ] = { id =  DMB+22 },
+[DMB+3  ] = { id =  DMB+3  },
+[DMB+38 ] = { id =  DMB+38 },
+[DMB+6  ] = { id =  DMB+6  },
+[DMB+9  ] = { id =  DMB+9  },
+[DMB+36 ] = { id =  DMB+36 },
+[DMB+21 ] = { id =  DMB+21 },
+[DMB+17 ] = { id =  DMB+17 },
+[DMB+19 ] = { id =  DMB+19 },
+[DMB+20 ] = { id =  DMB+20 },
+[DMB+25 ] = { id =  DMB+25 },
+[DMB+30 ] = { id =  DMB+30 },
+[DMB+15 ] = { id =  DMB+15 },
+[DMB+7  ] = { id =  DMB+7  },
+[DMB+322] = { id =  DMB+322},
+[DMB+335] = { id =  DMB+335},
+[DMB+314] = { id =  DMB+314},
+[DMB+94 ] = { id =  DMB+94 },
+[DMB+82 ] = { id =  DMB+82 },
+[DMB+87 ] = { id =  DMB+87 },
+[DMB+375] = { id =  DMB+375},
+[DMB+100] = { id =  DMB+100},
+[DMB+101] = { id =  DMB+101},
+[DMB+106] = { id =  DMB+106},
+[DMB+393] = { id =  DMB+393},
+[DMB+113] = { id =  DMB+113},
+[DMB+105] = { id =  DMB+105},
+[DMB+108] = { id =  DMB+108},
+[DMB+109] = { id =  DMB+109},
+[DMB+89 ] = { id =  DMB+89 },
+[DMB+377] = { id =  DMB+377},
+[DMB+92 ] = { id =  DMB+92 },
+[DMB+381] = { id =  DMB+381},
+[DMB+102] = { id =  DMB+102},
+[DMB+388] = { id =  DMB+388},
+[DMB+107] = { id =  DMB+107},
+[DMB+394] = { id =  DMB+394},
+[DMB+95 ] = { id =  DMB+95 },
+[DMB+85 ] = { id =  DMB+85 },
+[DMB+83 ] = { id =  DMB+83 },
+[DMB+84 ] = { id =  DMB+84 },
+[DMB+391] = { id =  DMB+391},
+[DMB+392] = { id =  DMB+392},
+[DMB+387] = { id =  DMB+387},
+[DMB+640] = { id =  DMB+640},
+[DMB+110] = { id =  DMB+110},
+[DMB+396] = { id =  DMB+396},
+[DMB+112] = { id =  DMB+112},
+[DMB+103] = { id =  DMB+103},
+[DMB+90 ] = { id =  DMB+90 },
+[DMB+91 ] = { id =  DMB+91 },
+[DMB+118] = { id =  DMB+118},
+[DMB+128] = { id =  DMB+128},
+[DMB+119] = { id =  DMB+119},
+[DMB+410] = { id =  DMB+410},
+[DMB+132] = { id =  DMB+132},
+[DMB+137] = { id =  DMB+137},
+[DMB+144] = { id =  DMB+144},
+[DMB+143] = { id =  DMB+143},
+[DMB+125] = { id =  DMB+125},
+[DMB+129] = { id =  DMB+129},
+[DMB+146] = { id =  DMB+146},
+[DMB+127] = { id =  DMB+127},
+[DMB+149] = { id =  DMB+149},
+[DMB+120] = { id =  DMB+120},
+[DMB+139] = { id =  DMB+139},
+[DMB+141] = { id =  DMB+141},
+[DMB+426] = { id =  DMB+426},
+[DMB+406] = { id =  DMB+406},
+[DMB+407] = { id =  DMB+407},
+[DMB+412] = { id =  DMB+412},
+[DMB+422] = { id =  DMB+422},
+[DMB+423] = { id =  DMB+423},
+[DMB+122] = { id =  DMB+122},
+[DMB+137] = { id =  DMB+137},
+[DMB+148] = { id =  DMB+148},
+[DMB+145] = { id =  DMB+145},
+[DMB+425] = { id =  DMB+425},
+[DMB+641] = { id =  DMB+641},
+[DMB+123] = { id =  DMB+123},
+[DMB+424] = { id =  DMB+424},
+[DMB+131] = { id =  DMB+131},
+[DMB+642] = { id =  DMB+642},
+[DMB+124] = { id =  DMB+124},
+[DMB+406] = { id =  DMB+486},
 
 }
 
 mobList[zone].zoneID = tpz.zone.DYNAMIS_BUBURIMU
 
 --Dragons
-mobList[zone][DMB+0  ].pos = {-29.0061, -13.6044, 60.6641, 11}
-mobList[zone][DMB+307  ].pos = {60.7967, -23.0410, 199.0426, 12}
-mobList[zone][DMB+309  ].pos = {-339.9798, -39.0022, 243.1307, 70}
-mobList[zone][DMB+610  ].pos = {232.1226, -9.4403, 211.5448, 20}
-mobList[zone][DMB+611  ].pos = {346.0957, -9.2967, 271.6128, 66}
-mobList[zone][DMB+308  ].pos = {-428.8357, -7.4000, -221.6568, 211}
-mobList[zone][DMB+612  ].pos = {-41.1463, -16.0195, -3.8987, 63}
-mobList[zone][DMB+613  ].pos = {-33.7517, 16.1113, -236.2199, 186}
-mobList[zone][DMB+614  ].pos = {36.0265, 0.1348, -233.2813, 193}
-mobList[zone][DMB+310  ].pos = {206.5141, -7.7500, 4.5535, 119}
-mobList[zone][DMB+615  ].pos = {482.4607, 0.9171, -18.3645, 127}
+mobList[zone][DMB+0  ].pos = {-201.7883, -29.9139, 147.2554, 57 } -- Apoc Beast
+mobList[zone][DMB+307].pos = {60.7967, -23.0410, 199.0426, 12   } -- Stihi
+mobList[zone][DMB+309].pos = {-339.9798, -39.0022, 243.1307, 70 } -- Alklha
+mobList[zone][DMB+610].pos = {232.1226, -9.4403, 211.5448, 20   } -- Basilic
+mobList[zone][DMB+611].pos = {346.0957, -9.2967, 271.6128, 66   } -- Jurik
+mobList[zone][DMB+308].pos = {-428.8357, -7.4000, -221.6568, 211} -- Barong
+mobList[zone][DMB+612].pos = {-41.1463, -16.0195, -3.8987, 63   } -- Tarasca
+mobList[zone][DMB+613].pos = {-33.7517, 16.1113, -236.2199, 186 } -- Stollenwurm
+mobList[zone][DMB+614].pos = {36.0265, 0.1348, -233.2813, 193   } -- Koschei
+mobList[zone][DMB+310].pos = {206.5141, -7.7500, 4.5535, 119    } -- Aitvaras
+mobList[zone][DMB+615].pos = {482.4607, 0.9171, -18.3645, 127   } -- Vishap
 --Orc Stats
-mobList[zone][SMB+50   ].pos = {-489.6237, -29.8504, 59.9449, 63}
-mobList[zone][SMB+51   ].pos = {-483.8572, -30.9016, 65.4925, 63}
-mobList[zone][SMB+52   ].pos = {-474.6325, -29.7465, 58.5642, 63}
-mobList[zone][SMB+67   ].pos = {-365.3331, -22.1115, 21.2624, 198}
-mobList[zone][SMB+68   ].pos = {-355.8970, -21.9494, 21.5242, 198}
-mobList[zone][SMB+69   ].pos = {-360.7734, -21.8964, 18.8860, 198}
-mobList[zone][SMB+343  ].pos = {-370.3228, -23.2670, 15.0742, 71}
-mobList[zone][SMB+344  ].pos = {-353.7643, -22.5512, 15.7313, 71}
-mobList[zone][SMB+345  ].pos = {-216.7957, -22.1539, 96.7794, 64}
-mobList[zone][SMB+357  ].pos = {-216.1143, -22.1460, 106.0876, 189}
-mobList[zone][SMB+358  ].pos = {-208.1248, -21.6153, 101.4173, 189}
-mobList[zone][SMB+359  ].pos = {-199.5664, -22.8261, 94.8028, 9}
-mobList[zone][SMB+603  ].pos = {-199.2854, -22.8656, 105.3254, 195}
+mobList[zone][SMB+50 ].pos = {-489.6237, -29.8504, 59.9449, 63  }
+mobList[zone][SMB+51 ].pos = {-483.8572, -30.9016, 65.4925, 63  }
+mobList[zone][SMB+52 ].pos = {-474.6325, -29.7465, 58.5642, 63  }
+mobList[zone][SMB+67 ].pos = {-365.3331, -22.1115, 21.2624, 198 }
+mobList[zone][SMB+68 ].pos = {-355.8970, -21.9494, 21.5242, 198 }
+mobList[zone][SMB+69 ].pos = {-360.7734, -21.8964, 18.8860, 198 }
+mobList[zone][SMB+343].pos = {-370.3228, -23.2670, 15.0742, 71  }
+mobList[zone][SMB+344].pos = {-353.7643, -22.5512, 15.7313, 71  }
+mobList[zone][SMB+345].pos = {-216.7957, -22.1539, 96.7794, 64  }
+mobList[zone][SMB+357].pos = {-216.1143, -22.1460, 106.0876, 189}
+mobList[zone][SMB+358].pos = {-208.1248, -21.6153, 101.4173, 189}
+mobList[zone][SMB+359].pos = {-199.5664, -22.8261, 94.8028, 9   }
+mobList[zone][SMB+603].pos = {-199.2854, -22.8656, 105.3254, 195}
 --Goblin Stats
-mobList[zone][SMB+0    ].pos = {-30.1739, -13.7288, 61.2518, 82}
-mobList[zone][SMB+1    ].pos = {-24.6467, -13.2863, 58.9652, 82}
-mobList[zone][SMB+2    ].pos = { -15.2367, -13.3332, 57.8845, 82}
-mobList[zone][SMB+15   ].pos = {26.1893, -13.1639, 61.5514, 74}
-mobList[zone][SMB+16   ].pos = {36.0939, -13.8959, 61.0378, 74}
-mobList[zone][SMB+17   ].pos = {47.8134, -12.8931, 60.0505, 74}
-mobList[zone][SMB+30   ].pos = {-20.4471, -13.5662, -5.0198, 67}
-mobList[zone][SMB+31   ].pos = {-20.9386, -6.1433, -33.5945, 185}
-mobList[zone][SMB+32   ].pos = {-12.7062, -7.3521, -42.6142, 249}
-mobList[zone][SMB+313  ].pos = {-26.1805, -6.9301, -43.9465, 128}
-mobList[zone][SMB+314  ].pos = {-18.5424, -6.0020, -48.6369, 49}
+mobList[zone][SMB+0  ].pos = {-30.1739, -13.7288, 61.2518, 82   }
+mobList[zone][SMB+1  ].pos = {-24.6467, -13.2863, 58.9652, 82   }
+mobList[zone][SMB+2  ].pos = { -15.2367, -13.3332, 57.8845, 82  }
+mobList[zone][SMB+15 ].pos = {26.1893, -13.1639, 61.5514, 74    }
+mobList[zone][SMB+16 ].pos = {36.0939, -13.8959, 61.0378, 74    }
+mobList[zone][SMB+17 ].pos = {47.8134, -12.8931, 60.0505, 74    }
+mobList[zone][SMB+30 ].pos = {-20.4471, -13.5662, -5.0198, 67   }
+mobList[zone][SMB+31 ].pos = {-20.9386, -6.1433, -33.5945, 185  }
+mobList[zone][SMB+32 ].pos = {-12.7062, -7.3521, -42.6142, 249  }
+mobList[zone][SMB+313].pos = {-26.1805, -6.9301, -43.9465, 128  }
+mobList[zone][SMB+314].pos = {-18.5424, -6.0020, -48.6369, 49   }
 --Quadav Stats
-mobList[zone][SMB+85   ].pos = {241.4802, -5.7749, 20.1419, 129}
-mobList[zone][SMB+86   ].pos = {257.7976, -2.3514, 22.7234, 129}
-mobList[zone][SMB+87   ].pos = { 279.3134, 2.1576, 20.6812, 129}
-mobList[zone][SMB+103  ].pos = { 302.2001, 2.1881, 96.2034, 170}
-mobList[zone][SMB+104  ].pos = { 299.4405, 2.1729, 82.7570, 170}
-mobList[zone][SMB+105  ].pos = {300.0283, 2.2393, 77.8772, 170}
-mobList[zone][SMB+372  ].pos = {283.6140, 2.1808, 19.5053, 128}
-mobList[zone][SMB+373  ].pos = {299.0122, 2.2500, 37.3500, 128}
-mobList[zone][SMB+374  ].pos = { 298.2328, 2.8144, 16.9182, 128}
-mobList[zone][SMB+387  ].pos = {300.0039, 2.2430, -0.4152, 128}
-mobList[zone][SMB+388  ].pos = {301.2189, 2.5103, -25.6304, 110}
-mobList[zone][SMB+389  ].pos = {299.6303, 2.1966, -37.0409, 110}
-mobList[zone][SMB+604  ].pos = {300.0410, 2.2101, -43.0707, 110}
+mobList[zone][SMB+85 ].pos = {241.4802, -5.7749, 20.1419, 129   }
+mobList[zone][SMB+86 ].pos = {257.7976, -2.3514, 22.7234, 129   }
+mobList[zone][SMB+87 ].pos = { 279.3134, 2.1576, 20.6812, 129   }
+mobList[zone][SMB+103].pos = { 302.2001, 2.1881, 96.2034, 170   }
+mobList[zone][SMB+104].pos = { 299.4405, 2.1729, 82.7570, 170   }
+mobList[zone][SMB+105].pos = {300.0283, 2.2393, 77.8772, 170    }
+mobList[zone][SMB+372].pos = {283.6140, 2.1808, 19.5053, 128    }
+mobList[zone][SMB+373].pos = {299.0122, 2.2500, 37.3500, 128    }
+mobList[zone][SMB+374].pos = { 298.2328, 2.8144, 16.9182, 128   }
+mobList[zone][SMB+387].pos = {300.0039, 2.2430, -0.4152, 128    }
+mobList[zone][SMB+388].pos = {301.2189, 2.5103, -25.6304, 110   }
+mobList[zone][SMB+389].pos = {299.6303, 2.1966, -37.0409, 110   }
+mobList[zone][SMB+604].pos = {300.0410, 2.2101, -43.0707, 110   }
 -- Yagudo Stats
-mobList[zone][SMB+122  ].pos = {351.5531, 2.0022, -60.4356, 196}
-mobList[zone][SMB+123  ].pos = {373.1893, 2.5996, -63.9211, 219}
-mobList[zone][SMB+124  ].pos = {379.2950, 2.1553, -81.4621, 2}
-mobList[zone][SMB+140  ].pos = {351.6066, -0.6636, -190.2410, 1}
-mobList[zone][SMB+141  ].pos = {353.3952, -0.6354, -200.8557, 236}
-mobList[zone][SMB+142  ].pos = {375.5005, -0.6350, -225.3975, 225}
-mobList[zone][SMB+403  ].pos = {412.0664, 2.6627, -221.4059, 189}
-mobList[zone][SMB+404  ].pos = {430.3526, 2.0774, -219.0766, 123}
-mobList[zone][SMB+405  ].pos = {493.5782, 2.5840, -225.4034, 154}
-mobList[zone][SMB+417  ].pos = {501.7607, 2.0000, -247.7523, 169}
-mobList[zone][SMB+418  ].pos = {523.8189, 2.1778, -259.4799, 144}
-mobList[zone][SMB+419  ].pos = {536.0930, 2.2397, -261.7803, 137}
-mobList[zone][SMB+605  ].pos = {553.5475, 1.4175, -261.2966, 126}
+mobList[zone][SMB+122].pos = {351.5531, 2.0022, -60.4356, 196   }
+mobList[zone][SMB+123].pos = {373.1893, 2.5996, -63.9211, 219   }
+mobList[zone][SMB+124].pos = {379.2950, 2.1553, -81.4621, 2     }
+mobList[zone][SMB+140].pos = {351.6066, -0.6636, -190.2410, 1   }
+mobList[zone][SMB+141].pos = {353.3952, -0.6354, -200.8557, 236 }
+mobList[zone][SMB+142].pos = {375.5005, -0.6350, -225.3975, 225 }
+mobList[zone][SMB+403].pos = {412.0664, 2.6627, -221.4059, 189  }
+mobList[zone][SMB+404].pos = {430.3526, 2.0774, -219.0766, 123  }
+mobList[zone][SMB+405].pos = {493.5782, 2.5840, -225.4034, 154  }
+mobList[zone][SMB+417].pos = {501.7607, 2.0000, -247.7523, 169  }
+mobList[zone][SMB+418].pos = {523.8189, 2.1778, -259.4799, 144  }
+mobList[zone][SMB+419].pos = {536.0930, 2.2397, -261.7803, 137  }
+mobList[zone][SMB+605].pos = {553.5475, 1.4175, -261.2966, 126  }
 -- Nightmare Crabs
-mobList[zone][DMB+155  ].pos = {-30.7958, 19.4184, -308.5479, 130}
-mobList[zone][DMB+156  ].pos = {-29.2222, 19.9959, -315.8475, 131}
-mobList[zone][DMB+157  ].pos = {-31.1747, 15.8897, -278.6635, 168}
-mobList[zone][DMB+158  ].pos = {-33.0270, 16.0036, -274.3393, 65}
-mobList[zone][DMB+159  ].pos = {-13.1607, 15.8045, -251.7880, 164}
-mobList[zone][DMB+160  ].pos = {-6.0943, 15.8577, -249.0809, 126}
-mobList[zone][DMB+161  ].pos = {-0.6842, 16.8508, -217.9911, 228}
-mobList[zone][DMB+162  ].pos = {-0.7560, 16.4701, -212.7469, 191}
-mobList[zone][DMB+163  ].pos = {-43.9131, 16.5957, -214.0052, 243}
-mobList[zone][DMB+164  ].pos = {-49.2881, 16.4286, -219.6089, 100}
-mobList[zone][DMB+165  ].pos = {-68.2952, 15.9799, -253.3839, 79}
-mobList[zone][DMB+166  ].pos = {-68.1487, 16.1250, -263.1060, 45}
-mobList[zone][DMB+167  ].pos = {-89.9767, 16.1424, -234.8192, 48}
-mobList[zone][DMB+168  ].pos = {-86.8363, 15.6488, -230.9654, 219}
-mobList[zone][DMB+169  ].pos = {-120.5364, 16.0000, -238.3332, 103}
-mobList[zone][DMB+170  ].pos = {-124.9815, 16.0000, -233.7003, 169}
-mobList[zone][DMB+171  ].pos = {-132.1700, 15.4754, -280.0170, 75}
-mobList[zone][DMB+172  ].pos = {-126.3671, 16.1013, -286.9827, 48}
-mobList[zone][DMB+173  ].pos = {-111.2321, 20.0000, -321.6591, 99}
-mobList[zone][DMB+174  ].pos = {-115.5943, 20.0000, -325.8853, 94}
+mobList[zone][DMB+155].pos = {-30.7958, 19.4184, -308.5479, 130 }
+mobList[zone][DMB+157].pos = {-31.1747, 15.8897, -278.6635, 168 }
+mobList[zone][DMB+159].pos = {-13.1607, 15.8045, -251.7880, 164 }
+mobList[zone][DMB+161].pos = {-0.6842, 16.8508, -217.9911, 228  }
+mobList[zone][DMB+163].pos = {-43.9131, 16.5957, -214.0052, 243 }
+mobList[zone][DMB+165].pos = {-68.2952, 15.9799, -253.3839, 79  }
+mobList[zone][DMB+167].pos = {-89.9767, 16.1424, -234.8192, 48  }
+mobList[zone][DMB+169].pos = {-120.5364, 16.0000, -238.3332, 103}
+mobList[zone][DMB+171].pos = {-132.1700, 15.4754, -280.0170, 75 }
+mobList[zone][DMB+173].pos = {-111.2321, 20.0000, -321.6591, 99 }
 -- Nightmare Dhalmels
-mobList[zone][DMB+174  ].pos = {147.0991, -13.8950, 83.2262, 91}
-mobList[zone][DMB+174  ].pos = {150.5967, -15.0383, 77.4631, 52}
-mobList[zone][DMB+174  ].pos = {184.7485, -14.7913, 70.9593, 80}
-mobList[zone][DMB+174  ].pos = {193.1325, -14.6696, 69.7727, 8}
-mobList[zone][DMB+174  ].pos = {173.1945, -15.7263, 105.4897, 231}
-mobList[zone][DMB+174  ].pos = {175.1099, -16.7937, 95.3463, 35}
-mobList[zone][DMB+174  ].pos = {168.6498, -17.3226, 97.7622, 245}
-mobList[zone][DMB+174  ].pos = {159.7019, -19.7969, 137.1451, 115}
-mobList[zone][DMB+174  ].pos = {164.7219, -20.3030, 142.5724, 240}
-mobList[zone][DMB+174  ].pos = {165.4218, -19.7552, 138.6105, 117}
-mobList[zone][DMB+174  ].pos = {200.3606, -12.1309, 138.5568, 25}
-mobList[zone][DMB+174  ].pos = {205.9270, -12.3573, 141.1469, 235}
-mobList[zone][DMB+174  ].pos = {202.5746, -13.5267, 144.1523, 46}
-mobList[zone][DMB+174  ].pos = {234.5791, -8.2018, 134.8770, 28}
-mobList[zone][DMB+174  ].pos = {229.5914, -7.8646, 131.2038, 69}
-mobList[zone][DMB+174  ].pos = {229.1217, -9.2294, 138.7487, 8}
-mobList[zone][DMB+174  ].pos = {220.6413, -10.6810, 173.0818, 143}
-mobList[zone][DMB+174  ].pos = {218.4597, -11.5093, 170.9403, 98}
-mobList[zone][DMB+174  ].pos = {197.9261, -15.5859, 184.8995, 25}
-mobList[zone][DMB+174  ].pos = {204.3031, -15.3590, 189.9328, 215}
-mobList[zone][DMB+174  ].pos = {226.7076, -10.4975, 199.3315, 214}
-mobList[zone][DMB+174  ].pos = {231.5724, -8.7812, 200.8736, 126}
-mobList[zone][DMB+174  ].pos = {259.2725, -4.3060, 194.6071, 203}
-mobList[zone][DMB+174  ].pos = {257.5502, -5.7149, 202.1803, 183}
-mobList[zone][DMB+174  ].pos = {256.6777, -8.2446, 131.9328, 47}
-mobList[zone][DMB+174  ].pos = {254.4781, -7.8469, 121.0773, 88}
+mobList[zone][DMB+174].pos = {147.0991, -13.8950, 83.2262, 91   }
+mobList[zone][DMB+176].pos = {184.7485, -14.7913, 70.9593, 80   }
+mobList[zone][DMB+178].pos = {173.1945, -15.7263, 105.4897, 231 }
+mobList[zone][DMB+180].pos = {168.6498, -17.3226, 97.7622, 245  }
+mobList[zone][DMB+182].pos = {164.7219, -20.3030, 142.5724, 240 }
+mobList[zone][DMB+184].pos = {200.3606, -12.1309, 138.5568, 25  }
+mobList[zone][DMB+186].pos = {202.5746, -13.5267, 144.1523, 46  }
+mobList[zone][DMB+188].pos = {229.5914, -7.8646, 131.2038, 69   }
+mobList[zone][DMB+191].pos = {218.4597, -11.5093, 170.9403, 98  }
+mobList[zone][DMB+443].pos = {226.7076, -10.4975, 199.3315, 214 }
+mobList[zone][DMB+446].pos = {257.5502, -5.7149, 202.1803, 183  }
 -- Nightmare Uragnites
-mobList[zone][DMB+193  ].pos = {387.0336, 15.3531, 76.0351, 147}
-mobList[zone][DMB+194  ].pos = {386.1310, 15.2863, 82.8960, 57}
-mobList[zone][DMB+195  ].pos = {377.8488, 15.0754, 102.8690, 169}
-mobList[zone][DMB+196  ].pos = {369.8853, 15.4632, 108.8367, 162}
-mobList[zone][DMB+197  ].pos = {359.6248, 16.2275, 128.5730, 170}
-mobList[zone][DMB+198  ].pos = {358.1983, 16.3443, 130.9093, 169}
-mobList[zone][DMB+199  ].pos = {349.6410, 15.6979, 156.5760, 179}
-mobList[zone][DMB+200  ].pos = {351.3098, 15.9044, 159.2635, 9}
-mobList[zone][DMB+201  ].pos = {367.1823, 15.1005, 173.3831, 196}
-mobList[zone][DMB+202  ].pos = {374.2122, 15.2872, 171.1647, 186}
-mobList[zone][DMB+203  ].pos = {435.8933, 19.9970, 170.3763, 115}
-mobList[zone][DMB+204  ].pos = {437.2286, 20.0000, 164.3130, 48}
-mobList[zone][DMB+205  ].pos = {428.0363, 19.4671, 165.0977, 78}
-mobList[zone][DMB+206  ].pos = {435.6099, 20.0000, 138.3125, 119}
-mobList[zone][DMB+207  ].pos = {432.5457, 20.0000, 138.9886, 132}
-mobList[zone][DMB+208  ].pos = {439.2874, 20.0000, 140.7343, 43}
-mobList[zone][DMB+464  ].pos = {445.4790, 20.0000, 105.9790, 78}
-mobList[zone][DMB+465  ].pos = {440.2088, 20.0000, 106.2512, 124}
-mobList[zone][DMB+466  ].pos = {447.7589, 20.0000, 111.5140, 224}
-mobList[zone][DMB+467  ].pos = {445.8142, 20.0674, 68.9965, 176}
-mobList[zone][DMB+468  ].pos = {440.7611, 20.0000, 71.2139, 201}
-mobList[zone][DMB+469  ].pos = {441.8423, 20.0000, 73.8866, 186}
+mobList[zone][DMB+193].pos = {387.0336, 15.3531, 76.0351, 147   }
+mobList[zone][DMB+195].pos = {377.8488, 15.0754, 102.8690, 169  }
+mobList[zone][DMB+197].pos = {359.6248, 16.2275, 128.5730, 170  }
+mobList[zone][DMB+199].pos = {349.6410, 15.6979, 156.5760, 179  }
+mobList[zone][DMB+201].pos = {367.1823, 15.1005, 173.3831, 196  }
+mobList[zone][DMB+203].pos = {435.8933, 19.9970, 170.3763, 115  }
+mobList[zone][DMB+206].pos = {435.6099, 20.0000, 138.3125, 119  }
+mobList[zone][DMB+464].pos = {445.4790, 20.0000, 105.9790, 78   }
+mobList[zone][DMB+467].pos = {445.8142, 20.0674, 68.9965, 176   }
 -- Nightmare Scorpion
-mobList[zone][DMB+209  ].pos = {471.2361, 0.2161, 6.8440, 62}
-mobList[zone][DMB+210  ].pos = {479.5731, 0.4628, 6.5544, 26}
-mobList[zone][DMB+211  ].pos = {477.7462, 4.1604, 16.9453, 112}
-mobList[zone][DMB+212  ].pos = {478.3198, 1.0893, 10.9378, 23}
-mobList[zone][DMB+213  ].pos = {516.1291, 0.2165, -8.3529, 115}
-mobList[zone][DMB+214  ].pos = {512.9695, 0.1659, -4.3340, 162}
-mobList[zone][DMB+215  ].pos = {518.4948, 0.0000, -1.8332, 83}
-mobList[zone][DMB+216  ].pos = {511.0065, 0.0000, -10.1647, 100}
-mobList[zone][DMB+217  ].pos = {519.8561, 1.0989, -51.0201, 102}
-mobList[zone][DMB+218  ].pos = {516.4373, -0.0155, -43.8536, 182}
-mobList[zone][DMB+219  ].pos = {521.2855, 0.0000, -41.4890, 244}
-mobList[zone][DMB+220  ].pos = {526.9821, 0.3656, -40.4521, 120}
-mobList[zone][DMB+221  ].pos = {474.1000, 0.0938, -39.7732, 137}
-mobList[zone][DMB+222  ].pos = {465.3293, 1.1241, -45.7196, 77}
-mobList[zone][DMB+223  ].pos = {470.0686, 1.4503, -50.5842, 150}
-mobList[zone][DMB+224  ].pos = {479.3802, 0.2089, -45.7283, 178}
-mobList[zone][DMB+225  ].pos = {471.0633, 0.3659, -15.7049, 56}
-mobList[zone][DMB+226  ].pos = {476.3187, 0.4854, -12.9030, 78}
-mobList[zone][DMB+477  ].pos = {487.9113, 0.6762, -13.6614, 1}
-mobList[zone][DMB+478  ].pos = {492.5678, 0.3704, -18.9696, 57}
-mobList[zone][DMB+479  ].pos = {482.5498, 0.4906, -27.0479, 94}
+mobList[zone][DMB+209].pos = {471.2361, 0.2161, 6.8440, 62      }
+mobList[zone][DMB+213].pos = {516.1291, 0.2165, -8.3529, 115    }
+mobList[zone][DMB+217].pos = {519.8561, 1.0989, -51.0201, 102   }
+mobList[zone][DMB+221].pos = {474.1000, 0.0938, -39.7732, 137   }
+mobList[zone][DMB+225].pos = {471.0633, 0.3659, -15.7049, 56    }
 --Nightmare Bunny
-mobList[zone][DMB+227  ].pos = {-500.4587, -31.1175, 40.6901, 236}
-mobList[zone][DMB+228  ].pos = {-495.7739, -31.2272, 39.3958, 11}
-mobList[zone][DMB+229  ].pos = {-490.4445, -31.8260, 19.6098, 51}
-mobList[zone][DMB+230  ].pos = {-484.6965, -31.5461, 14.0162, 78}
-mobList[zone][DMB+231  ].pos = {-465.3930, -32.6130, 15.1436, 246}
-mobList[zone][DMB+232  ].pos = {-466.7535, -32.3936, 20.7843, 175}
-mobList[zone][DMB+233  ].pos = {-459.7678, -29.8715, 35.0834, 240}
-mobList[zone][DMB+234  ].pos = {-458.0956, -30.0835, 43.2425, 200}
-mobList[zone][DMB+235  ].pos = {-458.8814, -32.5718, 66.9976, 179}
-mobList[zone][DMB+236  ].pos = {-465.0006, -31.3889, 72.7084, 160}
-mobList[zone][DMB+237  ].pos = {-478.2877, -32.0000, 78.9771, 147}
-mobList[zone][DMB+238  ].pos = {-483.2349, -32.0000, 81.4262, 146}
-mobList[zone][DMB+239  ].pos = {-503.5589, -31.2163, 79.4331, 113}
-mobList[zone][DMB+240  ].pos = {-511.9339, -31.7978, 76.3893, 113}
-mobList[zone][DMB+241  ].pos = {-524.4575, -32.0880, 44.5391, 40}
-mobList[zone][DMB+242  ].pos = {-526.3312, -32.5739, 42.4996, 131}
-mobList[zone][DMB+496  ].pos = {-471.6640, -31.7843, -0.3831, 184}
-mobList[zone][DMB+497  ].pos = {-464.1001, -31.2146, -0.5464, 120}
-mobList[zone][DMB+498  ].pos = {-432.8346, -31.8996, 0.7240, 207}
-mobList[zone][DMB+499  ].pos = {-427.8708, -31.7024, 5.0407, 145}
+mobList[zone][DMB+227].pos = {-500.4587, -31.1175, 40.6901, 236 }
+mobList[zone][DMB+229].pos = {-490.4445, -31.8260, 19.6098, 51  }
+mobList[zone][DMB+231].pos = {-465.3930, -32.6130, 15.1436, 246 }
+mobList[zone][DMB+233].pos = {-459.7678, -29.8715, 35.0834, 240 }
+mobList[zone][DMB+235].pos = {-458.8814, -32.5718, 66.9976, 179 }
+mobList[zone][DMB+237].pos = {-478.2877, -32.0000, 78.9771, 147 }
+mobList[zone][DMB+239].pos = {-503.5589, -31.2163, 79.4331, 113 }
+mobList[zone][DMB+241].pos = {-524.4575, -32.0880, 44.5391, 40  }
+mobList[zone][DMB+496].pos = {-471.6640, -31.7843, -0.3831, 184 }
+mobList[zone][DMB+498].pos = {-432.8346, -31.8996, 0.7240, 207  }
 -- Nightmare Mandragora
-mobList[zone][DMB+520  ].pos = {18.8103, -25.6353, 215.0178, 84}
-mobList[zone][DMB+521  ].pos = {14.4507, -25.8432, 215.0486, 128}
-mobList[zone][DMB+522  ].pos = {14.2471, -25.7548, 220.5003, 158}
-mobList[zone][DMB+523  ].pos = {-0.9103, -24.2774, 235.0815, 0}
-mobList[zone][DMB+524  ].pos = {5.6903, -24.5357, 242.9050, 46}
-mobList[zone][DMB+525  ].pos = {3.2289, -24.0000, 238.4653, 251}
-mobList[zone][DMB+526  ].pos = {-42.1285, -24.0754, 236.0463, 104}
-mobList[zone][DMB+527  ].pos = {-40.4723, -24.0000, 238.5071, 250}
-mobList[zone][DMB+528  ].pos = {-35.3389, -24.1134, 236.0161, 253}
-mobList[zone][DMB+529  ].pos = {-27.1142, -25.0121, 265.3078, 82}
-mobList[zone][DMB+530  ].pos = {-26.8868, -24.3494, 260.0490, 253}
-mobList[zone][DMB+531  ].pos = {-32.5834, -23.8965, 266.0062, 221}
-mobList[zone][DMB+532  ].pos = {-62.4796, -29.3045, 273.5851, 222}
-mobList[zone][DMB+533  ].pos = {-63.8176, -29.4805, 277.4575, 254}
-mobList[zone][DMB+534  ].pos = {-57.1254, -27.8022, 278.2867, 238}
-mobList[zone][DMB+535  ].pos = {-105.0640, -31.3110, 277.3794, 172}
-mobList[zone][DMB+536  ].pos = {-106.2535, -31.4301, 279.9367, 172}
-mobList[zone][DMB+537  ].pos = {-100.5884, -31.1011, 284.3138, 215}
-mobList[zone][DMB+538  ].pos = {-131.7827, -33.5953, 268.1009, 136}
-mobList[zone][DMB+539  ].pos = {-139.0331, -33.6447, 265.6450, 215}
-mobList[zone][DMB+540  ].pos = {-145.4037, -33.7469, 261.0375, 246}
-mobList[zone][DMB+541  ].pos = {57.2546, -23.1384, 198.0793, 78}
-mobList[zone][DMB+542  ].pos = {53.9017, -23.5723, 203.3086, 179}
-mobList[zone][DMB+543  ].pos = {60.4103, -24.2500, 207.0856, 167}
+mobList[zone][DMB+520].pos = {18.8103, -25.6353, 215.0178, 84   }
+mobList[zone][DMB+523].pos = {-0.9103, -24.2774, 235.0815, 0    }
+mobList[zone][DMB+526].pos = {-42.1285, -24.0754, 236.0463, 104 }
+mobList[zone][DMB+529].pos = {-27.1142, -25.0121, 265.3078, 82  }
+mobList[zone][DMB+532].pos = {-62.4796, -29.3045, 273.5851, 222 }
+mobList[zone][DMB+535].pos = {-105.0640, -31.3110, 277.3794, 172}
+mobList[zone][DMB+538].pos = {-131.7827, -33.5953, 268.1009, 136}
+mobList[zone][DMB+541].pos = {57.2546, -23.1384, 198.0793, 78   }
 -- Nightmare Crawler
-mobList[zone][DMB+259  ].pos = {319.6010, 0.0000, 361.1112, 80}
-mobList[zone][DMB+260  ].pos = {317.8693, 0.0000, 358.3013, 246}
-mobList[zone][DMB+261  ].pos = {323.2807, 0.0000, 357.6271, 91}
-mobList[zone][DMB+262  ].pos = {340.7446, 1.0797, 330.5484, 145}
-mobList[zone][DMB+263  ].pos = {338.2596, 0.9850, 325.3451, 252}
-mobList[zone][DMB+264  ].pos = {337.1280, 0.9671, 331.9686, 90}
-mobList[zone][DMB+265  ].pos = {317.7736, 0.0000, 319.5869, 247}
-mobList[zone][DMB+266  ].pos = {309.4247, -1.5303, 321.6266, 136}
-mobList[zone][DMB+267  ].pos = {284.4820, -7.9469, 323.3417, 106}
-mobList[zone][DMB+551  ].pos = {278.1880, -8.0000, 319.7731, 107}
-mobList[zone][DMB+552  ].pos = {283.0578, -7.4367, 296.3896, 51}
-mobList[zone][DMB+553  ].pos = {282.0612, -7.7628, 288.7672, 97}
-mobList[zone][DMB+554  ].pos = {371.0742, 0.6000, 228.1120, 74}
-mobList[zone][DMB+555  ].pos = {366.5767, 0.7523, 218.8685, 92}
-mobList[zone][DMB+556  ].pos = {374.6455, 0.3026, 216.7436, 65}
-mobList[zone][DMB+557  ].pos = {402.5201, 0.3097, 229.7839, 208}
-mobList[zone][DMB+558  ].pos = {400.8975, 0.0391, 235.1942, 177}
-mobList[zone][DMB+559  ].pos = {433.3880, -0.0124, 209.0955, 49}
-mobList[zone][DMB+560  ].pos = {433.7487, 0.1114, 201.2834, 121}
-mobList[zone][DMB+561  ].pos = {430.1181, 0.2929, 201.8347, 149}
-mobList[zone][DMB+562  ].pos = {399.0885, 0.0000, 194.4992, 94}
-mobList[zone][DMB+563  ].pos = {397.8453, 0.1269, 190.9244, 55}
-mobList[zone][DMB+564  ].pos = {368.1004, 0.2465, 194.1234, 111}
-mobList[zone][DMB+565  ].pos = {364.4777, 0.0227, 199.6740, 162}
+mobList[zone][DMB+259].pos = {319.6010, 0.0000, 361.1112, 80    }
+mobList[zone][DMB+261].pos = {323.2807, 0.0000, 357.6271, 91    }
+mobList[zone][DMB+263].pos = {338.2596, 0.9850, 325.3451, 252   }
+mobList[zone][DMB+265].pos = {317.7736, 0.0000, 319.5869, 247   }
+mobList[zone][DMB+551].pos = {278.1880, -8.0000, 319.7731, 107  }
+mobList[zone][DMB+554].pos = {371.0742, 0.6000, 228.1120, 74    }
+mobList[zone][DMB+556].pos = {374.6455, 0.3026, 216.7436, 65    }
+mobList[zone][DMB+558].pos = {400.8975, 0.0391, 235.1942, 177   }
+mobList[zone][DMB+560].pos = {433.7487, 0.1114, 201.2834, 121   }
+mobList[zone][DMB+563].pos = {397.8453, 0.1269, 190.9244, 55    }
 --Nightmare Raven
-mobList[zone][DMB+269  ].pos = {251.3917, -7.5990, -27.2447, 247}
-mobList[zone][DMB+270  ].pos = {248.1401, -8.3936, -31.8380, 91}
-mobList[zone][DMB+271  ].pos = {247.8203, -7.7523, -51.8739, 76}
-mobList[zone][DMB+272  ].pos = {241.0595, -7.0022, -59.9794, 129}
-mobList[zone][DMB+273  ].pos = {226.7718, -8.4287, -67.0033, 101}
-mobList[zone][DMB+274  ].pos = {220.9340, -9.4434, -62.6842, 158}
-mobList[zone][DMB+275  ].pos = {212.1411, -13.9209, -45.4596, 175}
-mobList[zone][DMB+276  ].pos = {209.5000, -15.0001, -37.4746, 208}
-mobList[zone][DMB+277  ].pos = {189.4418, -14.5562, -35.2972, 106}
-mobList[zone][DMB+278  ].pos = {187.8147, -13.3340, -30.7853, 179}
-mobList[zone][DMB+279  ].pos = {192.6980, -12.6985, -60.3909, 50}
-mobList[zone][DMB+280  ].pos = {189.3235, -7.0520, -68.8272, 112}
-mobList[zone][DMB+281  ].pos = {164.4827, -7.9380, -4.5929, 98}
-mobList[zone][DMB+282  ].pos = {169.4024, -7.8257, -4.7580, 2}
-mobList[zone][DMB+283  ].pos = {194.2779, -7.9510, 10.4772, 243}
-mobList[zone][DMB+284  ].pos = {205.5011, -7.9553, 8.8672, 252}
-mobList[zone][DMB+285  ].pos = {153.4070, -7.2771, -17.0971, 133}
-mobList[zone][DMB+286  ].pos = {153.8699, -7.2000, -23.8934, 56}
-mobList[zone][DMB+287  ].pos = {133.5932, -7.9051, -41.3949, 50}
-mobList[zone][DMB+288  ].pos = {135.6232, -8.0777, -42.6471, 25}
-mobList[zone][DMB+572  ].pos = {107.4268, -7.9171, -27.6511, 142}
-mobList[zone][DMB+573  ].pos = {102.3821, -7.8493, -23.0362, 140}
-mobList[zone][DMB+574  ].pos = {104.9176, -7.3981, 7.3448, 79}
-mobList[zone][DMB+575  ].pos = {102.5564, -8.1223, 14.6608, 179}
-mobList[zone][DMB+576  ].pos = {78.0692, -7.9856, 4.3110, 91}
-mobList[zone][DMB+577  ].pos = {75.4299, -8.0374, -1.7323, 86}
+mobList[zone][DMB+269].pos = {251.3917, -7.5990, -27.2447, 247  }
+mobList[zone][DMB+271].pos = {247.8203, -7.7523, -51.8739, 76   }
+mobList[zone][DMB+273].pos = {226.7718, -8.4287, -67.0033, 101  }
+mobList[zone][DMB+275].pos = {212.1411, -13.9209, -45.4596, 175 }
+mobList[zone][DMB+277].pos = {189.4418, -14.5562, -35.2972, 106 }
+mobList[zone][DMB+279].pos = {192.6980, -12.6985, -60.3909, 50  }
+mobList[zone][DMB+281].pos = {164.4827, -7.9380, -4.5929, 98    }
+mobList[zone][DMB+283].pos = {194.2779, -7.9510, 10.4772, 243   }
+mobList[zone][DMB+285].pos = {153.4070, -7.2771, -17.0971, 133  }
+mobList[zone][DMB+287].pos = {133.5932, -7.9051, -41.3949, 50   }
+mobList[zone][DMB+572].pos = {107.4268, -7.9171, -27.6511, 142  }
+mobList[zone][DMB+574].pos = {104.9176, -7.3981, 7.3448, 79     }
+mobList[zone][DMB+576].pos = {78.0692, -7.9856, 4.3110, 91      }
 --Nightmare Eft
-mobList[zone][DMB+289  ].pos = {-361.8208, -9.4083, -189.7500, 254}
-mobList[zone][DMB+290  ].pos = {-358.7366, -8.0000, -197.0368, 167}
-mobList[zone][DMB+291  ].pos = {-388.3024, -7.6163, -196.1346, 60}
-mobList[zone][DMB+292  ].pos = {-392.3798, -8.5402, -192.1098, 157}
-mobList[zone][DMB+293  ].pos = {-411.7224, -7.6151, -198.3405, 131}
-mobList[zone][DMB+294  ].pos = {-417.6263, -7.7843, -192.3318, 134}
-mobList[zone][DMB+295  ].pos = {-444.0339, -8.0858, -193.2675, 164}
-mobList[zone][DMB+296  ].pos = {-444.6999, -8.2927, -190.2555, 16}
-mobList[zone][DMB+297  ].pos = {-481.2613, -16.0000, -241.4592, 71}
-mobList[zone][DMB+298  ].pos = {-479.4951, -16.0000, -243.0861, 35}
-mobList[zone][DMB+299  ].pos = {-450.6776, -9.8428, -262.6942, 35}
-mobList[zone][DMB+300  ].pos = {-445.6714, -9.1941, -257.4806, 229}
-mobList[zone][DMB+301  ].pos = {-426.0003, -5.8710, -279.0026, 24}
-mobList[zone][DMB+302  ].pos = {-432.6729, -7.5913, -281.1773, 129}
-mobList[zone][DMB+303  ].pos = {-403.1646, 0.0000, -278.8900, 233}
-mobList[zone][DMB+304  ].pos = {-401.6548, -0.3184, -273.5102, 205}
-mobList[zone][DMB+305  ].pos = {-381.4844, -9.1690, -220.7178, 122}
-mobList[zone][DMB+306  ].pos = {-386.0872, -8.7743, -218.2662, 241}
-mobList[zone][DMB+590  ].pos = {-355.3060, -8.1887, -200.9366, 245}
-mobList[zone][DMB+591  ].pos = {-359.9953, -8.3044, -205.1856, 90}
+mobList[zone][DMB+289].pos = {-361.8208, -9.4083, -189.7500, 254}
+mobList[zone][DMB+291].pos = {-388.3024, -7.6163, -196.1346, 60 }
+mobList[zone][DMB+293].pos = {-411.7224, -7.6151, -198.3405, 131}
+mobList[zone][DMB+295].pos = {-444.0339, -8.0858, -193.2675, 164}
+mobList[zone][DMB+297].pos = {-481.2613, -16.0000, -241.4592, 71}
+mobList[zone][DMB+299].pos = {-450.6776, -9.8428, -262.6942, 35 }
+mobList[zone][DMB+301].pos = {-426.0003, -5.8710, -279.0026, 24 }
+mobList[zone][DMB+303].pos = {-403.1646, 0.0000, -278.8900, 233 }
+mobList[zone][DMB+305].pos = {-381.4844, -9.1690, -220.7178, 122}
+mobList[zone][DMB+590].pos = {-355.3060, -8.1887, -200.9366, 245}
 --Nightmare Cockatrice
-mobList[zone][DMB+620  ].pos = {-313.1621, -39.8093, 257.1451, 19}
-mobList[zone][DMB+621  ].pos = {-312.4508, -40.0850, 265.7268, 251}
-mobList[zone][DMB+622  ].pos = {-299.1613, -39.8762, 269.6068, 215}
-mobList[zone][DMB+623  ].pos = {-301.6097, -41.1347, 259.3679, 78}
-mobList[zone][DMB+624  ].pos = {-352.1228, -39.8073, 236.7914, 139}
-mobList[zone][DMB+625  ].pos = {-358.3139, -40.0000, 241.4646, 180}
-mobList[zone][DMB+626  ].pos = {-361.2079, -40.2316, 231.6764, 94}
-mobList[zone][DMB+627  ].pos = {-351.4143, -40.0605, 223.4486, 227}
-mobList[zone][DMB+628  ].pos = {-334.8820, -31.3485, 204.2709, 51}
-mobList[zone][DMB+629  ].pos = {-330.9466, -31.6538, 197.1722, 2}
-mobList[zone][DMB+630  ].pos = {-337.4206, -31.3346, 195.2325, 109}
-mobList[zone][DMB+628  ].pos = {-318.3690, -30.5167, 189.2187, 14}
-mobList[zone][DMB+631  ].pos = {-357.9044, -32.3993, 154.4069, 9}
-mobList[zone][DMB+632  ].pos = {-351.8373, -31.4871, 158.4229, 185}
-mobList[zone][DMB+633  ].pos = {-352.3749, -31.5144, 168.4233, 173}
-mobList[zone][DMB+634  ].pos = {-340.5129, -28.6569, 160.1128, 56}
-mobList[zone][DMB+635  ].pos = {-318.5551, -23.0392, 139.2384, 11}
-mobList[zone][DMB+636  ].pos = {-310.6508, -23.6236, 137.7404, 50}
-mobList[zone][DMB+637  ].pos = {-310.4880, -23.9568, 125.5293, 55}
-mobList[zone][DMB+638  ].pos = {-323.6383, -24.0892, 125.3986, 125}
+mobList[zone][DMB+643].pos = {-313.1621, -39.8093, 257.1451, 19 }
+mobList[zone][DMB+624].pos = {-352.1228, -39.8073, 236.7914, 139}
+mobList[zone][DMB+628].pos = {-334.8820, -31.3485, 204.2709, 51 }
+mobList[zone][DMB+632].pos = {-357.9044, -32.3993, 154.4069, 9  }
+mobList[zone][DMB+636].pos = {-318.5551, -23.0392, 139.2384, 11 }
 
--- Wavelists
---Dragons
-mobList[zone][DMB+307 ].waves = { 1, nil, nil}
-mobList[zone][DMB+309 ].waves = { 1, nil, nil}
-mobList[zone][DMB+610 ].waves = { 1, nil, nil}
-mobList[zone][DMB+611 ].waves = { 1, nil, nil}
-mobList[zone][DMB+308 ].waves = { 1, nil, nil}
-mobList[zone][DMB+612 ].waves = { 1, nil, nil}
-mobList[zone][DMB+613 ].waves = { 1, nil, nil}
-mobList[zone][DMB+614 ].waves = { 1, nil, nil}
-mobList[zone][DMB+310 ].waves = { 1, nil, nil}
-mobList[zone][DMB+615 ].waves = { 1, nil, nil}
---stats
-mobList[zone][SMB+50  ].waves = { 1, nil, nil}
-mobList[zone][SMB+51  ].waves = { 1, nil, nil}
-mobList[zone][SMB+52  ].waves = { 1, nil, nil}
-mobList[zone][SMB+67  ].waves = { 1, nil, nil}
-mobList[zone][SMB+68  ].waves = { 1, nil, nil}
-mobList[zone][SMB+69  ].waves = { 1, nil, nil}
-mobList[zone][SMB+343 ].waves = { 1, nil, nil}
-mobList[zone][SMB+344 ].waves = { 1, nil, nil}
-mobList[zone][SMB+345 ].waves = { 1, nil, nil}
-mobList[zone][SMB+357 ].waves = { 1, nil, nil}
-mobList[zone][SMB+358 ].waves = { 1, nil, nil}
-mobList[zone][SMB+359 ].waves = { 1, nil, nil}
-mobList[zone][SMB+603 ].waves = { 1, nil, nil}
-mobList[zone][SMB+0   ].waves = { 1, nil, nil}
-mobList[zone][SMB+1   ].waves = { 1, nil, nil}
-mobList[zone][SMB+2   ].waves = { 1, nil, nil}
-mobList[zone][SMB+15  ].waves = { 1, nil, nil}
-mobList[zone][SMB+16  ].waves = { 1, nil, nil}
-mobList[zone][SMB+17  ].waves = { 1, nil, nil}
-mobList[zone][SMB+30  ].waves = { 1, nil, nil}
-mobList[zone][SMB+31  ].waves = { 1, nil, nil}
-mobList[zone][SMB+32  ].waves = { 1, nil, nil}
-mobList[zone][SMB+313 ].waves = { 1, nil, nil}
-mobList[zone][SMB+314 ].waves = { 1, nil, nil}
-mobList[zone][SMB+85  ].waves = { 1, nil, nil}
-mobList[zone][SMB+86  ].waves = { 1, nil, nil}
-mobList[zone][SMB+87  ].waves = { 1, nil, nil}
-mobList[zone][SMB+103 ].waves = { 1, nil, nil}
-mobList[zone][SMB+104 ].waves = { 1, nil, nil}
-mobList[zone][SMB+105 ].waves = { 1, nil, nil}
-mobList[zone][SMB+372 ].waves = { 1, nil, nil}
-mobList[zone][SMB+373 ].waves = { 1, nil, nil}
-mobList[zone][SMB+374 ].waves = { 1, nil, nil}
-mobList[zone][SMB+387 ].waves = { 1, nil, nil}
-mobList[zone][SMB+388 ].waves = { 1, nil, nil}
-mobList[zone][SMB+389 ].waves = { 1, nil, nil}
-mobList[zone][SMB+604 ].waves = { 1, nil, nil}
-mobList[zone][SMB+122 ].waves = { 1, nil, nil}
-mobList[zone][SMB+123 ].waves = { 1, nil, nil}
-mobList[zone][SMB+124 ].waves = { 1, nil, nil}
-mobList[zone][SMB+140 ].waves = { 1, nil, nil}
-mobList[zone][SMB+141 ].waves = { 1, nil, nil}
-mobList[zone][SMB+142 ].waves = { 1, nil, nil}
-mobList[zone][SMB+403 ].waves = { 1, nil, nil}
-mobList[zone][SMB+404 ].waves = { 1, nil, nil}
-mobList[zone][SMB+405 ].waves = { 1, nil, nil}
-mobList[zone][SMB+417 ].waves = { 1, nil, nil}
-mobList[zone][SMB+418 ].waves = { 1, nil, nil}
-mobList[zone][SMB+419 ].waves = { 1, nil, nil}
-mobList[zone][SMB+605 ].waves = { 1, nil, nil}
---Apoc Beast
-mobList[zone][DMB+0   ].waves = { nil, 2, nil}
---Nightmare Mobs
-mobList[zone][DMB+155   ].waves = { nil, 2, nil}
-mobList[zone][DMB+156   ].waves = { nil, 2, nil}
-mobList[zone][DMB+157   ].waves = { nil, 2, nil}
-mobList[zone][DMB+158   ].waves = { nil, 2, nil}
-mobList[zone][DMB+159   ].waves = { nil, 2, nil}
-mobList[zone][DMB+160   ].waves = { nil, 2, nil}
-mobList[zone][DMB+161   ].waves = { nil, 2, nil}
-mobList[zone][DMB+162   ].waves = { nil, 2, nil}
-mobList[zone][DMB+163   ].waves = { nil, 2, nil}
-mobList[zone][DMB+164   ].waves = { nil, 2, nil}
-mobList[zone][DMB+165   ].waves = { nil, 2, nil}
-mobList[zone][DMB+166   ].waves = { nil, 2, nil}
-mobList[zone][DMB+167   ].waves = { nil, 2, nil}
-mobList[zone][DMB+168   ].waves = { nil, 2, nil}
-mobList[zone][DMB+169   ].waves = { nil, 2, nil}
-mobList[zone][DMB+170   ].waves = { nil, 2, nil}
-mobList[zone][DMB+171   ].waves = { nil, 2, nil}
-mobList[zone][DMB+172   ].waves = { nil, 2, nil}
-mobList[zone][DMB+173   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+174   ].waves = { nil, 2, nil}
-mobList[zone][DMB+193   ].waves = { nil, 2, nil}
-mobList[zone][DMB+194   ].waves = { nil, 2, nil}
-mobList[zone][DMB+195   ].waves = { nil, 2, nil}
-mobList[zone][DMB+196   ].waves = { nil, 2, nil}
-mobList[zone][DMB+197   ].waves = { nil, 2, nil}
-mobList[zone][DMB+198   ].waves = { nil, 2, nil}
-mobList[zone][DMB+199   ].waves = { nil, 2, nil}
-mobList[zone][DMB+200   ].waves = { nil, 2, nil}
-mobList[zone][DMB+201   ].waves = { nil, 2, nil}
-mobList[zone][DMB+202   ].waves = { nil, 2, nil}
-mobList[zone][DMB+203   ].waves = { nil, 2, nil}
-mobList[zone][DMB+204   ].waves = { nil, 2, nil}
-mobList[zone][DMB+205   ].waves = { nil, 2, nil}
-mobList[zone][DMB+206   ].waves = { nil, 2, nil}
-mobList[zone][DMB+207   ].waves = { nil, 2, nil}
-mobList[zone][DMB+208   ].waves = { nil, 2, nil}
-mobList[zone][DMB+464   ].waves = { nil, 2, nil}
-mobList[zone][DMB+465   ].waves = { nil, 2, nil}
-mobList[zone][DMB+466   ].waves = { nil, 2, nil}
-mobList[zone][DMB+467   ].waves = { nil, 2, nil}
-mobList[zone][DMB+468   ].waves = { nil, 2, nil}
-mobList[zone][DMB+469   ].waves = { nil, 2, nil}
-mobList[zone][DMB+209   ].waves = { nil, 2, nil}
-mobList[zone][DMB+210   ].waves = { nil, 2, nil}
-mobList[zone][DMB+211   ].waves = { nil, 2, nil}
-mobList[zone][DMB+212   ].waves = { nil, 2, nil}
-mobList[zone][DMB+213   ].waves = { nil, 2, nil}
-mobList[zone][DMB+214   ].waves = { nil, 2, nil}
-mobList[zone][DMB+215   ].waves = { nil, 2, nil}
-mobList[zone][DMB+216   ].waves = { nil, 2, nil}
-mobList[zone][DMB+217   ].waves = { nil, 2, nil}
-mobList[zone][DMB+218   ].waves = { nil, 2, nil}
-mobList[zone][DMB+219   ].waves = { nil, 2, nil}
-mobList[zone][DMB+220   ].waves = { nil, 2, nil}
-mobList[zone][DMB+221   ].waves = { nil, 2, nil}
-mobList[zone][DMB+222   ].waves = { nil, 2, nil}
-mobList[zone][DMB+223   ].waves = { nil, 2, nil}
-mobList[zone][DMB+224   ].waves = { nil, 2, nil}
-mobList[zone][DMB+225   ].waves = { nil, 2, nil}
-mobList[zone][DMB+226   ].waves = { nil, 2, nil}
-mobList[zone][DMB+477   ].waves = { nil, 2, nil}
-mobList[zone][DMB+478   ].waves = { nil, 2, nil}
-mobList[zone][DMB+479   ].waves = { nil, 2, nil}
-mobList[zone][DMB+227   ].waves = { nil, 2, nil}
-mobList[zone][DMB+228   ].waves = { nil, 2, nil}
-mobList[zone][DMB+229   ].waves = { nil, 2, nil}
-mobList[zone][DMB+230   ].waves = { nil, 2, nil}
-mobList[zone][DMB+231   ].waves = { nil, 2, nil}
-mobList[zone][DMB+232   ].waves = { nil, 2, nil}
-mobList[zone][DMB+233   ].waves = { nil, 2, nil}
-mobList[zone][DMB+234   ].waves = { nil, 2, nil}
-mobList[zone][DMB+235   ].waves = { nil, 2, nil}
-mobList[zone][DMB+236   ].waves = { nil, 2, nil}
-mobList[zone][DMB+237   ].waves = { nil, 2, nil}
-mobList[zone][DMB+238   ].waves = { nil, 2, nil}
-mobList[zone][DMB+239   ].waves = { nil, 2, nil}
-mobList[zone][DMB+240   ].waves = { nil, 2, nil}
-mobList[zone][DMB+241   ].waves = { nil, 2, nil}
-mobList[zone][DMB+242   ].waves = { nil, 2, nil}
-mobList[zone][DMB+496   ].waves = { nil, 2, nil}
-mobList[zone][DMB+497   ].waves = { nil, 2, nil}
-mobList[zone][DMB+498   ].waves = { nil, 2, nil}
-mobList[zone][DMB+499   ].waves = { nil, 2, nil}
-mobList[zone][DMB+520   ].waves = { nil, 2, nil}
-mobList[zone][DMB+521   ].waves = { nil, 2, nil}
-mobList[zone][DMB+522   ].waves = { nil, 2, nil}
-mobList[zone][DMB+523   ].waves = { nil, 2, nil}
-mobList[zone][DMB+524   ].waves = { nil, 2, nil}
-mobList[zone][DMB+525   ].waves = { nil, 2, nil}
-mobList[zone][DMB+526   ].waves = { nil, 2, nil}
-mobList[zone][DMB+527   ].waves = { nil, 2, nil}
-mobList[zone][DMB+528   ].waves = { nil, 2, nil}
-mobList[zone][DMB+529   ].waves = { nil, 2, nil}
-mobList[zone][DMB+530   ].waves = { nil, 2, nil}
-mobList[zone][DMB+531   ].waves = { nil, 2, nil}
-mobList[zone][DMB+532   ].waves = { nil, 2, nil}
-mobList[zone][DMB+533   ].waves = { nil, 2, nil}
-mobList[zone][DMB+534   ].waves = { nil, 2, nil}
-mobList[zone][DMB+535   ].waves = { nil, 2, nil}
-mobList[zone][DMB+536   ].waves = { nil, 2, nil}
-mobList[zone][DMB+537   ].waves = { nil, 2, nil}
-mobList[zone][DMB+538   ].waves = { nil, 2, nil}
-mobList[zone][DMB+539   ].waves = { nil, 2, nil}
-mobList[zone][DMB+540   ].waves = { nil, 2, nil}
-mobList[zone][DMB+541   ].waves = { nil, 2, nil}
-mobList[zone][DMB+542   ].waves = { nil, 2, nil}
-mobList[zone][DMB+543   ].waves = { nil, 2, nil}
-mobList[zone][DMB+259   ].waves = { nil, 2, nil}
-mobList[zone][DMB+260   ].waves = { nil, 2, nil}
-mobList[zone][DMB+261   ].waves = { nil, 2, nil}
-mobList[zone][DMB+262   ].waves = { nil, 2, nil}
-mobList[zone][DMB+263   ].waves = { nil, 2, nil}
-mobList[zone][DMB+264   ].waves = { nil, 2, nil}
-mobList[zone][DMB+265   ].waves = { nil, 2, nil}
-mobList[zone][DMB+266   ].waves = { nil, 2, nil}
-mobList[zone][DMB+267   ].waves = { nil, 2, nil}
-mobList[zone][DMB+551   ].waves = { nil, 2, nil}
-mobList[zone][DMB+552   ].waves = { nil, 2, nil}
-mobList[zone][DMB+553   ].waves = { nil, 2, nil}
-mobList[zone][DMB+554   ].waves = { nil, 2, nil}
-mobList[zone][DMB+555   ].waves = { nil, 2, nil}
-mobList[zone][DMB+556   ].waves = { nil, 2, nil}
-mobList[zone][DMB+557   ].waves = { nil, 2, nil}
-mobList[zone][DMB+558   ].waves = { nil, 2, nil}
-mobList[zone][DMB+559   ].waves = { nil, 2, nil}
-mobList[zone][DMB+560   ].waves = { nil, 2, nil}
-mobList[zone][DMB+561   ].waves = { nil, 2, nil}
-mobList[zone][DMB+562   ].waves = { nil, 2, nil}
-mobList[zone][DMB+563   ].waves = { nil, 2, nil}
-mobList[zone][DMB+564   ].waves = { nil, 2, nil}
-mobList[zone][DMB+565   ].waves = { nil, 2, nil}
-mobList[zone][DMB+269   ].waves = { nil, 2, nil}
-mobList[zone][DMB+270   ].waves = { nil, 2, nil}
-mobList[zone][DMB+271   ].waves = { nil, 2, nil}
-mobList[zone][DMB+272   ].waves = { nil, 2, nil}
-mobList[zone][DMB+273   ].waves = { nil, 2, nil}
-mobList[zone][DMB+274   ].waves = { nil, 2, nil}
-mobList[zone][DMB+275   ].waves = { nil, 2, nil}
-mobList[zone][DMB+276   ].waves = { nil, 2, nil}
-mobList[zone][DMB+277   ].waves = { nil, 2, nil}
-mobList[zone][DMB+278   ].waves = { nil, 2, nil}
-mobList[zone][DMB+279   ].waves = { nil, 2, nil}
-mobList[zone][DMB+280   ].waves = { nil, 2, nil}
-mobList[zone][DMB+281   ].waves = { nil, 2, nil}
-mobList[zone][DMB+282   ].waves = { nil, 2, nil}
-mobList[zone][DMB+283   ].waves = { nil, 2, nil}
-mobList[zone][DMB+284   ].waves = { nil, 2, nil}
-mobList[zone][DMB+285   ].waves = { nil, 2, nil}
-mobList[zone][DMB+286   ].waves = { nil, 2, nil}
-mobList[zone][DMB+287   ].waves = { nil, 2, nil}
-mobList[zone][DMB+288   ].waves = { nil, 2, nil}
-mobList[zone][DMB+572   ].waves = { nil, 2, nil}
-mobList[zone][DMB+573   ].waves = { nil, 2, nil}
-mobList[zone][DMB+574   ].waves = { nil, 2, nil}
-mobList[zone][DMB+575   ].waves = { nil, 2, nil}
-mobList[zone][DMB+576   ].waves = { nil, 2, nil}
-mobList[zone][DMB+577   ].waves = { nil, 2, nil}
-mobList[zone][DMB+289   ].waves = { nil, 2, nil}
-mobList[zone][DMB+290   ].waves = { nil, 2, nil}
-mobList[zone][DMB+291   ].waves = { nil, 2, nil}
-mobList[zone][DMB+292   ].waves = { nil, 2, nil}
-mobList[zone][DMB+293   ].waves = { nil, 2, nil}
-mobList[zone][DMB+294   ].waves = { nil, 2, nil}
-mobList[zone][DMB+295   ].waves = { nil, 2, nil}
-mobList[zone][DMB+296   ].waves = { nil, 2, nil}
-mobList[zone][DMB+297   ].waves = { nil, 2, nil}
-mobList[zone][DMB+298   ].waves = { nil, 2, nil}
-mobList[zone][DMB+299   ].waves = { nil, 2, nil}
-mobList[zone][DMB+300   ].waves = { nil, 2, nil}
-mobList[zone][DMB+301   ].waves = { nil, 2, nil}
-mobList[zone][DMB+302   ].waves = { nil, 2, nil}
-mobList[zone][DMB+303   ].waves = { nil, 2, nil}
-mobList[zone][DMB+304   ].waves = { nil, 2, nil}
-mobList[zone][DMB+305   ].waves = { nil, 2, nil}
-mobList[zone][DMB+306   ].waves = { nil, 2, nil}
-mobList[zone][DMB+590   ].waves = { nil, 2, nil}
-mobList[zone][DMB+591   ].waves = { nil, 2, nil}
-mobList[zone][DMB+620   ].waves = { nil, 2, nil}
-mobList[zone][DMB+621   ].waves = { nil, 2, nil}
-mobList[zone][DMB+622   ].waves = { nil, 2, nil}
-mobList[zone][DMB+623   ].waves = { nil, 2, nil}
-mobList[zone][DMB+624   ].waves = { nil, 2, nil}
-mobList[zone][DMB+625   ].waves = { nil, 2, nil}
-mobList[zone][DMB+626   ].waves = { nil, 2, nil}
-mobList[zone][DMB+627   ].waves = { nil, 2, nil}
-mobList[zone][DMB+628   ].waves = { nil, 2, nil}
-mobList[zone][DMB+629   ].waves = { nil, 2, nil}
-mobList[zone][DMB+630   ].waves = { nil, 2, nil}
-mobList[zone][DMB+628   ].waves = { nil, 2, nil}
-mobList[zone][DMB+631   ].waves = { nil, 2, nil}
-mobList[zone][DMB+632   ].waves = { nil, 2, nil}
-mobList[zone][DMB+633   ].waves = { nil, 2, nil}
-mobList[zone][DMB+634   ].waves = { nil, 2, nil}
-mobList[zone][DMB+635   ].waves = { nil, 2, nil}
-mobList[zone][DMB+636   ].waves = { nil, 2, nil}
-mobList[zone][DMB+637   ].waves = { nil, 2, nil}
-mobList[zone][DMB+638   ].waves = { nil, 2, nil}
+-- set statue eye color
+mobList[zone][SMB+51 ].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+345].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+357].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+359].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+603].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+30 ].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+32 ].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+313].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+314].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+387].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+122].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+123].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+140].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+403].eyes = dynamis.eyes.GREEN
+mobList[zone][SMB+404].eyes = dynamis.eyes.BLUE
+
+-- set time extensions
+mobList[zone][DMB+0  ].timeExtension = 60
 
 -- list of mobs to spawn the wave. ALL of them must be defeated (in any order)
-mobList[zone].waveDefeatRequirements = { }
-mobList[zone].waveDefeatRequirements[1] = { } -- always leave this empty
--- mobList[zone].waveDefeatRequirements[2] = { DMB+10, DMB+20, DMB+30, DMB+40 } -- example of 4 bosses
--- mobList[zone].waveDefeatRequirements[3] = { SMB+1 } -- example of mega boss for respawns
+mobList[zone].waveDefeatRequirements    = {       }
+mobList[zone].waveDefeatRequirements[1] = {       } -- always leave this empty
+mobList[zone].waveDefeatRequirements[2] = { DMB+0 } -- Kill Megaboss
 
 -- set which waves this monster will spawn on (can be multiple)
--- wave 1 is spawned on the creation of the dynamis instance
--- mobList[zone][SMB+1  ].waves = {  1 ,nil,nil } -- example
+mobList[zone][DMB+0  ].waves = { 1, nil, nil}
+mobList[zone][DMB+307].waves = { 1, nil, nil}
+mobList[zone][DMB+309].waves = { 1, nil, nil}
+mobList[zone][DMB+610].waves = { 1, nil, nil}
+mobList[zone][DMB+611].waves = { 1, nil, nil}
+mobList[zone][DMB+308].waves = { 1, nil, nil}
+mobList[zone][DMB+612].waves = { 1, nil, nil}
+mobList[zone][DMB+613].waves = { 1, nil, nil}
+mobList[zone][DMB+614].waves = { 1, nil, nil}
+mobList[zone][DMB+310].waves = { 1, nil, nil}
+mobList[zone][DMB+615].waves = { 1, nil, nil}
+mobList[zone][SMB+50 ].waves = { 1, nil, nil}
+mobList[zone][SMB+51 ].waves = { 1, nil, nil}
+mobList[zone][SMB+52 ].waves = { 1, nil, nil}
+mobList[zone][SMB+67 ].waves = { 1, nil, nil}
+mobList[zone][SMB+68 ].waves = { 1, nil, nil}
+mobList[zone][SMB+69 ].waves = { 1, nil, nil}
+mobList[zone][SMB+343].waves = { 1, nil, nil}
+mobList[zone][SMB+344].waves = { 1, nil, nil}
+mobList[zone][SMB+345].waves = { 1, nil, nil}
+mobList[zone][SMB+357].waves = { 1, nil, nil}
+mobList[zone][SMB+358].waves = { 1, nil, nil}
+mobList[zone][SMB+359].waves = { 1, nil, nil}
+mobList[zone][SMB+603].waves = { 1, nil, nil}
+mobList[zone][SMB+0  ].waves = { 1, nil, nil}
+mobList[zone][SMB+1  ].waves = { 1, nil, nil}
+mobList[zone][SMB+2  ].waves = { 1, nil, nil}
+mobList[zone][SMB+15 ].waves = { 1, nil, nil}
+mobList[zone][SMB+16 ].waves = { 1, nil, nil}
+mobList[zone][SMB+17 ].waves = { 1, nil, nil}
+mobList[zone][SMB+30 ].waves = { 1, nil, nil}
+mobList[zone][SMB+31 ].waves = { 1, nil, nil}
+mobList[zone][SMB+32 ].waves = { 1, nil, nil}
+mobList[zone][SMB+313].waves = { 1, nil, nil}
+mobList[zone][SMB+314].waves = { 1, nil, nil}
+mobList[zone][SMB+85 ].waves = { 1, nil, nil}
+mobList[zone][SMB+86 ].waves = { 1, nil, nil}
+mobList[zone][SMB+87 ].waves = { 1, nil, nil}
+mobList[zone][SMB+103].waves = { 1, nil, nil}
+mobList[zone][SMB+104].waves = { 1, nil, nil}
+mobList[zone][SMB+105].waves = { 1, nil, nil}
+mobList[zone][SMB+372].waves = { 1, nil, nil}
+mobList[zone][SMB+373].waves = { 1, nil, nil}
+mobList[zone][SMB+374].waves = { 1, nil, nil}
+mobList[zone][SMB+387].waves = { 1, nil, nil}
+mobList[zone][SMB+388].waves = { 1, nil, nil}
+mobList[zone][SMB+389].waves = { 1, nil, nil}
+mobList[zone][SMB+604].waves = { 1, nil, nil}
+mobList[zone][SMB+122].waves = { 1, nil, nil}
+mobList[zone][SMB+123].waves = { 1, nil, nil}
+mobList[zone][SMB+124].waves = { 1, nil, nil}
+mobList[zone][SMB+140].waves = { 1, nil, nil}
+mobList[zone][SMB+141].waves = { 1, nil, nil}
+mobList[zone][SMB+142].waves = { 1, nil, nil}
+mobList[zone][SMB+403].waves = { 1, nil, nil}
+mobList[zone][SMB+404].waves = { 1, nil, nil}
+mobList[zone][SMB+405].waves = { 1, nil, nil}
+mobList[zone][SMB+417].waves = { 1, nil, nil}
+mobList[zone][SMB+418].waves = { 1, nil, nil}
+mobList[zone][SMB+419].waves = { 1, nil, nil}
+mobList[zone][SMB+605].waves = { 1, nil, nil}
+mobList[zone][DMB+155].waves = { nil, 2, nil}
+mobList[zone][DMB+157].waves = { nil, 2, nil}
+mobList[zone][DMB+159].waves = { nil, 2, nil}
+mobList[zone][DMB+161].waves = { nil, 2, nil}
+mobList[zone][DMB+163].waves = { nil, 2, nil}
+mobList[zone][DMB+165].waves = { nil, 2, nil}
+mobList[zone][DMB+167].waves = { nil, 2, nil}
+mobList[zone][DMB+169].waves = { nil, 2, nil}
+mobList[zone][DMB+171].waves = { nil, 2, nil}
+mobList[zone][DMB+173].waves = { nil, 2, nil}
+mobList[zone][DMB+289].waves = { nil, 2, nil}
+mobList[zone][DMB+291].waves = { nil, 2, nil}
+mobList[zone][DMB+293].waves = { nil, 2, nil}
+mobList[zone][DMB+295].waves = { nil, 2, nil}
+mobList[zone][DMB+297].waves = { nil, 2, nil}
+mobList[zone][DMB+299].waves = { nil, 2, nil}
+mobList[zone][DMB+301].waves = { nil, 2, nil}
+mobList[zone][DMB+303].waves = { nil, 2, nil}
+mobList[zone][DMB+305].waves = { nil, 2, nil}
+mobList[zone][DMB+590].waves = { nil, 2, nil}
+mobList[zone][DMB+227].waves = { nil, 2, nil}
+mobList[zone][DMB+229].waves = { nil, 2, nil}
+mobList[zone][DMB+231].waves = { nil, 2, nil}
+mobList[zone][DMB+233].waves = { nil, 2, nil}
+mobList[zone][DMB+235].waves = { nil, 2, nil}
+mobList[zone][DMB+237].waves = { nil, 2, nil}
+mobList[zone][DMB+239].waves = { nil, 2, nil}
+mobList[zone][DMB+241].waves = { nil, 2, nil}
+mobList[zone][DMB+496].waves = { nil, 2, nil}
+mobList[zone][DMB+498].waves = { nil, 2, nil}
+mobList[zone][DMB+643].waves = { nil, 2, nil}
+mobList[zone][DMB+624].waves = { nil, 2, nil}
+mobList[zone][DMB+628].waves = { nil, 2, nil}
+mobList[zone][DMB+632].waves = { nil, 2, nil}
+mobList[zone][DMB+636].waves = { nil, 2, nil}
+mobList[zone][DMB+520].waves = { nil, 2, nil}
+mobList[zone][DMB+523].waves = { nil, 2, nil}
+mobList[zone][DMB+526].waves = { nil, 2, nil}
+mobList[zone][DMB+529].waves = { nil, 2, nil}
+mobList[zone][DMB+532].waves = { nil, 2, nil}
+mobList[zone][DMB+535].waves = { nil, 2, nil}
+mobList[zone][DMB+538].waves = { nil, 2, nil}
+mobList[zone][DMB+541].waves = { nil, 2, nil}
+mobList[zone][DMB+269].waves = { nil, 2, nil}
+mobList[zone][DMB+271].waves = { nil, 2, nil}
+mobList[zone][DMB+273].waves = { nil, 2, nil}
+mobList[zone][DMB+275].waves = { nil, 2, nil}
+mobList[zone][DMB+277].waves = { nil, 2, nil}
+mobList[zone][DMB+279].waves = { nil, 2, nil}
+mobList[zone][DMB+281].waves = { nil, 2, nil}
+mobList[zone][DMB+283].waves = { nil, 2, nil}
+mobList[zone][DMB+285].waves = { nil, 2, nil}
+mobList[zone][DMB+287].waves = { nil, 2, nil}
+mobList[zone][DMB+572].waves = { nil, 2, nil}
+mobList[zone][DMB+574].waves = { nil, 2, nil}
+mobList[zone][DMB+576].waves = { nil, 2, nil}
+mobList[zone][DMB+174].waves = { nil, 2, nil}
+mobList[zone][DMB+176].waves = { nil, 2, nil}
+mobList[zone][DMB+178].waves = { nil, 2, nil}
+mobList[zone][DMB+180].waves = { nil, 2, nil}
+mobList[zone][DMB+182].waves = { nil, 2, nil}
+mobList[zone][DMB+184].waves = { nil, 2, nil}
+mobList[zone][DMB+186].waves = { nil, 2, nil}
+mobList[zone][DMB+188].waves = { nil, 2, nil}
+mobList[zone][DMB+191].waves = { nil, 2, nil}
+mobList[zone][DMB+443].waves = { nil, 2, nil}
+mobList[zone][DMB+446].waves = { nil, 2, nil}
+mobList[zone][DMB+259].waves = { nil, 2, nil}
+mobList[zone][DMB+261].waves = { nil, 2, nil}
+mobList[zone][DMB+263].waves = { nil, 2, nil}
+mobList[zone][DMB+265].waves = { nil, 2, nil}
+mobList[zone][DMB+551].waves = { nil, 2, nil}
+mobList[zone][DMB+554].waves = { nil, 2, nil}
+mobList[zone][DMB+556].waves = { nil, 2, nil}
+mobList[zone][DMB+558].waves = { nil, 2, nil}
+mobList[zone][DMB+560].waves = { nil, 2, nil}
+mobList[zone][DMB+563].waves = { nil, 2, nil}
+mobList[zone][DMB+193].waves = { nil, 2, nil}
+mobList[zone][DMB+195].waves = { nil, 2, nil}
+mobList[zone][DMB+197].waves = { nil, 2, nil}
+mobList[zone][DMB+199].waves = { nil, 2, nil}
+mobList[zone][DMB+201].waves = { nil, 2, nil}
+mobList[zone][DMB+203].waves = { nil, 2, nil}
+mobList[zone][DMB+206].waves = { nil, 2, nil}
+mobList[zone][DMB+464].waves = { nil, 2, nil}
+mobList[zone][DMB+467].waves = { nil, 2, nil}
+mobList[zone][DMB+209].waves = { nil, 2, nil}
+mobList[zone][DMB+213].waves = { nil, 2, nil}
+mobList[zone][DMB+217].waves = { nil, 2, nil}
+mobList[zone][DMB+221].waves = { nil, 2, nil}
+mobList[zone][DMB+225].waves = { nil, 2, nil}
 
 -- set what mobIDs i will spawn when i engage (such as NMs or other statues)
--- mobList[zone][SMB+1  ].specificChildren = { SMB+2, SMB+3, SMB+4 } -- example
+-- Statue Children
+mobList[zone][SMB+50 ].specificChildren = { DMB+59, DMB+47, DMB+49, DMB+54     } -- Elvaansticker Bxafraff, RDM, THF, BRD (001-O)
+mobList[zone][SMB+51 ].specificChildren = { DMB+74, DMB+52                     } -- SMN, BST                              (002-O)
+mobList[zone][SMB+52 ].specificChildren = { DMB+58, DMB+65, DMB+68, DMB+55     } -- Flamecaller Zoeqdoq, WAR, WHM, NIN    (003-O)
+mobList[zone][SMB+67 ].specificChildren = { DMB+73                             } -- SAM                                   (004-O)
+mobList[zone][SMB+68 ].specificChildren = { DMB+45                             } -- BLM                                   (005-O)
+mobList[zone][SMB+69 ].specificChildren = { DMB+76, DMB+56, DMB+348, DMB+66    } -- Hamfist Gukhbuk, DRG, BST, WAR        (006-O)
+mobList[zone][SMB+343].specificChildren = { DMB+50                             } -- DRK                                   (007-O)
+mobList[zone][SMB+344].specificChildren = { DMB+48                             } -- RDM                                   (008-O)
+mobList[zone][SMB+345].specificChildren = { DMB+72                             } -- PLD                                   (009-O)
+mobList[zone][SMB+357].specificChildren = { DMB+351, DMB+69                    } -- NIN, WHM                              (010-O)
+mobList[zone][SMB+358].specificChildren = { DMB+77, DMB+67, DMB+360, DMB+70    } -- Lyncean Juvgneg, MNK, MNK, RNG        (011-O)
+mobList[zone][SMB+359].specificChildren = { DMB+366, DMB+350                   } -- SMN, BRD                              (012-O)
+mobList[zone][SMB+603].specificChildren = { DMB+346                            } -- THF                                   (013-O)
+mobList[zone][SMB+0  ].specificChildren = { DMB+5                              } -- BRD                                   (014-G)
+mobList[zone][SMB+1  ].specificChildren = { DMB+40, DMB+33, DMB+35, DMB+23     } -- Gosspix Blabberlips, THF, PLD, DRG    (015-G)
+mobList[zone][SMB+2  ].specificChildren = { DMB+22, DMB+3                      } -- NIN, BST                              (016-G)
+mobList[zone][SMB+15 ].specificChildren = { DMB+38, DMB+6                      } -- SMN, BRD                              (017-G)
+mobList[zone][SMB+16 ].specificChildren = { DMB+9, DMB+36, DMB+21, DMB+17      } -- Woodnix Shrillwhistle, RNG, DRK, WHM  (018-G)
+mobList[zone][SMB+17 ].specificChildren = { DMB+19                             } -- BLM                                   (019-G)
+mobList[zone][SMB+30 ].specificChildren = { DMB+20                             } -- BLM                                   (020-G)
+mobList[zone][SMB+31 ].specificChildren = { DMB+25, DMB+30, DMB+15, DMB+7      } -- Shamblix Rottenheart, MNK, WAR, SAM   (021-G)
+mobList[zone][SMB+32 ].specificChildren = { DMB+322                            } -- SMN                                   (022-G)
+mobList[zone][SMB+313].specificChildren = { DMB+335                            } -- NIN                                   (023-G)
+mobList[zone][SMB+314].specificChildren = { DMB+314                            } -- RDM                                   (024-G)
+mobList[zone][SMB+85 ].specificChildren = { DMB+94, DMB+82, DMB+87, DMB+375    } -- Qu'Pho Bloodspiller, WAR, BST, BST    (025-Q)
+mobList[zone][SMB+86 ].specificChildren = { DMB+100, DMB+101                   } -- BLM, BLM                              (026-Q)
+mobList[zone][SMB+87 ].specificChildren = { DMB+106, DMB+393                   } -- DRK, DRK                              (027-Q)
+mobList[zone][SMB+103].specificChildren = { DMB+113, DMB+105, DMB+108, DMB+109 } -- Te'Zha Ironclad, PLD, NIN, NIN        (028-Q)
+mobList[zone][SMB+104].specificChildren = { DMB+89, DMB+377                    } -- BRD, BRD                              (029-Q)
+mobList[zone][SMB+105].specificChildren = { DMB+92, DMB+381                    } -- DRG, DRG                              (030-Q)
+mobList[zone][SMB+372].specificChildren = { DMB+102, DMB+388                   } -- RDM, RDM                              (031-Q)
+mobList[zone][SMB+373].specificChildren = { DMB+107, DMB+394                   } -- SAM, SAM                              (032-Q)
+mobList[zone][SMB+374].specificChildren = { DMB+95, DMB+85, DMB+83, DMB+84     } -- Gi'Bhe Flesheater, WHM, MNK, MNK      (033-Q)
+mobList[zone][SMB+387].specificChildren = { DMB+391, DMB+392                   } -- PLD, PLD                              (034-Q)
+mobList[zone][SMB+388].specificChildren = { DMB+387, DMB+640                   } -- BLM, BLM                              (035-Q)
+mobList[zone][SMB+389].specificChildren = { DMB+110, DMB+396                   } -- SMN, SMN                              (036-Q)
+mobList[zone][SMB+604].specificChildren = { DMB+112, DMB+103, DMB+90, DMB+91   } -- Va'Rhu Bodysnatcher, THF, RNG, RNG    (037-Q)
+mobList[zone][SMB+122].specificChildren = { DMB+118, DMB+128                   } -- MNK, SAM                              (038-Y)
+mobList[zone][SMB+123].specificChildren = { DMB+119, DMB+410                   } -- MNK, SAM                              (039-Y)
+mobList[zone][SMB+124].specificChildren = { DMB+132, DMB+137, DMB+144, DMB+143 } -- Koo rahi the Levinblade, WAR, RNG, DRK(040-Y)
+mobList[zone][SMB+140].specificChildren = { DMB+125, DMB+129                   } -- BST, DRG                              (041-Y)
+mobList[zone][SMB+141].specificChildren = { DMB+146, DMB+127                   } -- SMN, BRD                              (042-Y)
+mobList[zone][SMB+142].specificChildren = { DMB+149, DMB+120, DMB+139, DMB+141 } -- Baa Dava the Bibliopage, WHM, BLM, RDM(043-Y)
+mobList[zone][SMB+403].specificChildren = { DMB+426, DMB+406                   } -- SMN, BRD                              (044-Y)
+mobList[zone][SMB+404].specificChildren = { DMB+407, DMB+412                   } -- BST, DRG                              (045-Y)
+mobList[zone][SMB+405].specificChildren = { DMB+422, DMB+423                   } -- DRK, DRK                              (046-Y)
+mobList[zone][SMB+417].specificChildren = { DMB+122, DMB+137                   } -- THF, WAR                              (047-Y)
+mobList[zone][SMB+418].specificChildren = { DMB+148, DMB+145, DMB+425, DMB+641 } -- Doo Peku the Fleetfoot, NIN, NIN, NIN (048-Y)
+mobList[zone][SMB+419].specificChildren = { DMB+123, DMB+424                   } -- THF, RNG                              (049-Y)
+mobList[zone][SMB+605].specificChildren = { DMB+131, DMB+642, DMB+124, DMB+406 } -- Ree Nata the Melomanic, BRD, PLD, PLD (050-Y)
+-- Nightmare Mobs
+mobList[zone][DMB+155].specificChildren = { DMB+156                            } -- Nightmare Crab                        ( 062 )
+mobList[zone][DMB+157].specificChildren = { DMB+158                            } -- Nightmare Crab                        ( 063 )
+mobList[zone][DMB+159].specificChildren = { DMB+160                            } -- Nightmare Crab                        ( 064 )
+mobList[zone][DMB+161].specificChildren = { DMB+162                            } -- Nightmare Crab                        ( 065 )
+mobList[zone][DMB+163].specificChildren = { DMB+164                            } -- Nightmare Crab                        ( 066 )
+mobList[zone][DMB+165].specificChildren = { DMB+166                            } -- Nightmare Crab                        ( 067 )
+mobList[zone][DMB+167].specificChildren = { DMB+168                            } -- Nightmare Crab                        ( 068 )
+mobList[zone][DMB+169].specificChildren = { DMB+170                            } -- Nightmare Crab                        ( 069 )
+mobList[zone][DMB+171].specificChildren = { DMB+172                            } -- Nightmare Crab                        ( 070 )
+mobList[zone][DMB+173].specificChildren = { DMB+174                            } -- Nightmare Crab                        ( 071 )
+mobList[zone][DMB+289].specificChildren = { DMB+290                            } -- Nightmare Eft                         ( 072 )
+mobList[zone][DMB+291].specificChildren = { DMB+292                            } -- Nightmare Eft                         ( 073 )
+mobList[zone][DMB+293].specificChildren = { DMB+294                            } -- Nightmare Eft                         ( 074 )
+mobList[zone][DMB+295].specificChildren = { DMB+296                            } -- Nightmare Eft                         ( 075 )
+mobList[zone][DMB+297].specificChildren = { DMB+298                            } -- Nightmare Eft                         ( 076 )
+mobList[zone][DMB+299].specificChildren = { DMB+300                            } -- Nightmare Eft                         ( 077 )
+mobList[zone][DMB+301].specificChildren = { DMB+302                            } -- Nightmare Eft                         ( 078 )
+mobList[zone][DMB+303].specificChildren = { DMB+304                            } -- Nightmare Eft                         ( 079 )
+mobList[zone][DMB+305].specificChildren = { DMB+306                            } -- Nightmare Eft                         ( 080 )
+mobList[zone][DMB+590].specificChildren = { DMB+591                            } -- Nightmare Eft                         ( 081 )
+mobList[zone][DMB+227].specificChildren = { DMB+228                            } -- Nightmare Bunny                       ( 082 )
+mobList[zone][DMB+229].specificChildren = { DMB+230                            } -- Nightmare Bunny                       ( 083 )
+mobList[zone][DMB+231].specificChildren = { DMB+232                            } -- Nightmare Bunny                       ( 084 )
+mobList[zone][DMB+233].specificChildren = { DMB+234                            } -- Nightmare Bunny                       ( 085 )
+mobList[zone][DMB+235].specificChildren = { DMB+236                            } -- Nightmare Bunny                       ( 086 )
+mobList[zone][DMB+237].specificChildren = { DMB+238                            } -- Nightmare Bunny                       ( 087 )
+mobList[zone][DMB+239].specificChildren = { DMB+240                            } -- Nightmare Bunny                       ( 088 )
+mobList[zone][DMB+241].specificChildren = { DMB+242                            } -- Nightmare Bunny                       ( 089 )
+mobList[zone][DMB+496].specificChildren = { DMB+497                            } -- Nightmare Bunny                       ( 090 )
+mobList[zone][DMB+498].specificChildren = { DMB+499                            } -- Nightmare Bunny                       ( 091 )
+mobList[zone][DMB+643].specificChildren = { DMB+621, DMB+622, DMB+623          } -- Nightmare Cockatrice                  ( 092 )
+mobList[zone][DMB+624].specificChildren = { DMB+625, DMB+626, DMB+627          } -- Nightmare Cockatrice                  ( 093 )
+mobList[zone][DMB+628].specificChildren = { DMB+629, DMB+630, DMB+631          } -- Nightmare Cockatrice                  ( 094 )
+mobList[zone][DMB+632].specificChildren = { DMB+633, DMB+634, DMB+635          } -- Nightmare Cockatrice                  ( 095 )
+mobList[zone][DMB+636].specificChildren = { DMB+637, DMB+638, DMB+639          } -- Nightmare Cockatrice                  ( 096 )
+mobList[zone][DMB+520].specificChildren = { DMB+521, DMB+522                   } -- Nightmare Mandragora                  ( 097 )
+mobList[zone][DMB+523].specificChildren = { DMB+524, DMB+525                   } -- Nightmare Mandragora                  ( 098 )
+mobList[zone][DMB+526].specificChildren = { DMB+527, DMB+528                   } -- Nightmare Mandragora                  ( 099 )
+mobList[zone][DMB+529].specificChildren = { DMB+530, DMB+531                   } -- Nightmare Mandragora                  ( 100 )
+mobList[zone][DMB+532].specificChildren = { DMB+533, DMB+534                   } -- Nightmare Mandragora                  ( 101 )
+mobList[zone][DMB+535].specificChildren = { DMB+536, DMB+537                   } -- Nightmare Mandragora                  ( 102 )
+mobList[zone][DMB+538].specificChildren = { DMB+539, DMB+540                   } -- Nightmare Mandragora                  ( 103 )
+mobList[zone][DMB+541].specificChildren = { DMB+542, DMB+543                   } -- Nightmare Mandragora                  ( 104 )
+mobList[zone][DMB+269].specificChildren = { DMB+270                            } -- Nightmare Raven                       ( 105 )
+mobList[zone][DMB+271].specificChildren = { DMB+272                            } -- Nightmare Raven                       ( 106 )
+mobList[zone][DMB+273].specificChildren = { DMB+274                            } -- Nightmare Raven                       ( 107 )
+mobList[zone][DMB+275].specificChildren = { DMB+276                            } -- Nightmare Raven                       ( 108 )
+mobList[zone][DMB+277].specificChildren = { DMB+278                            } -- Nightmare Raven                       ( 109 )
+mobList[zone][DMB+279].specificChildren = { DMB+280                            } -- Nightmare Raven                       ( 110 )
+mobList[zone][DMB+281].specificChildren = { DMB+282                            } -- Nightmare Raven                       ( 111 )
+mobList[zone][DMB+283].specificChildren = { DMB+284                            } -- Nightmare Raven                       ( 112 )
+mobList[zone][DMB+285].specificChildren = { DMB+286                            } -- Nightmare Raven                       ( 113 )
+mobList[zone][DMB+287].specificChildren = { DMB+288                            } -- Nightmare Raven                       ( 114 )
+mobList[zone][DMB+572].specificChildren = { DMB+573                            } -- Nightmare Raven                       ( 115 )
+mobList[zone][DMB+574].specificChildren = { DMB+575                            } -- Nightmare Raven                       ( 116 )
+mobList[zone][DMB+576].specificChildren = { DMB+577                            } -- Nightmare Raven                       ( 117 )
+mobList[zone][DMB+174].specificChildren = { DMB+175                            } -- Nightmare Dhalmel                     ( 118 )
+mobList[zone][DMB+176].specificChildren = { DMB+177                            } -- Nightmare Dhalmel                     ( 119 )
+mobList[zone][DMB+178].specificChildren = { DMB+179                            } -- Nightmare Dhalmel                     ( 120 )
+mobList[zone][DMB+180].specificChildren = { DMB+181                            } -- Nightmare Dhalmel                     ( 121 )
+mobList[zone][DMB+182].specificChildren = { DMB+183                            } -- Nightmare Dhalmel                     ( 122 )
+mobList[zone][DMB+184].specificChildren = { DMB+185                            } -- Nightmare Dhalmel                     ( 123 )
+mobList[zone][DMB+186].specificChildren = { DMB+187                            } -- Nightmare Dhalmel                     ( 124 )
+mobList[zone][DMB+188].specificChildren = { DMB+189, DMB+190                   } -- Nightmare Dhalmel                     ( 125 )
+mobList[zone][DMB+191].specificChildren = { DMB+192, DMB+193                   } -- Nightmare Dhalmel                     ( 126 )
+mobList[zone][DMB+443].specificChildren = { DMB+444, DMB+445                   } -- Nightmare Dhalmel                     ( 127 )
+mobList[zone][DMB+446].specificChildren = { DMB+447, DMB+448                   } -- Nightmare Dhalmel                     ( 128 )
+mobList[zone][DMB+259].specificChildren = { DMB+260                            } -- Nightmare Crawler                     ( 129 )
+mobList[zone][DMB+261].specificChildren = { DMB+262                            } -- Nightmare Crawler                     ( 130 )
+mobList[zone][DMB+263].specificChildren = { DMB+264                            } -- Nightmare Crawler                     ( 131 )
+mobList[zone][DMB+265].specificChildren = { DMB+266, DMB+267                   } -- Nightmare Crawler                     ( 132 )
+mobList[zone][DMB+551].specificChildren = { DMB+552, DMB+553                   } -- Nightmare Crawler                     ( 133 )
+mobList[zone][DMB+554].specificChildren = { DMB+555                            } -- Nightmare Crawler                     ( 134 )
+mobList[zone][DMB+556].specificChildren = { DMB+557                            } -- Nightmare Crawler                     ( 135 )
+mobList[zone][DMB+558].specificChildren = { DMB+559                            } -- Nightmare Crawler                     ( 136 )
+mobList[zone][DMB+560].specificChildren = { DMB+561, DMB+562                   } -- Nightmare Crawler                     ( 137 )
+mobList[zone][DMB+563].specificChildren = { DMB+564, DMB+565                   } -- Nightmare Crawler                     ( 138 )
+mobList[zone][DMB+193].specificChildren = { DMB+194                            } -- Nightmare Uragnite                    ( 139 )
+mobList[zone][DMB+195].specificChildren = { DMB+196                            } -- Nightmare Uragnite                    ( 140 )
+mobList[zone][DMB+197].specificChildren = { DMB+198                            } -- Nightmare Uragnite                    ( 141 )
+mobList[zone][DMB+199].specificChildren = { DMB+200                            } -- Nightmare Uragnite                    ( 142 )
+mobList[zone][DMB+201].specificChildren = { DMB+202                            } -- Nightmare Uragnite                    ( 143 )
+mobList[zone][DMB+203].specificChildren = { DMB+204, DMB+205                   } -- Nightmare Uragnite                    ( 144 )
+mobList[zone][DMB+206].specificChildren = { DMB+207, DMB+208                   } -- Nightmare Uragnite                    ( 145 )
+mobList[zone][DMB+464].specificChildren = { DMB+465, DMB+466                   } -- Nightmare Uragnite                    ( 146 )
+mobList[zone][DMB+467].specificChildren = { DMB+468, DMB+469                   } -- Nightmare Uragnite                    ( 147 )
+mobList[zone][DMB+209].specificChildren = { DMB+210, DMB+211, DMB+212          } -- Nightmare Scorption                   ( 148 )
+mobList[zone][DMB+213].specificChildren = { DMB+214, DMB+215, DMB+216          } -- Nightmare Scorption                   ( 149 )
+mobList[zone][DMB+217].specificChildren = { DMB+218, DMB+219, DMB+220          } -- Nightmare Scorption                   ( 150 )
+mobList[zone][DMB+221].specificChildren = { DMB+222, DMB+223, DMB+224          } -- Nightmare Scorption                   ( 151 )
+mobList[zone][DMB+225].specificChildren = { DMB+226, DMB+477, DMB+478, DMB+479 } -- Nightmare Scorption                   ( 152 )
 
 -- set how many random children i will spawn when i engage
 -- mobList[zone][SMB+1  ].randomChildrenCount = 3 -- example

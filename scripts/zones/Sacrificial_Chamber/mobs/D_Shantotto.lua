@@ -9,7 +9,11 @@ require("scripts/globals/utils")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
     mob:setMod(tpz.mod.DARKRES, 100)
+    mob:setMod(tpz.mod.UDMGMAGIC, -80)
     mob:setMod(tpz.mod.EARTHRES, 100)
     mob:setMod(tpz.mod.ICERES, 100)
     mob:setMod(tpz.mod.WATERRES, 100)
@@ -33,21 +37,29 @@ function onMobFight(mob, target)
     local partner = GetMobByID(mob:getID() + 1)
 
     if mob:getHPP() <= 75 and multiMove == 0 and utils.canUseAbility(mob) == true and moveNum == 0 then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.DSHANTOTTO_75)
         mob:setLocalVar("multiMove", 1)
         mob:setLocalVar("moveNum", 4)
     elseif mob:getHPP() <= 50 and multiMove == 1 and utils.canUseAbility(mob) == true and moveNum == 0 then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.DSHANTOTTO_50)
         mob:setLocalVar("multiMove", 2)
         mob:setLocalVar("moveNum", 4)
     elseif mob:getHPP() <= 25 and multiMove == 2 and utils.canUseAbility(mob) == true and moveNum == 0 then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.DSHANTOTTO_25)
         mob:setLocalVar("multiMove", 3)
         mob:setLocalVar("moveNum", 4)
     elseif mob:getHPP() <= 10 and multiMove == 2 and utils.canUseAbility(mob) == true and moveNum == 0 and partner:getHPP() > 10 then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.SHANTOTTO_METEOR1)
         mob:setLocalVar("multiMove", 3)
@@ -58,6 +70,9 @@ function onMobFight(mob, target)
         local move = math.random(96,102)
         mob:useMobAbility(move)
         mob:setLocalVar("moveNum", moveNum - 1)
+    elseif moveNum == 0 then
+        mob:setMod(tpz.mod.UDMGPHYS, 0)
+        mob:setMod(tpz.mod.UDMGRANGE, 0)
     end
 
 

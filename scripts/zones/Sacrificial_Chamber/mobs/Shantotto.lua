@@ -16,6 +16,7 @@ function onMobSpawn(mob)
     mob:SetMobAbilityEnabled(true)
     mob:SetMagicCastingEnabled(true)
     mob:setMod(tpz.mod.LIGHTRES, 100)
+    mob:setMod(tpz.mod.UDMGMAGIC, -80)
     mob:setMod(tpz.mod.FIRERES, 100)
     mob:setMod(tpz.mod.WINDRES, 100)
     mob:setMod(tpz.mod.THUNDERRES, 100)
@@ -40,21 +41,29 @@ function onMobFight(mob, target)
     local partner = GetMobByID(mob:getID() + 1)
 
     if mob:getHPP() <= 75 and multiSpell == 0 and spellNum == 0 and utils.canUseAbility(mob) == true then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.SHANTOTTO_75)
         mob:setLocalVar("multiSpell", 1)
         mob:setLocalVar("spellNum", 7)
     elseif mob:getHPP() <= 50 and multiSpell == 1 and spellNum == 0 and utils.canUseAbility(mob) == true then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.SHANTOTTO_50)
         mob:setLocalVar("multiSpell", 2)
         mob:setLocalVar("spellNum", 7)
     elseif mob:getHPP() <= 25 and multiSpell == 2 and spellNum == 0 and utils.canUseAbility(mob) == true then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:showText(mob, ID.text.SHANTOTTO_25)
         mob:setLocalVar("multiSpell", 3)
         mob:setLocalVar("spellNum", 7)
     elseif mob:getHPP() <= 10 and multiSpell == 3 and spellNum == 0 and utils.canUseAbility(mob) == true and partner:getHPP() > 10  then
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:useMobAbility(627)
         mob:setLocalVar("multiSpell", 4)
         mob:setLocalVar("spellNum", 7)
@@ -66,14 +75,20 @@ function onMobFight(mob, target)
         local spell = math.random(1,3)
         mob:castSpell(nukes[spell])
     elseif spellNum == 2 and utils.canUseAbility(mob) == true and multiSpell < 4 then
+        mob:setMod(tpz.mod.MATT, 300)
         local spell = math.random(1,3)
         mob:castSpell(aoe[spell])
     elseif spellNum > 1 and utils.canUseAbility(mob) == true and multiSpell == 4 then
         mob:castSpell()
     elseif spellNum == 1 and multiSpell < 4 then
+        mob:setMod(tpz.mod.MATT, 32)
+        mob:setMod(tpz.mod.UDMGPHYS, -70)
+        mob:setMod(tpz.mod.UDMGRANGE, -70)
         mob:setSpellList(533)
         mob:setLocalVar("spellNum", 0)
     elseif spellNum == 1 then
+        mob:setMod(tpz.mod.UDMGPHYS, 0)
+        mob:setMod(tpz.mod.UDMGRANGE, 0)
         mob:setLocalVar("spellNum", 0)
     end
 

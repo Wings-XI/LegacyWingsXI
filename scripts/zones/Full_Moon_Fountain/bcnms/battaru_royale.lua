@@ -13,22 +13,6 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldRegister(player, battlefield)
-    local sapsCollected =
-    (player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL)     and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)     and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)       and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL)      and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)      and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)     and 1 or 0) +
-    (player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL)      and 1 or 0)
-
-    if sapsCollected > 0 then
-        player:setCharVar("ASA_BCNM", 1)
-    end
-end
-
-function onBattlefieldEnter(player, battlefield)
     local bfID = battlefield:getArea()
     if player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_TORRENTS[bfID]):setLocalVar("Immunity", 1)
@@ -64,6 +48,22 @@ function onBattlefieldEnter(player, battlefield)
     end
 end
 
+function onBattlefieldEnter(player, battlefield)
+    player:setTP(0)
+
+    local sapsCollected =
+    (player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL)     and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)     and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)       and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL)      and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)      and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)     and 1 or 0) +
+    (player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL)      and 1 or 0)
+
+    player:setCharVar("sapsCollected", sapsCollected)
+end
+
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then -- play end CS. Need time and battle id for record keeping + storage
         local now = tonumber(os.date("%j"))
@@ -71,8 +71,8 @@ function onBattlefieldLeave(player, battlefield, leavecode)
 
         player:addExp(700)
 
-        if player:getCharVar("ASA_BCNM") == 1 then
-            player:setCharVar("ASA_BCNM", 0)
+        if player:getCharVar("sapsCollected") >= 1 then
+            player:setCharVar("sapsCollected", 0)
             if not player:hasKeyItem(tpz.ki.CHOCOBO_KEY) and now ~= lastChocobo and player:getCurrentMission(ASA) >= tpz.mission.id.asa.BATTARU_ROYALE then
                 player:setCharVar("LastChocoboKey", os.date("%j"))
                 player:addKeyItem(tpz.ki.CHOCOBO_KEY)
@@ -84,9 +84,18 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         local arg8 = player:hasCompletedMission(ASA, tpz.mission.id.asa.BATTARU_ROYALE) and 1 or 0
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
-        player:setCharVar("ASA_BCNM", 0)
+        player:setCharVar("sapsCollected", 0)
         player:startEvent(32002)
     end
+
+    player:delKeyItem(tpz.ki.WATER_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.ICE_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.WIND_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)
+    player:delKeyItem(tpz.ki.DARK_SAP_CRYSTAL)
 end
 
 function onEventUpdate(player, csid, option)
