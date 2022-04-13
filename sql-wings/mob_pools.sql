@@ -790,7 +790,7 @@ INSERT INTO `mob_pools` VALUES(726, 'Chuglix_Berrypaws', 'Chuglix_Berrypaws', 13
 INSERT INTO `mob_pools` VALUES(727, 'Cinderwing', 'Cinderwing', 55, _binary 0x0000bc0100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 55);
 INSERT INTO `mob_pools` VALUES(728, 'Cinnamon_Custard', 'Cinnamon_Custard', 112, _binary 0x0000080700000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 133, 4, 0, 2, 0, 0, 5011);
 INSERT INTO `mob_pools` VALUES(729, 'Cirein-croin', 'Cirein-croin', 191, _binary 0x0000c20600000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 889);
-INSERT INTO `mob_pools` VALUES(730, 'Cirrate_Christelle', 'Cirrate_Christelle', 186, _binary 0x00007c0100000000000000000000000000000000, 12, 12, 7, 200, 100, 0, 1, 1, 1, 2, 0, 32, 7, 1695, 8, 0, 0, 0, 0, 5019);
+INSERT INTO `mob_pools` VALUES(730, 'Cirrate_Christelle', 'Cirrate_Christelle', 186, _binary 0x00007c0100000000000000000000000000000000, 12, 12, 7, 200, 100, 0, 0, 1, 1, 2, 0, 32, 7, 1695, 8, 0, 0, 0, 0, 5019);
 INSERT INTO `mob_pools` VALUES(731, 'Citadel_Bats', 'Citadel_Bats', 47, _binary 0x0000040100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 0, 0, 64, 185, 643, 0, 0, 0, 0, 0, 47);
 INSERT INTO `mob_pools` VALUES(732, 'Citadel_Chelonian', 'Citadel_Chelonian', 2, _binary 0x0000910100000000000000000000000000000000, 1, 1, 7, 380, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 2);
 INSERT INTO `mob_pools` VALUES(733, 'Citipati', 'Citipati', 74, _binary 0x0000530500000000000000000000000000000000, 4, 5, 12, 290, 100, 0, 1, 0, 1, 2, 0, 32, 562, 157, 0, 0, 80, 0, 0, 74);
