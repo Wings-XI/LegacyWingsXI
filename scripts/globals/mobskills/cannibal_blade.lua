@@ -15,7 +15,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local damage = math.random(60,120) + mob:getMainLvl() * 3
     
-    damage = target:physicalDmgTaken(damage, tpz.damageType.SLASHING)
+    damage = target:physicalDmgTaken(target, damage, tpz.damageType.SLASHING)
     damage = damage * target:getMod(tpz.mod.SLASHRES) / 1000
     
     if mob:checkDistance(target) > 7 then
