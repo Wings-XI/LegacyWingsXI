@@ -28,72 +28,18 @@ function onMobDeath(mob, player, isKiller)
         local pos = mob:getPos()
         sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
         sjQM:setStatus(tpz.status.NORMAL)
-        if GetMobByID(16937015):isAlive() then
-            DespawnMob(16937015)
-        end
-        if GetMobByID(16937016):isAlive() then
-            DespawnMob(16937016)
-        end
-        if GetMobByID(16937017):isAlive() then
-            DespawnMob(16937017)
-        end
-        if GetMobByID(16937018):isAlive() then
-            DespawnMob(16937018)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
     -- If Nightmare Fly 2 was last alive:
     elseif GetMobByID(zoneID.mobs.Nightmare_Fly_1):getStatus() == 2 and GetMobByID(zoneID.mobs.Nightmare_Fly_3):getStatus() == 2 then
         local sjQM = GetNPCByID(16937585)
         local pos = mob:getPos()
         sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
         sjQM:setStatus(tpz.status.NORMAL)
-        if GetMobByID(16937015):isAlive() then
-            DespawnMob(16937015)
-        end
-        if GetMobByID(16937016):isAlive() then
-            DespawnMob(16937016)
-        end
-        if GetMobByID(16937017):isAlive() then
-            DespawnMob(16937017)
-        end
-        if GetMobByID(16937018):isAlive() then
-            DespawnMob(16937018)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
     -- If Nightmare Fly 3 was last alive:
     elseif GetMobByID(zoneID.mobs.Nightmare_Fly_2):getStatus() == 2 and GetMobByID(zoneID.mobs.Nightmare_Fly_1):getStatus() == 2 then
         local sjQM = GetNPCByID(16937585)
         local pos = mob:getPos()
         sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
         sjQM:setStatus(tpz.status.NORMAL)
-        if GetMobByID(16937015):isAlive() then
-            DespawnMob(16937015)
-        end
-        if GetMobByID(16937016):isAlive() then
-            DespawnMob(16937016)
-        end
-        if GetMobByID(16937017):isAlive() then
-            DespawnMob(16937017)
-        end
-        if GetMobByID(16937018):isAlive() then
-            DespawnMob(16937018)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
-        if GetMobByID(16937019):isAlive() then
-            DespawnMob(16937019)
-        end
     end
 
 end
