@@ -138,7 +138,7 @@ dynamis.entryInfo =
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
-        enabled = true,
+        enabled = false,
         winVar = "DynaValkurm_Win",
         hasEnteredVar = "DynaValkurm_HasEntered",
         hasSeenWinCSVar = "DynaValkurm_HasSeenWinCS",
@@ -997,6 +997,7 @@ dynamis.setNMStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(tpz.MOBTYPE_NOTORIOUS)
     mob:setMaxHPP(132)
     mob:setMobLevel(math.random(80,82))
     mob:setMod(tpz.mod.STR, -15)
@@ -1018,6 +1019,7 @@ dynamis.setStatueStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(tpz.MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
@@ -1038,6 +1040,7 @@ dynamis.setMegaBossStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(tpz.MOBTYPE_NOTORIOUS)
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
     mob:setTrueDetection(1)
@@ -1077,6 +1080,7 @@ dynamis.setEyeStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(tpz.MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.DEF, 420)
     mob:addMod(tpz.mod.MDEF, 150)
