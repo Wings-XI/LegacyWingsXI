@@ -1428,11 +1428,14 @@ INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 231, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 58, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 254, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 253, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 361, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 232, 1, 255); -- Bio III
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255); -- Drain
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255); -- Aspir 
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 260, 1, 255); -- Dispel
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 361, 1, 255); -- Blindga
 -- Oupire Spell List (Non-Elemental)
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 227, 1, 255); -- Poisonga III
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 360, 1, 255); -- Dispelga
