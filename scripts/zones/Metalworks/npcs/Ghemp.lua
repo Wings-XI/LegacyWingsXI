@@ -92,6 +92,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 4096) -- Fire Crystal
             signupGuild(player, guild.smithing)
         end
+    elseif (csid == 101 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("SmithingTraded") == 1 then
             player:tradeComplete()
