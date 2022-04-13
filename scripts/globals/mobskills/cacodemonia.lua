@@ -13,6 +13,9 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    if target:hasStatusEffect(tpz.effect.CURSE_I) then
+        return 1
+    end
     return 0
 end
 
