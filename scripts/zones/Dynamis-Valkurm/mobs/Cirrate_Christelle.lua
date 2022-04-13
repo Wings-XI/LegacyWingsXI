@@ -17,7 +17,7 @@ function onMobSpawn(mob)
     dynamis.setMegaBossStats(mob)
 
     -- Set Mods
-    mob:setMod(tpz.mod.MOVE, 100)
+    mob:speed(140)
     mob:addMod(tpz.mod.REGAIN, 1250)
     mob:SetAutoAttackEnabled(false)
     
@@ -74,7 +74,7 @@ function onMobFight(mob)
         mob:setLocalVar("putridbreathcap", 500)
     end
     if GetMobByID(ID.mobs.Fairy_Ring):getStatus() == 2 then
-        mob:setMod(tpz.mod.MOVE, 40)
+        mob:speed(40)
         mob:setLocalVar("miasmicbreathpower", 30)
     end
     if GetMobByID(ID.mobs.Nantina):getStatus() == 2 then
@@ -83,6 +83,8 @@ function onMobFight(mob)
     if GetMobByID(ID.mobs.Stcemqestcint):getStatus() == 2 then
         mob:setLocalVar("vampiriclashpower", 1)
     end
+
+    
 
 end
 
