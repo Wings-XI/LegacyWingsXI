@@ -20,7 +20,8 @@ end
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
         local name, clearTime, partySize = battlefield:getRecord()
-        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), 0)
+        local arg8 = (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_COMPLETED) and 1 or 0
+        player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002)
     end
@@ -37,6 +38,6 @@ function onEventFinish(player, csid, option)
             player:startEvent(7)
         end
     elseif csid == 7 then
-        player:setPos(-.0745,-10,-465.1132,63,33)
+        player:setPos(-0.004, -10, -465.053, 64, 33)
     end
 end
