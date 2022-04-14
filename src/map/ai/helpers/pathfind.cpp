@@ -253,30 +253,36 @@ void CPathFind::FollowPath()
     if (!IsFollowingPath()) return;
 
     m_onPoint = false;
-
-    // move mob to next point
     position_t& targetPoint = m_points[m_currentPoint];
-
-    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
 
     if (m_maxDistance && m_distanceMoved >= m_maxDistance)
     {
         // if I have a max distance, check to stop me
         Clear();
+        m_onPoint = true;
+        return;
+    }
+
+    // Iterate over points in the current path and find the first point
+    // that we haven't successfully arrived at already.
+    while (m_currentPoint < (int16)m_points.size())
+    {
+        targetPoint = m_points[m_currentPoint];
+        
+        if (AtPoint(targetPoint))
+            m_currentPoint++;
+        else
+            break;
 
         m_onPoint = true;
     }
-    else if (AtPoint(targetPoint))
+
+    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
+    
+    if (m_currentPoint >= (int16)m_points.size())
     {
-        m_currentPoint++;
-
-        if (m_currentPoint >= (int16)m_points.size())
-        {
-            FinishedPath();
-        }
-
+        FinishedPath();
         m_onPoint = true;
-        //#event onPoint event
     }
 }
 
