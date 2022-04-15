@@ -2,7 +2,7 @@
  *	@file WorldManager.h
  *	Manages world list and MQ connections to world servers
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_LOGIN_WORLDMANAGER_H
@@ -233,7 +233,7 @@ private:
     bool mbWorldListLoaded = false;
     /// Character handler for dealing with incoming MQ messages
     std::shared_ptr<CharMessageHnd> mCharHandler;
-    
+
     /// Current singleton object
     static WorldManagerPtr smpSingletonObj;
     /// Current object is already being destroyed

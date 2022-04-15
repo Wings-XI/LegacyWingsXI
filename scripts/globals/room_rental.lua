@@ -3,7 +3,7 @@
 -- Initial version by Caelic             --
 -- Complete rewrite by Twilight          --
 -- (c) 2021 Wings Open Source Project.   --
--- Licensed under AGPLv3                 --
+-- Licensed under GPLv3                 --
 -------------------------------------------
 
 function rrGetPartyMemberByID(player, memberid)
@@ -34,31 +34,31 @@ function rrIsInSameTown(from, to)
             return true
         end
     end
-    
+
     if from == 48 or from == 50 then -- WG
         if to == 48 or to == 50 then
             return true
         end
     end
-    
+
     if from == 234 or from == 235 or from == 236 then -- bastok
         if to == 234 or to == 235 or to == 236 then
             return true
         end
     end
-    
+
     if from == 230 or from == 231 or from == 232 then -- sandy
         if to == 230 or to == 231 or to == 232 then
             return true
         end
     end
-    
+
     if from == 238 or from == 239 or from == 240 or from == 241 then -- windy
         if to == 238 or to == 239 or to == 240 or to == 241 then
             return true
         end
     end
-    
+
     return false
 end
 
@@ -67,19 +67,19 @@ function rrTryMoveToOpenMH(player, residentid)
     if residentid == nil or residentid < 1 or residentid > 0xFFFF then
         return
     end
-    
+
     local residentplayer = rrGetPartyMemberByID(player, residentid)
     if residentplayer == nil or residentplayer:getID() == player:getID() then
         return
     end
-    
+
     local residentname = residentplayer:getName()
     if residentplayer:getOpenMH() == false or residentplayer:isInMogHouse() == false or rrIsInSameTown(player:getZoneID(),residentplayer:getZoneID()) == false then
         return
     end
-    
+
     player:gotoPlayer(residentname)
-    
+
     return
 end
 

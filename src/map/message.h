@@ -42,7 +42,7 @@ namespace message
     /**
      *  Message handler of the new RabbitMQ-based messages
      *  @author Twilight
-     *  @license AGPLv3
+     *  @license GPLv3
      */
     class MapMQHandler : public MQHandler
     {

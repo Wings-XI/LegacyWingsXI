@@ -1,9 +1,9 @@
 # Wings Project
 
 ### License Notice
-**Original contributions to the Wings project (i.e. not originating from the Darkstar project or Project Topaz) are governed by the GNU AGPLv3 (rather than GPL), which requires modified versions to be shared back, unless marked as dual-licensed by their respective authors. See the [LICENSE](LICENSE) file for more details.**
+**Original contributions to the Wings project (i.e. not originating from the Darkstar project or Project Topaz) are governed by the GNU GPLv3 (rather than GPL), which requires modified versions to be shared back, unless marked as dual-licensed by their respective authors. See the [LICENSE](LICENSE) file for more details.**
 
-**The new login server (src/new-login and src/new-common) is not based on Topaz and is entirely under AGPLv3.
+**The new login server (src/new-login and src/new-common) is not based on Topaz and is entirely under GPLv3.
 
 ## Welcome to the Wings Project
 The Wing project is a server emulator for FFXI, aiming to reproduce the game experience as it was in March 2010.

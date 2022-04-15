@@ -2,7 +2,7 @@
  *	@file ViewHandler.h
  *	Implementation of the view protocol
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #include <mariadb++/connection.hpp>
@@ -66,7 +66,7 @@ void ViewHandler::Run()
                 if (mpSession != NULL) {
                     mpSession->SetLastPacketNow();
                 }
-                
+
                 pPacketHeader = reinterpret_cast<FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER*>(pRawData.get());
                 pPayloadData = pRawData.get() + sizeof(FFXILoginPacket::FFXI_LOGIN_PACKET_HEADER);
 
@@ -241,7 +241,7 @@ void ViewHandler::CheckVersionAndSendFeatures(const uint8_t* pRequestPacket)
     mpSession->SetClientVersion(strClientVersion);
     // Pull features and expansions bitmask from DB
     std::string strSqlQueryFmt("SELECT expansions, features FROM %saccounts WHERE id=%d;");
-    std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt, 
+    std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
         Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
         mpSession->GetAccountID()));
     mariadb::result_set_ref pResultSet = DB->query(strSqlFinalQuery);

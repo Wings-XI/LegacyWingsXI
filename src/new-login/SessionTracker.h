@@ -2,7 +2,7 @@
  *	@file SessionTracker.h
  *	Keeps track of open sessions, allows cross referencing between protocols
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_LOGIN_SESSIONTRACKER_H

@@ -31,7 +31,7 @@ with additional improvements, but kept privately as an "edge" over others,
 including the original developer of the feature.
 
   For these reasons, Project Topaz instead intends to be licensed primarily 
-under the terms of the GNU Affero General Public License Version 3, which 
+under the terms of the GNU  General Public License Version 3, which 
 stipulates that use of a Program over a network qualifies as distribution, 
 and that the source code of the modified Program needs to be offered to
 users interacting with the Program.
@@ -45,9 +45,9 @@ entire server source code were available to public view.
 
   To both provide special exemptions in those cases, and to account for 
 source code that we have have combined from Darkstar Project which is 
-licensed under GPLv3 (that we can not relicense as AGPLv3), Project 
+licensed under GPLv3 (that we can not relicense as GPLv3), Project 
 Topaz releases its source code under this special license. This license 
-states which of the two GNU licenses, GPLv3 or AGPLv3, pertain to
+states which of the two GNU licenses, GPLv3 or GPLv3, pertain to
 which parts of this combined source code. The license also grants, for 
 source code which is the work of Project Topaz, select Additional 
 Permissions to give server operators additional freedoms, and to 
@@ -67,9 +67,9 @@ Public License. A copy should have been included in the source code you
 have received in a file named "GPL3". If not, you may find a copy online 
 at <http://www.gnu.org/licenses/>.
 
-  "GNU AGPLv3", "AGPLv3", and "AGPL" refer to version 3 of the GNU Affero 
+  "GNU GPLv3", "GPLv3", and "GPLv3" refer to version 3 of the GNU  
 General Public License. A copy should have been included in the source code 
-you have received in a file named "AGPL3". If not, you may find a copy 
+you have received in a file named "GPLv33". If not, you may find a copy 
 online at <http://www.gnu.org/licenses/>.
 
   The terms "Copyright", "Program", "modify", and "convey" are as defined 
@@ -145,7 +145,7 @@ to view this information on our GitHub repository.
   2. Basic License Terms.
 
   Project Topaz is a combined work of source code licensed under
-both the GPLv3, and the AGPLv3 with Additional Terms we are adding 
+both the GPLv3, and the GPLv3 with Additional Terms we are adding 
 through Section 7 Additional Terms of both licenses. These Additional 
 Terms are defined later in this license document.
 
@@ -159,32 +159,32 @@ to these files. These will be declared in the license header at
 the top of the file.
 
   Additionally, any source code files which are not clearly marked 
-as being governed by the AGPLv3 may be assumed to be governed 
+as being governed by the GPLv3 may be assumed to be governed 
 by the GPLv3.
 
-  Portions of Project Topaz which are governed by the AGPLv3 will 
+  Portions of Project Topaz which are governed by the GPLv3 will 
 be clearly marked at the top of all relevant source code files. 
 When such declared, there are additional terms applied to these 
-source files which supplement the AGPLv3. These additional terms 
+source files which supplement the GPLv3. These additional terms 
 are defined later in this license document.
 
   Your rights to use, modify, and distribute source code are governed 
 by the license which the original work was licensed under. However, 
-per Section 13 of both the GPLv3 and the AGPLv3, all modifications 
+per Section 13 of both the GPLv3 and the GPLv3, all modifications 
 you make to this Program, or works you combine with this Program, 
-are subject to the requirements of the AGPLv3 concerning interaction 
+are subject to the requirements of the GPLv3 concerning interaction 
 through a network.
 
   3. Additional Terms.
 
-  Through Section 7, Additional Terms of the AGPLv3, we are adding
+  Through Section 7, Additional Terms of the GPLv3, we are adding
 the following additional terms to our material:
 
     a) ADDITIONAL PERMISSIONS.
-    For all of our material which is governed by the AGPLv3, 
+    For all of our material which is governed by the GPLv3, 
     Project Topaz grants you an additional permission exempting 
     you from being bound by Section 13 Remote Network Interaction 
-    of the AGPLv3, for modifications you make to the Program, if 
+    of the GPLv3, for modifications you make to the Program, if 
     the modification is:
 
       i. Necessary for the basic operation of a private server. 
@@ -246,7 +246,7 @@ the following additional terms to our material:
 These new versions will be similar in spirit, but may differ to address 
 new problems or concerns with the project by modifying the additional
 permissions we grant to you, or modify the restrictions imposed on you,  
-to the extent allowed under AGPLv3 Section 7, Additional Terms.
+to the extent allowed under GPLv3 Section 7, Additional Terms.
 
   The license for which you may use the Program is the one you 
 received along with a copy of this source code, or at your option, 

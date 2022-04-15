@@ -470,7 +470,7 @@ void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
                 {
                     if (Sql_GetIntData(SqlHandle, 0) != 0)
-                        fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);    
+                        fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);
                 }
             }
             else
@@ -1466,7 +1466,7 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
             return;
         }
-        
+
         // If either player is crafting, don't allow the trade request
         if (PChar->animation == ANIMATION_SYNTH || PTarget->animation == ANIMATION_SYNTH)
         {
@@ -2988,7 +2988,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                             PChar->AuctionPlayerContainer->m_page = 1;
                     }
                 }
-                
+
             }
             else
             {
@@ -5300,7 +5300,7 @@ void SmallPacket0x0B6(map_session_data_t* const PSession, CCharEntity* const PCh
     int8 packetData[64];
     strncpy((char*)packetData + 4, RecipientName.c_str(), RecipientName.length() + 1);
     ref<uint32>(packetData, 0) = PChar->id;
-    
+
     CChatMessagePacket* NewMessage = new CChatMessagePacket(PChar, MESSAGE_TELL, MessageContent);
     if (map_config.audit_chat == 1 && ((map_config.audit_tell == 1) || (PChar->m_logChat)))
     {
@@ -6013,7 +6013,7 @@ void SmallPacket0x0DE(map_session_data_t* const PSession, CCharEntity* const PCh
 /************************************************************************
  *                                                                       *
  *  Set Search Message                                                   *
- *  All code (other than documentation) (c) Wings, under AGPLv3          *
+ *  All code (other than documentation) (c) Wings, under GPLv3          *
  *                                                                       *
  ************************************************************************/
 
@@ -7588,7 +7588,7 @@ void SmallPacket0x117(map_session_data_t* const PSession, CCharEntity* const PCh
  *                                                                       *
  *  Jump (/jump)                                                         *
 *  (c) Wings Project                                                    *
-*  Note - CCharJumpPacket is AGPLv3 licensed.                           *
+*  Note - CCharJumpPacket is GPLv3 licensed.                           *
  *                                                                       *
  ************************************************************************/
 

@@ -22,7 +22,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 Mentor and Search Comment functions and logic
 Copyright (c) 2021 Wings Open Source Project
-Distributed under AGPLv3. See LICENSE FILE.
+Distributed under GPLv3. See LICENSE FILE.
 
 ===========================================================================
 */

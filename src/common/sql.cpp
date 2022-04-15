@@ -70,7 +70,7 @@ Sql_t* Sql_Malloc(void)
 /************************************************************************
 *																		*
 *  Sets up SSL connection to the database.  							*
-*  This function is (c) Wings project, licensed under AGPLv3            *
+*  This function is (c) Wings project, licensed under GPLv3            *
 *																		*
 ************************************************************************/
 
@@ -87,7 +87,7 @@ int Sql_SSL(Sql_t* self, bool enable, bool verify_peer, const char* ca_file, con
     if (self == NULL) {
         return SQL_ERROR;
     }
-    
+
     if ((ca_file != NULL) && (ca_file[0] == '\0')) {
         ca_file = NULL;
     }
@@ -107,7 +107,7 @@ int Sql_SSL(Sql_t* self, bool enable, bool verify_peer, const char* ca_file, con
         ShowSQL("%s\n", mysql_error(&self->handle));
         return SQL_ERROR;
     }
-    
+
     if (mysql_ssl_set(&self->handle, key_file, cert_file, ca_file, NULL, NULL) == SQL_ERROR) {
         ShowSQL("%s\n", mysql_error(&self->handle));
         return SQL_ERROR;
