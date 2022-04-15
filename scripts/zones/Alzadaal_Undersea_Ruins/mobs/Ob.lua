@@ -22,15 +22,13 @@ local function overloadRageDisengage(mob)
         mob:delMod(tpz.mod.MAIN_DMG_RATING, 75)
         mob:delMod(tpz.mod.CRITHITRATE, 30)
         mob:delMod(tpz.mod.MEVA, 500)
-        mob:delMod(tpz.mod.LULLABYRESTRAIT, 100)
-        mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
-        mob:delMod(tpz.mod.BINDRESTRAIT, 100)
-        mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
+        mob:delMod(tpz.mod.BINDRES, 100)
+        mob:delMod(tpz.mod.GRAVITYRES, 100)
         mob:delMod(tpz.mod.MOVE, 200)
 
-        -- intense regain, uses TP moves at will when raged
-        mob:delMod(tpz.mod.REGAIN, 2000)
-        
+        -- per capture, will tp quickly, but its not chain tp at 70%+ hp
+        mob:delMod(tpz.mod.REGAIN, 700)
+
     end
 end
 
@@ -43,14 +41,12 @@ local function overloadRageEngage(mob)
     mob:addMod(tpz.mod.MAIN_DMG_RATING, 75)
     mob:addMod(tpz.mod.CRITHITRATE, 30)
     mob:addMod(tpz.mod.MEVA, 500)
-    mob:addMod(tpz.mod.LULLABYRESTRAIT, 100)
-    mob:addMod(tpz.mod.SLEEPRESTRAIT, 100)
-    mob:addMod(tpz.mod.BINDRESTRAIT, 100)
-    mob:addMod(tpz.mod.GRAVITYRESTRAIT, 100)
+    mob:addMod(tpz.mod.BINDRES, 100)
+    mob:addMod(tpz.mod.GRAVITYRES, 100)
     mob:addMod(tpz.mod.MOVE, 200)
 
-    -- intense regain, uses TP moves at will when raged
-    mob:addMod(tpz.mod.REGAIN, 2000)
+    -- per capture, will tp quickly, but its not chain tp at 70%+ hp
+    mob:addMod(tpz.mod.REGAIN, 700)
 end
 
 local function changeToValoredge(mob, percent)
@@ -99,7 +95,7 @@ local function changeToSharpshot(mob)
     if(mob:getLocalVar("CurrentFrame") == sharpshotFrameModelId) then
         return
     end
-    
+
     mob:setLocalVar("CurrentFrame", sharpshotFrameModelId)
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
@@ -122,7 +118,7 @@ local function setupHarlequin(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -50)
     mob:setMod(tpz.mod.UDMGRANGE, -50)
     mob:setMod(tpz.mod.UDMGMAGIC, -50)
-    mob:setSpellList(525)
+    mob:setSpellList(536)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 35)
     mob:setMod(tpz.mod.UFASTCAST, 25)
     mob:setBehaviour(0) -- Standback disabled
@@ -139,6 +135,7 @@ local function scanForManeuvers(mob, target)
     local currentFrame = mob:getLocalVar("CurrentFrame")
 
     local overloadCount = 0
+    local largestOverloadDuration = 0
 
     local zoneID = mob:getZoneID()
     local enmityList = mob:getEnmityList()
@@ -162,7 +159,14 @@ local function scanForManeuvers(mob, target)
                 end
 
                 -- Catch overloads
-                overloadCount = overloadCount + member:countEffect(tpz.effect.OVERLOAD)
+                local overloadStatus = member:getStatusEffect(tpz.effect.OVERLOAD)
+                if (overloadStatus ~= nil) then
+                    overloadCount = overloadCount + 1
+                    local duration = overloadStatus:getDuration()
+                    if (duration > largestOverloadDuration) then
+                        largestOverloadDuration = duration
+                    end
+                end
             end
         end
     end
@@ -170,8 +174,8 @@ local function scanForManeuvers(mob, target)
     -- [rage]started is from rage.lua - we dont need to overload rage when actually raging
     if (overloadCount > 0 and mob:getLocalVar("OverloadRage") == 0 and mob:getLocalVar("[rage]started") == 0) then
          -- ya done goofed
-        mob:setLocalVar("OverloadRage", os.time() + math.random(45,180)) -- how long does Ob Rage for when a Puppetmaster screws up? 5mins?  I'm guessing here.
-        mob:useMobAbility(603) -- 603, 604, 624-627  -- 2 hour dust clouds - which does Ob use?
+        mob:setLocalVar("OverloadRage", os.time() + largestOverloadDuration) -- per capture, appears to match overload time on puppetmaster.
+        mob:useMobAbility(627) -- per capture
         overloadRageEngage(mob)
     end
 
@@ -203,12 +207,12 @@ end
 
 function onMobEngaged(mob, target)
     scanForManeuvers(mob, target)
-    mob:setLocalVar("ScanTime", os.time() + 15)
+    mob:setLocalVar("ScanTime", os.time() + 5)
 end
 
 function onMobFight(mob, target)
     if (os.time() > mob:getLocalVar("ScanTime")) then
-        mob:setLocalVar("ScanTime", os.time() + 15)
+        mob:setLocalVar("ScanTime", os.time() + 5)
         scanForManeuvers(mob, target)
     end
 
@@ -228,6 +232,8 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
     setupHarlequin(mob)
 end
 

@@ -39,6 +39,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
 #include "utils/fishingutils.h"
+#include "utils/fellowutils.h"
 #include "utils/gardenutils.h"
 #include "utils/guildutils.h"
 #include "utils/instanceutils.h"
@@ -49,6 +50,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packet_guard.h"
 #include "packet_system.h"
 #include "party.h"
+#include "utils/mobutils.h"
 #include "utils/petutils.h"
 #include "utils/trustutils.h"
 #include "roe.h"
@@ -364,6 +366,7 @@ int32 do_init(int32 argc, char** argv)
     battleutils::LoadMobSkillsList();
     battleutils::LoadSkillChainDamageModifiers();
     petutils::LoadPetList();
+    fellowutils::LoadFellowList();
     trustutils::LoadTrustList();
     mobutils::LoadCustomMods();
     daily::LoadDailyItems();
@@ -375,6 +378,7 @@ int32 do_init(int32 argc, char** argv)
     ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
 
     fishingutils::LoadFishingMessages();
+    fellowutils::LoadFellowMessages();
 
     ShowStatus("do_init: server is binding with port %u", map_port == 0 ? map_config.usMapPort : map_port);
     map_fd = makeBind_udp(map_config.uiMapIp, map_port == 0 ? map_config.usMapPort : map_port);
@@ -2787,6 +2791,7 @@ int32 map_config_default()
     map_config.storage_ignore_features = false;
     map_config.force_enable_mog_locker = false;
     map_config.log_gil_period = 0;
+    map_config.adventuring_fellow_dualwield = true;
     return 0;
 }
 
@@ -3383,6 +3388,10 @@ int32 map_config_read(const int8* cfgName)
             else if (strcmp(w1, "log_gil_period") == 0)
             {
                 map_config.log_gil_period = atoi(w2);
+            }
+            else if (strcmp(w1, "adventuring_fellow_dualwield") == 0)
+            {
+                map_config.adventuring_fellow_dualwield = atoi(w2);
             }
             else
             {

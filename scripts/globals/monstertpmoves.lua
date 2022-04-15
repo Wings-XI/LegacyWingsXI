@@ -742,7 +742,10 @@ function MobDrainStatusEffectMove(mob, target)
 end
 
 -- Adds a status effect to a target
-function MobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
+function MobStatusEffectMove(mob, target, typeEffect, power, tick, duration, subEffect, subPower)
+
+    subEffect = subEffect or 0
+    subPower = subPower or 0
 
     if (target:canGainStatusEffect(typeEffect, power)) then
         local statmod = tpz.mod.INT
@@ -753,7 +756,7 @@ function MobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
         if (resist >= 0.25) then
 
             local totalDuration = utils.clamp(duration * resist, 1)
-            target:addStatusEffect(typeEffect, power, tick, totalDuration)
+            target:addStatusEffect(typeEffect, power, tick, totalDuration, subEffect, subPower)
 
             return tpz.msg.basic.SKILL_ENFEEB_IS
         end

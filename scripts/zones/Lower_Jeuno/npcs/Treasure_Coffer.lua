@@ -105,37 +105,37 @@ local optionToAugment =
     },
     [3] = -- ASA
     {
-        [ 1] = {}, -- HP+25 Enmity+4
-        [ 2] = {}, -- MP+25 Enmity-4
-        [ 3] = {}, -- Attack+7
-        [ 4] = {}, -- Accuracy+7
-        [ 5] = {}, -- Ranged Accuracy+7
-        [ 6] = {}, -- Ranged Attack+7
-        [ 7] = {}, -- Evasion+7
-        [ 8] = {}, -- Magic Accuracy+4
-        [ 9] = {}, -- "Magic Atk. Bonus" +4
-        [10] = {}, -- Haste +3%
-        [11] = {}, -- "Double Attack" +2%
-        [12] = {}, -- Increases Critical Hit Damage +3%
-        [13] = {}, -- Skillchain damage +5%
-        [14] = {}, -- "Conserve TP"+5
-        [15] = {}, -- Physical damage taken -4%
-        [16] = {}, -- Magic Critical Hit damage +10%
-        [17] = {}, -- Magic Burst damage +10%
-        [18] = {}, -- "Kick Attacks" +5
-        [19] = {}, -- "Cure" potency +5%
-        [20] = {}, -- "Sic" & "Ready" ability delay -5
-        [21] = {}, -- Song Recast Delay -3
-        [22] = {}, -- "Barrage" +1
-        [23] = {}, -- "Elemental Siphon" +20
-        [24] = {}, -- "Phantom Roll" ability delay -5
-        [25] = {}, -- "Repair" potency +10%
-        [26] = {}, -- "Waltz" TP cost -5*
-        [27] = {}, -- Pet: Accuracy +7 Ranged Accuracy +7
-        [28] = {}, -- Pet: Attack +7 Ranged Attack +7
-        [29] = {}, -- Pet: "Store TP" +8 "Subtle Blow" +8
-        [30] = {}, -- Pet: Magic Accuracy +7
-        [31] = {}, -- Movement Speed +8% 	
+        [ 1] = {{augment =    1, power = 24}, {augment = 39, power =  3}}, -- HP+25 Enmity+4
+        [ 2] = {{augment =    9, power = 24}, {augment = 40, power =  3}}, -- MP+25 Enmity-4
+        [ 3] = {{augment =   23, power =  6}}, -- Attack+7
+        [ 4] = {{augment =   25, power =  6}}, -- Accuracy+7
+        [ 5] = {{augment =   27, power =  6}}, -- Ranged Accuracy+7
+        [ 6] = {{augment =   29, power =  6}}, -- Ranged Attack+7
+        [ 7] = {{augment =   31, power =  6}}, -- Evasion+7
+        [ 8] = {{augment =   35, power =  3}}, -- Magic Accuracy+4
+        [ 9] = {{augment =  133, power =  3}}, -- "Magic Atk. Bonus" +4
+        [10] = {{augment =   49, power =  2}}, -- Haste +3%
+        [11] = {{augment =  143, power =  1}}, -- "Double Attack" +2%
+        [12] = {{augment =  328, power =  2}}, -- Increases Critical Hit Damage +3%
+        [13] = {{augment =  332, power =  4}}, -- Skillchain damage +5%
+        [14] = {{augment =  333, power =  4}}, -- "Conserve TP"+5
+        [15] = {{augment =   54, power =  3}}, -- Physical damage taken -4%
+        [16] = {{augment =  335, power =  9}}, -- Magic Critical Hit damage +10%
+        [17] = {{augment =  334, power =  9}}, -- Magic Burst damage +10%
+        [18] = {{augment =  194, power =  4}}, -- "Kick Attacks" +5
+        [19] = {{augment =  329, power =  4}}, -- "Cure" potency +5%
+        [20] = {{augment =  336, power =  4}}, -- "Sic" & "Ready" ability delay -5
+        [21] = {{augment =  337, power =  2}}, -- Song Recast Delay -3
+        [22] = {{augment =  338, power =  0}}, -- "Barrage" +1
+        [23] = {{augment =  339, power = 19}}, -- "Elemental Siphon" +20
+        [24] = {{augment =  340, power =  4}}, -- "Phantom Roll" ability delay -5
+        [25] = {{augment =  341, power =  9}}, -- "Repair" potency +10%
+        [26] = {{augment =  342, power =  1}}, -- "Waltz" TP cost -20
+        [27] = {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
+        [28] = {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
+        [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
+        [30] = {{augment =  128, power =  6}}, -- Pet: Magic Accuracy +7
+        [31] = {{augment =  913, power =  2}}, -- Movement Speed +8%
     },
 }
 
@@ -436,19 +436,19 @@ local prizes =
     },
     [tpz.ki.MOOGLE_KEY] =
     {
-        {cutoff =  167, itemId = 12442}, -- Studded Bandana
-        {cutoff =  374, itemId = 13209}, -- Chain Belt
-        {cutoff =  707, itemId = 13083}, -- Chain Choker
+        {cutoff =  167, itemId = 12442, augments = {{23, 0,  0}, {769, 0, 1}                         }}, -- Studded Bandana
+        {cutoff =  374, itemId = 13209, augments = {{ 9, 0,  3}, {551, 0, 0}, {770, 0, 0}            }}, -- Chain Belt
+        {cutoff =  707, itemId = 13083, augments = {{ 9, 0, 11}, {775, 0, 2}, { 40, 0, 0}, {53, 0, 0}}}, -- Chain Choker
         {cutoff =  874, itemId =  4751}, -- Scroll of Erase
         {cutoff = 1041, itemId =   653}, -- Mythril Ingot
         {cutoff = 1100, itemId =   744}, -- Silver Ingot
     },
     [tpz.ki.BIRD_KEY] =
     {
-        {cutoff = 143, itemId = 12987}, -- Ebony Sabots
-        {cutoff = 393, itemId = 13783}, -- Iron Scale Mail
-        {cutoff = 536, itemId = 12293}, -- Oak Shield
-        {cutoff = 653, itemId = 13200}, -- Waistbelt
+        {cutoff = 143, itemId = 12987, augments = {{ 39, 0, 3}, {774, 0, 2}, { 53, 0, 2}, { 35, 0, 0}, { 9, 0, 1}, {518, 0, 0}}}, -- Ebony Sabots
+        {cutoff = 393, itemId = 13783, augments = {{  1, 0, 9}, { 51, 0, 2}, {512, 0, 1}, {520, 0, 3}, {25, 0, 5}, { 97, 0, 2}}}, -- Iron Scale Mail
+        {cutoff = 536, itemId = 12293, augments = {{  9, 0, 3}, {768, 0, 3}, { 35, 0, 0}, {329, 0, 0}, {96, 0, 2}, {521, 0, 0}}}, -- Oak Shield
+        {cutoff = 653, itemId = 13200, augments = {{188, 0, 1}, {185, 0, 0}, {512, 0, 0}, { 25, 0, 3}, {32, 0, 5}             }}, -- Waistbelt
         {cutoff = 663, itemId =   793}, -- Black Pearl
         {cutoff = 678, itemId =   770}, -- Blue Rock
         {cutoff = 770, itemId =  4145}, -- Elixir
@@ -467,10 +467,10 @@ local prizes =
     },
     [tpz.ki.CACTUAR_KEY] =
     {
-        {cutoff = 109, itemId = 13111}, -- Nodowa
-        {cutoff = 196, itemId = 12604}, -- Silk Coat
-        {cutoff = 305, itemId = 13981}, -- Turtle Bangles
-        {cutoff = 370, itemId = 13711}, -- Carapace Mask
+        {cutoff = 109, itemId = 13111, augments = {{512, 0, 1}, {513, 0, 1}, { 50, 0, 3}, {  1, 0, 4}, {115, 0, 1}, {773, 0, 1}}}, -- Nodowa
+        {cutoff = 196, itemId = 12604, augments = {{516, 0, 3}, {517, 0, 3}, {518, 0, 3}, {110, 0, 0}, {179, 0, 1}, { 36, 0, 2}}}, -- Silk Coat
+        {cutoff = 305, itemId = 13981, augments = {{518, 0, 1}, {520, 0, 2}, { 25, 0, 2}, { 23, 0, 1}, {178, 0, 1}, {187, 0, 0}}}, -- Turtle Bangles
+        {cutoff = 370, itemId = 13711, augments = {{517, 0, 1}, {  1, 0, 5}, { 27, 0, 4}, { 30, 0, 3}, {770, 0, 4}             }}, -- Carapace Mask
         {cutoff = 435, itemId =  4132}, -- Hi-Ether
         {cutoff = 544, itemId =  4144}, -- Hi-Elixer
         {cutoff = 609, itemId =   645}, -- Darksteel Ore
@@ -488,19 +488,19 @@ local prizes =
     },
     [tpz.ki.BOMB_KEY] =
     {
-        {cutoff = 308, itemId = 12980}, -- Battle Boots
-        {cutoff = 462, itemId = 12860}, -- Silk Slops
-        {cutoff = 616, itemId = 13589}, -- Tiger Mantle
-        {cutoff = 693, itemId = 12427}, -- Bascinet
+        {cutoff = 308, itemId = 12980, augments = {{34, 0, 5}, {  9, 0, 10}, {141, 0, 2}, { 40, 0, 1}, {104, 0, 1}}}, -- Battle Boots
+        {cutoff = 462, itemId = 12860, augments = {{ 9, 0, 2}, {515, 0,  0}, {517, 0, 1}, { 29, 0, 2}, { 98, 0, 0}}}, -- Silk Slops
+        {cutoff = 616, itemId = 13589, augments = {{ 1, 0, 4}, {515, 0,  0}, { 31, 0, 0}, {769, 0, 1}, { 55, 0, 0}}}, -- Tiger Mantle
+        {cutoff = 693, itemId = 12427, augments = {{49, 0, 2}, { 24, 0,  0}, {180, 0, 0}, {100, 0, 0}             }}, -- Bascinet
         {cutoff = 747, itemId =  4144}, -- Hi-Elixer
         {cutoff = 824, itemId =   654}, -- Darksteel Ingot
         {cutoff = 901, itemId =   645}, -- Darksteel Ore
     },
     [tpz.ki.CHOCOBO_KEY] =
     {
-        {cutoff =  190, itemId = 16008}, -- Aptus Earring
-        {cutoff =  285, itemId = 16372}, -- Stearc Subligar
-        {cutoff =  571, itemId = 16295}, -- Varius Torque
+        {cutoff =  190, itemId = 16008, augments = {{34, 0, 5}, { 35, 0, 1}, {141, 0, 2}, {53, 0, 4}, {294, 0, 0}, {293, 0, 1}, {291, 0, 1}, {295, 0, 0}, {290, 0, 1}, {299, 0, 1}, {13, 0, 25}, {296, 0, 1}, {298, 0, 2}, {292, 0, 0}}}, -- Aptus Earring
+        {cutoff =  285, itemId = 16372, augments = {{44, 0, 2}, {188, 0, 3}, { 51, 0, 0}, { 1, 0, 7}, {774, 0, 6}, {783, 0, 5}                                                                                                        }}, -- Stearc Subligar
+        {cutoff =  571, itemId = 16295, augments = {{23, 0, 4}, { 25, 0, 4}, { 27, 0, 3}, {29, 0, 3}, {259, 0, 0}, {267, 0, 2}, {262, 0, 0}, {260, 0, 0}, {264, 0, 4}, {266, 0, 0}, {282, 0, 2}, {281, 0, 4}, {257, 0, 4}, {  5, 0,24}}}, -- Varius Torque
         {cutoff =  595, itemId =   823}, -- Gold Thread
         {cutoff =  643, itemId =  4134}, -- Hi-Ether +2
         {cutoff =  714, itemId =  4118}, -- Hi-Potion +2
@@ -515,8 +515,8 @@ local prizes =
     },
     [tpz.ki.TONBERRY_KEY] =
     {
-        {cutoff =  291, itemId = 15938}, -- Esprit Belt
-        {cutoff =  600, itemId = 15937}, -- Fettle Belt
+        {cutoff =  291, itemId = 15938, augments = {{516, 0, 5}, {517, 0,  4}, {518, 0, 4}, {35, 0, 3}, {39, 0, 2}, {53, 0, 2}}}, -- Esprit Belt
+        {cutoff =  600, itemId = 15937, augments = {{ 49, 0, 4}, {512, 0,  2}, {513, 0, 2}, {44, 0, 4}, {31, 0, 4}, {24, 0, 9}}}, -- Fettle Belt
         {cutoff =  636, itemId =   813}, -- Angelstone
         {cutoff =  654, itemId =   812}, -- Deathstone
         {cutoff =  690, itemId =   645}, -- Darksteel Ore
@@ -590,18 +590,33 @@ function scenarioArmor(player, option, giveToPlayer)
     local gear = 0
     local addon = 0
 
-    if giveToPlayer then
-        option = option - 8388615 -- extra bit passed when recieving armor
-    end
+    -- if giveToPlayer then
+    --     local selection = player:getCharVar("expansionSelect")
+    --     if selection == 1 then -- ACP
+    --         option = option - 8388615 -- extra bit passed when recieving armor
+    --     elseif selection == 2 then -- AMK
+    --     elseif selection == 3 then -- ASA
+    --         option = option - 21 -- extra bit passed when recieving armor
+    --     end
+    -- end
 
-    aug2 = bit.rshift(option, 16)                               -- 5 bits for 2nd selected augment
-    aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
-    gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
-    addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
+    -- aug2 = bit.rshift(option, 16)                               -- 5 bits for 2nd selected augment
+    -- aug1 = bit.rshift(option, 11) - (aug2 * 32)                 -- 5 bits for 1st selected augment
+    -- gear = bit.rshift(option, 6)  - (aug2 * 1024) - (aug1 * 32) -- 5 bits for selected gear piece
+    -- addon = optionToGear[gear].addon                            -- index of addon scenario the gear belongs to
+
+    aug2 = bit.band(bit.rshift(option, 16), 31) -- 5 bits for 2nd selected augment
+    aug1 = bit.band(bit.rshift(option, 11), 31) -- 5 bits for 1st selected augment
+    gear = bit.band(bit.rshift(option, 6), 31)  -- 5 bits for selected gear piece
+    addon = optionToGear[gear].addon            -- index of addon scenario the gear belongs to
+
+    -- if not giveToPlayer then
+    --     player:setCharVar("expansionSelect", addon)
+    -- end
 
     local augment1 = optionToAugment[addon][aug1]
     local augment2 = optionToAugment[addon][aug2]
-    
+
     local addAug = {}
     if giveToPlayer then
         -- Add each augment's ID and power
@@ -636,6 +651,7 @@ function scenarioArmor(player, option, giveToPlayer)
         -- Each argument concats 2 different augments. For some reason, argument 1 contacts the string below.
         player:updateEvent(tonumber(addAug[1] .. "0000001100000010", 2), tonumber(addAug[2] .. addAug[3], 2), tonumber(addAug[4] .. addAug[5], 2))
     end
+
 end
 
 function intToBinary(x)

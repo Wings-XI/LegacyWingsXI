@@ -15,8 +15,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    mob:lookAt(target:getPos())
     local typeEffect = tpz.effect.PETRIFICATION
-
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, 60))
     return typeEffect
 end

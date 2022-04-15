@@ -13,19 +13,13 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+
+
     -- Trade Enfeebling Kit
     if player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD then
-        local item = 0
-        local asaStatus = player:getCharVar("ASA_Status")
+        local kit = player:getCharVar("ASA_kit")
 
-        -- TODO: Other Enfeebling Kits
-        if asaStatus == 0 then
-            item = 2779
-        else
-            printf("Error: Unknown ASA Status Encountered <%u>", asaStatus)
-        end
-
-        if npcUtil.tradeHas(trade, item) then
+        if npcUtil.tradeHas(trade, kit) then
             player:startEvent(44)
         end
     end
@@ -46,6 +40,8 @@ function onTrigger(player, npc)
             player:setCharVar("ASA_Status", completedSeals)
             player:startEvent(45)
         end
+    else
+        player:messageSpecial(ID.text.ASA_SNOW)
     end
 end
 
@@ -62,6 +58,7 @@ function onEventFinish(player, csid, option)
             tpz.ki.DOMINAS_VIOLET_SEAL,
             tpz.ki.DOMINAS_AZURE_SEAL
         })
+        player:setCharVar("ASA_kit", 0)
 
         player:completeMission(ASA, tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD)
         player:addMission(ASA, tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE)
@@ -76,17 +73,21 @@ function onEventFinish(player, csid, option)
 
         player:confirmTrade()
     elseif csid == 45 then
-        local completedSeals = player:getCharVar("ASA_Status")
+        local completedSeals = player:getCharVar("ASA_SealCount")
 
         -- Calculate Reward
         if completedSeals == 3 then
             player:addGil(GIL_RATE * 3000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE* 3000)
         elseif completedSeals == 4 then
             player:addGil(GIL_RATE * 10000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE* 10000)
         elseif completedSeals == 5 then
             player:addGil(GIL_RATE * 30000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE* 30000)
         elseif completedSeals == 6 then
             player:addGil(GIL_RATE * 50000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE* 50000)
         end
 
         -- Clean Up Remaining Key Items
@@ -107,6 +108,6 @@ function onEventFinish(player, csid, option)
         -- Advance Mission
         player:completeMission(ASA, tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE)
         player:addMission(ASA, tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I)
-        player:setCharVar("ASA_Status", 0)
+        player:setCharVar("ASA_SealCount", 0)
     end
 end

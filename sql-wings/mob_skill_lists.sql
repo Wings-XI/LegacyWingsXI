@@ -117,7 +117,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Carbuncle', 34, 906);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Carbuncle', 34, 907);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Carbuncle', 34, 910);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Carbuncle', 34, 911);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Carbuncle', 34, 912);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Diabolos', 35, 1903);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Diabolos', 35, 1905);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Diabolos', 35, 1906);
@@ -129,7 +128,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 36, 834);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 36, 835);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 36, 836);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 36, 837);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 36, 838);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 867);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 868);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 869);
@@ -138,7 +136,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 871);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 872);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 873);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 874);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 37, 875);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 840);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 841);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 842);
@@ -147,7 +144,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 844);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 845);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 846);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 847);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 848);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2334);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2335);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336);
@@ -162,7 +158,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 862);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 863);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 864);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 865);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 866);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 885);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 886);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 887);
@@ -171,7 +166,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 889);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 890);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 891);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 892);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 43, 893);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 876);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 877);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 878);
@@ -180,7 +174,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 880);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 881);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 882);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 883);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 44, 884);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 849);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 850);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 851);
@@ -189,7 +182,6 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 853);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 854);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 855);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 856);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 45, 857);
 INSERT INTO `mob_skill_lists` VALUES('Bat', 46, 392);
 INSERT INTO `mob_skill_lists` VALUES('Bat', 46, 394);
 INSERT INTO `mob_skill_lists` VALUES('Bat', 46, 1155);
@@ -1385,33 +1377,26 @@ INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,503); -- unblessed_armor
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 881);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 882);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 883);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Shiva', 319, 884);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 320, 890);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 320, 891);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 320, 892);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ramuh', 320, 893);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 321, 853);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 321, 854);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 321, 855);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 321, 856);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Titan', 321, 857);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 322, 845);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 322, 846);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 322, 847);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 322, 848);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 323, 861);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 323, 863);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 323, 864);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 323, 865);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 323, 866);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 324, 872);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 324, 873);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 324, 874);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Garuda', 324, 875);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 325, 833);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 325, 835);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 325, 836);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Fenrir', 325, 838);
 INSERT INTO `mob_skill_lists` VALUES('TrollGurfurlur', 326, 1802);
 INSERT INTO `mob_skill_lists` VALUES('TrollGurfurlur', 326, 1803);
 INSERT INTO `mob_skill_lists` VALUES('TrollGurfurlur', 326, 1804);
@@ -1634,6 +1619,7 @@ INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1903);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1905);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1906);
 INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1908);
+INSERT INTO `mob_skill_lists` VALUES('Diabolos', 378, 1909);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 906);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 907);
 INSERT INTO `mob_skill_lists` VALUES('Pet-Carbuncle', 379, 908);
@@ -3268,6 +3254,27 @@ INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 665);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 666);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 667);
 INSERT INTO `mob_skill_lists` VALUES('Skadi', 1190, 710);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 177);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 178);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 182);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 180);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 184);
+INSERT INTO `mob_skill_lists` VALUES('Shantotto', 1191, 2488);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 96);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 97);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 98);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 99);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 100);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 101);
+INSERT INTO `mob_skill_lists` VALUES('D_Shantotto', 1192, 102);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 128);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 129);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 130);
+INSERT INTO `mob_skill_lists` VALUES('TenshodoKatana', 1193, 131);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 144);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 145);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 146);
+INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 147);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
@@ -3435,6 +3442,25 @@ INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 613);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 614);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 633);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 2233);
+-- Dynamis - Buburimu
+INSERT INTO `mob_skill_lists` VALUES('Alkla', 5024, 647); -- Chaos Blade
+INSERT INTO `mob_skill_lists` VALUES('Stihi', 5025, 642); -- Flame Breath
+INSERT INTO `mob_skill_lists` VALUES('Basilic', 5026, 648); -- Petro Eyes
+INSERT INTO `mob_skill_lists` VALUES('Jurik', 5027, 644); -- Wind Breath
+INSERT INTO `mob_skill_lists` VALUES('Barong', 5028, 645); -- Body Slam
+INSERT INTO `mob_skill_lists` VALUES('Tarasca', 5030, 646); -- Heavy Stomp
+INSERT INTO `mob_skill_lists` VALUES('Stollenwurm', 5031, 651); -- Lodesong
+INSERT INTO `mob_skill_lists` VALUES('Koschei', 5032, 650); -- Thornsong
+INSERT INTO `mob_skill_lists` VALUES('Aitvaras', 5033, 649); -- Voidsong
+INSERT INTO `mob_skill_lists` VALUES('Vishap', 5034, 643); -- Poison Breath
+-- Dynamis - Valkurm
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1626);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1120);
+
 --
 -- Indexes for dumped tables
 --

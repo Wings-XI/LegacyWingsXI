@@ -850,7 +850,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
     else if (PSkill->isJobAbility())
         action.actiontype = ACTION_JOBABILITY_FINISH;
-    else if (PSkill->getID() < 256)
+    else if (PSkill->getID() < 256 || (PSkill->getID() > 2485 && PSkill->getID() < 2490))
         action.actiontype = ACTION_WEAPONSKILL_FINISH;
     else
         action.actiontype = ACTION_MOBABILITY_FINISH;
@@ -864,8 +864,33 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         }
         else if (PSkill->isConal())
         {
-            float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
+            float angle = 0.0f;
+
+            if (this->m_Family == 62 || this->m_Family == 164 || this->m_Family >= 259 && this->m_Family <= 264 || this->m_Family >= 391 && this->m_Family <= 393) // Cerb, Hydra, and Wyrm families have wide Conals
+            {
+                angle = 90.0f; 
+            }
+            else if (PSkill->getID() == 2335) // Ixion's Lightning Spear is the only 120º Conal that we know of
+            {
+                angle = 120.0f;
+            }
+            else
+            {
+                angle = 45.0f;
+            }
+            if(PSkill->m_Aoe == 6) // Conal from center of mob
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, 0);
+            }
+            else if (PSkill->m_Aoe == 7) // Conal from center of mob in front and behind
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, 128);
+                PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_ATTACKER, distance, angle, findFlags, 0);
+            }
+            else // Conal in front centered on target, m_AoE 5 sets conal to rear
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOERADIUS_TARGET, distance, angle, findFlags, (PSkill->m_Aoe == 5)*128);
+            }
         }
         else
         {
@@ -1412,7 +1437,7 @@ bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>
             float bonusRange = 2;
             if (PTarget->speed >= this->speed)
                 bonusRange = this->speed / PTarget->speed * 2;
-            
+
             // attempt to hit a running target, increase range slightly
             if (std::chrono::system_clock::now() > this->m_NextSlidingHit && distance(loc.p, PTarget->loc.p) - PTarget->m_ModelSize < attack_range + bonusRange)
             {

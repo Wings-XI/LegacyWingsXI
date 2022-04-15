@@ -18,6 +18,8 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+    mob:setMod(tpz.mod.LULLABYRES, 100)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -52,7 +54,7 @@ function onAdditionalEffect(mob, target, damage)
         table.insert(effects, tpz.mob.ae.PLAGUE)
     end
 
-    printf("effectscount %s", #effects)
+    --printf("effectscount %s", #effects)
     if #effects == 0 then
         local params = { }
         params.chance = 100

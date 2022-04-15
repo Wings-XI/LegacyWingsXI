@@ -12,7 +12,7 @@ function onMobSpawn(mob)
     dynamis.setNMStats(mob)
 
     -- Set Mods
-    mob:setMod(tpz.mod.MOVE, 100)
+    mob:speed(140)
     mob:addMod(tpz.mod.REGAIN, 1250)
     mob:SetAutoAttackEnabled(false)
 end

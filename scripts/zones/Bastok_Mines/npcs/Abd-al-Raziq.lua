@@ -42,7 +42,7 @@ function onTrigger(player, npc)
     local expertQuestStatus = 0
     local Rank = player:getSkillRank(tpz.skill.ALCHEMY)
     local realSkill = (craftSkill - Rank) / 32
-    local canRankUp = rankCap - realSkill -- used to make sure rank up isn't overridden by ASA mission
+    local asaTriggered = player:getCharVar("AbdTriggered")
     if (guildMember == 1) then guildMember = 150995375; end
 
     if onTriggerDenounceCheck(player, 120, realSkill, rankCap, 184549887) then
@@ -57,19 +57,12 @@ function onTrigger(player, npc)
         end
     end
 
-    if (player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD and guildMember == 150995375 and canRankUp >= 3) then
-        local item = 0
-        local asaStatus = player:getCharVar("ASA_Status")
-
-        -- TODO: Other Enfeebling Kits
-        if (asaStatus == 0) then
-            item = 2779
-        else
-            printf("Error: Unknown ASA Status Encountered <%u>", asaStatus)
-        end
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD and asaTriggered == 0 then
+        local kit = player:getCharVar("ASA_kit")
 
         -- The Parameters are Item IDs for the Recipe
-        player:startEvent(590, item, 2774, 929, 4103, 2777, 4103)
+        player:startEvent(590, kit, 2774, 929, 4103, 2777, 4103)
+        player:setCharVar("AbdTriggered", 1)
     elseif expertQuestStatus == 550 then
         --[[
         Feeding the proper parameter currently hangs the client in cutscene. This may
@@ -108,6 +101,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, crystal)
             signupGuild(player, guild.alchemy)
         end
+    elseif (csid == 101 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("AlchemyTraded") == 1 then
             player:tradeComplete()

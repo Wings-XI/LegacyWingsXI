@@ -10,7 +10,7 @@ local zone = 39
 
 function onMobSpawn(mob)
     dynamis.setNMStats(mob)
-    mob:setMod(tpz.mod.MOVE, 100)
+    mob:speed(140)
 end
 
 function onMobDeath(mob, player, isKiller)

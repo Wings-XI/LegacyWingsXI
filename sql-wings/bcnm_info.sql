@@ -121,7 +121,7 @@ INSERT INTO `bcnm_info` VALUES(116, 146, 'beyond_infinity', 'nobody', 0, 600, 60
 INSERT INTO `bcnm_info` VALUES(128, 163, 'temple_of_uggalepih', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(129, 163, 'jungle_boogymen', 'nobody', 0, 1800, 1800, 60, 6, 129, 15, 0);
 INSERT INTO `bcnm_info` VALUES(130, 163, 'amphibian_assault', 'nobody', 0, 1800, 1800, 60, 6, 130, 15, 0);
-INSERT INTO `bcnm_info` VALUES(131, 163, 'project_shantottofication', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 0);
+INSERT INTO `bcnm_info` VALUES(131, 163, 'project_shantottofication', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(132, 163, 'whom_wilt_thou_call', 'nobody', 0, 1800, 1800, 0, 6, 132, 15, 0);
 INSERT INTO `bcnm_info` VALUES(160, 165, 'shadow_lord_battle', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(161, 165, 'where_two_paths_converge', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
@@ -141,7 +141,7 @@ INSERT INTO `bcnm_info` VALUES(201, 168, 'dragon_scales', 'nobody', 0, 600, 600,
 INSERT INTO `bcnm_info` VALUES(224, 170, 'moonlit_path', 'nobody', 0, 1800, 1800, 0, 6, 0, 5, 0);
 INSERT INTO `bcnm_info` VALUES(225, 170, 'moon_reading', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(226, 170, 'waking_the_beast_fullmoon', 'nobody', 0, 1800, 1800, 0, 18, 0, 5, 0);
-INSERT INTO `bcnm_info` VALUES(227, 170, 'battaru_royale', 'nobody', 0, 1800, 1800, 99, 6, 0, 5, 0);
+INSERT INTO `bcnm_info` VALUES(227, 170, 'battaru_royale', 'nobody', 0, 1800, 1800, 0, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(256, 179, 'return_to_delkfutts_tower', 'nobody', 0, 1800, 1800, 75, 6, 0, 5, 1);
 INSERT INTO `bcnm_info` VALUES(257, 179, 'indomitable_triumvirate_vs3', 'nobody', 0, 900, 900, 60, 6, 0, 4, 0);
 INSERT INTO `bcnm_info` VALUES(258, 179, 'dauntless_duo_vs2', 'nobody', 0, 900, 900, 60, 6, 0, 4, 0);

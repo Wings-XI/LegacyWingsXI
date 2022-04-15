@@ -41,6 +41,7 @@ function onMobDeath(mob, player, isKiller)
         sjQM:setPos(pos.x,pos.y,pos.z,pos.rot)
         sjQM:setStatus(tpz.status.NORMAL)
     end
+
 end
 
 function onMobRoamAction(mob)

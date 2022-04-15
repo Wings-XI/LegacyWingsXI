@@ -847,35 +847,36 @@ tpz.effect =
 
 tpz.effectFlag =
 {
-    NONE            = 0x0000,
-    DISPELABLE      = 0x0001,
-    ERASABLE        = 0x0002,
-    ATTACK          = 0x0004,
-    EMPATHY         = 0x0008,
-    DAMAGE          = 0x0010,
-    DEATH           = 0x0020,
-    MAGIC_BEGIN     = 0x0040,
-    MAGIC_END       = 0x0080,
-    ON_ZONE         = 0x0100,
-    NO_LOSS_MESSAGE = 0x0200,
-    INVISIBLE       = 0x0400,
-    DETECTABLE      = 0x0800,
-    NO_REST         = 0x1000,
-    PREVENT_ACTION  = 0x2000,
-    WALTZABLE       = 0x4000,
-    FOOD            = 0x8000,
-    SONG            = 0x10000,
-    ROLL            = 0x20000,
-    SYNTH_SUPPORT   = 0x40000,
-    CONFRONTATION   = 0x80000,
-    LOGOUT          = 0x100000,
-    BLOODPACT       = 0x200000,
-    ON_JOBCHANGE    = 0x400000,
-    NO_CANCEL       = 0x800000,
-    INFLUENCE       = 0x1000000,
-    OFFLINE_TICK    = 0x2000000,
-    AURA            = 0x4000000,
-    ON_SYNC         = 0x8000000,
+    NONE              = 0x0000,
+    DISPELABLE        = 0x0001,
+    ERASABLE          = 0x0002,
+    ATTACK            = 0x0004,
+    EMPATHY           = 0x0008,
+    DAMAGE            = 0x0010,
+    DEATH             = 0x0020,
+    MAGIC_BEGIN       = 0x0040,
+    MAGIC_END         = 0x0080,
+    ON_ZONE           = 0x0100,
+    NO_LOSS_MESSAGE   = 0x0200,
+    INVISIBLE         = 0x0400,
+    DETECTABLE        = 0x0800,
+    NO_REST           = 0x1000,
+    PREVENT_ACTION    = 0x2000,
+    WALTZABLE         = 0x4000,
+    FOOD              = 0x8000,
+    SONG              = 0x10000,
+    ROLL              = 0x20000,
+    SYNTH_SUPPORT     = 0x40000,
+    CONFRONTATION     = 0x80000,
+    LOGOUT            = 0x100000,
+    BLOODPACT         = 0x200000,
+    ON_JOBCHANGE      = 0x400000,
+    NO_CANCEL         = 0x800000,
+    INFLUENCE         = 0x1000000,
+    OFFLINE_TICK      = 0x2000000,
+    AURA              = 0x4000000,
+    ON_SYNC           = 0x8000000,
+    LEVEL_RESTRICTION = 0x10000000,
 }
 
 ------------------------------------
@@ -1301,6 +1302,7 @@ tpz.mod =
     FERAL_HOWL_DURATION       = 503, -- +20% duration per merit when wearing augmented Monster Jackcoat +2
     JUG_LEVEL_RANGE           = 564, -- Decreases the level range of spawned jug pets. Maxes out at 2.
     CALL_BEAST_DELAY          = 572, -- Lowers Call Beast recast
+    SIC_READY_DELAY           = 574, -- Lowers Sic & Ready delay
 
     -- Bard
     MINNE_EFFECT              = 433, --
@@ -1330,6 +1332,7 @@ tpz.mod =
 
     -- Ranger
     CAMOUFLAGE_DURATION       = 98,  -- Camouflage duration in percents
+    BARRAGE_COUNT             = 138, -- Increases Barrage shots by 1
     RECYCLE                   = 305, -- Percent chance to recycle
     SNAP_SHOT                 = 365, -- Percent reduction to range attack delay
     RAPID_SHOT                = 359, -- Percent chance to proc rapid shot
@@ -1388,6 +1391,7 @@ tpz.mod =
     JOB_BONUS_CHANCE          = 542, -- Chance to apply job bonus to COR roll without having the job in the party.
     QUICK_DRAW_DELAY          = 571, -- Lowers Quick Draw recast
     RANDOM_DEAL_BONUS         = 573, -- % chance to reset 2 abilities
+    PHANTOM_ROLL_DELAY        = 575, -- Lower Phantom Roll recast
 
     DMG_REFLECT               = 316, -- Tracks totals
     ROLL_ROGUES               = 317, -- Tracks totals
@@ -1458,6 +1462,7 @@ tpz.mod =
     SAMBA_PDURATION           = 498, -- Samba percent duration bonus
     SPECTRAL_JIG_DURATION     = 502, -- Spectral Jig duration bonus in percents
     REVERSE_FLOURISH_EFFECT   = 836, -- Reverse Flourish effect in tenths of squared term multiplier
+    WALTZ_COST                = 139, -- Reduce Waltz cost by 5%
 
     -- Scholar
     BLACK_MAGIC_COST          = 393, -- MP cost for black magic (light/dark arts)

@@ -1117,7 +1117,6 @@ INSERT INTO `mob_spell_lists` VALUES('Dynamis_Lord', 86, 365, 10, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 4, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 9, 55, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 21, 55, 98);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longsword', 87, 360, 30, 49);
 INSERT INTO `mob_spell_lists` VALUES('Satellite_Staves', 88, 4, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Satellite_Staves', 88, 161, 37, 255);
@@ -1125,36 +1124,28 @@ INSERT INTO `mob_spell_lists` VALUES('Satellite_Staves', 88, 190, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Satellite_Staves', 88, 191, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Staff', 89, 21, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Staff', 89, 365, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Staff', 89, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tabar', 90, 53, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Tabar', 90, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tabar', 90, 273, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tabar', 90, 356, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Claymore', 91, 181, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Claymore', 91, 250, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Claymore', 91, 273, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Claymore', 91, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Scythe', 92, 106, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Scythe', 92, 232, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Scythe', 92, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Scythe', 92, 361, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tachi', 93, 9, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Tachi', 93, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tachi', 93, 359, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Tachi', 93, 361, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Dagger', 94, 112, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Dagger', 94, 186, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Dagger', 94, 226, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Dagger', 94, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Knuckles', 95, 128, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Knuckles', 95, 249, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Knuckles', 95, 358, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Knuckles', 95, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Shield', 96, 9, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Shield', 96, 46, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Shield', 96, 106, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Shield', 96, 273, 37, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Shield', 96, 261, 37, 255);
 INSERT INTO `mob_spell_lists` VALUES('Stubborn_Dredvodd', 97, 54, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Demonic_Tiphia', 98, 5, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Demonic_Tiphia', 98, 143, 1, 255);
@@ -1437,10 +1428,14 @@ INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 231, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 58, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 254, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Blighting_Brand', 148, 253, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 232, 1, 255); -- Bio III
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 245, 1, 255); -- Drain
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 247, 1, 255); -- Aspir 
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 260, 1, 255); -- Dispel
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 274, 1, 255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 360, 1, 255); -- Dispelga
+INSERT INTO `mob_spell_lists` VALUES('Diabolos_Waking_Dream', 149, 361, 1, 255); -- Blindga
 -- Oupire Spell List (Non-Elemental)
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 227, 1, 255); -- Poisonga III
 INSERT INTO `mob_spell_lists` VALUES ('Oupire', 150, 360, 1, 255); -- Dispelga
@@ -4093,24 +4088,18 @@ INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Love_Dark', 491, 360, 1, 255); -
 INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Love_Dark', 491, 361, 1, 255); -- Blindga
 INSERT INTO `mob_spell_lists` VALUES('Animated_Gun', 492, 204, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Gun', 492, 249, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Gun', 492, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Gun', 492, 366, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longbow', 493, 9, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longbow', 493, 53, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longbow', 493, 208, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Longbow', 493, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Longbow', 493, 362, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Hammer', 494, 21, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Hammer', 494, 106, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Hammer', 494, 261, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Kunai', 495, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Kunai', 495, 342, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Kunai', 495, 348, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Spear', 496, 8, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_Spear', 496, 196, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_Spear', 496, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 249, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 261, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 266, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Animated_GreatAxe', 497, 357, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Psoxja_Gargoyles_NM', 498, 59, 1, 255); -- silence
@@ -4287,17 +4276,109 @@ INSERT INTO `mob_spell_lists` VALUES('Ziryu', 523, 54, 1, 255); -- Stoneskin
 -- Todays Horoscope KS30
 INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 356, 1, 255);-- paralyga
 INSERT INTO `mob_spell_lists` VALUES('Aries', 524, 54, 1, 255); -- stoneskin
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 23, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 56, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 58, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 254, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 3, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Ob', 525, 4, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 359, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 366, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 208, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 157, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Kurrea', 526, 186, 1, 255);
+-- ASA Enemy of the Empire
+INSERT INTO `mob_spell_lists` VALUES('Tenshodo', 525, 339, 1, 255);
+-- ASA Battaru Royale
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 161, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 190, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 210, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 211, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Boulders', 526, 79, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 156, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 185, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 209, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gusts', 527, 59, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 151, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 152, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 180, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 206, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 207, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 80, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Glaciers', 528, 258, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 166, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 195, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 212, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 213, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Sparks', 529, 252, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Flames', 530, 146, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Flames', 530, 147, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Flames', 530, 175, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Flames', 530, 204, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Flames', 530, 205, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 171, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 200, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 214, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 215, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Torrents', 531, 220, 1, 255);
+-- ASA Project: Shantottofication
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 360, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 245, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 247, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 151, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 152, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 161, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 171, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 179, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 180, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 206, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 207, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 210, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 211, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 214, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('D_Shantotto', 532, 215, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 21, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 22, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 47, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 52, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 112, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 166, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 156, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 146, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 147, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 212, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 213, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 204, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 205, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 209, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 196, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Shantotto', 533, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 144, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 154, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 164, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 174, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 184, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('ShantottoSpam', 534, 194, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 321, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 324, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 327, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 330, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 333, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('BompupuShadow', 535, 336, 40, 72);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 23, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 56, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 254, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 3, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ob', 536, 4, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 359, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 366, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 186, 1, 255);
 
 --
 -- Indexes for dumped tables

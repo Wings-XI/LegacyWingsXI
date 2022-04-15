@@ -325,6 +325,16 @@ dynamis.dynaInfo =
         winTitle = tpz.title.DYNAMIS_BUBURIMU_INTERLOPER,
         entryPos = {155, -1, -169, 170, tpz.zone.DYNAMIS_BUBURIMU},
         ejectPos = {154, -1, -170, 190, tpz.zone.BUBURIMU_PENINSULA},
+        sjRestriction = true,
+        sjRestrictionNPC = 16941676,
+        sjRestrictionNPCNumber = 4,
+        sjRestrictionLocation =
+        {
+            [1] = {-214.161, 15.360, -269.202, 54},
+            [2] = {620.425, 7.306, -266.427, 71},
+            [3] = {427.460, -0.308, 189.224, 50},
+            [4] = {320.489, -0.642, 366.648, 101},
+        }
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
@@ -342,6 +352,7 @@ dynamis.dynaInfo =
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
         sjRestriction = true,
         sjRestrictionNPC = 16945638,
+        sjRestrictionNPCNumber = 12,
         sjRestrictionLocation =
         {
             [1] = {-264.498, -19.255, 401.465, 54},
@@ -543,7 +554,7 @@ dynamis.zoneOnInitialize = function(zone)
     local zoneId = zone:getID()
     if dynamis.dynaInfo[zoneId].sjRestriction == true and dynamis.dynaInfo[zoneId].sjRestrictionNPC ~= nil then
         local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
-        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random((1), (12))]
+        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random(1, dynamis.dynaInfo[zoneId].sjRestrictionNPCNumber)]
         sjRestrictionNPC:setPos(pos)
         sjRestrictionNPC:setStatus(tpz.status.NORMAL)
     end
@@ -591,30 +602,13 @@ dynamis.statueOnSpawn = function(mob, eyes) -- says statue but this is also call
     mob:setLocalVar("dynaReadyToSpawnChildren", 1)
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then
         mob:setLocalVar("eyeColor", eyes)
+        if eyes >= 2 then
+            mob:setUnkillable(true)
+        end
     end
 end
 
 dynamis.statueOnDeath = function(mob, player, isKiller)
-    local eyes = mob:AnimationSub()
-
-    if isKiller and (eyes == dynamis.eyes.BLUE or eyes == dynamis.eyes.GREEN) then
-        -- MP or HP refill
-        local zone = mob:getZone()
-        local players = zone:getPlayers()
-        for name, player in pairs(players) do
-            if mob:checkDistance(player) < 30 then
-                if eyes == dynamis.eyes.GREEN then
-                    local amt = player:getMaxMP() - player:getMP()
-                    player:restoreMP(amt)
-                    player:messageBasic(tpz.msg.basic.RECOVERS_MP, 0, amt)
-                else
-                    local amt = player:getMaxHP() - player:getHP()
-                    player:restoreHP(amt)
-                    player:messageBasic(tpz.msg.basic.RECOVERS_HP, 0, amt)
-                end
-            end
-        end
-    end
 end
 
 dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
@@ -844,8 +838,18 @@ dynamis.sjQMOnTrigger = function(player, npc)
         for _, member in pairs(player:getAlliance()) do
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
+                    if member:hasStatusEffect(tpz.effect.RERAISE) then -- Check for reraise and store values.
+                        member:setLocalVar("had_reraise", 1)
+                        member:setLocalVar("reraise_power", member:getStatusEffect(tpz.effect.RERAISE):getPower())
+                        member:setLocalVar("reraise_duration", member:getStatusEffect(tpz.effect.RERAISE):getDuration())
+                    end
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
                     player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
+                    if member:getLocalVar("had_reraise") == 1 then -- Reapply previous reraise if lost.
+                        if not member:hasStatusEffect(tpz.effect.RERAISE) then
+                            member:addStatusEffect(tpz.effect.RERAISE, member:getLocalVar("reraise_power"), 0, member:getLocalVar("reraise_duration"))
+                        end
+                    end
                 end
             end
         end
@@ -993,6 +997,7 @@ dynamis.setNMStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMaxHPP(132)
     mob:setMobLevel(math.random(80,82))
     mob:setMod(tpz.mod.STR, -15)
@@ -1014,6 +1019,7 @@ dynamis.setStatueStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
@@ -1034,6 +1040,7 @@ dynamis.setMegaBossStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
     mob:setTrueDetection(1)
@@ -1073,6 +1080,7 @@ dynamis.setEyeStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.DEF, 420)
     mob:addMod(tpz.mod.MDEF, 150)
