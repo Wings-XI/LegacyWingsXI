@@ -217,7 +217,7 @@ void LoginSession::LoadCharacterList()
 
         // First, query all content ids, which should be in the table even if not
         // yet associated with a character.
-        strSqlQueryFmt = "SELECT %scontents.content_id, enabled, character_id FROM %scontents LEFT JOIN %schars ON %scontents.content_id = %schars.content_id WHERE account_id=%d ORDER BY content_id LIMIT 16;";
+        strSqlQueryFmt = "SELECT %scontents.content_id, enabled, character_id FROM %scontents LEFT JOIN %schars ON %scontents.content_id = %schars.content_id WHERE account_id=%d AND world_id <> 101 ORDER BY content_id LIMIT 16;";
         strSqlFinalQuery = FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
