@@ -95,6 +95,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, crystal)
             signupGuild(player, guild.bonecraft)
         end
+    elseif (csid == 101 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("BonecraftTraded") == 1 then
             player:tradeComplete()

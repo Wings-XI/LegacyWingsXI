@@ -800,6 +800,7 @@ function checkSkip(player, bfid)
     local copStat   = player:getCharVar("PromathiaStatus")
     local toauStat  = player:getCharVar("AhtUrganStatus")
     local sofStat   = player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.STORMS_OF_FATE)
+    local anStat    = player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH)
     local mission2_3a =
         player:hasCompletedMission(BASTOK, mi.bastok.THE_EMISSARY_SANDORIA2) or
         player:hasCompletedMission(WINDURST, mi.windurst.THE_THREE_KINGDOMS_SANDORIA2) or
@@ -874,7 +875,7 @@ function checkSkip(player, bfid)
         [ 993] = function() return ( player:hasCompletedMission(COP, mi.cop.THE_WARRIOR_S_PATH)                                                                                                      ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( player:hasCompletedMission(COP, mi.cop.WHEN_ANGELS_FALL) or (cop == mi.cop.WHEN_ANGELS_FALL and copStat > 4)                                                    ) end, -- PM8-3: When Angels Fall
         [1056] = function() return ( player:hasCompletedMission(COP, mi.cop.DAWN) or (cop == mi.cop.DAWN and copStat > 2)                                                                            ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:hasCompletedQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH)                                                                                             ) end, -- Apocalypse Nigh
+        [1057] = function() return ( anStat == QUEST_COMPLETED                                                                                                                                       ) end, -- Apocalypse Nigh
     }
 
     -- determine whether player meets cutscene skip requirements

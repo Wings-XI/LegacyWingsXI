@@ -838,8 +838,18 @@ dynamis.sjQMOnTrigger = function(player, npc)
         for _, member in pairs(player:getAlliance()) do
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
+                    if member:hasStatusEffect(tpz.effect.RERAISE) then -- Check for reraise and store values.
+                        member:setLocalVar("had_reraise", 1)
+                        member:setLocalVar("reraise_power", member:getStatusEffect(tpz.effect.RERAISE):getPower())
+                        member:setLocalVar("reraise_duration", member:getStatusEffect(tpz.effect.RERAISE):getDuration())
+                    end
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
                     player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
+                    if member:getLocalVar("had_reraise") == 1 then -- Reapply previous reraise if lost.
+                        if not member:hasStatusEffect(tpz.effect.RERAISE) then
+                            member:addStatusEffect(tpz.effect.RERAISE, member:getLocalVar("reraise_power"), 0, member:getLocalVar("reraise_duration"))
+                        end
+                    end
                 end
             end
         end
@@ -987,6 +997,7 @@ dynamis.setNMStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMaxHPP(132)
     mob:setMobLevel(math.random(80,82))
     mob:setMod(tpz.mod.STR, -15)
@@ -1008,6 +1019,7 @@ dynamis.setStatueStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.STR, -5)
     mob:setMod(tpz.mod.VIT, -5)
@@ -1028,6 +1040,7 @@ dynamis.setMegaBossStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(88)
     mob:setMod(tpz.mod.STR, -10)
     mob:setTrueDetection(1)
@@ -1067,6 +1080,7 @@ dynamis.setEyeStats = function(mob)
     local job = mob:getMainJob()
     local zone = mob:getZoneID()
 
+    mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobLevel(math.random(82,84))
     mob:setMod(tpz.mod.DEF, 420)
     mob:addMod(tpz.mod.MDEF, 150)
