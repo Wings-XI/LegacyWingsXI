@@ -715,10 +715,11 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
                 continue; // book refresh/regen persists through level sync application
 
             // If this is a Nightmare effect flag, it needs to be removed explictly by a cure
-            if (flag & EFFECTFLAG_DAMAGE        // Only check this when removing effects by taking damage
-                && !(PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
-  
-                RemoveStatusEffect(PStatusEffect, silent);
+            if (flag & EFFECTFLAG_DAMAGE 
+                && (PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
+                continue; 
+
+            RemoveStatusEffect(PStatusEffect, silent);
         }
     }
 }
