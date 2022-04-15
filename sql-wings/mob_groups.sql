@@ -9962,7 +9962,7 @@ INSERT INTO `mob_groups` VALUES(16, 2491, 169, 'Makara', 960, 0, 279, 0, 0, 49, 
 INSERT INTO `mob_groups` VALUES(17, 514, 169, 'Bouncing_Ball', 960, 0, 344, 0, 0, 64, 67, 0);
 INSERT INTO `mob_groups` VALUES(18, 5859, 169, 'Canal_Moocher', 0, 32, 3071, 9500, 0, 73, 74, 0);
 INSERT INTO `mob_groups` VALUES(19, 3803, 169, 'Stygian_Pugil', 960, 0, 0, 0, 0, 63, 65, 0);
-INSERT INTO `mob_groups` VALUES(20, 2982, 169, 'Oni_Carcass', 86400, 0, 1860, 30000, 0, 68, 70, 0);
+INSERT INTO `mob_groups` VALUES(20, 2982, 169, 'Oni_Carcass', 86400, 128, 1860, 30000, 0, 68, 70, 0);
 INSERT INTO `mob_groups` VALUES(21, 3803, 169, 'Stygian_Pugil', 960, 0, 0, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(23, 2764, 169, 'Mousse', 960, 0, 1751, 0, 0, 63, 65, 0);
 INSERT INTO `mob_groups` VALUES(24, 5552, 169, 'Konjac', 0, 32, 3040, 0, 0, 78, 78, 0);
@@ -10245,8 +10245,8 @@ INSERT INTO `mob_groups` VALUES(25, 3018, 175, 'Orcish_Guard', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(26, 1200, 175, 'Ellylldan', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(27, 1026, 175, 'Dhoul', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(28, 5178, 175, 'Giltine', 0, 128, 0, 0, 20000, 94, 95, 0);
-INSERT INTO `mob_groups` VALUES(29, 6885, 175, 'Ethniu', 14400, 0, 3228, 25396, 20000, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(30, 6886, 175, 'Tethra', 14400, 0, 3229, 25291, 20000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(29, 6885, 175, 'Ethniu', 14400, 128, 3228, 25396, 20000, 80, 80, 0);
+INSERT INTO `mob_groups` VALUES(30, 6886, 175, 'Tethra', 14400, 128, 3229, 25291, 20000, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(9053, 18, 175, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(9054, 37, 175, 'Achtelle', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(9055, 84, 175, 'Alfons', 1, 0, 0, 0, 0, 1, 1, 0);
