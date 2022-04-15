@@ -242,7 +242,7 @@ end
 function onEventFinish(player, csid, option)
     if (csid == 10085) then
         player:setCharVar("WildcatJeuno", utils.mask.setBit(player:getCharVar("WildcatJeuno"), 7, true))
-    elseif csid == 10031 then
+    elseif csid == 10031 and option >= 0 and option <= 119 then
         player:addQuest(JEUNO,tpz.quest.id.jeuno.UNLISTED_QUALITIES)
         player:setFellowValue("fellowid",option)
 --[[
