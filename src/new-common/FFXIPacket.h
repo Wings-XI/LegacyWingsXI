@@ -2,7 +2,7 @@
  *	@file FFXIPacket.h
  *	Implements the FFXI login packet header (for view server)
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_FFXI_PACKET_H

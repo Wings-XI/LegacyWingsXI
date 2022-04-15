@@ -6,33 +6,10 @@ The new login server has been written from scratch, is not based on Topaz,
 and does not share any code with Topaz, therefore it is not subject to the
 Topaz license or DSP license.
 The new login server is entirely (c) 2020-2021 Wings Open Source Project.
-The server is licensed under the GNU Affero Public License (AGPL) version 3
+The server is licensed under the GNU  Public License (GPLv3) version 3
 or any later version of your choice, as long as it contains clause 7 of the
-AGPLv3 or a compatible clause.
+GPLv3 or a compatible clause.
 By using this software you agree to comply with the terms of the license.
-
-Per section 7 of the GNU AGPLv3 we ammend the license with the following:
-1. Warranty disclaimer - This software comes "AS IS", without any warranty
-or liability, whether received in source code or binary form, whether
-verbatim or modified. In no event shall the Wings Open Source Project or
-any contributor be held liable to any damage arising from the use of this
-software, even if advised of such a possibility.
-
-2. Misrepresentation - The terms of section 5 of the AGPLv3 shall apply
-to binary and object code distribution as well as the source form.
-Modified binaries must carry a prominent notice in the user documentation.
-This section does not relieve you from the need to provide the corresponding
-source code of such modified copies.
-
-3. Non-Endorsement - The name of the Wings Open Source Project or its
-contributors may not be used to endorse any modified versions or other
-products, whether based on it or not, without an explicit written
-prior permission.
-
-4. Linking with OpenSSL - You are allowed to link this software with
-any version of the OpenSSL library, including modified versions, as
-long as they are distributed under the exact same license.
-
 
 1. COMPILATION
 Generate project files using CMake as usual. The new login server depends

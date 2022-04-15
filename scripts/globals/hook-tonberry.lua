@@ -1,6 +1,6 @@
 --------------------------------------------------------
 -- (C) 2022 Wings Project.                            --
--- Licensed under AGPLv3                              --
+-- Licensed under GPLv3                              --
 -- Tonberry server customizations.                    --
 -- Set HOOK_FILE_NAME = "tonberry" in settings.lua    --
 -- to enable.                                         --
@@ -40,7 +40,7 @@ function hookOnCharCreate(player)
     if not player:hasItem(4606) then
         player:addItem(4606) -- dia
     end
-    
+
     -- All races get the starting ring
     local nation = player:getNation()
     local nationRing = 0
@@ -54,45 +54,45 @@ function hookOnCharCreate(player)
     if nationRing ~= 0 and not player:hasItem(nationRing) then
         player:addItem(nationRing)
     end
-    
+
     -- Echad ring
     if not player:hasItem(27556) then
         player:addItem(27556)
     end
-    
+
     -- Player already begins with a subjob
-    
+
     if SUBJOB_QUEST_LEVEL ~= 0 then
         -- Force unlock
         -- If SUBJOB_QUEST_LEVEL == 0 they were already unlocked
         -- by the main script.
         player:unlockJob(0)
     end
-    
+
     if (player:getMainJob() == 1) then -- WAR
         player:changesJob(2) -- MNK
     end
-    
+
     if (player:getMainJob() == 2) then -- MNK
         player:changesJob(1) -- WAR
     end
-    
+
     if (player:getMainJob() == 3) then -- WHM
         player:changesJob(5) -- RDM
     end
-    
+
     if (player:getMainJob() == 4) then -- BLM
         player:changesJob(5) -- RDM
     end
-    
+
     if (player:getMainJob() == 5) then -- RDM
         player:changesJob(4) -- BLM
     end
-    
+
     if (player:getMainJob() == 6) then -- THF
         player:changesJob(1) -- WAR
     end
-    
+
     player:setsLevel(1);
 
 

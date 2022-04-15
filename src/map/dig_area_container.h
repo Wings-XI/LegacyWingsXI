@@ -3,8 +3,8 @@
 
   Copyright (c) 2021 Wings Open Source Project
 
-  Use of this file is under AGPLv3, see LICENSE file.
-  
+  Use of this file is under GPLv3, see LICENSE file.
+
   Author: Caelic
 
 ===========================================================================
@@ -36,7 +36,7 @@ private:
     CDigObject m_DigObject[1000]; // 27 bytes each, array memory impact 27kb
     uint16 m_DigObjectIteratorStart; // iterator to the first element, oldest dig
     uint16 m_DigObjectIteratorEnd; // iterator to just past the last element, most recently added dig
-    
+
 };
 
 #endif

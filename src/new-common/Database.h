@@ -2,7 +2,7 @@
  *	@file Database.h
  *	Database access and synchronization
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_DATABASE_H

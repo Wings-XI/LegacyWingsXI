@@ -2,7 +2,7 @@
  *	@file CharMessageHnd.h
  *	Stub for incoming messages to login server (currently none used)
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_LOGIN_CHARMESSAGEHND_H
