@@ -89,6 +89,7 @@ function onBattlefieldEnter(player, battlefield)
     player:getStatusEffect(tpz.effect.MAX_HP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.MAX_MP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:setTP(0)
+    player:timer (1000 , function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
 end
 
 
