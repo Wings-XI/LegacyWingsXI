@@ -16,35 +16,27 @@ function onBattlefieldRegister(player, battlefield)
     local bfID = battlefield:getArea()
     if player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_TORRENTS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.WATER_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_BOULDERS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_GLACIERS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.ICE_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_GUSTS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.WIND_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_SPARKS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_FLAMES[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_LIGHTS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)
     end
     if player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL) then
         GetMobByID(ID.battaru_royale.CLONE_OF_SHADOWS[bfID]):setLocalVar("Immunity", 1)
-        player:delKeyItem(tpz.ki.DARK_SAP_CRYSTAL)
     end
 end
 
