@@ -7,6 +7,7 @@
 local ID = require("scripts/zones/Sauromugue_Champaign_[S]/IDs")
 require("scripts/globals/maws")
 require("scripts/globals/teleports")
+require("scripts/globals/pets/fellow")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -18,7 +19,7 @@ function onTrigger(player, npc)
     local bond = player:getFellowValue("bond")
     local wotg_unlock = player:getFellowValue("wotg_unlock")
    
-    if (hasMaw == true and bond ~= nil and wotg_unlock~=nil and wotg_unlock ~= 1) then
+    if (hasMaw == true and bond ~= nil and wotg_unlock ~= nil and wotg_unlock ~= 1) then
         local styleParam    = getStyleParam(player)
         local lookParam     = getLookParam(player)
         local fellowParam   = getFellowParam(player)
