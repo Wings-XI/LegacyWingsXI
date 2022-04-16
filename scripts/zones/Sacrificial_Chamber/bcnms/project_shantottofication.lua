@@ -63,12 +63,10 @@ function onBattlefieldEnter(player, battlefield)
         player:addStatusEffect(tpz.effect.CHR_BOOST, 150, 0, 0)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY) then
-        local hpBoost = player:getMaxHP() * 3
-        player:addStatusEffect(tpz.effect.MAX_HP_BOOST, hpBoost, 0, 0)
+        player:addStatusEffect(tpz.effect.MAX_HP_BOOST, 200, 0, 0)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT) then
-        local mpBoost = player:getMaxMP() * 3
-        player:addStatusEffect(tpz.effect.MAX_MP_BOOST, mpBoost, 0, 0)
+        player:addStatusEffect(tpz.effect.MAX_MP_BOOST, 200, 0, 0)
     end
     if player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH) then
         player:addStatusEffect(tpz.effect.RERAISE, 1, 0, 3600)
