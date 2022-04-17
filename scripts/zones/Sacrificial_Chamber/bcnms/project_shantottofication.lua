@@ -73,12 +73,10 @@ function onBattlefieldEnter(player, battlefield)
         player:setLocalVar("Shantottofication", 1)
     end
 
-    player:getStatusEffect(tpz.effect.BARTHUNDER):unsetFlag(tpz.effectFlag.DEATH)
-    player:getStatusEffect(tpz.effect.BARBLIZZARD):unsetFlag(tpz.effectFlag.DEATH)
-    player:getStatusEffect(tpz.effect.BARAERO):unsetFlag(tpz.effectFlag.DEATH)
-    player:getStatusEffect(tpz.effect.BARSTONE):unsetFlag(tpz.effectFlag.DEATH)
-    player:getStatusEffect(tpz.effect.BARFIRE):unsetFlag(tpz.effectFlag.DEATH)
-    player:getStatusEffect(tpz.effect.BARWATER):unsetFlag(tpz.effectFlag.DEATH)
+    player:setCharVar("ASA_BCNM", 1)
+    player:setTP(0)
+    player:timer(1000, function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
+
     player:getStatusEffect(tpz.effect.STR_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.DEX_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.VIT_BOOST):unsetFlag(tpz.effectFlag.DEATH)
@@ -88,10 +86,6 @@ function onBattlefieldEnter(player, battlefield)
     player:getStatusEffect(tpz.effect.CHR_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.MAX_HP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.MAX_MP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
-
-    player:setCharVar("ASA_BCNM", 1)
-    player:setTP(0)
-    player:timer(1000, function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
