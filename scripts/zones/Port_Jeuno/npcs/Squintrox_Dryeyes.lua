@@ -81,7 +81,6 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
-    print(option)
     if csid == 323 then
         if option == 100 then -- Viridian Key
             if player:hasKeyItem(tpz.ki.BOWL_OF_BLAND_GOBLIN_SALAD) and player:hasKeyItem(tpz.ki.JUG_OF_GREASY_GOBLIN_JUICE) and player:hasKeyItem(tpz.ki.CHUNK_OF_SMOKED_GOBLIN_GRUB) then
@@ -204,7 +203,6 @@ end
 
 function onEventFinish(player, csid, option)
     local now = tonumber(os.date("%j"))
-    print(option)
 
     if (csid == 323) then
         if (option == 1) then
