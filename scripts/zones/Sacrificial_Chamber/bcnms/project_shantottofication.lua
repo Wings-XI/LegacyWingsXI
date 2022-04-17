@@ -88,10 +88,32 @@ function onBattlefieldEnter(player, battlefield)
     player:getStatusEffect(tpz.effect.CHR_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.MAX_HP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
     player:getStatusEffect(tpz.effect.MAX_MP_BOOST):unsetFlag(tpz.effectFlag.DEATH)
-    player:setTP(0)
-    player:timer (1000 , function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
-end
 
+    local keyItems =
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED)   and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY)    and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE)   and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE)    and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_REGRET)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RAGE)    and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_AGONY)   and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DOLOR)   and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RANCOR)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT)  and 1 or 0) +
+        (player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)   and 1 or 0)
+
+    if keyItems > 0 then
+        player:setCharVar("ASA_BCNM", 1)
+    end
+
+    player:setTP(0)
+    player:timer(1000, function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
+end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
