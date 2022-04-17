@@ -1,17 +1,19 @@
 -----------------------------------
 -- Area: Temple of Uggalepih
---  NPC: ??? (Spawns Sozu Rogberry NM)
+--  NPC: ??? (Spawns Death From Above NM)
+-- Involved In Mission: Death From Above
+-- !pos 53 1 -32 159
 -----------------------------------
 local ID = require("scripts/zones/Temple_of_Uggalepih/IDs")
 require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 2387) and npcUtil.popFromQM(player, npc, ID.mob.SOZU_ROGBERRY) then -- Flickering Lantern
+    if npcUtil.tradeHas(trade, 1267) and npcUtil.popFromQM(player, npc, ID.mob.DEATH_FROM_ABOVE) then -- Bee Larvae
         player:confirmTrade()
     end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    player:messageSpecial(ID.text.IT_IS_A_BEEHIVE)
 end
