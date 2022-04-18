@@ -407,10 +407,6 @@ function onEventFinish(player, csid, option)
                 player:addKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_DEATH)
             end
-            if not player:hasKeyItem(tpz.ki.BLACK_BOOK) then
-                player:addKeyItem(tpz.ki.BLACK_BOOK)
-                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLACK_BOOK)
-            end
         end
     end
 end
