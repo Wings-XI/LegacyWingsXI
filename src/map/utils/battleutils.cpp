@@ -3857,21 +3857,6 @@ namespace battleutils
             return nullptr;
         };
 
-        auto checkFellow = [&](CBattleEntity* PEntity) -> CBattleEntity* {
-            if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity))
-            {
-                if (PChar->m_PFellow) 
-                {
-                    CBattleEntity* fellow = (CBattleEntity*)PChar->m_PFellow;
-                    if (isValidTrickAttackHelper(fellow))
-                        return fellow;
-                }
-                
-            }
-
-            return nullptr;
-        };
-
         if (taUser->PParty != nullptr)
         {
             if (taUser->PParty->m_PAlliance != nullptr)
