@@ -61,6 +61,7 @@ end
 
 function onMobFight(mob, target)
     if mob:getHP() == 1 then
+        mob:setTP(0)
         if mob:AnimationSub() == 2 then
             mob:useMobAbility(1124)
         elseif mob:AnimationSub() == 3 then
