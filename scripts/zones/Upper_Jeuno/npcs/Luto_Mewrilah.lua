@@ -147,8 +147,8 @@ function onTrade(player, npc, trade)
 
     local UnlistedQualities = player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.UNLISTED_QUALITIES)
     if UnlistedQualities == QUEST_COMPLETED then
-        local weaponlevel = player:getFellowValue("weaponlevel")
-        local weapon = updateMatchingFellowWeapon(player, weaponlevel, trade)
+        local weaponlvl = player:getFellowValue("weaponlvl")
+        local weapon = updateMatchingFellowWeapon(player, weaponlvl, trade)
         if (weapon == nil) then
             -- no match found
             return
@@ -170,11 +170,11 @@ function onTrigger(player, npc)
     local needToZone = player:needToZone()
     local fellowParam = 0
     local bond = 0
-    local weaponlevel = 0
+    local weaponlvl = 0
     if UnlistedQualities == QUEST_COMPLETED then
         fellowParam = getFellowParam(player)
         bond = player:getFellowValue("bond")
-        weaponlevel = player:getFellowValue("weaponlevel")
+        weaponlvl = player:getFellowValue("weaponlvl")
     end
 
     if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(WildcatJeuno, 7)) then
@@ -205,19 +205,19 @@ function onTrigger(player, npc)
         player:startEvent(10053,244,14810,0,0,0,0,0,fellowParam)
     elseif MirrorMirror == QUEST_COMPLETED then
         if (player:getEquipID(tpz.slot.EAR1) == 14810 or player:getEquipID(tpz.slot.EAR2) == 14810) then
-            if (bond >= 10 and weaponlevel == 0) then
+            if (bond >= 10 and weaponlvl == 0) then
                 player:startEvent(10050, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 20 and weaponlevel == 1) then
+            elseif (bond >= 20 and weaponlvl == 1) then
                 player:startEvent(10051, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 40 and weaponlevel == 2) then
+            elseif (bond >= 40 and weaponlvl == 2) then
                 player:startEvent(10068, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 50 and weaponlevel == 3) then
+            elseif (bond >= 50 and weaponlvl == 3) then
                 player:startEvent(10069, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 60 and weaponlevel == 4) then
+            elseif (bond >= 60 and weaponlvl == 4) then
                 player:startEvent(10070, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 90 and weaponlevel == 5) then
+            elseif (bond >= 90 and weaponlvl == 5) then
                 player:startEvent(10076, 0, 0, 0, 0, 0, 0, 0, fellowParam)
-            elseif (bond >= 110 and weaponlevel == 6) then
+            elseif (bond >= 110 and weaponlvl == 6) then
                 player:startEvent(10077, 0, 0, 0, 0, 0, 0, 0, fellowParam)
             else
                 player:startEvent(10047,244,14810,0,0,0,0,0,fellowParam)
@@ -361,18 +361,18 @@ Adventuring Fellow Name Options:
         player:setLocalVar("StartOver", 0)
         player:confirmTrade()
     elseif csid == 10050 then
-        player:setFellowValue("weaponlevel", 1)
+        player:setFellowValue("weaponlvl", 1)
     elseif csid == 10051 then
-        player:setFellowValue("weaponlevel", 2)
+        player:setFellowValue("weaponlvl", 2)
     elseif csid == 10068 then
-        player:setFellowValue("weaponlevel", 3)
+        player:setFellowValue("weaponlvl", 3)
     elseif csid == 10069 then
-        player:setFellowValue("weaponlevel", 4)
+        player:setFellowValue("weaponlvl", 4)
     elseif csid == 10070 then
-        player:setFellowValue("weaponlevel", 5)
+        player:setFellowValue("weaponlvl", 5)
     elseif csid == 10076 then
-        player:setFellowValue("weaponlevel", 6)
+        player:setFellowValue("weaponlvl", 6)
     elseif csid == 10077 then
-        player:setFellowValue("weaponlevel", 7)
+        player:setFellowValue("weaponlvl", 7)
     end
 end
