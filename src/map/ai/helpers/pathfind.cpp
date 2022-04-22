@@ -251,7 +251,7 @@ void CPathFind::FollowPath()
 
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
 
-    if (m_carefulPathing)
+    if (isNavMeshEnabled() && m_carefulPathing)
     {
         m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
     }
@@ -365,6 +365,12 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
 bool CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 maxTurns, uint16 roamFlags)
 {
     TracyZoneScoped;
+
+    if (!isNavMeshEnabled())
+    {
+        return false;
+    }
+
     auto m_turnLength = tpzrand::GetRandomNumber((int)maxTurns) + 1;
 
     position_t startPosition = start;
@@ -490,10 +496,6 @@ bool CPathFind::AtPoint(const position_t& pos)
 
 bool CPathFind::InWater()
 {
-    if (m_POwner->loc.zone->GetWeather() == WEATHER_SQUALL)
-    {
-        return true;
-    }
     if (isNavMeshEnabled())
     {
         return m_POwner->loc.zone->m_navMesh->inWater(m_POwner->loc.p);
