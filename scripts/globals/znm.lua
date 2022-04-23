@@ -341,6 +341,11 @@ end
 tpz.znm.soultrapper = tpz.znm.soultrapper or {}
 
 tpz.znm.soultrapper.onItemCheck = function(target, user)
+    -- Players can manually type or macro a name - bypassing the client side targeting restriction
+    if (target == nil or (not target:isMob())) then
+        return tpz.msg.basic.ITEM_UNABLE_TO_USE
+    end
+
     if not user:isFacing(target) then
         return tpz.msg.basic.ITEM_UNABLE_TO_USE
     end
