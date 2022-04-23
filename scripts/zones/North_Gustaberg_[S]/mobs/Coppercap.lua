@@ -27,6 +27,10 @@ function onMobEngaged(mob, target)
     end)
 end
 
+function onMobDisengage(mob)
+    mob:removeListener("ITEM_STOLEN")
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 
