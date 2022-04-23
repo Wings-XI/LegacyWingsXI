@@ -233,7 +233,7 @@ INSERT INTO `abilities` VALUES(191, 'curing_waltz_ii', 19, 30, 27, 8, 217, 306, 
 INSERT INTO `abilities` VALUES(192, 'curing_waltz_iii', 19, 50, 27, 10, 217, 306, 0, 8, 4000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(193, 'curing_waltz_iv', 19, 70, 27, 17, 217, 306, 0, 9, 4000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(194, 'healing_waltz', 19, 35, 27, 15, 215, 0, 0, 10, 4000, 0, 14, 20.0, 0, 1, 300, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(195, 'divine_waltz', 19, 25, 27, 13, 225, 306, 0, 11, 4000, 0, 14, 20.0, 1, 0, 0, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(195, 'divine_waltz', 19, 25, 27, 13, 225, 306, 0, 11, 4000, 0, 14, 10.0, 1, 0, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(196, 'spectral_jig', 19, 25, 1, 30, 218, 0, 0, 12, 4000, 0, 14, 20.0, 0, 1, 300, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(197, 'chocobo_jig', 19, 55, 1, 60, 218, 126, 0, 13, 4000, 0, 14, 20.0, 0, 1, 300, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(198, 'jigs', 19, 25, 1, 0, 0, 0, 0, 0, 4000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
