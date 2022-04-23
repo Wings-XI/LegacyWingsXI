@@ -145,10 +145,12 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    local partner = GetMobByID(mob:getID() - 1)
-    mob:showText(mob, ID.text.DSHANTOTTO_DEATH)
-    if partner:isAlive() then
-        partner:setLocalVar("canMeteor", 1)
-        partner:setLocalVar("delay", os.time() + 30)
+    if isKiller or isKiller == nil then
+        local partner = GetMobByID(mob:getID() - 1)
+        mob:showText(mob, ID.text.DSHANTOTTO_DEATH)
+        if partner:isAlive() then
+            partner:setLocalVar("canMeteor", 1)
+            partner:setLocalVar("delay", os.time() + 30)
+        end
     end
 end

@@ -82,8 +82,8 @@ function onMobFight(mob, target)
         mob:castSpell()
     elseif spellNum == 1 and multiSpell < 4 then
         mob:setMod(tpz.mod.MATT, 32)
-        mob:setMod(tpz.mod.UDMGPHYS, -70)
-        mob:setMod(tpz.mod.UDMGRANGE, -70)
+        mob:setMod(tpz.mod.UDMGPHYS, 0)
+        mob:setMod(tpz.mod.UDMGRANGE, 0)
         mob:setSpellList(533)
         mob:setLocalVar("spellNum", 0)
     elseif spellNum == 1 then
@@ -137,7 +137,7 @@ function onMobFight(mob, target)
 
     local delay = mob:getLocalVar("delay")
     if not partner:isAlive() and os.time() > delay then
-        mob:useMobAbility(2486)
+        mob:useMobAbility(2488)
         mob:setLocalVar("delay", os.time() + math.random(90,120))
     end
 end
@@ -169,10 +169,12 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:showText(mob, ID.text.SHANTOTTO_DEATH)
-    local partner = GetMobByID(mob:getID() + 1)
-    if partner:isAlive() then
-        partner:setLocalVar("canMeteor", 1)
-        partner:setLocalVar("delay", os.time() + 30)
+    if isKiller or isKiller == nil then
+        mob:showText(mob, ID.text.SHANTOTTO_DEATH)
+        local partner = GetMobByID(mob:getID() + 1)
+        if partner:isAlive() then
+            partner:setLocalVar("canMeteor", 1)
+            partner:setLocalVar("delay", os.time() + 30)
+        end
     end
 end
