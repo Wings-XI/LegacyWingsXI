@@ -42,6 +42,10 @@ function updateRegen(mob)
     end
 end
 
+function onMobDisengage(mob)
+    mob:removeListener("ITEM_STOLEN")
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 
