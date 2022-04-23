@@ -676,7 +676,7 @@ INSERT INTO `mob_skills` VALUES(828, 500, 'water_blade', 0, 7.0, 2000, 0, 1, 0, 
 INSERT INTO `mob_skills` VALUES(829, 501, 'great_wheel', 1, 7.0, 2000, 2000, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(830, 502, 'light_blade', 0, 30.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(831, 513, 'moonlit_charge', 0, 10.0, 512, 3000, 4, 0, 0, 7, 2, 0, 0);
-INSERT INTO `mob_skills` VALUES(832, 514, 'crescent_fang', 0, 10.0, 513, 3000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(832, 514, 'crescent_fang', 0, 10.0, 513, 3000, 4, 0, 0, 0, 1, 0, 0);
 INSERT INTO `mob_skills` VALUES(833, 515, 'lunar_cry', 0, 10.0, 514, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(834, 516, 'ecliptic_growl', 1, 10.0, 516, 3000, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(835, 517, 'lunar_roar', 1, 10.0, 515, 3000, 4, 0, 0, 0, 0, 0, 0);
@@ -1324,7 +1324,7 @@ INSERT INTO `mob_skills` VALUES(1896, 1243, 'rock_smash', 0, 7.0, 2000, 1500, 4,
 INSERT INTO `mob_skills` VALUES(1899, 1246, 'quake_stomp', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1892, 1229, 'cerberus_howl', 0, 7.0, 2000, 0, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1901, 505, 'activate', 0, 7.0, 2000, 0, 1, 4, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1903, 915, 'camisado', 0, 10.0, 640, 3000, 4, 0, 0, 2, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1903, 915, 'camisado', 0, 10.0, 640, 3000, 4, 0, 0, 2, 2, 0, 0);
 INSERT INTO `mob_skills` VALUES(1904, 1126, 'somnolence', 0, 10.0, 641, 3000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1905, 916, 'noctoshield', 1, 10.0, 644, 1800, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1906, 917, 'ultimate_terror', 1, 10.0, 643, 3000, 4, 0, 0, 0, 0, 0, 0);
