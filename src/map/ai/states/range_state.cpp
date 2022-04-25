@@ -112,7 +112,10 @@ bool CRangeState::Update(time_point tick)
             range = 40;
             if (m_initialDamage != m_PEntity->GetRangedWeaponDmg() || m_initialDelay != m_PEntity->GetRangedWeaponDelay(false))
             {
-                m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, 0, 0, MSGBASIC_NO_RANGED_WEAPON);
+                if (auto PChar = dynamic_cast<CCharEntity*>(m_PEntity))
+                {
+                    m_errorMsg = std::make_unique<CMessageBasicPacket>(PChar, PChar, 0, 0, MSGBASIC_NO_RANGED_WEAPON);
+                }
             }
         }
 
