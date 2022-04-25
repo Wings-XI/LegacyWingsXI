@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -47,6 +47,8 @@ private:
     position_t m_startPos;
     time_point m_lastCancelCheck;
     bool m_cancelEarly;
+    int m_initialDelay;
+    int m_initialDamage;
 };
 
 #endif
