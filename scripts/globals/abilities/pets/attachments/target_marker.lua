@@ -4,12 +4,14 @@
 require("scripts/globals/status")
 -----------------------------------
 -- Needs a rework to remove level diff calcs http://wiki.ffo.jp/html/9133.html
+-- Same link as above:  In addition, the effect of increasing the hit rate is also applied to the ranged attack of the shooting battle as well as the stabilizer series
 
 function onEquip(pet)
     pet:addListener("ENGAGE", "AUTO_TARGETMARKER_ENGAGE", function(pet, target)
         local ignored = pet:getLocalVar("targetmarker")
         if ignored > 0 then
             pet:delMod(tpz.mod.ACC, ignored)
+            pet:delMod(tpz.mod.RACC, ignored)
             pet:setLocalVar("targetmarker", 0)
         end
 
@@ -27,6 +29,7 @@ function onEquip(pet)
             end
             local accbonus = math.floor(eva * percentage)
             pet:addMod(tpz.mod.ACC, accbonus)
+            pet:addMod(tpz.mod.RACC, accbonus)
             pet:setLocalVar("targetmarker", accbonus)
         end
     end)
@@ -34,6 +37,7 @@ function onEquip(pet)
         local ignored = pet:getLocalVar("targetmarker")
         if ignored > 0 then
             pet:delMod(tpz.mod.ACC, ignored)
+            pet:delMod(tpz.mod.RACC, ignored)
             pet:setLocalVar("targetmarker", 0)
         end
     end)
@@ -59,6 +63,7 @@ function onManeuverGain(pet, maneuvers)
         end
         local accbonus = math.floor(eva * percentage)
         pet:addMod(tpz.mod.ACC, accbonus - ignored)
+        pet:addMod(tpz.mod.RACC, accbonus - ignored)
         pet:setLocalVar("targetmarker", accbonus)
     end
 end
@@ -78,6 +83,7 @@ function onManeuverLose(pet, maneuvers)
         end
         local accbonus = math.floor(eva * percentage)
         pet:delMod(tpz.mod.ACC, ignored - accbonus)
+        pet:delMod(tpz.mod.RACC, ignored - accbonus)
         pet:setLocalVar("targetmarker", accbonus)
     end
 end
