@@ -130,7 +130,7 @@ local optionToAugment =
         [23] = {{augment =  339, power = 19}}, -- "Elemental Siphon" +20
         [24] = {{augment =  340, power =  4}}, -- "Phantom Roll" ability delay -5
         [25] = {{augment =  341, power =  9}}, -- "Repair" potency +10%
-        [26] = {{augment =  342, power =  1}}, -- "Waltz" TP cost -20
+        [26] = {{augment =  342, power =  4}}, -- "Waltz" TP cost -50
         [27] = {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
         [28] = {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
         [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
