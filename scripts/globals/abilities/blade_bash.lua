@@ -13,8 +13,6 @@ require("scripts/globals/msg")
 function onAbilityCheck(player, target, ability)
     if (not player:isWeaponTwoHanded()) then
         return tpz.msg.basic.NEEDS_2H_WEAPON, 0
-    elseif not player:isEngaged() then
-        return tpz.msg.basic.REQUIRES_COMBAT, 0
     elseif not player:isFacing(target) then
 		return 5, target:getID()
     else

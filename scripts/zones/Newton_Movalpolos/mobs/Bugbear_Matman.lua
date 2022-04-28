@@ -6,7 +6,7 @@ require("scripts/globals/hunts")
 ------------------------------
 
 function onMobSpawn(mob)
-    mob:addMod(tpz.mod.REGAIN, 500)
+    mob:addMod(tpz.mod.REGAIN, 50)
 end
 
 function onMobWeaponSkillPrepare(mob, target)

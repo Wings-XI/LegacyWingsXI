@@ -39,16 +39,16 @@ local loot =
         },
         {
             {itemid = 4896, droprate = 174}, -- Scroll of Fire Spirit
-            {itemid = 4751, droprate =  16}, -- Vile Elixir
+            {itemid = 4174, droprate =  16}, -- Vile Elixir
             {itemid = 4858, droprate = 114}, -- Ice Spikes
-            {itemid = 4874, droprate = 174}, -- Refresh
+            {itemid = 4717, droprate = 174}, -- Refresh
             {itemid = 4947, droprate = 138}, -- Utsusemi: Ni
             {itemid = 4172, droprate =  21}, -- Reraiser
             {itemid = 792,  droprate =  21}, -- Pearl
         },
         {
             {itemid = 4858, droprate = 87}, -- Scroll of Ice Spikes
-            {itemid = 4874, droprate = 75}, -- Refresh
+            {itemid = 4717, droprate = 75}, -- Refresh
             {itemid = 4947, droprate = 75}, -- Utsusemi: Ni
             {itemid =  792, droprate = 86}, -- Pearl
             {itemid =    0, droprate =  0}, -- nothing
