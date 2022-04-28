@@ -1230,10 +1230,10 @@ namespace fishingutils
                     anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch (5 strikes).");
                     if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK)
                     {
-                        charutils::SetCharVar(PChar, "FishingDenied", 1);
+                        //charutils::SetCharVar(PChar, "FishingDenied", 1);
                         charutils::SetCharVar(PChar, "FishingBot", 1);
-                        RodBreak(PChar);
-                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_RODBREAK;
+                        /*RodBreak(PChar);
+                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_RODBREAK;*/
                     }
                 }
                 else
@@ -1310,12 +1310,12 @@ namespace fishingutils
                 if (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken) {
                     anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch.");
                     if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK) {
-                        charutils::SetCharVar(PChar, "FishingDenied", 1);
+                        //charutils::SetCharVar(PChar, "FishingDenied", 1);
                         charutils::SetCharVar(PChar, "FishingBot", 1);
-                        RodBreak(PChar);
+                        /*RodBreak(PChar);
                         PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_RODBREAK;
-                        //PChar->status = STATUS_SHUTDOWN;
-                        //charutils::SendToZone(PChar, 1, 0);
+                        PChar->status = STATUS_SHUTDOWN;
+                        charutils::SendToZone(PChar, 1, 0);*/
                     }
                     if (response != nullptr)
                         ShowDebug("fishingToken error: expected (%u) but got (%u)\n", PChar->fishingToken, response->fishingToken);
