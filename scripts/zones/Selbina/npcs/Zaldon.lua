@@ -269,6 +269,7 @@ local function tradeFish(player, fishId)
 
     for i = 1, #rewards do
         sum = sum + rewards[i].chance
+
         if roll <= sum then
             found = true
             player:setCharVar("insideBellyItemIdx", i)
@@ -287,32 +288,32 @@ local function giveReward(player, csid)
         local fishId  = player:getCharVar("insideBellyFishId")
         local itemIdx = player:getCharVar("insideBellyItemIdx")
         local reward  = fishRewards[fishId]
-        local traded  = true
+--        local traded  = true
 
         if itemIdx > 0 then
             local r = reward.items[itemIdx]
             local itemId = r.itemId
             local itemQt = 1
+
             if r.min ~= nil and r.max ~= nil then
                 itemQt = math.random(r.min, r.max)
             end
 
-            if not npcUtil.giveItem(player, {{itemId, itemQt}}) then
-                traded = false
-            end
-        end
+            if npcUtil.giveItem(player, {{itemId, itemQt}}) then
+--                traded = false
+                player:confirmTrade()
+                player:addGil(GIL_RATE * reward.gil)
+                player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
+                player:setCharVar("insideBellyFishId", 0)
+                player:setCharVar("insideBellyItemIdx", 0)
 
-        if traded then
-            player:confirmTrade()
-            player:addGil(GIL_RATE * reward.gil)
-            player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
-            player:setCharVar("insideBellyFishId", 0)
-            player:setCharVar("insideBellyItemIdx", 0)
-            if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY) == QUEST_ACCEPTED then
-                player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY)
-            end
-            if reward.title ~= nil then
-                player:addTitle(reward.title)
+                if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY) == QUEST_ACCEPTED then
+                    player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY)
+                end
+
+                if reward.title ~= nil then
+                    player:addTitle(reward.title)
+                end
             end
         end
     end
