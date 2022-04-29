@@ -6874,7 +6874,7 @@ INSERT INTO `mob_droplist` VALUES (1338,2,0,1000,656,0); -- (Hundredscar Hajwaj)
 INSERT INTO `mob_droplist` VALUES (1338,0,0,1000,13051,861); -- (Hundredscar Hajwaj) Coarse Leggings
 INSERT INTO `mob_droplist` VALUES (1338,0,0,1000,17412,100); -- (Hundredscar Hajwaj) Wild Cudgel
 INSERT INTO `mob_droplist` VALUES (1339,2,0,1000,846,0);
-INSERT INTO `mob_droplist` VALUES (1339,0,0,1000,1616,300);
+INSERT INTO `mob_droplist` VALUES (1339,0,0,1000,1616,31); -- Antlion Jaw
 INSERT INTO `mob_droplist` VALUES (1339,0,0,1000,1649,10);
 INSERT INTO `mob_droplist` VALUES (1340,0,0,1000,905,140);
 INSERT INTO `mob_droplist` VALUES (1340,0,0,1000,1122,110);
