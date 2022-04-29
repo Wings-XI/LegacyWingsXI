@@ -83,7 +83,7 @@ function onTrigger(player, npc)
     local mobOne = player:getCharVar("ASA_MobOne")
     local platesTraded = player:getCharVar("ASA_Plates")
 
-    if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I or (player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and not player:hasKeyItem(tpz.ki.BLACK_BOOK)) then
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_I or (player:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and not player:hasKeyItem(tpz.ki.BLACK_BOOK)) then
         if mobOne == 0 then
             -- Select mobs for player to get pictures of
             mobOne = math.random(1,23)
@@ -93,7 +93,7 @@ function onTrigger(player, npc)
             end
             local mobThree = math.random(1,23)
             while mobThree == mobOne or mobThree == mobTwo do
-                mobTwo = math.random(1,23)
+                mobThree = math.random(1,23)
             end
             player:setCharVar("ASA_MobOne", mobOne)
             player:setCharVar("ASA_MobTwo", mobTwo)

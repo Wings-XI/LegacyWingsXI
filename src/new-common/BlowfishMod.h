@@ -3,7 +3,7 @@
  *	Implements the FFXI packet encryption scheme, which is a modified
  *  variant of the Blowfish algorithm.
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_BLOWFISHMOD_H

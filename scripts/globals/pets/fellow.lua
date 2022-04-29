@@ -288,12 +288,12 @@ function checkProvoke(mob, target, fellowType)
         if mob:actionQueueEmpty() and (mob:getHPP() > 25 or master:getHPP() < 10) then
             if target:isEngaged() then
                 if target:getTarget():getID() ~= mob:getID() then
-                    mob:useJobAbility(19, target)
+                    mob:useJobAbility(35, target)
                     mob:setLocalVar("provoke", os.time()+30)
                     return true
                 end
             else -- edge case for independent fellow attacking (quest bcnms)
-                mob:useJobAbility(19, target)
+                mob:useJobAbility(35, target)
                 mob:setLocalVar("provoke", os.time()+30)
                 return true
             end

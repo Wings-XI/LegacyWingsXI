@@ -59,6 +59,7 @@
 #include "../entities/mobentity.h"
 #include "../entities/petentity.h"
 #include "../entities/trustentity.h"
+#include "../entities/fellowentity.h"
 #include "../enmity_container.h"
 #include "../items.h"
 #include "../item_container.h"
@@ -3891,6 +3892,19 @@ namespace battleutils
                     {
                         return potentialTrust;
                     }
+                }
+            }
+        }
+
+        // Check fellow for TA target
+        if (auto* PChar = dynamic_cast<CCharEntity*>(taUser))
+        {
+            if (PChar->m_PFellow)
+            {
+                if (auto* fellow = dynamic_cast<CBattleEntity*>(PChar->m_PFellow))
+                {
+                    if (isValidTrickAttackHelper(fellow))
+                        return fellow;
                 }
             }
         }

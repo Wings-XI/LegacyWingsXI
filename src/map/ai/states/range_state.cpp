@@ -47,7 +47,11 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid) :
         throw CStateInitException(std::move(m_errorMsg));
     }
 
+    m_initialDamage = PEntity->GetRangedWeaponDmg();
+
     auto delay = m_PEntity->GetRangedWeaponDelay(false);
+    m_initialDelay = delay;
+
     delay = battleutils::GetSnapshotReduction(m_PEntity, delay);
 
     // TODO: Allow trusts to use this
@@ -106,6 +110,13 @@ bool CRangeState::Update(time_point tick)
         if (tick > GetEntryTime()) // after checking for the initial time, the mob can move further away and not cancel our RA
         {
             range = 40;
+            if (m_initialDamage != m_PEntity->GetRangedWeaponDmg() || m_initialDelay != m_PEntity->GetRangedWeaponDelay(false))
+            {
+                if (auto PChar = dynamic_cast<CCharEntity*>(m_PEntity))
+                {
+                    m_errorMsg = std::make_unique<CMessageBasicPacket>(PChar, PChar, 0, 0, MSGBASIC_NO_RANGED_WEAPON);
+                }
+            }
         }
 
         CanUseRangedAttack(PTarget, range);
@@ -209,7 +220,7 @@ bool CRangeState::CanUseRangedAttack(CBattleEntity* PTarget, uint8 range)
     {
         CItemWeapon* PRanged = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_RANGED));
         CItemWeapon* PAmmo = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_AMMO));
-
+        
         if (!((PRanged && PRanged->isType(ITEM_WEAPON)) ||
               (PAmmo && PAmmo->isThrowing())))
         {

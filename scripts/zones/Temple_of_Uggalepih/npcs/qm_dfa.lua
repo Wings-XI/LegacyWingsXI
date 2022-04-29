@@ -15,5 +15,5 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NM_OFFSET + 4)
+    player:messageSpecial(ID.text.IT_IS_A_BEEHIVE)
 end

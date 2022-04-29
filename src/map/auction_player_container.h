@@ -2,7 +2,7 @@
 ===========================================================================
 
 this entire document is 100% original code written for the Wings FFXI server project
-(C) 2020-2021 Wings Project. Licensed under AGPLv3 as far as permitted by law.
+(C) 2020-2021 Wings Project. Licensed under GPLv3 as far as permitted by law.
 Usage allowed only in open-source servers.
 Author: Caelic
 
@@ -42,7 +42,7 @@ public:
     uint16 m_page;
     uint16 m_maxPage;
     bool isPageResetQueued; // go back to page 1 next time sales history is looked at
-    
+
 };
 
 #endif

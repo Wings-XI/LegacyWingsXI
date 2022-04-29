@@ -2,7 +2,7 @@
  *	@file LoginServer.h
  *	Easy threading interface
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_THREAD_H

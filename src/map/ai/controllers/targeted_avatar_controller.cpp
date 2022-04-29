@@ -2,7 +2,7 @@
 ===========================================================================
 
 this document is 100% original code written for the Wings FFXI server project
-(C) 2020-2021 Wings Project. Licensed under AGPLv3 as far as permitted by law.
+(C) 2020-2021 Wings Project. Licensed under GPLv3 as far as permitted by law.
 Usage allowed only in open-source servers.
 -Caelic
 
@@ -65,7 +65,7 @@ PAvatar(PPet), PAbilityTarget(PTarget)
         ShowDebug("Atomos detected. Set PSkillSecondary to %i\n", PSkillSecondary->getID());
         m_LastSkillTime = m_Tick - 1s; // initial skill cooldown 5s
     }
-    
+
 }
 
 void CTargetedAvatarController::DoRoamTick(time_point tick)

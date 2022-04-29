@@ -39,7 +39,12 @@ function onEventFinish(player, csid, option)
     if csid == 15 and option == 1 then
         QM:setStatus(tpz.status.DISAPPEAR)
         player:messageSpecial(ID.text.BATTLE_TIME, 30)
-        player:delKeyItem(tpz.ki.BLACK_BOOK)
+        for _, member in pairs(player:getAlliance()) do
+            if member:hasKeyItem(tpz.ki.BLACK_BOOK) then
+                member:setLocalVar("hadBook", 1)
+                member:delKeyItem(tpz.ki.BLACK_BOOK)
+            end
+        end
         player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.BLACK_BOOK)
         player:addPartyEffect(276, 10, 0, 0) -- Add Confrontation Status to allow attacking the mobs
         npcUtil.popFromQM(player, QM, mobs, {

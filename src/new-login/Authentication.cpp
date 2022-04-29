@@ -2,7 +2,7 @@
  *	@file Authentication.cpp
  *	User authentication routines
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #include <mariadb++/connection.hpp>

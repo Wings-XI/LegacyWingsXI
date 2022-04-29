@@ -11162,6 +11162,7 @@ INSERT INTO `mob_droplist` VALUES(2134, 0, 0, 1000, 4358, 520);
 INSERT INTO `mob_droplist` VALUES(2135, 0, 0, 1000, 2754, 30);
 INSERT INTO `mob_droplist` VALUES(2135, 2, 0, 1000, 2754, 0);
 INSERT INTO `mob_droplist` VALUES(2135, 0, 0, 1000, 2755, 200);
+INSERT INTO `mob_droplist` VALUES(2135, 0, 0, 1000, 5755, 190);
 INSERT INTO `mob_droplist` VALUES(2136, 0, 0, 1000, 861, 210);
 INSERT INTO `mob_droplist` VALUES(2136, 0, 0, 1000, 884, 480);
 INSERT INTO `mob_droplist` VALUES(2136, 2, 0, 1000, 4372, 0);
@@ -11312,6 +11313,7 @@ INSERT INTO `mob_droplist` VALUES(2167, 0, 0, 1000, 853, 190);
 INSERT INTO `mob_droplist` VALUES(2168, 0, 0, 1000, 2754, 260);
 INSERT INTO `mob_droplist` VALUES(2168, 2, 0, 1000, 2754, 0);
 INSERT INTO `mob_droplist` VALUES(2168, 0, 0, 1000, 2755, 340);
+INSERT INTO `mob_droplist` VALUES(2168, 0, 0, 1000, 5755, 230);
 INSERT INTO `mob_droplist` VALUES(2169, 0, 0, 1000, 857, 20);
 INSERT INTO `mob_droplist` VALUES(2169, 0, 0, 1000, 857, 10);
 INSERT INTO `mob_droplist` VALUES(2169, 0, 0, 1000, 893, 50);
@@ -17086,6 +17088,7 @@ INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1456, 333); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1452, 333); -- Silverpiece
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1455, 333); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1456, 334); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3240, 0, 0, 1000, 15219, 475);
 
 --
 -- Indexes for dumped tables

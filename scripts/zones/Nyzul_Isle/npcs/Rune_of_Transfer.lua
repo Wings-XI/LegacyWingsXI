@@ -179,10 +179,7 @@ function bubbleWarpThePlayers(player, instance, stage)
         player:startEvent(95)
         for _,char in pairs(instance:getChars()) do
             if char:getID() ~= player:getID() then
-                char:setLocalVar("Nyzul_BubbleWarpQuit", os.time() + 2)
-                while(char:getEventID() ~= -1 and os.time() <= char:getLocalVar("Nyzul_BubbleWarpQuit")) do
-                    char:release()
-                end
+                char:release()
                 char:startEvent(95)
             end
         end

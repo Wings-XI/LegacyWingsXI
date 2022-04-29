@@ -10,6 +10,7 @@ require("scripts/globals/mobs")
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:setMod(tpz.mod.COUNTER, 25)
 end
 
 function onMobSpawn(mob)

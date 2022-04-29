@@ -2,7 +2,7 @@
  *	@file SSLConnection.cpp
  *	TLS / SSL encrypted connection class.
  *	@author Twilight
- *	@copyright 2021, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2021, all rights reserved. Licensed under GPLv3
  */
 
 #include "SSLConnection.h"

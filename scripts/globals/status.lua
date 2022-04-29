@@ -1462,7 +1462,7 @@ tpz.mod =
     SAMBA_PDURATION           = 498, -- Samba percent duration bonus
     SPECTRAL_JIG_DURATION     = 502, -- Spectral Jig duration bonus in percents
     REVERSE_FLOURISH_EFFECT   = 836, -- Reverse Flourish effect in tenths of squared term multiplier
-    WALTZ_COST                = 139, -- Reduce Waltz cost by 5%
+    WALTZ_COST                = 139, -- Reduce Waltz cost by 5tp (50 post 1000tp scale)
 
     -- Scholar
     BLACK_MAGIC_COST          = 393, -- MP cost for black magic (light/dark arts)

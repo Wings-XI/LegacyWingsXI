@@ -2,7 +2,7 @@
  *	@file Debugging.c
  *	Debugging, logging and execption logging
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #include "Debugging.h"

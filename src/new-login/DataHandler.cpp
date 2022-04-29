@@ -2,7 +2,7 @@
  *	@file DataHandler.cpp
  *	Implementation of the data protocol
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #include <mariadb++/connection.hpp>
@@ -242,7 +242,7 @@ void DataHandler::Run()
                 bGotKey = true;
                 mpSession->SendRequestToViewServer(LoginSession::VIEW_SERVER_PROCEED_LOGIN);
                 LOG_DEBUG1("Key updated.");
-                
+
             }
             else {
                 LOG_ERROR("Client sent a key before creating session.");

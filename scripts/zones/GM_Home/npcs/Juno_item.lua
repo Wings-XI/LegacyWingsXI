@@ -2,7 +2,7 @@
 -- Area: GM Home
 --  NPC: Key Item
 -- Gives GMs necessary KIs
--- License: AGPLv3
+-- License: GPLv3
 -----------------------------------
 
 local ID = require("scripts/zones/GM_Home/IDs")
@@ -18,10 +18,10 @@ function onEventUpdate(player, csid, option)
 end;
 
 function onEventFinish(player, csid, option)
-    local allowedItems = 
+    local allowedItems =
     {
         549, 495, 494, 4377, 554, 555, 534, 531, 776, 557, 556, 558, 559,
-        560, 561, 562, 917, 634, 12507, 4508, 548, 16522, 16631, 1126        
+        560, 561, 562, 917, 634, 12507, 4508, 548, 16522, 16631, 1126
     }
     if not listContains(allowedItems, option) then
         return

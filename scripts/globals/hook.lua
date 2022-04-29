@@ -1,6 +1,6 @@
 --------------------------------------------------------
 -- (C) 2022 Wings Project.                            --
--- Licensed under AGPLv3                              --
+-- Licensed under GPLv3                              --
 -- Hook system.                                       --
 -- Create a file called hook-<name> and set <name>    --
 -- in settings and it'll be included when including   --

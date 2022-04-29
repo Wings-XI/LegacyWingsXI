@@ -2,7 +2,7 @@
 -- Area: GM Home
 --  NPC: Key Item
 -- Gives GMs necessary KIs
--- License: AGPLv3
+-- License: GPLv3
 -----------------------------------
 
 local ID = require("scripts/zones/GM_Home/IDs")

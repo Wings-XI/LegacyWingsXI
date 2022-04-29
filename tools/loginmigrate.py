@@ -3,7 +3,7 @@
 """loginmigrate.py
 Migrate existing userbase from old to new login server
 Author: Twilight
-License: AGPLv3
+License: GPLv3
 """
 
 import sys

@@ -616,6 +616,11 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
              attacker:getStat(tpz.mod.INT) * wsParams.int_wsc + attacker:getStat(tpz.mod.MND) * wsParams.mnd_wsc +
              attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc)
 
+        -- Applying fTP multiplier
+        -- ftp doesnt multiply fInt (dStat), it multiplies 
+        local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + bonusfTP
+        dmg = dmg * ftp
+
         -- mythic weapons use: D value = (77 + status correction) x magnification + (own step A-enemy step B) x system magnification
         -- Source: bgwiki and https://w.atwiki.jp/studiogobli/pages/77.html
         if (mythicMagicWsParams) then
@@ -626,11 +631,6 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         else
             dmg = dmg + fint
         end
-
-        -- Applying fTP multiplier
-        local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + bonusfTP
-
-        dmg = dmg * ftp
 
         -- Factor in "all hits" bonus damage mods
         local bonusdmg = attacker:getMod(tpz.mod.ALL_WSDMG_ALL_HITS) -- For any WS

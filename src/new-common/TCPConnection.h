@@ -2,7 +2,7 @@
  *	@file TCPConnection.h
  *	Low level TCP connection classes.
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_TCPCONNECTION_H
