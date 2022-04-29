@@ -18,11 +18,9 @@ function onAbilityCheck(player, target, ability)
     elseif player:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.STAFF then
         ability:setAnimation(202)
     end 
-    
+
     if (not player:isWeaponTwoHanded()) then
         return tpz.msg.basic.NEEDS_2H_WEAPON, 0
-    elseif not player:isFacing(target) then
-		return 5, target:getID()
     else
         return 0, 0
     end
