@@ -2,7 +2,7 @@
 *	@file WorldDBConnection.cpp
 *	Handles connections to world DB servers
 *	@author Twilight
-*	@copyright 2021, all rights reserved. Licensed under AGPLv3
+*	@copyright 2021, all rights reserved. Licensed under GPLv3
 */
 
 #include "WorldDBConnection.h"

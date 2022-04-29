@@ -2,7 +2,7 @@
 -- Area: GM Home
 --  NPC: Fame
 -- Raises fame in starting cities and Norg
--- License: AGPLv3
+-- License: GPLv3
 -----------------------------------
 
 require("scripts/globals/log_ids")
@@ -23,14 +23,14 @@ function onEventFinish(player, csid, option)
 	end
 	nationid = math.floor(option / 100)
 	famerank = option % 100
-	
+
 	if (nationid == 0) then nation = SANDORIA
 	elseif (nationid == 1) then nation = BASTOK
 	elseif (nationid == 2) then nation = WINDURST
 	elseif (nationid == 3) then nation = NORG
 	else return
 	end
-	
+
 	if (famerank == 0 or famerank == 1) then fame = 0
 	elseif (famerank == 2) then fame = 50
 	elseif (famerank == 3) then fame = 125
@@ -42,7 +42,7 @@ function onEventFinish(player, csid, option)
 	elseif (famerank == 9) then fame = 613
 	else return
 	end
-	
+
 	player:setFame(nation, fame)
 	player:setFame(JEUNO, math.floor((player:getFame(SANDORIA) + player:getFame(BASTOK) + player:getFame(WINDURST))/3))
 	player:messageSpecial(7056, nationid, famerank)

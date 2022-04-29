@@ -16,7 +16,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.ENCHANTMENT, 0, 0, 600, 15864)
+    target:addStatusEffect(tpz.effect.ENCHANTMENT, 0, 0, 60, 15864)
 end
 
 function onEffectGain(target, effect)

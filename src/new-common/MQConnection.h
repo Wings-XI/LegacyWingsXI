@@ -2,7 +2,7 @@
  *	@file MQConnection.h
  *	Handles connections to world MQ servers
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under AGPLv3
+ *	@copyright 2020, all rights reserved. Licensed under GPLv3
  */
 
 #ifndef FFXI_COMMON_MQCONNECTION_H

@@ -3,8 +3,8 @@
 
   Copyright (c) 2021 Wings Open Source Project
 
-  Use of this file is under AGPLv3, see LICENSE file.
-  
+  Use of this file is under GPLv3, see LICENSE file.
+
   Author: Caelic, Twilight
 
 ===========================================================================
@@ -55,7 +55,7 @@ void CDynamisHandler::HandleDynamis(time_point tick)
     {
         m_given10MinWarning = true;
         m_PZone->ForEachChar([&](CCharEntity* PChar) { luautils::OnDynamisTimeWarning(this, PChar); });
-        
+
     }
     if (!m_given3MinWarning && timeRemaining < 240)
     {

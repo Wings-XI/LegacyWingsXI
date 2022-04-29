@@ -3,7 +3,7 @@
 
   Copyright (c) 2021 Wings Open Source Project
 
-  Use of this file is under AGPLv3, see LICENSE file.
+  Use of this file is under GPLv3, see LICENSE file.
 
   Author: Velyn
 

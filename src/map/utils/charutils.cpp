@@ -6454,7 +6454,7 @@ namespace charutils
             RangedAmmoSubType = ((CItemWeapon*)RangedAmmo)->getSubSkillType();
         }
 
-        ShowDebug("RangedMainType = %u, RangedMainSubtype = %u, RangedMainCategory = %u\n",RangedMainType,RangedMainSubType,RangedMainCategory);
+        // ShowDebug("RangedMainType = %u, RangedMainSubtype = %u, RangedMainCategory = %u\n",RangedMainType,RangedMainSubType,RangedMainCategory);
 
 
 

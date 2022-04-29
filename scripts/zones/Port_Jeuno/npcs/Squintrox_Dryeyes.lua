@@ -295,6 +295,118 @@ function onEventFinish(player, csid, option)
                 player:addKeyItem(tpz.ki.OMNIS_STONE)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.OMNIS_STONE)
             end
+        elseif option == 306 then -- Black Book
+            player:delSeals(5, 0)
+            player:delGil(500)
+
+            if not player:hasKeyItem(tpz.ki.BLACK_BOOK) then
+                player:addKeyItem(tpz.ki.BLACK_BOOK)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLACK_BOOK)
+            end
+        elseif option == 307 then -- Elemental Saps
+            player:delSeals(15, 0)
+            player:delGil(1500)
+
+            if not player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.FIRE_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.FIRE_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.WATER_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WATER_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.WIND_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WIND_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.EARTH_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LIGHTNING_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.ICE_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ICE_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LIGHT_SAP_CRYSTAL)
+            end
+            if not player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL) then
+                player:addKeyItem(tpz.ki.DARK_SAP_CRYSTAL)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_SAP_CRYSTAL)
+            end
+        elseif option == 308 then -- Tablet of Hexes KIs
+            player:delSeals(20, 0)
+            player:delGil(2000)
+
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_GREED) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_GREED)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_GREED)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_ENVY)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_ENVY)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_MALICE)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_MALICE)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_DECEIT)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_DECEIT)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_PRIDE)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_PRIDE)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BALE) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_BALE)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_BALE)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_DESPAIR)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_DESPAIR)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_REGRET) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_REGRET)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_REGRET)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RAGE) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_RAGE)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_RAGE)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_AGONY) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_AGONY)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_AGONY)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DOLOR) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_DOLOR)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_DOLOR)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_RANCOR) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_RANCOR)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_RANCOR)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_STRIFE)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_STRIFE)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_PENURY)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_PENURY)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_BLIGHT)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_BLIGHT)
+            end
+            if not player:hasKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH) then
+                player:addKeyItem(tpz.ki.TABLET_OF_HEXES_DEATH)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TABLET_OF_HEXES_DEATH)
+            end
         end
     end
 end

@@ -2,7 +2,7 @@
 -- Event Item Depository NPCs                   --
 -- Author: Twilight                             --
 -- (c) 2021 Wings open source project.          --
--- Licensed under AGPLv3                        --
+-- Licensed under GPLv3                        --
 --------------------------------------------------
 
 require('scripts/globals/zone')

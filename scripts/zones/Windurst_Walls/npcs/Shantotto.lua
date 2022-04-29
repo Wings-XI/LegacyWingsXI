@@ -176,14 +176,13 @@ function onTrigger(player, npc)
         player:startEvent(529, 0, 0, 0, TrustMemory(player), 0, 0, 0, FoiledAGolem == QUEST_COMPLETED and 1 or 0)
 
         -- Standard dialog
-    elseif (FoiledAGolem == QUEST_COMPLETED) then
-        player:startEvent(343) -- new standard dialog after Curses, Foiled A-Golem!?
-
-    elseif (CFA2 == QUEST_COMPLETED) then
-        player:startEvent(184) -- New standard dialog after CFA2
     elseif (player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING) and
         player:getCharVar("ShantottoCS") == 1) then
-        player:startEvent(399, 0, 0, 282)
+        player:startEvent(399, 0, 0, 0, tpz.ki.GLOVE_OF_PERPETUAL_TWILIGHT)
+    elseif (FoiledAGolem == QUEST_COMPLETED) then
+        player:startEvent(343) -- new standard dialog after Curses, Foiled A-Golem!?        
+    elseif (CFA2 == QUEST_COMPLETED) then
+        player:startEvent(184) -- New standard dialog after CFA2
     else
         player:startEvent(164)
     end
@@ -259,7 +258,6 @@ function onEventFinish(player, csid, option)
         player:setCharVar("MissionStatus", 8)
     elseif (csid == 399) then
         player:setCharVar("ShantottoCS", 0)
-
     elseif csid == 506 then
         player:completeMission(AMK, tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX)
         player:addMission(AMK, tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE)

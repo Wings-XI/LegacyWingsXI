@@ -16,12 +16,14 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.UDMGMAGIC, -101)
     mob:addMod(tpz.mod.UDMGPHYS, -101)
     mob:addMod(tpz.mod.UDMGRANGE, -101)
+    mob:addMod(tpz.mod.UDMGBREATH, -101)
     mob:setMobMod(tpz.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 8)
     mob:SetMobAbilityEnabled(false)
     mob:SetAutoAttackEnabled(false)
     mob:SetMagicCastingEnabled(true)
+    mob:untargetable(true)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
     mob:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
 end
@@ -93,6 +95,7 @@ function onMobFight(mob, target)
         mob:delMod(tpz.mod.UDMGMAGIC, -101)
         mob:delMod(tpz.mod.UDMGPHYS, -101)
         mob:delMod(tpz.mod.UDMGRANGE, -101)
+        mob:delMod(tpz.mod.UDMGBREATH, -101)
         mob:untargetable(false)
         mob:setSpellList(0)
         mob:setLocalVar("targetPhase", 2)
@@ -100,30 +103,33 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    mob:showText(mob, ID.text.ASA_BOMPUPU_DEATH)
-    for i = ID.mob.BOMPUPU + 1, ID.mob.BOMPUPU + 3 do
-        DespawnMob(i)
-        for _, member in pairs(player:getAlliance()) do
-            member:messageSpecial(ID.text.ASA_SHADOW_DEATH, 2)
+    if isKiller or isKiller == nil then
+        mob:showText(mob, ID.text.ASA_BOMPUPU_DEATH)
+        for i = ID.mob.BOMPUPU + 1, ID.mob.BOMPUPU + 3 do
+            DespawnMob(i)
+            for _, member in pairs(player:getAlliance()) do
+                member:messageSpecial(ID.text.ASA_SHADOW_DEATH, 2)
+            end
         end
-    end
 
-    local gorattz = GetMobByID(ID.mob.GORATTZ)
-    local renfred = GetMobByID(ID.mob.RENFRED)
-    local QM = GetNPCByID(ID.npc.OUTCROPPING_QM)
-    local spawner = GetPlayerByID(mob:getLocalVar("spawner"))
+        local gorattz = GetMobByID(ID.mob.GORATTZ)
+        local renfred = GetMobByID(ID.mob.RENFRED)
+        local QM = GetNPCByID(ID.npc.OUTCROPPING_QM)
+        local spawner = GetPlayerByID(mob:getLocalVar("spawner"))
 
-    if not gorattz:isAlive() and not renfred:isAlive() then
-        QM:setStatus(tpz.status.NORMAL)
-        spawner:delPartyEffect(276) -- Remove Confrontation
-        for _, member in pairs(spawner:getAlliance()) do
-            member:setCharVar("ASA_enemyPhase", 2)
-            local now = tonumber(os.date("%j"))
-            local lastChocobo = member:getCharVar("LastCactuarKey")
-            if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastChocobo and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II then
-                member:setCharVar("LastCactuarKey", os.date("%j"))
-                member:addKeyItem(tpz.ki.CACTUAR_KEY)
-                member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
+        if not gorattz:isAlive() and not renfred:isAlive() then
+            QM:setStatus(tpz.status.NORMAL)
+            spawner:delPartyEffect(276) -- Remove Confrontation
+            for _, member in pairs(spawner:getAlliance()) do
+                member:setCharVar("ASA_enemyPhase", 2)
+                local now = tonumber(os.date("%j"))
+                local lastChocobo = member:getCharVar("LastCactuarKey")
+                if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastChocobo and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and member:getLocalVar("hadBook") == 1 then
+                    member:setCharVar("LastCactuarKey", os.date("%j"))
+                    member:addKeyItem(tpz.ki.CACTUAR_KEY)
+                    member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
+                    member:setLocalVar("hadBook", 0)
+                end
             end
         end
     end

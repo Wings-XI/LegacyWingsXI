@@ -22,7 +22,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 Mentor and Search Comment functions and logic
 Copyright (c) 2021 Wings Open Source Project
-Distributed under AGPLv3. See LICENSE FILE.
+Distributed under GPLv3. See LICENSE FILE.
 
 ===========================================================================
 */
@@ -348,7 +348,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
                 }
             }
 
-            // filter by linkshell 
+            // filter by linkshell
             if (sr.lsFilter)
             {
                 // 0(none equipped) or id doesn't match either linkshell = skip/continue

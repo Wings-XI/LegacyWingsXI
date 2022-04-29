@@ -3,8 +3,8 @@
 
   Copyright (c) 2021 Wings Open Source Project
 
-  Use of this file is under AGPLv3, see LICENSE file.
-  
+  Use of this file is under GPLv3, see LICENSE file.
+
   Author: Caelic, Twilight
 
 ===========================================================================
@@ -41,7 +41,7 @@ public:
     void CleanupDynamis();                                    // cleanup instance that is finished
     void ClearPlayerRegistry();
     void EjectAllPlayers(bool immediate = false);
-    
+
     bool IsRegistered(uint32 charid);
     bool RegisterPlayer(uint32 charid);                  // returns false if dynamis registry is full (64 players)
     bool EjectPlayer(CCharEntity* PChar, bool immediate = false);

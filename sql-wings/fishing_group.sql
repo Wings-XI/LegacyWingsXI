@@ -667,6 +667,7 @@ INSERT INTO `fishing_group` VALUES(78, 13454, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(78, 13456, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(78, 14117, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(78, 14242, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
+INSERT INTO `fishing_group` VALUES(78, 16537, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(79, 4384, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(79, 4399, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');
 INSERT INTO `fishing_group` VALUES(79, 4403, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');

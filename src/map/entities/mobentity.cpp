@@ -866,9 +866,13 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         {
             float angle = 0.0f;
 
-            if (this->m_Family == 62 || this->m_Family == 164 || this->m_Family >= 259 && this->m_Family <= 264 || this->m_Family >= 391 && this->m_Family <= 393) // Cerb, Hydra, and Wyrm families have wide Conals
+            if (this->m_Family == 62 || this->m_Family == 164)  // Cerb and Hydra families have wide Conals
             {
                 angle = 90.0f; 
+            }
+            else if (this->m_Family >= 259 && this->m_Family <= 264 || this->m_Family >= 391 && this->m_Family <= 393) // Wyrms have slightly wider than normal
+            {
+                angle = 60.0f;
             }
             else if (PSkill->getID() == 2335) // Ixion's Lightning Spear is the only 120º Conal that we know of
             {

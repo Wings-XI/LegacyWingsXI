@@ -10,6 +10,7 @@ local ID = require("scripts/zones/RoMaeve/IDs")
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -100)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
+    mob:setMod(tpz.mod.UDMGBREATH, -100)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
 end
 

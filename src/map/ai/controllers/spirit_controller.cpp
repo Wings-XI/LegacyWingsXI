@@ -2,7 +2,7 @@
 ===========================================================================
 
 this document is 100% original code written for the Wings FFXI server project
-(C) 2020-2021 Wings Project. Licensed under AGPLv3 as far as permitted by law.
+(C) 2020-2021 Wings Project. Licensed under GPLv3 as far as permitted by law.
 Usage allowed only in open-source servers.
 Author: Caelic
 
@@ -166,7 +166,7 @@ bool CSpiritController::TryIdleSpellcast()
 
     PCastTarget = nullptr;
     SpellID spell = GetHighestCure();
-    
+
     if (spell == SpellID::NULLSPELL)
         spell = GetBuff();
 
@@ -455,7 +455,7 @@ SpellID CSpiritController::GetHighestCure()
         else if (level > 15)
             cure = SpellID::Curaga;
     }
-    
+
     if (cure != SpellID::NULLSPELL)
     {
         uint8 i = 0;
@@ -618,7 +618,7 @@ int8 CSpiritController::WeatherFavorability()
         cweather = battleutils::GetWeather(PSummoner, false);
     else
         cweather = zoneutils::GetZone(PSummoner->getZone())->GetWeather();
-    
+
     switch (PSpirit->m_PetID)
     {
     case PETID_EARTHSPIRIT:
@@ -670,7 +670,7 @@ int8 CSpiritController::WeatherFavorability()
             return -1;
         break;
     }
-    
+
     return 0;
 
 }
@@ -678,7 +678,7 @@ int8 CSpiritController::WeatherFavorability()
 int8 CSpiritController::DayFavorability()
 {
     uint32 day = CVanaTime::getInstance()->getWeekday();
-    
+
     switch (PSpirit->m_PetID)
     {
     case PETID_EARTHSPIRIT:

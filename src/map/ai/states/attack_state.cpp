@@ -155,5 +155,5 @@ bool CAttackState::CanAttack(CBattleEntity* PTarget)
 
 bool CAttackState::AttackReady()
 {
-    return m_attackTime < 0ms;
+    return m_attackTime <= 0ms;
 }
