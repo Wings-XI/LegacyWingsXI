@@ -36,27 +36,9 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-    if mob:getHP() == 1 and mob:AnimationSub() >= 2 then
-        mob:SetMobAbilityEnabled(false)
-        mob:SetMagicCastingEnabled(false)
-        mob:SetAutoAttackEnabled(false)
-        mob:setTP(0)
-        if mob:getStatus() == tpz.action.NONE then
-            mob:SetMobAbilityEnabled(true)
-            if mob:AnimationSub() == 2 then
-                mob:useMobAbility(1124)
-            elseif mob:AnimationSub() == 3 then
-                mob:useMobAbility(1125)
-            end
-        end
-    end
+    dynamis.onStatueFight(mob, target)
 end
 
 function onMobSkillFinished(mob, target, skill)
-    if skill:getID() == 1124 or skill:getID() == 1125 then
-        mob:SetMagicCastingEnabled(true)
-        mob:SetAutoAttackEnabled(true)
-        mob:setUnkillable(false)
-        mob:setHP(0)
-    end
+    dynamis.onStatueSkillFinished(mob, target, skill)
 end
