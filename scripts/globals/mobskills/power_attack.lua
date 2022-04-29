@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    local mobSkin = mob:getModelId() --Mobskill based on modelid, these are the gigas with weapons
+    local mobSkin = mob:getModelId() --Mobskill based on modelid, this is for all h2h models
     if mobSkin == 271 or mobSkin == 642 or mobSkin == 643 or mobSkin == 709 or mobSkin == 711 then
         return 0
     end
