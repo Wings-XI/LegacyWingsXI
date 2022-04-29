@@ -584,17 +584,11 @@ local function calculateZeniBonus(plateData)
 end
 
 tpz.znm.sanraku.onTrade = function(player, npc, trade)
-    if not player:hasKeyItem(tpz.ki.RHAPSODY_IN_AZURE) then
+    if npcUtil.tradeHasExactly(trade, tpz.items.SOUL_PLATE) then
         if platesTradedToday(player) >= 10 then
             -- TODO: A message here? -- no message found in events
             return
         end
-    else -- If you have the KI, clear out the tracking vars!
-        player:setCharVar("[ZNM][Sanraku]TradingDay", 0)
-        player:setCharVar("[ZNM][Sanraku]TradedPlates", 0)
-    end
-
-    if npcUtil.tradeHasExactly(trade, tpz.items.SOUL_PLATE) then
         -- Cache the soulplate value on the player
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
