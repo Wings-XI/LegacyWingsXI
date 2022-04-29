@@ -29,7 +29,7 @@ function onTrade(player, npc, trade)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
     if player:getCharVar("chips") == 1 then
-        if trade:getItemQty(1693, 1) and trade:getItemQty(1692, 1) and trade:getItemQty(1694, 1) then
+        if npcUtil.tradeHasExactly(trade, {1693, 1692, 1694}) then
             player:startEvent(883,1693,1692,1694)
             player:tradeComplete()
         end
