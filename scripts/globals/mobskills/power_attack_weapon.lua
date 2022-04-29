@@ -11,7 +11,8 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getMainJob() == tpz.job.WAR) then
+    local mobSkin = mob:getModelId() -- Mobskill based on modelid, this is for all h2h models
+    if mobSkin == 274 or mobSkin == 275 or mobSkin == 640 or mobSkin == 703 or mobSkin == 707 or mobSkin == 708 or mobSkin == 710 or mobSkin == 720 then
         return 0
     end
     return 1

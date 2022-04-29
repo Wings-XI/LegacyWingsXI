@@ -4379,6 +4379,12 @@ INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 366, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 208, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 157, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Kurrea', 537, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 104, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 196, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 212, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 251, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 57, 1, 255);
 
 --
 -- Indexes for dumped tables

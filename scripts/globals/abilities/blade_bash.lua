@@ -11,6 +11,14 @@ require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player, target, ability)
+    if player:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.GREAT_KATANA then
+        ability:setAnimation(201)
+    elseif player:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.POLEARM then
+        ability:setAnimation(203)
+    elseif player:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.STAFF then
+        ability:setAnimation(202)
+    end 
+    
     if (not player:isWeaponTwoHanded()) then
         return tpz.msg.basic.NEEDS_2H_WEAPON, 0
     elseif not player:isFacing(target) then

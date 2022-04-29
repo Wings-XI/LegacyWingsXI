@@ -11,7 +11,8 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getMainJob() ~= tpz.job.WAR) then
+    local mobSkin = mob:getModelId() --Mobskill based on modelid, these are the gigas with weapons
+    if mobSkin == 271 or mobSkin == 642 or mobSkin == 643 or mobSkin == 709 or mobSkin == 711 then
         return 0
     end
     return 1

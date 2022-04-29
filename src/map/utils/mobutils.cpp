@@ -668,8 +668,10 @@ void SetupJob(CMobEntity* PMob)
                 PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 272);
 	            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
             }
-
+            if (PMob->m_Family != 176)
+            {
             PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
+            }
             break;
         case JOB_BST:
             PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 90);
