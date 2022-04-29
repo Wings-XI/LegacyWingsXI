@@ -14,6 +14,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.IMPACTRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 0)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
+    mob:setMod(tpz.mod.UDMGBREATH, -100)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
 end
 
