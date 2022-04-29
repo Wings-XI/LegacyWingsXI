@@ -693,6 +693,32 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
     end
 end
 
+dynamis.onStatueFight = function(mob, target)
+    if mob:getHP() == 1 and (mob:AnimationSub() == 2 or mob:AnimationSub() == 3) then
+        mob:SetMobAbilityEnabled(false)
+        mob:SetMagicCastingEnabled(false)
+        mob:SetAutoAttackEnabled(false)
+        mob:setTP(0)
+        mob:timer(500, function(mob) mob:SetMobAbilityEnabled(true) end)
+        mob:timer(500, function(mob)
+            if mob:AnimationSub() == 2 then
+                mob:useMobAbility(1124)
+            elseif mob:AnimationSub() == 3 then
+                mob:useMobAbility(1125)
+            end
+        end)
+    end
+end
+
+dynamis.onStatueSkillFinished = function (mob, target, skill)
+    if skill:getID() == 1124 or skill:getID() == 1125 then
+        mob:SetMagicCastingEnabled(true)
+        mob:SetAutoAttackEnabled(true)
+        mob:setUnkillable(false)
+        mob:setHP(0)
+    end
+end
+
 dynamis.mobOnRoamAction = function(mob)
     local zoneId = mob:getZoneID()
     if dynamis.dynaInfo[zoneId].updatedRoam == true then
