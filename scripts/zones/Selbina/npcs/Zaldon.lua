@@ -264,8 +264,8 @@ local function tradeFish(player, fishId)
 
     local rewards = fishRewards[fishId].items
     local roll = math.random(1000) / 10
-    local found = false
     local sum = 0
+    local item = nil
 
     for i = 1, #rewards do
         sum = sum + rewards[i].chance
@@ -273,12 +273,14 @@ local function tradeFish(player, fishId)
         if roll <= sum then
             found = true
             player:setCharVar("insideBellyItemIdx", i)
-            player:startEvent(166, 0, rewards[i].itemId)
+            item = rewards[i].itemId
             break
         end
     end
-
-    if not found then
+    
+    if item then
+        player:startEvent(166, 0, item)
+    else 
         player:startEvent(167)
     end
 end
@@ -287,36 +289,48 @@ local function giveReward(player, csid)
     if csid == 166 or csid == 167 then
         local fishId  = player:getCharVar("insideBellyFishId")
         local itemIdx = player:getCharVar("insideBellyItemIdx")
-        local reward  = fishRewards[fishId]
---        local traded  = true
+        local reward = fishRewards[fishId]
 
-        if itemIdx > 0 then
+        local itemId = nil
+        local itemQt = nil
+        local rewardSet = {}
+
+        -- Reset the character variables
+        player:setCharVar("insideBellyFishId", 0)
+        player:setCharVar("insideBellyItemIdx", 0)
+
+        -- Regardless of success or failure, confirm the trade, give gil, and set the char vars to 0
+        player:confirmTrade()
+        player:addGil(GIL_RATE * reward.gil)
+        player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
+        
+        --If successful (other than gil) give the item
+        if itemIdx > 0 then     -- Successful reward (other than gil)
             local r = reward.items[itemIdx]
-            local itemId = r.itemId
-            local itemQt = 1
-
+            itemId = r.itemId
+            itemQt = 1
             if r.min ~= nil and r.max ~= nil then
                 itemQt = math.random(r.min, r.max)
             end
 
-            if npcUtil.giveItem(player, {{itemId, itemQt}}) then
---                traded = false
-                player:confirmTrade()
-                player:addGil(GIL_RATE * reward.gil)
-                player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
-                player:setCharVar("insideBellyFishId", 0)
-                player:setCharVar("insideBellyItemIdx", 0)
+            -- Issue the reward
+            rewardSet = {itemId, itemQt}
+            local traded = npcUtil.giveItem(player, {rewardSet})
 
-                if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY) == QUEST_ACCEPTED then
-                    player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY)
-                end
+            -- If the player has received a reward, mark the quest log as complete if it's accepted
+            if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY) == QUEST_ACCEPTED then
+                player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.INSIDE_THE_BELLY)
+            end
 
-                if reward.title ~= nil then
-                    player:addTitle(reward.title)
-                end
+            -- If there's a title to grant based on the reward, grant it.
+            if reward.title ~= nil then
+                player:addTitle(reward.title)
             end
         end
     end
+
+
+        
 end
 
 function onTrade(player, npc, trade)
