@@ -506,16 +506,20 @@ tpz.znm.ryo.onEventUpdate = function(player, csid, option)
         player:updateEvent(zeniValue)
     elseif csid == 913 then
         if option == 300 then
-            player:updateEvent(player:getCurrency("zeni_point"), 0)
+            player:updateEvent(player:getCurrency("zeni_point"))
         elseif option == 200 then
             -- SubjectsOfInterest
             player:updateEvent(GetServerVariable("[ZNM]SubjectsOfInterest"))
         elseif option == 201 then
             -- Fauna
             player:updateEvent(GetServerVariable("[ZNM]Fauna"))
-        elseif option == 400 then
+        elseif option == 402 then
             -- Islets dialog
-             player:setLocalVar("[ZNM][Ryo]IsletDiscussion", 1)
+             player:setCharVar("[ZNM][Ryo]IsletDiscussion", 1)
+        elseif option == 404 then
+            -- this is where we can remove elements of Ryo's dialogue - like perhaps the islet discussion once it happens once.
+            -- normal bitmask operation, 1-512
+            player:updateEvent(0)
         end
     end
 end
@@ -708,8 +712,6 @@ tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
                 player:delCurrency("zeni_point", 500)
             end
         else -- player is interested in buying a pop item.
-            
-
             n = option % 10
             if n <= 2 then
                 if option == 130 or option == 440 then
@@ -774,7 +776,10 @@ tpz.znm.sanraku.onEventUpdate = function(player, csid, option)
                 end
             elseif option == 500 or option == 1 then -- player has declined to buy a pop item
                 local allowIslet = 0
-                allowIslet = player:getCharVar("[ZNM][Ryo]IsletDiscussion")
+                if (ZNM_Tier4 == 1) then
+                    -- dont allow players to buy the salts to teleport to Tier4 NMs unless Tier4 NMs are enabled
+                    allowIslet = player:getCharVar("[ZNM][Ryo]IsletDiscussion") 
+                end
                 player:updateEvent(allowIslet)
             end
         end
