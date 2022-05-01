@@ -964,7 +964,7 @@ INSERT INTO `mob_skills` VALUES(1219, 836, 'hexagon_belt', 0, 7.0, 2000, 1500, 1
 INSERT INTO `mob_skills` VALUES(1220, 837, 'auroral_drape', 1, 13.7, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1228, 845, 'memory_of_dark', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1229, 919, 'brain_spike', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1230, 920, 'empty_thrash', 0, 10.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1230, 920, 'empty_thrash', 0, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1231, 921, 'promyvion_brume', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1232, 922, 'murk', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1233, 923, 'material_fend', 0, 10.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
