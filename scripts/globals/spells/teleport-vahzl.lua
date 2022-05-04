@@ -15,6 +15,7 @@ function onSpellCast(caster, target, spell)
     if target:getObjType() == tpz.objType.PC then
         if target:hasKeyItem(tpz.ki.VAHZL_GATE_CRYSTAL) then
             target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.VAHZL, 0, 4.7)
+            target:setCharVar("Teleport", tpz.ki.VAHZL_GATE_CRYSTAL)    -- Used KI as common entity between LUA requires
             spell:setMsg(tpz.msg.basic.MAGIC_TELEPORT)
         else
             spell:setMsg(tpz.msg.basic.NONE)
