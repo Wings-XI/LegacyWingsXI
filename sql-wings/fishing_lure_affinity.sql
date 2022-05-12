@@ -392,6 +392,7 @@ INSERT INTO `fishing_lure_affinity` VALUES(17392, 4399, 4);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 4485, 4);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 4471, 4);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 4461, 4);
+INSERT INTO `fishing_lure_affinity` VALUES(17392, 5454, 4);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 4305, 1);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 624, 0);
 INSERT INTO `fishing_lure_affinity` VALUES(17392, 1135, 1);
