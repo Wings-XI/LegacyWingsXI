@@ -73,7 +73,6 @@ function onBattlefieldEnter(player, battlefield)
         player:setLocalVar("Shantottofication", 1)
     end
 
-    player:setCharVar("ASA_BCNM", 1)
     player:setTP(0)
     player:timer(1000, function(player) player:setHP(player:getMaxHP()) player:setMP(player:getMaxMP()) end)
 
@@ -98,13 +97,23 @@ function onBattlefieldLeave(player, battlefield, leavecode)
 
         player:addExp(750)
 
-        if player:getCharVar("ASA_BCNM") == 1 then
-            player:setCharVar("ASA_BCNM", 0)
-            if not player:hasKeyItem(tpz.ki.TONBERRY_KEY) and now ~= lastTonberry and player:getCurrentMission(ASA) >= tpz.mission.id.asa.BATTARU_ROYALE then
-                player:setCharVar("LastTonberryKey", os.date("%j"))
-                player:addKeyItem(tpz.ki.TONBERRY_KEY)
-                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TONBERRY_KEY)
+        if not player:hasKeyItem(tpz.ki.TONBERRY_KEY) and now ~= lastTonberry and player:getCurrentMission(ASA) >= tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION then
+            player:setCharVar("LastTonberryKey", os.date("%j"))
+            player:addKeyItem(tpz.ki.TONBERRY_KEY)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TONBERRY_KEY)
+        end
+
+        -- Award another Behemoth Key if player has already completed ASA and has thrown out their previous reward
+        local hasArmor = false
+        for i = 16369, 16371 do
+            if player:hasItem(i) then
+                hasArmor = true
             end
+        end
+
+        if player:hasCompletedMission(ASA, tpz.mission.id.asa.AN_UNEASY_PEACE) and not hasArmor and not player:hasKeyItem(tpz.ki.BEHEMOTH_KEY) then
+            player:addKeyItem(tpz.ki.BEHEMOTH_KEY)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BEHEMOTH_KEY)
         end
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002)

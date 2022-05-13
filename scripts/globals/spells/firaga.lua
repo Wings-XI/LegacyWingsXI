@@ -13,7 +13,7 @@ end
 function onSpellCast(caster, target, spell)
     local spellParams = {}
     spellParams.hasMultipleTargetReduction = true
-    if caster:getName() == "Shantotto" then
+    if caster:getName() == "Shantotto" and caster:isMob() then
         spellParams.V = 589
         spellParams.V0 = 620
         spellParams.V50 = 830
