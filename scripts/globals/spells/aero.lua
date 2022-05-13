@@ -14,7 +14,7 @@ function onSpellCast(caster, target, spell)
     local spellParams = {}
     spellParams.hasMultipleTargetReduction = false
     spellParams.resistBonus = 1.0
-    if caster:getName() == "Shantotto" then
+    if caster:getName() == "Shantotto" and caster:isMob() then
         spellParams.resistBonus = 1.0
         spellParams.V = 472
         spellParams.V0 = 520
