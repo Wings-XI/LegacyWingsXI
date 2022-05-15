@@ -68,34 +68,34 @@ function onMobDeath(mob, player, isKiller)
     winQM:setStatus(tpz.status.NORMAL)
     player:addTitle(tpz.title.DYNAMIS_BUBURIMU_INTERLOPER)
     if GetMobByID(ID.mob.Aitvaras):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Aitvaras))
+        DespawnMob(ID.mob.Aitvaras)
     end
     if GetMobByID(ID.mob.Alklha):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Alklha))
+        DespawnMob(ID.mob.Alklha)
     end
     if GetMobByID(ID.mob.Barong):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Barong))
+        DespawnMob(ID.mob.Barong)
     end
     if GetMobByID(ID.mob.Basilic):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Basilic))
+        DespawnMob(ID.mob.Basilic)
     end
     if GetMobByID(ID.mob.Jurik):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Jurik))
+        DespawnMob(ID.mob.Jurik)
     end
     if GetMobByID(ID.mob.Koschei):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Koschei))
+        DespawnMob(ID.mob.Koschei)
     end
     if GetMobByID(ID.mob.Stihi):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Stihi))
+        DespawnMob(ID.mob.Stihi)
     end
     if GetMobByID(ID.mob.Stollenwurm):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Stollenwurm))
+        DespawnMob(ID.mob.Stollenwurm)
     end
     if GetMobByID(ID.mob.Tarasca):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Tarasca))
+        DespawnMob(ID.mob.Tarasca)
     end
     if GetMobByID(ID.mob.Vishap):isAlive() then
-        DespawnMob(GetMobByID(ID.mob.Vishap))
+        DespawnMob(ID.mob.Vishap)
     end
 end
 
@@ -217,34 +217,34 @@ function onMobWeaponSkillPrepare(mob, target)
     local charm = 10
 
     -- Set Probabilities of Each Skill Based on Dragon Kill Status
-    if GetMobByID(ID.mob.Aitvaras):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Aitvaras):isAlive() then
         voidsong = 0
     end
-    if GetMobByID(ID.mob.Alklha):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Alklha):isAlive() then
         chaosblade = 0
     end
-    if GetMobByID(ID.mob.Barong):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Barong):isAlive() then
         bodyslam = 0
     end
-    if GetMobByID(ID.mob.Basilic):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Basilic):isAlive() then
         petroeyes = 0
     end
-    if GetMobByID(ID.mob.Jurik):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Jurik):isAlive() then
         windbreath = 0
     end
-    if GetMobByID(ID.mob.Koschei):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Koschei):isAlive() then
         thornsong = 0
     end
-    if GetMobByID(ID.mob.Stihi):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Stihi):isAlive() then
         flamebreath = 0
     end
-    if GetMobByID(ID.mob.Stollenwurm):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Stollenwurm):isAlive() then
         lodesong = 0
     end
-    if GetMobByID(ID.mob.Tarasca):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Tarasca):isAlive() then
         heavystomp = 0
     end
-    if GetMobByID(ID.mob.Vishap):getStatus() == 2 then
+    if not GetMobByID(ID.mob.Vishap):isAlive() then
         poisonbreath = 0
     end
     if mob:getLocalVar("familiarcharm") == 0 then
