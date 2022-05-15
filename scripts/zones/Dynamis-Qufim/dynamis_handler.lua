@@ -35,7 +35,6 @@ function onDynamisNewInstance()
     while i <= iEnd do
         entity = GetEntityByID(i)
         if entity ~= nil and entity:isNPC() then entity:setStatus(tpz.status.DISAPPEAR) end
-        
         if mobList[zone][i] ~= nil then
             local mob = GetMobByID(i)
             mob:setNM(true)
@@ -78,6 +77,7 @@ function onDynamisCleanup()
         end
         i = i + 1
     end
+    SetServerVariable(string.format("DynamisSJRestriction_%s", zoneId), 0)
 end
 
 function onDynamisEjectPlayer(player, immediate)

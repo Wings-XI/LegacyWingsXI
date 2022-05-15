@@ -577,7 +577,7 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
             player:setCharVar("DynaInflictWeakness", 0)
         if dynamis.dynaInfo[zoneId].sjRestriction == true then
-            if os.time() > player:getCharVar("SJUnlockTime") then
+            if GetServerVariable(string.format("DynamisSJRestriction_%s", zoneId)) == 0 then
                 player:addStatusEffect(tpz.effect.SJ_RESTRICTION, 1, 3, 0)
             end
         end
@@ -859,9 +859,11 @@ end
 
 dynamis.sjQMOnTrigger = function(player, npc)
     local zoneId = npc:getZoneID()
+    local npczone = npc:getZone()
+    local playersinzone = npczone:getPlayers()
 
     if dynamis.dynaInfo[zoneId].sjRestriction == true then
-        for _, member in pairs(player:getAlliance()) do
+        for _, member in pairs(playersinzone) do
             if member:getZoneID() == player:getZoneID() then
                 if member:hasStatusEffect(tpz.effect.SJ_RESTRICTION) then
                     if member:hasStatusEffect(tpz.effect.RERAISE) then -- Check for reraise and store values.
@@ -870,7 +872,6 @@ dynamis.sjQMOnTrigger = function(player, npc)
                         member:setLocalVar("reraise_duration", member:getStatusEffect(tpz.effect.RERAISE):getDuration())
                     end
                     member:delStatusEffect(tpz.effect.SJ_RESTRICTION)
-                    player:setCharVar("SJUnlockTime", os.time() + 14400) -- Set Immune to reobtaining SJ_Restriction for 4 hours.
                     if member:getLocalVar("had_reraise") == 1 then -- Reapply previous reraise if lost.
                         if not member:hasStatusEffect(tpz.effect.RERAISE) then
                             member:addStatusEffect(tpz.effect.RERAISE, member:getLocalVar("reraise_power"), 0, member:getLocalVar("reraise_duration"))
