@@ -53,6 +53,7 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.GRAVITYRES, 40)
     mob:addMod(tpz.mod.BINDRES, 40)
     mob:addMod(tpz.mod.REGAIN, 50)
+    mob:setMod(tpz.mod.STUNRES, 99)
 end
 
 function onMobDeath(mob, player, isKiller)

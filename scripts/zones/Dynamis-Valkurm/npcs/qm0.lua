@@ -11,5 +11,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local zoneId = npc:getZoneID()
+    SetServerVariable(string.format("DynamisSJRestriction_%s", zoneId), 1)
     dynamis.sjQMOnTrigger(player, npc)
 end
