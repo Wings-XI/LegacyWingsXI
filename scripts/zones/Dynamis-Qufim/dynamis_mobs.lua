@@ -442,7 +442,6 @@ mobList[zone] =
     [SMB+345] = { id =  SMB+345},
     [SMB+490] = { id =  SMB+490},
     [SMB+492] = { id =  SMB+492},
-    [SMB+486] = { id =  SMB+486},
     [SMB+494] = { id =  SMB+494},
     [SMB+487] = { id =  SMB+487},
     [SMB+498] = { id =  SMB+498},
@@ -457,6 +456,13 @@ mobList[zone] =
     [SMB+491] = { id =  SMB+491},
     [SMB+526] = { id =  SMB+526},
     [SMB+527] = { id =  SMB+527},
+    [SMB+506] = { id =  SMB+506},
+    [SMB+528] = { id =  SMB+528},
+    [SMB+529] = { id =  SMB+529},
+    [SMB+500] = { id =  SMB+500},
+    [SMB+503] = { id =  SMB+503},
+    [SMB+505] = { id =  SMB+505},
+    [SMB+497] = { id =  SMB+497},
 }
 
 mobList[zone].zoneID = tpz.zone.DYNAMIS_QUFIM
@@ -695,7 +701,6 @@ mobList[zone][DMB+135].waves = { nil, 2, nil}
 mobList[zone][DMB+138].waves = { nil, 2, nil}
 mobList[zone][DMB+141].waves = { nil, 2, nil}
 mobList[zone][DMB+144].waves = { nil, 2, nil}
-mobList[zone][DMB+145].waves = { nil, 2, nil}
 mobList[zone][DMB+147].waves = { nil, 2, nil}
 mobList[zone][DMB+150].waves = { nil, 2, nil}
 mobList[zone][DMB+397].waves = { nil, 2, nil}
@@ -815,13 +820,13 @@ mobList[zone][SMB+348].specificChildren = { true, SMB+362, SMB+381, SMB+343     
 mobList[zone][SMB+367].specificChildren = { true, SMB+364, SMB+372, SMB+341                  } -- DRK, RNG, WHM            (037-G)
 -- Wave 2 based on https://enedin.be/dyna/html/zone/frame_quf2.htm
 -- Southwest
-mobList[zone][SMB+385].specificChildren = { true, SMB+482, SMB+526, SMB+380, SMB+502         } --  THF, BRD, MNK, RNG      (065-G)
-mobList[zone][SMB+386].specificChildren = { true, SMB+485, SMB+341, SMB+342, SMB+488         } --  MNK, WHM, PLD, SMN      (066-G)
-mobList[zone][SMB+387].specificChildren = { true, SMB+345, SMB+490, SMB+492, SMB+486, SMB+494} --  SAM, BLM, RDM, MNK, WAR (067-G)
-mobList[zone][SMB+525].specificChildren = { true, SMB+527, SMB+498, SMB+486, SMB+496         } --  PLD, DRK, WHM, BST      (068-G)
+mobList[zone][SMB+385].specificChildren = { true, SMB+486, SMB+526, SMB+380, SMB+506         } --  THF, BRD, MNK, RNG      (065-G)
+mobList[zone][SMB+386].specificChildren = { true, SMB+489, SMB+490, SMB+342, SMB+492         } --  MNK, WHM, PLD, SMN      (066-G)
+mobList[zone][SMB+387].specificChildren = { true, SMB+345, SMB+494, SMB+496, SMB+528, SMB+498} --  SAM, BLM, RDM, MNK, WAR (067-G)
+mobList[zone][SMB+525].specificChildren = { true, SMB+527, SMB+502, SMB+529, SMB+500         } --  PLD, DRK, WHM, BST      (068-G)
 -- Northeast
-mobList[zone][SMB+484].specificChildren = { true, SMB+484, SMB+525, SMB+489, SMB+499         } --  THF, BRD, SAM, DRG      (069-G)
-mobList[zone][SMB+485].specificChildren = { true, SMB+495, SMB+501, SMB+493, SMB+491         } --  WAR, NIN, RDM, BLM      (070-G)
+mobList[zone][SMB+484].specificChildren = { true, SMB+488, SMB+487, SMB+493, SMB+503         } --  THF, BRD, SAM, DRG      (069-G)
+mobList[zone][SMB+485].specificChildren = { true, SMB+499, SMB+505, SMB+497, SMB+495         } --  WAR, NIN, RDM, BLM      (070-G)
 
 -- Nightmares
 -- Wave 1
