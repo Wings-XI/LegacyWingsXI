@@ -64,7 +64,7 @@ end
 function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     local KingVine = GetMobByID(ID.mob.KING_VINEGARROON)
-	local respawn = math.random(75600, 86400) -- 21h to 24h
+	local respawn = 75600 -- 21h
     mob:setRespawnTime(respawn)
 	SetServerVariable("KVRespawn",(os.time() + respawn))
     DisallowRespawn(KingVine:getID(), true)
