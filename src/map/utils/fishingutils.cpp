@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1305,6 +1305,7 @@ namespace fishingutils
                 if (!response)
                 {
                     CatchNothing(PChar, FISHINGFAILTYPE_NONE);
+
                 }
                 else if (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken)
                 {
@@ -1352,8 +1353,11 @@ namespace fishingutils
                     FishingRod = nullptr;
                 }
 
-                delete response;
-                response = nullptr;
+                if (response)
+                {
+                    delete response;
+                    response = nullptr;
+                }
 
             }
             else if (stamina <= 0x14)
