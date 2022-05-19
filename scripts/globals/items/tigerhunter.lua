@@ -11,9 +11,9 @@ require("scripts/globals/msg")
 
 function onAdditionalEffect(player,target,damage)
     if (target:getFamily() == 242) then
-        local chance = 10
-        if math.random(100) <= chance and applyResistanceAddEffect(player,target,tpz.magic.ele.ICE,0) > 0.5 then
-            target:addStatusEffect(tpz.effect.PARALYSIS, 10, 0, 30)
+        local chance = 15
+        if not target:hasStatusEffect(tpz.effect.PARALYSIS) and math.random(100) < chance and applyResistanceAddEffect(player,target,tpz.magic.ele.ICE,0) > 0.5 then
+            target:addStatusEffect(tpz.effect.PARALYSIS, 20, 0, 30)
             return tpz.subEffect.PARALYSIS, tpz.msg.basic.ADD_EFFECT_STATUS, tpz.effect.PARALYSIS
         end
     end
