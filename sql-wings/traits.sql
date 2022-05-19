@@ -429,7 +429,7 @@ INSERT INTO `traits` VALUES(80, 'desperate blows', 8, 75, 1, 0, 0, 'TOAU', 2502)
 INSERT INTO `traits` VALUES(81, 'beast affinity ', 9, 75, 1, 0, 0, 'TOAU', 2564);
 INSERT INTO `traits` VALUES(82, 'beast healer', 9, 75, 1, 0, 0, 'TOAU', 2566);
 INSERT INTO `traits` VALUES(83, 'snapshot', 11, 75, 1, 0, 0, 'TOAU', 2692);
-INSERT INTO `traits` VALUES(84, 'recycle', 11, 20, 1, 305, 10, 'SOA', 0);
+INSERT INTO `traits` VALUES(84, 'recycle', 11, 75, 1, 305, 0, 'WOTG', 2694);
 INSERT INTO `traits` VALUES(84, 'recycle', 17, 35, 1, 305, 10, 'SOA', 0);
 INSERT INTO `traits` VALUES(85, 'ikishoten', 12, 75, 1, 0, 0, 'TOAU', 2756);
 INSERT INTO `traits` VALUES(86, 'overwhelm', 12, 75, 1, 0, 0, 'TOAU', 2758);
