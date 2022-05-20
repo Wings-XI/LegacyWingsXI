@@ -4313,7 +4313,7 @@ INSERT INTO `mob_pools` VALUES(4249, 'Volker', 'Volker', 482, _binary 0x00000503
 INSERT INTO `mob_pools` VALUES(4250, 'Voll_the_Sharkfinned', 'Voll_the_Sharkfinned', 213, _binary 0x0000130500000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 213);
 INSERT INTO `mob_pools` VALUES(4251, 'Volunteer', 'Volunteer', 145, _binary 0x0500a20700000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 0, 0, 0, 0, 10, 131, 0, 0, 0, 0, 0, 145);
 INSERT INTO `mob_pools` VALUES(4252, 'Voluptuous_Vilma', 'Voluptuous_Vilma', 186, _binary 0x00007c0100000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 186);
-INSERT INTO `mob_pools` VALUES(4253, 'Voluptuous_Vivian', 'Voluptuous_Vivian', 186, _binary 0x00007d0100000000000000000000000000000000, 12, 12, 7, 200, 100, 0, 1, 0, 0, 2, 0, 32, 5074, 671, 0, 0, 0, 0, 0, 411);
+INSERT INTO `mob_pools` VALUES(4253, 'Voluptuous_Vivian', 'Voluptuous_Vivian', 186, _binary 0x00007d0100000000000000000000000000000000, 12, 12, 7, 200, 100, 0, 1, 0, 0, 2, 32, 32, 5074, 671, 0, 0, 0, 0, 0, 411);
 INSERT INTO `mob_pools` VALUES(4254, 'Voo_Tolu_the_Ghostfist', 'Voo_Tolu_the_Ghostfist', 360, _binary 0x0000440200000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(4255, 'Vorjirzur_the_Valiant', 'Vorjirzur_the_Valiant', 246, _binary 0x0600980600000000000000000000000000000000, 7, 7, 2, 280, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 246);
 INSERT INTO `mob_pools` VALUES(4256, 'Vorpal_Bunny', 'Vorpal_Bunny', 206, _binary 0x00000c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 80, 129, 0, 0, 0, 0, 0, 206);
