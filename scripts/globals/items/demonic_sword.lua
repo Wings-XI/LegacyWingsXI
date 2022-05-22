@@ -26,6 +26,7 @@ function onAdditionalEffect(player, target, damage)
         local message = tpz.msg.basic.ADD_EFFECT_DMG
         if (dmg < 0) then
             message = tpz.msg.basic.ADD_EFFECT_HEAL
+            dmg = -dmg
         end
 
         return tpz.subEffect.DARKNESS_DAMAGE, message, dmg
