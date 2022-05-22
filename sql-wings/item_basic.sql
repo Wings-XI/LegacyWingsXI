@@ -5264,8 +5264,8 @@ INSERT INTO `item_basic` VALUES(5588, 0, 'serving_of_karni_yarik', 'karni_yarik'
 INSERT INTO `item_basic` VALUES(5589, 0, 'serving_of_karni_yarik_+1', 'karni_yarik_+1', 12, 1548, 54, 0, 841);
 INSERT INTO `item_basic` VALUES(5590, 0, 'balik_sandvici', 'balik_sandvici', 12, 1548, 56, 0, 324);
 INSERT INTO `item_basic` VALUES(5591, 0, 'balik_sandvici_+1', 'blk._sandvici_+1', 12, 1548, 56, 0, 405);
-INSERT INTO `item_basic` VALUES(5592, 0, 'cup_of_imperial_coffee', 'imperial_coffee', 1, 1580, 66, 0, 92);
-INSERT INTO `item_basic` VALUES(5593, 0, 'cup_of_imperial_coffee_+1', 'imperial_coffee_+1', 1, 1580, 66, 0, 100);
+INSERT INTO `item_basic` VALUES(5592, 0, 'cup_of_imperial_coffee', 'imperial_coffee', 1, 1580, 58, 0, 92);
+INSERT INTO `item_basic` VALUES(5593, 0, 'cup_of_imperial_coffee_+1', 'imperial_coffee_+1', 1, 1580, 58, 0, 100);
 INSERT INTO `item_basic` VALUES(5594, 0, 'cup_of_chai_+1', 'chai_+1', 1, 1580, 58, 0, 21);
 INSERT INTO `item_basic` VALUES(5595, 0, 'bowl_of_nashmau_stew', 'nashmau_stew', 1, 1580, 55, 0, 100);
 INSERT INTO `item_basic` VALUES(5596, 0, 'simit', 'simit', 12, 1548, 56, 0, 49);
