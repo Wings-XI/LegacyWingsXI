@@ -340,7 +340,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
     calcParams.extraOffhandHit = attacker:isDualWielding() or attack.weaponType == tpz.skill.HAND_TO_HAND
     calcParams.hybridHit = wsParams.hybridWS
-    calcParams.flourishEffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
+    calcParams.flourishEffect = wsParams.violentFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- violent flourish (even though it's coded as a WS) isn't boosted by building flourish
     calcParams.fencerBonus = fencerBonus(attacker)
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = gorgetBeltFTP or 0
@@ -363,7 +363,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     -- Delete statuses that may have been spent by the WS
     attacker:delStatusEffectsByFlag(tpz.effectFlag.ATTACK)
-    attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
+    if wsParams.violentFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
 
     local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
