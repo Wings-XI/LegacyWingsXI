@@ -45,6 +45,7 @@ function onTrigger(player, npc)
         npc:setLocalVar("position", pos)
         npc:setLocalVar("hatedPlayer", 0)
         npc:setLocalVar("hateTimer", 0)
+        npc:setLocalVar("nextMove", os.time() + 1800) -- 30 minutes later
     end
 end
 
