@@ -4027,6 +4027,7 @@ INSERT INTO `synth_recipes` VALUES(4593, 1, 0, 0, 0, 0, 36, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4594, 0, 0, 0, 0, 0, 33, 0, 0, 48, 0, 4101, 4243, 529, 529, 914, 0, 0, 0, 0, 0, 5352, 5352, 5352, 5352, 3, 6, 9, 9, 'Spectral_Serum');
 INSERT INTO `synth_recipes` VALUES(4595, 1, 0, 0, 0, 0, 0, 74, 0, 0, 0, 4100, 4242, 16213, 0, 0, 0, 0, 0, 0, 0, 2296, 1869, 1869, 1869, 1, 1, 2, 2, 'Lamia_Mantle_Desynth');
 INSERT INTO `synth_recipes` VALUES(4596, 1, 0, 0, 0, 0, 0, 85, 0, 0, 0, 4100, 4242, 16235, 0, 0, 0, 0, 0, 0, 0, 820, 2512, 2512, 2512, 1, 1, 1, 1, 'Lynx_Mantle_Desynth)');
+INSERT INTO `synth_recipes` VALUES(4597, 1, 0, 0, 0, 0, 0, 59, 0, 0, 0, 4100, 4242, 12995, 0, 0, 0, 0, 0, 0, 0, 826, 819, 853, 853, 1, 2, 1, 1, 'Moccasins_Desynth)');
 
 -- -----------
 -- RECIPES END
