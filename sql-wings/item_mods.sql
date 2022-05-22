@@ -52220,7 +52220,48 @@ INSERT INTO `item_mods` VALUES (18720,830,218);
 INSERT INTO `item_mods` VALUES (18754,830,12);
 INSERT INTO `item_mods` VALUES (19102,830,29);
 INSERT INTO `item_mods` VALUES (18592,830,188);  -- WS allowance on nyzul base weapons end
-
+INSERT INTO `item_mods` VALUES (17512,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17513,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17514,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17515,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17516,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17517,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17686,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17687,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17688,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17689,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17690,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17691,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17780,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17781,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17782,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17783,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17784,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17785,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17984,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17985,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17986,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17987,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17988,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17989,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18076,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18077,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18078,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18079,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18080,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18081,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18200,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18201,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18202,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18203,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18204,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18205,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18366,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18367,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18368,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18369,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18370,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18371,431,1); -- ammo charge additional effect weapon
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;
