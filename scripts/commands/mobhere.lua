@@ -46,9 +46,9 @@ function onTrigger(player, mobId, noDepop)
         SpawnMob( mobId )
     end
     if (player:getZoneID() == targ:getZoneID()) then
-        targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
+        targ:setPos( player:getXPos(), player:getYPos() + (noDepop == "floor" and 16 or 0), player:getZPos(), player:getRotPos(), player:getZoneID() )
     else
-        if (noDepop == nil or noDepop == 0) then
+        if (noDepop == nil or noDepop == 0 or noDepop == "floor") then
             if (instance ~= nil) then
                 DespawnMob( mobId, instance )
             else
