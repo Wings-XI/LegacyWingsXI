@@ -1271,7 +1271,7 @@ INSERT INTO `mob_skills` VALUES(1786, 1224, 'sulfurous_breath', 6, 7.0, 2000, 18
 INSERT INTO `mob_skills` VALUES(1787, 1225, 'scorching_lash', 1, 20.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1788, 1226, 'ululation', 1, 20.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1789, 1227, 'magma_hoplon', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1790, 1228, 'gates_of_hades', 1, 20.0, 2000, 2100, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1790, 1228, 'gates_of_hades', 1, 20.0, 2000, 3000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1791, 1217, 'incinerate', 4, 12.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1792, 1212, 'nullsong', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1793, 62, 'vampiric_root', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1312,7 +1312,7 @@ INSERT INTO `mob_skills` VALUES(1831, 1318, 'polar_bulwark', 0, 7.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(1832, 1313, 'barofield', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1834, 1310, 'trembling', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1835, 1311, 'serpentine_tail', 0, 7.0, 2000, 1500, 4, 0, 0, 7, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1836, 1312, 'nerve_gas', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1836, 1312, 'nerve_gas', 1, 10.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1837, 1314, 'feeble_bleat', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1838, 1221, 'mine_blast', 1, 10.0, 2000, 1500, 4, 24, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1839, 1147, 'rushing_slash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1384,7 +1384,7 @@ INSERT INTO `mob_skills` VALUES(2024, 1371, 'tourbillion', 1, 18.0, 2000, 1500, 
 INSERT INTO `mob_skills` VALUES(2025, 1369, 'dreadstorm', 1, 13.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2026, 1381, 'fossilizing_breath', 4, 12.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2027, 1382, 'plague_swipe', 5, 12.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2028, 1386, 'fulmination', 1, 32.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2028, 1386, 'fulmination', 1, 32.0, 2000, 3000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2031, 433, 'reactive_shield', 0, 7.0, 2000, 0, 16, 4, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2032, 1383, 'roller_chain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2033, 1384, 'choke_chain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
