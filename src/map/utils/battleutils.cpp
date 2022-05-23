@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -3312,7 +3312,7 @@ namespace battleutils
         if (PSCEffect == nullptr && PCBEffect == nullptr)
         {
             // No effect exists, apply an effect using the weaponskill ID as the power with a tier of 0.
-            PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SKILLCHAIN, 0, combined_properties, 0, 10, 0, 0, 0));
+            PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SKILLCHAIN, 0, combined_properties, 0, 6, 0, 0, 0));
             return SUBEFFECT_NONE;
         }
         else
@@ -3379,7 +3379,7 @@ namespace battleutils
             {
                 PSCEffect->SetStartTime(server_clock::now());
                 //   ShowDebug("duration: %d", PSCEffect->GetDuration());
-                PSCEffect->SetDuration(10000);
+                PSCEffect->SetDuration(6000);
                 PSCEffect->SetTier(GetSkillchainTier((SKILLCHAIN_ELEMENT)skillchain));
                 PSCEffect->SetPower(skillchain);
                 PSCEffect->SetSubPower(std::min(PSCEffect->GetSubPower() + 1, 6)); // Linked, limited to 6
@@ -3388,7 +3388,7 @@ namespace battleutils
             }
 
             PSCEffect->SetStartTime(server_clock::now());
-            PSCEffect->SetDuration(10000);
+            PSCEffect->SetDuration(6000);
             PSCEffect->SetTier(0);
             PSCEffect->SetPower(combined_properties);
             PSCEffect->SetSubPower(0);
