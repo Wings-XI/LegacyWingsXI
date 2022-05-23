@@ -15,6 +15,14 @@ function onMobSpawn(mob)
     mob:setLocalVar("BreakChance", 5)
 end
 
+function onMobWeaponSkill(target, mob, skill)
+
+    if  skill:getID() == 1704 then -- (Onrush)
+        mob:lowerEnmity(target, 20)
+    end
+
+end
+
 function onCriticalHit(mob, attacker)
     if math.random(100) <= mob:getLocalVar("BreakChance") then
         local animationSub = mob:AnimationSub()

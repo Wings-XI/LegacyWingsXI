@@ -22,6 +22,10 @@ function onMobWeaponSkill(target, mob, skill)
     potency = potency - math.random(0, potency/4)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
+    local divisor = 100
 
-    return MobHealMove(mob, mob:getMaxHP() * potency / 100)
+    if mob:getID() == 16986429 then -- Iriz Ima Proboscis Shower (video calculations)
+        divisor = 350
+    end
+    return MobHealMove(mob, mob:getMaxHP() * potency / divisor)
 end
