@@ -248,6 +248,106 @@ local fishRewards =
             {chance = 1.0, itemId = 18377}, -- Mercurial Sword
         }
     },
+    [4480] = -- Gugru Tuna
+    {
+        gil = 50,
+        items =
+        {
+            {chance = 2.5, itemId = 19186}, -- Tiny Tathlum
+        }
+    },
+    [5136] = -- Istavrit
+    {
+        gil = 50,
+        items =
+        {
+            {chance = 1.6, itemId = 944}, -- Venom Dust
+        }
+    },
+    [5475] = -- Gigant Octopus
+    {
+        gil = 119,
+        items =
+        {
+            {chance = 1.6, itemId = 929}, -- Black Ink
+        }
+    },
+    [4474] = -- Gigant Squid
+    {
+        gil = 300,
+        items =
+        {
+            {chance = 2.5, itemId = 12317}, -- Flame Shield (Need source for drop %, just went with 2.5 to match other misc gear.)
+        }
+    },
+    [5135] = -- Rhinochimera
+    {
+        gil = 300,
+        items =
+        {
+            {chance = 3.2, itemId = 11624}, -- Solon Torque
+        }
+    },
+    [4304] = -- Grimmonite
+    {
+        gil = 350,
+        items =
+        {
+            {chance = 1, itemId = 13445}, -- Gold Ring  (Not really any good sources on drop % on these, just guessed.)
+            {chance = 2, itemId = 13446}, -- Mythril Ring
+            {chance = 3, itemId = 13456}, -- Silver Ring
+        }
+    },
+    [4316] = -- Armored Pisces
+    {
+        gil = 350,
+        items =
+        {
+            {chance = 0.4, itemId = 13736}, -- Stolid Breastplate
+        }
+    },
+    [5134] = -- Mola Mola
+    {
+        gil = 487,
+        items =
+        {
+            {chance = 1.8, itemId = 16850}, -- Mercurial Spear
+        }
+    },
+    [5450] = -- Lakerda
+    {
+        gil = 51,
+        items =
+        {
+            {chance = 6, itemId = 792}, -- Pearl
+            {chance = 1.9, itemId = 793}, -- Black Pearl
+        }
+    },
+    [5463] = -- Yayinbaligi
+    {
+        gil = 50,
+        items =
+        {
+            {chance = 2.5, itemId = 14649}, -- Telluric Ring
+        }
+    },
+    [5451] = -- Kilicbaligi
+    {
+        gil = 150,
+        items =
+        {
+            {chance = 2.5, itemId = 16606}, -- Rusty Greatsword
+        }
+    },
+    [5455] = -- Ahtapot
+    {
+        gil = 350,
+        items =
+        {
+            {chance = 10.2, itemId = 2886}, -- Mildewy Ingot
+            {chance = 18.5, itemId = 2887}, -- Decayed Ingot
+        }
+    },
     [5471] = -- Gerrothorax
     {
         gil = 423,
@@ -277,10 +377,10 @@ local function tradeFish(player, fishId)
             break
         end
     end
-    
+
     if item then
         player:startEvent(166, 0, item)
-    else 
+    else
         player:startEvent(167)
     end
 end
@@ -303,7 +403,7 @@ local function giveReward(player, csid)
         player:confirmTrade()
         player:addGil(GIL_RATE * reward.gil)
         player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
-        
+
         --If successful (other than gil) give the item
         if itemIdx > 0 then     -- Successful reward (other than gil)
             local r = reward.items[itemIdx]
@@ -330,7 +430,7 @@ local function giveReward(player, csid)
     end
 
 
-        
+
 end
 
 function onTrade(player, npc, trade)
