@@ -4397,7 +4397,7 @@ INSERT INTO `mob_pools` VALUES(4333, 'White_Coney', 'White_Coney', 206, _binary 
 INSERT INTO `mob_pools` VALUES(4334, 'White_Lizard', 'White_Lizard', 174, _binary 0x0000490100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 290, 131, 0, 0, 0, 0, 0, 174);
 INSERT INTO `mob_pools` VALUES(4335, 'White_Sentinel', 'White_Sentinel', 31, _binary 0x0600bf0700000000000000000000000000000000, 7, 7, 3, 360, 100, 0, 0, 0, 1, 0, 0, 0, 10, 133, 0, 0, 4, 0, 0, 31);
 INSERT INTO `mob_pools` VALUES(4336, 'Whyjham', 'Whyjham', 145, _binary 0x00007a0000000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 145);
-INSERT INTO `mob_pools` VALUES(4337, 'Wight', 'Wight', 227, _binary 0x0000340200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 344, 131, 0, 0, 0, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(4337, 'Wight', 'Wight', 227, _binary 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 0, 0, 0, 0, 344, 131, 0, 0, 28, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(4338, 'Wildcat_Vanguard', 'Wildcat_Vanguard', 151, _binary 0x01000807b710892089300f400f509a61af700080, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 151);
 INSERT INTO `mob_pools` VALUES(4339, 'Wildcat_Volunteer', 'Wildcat_Volunteer', 151, _binary 0x010006078910892089300f400f506f6000702980, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 151);
 INSERT INTO `mob_pools` VALUES(4340, 'Wildfire', 'Wildfire', 56, _binary 0x0000180100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56);
@@ -6322,6 +6322,7 @@ INSERT INTO `mob_pools` VALUES(6927, 'Stollenwurm', 'Stollenwurm', 87, _binary 0
 INSERT INTO `mob_pools` VALUES(6928, 'Koschei', 'Koschei', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 5032);
 INSERT INTO `mob_pools` VALUES(6930, 'Vishap', 'Vishap', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 5034);
 INSERT INTO `mob_pools` VALUES(6931, 'Nightmare_Cockatrice', 'Nightmare_Cockatrice', 70, _binary 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 1, 1, 0, 0, 0, 164, 643, 0, 0, 0, 0, 0, 70);
+INSERT INTO `mob_pools` VALUES(6932, 'Wight', 'Wight', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 344, 131, 0, 0, 0, 0, 0, 227);
 
 --
 -- Indexes for dumped tables
