@@ -38,7 +38,7 @@ function onUseAbility(player, target, ability)
     -- If the Dragoon's wyvern is out and alive, tell it to use Super Climb
     local wyvern = player:getPet()
     if (wyvern ~= nil and player:getPetID() == tpz.pet.id.WYVERN and wyvern:getHP() > 0) then
-        wyvern:useJobAbility(636, wyvern)
+        wyvern:useJobAbility(652, wyvern)
     end
 
 end
