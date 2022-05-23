@@ -37,7 +37,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(damage, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, MOBPARAM_IGNORE_SHADOWS)
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, 1) end
+	target:tryInterruptSpell(mob, 1)
     mob:resetEnmity(target)
     return dmg
 end
