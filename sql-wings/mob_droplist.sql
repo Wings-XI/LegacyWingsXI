@@ -16450,6 +16450,8 @@ INSERT INTO `mob_droplist` VALUES(3171, 0, 0, 1000, 2850, 59);
 INSERT INTO `mob_droplist` VALUES(3172, 0, 0, 1000, 19124, 198);
 INSERT INTO `mob_droplist` VALUES(3173, 0, 0, 1000, 2855, 350);
 INSERT INTO `mob_droplist` VALUES(3174, 0, 0, 1000, 16017, 212);
+INSERT INTO `mob_droplist` VALUES(3175, 2, 0, 1000, 880, 0);
+INSERT INTO `mob_droplist` VALUES(3175, 0, 0, 1000, 880, 210);
 
 
 -- 3200s are dynamis drops
