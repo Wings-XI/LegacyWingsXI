@@ -10,7 +10,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(103)
+    player:PrintToPlayer("You are jailed under suspicion of breaking the Terms of Service. Please submit a GM Ticket in the Wings Discord.",29)
 end
 
 function onEventUpdate(player, csid, option)
