@@ -236,8 +236,13 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     -- plus 100 forces it to be a number
     mab = (100 + mob:getMod(tpz.mod.MATT)) / (100 + target:getMod(tpz.mod.MDEF) + mdefBarBonus)
 
-    if (mab > 1.3) then
-        mab = 1.3
+    if (mob:isPet() and mob:getMaster() ~= nil) then
+        local master = mob:getMaster()
+        if not (master:isPC()) then -- check to ensure this is not a player pet
+            if (mab > 1.3) then
+                mab = 1.3
+            end
+        end
     end
 
     if (mab < 0.7) then
