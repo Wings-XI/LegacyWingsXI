@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -303,7 +303,7 @@ float CBattleEntity::GetJumpTPBonus()
 {
     if ((float)getMod(Mod::JUMP_TP_BONUS) != 0)
     {
-        return ((float)(getMod(Mod::JUMP_TP_BONUS)) / 10);
+        return (float)(getMod(Mod::JUMP_TP_BONUS));
     }
     else
     {
