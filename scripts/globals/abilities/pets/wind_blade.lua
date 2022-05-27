@@ -22,7 +22,6 @@ function onPetAbility(target, pet, skill)
     if (master ~= nil and master:isPC()) then
         merits = master:getMerit(tpz.merit.WIND_BLADE)*40
     end
-    
 
     tp = tp + (merits - 40)
     if (tp > 300) then
@@ -34,7 +33,7 @@ function onPetAbility(target, pet, skill)
     damage = math.floor(damage + (dINT * 1.5))
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.WIND, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.WIND)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
     
     local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.WIND - 5, target)
     if (skillchainTier > 0) then

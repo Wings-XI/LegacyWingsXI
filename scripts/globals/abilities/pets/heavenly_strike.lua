@@ -33,7 +33,7 @@ function onPetAbility(target, pet, skill)
     damage = math.floor(damage + (dINT * 1.5))
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.ICE, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.ICE)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_WIPE_SHADOWS)
     
     local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.ICE - 5, target)
     if (skillchainTier > 0) then
