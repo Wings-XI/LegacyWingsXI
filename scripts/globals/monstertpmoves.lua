@@ -243,8 +243,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
                 mab = 1.3
             end
         end
-    end
-    if not(mob:isPet()) then -- check to ensure this is not a pet
+    else -- this is not a pet
         if (mab > 1.3) then
             mab = 1.3
         end
