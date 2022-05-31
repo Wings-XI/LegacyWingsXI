@@ -3571,7 +3571,7 @@ INSERT INTO `mob_groups` VALUES(56, 2349, 79, 'Lamia_No27', 0, 128, 0, 0, 0, 79,
 INSERT INTO `mob_groups` VALUES(57, 2752, 79, 'Moshdahn', 0, 128, 0, 25000, 0, 79, 81, 0);
 INSERT INTO `mob_groups` VALUES(58, 3704, 79, 'Soulflayer', 300, 0, 2030, 0, 0, 79, 82, 0);
 INSERT INTO `mob_groups` VALUES(59, 2220, 79, 'Khimaira', 172800, 128, 1437, 72000, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(60, 4221, 79, 'Verdelet', 0, 128, 2575, 22000, 0, 85, 86, 0);
+INSERT INTO `mob_groups` VALUES(60, 4221, 79, 'Verdelet', 0, 128, 2575, 22000, 10000, 85, 86, 0);
 INSERT INTO `mob_groups` VALUES(61, 4063, 79, 'Tyger', 0, 128, 2508, 48000, 0, 88, 90, 0);
 INSERT INTO `mob_groups` VALUES(62, 2489, 79, 'Mahjlaef_the_Paintorn', 0, 128, 1576, 37000, 0, 83, 85, 0);
 INSERT INTO `mob_groups` VALUES(63, 1272, 79, 'Experimental_Lamia', 0, 128, 801, 32000, 0, 82, 84, 0);
