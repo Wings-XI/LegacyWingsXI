@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Chaotic Strike M=9 , 2
+-- Chaotic Strike M=8 , 2
 ---------------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
