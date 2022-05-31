@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_FRAGMENTATION
     params.spellLevel = 73
     params.numhits = 1
-    params.multiplier = 1.0
-    params.tp150 = 1.375
-    params.tp300 = 1.75
-    params.azuretp = 1.875
+    params.multiplier = 4.0
+    params.tp150 = 4.5
+    params.tp300 = 5.0
+    params.azuretp = 5.16
     params.duppercap = 75
     params.str_wsc = 0.3
     params.dex_wsc = 0.0
