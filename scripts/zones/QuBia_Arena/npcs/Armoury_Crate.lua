@@ -169,6 +169,7 @@ local loot =
             {itemid = 14204, droprate =  167}, -- river_gaiters
         },
         {
+            {itemid =   784, droprate =   94}, -- jadeite
             {itemid =   803, droprate =  113}, -- sunstone
             {itemid =   805, droprate =   75}, -- zircon
             {itemid =   478, droprate =   10}, -- clear_chip
@@ -188,7 +189,7 @@ local loot =
             {itemid =   480, droprate =   10}, -- white_chip
             {itemid =   802, droprate =  151}, -- moonstone
             {itemid =   805, droprate =   75}, -- zircon
-            {itemid =   810, droprate =   57}, -- fluorite
+            {itemid =   810, droprate =   10}, -- fluorite
             {itemid =   801, droprate =   57}, -- chrysoberyl
             {itemid =   772, droprate =   38}, -- green_rock
             {itemid =  4173, droprate =   38}, -- hi-reraiser
