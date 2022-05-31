@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_DETONATION
     params.spellLevel = 34
     params.numhits = 1
-    params.multiplier = 1.5
-    params.tp150 = 2.25
-    params.tp300 = 2.5
-    params.azuretp = 2.53125
+    params.multiplier = 3.3
+    params.tp150 = 3.9
+    params.tp300 = 4.5
+    params.azuretp = 4.7
     params.duppercap = 35
     params.str_wsc = 0.2
     params.dex_wsc = 0.2

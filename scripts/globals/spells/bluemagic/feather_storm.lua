@@ -27,11 +27,12 @@ function onSpellCast(caster, target, spell)
     params.attackType = tpz.attackType.RANGED
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIGHT
+    params.spellLevel = 12
     params.numhits = 1
-    params.multiplier = 2.0
-    params.tp150 = 2.0
-    params.tp300 = 2.0
-    params.azuretp = 2.0
+    params.multiplier = 1.5
+    params.tp150 = 1.5
+    params.tp300 = 1.5
+    params.azuretp = 1.5
     params.duppercap = 17
     params.str_wsc = 0.0
     params.dex_wsc = 0.0

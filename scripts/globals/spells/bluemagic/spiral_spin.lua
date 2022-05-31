@@ -28,10 +28,10 @@ function onSpellCast(caster, target, spell)
     params.damageType = tpz.damageType.SLASHING
     params.scattr = SC_TRANSFIXION
     params.numhits = 1
-    params.multiplier = 2.0
-    params.tp150 = 2.0
-    params.tp300 = 2.0
-    params.azuretp = 2.0
+    params.multiplier = 2.7
+    params.tp150 = 2.7
+    params.tp300 = 2.7
+    params.azuretp = 2.7
     params.duppercap = 60
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
