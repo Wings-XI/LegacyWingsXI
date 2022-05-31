@@ -159,18 +159,16 @@ local loot =
     [523] =
     {
         {
-            {itemid = 14202, droprate =  125}, -- creek_m_clomps
-            {itemid = 14203, droprate =  125}, -- creek_f_clomps
-            {itemid = 14198, droprate =  125}, -- marine_m_boots
-            {itemid = 14199, droprate =  125}, -- marine_f_boots
-            {itemid = 14200, droprate =  125}, -- wood_m_ledelsens
-            {itemid = 14201, droprate =  125}, -- wood_f_ledelsens
-            {itemid = 14205, droprate =  125}, -- dune_sandals
-            {itemid = 14204, droprate =  125}, -- river_gaiters
+            {itemid = 14202, droprate =  150}, -- creek_m_clomps
+            {itemid = 14203, droprate =  93}, -- creek_f_clomps
+            {itemid = 14198, droprate =  148}, -- marine_m_boots
+            {itemid = 14199, droprate =  200}, -- marine_f_boots
+            {itemid = 14200, droprate =  74}, -- wood_m_ledelsens
+            {itemid = 14201, droprate =  111}, -- wood_f_ledelsens
+            {itemid = 14205, droprate =  74}, -- dune_sandals
+            {itemid = 14204, droprate =  167}, -- river_gaiters
         },
         {
-            {itemid =   801, droprate =   10}, -- chrysoberyl
-            {itemid =   784, droprate =   94}, -- jadeite
             {itemid =   803, droprate =  113}, -- sunstone
             {itemid =   805, droprate =   75}, -- zircon
             {itemid =   478, droprate =   10}, -- clear_chip
@@ -181,6 +179,7 @@ local loot =
             {itemid =   776, droprate =   19}, -- white_rock
         },
         {
+            {itemid =     0, droprate =  582}, -- nothing
             {itemid =   652, droprate =  132}, -- steel_ingot
             {itemid =   773, droprate =  113}, -- translucent_rock
             {itemid =   654, droprate =  113}, -- darksteel_ingot
@@ -203,19 +202,17 @@ local loot =
         {
             {itemid =     0, droprate =  582}, -- nothing
             {itemid =   653, droprate =  302}, -- mythril_ingot
+            {itemid =  4119, droprate =  113}, -- hi-potion_+3
             {itemid =   475, droprate =   19}, -- blue_chip
             {itemid =   481, droprate =   38}, -- black_chip
             {itemid =   479, droprate =   10}, -- purple_chip
             {itemid =   477, droprate =   19}, -- green_chip
-            {itemid =   700, droprate =   10}, -- mahogany_log
-            {itemid =   769, droprate =   10}, -- red_rock
-            {itemid =   775, droprate =   10}, -- black_rock
+            {itemid =   700, droprate =   132}, -- mahogany_log
+            {itemid =   769, droprate =   19}, -- red_rock
+            {itemid =   775, droprate =   19}, -- black_rock
         },
         {
-            {itemid =     0, droprate =  887}, -- nothing
-            {itemid =  4119, droprate =  113}, -- hi-potion_+3
-        },
-    },
+        
 
     -- BCNM Undying Promise
     [524] =
