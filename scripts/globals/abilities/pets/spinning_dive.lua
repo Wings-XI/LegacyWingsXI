@@ -17,7 +17,7 @@ function onPetAbility(target, pet, skill)
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 1
     local accmod = 20 + math.floor(15*skill:getTP()/3000)
-    local dmgmod = 6 * coe --12 * coe or correct formula when smn calcs have been auditted
+    local dmgmod = 12 * coe
 
     local totaldamage = 0
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
