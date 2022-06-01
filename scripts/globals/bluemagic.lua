@@ -296,6 +296,11 @@ function BluePhysicalSpell(caster, target, spell, params)
         finaldmg = math.floor(finaldmg * circlemult / 100)
     end
 
+    if caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK) then
+        finaldmg = finaldmg * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
+    end
+
     finaldmg = BlueApplyTargetDamageReductions(target, finaldmg)
 
     if finaldmg > 0 then target:addTPFromSpell(caster, hitslanded) end
@@ -352,6 +357,12 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
     end
 
     D = math.floor(addBonuses(caster, spell, target, D, params))
+    
+    if caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK) then
+        D = D * 1.5
+        caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
+    end
+    
     D = BlueApplyTargetDamageReductions(target, D)
 
     if params.attackType == tpz.attackType.BREATH then
@@ -381,7 +392,7 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
 
     local attackType = params.attackType or tpz.attackType.NONE
     local damageType = params.damageType or tpz.damageType.NONE
-    if attackType == tpz.attackType.MAGICAL or attackType == tpz.attackType.SPECIAL or attackType == tpz.attackType.BREATH then
+    if attackType == tpz.attackType.MAGICAL or attackType == tpz.attackType.SPECIAL then
         dmg = target:magicDmgTaken(dmg)
     elseif attackType == tpz.attackType.RANGED then
         dmg = target:rangedDmgTaken(caster, dmg)
@@ -398,6 +409,7 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
 		end
 	end
     target:handleAfflatusMiseryDamage(dmg)
+    
     -- TP has already been dealt with.
     return dmg
 end
@@ -454,6 +466,7 @@ end
 -- ftp2 - The TP 150% value
 -- ftp3 - The TP 300% value
 function BluefTP(tp, ftp1, ftp2, ftp3)
+    if tp == nil or ftp1 == nil or ftp2 == nil or ftp3 == nil then return 1 end
     if tp =< 1500 then -- 0 to 1500
         return ftp1 + (ftp2 - ftp1) * (tp / 1500)
     else -- 1500 to 3000
