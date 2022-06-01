@@ -17,7 +17,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    local baseDuration = 32
+    local baseDuration = 180
     local durationMultiplier = 1.0 + utils.clamp(player:getMod(tpz.mod.SPECTRAL_JIG_DURATION), 0, 200) / 100
     local finalDuration = math.floor(baseDuration * durationMultiplier * SNEAK_INVIS_DURATION_MULTIPLIER)
 
