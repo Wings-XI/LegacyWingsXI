@@ -196,6 +196,38 @@ void CNavMesh::unload()
     m_navMesh.reset();
 }
 
+uint8 CNavMesh::maxAngleDivergenceOfPath(std::vector<position_t>* PPath)
+{
+    if (PPath->size() <= 2)
+        return 0;
+
+    int16 divergence = 0;
+    int16 referenceAngle = worldAngle(*(PPath->begin()), *(PPath->end() - 1));
+
+    for (auto i = PPath->begin() + 1; i != PPath->end() - 1; i++)
+    {
+        int16 angleDiff = abs(angleDifference(worldAngle(*(PPath->begin()), *i), referenceAngle));
+        divergence = angleDiff > divergence ? angleDiff : divergence;
+    }
+
+    //ShowInfo("maxAngleDivergenceOfPath was %i\n", divergence);
+    return divergence;
+}
+
+float CNavMesh::countPathDistance(std::vector<position_t>* PPath)
+{
+    if (!PPath->size())
+        return 0.0f;
+
+    float dist = 0.0f;
+
+    for (auto i = PPath->begin(); (i + 1) != PPath->end(); i++)
+        dist += distance(*i, *(i + 1));
+
+    //ShowInfo("countPathDistance was %f\n", dist);
+    return dist;
+}
+
 std::vector<position_t> CNavMesh::findPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;

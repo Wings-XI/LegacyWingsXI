@@ -23,6 +23,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "../ai_container.h"
 #include "../../ability.h"
+#include "../../navmesh.h"
 #include "../states/death_state.h"
 #include "../../entities/charentity.h"
 #include "../../items/item_weapon.h"
@@ -30,6 +31,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../packets/lock_on.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/charutils.h"
+#include "../../utils/zoneutils.h"
 #include "../../recast_container.h"
 #include "../../latent_effect_container.h"
 #include "../../status_effect_container.h"
@@ -129,8 +131,16 @@ bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
 
 bool CPlayerController::RangedAttack(uint16 targid)
 {
-    auto PChar = static_cast<CCharEntity*>(POwner);
+    CCharEntity* PChar = static_cast<CCharEntity*>(POwner);
+    CZone* PZone = zoneutils::GetZone(PChar->getZone());
+    if (!PZone)
+        return false;
+    CBattleEntity* PTarget = (CBattleEntity*)(PZone->GetEntity(targid));
+    if (!PTarget)
+        return false;
     uint8 anim = PChar->animation;
+    std::vector<position_t> predictedPath = PZone->m_navMesh->findPath(PChar->loc.p, PTarget->loc.p);
+    float dist = distance(PChar->loc.p, PTarget->loc.p);
     if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == RANGE_STATE)
     {
         //ShowDebug("Got ranged attack request while already ranged attacking...\n");
@@ -152,6 +162,14 @@ bool CPlayerController::RangedAttack(uint16 targid)
     else if (PChar->PAI->GetCurrentState() && PChar->PAI->GetCurrentState()->m_id == ABILITY_STATE)
     {
         return false;
+    }
+    else if (PZone->m_navMesh->countPathDistance(&predictedPath) > 50)
+    { // the predicted return path of the target to the player is greater than 50 yalms (high potential for navmesh abuse)
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_CANNOT_SEE));
+    }
+    else if (dist > 5 && dist < 26 && PZone->m_navMesh->maxAngleDivergenceOfPath(&predictedPath) > 50 + 50 * (26 - dist)/26)
+    { // the obstacles that the mob woulth have to path around to reach the player exceeds a right-angle sight view of the player (probably shooting through a wall)
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_CANNOT_SEE));
     }
     else if (PChar->PAI->CanChangeState())
     {
