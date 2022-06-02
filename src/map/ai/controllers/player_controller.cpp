@@ -167,7 +167,7 @@ bool CPlayerController::RangedAttack(uint16 targid)
     { // the predicted return path of the target to the player is greater than 50 yalms (high potential for navmesh abuse)
         PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_CANNOT_SEE));
     }
-    else if (dist > 5 && dist < 26 && PZone->m_navMesh->maxAngleDivergenceOfPath(&predictedPath) > 50 + 50 * (26 - dist)/26)
+    else if (dist > 5 && dist < 26 && PZone->m_navMesh->maxAngleDivergenceOfPath(&predictedPath) > 50 + 50 * (26 - dist)/26) // allowed angle becomes more permissive the closer you move
     { // the obstacles that the mob woulth have to path around to reach the player exceeds a right-angle sight view of the player (probably shooting through a wall)
         PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, 0, 0, MSGBASIC_CANNOT_SEE));
     }
