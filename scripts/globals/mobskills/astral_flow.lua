@@ -63,7 +63,9 @@ function onMobWeaponSkill(target, mob, skill)
         skillId = 919 -- searing light
     end
 
-    GetMobByID(avatar):useMobAbility(skillId)
+    if mob:isInDynamis() then
+        GetMobByID(avatar):useMobAbility(skillId)
+    end
 
     return tpz.effect.ASTRAL_FLOW
 end
