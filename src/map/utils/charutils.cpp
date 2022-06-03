@@ -93,6 +93,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../mob_modifier.h"
 #include "../roe.h"
 #include "../anticheat.h"
+#include "../dynamis_handler.h"
 
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
@@ -3880,6 +3881,8 @@ namespace charutils
         uint8 tries = 0;
         uint8 maxTries = 1;
         uint8 bonus = 0;
+        CZone* PZone = zoneutils::GetZone(PChar->getZone());
+        CDynamisHandler* PDynaHandler = PZone ? PZone->m_DynamisHandler : nullptr;
         if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
         {
             //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
@@ -3891,7 +3894,7 @@ namespace charutils
         {
             if (droprate > 0 && tpzrand::GetRandomNumber(1000) < droprate * map_config.drop_rate_multiplier + bonus)
             {
-                PChar->PTreasurePool->AddItem(itemid, PEntity);
+                PChar->PTreasurePool->AddItem(itemid, PEntity, PDynaHandler);
                 break;
             }
             tries++;
