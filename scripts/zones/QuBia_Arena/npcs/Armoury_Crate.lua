@@ -12,40 +12,39 @@ local loot =
     [520] =
     {
         {
-            {itemid = 14833, droprate =  125}, -- marine_m_gloves
-            {itemid = 14834, droprate =  125}, -- marine_f_gloves
-            {itemid = 14835, droprate =  125}, -- wood_gauntlets
-            {itemid = 14836, droprate =  125}, -- wood_gloves
-            {itemid = 14837, droprate =  125}, -- creek_m_mitts
-            {itemid = 14838, droprate =  125}, -- creek_f_mitts
-            {itemid = 14839, droprate =  125}, -- river_gauntlets
-            {itemid = 14840, droprate =  125}, -- dune_bracers
+            {itemid = 14833, droprate =  148}, -- marine_m_gloves
+            {itemid = 14834, droprate =  200}, -- marine_f_gloves
+            {itemid = 14835, droprate =  74}, -- wood_gauntlets
+            {itemid = 14836, droprate =  111}, -- wood_gloves
+            {itemid = 14837, droprate =  150}, -- creek_m_mitts
+            {itemid = 14838, droprate =  93}, -- creek_f_mitts
+            {itemid = 14839, droprate =  167}, -- river_gauntlets
+            {itemid = 14840, droprate =  74}, -- dune_bracers
         },
         {
-            {itemid =   474, droprate =  125}, -- red_chip
-            {itemid =   475, droprate =  125}, -- blue_chip
-            {itemid =   476, droprate =  125}, -- yellow_chip
-            {itemid =   477, droprate =  125}, -- green_chip
-            {itemid =   478, droprate =  125}, -- clear_chip
-            {itemid =   479, droprate =  125}, -- purple_chip
-            {itemid =   480, droprate =  125}, -- white_chip
-            {itemid =   481, droprate =  125}, -- black_chip
+            {itemid =   474, droprate =  38}, -- red_chip
+            {itemid =   475, droprate =  19}, -- blue_chip
+            {itemid =   476, droprate =  38}, -- yellow_chip
+            {itemid =   477, droprate =  38}, -- green_chip
+            {itemid =   478, droprate =  10}, -- clear_chip
+            {itemid =   479, droprate =  38}, -- purple_chip
+            {itemid =   480, droprate =  38}, -- white_chip
+            {itemid =   481, droprate =  38}, -- black_chip
         },
         {
-            {itemid =     0, droprate =  125}, -- nothing
-            {itemid =   653, droprate =  125}, -- mythril_ingot
-            {itemid =   702, droprate =  125}, -- ebony_log
-            {itemid =   703, droprate =  125}, -- petrified_log
-            {itemid =   791, droprate =  125}, -- aquamarine
-            {itemid =   797, droprate =  125}, -- painite
-            {itemid =   801, droprate =  125}, -- chrysoberyl
-            {itemid =   802, droprate =  125}, -- moonstone
+            {itemid =     0, droprate =  542}, -- nothing
+            {itemid =   653, droprate =  302}, -- mythril_ingot
+            {itemid =   702, droprate =  132}, -- ebony_log
+            {itemid =   703, droprate =  132}, -- petrified_log
+            {itemid =   791, droprate =  57}, -- aquamarine
+            {itemid =   797, droprate =  50}, -- painite
+            {itemid =   801, droprate =  10}, -- chrysoberyl
+            {itemid =   802, droprate =  151}, -- moonstone
         },
         {
-            {itemid =     0, droprate =  625}, -- nothing
-            {itemid =  4749, droprate =  125}, -- scroll_of_reraise_ii
-            {itemid =  4812, droprate =  125}, -- scroll_of_flare
-            {itemid =  5005, droprate =  125}, -- scroll_of_valor_minuet_iv
+            {itemid =  4749, droprate =  264}, -- scroll_of_reraise_ii
+            {itemid =  4812, droprate =  283}, -- scroll_of_flare
+            {itemid =  5005, droprate =  358}, -- scroll_of_valor_minuet_iv
         },
         {
             {itemid =     0, droprate =  700}, -- nothing
