@@ -295,16 +295,18 @@ function BluePhysicalSpell(caster, target, spell, params)
 
         finaldmg = math.floor(finaldmg * circlemult / 100)
     end
-
+    
     if caster:hasStatusEffect(tpz.effect.SOLDIERS_DRINK) then
         finaldmg = finaldmg * 1.5
         caster:delStatusEffectSilent(tpz.effect.SOLDIERS_DRINK)
     end
-
+    
     finaldmg = BlueApplyTargetDamageReductions(target, finaldmg)
-
+    
     if finaldmg > 0 then target:addTPFromSpell(caster, hitslanded) end
-
+    
+    if (hitslanded == 0) then spell:setMsg(tpz.msg.basic.MAGIC_FAIL) end
+    
     return finaldmg, hitslanded, taChar
 end
 
