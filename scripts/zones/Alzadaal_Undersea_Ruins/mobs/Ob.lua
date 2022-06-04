@@ -231,7 +231,6 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setMod(tpz.mod.LULLABYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     setupHarlequin(mob)

@@ -113,7 +113,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setMod(tpz.mod.ATT, 400)
 end
 

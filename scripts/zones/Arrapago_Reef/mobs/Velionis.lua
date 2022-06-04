@@ -26,7 +26,6 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:SetAutoAttackEnabled(false)
     mob:setMod(tpz.mod.FASTCAST, 15)
     mob:setLocalVar("HPP", 90)

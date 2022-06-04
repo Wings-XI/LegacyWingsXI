@@ -15,7 +15,6 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setLocalVar("formTime", os.time() + math.random(43, 47))
     mob:setLocalVar("defUp", math.random(25, 40))
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
