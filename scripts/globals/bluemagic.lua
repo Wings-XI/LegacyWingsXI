@@ -469,7 +469,7 @@ end
 -- ftp3 - The TP 300% value
 function BluefTP(tp, ftp1, ftp2, ftp3)
     if tp == nil or ftp1 == nil or ftp2 == nil or ftp3 == nil then return 1 end
-    if tp =< 1500 then -- 0 to 1500
+    if tp <= 1500 then -- 0 to 1500
         return ftp1 + (ftp2 - ftp1) * (tp / 1500)
     else -- 1500 to 3000
         return ftp2 + (ftp3 - ftp2) * ((tp-1500) / 1500)
