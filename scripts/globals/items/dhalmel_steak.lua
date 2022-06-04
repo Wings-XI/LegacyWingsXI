@@ -27,13 +27,13 @@ end
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.STR, 4)
     target:addMod(tpz.mod.INT, -2)
-    target:addMod(tpz.mod.ATTP, 25)
+    target:addMod(tpz.mod.FOOD_ATTP, 25)
     target:addMod(tpz.mod.FOOD_ATT_CAP, 45)
 end
 
 function onEffectLose(target, effect)
     target:delMod(tpz.mod.STR, 4)
     target:delMod(tpz.mod.INT, -2)
-    target:delMod(tpz.mod.ATTP, 25)
+    target:delMod(tpz.mod.FOOD_ATTP, 25)
     target:delMod(tpz.mod.FOOD_ATT_CAP, 45)
 end
