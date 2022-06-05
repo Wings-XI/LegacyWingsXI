@@ -15,6 +15,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.REGEN, math.floor(mob:getMaxHP()*.004))
     mob:addMod(tpz.mod.BINDRES, 40)
     mob:addMod(tpz.mod.MOVE, 25) -- 25% faster than a player
