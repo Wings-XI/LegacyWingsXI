@@ -24,7 +24,6 @@ local function overloadRageDisengage(mob)
         mob:delMod(tpz.mod.MEVA, 500)
         mob:delMod(tpz.mod.BINDRES, 100)
         mob:delMod(tpz.mod.GRAVITYRES, 100)
-        mob:delMod(tpz.mod.MOVE, 200)
 
         -- per capture, will tp quickly, but its not chain tp at 70%+ hp
         mob:delMod(tpz.mod.REGAIN, 700)
@@ -43,7 +42,6 @@ local function overloadRageEngage(mob)
     mob:addMod(tpz.mod.MEVA, 500)
     mob:addMod(tpz.mod.BINDRES, 100)
     mob:addMod(tpz.mod.GRAVITYRES, 100)
-    mob:addMod(tpz.mod.MOVE, 200)
 
     -- per capture, will tp quickly, but its not chain tp at 70%+ hp
     mob:addMod(tpz.mod.REGAIN, 700)
