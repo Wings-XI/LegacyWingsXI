@@ -698,7 +698,13 @@ dynamis.onStatueFight = function(mob, target)
         mob:SetMobAbilityEnabled(false)
         mob:SetMagicCastingEnabled(false)
         mob:SetAutoAttackEnabled(false)
+        mob:untargetable(true)
+        mob:hideName(true)
         mob:setTP(0)
+        mob:setLocalVar("DeadStatue", 1) -- Flag to interrupt struggling statues casting
+        if mob:getCurrentAction() == tpz.act.MAGIC_CASTING then
+            mob:tryInterruptSpell(target, 1)
+        end
         mob:timer(500, function(mob) mob:SetMobAbilityEnabled(true) end)
         mob:timer(500, function(mob)
             if mob:AnimationSub() == 2 then
@@ -715,6 +721,8 @@ dynamis.onStatueSkillFinished = function (mob, target, skill)
         mob:SetMagicCastingEnabled(true)
         mob:SetAutoAttackEnabled(true)
         mob:setUnkillable(false)
+        mob:untargetable(false)
+        mob:hideName(false)
         mob:setHP(0)
     end
 end
