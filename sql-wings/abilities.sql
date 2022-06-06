@@ -422,6 +422,7 @@ INSERT INTO `abilities` VALUES(659, 'ultimate_terror', 15, 37, 4, 60, 174, 0, 0,
 INSERT INTO `abilities` VALUES(660, 'noctoshield', 15, 49, 1, 60, 174, 0, 0, 92, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(661, 'dream_shroud', 15, 56, 1, 60, 174, 0, 0, 121, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(662, 'nether_blast', 15, 65, 4, 60, 173, 0, 0, 109, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
+INSERT INTO `abilities` VALUES(664, 'ruinous_omen', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 0, 0, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(672, 'foot_kick', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);
 INSERT INTO `abilities` VALUES(673, 'dust_cloud', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);
 INSERT INTO `abilities` VALUES(674, 'whirl_claws', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);
