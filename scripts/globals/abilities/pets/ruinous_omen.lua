@@ -1,5 +1,11 @@
 ---------------------------------------------------
 -- Ruinous Omen
+-- Sources:
+-- https://www.bg-wiki.com/ffxi/Ruinous_Omen
+-- https://www.bluegartr.com/threads/108197-Random-Facts-Thread-Abilities?p=6003851&viewfull=1#post6003851
+-- https://www.bluegartr.com/threads/35650-Diabolos-This-Way?s=f56900f365d3dd0ee19bf2efa5a69b38&p=1155067&viewfull=1#post1155067
+-- https://seesaawiki.jp/w/homelos/d/%A5%EB%A5%A4%A5%CA%A5%B9%A5%AA%A1%BC%A5%E1%A5%F3
+-- https://www.youtube.com/watch?v=0a_khHBAdxQ
 ---------------------------------------------------
 require("/scripts/globals/settings")
 require("/scripts/globals/status")
@@ -21,82 +27,48 @@ end
 
 function onPetAbility(target, pet, skill, master)
 
-    -- Get enemy current HP
-    local mobHP = target:getHP()/100
+    -- Target HP decrease seems to be about 40% unresisted, 1% on NMs.
+    -- Maximum observed 50% (weakness to darkness?), 10% on NMs.
+    -- Minimum observed 10% (high resist), 0.05% on NMs
     local min = 10
     local max = 50
-    local damage = math.random(min, max) * mobHP
-    if target:isNM() then
-        if target:getFamily() ~= 51 then -- Not a Behemoth
-            damage = 1*mobHP
-            printf("%i HP", 1*mobHP)
-        else
-            damage = math.random(1, min) * mobHP
-        end
-    end
-
-    -- day/weather start
-    local ele = 8
-    local caster = pet
-    local dayWeatherBonus = 1.00
-    local weather = caster:getWeather()
-
-    if (weather == tpz.magic.singleWeatherStrong[ele]) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus + 0.10
-        end
-    elseif (caster:getWeather() == tpz.magic.singleWeatherWeak[ele]) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus - 0.10
-        end
-    elseif (weather == tpz.magic.doubleWeatherStrong[ele]) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus + 0.25
-        end
-    elseif (weather == tpz.magic.doubleWeatherWeak[ele]) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus - 0.25
-        end
-    end
-
-    local dayElement = VanadielDayElement()
-    if (dayElement == ele) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus + 0.10
-        end
-    elseif (dayElement == tpz.magic.elementDescendant[ele]) then
-        if (math.random() < 0.33) then
-            dayWeatherBonus = dayWeatherBonus - 0.10
-        end
-    end
-
-    damage = damage * dayWeatherBonus
-    -- day/weather end
-
-    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.DARK - 5, target)
-    if (skillchainTier > 0) then
-        skill:setMsg(747)
-    end
-
+    local ratio = 4
+    local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     
+    if dINT <= 0 then ratio = 30 end
+
     if target:isNM() then
-        if target:getFamily() ~= 51 then -- Not a Behemoth
-            damage = utils.clamp(damage, 1*mobHP, max*mobHP)
+        printf("Current Target: %s, is NM", target:getName())
+        if (target:getFamily() ~= 51 and target:getFamily() ~= 479) then -- Not a Behemoth
+            printf("Current Target: %s, is NOT Behemoth", target:getName())
+            min = 0.05
+            max = 10
         else
-            damage = utils.clamp(damage, 1*mobHP, min*mobHP)
+            printf("Current Target: %s, is a Behemoth", target:getName())
+            min = 2
+            max = 10
         end
-    else
-        damage = utils.clamp(damage, min*mobHP, max*mobHP)
     end
 
+    hpTarget = math.random(min, max)
 
-    if damage > 9999 then
-        damage = 9999
-    end
+    hpTarget = hpTarget + ((dINT / ratio))
 
-    damage = math.floor(damage)
+    printf("Current Target: %s, dINT = %i, hpTarget = %i", target:getName(), dINT, hpTarget)
 
-    damage = utils.stoneskin(target, damage)
+    hpTarget = MobMagicalMove(pet, target, skill, hpTarget, tpz.magic.ele.DARK, 0.7, TP_NO_EFFECT, 0)
+    printf("Current Target: %s, after MobMagicalMove, hpTarget = %i", target:getName(), hpTarget.dmg)
+    hpTarget = mobAddBonuses(pet, nil, target, hpTarget.dmg, tpz.magic.ele.DARK)
+    printf("Current Target: %s, after mobAddBonuses, hpTarget = %i", target:getName(), hpTarget)
+    hpTarget = AvatarFinalAdjustments(hpTarget, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
+    printf("Current Target: %s, after AvatarFinalAdjustments, hpTarget = %i", target:getName(), hpTarget)
+
+    hpTarget = utils.clamp(hpTarget, min, max)
+    printf("Current Target: %s, after clamping, hpTarget = %i", target:getName(), hpTarget)
+
+    -- Convert the reduction into an entity-specific amount based on their current HP
+    local damage = target:getHP() * hpTarget / 100
+    printf("Final Damage = %i", damage)
 
     master:setMP(0)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
