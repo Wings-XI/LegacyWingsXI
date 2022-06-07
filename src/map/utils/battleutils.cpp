@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1778,7 +1778,10 @@ namespace battleutils
             check = 0;
         }
 
-        if (chance < check)
+        //100% interrupt dynamis statues if they are dead but haven't realized yet
+        auto isDeadStatue = (int16)PDefender->GetLocalVar("DeadStatue");
+
+        if (chance < check || isDeadStatue)
         {
             return true;
         }
