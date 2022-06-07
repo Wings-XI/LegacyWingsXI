@@ -53,7 +53,8 @@ local loot =
             {itemid =  4174, droprate =   50}, -- vile_elixir
             {itemid =  4175, droprate =   25}, -- vile_elixir_+1
         },
-    },
+    },   
+    
 
     -- BCNM Die by the Sword
     [521] =
@@ -211,8 +212,8 @@ local loot =
             {itemid =   769, droprate =   19}, -- red_rock
             {itemid =   775, droprate =   19}, -- black_rock
         },
-        {
-        
+    },    
+    
 
     -- BCNM Undying Promise
     [524] =
