@@ -38,13 +38,10 @@ function onPetAbility(target, pet, skill, master)
     if dINT <= 0 then ratio = 30 end
 
     if target:isNM() then
-        printf("Current Target: %s, is NM", target:getName())
         if (target:getFamily() ~= 51 and target:getFamily() ~= 479) then -- Not a Behemoth
-            printf("Current Target: %s, is NOT Behemoth", target:getName())
             min = 0.05
             max = 10
         else
-            printf("Current Target: %s, is a Behemoth", target:getName())
             min = 2
             max = 10
         end
@@ -54,25 +51,17 @@ function onPetAbility(target, pet, skill, master)
 
     hpTarget = hpTarget + ((dINT / ratio))
 
-    printf("Current Target: %s, dINT = %i, hpTarget = %i", target:getName(), dINT, hpTarget)
-
     hpTarget = MobMagicalMove(pet, target, skill, hpTarget, tpz.magic.ele.DARK, 0.7, TP_NO_EFFECT, 0)
-    printf("Current Target: %s, after MobMagicalMove, hpTarget = %i", target:getName(), hpTarget.dmg)
     hpTarget = mobAddBonuses(pet, nil, target, hpTarget.dmg, tpz.magic.ele.DARK)
-    printf("Current Target: %s, after mobAddBonuses, hpTarget = %i", target:getName(), hpTarget)
     hpTarget = AvatarFinalAdjustments(hpTarget, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
-    printf("Current Target: %s, after AvatarFinalAdjustments, hpTarget = %i", target:getName(), hpTarget)
 
     hpTarget = utils.clamp(hpTarget, min, max)
-    printf("Current Target: %s, after clamping, hpTarget = %i", target:getName(), hpTarget)
 
     -- Convert the reduction into an entity-specific amount based on their current HP
     local damage = target:getHP() * hpTarget / 100
-    printf("Final Damage = %i", damage)
 
     master:setMP(0)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
-
     target:updateEnmityFromDamage(pet, damage)
 
     return damage
