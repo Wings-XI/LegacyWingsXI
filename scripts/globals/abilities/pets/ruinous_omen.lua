@@ -10,7 +10,7 @@
 require("/scripts/globals/settings")
 require("/scripts/globals/status")
 require("/scripts/globals/monstertpmoves")
-require("scripts/globals/utils")
+require("/scripts/globals/utils")
 require("/scripts/globals/magic")
 
 ---------------------------------------------------
@@ -31,8 +31,10 @@ function onPetAbility(target, pet, skill, master)
     -- Maximum observed 50% (weakness to darkness?), 10% on NMs.
     -- Minimum observed 10% (high resist), 0.05% on NMs
     local min = 10
+    local hpTarget = 30
     local max = 50
     local ratio = 4
+    local currentHP = target:getHP()
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     
     if dINT <= 0 then ratio = 30 end
@@ -47,22 +49,21 @@ function onPetAbility(target, pet, skill, master)
         end
     end
 
-    hpTarget = math.random(min, max)
+    hpTarget = (math.random(min*100, max*100) / 100)
 
     hpTarget = hpTarget + ((dINT / ratio))
 
-    hpTarget = MobMagicalMove(pet, target, skill, hpTarget, tpz.magic.ele.DARK, 0.7, TP_NO_EFFECT, 0)
-    hpTarget = mobAddBonuses(pet, nil, target, hpTarget.dmg, tpz.magic.ele.DARK)
-    hpTarget = AvatarFinalAdjustments(hpTarget, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
-
-    hpTarget = utils.clamp(hpTarget, min, max)
-
     -- Convert the reduction into an entity-specific amount based on their current HP
-    local damage = target:getHP() * hpTarget / 100
+    local damage = currentHP * hpTarget / 100
+
+    damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.DARK, 0.7, TP_NO_EFFECT, 0)
+    damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.DARK)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.DARK, MOBPARAM_IGNORE_SHADOWS)
+
+    damage = utils.clamp(damage, min*currentHP/100, max*currentHP/100)
 
     master:setMP(0)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
-    target:updateEnmityFromDamage(pet, damage)
 
     return damage
 end
