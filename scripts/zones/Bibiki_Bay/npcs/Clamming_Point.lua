@@ -69,24 +69,18 @@ end
 
 function onTrigger(player, npc)
     if (player:hasKeyItem(tpz.ki.CLAMMING_KIT)) then
-        player:setLocalVar("ClammingPointID", npc:getID())
-
-        if (GetServerVariable("ClammingPoint_" .. npc:getID() .. "_InUse") == 1) then
-            player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
+    player:setLocalVar("ClammingPointID", npc:getID())
+        if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
+            player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
         else
-            if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
-                player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
+            local delay = GetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay")
+
+            if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
+                player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
             else
-                local delay = GetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay")
+                SetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay", 0)
 
-                if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
-                    player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
-                else
-                    SetServerVariable("ClammingPoint_" .. npc:getID() .. "_InUse", 1)
-                    SetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay", 0)
-
-                    player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
-                end
+                player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
             end
         end
     else
@@ -153,7 +147,6 @@ function onEventFinish(player, csid, option)
             end
         end
 
-        SetServerVariable("ClammingPoint_" .. player:getLocalVar("ClammingPointID") .. "_InUse", 0)
         player:setLocalVar("ClammingPointID", 0)
     end
 end
