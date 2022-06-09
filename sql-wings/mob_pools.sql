@@ -564,7 +564,7 @@ INSERT INTO `mob_pools` VALUES(500, 'Bonnacon', 'Bonnacon', 57, _binary 0x00004d
 INSERT INTO `mob_pools` VALUES(501, 'Bonze_Marberry', 'Bonze_Marberry', 243, _binary 0x0000c60400000000000000000000000000000000, 4, 4, 6, 240, 100, 0, 1, 0, 1, 2, 17, 32, 291, 157, 0, 0, 2, 0, 0, 243);
 INSERT INTO `mob_pools` VALUES(502, 'Boodlix', 'Boodlix', 133, _binary 0x0000be0200000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 1, 1, 32, 0, 0, 0, 3, 0, 0, 0, 0, 0, 133);
 INSERT INTO `mob_pools` VALUES(503, 'Book_Browser_Bokabraq', 'Book_Browser_Bokabraq', 184, _binary 0x0000af0200000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 184);
-INSERT INTO `mob_pools` VALUES(504, 'Boompadu', 'Boompadu', 0, _binary 0x0000000000000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_pools` VALUES(504, 'Boompadu', 'Boompadu', 1, _binary 0x0000F20600000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 1, 0, 2, 0, 0, 0, 133, 0, 0, 0, 0, 0, 2032);
 INSERT INTO `mob_pools` VALUES(505, 'Bootrix_Jaggedelbow', 'Bootrix_Jaggedelbow', 373, _binary 0x00003e0400000000000000000000000000000000, 2, 2, 2, 480, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(506, 'Bopa_Greso', 'Bopa_Greso', 151, _binary 0x0100010717100620063000001850b36000000000, 1, 1, 0, 0, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 151);
 INSERT INTO `mob_pools` VALUES(507, 'Borametz', 'Borametz', 178, _binary 0x00002d0100000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 1, 1, 16, 0, 0, 3744, 131, 0, 0, 0, 0, 0, 178);
