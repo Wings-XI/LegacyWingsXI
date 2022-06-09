@@ -4421,7 +4421,6 @@ INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 156, 1, 255); -- Aero 3
 INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 157, 1, 255); -- Aero 4
 INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 184, 1, 255); -- Aeroga 1
 INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 185, 1, 255); -- Aeroga 2
-INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 186, 1, 255); -- Aeroga 3
 
 --
 -- Indexes for dumped tables
