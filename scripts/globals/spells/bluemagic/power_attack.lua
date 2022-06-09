@@ -29,10 +29,10 @@ function onSpellCast(caster, target, spell)
     params.scattr = SC_REVERBERATION
     params.spellLevel = 4
     params.numhits = 1
-    params.multiplier = 1.125
-    params.tp150 = 1.125
-    params.tp300 = 1.125
-    params.azuretp = 1.125
+    params.multiplier = 1.6
+    params.tp150 = 1.6
+    params.tp300 = 1.6
+    params.azuretp = 1.6
     params.duppercap = 11
     params.str_wsc = 0.0
     params.dex_wsc = 0.0

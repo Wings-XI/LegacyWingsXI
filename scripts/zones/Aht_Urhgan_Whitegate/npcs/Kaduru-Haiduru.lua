@@ -9,7 +9,7 @@ local function canUse_KaduruHaiduru_Service(player)
     local caughtUsingShihuDanhuDate = player:getCharVar("Kaduru_ShihuDanhu_date")
     local shihuDanhuEncounters = player:getCharVar("ShihuDanhu_Encounters")
     local shihuDanhuDate = player:getCharVar("ShihuDanhu_TP_date")
-    local currentDate = os.date("%j")
+    local currentDate = math.floor(os.time()/86400)
 
     -- Kaduru-Haiduru can be used unless the following are true.
     if (currentDate - shihuDanhuDate < 1 and shihuDanhuEncounters > 1) or
@@ -23,13 +23,13 @@ function onTrigger(player, npc)
     local caughtUsingShihuDanhuDate = player:getCharVar("Kaduru_ShihuDanhu_date")
     local shihuDanhuDate = player:getCharVar("ShihuDanhu_TP_date")
     local timesUsed = player:getCharVar("Kaduru_TimesUsed")
-    local currentDate = os.date("%j")
+    local currentDate = math.floor(os.time()/86400)
 
     if canUse_KaduruHaiduru_Service(player) then
         player:startEvent(151, 0, 0, timesUsed, 0, 0, 0, 0, 0, 0)
     else
         if caughtUsingShihuDanhuDate == 0 then
-            player:setCharVar("Kaduru_ShihuDanhu_date", os.date("%j"))
+            player:setCharVar("Kaduru_ShihuDanhu_date", currentDate)
             player:setCharVar("Kaduru_TimesUsed", 0)
         end
         player:startEvent(153, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -59,7 +59,7 @@ function onTrade(player, npc, trade)
         end
     else
         if caughtUsingShihuDanhuDate == 0 then
-            player:setCharVar("Kaduru_ShihuDanhu_date", os.date("%j"))
+            player:setCharVar("Kaduru_ShihuDanhu_date", math.floor(os.time()/86400))
             player:setCharVar("Kaduru_TimesUsed", 0)
         end
         player:startEvent(155, 0, 0, 0, 0, 0, 0, 0, 0, 0)

@@ -23,7 +23,7 @@ local loot =
         },
         {
             {itemid =  1794, droprate =  291}, -- Beatific Image
-            {itemid =  1795, droprate =  372}, -- Grave Image
+            {itemid =  1793, droprate =  372}, -- Grave Image
             {itemid =  1795, droprate =  337}, -- Valorous Image
         },
         {

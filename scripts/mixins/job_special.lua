@@ -271,7 +271,7 @@ g_mixins.job_special = function(mob)
         if mJob == tpz.job.RNG then
             ability = familyEES[mob:getFamily()]
         elseif mJob == tpz.job.SMN and mob:isInDynamis() then
-            ability = tpz.jsa.ASTRAL_FLOW_MAAT
+            ability = tpz.jsa.ASTRAL_FLOW
         else
             ability = job2hr[mJob]
         end

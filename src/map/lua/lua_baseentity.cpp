@@ -4279,7 +4279,7 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
 *  Function: delItem()
 *  Purpose : Deletes an item from a player's inventory
 *  Example : player:delItem(4102,12)
-*  Notes   : Can specify contianer using third variable
+*  Notes   : Can specify container using 3rd variable, and slotid with 4th variable
 ************************************************************************/
 
 int32 CLuaBaseEntity::delItem(lua_State* L)
@@ -4288,8 +4288,8 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    auto quantity = 0;
-    auto location = 0;
+    uint32 quantity = 0;
+    CONTAINER_ID location = LOC_INVENTORY;
 
     if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
     {
@@ -4300,7 +4300,7 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
     {
         if ((uint32)lua_tointeger(L, 3) < MAX_CONTAINER_ID)
         {
-            location = (uint32)lua_tointeger(L, 3);
+            location = (CONTAINER_ID)lua_tointeger(L, 3);
         }
         else
         {
@@ -4308,8 +4308,8 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
         }
     }
 
-    auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    auto SlotID = PChar->getStorage(location)->SearchItem((uint16)lua_tointeger(L, 1));
+    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    uint16 SlotID = !lua_isnil(L, 4) && lua_isnumber(L, 4) ? (uint16)lua_tointeger(L, 4) : PChar->getStorage(location)->SearchItem((uint16)lua_tointeger(L, 1));
     if (SlotID != ERROR_SLOTID)
     {
         charutils::UpdateItem(PChar, location, SlotID, -quantity);

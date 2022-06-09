@@ -46,7 +46,7 @@ function doHealingBreath(player, threshold, breath)
     else
         local party = player:getParty()
         for _, member in ipairs(party) do
-            if member:getHPP() < threshold and inBreathRange(member) then
+            if member:getHPP() <= threshold and inBreathRange(member) then
                 player:getPet():useJobAbility(breath, member)
                 break
             end

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -135,7 +135,7 @@ public:
     template<typename T, typename... Args>
     bool ChangeState(Args&&... args)
     {
-        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 10);
+        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 100);
         if (CanChangeState())
         {
             try
@@ -154,7 +154,7 @@ public:
     template<typename T, typename... Args>
     bool ForceChangeState(Args&&... args)
     {
-        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 10);
+        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 100);
         try
         {
             CheckCompletedStates();

@@ -9,7 +9,7 @@ local ID = require("scripts/zones/RuLude_Gardens/IDs")
 
 local rewards = {
     { 1794,  1766}, -- Beatific Image
-    { 1795,  1765}, -- Grave Image
+    { 1793,  1765}, -- Grave Image
     { 1795,  1768}, -- Valorous Image
     { 1796,  1770}, -- Ancient Image
     { 1797,  1772}, -- Virgin Image

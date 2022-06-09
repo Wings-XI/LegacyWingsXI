@@ -47,7 +47,6 @@ g_mixins.rage = function(mob)
             mob:addMod(tpz.mod.SLEEPRESTRAIT, 100)
             mob:addMod(tpz.mod.BINDRESTRAIT, 100)
             mob:addMod(tpz.mod.GRAVITYRESTRAIT, 100)
-            mob:addMod(tpz.mod.MOVE, 200)
             
             mob:delStatusEffect(tpz.effect.SLEEP_I)
             mob:delStatusEffect(tpz.effect.PARALYSIS)
@@ -100,7 +99,6 @@ g_mixins.rage = function(mob)
                 mob:delMod(tpz.mod.SLEEPRESTRAIT, 100)
                 mob:delMod(tpz.mod.BINDRESTRAIT, 100)
                 mob:delMod(tpz.mod.GRAVITYRESTRAIT, 100)
-                mob:delMod(tpz.mod.MOVE, 200)
             end
         end
     end)

@@ -365,7 +365,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return std::clamp((int)level * 106 / 100, 8, 90);
+        return level * 31 / 50 + 6;
     }
 
     int16 GetEnmityModCure(int16 level)
@@ -1778,7 +1778,10 @@ namespace battleutils
             check = 0;
         }
 
-        if (chance < check)
+        //100% interrupt dynamis statues if they are dead but haven't realized yet
+        auto isDeadStatue = (int16)PDefender->GetLocalVar("DeadStatue");
+
+        if (chance < check || isDeadStatue)
         {
             return true;
         }
@@ -3379,7 +3382,7 @@ namespace battleutils
             {
                 PSCEffect->SetStartTime(server_clock::now());
                 //   ShowDebug("duration: %d", PSCEffect->GetDuration());
-                PSCEffect->SetDuration(PSCEffect->GetDuration() - 1000);
+                PSCEffect->SetDuration(10000);
                 PSCEffect->SetTier(GetSkillchainTier((SKILLCHAIN_ELEMENT)skillchain));
                 PSCEffect->SetPower(skillchain);
                 PSCEffect->SetSubPower(std::min(PSCEffect->GetSubPower() + 1, 6)); // Linked, limited to 6

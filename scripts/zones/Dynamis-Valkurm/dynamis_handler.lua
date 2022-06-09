@@ -76,7 +76,7 @@ function onDynamisCleanup()
         end
         i = i + 1
     end
-    SetServerVariable(string.format("DynamisSJRestriction_%s", zoneId), 0)
+    SetServerVariable(string.format("DynamisSJRestriction_%s", zone), 0)
 end
 
 function onDynamisEjectPlayer(player, immediate)

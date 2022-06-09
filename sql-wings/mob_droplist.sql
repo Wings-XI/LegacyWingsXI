@@ -6791,7 +6791,7 @@ INSERT INTO `mob_droplist` VALUES(1338, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(1338, 0, 0, 1000, 13051, 861);
 INSERT INTO `mob_droplist` VALUES(1338, 0, 0, 1000, 17412, 100);
 INSERT INTO `mob_droplist` VALUES(1339, 2, 0, 1000, 846, 0);
-INSERT INTO `mob_droplist` VALUES(1339, 0, 0, 1000, 1616, 300);
+INSERT INTO `mob_droplist` VALUES(1339, 0, 0, 1000, 1616, 31);
 INSERT INTO `mob_droplist` VALUES(1339, 0, 0, 1000, 1649, 10);
 INSERT INTO `mob_droplist` VALUES(1340, 0, 0, 1000, 905, 140);
 INSERT INTO `mob_droplist` VALUES(1340, 0, 0, 1000, 1122, 110);
@@ -15533,7 +15533,7 @@ INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2078, 66); -- bards_roundlet_-
 INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2083, 67); -- scouts_beret_-1
 INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2088, 66); -- saotome_kabuto_-1
 INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2093, 67); -- koga_hatsuburi_-1
-INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2198, 66); -- wyrm_armet_-1
+INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2098, 66); -- wyrm_armet_-1
 INSERT INTO `mob_droplist` VALUES(2909, 1, 3, 15, 2103, 67); -- summoners_horn_-1
 INSERT INTO `mob_droplist` VALUES(2909, 1, 2, 15, 2662, 200); -- mirage_keffiyeh_-1
 INSERT INTO `mob_droplist` VALUES(2909, 1, 2, 15, 2667, 200); -- commodore_tricorne_-1
@@ -15761,7 +15761,7 @@ INSERT INTO `mob_droplist` VALUES(3005, 0, 0, 1000, 701, 6);
 INSERT INTO `mob_droplist` VALUES(3005, 0, 0, 1000, 702, 4);
 INSERT INTO `mob_droplist` VALUES(3005, 0, 0, 1000, 700, 2);
 INSERT INTO `mob_droplist` VALUES(3005, 0, 0, 1000, 703, 2);
-INSERT INTO `mob_droplist` VALUES(3006, 0, 0, 1000, 2198, 108);
+INSERT INTO `mob_droplist` VALUES(3006, 0, 0, 1000, 2098, 108);
 INSERT INTO `mob_droplist` VALUES(3007, 0, 0, 1000, 816, 159);
 INSERT INTO `mob_droplist` VALUES(3007, 0, 0, 1000, 839, 371);
 INSERT INTO `mob_droplist` VALUES(3007, 2, 0, 1000, 839, 0);
@@ -15789,7 +15789,6 @@ INSERT INTO `mob_droplist` VALUES(3022, 0, 0, 1000, 16032, 169);
 INSERT INTO `mob_droplist` VALUES(3023, 0, 0, 1000, 15852, 55);
 INSERT INTO `mob_droplist` VALUES(3024, 0, 0, 1000, 852, 40);
 INSERT INTO `mob_droplist` VALUES(3024, 0, 0, 1000, 926, 200);
-INSERT INTO `mob_droplist` VALUES(3024, 0, 0, 1000, 3552, 70);
 INSERT INTO `mob_droplist` VALUES(3024, 0, 0, 1000, 4362, 60);
 INSERT INTO `mob_droplist` VALUES(3025, 0, 0, 1000, 816, 253);
 INSERT INTO `mob_droplist` VALUES(3026, 0, 0, 1000, 19232, 148);
@@ -15801,8 +15800,8 @@ INSERT INTO `mob_droplist` VALUES(3030, 0, 0, 1000, 18947, 164);
 INSERT INTO `mob_droplist` VALUES(3030, 0, 0, 1000, 2504, 222);
 INSERT INTO `mob_droplist` VALUES(3031, 0, 0, 1000, 15014, 400);
 INSERT INTO `mob_droplist` VALUES(3032, 0, 0, 1000, 15818, 296);
-INSERT INTO `mob_droplist` VALUES(3033, 0, 0, 1000, 16319, 400);
-INSERT INTO `mob_droplist` VALUES(3033, 0, 0, 1000, 2520, 400);
+INSERT INTO `mob_droplist` VALUES(3033, 0, 0, 1000, 16319, 182);
+INSERT INTO `mob_droplist` VALUES(3033, 0, 0, 1000, 2520, 91);
 INSERT INTO `mob_droplist` VALUES(3034, 0, 0, 1000, 2837, 200);
 INSERT INTO `mob_droplist` VALUES(3035, 0, 0, 1000, 19208, 222);
 INSERT INTO `mob_droplist` VALUES(3036, 0, 0, 1000, 16030, 100);
@@ -16450,6 +16449,8 @@ INSERT INTO `mob_droplist` VALUES(3171, 0, 0, 1000, 2850, 59);
 INSERT INTO `mob_droplist` VALUES(3172, 0, 0, 1000, 19124, 198);
 INSERT INTO `mob_droplist` VALUES(3173, 0, 0, 1000, 2855, 350);
 INSERT INTO `mob_droplist` VALUES(3174, 0, 0, 1000, 16017, 212);
+INSERT INTO `mob_droplist` VALUES(3175, 2, 0, 1000, 880, 0);
+INSERT INTO `mob_droplist` VALUES(3175, 0, 0, 1000, 880, 210);
 
 
 -- 3200s are dynamis drops
@@ -16979,7 +16980,7 @@ INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2078, 66); -- bards_roundlet_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2083, 67); -- scouts_beret_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2088, 66); -- saotome_kabuto_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2093, 67); -- koga_hatsuburi_-1
-INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2198, 66); -- wyrm_armet_-1
+INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2098, 66); -- wyrm_armet_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 3, 8, 2103, 67); -- summoners_horn_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 8, 2662, 200); -- mirage_keffiyeh_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 8, 2667, 200); -- commodore_tricorne_-1
@@ -17010,7 +17011,7 @@ INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2078, 66); -- bards_roundlet_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2083, 67); -- scouts_beret_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2088, 66); -- saotome_kabuto_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2093, 67); -- koga_hatsuburi_-1
-INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2198, 66); -- wyrm_armet_-1
+INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2098, 66); -- wyrm_armet_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 3, 8, 2103, 67); -- summoners_horn_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 8, 2662, 200); -- mirage_keffiyeh_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 8, 2667, 200); -- commodore_tricorne_-1

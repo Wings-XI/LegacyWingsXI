@@ -27,6 +27,8 @@ function onTrigger(player, npc)
 
         if sapsCollected > 0 then
             player:startEvent(63)
+        else
+            EventTriggerBCNM(player, npc)
         end
     else
         EventTriggerBCNM(player, npc)

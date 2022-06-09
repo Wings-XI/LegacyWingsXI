@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
+    if player:hasStatusEffect(tpz.effect.WEIGHT) then player:delStatusEffect(tpz.effect.WEIGHT) end
     local duration = 30 + player:getMod(tpz.mod.FLEE_DURATION)
     player:addStatusEffect(tpz.effect.FLEE, 100, 0, duration)
 end

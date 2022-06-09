@@ -1,5 +1,5 @@
 ---------------------------------------------------
--- Chaotic Strike M=9 , 2
+-- Chaotic Strike M=8 , 2
 ---------------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -21,7 +21,7 @@ function onPetAbility(target, pet, skill)
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 3
     local accmod = 1
-    local dmgmod = 5 * coe -- 9 * coe is original formula - return once smn skills audited for correctness
+    local dmgmod = 8 * coe
     local dmgmodsubsequent = 2 * coe
     local critmod = 1 + math.floor(20*skill:getTP()/3000)
 

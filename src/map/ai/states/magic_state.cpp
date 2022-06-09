@@ -146,9 +146,11 @@ bool CMagicState::Update(time_point tick)
 
         Complete();
     }
-    else if (!IsCompleted() && tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime()))
+    else if (!IsCompleted() && tick > m_lastCancelCheck + 200ms)
     {
         m_lastCancelCheck = tick;
+        bool finishedCheck = tick > m_lastCancelCheck + m_castTime + std::chrono::milliseconds(m_PSpell->getAnimationTime());
+        bool moveCancel = false;
         uint8 validTargets = m_PSpell->getValidTarget();
         if (m_PSpell->getID() <= SpellID::Curaga_V && m_PSpell->getID() >= SpellID::Curaga && m_PEntity->objtype == TYPE_PET)
             validTargets |= 0x08; // allows Light Spirit to cast Curaga on alliance members
@@ -156,12 +158,11 @@ bool CMagicState::Update(time_point tick)
         action_t action;
         MSGBASIC_ID msg = MSGBASIC_IS_INTERRUPTED;
 
-        if (m_errorMsg || (HasMoved() && (m_PEntity->objtype != TYPE_PET ||
-            static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON)))
+        if (finishedCheck && m_errorMsg)
         {
             m_interrupted = true;
         }
-        else if (!PTarget || !CanCastSpell(PTarget))
+        else if (finishedCheck && (!PTarget || !CanCastSpell(PTarget)))
         {
             if ((m_PEntity->objtype != TYPE_MOB && m_PEntity->objtype != TYPE_PET) ||
                 (m_errorMsg && static_cast<MSGBASIC_ID>(((CMessageBasicPacket*) &m_errorMsg)->getMessageID()) != MSGBASIC_TOO_FAR_AWAY &&
@@ -171,7 +172,13 @@ bool CMagicState::Update(time_point tick)
             }
         }
 
-        if (m_interrupted)
+        if ((HasMoved() && (m_PEntity->objtype != TYPE_PET || static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON)))
+        {
+            m_interrupted = true;
+            moveCancel = true;
+        }
+
+        if (m_interrupted && (moveCancel || finishedCheck))
         {
             m_PEntity->OnCastInterrupted(*this, action, msg);
             m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));

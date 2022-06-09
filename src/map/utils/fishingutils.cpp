@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1225,21 +1225,16 @@ namespace fishingutils
             {
                 ShowError("fishingToken error: expected (%u) but got (%u)\n", PChar->fishingToken, response->fishingToken);
 
-                if (AddFishingStrike(PChar) == 5) // 5 strikes within an hour = fishban
+                if (AddFishingStrike(PChar) == 3) // 3 strikes within an hour = fishban
                 {
-                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch (5 strikes).");
+                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch (3 strikes).");
                     if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK)
                     {
-                        //charutils::SetCharVar(PChar, "FishingDenied", 1);
                         charutils::SetCharVar(PChar, "FishingBot", 1);
-                        /*RodBreak(PChar);
-                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_RODBREAK;*/
                     }
                 }
-                else
-                {
-                    CatchNothing(PChar, FISHINGFAILTYPE_NONE);
-                }
+
+                CatchNothing(PChar, FISHINGFAILTYPE_NONE);
                 
             }
             else if (fishingArea != nullptr && response != nullptr && response->caught && response->catchtype > 0 && response->catchid > 0)
@@ -1307,20 +1302,28 @@ namespace fishingutils
                 luautils::OnFishingCatch(PChar, PChar->hookedFish->catchtype, PChar->hookedFish->catchid);
 
                 catchresponse_t* response = luautils::OnFishingReelIn(PChar, PChar->hookedFish, FishingRod);
-                if (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken) {
-                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch.");
-                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK) {
-                        //charutils::SetCharVar(PChar, "FishingDenied", 1);
-                        charutils::SetCharVar(PChar, "FishingBot", 1);
-                        /*RodBreak(PChar);
-                        PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_RODBREAK;
-                        PChar->status = STATUS_SHUTDOWN;
-                        charutils::SendToZone(PChar, 1, 0);*/
-                    }
-                    if (response != nullptr)
-                        ShowDebug("fishingToken error: expected (%u) but got (%u)\n", PChar->fishingToken, response->fishingToken);
+                if (!response)
+                {
+                    CatchNothing(PChar, FISHINGFAILTYPE_NONE);
+
                 }
-                else if (response->caught) {
+                else if (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken)
+                {
+                    ShowError("fishingToken error: expected (%u) but got (%u)\n", PChar->fishingToken, response->fishingToken);
+
+                    if (AddFishingStrike(PChar) == 3) // 3 strikes within an hour = fishban
+                    {
+                        anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISHBOT, PChar->loc.zone->GetID(), "Fishbot detection token mismatch (3 strikes).");
+                        if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISHBOT, NULL, 0) && anticheat::CheatAction::CHEAT_ACTION_BLOCK)
+                        {
+                            charutils::SetCharVar(PChar, "FishingBot", 1);
+                        }
+                    }
+
+                    CatchNothing(PChar, FISHINGFAILTYPE_NONE);
+                }
+                else if (response->caught)
+                {
                     PChar->fishingToken = 0;
                     ReelInCatch(PChar);
                     LureLoss(PChar, false, true);
@@ -1328,7 +1331,8 @@ namespace fishingutils
                         EE(PChar, Rod);
                     }
                 }
-                else {
+                else
+                {
                     if (response->linebreak) {
                         charutils::AddCharVar(PChar, "FishingLineBreaks", 1);
                         LureLoss(PChar, true, true);
@@ -1342,11 +1346,15 @@ namespace fishingutils
                     LoseCatch(PChar, response->failReason);
                     UnhookMob(PChar, !response->caught);
                 }
-                if (FishingRod != nullptr) {
+
+                if (FishingRod)
+                {
                     delete FishingRod;
                     FishingRod = nullptr;
                 }
-                if (response != nullptr) {
+
+                if (response)
+                {
                     delete response;
                     response = nullptr;
                 }
@@ -1459,7 +1467,7 @@ namespace fishingutils
         uint8 availableSlot = 0xFF;
         uint8 count = 0;
         time_point now = std::chrono::system_clock::now();
-        while (i < 5)
+        while (i < 3)
         {
             if (PChar->fishingStrike[i] + 1h > now)
                 count++;

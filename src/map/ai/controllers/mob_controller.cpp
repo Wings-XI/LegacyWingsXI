@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1093,6 +1093,7 @@ bool CMobController::Disengage()
     PMob->updatemask |= (UPDATE_STATUS | UPDATE_HP);
     PMob->CallForHelp(false);
     PMob->animation = ANIMATION_NONE;
+    PMob->m_UsedSkillIds.clear();
 
     return CController::Disengage();
 }
