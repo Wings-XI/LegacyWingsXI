@@ -3,7 +3,7 @@
 --
 --  Description: Deals damage to a single target.
 --  Type: Physical
---  Wipes shadows
+--  Ignores shadows
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
