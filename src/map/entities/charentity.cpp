@@ -2156,7 +2156,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
         //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
         if (PTarget->PParty)
         {
-            for each (CBattleEntity* PMember in PTarget->PParty->members)
+            for (CBattleEntity* PMember : PTarget->PParty->members)
             {
                 // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
                 if (this->id == PMember->id)
