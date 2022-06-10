@@ -131,6 +131,7 @@ UpgradeLog*.XML
 
 # Generated executables
 /topaz_connect
+/topaz_new_connect
 /topaz_game
 /topaz_search
 /topaz_connect_64
