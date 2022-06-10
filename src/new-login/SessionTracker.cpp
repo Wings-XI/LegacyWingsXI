@@ -9,6 +9,7 @@
 #include "../new-common/Debugging.h"
 #include <stdexcept>
 #include <time.h>
+#include <cstring>
 
 SessionTrackerPtr SessionTracker::smpSingletonObj = NULL;
 bool SessionTracker::sbBeingDestroyed = false;
