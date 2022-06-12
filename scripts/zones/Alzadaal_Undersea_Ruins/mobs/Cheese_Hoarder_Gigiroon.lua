@@ -103,6 +103,7 @@ end
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
+    mob:setMod(tpz.mod.MOVE, -10)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
 end
@@ -124,6 +125,7 @@ function onMobFight(mob, target)
             local runType = math.random(1,2)
             mob:setLocalVar("RunType", runType)
             mob:setLocalVar("MineTime", now)
+            mob:setMod(tpz.mod.MOVE, 40)
 
             pickStartingRunPoint(mob)
 
@@ -140,6 +142,7 @@ function onMobFight(mob, target)
             -- done running for now
             mob:setLocalVar("RunType", 0)
             mob:setLocalVar("TimeToRun", now + math.random(90,120))
+            mob:setMod(tpz.mod.MOVE, -10)
         else
             if (now > mob:getLocalVar("MineTime")) then
                 spawnMine(mob)
