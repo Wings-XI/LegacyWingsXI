@@ -4,7 +4,7 @@
 -- Type: Standard NPC
 -- !pos -27.443 -1 -636.850 33
 -----------------------------------
-local ID = require("scripts/zones/Grand_Palace_of_Huxzoi/IDs")
+local ID = require("scripts/zones/Grand_Palace_of_HuXzoi/IDs")
 require("scripts/globals/pathfind")
 require("scripts/globals/utils")
 -----------------------------------

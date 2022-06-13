@@ -68,6 +68,7 @@ endif()
 
 if(UNIX)
     link_libraries(dl)
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -pthread")
 endif()
 
 # TODO: These should be applied on a per-target level, not globally like this!
