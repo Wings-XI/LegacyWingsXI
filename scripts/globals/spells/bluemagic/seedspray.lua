@@ -37,7 +37,7 @@ function onSpellCast(caster, target, spell)
     params.dex_wsc = 0.30
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
-    params.int_wsc = 2.0
+    params.int_wsc = 0.2
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
     local damage = 0
