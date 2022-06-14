@@ -27,6 +27,14 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../../common/utils.h"
 #include "../../zone.h"
 
+namespace
+{
+    bool arePositionsClose(const position_t& a, const position_t& b)
+    {
+        return distance(a, b) < 1.0f;
+    }
+} // namespace
+
 CPathFind::CPathFind(CBaseEntity* PTarget)
 : m_POwner(PTarget)
 , m_pathFlags(0)
@@ -209,7 +217,9 @@ void CPathFind::PrunePathWithin(float within)
     TracyZoneScoped;
 
     if (!IsFollowingPath())
+    {
         return;
+    }
 
     position_t* targetPoint     = &m_points.back();
     position_t* secondLastPoint = nullptr;
@@ -329,6 +339,17 @@ void CPathFind::StepTo(const position_t& pos, bool run)
 bool CPathFind::FindPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
+
+    if (arePositionsClose(start, end))
+    {
+        return false;
+    }
+
+    if (!isNavMeshEnabled())
+    {
+        return false;
+    }
+
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
 
@@ -375,6 +396,17 @@ bool CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
 bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
+
+    if (arePositionsClose(start, end))
+    {
+        return false;
+    }
+
+    if (!isNavMeshEnabled())
+    {
+        return false;
+    }
+
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
     m_points.push_back(end);  // this prevents exploits with navmesh / impassible terrain
