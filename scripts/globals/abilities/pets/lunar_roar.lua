@@ -12,6 +12,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 27
     if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) > 0.25 then
         target:dispelStatusEffect()
     end
@@ -19,5 +20,7 @@ function onPetAbility(target, pet, skill)
         target:dispelStatusEffect()
     end
     skill:setMsg(tpz.msg.basic.NONE)
+
+    pet:getMaster():addMP(-mpCost)
     return 0
 end

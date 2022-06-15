@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 27
     skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     local res = applyPlayerResistance(pet,-1,target, 0, tpz.skill.DARK_MAGIC, tpz.magic.ele.DARK)
     
@@ -64,5 +65,6 @@ function onPetAbility(target, pet, skill)
         
     end
     
+    pet:getMaster():addMP(-mpCost)
     return 0
 end

@@ -16,7 +16,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-
+    local mpCost = 164
     local ele = tpz.damageType.LIGHTNING
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 3
@@ -46,5 +46,7 @@ function onPetAbility(target, pet, skill)
 
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(pet, totaldamage)
+
+    pet:getMaster():addMP(-mpCost)
     return totaldamage
 end

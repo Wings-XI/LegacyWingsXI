@@ -32,5 +32,6 @@ function onPetAbility(target, pet, skill)
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     end
     
+    pet:getMaster():setMP(0)
     return tpz.effect.RERAISE
 end

@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 20
     local ele = tpz.damageType.DARK
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local numhits = 1
@@ -28,6 +29,7 @@ function onPetAbility(target, pet, skill)
     if totaldamage > 0 then
         target:addStatusEffect(tpz.effect.STUN,1,0,1) -- knockback workaround for now
     end
-
+    
+    pet:getMaster():addMP(-mpCost)
     return totaldamage
 end

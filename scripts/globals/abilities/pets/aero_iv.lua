@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 118
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local tp = skill:getTP()
     local ele = tpz.damageType.WIND
@@ -27,9 +28,10 @@ function onPetAbility(target, pet, skill)
     if (skillchainTier > 0) then
         skill:setMsg(747)
     end
-    
+        
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.WIND)
     target:updateEnmityFromDamage(pet, damage)
-
+    
+    pet:getMaster():addMP(-mpCost)
     return damage
 end

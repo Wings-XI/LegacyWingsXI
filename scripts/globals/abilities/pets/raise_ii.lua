@@ -15,11 +15,13 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 160
     if (not target:isPC()) or (target:isAlive()) then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         return 0
     end
     skill:setMsg(0)
     target:sendRaise(2)
+    pet:getMaster():addMP(-mpCost)
     return 0
 end

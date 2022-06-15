@@ -12,6 +12,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 109
     local level = pet:getMainLvl()
     local damage = (5 * level +  10) -- 385 ...
     
@@ -78,6 +79,7 @@ function onPetAbility(target, pet, skill)
     damage = utils.stoneskin(target, damage)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
     target:updateEnmityFromDamage(pet, damage)
-
+    
+    pet:getMaster():addMP(-mpCost)
     return damage
 end

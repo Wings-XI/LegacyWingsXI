@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 182
     local ele = tpz.damageType.EARTH
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
@@ -51,6 +52,7 @@ function onPetAbility(target, pet, skill)
             target:addStatusEffect(tpz.effect.STUN, 3, 3, duration)
         end
     end
-
+    
+    pet:getMaster():addMP(-mpCost)
     return damage
 end

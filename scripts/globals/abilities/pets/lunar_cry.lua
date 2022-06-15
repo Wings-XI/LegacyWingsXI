@@ -12,6 +12,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 41
     if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) < 0.25 then
         return 0
     end
@@ -37,5 +38,6 @@ function onPetAbility(target, pet, skill)
     target:addStatusEffect(tpz.effect.ACCURACY_DOWN, buffvalue, 0, 180)
     target:addStatusEffect(tpz.effect.EVASION_DOWN, 32-buffvalue, 0, 180)
     skill:setMsg(tpz.msg.basic.NONE)
+    pet:getMaster():addMP(-mpCost)
     return 0
 end

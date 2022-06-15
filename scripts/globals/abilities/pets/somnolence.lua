@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 30
     local damage = 10 + pet:getMainLvl() * 2
     local resist = applyPlayerResistance(pet, -1, target, 0, tpz.skill.ELEMENTAL_MAGIC, tpz.magic.ele.DARK)
 
@@ -36,5 +37,6 @@ function onPetAbility(target, pet, skill)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.DARK)
     target:updateEnmityFromDamage(pet,damage)
     
+    pet:getMaster():addMP(-mpCost)
     return damage
 end

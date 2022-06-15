@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 118
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local tp = skill:getTP()
     local ele = tpz.damageType.WATER
@@ -31,6 +32,7 @@ function onPetAbility(target, pet, skill)
 
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.WATER)
     target:updateEnmityFromDamage(pet, damage)
-
+    
+    pet:getMaster():addMP(-mpCost)
     return damage
 end
