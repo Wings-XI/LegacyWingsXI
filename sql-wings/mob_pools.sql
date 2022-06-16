@@ -2685,7 +2685,7 @@ INSERT INTO `mob_pools` VALUES(2621, 'Merrow_Kabukidancer', 'Merrow_Kabukidancer
 INSERT INTO `mob_pools` VALUES(2622, 'Merrow_No11', 'Merrow_No11', 182, _binary 0x0600880600000000000000000000000000000000, 12, 12, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182);
 INSERT INTO `mob_pools` VALUES(2623, 'Merrow_No12', 'Merrow_No12', 182, _binary 0x0600860600000000000000000000000000000000, 10, 10, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 182);
 INSERT INTO `mob_pools` VALUES(2624, 'Merrow_No16', 'Merrow_No16', 182, _binary 0x0600860600000000000000000000000000000000, 5, 5, 4, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 182);
-INSERT INTO `mob_pools` VALUES(2625, 'Merrow_No5', 'Merrow_No5', 182, _binary 0x0600860600000000000000000000000000000000, 16, 16, 5, 240, 100, 0, 1, 1, 1, 2, 0, 32, 285, 543, 12, 0, 8, 0, 0, 182);
+INSERT INTO `mob_pools` VALUES(2625, 'Merrow_No5', 'Merrow_No5', 182, _binary 0x0600860600000000000000000000000000000000, 10, 10, 5, 240, 100, 0, 1, 1, 1, 2, 0, 32, 285, 543, 12, 1, 0, 0, 0, 2033);
 INSERT INTO `mob_pools` VALUES(2626, 'Merrow_Seafarer', 'Merrow_Seafarer', 182, _binary 0x0600850600000000000000000000000000000000, 5, 5, 4, 240, 100, 0, 1, 0, 1, 0, 0, 0, 15, 515, 0, 0, 3, 0, 0, 182);
 INSERT INTO `mob_pools` VALUES(2627, 'Merrow_Shadowdancer', 'Merrow_Shadowdancer', 182, _binary 0x0600850600000000000000000000000000000000, 5, 5, 4, 240, 100, 0, 1, 0, 1, 0, 0, 0, 237, 515, 0, 0, 3, 0, 0, 182);
 INSERT INTO `mob_pools` VALUES(2628, 'Merrow_Shiranuhi', 'Merrow_Shiranuhi', 182, _binary 0x0600880600000000000000000000000000000000, 12, 12, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 16, 515, 0, 0, 0, 0, 0, 182);
