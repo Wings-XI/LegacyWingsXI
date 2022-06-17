@@ -4,6 +4,7 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/settings")
 require("scripts/globals/magic")
+require("scripts/globals/monstertpmoves")
 
 function getSummoningSkillOverCap(avatar)
     local summoner = avatar:getMaster()
@@ -15,6 +16,88 @@ end
 function getAvatarEcosystemCoefficient(target, ele)
     --print(string.format("AvatarEcosystemCoe was %f",(getElementalSDT(ele-5, target)/100+0.9)/1.9))
     return (getElementalSDT(ele-5, target)/100+0.9)/1.9 -- range of 0.5 to 1.26
+end
+
+function getAvatarfTP(tp, tier)
+    -- Source: https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
+    local ftp1 = 1
+    local ftp2 = 1
+    local ftp3 = 1
+
+    if (tier == 2) then
+        ftp1 = 1.5
+        ftp2 = 2.75
+        ftp3 = 3
+    end
+
+    if (tier == 4) then
+        ftp1 = 3.625
+        ftp2 = 5.312
+        ftp3 = 6.125
+    end
+
+    if (tier == 5) then
+        ftp1 = 5.375
+        ftp2 = 8 + 1/16
+        ftp3 = 10 + 12/16
+    end
+
+    if (tp < 1000) then
+        tp = 1000
+    end
+    if (tp >= 1000 and tp < 2000) then
+        return ftp1 + ( ((ftp2-ftp1)/1000) * (tp-1000))
+    elseif (tp >= 2000 and tp <= 3000) then
+        -- generate a straight line between ftp2 and ftp3 and find point @ tp
+        return ftp2 + ( ((ftp3-ftp2)/1000) * (tp-2000))
+    end
+    return 1 -- no ftp mod
+end
+
+function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
+    -- Damage = ( (D) * fTP + dSTAT ) * Magic Multipliers
+    -- D = Constant + Modifier
+    -- Source: https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
+    local damage = 0
+    local statMod = 1
+    local alpha = 0.85
+    local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
+    local totalAccBonus = 0
+
+    if (dINT > 0) then
+        dINT = dINT*1.5
+    end
+
+    if (tier == 2) then
+        statMod = 0.3
+    elseif (tier >= 4) then
+        statMod = 0.25
+    end
+
+    local D = pet:getMainLvl() + 2
+
+    -- Calculate base damage
+    damage = math.floor(D+math.floor(pet:getStat(tpz.mod.INT)*statMod)*alpha)
+    printf("Base DMG = %i", damage)
+    damage = math.floor(damage*getAvatarfTP(tp, tier)+dINT)
+    printf("FTP DMG = %i", damage)
+    -- Calculate resists (1, 1/2, 1/4, 1/8, or 1/16)
+    totalAccBonus = utils.clamp(getSummoningSkillOverCap(pet), 0, 200) + pet:getMaster():getMerit(1284) -- avatar magic acc merit
+    damage = math.floor(damage * applyPlayerResistance(pet, nil, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), totalAccBonus, ele-5))
+    printf("Resist damage = %i", damage)
+    -- Calculate Day/Weather + MB Bonuses
+    damage = mobAddBonuses(pet, nil, target, damage, ele-5)
+    printf("day/weather + MB damage = %i", damage)
+    -- Calculate MAB/MDB
+    damage = math.floor(damage * ((1+(pet:getMod(tpz.mod.MATT)/100))/(1+(target:getMod(tpz.mod.MDEF)/100))))
+    printf("MAB dmg = %i", damage)
+    -- Calculate Target Magic Damage Adjustment (TMDA)
+    damage = damage * getAvatarEcosystemCoefficient(target, ele)
+    --damage = math.floor(damage * getElementalSDT(ele-5, target)/100)
+    printf("SDT damage = %i", damage)
+    -- Maybe use previous COE for era values?
+
+    return damage
 end
 
 function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmodsubsequent,tpeffect,mtp100,mtp200,mtp300,critmod)

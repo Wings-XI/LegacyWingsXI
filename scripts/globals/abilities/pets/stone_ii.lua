@@ -5,6 +5,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/magic")
+require("scripts/globals/summon")
 
 ---------------------------------------------------
 
@@ -14,24 +15,18 @@ end
 
 function onPetAbility(target, pet, skill)
     local mpCost = 24
-    local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
-    local tp = skill:getTP()
-    
     local ele = tpz.damageType.EARTH
-    local coe = getAvatarEcosystemCoefficient(target, ele)
+    local tp = skill:getTP()
 
-    local damage = math.floor(45 * (1 + 0.478*tp/3000) * coe)
-    damage = damage + (dINT * 1.5)
-    damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.EARTH, 1, TP_NO_EFFECT, 0)
-    damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.EARTH)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, 1)
+    local damage = AvatarMagicalMove(pet, target, skill, tp, ele, 2)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, ele, 1)
     
-    local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.EARTH - 5, target)
+    local skillchainTier, skillchainCount = FormMagicBurst(ele - 5, target)
     if (skillchainTier > 0) then
         skill:setMsg(747)
     end
 
-    target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.EARTH)
+    target:takeDamage(damage, pet, tpz.attackType.MAGICAL, ele)
     target:updateEnmityFromDamage(pet, damage)
     
     pet:getMaster():addMP(-mpCost)
