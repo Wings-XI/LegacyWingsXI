@@ -28,15 +28,11 @@ function getAvatarfTP(tp, tier)
         ftp1 = 1.5
         ftp2 = 2.75
         ftp3 = 3
-    end
-
-    if (tier == 4) then
+    elseif (tier == 4) then
         ftp1 = 3.625
         ftp2 = 5.312
         ftp3 = 6.125
-    end
-
-    if (tier == 5) then
+    elseif (tier == 5) then
         ftp1 = 5.375
         ftp2 = 8 + 1/16
         ftp3 = 10 + 12/16
@@ -66,6 +62,8 @@ function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
 
     if (dINT > 0) then
         dINT = dINT*1.5
+    else
+        dINT = 1.5
     end
 
     if (tier == 2) then
@@ -74,28 +72,30 @@ function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
         statMod = 0.25
     end
 
-    local D = pet:getMainLvl() + 2
+    local baseDMG = pet:getMainLvl() + 2
 
-    -- Calculate base damage
-    damage = math.floor(D+math.floor(pet:getStat(tpz.mod.INT)*statMod)*alpha)
+    -- Base damage
+    damage = math.floor(baseDMG + math.floor(pet:getStat(tpz.mod.INT)*statMod)*alpha)
     printf("Base DMG = %i", damage)
+    -- Astral Flow damage
+    -- Tuned to the following source: https://www.youtube.com/watch?v=n4Ib2EIM0_g
+    if (tier == 0) then
+        damage = damage * 5
+    end
+    printf("Astral Flow DMG = %i", damage)
+    -- fTP
     damage = math.floor(damage*getAvatarfTP(tp, tier)+dINT)
     printf("FTP DMG = %i", damage)
-    -- Calculate resists (1, 1/2, 1/4, 1/8, or 1/16)
+    -- Resists (1, 1/2, 1/4, 1/8, or 1/16)
     totalAccBonus = utils.clamp(getSummoningSkillOverCap(pet), 0, 200) + pet:getMaster():getMerit(1284) -- avatar magic acc merit
     damage = math.floor(damage * applyPlayerResistance(pet, nil, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), totalAccBonus, ele-5))
     printf("Resist damage = %i", damage)
-    -- Calculate Day/Weather + MB Bonuses
+    -- Day/Weather + MB Bonuses
     damage = mobAddBonuses(pet, nil, target, damage, ele-5)
     printf("day/weather + MB damage = %i", damage)
-    -- Calculate MAB/MDB
+    -- MAB/MDB
     damage = math.floor(damage * ((1+(pet:getMod(tpz.mod.MATT)/100))/(1+(target:getMod(tpz.mod.MDEF)/100))))
     printf("MAB dmg = %i", damage)
-    -- Calculate Target Magic Damage Adjustment (TMDA)
-    damage = damage * getAvatarEcosystemCoefficient(target, ele)
-    --damage = math.floor(damage * getElementalSDT(ele-5, target)/100)
-    printf("SDT damage = %i", damage)
-    -- Maybe use previous COE for era values?
 
     return damage
 end

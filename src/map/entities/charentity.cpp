@@ -1621,7 +1621,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 }
                 else
                 {
-                    ShowDebug("doing pet ability %i...\n", PAbility->getMobSkillID());
+                    //ShowDebug("doing pet ability %i...\n", PAbility->getMobSkillID());
                     PPet->PAI->MobSkill(PPetTarget, PAbility->getMobSkillID());
                 }
             }
