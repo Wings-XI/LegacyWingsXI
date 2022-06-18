@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Tavnazian Safehold
---  NPC: ??? (qm_in_search_of_the_truth_first)
+--  NPC: ??? (qm_in_search_of_the_truth)
 -- QM for Quest: In Search Of The Truth 
 -----------------------------------
 require("scripts/globals/missions")
