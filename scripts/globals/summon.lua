@@ -32,10 +32,6 @@ function getAvatarfTP(tp, tier)
         ftp1 = 3.625
         ftp2 = 5.312
         ftp3 = 6.125
-    elseif (tier == 5) then
-        ftp1 = 5.375
-        ftp2 = 8 + 1/16
-        ftp3 = 10 + 12/16
     end
 
     if (tp < 1000) then
@@ -50,13 +46,25 @@ function getAvatarfTP(tp, tier)
     return 1 -- no ftp mod
 end
 
+function getAvatarAlpha(pet)
+    local alpha = 1
+
+    if (pet:getMainLvl() < 62) then
+        alpha = 1 - math.floor(pet:getMainLvl() / 6) / 100
+    else
+        alpha = 0.9 - math.floor( (pet:getMainLvl() - 60) / 2 ) / 100
+    end
+
+    return alpha
+end
+
 function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
     -- Damage = ( (D) * fTP + dSTAT ) * Magic Multipliers
     -- D = Constant + Modifier
     -- Source: https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
     local damage = 0
     local statMod = 1
-    local alpha = 0.85
+    local alpha = getAvatarAlpha(pet)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
     local totalAccBonus = 0
 
@@ -100,7 +108,7 @@ function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
     return damage
 end
 
-function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmodsubsequent,tpeffect,mtp100,mtp200,mtp300,critmod)
+function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmodsubsequent,tpeffect,mtp100,mtp200,mtp300,critmod, wsc)
 
     local master = avatar:getMaster()
 
@@ -112,23 +120,40 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
 
     local acc = avatar:getACC()
     local eva = target:getEVA()
-    local dmg = avatar:getWeaponDmg()
+    local dmg = avatar:getWeaponDmg() - target:getMod(tpz.mod.VIT)/4
     local minFstr, maxFstr = avatarFSTR(avatar:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT))
     local ratio = avatar:getStat(tpz.mod.ATT) / target:getStat(tpz.mod.DEF)
+    printf("Avatar ATT = %d, target DEF = %d, Ratio = %d",avatar:getStat(tpz.mod.ATT), target:getStat(tpz.mod.DEF), ratio)
+    local cRatio = avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
 
     -- Note: Avatars do not have any level correction. This is why they are so good on Wyrms! // https://kegsay.livejournal.com/tag/smn!
     -- merit 1280 is avatar phys accuracy merit
-    local hitrate = utils.clamp(75 + accmod + getSummoningSkillOverCap(avatar)/2 + master:getMerit(1280)/2.2 + ((acc - eva)/5), 20, 97)
-    --master:PrintToPlayer(string.format("hitrate = 75 + %i + %.1f + %.1f + %.1f = %.1f",accmod,getSummoningSkillOverCap(avatar)/2,master:getMerit(1280)/2.2,(acc - eva)/5,hitrate))
+    local hitrate = utils.clamp(75 + accmod + getSummoningSkillOverCap(avatar) + master:getMerit(1280) + ((acc - eva)/5), 20, 97)
 
-    -- add on native crit hit rate (guesstimated, it actually follows an exponential curve)
-    local critrate = (avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)) * 0.005 -- assumes +0.5% crit rate per 1 dDEX
+    local dexMod = 0
+    if (cRatio < 7) then
+        dexMod = 0
+    elseif (cRatio < 14) then
+        dexMod = 0.01
+    elseif (cRatio < 20) then
+        dexMod = 0.02
+    elseif (cRatio < 30) then
+        dexMod = 0.03
+    elseif (cRatio < 40) then
+        dexMod = 0.04
+    elseif (cRatio < 51) then
+        dexMod = (cRatio - 35) / 100
+    else
+        dexMod = 0.15
+    end
+
+
+    local critrate = 0.05 + dexMod
+    --local critrate = (avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)) * 0.005 -- assumes +0.5% crit rate per 1 dDEX
     critrate = critrate + avatar:getMod(tpz.mod.CRITHITRATE) / 100 + critmod / 100
     critrate = utils.clamp(critrate, 0.05, 0.2)
 
     -- Applying pDIF
-    --old
-    --[[
     if ratio <= 1 then
         maxRatio = 1
         minRatio = 1/3
@@ -145,7 +170,14 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
         maxRatio = 4.2
         minRatio = 4
     end
-    ]]
+
+    -- pDIF cap on low level mobs
+    if (target:getMainLvl() < avatar:getMainLvl()-20) then
+        maxRatio = utils.clamp(maxRatio, 1, 1.25)
+        minRatio = utils.clamp(minRatio, 1/3, maxRatio-0.1)
+    end
+
+    --[[
     maxRatio = ratio * 0.5 + 1
     minRatio = maxRatio * 0.78 + 1/6
     if maxRatio > 2.75 then
@@ -153,8 +185,16 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
     end
     if minRatio > maxRatio - 0.1 then
         minRatio = maxRatio - 0.1
-    end
+    end ]]
 
+    -- WSC calculation
+    local extraDmg = 0
+    if (wsc ~= nil) then
+        extraDmg = (avatar:getStat(tpz.mod.STR) * wsc.str_wsc + avatar:getStat(tpz.mod.DEX) * wsc.dex_wsc +
+         avatar:getStat(tpz.mod.VIT) * wsc.vit_wsc + avatar:getStat(tpz.mod.AGI) * wsc.agi_wsc +
+         avatar:getStat(tpz.mod.INT) * wsc.int_wsc + avatar:getStat(tpz.mod.MND) * wsc.mnd_wsc +
+         avatar:getStat(tpz.mod.CHR) * wsc.chr_wsc) * getAvatarAlpha(avatar)
+    end
 
     -- start the hits
     local hitsdone = 1
@@ -162,8 +202,12 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
     local hitdmg = 0
     local finaldmg = 0
 
+    -- first hit
     if math.random()*100 < hitrate then
-        hitdmg = avatarHitDmg(dmg, minRatio, maxRatio, minFstr, maxFstr, critrate)
+        hitdmg = avatarHitDmg(dmg + extraDmg, minRatio, maxRatio, minFstr, maxFstr, critrate)
+        if (wsc.ele ~= nil) then
+            hitdmg = hitdmg * applyResistanceAbility(avatar, target, wsc.ele, tpz.skill.ELEMENTAL_MAGIC)
+        end
         finaldmg = finaldmg + hitdmg * dmgmod
         hitslanded = hitslanded + 1
     end
@@ -212,8 +256,9 @@ function avatarHitDmg(dmg, pdifMin, pdifMax, fstrMin, fstrMax, critrate)
     local fstr = math.random(fstrMin, fstrMax)
     local pdif = math.random(pdifMin * 1000, pdifMax * 1000) / 1000
     if math.random() < critrate then
-        pdif = math.min(pdif + 0.5, 4.2)
+        pdif = math.min(pdif + 1, 4.2)
     end
+    printf("dmg = %d, fSTR = %d, pdif = %d total = %d", dmg, fstr, pdif, (dmg + fstr) * pdif)
     return (dmg + fstr) * pdif
 end
 

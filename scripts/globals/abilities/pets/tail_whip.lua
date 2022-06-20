@@ -3,9 +3,8 @@
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/monstertpmoves")
 require("scripts/globals/summon")
-
+require("scripts/globals/magic")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -15,26 +14,26 @@ end
 function onPetAbility(target, pet, skill)
     local mpCost = 49
     local ele = tpz.damageType.WATER
-    local coe = getAvatarEcosystemCoefficient(target, ele)
+    local params = {}
+    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.3 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     local numhits = 1
     local accmod = -1
-    local dmgmod = 5 * coe * (1 + 0.35*skill:getTP()/3000)
-
+    local dmgmod = 5
     local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3)
+
+    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3, 0, params)
     totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
 
-    local resist = applyPlayerResistance(pet, -1, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), tpz.skill.ELEMENTAL_MAGIC, 5)
-    if resist < 0.5 then
-        resist = 0
-    end
-    
-    local duration = math.ceil(120 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
-    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
-        if duration > 0 and AvatarPhysicalHit(skill, totaldamage) and target:hasStatusEffect(tpz.effect.WEIGHT) == false then
-            target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+    if totaldamage > 0 then
+        local resist = applyResistanceAbility(pet,target,tpz.magic.element.WATER,tpz.skill.ENFEEBLING_MAGIC)
+        local duration = math.ceil((120 + 120 * skill:getTP()/3000) * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
+        if (target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100) then
+            if (resist >= 0.25 and target:hasStatusEffect(tpz.effect.WEIGHT) == false) then
+                target:addStatusEffect(tpz.effect.WEIGHT, 50, 0, duration)
+            end
         end
     end
+
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(pet,totaldamage)
     
