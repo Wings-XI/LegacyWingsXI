@@ -69,18 +69,24 @@ end
 
 function onTrigger(player, npc)
     if (player:hasKeyItem(tpz.ki.CLAMMING_KIT)) then
-    player:setLocalVar("ClammingPointID", npc:getID())
-        if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
-            player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
+        player:setLocalVar("ClammingPointID", npc:getID())
+
+        if (npc:getLocalVar("InUse") == 1) then
+            player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
         else
-            local delay = GetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay")
-
-            if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
-                player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
+            if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
+                player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
             else
-                SetServerVariable("ClammingPoint_" .. npc:getID() .. "_Delay", 0)
+                local delay = npc:getLocalVar("Delay")
 
-                player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
+                if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
+                    player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
+                else
+                    npc:setLocalVar("InUse", 1)
+                    npc:setLocalVar("Delay", 0)
+
+                    player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
+                end
             end
         end
     else
@@ -116,6 +122,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    local npc = GetEntityByID(player:getLocalVar("ClammingPointID"))
 
     if (csid == 20) then
         if (player:getLocalVar("SomethingJumpedInBucket") > 0) then
@@ -142,11 +149,12 @@ function onEventFinish(player, csid, option)
                     player:messageSpecial(ID.text.YOU_FIND_ITEM, clammedItem)
                 end
 
-                SetServerVariable("ClammingPoint_" .. player:getLocalVar("ClammingPointID") .. "_Delay", os.time() + 10)
+                npc:setLocalVar("Delay", os.time() + 10)
                 player:setLocalVar("ClammedItem", 0)
             end
         end
 
+        npc:setLocalVar("InUse", 0)
         player:setLocalVar("ClammingPointID", 0)
     end
 end
