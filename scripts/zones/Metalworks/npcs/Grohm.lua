@@ -18,6 +18,8 @@ function onTrigger(player, npc)
             player:startEvent(425)
         elseif (player:getCharVar("MissionStatus") == 4) then
             player:startEvent(423)
+        elseif (player:getCharVar("PiusTalk") == 1) then -- Added due to playervar MissionStatus getting reset and rendering mission uncompletable without assistance.
+            player:startEvent(423)
         elseif (player:getCharVar("MissionStatus") == 5 and player:hasItem(599) == false) then
             player:startEvent(424)
         else
@@ -65,6 +67,8 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 605) -- Pickaxes
             player:setCharVar("MissionStatus", 5)
             player:setCharVar("notReceivePickaxe", 0)
+            player:setCharVar("PiusTalk", 0) -- Added due to playervar MissionStatus getting reset and rendering mission uncompletable without assistance.
+            player:setCharVar("GrohmTalk", 1)
         end
     elseif (csid == 426) then
         player:setCharVar("MissionStatus", 10)
