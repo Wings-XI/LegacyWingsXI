@@ -16,10 +16,11 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
-    local renfred = GetMobByID(ID.mob.RENFRED)
     if mob:getHP() == 1 then
         DespawnMob(mob:getID())
-        local spawner = GetPlayerByID(renfred:getLocalVar("spawner"))
+ 
+        local bompupu = GetMobByID(ID.mob.BOMPUPU)
+        local spawner = GetPlayerByID(bompupu:getLocalVar("spawner"))
         for _, member in pairs(spawner:getAlliance()) do
             member:messageSpecial(ID.text.ASA_SHADOW_DEATH, 2)
         end

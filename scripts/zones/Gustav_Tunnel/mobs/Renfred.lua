@@ -29,11 +29,11 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
+    mob:setLocalVar("spawner", target:getID())
     mob:showText(mob, ID.text.ASA_BATTLE_START)
 end
 
 function onMobFight(mob, target)
-    mob:setLocalVar("spawner", target:getID())
     local utsuCount = mob:getLocalVar("utsuSpam")
     local targetPhase = mob:getLocalVar("targetPhase")
     local utsuWait = mob:getLocalVar("utsuWaitTime")
@@ -108,33 +108,31 @@ function onMobFight(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if isKiller or isKiller == nil then
-        mob:showText(mob, ID.text.ASA_RENFRED_DEATH)
+    mob:showText(mob, ID.text.ASA_RENFRED_DEATH)
 
-        local spawner = GetPlayerByID(mob:getLocalVar("spawner"))
-        for i = ID.mob.RENFRED + 1, ID.mob.RENFRED + 3 do
-            DespawnMob(i)
-            for _, member in pairs(spawner:getAlliance()) do
-                member:messageSpecial(ID.text.ASA_SHADOW_DEATH, 1)
-            end
+    local spawner = GetPlayerByID(mob:getLocalVar("spawner"))
+    for i = ID.mob.RENFRED + 1, ID.mob.RENFRED + 3 do
+        DespawnMob(i)
+        for _, member in pairs(spawner:getAlliance()) do
+            member:messageSpecial(ID.text.ASA_SHADOW_DEATH)
         end
+    end
 
-        local gorattz = GetMobByID(ID.mob.GORATTZ)
-        local bompupu = GetMobByID(ID.mob.BOMPUPU)
-        local QM = GetNPCByID(ID.npc.OUTCROPPING_QM)
-        if not gorattz:isAlive() and not bompupu:isAlive() then
-            QM:setStatus(tpz.status.NORMAL)
-            spawner:delPartyEffect(276) -- Remove Confrontation
-            for _, member in pairs(spawner:getAlliance()) do
-                member:setCharVar("ASA_enemyPhase", 2)
-                local now = tonumber(os.date("%j"))
-                local lastCactuar = member:getCharVar("LastCactuarKey")
-                if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastCactuar and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and member:getLocalVar("hadBook") == 1 then
-                    member:setCharVar("LastCactuarKey", os.date("%j"))
-                    member:addKeyItem(tpz.ki.CACTUAR_KEY)
-                    member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
-                    member:setLocalVar("hadBook", 0)
-                end
+    local gorattz = GetMobByID(ID.mob.GORATTZ)
+    local bompupu = GetMobByID(ID.mob.BOMPUPU)
+    local QM = GetNPCByID(ID.npc.OUTCROPPING_QM)
+    if not gorattz:isAlive() and not bompupu:isAlive() then
+        QM:setStatus(tpz.status.NORMAL)
+        spawner:delPartyEffect(276) -- Remove Confrontation
+        for _, member in pairs(spawner:getAlliance()) do
+            member:setCharVar("ASA_enemyPhase", 2)
+            local now = tonumber(os.date("%j"))
+            local lastCactuar = member:getCharVar("LastCactuarKey")
+            if not member:hasKeyItem(tpz.ki.CACTUAR_KEY) and now ~= lastCactuar and member:getCurrentMission(ASA) >= tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II and member:getLocalVar("hadBook") == 1 then
+                member:setCharVar("LastCactuarKey", os.date("%j"))
+                member:addKeyItem(tpz.ki.CACTUAR_KEY)
+                member:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CACTUAR_KEY)
+                member:setLocalVar("hadBook", 0)
             end
         end
     end

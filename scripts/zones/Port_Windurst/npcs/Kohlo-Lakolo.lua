@@ -105,9 +105,11 @@ Fame       = player:getFameLevel(WINDURST);
         end
     elseif (OnionRings == QUEST_COMPLETED) then
         if (NeedToZone == false) then
-            player:startEvent(496);
-        else
-            player:startEvent(440);
+            if player:getCharVar("OnionRings") == 2 then
+                player:startEvent(440);
+            else
+                player:startEvent(496);
+            end
         end
     elseif (OnionRings == QUEST_ACCEPTED) then
         OldRing = player:hasKeyItem(tpz.ki.OLD_RING);
@@ -264,6 +266,7 @@ function onEventFinish(player,csid,option)
         player:addTitle(tpz.title.STAR_ONION_BRIGADIER);
         player:delKeyItem(tpz.ki.OLD_RING);
         player:setCharVar("OnionRingsTime",0);
+        player:setCharVar("OnionRings",2);
         player:needToZone(true);
     elseif (csid == 440) then
         OnionRingsVar    = player:getCharVar("OnionRings");

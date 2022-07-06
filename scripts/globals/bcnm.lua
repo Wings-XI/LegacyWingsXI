@@ -644,8 +644,8 @@ function checkReqs(player, npc, bfid, registrant)
         [ 640] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 6                                                               ) end, -- PM5-3 U3: Flames for the Dead
         [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Follow the White Rabbit
         [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: When Hell Freezes Over
-        [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Brothers
-        [ 644] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Holy Cow
+        [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801894                                                                             ) end, -- ENM: Brothers
+        [ 644] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801896                                                                             ) end, -- ENM: Holy Cow
         [ 672] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 5                                                               ) end, -- PM5-3 U2: Head Wind
         [ 673] = function() return ( player:hasKeyItem(tpz.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Like the Wind
         [ 674] = function() return ( player:hasKeyItem(tpz.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Sheep in Antlion's Clothing

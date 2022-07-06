@@ -3445,6 +3445,9 @@ INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 2233);
 INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2071);
 INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2072);
 INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2073);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1771);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
 -- Dynamis - Buburimu
 INSERT INTO `mob_skill_lists` VALUES('Alkla', 5024, 647); -- Chaos Blade
 INSERT INTO `mob_skill_lists` VALUES('Stihi', 5025, 642); -- Flame Breath

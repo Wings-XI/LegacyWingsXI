@@ -14,6 +14,7 @@ zones[tpz.zone.TAVNAZIAN_SAFEHOLD] =
         ITEM_OBTAINED                  = 6388, -- Obtained: <item>.
         GIL_OBTAINED                   = 6389, -- Obtained <number> gil.
         KEYITEM_OBTAINED               = 6391, -- Obtained key item: <keyitem>.
+        NOTHING_OUT_OF_ORDINARY        = 6402, -- There is nothing out of the ordinary here.
         CARRIED_OVER_POINTS            = 6427, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY        = 6428, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                   = 6429, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
@@ -44,6 +45,7 @@ zones[tpz.zone.TAVNAZIAN_SAFEHOLD] =
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 11830, -- Players who have not reached level <number> are prohibited from entering Dynamis.
         RETRIEVE_DIALOG_ID             = 12253, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL          = 13327, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        TRAIL_OF_WATER                 = 11745, -- There is a trail of water here. It is still fresh.
     },
     mob =
     {
