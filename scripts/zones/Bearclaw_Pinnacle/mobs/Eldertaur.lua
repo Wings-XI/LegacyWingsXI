@@ -24,6 +24,7 @@ end
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 50)
     mob:setMod(tpz.mod.DMGMAGIC, -10)
     mob:setMod(tpz.mod.SLEEPRES, 75)
 end
