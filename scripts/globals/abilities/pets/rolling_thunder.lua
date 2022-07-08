@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
+    local mpCost = 52
     local bonus = getSummoningSkillOverCap(pet)
     if bonus > 90 then
         bonus = 90
@@ -37,6 +38,7 @@ function onPetAbility(target, pet, skill, summoner)
     local typeEffect = tpz.effect.ENTHUNDER
 
     skill:setMsg(MobBuffMove(target, typeEffect, potency, 0, 60+bonus))
-
+    
+    pet:getMaster():addMP(-mpCost)
     return typeEffect
 end

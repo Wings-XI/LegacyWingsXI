@@ -15,11 +15,14 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 80
     if (not target:isPC()) or not (target:addStatusEffect(tpz.effect.RERAISE, 2, 0, 3600)) then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         return 0
     end
     
-    skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)    
+    skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+
+    pet:getMaster():addMP(-mpCost) 
     return tpz.effect.RERAISE
 end

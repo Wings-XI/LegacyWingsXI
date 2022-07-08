@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 62
     --randomly give str/dex/vit/agi/int/mnd/chr (+12)
     local effect = math.random()
     local effectid = tpz.effect.STR_BOOST
@@ -37,5 +38,7 @@ function onPetAbility(target, pet, skill)
     end
     target:addStatusEffect(effectid, math.random(12, 14), 0, 90+bonus)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+
+    pet:getMaster():addMP(-mpCost)
     return effectid
 end

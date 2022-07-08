@@ -1592,7 +1592,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         }
                     }
 
-                    addMP((int32)-mpCost);
+                    //addMP((int32)-mpCost);  This is no longer used as MP calculation is now done on abilities
 
                     if (PAbility->getValidTarget() == TARGET_SELF)
                     {

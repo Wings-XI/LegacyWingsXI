@@ -12,9 +12,12 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 92
     --target:delStatusEffect(tpz.effect.STONESKIN)
     local amount = pet:getMainLvl()*2 + 50
     target:addStatusEffect(tpz.effect.STONESKIN, amount, 0, 900, 0, 0, 3)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+
+    pet:getMaster():addMP(-mpCost)
     return tpz.effect.STONESKIN
 end

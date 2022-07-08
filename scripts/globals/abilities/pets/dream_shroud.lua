@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
+    local mpCost = 121
     local bonusTime = utils.clamp(summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 200)
     local duration = 180 + bonusTime
     local hour = VanadielHour()
@@ -23,5 +24,7 @@ function onPetAbility(target, pet, skill, summoner)
     target:addStatusEffect(tpz.effect.MAGIC_ATK_BOOST, buffvalue, 0, duration)
     target:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 14 - buffvalue, 0, duration)
     skill:setMsg(tpz.msg.basic.NONE)
+
+    pet:getMaster():addMP(-mpCost)
     return 0
 end

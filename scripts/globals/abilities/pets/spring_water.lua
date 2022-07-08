@@ -12,6 +12,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 99
     local base = 47 + pet:getMainLvl()*3
     local tp = skill:getTP()
     if tp < 1000 then
@@ -34,5 +35,7 @@ function onPetAbility(target, pet, skill)
     end
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     target:addHP(base)
+
+    pet:getMaster():addMP(-mpCost)
     return base
 end
