@@ -40,9 +40,9 @@ function onEventFinish(player, csid, option)
             player:completeMission(COP, tpz.mission.id.cop.THE_WARRIOR_S_PATH)
             player:addMission(COP, tpz.mission.id.cop.GARDEN_OF_ANTIQUITY)
             player:setCharVar("PromathiaStatus", 0)
+            player:addTitle(tpz.title.THE_CHEBUKKIS_WORST_NIGHTMARE)
+            player:setPos(-25, -1, -620, 208, 33) -- Al'Taieu
         end
         player:addExp(1000)
-        player:addTitle(tpz.title.THE_CHEBUKKIS_WORST_NIGHTMARE)
-        player:setPos(-25, -1, -620, 208, 33) -- Al'Taieu
     end
 end
