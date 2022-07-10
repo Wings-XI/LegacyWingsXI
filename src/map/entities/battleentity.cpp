@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -1547,6 +1547,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     if (!PActionTarget) {
         return;
+    }
+    if (PActionTarget->isSuperJumped)
+    {
+        return OnCastInterrupted(state, action, MSGBASIC_IS_INTERRUPTED);
     }
 
     if (this->objtype == TYPE_MOB && PActionTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) && PActionTarget->StatusEffectContainer->GetStatusEffect(EFFECT_COVER)->GetPower() & 4)
