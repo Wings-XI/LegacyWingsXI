@@ -47,6 +47,7 @@ function onPetAbility(target, pet, skill, summoner)
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     end
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.SLOW
 end

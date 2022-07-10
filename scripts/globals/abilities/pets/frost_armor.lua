@@ -24,6 +24,7 @@ function onPetAbility(target, pet, skill, summoner)
     target:addStatusEffect(tpz.effect.ICE_SPIKES, 15, 0, 90+bonus)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.ICE_SPIKES
 end

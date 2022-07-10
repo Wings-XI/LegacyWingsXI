@@ -39,6 +39,7 @@ function onPetAbility(target, pet, skill)
     target:addStatusEffect(effectid, math.random(12, 14), 0, 90+bonus)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return effectid
 end

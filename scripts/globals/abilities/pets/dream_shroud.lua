@@ -25,6 +25,7 @@ function onPetAbility(target, pet, skill, summoner)
     target:addStatusEffect(tpz.effect.MAGIC_DEF_BOOST, 14 - buffvalue, 0, duration)
     skill:setMsg(tpz.msg.basic.NONE)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return 0
 end

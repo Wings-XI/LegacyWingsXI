@@ -49,6 +49,7 @@ function onPetAbility(target, pet, skill, summoner)
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return effect
 end
