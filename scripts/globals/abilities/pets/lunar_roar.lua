@@ -22,8 +22,6 @@ function onPetAbility(target, pet, skill)
     end
     skill:setMsg(tpz.msg.basic.NONE)
 
-    printf("total targets: %i", skill:getTotalTargets())
-
     pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
 
     return 0
