@@ -3793,6 +3793,9 @@ INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 157, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 201, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 356, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 357, 1, 255);
 -- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
@@ -4385,6 +4388,48 @@ INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 196, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 212, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 251, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 57, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 100, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 147, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 176, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 204, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 235, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 249, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 58, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 101, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 152, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 181, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 206, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 236, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Ice_Pot', 542, 250, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 53, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 59, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 102, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 157, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 186, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 208, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 216, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Air_Pot', 543, 237, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 54, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 56, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 103, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 162, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 191, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 210, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Earth_Pot', 544, 238, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 104, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 167, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 196, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 212, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 239, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Thunder_Pot', 545, 251, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 55, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 105, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 172, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 201, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 214, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 221, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 226, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 240, 1, 255);
 
 --
 -- Indexes for dumped tables

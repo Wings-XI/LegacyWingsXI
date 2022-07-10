@@ -50,6 +50,7 @@ zones[tpz.zone.QUBIA_ARENA] =
             17621303,
             17621304,
         },
+        E_VASE_IVE_ACTION_OFFSET = 17621227,
     },
     npc =
     {

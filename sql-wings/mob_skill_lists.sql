@@ -3107,6 +3107,8 @@ INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3512);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3513);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3514);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3515);
+INSERT INTO `mob_skill_lists` VALUES('Beelzebub', 1048, 334);
+INSERT INTO `mob_skill_lists` VALUES('Beelzebub', 1048, 335);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 813);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 814);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 815);
