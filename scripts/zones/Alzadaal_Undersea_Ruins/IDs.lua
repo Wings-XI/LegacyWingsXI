@@ -55,7 +55,7 @@ zones[tpz.zone.ALZADAAL_UNDERSEA_RUINS] =
         ARMED_GEARS             = 17072178,
         WULGARU                 = 17072179,
         OUPIRE                  = 17072170,
-
+        BOOMPADU                = 17072133,
     },
     npc =
     {

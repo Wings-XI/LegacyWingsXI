@@ -42,6 +42,7 @@ function onEventFinish(player, csid, option)
     if (csid == 355) then
         if (player:getCharVar("MissionStatus") == 3) then
             player:setCharVar("MissionStatus", 4)
+            player:setCharVar("PiusTalk", 1) -- Added due to playervar MissionStatus getting reset and rendering mission uncompletable without assistance.
         else
             player:setCharVar("MissionStatus", 9)
         end

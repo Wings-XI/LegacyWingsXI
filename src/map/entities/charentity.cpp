@@ -1592,7 +1592,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         }
                     }
 
-                    addMP((int32)-mpCost);
+                    //addMP((int32)-mpCost);  This is no longer used as MP calculation is now done on abilities
 
                     if (PAbility->getValidTarget() == TARGET_SELF)
                     {
@@ -2156,7 +2156,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
         //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
         if (PTarget->PParty)
         {
-            for each (CBattleEntity* PMember in PTarget->PParty->members)
+            for (CBattleEntity* PMember : PTarget->PParty->members)
             {
                 // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
                 if (this->id == PMember->id)

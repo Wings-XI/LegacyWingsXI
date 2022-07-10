@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
+    local mpCost = 57
     local duration = 180
 
     local moon = VanadielMoonPhase()
@@ -37,5 +38,8 @@ function onPetAbility(target, pet, skill, summoner)
     target:addStatusEffect(tpz.effect.ACCURACY_BOOST, buffvalue, 0, duration)
     target:addStatusEffect(tpz.effect.EVASION_BOOST, 25-buffvalue, 0, duration)
     skill:setMsg(tpz.msg.basic.NONE)
+    
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return 0
 end

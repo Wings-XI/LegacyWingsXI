@@ -3107,6 +3107,8 @@ INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3512);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3513);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3514);
 INSERT INTO `mob_skill_lists` VALUES('Siren', 1010, 3515);
+INSERT INTO `mob_skill_lists` VALUES('Beelzebub', 1048, 334);
+INSERT INTO `mob_skill_lists` VALUES('Beelzebub', 1048, 335);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 813);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 814);
 INSERT INTO `mob_skill_lists` VALUES('Lightning_Wyvern', 1138, 815);
@@ -3442,6 +3444,12 @@ INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 613);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 614);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 633);
 INSERT INTO `mob_skill_lists` VALUES('Quadav_WotG', 2031, 2233);
+INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2071);
+INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2072);
+INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2073);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1771);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
+INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
 -- Dynamis - Buburimu
 INSERT INTO `mob_skill_lists` VALUES('Alkla', 5024, 647); -- Chaos Blade
 INSERT INTO `mob_skill_lists` VALUES('Stihi', 5025, 642); -- Flame Breath

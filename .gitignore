@@ -131,6 +131,7 @@ UpgradeLog*.XML
 
 # Generated executables
 /topaz_connect
+/topaz_new_connect
 /topaz_game
 /topaz_search
 /topaz_connect_64
@@ -216,3 +217,5 @@ libssl-3.dll
 libzmq.dll
 libzmq-d.dll
 lua51.dll
+/conf/default
+/conf/old-login.conf

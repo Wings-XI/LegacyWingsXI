@@ -9,76 +9,53 @@
 local ID = require("scripts/zones/Upper_Jeuno/IDs")
 -----------------------------------
 
+local itemXRefs =
+{
+    -- Male to Female, NQ
+    [14578] = 14579,    -- dancers_casaque
+    [15002] = 15003,    -- dancers_bangles
+    [15659] = 15660,    -- dancers_tights
+    [15746] = 15747,    -- dancers_toe_shoes
+    [16138] = 16139,    -- dancers_tiara
+    -- Female to Male, NQ
+    [14579] = 14578,
+    [15003] = 15002,
+    [15660] = 15659,
+    [15747] = 15746,
+    [16139] = 16138,
+    -- Male to Female, HQ
+    [11302] = 11303,    -- dancers_casaque_+1
+    [11393] = 11394,    -- dancers_toe_shoes_+1
+    [11475] = 11476,    -- dancers_tiara_+1
+    [15035] = 15036,    -- dancers_bangles_+1
+    [16357] = 16358,    -- dancers_tights_+1
+    -- Female to Male, HQ
+    [11303] = 11302,
+    [11394] = 11393,
+    [11476] = 11475,
+    [15036] = 15035,
+    [16358] = 16357,
+}
+
 function onTrade(player, npc, trade)
+    -- make sure there is only one item in the trade
+    if trade:getItemCount() == 1 then
+        -- look for traded item
+        for k, v in pairs(itemXRefs) do
+            if trade:hasItemQty(k, 1) then
+                if player:getFreeSlotsCount() > 0 then
+                    player:tradeComplete()
+                    player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
+                    player:addItem(v)
+                    player:messageSpecial(ID.text.ITEM_OBTAINED, v)
+                else
+                    player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, v)
+                end
 
-    --------------------------- Male to Female --------------------------------
-
-    local traded
-
-    if trade:hasItemQty(16138, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(16139)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 16139)
-        traded = 16139
-    elseif trade:hasItemQty(14578, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(14579)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 14579)
-        traded = 14579
-    elseif trade:hasItemQty(15002, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15003)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15003)
-        traded = 15003
-    elseif trade:hasItemQty(15659, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15660)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15660)
-        traded = 15660
-    elseif trade:hasItemQty(15746, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15747)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15747)
-        traded = 15747
-    ------------------------ Female to Male --------------------------------
-
-    elseif trade:hasItemQty(16139, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(16138)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 16138)
-        traded = 16138
-    elseif trade:hasItemQty(14579, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(14578)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 14578)
-        traded = 14578
-    elseif trade:hasItemQty(15003, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15002)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15002)
-        traded = 15002
-    elseif trade:hasItemQty(15660, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15659)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15659)
-        traded = 15659
-    elseif trade:hasItemQty(15747, 1) and player:getFreeSlotsCount() > 0 and trade:getItemCount() == 1 then
-        player:tradeComplete()
-        player:PrintToPlayer("Olgald : Ah, well we are all fine with accepting the new you.. Here you go.", 0xD)
-        player:addItem(15746)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 15746)
-        traded = 15746
-    else
-        player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, traded)
+                -- item matched, no need to continue looping
+                return
+            end
+        end
     end
 end
 

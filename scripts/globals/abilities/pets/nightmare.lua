@@ -13,7 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
-
+    local mpCost = 42
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return tpz.effect.SLEEP_I
@@ -48,6 +48,8 @@ function onPetAbility(target, pet, skill, summoner)
     else
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
     end
+    
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
 
     return effect
 end

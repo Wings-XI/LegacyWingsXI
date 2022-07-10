@@ -12,6 +12,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 235
     if target:getMainLvl() % 3 ~= 0 then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         return 0
@@ -34,6 +35,8 @@ function onPetAbility(target, pet, skill)
     
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     target:updateEnmityFromDamage(pet,damage)
+    
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
 
     return damage
 end

@@ -16,7 +16,7 @@ function onPetAbility(target, pet, skill)
         --skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
         --return 0
     --end
-    
+    local mpCost = 235
     local dMND = math.floor(pet:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND))
     local ele = tpz.damageType.LIGHT
     local coe = getAvatarEcosystemCoefficient(target, ele)
@@ -34,6 +34,8 @@ function onPetAbility(target, pet, skill)
     
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     target:updateEnmityFromDamage(pet,damage)
+    
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
 
     return damage
 end

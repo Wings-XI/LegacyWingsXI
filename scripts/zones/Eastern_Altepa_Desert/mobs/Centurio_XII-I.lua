@@ -12,6 +12,17 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.STATUSRES,50)
 end
 
+function onMobFight( mob, target )
+    local mobId = mob:getID()
+    -- make sure minions have a target
+    for i = mobId + 1, mobId + 2 do
+        local pet = GetMobByID(i)
+        if (pet:getCurrentAction() == tpz.act.ROAMING) then
+            pet:updateEnmity(target)
+        end
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 

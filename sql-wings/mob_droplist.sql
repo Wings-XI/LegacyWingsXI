@@ -16214,9 +16214,12 @@ INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 15, 2671, 200); -- commodore_botte
 INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 15, 2676, 200); -- pantin_babouches_-1
 INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 15, 2722, 200); -- etoile_toe_shoes_-1
 INSERT INTO `mob_droplist` VALUES(3131, 1, 2, 15, 2727, 200); -- argute_loafers_-1
-INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1450, 20); -- Jadeshell
-INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1453, 20); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3132, 0, 0, 1000, 1456, 20); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3132, 0, 1, 1000, 1450, 20); -- Jadeshell
+INSERT INTO `mob_droplist` VALUES(3132, 0, 1, 1000, 1453, 20); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3132, 0, 1, 1000, 1456, 20); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3132, 1, 2, 1000, 1450, 10); -- Jadeshell
+INSERT INTO `mob_droplist` VALUES(3132, 1, 2, 1000, 1453, 10); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3132, 1, 2, 1000, 1456, 10); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3133, 2, 0, 1000, 1449, 0);
 INSERT INTO `mob_droplist` VALUES(3133, 2, 0, 1000, 1452, 0);
 INSERT INTO `mob_droplist` VALUES(3133, 2, 0, 1000, 1455, 0);
@@ -16958,9 +16961,9 @@ INSERT INTO `mob_droplist` VALUES(3233, 0, 0, 1000, 1831, 917); -- Lugworm Sand
 
 -- Nightmare Hippogryph, Sabotender
 -- Adding -1 Gear per http://www.dynamisbums.com/strategy/val.html
-INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1452, 20); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1455, 20); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1452, 133); -- Bronzepiece
+INSERT INTO `mob_droplist` VALUES(3234, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15871, 170); -- warriors_stone
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15481, 160); -- valor_cape
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15482, 170); -- bards_cape
@@ -16989,9 +16992,9 @@ INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 8, 2718, 200); -- etoile_tiara_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 8, 2723, 200); -- argute_mortarboard_-1
 -- Nightmare Manticore, Sheep
 -- Adding -1 Gear per http://www.dynamisbums.com/strategy/val.html
-INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1452, 20); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1455, 20); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1452, 133); -- Bronzepiece
+INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15872, 170); -- cerics_belt
 INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15874, 160); -- sorcerers_belt
 INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15480, 170); -- assassins_cape
@@ -17019,13 +17022,13 @@ INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 8, 2672, 200); -- pantin_taj_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 8, 2718, 200); -- etoile_tiara_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 8, 2723, 200); -- argute_mortarboard_-1
 -- Nightmare Fly
-INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1452, 20); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1455, 20); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1452, 133); -- Bronzepiece
+INSERT INTO `mob_droplist` VALUES(3236, 0, 0, 1000, 1455, 133); -- One Byne
 -- Nightmare Raven and Scorpion
-INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1452, 20); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1455, 20); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1452, 133); -- Bronzepiece
+INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 15873, 333); -- duelists_belt
 INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 15876, 333); -- scouts_belt
 INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 16244, 334); -- mirage_mantle
@@ -17050,9 +17053,9 @@ INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 8, 2674, 200); -- pantin_dastanas_
 INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 8, 2720, 200); -- etoile_bangles_-1
 INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 8, 2725, 200); -- argute_bracers_-1
 -- Nightmare Dhalmel and Crawler
-INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1452, 20); -- Bronzepiece
-INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1455, 20); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1449, 133); -- Whiteshell
+INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1452, 133); -- Bronzepiece
+INSERT INTO `mob_droplist` VALUES(3238, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3238, 1, 1, 8, 15479, 333); -- abyss_cape
 INSERT INTO `mob_droplist` VALUES(3238, 1, 1, 8, 15871, 333); -- warriors_stone
 INSERT INTO `mob_droplist` VALUES(3238, 1, 1, 8, 16244, 334); -- mirage_mantle
@@ -17076,18 +17079,18 @@ INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2669, 200); -- commodore_gants_
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2674, 200); -- pantin_dastanas_-1
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2720, 200); -- etoile_bangles_-1
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2725, 200); -- argute_bracers_-1
--- Apocalypse Beast
+-- Apocalypse Beast / Cirrate
 INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1452, 333); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1455, 333); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1450, 333); -- Lungo
 INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1456, 334); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1452, 333); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1455, 334); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1450, 334); -- Lungo
 INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1456, 333); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1452, 334); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1455, 333); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1450, 333); -- Lungo
 INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1456, 333); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1452, 333); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1455, 333); -- One Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1450, 333); -- Lungo
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1456, 334); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3240, 0, 0, 1000, 15219, 475);
 

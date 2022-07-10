@@ -3304,6 +3304,21 @@ namespace battleutils
         return SC_NONE;
     }
 
+    SKILLCHAIN_ELEMENT FormChainboundSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill)
+    {
+        for (auto& skill_element : skill)
+        {
+            for (auto& resonance_element : resonance)
+            {
+                if (auto skillchain = skillchain_map.find({ resonance_element, skill_element }); skillchain != skillchain_map.end())
+                {
+                    return skillchain->second;
+                }
+            }
+        }
+        return SC_NONE;
+    }
+
 
     SUBEFFECT GetSkillChainEffect(CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary)
     {
@@ -3344,7 +3359,7 @@ namespace battleutils
                     resonanceProperties.push_back(SC_IMPACTION);
                     resonanceProperties.push_back(SC_COMPRESSION);
 
-                    skillchain = FormSkillchain(resonanceProperties, skillProperties);
+                    skillchain = FormChainboundSkillchain(resonanceProperties, skillProperties);
                 }
                 PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SKILLCHAIN, 0, combined_properties, 0, 10, 0, 0, 0));
                 PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_CHAINBOUND);

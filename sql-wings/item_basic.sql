@@ -14161,7 +14161,7 @@ INSERT INTO `item_basic` VALUES(16927, 0, 'busuto_+1', 'busuto_+1', 1, 2080, 9, 
 INSERT INTO `item_basic` VALUES(16928, 0, 'hellfire_sword', 'hellfire_sword', 1, 2080, 4, 0, 3566);
 INSERT INTO `item_basic` VALUES(16929, 0, 'burning_claymore', 'burning_claymore', 1, 2080, 4, 0, 979);
 INSERT INTO `item_basic` VALUES(16930, 0, 'mercenarys_greatsword', 'mrc._greatsword', 1, 2052, 4, 0, 2013);
-INSERT INTO `item_basic` VALUES(16931, 0, 'two-handed_sword_+1', '2-hand._sword_+1', 1, 2080, 4, 0, 1);
+INSERT INTO `item_basic` VALUES(16931, 0, 'two-handed_sword_+1', '2-hand._sword_+1', 1, 2080, 4, 0, 2379);
 INSERT INTO `item_basic` VALUES(16932, 0, 'greatsword_+1', 'greatsword_+1', 1, 2080, 4, 0, 8447);
 INSERT INTO `item_basic` VALUES(16933, 0, 'darksteel_claymore_+1', 'dst._claymore_+1', 1, 2080, 4, 0, 8786);
 INSERT INTO `item_basic` VALUES(16934, 0, 'braveheart', 'braveheart', 1, 2052, 4, 0, 2045);
