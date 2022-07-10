@@ -21,6 +21,7 @@ function onPetAbility(target, pet, skill)
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     target:addHP(base)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return base
 end

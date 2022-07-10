@@ -13,6 +13,7 @@ end
 
 function onPetAbility(target, pet, skill)
     local mpCost = 27
+
     if applyResistanceAbility(pet, target, tpz.magic.ele.DARK, tpz.skill.ENFEEBLING_MAGIC, 0) > 0.25 then
         target:dispelStatusEffect()
     end
@@ -21,6 +22,7 @@ function onPetAbility(target, pet, skill)
     end
     skill:setMsg(tpz.msg.basic.NONE)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return 0
 end

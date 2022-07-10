@@ -35,6 +35,7 @@ function onPetAbility(target, pet, skill)
         end
     end
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.SLEEP_I
 end

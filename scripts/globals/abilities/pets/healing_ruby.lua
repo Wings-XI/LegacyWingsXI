@@ -25,5 +25,6 @@ function onPetAbility(target, pet, skill)
     target:addHP(base)
 
     pet:getMaster():addMP(-mpCost)
+
     return base
 end

@@ -65,6 +65,7 @@ function onPetAbility(target, pet, skill)
         
     end
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return 0
 end

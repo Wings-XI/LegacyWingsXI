@@ -21,6 +21,7 @@ function onPetAbility(target, pet, skill, summoner)
     target:addStatusEffect(tpz.effect.SHINING_RUBY, 1, 0, duration)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.SHINING_RUBY
 end

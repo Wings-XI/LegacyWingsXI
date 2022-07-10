@@ -35,6 +35,7 @@ function onPetAbility(target, pet, skill)
     target:takeDamage(damage, pet, tpz.attackType.MAGICAL, tpz.damageType.LIGHT)
     target:updateEnmityFromDamage(pet,damage)
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return damage
 end

@@ -17,6 +17,7 @@ function onPetAbility(target, pet, skill)
     target:addStatusEffect(tpz.effect.BLINK, 3, 0, 900)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.BLINK
 end

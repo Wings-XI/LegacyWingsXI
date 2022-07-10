@@ -39,6 +39,7 @@ function onPetAbility(target, pet, skill, summoner)
 
     skill:setMsg(MobBuffMove(target, typeEffect, potency, 0, 60+bonus))
     
-    pet:getMaster():addMP(-mpCost)
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return typeEffect
 end
