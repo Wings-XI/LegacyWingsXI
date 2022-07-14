@@ -24,7 +24,7 @@ function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.ATT, -50)
-    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 10)
+    mob:setMod(tpz.mod.RESBUILD_GRAVITY, 5)
     mob:setMod(tpz.mod.SLEEPRESTRAIT, 99)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMod(tpz.mod.MDEF, -20)
