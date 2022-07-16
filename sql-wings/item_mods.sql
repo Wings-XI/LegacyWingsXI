@@ -20884,6 +20884,7 @@ INSERT INTO `item_mods` VALUES (17460,9,3);
 INSERT INTO `item_mods` VALUES (17460,10,3);
 INSERT INTO `item_mods` VALUES (17463,13,2);
 INSERT INTO `item_mods` VALUES (17463,111,1);
+INSERT INTO `item_mods` VALUES (17464,431,1); -- Purgatory Mace - Additional effect: "Stun"
 INSERT INTO `item_mods` VALUES (17464,8,3);
 INSERT INTO `item_mods` VALUES (17464,13,3);
 INSERT INTO `item_mods` VALUES (17465,12,1);
