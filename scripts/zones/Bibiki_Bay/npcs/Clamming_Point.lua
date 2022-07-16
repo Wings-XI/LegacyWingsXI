@@ -58,10 +58,10 @@ end
 local function giveReducedIncidents(player)
 
     if (player:getMod(tpz.mod.CLAMMING_REDUCED_INCIDENTS) > 0) then
-        return 0.05
+        return 0.5
     end
 
-    return 0.1
+    return 0.75
 end
 
 function onTrade(player, npc, trade)
@@ -71,22 +71,17 @@ function onTrigger(player, npc)
     if (player:hasKeyItem(tpz.ki.CLAMMING_KIT)) then
         player:setLocalVar("ClammingPointID", npc:getID())
 
-        if (npc:getLocalVar("InUse") == 1) then
-            player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
+        if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
+            player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
         else
-            if (player:getCharVar("ClammingKitBroken") > 0) then -- Broken bucket
-                player:messageSpecial(ID.text.YOU_CANNOT_COLLECT)
+            local delay = npc:getLocalVar("Delay")
+
+            if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
+                player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
             else
-                local delay = npc:getLocalVar("Delay")
+                npc:setLocalVar("Delay", 0)
 
-                if ( delay > 0 and delay > os.time()) then -- player has to wait a little longer
-                    player:messageSpecial(ID.text.IT_LOOKS_LIKE_SOMEONE)
-                else
-                    npc:setLocalVar("InUse", 1)
-                    npc:setLocalVar("Delay", 0)
-
-                    player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
-                end
+                player:startEvent(20, 0, 0, 0, 0, 0, 0, 0, 0)
             end
         end
     else
@@ -97,7 +92,7 @@ end
 function onEventUpdate(player, csid, option)
 
     if (csid == 20) then
-        if (player:getCharVar("ClammingKitSize") == 200 and math.random() <= giveReducedIncidents(player)) then
+        if (player:getCharVar("ClammingKitWeight") >= 150 and math.random() <= giveReducedIncidents(player)) then
             player:setLocalVar("SomethingJumpedInBucket", 1)
         else
             local dropRate = math.random()
@@ -154,7 +149,6 @@ function onEventFinish(player, csid, option)
             end
         end
 
-        npc:setLocalVar("InUse", 0)
         player:setLocalVar("ClammingPointID", 0)
     end
 end
