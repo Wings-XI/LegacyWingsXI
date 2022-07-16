@@ -1169,6 +1169,7 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
     }
     case LATENT_ZONE_HOME_NATION:
     {
+        // *** Ensure this is only used for nation-specific aketons with speed boost **
         //player is logging in/zoning
         if (m_POwner->loc.zone == nullptr)
         {
@@ -1178,16 +1179,33 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         auto PZone = m_POwner->loc.zone;
         auto region = (REGIONTYPE)latentEffect.GetConditionsValue();
 
-        switch (region)
+        /*
+        Respective City Aketons provide speed boost in 
+        - home nation zones
+        - if player is previously rank 10 with zone's nation
+        Any Nation's Aketon provide speed boost if player is rank 10 with all 3 nations
+        - in Jeuno
+        - in Shadowreign Cities
+        */
+        switch (PZone->GetType())
         {
-        case REGION_SANDORIA:
-            expression = m_POwner->profile.nation == 0 && PZone->GetRegionID() == region;
-            break;
-        case REGION_BASTOK:
-            expression = m_POwner->profile.nation == 1 && PZone->GetRegionID() == region;
-            break;
-        case REGION_WINDURST:
-            expression = m_POwner->profile.nation == 2 && PZone->GetRegionID() == region;
+        case 1:
+            switch (PZone->GetRegionID())
+            {
+            case REGION_SANDORIA:
+            case REGION_BASTOK:
+            case REGION_WINDURST:
+                expression = (m_POwner->profile.nation == (PZone->GetRegionID() - 19) || m_POwner->profile.rank[(PZone->GetRegionID() - 19)] == 10) && PZone->GetRegionID() == region;
+                break;
+            case REGION_RONFAURE_FRONT:
+            case REGION_GUSTABERG_FRONT:
+            case REGION_SARUTA_FRONT:
+            case REGION_JEUNO:
+                expression = m_POwner->profile.rank[0] == 10 && m_POwner->profile.rank[1] == 10 && m_POwner->profile.rank[2] == 10;
+                break;
+            default:
+                break;
+            }
             break;
         default:
             break;
