@@ -1150,23 +1150,39 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         }
 
         auto region = m_POwner->loc.zone->GetRegionID();
+        auto regionOwner = conquest::GetRegionOwner(region);
         auto hasSignet = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET);
         auto hasSanction = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION);
         auto hasSigil = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL);
 
-        switch (latentEffect.GetConditionsValue())
+        switch(regionOwner)
         {
         case 0:
-            //under own nation's control
-            expression = region < 28 && conquest::GetRegionOwner(region) == m_POwner->profile.nation && (hasSignet || hasSanction || hasSigil);
-            break;
         case 1:
-            //outside of own nation's control
-            expression = region < 28 && m_POwner->profile.nation != conquest::GetRegionOwner(region) && (hasSignet || hasSanction || hasSigil);
+        case 2:
+        case 3:
+            switch (latentEffect.GetConditionsValue())
+            {
+            case 0:
+                //under own nation's control
+                expression = region < 28 && m_POwner->profile.nation == regionOwner && (hasSignet || hasSanction || hasSigil);
+                break;
+            case 1:
+                //outside of own nation's control
+                expression = region < 28 && m_POwner->profile.nation != regionOwner && (hasSignet || hasSanction || hasSigil);
+                break;
+            default:
+                break;
+            }
+            break;
+        // no matter if item requires "in control" or "not in control", if zone has NEUTRAL control and region < 28, then effect is active (dynamis, limbus, cities, etc)
+        default:
+            expression = region < 28 && (hasSignet || hasSanction || hasSigil);
             break;
         }
         break;
     }
+
     case LATENT_ZONE_HOME_NATION:
     {
         //player is logging in/zoning
