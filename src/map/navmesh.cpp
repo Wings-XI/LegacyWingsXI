@@ -31,26 +31,27 @@
 constexpr int8 CNavMesh::ERROR_NEARESTPOLY;
 constexpr float polyPickExt[3] = { 5.0f, 10.0f, 5.0f };
 
-void CNavMesh::ToFFXIPos(const position_t* pos, float* out) {
+void CNavMesh::ToFFXIPos(const position_t* pos, float* out)
+{
     float y = pos->y;
     float z = pos->z;
 
     out[0] = pos->x;
     out[1] = y * -1;
     out[2] = z * -1;
-
 }
 
-void CNavMesh::ToFFXIPos(float* out) {
+void CNavMesh::ToFFXIPos(float* out)
+{
     float y = out[1];
     float z = out[2];
 
     out[1] = y * -1;
     out[2] = z * -1;
-
 }
 
-void CNavMesh::ToFFXIPos(position_t* out) {
+void CNavMesh::ToFFXIPos(position_t* out)
+{
     float y = out->y;
     float z = out->z;
 
@@ -58,32 +59,32 @@ void CNavMesh::ToFFXIPos(position_t* out) {
     out->z = z * -1;
 }
 
-void CNavMesh::ToDetourPos(float* out) {
+void CNavMesh::ToDetourPos(float* out)
+{
     float y = out[1];
     float z = out[2];
 
     out[1] = y * -1;
     out[2] = z * -1;
-
 }
 
-void CNavMesh::ToDetourPos(position_t* out) {
+void CNavMesh::ToDetourPos(position_t* out)
+{
     float y = out->y;
     float z = out->z;
 
     out->y = y * -1;
     out->z = z * -1;
-
 }
 
-void CNavMesh::ToDetourPos(const position_t* pos, float* out) {
+void CNavMesh::ToDetourPos(const position_t* pos, float* out)
+{
     float y = pos->y;
     float z = pos->z;
 
     out[0] = pos->x;
     out[1] = y * -1;
     out[2] = z * -1;
-
 }
 
 CNavMesh::CNavMesh(uint16 zoneID)
@@ -165,7 +166,6 @@ bool CNavMesh::load(const std::string& filename)
 
 void CNavMesh::outputError(uint32 status)
 {
-
     if (status & DT_WRONG_MAGIC)
     {
         ShowNavError("Detour wrong magic\n");
@@ -499,10 +499,5 @@ bool CNavMesh::raycast(const position_t& start, const position_t& end, bool look
     }
 
     // no wall was hit
-    if (m_hit.t == FLT_MAX)
-    {
-        return true;
-    }
-
-    return false;
+    return m_hit.t == FLT_MAX;
 }
