@@ -23,6 +23,7 @@ add_library(entities STATIC ${SOURCES})
 target_link_libraries(entities
     PUBLIC
     common
+    ai
     project_options
     #project_warnings
 )
