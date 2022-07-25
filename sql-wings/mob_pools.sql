@@ -6279,7 +6279,9 @@ INSERT INTO `mob_pools` VALUES(6717, 'Platinum_Quadav_S', 'Platinum_Quadav_S', 2
 INSERT INTO `mob_pools` VALUES(6718, 'Sapphire_Quadav_S', 'Sapphire_Quadav_S', 202, _binary 0x00009d0200000000000000000000000000000000, 4, 4, 5, 265, 100, 0, 1, 0, 1, 0, 0, 0, 86, 133, 0, 0, 2, 0, 0, 2031);
 INSERT INTO `mob_pools` VALUES(6719, 'Sapphirine_Quadav_S', 'Sapphirine_Quadav_S', 202, _binary 0x0000990200000000000000000000000000000000, 3, 3, 3, 265, 100, 0, 1, 0, 1, 0, 0, 0, 301, 131, 0, 0, 1, 0, 0, 2031);
 INSERT INTO `mob_pools` VALUES(6720, 'Bronze_Quadav_S', 'Bronze_Quadav_S', 202, _binary 0x00004e0800000000000000000000000000000000, 7, 7, 3, 265, 100, 0, 1, 0, 1, 0, 0, 0, 449, 131, 0, 0, 4, 0, 0, 2030);
--- 6721 through 6884 free
+-- 6721 through 6856 free
+INSERT INTO `mob_pools` VALUES(6857, 'Scylla', 'Scylla', 211, 0x0000AF0800000000000000000000000000000000, 5, 1, 6, 240, 100, 0, 1, 1, 1, 2, 7, 32, 0, 663, 12, 0, 449, 0, 0, 211);
+-- 6858 through 6884 free
 INSERT INTO `mob_pools` VALUES(6885, 'Ethniu', 'Ethniu', 115, _binary 0x01001d0702110221023102410251cb61cb710000, 16, 4, 1, 240, 100, 0, 1, 1, 0, 2, 32768, 0, 1, 157, 0, 0, 519, 0, 0, 5015);
 INSERT INTO `mob_pools` VALUES(6886, 'Tethra', 'Tethra', 115, _binary 0x01001d0505110521053105410551ce6100700000, 4, 16, 1, 240, 100, 0, 1, 1, 0, 2, 32768, 0, 1, 157, 0, 0, 520, 0, 0, 5016);
 INSERT INTO `mob_pools` VALUES(6887, 'Kindred_Summoner', 'Kindred_Summoner', 358, 0x0000f30200000000000000000000000000000000, 15, 15, 7, 290, 100, 0, 1, 0, 1, 0, 0, 0, 343, 131, 0, 0, 31, 0, 0, 358);

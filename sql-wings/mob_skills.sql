@@ -1571,6 +1571,8 @@ INSERT INTO `mob_skills` VALUES(2436, 1698, 'sub-zero_smash', 1, 18.0, 2000, 150
 INSERT INTO `mob_skills` VALUES(2437, 1699, 'aqua_blast', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2438, 1700, 'frozen_mist', 1, 18.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2439, 1701, 'hydro_wave', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2440, 1702, 'ice_guillotine', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2441, 1703, 'aqua_cannon', 1, 18.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2442, 1714, 'thorned_dance', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2443, 1715, 'sensual_dance', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2444, 1712, 'dancers_fury', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);

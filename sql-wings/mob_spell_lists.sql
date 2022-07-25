@@ -3796,6 +3796,9 @@ INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 176, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 226, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 356, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 357, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 225, 1, 255); -- poisonga
+INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 356, 1, 255); -- paralyga
+INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 362, 1, 255); -- bindga
 -- ENM Shell We Dance? - BONEYARD_GULLY - Add spell to Bladmall
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 46, 1, 255); -- protect IV
 INSERT INTO `mob_spell_lists` VALUES('Bladmall', 450, 133, 1, 255); -- shellra IV
