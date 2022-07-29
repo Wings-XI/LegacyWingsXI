@@ -53,16 +53,6 @@ function onMobFight(mob, target)
         -- run these checks once per second
         mob:setLocalVar("omfCooldown", os.time())
 
-        -- everyone on enmity list will get drawn in to spawn point if too far from it
-        local finks = mob:getEnmityList()
-        for _, fink in pairs(finks) do
-            local entity = fink.entity
-            if checkDistanceFromSpawn(entity) > 25 then
-                entity:setPos(spawnPoint.x, spawnPoint.y, spawnPoint.z)
-                mob:messageBasic(tpz.msg.basic.DRAWN_IN, 0, 0, entity)
-            end
-        end
-
         -- Scylla has a 10 yalms Silence and Paralyze aura under certain conditions
         local animSub = mob:AnimationSub()
         local typeEffect = 0
@@ -74,12 +64,22 @@ function onMobFight(mob, target)
             typeEffect = tpz.effect.SILENCE
         end
 
-        -- (re)apply that aura
-        if typeEffect > 0 then
-            local players = mob:getPlayersInRange(10)
-            for _, player in pairs(players) do
-                player:delStatusEffectSilent(typeEffect)
-                player:addStatusEffect(typeEffect, 0, 0, 5)
+        -- everyone on enmity list will get drawn in to spawn point if too far from it
+        local finks = mob:getEnmityList()
+        for _, fink in pairs(finks) do
+            local entity = fink.entity
+            local dist = checkDistanceFromSpawn(entity)
+
+            printf(string.format("Distance from spawn: %u", dist))
+            if dist < 10 and typeEffect > 0 then
+                printf("applying effect")
+                -- (re)apply the aura if applicable
+                entity:delStatusEffectSilent(typeEffect)
+                entity:addStatusEffect(typeEffect, 0, 0, 5)
+            elseif dist > 25 then
+                printf("draw in")
+                entity:setPos(spawnPoint.x, spawnPoint.y, spawnPoint.z)
+                mob:messageBasic(tpz.msg.basic.DRAWN_IN, 0, 0, entity)
             end
         end
     end
@@ -88,22 +88,12 @@ end
 function onMobWeaponSkillPrepare(mob, target)
     local fuAmount = mob:getLocalVar("fuAmount")
     if fuAmount == 0 then
-        -- will prioritize Aqua Wave and Frozen Mist more as hp goes down
-        local chances = math.ceil(math.min(100 - mob:getHPP(), 50) * 1) + 25
+        -- will prioritize Aqua Wave and Frozen Mist more as hp goes down (up to 80%)
+        local chances = math.min(100 - mob:getHPP(), 50) + 30
         if math.random(100) <= chances then
-            -- Frozen Mist (2438) will be followed by multiple Ice Guillotine (2440)
-            -- Aqua Wave (2439) will be followed by multiple Aqua Cannon (2441)
-            mob:setLocalVar("fuAmount", math.random(6, 10))
-            mob:SetAutoAttackEnabled(true)
-            mob:SetMagicCastingEnabled(false)
-            mob:SetMobAbilityEnabled(false)
-            mob:addMod(tpz.mod.DELAY, 1500)
-
             if math.random() < 0.5 then
-                mob:SetMobSkillAttack(2440)
                 return 2438
             else
-                mob:SetMobSkillAttack(2441)
                 return 2439
             end
         end
@@ -112,7 +102,17 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local skillID = skill:getID()
-    if skillID == 2440 or skillID == 2441 then
+    if skillID == 2438 or skillID == 2439 then
+        -- Frozen Mist (2438) will be followed by multiple Ice Guillotine (2440)
+        -- Aqua Wave (2439) will be followed by multiple Aqua Cannon (2441)
+        mob:setLocalVar("fuAmount", math.random(6, 10))
+        mob:SetAutoAttackEnabled(true)
+        mob:SetMagicCastingEnabled(false)
+        mob:SetMobAbilityEnabled(false)
+        mob:SetMobSkillAttack(skillID + 2)
+        mob:addMod(tpz.mod.DELAY, 1500)
+
+    elseif skillID == 2440 or skillID == 2441 then
         local fuAmount = math.max(0, mob:getLocalVar("fuAmount") - 1)
         mob:setLocalVar("fuAmount",  fuAmount)
 

@@ -19,15 +19,17 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WATER, MOBPARAM_WIPE_SHADOWS)
 
     -- take off a random piece of gear
-    local slots = {}
-    for i = tpz.slot.MAIN, tpz.slot.BACK do
-        if target:getEquippedItem(i) ~= nil then
-            table.insert(slots, i)
+    if target:isPC() then
+        local slots = {}
+        for i = tpz.slot.MAIN, tpz.slot.BACK do
+            if target:getEquippedItem(i) ~= nil then
+                table.insert(slots, i)
+            end
         end
-    end
 
-    if #slots > 0 then
-        target:unequipItem(slots[math.random(1, #slots)])
+        if #slots > 0 then
+            target:unequipItem(slots[math.random(1, #slots)])
+        end
     end
 
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WATER)
