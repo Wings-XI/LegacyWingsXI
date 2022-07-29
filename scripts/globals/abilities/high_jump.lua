@@ -38,6 +38,7 @@ function onUseAbility(player, target, ability, action)
     params.hitsHigh = true
     params.useOAXTimes = true
     params.useAutoTPFormula = 2
+    params.preserveBuildingFlourish = true
 
     if (target:isMob()) then
         local enmityShed = 50

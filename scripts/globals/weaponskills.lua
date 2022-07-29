@@ -340,7 +340,8 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
     calcParams.extraOffhandHit = attacker:isDualWielding() or attack.weaponType == tpz.skill.HAND_TO_HAND
     calcParams.hybridHit = wsParams.hybridWS
-    calcParams.flourishEffect = wsParams.violentFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- violent flourish (even though it's coded as a WS) isn't boosted by building flourish
+     -- various job abilities are abusing this function, don't boost them and remove the effect
+    calcParams.flourishEffect = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil
     calcParams.fencerBonus = fencerBonus(attacker)
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = gorgetBeltFTP or 0
@@ -363,7 +364,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     -- Delete statuses that may have been spent by the WS
     attacker:delStatusEffectsByFlag(tpz.effectFlag.ATTACK)
-    if wsParams.violentFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
+    if wsParams.preserveBuildingFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
 
     local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
@@ -564,9 +565,13 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         ['shadowsAbsorbed'] = 0,
         ['tpHitsLanded'] = 1,
         ['extraHitsLanded'] = 0,
-        ['bonusTP'] = wsParams.bonusTP or 0
+        ['bonusTP'] = wsParams.bonusTP or 0,
+        ['flourishEffect'] = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- various job abilities are abusing this function, don't boost them and remove the effect
     }
 
+    -- Delete statuses that may have been spent by the WS
+    if wsParams.preserveBuildingFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
+    
     local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
     -- There is an assumed +100 macc bonus for magical weaponskills
     -- https://www.bg-wiki.com/ffxi/Category:Elemental_Weapon_Skill
