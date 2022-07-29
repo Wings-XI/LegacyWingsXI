@@ -4359,6 +4359,14 @@ namespace charutils
         if (PChar->jobs.job[PChar->GetMJob()] > 74 && PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai && PChar->jobs.exp[PChar->GetMJob()] == GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1)
             onLimitMode = true;
 
+        // Split large chunk of xp gain to catch edge conditions like capping xp and moving to limit point mode
+        uint32 expLeftover = 0;
+        uint32 expRemaining = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - PChar->jobs.exp[PChar->GetMJob()] - 1;
+        if(!onLimitMode && PChar->jobs.job[PChar->GetMJob()] == map_config.max_level && exp > expRemaining){
+            expLeftover = exp - expRemaining;
+            exp = expRemaining;
+        }
+
         // exp added from raise shouldn't display a message. Don't need a message for zero exp either
         if (!expFromRaise && exp > 0)
         {
@@ -4566,6 +4574,9 @@ namespace charutils
         if (PMob != PChar) // Only mob kills count for gain EXP records
         {
             roeutils::event(ROE_EXPGAIN, PChar, RoeDatagram("exp", exp));
+        }
+        if(expLeftover > 0){
+            AddExperiencePoints(false, PChar, PMob, expLeftover);
         }
     }
 
