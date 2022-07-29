@@ -3277,6 +3277,9 @@ INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 144);
 INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 145);
 INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 146);
 INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 147);
+INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2435);
+INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2436);
+INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2437);
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade
@@ -3450,6 +3453,9 @@ INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2073);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1771);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
+-- Scylla exclusive lists/skills
+INSERT INTO `mob_skill_lists` VALUES('Scylla_IG', 2440, 2440);
+INSERT INTO `mob_skill_lists` VALUES('Scylla_AC', 2441, 2441);
 -- Dynamis - Buburimu
 INSERT INTO `mob_skill_lists` VALUES('Alkla', 5024, 647); -- Chaos Blade
 INSERT INTO `mob_skill_lists` VALUES('Stihi', 5025, 642); -- Flame Breath
