@@ -9,6 +9,8 @@ require("scripts/globals/status")
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:addMod(tpz.mod.DELAY, 350)
+    mob:addMod(tpz.mod.DMGMAGIC, 100)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -21,7 +23,8 @@ function onMobDeath(mob, player, isKiller)
 
         SpawnMob(mobId + offset + 1):setPos(x, y, z)
         SpawnMob(mobId + offset + 2):setPos(x-1, y, z-1)
-        GetMobByID(mobId + offset + 1):updateEnmity(player)
-        GetMobByID(mobId + offset + 2):updateEnmity(player)
+        -- Mobs are supposed to spawn unclaimed with no aggro
+        --GetMobByID(mobId + offset + 1):updateEnmity(player)
+        --GetMobByID(mobId + offset + 2):updateEnmity(player)
     end
 end
