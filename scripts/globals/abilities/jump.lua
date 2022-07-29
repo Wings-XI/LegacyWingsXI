@@ -38,6 +38,7 @@ function onUseAbility(player, target, ability, action)
     params.hitsHigh = true
     params.useOAXTimes = true
     params.useAutoTPFormula = 2
+    params.preserveBuildingFlourish = true
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)
