@@ -8,6 +8,45 @@ require("scripts/globals/missions")
 require("scripts/globals/settings")
 -----------------------------------
 
+-- Eatery Schedule
+-- Based on https://ffxiclopedia.fandom.com/wiki/Marble_Bridge_Eatery
+-- To match with http://www.mithrapride.org/vana_time/
+local eaterySchedule =
+{
+    [1] = function(player) return player:getNation() == tpz.nation.SANDORIA end,
+    [2] = function(player) return player:getNation() == tpz.nation.BASTOK end,
+    [3] = function(player) return player:getNation() == tpz.nation.WINDURST end,
+    [4] = function(player) return player:getMainJob() == tpz.job.WAR end,
+    [5] = function(player) return player:getMainJob() == tpz.job.MNK end,
+    [6] = function(player) return player:getMainJob() == tpz.job.WHM end,
+    [7] = function(player) return player:getMainJob() == tpz.job.BLM end,
+    [8] = function(player) return player:getMainJob() == tpz.job.RDM end,
+    [9] = function(player) return player:getMainJob() == tpz.job.THF end,
+    [10] = function(player) return player:getMainJob() == tpz.job.PLD end,
+    [11] = function(player) return player:getMainJob() == tpz.job.DRK end,
+    [12] = function(player) return player:getMainJob() == tpz.job.BST end,
+    [13] = function(player) return player:getMainJob() == tpz.job.BRD end,
+    [14] = function(player) return player:getMainJob() == tpz.job.RNG end,
+    [15] = function(player) return player:getMainJob() == tpz.job.SAM end,
+    [16] = function(player) return player:getMainJob() == tpz.job.NIN end,
+    [17] = function(player) return player:getMainJob() == tpz.job.DRG end,
+    [18] = function(player) return player:getMainJob() == tpz.job.SMN end,
+    [19] = function(player) return player:getMainJob() == tpz.job.BLU end,
+    [20] = function(player) return player:getMainJob() == tpz.job.COR end,
+    [21] = function(player) return player:getMainJob() == tpz.job.PUP end,
+    [22] = function(player) return player:getMainJob() == tpz.job.DNC end,
+    [23] = function(player) return player:getMainJob() == tpz.job.SCH end,
+    [24] = function(player) return player:getMainJob() == tpz.job.GEO end,
+    [25] = function(player) return player:getMainJob() == tpz.job.RUN end,
+    [26] = function(player) return player:getRace() == tpz.race.HUME_F or player:getRace() == tpz.race.HUME_M end,
+    [27] = function(player) return player:getRace() == tpz.race.ELVAAN_F or player:getRace() == tpz.race.ELVAAN_M end,
+    [28] = function(player) return player:getRace() == tpz.race.TARU_F or player:getRace() == tpz.race.TARU_M end,
+    [29] = function(player) return player:getRace() == tpz.race.MITHRA end,
+    [30] = function(player) return player:getRace() == tpz.race.GALKA end,
+    [31] = function(player) return player:getGender() == 1 end, -- Gents
+    [32] = function(player) return player:getGender() == 0 end, -- Ladies
+}
+
 local ring =
 {
     15543, -- Rajas Ring
@@ -65,77 +104,17 @@ function onTrigger(player, npc)
 end
 
 function MarbleEateryDoorCheck(player)
-    local dayofthemonth = VanadielDayOfTheMonth()
-    local nation = player:getNation()
-    local job = player:getMainJob()
-    local race = player:getRace()
-    local gender = player:getGender()
-
-    -- Rotation is based on https://ffxiclopedia.fandom.com/wiki/Marble_Bridge_Eatery removed by 3 days to match up with http://www.mithrapride.org/vana_time/
-    -- Check Nations
-    if dayofthemonth == 1 and nation == tpz.nation.SANDORIA then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 2 and nation == tpz.nation.BASTOK then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 3 and nation == tpz.nation.WINDURST then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 4 and job == tpz.job.WAR then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 5 and job == tpz.job.MNK then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 6 and job == tpz.job.WHM then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 7 and job == tpz.job.BLM then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 8 and job == tpz.job.RDM then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 9 and job == tpz.job.THF then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 10 and job == tpz.job.PLD then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 11 and job == tpz.job.DRK then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 12 and job == tpz.job.BST then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 13 and job == tpz.job.BRD then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 14 and job == tpz.job.RNG then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 15 and job == tpz.job.SAM then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 16 and job == tpz.job.NIN then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 17 and job == tpz.job.DRG then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 18 and job == tpz.job.SMN then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 19 and job == tpz.job.BLU then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 20 and job == tpz.job.COR then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 21 and job == tpz.job.PUP then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 22 and job == tpz.job.DNC then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 23 and job == tpz.job.SCH then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 24 and race == (tpz.race.HUME_F or tpz.race.HUME_M) then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 25 and race == (tpz.race.ELVAAN_F or tpz.race.ELVAAN_M) then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 26 and race == (tpz.race.TARU_F or tpz.race.TARU_M) then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 27 and race == (tpz.race.MITHRA) then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 28 and race == (tpz.race.GALKA) then
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 29 and gender == 0 then -- Ladies
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    elseif dayofthemonth == 29 and gender == 1 then -- Gents
-        player:startEvent(124, (dayofthemonth - 1), 1)
-    else
-        player:startEvent(124, (dayofthemonth - 1), 0)
+    --local index = ( VanadielDayAbsolute() - 1 ) % #eaterySchedule + 1
+    -- since we're skipping GEO and RUN days, we'll offset by 2
+    local index = ( VanadielDayAbsolute() - 1 ) % ( #eaterySchedule - 2 ) + 1
+    -- and correct schedule index
+    if index > 23 then
+        index = index + 2
     end
+
+    -- using our callback function to see if we meet reqs
+    local pass = eaterySchedule[index](player)
+    player:startEvent(124, index - 1, ( pass and 1 or 0 ))
 end
 
 function onEventUpdate(player, csid, option)
