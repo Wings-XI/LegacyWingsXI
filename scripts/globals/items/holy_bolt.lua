@@ -12,8 +12,9 @@ require("scripts/globals/msg")
 function onAdditionalEffect(player, target, damage)
     local mnd = player:getStat(tpz.mod.MND)
     local mob = target:getStat(tpz.mod.MND)
-    local res = 1 - (mnd / mob)
-    
+    --local res = 1 - (mnd / mob)
+    --Increasing mob resists significantly to prevent cheese.
+    local res = 1 - (mnd / mob^1.3)
     if res < 0 then res = 0 end
     
     --Updated Formula based on AE Data taken at multiple MND levels

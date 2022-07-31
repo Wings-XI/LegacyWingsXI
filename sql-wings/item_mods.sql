@@ -7865,7 +7865,7 @@ INSERT INTO `item_mods` VALUES (12316,54,2);
 INSERT INTO `item_mods` VALUES (12316,55,2);
 INSERT INTO `item_mods` VALUES (12316,58,-4);
 INSERT INTO `item_mods` VALUES (12317,1,12);      -- Flame Shield: DEF 12
-INSERT INTO `item_mods` VALUES (12317,54,20);     -- Fire resistance +20
+INSERT INTO `item_mods` VALUES (12317,54,30);     -- Fire resistance +30
 INSERT INTO `item_mods` VALUES (12317,499,1);     -- Blaze spikes
 INSERT INTO `item_mods` VALUES (12317,500,20);    -- Spikes damage +20
 INSERT INTO `item_mods` VALUES (12317,501,20);    -- Spikes chance +20%
@@ -20884,6 +20884,7 @@ INSERT INTO `item_mods` VALUES (17460,9,3);
 INSERT INTO `item_mods` VALUES (17460,10,3);
 INSERT INTO `item_mods` VALUES (17463,13,2);
 INSERT INTO `item_mods` VALUES (17463,111,1);
+INSERT INTO `item_mods` VALUES (17464,431,1); -- Purgatory Mace - Additional effect: "Stun"
 INSERT INTO `item_mods` VALUES (17464,8,3);
 INSERT INTO `item_mods` VALUES (17464,13,3);
 INSERT INTO `item_mods` VALUES (17465,12,1);

@@ -50,6 +50,7 @@ function onUseAbility(player, target, ability, action)
     params.bonusTP = player:getMod(tpz.mod.JUMP_TP_BONUS)
     params.targetTPMult = 0
     params.hitsHigh = true
+    params.preserveBuildingFlourish = true
 
     if (target:isMob()) then
         local enmityShed = 50

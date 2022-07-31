@@ -61,7 +61,7 @@ function onUseAbility(player, target, ability, action)
     params.atk100 = atkmulti params.atk200 = atkmulti params.atk300 = atkmulti
     params.hitsHigh = false
     params.useOAXTimes = false
-    params.violentFlourish = true
+    params.preserveBuildingFlourish = true
 
     local taChar = player:getTrickAttackChar(target)
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, 0, params, 0, action, true, taChar)

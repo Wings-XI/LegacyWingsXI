@@ -78,6 +78,6 @@ int8* EncodeStringSignature(const int8* signature, int8* target);
 void DecodeStringSignature(const int8* signature, int8* target);
 void PackSoultrapperName(std::string name, uint8 output[]);
 std::string UnPackSoultrapperName(uint8 input[]);
-std::string escape(std::string const& s);
+std::string escape(std::string const &s);
 
 #endif

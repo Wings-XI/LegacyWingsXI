@@ -71,8 +71,6 @@ public:
     bool load(const std::string& path);
     void unload();
 
-    uint8 maxAngleDivergenceOfPath(std::vector<position_t>* PPath); // calculate the biggest angle of divergence from the outlier points between start and end
-	float countPathDistance(std::vector<position_t>* PPath); // calculate the total distance of the path, used for ranged attack "cannot see" message in player_controller.cpp
     std::vector<position_t> findPath(const position_t& start, const position_t& end);
     std::pair<int16, position_t> findRandomPosition(const position_t& start, float maxRadius);
 

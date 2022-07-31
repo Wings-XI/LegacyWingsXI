@@ -74,4 +74,11 @@ end
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMod(tpz.mod.SLEEPRESTRAIT, 0)
+    mob:setMod(tpz.mod.SLEEPRES, 10)
+    mob:setMod(tpz.mod.GRAVITYRESTRAIT, 0)
+    mob:setMod(tpz.mod.GRAVITYRES, 10)
+    mob:setMod(tpz.mod.BINDRESTRAIT, 0)
+    mob:setMod(tpz.mod.BINDRES, 10)
+    
 end

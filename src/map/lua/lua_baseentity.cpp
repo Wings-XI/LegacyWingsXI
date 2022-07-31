@@ -8341,7 +8341,16 @@ inline int32 CLuaBaseEntity::addExp(lua_State *L)
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    charutils::AddExperiencePoints(false, (CCharEntity*)m_PBaseEntity, m_PBaseEntity, (uint32)lua_tointeger(L, 1));
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint32 expRemaining = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - PChar->jobs.exp[PChar->GetMJob()] - 1;
+    // Split large chunk of xp gain to catch edge conditions like capping xp and moving to limit point mode
+    if(PChar->jobs.job[PChar->GetMJob()] == map_config.max_level && (uint32)lua_tointeger(L, 1) > expRemaining){
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, expRemaining);
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, (uint32)lua_tointeger(L, 1) - expRemaining);
+    }else{
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, (uint32)lua_tointeger(L, 1));
+    }
+    
     return 0;
 }
 
