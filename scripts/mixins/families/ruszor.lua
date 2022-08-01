@@ -44,21 +44,21 @@ g_mixins.families.ruszor = function(mob)
         if wsid == 2438 or wsid == 2439 then
             -- cleanup any previous aftermath
             removeAftermath(mob)
-    
+
             -- keep track of current aftermath for removal
             local aftermath = wsAftermath[wsid]
             mob:setLocalVar("AftermathMod", aftermath.mod)
             mob:setLocalVar("AftermathValue", aftermath.value)
             mob:setLocalVar("AftermathTimeout", os.time() + aftermath.duration)
-    
+
             -- add current aftermath and apply visual effect
             mob:addMod(aftermath.mod, aftermath.value)
             mob:AnimationSub(aftermath.animsub)
         end
     end)
-    
+
     -- to keep track and remove aftermath after expiration
-    mob:addListener("COMBAT_TICK", "RUSZOR_CTICK", function(mob)
+    mob:addListener("TICK", "RUSZOR_TICK", function(mob)
         -- remove aftermath if set and expired
         local timeout = mob:getLocalVar("AftermathTimeout")
         if timeout > 0 and timeout < os.time() then

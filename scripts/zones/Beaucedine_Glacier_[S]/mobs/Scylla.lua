@@ -56,22 +56,24 @@ function onMobFight(mob, target)
             typeEffect = tpz.effect.SILENCE
         end
 
-        -- everyone on enmity list will get drawn in to spawn point if too far from it
+        local mobPos = mob:getPos()
+        local spawnPos = mob:getSpawnPos()
+
+        -- check everyone on enmity list
         local finks = mob:getEnmityList()
         for _, fink in pairs(finks) do
             local entity = fink.entity
-            local pos = entity:getPos()
-            local spawn = mob:getSpawnPos()
-            local dist = math.sqrt((pos.x - spawn.x) ^ 2 + (pos.y - spawn.y) ^ 2 + (pos.z - spawn.z) ^ 2)
+            local entityPos = entity:getPos()
+            local distFromMob = math.sqrt((entityPos.x - mobPos.x) ^ 2 + (entityPos.y - mobPos.y) ^ 2 + (entityPos.z - mobPos.z) ^ 2)
+            local distFromSpawn = math.sqrt((entityPos.x - spawnPos.x) ^ 2 + (entityPos.y - spawnPos.y) ^ 2 + (entityPos.z - spawnPos.z) ^ 2)
 
-            if dist < 10 and typeEffect > 0 then
-                printf("applying effect")
+            if distFromMob < 10 and typeEffect > 0 then
                 -- (re)apply the aura if applicable
                 entity:delStatusEffectSilent(typeEffect)
                 entity:addStatusEffect(typeEffect, 0, 0, 5)
-            elseif dist > 25 then
-                printf("draw in")
-                entity:setPos(spawnPoint.x, spawnPoint.y, spawnPoint.z)
+            elseif distFromSpawn > 25 then
+                -- draw in to spawn point if too far
+                entity:setPos(spawnPos.x, spawnPos.y, spawnPos.z)
                 mob:messageBasic(tpz.msg.basic.DRAWN_IN, 0, 0, entity)
             end
         end
@@ -103,7 +105,7 @@ function onMobWeaponSkill(target, mob, skill)
         mob:SetMagicCastingEnabled(false)
         mob:SetMobAbilityEnabled(false)
         mob:SetMobSkillAttack(skillID + 2)
-        mob:addMod(tpz.mod.DELAY, 1500)
+        mob:setMod(tpz.mod.DELAY, 1800)
 
     elseif skillID == 2440 or skillID == 2441 then
         local fuAmount = math.max(0, mob:getLocalVar("fuAmount") - 1)
@@ -115,8 +117,31 @@ function onMobWeaponSkill(target, mob, skill)
             mob:SetMagicCastingEnabled(true)
             mob:SetMobAbilityEnabled(true)
             mob:SetMobSkillAttack(0)
-            mob:delMod(tpz.mod.DELAY, 1500)
+            mob:setMod(tpz.mod.DELAY, 300)
         end
+    end
+end
+
+function onMobDisengage(mob)
+    mob:setLocalVar("fuAmount", 0)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMagicCastingEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMobSkillAttack(0)
+    mob:setMod(tpz.mod.DELAY, 300)
+
+    -- Scylla will despawn after the fight if a certain threshold was reached
+    if mob:getHPP() < 90 then
+        -- display message to players in range
+        local players = mob:getPlayersInRange(30)
+        if players ~= nil then
+            for _, player in pairs(players) do
+                player:messageSpecial(ID.text.SCYLLA_DESPAWN)
+            end
+        end
+
+        -- aaand.. its gone
+        DespawnMob(ID.mob.SCYLLA)
     end
 end
 
@@ -126,11 +151,6 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    -- target despawned and wasnt killed
-    if mob:getHP() > 0 then
-        mob:showText(mob, ID.text.SCYLLA_DESPAWN)
-    end
-
     -- 4 to 6 hours respawn
     local respawn = math.random(14400, 21600)
     mob:setRespawnTime(respawn)
