@@ -3,24 +3,16 @@
 --   NM: Scylla   (17334336)
 ------------------------------
 local ID = require("scripts/zones/Beaucedine_Glacier_[S]/IDs")
-mixins = { require("scripts/mixins/rage"), }
+mixins = {
+    require("scripts/mixins/families/ruszor"),
+    require("scripts/mixins/rage"),
+}
 
 require("scripts/globals/hunts")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 ------------------------------
-
-local spawnPoint = { x = 282, y = 0.9, z = 218 }
-
-function checkDistanceFromSpawn(target)
-    local targetPos = target:getPos()
-    return math.sqrt(
-        (targetPos.x - spawnPoint.x) ^ 2
-        + (targetPos.y - spawnPoint.y) ^ 2
-        + (targetPos.z - spawnPoint.z) ^ 2
-        * 1)
-end
 
 function onMobInitialize(mob)
     -- fairly high humanoid killer
@@ -68,9 +60,10 @@ function onMobFight(mob, target)
         local finks = mob:getEnmityList()
         for _, fink in pairs(finks) do
             local entity = fink.entity
-            local dist = checkDistanceFromSpawn(entity)
+            local pos = entity:getPos()
+            local spawn = mob:getSpawnPos()
+            local dist = math.sqrt((pos.x - spawn.x) ^ 2 + (pos.y - spawn.y) ^ 2 + (pos.z - spawn.z) ^ 2)
 
-            printf(string.format("Distance from spawn: %u", dist))
             if dist < 10 and typeEffect > 0 then
                 printf("applying effect")
                 -- (re)apply the aura if applicable
