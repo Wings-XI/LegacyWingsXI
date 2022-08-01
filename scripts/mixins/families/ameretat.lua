@@ -18,23 +18,40 @@ g_mixins.families.ameretat = function(mob)
         mob:setLocalVar("RegenPotency", 50)
     end)
 
+    mob:addListener("ENGAGE", "AMERETAT_ENGAGE", function(mob)
+        if mob:getLocalVar("HPDrainEnabled") == 0 then
+            mob:addMod(tpz.mod.REGEN, mob:getLocalVar("RegenPotency"))
+        end
+    end)
+
+    mob:addListener("DISENGAGE", "AMERETAT_DISENGAGE", function(mob)
+        if mob:getLocalVar("HPDrainEnabled") == 0 then
+            mob:delMod(tpz.mod.REGEN, mob:getLocalVar("RegenPotency"))
+        end
+    end)
+
     mob:addListener("COMBAT_TICK", "AMERETAT_CTICK", function(mob, target)
         local ctCooldown = mob:getLocalVar("ctCooldown")
         if ctCooldown < os.time() then
             mob:setLocalVar("ctCooldown", os.time() + 1)
 
-            -- determine distance from spawn and add/remove regen accordingly
-            if getDistBetween(mob:getPos(), mob:getSpawnPos()) > 20 then
-                mob:setMod(tpz.mod.REGEN, 0)
-            else
-                local potency = mob:getLocalVar("RegenPotency")
-                mob:setMod(tpz.mod.REGEN, potency)
+            -- determine distance and current status to toggle between endrain/regen
+            local dist = getDistBetween(mob:getPos(), mob:getSpawnPos())
+            local drainEnabled = mob:getLocalVar("HPDrainEnabled")
+            local potency = mob:getLocalVar("RegenPotency")
+
+            if dist >= 20 and drainEnabled == 0 then
+                mob:setLocalVar("HPDrainEnabled", 1)
+                mob:delMod(tpz.mod.REGEN, potency)
+            elseif dist < 20 and drainEnabled == 1 then
+                mob:setLocalVar("HPDrainEnabled", 0)
+                mob:addMod(tpz.mod.REGEN, potency)
             end
         end
     end)
 
     mob:addListener("ATTACK", "AMERETAT_ATTACK", function(attacker, target, action)
-        if attacker:getMod(tpz.mod.REGEN) == 0 then
+        if attacker:getLocalVar("HPDrainEnabled") > 0 then
             local playerID = target:getID()
             local potency = attacker:getLocalVar("HPDrainPotency")
 
