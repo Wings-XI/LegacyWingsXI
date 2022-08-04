@@ -935,8 +935,12 @@ local function getPageByRegimeId(regimeType, zoneId, regimeId)
     info = info.page
     if not info then return nil end
 
+    -- return sequential page number for convenience
+    local pageNum = 0
     for _, v in pairs(info) do
+        pageNum = pageNum + 1
         if v[8] == regimeId then
+            v[9] = pageNum
             return v
         end
     end
@@ -1041,6 +1045,7 @@ tpz.regime.clearRegimeVars = function(player)
     player:setCharVar("[regime]id", 0)
     player:setCharVar("[regime]repeat", 0)
     player:setCharVar("[regime]lastReward", 0)
+    player:setCharVar("[regime]waitNewDay", 0)
 
     for i = 1, 4 do
         player:setCharVar("[regime]needed" .. i, 0)
@@ -1117,8 +1122,8 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     local msgOffset = zones[zoneId].text.REGIME_REGISTERED
     local tabs = player:getCurrency("valor_point")
     -- repeating regimes OOE for 2010
-    -- local regimeRepeat = bit.band(option, 0x80000000)
-    local regimeRepeat = 0
+    local regimeRepeat = bit.band(option, 0x80000000)
+    -- local regimeRepeat = 0
     local hasKI  = player:hasKeyItem(tpz.ki.RHAPSODY_IN_WHITE)
 
     option = bit.band(option, 0x7FFFFFFF)
@@ -1266,7 +1271,11 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
         if page then
             if regimeRepeat ~= 0 then
                 regimeRepeat = 1
+                -- only displayed if repeating is enabled
+                player:PrintToPlayer("Field Manual: You chose to repeat this regime. Continue killing regime monsters after completion for renewal!", 0xD)
             end
+            -- QoL info for player to know which page number they just grabbed
+            player:PrintToPlayer(string.format("Field Manual: Grabbed page %s!", page[9]), 0xD)
 
             player:setCharVar("[regime]type", regimeType)
             player:setCharVar("[regime]zone", zoneId)
@@ -1296,119 +1305,141 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
 end
 
 tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
-
-    -- dead players, or players not on this training regime, get no credit
-    if not player or player:getHP() == 0 or player:getCharVar("[regime]id") ~= regimeId then
+    -- a dead player gets no credit
+    if not player or player:getHP() == 0 then
         return
     end
 
-    -- people in alliance get no fields credit unless FOV_REWARD_ALLIANCE is 1 in scripts/globals/settings.lua
-    if FOV_REWARD_ALLIANCE ~= 1 and regimeType == tpz.regime.type.FIELDS and player:checkSoloPartyAlliance() == 2 then
-        return
-    end
-
-    -- people in alliance get no grounds credit unless GOV_REWARD_ALLIANCE is 1 in scripts/globals/settings.lua
-    if GOV_REWARD_ALLIANCE ~= 1 and regimeType == tpz.regime.type.GROUNDS and player:checkSoloPartyAlliance() == 2 then
-        return
-    end
-
-    -- mobs that give no XP give no credit
-    if not player:checkKillCredit(mob) then
-        return
-    end
-
-    -- get number of this mob needed, and killed so far
-    local needed = player:getCharVar("[regime]needed" .. index)
-    local killed = player:getCharVar("[regime]killed" .. index)
-
-    -- already finished with this mob
-    if killed == needed then
-        return
-    end
-
-    -- increment number killed
-    killed = killed + 1
-    player:messageBasic(tpz.msg.basic.FOV_DEFEATED_TARGET, killed, needed)
-    player:setCharVar("[regime]killed" .. index, killed)
-
-    -- this mob is not yet finished
-    if needed > killed then
-        return
-    end
-
-    -- get page information
-    local page = getPageByRegimeId(player:getCharVar("[regime]type"), player:getCharVar("[regime]zone"), player:getCharVar("[regime]id"))
-    if not page then
-        return
-    end
-
-    -- this page is not yet finished
-    for i = 1, 4 do
-        if player:getCharVar("[regime]killed" .. i) < page[i] then
+    -- check if regime needs to be renewed on ANY mob related to regimes
+    if player:getCharVar("[regime]waitNewDay") ~= 1 then
+        -- players not on this training regime get no credit
+        if player:getCharVar("[regime]id") ~= regimeId then
             return
         end
-    end
 
-    -- get base reward
-    player:messageBasic(tpz.msg.basic.FOV_COMPLETED_REGIME)
-    local reward = page[7]
-
-    -- adjust reward down if regime is higher than server mob level cap
-    -- example: if you have mobs capped at level 80, and the regime is level 100, you will only get 80% of the reward
-    if NORMAL_MOB_MAX_LEVEL_RANGE_MAX > 0 and page[6] > NORMAL_MOB_MAX_LEVEL_RANGE_MAX then
-        local avgCapLevel = (NORMAL_MOB_MAX_LEVEL_RANGE_MIN + NORMAL_MOB_MAX_LEVEL_RANGE_MAX) / 2
-        local avgMobLevel = (page[5] + page[6]) / 2
-        reward = math.floor(reward * avgCapLevel / avgMobLevel)
-    end
-
-    -- prowess buffs from completing Grounds regimes
-    if regimeType == tpz.regime.type.GROUNDS then
-        addGovProwessBonusEffect(player)
-
-        -- repeat clears bonus
-        if player:hasStatusEffect(tpz.effect.PROWESS) then
-            -- increase reward based on number of clears. hard caps at 2x base reward.
-            local govClears = player:getStatusEffect(tpz.effect.PROWESS):getPower()
-            local baseReward = reward
-            reward = reward * (100 + (govClears * 4)) / 100
-            reward = utils.clamp(reward, 0, baseReward * 2)
-
-            -- increment clears
-            player:delStatusEffectSilent(tpz.effect.PROWESS)
-            player:addStatusEffect(tpz.effect.PROWESS, govClears + 1, 0, 0)
-
-        else
-            -- keep track of number of clears
-            player:addStatusEffect(tpz.effect.PROWESS, 1, 0, 0)
+        -- people in alliance get no fields credit unless FOV_REWARD_ALLIANCE is 1 in scripts/globals/settings.lua
+        if FOV_REWARD_ALLIANCE ~= 1 and regimeType == tpz.regime.type.FIELDS and player:checkSoloPartyAlliance() == 2 then
+            return
         end
+
+        -- people in alliance get no grounds credit unless GOV_REWARD_ALLIANCE is 1 in scripts/globals/settings.lua
+        if GOV_REWARD_ALLIANCE ~= 1 and regimeType == tpz.regime.type.GROUNDS and player:checkSoloPartyAlliance() == 2 then
+            return
+        end
+
+        -- mobs that give no XP give no credit
+        if not player:checkKillCredit(mob) then
+            return
+        end
+
+        -- get number of this mob needed, and killed so far
+        local needed = player:getCharVar("[regime]needed" .. index)
+        local killed = player:getCharVar("[regime]killed" .. index)
+
+        -- already finished with this mob
+        if killed == needed then
+            return
+        end
+
+        -- increment number killed
+        killed = killed + 1
+        player:messageBasic(tpz.msg.basic.FOV_DEFEATED_TARGET, killed, needed)
+        player:setCharVar("[regime]killed" .. index, killed)
+
+        -- this mob is not yet finished
+        if needed > killed then
+            return
+        end
+
+        -- get page information
+        local page = getPageByRegimeId(player:getCharVar("[regime]type"), player:getCharVar("[regime]zone"), player:getCharVar("[regime]id"))
+        if not page then
+            return
+        end
+
+        -- this page is not yet finished
+        for i = 1, 4 do
+            if player:getCharVar("[regime]killed" .. i) < page[i] then
+                return
+            end
+        end
+
+
+        -- get base reward
+        player:messageBasic(tpz.msg.basic.FOV_COMPLETED_REGIME)
+        local reward = page[7]
+
+        -- adjust reward down if regime is higher than server mob level cap
+        -- example: if you have mobs capped at level 80, and the regime is level 100, you will only get 80% of the reward
+        if NORMAL_MOB_MAX_LEVEL_RANGE_MAX > 0 and page[6] > NORMAL_MOB_MAX_LEVEL_RANGE_MAX then
+            local avgCapLevel = (NORMAL_MOB_MAX_LEVEL_RANGE_MIN + NORMAL_MOB_MAX_LEVEL_RANGE_MAX) / 2
+            local avgMobLevel = (page[5] + page[6]) / 2
+            reward = math.floor(reward * avgCapLevel / avgMobLevel)
+        end
+
+        -- prowess buffs from completing Grounds regimes
+        if regimeType == tpz.regime.type.GROUNDS then
+            addGovProwessBonusEffect(player)
+
+            -- repeat clears bonus
+            if player:hasStatusEffect(tpz.effect.PROWESS) then
+                -- increase reward based on number of clears. hard caps at 2x base reward.
+                local govClears = player:getStatusEffect(tpz.effect.PROWESS):getPower()
+                local baseReward = reward
+                reward = reward * (100 + (govClears * 4)) / 100
+                reward = utils.clamp(reward, 0, baseReward * 2)
+
+                -- increment clears
+                player:delStatusEffectSilent(tpz.effect.PROWESS)
+                player:addStatusEffect(tpz.effect.PROWESS, govClears + 1, 0, 0)
+
+            else
+                -- keep track of number of clears
+                player:addStatusEffect(tpz.effect.PROWESS, 1, 0, 0)
+            end
+        end
+
+        -- award gil and tabs once per day, or at every page completion if REGIME_WAIT is 0 in settings.lua
+        local vanadielEpoch = vanaDay()
+        if REGIME_WAIT == 0 or player:getCharVar("[regime]lastReward") < vanadielEpoch then
+            -- gil
+            player:addGil(reward)
+            player:messageBasic(tpz.msg.basic.FOV_OBTAINS_GIL, reward)
+
+            -- tabs
+            local tabs = math.floor(reward / 10) * TABS_RATE
+            tabs = utils.clamp(tabs, 0, 50000 - player:getCurrency("valor_point")) -- Retail caps players at 50000 tabs
+            player:addCurrency("valor_point", tabs)
+            player:messageBasic(tpz.msg.basic.FOV_OBTAINS_TABS, tabs, player:getCurrency("valor_point"))
+
+            player:setCharVar("[regime]lastReward", vanadielEpoch)
+        end
+
+        -- award XP every page completion
+        player:addExp(reward)
     end
-
-    -- award gil and tabs once per day, or at every page completion if REGIME_WAIT is 0 in settings.lua
-    local vanadielEpoch = vanaDay()
-    if REGIME_WAIT == 0 or player:getCharVar("[regime]lastReward") < vanadielEpoch then
-        -- gil
-        player:addGil(reward)
-        player:messageBasic(tpz.msg.basic.FOV_OBTAINS_GIL, reward)
-
-        -- tabs
-        local tabs = math.floor(reward / 10) * TABS_RATE
-        tabs = utils.clamp(tabs, 0, 50000 - player:getCurrency("valor_point")) -- Retail caps players at 50000 tabs
-        player:addCurrency("valor_point", tabs)
-        player:messageBasic(tpz.msg.basic.FOV_OBTAINS_TABS, tabs, player:getCurrency("valor_point"))
-
-        player:setCharVar("[regime]lastReward", vanadielEpoch)
-    end
-
-    -- award XP every page completion
-    player:addExp(reward)
 
     -- repeating regimes
     if player:getCharVar("[regime]repeat") == 1 then
-        for i = 1, 4 do
-            player:setCharVar("[regime]killed" .. i, 0)
-        end
+        -- new day hasn't passed since collecting a page
+        if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+            if player:getCharVar("[regime]waitNewDay") ~= 1 then
+                player:setCharVar("[regime]waitNewDay", 1)
+                player:PrintToPlayer("Reviewing your progress at Field Manual will show all tasks complete until killing a regime monster in any zone on a new day.")
+            end
+        else
+            for i = 1, 4 do
+                player:setCharVar("[regime]killed" .. i, 0)
+            end
+            
+            player:messageBasic(tpz.msg.basic.FOV_REGIME_BEGINS_ANEW)
+            player:setCharVar("[regime]waitNewDay", 0)
+			player:setCharVar("[regime]day", VanadielDayAbsolute())
 
-        player:messageBasic(tpz.msg.basic.FOV_REGIME_BEGINS_ANEW)
+            local pageNum = getPageByRegimeId(player:getCharVar("[regime]type"), player:getCharVar("[regime]zone"), player:getCharVar("[regime]id"))[9]
+            local zoneString = player:getCharVar("[regime]zone") == player:getZoneID() and "this zone" or "another zone"
+            player:PrintToPlayer(string.format("Field Manual: Renewed page %s from %s!", pageNum, zoneString), 0xD)
+        end
     else
         tpz.regime.clearRegimeVars(player)
     end
