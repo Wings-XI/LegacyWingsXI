@@ -1030,7 +1030,7 @@ INSERT INTO `mob_skills` VALUES(1305, 659, 'absolute_terror', 1, 15.0, 4000, 150
 INSERT INTO `mob_skills` VALUES(1306, 660, 'horrid_roar_3', 0, 18.0, 4000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1309, 653, 'cyclone_wing', 1, 30.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1310, 654, 'spike_flail', 1, 23.0, 2000, 2000, 4, 8, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1311, 968, 'sable_breath', 4, 18.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1311, 968, 'sable_breath', 6, 18.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1315, 659, 'absolute_terror', 0, 18.0, 4000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1316, 660, 'horrid_roar_3', 0, 18.0, 4000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1317, 975, 'mucus_spread', 1, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
