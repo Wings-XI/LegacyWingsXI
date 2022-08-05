@@ -990,7 +990,7 @@ INSERT INTO `mob_pools` VALUES(926, 'Davoi_Pugil', 'Davoi_Pugil', 197, _binary 0
 INSERT INTO `mob_pools` VALUES(927, 'Davoi_Wasp', 'Davoi_Wasp', 48, _binary 0x0000100100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 238, 643, 0, 0, 0, 0, 0, 48);
 INSERT INTO `mob_pools` VALUES(928, 'Da_Dha_Hundredmask', 'Da_Dha_Hundredmask', 202, _binary 0x00008c0200000000000000000000000000000000, 6, 6, 2, 265, 100, 0, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(929, 'Da_Shu_Knightslayer', 'Da_Shu_Knightslayer', 202, _binary 0x0000980200000000000000000000000000000000, 5, 5, 4, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 202);
-INSERT INTO `mob_pools` VALUES(930, 'Dea', 'Dea', 306, _binary 0x0000fb0600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 32, 417, 157, 0, 0, 0, 0, 0, 306);
+INSERT INTO `mob_pools` VALUES(930, 'Dea', 'Dea', 306, _binary 0x0000fb0600000000000000000000000000000000, 1, 1, 7, 240, 100, 1024, 1, 0, 0, 2, 1, 32, 417, 157, 0, 0, 0, 0, 0, 306);
 INSERT INTO `mob_pools` VALUES(931, 'Deadly_Dodo', 'Deadly_Dodo', 70, _binary 0x0000200100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 0, 2, 0, 0, 1951, 133, 0, 0, 0, 0, 0, 70);
 INSERT INTO `mob_pools` VALUES(932, 'Deadly_Iris', 'Deadly_Iris', 4, _binary 0x0000080100000000000000000000000000000000, 1, 4, 11, 240, 100, 0, 1, 0, 1, 0, 0, 0, 217, 131, 0, 0, 11, 0, 0, 4);
 INSERT INTO `mob_pools` VALUES(933, 'Deadpan_Devilet', 'Deadpan_Devilet', 165, _binary 0x0000bf0600000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 2, 0, 0, 165);
