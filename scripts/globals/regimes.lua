@@ -1269,13 +1269,13 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
 		end
 
         if page then
+            -- QoL info for player to know which page number they just grabbed
+            player:PrintToPlayer(string.format("Field Manual: Grabbed page %s!", opt.page), 0xD)
             if regimeRepeat ~= 0 then
                 regimeRepeat = 1
                 -- only displayed if repeating is enabled
                 player:PrintToPlayer("Field Manual: You chose to repeat this regime. Continue killing regime monsters after completion for renewal!", 0xD)
             end
-            -- QoL info for player to know which page number they just grabbed
-            player:PrintToPlayer(string.format("Field Manual: Grabbed page %s!", page[9]), 0xD)
 
             player:setCharVar("[regime]type", regimeType)
             player:setCharVar("[regime]zone", zoneId)
