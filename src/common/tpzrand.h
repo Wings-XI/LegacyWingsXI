@@ -127,10 +127,10 @@ public:
     public:
         using result_type = T;
 
-        static T min() {
+        static constexpr T min() {
             return std::numeric_limits<T>::min();
         }
-        static T max() {
+        static constexpr T max() {
             return std::numeric_limits<T>::max();
         }
 
