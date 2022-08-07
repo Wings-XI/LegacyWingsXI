@@ -8,7 +8,8 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:AnimationSub() == 0 then
+    -- if AnimationSub is 0 or if used by Iriz Ima : AnimationSub(2)
+    if mob:AnimationSub() == 0 or (mob:getID() == 16986429 and mob:AnimationSub() ~= 2) then
         return 0
     else
         return 1
@@ -16,7 +17,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
     MobBuffMove(mob, tpz.effect.MAGIC_DEF_BOOST, 30, 0, 90)
     skill:setMsg(MobBuffMove(mob, tpz.effect.DEFENSE_BOOST, 30, 0, 90))
 

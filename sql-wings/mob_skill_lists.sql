@@ -1297,35 +1297,36 @@ INSERT INTO `mob_skill_lists` VALUES('IrizIma', 295, 1704);
 INSERT INTO `mob_skill_lists` VALUES('IrizIma', 295, 1705);
 INSERT INTO `mob_skill_lists` VALUES('IrizIma', 295, 1706);
 INSERT INTO `mob_skill_lists` VALUES('IrizIma', 295, 1707);
-INSERT INTO `mob_skill_lists` VALUES('IrizIma', 295, 1708);
 INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 316);
 INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 317);
 INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 319);
 INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 320);
+INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 1332);
+INSERT INTO `mob_skill_lists` VALUES('LividrootAmoo', 296, 1793);
+INSERT INTO `mob_skill_lists` VALUES('IririSamariri', 297, 1957);
 INSERT INTO `mob_skill_lists` VALUES('IririSamariri', 297, 1958);
 INSERT INTO `mob_skill_lists` VALUES('IririSamariri', 297, 1959);
-INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 644);
-INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 645);
-INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 646);
+INSERT INTO `mob_skill_lists` VALUES('IririSamariri', 297, 1961);
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 647); -- Chaosblade
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 649); -- Voidsong
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 650); -- Thornsong
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 651); -- Lodesong
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga', 298, 1792); -- Nullsong
 INSERT INTO `mob_skill_lists` VALUES('Dextrose', 299, 1821);
 INSERT INTO `mob_skill_lists` VALUES('Dextrose', 299, 1822);
-INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 510);
-INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 511);
+INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 593);
+INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 594);
+INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 595);
+INSERT INTO `mob_skill_lists` VALUES('Reacton', 300, 596);
 INSERT INTO `mob_skill_lists` VALUES('Verdelet', 301, 1709);
 INSERT INTO `mob_skill_lists` VALUES('Verdelet', 301, 1710);
 INSERT INTO `mob_skill_lists` VALUES('Verdelet', 301, 1711);
-INSERT INTO `mob_skill_lists` VALUES('Wulgaru', 302, 2070);
-INSERT INTO `mob_skill_lists` VALUES('Wulgaru', 302, 2071);
-INSERT INTO `mob_skill_lists` VALUES('Wulgaru', 302, 2072);
 INSERT INTO `mob_skill_lists` VALUES('Wulgaru', 302, 2073);
-INSERT INTO `mob_skill_lists` VALUES('Wulgaru', 302, 2074);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1778);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1779);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1780);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1781);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1782);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1783);
-INSERT INTO `mob_skill_lists` VALUES('ZareehklTheJu', 303, 1784);
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase1', 303, 1778);
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase1', 303, 1779);
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase1', 303, 1781);
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase1', 303, 1782);
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase1', 303, 1783);
 INSERT INTO `mob_skill_lists` VALUES('Big_Bang', 304, 2218);
 INSERT INTO `mob_skill_lists` VALUES('Gotoh_Zha_the_Redolent', 305, 1920);
 INSERT INTO `mob_skill_lists` VALUES('Gotoh_Zha_the_Redolent', 305, 1921);
@@ -3479,6 +3480,14 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1626);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1120);
+-- Anantaboga
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 644); -- Wind Breath
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 645); -- Bodyslam
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 646); -- Heavy Stomp
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 647); -- Chaosblade
+INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 648); -- Petro Eyes
+-- Zareehkl the Jubilant
+INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase2', 5303, 2363);
 
 --
 -- Indexes for dumped tables

@@ -42,6 +42,7 @@ zones[tpz.zone.MOUNT_ZHAYOLM] =
         SICKLY_SWEET                  = 7563, -- A sickly sweet fragrance pervades the air...
         DRAWS_NEAR                    = 7575, -- Something draws near!
         HOMEPOINT_SET                 = 8724, -- Home point set!
+        ANANTABOGA                    = 7564, -- The ground here is slimy to the touch.
     },
     mob =
     {
