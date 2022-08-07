@@ -2288,7 +2288,7 @@ INSERT INTO `mob_groups` VALUES(50, 910, 52, 'Dark_Bugler', 0, 128, 0, 0, 0, 76,
 INSERT INTO `mob_groups` VALUES(51, 914, 52, 'Dark_Esquire', 0, 128, 569, 0, 0, 76, 76, 0);
 INSERT INTO `mob_groups` VALUES(52, 1802, 52, 'Greater_Colibri', 300, 0, 1225, 0, 0, 81, 82, 0);
 INSERT INTO `mob_groups` VALUES(53, 4355, 52, 'Wivre', 300, 0, 2952, 0, 0, 78, 83, 0);
-INSERT INTO `mob_groups` VALUES(54, 2423, 52, 'Lividroot_Amooshah', 0, 128, 1526, 30000, 0, 85, 87, 0);
+INSERT INTO `mob_groups` VALUES(54, 2423, 52, 'Lividroot_Amooshah', 0, 128, 1526, 8000, 0, 85, 87, 0);
 INSERT INTO `mob_groups` VALUES(55, 930, 52, 'Dea', 0, 128, 577, 25000, 0, 82, 84, 0);
 INSERT INTO `mob_groups` VALUES(1727, 39, 52, 'Acrolith', 0, 128, 0, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(1731, 272, 52, 'Assault_Bhoot', 0, 128, 0, 0, 0, 15, 17, 0);
@@ -2609,7 +2609,7 @@ INSERT INTO `mob_groups` VALUES(44, 1469, 61, 'Garhorlur_the_Brutal', 3600, 0, 0
 INSERT INTO `mob_groups` VALUES(45, 122, 61, 'Ancient_Bombs', 0, 128, 84, 0, 0, 74, 78, 0);
 INSERT INTO `mob_groups` VALUES(46, 524, 61, 'Brass_Borer', 0, 128, 347, 15000, 0, 83, 83, 0);
 INSERT INTO `mob_groups` VALUES(47, 738, 61, 'Claret', 0, 128, 477, 15000, 0, 78, 80, 0);
-INSERT INTO `mob_groups` VALUES(48, 118, 61, 'Anantaboga', 0, 128, 78, 30000, 0, 85, 87, 0);
+INSERT INTO `mob_groups` VALUES(48, 118, 61, 'Anantaboga', 0, 128, 78, 17000, 0, 85, 87, 0);
 INSERT INTO `mob_groups` VALUES(49, 2223, 61, 'Khromasoul_Bhurborlor', 0, 128, 1438, 39000, 0, 82, 84, 0);
 INSERT INTO `mob_groups` VALUES(50, 4018, 61, 'Troll_Grenadier', 0, 128, 0, 0, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(51, 4013, 61, 'Troll_Cuirasser', 0, 128, 0, 0, 0, 73, 75, 0);
@@ -2669,7 +2669,7 @@ INSERT INTO `mob_groups` VALUES(47, 1851, 62, 'Gurfurlur_the_Menacing', 900, 0, 
 INSERT INTO `mob_groups` VALUES(48, 1947, 62, 'Hilltroll_Elite_Guard', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(49, 4365, 62, 'Woodtroll_Elite_Guard', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(50, 4327, 62, 'Wheel_Wamoura', 0, 128, 0, 0, 0, 74, 79, 0);
-INSERT INTO `mob_groups` VALUES(51, 1020, 62, 'Dextrose', 0, 128, 647, 26000, 0, 80, 82, 0);
+INSERT INTO `mob_groups` VALUES(51, 1020, 62, 'Dextrose', 0, 128, 647, 26000, 10000, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(52, 3339, 62, 'Reacton', 0, 128, 2082, 25000, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(53, 34, 62, 'Achamoth', 0, 128, 14, 38000, 0, 86, 88, 0);
 INSERT INTO `mob_groups` VALUES(54, 35, 62, 'Achamothcampa', 0, 128, 0, 8000, 0, 73, 75, 0);

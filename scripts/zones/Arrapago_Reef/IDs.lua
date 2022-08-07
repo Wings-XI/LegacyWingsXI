@@ -45,6 +45,7 @@ zones[tpz.zone.ARRAPAGO_REEF] =
         SLIMY_TOUCH                   = 8907, -- The ground here is slimy to the touch...
         BLOOD_STAINS                  = 8907, -- The ground is smeared with bloodstains...
         DRAWS_NEAR                    = 8909, -- Something draws near!
+        ZAREEHKL                      = 8912, -- 
         COMMON_SENSE_SURVIVAL         = 9781, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =

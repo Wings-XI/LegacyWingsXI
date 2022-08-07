@@ -41,6 +41,7 @@ zones[tpz.zone.ALZADAAL_UNDERSEA_RUINS] =
         HEADY_FRAGRANCE               = 7728, -- The heady fragrance of wine pervades the air...
         SLIMY_TOUCH                   = 7747, -- The ground here is slimy to the touch...
         DRAWS_NEAR                    = 7758, -- Something draws near!
+        WULGARU                       = 7760, -- Quite the accomplishment.. Never would I have expected you to surpass Zahak.
     },
     mob =
     {

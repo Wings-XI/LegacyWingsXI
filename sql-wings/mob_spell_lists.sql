@@ -3796,6 +3796,16 @@ INSERT INTO `mob_spell_lists` VALUES('Xolotl', 445, 176, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 226, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 356, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Anansi', 446, 357, 1, 255);
+-- ZNM Tier 2 Reacton
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase2', 447, 144, 1, 255); -- fire
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase2', 447, 145, 1, 255); -- fire_ii
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase2', 447, 146, 1, 255); -- fire_iii
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase2', 447, 174, 1, 255); -- firaga
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase2', 447, 249, 1, 255); -- blaze_spikes
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase3', 448, 146, 1, 255); -- fire_iii
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase3', 448, 147, 1, 255); -- fire_iv
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase3', 448, 176, 1, 255); -- firaga_iii
+INSERT INTO `mob_spell_lists` VALUES('Reacton_Phase3', 448, 205, 1, 255); -- flare_ii
 INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 225, 1, 255); -- poisonga
 INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 356, 1, 255); -- paralyga
 INSERT INTO `mob_spell_lists` VALUES('Scylla', 449, 362, 1, 255); -- bindga
@@ -4391,6 +4401,13 @@ INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 196, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 212, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 251, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Gration', 538, 57, 1, 255);
+-- Anantaboga
+INSERT INTO `mob_spell_lists` VALUES('Anantaboga', 540, 371, 1, 255); -- Foe Requiem
+INSERT INTO `mob_spell_lists` VALUES('Anantaboga', 540, 376, 1, 255); -- Horde Lullaby
+INSERT INTO `mob_spell_lists` VALUES('Anantaboga', 540, 392, 1, 255); -- Knight's Minne
+INSERT INTO `mob_spell_lists` VALUES('Anantaboga', 540, 422, 1, 255); -- Carnage Elegy
+INSERT INTO `mob_spell_lists` VALUES('Anantaboga', 540, 466, 1, 255); -- Maiden's Virelai
+-- E-vase-ise Action
 INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 100, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 147, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Fire_Pot', 541, 176, 1, 255);
@@ -4433,6 +4450,45 @@ INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 214, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 221, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 226, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Water_Pot', 546, 240, 1, 255);
+-- Verdelet T2ZNM
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 146, 1, 255); -- Fire 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 147, 1, 255); -- Fire 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 175, 1, 255); -- Firaga 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 176, 1, 255); -- Firaga 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 151, 1, 255); -- Blizzard 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 152, 1, 255); -- Blizzard 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 180, 1, 255); -- Blizzaga 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 181, 1, 255); -- Blizzaga 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 161, 1, 255); -- Stone 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 162, 1, 255); -- Stone 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 190, 1, 255); -- Stonega 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 191, 1, 255); -- Stonega 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 166, 1, 255); -- Thunder 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 167, 1, 255); -- Thunder 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 195, 1, 255); -- Thundaga 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 196, 1, 255); -- Thundaga 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 171, 1, 255); -- Water 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 172, 1, 255); -- Water 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 200, 1, 255); -- Waterga 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 201, 1, 255); -- Waterga 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 156, 1, 255); -- Aero 3
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 157, 1, 255); -- Aero 4
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 185, 1, 255); -- Aeroga 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet', 539, 186, 1, 255); -- Aeroga 3
+-- Verdelet T2ZNM (Broken Horn)
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 145, 1, 255); -- Fire 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 174, 1, 255); -- Firaga 1 
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 150, 1, 255); -- Blizzard 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 179, 1, 255); -- Blizzaga 1
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 160, 1, 255); -- Stone 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 189, 1, 255); -- Stonega 1
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 165, 1, 255); -- Thunder 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 194, 1, 255); -- Thundaga 1
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 170, 1, 255); -- Water 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 199, 1, 255); -- Waterga 1
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 155, 1, 255); -- Aero 2
+INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 184, 1, 255); -- Aeroga 1
+
 
 --
 -- Indexes for dumped tables

@@ -24,6 +24,7 @@ zones[tpz.zone.MAMOOK] =
         SICKLY_SWEET             = 8661, -- A sickly sweet fragrance pervades the air...
         DRAWS_NEAR               = 8665, -- Something draws near!
         COMMON_SENSE_SURVIVAL    = 9537, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        IRIRI_SAMARIRI           = 8647, -- An ocidic odor pervades the air....
     },
     mob =
     {
