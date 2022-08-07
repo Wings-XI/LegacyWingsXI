@@ -4,6 +4,7 @@
 -- Note: PH for Jaded Jody
 -----------------------------------
 local ID = require("scripts/zones/Wajaom_Woodlands/IDs")
+mixins = { require("scripts/mixins/families/ameretat"), }
 require("scripts/globals/mobs")
 -----------------------------------
 

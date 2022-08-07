@@ -7,7 +7,6 @@ require("scripts/globals/titles")
 -----------------------------------
 
 function onMobSpawn(mob)
-    DespawnMob(mob:getID())
 end
 
 function onMobDeath(mob, player, isKiller)

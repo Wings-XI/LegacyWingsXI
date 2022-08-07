@@ -5,6 +5,10 @@
 -----------------------------------
 local ID = require("scripts/zones/Mamook/IDs")
 
+function onMobInitialize( mob )
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
+end
+
 function onMobSpawn(mob)
 end
 

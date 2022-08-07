@@ -8,6 +8,12 @@ require("scripts/globals/conquest")
 -----------------------------------
 
 function onInitialize(zone)
+    local ScyllaRespawn = GetServerVariable("ScyllaRespawn")
+    if os.time() < ScyllaRespawn then
+        GetMobByID(ID.mob.SCYLLA):setRespawnTime(ScyllaRespawn - os.time())
+    else
+        SpawnMob(ID.mob.SCYLLA)
+    end
 end
 
 function onZoneIn(player, prevZone)
