@@ -4864,7 +4864,14 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
     if (jailutils::InPrison(PChar))
     {
         // Prevent crafting in prison
-        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANT_BE_USED_IN_AREA));
+        return;
+    }
+
+    // Prevent crafting while slept, stunned, terrored, etc..
+    if (PChar->StatusEffectContainer->HasPreventActionEffect())
+    {
+        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, MSGBASIC_CANNOT_PERFORM_ACTION));
         return;
     }
 
