@@ -8338,6 +8338,7 @@ INSERT INTO `mob_groups` VALUES(23, 3593, 136, 'Shesha', 1, 0, 0, 0, 0, 1, 1, 0)
 INSERT INTO `mob_groups` VALUES(24, 4206, 136, 'Vasuki', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(25, 2182, 136, 'Kaliya', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(26, 275, 136, 'Astika', 1, 0, 0, 0, 0, 1, 1, 0);
+INSERT INTO `mob_groups` VALUES(28, 6857, 136, 'Scylla', 14400, 128, 3176, 35500, 5000, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(7241, 2, 136, '1st_Iron_Musketeer', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(7242, 3, 136, '1st_Legionnaire', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(7243, 11, 136, '4th_Legionnaire', 1, 0, 0, 0, 0, 1, 1, 0);

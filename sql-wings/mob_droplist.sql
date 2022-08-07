@@ -16454,7 +16454,12 @@ INSERT INTO `mob_droplist` VALUES(3173, 0, 0, 1000, 2855, 350);
 INSERT INTO `mob_droplist` VALUES(3174, 0, 0, 1000, 16017, 212);
 INSERT INTO `mob_droplist` VALUES(3175, 2, 0, 1000, 880, 0);
 INSERT INTO `mob_droplist` VALUES(3175, 0, 0, 1000, 880, 210);
-
+INSERT INTO `mob_droplist` VALUES(3176, 0, 0, 1000, 1312, 82);    -- piece_of_angel_skin
+INSERT INTO `mob_droplist` VALUES(3176, 2, 0, 1000, 2754, 0);     -- ruszor_fang
+INSERT INTO `mob_droplist` VALUES(3176, 0, 0, 1000, 2755, 374);   -- ruszor_hide
+INSERT INTO `mob_droplist` VALUES(3176, 0, 0, 1000, 2810, 1000);  -- vial_of_ebur_pigment
+INSERT INTO `mob_droplist` VALUES(3176, 0, 0, 1000, 2824, 227);   -- square_of_shagreen
+INSERT INTO `mob_droplist` VALUES(3176, 0, 0, 1000, 19126, 134);  -- papilio_kirpan
 
 -- 3200s are dynamis drops
 INSERT INTO `mob_droplist` VALUES(3200, 0, 0, 1000, 1456, 10); -- dyna bastok statue drops

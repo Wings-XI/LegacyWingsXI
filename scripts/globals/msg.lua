@@ -171,6 +171,7 @@ tpz.msg.basic =
     UNABLE_TO_SEE_TARG      =   5, -- Unable to see <target>.
     LOSE_SIGHT              =  36, -- You lose sight of <target>.
     TOO_FAR_AWAY            =  78, -- <target> is too far away.
+    DRAWN_IN                = 232, -- <target> is drawn in!
     
     -- Pets
     REQUIRES_A_PET          = 215, -- That action requires a pet.
