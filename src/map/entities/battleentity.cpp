@@ -243,7 +243,7 @@ uint8 CBattleEntity::GetSpeed()
     Mod mod = isMounted() ? Mod::MOUNT_MOVE : Mod::MOVE;
 
     float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
-    // Cap unmounted movement speed increase to 25%
+    // Cap unmounted movement speed increase to 50%, max quickening (25 - chocobo mazurka/jig) + max gear movement (25 ninja af+1)
     if (mod == Mod::MOVE)
     {
         if (StatusEffectContainer->GetStatusEffect(EFFECT_FLEE))
@@ -252,7 +252,7 @@ uint8 CBattleEntity::GetSpeed()
         }
         else
         {
-            modAmount = std::clamp(modAmount, 0.0f, 1.25f);
+            modAmount = std::clamp(modAmount, 0.0f, 1.50f);
         }
     }
 
