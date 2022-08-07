@@ -36,6 +36,7 @@ zones[tpz.zone.BHAFLAU_THICKETS] =
         PARTY_MIN_REQS                = 7592, -- Your party does not meet the minimum required number of ≺Numeric Parameter 0≻ members. Unable to enter area.
         MEMBER_TOO_FAR                = 7593, -- One or more party members are too far away from the entrance. Unable to enter area.
         HOMEPOINT_SET                 = 7692, -- Home point set!
+        LIVIDROOT_AMOOSHAH            = 7661, -- A putrid odor threatens to overwhelm you.
     },
     mob =
     {

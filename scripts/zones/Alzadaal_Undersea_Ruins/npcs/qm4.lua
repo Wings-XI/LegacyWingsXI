@@ -10,9 +10,10 @@ require("scripts/globals/npc_util")
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 2597) and npcUtil.popFromQM(player, npc, ID.mob.WULGARU) then -- Trade Opalus Gem
         player:confirmTrade()
+        player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    player:messageSpecial(ID.text.WULGARU)
 end
