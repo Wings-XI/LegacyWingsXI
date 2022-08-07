@@ -138,7 +138,7 @@ function onEventUpdate(player, csid, option)
         -- param 3 = x .:(You have x) (maybe number of blank plates?)
         player:updateEvent(0, 18721, 18722, player:getGil())
     elseif (csid == 237 and option == 5) then
-        player:setCharVar("AndrauseBuy", 1)
+        player:setLocalVar("AndrauseBuy", 1)
     end
 
     -- 99 = Player completed trade
@@ -168,7 +168,7 @@ function onEventUpdate(player, csid, option)
     elseif (csid == 238 and option == 4) then
         player:updateEvent(18721, 18722)
     elseif (csid == 238 and option == 5) then
-        player:setCharVar("AndrauseBuy", 1)
+        player:setLocalVar("AndrauseBuy", 1)
     end
 
     if csid == 241 then
@@ -203,36 +203,30 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if csid == 237 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() > 800 then
-        player:delGil(800)
-        if not player:hasItem(18721) then
-            player:addItem(18721)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 18721) -- Soultrapper
-        end
-        player:addItem(18722, 12)
-        player:messageSpecial(ID.text.YOU_OBTAIN, 18722, 12) -- Soul Plates
-        player:setCharVar("AndrauseBuy", 0)
-        player:setCharVar("[ASA]Soulplate", JstMidnight())
-    elseif csid == 237 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() < 800 then
-        player:setCharVar("AndrauseBuy", 0)
-    end
+    if ( csid == 237 or csid == 238 ) and player:getLocalVar("AndrauseBuy") == 1 then
+        -- check if we got the room and gils
+        local slotsNeeded = 1 + ( not player:hasItem(18721) and 1 or 0 )
+        if player:getFreeSlotsCount() < slotsNeeded then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED2)
+        elseif player:getGil() < 800 then
+            player:messageSpecial(ID.text.YOU_DO_NOT_HAVE_ENOUGH_GIL)
+        else
+            -- complete the trade
+            player:delGil(800)
+            if slotsNeeded == 2 then
+                player:addItem(18721)       -- Soultrapper
+                player:messageSpecial(ID.text.ITEM_OBTAINED, 18721)
+            end
+            player:addItem(18722, 12)       -- Soul Plates
+            player:messageSpecial(ID.text.YOU_OBTAIN, 18722, 12)
 
-    if csid == 238 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() > 800 then
-        player:delGil(800)
-        if not player:hasItem(18721) then
-            player:addItem(18721)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 18721) -- Soultrapper
+            -- next buy after jst midnight
+            player:setCharVar("[ASA]Soulplate", JstMidnight())
         end
-        player:addItem(18722, 12)
-        player:messageSpecial(ID.text.YOU_OBTAIN, 18722, 12) -- Soul Plates
-        player:setCharVar("AndrauseBuy", 0)
-        player:setCharVar("[ASA]Soulplate", JstMidnight())
-    elseif csid == 238 and player:getCharVar("AndrauseBuy") == 1 and player:getGil() < 800 then
-        player:setCharVar("AndrauseBuy", 0)
-    end
 
-    local platesTraded = player:getCharVar("ASA_Plates")
-    if csid == 241 and platesTraded == 3 then
+        -- trade has either completed or failed, reset this var
+        player:setLocalVar("AndrauseBuy", 0)
+    elseif csid == 241 and player:getCharVar("ASA_Plates") == 3 then
         player:addKeyItem(tpz.ki.BLACK_BOOK)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BLACK_BOOK)
         player:setCharVar("ASA_MobOne", 0)
