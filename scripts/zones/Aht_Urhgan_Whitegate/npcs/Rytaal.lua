@@ -64,7 +64,7 @@ function onTrigger(player, npc)
         local haveimperialIDtag = 0
         local tagsAvail = 0
 
-        while currentTime >= refreshTime and tagStock < 3 do
+        while currentTime >= refreshTime and tagStock < 7 do
             refreshTime = refreshTime + 86400
             tagStock = tagStock + 1
         end
