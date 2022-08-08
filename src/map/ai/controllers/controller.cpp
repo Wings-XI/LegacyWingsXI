@@ -47,7 +47,7 @@ bool CController::Cast(uint16 targid, SpellID spellid)
 {
     if (POwner)
     {
-        if (POwner->objtype == TYPE_PC && POwner->PAI->GetCurrentState() && POwner->PAI->GetCurrentState()->m_id == MAGIC_STATE)
+        if (POwner->objtype == TYPE_PC && POwner->PAI->IsCasting())
         {
             //ShowDebug("Got spellcast request while already spellcasting...\n");
             if (POwner->PAI->GetCurrentState()->IsCompleted())

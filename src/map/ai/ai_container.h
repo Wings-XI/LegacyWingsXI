@@ -104,6 +104,7 @@ public:
     bool IsSpawned();
     bool IsRoaming();
     bool IsEngaged();
+    bool IsCasting();
     //whether AI is currently able to change state from external means
     bool CanChangeState();
     bool CanFollowPath();
