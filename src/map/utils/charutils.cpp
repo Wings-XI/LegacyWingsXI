@@ -3207,7 +3207,7 @@ namespace charutils
             }
             uint16 MaxMSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PChar->GetMJob(), PChar->GetMLevel());
             uint16 MaxSSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PChar->GetSJob(), PChar->GetSLevel());
-            uint16 skillBonus = 0;
+            int32 skillBonus = 0;
 
             // apply arts bonuses
             if ((i >= 32 && i <= 35 && PChar->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE})) ||
@@ -3297,7 +3297,7 @@ namespace charutils
             }
             else
             {
-                PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus) | 0x8000;
+                PChar->WorkingSkills.skill[i] = std::max(0, skillBonus) | 0x8000;
             }
         }
 
