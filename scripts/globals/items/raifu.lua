@@ -29,6 +29,6 @@ function onAdditionalEffect(player,target,damage)
             dmg = -dmg
         end
 
-        return tpz.subEffect.WATER_DAMAGE,message,dmg
+        return tpz.subEffect.LIGHTNING_DAMAGE,message,dmg
     end
 end
