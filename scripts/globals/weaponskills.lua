@@ -340,7 +340,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
     calcParams.extraOffhandHit = attacker:isDualWielding() or attack.weaponType == tpz.skill.HAND_TO_HAND
     calcParams.hybridHit = wsParams.hybridWS
-     -- various job abilities are abusing this function, don't boost them and remove the effect
+     -- various job abilities are abusing this ws function, don't boost them or remove building flourish
     calcParams.flourishEffect = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil
     calcParams.fencerBonus = fencerBonus(attacker)
     calcParams.bonusTP = wsParams.bonusTP or 0
@@ -353,6 +353,11 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     else
         calcParams.firstHitRateBonus = 50
     end
+
+    if calcParams.flourishEffect ~= nil then
+        calcParams.bonusAcc = calcParams.bonusAcc + 20 + calcParams.flourishEffect:getSubPower()*2 
+    end
+
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- allow crit if building flourish is on (3+ moves)
@@ -489,6 +494,11 @@ end
     end
 
     calcParams.firstHitRateBonus = 0
+
+    if calcParams.flourishEffect ~= nil then
+        calcParams.bonusAcc = calcParams.bonusAcc + 20 + calcParams.flourishEffect:getSubPower()*2 
+    end
+
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, true)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -566,7 +576,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         ['tpHitsLanded'] = 1,
         ['extraHitsLanded'] = 0,
         ['bonusTP'] = wsParams.bonusTP or 0,
-        ['flourishEffect'] = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- various job abilities are abusing this function, don't boost them and remove the effect
+        ['flourishEffect'] = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- various job abilities are abusing this ws function, don't boost them or remove building flourish
     }
 
     -- Delete statuses that may have been spent by the WS
@@ -832,9 +842,6 @@ end
 function getHitRate(attacker, target, capHitRate, bonus, isRanged)
     local acc = isRanged and attacker:getRACC() or attacker:getACC()
     local eva = target:getEVA()
-
-    local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil then acc = acc + 20 + flourisheffect:getSubPower()*2 end
 
     if (bonus == nil) then
         bonus = 0
