@@ -455,6 +455,11 @@ bool CAIContainer::IsEngaged()
     return PEntity->animation == ANIMATION_ATTACK;
 }
 
+bool CAIContainer::IsCasting()
+{
+    return PEntity->PAI->GetCurrentState() != NULL && PEntity->PAI->GetCurrentState()->m_id == MAGIC_STATE;
+}
+
 time_point CAIContainer::getTick()
 {
     return m_Tick;
