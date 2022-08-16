@@ -4029,6 +4029,7 @@ INSERT INTO `synth_recipes` VALUES(4595, 1, 0, 0, 0, 0, 0, 74, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4596, 1, 0, 0, 0, 0, 0, 85, 0, 0, 0, 4100, 4242, 16235, 0, 0, 0, 0, 0, 0, 0, 820, 2512, 2512, 2512, 1, 1, 1, 1, 'Lynx_Mantle_Desynth)');
 INSERT INTO `synth_recipes` VALUES(4597, 1, 0, 0, 0, 0, 0, 59, 0, 0, 0, 4100, 4242, 12995, 0, 0, 0, 0, 0, 0, 0, 826, 819, 853, 853, 1, 2, 1, 1, 'Moccasins_Desynth)');
 INSERT INTO `synth_recipes` VALUES(4598, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13318, 0, 0, 0, 0, 0, 0, 0, 789, 789, 746, 746, 1, 1, 1, 2, 'Topaz_Earring_Desynth');
+INSERT INTO `synth_recipes` VALUES (4599,0,0,0,0,0,0,0,0,0,98,4098,4240,612,633,936,1555,4273,4387,4390,5650,5701,5702,5702,5702,1,1,1,1,'Nopales Salad');
 
 -- -----------
 -- RECIPES END
