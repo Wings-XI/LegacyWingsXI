@@ -42,6 +42,7 @@
 #include "../recast_container.h"
 #include "../roe.h"
 #include "../status_effect_container.h"
+#include "../enmity_container.h"
 #include "../utils/battleutils.h"
 #include "../utils/petutils.h"
 #include "../utils/puppetutils.h"
@@ -2147,6 +2148,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             if (PTarget->objtype == TYPE_PC) 
             {
                 charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
+            if (PTarget->objtype == TYPE_MOB && this->objtype == TYPE_PC)
+            {
+                // 1 ce for a missed attack for TH application
+                ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity((CBattleEntity*)this, 1, 0);
             }
         }
 
