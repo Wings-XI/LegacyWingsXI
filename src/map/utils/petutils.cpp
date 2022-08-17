@@ -839,6 +839,63 @@ namespace petutils
         }
     }
 
+    void LoadPetProperties(CBattleEntity* PMaster, CMobEntity* PPet, uint32 PetID, bool isMobPet)
+    {
+        Pet_t* petData = g_PPetList.at(PetID);
+
+        if (isMobPet)
+        {
+            PPet->look = petData->look;
+            PPet->name = petData->name;
+            PPet->SetMJob(petData->mJob);
+            PPet->m_EcoSystem = petData->EcoSystem;
+            PPet->m_Family = petData->m_Family;
+            PPet->m_Element = petData->m_Element;
+            PPet->HPscale = petData->HPscale;
+            PPet->MPscale = petData->MPscale;
+            PPet->m_HasSpellScript = petData->hasSpellScript;
+
+            PPet->allegiance = PMaster->allegiance;
+            PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
+        }
+        
+        if (isMobPet || PetID <= PETID_CAIT_SITH)
+        {
+            // load Pet attributes directly from db mob_pools, mob_family_system, mob_family_mods
+            // - Mob Pets
+            // - smn spirits and avatars
+
+            PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
+
+            PPet->setModifier(Mod::SLASHRES, petData->slashres);
+            PPet->setModifier(Mod::PIERCERES, petData->pierceres);
+            PPet->setModifier(Mod::H2HRES, petData->h2hres);
+            PPet->setModifier(Mod::IMPACTRES, petData->impactres);
+
+            PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages
+            PPet->setModifier(Mod::ICEDEF, petData->icedef); // and need to be adjusted into modifier units.
+            PPet->setModifier(Mod::WINDDEF, petData->winddef); // Higher DEF = lower damage.
+            PPet->setModifier(Mod::EARTHDEF, petData->earthdef); // Negatives signify increased damage.
+            PPet->setModifier(Mod::THUNDERDEF, petData->thunderdef); // Positives signify reduced damage.
+            PPet->setModifier(Mod::WATERDEF, petData->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
+            PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
+            PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
+
+            PPet->setModifier(Mod::SDT_FIRE, petData->fireresSDT);
+            PPet->setModifier(Mod::SDT_ICE, petData->iceresSDT);
+            PPet->setModifier(Mod::SDT_WIND, petData->windresSDT);
+            PPet->setModifier(Mod::SDT_EARTH, petData->earthresSDT);
+            PPet->setModifier(Mod::SDT_THUNDER, petData->thunderresSDT);
+            PPet->setModifier(Mod::SDT_WATER, petData->waterresSDT);
+            PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
+            PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
+
+            if (PetID <= PETID_DARKSPIRIT) // spirits have a ton of MP, almost exactly 5x
+                PPet->setModifier(Mod::MPP, 500);
+        }
+        
+    }
+
     void LoadAvatarStats(CPetEntity* PPet)
     {
         // Объявление переменных, нужных для рассчета.
@@ -1064,52 +1121,9 @@ namespace petutils
         */
 
         // grab pet info
-        Pet_t* petData = g_PPetList.at(PetID);
         CMobEntity* PPet = (CMobEntity*)PMaster->PPet;
 
-        PPet->look = petData->look;
-        PPet->name = petData->name;
-        PPet->SetMJob(petData->mJob);
-        PPet->m_EcoSystem = petData->EcoSystem;
-        PPet->m_Family = petData->m_Family;
-        PPet->m_Element = petData->m_Element;
-        PPet->HPscale = petData->HPscale;
-        PPet->MPscale = petData->MPscale;
-        PPet->m_HasSpellScript = petData->hasSpellScript;
-
-        PPet->allegiance = PMaster->allegiance;
-        PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
-
-        if (PPet->m_EcoSystem == SYSTEM_AVATAR || PPet->m_EcoSystem == SYSTEM_ELEMENTAL)
-        {
-            // assuming elemental spawn
-            PPet->setModifier(Mod::DMGPHYS, -50); //-50% PDT
-        }
-
-        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
-
-        PPet->setModifier(Mod::SLASHRES, petData->slashres);
-        PPet->setModifier(Mod::PIERCERES, petData->pierceres);
-        PPet->setModifier(Mod::H2HRES, petData->h2hres);
-        PPet->setModifier(Mod::IMPACTRES, petData->impactres);
-
-        PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages
-        PPet->setModifier(Mod::ICEDEF, petData->icedef); // and need to be adjusted into modifier units.
-        PPet->setModifier(Mod::WINDDEF, petData->winddef); // Higher DEF = lower damage.
-        PPet->setModifier(Mod::EARTHDEF, petData->earthdef); // Negatives signify increased damage.
-        PPet->setModifier(Mod::THUNDERDEF, petData->thunderdef); // Positives signify reduced damage.
-        PPet->setModifier(Mod::WATERDEF, petData->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
-        PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
-        PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
-
-        PPet->setModifier(Mod::SDT_FIRE, petData->fireresSDT);
-        PPet->setModifier(Mod::SDT_ICE, petData->iceresSDT);
-        PPet->setModifier(Mod::SDT_WIND, petData->windresSDT);
-        PPet->setModifier(Mod::SDT_EARTH, petData->earthresSDT);
-        PPet->setModifier(Mod::SDT_THUNDER, petData->thunderresSDT);
-        PPet->setModifier(Mod::SDT_WATER, petData->waterresSDT);
-        PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
-        PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
+        LoadPetProperties(PMaster, PPet, PetID, true);
     }
 
     void DetachPet(CBattleEntity* PMaster)
@@ -1563,9 +1577,8 @@ namespace petutils
                 ShowDebug("%s summoned an avatar but is not SMN main or SMN sub! Please report. \n", PMaster->GetName());
                 PPet->SetMLevel(1);
             }
+            LoadPetProperties(PMaster, PPet, PetID, false);
             LoadAvatarStats(PPet); //follows PC calcs (w/o SJ)
-
-            PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PPetData->spellList);
 
             PPet->setModifier(Mod::DMGPHYS, -50); //-50% PDT
 
@@ -1644,8 +1657,6 @@ namespace petutils
             uint8 eleMerit = ((CCharEntity*)PMaster)->PMeritPoints->GetMerit(MERIT_SUMMONING_MAGIC_CAST_TIME)->value; // TODO -- RENAME THIS SUMMONING MAGIC CAST TIME MERIT TO ELE COST REDUCTION
             PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, PPet->GetMLevel(), eleMerit));
             
-            if (PetID <= PETID_DARKSPIRIT) // spirits have a ton of MP, almost exactly 5x
-                PPet->setModifier(Mod::MPP, 500);
 
         }
         else if (PPet->getPetType() == PETTYPE_JUG_PET)
