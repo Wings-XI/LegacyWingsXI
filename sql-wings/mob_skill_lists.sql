@@ -809,6 +809,8 @@ INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1694);
 INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1695);
 INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1696);
 INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1697);
+INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1698);
+INSERT INTO `mob_skill_lists` VALUES('Orobon', 191, 1977);
 INSERT INTO `mob_skill_lists` VALUES('Peiste', 192, 2152);
 INSERT INTO `mob_skill_lists` VALUES('Peiste', 192, 2153);
 INSERT INTO `mob_skill_lists` VALUES('Peiste', 192, 2154);
