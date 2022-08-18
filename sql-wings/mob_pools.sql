@@ -4641,7 +4641,7 @@ INSERT INTO `mob_pools` VALUES(4577, 'Snaggletooth_Peapuk', 'Snaggletooth_Peapuk
 INSERT INTO `mob_pools` VALUES(4578, 'Mourning_Crawler', 'Mourning_Crawler', 79, _binary 0x00008d0100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 133, 0, 0, 0, 0, 0, 79);
 INSERT INTO `mob_pools` VALUES(4579, 'Pygmytoise', 'Pygmytoise', 275, _binary 0x00004e0900000000000000000000000000000000, 7, 7, 6, 240, 100, 0, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 2);
 INSERT INTO `mob_pools` VALUES(4580, 'Boulder_Eater', 'Boulder_Eater', 258, _binary 0x0000580900000000000000000000000000000000, 4, 5, 6, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 64, 258);
-INSERT INTO `mob_pools` VALUES(4581, 'Pet_Fenrir', 'Pet_Fenrir', 381, _binary 0x0000110000000000000000000000000000000000, 5, 1, 3, 280, 100, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 381);
+INSERT INTO `mob_pools` VALUES(4581, 'Pet_Fenrir', 'Pet_Fenrir', 381, _binary 0x0000110000000000000000000000000000000000, 8, 1, 3, 280, 100, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 381);
 INSERT INTO `mob_pools` VALUES(4582, 'Pet_Ifrit', 'Pet_Ifrit', 383, _binary 0x0000120000000000000000000000000000000000, 4, 1, 12, 320, 100, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 383);
 INSERT INTO `mob_pools` VALUES(4583, 'Pet_Titan', 'Pet_Titan', 388, _binary 0x0000130000000000000000000000000000000000, 4, 1, 12, 320, 100, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 388);
 INSERT INTO `mob_pools` VALUES(4584, 'Pet_Leviathan', 'Pet_Leviathan', 384, _binary 0x0000140000000000000000000000000000000000, 4, 1, 12, 320, 100, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 384);

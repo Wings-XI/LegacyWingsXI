@@ -617,6 +617,7 @@ public:
     int32 isWeaponTwoHanded(lua_State*);
     int32 getMeleeHitDamage(lua_State*);        // gets the damage of a single hit vs the specified mob
     int32 getMeleeRange(lua_State*);            // gets the melee range of the battle entity
+    int32 getWeaponDelay(lua_State*);           // gets the current equipped weapons' delay
     int32 getWeaponDmg(lua_State*);             // gets the current equipped weapons' DMG rating
     int32 getWeaponDmgRank(lua_State*);         // gets the current equipped weapons' DMG rating for Rank calc
     int32 getOffhandDmg(lua_State*);            // gets the current equipped offhand's DMG rating (used in WS calcs)
