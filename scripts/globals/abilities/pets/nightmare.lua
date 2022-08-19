@@ -34,12 +34,17 @@ function onPetAbility(target, pet, skill, summoner)
         target:delStatusEffectSilent(effect)
         target:delStatusEffectSilent(tpz.effect.LULLABY)
         target:delStatusEffectSilent(tpz.effect.BIO)
+        
         local summoningskill = 100
-        local dotdmg = math.floor((summoningskill + 29) / 40)
+
         if summoner ~= nil then
             summoningskill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
         end
-        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration * resist, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
+
+        local dotdmg = math.floor((summoningskill + 29) / 40) -- Where does this come from!? Seems to be as effective as Bio 2 at higher levels.
+
+        --if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration 25, 25, 1) then -- subid/subpower for poison detection on wakup function
+        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, 180, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
             target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 15, 2)
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         else
