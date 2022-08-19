@@ -1,6 +1,6 @@
 ---------------------------------------------------
 -- Regal Scratch
--- M=5,1
+-- M=3,1
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -20,7 +20,7 @@ function onPetAbility(target, pet, skill)
     params.str_wsc = 0.0 params.dex_wsc = 0.3 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     local numhits = 3
     local accmod = -5
-    local dmgmod = 5
+    local dmgmod = 3
     local dmgmodsubsequent = 1
     local totaldamage = 0
     

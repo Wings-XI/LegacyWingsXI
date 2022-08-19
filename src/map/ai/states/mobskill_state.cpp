@@ -168,8 +168,7 @@ bool CMobSkillState::Update(time_point tick)
                 int power = PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->GetPower();
                 // Rage BPs reduce the power of Avatar's Favor by 4 levels
                 // Ward BPs reduce the power of Avatar's Favor by 2 levels
-                // Inorder for the effect drop to be noticable - bumping to 5 and 3
-                int levelLost = WasBloodPactRage(m_PSkill->getID()) ? 5 : 3;
+                int levelLost = WasBloodPactRage(m_PSkill->getID()) ? 4 : 2;
                 power -= levelLost;        
                 PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->SetPower(power > 0 ? power : 1);
             }
