@@ -17,7 +17,7 @@ function onPetAbility(target, pet, skill)
     params.str_wsc = 0.0 params.dex_wsc = 0.3 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     local numhits = 3
     local accmod = 10
-    local dmgmod = 8
+    local dmgmod = 7
     local dmgmodsubsequent = 2
     local totaldamage = 0
 

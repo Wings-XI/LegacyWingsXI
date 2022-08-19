@@ -20,7 +20,7 @@ function onPetAbility(target, pet, skill)
     local accmod = -5
     local dmgmod = 10
     local dmgmodsubsequent = 2
-    local critmod = 7 + math.floor(12*skill:getTP()/3000)
+    local critmod = 15
     local totaldamage = 0
 
     local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsubsequent, TP_NO_EFFECT, 1, 2, 3, critmod, params)
