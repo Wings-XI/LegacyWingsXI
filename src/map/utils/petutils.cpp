@@ -933,7 +933,7 @@ namespace petutils
             {
                 ModID = Sql_GetIntData(SqlHandle, 1);
                 // exclude KILLER traits: ModID 224-238
-                if (ModID > 0 && (ModID < 224 && ModID > 238))
+                if (ModID > 0 && (ModID < 224 || ModID > 238))
                     PPet->addModifier((Mod)ModID, (int16)Sql_GetIntData(SqlHandle, 2));
             }
         }
