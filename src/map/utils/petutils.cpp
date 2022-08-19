@@ -855,6 +855,8 @@ namespace petutils
         // - smn spirits and avatars
 
         PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
+        if (PPet->m_SpellListContainer == 0)
+            PPet->setModifier(Mod::MP, 0);
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petData->cmbDelay / 60.0f))));
 
@@ -914,6 +916,8 @@ namespace petutils
 
         // grab all pet mJob traits for this pet
         // collect only the highest rank of each trait
+        // bst jug job traits based on jug job: https://www.bluegartr.com/threads/103121-Demystifying-bst-jug-pet-effectiveness/page2
+        // smn pet job traits: https://forum.square-enix.com/ffxi/archive/index.php/t-26620.html?s=7479ed8941e24392e5bba049aabd4032
         Query =
             "SELECT a.traitid, a.modifier, a.value, a.rank FROM traits a \
             INNER JOIN ( \
@@ -924,9 +928,13 @@ namespace petutils
 
         if (Sql_Query(SqlHandle, Query, PPet->GetMJob(), PPet->GetMLevel()) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
         {
+            uint16 ModID = 0;
             while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
             {
-                PPet->addModifier((Mod)Sql_GetIntData(SqlHandle, 1), (int16)Sql_GetIntData(SqlHandle, 2));
+                ModID = Sql_GetIntData(SqlHandle, 1);
+                // exclude KILLER traits: ModID 224-238
+                if (ModID > 0 && (ModID < 224 && ModID > 238))
+                    PPet->addModifier((Mod)ModID, (int16)Sql_GetIntData(SqlHandle, 2));
             }
         }
     }
