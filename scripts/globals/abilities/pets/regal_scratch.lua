@@ -1,5 +1,6 @@
 ---------------------------------------------------
--- M=3,1
+-- Regal Scratch
+-- M=5,1
 ---------------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -13,20 +14,21 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
-    --skill:setAnim(10)
     local mpCost = 5
     local ele = tpz.damageType.LIGHT
-    local coe = getAvatarEcosystemCoefficient(target, ele)
+    local params = {}
+    params.str_wsc = 0.0 params.dex_wsc = 0.3 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     local numhits = 3
-    local accmod = 1 + math.floor(20*skill:getTP()/3000)
-    local dmgmod = (3 + pet:getMainLvl()/15) * coe
-    local dmgmodsubsequent = (1 + 0) * coe
-
+    local accmod = -5
+    local dmgmod = 5
+    local dmgmodsubsequent = 1
     local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet,target,skill,numhits,accmod,dmgmod,0,TP_NO_EFFECT,1,2,3)
-    totaldamage = AvatarFinalAdjustments(damage.dmg,pet,skill,target,tpz.attackType.PHYSICAL,tpz.damageType.SLASHING,numhits)
+    
+    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsubsequent, TP_NO_EFFECT, 1, 2, 3, 0, params)
+    totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, numhits)
+
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-    target:updateEnmityFromDamage(pet,totaldamage)
+    target:updateEnmityFromDamage(pet, totaldamage)
     
     pet:getMaster():addMP(-mpCost)
     return totaldamage
