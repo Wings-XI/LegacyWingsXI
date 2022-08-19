@@ -28,7 +28,7 @@ function onPetAbility(target, pet, skill)
     if target:isDead() then
         target:sendRaise(4)
         skill:setMsg(tpz.msg.basic.NONE)
-    elseif not target:addStatusEffect(tpz.effect.RERAISE, 3, 0, 3600) then
+    elseif not target:addStatusEffect(tpz.effect.RERAISE, 3, 0, 0) then -- Infinite duration http://wiki.ffo.jp/html/30976.html
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     end
     
