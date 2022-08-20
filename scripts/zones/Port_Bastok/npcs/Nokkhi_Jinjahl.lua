@@ -39,6 +39,8 @@ function onTrade(player, npc, trade)
         {21318, 6206}, -- bolt, bismuth
         {18150, 5334}, -- bolt, blind
         {18151, 5339}, -- bolt, bloody
+        {17339, 4227}, -- bolt, bronze
+        {17339, 4227}, -- bolt, crossbow
         {21322, 6140}, -- bolt, damascus
         {19183, 5872}, -- bolt, dark adaman
         {19196, 5820}, -- bolt, darkling
