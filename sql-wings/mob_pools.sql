@@ -1676,7 +1676,7 @@ INSERT INTO `mob_pools` VALUES(1612, 'Gi_Ghis_Elite_Guard', 'Gi_Ghis_Elite_Guard
 INSERT INTO `mob_pools` VALUES(1613, 'Gi_Ghis_Peiste', 'Gi_Ghis_Peiste', 192, _binary 0x0000df0700000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 192);
 INSERT INTO `mob_pools` VALUES(1614, 'GiPha_Manameister', 'GiPha_Manameister', 337, _binary 0x00001f0400000000000000000000000000000000, 4, 4, 11, 240, 100, 0, 1, 0, 1, 2, 0, 32, 661, 159, 0, 0, 2, 0, 0, 705);
 INSERT INTO `mob_pools` VALUES(1615, 'Gi_Rho_Wrathstorm', 'Gi_Rho_Wrathstorm', 200, _binary 0x0000950200000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200);
-INSERT INTO `mob_pools` VALUES(1616, 'Glacial_Imp', 'Glacial_Imp', 165, _binary 0x0000bc0800000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 1, 2, 0, 0, 0, 0, 274, 131, 0, 0, 0, 0, 0, 165);
+INSERT INTO `mob_pools` VALUES(1616, 'Glacial_Imp', 'Glacial_Imp', 165, _binary 0x0000bc0800000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 1, 1, 0, 0, 0, 274, 131, 4, 0, 2, 1, 0, 165);
 INSERT INTO `mob_pools` VALUES(1617, 'Glacial_Wisp', 'Glacial_Wisp', 232, _binary 0x0000160100000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 232);
 INSERT INTO `mob_pools` VALUES(1618, 'Glacier_Eater', 'Glacier_Eater', 258, _binary 0x0000a80100000000000000000000000000000000, 4, 5, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 205, 131, 0, 0, 9, 0, 64, 258);
 INSERT INTO `mob_pools` VALUES(1619, 'Glade_Wivre', 'Glade_Wivre', 257, _binary 0x0000b90800000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 257);
@@ -3751,7 +3751,7 @@ INSERT INTO `mob_pools` VALUES(3687, 'Snow_Devil', 'Snow_Devil', 232, _binary 0x
 INSERT INTO `mob_pools` VALUES(3688, 'Snow_Gigas', 'Snow_Gigas', 126, _binary 0x0000c50200000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 1, 0, 0, 0, 4143, 131, 0, 0, 0, 0, 0, 126);
 INSERT INTO `mob_pools` VALUES(3689, 'Snow_Lizard', 'Snow_Lizard', 97, _binary 0x0000490100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 239, 131, 0, 0, 0, 0, 0, 97);
 INSERT INTO `mob_pools` VALUES(3690, 'Snow_Maiden', 'Snow_Maiden', 232, _binary 0x0000160100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 645, 0, 0, 0, 0, 0, 232);
-INSERT INTO `mob_pools` VALUES(3691, 'Snow_Wight', 'Snow_Wight', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 290, 131, 0, 0, 0, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(3691, 'Snow_Wight', 'Snow_Wight', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 290, 131, 0, 0, 0, 1, 0, 227);
 INSERT INTO `mob_pools` VALUES(3692, 'Snypestix_Eaglebeak', 'Snypestix_Eaglebeak', 373, _binary 0x00003e0400000000000000000000000000000000, 13, 13, 2, 240, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 7, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(3693, 'Sobbing_Eyes', 'Sobbing_Eyes', 139, _binary 0x0000800100000000000000000000000000000000, 4, 4, 12, 280, 100, 0, 1, 0, 1, 18, 0, 0, 1682, 135, 0, 0, 66, 0, 0, 492);
 INSERT INTO `mob_pools` VALUES(3694, 'Sobbing_Sapling', 'Sobbing_Sapling', 216, _binary 0x0000880100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 3727, 133, 0, 0, 0, 0, 0, 216);

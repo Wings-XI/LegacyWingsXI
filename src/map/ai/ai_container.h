@@ -104,6 +104,7 @@ public:
     bool IsSpawned();
     bool IsRoaming();
     bool IsEngaged();
+    bool IsCasting();
     //whether AI is currently able to change state from external means
     bool CanChangeState();
     bool CanFollowPath();
@@ -135,7 +136,7 @@ public:
     template<typename T, typename... Args>
     bool ChangeState(Args&&... args)
     {
-        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 100);
+        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 20);
         if (CanChangeState())
         {
             try
@@ -154,7 +155,7 @@ public:
     template<typename T, typename... Args>
     bool ForceChangeState(Args&&... args)
     {
-        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 100);
+        TPZ_DEBUG_BREAK_IF(m_stateStack.size() > 20);
         try
         {
             CheckCompletedStates();

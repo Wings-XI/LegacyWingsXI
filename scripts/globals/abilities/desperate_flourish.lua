@@ -52,17 +52,69 @@ function onUseAbility(player, target, ability, action)
         isSneakValid = false
     end
 
-    local hitrate = getHitRate(player, target, true)
+    local stepCount = 0
+    if (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_5)) then
+        stepCount = stepCount + 5
+    elseif (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_4)) then
+        stepCount = stepCount + 4
+    elseif (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_3)) then
+        stepCount = stepCount + 3
+    elseif (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_2)) then
+        stepCount = stepCount + 2
+    elseif (target:hasStatusEffect(tpz.effect.LETHARGIC_DAZE_1)) then
+        stepCount = stepCount + 1
+    end
+    if (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_5)) then
+        stepCount = stepCount + 5
+    elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_4)) then
+        stepCount = stepCount + 4
+    elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_3)) then
+        stepCount = stepCount + 3
+    elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_2)) then
+        stepCount = stepCount + 2
+    elseif (target:hasStatusEffect(tpz.effect.SLUGGISH_DAZE_1)) then
+        stepCount = stepCount + 1
+    end
+    if (target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_5)) then
+        stepCount = stepCount + 5
+    elseif (target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_4)) then
+        stepCount = stepCount + 4
+    elseif (target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_3)) then
+        stepCount = stepCount + 3
+    elseif (target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_2)) then
+        stepCount = stepCount + 2
+    elseif (target:hasStatusEffect(tpz.effect.WEAKENED_DAZE_1)) then
+        stepCount = stepCount + 1
+    end
+    if (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_5)) then
+        stepCount = stepCount + 5
+    elseif (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_4)) then
+        stepCount = stepCount + 4
+    elseif (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_3)) then
+        stepCount = stepCount + 3
+    elseif (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_2)) then
+        stepCount = stepCount + 2
+    elseif (target:hasStatusEffect(tpz.effect.BEWILDERED_DAZE_1)) then
+        stepCount = stepCount + 1
+    end
 
+    -- Give bonus phys and magic acc based on simply the number of steps on the mob
+    -- https://ffxiclopedia.fandom.com/wiki/Desperate_Flourish
+    stepCount = utils.clamp(stepCount, 0, 4)
+
+    local hitrate = getHitRate(player, target, true, stepCount * 5)
+    --GetPlayerByID(1):PrintToPlayer(string.format("phys hit rate: %f",hitrate))
     if (math.random() <= hitrate or isSneakValid) then
 
         local spell = getSpell(216)
         local params = {}
         params.diff = 0
         params.skillType = player:getWeaponSkillType(tpz.slot.MAIN)
-        params.bonus = -10
+        params.bonus = -10 + stepCount * 10
+
         local resist = applyResistance(player, target, spell, params)
         local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_GRAVITY, target))
+        --GetPlayerByID(1):PrintToPlayer(string.format("magic hit rate: %f",resist))
         if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.GRAVITYRES) < 100 then
             if resist > 0.25 then
                 target:delStatusEffectSilent(tpz.effect.WEIGHT)

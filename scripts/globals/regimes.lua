@@ -1165,6 +1165,14 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
         player:delCurrency("valor_point", cost)
 
         if act == "CANCEL_REGIME" then
+            local totalPageProgress = 0
+            for i = 1, 4 do
+                totalPageProgress = totalPageProgress + player:getCharVar("[regime]killed" .. i)
+            end
+            if totalPageProgress == 0 then
+                player:setCharVar("[regime]day",0)
+                player:PrintToPlayer("Field Manual: Page had no progress, you may get another page today!", 0xD)
+            end
             tpz.regime.clearRegimeVars(player)
             player:showText(player, msgOffset + 2) -- Training regime canceled.
 
@@ -1263,30 +1271,39 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     elseif opt.page then
         local page = getPageByNum(regimeType, zoneId, opt.page)
 
-		if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
-			player:messageBasic(tpz.msg.basic.WAIT_LONGER)
-			return
-		end
-
         if page then
-            -- QoL info for player to know which page number they just grabbed
-            player:PrintToPlayer(string.format("Field Manual: Grabbed page %s!", opt.page), 0xD)
             if regimeRepeat ~= 0 then
                 regimeRepeat = 1
                 -- only displayed if repeating is enabled
                 player:PrintToPlayer("Field Manual: You chose to repeat this regime. Continue killing regime monsters after completion for renewal!", 0xD)
+            elseif player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+                player:messageBasic(tpz.msg.basic.WAIT_LONGER)
+                return
             end
+
+            -- QoL info for player to know which page number they just grabbed
+            player:PrintToPlayer(string.format("Field Manual: Grabbed page %s!", opt.page), 0xD)
 
             player:setCharVar("[regime]type", regimeType)
             player:setCharVar("[regime]zone", zoneId)
             player:setCharVar("[regime]id", page[8])
             player:setCharVar("[regime]repeat", regimeRepeat)
-			player:setCharVar("[regime]day", VanadielDayAbsolute())
-
-            for i = 1, 4 do
-                player:setCharVar("[regime]killed" .. i, 0)
-                player:setCharVar("[regime]needed" .. i, page[i])
+            
+            if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+                player:PrintToPlayer("You have chosen a page before a new one is available. Since you chose to have the page repeat your progress is stalled until the new day.")
+                for i = 1, 4 do
+                    player:setCharVar("[regime]killed" .. i, page[i])
+                    player:setCharVar("[regime]needed" .. i, page[i])
+                end
+                player:setCharVar("[regime]waitNewDay", 1)
+            else
+                for i = 1, 4 do
+                    player:setCharVar("[regime]killed" .. i, 0)
+                    player:setCharVar("[regime]needed" .. i, page[i])
+                end
             end
+
+            player:setCharVar("[regime]day", VanadielDayAbsolute())
 
             player:showText(player, msgOffset)
             player:showText(player, msgOffset + 1)
@@ -1305,15 +1322,15 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
 end
 
 tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
-    -- a dead player gets no credit
-    if not player or player:getHP() == 0 then
+    -- if this is run for a player, do below logic to renew page if applicable
+    if not player then
         return
     end
 
     -- check if regime needs to be renewed on ANY mob related to regimes
     if player:getCharVar("[regime]waitNewDay") ~= 1 then
-        -- players not on this training regime get no credit
-        if player:getCharVar("[regime]id") ~= regimeId then
+        -- dead players and players not on this training regime get no credit
+        if player:getHP() == 0 or player:getCharVar("[regime]id") ~= regimeId then
             return
         end
 
@@ -1434,11 +1451,20 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
             
             player:messageBasic(tpz.msg.basic.FOV_REGIME_BEGINS_ANEW)
             player:setCharVar("[regime]waitNewDay", 0)
-			player:setCharVar("[regime]day", VanadielDayAbsolute())
+            player:setCharVar("[regime]day", VanadielDayAbsolute())
+            -- since we only let pages renew once per day, we need to reset this to allow gil/tabs every page completion
+            player:setCharVar("[regime]lastReward", 0)
 
             local pageNum = getPageByRegimeId(player:getCharVar("[regime]type"), player:getCharVar("[regime]zone"), player:getCharVar("[regime]id"))[9]
-            local zoneString = player:getCharVar("[regime]zone") == player:getZoneID() and "this zone" or "another zone"
-            player:PrintToPlayer(string.format("Field Manual: Renewed page %s from %s!", pageNum, zoneString), 0xD)
+            local regimeZoneID = player:getCharVar("[regime]zone")
+            local zoneString = "SomeZone"
+            for zone, v in pairs(tpz.zone) do
+                if tpz.zone[zone] == regimeZoneID then
+                    zoneString = zone
+                    break
+                end
+            end
+            player:PrintToPlayer(string.format("Field Manual: Renewed page %s from %s!", pageNum, string.gsub(string.lower(zoneString),"_"," ")), 0xD)
         end
     else
         tpz.regime.clearRegimeVars(player)
