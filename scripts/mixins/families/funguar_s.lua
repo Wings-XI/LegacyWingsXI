@@ -42,18 +42,6 @@ g_mixins.families.funguar_s = function(mob)
 
     -- All funguars in shadowreign area have regen in rain weather
     mob:addListener("ROAM_TICK", "SHROOM_S_RTICK", function(mob)
-        -- adjust steal item based on the animationsub. This is adjusted by either successfully stealing or by the mob using numbshroom or queezyshroom
-        local animSum = mob:AnimationSub()
-        if animSum == 0 then
-            mob:setStealItemID(4373) -- Woozyshroom
-        elseif animSum == 1 then
-            mob:setStealItemID(4375) -- Danceshroom
-        elseif animSum == 2 then
-            mob:setStealItemID(5680) -- Agaricus
-        elseif animSum == 3 then
-            mob:itemStolen() -- Nothing left to steal
-        end
-
         -- All funguars in shadowreign area have regen in rain weather
         if mob:getWeather() == tpz.weather.RAIN or mob:getWeather() == tpz.weather.SQUALL then
             mob:setMod(tpz.mod.REGEN, 9) -- 1% per 12s from retail capture
