@@ -2290,7 +2290,7 @@ namespace battleutils
         else if (PDefender->objtype == TYPE_MOB)
            ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
 
-        if (PAttacker->objtype == TYPE_PC && !isRanged)
+        if (PAttacker->objtype == TYPE_PC && !isRanged && !isCounter)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
@@ -2422,7 +2422,7 @@ namespace battleutils
         else if (PDefender->objtype == TYPE_MOB)
             ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
 
-        if (!isRanged)
+        if (!isRanged && !isCounter)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
         // Apply TP

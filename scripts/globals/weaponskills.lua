@@ -481,7 +481,7 @@ end
         mightyStrikesApplicable = false,
         forcedFirstCrit = false,
         extraOffhandHit = false,
-        flourishEffect = false,
+        flourishEffect = nil,
         fencerBonus = fencerBonus(attacker),
         bonusTP = wsParams.bonusTP or 0,
         bonusfTP = gorgetBeltFTP or 0,

@@ -349,7 +349,7 @@ enum class Mod
     DEFENDER_DURATION         = 956, // Defender Duration
 
     // Monk
-    BOOST_EFFECT              = 97,  // Boost power in tenths
+    BOOST_EFFECT              = 97,  // Boost buff attp increase, in hundreths of a percent
     CHAKRA_MULT               = 123, // Chakra multiplier increase (from gear)
     CHAKRA_REMOVAL            = 124, // Extra statuses removed by Chakra
     SUBTLE_BLOW               = 289, // How much TP to reduce.

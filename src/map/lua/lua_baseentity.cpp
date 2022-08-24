@@ -13586,6 +13586,33 @@ inline int32 CLuaBaseEntity::getMeleeHitDamage(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getWeaponDelay()
+*  Purpose : Returns the real delay value of a Weapon in the Main slot
+*  Example : 
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getWeaponDelay(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    uint16 weapondly = 0;
+
+    if(m_PBaseEntity->objtype == TYPE_PC)
+    {
+        weapondly = ((CBattleEntity*)m_PBaseEntity)->GetWeaponDelay(0);
+    }
+    else
+    {
+        weapondly = ((CItemWeapon*)((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN])->getDelay();
+    }
+
+    lua_pushinteger(L, weapondly);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getWeaponDmg()
 *  Purpose : Returns the real damage value of a Weapon in the Main slot
 *  Example : local weaponDamage = attacker:getWeaponDmg()
@@ -14035,11 +14062,16 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
+        /*
+        seems like you can spawn the pet first, then load SDT, mods, etc. This seems to load things properly.
+        SpawnMobPet now pulls job traits and mob mods using addModifier, which means we can't load it more than once
+
         // if a number is given its an avatar or elemental spawn
         if (!lua_isnil(L, 1) && lua_isstring(L, 1))
         {
             petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
         }
+        */
 
         // always spawn on master
         PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
@@ -19407,6 +19439,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isWeaponTwoHanded),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeHitDamage),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDelay),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmgRank),

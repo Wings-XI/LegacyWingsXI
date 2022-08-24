@@ -12182,7 +12182,7 @@ INSERT INTO `item_mods` VALUES (13962,1,14);
 INSERT INTO `item_mods` VALUES (13962,2,14);
 INSERT INTO `item_mods` VALUES (13962,8,4);
 INSERT INTO `item_mods` VALUES (13962,61,10);
-INSERT INTO `item_mods` VALUES (13962,97,55);
+INSERT INTO `item_mods` VALUES (13962,97,625);  -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (13963,1,14);
 INSERT INTO `item_mods` VALUES (13963,5,10);
 INSERT INTO `item_mods` VALUES (13963,8,5);
@@ -15284,7 +15284,7 @@ INSERT INTO `item_mods` VALUES (14890,109,15);
 INSERT INTO `item_mods` VALUES (14891,1,15);
 INSERT INTO `item_mods` VALUES (14891,2,14);
 INSERT INTO `item_mods` VALUES (14891,8,6);
-INSERT INTO `item_mods` VALUES (14891,97,55);
+INSERT INTO `item_mods` VALUES (14891,97,625);  -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (14891,289,4);
 INSERT INTO `item_mods` VALUES (14892,1,14);
 INSERT INTO `item_mods` VALUES (14892,5,15);
@@ -23086,7 +23086,7 @@ INSERT INTO `item_mods` VALUES (18775,68,5);
 INSERT INTO `item_mods` VALUES (18777,25,7);      -- Magnus Sainti: Accuracy+7
 INSERT INTO `item_mods` VALUES (18778,25,7);      -- Marotte Claws: Accuracy+7
 INSERT INTO `item_mods` VALUES (18779,8,6);
-INSERT INTO `item_mods` VALUES (18779,97,55);
+INSERT INTO `item_mods` VALUES (18779,97,625);    -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (18779,289,10);
 INSERT INTO `item_mods` VALUES (18780,8,5);       -- Burattinaios: STR+5
 INSERT INTO `item_mods` VALUES (18780,9,5);       -- DEX+5
@@ -28614,7 +28614,7 @@ INSERT INTO `item_mods` VALUES (23175,25,38);     -- Accuracy+38
 INSERT INTO `item_mods` VALUES (23175,29,1);      -- Magic Defense Bonus+1
 INSERT INTO `item_mods` VALUES (23175,31,36);     -- Magic Evasion+36
 INSERT INTO `item_mods` VALUES (23175,68,32);     -- Evasion+32
-INSERT INTO `item_mods` VALUES (23175,97,70);     -- Boost Effect+70
+INSERT INTO `item_mods` VALUES (23175,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (23175,289,8);     -- Subtle Blow+8
 INSERT INTO `item_mods` VALUES (23175,384,500);    -- Haste +5%
 INSERT INTO `item_mods` VALUES (23175,841,5);     -- Weapon Skill Damage+5%
@@ -30605,7 +30605,7 @@ INSERT INTO `item_mods` VALUES (23510,25,48);     -- Accuracy+48
 INSERT INTO `item_mods` VALUES (23510,29,2);      -- Magic Defense Bonus+2
 INSERT INTO `item_mods` VALUES (23510,31,46);     -- Magic Evasion+46
 INSERT INTO `item_mods` VALUES (23510,68,42);     -- Evasion+42
-INSERT INTO `item_mods` VALUES (23510,97,72);     -- Boost Effect+72
+INSERT INTO `item_mods` VALUES (23510,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (23510,289,11);    -- Subtle Blow+11
 INSERT INTO `item_mods` VALUES (23510,384,500);   -- Haste +5%
 INSERT INTO `item_mods` VALUES (23510,841,10);    -- Weapon Skill Damage+10%
@@ -46347,7 +46347,7 @@ INSERT INTO `item_mods` VALUES (27944,13,17);
 INSERT INTO `item_mods` VALUES (27944,14,10);
 INSERT INTO `item_mods` VALUES (27944,31,18);
 INSERT INTO `item_mods` VALUES (27944,68,10);
-INSERT INTO `item_mods` VALUES (27944,97,68);
+INSERT INTO `item_mods` VALUES (27944,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (27944,289,5);
 INSERT INTO `item_mods` VALUES (27944,384,400);
 INSERT INTO `item_mods` VALUES (27945,1,59);
@@ -46672,7 +46672,7 @@ INSERT INTO `item_mods` VALUES (27965,14,16);
 INSERT INTO `item_mods` VALUES (27965,29,1);      -- Magic Def. Bonus+1
 INSERT INTO `item_mods` VALUES (27965,31,26);
 INSERT INTO `item_mods` VALUES (27965,68,22);
-INSERT INTO `item_mods` VALUES (27965,97,68);
+INSERT INTO `item_mods` VALUES (27965,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (27965,289,5);
 INSERT INTO `item_mods` VALUES (27965,384,500);
 INSERT INTO `item_mods` VALUES (27966,1,83);

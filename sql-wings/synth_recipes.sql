@@ -3879,7 +3879,7 @@ INSERT INTO `synth_recipes` VALUES(4239, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 4099, 42
 INSERT INTO `synth_recipes` VALUES(4240, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 4103, 4245, 8867, 0, 0, 0, 0, 0, 0, 0, 851, 851, 851, 851, 1, 1, 1, 1, 'Ram Leather');
 INSERT INTO `synth_recipes` VALUES(4241, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 4099, 4241, 8868, 0, 0, 0, 0, 0, 0, 0, 14176, 14176, 14176, 14176, 1, 1, 1, 1, 'Field Boots');
 INSERT INTO `synth_recipes` VALUES(4242, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 4101, 4243, 8869, 0, 0, 0, 0, 0, 0, 0, 12827, 12827, 12827, 12827, 1, 1, 1, 1, 'Cuir Trousers');
-INSERT INTO `synth_recipes` VALUES(4243, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 4099, 4241, 8870, 0, 0, 0, 0, 0, 0, 0, 12294, 12294, 12294, 12294, 1, 1, 1, 1, 'Leather Shield');
+INSERT INTO `synth_recipes` VALUES(4243, 0, 0, 0, 0, 0, 0, 51, 0, 0, 0, 4099, 4241, 8870, 0, 0, 0, 0, 0, 0, 0, 12294, 12294, 12294, 12294, 1, 1, 1, 1, 'Leather Shield');
 INSERT INTO `synth_recipes` VALUES(4244, 0, 0, 0, 0, 0, 0, 17, 0, 0, 0, 4099, 4241, 817, 852, 2834, 0, 0, 0, 0, 0, 11530, 11539, 11539, 11539, 1, 1, 1, 1, 'Exactitude Mantle');
 INSERT INTO `synth_recipes` VALUES(4245, 0, 2016, 0, 0, 0, 0, 24, 0, 0, 0, 4103, 4245, 695, 1640, 1645, 1645, 1647, 4509, 0, 0, 1971, 1971, 1971, 1971, 1, 1, 1, 1, 'S. Bgd. Leather');
 INSERT INTO `synth_recipes` VALUES(4246, 0, 2016, 0, 0, 0, 0, 61, 0, 0, 0, 4103, 4245, 635, 1644, 1644, 1648, 2518, 4509, 0, 0, 2733, 2733, 2733, 2733, 1, 1, 1, 1, 'S. Smil. Leather');
@@ -4029,7 +4029,8 @@ INSERT INTO `synth_recipes` VALUES(4595, 1, 0, 0, 0, 0, 0, 74, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4596, 1, 0, 0, 0, 0, 0, 85, 0, 0, 0, 4100, 4242, 16235, 0, 0, 0, 0, 0, 0, 0, 820, 2512, 2512, 2512, 1, 1, 1, 1, 'Lynx_Mantle_Desynth)');
 INSERT INTO `synth_recipes` VALUES(4597, 1, 0, 0, 0, 0, 0, 59, 0, 0, 0, 4100, 4242, 12995, 0, 0, 0, 0, 0, 0, 0, 826, 819, 853, 853, 1, 2, 1, 1, 'Moccasins_Desynth)');
 INSERT INTO `synth_recipes` VALUES(4598, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 4242, 13318, 0, 0, 0, 0, 0, 0, 0, 789, 789, 746, 746, 1, 1, 1, 2, 'Topaz_Earring_Desynth');
-INSERT INTO `synth_recipes` VALUES (4599,0,0,0,0,0,0,0,0,0,98,4098,4240,612,633,936,1555,4273,4387,4390,5650,5701,5702,5702,5702,1,1,1,1,'Nopales Salad');
+INSERT INTO `synth_recipes` VALUES(4599, 0, 0, 0, 0, 0, 0, 0, 0, 0, 98, 4098, 4240, 612, 633, 936, 1555, 4273, 4387, 4390, 5650, 5701, 5702, 5702, 5702, 1, 1, 1, 1, 'Nopales Salad');
+INSERT INTO `synth_recipes` VALUES(4600, 1, 0, 0, 0, 0, 8, 34, 0, 0, 0, 4100, 4242, 12994, 0, 0, 0, 0, 0, 0, 0, 818, 818, 848, 848, 2, 3, 1, 2, 'Shoes_Desynth');
 
 -- -----------
 -- RECIPES END
