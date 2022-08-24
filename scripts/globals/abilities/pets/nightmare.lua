@@ -5,6 +5,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/magic")
+require("scripts/globals/summon")
 
 ---------------------------------------------------
 
@@ -14,6 +15,16 @@ end
 
 function onPetAbility(target, pet, skill, summoner)
     local mpCost = 42
+    local summoningskill = 100
+    local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
+    local effect = tpz.effect.SLEEP_I
+    local accuracy = -5
+
+    if summoner ~= nil then
+        summoningskill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
+        accuracy = math.floor((getSummoningSkillOverCap(pet)/2)-5) -- No real source for this, please confirm.
+    end
+
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
         return tpz.effect.SLEEP_I
@@ -24,23 +35,18 @@ function onPetAbility(target, pet, skill, summoner)
         return tpz.effect.SLEEP_I
     end
 
-    local dINT = pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-
-    local effect = tpz.effect.SLEEP_I
-    local resist = applyPlayerResistance(pet,-1,target, dINT, -5, tpz.magic.ele.DARK)
-
+    local resist = applyPlayerResistance(pet, -1, target, dINT, accuracy, tpz.magic.ele.DARK)
     local duration = math.ceil(60 + math.floor(31*math.random()) * resist * tryBuildResistance(tpz.mod.RESBUILD_SLEEP, target)) -- wiki: duration variable from 30 to 90. can be thought of random 60-90 with possible half resist making it range 30-90
+
     if resist >= 0.5 then
         target:delStatusEffectSilent(effect)
         target:delStatusEffectSilent(tpz.effect.LULLABY)
         target:delStatusEffectSilent(tpz.effect.BIO)
-        local summoningskill = 100
-        local dotdmg = math.floor((summoningskill + 29) / 40)
-        if summoner ~= nil then
-            summoningskill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
-        end
-        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration * resist, 25, 25, 1) then -- subid/subpower for poison detection on wakup function
-            target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration, 0, 15, 2)
+
+        local dotdmg = math.floor((summoningskill + 29) / 40) -- Where does this come from!? Seems to be as effective as Bio 2 at higher levels.
+
+        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration, tpz.effect.BIO, 0, 1) then -- subid = tpz.effect.BIO for DoT detection on wakup check in lua_baseentity.cpp 
+            target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration)
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)

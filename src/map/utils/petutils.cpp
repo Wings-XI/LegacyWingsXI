@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -404,22 +404,13 @@ namespace petutils
         PMob->health.mp = PMob->GetMaxMP();
 
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
-
-        // Add Double Attack trait if level 25 or above Warrior job
-        // TODO: Load job traits for pets rather than add them manually
-        if (PMob->GetMJob() == JOB_WAR && lvl >= 25)
-        {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 10);
-        }
         
         // Enables Monk swinging twice
-        // Adds Counter trait. 
-        // TODO: These are temporary fixes until job traits, cmbSkill, and weapon checks properly implemented for pets.
+        // TODO: This is temporary fixes until cmbSkill, and weapon checks properly implemented for pets.
         
         if (PMob->GetMJob() == JOB_MNK)
         {
             PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
-            PMob->addModifier(Mod::COUNTER, 8);
         }
         
         // Adds Martial Arts trait.
@@ -839,6 +830,115 @@ namespace petutils
         }
     }
 
+    void LoadPetProperties(CBattleEntity* PMaster, CMobEntity* PPet, uint32 PetID, bool isMobPet)
+    {
+        Pet_t* petData = g_PPetList.at(PetID);
+
+        if (isMobPet)
+        {
+            PPet->look = petData->look;
+            PPet->name = petData->name;
+            PPet->SetMJob(petData->mJob);
+            PPet->m_EcoSystem = petData->EcoSystem;
+            PPet->m_Family = petData->m_Family;
+            PPet->m_Element = petData->m_Element;
+            PPet->HPscale = petData->HPscale;
+            PPet->MPscale = petData->MPscale;
+            PPet->m_HasSpellScript = petData->hasSpellScript;
+
+            PPet->allegiance = PMaster->allegiance;
+            PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
+        }
+        
+        // load Pet attributes directly from db mob_pools, mob_family_system, mob_family_mods
+        // - Mob Pets
+        // - smn spirits and avatars
+
+        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
+        if (PPet->m_SpellListContainer == 0)
+            PPet->setModifier(Mod::MP, 0);
+
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petData->cmbDelay / 60.0f))));
+
+        PPet->setModifier(Mod::SLASHRES, petData->slashres);
+        PPet->setModifier(Mod::PIERCERES, petData->pierceres);
+        PPet->setModifier(Mod::H2HRES, petData->h2hres);
+        PPet->setModifier(Mod::IMPACTRES, petData->impactres);
+
+        PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages
+        PPet->setModifier(Mod::ICEDEF, petData->icedef); // and need to be adjusted into modifier units.
+        PPet->setModifier(Mod::WINDDEF, petData->winddef); // Higher DEF = lower damage.
+        PPet->setModifier(Mod::EARTHDEF, petData->earthdef); // Negatives signify increased damage.
+        PPet->setModifier(Mod::THUNDERDEF, petData->thunderdef); // Positives signify reduced damage.
+        PPet->setModifier(Mod::WATERDEF, petData->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
+        PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
+        PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
+
+        PPet->setModifier(Mod::SDT_FIRE, petData->fireresSDT);
+        PPet->setModifier(Mod::SDT_ICE, petData->iceresSDT);
+        PPet->setModifier(Mod::SDT_WIND, petData->windresSDT);
+        PPet->setModifier(Mod::SDT_EARTH, petData->earthresSDT);
+        PPet->setModifier(Mod::SDT_THUNDER, petData->thunderresSDT);
+        PPet->setModifier(Mod::SDT_WATER, petData->waterresSDT);
+        PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
+        PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
+        
+        // grab all mob_family_mods for this pet
+        char* Query =
+            "SELECT \
+                pet_list.petid, \
+                pet_list.name, \
+                mob_family_mods.modid, \
+                mob_family_mods.value, \
+                mob_family_mods.is_mob_mod \
+                FROM pet_list, mob_pools, mob_family_system, mob_family_mods \
+                WHERE pet_list.poolid = mob_pools.poolid AND \
+                mob_pools.familyid = mob_family_system.familyid AND \
+                mob_pools.familyid = mob_family_mods.familyid AND \
+                pet_list.petid = %u";
+
+        if (Sql_Query(SqlHandle, Query, PetID) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+        {
+            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                switch((bool)Sql_GetIntData(SqlHandle, 4))
+                {
+                case true:
+                    if (isMobPet)
+                        PPet->addMobMod((uint16)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
+                    break;
+                case false:
+                    PPet->addModifier((Mod)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
+                    break;
+                }
+            }
+        }
+
+        // grab all pet mJob traits for this pet
+        // collect only the highest rank of each trait
+        // bst jug job traits based on jug job: https://www.bluegartr.com/threads/103121-Demystifying-bst-jug-pet-effectiveness/page2
+        // smn pet job traits: https://forum.square-enix.com/ffxi/archive/index.php/t-26620.html?s=7479ed8941e24392e5bba049aabd4032
+        Query =
+            "SELECT a.traitid, a.modifier, a.value, a.rank FROM traits a \
+            INNER JOIN ( \
+            SELECT traitid, job, MAX(`rank`) AS highest FROM traits \
+            WHERE modifier > 0 AND job = %u AND LEVEL <= %u \
+            GROUP BY traitid) b \
+            ON a.traitid = b.traitid AND a.job = b.job AND a.rank = b.highest";
+
+        if (Sql_Query(SqlHandle, Query, PPet->GetMJob(), PPet->GetMLevel()) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+        {
+            uint16 ModID = 0;
+            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                ModID = Sql_GetIntData(SqlHandle, 1);
+                // exclude KILLER traits: ModID 224-238
+                if (ModID > 0 && (ModID < 224 || ModID > 238))
+                    PPet->addModifier((Mod)ModID, (int16)Sql_GetIntData(SqlHandle, 2));
+            }
+        }
+    }
+
     void LoadAvatarStats(CPetEntity* PPet)
     {
         // Объявление переменных, нужных для рассчета.
@@ -978,10 +1078,9 @@ namespace petutils
             ref<uint16>(&PPet->stats, counter) = (uint16)(raceStat + jobStat);
             counter += 2;
         }
-        if (PPet->m_PetID == PETID_CAIT_SITH || PPet->m_PetID == PETID_FENRIR)
-            PPet->m_dmgType = DAMAGE_SLASHING;
-        else
-            PPet->m_dmgType = DAMAGE_IMPACT;
+
+        // All avatars do blunt dmg: https://ffxiclopedia.fandom.com/wiki/Damage_Types#Avatar_damage_types
+        PPet->m_dmgType = DAMAGE_IMPACT;
     }
 
     /************************************************************************
@@ -1057,59 +1156,12 @@ namespace petutils
     void SpawnMobPet(CBattleEntity* PMaster, uint32 PetID)
     {
         // this is ONLY used for mob smn elementals / avatars
-        /*
-        This should eventually be merged into one big spawn pet method.
-        At the moment player pets and mob pets are totally different. We need a central place
-        to manage pet families and spawn them.
-        */
+        // TODO: merge the usage of this into SpawnPet()
 
         // grab pet info
-        Pet_t* petData = g_PPetList.at(PetID);
         CMobEntity* PPet = (CMobEntity*)PMaster->PPet;
 
-        PPet->look = petData->look;
-        PPet->name = petData->name;
-        PPet->SetMJob(petData->mJob);
-        PPet->m_EcoSystem = petData->EcoSystem;
-        PPet->m_Family = petData->m_Family;
-        PPet->m_Element = petData->m_Element;
-        PPet->HPscale = petData->HPscale;
-        PPet->MPscale = petData->MPscale;
-        PPet->m_HasSpellScript = petData->hasSpellScript;
-
-        PPet->allegiance = PMaster->allegiance;
-        PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
-
-        if (PPet->m_EcoSystem == SYSTEM_AVATAR || PPet->m_EcoSystem == SYSTEM_ELEMENTAL)
-        {
-            // assuming elemental spawn
-            PPet->setModifier(Mod::DMGPHYS, -50); //-50% PDT
-        }
-
-        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
-
-        PPet->setModifier(Mod::SLASHRES, petData->slashres);
-        PPet->setModifier(Mod::PIERCERES, petData->pierceres);
-        PPet->setModifier(Mod::H2HRES, petData->h2hres);
-        PPet->setModifier(Mod::IMPACTRES, petData->impactres);
-
-        PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages
-        PPet->setModifier(Mod::ICEDEF, petData->icedef); // and need to be adjusted into modifier units.
-        PPet->setModifier(Mod::WINDDEF, petData->winddef); // Higher DEF = lower damage.
-        PPet->setModifier(Mod::EARTHDEF, petData->earthdef); // Negatives signify increased damage.
-        PPet->setModifier(Mod::THUNDERDEF, petData->thunderdef); // Positives signify reduced damage.
-        PPet->setModifier(Mod::WATERDEF, petData->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
-        PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
-        PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
-
-        PPet->setModifier(Mod::SDT_FIRE, petData->fireresSDT);
-        PPet->setModifier(Mod::SDT_ICE, petData->iceresSDT);
-        PPet->setModifier(Mod::SDT_WIND, petData->windresSDT);
-        PPet->setModifier(Mod::SDT_EARTH, petData->earthresSDT);
-        PPet->setModifier(Mod::SDT_THUNDER, petData->thunderresSDT);
-        PPet->setModifier(Mod::SDT_WATER, petData->waterresSDT);
-        PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
-        PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
+        LoadPetProperties(PMaster, PPet, PetID, true);
     }
 
     void DetachPet(CBattleEntity* PMaster)
@@ -1565,48 +1617,21 @@ namespace petutils
             }
             LoadAvatarStats(PPet); //follows PC calcs (w/o SJ)
 
-            PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PPetData->spellList);
+            // Pet mods moved to mob_family_mods and directly from main job lvl
 
-            PPet->setModifier(Mod::DMGPHYS, -50); //-50% PDT
+            // pet cmbDelay is pulled from mob_family_system
 
-            PPet->setModifier(Mod::CRIT_DMG_INCREASE, 8); //Avatars have Crit Att Bonus II for +8 crit dmg
-
-            if (PPet->GetMLevel() >= 70)
-            {
-                PPet->setModifier(Mod::MATT, 32);
-            }
-            else if (PPet->GetMLevel() >= 50)
-            {
-                PPet->setModifier(Mod::MATT, 28);
-            }
-            else if (PPet->GetMLevel() >= 30)
-            {
-                PPet->setModifier(Mod::MATT, 24);
-            }
-            else if (PPet->GetMLevel() >= 10)
-            {
-                PPet->setModifier(Mod::MATT, 20);
-            }
-            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f))));
-
-            if (PetID == PETID_FENRIR)
-            {
-                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0 * (280.0f / 60.0f))));
-            }
             ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.74f)));
 
             if (PetID == PETID_CARBUNCLE)
             {
                 ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.67f)));
-                if (PPet->GetMLevel() >= 25)
-                {
-                    PPet->setModifier(Mod::REGEN, 1);
-                }
             }
 
-            //Set B+ weapon skill (assumed capped for level derp)
-            //attack is madly high for avatars (roughly x2)
-            PPet->setModifier(Mod::ATT, 2 * battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, PPet->GetMLevel()));
+            
+            //attack is madly high for avatars (roughly x2), using B- combat skill capped for lvl times 2
+            PPet->setModifier(Mod::ATT, 2 * battleutils::GetMaxSkill(SKILL_SCYTHE, JOB_BST, PPet->GetMLevel()));
+            //Set B+ weapon skill (assumed capped for level)
             PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, PPet->GetMLevel()));
             //Set E evasion and def
             PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, PPet->GetMLevel()));
@@ -1644,14 +1669,14 @@ namespace petutils
             uint8 eleMerit = ((CCharEntity*)PMaster)->PMeritPoints->GetMerit(MERIT_SUMMONING_MAGIC_CAST_TIME)->value; // TODO -- RENAME THIS SUMMONING MAGIC CAST TIME MERIT TO ELE COST REDUCTION
             PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, PPet->GetMLevel(), eleMerit));
             
-            if (PetID <= PETID_DARKSPIRIT) // spirits have a ton of MP, almost exactly 5x
-                PPet->setModifier(Mod::MPP, 500);
+            // load mob sdt, etc from mob_family_system
+            // load all non-mob mods from mob_family_mods
+            // after the above code to ensure job, level, and stats are set
+            LoadPetProperties(PMaster, PPet, PetID, false);
 
         }
         else if (PPet->getPetType() == PETTYPE_JUG_PET)
         {
-            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f*(240.0f / 60.0f))));
-
             //Get the Jug pet cap level
             uint8 highestLvl = PPetData->maxLevel;
 
@@ -1671,6 +1696,11 @@ namespace petutils
 
             PPet->SetMLevel(highestLvl);
             LoadJugStats(PPet, PPetData); //follow monster calcs (w/o SJ)
+            
+            // load mob sdt, etc from mob_family_system
+            // load all non-mob mods from mob_family_mods
+            // after the above code to ensure job, level, and stats are set
+            LoadPetProperties(PMaster, PPet, PetID, false);
         }
         else if (PPet->getPetType() == PETTYPE_WYVERN)
         {

@@ -233,6 +233,8 @@ INSERT INTO `mob_family_mods` VALUES(227, 51, 5, 1);
 INSERT INTO `mob_family_mods` VALUES(110, 36, 45, 1);
 INSERT INTO `mob_family_mods` VALUES(110, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(110, 52, 30, 1);
+
+-- elementals
 INSERT INTO `mob_family_mods` VALUES(99, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(100, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(101, 51, 3, 1);
@@ -241,6 +243,51 @@ INSERT INTO `mob_family_mods` VALUES(103, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(104, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(105, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(106, 51, 3, 1);
+
+
+
+-- SMN Avatars
+-- +500% mpp
+INSERT INTO `mob_family_mods` VALUES (99,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (100,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (101,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (102,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (103,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (104,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (105,6,500,0);
+INSERT INTO `mob_family_mods` VALUES (106,6,500,0);
+-- DMGPHYS -50
+INSERT INTO `mob_family_mods` VALUES (379,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (381,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (383,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (388,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (384,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (382,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (387,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (386,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (380,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (389,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (385,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (32,161,-50,0);
+INSERT INTO `mob_family_mods` VALUES (60,161,-50,0);
+-- attp
+INSERT INTO `mob_family_mods` VALUES (379,62,5,0);
+-- crit dmg +8%
+INSERT INTO `mob_family_mods` VALUES (379,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (381,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (383,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (388,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (384,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (382,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (387,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (386,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (380,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (389,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (385,421,8,0);
+INSERT INTO `mob_family_mods` VALUES (32, 421,8,0);
+INSERT INTO `mob_family_mods` VALUES (60, 421,8,0);
+
+
 INSERT INTO `mob_family_mods` VALUES(155, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(156, 51, 3, 1);
 INSERT INTO `mob_family_mods` VALUES(157, 51, 3, 1);
