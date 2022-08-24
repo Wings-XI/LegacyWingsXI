@@ -81,7 +81,7 @@ INSERT INTO `fishing_fish` VALUES(5474, 'Ca Cuong', 0, 73, 16, 12, 6, 12, 1, 0, 
 INSERT INTO `fishing_fish` VALUES(5465, 'Caedarva Frog', 0, 30, 17, 6, 13, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4309, 'Cave Cherax', 90, 110, 36, 7, 4, 118, 232, 1, 0, 255, 255, 0, 1, 0, 0, 1, 500, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4379, 'Cheval Salmon', 0, 21, 21, 7, 7, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
-INSERT INTO `fishing_fish` VALUES(4443, 'Cobalt Jellyfish', 0, 5, 28, 13, 0, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(4443, 'Cobalt Jellyfish', 0, 5, 25, 13, 0, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(5128, 'Cone Calamary', 0, 48, 40, 10, 5, 1, 1, 0, 0, 255, 255, 1, 0, 0, 0, 3, 850, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4515, 'Copper Frog', 0, 16, 22, 8, 4, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(13454, 'Copper ring', 0, 3, 40, 13, 2, 1, 1, 0, 0, 255, 255, 1, 0, 0, 1, 1, 800, 0, '', 0);
