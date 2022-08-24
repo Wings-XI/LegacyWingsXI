@@ -975,8 +975,7 @@ bool CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, ui
             PEffect->GetStatusID() == EFFECT_BUST)//is a cor effect
         {
             if (PEffect->GetStatusID() == PStatusEffect->GetStatusID() &&
-                PEffect->GetSubID() == PStatusEffect->GetSubID() &&
-                PEffect->GetSubPower() < PStatusEffect->GetSubPower()) {//same type, double up
+                PEffect->GetSubID() == PStatusEffect->GetSubID()) {//same type, double up or reapply regardless if a more powerfull roll exists
                 if (PStatusEffect->GetSubPower() < 12)
                 {
                     PStatusEffect->SetDuration(PEffect->GetDuration());
@@ -989,15 +988,37 @@ bool CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, ui
                 {
                     if (PEffect->GetSubID() == m_POwner->id)
                     {
-                        if (!CheckForElevenRoll())
-                        {
+                        // https://wiki-ffo-jp.translate.goog/html/3347.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp
+                        // As a new XI bonus in place of the version upgrade effect time bonus on July 12, 2011, the effect of resetting and 
+                        // shortening the phantom roll reuse time and nullifying the Bust penalty has been implemented . In implementing
+                        // these bonuses, it was the first attempt in FF11 history to solicit ideas directly from users on the official forum .
+                        // 
+                        // I.E. in 2011 they added the functionality of not giving the bust penalty if you have an 11 roll present, here we should always get the bust
+                        // if (!CheckForElevenRoll())
+                        //{
                             uint16 duration = 300;
                             duration -= bustDuration;
-                            CStatusEffect* bustEffect = new CStatusEffect(EFFECT_BUST, EFFECT_BUST, PStatusEffect->GetPower(),
+                            uint16 power = PStatusEffect->GetPower();
+                            // GetTier() = mod
+                            // GetStatusID() = roll
+                            // Don't let Evoker's and Dancer's bust tick below zero
+                            switch(PStatusEffect->GetStatusID())
+                            {
+                                case EFFECT_EVOKERS_ROLL:
+                                    if (m_POwner->getMod(Mod::REFRESH) - PEffect->GetPower() < power)
+                                        power = m_POwner->getMod(Mod::REFRESH) - PEffect->GetPower();
+                                    break;
+                                case EFFECT_DANCERS_ROLL:
+                                    if(m_POwner->getMod(Mod::REGEN) - PEffect->GetPower() < power)
+                                        power = m_POwner->getMod(Mod::REGEN) - PEffect->GetPower();
+                                    break;
+                            }
+                            // (EFFECT id, uint16 icon, uint16 power, uint32 tick, uint32 duration, uint32 subid, uint16 subPower, uint16 tier, uint32 flags)
+                            CStatusEffect* bustEffect = new CStatusEffect(EFFECT_BUST, EFFECT_BUST, power,
                                 0, duration, PStatusEffect->GetTier(), PStatusEffect->GetStatusID());
                             AddStatusEffect(bustEffect, true);
                             DelStatusEffectSilent(EFFECT_DOUBLE_UP_CHANCE);
-                        }
+                        //}
                     }
                     DelStatusEffectSilent(PStatusEffect->GetStatusID());
 

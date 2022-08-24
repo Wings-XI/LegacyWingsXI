@@ -39,8 +39,11 @@ function onUseAbility(caster, target, ability, action)
             roll = roll + math.random(1, 6)
             if (roll > 12) then
                 roll = 12
-                caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
             end
+        end
+        -- no more double-up if you roll an 11 or bust
+        if (roll >= 11) then
+            caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
         end
         caster:setLocalVar("corsairRollTotal", roll)
         action:speceffect(caster:getID(), roll - prev_roll:getSubPower())
