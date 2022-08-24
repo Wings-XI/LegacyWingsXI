@@ -16,6 +16,10 @@ function onMobRoam(mob)
 
     if totd ~= tpz.time.NIGHT and totd ~= tpz.time.MIDNIGHT then -- Despawn Citipati if its day
         DespawnMob(mob:getID())
+        -- force spawn on next spawn of a random PH
+        local randomCorseID = 16806155
+        tpz.mob.phOnDespawn(GetMobByID(randomCorseID), ID.mob.CITIPATI_PH, 100, 0, 1)
+        printf("Citipati spawning when mobid %u spawns", randomCorseID)
     end
 end
 
@@ -24,6 +28,10 @@ function onMobDisengage(mob)
 
     if totd ~= tpz.time.NIGHT and totd ~= tpz.time.MIDNIGHT then -- Despawn Citipati if its day
         DespawnMob(mob:getID())
+        -- force spawn on next spawn of a random PH
+        local randomCorseID = 16806155
+        tpz.mob.phOnDespawn(GetMobByID(randomCorseID), ID.mob.CITIPATI_PH, 100, 0, 1)
+        printf("Citipati spawning when mobid %u spawns", randomCorseID)
     end
 end
 
@@ -32,7 +40,4 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    UpdateNMSpawnPoint(mob:getID())
-    SetServerVariable("CitipatiRespawn",(os.time() + 10800))
-    DisallowRespawn(mob:getID(), true)
 end
