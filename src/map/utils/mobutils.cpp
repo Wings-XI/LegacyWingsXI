@@ -53,7 +53,18 @@ namespace mobutils
 
 uint16 GetWeaponDamage(CMobEntity* PMob)
 {
-    uint16 damage = PMob->GetMLevel();
+    uint16 damage;
+    if (PMob->GetMJob() == JOB_MNK)
+    {
+        uint16 h2hskill = battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_MNK, PMob->GetMLevel());
+        // https://ffxiclopedia.fandom.com/wiki/Category:Hand-to-Hand
+        damage = 0.11f * h2hskill + 3 + 18 * PMob->GetMLevel() / 75; // basic h2h weapon dmg + scaling "weapon" for mnk mobs based on h2h skill (destroyers 18 dmg at 75)
+    }
+    else
+    {
+        damage = PMob->GetMLevel();
+    }
+    
 
     damage = (uint16)(damage * PMob->m_dmgMult / 100.0f);
 
