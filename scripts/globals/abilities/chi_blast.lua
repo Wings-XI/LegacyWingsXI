@@ -20,14 +20,20 @@ function onUseAbility(player, target, ability)
     end
     
     local mnd = player:getStat(tpz.mod.MND)
-    local Boosts = player:getLocalVar("BoostCounter")
-    local Rand = (math.random(26,60)/100)
-
-    if player:getMod(tpz.mod.BOOST_EFFECT) > 0 then
-        Rand = (math.random(75,110)/100)
+    local boostPower = 0
+    local boostNum = 0
+    if (player:hasStatusEffect(tpz.effect.BOOST) == true) then
+        local boostEffect = player:getStatusEffect(tpz.effect.BOOST)
+        boostPowerPerc = boostEffect:getPower() / 1000 -- attp is in tenths of attack %
+        boostNum = boostEffect:getSubPower()
     end
+    local rand = .5 + math.random()/2
 
-    local dmg = mnd * (Boosts * Rand + 1)
+    -- https://ffxiclopedia.fandom.com/wiki/Chi_Blast
+    -- DMG = floor( floor( MND × Rand ) × ( #Boost × BoostIncrease% + 1 ) )
+    -- boost increase % implies that this should be #boost * (1 + boostincrease%)
+    local dmg = math.floor(math.floor(mnd * rand) * (boostNum * (1 + boostPowerPerc * 4 / 100)))
+    -- printf("dmg %u, mnd %u, rand %f, boostNum %u, boostPower %u", dmg, mnd, rand, boostNum, boostPowerPerc)
     
     local penance = player:getMerit(tpz.merit.PENANCE)
     
