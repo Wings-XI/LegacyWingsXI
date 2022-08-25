@@ -15550,6 +15550,33 @@ inline int32 CLuaBaseEntity::setSpawn(lua_State *L)
     return 0;
 }
 
+
+/************************************************************************
+*  Function: getSpawnType()
+*  Purpose : Returns the spawntype flags for a mob
+*  Example : if (nm:getSpawnType() == tpz.mob.spawntype.SPAWNTYPE_NORMAL)
+*  Notes   : 
+************************************************************************/
+
+int32 CLuaBaseEntity::getSpawnType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob->m_SpawnType)
+    {
+        lua_pushinteger(L, PMob->m_SpawnType);
+        return 1;
+    }
+    else
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+}
+
 /************************************************************************
 *  Function: getRespawnTime()
 *  Purpose : Returns the remaining respawn time for a Mob
@@ -19503,6 +19530,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isSpawned),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSpawn),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRespawnTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRespawnTime),
 

@@ -710,6 +710,7 @@ public:
     int32 isSpawned(lua_State*);
     int32 getSpawnPos(lua_State*);          // Get Mob spawn position (x,y,z)
     int32 setSpawn(lua_State*);             // Sets spawn point
+    int32 getSpawnType(lua_State*);
     int32 getRespawnTime(lua_State*);
     int32 setRespawnTime(lua_State*);       // set respawn time
 
