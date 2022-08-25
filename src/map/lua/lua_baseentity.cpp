@@ -2008,9 +2008,12 @@ inline int32 CLuaBaseEntity::getDetectionType(lua_State* L)
         return 0;
     }
 
-    lua_pushinteger(L, ((CMobEntity*)m_PBaseEntity)->m_Detects);
-
-    return 1;
+    // Avoid unpredictable results if we're too close.
+    if (!distanceWithin(m_PBaseEntity->loc.p, point, 0.1f, true))
+    {
+        m_PBaseEntity->loc.p.rotation = worldAngle(m_PBaseEntity->loc.p, point);
+        m_PBaseEntity->updatemask |= UPDATE_POS;
+    }
 }
 
 /************************************************************************
@@ -2024,37 +2027,25 @@ inline int32 CLuaBaseEntity::lookAt(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    float posX = 0;
-    float posY = 0;
-    float posZ = 0;
+    position_t pos;
 
     if (lua_isnumber(L, 1))
     {
-        posX = (float)lua_tonumber(L, 1);
-        posY = (float)lua_tonumber(L, 2);
-        posZ = (float)lua_tonumber(L, 3);
+        pos.x = va.get<float>(0);
+        pos.y = va.get<float>(1);
+        pos.z = va.get<float>(2);
     }
     else
     {
-        lua_getfield(L, 1, "x");
-        posX = (float)lua_tonumber(L, -1);
-        lua_getfield(L, 1, "y");
-        posY = (float)lua_tonumber(L, -1);
-        lua_getfield(L, 1, "z");
-        posZ = (float)lua_tonumber(L, -1);
+        auto table = va.get<sol::table>(0);
+        auto vec   = table.as<std::vector<float>>();
+
+        pos.x = vec[0];
+        pos.y = vec[1];
+        pos.z = vec[2];
     }
 
-    position_t point;
-
-    point.x = posX;
-    point.y = posY;
-    point.z = posZ;
-
-    m_PBaseEntity->loc.p.rotation = worldAngle(m_PBaseEntity->loc.p, point);
-
-    m_PBaseEntity->updatemask |= UPDATE_POS;
-
-    return 0;
+    return distanceWithin(m_PBaseEntity->loc.p, pos, 0.01f);
 }
 
 /************************************************************************
@@ -2830,12 +2821,13 @@ inline int32 CLuaBaseEntity::sendEmote(lua_State* L)
 }
 
 /************************************************************************
-*  Function: getWorldAngle()
-*  Purpose : Returns angle between two entities, relative to cardinal direction
-*  Example : player:worldAngle(target)
-*  Notes   : Target is... 0: east; 64: south; 128: west, 192: north
-*            Default angle is 255-based mob rotation value - NOT a 360 angle
-************************************************************************/
+ *  Function: getWorldAngle()
+ *  Purpose : Returns angle between two entities, relative to cardinal direction
+ *  Example : player:worldAngle(target)
+ *  Notes   : Target is... 0: east; 64: south; 128: west, 192: north
+ *            Default angle is 255-based mob rotation value - NOT a 360 angle
+ *            CAREFUL! If the entities are too close, this can return unexpected results.
+ ************************************************************************/
 
 inline int32 CLuaBaseEntity::getWorldAngle(lua_State *L)
 {
@@ -2875,6 +2867,7 @@ inline int32 CLuaBaseEntity::getWorldAngle(lua_State *L)
  *            Returned angle is 255-based rotation value - NOT a 360 angle
  *            Return value is signed to indicate this shortest turn direction.
  *            Negative: counter-clockwise (left), Positive: clockwise (right)
+ *            CAREFUL! If the entities are too close, this can return unxpected results.
  ************************************************************************/
 
 inline int32 CLuaBaseEntity::getFacingAngle(lua_State* L)

@@ -34,27 +34,27 @@ int32 checksum(uint8* buf,uint32 buflen,char checkhash[16]);
 int config_switch(const char* str);
 bool bin2hex(char* output, unsigned char* input, size_t count);
 
-float distance(const position_t& A, const position_t& B);		// distance between positions
-float distanceSquared(const position_t& A, const position_t& B);// squared distance between positions (use squared unless otherwise needed)
-constexpr float square(float distance)                          // constexpr square (used with distanceSquared)
+float           distance(const position_t& A, const position_t& B, bool ignoreVertical = false);        // distance between positions. Use only horizontal plane (x and z) if ignoreVertical is set.
+float           distanceSquared(const position_t& A, const position_t& B, bool ignoreVertical = false); // squared distance between positions (use squared unless otherwise needed)
+constexpr float square(float distance)                                                                  // constexpr square (used with distanceSquared)
 {
     return distance * distance;
 }
 
-int32 intpow32(int32 base, int32 exponent);						// Exponential power of integers
-void getMSB(uint32* result,uint32 value);						// fast Most Significant Byte search under GCC or MSVC. Fallback included.
-float rotationToRadian(uint8 rotation);
-uint8 radianToRotation(float radian);
-uint8 worldAngle(const position_t& A, const position_t& B);     // А - the main entity, B - target entity (vector projection onto the X-axis)
-uint8 relativeAngle(uint8 world, int16 diff);                   // Returns a new world angle which is diff degrees in a given (signed) direction
-int16 angleDifference(uint8 worldAngleA, uint8 aworldAngleB);   // Returns difference between two world angles (0~128), sign indicates direction
-int16 facingAngle(const position_t& A, const position_t& B);    // А - the main entity, B - target entity
-bool facing(const position_t& A, const position_t& B, uint8 coneAngle);   // true if A is facing B within coneAngle degrees
-bool infront(const position_t& A, const position_t& B, uint8 coneAngle);  // true if A is infront of B within coneAngle degrees
-bool behind(const position_t& A, const position_t& B, uint8 coneAngle);   // true if A is behind of B within coneAngle degrees
-bool beside(const position_t& A, const position_t& B, uint8 coneAngle);   // true if A is to a side of B within coneAngle degrees
-position_t nearPosition(const position_t& A, float offset, float radian); // Returns a position near the given position
-const char* nnString(const char* str);                          // Returns a valid string pointer. If input is null, returns an empty string
+int32      intpow32(int32 base, int32 exponent); // Exponential power of integers
+void       getMSB(uint32* result, uint32 value); // fast Most Significant Byte search under GCC or MSVC. Fallback included.
+float      rotationToRadian(uint8 rotation);
+uint8      radianToRotation(float radian);
+uint8      worldAngle(const position_t& A, const position_t& B);               // А - the main entity, B - target entity (vector projection onto the X-axis)
+uint8      relativeAngle(uint8 world, int16 diff);                             // Returns a new world angle which is diff degrees in a given (signed) direction
+int16      angleDifference(uint8 worldAngleA, uint8 aworldAngleB);             // Returns difference between two world angles (0~128), sign indicates direction
+int16      facingAngle(const position_t& A, const position_t& B);              // А - the main entity, B - target entity
+bool       facing(const position_t& A, const position_t& B, uint8 coneAngle);  // true if A is facing B within coneAngle degrees
+bool       infront(const position_t& A, const position_t& B, uint8 coneAngle); // true if A is infront of B within coneAngle degrees
+bool       behind(const position_t& A, const position_t& B, uint8 coneAngle);  // true if A is behind of B within coneAngle degrees
+bool       beside(const position_t& A, const position_t& B, uint8 coneAngle);  // true if A is to a side of B within coneAngle degrees
+bool       distanceWithin(const position_t& A, const position_t& B, float within, bool ignoreVertical = false);
+position_t nearPosition(const position_t& A, float offset, float radian);      // Returns a position near the given position
 
 int32 hasBit(uint16 value, uint8* BitArray, uint32 size);		// Check for the presence of a bit in the array
 int32 addBit(uint16 value, uint8* BitArray, uint32 size);		// Adds a bit to the array
