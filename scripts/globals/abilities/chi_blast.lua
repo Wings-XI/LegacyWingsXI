@@ -31,7 +31,6 @@ function onUseAbility(player, target, ability)
 
     -- https://ffxiclopedia.fandom.com/wiki/Chi_Blast
     -- DMG = floor( floor( MND × Rand ) × ( #Boost × BoostIncrease% + 1 ) )
-    -- boost increase % implies that this should be #boost * (1 + boostincrease%)
     local dmg = math.floor(math.floor(mnd * rand) * (boostNum * (boostPowerPerc * 4 / 100) + 1))
     -- printf("dmg %u, mnd %u, rand %f, boostNum %u, boostPower %u", dmg, mnd, rand, boostNum, boostPowerPerc)
     
