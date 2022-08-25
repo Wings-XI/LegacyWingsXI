@@ -103,6 +103,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
 
                 nm:addListener("SPAWN", "SPAWN_" .. nmId, function(m)
                     SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1) -- 1 means pop immediately on next PH kill if server crashes while alive
+                    m:removeListener("SPAWN_" .. nmId)
                 end)
 
                 nm:addListener("DESPAWN", "DESPAWN_" .. nmId, function(m)
