@@ -20,7 +20,7 @@ function onUseAbility(player, target, ability)
     end
     
     local mnd = player:getStat(tpz.mod.MND)
-    local boostPower = 0
+    local boostPowerPerc = 0
     local boostNum = 0
     if (player:hasStatusEffect(tpz.effect.BOOST) == true) then
         local boostEffect = player:getStatusEffect(tpz.effect.BOOST)
