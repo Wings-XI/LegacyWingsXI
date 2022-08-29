@@ -4782,9 +4782,9 @@ INSERT INTO `mob_pools` VALUES(4718, 'Bisa', 'Bisa', 227, _binary 0x00003c020000
 INSERT INTO `mob_pools` VALUES(4719, 'Uptala', 'Uptala', 472, _binary 0x0000390800000000000000000000000000000000, 1, 1, 10, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 1183, 0, 0, 0, 0, 0, 472);
 INSERT INTO `mob_pools` VALUES(4720, 'Aello', 'Aello', 471, _binary 0x00003a0800000000000000000000000000000000, 4, 4, 6, 240, 100, 0, 1, 0, 0, 2, 0, 0, 7, 1695, 0, 0, 2, 0, 0, 471);
 INSERT INTO `mob_pools` VALUES(4721, 'Aello_Handmaiden', 'Aello_Handmaiden', 504, _binary 0x0000ee0700000000000000000000000000000000, 5, 3, 2, 240, 100, 0, 0, 0, 2, 2, 0, 0, 7, 1545, 0, 0, 3, 0, 0, 195);
-INSERT INTO `mob_pools` VALUES(4722, 'Lode_Golem', 'Lode_Golem', 135, _binary 0x0000300100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 0, 2, 0, 32, 1, 131, 0, 0, 0, 0, 0, 135);
-INSERT INTO `mob_pools` VALUES(4723, 'Fired_Urn', 'Fired_Urn', 175, _binary 0x00009c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 1, 667, 0, 0, 0, 0, 0, 175);
-INSERT INTO `mob_pools` VALUES(4724, 'Steely_Weapon', 'Steely_Weapon', 110, _binary 0x0000c30100000000000000000000000000000000, 1, 1, 11, 220, 100, 0, 1, 0, 0, 2, 0, 0, 1, 667, 0, 0, 0, 0, 0, 110);
+INSERT INTO `mob_pools` VALUES(4722, 'Lode_Golem', 'Lode_Golem', 135, _binary 0x0000300100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 0, 0, 0, 2, 0, 32, 1, 131, 0, 0, 0, 0, 0, 135);
+INSERT INTO `mob_pools` VALUES(4723, 'Fired_Urn', 'Fired_Urn', 175, _binary 0x00009c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 2, 0, 0, 1, 667, 0, 0, 0, 0, 0, 175);
+INSERT INTO `mob_pools` VALUES(4724, 'Steely_Weapon', 'Steely_Weapon', 110, _binary 0x0000c30100000000000000000000000000000000, 1, 1, 11, 220, 100, 0, 0, 0, 0, 2, 0, 0, 1, 667, 0, 0, 0, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(4725, 'Mimic_Mage', 'Mimic_Mage', 183, _binary 0x0000020100000000000000000000000000000000, 4, 4, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 129, 0, 0, 2, 0, 0, 183);
 INSERT INTO `mob_pools` VALUES(4726, 'Mimic_Jester', 'Mimic_Jester', 183, _binary 0x0000020100000000000000000000000000000000, 1, 1, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 129, 0, 0, 0, 0, 0, 183);
 INSERT INTO `mob_pools` VALUES(4727, 'Mimic_King', 'Mimic_King', 183, _binary 0x00000b0100000000000000000000000000000000, 1, 1, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 135, 0, 0, 0, 0, 0, 183);
