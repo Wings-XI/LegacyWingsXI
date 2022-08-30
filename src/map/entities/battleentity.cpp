@@ -77,6 +77,7 @@ CBattleEntity::CBattleEntity()
     PParty        = nullptr;
     PMaster       = nullptr;
     PLastAttacker = nullptr;
+    BattleHistory.lastHitTaken_atkType = ATTACK_NONE;
 
     StatusEffectContainer = std::make_unique<CStatusEffectContainer>(this);
     PRecastContainer      = std::make_unique<CRecastContainer>(this);
@@ -653,7 +654,8 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         return 0;
     }
 
-    PLastAttacker                             = attacker;
+    PLastAttacker = attacker;
+    this->BattleHistory.lastHitTaken_atkType = attackType;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
     
     if (this->getMod(Mod::COVERED_MP_FLAG) && amount > 4)

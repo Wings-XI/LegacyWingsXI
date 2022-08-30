@@ -471,6 +471,11 @@ struct health_t
     int32 zoneinhp, zoneinmp; // HP and MP from previous zone
 };
 
+struct battlehistory_t
+{
+    ATTACKTYPE  lastHitTaken_atkType;
+};
+
 typedef std::vector<apAction_t> ActionList_t;
 class CModifier;
 class CParty;
@@ -713,6 +718,7 @@ public:
     CBattleEntity* PPet;    // питомец сущности
     CBattleEntity* PMaster; // владелец/хозяин сущности (распространяется на все боевые сущности)
     CBattleEntity* PLastAttacker;
+    battlehistory_t BattleHistory;              // Stores info related to most recent combat actions taken towards this entity.
     time_point LastAttacked;
 
     float m_drawInOffsetY;
