@@ -52,19 +52,19 @@ CBattleEntity::CBattleEntity()
 {
     m_OwnerID.clean();
     m_ModelSize = 0;
-    m_mlvl = 0;
-    m_slvl = 0;
+    m_mlvl      = 0;
+    m_slvl      = 0;
 
     m_mjob = JOB_WAR;
     m_sjob = JOB_WAR;
 
     m_magicEvasion = 0;
 
-    m_Weapons[SLOT_MAIN] = new CItemWeapon(0);
-    m_Weapons[SLOT_SUB] = new CItemWeapon(0);
+    m_Weapons[SLOT_MAIN]   = new CItemWeapon(0);
+    m_Weapons[SLOT_SUB]    = new CItemWeapon(0);
     m_Weapons[SLOT_RANGED] = new CItemWeapon(0);
-    m_Weapons[SLOT_AMMO] = new CItemWeapon(0);
-    m_dualWield = false;
+    m_Weapons[SLOT_AMMO]   = new CItemWeapon(0);
+    m_dualWield            = false;
 
     memset(&stats, 0, sizeof(stats));
     memset(&health, 0, sizeof(health));
@@ -73,14 +73,14 @@ CBattleEntity::CBattleEntity()
 
     memset(&WorkingSkills, 0, sizeof(WorkingSkills));
 
-    PPet = nullptr;
-    PParty = nullptr;
-    PMaster = nullptr;
+    PPet          = nullptr;
+    PParty        = nullptr;
+    PMaster       = nullptr;
     PLastAttacker = nullptr;
 
     StatusEffectContainer = std::make_unique<CStatusEffectContainer>(this);
-    PRecastContainer = std::make_unique<CRecastContainer>(this);
-    PNotorietyContainer = std::make_unique<CNotorietyContainer>(this);
+    PRecastContainer      = std::make_unique<CRecastContainer>(this);
+    PNotorietyContainer   = std::make_unique<CNotorietyContainer>(this);
 
     m_modStat[Mod::SLASHRES] = 1000;
     m_modStat[Mod::PIERCERES] = 1000;
@@ -88,8 +88,8 @@ CBattleEntity::CBattleEntity()
     m_modStat[Mod::IMPACTRES] = 1000;
     m_modStat[Mod::MOVE] = 0;
 
-    m_Immunity = 0;
-    isCharmed = false;
+    m_Immunity   = 0;
+    isCharmed    = false;
     isSuperJumped = false;
     m_unkillable = false;
     m_dmgType = (DAMAGETYPE)0;
@@ -146,7 +146,7 @@ bool CBattleEntity::isAsleep()
 
 bool CBattleEntity::isMounted()
 {
-	return (animation == ANIMATION_CHOCOBO || animation == ANIMATION_MOUNT);
+    return (animation == ANIMATION_CHOCOBO || animation == ANIMATION_MOUNT);
 }
 
 bool CBattleEntity::isSitting()
@@ -155,10 +155,10 @@ bool CBattleEntity::isSitting()
 }
 
 /*************************************************************************************
-*                                                                                    *
-*  Пересчитываем максимальные значения hp и mp с учетом модификаторов                *
+ *                                                                       *
+ *  Пересчитываем максимальные значения hp и mp с учетом модификаторов   *
 *  We recalculate the maximum values ​​of hp and mp taking into account the modifiers  *
-*                                                                                    *
+ *                                                                       *
 **************************************************************************************/
 
 void CBattleEntity::UpdateHealth()
@@ -189,10 +189,10 @@ void CBattleEntity::UpdateHealth()
 }
 
 /************************************************************************
-*                                                                       *
-*  Получаем текущее количество очков жизней                             *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Получаем текущее количество очков жизней                             *
+ *                                                                       *
+ ************************************************************************/
 
 uint8 CBattleEntity::GetHPP()
 {
@@ -212,10 +212,10 @@ int32 CBattleEntity::GetMaxHP()
 }
 
 /************************************************************************
-*                                                                       *
-*  Получаем текущее количество очков маны                               *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Получаем текущее количество очков маны                               *
+ *                                                                       *
+ ************************************************************************/
 
 uint8 CBattleEntity::GetMPP()
 {
@@ -228,12 +228,12 @@ int32 CBattleEntity::GetMaxMP()
 }
 
 /************************************************************************
-*                                                                       *
-*  Movement speed, taking into account modifiers                        *
-*  Note: retail speeds show as a float in the client,                   *
-*        yet in the packet it seems to be just one byte 0-255..         *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Movement speed, taking into account modifiers                        *
+ *  Note: retail speeds show as a float in the client,                   *
+ *        yet in the packet it seems to be just one byte 0-255..         *
+ *                                                                       *
+ ************************************************************************/
 
 uint8 CBattleEntity::GetSpeed()
 {
@@ -243,7 +243,7 @@ uint8 CBattleEntity::GetSpeed()
     // Mod::MOUNT_MOVE (972)
     Mod mod = isMounted() ? Mod::MOUNT_MOVE : Mod::MOVE;
 
-    float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
+    float modAmount     = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
     // Cap unmounted movement speed increase to 50%, max quickening (25 - chocobo mazurka/jig) + max gear movement (25 ninja af+1)
     if (mod == Mod::MOVE)
     {
@@ -318,7 +318,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
         uint16 MinimumDelay = weapon->getDelay(); // Track base delay.  We will need this later.  Mod::DELAY is ignored for now.
-        WeaponDelay = weapon->getDelay() - getMod(Mod::DELAY);
+        WeaponDelay         = weapon->getDelay() - getMod(Mod::DELAY);
         if (weapon->isHandToHand())
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
@@ -329,18 +329,18 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         {
             MinimumDelay += subweapon->getDelay();
             WeaponDelay += subweapon->getDelay();
-            //apply dual wield delay reduction
+            // apply dual wield delay reduction
             WeaponDelay = (uint16)(WeaponDelay * ((100.0f - getMod(Mod::DUAL_WIELD)) / 100.0f));
         }
         if ((!weapon || weapon->isHandToHand()) && this->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
             WeaponDelay = 480 * 1000 / 60;
-        //apply haste and delay reductions that don't affect tp
+        // apply haste and delay reductions that don't affect tp
         if (!tp)
         {
             // Cap haste at appropriate levels.
-            int16 hasteMagic = std::clamp<int16>(getMod(Mod::HASTE_MAGIC), -10000, 4375); // 43.75% cap -- handle 100% slow for weakness
+            int16 hasteMagic   = std::clamp<int16>(getMod(Mod::HASTE_MAGIC), -10000, 4375);  // 43.75% cap -- handle 100% slow for weakness
             int16 hasteAbility = std::clamp<int16>(getMod(Mod::HASTE_ABILITY), -2500, 2500); // 25% cap
-            int16 hasteGear = std::clamp<int16>(getMod(Mod::HASTE_GEAR), -2500, 2500); // 25%
+            int16 hasteGear    = std::clamp<int16>(getMod(Mod::HASTE_GEAR), -2500, 2500);    // 25%
 
             if (StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS))
             {
@@ -359,7 +359,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
 
             // Divide by float to get a more accurate reduction, then use int16 cast to truncate
             if (!specialAttackList)
-                WeaponDelay -= (int16)(WeaponDelay * (hasteMagic + hasteAbility + hasteGear) / 10000.f);
+            WeaponDelay -= (int16)(WeaponDelay * (hasteMagic + hasteAbility + hasteGear) / 10000.f);
         }
         
         WeaponDelay = (uint16)(WeaponDelay * ((100.0f + getMod(Mod::DELAYP)) / 100.0f));
@@ -381,7 +381,7 @@ uint8 CBattleEntity::GetMeleeRange()
 int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
 {
     CItemWeapon* PRange = (CItemWeapon*)m_Weapons[SLOT_RANGED];
-    CItemWeapon* PAmmo = (CItemWeapon*)m_Weapons[SLOT_AMMO];
+    CItemWeapon* PAmmo  = (CItemWeapon*)m_Weapons[SLOT_AMMO];
 
     // base delay
     int16 delay = 0;
@@ -392,7 +392,7 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
 
     delay = (((delay - getMod(Mod::RANGED_DELAY)) * 1000) / 120);
 
-    //apply haste and delay reductions that don't affect tp
+    // apply haste and delay reductions that don't affect tp
     if (!tp)
     {
         delay = (int16)(delay * ((100.0f + getMod(Mod::RANGED_DELAYP)) / 100.0f));
@@ -433,7 +433,7 @@ uint16 CBattleEntity::GetMainWeaponDmg()
         }
         else
             return weapon->getDamage() + getMod(Mod::MAIN_DMG_RATING);
-    }
+        }
     return 0;
 }
 
@@ -452,7 +452,7 @@ uint16 CBattleEntity::GetSubWeaponDmg()
         }
         else
             return weapon->getDamage() + getMod(Mod::SUB_DMG_RATING);
-    }
+        }
     return 0;
 }
 
@@ -472,7 +472,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
         }
         else
             dmg += weapon->getDamage();
-    }
+        }
     if (auto ammo = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_AMMO]))
     {
         // Level sync scaling
@@ -486,7 +486,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
         }
         else
             dmg += ammo->getDamage();
-    }
+        }
     return dmg + getMod(Mod::RANGED_DMG_RATING);
 }
 
@@ -497,7 +497,7 @@ uint16 CBattleEntity::GetMainWeaponRank()
         if (weapon->getSkillType() == SKILL_HAND_TO_HAND)
             return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK) + 3) / 9;
         else
-            return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK)) / 9;
+        return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK)) / 9;
     }
     return 0;
 }
@@ -554,10 +554,10 @@ int16 CBattleEntity::AddTPFromHit(CBattleEntity* PAttacker, CItemWeapon* weapon,
 }
 
 /************************************************************************
-*                                                                       *
-*  Изменяем количество TP сущности	                                    *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Изменяем количество TP сущности	                                    *
+ *                                                                       *
+ ************************************************************************/
 
 int16 CBattleEntity::addTP(int16 tp)
 {
@@ -565,7 +565,7 @@ int16 CBattleEntity::addTP(int16 tp)
     if (tp > 0)
     {
         float tpReducePercent = this->getMod(Mod::INHIBIT_TP) / 100.0f;
-        tp = (int16)(tp - (tp * tpReducePercent));
+        tp                    = (int16)(tp - (tp * tpReducePercent));
 
         float TPMulti = 1.0;
 
@@ -583,7 +583,7 @@ int16 CBattleEntity::addTP(int16 tp)
                 TPMulti = map_config.mob_tp_multiplier * 3;
             else
                 TPMulti = map_config.player_tp_multiplier;
-        }
+            }
 
         tp = (int16)(tp * TPMulti);
     }
@@ -593,25 +593,25 @@ int16 CBattleEntity::addTP(int16 tp)
     }
     
     int16 cap = std::clamp(health.tp + tp, 0, (int)health.modtp);
-    tp = health.tp - cap;
+    tp        = health.tp - cap;
     health.tp = cap;
     return abs(tp);
 }
 
 /************************************************************************
-*																		*
-*  Изменяем количество жизней сущности									*
-*																		*
-************************************************************************/
+ *																		*
+ *  Изменяем количество жизней сущности									*
+ *																		*
+ ************************************************************************/
 
 int32 CBattleEntity::addHP(int32 hp)
 {
     if (health.hp == 0 && hp < 0) {
-        return 0; //if the entity is already dead, skip the rest to prevent killing it again
+        return 0; // if the entity is already dead, skip the rest to prevent killing it again
     }
 
     int32 cap = std::clamp(health.hp + hp, 0, GetMaxHP());
-    hp = health.hp - cap;
+    hp        = health.hp - cap;
     health.hp = cap;
 
     // если количество жизней достигает нуля, то сущность умирает
@@ -637,7 +637,7 @@ int32 CBattleEntity::addHP(int32 hp)
 int32 CBattleEntity::addMP(int32 mp)
 {
     int32 cap = std::clamp(health.mp + mp, 0, GetMaxMP());
-    mp = health.mp - cap;
+    mp        = health.mp - cap;
     health.mp = cap;
     if (mp != 0)
     {
@@ -653,19 +653,22 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         return 0;
     }
 
-    PLastAttacker = attacker;
+    PLastAttacker                             = attacker;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
     
     if (this->getMod(Mod::COVERED_MP_FLAG) && amount > 4)
         this->addMP(amount / 5);
 
 
-    //RoE Damage Taken Trigger
+    // RoE Damage Taken Trigger
     if (this->objtype == TYPE_PC)
         roeutils::event(ROE_EVENT::ROE_DMGTAKEN, static_cast<CCharEntity*>(this), RoeDatagram("dmg", amount));
     else if (PLastAttacker && PLastAttacker->objtype == TYPE_PC)
         roeutils::event(ROE_EVENT::ROE_DMGDEALT, static_cast<CCharEntity*>(attacker), RoeDatagram("dmg", amount));
 
+    // Took dmg from non ws source, so remove ws kill var
+    this->SetLocalVar("weaponskillHit", 0);
+        
     if (amount > 0 && attacker)
     {
         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
@@ -677,10 +680,10 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
 }
 
 /************************************************************************
-*                                                                       *
-*  Полные значения характеристик боевой сущности                        *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Полные значения характеристик боевой сущности                        *
+ *                                                                       *
+ ************************************************************************/
 
 uint16 CBattleEntity::STR()
 {
@@ -719,8 +722,8 @@ uint16 CBattleEntity::CHR()
 
 uint16 CBattleEntity::ATT()
 {
-    //TODO: consider which weapon!
-    int32 ATT = 8 + m_modStat[Mod::ATT];
+    // TODO: consider which weapon!
+    int32 ATT    = 8 + m_modStat[Mod::ATT];
     auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
     if (weapon && weapon->isTwoHanded())
     {
@@ -804,10 +807,10 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
             return 0; // fishing baits dont offer RACC
     }
 
-    int skill_level = GetSkill(skill) + bonusSkill;
+    int    skill_level = GetSkill(skill) + bonusSkill;
     if (skill == SKILL_AUTOMATON_RANGED)
         skill_level = PMaster->GetSkill(skill) + bonusSkill;
-    uint16 acc = skill_level;
+    uint16 acc         = skill_level;
     if (skill_level > 200)
     {
         acc = (uint16)(200 + (skill_level - 200) * 0.9);
@@ -821,23 +824,23 @@ uint16 CBattleEntity::RACC(uint8 skill, uint16 bonusSkill)
 uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 {
     if (this->objtype & TYPE_PC) {
-        uint8 skill = 0;
+        uint8  skill     = 0;
         uint16 iLvlSkill = 0;
         if (attackNumber == 0)
         {
             if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
             {
-                skill = weapon->getSkillType();
+                skill     = weapon->getSkillType();
                 iLvlSkill = weapon->getILvlSkill();
                 if (skill == SKILL_NONE && GetSkill(SKILL_HAND_TO_HAND) > 0)
                     skill = SKILL_HAND_TO_HAND;
+                }
             }
-        }
         else if (attackNumber == 1)
         {
             if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]))
             {
-                skill = weapon->getSkillType();
+                skill     = weapon->getSkillType();
                 iLvlSkill = weapon->getILvlSkill();
                 if (skill == SKILL_NONE && GetSkill(SKILL_HAND_TO_HAND) > 0)
                 {
@@ -859,7 +862,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
             skill = SKILL_HAND_TO_HAND;
         }
         int16 ACC = GetSkill(skill) + iLvlSkill;
-        ACC = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
+        ACC       = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
         if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]); weapon && weapon->isTwoHanded() == true)
         {
             ACC += DEX() * 3 / 4;
@@ -868,7 +871,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         {
             ACC += DEX() / 2;
         }
-        ACC = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
+        ACC         = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
         auto PChar = dynamic_cast<CCharEntity *>(this);
         if (PChar)
             ACC += PChar->PMeritPoints->GetMeritValue(MERIT_ACCURACY, PChar);
@@ -878,7 +881,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
     else if (this->objtype == TYPE_PET && ((CPetEntity*)this)->getPetType() == PETTYPE_AUTOMATON)
     {
         int16 ACC = this->GetSkill(SKILL_AUTOMATON_MELEE);
-        ACC = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
+        ACC       = (ACC > 200 ? (int16)(((ACC - 200) * 0.9) + 200) : ACC);
         ACC += (int16)(DEX() * 0.5);
         ACC += m_modStat[Mod::ACC] + offsetAccuracy;
         ACC = ACC + std::min<int16>((ACC * m_modStat[Mod::FOOD_ACCP] / 100), m_modStat[Mod::FOOD_ACC_CAP]);
@@ -887,7 +890,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
     else
     {
         int16 ACC = m_modStat[Mod::ACC];
-        ACC = ACC + std::min<int16>((ACC * m_modStat[Mod::FOOD_ACCP] / 100), m_modStat[Mod::FOOD_ACC_CAP]) + DEX() / 2; //food mods here for Snatch Morsel
+        ACC       = ACC + std::min<int16>((ACC * m_modStat[Mod::FOOD_ACCP] / 100), m_modStat[Mod::FOOD_ACC_CAP]) + DEX() / 2; // food mods here for Snatch Morsel
         return std::max<int16>(0, ACC);
     }
 }
@@ -919,10 +922,10 @@ uint16 CBattleEntity::EVA()
 }
 
 /************************************************************************
-*                                                                       *
-*                                                                       *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
 JOBTYPE CBattleEntity::GetMJob()
 {
@@ -967,21 +970,21 @@ void CBattleEntity::SetMLevel(uint8 mlvl)
 
     if (this->objtype & TYPE_PC)
         Sql_Query(SqlHandle, "UPDATE char_stats SET mlvl = %u WHERE charid = %u LIMIT 1;", m_mlvl, this->id);
-}
+    }
 
 void CBattleEntity::SetSLevel(uint8 slvl)
 {
-    m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+                m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
 
     if (this->objtype & TYPE_PC)
         Sql_Query(SqlHandle, "UPDATE char_stats SET slvl = %u WHERE charid = %u LIMIT 1;", m_slvl, this->id);
-}
+    }
 
 /************************************************************************
-*																		*
-*  Добавляем модификатор												*
-*																		*
-************************************************************************/
+ *																		*
+ *  Добавляем модификатор												*
+ *																		*
+ ************************************************************************/
 
 void CBattleEntity::addModifier(Mod type, int16 amount)
 {
@@ -994,17 +997,17 @@ void CBattleEntity::addModifier(Mod type, int16 amount)
     }
     else
     {
-        m_modStat[type] += amount;
-    }
+    m_modStat[type] += amount;
+}
 }
 
 /************************************************************************
-*																		*
-*  Добавляем модификаторы												*
-*																		*
-************************************************************************/
+ *																		*
+ *  Добавляем модификаторы												*
+ *																		*
+ ************************************************************************/
 
-void CBattleEntity::addModifiers(std::vector<CModifier> *modList)
+void CBattleEntity::addModifiers(std::vector<CModifier>* modList)
 {
     for (auto modifier : *modList)
     {
@@ -1014,9 +1017,9 @@ void CBattleEntity::addModifiers(std::vector<CModifier> *modList)
         }
         else
         {
-            m_modStat[modifier.getModID()] += modifier.getModAmount();
-        }
+        m_modStat[modifier.getModID()] += modifier.getModAmount();
     }
+}
 }
 
 int16 CBattleEntity::CalculateMSFromSources()
@@ -1068,7 +1071,7 @@ int16 CBattleEntity::CalculateMSFromSources()
 }
 
 
-void CBattleEntity::addEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid)
+void CBattleEntity::addEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid)
 {
     if (GetMLevel() >= itemLevel)
     {
@@ -1160,10 +1163,10 @@ void CBattleEntity::addEquipModifiers(std::vector<CModifier> *modList, uint8 ite
 }
 
 /************************************************************************
-*																		*
-*  Устанавливаем модификатор											*
-*																		*
-************************************************************************/
+ *																		*
+ *  Устанавливаем модификатор											*
+ *																		*
+ ************************************************************************/
 
 void CBattleEntity::setModifier(Mod type, int16 amount)
 {
@@ -1171,12 +1174,12 @@ void CBattleEntity::setModifier(Mod type, int16 amount)
 }
 
 /************************************************************************
-*																		*
-*  Устанавливаем модификаторы											*
-*																		*
-************************************************************************/
+ *																		*
+ *  Устанавливаем модификаторы											*
+ *																		*
+ ************************************************************************/
 
-void CBattleEntity::setModifiers(std::vector<CModifier> *modList)
+void CBattleEntity::setModifiers(std::vector<CModifier>* modList)
 {
     for (uint16 i = 0; i < modList->size(); ++i)
     {
@@ -1185,10 +1188,10 @@ void CBattleEntity::setModifiers(std::vector<CModifier> *modList)
 }
 
 /************************************************************************
-*																		*
-*  Удаляем модификатор													*
-*																		*
-************************************************************************/
+ *																		*
+ *  Удаляем модификатор													*
+ *																		*
+ ************************************************************************/
 
 void CBattleEntity::delModifier(Mod type, int16 amount)
 {
@@ -1209,8 +1212,8 @@ void CBattleEntity::delModifier(Mod type, int16 amount)
     }
     else
     {
-        m_modStat[type] -= amount;
-    }
+    m_modStat[type] -= amount;
+}
 }
 
 void CBattleEntity::saveModifiers()
@@ -1224,12 +1227,12 @@ void CBattleEntity::restoreModifiers()
 }
 
 /************************************************************************
-*																		*
-*  Удаляем модификаторы													*
-*																		*
-************************************************************************/
+ *																		*
+ *  Удаляем модификаторы													*
+ *																		*
+ ************************************************************************/
 
-void CBattleEntity::delModifiers(std::vector<CModifier> *modList)
+void CBattleEntity::delModifiers(std::vector<CModifier>* modList)
 {
     for (uint16 i = 0; i < modList->size(); ++i)
     {
@@ -1345,10 +1348,10 @@ void CBattleEntity::delEquipModifiers(std::vector<CModifier>* modList, uint8 ite
 }
 
 /************************************************************************
-*																		*
-*  Получаем текущее значение указанного модификатора					*
-*																		*
-************************************************************************/
+ *																		*
+ *  Получаем текущее значение указанного модификатора					*
+ *																		*
+ ************************************************************************/
 
 int16 CBattleEntity::getMod(Mod modID)
 {
@@ -1388,7 +1391,7 @@ void CBattleEntity::delPetModifier(Mod type, PetModType petmod, int16 amount)
     }
 }
 
-void CBattleEntity::addPetModifiers(std::vector<CPetModifier> *modList)
+void CBattleEntity::addPetModifiers(std::vector<CPetModifier>* modList)
 {
     for (auto modifier : *modList)
     {
@@ -1396,7 +1399,7 @@ void CBattleEntity::addPetModifiers(std::vector<CPetModifier> *modList)
     }
 }
 
-void CBattleEntity::delPetModifiers(std::vector<CPetModifier> *modList)
+void CBattleEntity::delPetModifiers(std::vector<CPetModifier>* modList)
 {
     for (auto modifier : *modList)
     {
@@ -1436,10 +1439,10 @@ void CBattleEntity::removePetModifiers(CPetEntity* PPet)
 }
 
 /************************************************************************
-*																		*
-*  Текущая величина умения (не максимальная, а ограниченная уровнем)	*
-*																		*
-************************************************************************/
+ *																		*
+ *  Текущая величина умения (не максимальная, а ограниченная уровнем)	*
+ *																		*
+ ************************************************************************/
 
 uint16 CBattleEntity::GetSkill(uint16 SkillID)
 {
@@ -1519,7 +1522,7 @@ void CBattleEntity::Die()
 {
     if (CBaseEntity* PKiller = GetEntity(m_OwnerID.targid))
     {
-        static_cast<CBattleEntity*>(PKiller)->ForAlliance([this](CBattleEntity* PMember){
+        static_cast<CBattleEntity*>(PKiller)->ForAlliance([this](CBattleEntity* PMember) {
             CCharEntity* member = static_cast<CCharEntity*>(PMember);
             if (member->PClaimedMob == this)
             {
@@ -1543,7 +1546,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     auto PSpell = state.GetSpell();
     auto PActionTarget = static_cast<CBattleEntity*>(state.GetTarget());
     CBattleEntity* POriginalTarget = PActionTarget;
-    bool IsMagicCovered= false;
+    bool           IsMagicCovered  = false;
     bool cover = false;
 
     if (!PActionTarget) {
@@ -1617,7 +1620,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         if (this->objtype == TYPE_MOB && PActionTarget->objtype == TYPE_PC)
         {
             CBattleEntity* PCoverAbilityUser = battleutils::GetCoverAbilityUser(PActionTarget, this);
-            IsMagicCovered = battleutils::IsMagicCovered((CCharEntity*) PCoverAbilityUser);
+            IsMagicCovered                   = battleutils::IsMagicCovered((CCharEntity*)PCoverAbilityUser);
 
             if (IsMagicCovered)
             {
@@ -1632,26 +1635,26 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     PSpell->setTotalTargets(totalTargets);
 
-    action.id = id;
+    action.id         = id;
     action.actiontype = ACTION_MAGIC_FINISH;
-    action.actionid = static_cast<uint16>(PSpell->getID());
-    action.recast = state.GetRecast();
+    action.actionid   = static_cast<uint16>(PSpell->getID());
+    action.recast     = state.GetRecast();
     action.spellgroup = PSpell->getSpellGroup();
 
     uint16 msg = MSGBASIC_NONE;
 
     for (auto PTarget : PAI->TargetFind->m_targets)
     {
-        actionList_t& actionList = action.getNewActionList();
+        actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = PTarget->id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
 
         actionTarget.reaction = REACTION_NONE;
         actionTarget.speceffect = SPECEFFECT_NONE;
-        actionTarget.animation = PSpell->getAnimationID();
-        actionTarget.param = 0;
-        actionTarget.messageID = MSGBASIC_NONE;
+        actionTarget.animation  = PSpell->getAnimationID();
+        actionTarget.param      = 0;
+        actionTarget.messageID  = MSGBASIC_NONE;
 
         auto ce = PSpell->getCE();
         auto ve = PSpell->getVE();
@@ -1677,10 +1680,10 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
             && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
         {
             // take shadow
-            msg = MSGBASIC_SHADOW_ABSORB;
+            msg                = MSGBASIC_SHADOW_ABSORB;
             actionTarget.param = 1;
-            ve = 0;
-            ce = 0;
+            ve                 = 0;
+            ce                 = 0;
         }
         else
         {
@@ -1733,7 +1736,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
                 doEnmityAndClaim = false;
 
             if (doEnmityAndClaim)
-                state.ApplyEnmity(PTarget, ce, ve);
+            state.ApplyEnmity(PTarget, ce, ve);
         }
 
         if (PTarget->objtype == TYPE_MOB && msg != MSGBASIC_SHADOW_ABSORB) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
@@ -1780,17 +1783,17 @@ void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGB
     CSpell* PSpell = state.GetSpell();
     if (PSpell)
     {
-        action.id = id;
+        action.id         = id;
         action.actiontype = ACTION_MAGIC_INTERRUPT;
-        action.actionid = static_cast<uint16>(PSpell->getID());
+        action.actionid   = static_cast<uint16>(PSpell->getID());
         action.spellgroup = PSpell->getSpellGroup();
 
-        actionList_t& actionList = action.getNewActionList();
+        actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        actionTarget.messageID = 0;
-        actionTarget.animation = PSpell->getAnimationID();
+        actionTarget.messageID       = 0;
+        actionTarget.animation       = PSpell->getAnimationID();
 
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
     }
@@ -1806,9 +1809,9 @@ void CBattleEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& ac
 {
     auto PWeaponskill = state.GetSkill();
 
-    action.id = id;
+    action.id         = id;
     action.actiontype = ACTION_WEAPONSKILL_FINISH;
-    action.actionid = PWeaponskill->getID();
+    action.actionid   = PWeaponskill->getID();
 }
 
 bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
@@ -1931,8 +1934,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     // Create a new attack round.
     CAttackRound attackRound(this, PTarget);
 
-    action.actiontype = ACTION_ATTACK;
-    action.id = this->id;
+    action.actiontype  = ACTION_ATTACK;
+    action.id          = this->id;
     actionList_t& list = action.getNewActionList();
 
     list.ActionTargetID = PTarget->id;
@@ -1961,13 +1964,13 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
         if (attack.CheckCover())
         {
-            PTarget = attackRound.GetCoverAbilityUserEntity();
+            PTarget             = attackRound.GetCoverAbilityUserEntity();
             list.ActionTargetID = PTarget->id;
         }
 
         if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0) || PTarget->isSuperJumped)
         {
-            actionTarget.messageID = 32;
+            actionTarget.messageID  = 32;
             actionTarget.reaction = REACTION_EVADE;
             actionTarget.speceffect = SPECEFFECT_NONE;
         }
@@ -1995,7 +1998,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             {
                 if (attack.IsAnticipated())
                 {
-                    actionTarget.messageID = 30;
+                    actionTarget.messageID  = 30;
                     actionTarget.reaction = REACTION_EVADE;
                     actionTarget.speceffect = SPECEFFECT_NONE;
                 }
@@ -2003,8 +2006,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 {
                     actionTarget.reaction = REACTION_EVADE;
                     actionTarget.speceffect = SPECEFFECT_NONE;
-                    actionTarget.param = 0;
-                    actionTarget.messageID = 0;
+                    actionTarget.param        = 0;
+                    actionTarget.messageID    = 0;
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
                     if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
@@ -2028,7 +2031,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         if (PTarget->objtype == TYPE_PC)
                         {
                             auto targ_weapon = dynamic_cast<CItemWeapon*>(PTarget->m_Weapons[SLOT_MAIN]);
-                            uint8 skilltype = (targ_weapon == nullptr ? SKILL_HAND_TO_HAND : targ_weapon->getSkillType());
+                            uint8 skilltype   = (targ_weapon == nullptr ? SKILL_HAND_TO_HAND : targ_weapon->getSkillType());
                             charutils::TrySkillUP((CCharEntity*)PTarget, (SKILLTYPE)skilltype, GetMLevel());
                         } // In case the Automaton can counter
                         else if (PTarget->objtype == TYPE_PET && PTarget->PMaster && PTarget->PMaster->objtype == TYPE_PC &&
@@ -2054,7 +2057,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 {
                     actionTarget.reaction = REACTION_HIT;
                     actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
-                    actionTarget.messageID = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 353 : 67;
+                    actionTarget.messageID  = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 353 : 67;
 
                     if (PTarget->objtype == TYPE_MOB)
                     {
@@ -2067,7 +2070,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 {
                     actionTarget.reaction = REACTION_HIT;
                     actionTarget.speceffect = SPECEFFECT_HIT;
-                    actionTarget.messageID = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 352 : 1;
+                    actionTarget.messageID  = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 352 : 1;
                 }
 
                 // Guarded. TODO: Stuff guards that shouldn't.
@@ -2098,7 +2101,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 actionTarget.param = battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), attack.GetWeaponSlot(), 1, attackRound.GetTAEntity(), true, true, attack.IsCountered(), attack.IsCovered(), POriginalTarget);
                 if (actionTarget.param < 0)
                 {
-                    actionTarget.param = -(actionTarget.param);
+                    actionTarget.param     = -(actionTarget.param);
                     actionTarget.messageID = 373;
                 }
             }
@@ -2139,7 +2142,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             // misses the target
             actionTarget.reaction = REACTION_EVADE;
             actionTarget.speceffect = SPECEFFECT_NONE;
-            actionTarget.messageID = 15;
+            actionTarget.messageID  = 15;
             attack.SetEvaded(true);
 
             // Check & Handle Afflatus Misery Accuracy Bonus
@@ -2172,13 +2175,13 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             actionTarget.speceffect = SPECEFFECT_RECOIL;
         }
 
-        //try zanshin only on single swing attack rounds - it is last priority in the multi-hit order
-        //if zanshin procs, the attack is repeated
+        // try zanshin only on single swing attack rounds - it is last priority in the multi-hit order
+        // if zanshin procs, the attack is repeated
         if (attack.IsFirstSwing() && attackRound.GetAttackSwingCount() == 1)
         {
             uint16 zanshinChance = this->getMod(Mod::ZANSHIN) + battleutils::GetMeritValue(this, MERIT_ZANSHIN_ATTACK_RATE);
-            zanshinChance = std::clamp<uint16>(zanshinChance, 0, 100);
-            //zanshin may only proc on a missed/guarded/countered swing or as SAM main with hasso up (at 25% of the base zanshin rate)
+            zanshinChance        = std::clamp<uint16>(zanshinChance, 0, 100);
+            // zanshin may only proc on a missed/guarded/countered swing or as SAM main with hasso up (at 25% of the base zanshin rate)
             if ((actionTarget.reaction == REACTION_EVADE || actionTarget.reaction == REACTION_GUARD || actionTarget.spikesEffect == SUBEFFECT_COUNTER) && tpzrand::GetRandomNumber(100) < zanshinChance)
             {
                 attack.SetAttackType(PHYSICAL_ATTACK_TYPE::ZANSHIN);
@@ -2186,7 +2189,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             }
             else
                 attackRound.DeleteAttackSwing();
-        }
+            }
         else
         {
             attackRound.DeleteAttackSwing();
@@ -2231,7 +2234,7 @@ void CBattleEntity::TryHitInterrupt(CBattleEntity* PAttacker)
 {
     if (PAI->GetCurrentState())
         PAI->GetCurrentState()->TryInterrupt(PAttacker);
-}
+    }
 
 void CBattleEntity::OnDespawn()
 {
