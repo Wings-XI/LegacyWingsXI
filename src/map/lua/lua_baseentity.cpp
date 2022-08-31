@@ -13527,6 +13527,22 @@ int32 CLuaBaseEntity::handleAfflatusMiseryDamage(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getLastAttackType()
+*  Purpose : Gets the type of the last attack received (physical, magical, ranged etc.)
+*  Example : target:getLastAttackType()
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::getLastAttackType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    lua_pushinteger(L, (int32)((CBattleEntity*)m_PBaseEntity)->BattleHistory.lastHitTaken_atkType);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: isWeaponTwoHanded()
 *  Purpose : Returns true if the Weapon in the Main Slot is two-handed
 *  Example : if (player:isWeaponTwoHanded()) then
@@ -19436,6 +19452,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,rangedDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breathDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,handleAfflatusMiseryDamage),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastAttackType),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isWeaponTwoHanded),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeHitDamage),

@@ -24,6 +24,7 @@ function onMobDeathEx(mob, player, isKiller, isWeaponSkillKill)
             (player:getQuestStatus(BASTOK, tpz.quest.id.bastok.BLADE_OF_DARKNESS) == QUEST_ACCEPTED or player:getQuestStatus(BASTOK, tpz.quest.id.bastok.BLADE_OF_DEATH) == QUEST_ACCEPTED) and
             player:getEquipID(tpz.slot.MAIN) == 16607 and
             player:getCharVar("ChaosbringerKills") < 200 and
+            mob:getLastAttackType() == tpz.attackType.PHYSICAL and
             not isWeaponSkillKill
         then
             player:addCharVar("ChaosbringerKills", 1)
