@@ -46,6 +46,20 @@ end
 -- placeholder / lottery NMs
 -------------------------------------------------
 
+tpz.mob.spawntype =
+{
+    SPAWNTYPE_NORMAL    = 0, -- 00:00-24:00
+    SPAWNTYPE_ATNIGHT   = 1, -- 20:00-04:00
+    SPAWNTYPE_ATEVENING = 2, -- 18:00-06:00
+    SPAWNTYPE_WEATHER   = 4,
+    SPAWNTYPE_FOG       = 8, -- 02:00-07:00
+    SPAWNTYPE_MOONPHASE = 16,
+    SPAWNTYPE_LOTTERY   = 32,
+    SPAWNTYPE_WINDOWED  = 64,
+    SPAWNTYPE_SCRIPTED  = 128, -- scripted spawn
+    SPAWNTYPE_PIXIE     = 256, -- according to server amity
+}
+
 -- is a lottery NM already spawned or primed to pop?
 local function lotteryPrimed(phList)
     local nm
@@ -77,7 +91,6 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
         local nm = GetMobByID(nmId)
         if nm ~= nil then
             local pop = GetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId))
-
             chance = math.ceil(chance * 10) -- chance / 1000.
             if os.time() > pop and not lotteryPrimed(phList) and (math.random(1000) <= chance or pop == 1) then
 
@@ -86,18 +99,44 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                 DisallowRespawn(phId, true)
                 DisallowRespawn(nmId, false)
                 UpdateNMSpawnPoint(nmId)
-                nm:setRespawnTime(immediate and 1 or GetMobRespawnTime(phId)) -- if immediate is true, spawn the nm immediately (1ms) else use placeholder's timer
-				
-				nm:addListener("SPAWN", "SPAWN_" .. nmId, function(m)
+                nm:setRespawnTime(immediate and 1 or GetMobRespawnTime(phId)) -- if immediate is true, spawn the nm immediately (1ms) else use placeholder's timer	
+
+                nm:addListener("SPAWN", "SPAWN_" .. nmId, function(m)
                     SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1) -- 1 means pop immediately on next PH kill if server crashes while alive
+                    m:removeListener("SPAWN_" .. nmId)
                 end)
 
                 nm:addListener("DESPAWN", "DESPAWN_" .. nmId, function(m)
                     -- on NM death, replace NM repop with PH repop
                     DisallowRespawn(nmId, true)
-                    DisallowRespawn(phId, false)
-                    GetMobByID(phId):setRespawnTime(GetMobRespawnTime(phId))
-                    SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), os.time() + cooldown)
+                    -- consider spawn conditions of PH before enabling PH respawn
+                    local phEnable = false
+                    local phMob = GetMobByID(phId)
+                    local phSpawnType = phMob:getSpawnType()
+                    local totd = VanadielTOTD()
+
+                    -- TODO: add all spawn types
+                    -- best I can tell, spawntypes are mutually exclusive, but they're still treated as a flag in the cpp core
+                    -- used for PH mobs that have nonzero spawntypes
+                    if phSpawnType == tpz.mob.spawntype.SPAWNTYPE_NORMAL then
+                        phEnable = true
+                    elseif phSpawnType == tpz.mob.spawntype.SPAWNTYPE_ATNIGHT then
+                        if totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT then
+                            phEnable = true
+                        end
+                    end
+                    if phEnable == true then 
+                        DisallowRespawn(phId, false)
+                        phMob:setRespawnTime(GetMobRespawnTime(phId))
+                    end
+
+                    if m:getLocalVar("preservePop") == 1 then
+                        SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1)
+                        m:setLocalVar("preservePop", 0)
+                    else
+                        SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), os.time() + cooldown)
+                    end
+
                     m:removeListener("DESPAWN_" .. nmId)
                 end)
 
