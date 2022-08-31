@@ -38,10 +38,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "../auction_player_container.h"
 
-#define MAX_QUESTAREA   11
+#define MAX_QUESTAREA	 11
 #define MAX_QUESTID     256
-#define MAX_MISSIONAREA 15
-#define MAX_MISSIONID   851
+#define MAX_MISSIONAREA	 15
+#define MAX_MISSIONID    851
 
 class CItemWeapon;
 class CTrustEntity;
@@ -49,10 +49,10 @@ class CFellowEntity;
 
 struct jobs_t
 {
-    uint32 unlocked;         // a bit field of the jobs unlocked. The bit indices are stored inside of of the JOBTYPE enumeration
-    uint8  job[MAX_JOBTYPE]; // the current levels of each of the jobs from above
-    uint16 exp[MAX_JOBTYPE]; // the experience points for each of the jobs above
-    uint8  genkai;           // the maximum genkai level achieved
+    uint32 unlocked;				// a bit field of the jobs unlocked. The bit indices are stored inside of of the JOBTYPE enumeration
+    uint8  job[MAX_JOBTYPE];		// the current levels of each of the jobs from above
+    uint16 exp[MAX_JOBTYPE];		// the experience points for each of the jobs above
+    uint8  genkai;					// the maximum genkai level achieved
 };
 
 
@@ -69,8 +69,8 @@ struct event_t
     void reset()
     {
         EventID = -1;
-        Option  = 0;
-        Target  = 0;
+        Option = 0;
+        Target = 0;
         Script.clear();
         Function.clear();
     }
@@ -78,13 +78,13 @@ struct event_t
 
 struct profile_t
 {
-    uint8      nation;     // your nation alligeance
-    uint8      mhflag;     // флаг выхода из MogHouse
-    uint16     title;      // звание
-    uint16     fame[15];   // известность
-    uint8      rank[3];    // рагн в трех государствах
-    uint32     rankpoints; // очки ранга в трех государствах
-    location_t home_point; // точка возрождения персонажа
+    uint8	   nation;			// your nation alligeance
+    uint8	   mhflag;			// флаг выхода из MogHouse
+    uint16	   title;			// звание
+    uint16     fame[15];		// известность
+    uint8 	   rank[3];			// рагн в трех государствах
+    uint32	   rankpoints;	    // очки ранга в трех государствах
+    location_t home_point;		// точка возрождения персонажа
     uint8      campaign_allegiance;
 };
 
@@ -103,26 +103,26 @@ struct Telepoint_t
 
 struct Teleport_t
 {
-    uint32      outpostSandy;
-    uint32      outpostBastok;
-    uint32      outpostWindy;
-    uint32      runicPortal;
-    uint32      pastMaw;
-    uint32      campaignSandy;
-    uint32      campaignBastok;
-    uint32      campaignWindy;
+    uint32		outpostSandy;
+    uint32		outpostBastok;
+    uint32		outpostWindy;
+    uint32		runicPortal;
+    uint32		pastMaw;
+    uint32		campaignSandy;
+    uint32		campaignBastok;
+    uint32		campaignWindy;
     Telepoint_t homepoint;
     Telepoint_t survival;
 };
 
 struct PetInfo_t
 {
-    bool     respawnPet; // used for spawning pet on zone
-    uint8    petID;      // id as in wyvern(48) , carbuncle(8) ect..
+    bool		respawnPet;		// used for spawning pet on zone
+    uint8		petID;			// id as in wyvern(48) , carbuncle(8) ect..
     PETTYPE		petType;		// type of pet being transfered
-    int16    petHP;      // pets hp
-    int16    petMP;
-    float    petTP; // pets tp
+    int16		petHP;			// pets hp
+    int16       petMP;
+    float		petTP;			// pets tp
 };
 
 struct FellowInfo_t
@@ -135,16 +135,16 @@ struct FellowInfo_t
 
 struct UnlockedAttachments_t
 {
-    uint8  heads;
-    uint8  frames;
+    uint8 heads;
+    uint8 frames;
     uint32 attachments[8];
 };
 
 struct GearSetMod_t
 {
-    uint8  modNameId;
-    Mod    modId;
-    uint16 modValue;
+    uint8	modNameId;
+    Mod  	modId;
+    uint16	modValue;
 };
 
 struct GMCall_t
@@ -179,10 +179,10 @@ enum CHAR_SUBSTATE
 };
 
 /************************************************************************
- *                                                                       *
- *                                                                       *
- *                                                                       *
- ************************************************************************/
+*                                                                       *
+*                                                                       *
+*                                                                       *
+************************************************************************/
 
 class CBasicPacket;
 class CLinkshell;
@@ -199,66 +199,66 @@ class CRangeState;
 class CItemState;
 class CItemUsable;
 
-typedef std::deque<CBasicPacket*>      PacketList_t;
+typedef std::deque<CBasicPacket*> PacketList_t;
 typedef std::map<uint32, CBaseEntity*> SpawnIDList_t;
-typedef std::vector<EntityID_t>        BazaarList_t;
+typedef std::vector<EntityID_t> BazaarList_t;
 
 class CCharEntity : public CBattleEntity
 {
 public:
-    jobs_t     jobs;       // доступрые профессии персонажа
-    keyitems_t keys;       // таблица ключевых предметов
-    event_t    m_event;    // структура для запуска событый
-    skills_t   RealSkills; // структура всех реальных умений персонажа, с точностью до 0.1 и не ограниченных уровнем
+    jobs_t					jobs;							// доступрые профессии персонажа
+    keyitems_t				keys;							// таблица ключевых предметов
+    event_t					m_event;						// структура для запуска событый
+    skills_t				RealSkills;						// структура всех реальных умений персонажа, с точностью до 0.1 и не ограниченных уровнем
 
-    nameflags_t nameflags;           // флаги перед именем персонажа
-    nameflags_t menuConfigFlags;     // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
+    nameflags_t				nameflags;						// флаги перед именем персонажа
+    nameflags_t             menuConfigFlags;                // These flags are used for MenuConfig packets. Some nameflags values are duplicated.
     uint64                  chatFilterFlags;                // Chat Filters
     uint8                   m_logChat;                      // Log chat messages being sent (0x01) or received (0x02) by this character
-    uint32      lastOnline{ 0 };     // UTC Unix Timestamp of the last time char zoned or logged out
+    uint32                  lastOnline {0};                 // UTC Unix Timestamp of the last time char zoned or logged out
     bool                    isNewPlayer();                  // Checks if new player bit is unset.
     bool                    m_openMH;                       // mog house is open for alliance members or not
     bool                    m_disconnecting;                // Player is currently disconnecting from the server
 
-    profile_t  profile;             // профиль персонажа (все, что связывает города и персонажа)
-    expChain_t expChain;            // Exp Chains
-    search_t   search;              // данные и комментарий, отображаемые в окне поиска
-    bazaar_t   bazaar;              // все данные, необходимые для таботы bazaar
-    uint16     m_EquipFlag;         // текущие события, обрабатываемые экипировкой (потом упакую в структуру, вместе с equip[])
-    uint16     m_EquipBlock;        // заблокированные ячейки экипировки
-    uint16     m_StatsDebilitation; // Debilitation arrows
-    uint8      equip[18];           //      SlotID where equipment is
-    uint8      equipLoc[18];        // ContainerID where equipment is
-    uint16     styleItems[16];      // Item IDs for items that are style locked.
+    profile_t				profile;						// профиль персонажа (все, что связывает города и персонажа)
+    expChain_t				expChain;						// Exp Chains
+    search_t				search;							// данные и комментарий, отображаемые в окне поиска
+    bazaar_t				bazaar;							// все данные, необходимые для таботы bazaar
+    uint16					m_EquipFlag;					// текущие события, обрабатываемые экипировкой (потом упакую в структуру, вместе с equip[])
+    uint16					m_EquipBlock;					// заблокированные ячейки экипировки
+    uint16                  m_StatsDebilitation;            // Debilitation arrows
+    uint8					equip[18];						//      SlotID where equipment is
+    uint8					equipLoc[18];					// ContainerID where equipment is
+    uint16                  styleItems[16];                 // Item IDs for items that are style locked.
 
-    uint8             m_ZonesList[36];        // список посещенных персонажем зон
-    std::bitset<1024> m_SpellList;            // список изученных заклинаний
-    uint8             m_TitleList[94];        // список заслуженных завний
-    uint8             m_Abilities[62];        // список текущих способностей
+    uint8					m_ZonesList[36];				// список посещенных персонажем зон
+    std::bitset<1024>	    m_SpellList;				    // список изученных заклинаний
+    uint8					m_TitleList[94];				// список заслуженных завний
+    uint8					m_Abilities[62];				// список текущих способностей
     uint8					m_LearnedAbilities[47];			// learnable abilities (corsair rolls)
-    std::bitset<49>   m_LearnedWeaponskills;  // learnable weaponskills
-    uint8             m_TraitList[16];        // список постянно активных способностей в виде битовой маски
-    uint8             m_PetCommands[32];      // список доступных команд питомцу
-    uint8             m_WeaponSkills[32];
-    questlog_t        m_questLog[MAX_QUESTAREA];     // список всех квестов
-    missionlog_t      m_missionLog[MAX_MISSIONAREA]; // список миссий
-    eminencelog_t     m_eminenceLog;                 // Record of Eminence log
-    eminencecache_t   m_eminenceCache;               // Caching data for Eminence lookups
-    assaultlog_t      m_assaultLog;                  // список assault миссий
-    campaignlog_t     m_campaignLog;                 // список campaign миссий
-    uint32            m_lastBcnmTimePrompt;          // the last message prompt in seconds
-    PetInfo_t         petZoningInfo;                 // used to repawn dragoons pets ect on zone
-    void              setPetZoningInfo();            // set pet zoning info (when zoning and logging out)
-    void              resetPetZoningInfo();          // reset pet zoning info (when changing job ect)
+    std::bitset<49>         m_LearnedWeaponskills;          // learnable weaponskills
+    uint8					m_TraitList[16];				// список постянно активных способностей в виде битовой маски
+    uint8					m_PetCommands[32];				// список доступных команд питомцу
+    uint8					m_WeaponSkills[32];
+    questlog_t				m_questLog[MAX_QUESTAREA];		// список всех квестов
+    missionlog_t			m_missionLog[MAX_MISSIONAREA];	// список миссий
+    eminencelog_t           m_eminenceLog;                  // Record of Eminence log
+    eminencecache_t         m_eminenceCache;                // Caching data for Eminence lookups
+    assaultlog_t			m_assaultLog;					// список assault миссий
+    campaignlog_t			m_campaignLog;					// список campaign миссий
+    uint32					m_lastBcnmTimePrompt;			// the last message prompt in seconds
+    PetInfo_t				petZoningInfo;					// used to repawn dragoons pets ect on zone
+    void					setPetZoningInfo();				// set pet zoning info (when zoning and logging out)
+    void					resetPetZoningInfo();			// reset pet zoning info (when changing job ect)
     FellowInfo_t            fellowZoningInfo;               // used to repawn fellows on zone
     void                    setFellowZoningInfo();          // set fellow zoning info (when zoning and logging out)
     void                    resetFellowZoningInfo();        // reset fellow zoning info (when changing job ect)
-    uint8             m_SetBlueSpells[20];           // The 0x200 offsetted blue magic spell IDs which the user has set. (1 byte per spell)
+    uint8					m_SetBlueSpells[20];			// The 0x200 offsetted blue magic spell IDs which the user has set. (1 byte per spell)
     uint32                  lastInCombat;                   // last time in combat, determined by the last time a spell was cast or an attack was done.
     uint32                  lastZoneTimer;                  // last time the player zoned.
 
-    UnlockedAttachments_t m_unlockedAttachments; // Unlocked Automaton Attachments (1 bit per attachment)
-    CAutomatonEntity*     PAutomaton;            // Automaton statistics
+    UnlockedAttachments_t	m_unlockedAttachments;			// Unlocked Automaton Attachments (1 bit per attachment)
+    CAutomatonEntity*       PAutomaton;                     // Automaton statistics
     CFellowEntity*          m_PFellow;
 
     fishresponse_t* hookedFish;         // Currently hooked fish/item/monster
@@ -271,8 +271,8 @@ public:
     uint32 m_HelpDeskMessageID; // ID of the helpdesk ticket being answered
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
-    template <typename F, typename... Args>
-    void ForPartyWithTrusts(F func, Args&&... args)
+    template        <typename F, typename... Args>
+    void            ForPartyWithTrusts(F func, Args&&... args)
     {
         if (PParty) {
             for (auto PMember : PParty->members) {
@@ -292,96 +292,96 @@ public:
         }
     }
 
-    CBattleEntity* PClaimedMob;
+    CBattleEntity*	PClaimedMob;
 
     // These missions do not need a list of completed, because client automatically
     // displays earlier missions completed
 
-    uint16 m_copCurrent; // current mission of Chains of Promathia
-    uint16 m_acpCurrent; // current mission of A Crystalline Prophecy
-    uint16 m_mkeCurrent; // current mission of A Moogle Kupo d'Etat
-    uint16 m_asaCurrent; // current mission of A Shantotto Ascension
+    uint16			  m_copCurrent;					// current mission of Chains of Promathia
+    uint16			  m_acpCurrent;					// current mission of A Crystalline Prophecy
+    uint16			  m_mkeCurrent;					// current mission of A Moogle Kupo d'Etat
+    uint16			  m_asaCurrent;					// current mission of A Shantotto Ascension
 
-    // currency_t        m_currency;                 // conquest points, imperial standing points etc
-    Teleport_t teleport; // Outposts, Runic Portals, Homepoints, Survival Guides, Maws, etc
+    //currency_t        m_currency;                 // conquest points, imperial standing points etc
+    Teleport_t	      teleport;					    // Outposts, Runic Portals, Homepoints, Survival Guides, Maws, etc
 
-    uint8 GetGender(); // узнаем пол персонажа
+    uint8             GetGender();                  // узнаем пол персонажа
 
-    void          clearPacketList();                         // отчистка PacketList
+    void              clearPacketList();            // отчистка PacketList
     void              pushPacket(CBasicPacket*, int priorityNumOverride = 0xFF);    // добавление копии пакета в PacketList
     void              pushPacket(std::unique_ptr<CBasicPacket>, int priorityNumOverride = 0xFF);    // push packet to packet list
-    bool          isPacketListEmpty();                       // проверка размера PacketList
-    CBasicPacket* popPacket();                               // получение первого пакета из PacketList
-    PacketList_t  getPacketList();                           // returns a COPY of packet list
+    bool			  isPacketListEmpty();          // проверка размера PacketList
+    CBasicPacket*	  popPacket();                  // получение первого пакета из PacketList
+    PacketList_t      getPacketList();              // returns a COPY of packet list
     PacketList_t*     getPacketListPtr();           // by pointer instead
     std::mutex*       getPacketListMutexPtr();      // always use this when doing stuff with getPacketListPtr
-    size_t        getPacketCount();
+    size_t            getPacketCount();
     void              erasePackets(uint16 num);      // erase num elements from front of packet list
-    virtual void  HandleErrorMessage(std::unique_ptr<CBasicPacket>&) override;
+    virtual void      HandleErrorMessage(std::unique_ptr<CBasicPacket>&) override;
 
-    CLinkshell*    PLinkshell1; // linkshell, в которой общается персонаж
-    CLinkshell*    PLinkshell2; // linkshell 2
-    CTreasurePool* PTreasurePool; // сокровища, добытые с монстров
-    CMeritPoints*  PMeritPoints;  //
-    bool           MeritMode;     // If true then player is meriting
+    CLinkshell*       PLinkshell1;                  // linkshell, в которой общается персонаж
+    CLinkshell*       PLinkshell2;                  // linkshell 2
+    CTreasurePool*	  PTreasurePool;                // сокровища, добытые с монстров
+    CMeritPoints*     PMeritPoints;                 //
+    bool			  MeritMode;					//If true then player is meriting
 
     CLatentEffectContainer* PLatentEffectContainer;
 
-    CItemContainer* PGuildShop;                   // текущий магазин гильдии, в котором персонаж производит закупки
-    CItemContainer* getStorage(uint8 LocationID); // получение указателя на соответствующее хранилище
+    CItemContainer*   PGuildShop;					// текущий магазин гильдии, в котором персонаж производит закупки
+    CItemContainer*	  getStorage(uint8 LocationID);	// получение указателя на соответствующее хранилище
     bool              hasAccessToStorage(uint8 LocationID); // Does the character have access to a certain storage location
 
-    CTradeContainer* TradeContainer; // Container used specifically for trading.
-    CTradeContainer* Container;      // универсальный контейнер для обмена, синтеза, магазина и т.д.
-    CUContainer*     UContainer;     // container used for universal actions -- used for trading at least despite the dedicated trading container above
-    CTradeContainer* CraftContainer; // Container used for crafting actions.
+    CTradeContainer*  TradeContainer;               // Container used specifically for trading.
+    CTradeContainer*  Container;                    // универсальный контейнер для обмена, синтеза, магазина и т.д.
+    CUContainer*	  UContainer;					// container used for universal actions -- used for trading at least despite the dedicated trading container above
+    CTradeContainer*  CraftContainer;               // Container used for crafting actions.
 
-    CBaseEntity* PWideScanTarget; // wide scane цель
+    CBaseEntity*	  PWideScanTarget;				// wide scane цель
 
-    SpawnIDList_t SpawnPCList;    // list of visible characters
-    SpawnIDList_t SpawnMOBList;   // list of visible monsters
-    SpawnIDList_t SpawnPETList;   // list of visible pets
-    SpawnIDList_t SpawnTRUSTList; // list of visible trust
-    SpawnIDList_t SpawnNPCList;   // list of visible npc's
+    SpawnIDList_t	  SpawnPCList;					// list of visible characters
+    SpawnIDList_t	  SpawnMOBList;					// list of visible monsters
+    SpawnIDList_t	  SpawnPETList;					// list of visible pets
+    SpawnIDList_t	  SpawnTRUSTList;				// list of visible trust
+    SpawnIDList_t	  SpawnNPCList;					// list of visible npc's
 
-    void SetName(int8* name); // устанавливаем имя персонажа (имя ограничивается 15-ю символами)
+    void			  SetName(int8* name);			// устанавливаем имя персонажа (имя ограничивается 15-ю символами)
 
-    EntityID_t   TradePending;    // ID персонажа, предлагающего обмен
-    EntityID_t   InvitePending;   // ID персонажа, отправившего приглашение в группу
-    EntityID_t   BazaarID;        // Pointer to the bazaar we are browsing.
-    BazaarList_t BazaarCustomers; // Array holding the IDs of the current customers
+    EntityID_t        TradePending;                 // ID персонажа, предлагающего обмен
+    EntityID_t        InvitePending;                // ID персонажа, отправившего приглашение в группу
+    EntityID_t        BazaarID;                     // Pointer to the bazaar we are browsing.
+    BazaarList_t	  BazaarCustomers;              // Array holding the IDs of the current customers
 
     CAuctionPlayerContainer* AuctionPlayerContainer;// holds auction-related variables such as sales history list
 
-    uint32     m_InsideRegionID;     // номер региона, в котором сейчас находится персонаж (??? может засунуть в m_event ???)
-    uint8      m_LevelRestriction;   // ограничение уровня персонажа
-    uint16     m_Costume;            // карнавальный костюм персонажа (модель)
-    uint16     m_Monstrosity;        // Monstrosity model ID
-    uint32     m_DeathTimestamp;     // Timestamp when death counter has been saved to database
-    time_point m_deathSyncTime;      // Timer used for sending an update packet at a regular interval while the character is dead
+    uint32			  m_InsideRegionID;				// номер региона, в котором сейчас находится персонаж (??? может засунуть в m_event ???)
+    uint8			  m_LevelRestriction;			// ограничение уровня персонажа
+    uint16            m_Costume;                     // карнавальный костюм персонажа (модель)
+    uint16			  m_Monstrosity;				// Monstrosity model ID
+    uint32            m_DeathTimestamp;             // Timestamp when death counter has been saved to database
+    time_point        m_deathSyncTime;              // Timer used for sending an update packet at a regular interval while the character is dead
 
-    uint8      m_hasTractor;     // checks if player has tractor already
-    uint8      m_hasRaise;       // checks if player has raise already
+    uint8			  m_hasTractor;					// checks if player has tractor already
+    uint8			  m_hasRaise;					// checks if player has raise already
     bool              m_resendRaise;                // force resending raise menu
-    uint8      m_hasAutoTarget;  // возможность использования AutoTarget функции
-    position_t m_StartActionPos; // позиция начала действия (использование предмета, начало стрельбы, позиция tractor)
+    uint8             m_hasAutoTarget;              // возможность использования AutoTarget функции
+    position_t		  m_StartActionPos;				// позиция начала действия (использование предмета, начало стрельбы, позиция tractor)
 
     time_point        m_lastDig;
     position_t        m_lastDigPosition;
 
-    uint32 m_PlayTime;
-    uint32 m_SaveTime;
+    uint32			  m_PlayTime;
+    uint32			  m_SaveTime;
 
     uint16            m_LastEngagedTargID;          // my most recent engage target. used for auto-target logic
     CBattleEntity*    m_autoTargetOverride;         // When a party member auto-targets, this gets set to all of alliance to ensure everyone autotargets same mob (QoL)
 
-    uint8 m_GMlevel;    // Level of the GM flag assigned to this character
-    bool  m_isGMHidden; // GM Hidden flag to prevent player updates from being processed.
+    uint8			  m_GMlevel;                    // Level of the GM flag assigned to this character
+    bool              m_isGMHidden;                 // GM Hidden flag to prevent player updates from being processed.
     bool              m_GMSuperpowers;
 
-    bool   m_mentorUnlocked;
-    uint32 m_moghouseID;
-    uint16 m_moghancementID;
+    bool              m_mentorUnlocked;
+    uint32            m_moghouseID;
+    uint16            m_moghancementID;
 
     uint8             m_hitCounter;                 // auto-attack it counter for Tredecim Scythe
     time_point        m_ZoneAggroImmunity;
@@ -389,21 +389,21 @@ public:
     uint32            m_pixieHate;
     uint32            m_nyzulProgress;              // Nyzul floor progress - required to determine mythic weaponskill access on weapon equip
 
-    int8 getShieldSize();
+    int8			  getShieldSize();
 
     bool              getStyleLocked();
-    void setStyleLocked(bool isStyleLocked);
+    void              setStyleLocked(bool isStyleLocked);
     bool              getBlockingAid();
-    void setBlockingAid(bool isBlockingAid);
+    void              setBlockingAid(bool isBlockingAid);
 
     void              RefreshSpawns();
 
-    bool       m_EquipSwap; // true if equipment was recently changed
-    bool       m_EffectsChanged;
-    time_point m_LastSynthTime;
+    bool              m_EquipSwap;					// true if equipment was recently changed
+    bool              m_EffectsChanged;
+    time_point        m_LastSynthTime;
     time_point        m_LastAttackTime;
 
-    CHAR_SUBSTATE m_Substate;
+    CHAR_SUBSTATE     m_Substate;
 
     uint32            m_accountId;
     uint16            m_accountFeatures;            // Features bitmask of the char's account (used for storage access)
@@ -428,24 +428,24 @@ public:
     int32 addHP(int32 hp) override;
     int32 addMP(int32 mp) override;
 
-    std::vector<GearSetMod_t>     m_GearSetMods; // The list of gear set mods currently applied to the character.
+    std::vector<GearSetMod_t> m_GearSetMods;		// The list of gear set mods currently applied to the character.
 
     std::unordered_map<uint16, uint32> m_PacketRecievedTimestamps;
 
-    void   SetPlayTime(uint32 playTime);        // Set playtime
-    uint32 GetPlayTime(bool needUpdate = true); // Get playtime
+    void SetPlayTime(uint32 playTime);				// Set playtime
+    uint32 GetPlayTime(bool needUpdate = true);		// Get playtime
 
-    CItemEquipment* getEquip(SLOTTYPE slot);
+    CItemEquipment*	getEquip(SLOTTYPE slot);
 
-    void ReloadPartyInc();
-    void ReloadPartyDec();
+    void        ReloadPartyInc();
+    void        ReloadPartyDec();
     bool        ReloadParty();
-    void ClearTrusts();
-    void RemoveTrust(CTrustEntity*);
+    void        ClearTrusts();
+    void        RemoveTrust(CTrustEntity*);
     void        RemoveFellow();
 
     virtual void Tick(time_point) override;
-    void         PostTick() override;
+    void        PostTick() override;
 
     virtual void addTrait(CTrait*) override;
     virtual void delTrait(CTrait*) override;
@@ -456,13 +456,13 @@ public:
     virtual bool CanUseSpell(CSpell*) override;
 
     virtual void Die() override;
-    void         Die(duration _duration);
-    void         Raise();
+    void Die(duration _duration);
+    void Raise();
 
-    static constexpr duration death_duration         = 60min;
+    static constexpr duration death_duration = 60min;
     static constexpr duration death_update_frequency = 16s;
 
-    void  SetDeathTimestamp(uint32 timestamp);
+    void SetDeathTimestamp(uint32 timestamp);
     int32 GetSecondsElapsedSinceDeath();
     int32 GetTimeRemainingUntilDeathHomepoint();  // Amount of time remaining before the player should be forced back to homepoint while dead
 
@@ -477,24 +477,24 @@ public:
     void DropBattlefieldIfOutside();
 
     /* State callbacks */
-    virtual bool           CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
-    virtual bool           OnAttack(CAttackState&, action_t&) override;
-    virtual bool           OnAttackError(CAttackState&) override;
+    virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;
+    virtual bool OnAttack(CAttackState&, action_t&) override;
+    virtual bool OnAttackError(CAttackState&) override;
     virtual CBattleEntity* IsValidTarget(uint16 targid, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg) override;
-    virtual void           OnChangeTarget(CBattleEntity* PNewTarget) override;
-    virtual void           OnEngage(CAttackState&) override;
-    virtual void           OnDisengage(CAttackState&) override;
-    virtual void           OnCastFinished(CMagicState&, action_t&) override;
-    virtual void           OnCastInterrupted(CMagicState&, action_t&, MSGBASIC_ID msg) override;
-    virtual void           OnWeaponSkillFinished(CWeaponSkillState&, action_t&) override;
-    virtual void           OnAbility(CAbilityState&, action_t&) override;
-    virtual void           OnRangedAttack(CRangeState&, action_t&);
-    virtual void           OnDeathTimer() override;
-    virtual void           OnRaise() override;
-    virtual void           OnItemFinish(CItemState&, action_t&);
+    virtual void OnChangeTarget(CBattleEntity* PNewTarget) override;
+    virtual void OnEngage(CAttackState&) override;
+    virtual void OnDisengage(CAttackState&) override;
+    virtual void OnCastFinished(CMagicState&, action_t&) override;
+    virtual void OnCastInterrupted(CMagicState&, action_t&, MSGBASIC_ID msg) override;
+    virtual void OnWeaponSkillFinished(CWeaponSkillState&, action_t&) override;
+    virtual void OnAbility(CAbilityState&, action_t&) override;
+    virtual void OnRangedAttack(CRangeState&, action_t&);
+    virtual void OnDeathTimer() override;
+    virtual void OnRaise() override;
+    virtual void OnItemFinish(CItemState&, action_t&);
 
-    CCharEntity();  // constructor
-    ~CCharEntity(); // destructor
+    CCharEntity();									// constructor
+    ~CCharEntity();									// destructor
 
 protected:
     void TrackArrowUsageForScavenge(CItemWeapon* PAmmo);
@@ -502,27 +502,27 @@ protected:
 
 private:
 
-    std::unique_ptr<CItemContainer> m_Inventory;
-    std::unique_ptr<CItemContainer> m_Mogsafe;
-    std::unique_ptr<CItemContainer> m_Storage;
-    std::unique_ptr<CItemContainer> m_Tempitems;
-    std::unique_ptr<CItemContainer> m_Moglocker;
-    std::unique_ptr<CItemContainer> m_Mogsatchel;
-    std::unique_ptr<CItemContainer> m_Mogsack;
-    std::unique_ptr<CItemContainer> m_Mogcase;
-    std::unique_ptr<CItemContainer> m_Wardrobe;
-    std::unique_ptr<CItemContainer> m_Mogsafe2;
-    std::unique_ptr<CItemContainer> m_Wardrobe2;
-    std::unique_ptr<CItemContainer> m_Wardrobe3;
-    std::unique_ptr<CItemContainer> m_Wardrobe4;
+    std::unique_ptr<CItemContainer>   m_Inventory;
+    std::unique_ptr<CItemContainer>   m_Mogsafe;
+    std::unique_ptr<CItemContainer>   m_Storage;
+    std::unique_ptr<CItemContainer>   m_Tempitems;
+    std::unique_ptr<CItemContainer>   m_Moglocker;
+    std::unique_ptr<CItemContainer>   m_Mogsatchel;
+    std::unique_ptr<CItemContainer>   m_Mogsack;
+    std::unique_ptr<CItemContainer>   m_Mogcase;
+    std::unique_ptr<CItemContainer>   m_Wardrobe;
+    std::unique_ptr<CItemContainer>   m_Mogsafe2;
+    std::unique_ptr<CItemContainer>   m_Wardrobe2;
+    std::unique_ptr<CItemContainer>   m_Wardrobe3;
+    std::unique_ptr<CItemContainer>   m_Wardrobe4;
 
-    bool m_isStyleLocked;
-    bool m_isBlockingAid;
-    bool m_reloadParty;
+    bool            m_isStyleLocked;
+    bool            m_isBlockingAid;
+    bool			m_reloadParty;
 
-    PacketList_t PacketList; // the list of packets to be sent to the character during the next network cycle
+    PacketList_t    PacketList;					// the list of packets to be sent to the character during the next network cycle
 
-    std::mutex m_PacketListMutex;
+    std::mutex      m_PacketListMutex;
 };
 
 #endif

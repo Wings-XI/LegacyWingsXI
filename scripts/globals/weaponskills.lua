@@ -161,7 +161,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
          attacker:getStat(tpz.mod.CHR) * wsParams.chr_wsc) * calcParams.alpha
     -- (D + fSTR + WSC)
     local mainBase = calcParams.weaponDamage[1] + wsMods + calcParams.bonusWSmods
-
+    
     -- Calculate fTP multiplier
     local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
 
@@ -265,7 +265,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, isRanged)
         finaldmg = finaldmg + hitdmg
         hitsDone = hitsDone + 1
-        end
+    end
     calcParams.extraHitsLanded = calcParams.hitsLanded
     calcParams.hitsLanded = 0
     while (offHitsDone < numOffhandHits) do
@@ -274,7 +274,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         finaldmg = finaldmg + hitdmg
         offHitsDone = offHitsDone + 1
         --print("offhand while loop")
-        end
+    end
     calcParams.extraHitsLanded = calcParams.extraHitsLanded + calcParams.hitsLanded
 
     -- Apply Souleater bonus
@@ -288,7 +288,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         bonusdmg = bonusdmg + attacker:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
     end
 
-    finaldmg = finaldmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
+    finaldmg = finaldmg * ((100 + bonusdmg)/100) -- Apply our "all hits" WS dmg bonuses
     finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
 
     -- Return our raw damage to then be modified by enemy reductions based off of melee/ranged
@@ -587,7 +587,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     -- https://www.bg-wiki.com/ffxi/Category:Elemental_Weapon_Skill
     -- While this is very difficult to prove, the consistency of Trueflight, Leaden Salute, and Primal Rend (among others) supports this
     bonusacc = bonusacc + attacker:getMod(tpz.mod.WSACC) + 100
-
+    
     local fint = utils.clamp(8 + (attacker:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)), -32, 32)
     local dmg = 0
 
@@ -654,7 +654,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         end
 
         -- Add in bonusdmg
-        dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
+        dmg = dmg * ((100 + bonusdmg)/100) -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + ((dmg * attacker:getMod(tpz.mod.ALL_WSDMG_FIRST_HIT))/100) -- Add in our "first hit" WS dmg bonus
 
         -- Calculate magical bonuses and reductions
@@ -697,7 +697,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
     else
         calcParams.shadowsAbsorbed = 1
     end
-
+    
     calcParams.finalDmg = dmg
     dmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
     return dmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
@@ -873,7 +873,7 @@ function getHitRate(attacker, target, capHitRate, bonus, isRanged)
     -- Applying hitrate caps
     if (capHitRate) then -- this isn't capped for when acc varies with tp, as more penalties are due
         hitrate = utils.clamp(hitrate, 20, 95)
-        end
+    end
     -- Needs return as a decimal percent
     return hitrate/100
 end
@@ -883,19 +883,19 @@ function fTP(tp, ftp1, ftp2, ftp3)
         tp = 1000
     end
     if (tp >= 1000 and tp < 2000) then
-        return ftp1 + ( ((ftp2 - ftp1) / 1000) * (tp - 1000) )
+        return ftp1 + ( ((ftp2-ftp1)/1000) * (tp-1000))
     elseif (tp >= 2000 and tp <= 3000) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + ( ((ftp3 - ftp2) / 1000) * (tp - 2000) )
+        return ftp2 + ( ((ftp3-ftp2)/1000) * (tp-2000))
     end
     return 1 -- no ftp mod
 end
 
 function calculatedIgnoredDef(tp, def, ignore1, ignore2, ignore3)
     if (tp>=1000 and tp <2000) then
-        return (ignore1 + (((ignore2 - ignore1) / 1000) * (tp - 1000))) * def
+        return (ignore1 + ( ((ignore2-ignore1)/1000) * (tp-1000)))*def
     elseif (tp>=2000 and tp<=3000) then
-        return (ignore2 + (((ignore3 - ignore2) / 1000) * (tp - 2000))) * def
+        return (ignore2 + ( ((ignore3-ignore2)/1000) * (tp-2000)))*def
     end
     return 1 -- no def ignore mod
 end
@@ -988,7 +988,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     end
 
     return pDIF
-    end
+end
 
 function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local ratioCap = 3.0
@@ -1007,7 +1007,7 @@ function cRangedRatio(attacker, defender, params, ignoredDef, tp, isCritical)
         -- Flashy shot ignores level difference penalty
         if attacker:hasStatusEffect(tpz.effect.FLASHY_SHOT) then
             cRatio = ratio
-    else
+        else
             cRatio = ratio - (defender:getMainLvl() - attacker:getMainLvl()) * 0.025
         end
     end
@@ -1320,7 +1320,7 @@ function handleWSGorgetBelt(attacker)
         if SCProp1 == nil then
             return 0, 0
         end
-        for i, v in ipairs(elementalGorget) do
+        for i,v in ipairs(elementalGorget) do
             if neck == v then
                 if
                     doesElementMatchWeaponskill(i, SCProp1) or

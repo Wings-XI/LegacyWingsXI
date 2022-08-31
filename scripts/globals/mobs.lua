@@ -88,7 +88,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                 DisallowRespawn(nmId, false)
                 UpdateNMSpawnPoint(nmId)
                 nm:setRespawnTime(immediate and 1 or GetMobRespawnTime(phId)) -- if immediate is true, spawn the nm immediately (1ms) else use placeholder's timer
-
+				
 				nm:addListener("SPAWN", "SPAWN_" .. nmId, function(m)
                     SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1) -- 1 means pop immediately on next PH kill if server crashes while alive
                 end)
