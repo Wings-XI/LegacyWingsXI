@@ -14062,29 +14062,19 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
-        /*
-        seems like you can spawn the pet first, then load SDT, mods, etc. This seems to load things properly.
-        SpawnMobPet now pulls job traits and mob mods using addModifier, which means we can't load it more than once
-
         // if a number is given its an avatar or elemental spawn
+        // calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/spell list/other mods 
+        // cannot call twice now that SpawnMobPet addmods (not setmods) job traits/family mods
         if (!lua_isnil(L, 1) && lua_isstring(L, 1))
         {
             petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
         }
-        */
 
         // always spawn on master
         PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
 
         // setup AI
         PPet->Spawn();
-        
-        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
-        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
-        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
-        {
-            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
-        }
     }
     return 0;
 }
