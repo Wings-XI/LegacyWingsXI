@@ -654,6 +654,7 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     }
 
     PLastAttacker = attacker;
+    this->BattleHistory.lastHitTaken_atkType = attackType;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
     
     if (this->getMod(Mod::COVERED_MP_FLAG) && amount > 4)
@@ -666,6 +667,9 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     else if (PLastAttacker && PLastAttacker->objtype == TYPE_PC)
         roeutils::event(ROE_EVENT::ROE_DMGDEALT, static_cast<CCharEntity*>(attacker), RoeDatagram("dmg", amount));
 
+    // Took dmg from non ws source, so remove ws kill var
+    this->SetLocalVar("weaponskillHit", 0);
+        
     if (amount > 0 && attacker)
     {
         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);

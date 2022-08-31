@@ -614,6 +614,8 @@ public:
     int32 breathDmgTaken(lua_State* L);
     int32 handleAfflatusMiseryDamage(lua_State* L);
 
+    int32 getLastAttackType(lua_State* L);      // gets the type of the last attack received (physical, magical, ranged etc.)
+
     int32 isWeaponTwoHanded(lua_State*);
     int32 getMeleeHitDamage(lua_State*);        // gets the damage of a single hit vs the specified mob
     int32 getMeleeRange(lua_State*);            // gets the melee range of the battle entity

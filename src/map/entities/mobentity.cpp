@@ -1058,7 +1058,6 @@ void CMobEntity::DistributeRewards()
 
     if (PChar != nullptr && PChar->id == m_OwnerID.id)
     {
-        PChar->setWeaponSkillKill(false);
         StatusEffectContainer->KillAllStatusEffect();
 
         // NOTE: this is called for all alliance / party members!

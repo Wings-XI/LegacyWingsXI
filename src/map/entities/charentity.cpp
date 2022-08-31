@@ -203,7 +203,6 @@ CCharEntity::CCharEntity()
 
     MeritMode = false;
 
-    m_isWeaponSkillKill = false;
     m_isStyleLocked = false;
     m_isBlockingAid = false;
 
@@ -724,16 +723,6 @@ int32 CCharEntity::addMP(int32 mp)
     PLatentEffectContainer->CheckLatentsMP();
 
     return abs(mp);
-}
-
-bool CCharEntity::getWeaponSkillKill()
-{
-    return m_isWeaponSkillKill;
-}
-
-void CCharEntity::setWeaponSkillKill(bool isWeaponSkillKill)
-{
-    m_isWeaponSkillKill = isWeaponSkillKill;
 }
 
 bool CCharEntity::getStyleLocked()
