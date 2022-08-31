@@ -855,8 +855,7 @@ namespace petutils
         // - smn spirits and avatars
 
         PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
-        if (PPet->m_SpellListContainer == 0)
-            PPet->setModifier(Mod::MP, 0);
+        // TODO: don't give mp to avatars / pets with no spells?
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petData->cmbDelay / 60.0f))));
 

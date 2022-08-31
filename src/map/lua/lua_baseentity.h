@@ -614,6 +614,8 @@ public:
     int32 breathDmgTaken(lua_State* L);
     int32 handleAfflatusMiseryDamage(lua_State* L);
 
+    int32 getLastAttackType(lua_State* L);      // gets the type of the last attack received (physical, magical, ranged etc.)
+
     int32 isWeaponTwoHanded(lua_State*);
     int32 getMeleeHitDamage(lua_State*);        // gets the damage of a single hit vs the specified mob
     int32 getMeleeRange(lua_State*);            // gets the melee range of the battle entity
@@ -711,6 +713,7 @@ public:
     int32 isSpawned(lua_State*);
     int32 getSpawnPos(lua_State*);          // Get Mob spawn position (x,y,z)
     int32 setSpawn(lua_State*);             // Sets spawn point
+    int32 getSpawnType(lua_State*);
     int32 getRespawnTime(lua_State*);
     int32 setRespawnTime(lua_State*);       // set respawn time
 

@@ -28,7 +28,6 @@ function onUseAbility(player, target, ability)
         player:addStatusEffect(tpz.effect.BOOST, power, 1, 180)
         local effect = player:getStatusEffect(tpz.effect.BOOST)
         effect:setSubPower(1)
-        player:addMod(tpz.mod.ATTP, power / 100)
     end
 
 end

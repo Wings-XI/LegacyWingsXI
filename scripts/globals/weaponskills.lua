@@ -762,6 +762,10 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
+    if finaldmg > 0 then
+        defender:setLocalVar("weaponskillHit", 1)
+    end
+    
     return finaldmg
 end
 

@@ -6767,7 +6767,7 @@ namespace battleutils
         // constant 80% dist 25+
         return 0.80f;
     }
-
+/*
     void HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action)
     {
         TPZ_DEBUG_BREAK_IF(PSource == nullptr);
@@ -6801,5 +6801,6 @@ namespace battleutils
             }
         }
     }
+*/
 
     };

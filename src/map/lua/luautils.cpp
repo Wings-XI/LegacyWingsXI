@@ -3360,7 +3360,7 @@ namespace luautils
                     CLuaBaseEntity LuaMobEntity(PMob);
                     CLuaBaseEntity LuaAllyEntity(PMember);
                     bool isKiller = PMember == PChar;
-                    bool isWeaponSkillKill = PChar->getWeaponSkillKill();
+                    bool isWeaponSkillKill = PMob->GetLocalVar("weaponskillHit") > 0;
 
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaAllyEntity);

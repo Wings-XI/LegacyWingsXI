@@ -13527,6 +13527,22 @@ int32 CLuaBaseEntity::handleAfflatusMiseryDamage(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getLastAttackType()
+*  Purpose : Gets the type of the last attack received (physical, magical, ranged etc.)
+*  Example : target:getLastAttackType()
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::getLastAttackType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    lua_pushinteger(L, (int32)((CBattleEntity*)m_PBaseEntity)->BattleHistory.lastHitTaken_atkType);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: isWeaponTwoHanded()
 *  Purpose : Returns true if the Weapon in the Main Slot is two-handed
 *  Example : if (player:isWeaponTwoHanded()) then
@@ -14062,29 +14078,19 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
-        /*
-        seems like you can spawn the pet first, then load SDT, mods, etc. This seems to load things properly.
-        SpawnMobPet now pulls job traits and mob mods using addModifier, which means we can't load it more than once
-
         // if a number is given its an avatar or elemental spawn
+        // calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/spell list/other mods 
+        // cannot call twice now that SpawnMobPet addmods (not setmods) job traits/family mods
         if (!lua_isnil(L, 1) && lua_isstring(L, 1))
         {
             petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
         }
-        */
 
         // always spawn on master
         PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
 
         // setup AI
         PPet->Spawn();
-        
-        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
-        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
-        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
-        {
-            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
-        }
     }
     return 0;
 }
@@ -15580,6 +15586,33 @@ inline int32 CLuaBaseEntity::setSpawn(lua_State *L)
     }
 
     return 0;
+}
+
+
+/************************************************************************
+*  Function: getSpawnType()
+*  Purpose : Returns the spawntype flags for a mob
+*  Example : if (nm:getSpawnType() == tpz.mob.spawntype.SPAWNTYPE_NORMAL)
+*  Notes   : 
+************************************************************************/
+
+int32 CLuaBaseEntity::getSpawnType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob->m_SpawnType)
+    {
+        lua_pushinteger(L, PMob->m_SpawnType);
+        return 1;
+    }
+    else
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
 }
 
 /************************************************************************
@@ -19437,6 +19470,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breathDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,handleAfflatusMiseryDamage),
 
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastAttackType),
+
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isWeaponTwoHanded),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeHitDamage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDelay),
@@ -19536,6 +19571,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isSpawned),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSpawn),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRespawnTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRespawnTime),
 

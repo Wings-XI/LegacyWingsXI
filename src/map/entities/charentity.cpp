@@ -203,7 +203,6 @@ CCharEntity::CCharEntity()
 
     MeritMode = false;
 
-    m_isWeaponSkillKill = false;
     m_isStyleLocked = false;
     m_isBlockingAid = false;
 
@@ -724,16 +723,6 @@ int32 CCharEntity::addMP(int32 mp)
     PLatentEffectContainer->CheckLatentsMP();
 
     return abs(mp);
-}
-
-bool CCharEntity::getWeaponSkillKill()
-{
-    return m_isWeaponSkillKill;
-}
-
-void CCharEntity::setWeaponSkillKill(bool isWeaponSkillKill)
-{
-    m_isWeaponSkillKill = isWeaponSkillKill;
 }
 
 bool CCharEntity::getStyleLocked()
@@ -1688,7 +1677,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        //battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
 
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 
