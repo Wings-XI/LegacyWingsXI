@@ -47,6 +47,7 @@ function onEventFinish(player, csid, option)
         local newNation = tpz.nation.WINDURST
         local rank = getNationRank(newNation)
         local cost = 0
+        local ID = zones[player:getZoneID()]
 
         if rank == 1 then
             cost = 40000
@@ -59,5 +60,7 @@ function onEventFinish(player, csid, option)
         player:setNation(newNation)
         player:setGil(player:getGil() - cost)
         player:setRankPoints(0)
+        player:addItem(536)
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
     end
 end
