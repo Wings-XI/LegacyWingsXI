@@ -61,7 +61,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("FirstPromyvionDem", 1)
     elseif (csid == 58) then
         player:setCharVar("COP_Tenzen_s_Path", 4)
-    elseif (csid == 10046 or 10049) then
+    elseif (csid == 10046 or csid == 10049) then
         player:setCharVar("PromathiaStatus", 1)
     end
 end
