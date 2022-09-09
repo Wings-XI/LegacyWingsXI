@@ -2,7 +2,7 @@
 -- Area: Horlais Peak
 --  Mob: Fighting Sheep
 -- BCNM: Hostile Herbivores
--- TODO: melee attacks cause knockback.
+-- Note: melee attacks cause knockback. This is handled as a mobskill substitution.
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
@@ -19,6 +19,10 @@ end
 function onAdditionalEffect(mob, target, damage)
     -- 30 yalm knockback
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.KNOCKBACK, { power = 30, chance = 100 })
+end
+
+entity.onMobSpawn = function(mob)
+    mob:SetMobSkillAttack(701)
 end
 
 function onMobSpawn(mob)
