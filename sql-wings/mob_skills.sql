@@ -1204,6 +1204,7 @@ INSERT INTO `mob_skills` VALUES(1694, 1165, 'vile_belch', 1, 16.0, 2000, 1000, 4
 INSERT INTO `mob_skills` VALUES(1695, 1166, 'hypnic_lamp', 1, 16.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1696, 1167, 'seismic_tail', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1697, 1168, 'seaspray', 4, 12.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1698, 1169, 'leeching_current', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1699, 1176, 'pecking_flurry', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1700, 1177, 'snatch_morsel', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1701, 1178, 'feather_tickle', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -1379,6 +1380,7 @@ INSERT INTO `mob_skills` VALUES(1965, 1329, 'immortal_shield', 0, 7.0, 2000, 150
 INSERT INTO `mob_skills` VALUES(1966, 1330, 'mind_purge', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1967, 1331, 'tribulation', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1968, 1332, 'immortal_anathema', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1977, 1721, 'deathgnash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1969, 1333, 'reprobation', 1, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1998, 361, 'hane_fubuki', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1999, 362, 'hiden_sokyaku', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
