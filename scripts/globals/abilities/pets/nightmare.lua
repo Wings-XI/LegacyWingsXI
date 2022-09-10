@@ -27,12 +27,12 @@ function onPetAbility(target, pet, skill, summoner)
 
     if target:isUndead() and target:getFamily() ~= 52 and target:getFamily() ~= 121 then -- non-ghost undead
         skill:setMsg(tpz.msg.basic.SKILL_MISS)
-        return tpz.effect.SLEEP_I
+        return effect
     end
 
     if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLEEPRES) >= 100 then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-        return tpz.effect.SLEEP_I
+        return effect
     end
 
     local resist = applyPlayerResistance(pet, -1, target, dINT, accuracy, tpz.magic.ele.DARK)
@@ -44,9 +44,15 @@ function onPetAbility(target, pet, skill, summoner)
         target:delStatusEffectSilent(tpz.effect.BIO)
 
         local dotdmg = math.floor((summoningskill + 29) / 40) -- Where does this come from!? Seems to be as effective as Bio 2 at higher levels.
+        
+        ------------------------------------------------------------------------
+        ------ Temporarily commenting this out to have it looked at later ------
+        ------------------------------------------------------------------------
+        -- if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration, tpz.effect.BIO, 0, 1) then -- subid = tpz.effect.BIO for DoT detection on wakup check in lua_baseentity.cpp
+            -- target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration)
 
-        if not (target:hasImmunity(1) or hasSleepEffects(target)) and target:addStatusEffect(effect, 1, 0, duration, tpz.effect.BIO, 0, 1) then -- subid = tpz.effect.BIO for DoT detection on wakup check in lua_baseentity.cpp 
-            target:addStatusEffect(tpz.effect.BIO, dotdmg, 3, duration)
+        if not (target:hasImmunity(1) or hasSleepEffects(target)) then
+            target:addStatusEffect(effect, 1, 0, duration) -- Temporarily working as Sleep 1
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
