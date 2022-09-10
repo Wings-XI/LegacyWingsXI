@@ -1379,6 +1379,7 @@ INSERT INTO `mob_skills` VALUES(1965, 1329, 'immortal_shield', 0, 7.0, 2000, 150
 INSERT INTO `mob_skills` VALUES(1966, 1330, 'mind_purge', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1967, 1331, 'tribulation', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1968, 1332, 'immortal_anathema', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1969, 1333, 'reprobation', 1, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1998, 361, 'hane_fubuki', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1999, 362, 'hiden_sokyaku', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2000, 363, 'shiko_no_mitate', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
