@@ -1,6 +1,6 @@
 -------------------------------
 -- Skill: Final Heaven
--- H2H weapon skill
+-- Hand-to-Hand weapon skill
 -- Skill Level N/A
 -- Additional effect: temporarily enhances Subtle Blow tpz.effect.
 -- Mods : VIT:60%
@@ -16,7 +16,7 @@ require("scripts/globals/weaponskills")
 function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     -- number of normal hits for ws
-    params.numHits = 1
+    params.numHits = 1 -- all h2h weaponskills less than 3 hits are really numHits == 1 with a bonus offhand hit
     -- stat-modifiers (0.0 = 0%, 0.2 = 20%, 0.5 = 50%..etc)
     params.str_wsc = 0.0        params.dex_wsc = 0.0
     params.vit_wsc = 0.6        params.agi_wsc = 0.0

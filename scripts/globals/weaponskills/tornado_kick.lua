@@ -1,6 +1,6 @@
 -------------------------------
 -- Skill: Tornado Kick
--- Class: H2H Weapon Skill
+-- Class: Hand-to-Hand weapon skill
 -- Level: 225
 -- Mods : STR:37.5% VIT:30%
 -- 100%TP     200%TP     300%TP
@@ -16,7 +16,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
     local params = {}
     -- number of normal hits for ws
-    params.numHits = 1
+    params.numHits = 1 -- all h2h weaponskills less than 3 hits are really numHits == 1 with a bonus offhand hit
 
     -- stat-modifiers (0.0 = 0%, 0.2 = 20%, 0.5 = 50%..etc)
     params.str_wsc = 0.5        params.dex_wsc = 0.0
