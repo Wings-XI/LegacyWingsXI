@@ -14225,7 +14225,9 @@ inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->AddGambit(g);
+    if (controller) {
+        controller->m_GambitsContainer->AddGambit(g);
+    }
 
     return 0;
 }
@@ -14333,7 +14335,9 @@ inline int32 CLuaBaseEntity::addFullGambit(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->AddGambit(g);
+    if (controller) {
+        controller->m_GambitsContainer->AddGambit(g);
+    }
 
     return 0;
 }
@@ -14356,8 +14360,10 @@ int32 CLuaBaseEntity::setTrustTPSkillSettings(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->tp_trigger = static_cast<G_TP_TRIGGER>(lua_tointeger(L, 1));
-    controller->m_GambitsContainer->tp_select = static_cast<G_SELECT>(lua_tointeger(L, 2));
+    if (controller) {
+        controller->m_GambitsContainer->tp_trigger = static_cast<G_TP_TRIGGER>(lua_tointeger(L, 1));
+        controller->m_GambitsContainer->tp_select = static_cast<G_SELECT>(lua_tointeger(L, 2));
+    }
 
     return 0;
 }
@@ -15900,7 +15906,15 @@ inline int32 CLuaBaseEntity::SetAutoAttackEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetAutoAttackEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetAutoAttackEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
@@ -15917,7 +15931,15 @@ inline int32 CLuaBaseEntity::SetMagicCastingEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetMagicCastingEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetMagicCastingEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
@@ -15934,7 +15956,15 @@ inline int32 CLuaBaseEntity::SetMobAbilityEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetWeaponSkillEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetWeaponSkillEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
