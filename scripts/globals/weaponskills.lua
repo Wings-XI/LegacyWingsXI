@@ -256,7 +256,13 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     dmg = mainBase * ftp
-    local hitsDone = 1
+    -- Only get an additional offHand hit with H2H if the numHits == 1 
+    -- "Note that Hand-to-Hand weaponskills' listed hits do include the offhand hit. However, if a weaponskill does not list multiple hits, it still has an additional offhand hit."
+    -- see "hits" column: https://wiki-ffo-jp.translate.goog/html/19049.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=it&_x_tr_pto=wapp
+    -- basically h2h always gets 2 "initial" hits, but `numHits` is hard respected for the extra hits
+    -- whereas dual widling gets 2 "initial" hits, but `numHits` e.g. dancing edge is respected as though only one "initial" was performed 
+    -- tl;dr: DW gives an extra WS hit everytime, H2H simply ensures every WS gets at least 2 hits (yes backhand blow and dragon kick are both 2-hit ws...)
+    local hitsDone = attacker:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.HAND_TO_HAND and 2 or 1
     local offHitsDone = 0
     local numHits, numOffhandHits = getMultiAttacks(attacker, target, wsParams.numHits, wsParams.useOAXTimes, calcParams.melee)
     calcParams.useOAXTimes = wsParams.useOAXTimes
@@ -441,6 +447,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     finaldmg = finaldmg * WEAPON_SKILL_POWER
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+    -- attacker:PrintToPlayer(string.format("ws hits landed: tphits %u, extrahits %u", calcParams.tpHitsLanded, calcParams.extraHitsLanded))
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -1235,8 +1242,9 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
 
     local ret1 = numHits + bonusHits
 
-    if (ret1 > 8) then
-        ret1 = 8
+    if (ret1 >= 8) then
+        -- if dual wielding, reduce max hits by 1 to account for the extra offhand hit not tracked in "hitCount"
+        ret1 = attacker:getOffhandDmg() > 0 and 7 or 8
     end
 
     return ret1, offHandHits
