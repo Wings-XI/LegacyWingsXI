@@ -714,9 +714,14 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
 
                 continue; // book refresh/regen persists through level sync application
 
-            // If this is a Nightmare effect flag, it needs to be removed explictly by a cure
-            if (flag & EFFECTFLAG_DAMAGE 
-                && (PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
+            // If this is an NM Nightmare sleep, it can be removed explictly by a cure, but "High chance to not break nightmare sleep from any damage"
+            // therefore, don't remove it 90% of the time
+            // see nightmare.lua for full explanation
+            if (flag & EFFECTFLAG_DAMAGE && 
+                    (PStatusEffect->GetStatusID() == EFFECT_SLEEP && 
+                    PStatusEffect->GetSubID() == (uint32)EFFECT_BIO &&
+                    PStatusEffect->GetSubPower() > 9 &&
+                    tpzrand::GetRandomNumber(1000) > 100))
                 continue; 
 
             RemoveStatusEffect(PStatusEffect, silent);
@@ -1359,8 +1364,8 @@ void CStatusEffectContainer::SetEffectParams(CStatusEffect* StatusEffect)
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
     }
-    // Determine if this is a Nightmare effect -- Sleep with a Bio sub id
-    else if ((effect == EFFECT_SLEEP && (StatusEffect->GetSubID() == (uint32)EFFECT_BIO)))
+    // Determine if this is a Nightmare effect -- Sleep with a Bio sub id or vice-versa
+    else if ((effect == EFFECT_SLEEP && (StatusEffect->GetSubID() == (uint32)EFFECT_BIO)) || (effect == EFFECT_BIO && (StatusEffect->GetSubID() == (uint32)EFFECT_SLEEP)))
     {
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
@@ -1737,7 +1742,9 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             {
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
-                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)) // dots dont wake up from nightmare
+                // nightmare sleep. Don't break sleep from REGEN_DOWN damage
+                // see nightmare.lua for full explanation
+                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)) 
                     WakeUp();
             }
         }

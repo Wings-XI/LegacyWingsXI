@@ -9225,11 +9225,6 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         bool breakBind = true;
         bool removePetrify = false;
 
-        // Check to see if the target has a nightmare effect active
-        if (PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) &&
-            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)
-            wakeUp = false;
-
         if (!lua_isnil(L, 5) && lua_istable(L, 5))
         {
             // Attempt to wake up the target unless wakeUp is provided and is false.
@@ -9240,6 +9235,25 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
             lua_getfield(L, 5, "breakBind");
             breakBind = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
         }
+
+        // Check to see if the target a nightmare effect active, reset wakeUp accordingly
+        if (PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) &&
+            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)
+        {
+            // Don't break nightmare sleep from any dmg that doesn't break bind (DoT damage)
+            // see nightmare.lua for full explanation
+            if(breakBind == false)
+                    wakeUp = false;
+            
+            // Diabolos mob-move: Nightmare effect active (dot power 10 or higher) "High chance to not break nightmare sleep from any damage"
+            // therefore, don't remove it 90% of the time
+            // see nightmare.lua for full explanation
+            if(wakeUp == true &&
+                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubPower() > 9 &&
+                tpzrand::GetRandomNumber(1000) > 100)
+                    wakeUp = false;
+        }
+            
 
         ATTACKTYPE attackType = !lua_isnil(L, 3) && lua_isnumber(L, 3) ? (ATTACKTYPE)lua_tointeger(L, 3) : ATTACK_NONE;
         DAMAGETYPE damageType = !lua_isnil(L, 4) && lua_isnumber(L, 4) ? (DAMAGETYPE)lua_tointeger(L, 4) : DAMAGE_NONE;
