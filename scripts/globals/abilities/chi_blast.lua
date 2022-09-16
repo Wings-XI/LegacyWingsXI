@@ -24,15 +24,19 @@ function onUseAbility(player, target, ability)
     local boostNum = 0
     if (player:hasStatusEffect(tpz.effect.BOOST) == true) then
         local boostEffect = player:getStatusEffect(tpz.effect.BOOST)
-        boostPowerPerc = boostEffect:getPower() / 1000 -- attp is in tenths of attack %
-        boostNum = boostEffect:getSubPower()
+        boostNum = math.max(boostEffect:getSubPower(),1) -- shouldn't be possible to be less than 1, but just in case so we don't try dividing by zero
+        -- the formula from the post below suggests boostPowerPerc should be 50%, 75%, or 100% (this last is OoE for us)
+        -- I.E. if you boost everytime with AF gloves, this will make boostPowerPerc = 18.75 * 4 = 75,
+        -- but if some or all of your boosts were without AF it will tend towards boostPowerPerc = 12.5 * 4 = 50
+        boostPowerPerc = (4 * boostEffect:getPower() / 100) / boostNum
     end
-    local rand = .5 + math.random()/2
+    local rand = math.random(512,1024) / 1024
 
     -- https://ffxiclopedia.fandom.com/wiki/Chi_Blast
+    -- https://www.bluegartr.com/threads/108197-Random-Facts-Thread-Abilities?p=5089420&viewfull=1#post5089420
     -- DMG = floor( floor( MND × Rand ) × ( #Boost × BoostIncrease% + 1 ) )
-    local dmg = math.floor(math.floor(mnd * rand) * (boostNum * (boostPowerPerc * 4 / 100) + 1))
-    -- printf("dmg %u, mnd %u, rand %f, boostNum %u, boostPower %u", dmg, mnd, rand, boostNum, boostPowerPerc)
+    local dmg = math.floor(math.floor(mnd * rand) * (boostNum * (boostPowerPerc / 100) + 1))
+    -- printf("dmg %u, mnd %u, rand %f, boostNum %u, boostPowerPerc %u", dmg, mnd, rand, boostNum, boostPowerPerc)
     
     local penance = player:getMerit(tpz.merit.PENANCE)
     

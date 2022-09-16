@@ -7156,7 +7156,7 @@ INSERT INTO `mob_groups` VALUES(19, 3451, 113, 'Sand_Cockatrice', 300, 0, 2147, 
 INSERT INTO `mob_groups` VALUES(20, 5889, 113, 'Killer_Jonny', 28800, 0, 3088, 16071, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(21, 3882, 113, 'Terror_Pugil', 300, 0, 1229, 0, 0, 66, 70, 0);
 INSERT INTO `mob_groups` VALUES(22, 71, 113, 'Air_Elemental', 300, 4, 38, 0, 0, 52, 54, 0);
-INSERT INTO `mob_groups` VALUES(23, 5425, 113, 'Tegmine', 7200, 128, 2945, 10500, 5000, 70, 73, 0);
+INSERT INTO `mob_groups` VALUES(23, 5425, 113, 'Tegmine', 7200, 0, 2945, 10500, 5000, 70, 73, 0);
 INSERT INTO `mob_groups` VALUES(24, 1806, 113, 'Greater_Manticore', 300, 0, 1228, 0, 0, 76, 79, 0);
 INSERT INTO `mob_groups` VALUES(25, 1429, 113, 'Frostmane', 0, 32, 912, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(26, 2287, 113, 'Kreutzet', 0, 128, 1466, 11000, 0, 79, 80, 0);

@@ -38,9 +38,10 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         uint32_t dwPrivileges = 0;
         bool bUserExists = false;
         uint32_t dwIpExempt = 0;
+        time_t tmTempExempt = 0;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
-        std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
+        std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt, temp_exempt FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
             Database::RealEscapeString(pszUsername).c_str()));
@@ -61,6 +62,9 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             dwStatus = pAccountsFound->get_unsigned16(3);
             dwPrivileges = pAccountsFound->get_unsigned32(4);
             dwIpExempt = pAccountsFound->get_unsigned16(5);
+            if (!pAccountsFound->get_is_null(6)) {
+                tmTempExempt = (pAccountsFound->get_date_time(6)).mktime();
+            }
         }
         mLastError = AUTH_SUCCESS;
         // Hash the entered password even if the user does not exist. This prevents valid username
@@ -91,6 +95,10 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
                 LOG_DEBUG1("Account %s does not have maintenance mode access.", pszUsername);
                 mLastError = AUTH_MAINTENANCE_MODE;
             }
+        }
+        if ((tmTempExempt != 0) && (time(NULL) < tmTempExempt)) {
+            // LAN party mode enabled
+            dwIpExempt |= 0x01;
         }
         if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, ((dwIpExempt & 0x01) != 0))) {
             if (mLastError == AUTH_SUCCESS) {
