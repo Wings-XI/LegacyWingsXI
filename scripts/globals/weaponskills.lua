@@ -200,7 +200,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         critRate = critRate + nativecrit
 
         if calcParams.flourishEffect and calcParams.flourishEffect:getPower() > 2 then
-            critRate = critRate + 0.25 + calcParams.flourishEffect:getSubPower()/100
+             critRate = critRate + 0.10 + calcParams.flourishEffect:getSubPower()/100
         end
     end
     calcParams.critRate = critRate
@@ -355,13 +355,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     end
 
     if calcParams.flourishEffect ~= nil then
-        calcParams.bonusAcc = calcParams.bonusAcc + 20 + calcParams.flourishEffect:getSubPower()*2 
+         calcParams.bonusAcc = calcParams.bonusAcc + 40 + calcParams.flourishEffect:getSubPower()*2 
     end
 
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
-
-    -- allow crit if building flourish is on (3+ moves)
-    if calcParams.flourishEffect ~= nil and calcParams.flourishEffect:getPower() > 2 then wsParams.canCrit = true end
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, false)
@@ -904,7 +901,7 @@ end
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local flourishCoefficient = 1
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 2 + flourisheffect:getSubPower()/50 end
+    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 1.25 + flourisheffect:getSubPower()/100 end
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local ratio = (attacker:getStat(tpz.mod.ATT) * atkmulti * flourishCoefficient) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
