@@ -53,10 +53,12 @@ private:
         // Used when changing password
         char szNewPassword[16];
         char szEmail[50];
+        // Used when 2FA is enabled for the account
+        char szOTP[16];
         // Pad with some zeros because some modified bootloaders send more data
         // Note: It's only one char so do not change it to LOGIN_COMMANDS type.
         // Use a static cast as needed.
-        char szZero[157];
+        char szZero[141];
     };
 #pragma pack(pop)
 
