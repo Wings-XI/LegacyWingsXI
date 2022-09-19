@@ -67,6 +67,12 @@ find_package(RabbitMQ REQUIRED)
 # Find LuaJIT
 find_package(LuaJIT)
 
+# Find Baseencode
+find_package(Baseencode)
+
+# Find COTP
+find_package(COTP)
+
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_17)

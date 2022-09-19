@@ -40,6 +40,8 @@ public:
         AUTH_SESSION_EXISTS = 9,
         AUTH_IP_BLOCKED = 10,
         AUTH_IP_LOCKED_OUT = 11,
+        AUTH_NEED_OTP = 12,
+        AUTH_BAD_OTP = 13,
         AUTH_LAST
     };
 
@@ -72,10 +74,11 @@ public:
      *  Authenticate user by username / password.
      *  @param pszUsername Username to authenticate
      *  @param pszPassword Password to authenticate
+     *  @param pszOTP One-time-password (if enabled)
      *  @param pbufAuthToken If not null receives an 8 byte authentication token
      *  @return Account ID of the user on success or 0 on failure.
      */
-    uint32_t AuthenticateUser(const char* pszUsername, const char* pszPassword, uint8_t* pbufAuthToken = NULL);
+    uint32_t AuthenticateUser(const char* pszUsername, const char* pszPassword, const char* pszOTP, uint8_t* pbufAuthToken = NULL);
 
     /**
      *  Create a new user account.
@@ -92,9 +95,10 @@ public:
      *  @param pszUsername User to modify
      *  @param pszOldPassword Existing password
      *  @param pszNewPassword New password to set
+     *  @param pszOTP One-time-password (if enabled)
      *  @return true if successful, false on failure.
      */
-    bool ChangePassword(const char* pszUsername, const char* pszOldPassword, const char* pszNewPassword);
+    bool ChangePassword(const char* pszUsername, const char* pszOldPassword, const char* pszNewPassword, const char* pszOTP);
 
     /**
      *  Log the login into the logins log
