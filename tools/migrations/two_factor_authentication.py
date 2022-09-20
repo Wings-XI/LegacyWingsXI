@@ -18,6 +18,7 @@ def migrate(cur, db):
 	dbname = utils.login_dbname()
 	try:
 		cur.execute("ALTER TABLE {}.accounts ADD COLUMN `otp_secret` varchar(64) DEFAULT NULL".format(dbname))
+		cur.execute("ALTER TABLE {}.accounts ADD COLUMN `otp_change` datetime DEFAULT NULL".format(dbname))
 		db.commit()
 	except mysql.connector.Error as err:
 		print("Something went wrong: {}".format(err))
