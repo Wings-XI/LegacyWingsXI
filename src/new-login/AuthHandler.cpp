@@ -60,7 +60,7 @@ void AuthHandler::Run()
         switch (static_cast<LOGIN_COMMANDS>(LoginRequest.ucCommandType)) {
         case LOGIN_COMMAND_LOGIN:
             LOG_DEBUG1("Received login packet, username=%s", LoginRequest.szUserName);
-            dwAccountId = Authenticator.AuthenticateUser(LoginRequest.szUserName, LoginRequest.szPassword, bufAuthToken);
+            dwAccountId = Authenticator.AuthenticateUser(LoginRequest.szUserName, LoginRequest.szPassword, LoginRequest.szOTP, bufAuthToken);
             if (dwAccountId) {
                 // Login successful
                 LOG_INFO("User %s successfully logged in.", LoginRequest.szUserName);
@@ -100,7 +100,7 @@ void AuthHandler::Run()
             break;
         case LOGIN_COMMAND_CHANGE_PASSWORD:
             LOG_DEBUG1("Received password change packet, username=%s", LoginRequest.szUserName);
-            if (Authenticator.ChangePassword(LoginRequest.szUserName, LoginRequest.szPassword, LoginRequest.szNewPassword))
+            if (Authenticator.ChangePassword(LoginRequest.szUserName, LoginRequest.szPassword, LoginRequest.szNewPassword, LoginRequest.szOTP))
             {
                 LOG_INFO("Successfully changed the password of user %s.", LoginRequest.szUserName);
                 LoginResponse.ucResponseType = static_cast<uint8_t>(PWCHANGE_SUCCESSFUL);

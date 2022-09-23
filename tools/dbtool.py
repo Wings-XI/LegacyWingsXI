@@ -29,6 +29,8 @@ from migrations import currency_columns
 from migrations import chat_filters
 from migrations import ip_exempt
 from migrations import blocked_ranges
+from migrations import ip_exempt
+from migrations import two_factor_authentication
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -49,6 +51,8 @@ migrations = [
     chat_filters,
     ip_exempt,
     blocked_ranges,
+	ip_exempt,
+	two_factor_authentication,
 ]
 # These are the default 'protected' files
 player_data = [

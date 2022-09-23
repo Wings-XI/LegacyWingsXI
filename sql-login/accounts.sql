@@ -42,7 +42,9 @@ CREATE TABLE `accounts` (
   `status` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
   `privileges` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `ip_exempt` smallint(3) unsigned NOT NULL DEFAULT 0,
-  `temp_exempt` datetime DEFAULT NULL
+  `temp_exempt` datetime DEFAULT NULL,
+  `otp_secret` varchar(64) DEFAULT NULL,
+  `otp_change` datetime DEFAULT NULL 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
