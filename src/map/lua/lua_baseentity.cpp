@@ -14092,19 +14092,20 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
+        // always spawn on master
+        PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
+
         // if a number is given its an avatar or elemental spawn
-        // calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/spell list/other mods 
-        // cannot call twice now that SpawnMobPet addmods (not setmods) job traits/family mods
+        // calling to reset stats, mods, etc as the MobEntity->Spawn() function sets those separately
         if (!lua_isnil(L, 1) && lua_isstring(L, 1))
         {
             petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
         }
-
-        // always spawn on master
-        PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
-
-        // setup AI
-        PPet->Spawn();
+        else
+        {
+            // setup AI
+            PPet->Spawn();
+        }
     }
     return 0;
 }
