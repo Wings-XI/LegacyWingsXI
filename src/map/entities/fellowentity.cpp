@@ -101,6 +101,7 @@ bool CFellowEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
 void CFellowEntity::OnAbility(CAbilityState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PAbility = state.GetAbility();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 

@@ -1275,6 +1275,7 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
             if regimeRepeat ~= 0 then
                 regimeRepeat = 1
                 -- only displayed if repeating is enabled
+                -- WINGSCUSTOM
                 player:PrintToPlayer("Field Manual: You chose to repeat this regime. Continue killing regime monsters after completion for renewal!", 0xD)
             elseif player:getCharVar("[regime]day") == VanadielDayAbsolute() then
                 player:messageBasic(tpz.msg.basic.WAIT_LONGER)
@@ -1290,6 +1291,7 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
             player:setCharVar("[regime]repeat", regimeRepeat)
             
             if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+                -- WINGSCUSTOM
                 player:PrintToPlayer("You have chosen a page before a new one is available. Since you chose to have the page repeat your progress is stalled until the new day.")
                 for i = 1, 4 do
                     player:setCharVar("[regime]killed" .. i, page[i])
@@ -1441,6 +1443,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         -- new day hasn't passed since collecting a page
         if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
             if player:getCharVar("[regime]waitNewDay") ~= 1 then
+                -- WINGSCUSTOM
                 player:setCharVar("[regime]waitNewDay", 1)
                 player:PrintToPlayer("Reviewing your progress at Field Manual will show all tasks complete until killing a regime monster in any zone on a new day.")
             end

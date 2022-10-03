@@ -262,6 +262,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     -- basically h2h always gets 2 "initial" hits, but `numHits` is hard respected for the extra hits
     -- whereas dual widling gets 2 "initial" hits, but `numHits` e.g. dancing edge is respected as though only one "initial" was performed 
     -- tl;dr: DW gives an extra WS hit everytime, H2H simply ensures every WS gets at least 2 hits (yes backhand blow and dragon kick are both 2-hit ws...)
+    -- WINGSTODO Fix upstream
     local hitsDone = attacker:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.HAND_TO_HAND and 2 or 1
     local offHitsDone = 0
     local numHits, numOffhandHits = getMultiAttacks(attacker, target, wsParams.numHits, wsParams.useOAXTimes, calcParams.melee)
@@ -382,19 +383,21 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(attacker, finaldmg, attack.damageType)
-        if attack.weaponType == tpz.skill.HAND_TO_HAND then
+        -- WINGSCUSTOM
+        -- using damageType so that ws dmg type follows modified weapon type (joyeuse, birdbanes, etc)
+        if attack.damageType == tpz.damageType.H2H then
             if h2hres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * h2hres / 1000
             end
-        elseif attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM then
+        elseif attack.damageType == tpz.damageType.PIERCING then
             if pierceres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * pierceres / 1000
             end
-        elseif attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF then
+        elseif attack.damageType == tpz.damageType.BLUNT then
             if impactres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
             else

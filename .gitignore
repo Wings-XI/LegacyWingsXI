@@ -219,3 +219,5 @@ libzmq-d.dll
 lua51.dll
 /conf/default
 /conf/old-login.conf
+libbaseencode.dll
+libcotp.dll

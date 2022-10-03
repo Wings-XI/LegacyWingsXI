@@ -163,6 +163,7 @@ bool CBattleEntity::isSitting()
 
 void CBattleEntity::UpdateHealth()
 {
+    TracyZoneScoped;
     int32 dif = (getMod(Mod::CONVMPTOHP) - getMod(Mod::CONVHPTOMP));
 
     health.modmp = std::max(0, ((health.maxmp) * (100 + getMod(Mod::MPP)) / 100) + std::min<int16>((health.maxmp * m_modStat[Mod::FOOD_MPP] / 100), m_modStat[Mod::FOOD_MP_CAP]) + getMod(Mod::MP));
@@ -237,6 +238,7 @@ int32 CBattleEntity::GetMaxMP()
 
 uint8 CBattleEntity::GetSpeed()
 {
+    TracyZoneScoped;
     int16 startingSpeed = isMounted() ? 40 + map_config.mount_speed_mod : speed;
 
     // Mod::MOVE (169)
@@ -314,6 +316,7 @@ float CBattleEntity::GetJumpTPBonus()
 
 int16 CBattleEntity::GetWeaponDelay(bool tp)
 {
+    TracyZoneScoped;
     uint16 WeaponDelay = 9999;
     if (auto weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
@@ -380,6 +383,7 @@ uint8 CBattleEntity::GetMeleeRange()
 
 int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
 {
+    TracyZoneScoped;
     CItemWeapon* PRange = (CItemWeapon*)m_Weapons[SLOT_RANGED];
     CItemWeapon* PAmmo = (CItemWeapon*)m_Weapons[SLOT_AMMO];
 
@@ -648,6 +652,7 @@ int32 CBattleEntity::addMP(int32 mp)
 
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/)
 {
+    TracyZoneScoped;
     if (health.hp <= 0)
     {
         return 0;
@@ -1025,6 +1030,7 @@ void CBattleEntity::addModifiers(std::vector<CModifier> *modList)
 
 int16 CBattleEntity::CalculateMSFromSources()
 {
+    TracyZoneScoped;
     int16 highestItemPositiveValue = 0;
     int16 highestNonItemPositve = 0;
     int16 totalItemReducedValue = 0;
@@ -1074,6 +1080,7 @@ int16 CBattleEntity::CalculateMSFromSources()
 
 void CBattleEntity::addEquipModifiers(std::vector<CModifier> *modList, uint8 itemLevel, uint8 slotid)
 {
+    TracyZoneScoped;
     if (GetMLevel() >= itemLevel)
     {
         for (uint16 i = 0; i < modList->size(); ++i)
@@ -1250,6 +1257,7 @@ void CBattleEntity::delModifiers(std::vector<CModifier> *modList)
 
 void CBattleEntity::delEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid)
 {
+    TracyZoneScoped;
     if (GetMLevel() >= itemLevel)
     {
         for (uint16 i = 0; i < modList->size(); ++i)
@@ -1544,6 +1552,7 @@ void CBattleEntity::OnDeathTimer()
 
 void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PSpell = state.GetSpell();
     auto PActionTarget = static_cast<CBattleEntity*>(state.GetTarget());
     CBattleEntity* POriginalTarget = PActionTarget;
@@ -1817,6 +1826,7 @@ void CBattleEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& ac
 
 bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    TracyZoneScoped;
     if (this->PMaster != nullptr && this->PMaster->objtype == TYPE_PC && !static_cast<CCharEntity*>(this->PMaster)->IsMobOwner(PTarget))
     {
         errMsg = std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_ALREADY_CLAIMED);
@@ -1890,6 +1900,7 @@ CBattleEntity* CBattleEntity::GetBattleTarget()
 
 bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     bool cover = false;
 

@@ -103,6 +103,7 @@ namespace fishingutils
 
     void AddFishingLog(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         const char* catchName = "Unknown";
         switch (PChar->hookedFish->catchtype) {
         case FISHINGCATCHTYPE_SMALLFISH:
@@ -284,6 +285,7 @@ namespace fishingutils
     }
 
     fishingarea_t* GetFishingArea(CCharEntity* PChar) {
+        TracyZoneScoped;
         int16 zoneId = PChar->getZone();
         position_t p = PChar->loc.p;
         areavector_t loc = { p.x, p.y, p.z };
@@ -352,7 +354,7 @@ namespace fishingutils
 
     std::vector<fish_t>* GetFishingAreaFish(uint16 zoneId, uint16 areaId, uint16 lureId)
     {
-
+        TracyZoneScoped;
         const char* Query =
             "SELECT "
             "distinct "
@@ -434,7 +436,7 @@ namespace fishingutils
     }
 
     std::vector<fishmob_t>* GetFishingAreaMobs(uint16 ZoneId) {
-
+        TracyZoneScoped;
         const char* Query =
             "SELECT "
             "mobid, "               // 0
@@ -982,6 +984,7 @@ namespace fishingutils
 
     void StartFishing(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         uint16 MessageOffset = GetMessageOffset(PChar->getZone());
         CItemWeapon* Rod = nullptr;
         CItemWeapon* Bait = nullptr;
@@ -1146,6 +1149,7 @@ namespace fishingutils
 
     void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32 special)
     {
+        TracyZoneScoped;
         uint16 MessageOffset = GetMessageOffset(PChar->getZone());
         uint32 vanaTime = CVanaTime::getInstance()->getVanaTime();
 

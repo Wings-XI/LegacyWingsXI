@@ -225,6 +225,7 @@ void CAttackRound::DeleteAttackSwing()
 ************************************************************************/
 void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction)
 {
+    TracyZoneScoped;
     if (!PWeapon)
         return;
 
@@ -402,6 +403,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
 ************************************************************************/
 void CAttackRound::CreateKickAttacks()
 {
+    TracyZoneScoped;
     if (m_attacker->objtype == TYPE_PC || m_attacker->objtype == TYPE_MOB)
     {
 

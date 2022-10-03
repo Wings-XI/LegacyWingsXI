@@ -53,9 +53,11 @@ namespace mobutils
 
 uint16 GetWeaponDamage(CMobEntity* PMob)
 {
+    TracyZoneScoped;
     uint16 damage;
     if (PMob->GetMJob() == JOB_MNK)
     {
+        // WINGSTODO Fix upstream
         uint16 h2hskill = battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_MNK, PMob->GetMLevel());
         // https://ffxiclopedia.fandom.com/wiki/Category:Hand-to-Hand
         damage = 0.11f * h2hskill + 3 + 18 * PMob->GetMLevel() / 75; // basic h2h weapon dmg + scaling "weapon" for mnk mobs based on h2h skill (destroyers 18 dmg at 75)
@@ -223,6 +225,7 @@ uint16 GetBase(CMobEntity * PMob, uint8 rank)
 
 void CalculateStats(CMobEntity * PMob)
 {
+    TracyZoneScoped;
     // remove all to keep mods in sync
     PMob->StatusEffectContainer->KillAllStatusEffect();
     PMob->restoreModifiers();
@@ -926,6 +929,7 @@ void SetSpellList(CMobEntity* PMob, uint16 spellList)
 
 void InitializeMob(CMobEntity* PMob, CZone* PZone)
 {
+    TracyZoneScoped;
     // add special mob mods
 
     // this only has to be added once
