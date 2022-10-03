@@ -1794,7 +1794,7 @@ tpz.mod =
     LUMINION_CIRCLE = 1238,
 
     AUTOMATON_MAGIC_COST      = 1300,
-    AUTOMATON_CAN_BARRAGE     = 1301
+    AUTOMATON_CAN_BARRAGE     = 1301,
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 through 825 used by WS DMG mods these are not spares.

@@ -47,6 +47,7 @@ CLatentEffectContainer::CLatentEffectContainer(CCharEntity* PEntity) :
 
 void CLatentEffectContainer::AddLatentEffects(std::vector<CItemEquipment::itemLatent>& latentList, uint8 reqLvl, uint8 slot)
 {
+    TracyZoneScoped;
     for (auto& latent : latentList)
     {
         if (m_POwner->GetMLevel() >= reqLvl || latent.ConditionsValue == LATENT_JOB_LEVEL_ABOVE)
@@ -67,6 +68,7 @@ void CLatentEffectContainer::AddLatentEffects(std::vector<CItemEquipment::itemLa
 
 void CLatentEffectContainer::DelLatentEffects(uint8 reqLvl, uint8 slot)
 {
+    TracyZoneScoped;
     m_LatentEffectList.erase(std::remove_if(m_LatentEffectList.begin(), m_LatentEffectList.end(), [slot](auto& latent){
         return latent.GetSlot() == slot;
     }), m_LatentEffectList.end());
@@ -100,6 +102,7 @@ bool CLatentEffectContainer::DelLatentEffect(LATENT conditionID, uint16 conditio
 ************************************************************************/
 void CLatentEffectContainer::CheckAllLatents()
 {
+    TracyZoneScoped;
     CheckLatentsZone();
     CheckLatentsDay();
     CheckLatentsWeekDay();
@@ -480,6 +483,7 @@ void CLatentEffectContainer::CheckLatentsHours()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this, members](CLatentEffect& latentEffect)
     {
         switch (latentEffect.GetConditionsID())
@@ -656,6 +660,7 @@ void CLatentEffectContainer::CheckLatentsTime()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this, slot](CLatentEffect& latentEffect)
     {
         if (latentEffect.GetConditionsID() == LATENT_WEAPON_BROKEN && latentEffect.GetConditionsValue() == slot)
@@ -673,6 +678,7 @@ void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsZone()
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this](CLatentEffect& latentEffect)
     {
         switch (latentEffect.GetConditionsID())
@@ -737,6 +743,7 @@ void CLatentEffectContainer::CheckLatentsTargetChange()
 // health post looping if at least one logic function returned true
 void CLatentEffectContainer::ProcessLatentEffects(std::function <bool(CLatentEffect&)> logic)
 {
+    TracyZoneScoped;
     auto update = false;
 
     for (auto& latent : m_LatentEffectList)
@@ -860,8 +867,10 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
                 if (member->PPet != nullptr)
                 {
                     auto PPet = (CPetEntity*)member->PPet;
-                    if (PPet->m_PetID == latentEffect.GetConditionsValue() &&
-                        PPet->PAI->IsSpawned())
+                    if (PPet->PAI->IsSpawned() && 
+                            PPet->m_PetID < 21 && // is an avatar
+                            (PPet->m_PetID == latentEffect.GetConditionsValue() || latentEffect.GetConditionsValue() == 21) // avatar id matches or latent condition == 21 to match any avatar
+                        )
                     {
                         expression = true;
                         break;
@@ -872,8 +881,10 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         else if (m_POwner->PParty == nullptr && m_POwner->PPet != nullptr)
         {
             auto PPet = (CPetEntity*)m_POwner->PPet;
-            if (PPet->m_PetID == latentEffect.GetConditionsValue() &&
-                !PPet->isDead())
+            if (!PPet->isDead() &&
+                    PPet->m_PetID < 21 && // is an avatar
+                    (PPet->m_PetID == latentEffect.GetConditionsValue() || latentEffect.GetConditionsValue() == 21) // avatar id matches or latent condition == 21 to match any avatar
+                )
             {
                 expression = true;
             }

@@ -903,6 +903,7 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
 
 PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_t* map_session_data)
 {
+    TracyZoneScoped;
     auto getBufferSize = [](PacketList_t list) {
         size_t size = FFXI_HEADER_SIZE; // include header here
         while (!list.empty())
@@ -2243,6 +2244,7 @@ PacketList_t generate_priority_packet_list(CCharEntity* PChar, map_session_data_
         priorityList = orderPacketList(priorityList);
         while (compressedBufferSize + 4 > 1300 - FFXI_HEADER_SIZE - 16)
         {
+            TracyZoneScoped;
             priorityList.pop_back();
             if (!priorityList.empty())
                 priorityList.pop_back(); // compression is CPU expensive, let's pop two at a time

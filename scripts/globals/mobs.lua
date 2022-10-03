@@ -119,6 +119,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                     -- TODO: add all spawn types
                     -- best I can tell, spawntypes are mutually exclusive, but they're still treated as a flag in the cpp core
                     -- used for PH mobs that have nonzero spawntypes
+                    -- WINGSTODO Fix upstream
                     if phSpawnType == tpz.mob.spawntype.SPAWNTYPE_NORMAL then
                         phEnable = true
                     elseif phSpawnType == tpz.mob.spawntype.SPAWNTYPE_ATNIGHT then
@@ -131,6 +132,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                         phMob:setRespawnTime(GetMobRespawnTime(phId))
                     end
 
+                    -- WINGSCUSTOM
                     if m:getLocalVar("preservePop") == 1 then
                         SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), 1)
                         m:setLocalVar("preservePop", 0)

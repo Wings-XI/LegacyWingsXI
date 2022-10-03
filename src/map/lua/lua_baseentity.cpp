@@ -13625,17 +13625,12 @@ inline int32 CLuaBaseEntity::getMeleeHitDamage(lua_State *L)
 inline int32 CLuaBaseEntity::getWeaponDelay(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     uint16 weapondly = 0;
 
-    if(m_PBaseEntity->objtype == TYPE_PC)
+    if(m_PBaseEntity->objtype != TYPE_NPC)
     {
         weapondly = ((CBattleEntity*)m_PBaseEntity)->GetWeaponDelay(0);
-    }
-    else
-    {
-        weapondly = ((CItemWeapon*)((CBattleEntity*)m_PBaseEntity)->m_Weapons[SLOT_MAIN])->getDelay();
     }
 
     lua_pushinteger(L, weapondly);

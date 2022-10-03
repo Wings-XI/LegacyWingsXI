@@ -93,6 +93,7 @@ namespace anticheat
     // Log and possibly jail
     bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg, const char* description, uint8 add_strikes)
     {
+        TracyZoneScoped;
         if (PChar == NULL) {
             return false;
         }

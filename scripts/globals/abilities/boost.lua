@@ -14,6 +14,7 @@ end
 
 function onUseAbility(player, target, ability)
     -- power is 12.5% attack + boost_effect mods from gear, stored as hundreths of attp
+    -- WINGSTODO Fix upstream
     local power = 1250 + player:getMod(tpz.mod.BOOST_EFFECT)
 
     if (player:hasStatusEffect(tpz.effect.BOOST) == true) then

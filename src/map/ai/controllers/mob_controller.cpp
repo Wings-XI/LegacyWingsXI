@@ -41,6 +41,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../utils/petutils.h"
 #include "../../utils/zoneutils.h"
 
+#define TRY_LINK_TICK_FREQUENCY 4
+
 CMobController::CMobController(CMobEntity* PEntity) :
     CController(PEntity),
     PMob(PEntity),
@@ -139,11 +141,14 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
 
 void CMobController::TryLink()
 {
-    TracyZoneScoped;
-    if (PTarget == nullptr)
+    // only try links if engaged and every 4 server ticks
+    if (PTarget == nullptr || ++m_TryLinkSkippedTicks < TRY_LINK_TICK_FREQUENCY)
     {
         return;
     }
+    TracyZoneScoped;
+
+    m_TryLinkSkippedTicks = 0;
 
     //handle pet behaviour on the targets behalf (faster than in ai_pet_dummy)
     // Avatars defend masters by attacking mobs if the avatar isn't attacking anything currently (bodyguard behaviour)
@@ -1105,6 +1110,9 @@ bool CMobController::Engage(uint16 targid)
     if (ret)
     {
         m_firstSpell = true;
+
+        // randomize to have TryLink only run every 4th server tick, but not the _same_ tick for all linked mobs
+        m_TryLinkSkippedTicks = tpzrand::GetRandomNumber(0,TRY_LINK_TICK_FREQUENCY - 1);
 
         if (PMob->isInDynamis() && PMob->GetMJob() == JOB_SMN)
         { // dyna SMN: summon my avatar immediately

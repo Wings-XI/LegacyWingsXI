@@ -474,6 +474,7 @@ bool CAttack::CheckCover()
 ************************************************************************/
 void CAttack::ProcessDamage()
 {
+    TracyZoneScoped;
     // Sneak attack.
     if (m_attacker->GetMJob() == JOB_THF &&
         m_isFirstSwing &&

@@ -82,6 +82,7 @@ private:
 
     CMobEntity* const PMob;
 
+    uint8 m_TryLinkSkippedTicks;
     time_point m_LastActionTime;
     time_point m_LastMagicTime;
     time_point m_LastMobSkillTime;

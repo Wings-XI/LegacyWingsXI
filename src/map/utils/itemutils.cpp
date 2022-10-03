@@ -509,8 +509,9 @@ namespace itemutils
                     uint16 GroupRate = (uint16)Sql_GetIntData(SqlHandle, 5);
                     while (GroupId >= dropList->Groups.size())
                     {
-                        dropList->Groups.emplace_back(GroupRate);
+                        dropList->Groups.emplace_back(0); // ensures we don't consider drop groups that aren't actually in the db...
                     }
+                    dropList->Groups[GroupId].GroupRate = GroupRate;
                     dropList->Groups[GroupId].Items.emplace_back(DropType, ItemID, DropRate);
                 }
                 else
