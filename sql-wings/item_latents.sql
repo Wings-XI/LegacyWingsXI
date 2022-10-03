@@ -1458,6 +1458,7 @@ INSERT INTO `item_latents` VALUES(19060, 288, 3, 13, 56);
 INSERT INTO `item_latents` VALUES(19080, 165, 9, 13, 56);
 INSERT INTO `item_latents` VALUES(19080, 288, 3, 13, 56);
 INSERT INTO `item_latents` VALUES(19108, 366, 5, 0, 75);
+INSERT INTO `item_latents` VALUES(19109, 23, 10, 13, 6); -- trilling dagger +10 attack when silenced
 INSERT INTO `item_latents` VALUES(19113, 165, 7, 59, 14);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 368);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 369);

@@ -23708,6 +23708,13 @@ INSERT INTO `item_mods` VALUES (19107,11,4);
 INSERT INTO `item_mods` VALUES (19107,25,4);
 INSERT INTO `item_mods` VALUES (19107,68,4);
 INSERT INTO `item_mods` VALUES (19108,68,5);
+ -- trilling dagger
+INSERT INTO `item_mods` VALUES (19109,353,2); -- light affinity +10%
+-- INSERT INTO `item_mods` VALUES (19109,354,-2); -- dark affinity -10% dmg wiki doesn't seem to indicate we get this like light staff does
+-- INSERT INTO `item_mods` VALUES (19109,550,2); -- light affinity +acc wiki doesn't seem to indicate we get this like light staff does
+-- INSERT INTO `item_mods` VALUES (19109,551,-2); -- dark affinity -acc wiki doesn't seem to indicate we get this like light staff does
+INSERT INTO `item_mods` VALUES (19109,559,2); -- light avatar perp reduction
+INSERT INTO `item_mods` VALUES (19109,560,-2); -- dark avatar perp increase
 INSERT INTO `item_mods` VALUES (19111,14,4);
 INSERT INTO `item_mods` VALUES (19111,119,2);
 INSERT INTO `item_mods` VALUES (19112,12,4);
