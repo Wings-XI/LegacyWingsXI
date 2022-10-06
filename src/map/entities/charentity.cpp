@@ -1798,6 +1798,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 {
                     actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
                     actionTarget.messageID = 353;
+
+                    luautils::OnCriticalHit(PTarget, this);
                 }
 
                 // at least 1 hit occured
