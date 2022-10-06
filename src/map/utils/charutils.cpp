@@ -1718,6 +1718,7 @@ namespace charutils
 
     uint32 DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID)
     {
+        TracyZoneScoped;
         ShowDebug(CL_CYAN"%s->%s trade item movement started\n" CL_RESET, PChar->GetName(), PTarget->GetName());
         bool checkHG = false;
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
@@ -2354,6 +2355,7 @@ namespace charutils
 
     void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 containerID)
     {
+        TracyZoneScoped;
         CItemEquipment* PItem = (CItemEquipment*)PChar->getStorage(containerID)->GetItem(slotID);
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
@@ -2641,6 +2643,7 @@ namespace charutils
 
     void CheckEquipLogic(CCharEntity* PChar, SCRIPTTYPE ScriptType, uint32 param)
     {
+        TracyZoneScoped;
         if (!(PChar->m_EquipFlag & ScriptType))
             return;
 
@@ -2767,6 +2770,7 @@ namespace charutils
     }
 
     void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID) {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(PPet == nullptr || PChar == nullptr);
 
         memset(&PChar->m_PetCommands, 0, sizeof(PChar->m_PetCommands));
@@ -3090,6 +3094,7 @@ namespace charutils
 
     void BuildingCharAbilityTable(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         std::vector<CAbility*> AbilitiesList;
 
         memset(&PChar->m_Abilities, 0, sizeof(PChar->m_Abilities));
@@ -3190,6 +3195,7 @@ namespace charutils
 
     void BuildingCharSkillsTable(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         MERIT_TYPE skillMerit[] = {MERIT_H2H, MERIT_DAGGER, MERIT_SWORD, MERIT_GSWORD, MERIT_AXE, MERIT_GAXE, MERIT_SCYTHE, MERIT_POLEARM, MERIT_KATANA, MERIT_GKATANA, MERIT_CLUB,
             MERIT_STAFF, MERIT_AUTOMATON_MELEE, MERIT_AUTOMATON_RANGED, MERIT_AUTOMATON_MAGIC, MERIT_ARCHERY, MERIT_MARKSMANSHIP, MERIT_THROWING, MERIT_GUARDING, MERIT_EVASION,
             MERIT_SHIELD, MERIT_PARRYING, MERIT_DIVINE, MERIT_HEALING, MERIT_ENHANCING, MERIT_ENFEEBLING, MERIT_ELEMENTAL, MERIT_DARK, MERIT_SUMMONING, MERIT_NINJITSU, MERIT_SINGING,
@@ -3355,7 +3361,7 @@ namespace charutils
 
     void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl)
     {
-
+        TracyZoneScoped;
         // This usually happens after a crash
         TPZ_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
 
@@ -3909,6 +3915,7 @@ namespace charutils
 
     void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
     {
+        TracyZoneScoped;
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
@@ -5439,6 +5446,7 @@ namespace charutils
 
     void SaveCharJob(CCharEntity* PChar, JOBTYPE job)
     {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(job == JOB_NON || job >= MAX_JOBTYPE);
 
         const char* fmtQuery;
@@ -5988,6 +5996,7 @@ namespace charutils
 
     void ReloadParty(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         int ret = Sql_Query(SqlHandle, "SELECT partyid, allianceid, partyflag & %d FROM accounts_sessions s JOIN accounts_parties p ON "
             "s.charid = p.charid WHERE p.charid = %u;", (PARTY_SECOND | PARTY_THIRD), PChar->id);
         if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)

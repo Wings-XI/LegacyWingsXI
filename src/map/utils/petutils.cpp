@@ -830,9 +830,17 @@ namespace petutils
         }
     }
 
-    void LoadPetProperties(CBattleEntity* PMaster, CMobEntity* PPet, uint32 PetID, bool isMobPet)
+    void LoadPetProperties(CBattleEntity* PMaster, CMobEntity* PPet, uint32 PetID)
     {
+        bool isMobPet = false;
+        if (PPet->PMaster != nullptr && PPet->PMaster->objtype == TYPE_MOB)
+            isMobPet = true;
+
         Pet_t* petData = g_PPetList.at(PetID);
+
+        // provide spell list before spawning mob's pet
+        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
+        // TODO: don't give mp to avatars / pets with no spells?
 
         if (isMobPet)
         {
@@ -848,14 +856,73 @@ namespace petutils
 
             PPet->allegiance = PMaster->allegiance;
             PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
+
+            // setup AI before setting any mods (mobentity Spawn function sets some default mods)
+            // Mob Pets get proper job and family traits for their level from this spawn function
+            PPet->Spawn();
+        }
+        else
+        {
+            // grab all mob_family_mods for this player's pet
+            char* Query =
+                "SELECT \
+                    pet_list.petid, \
+                    pet_list.name, \
+                    mob_family_mods.modid, \
+                    mob_family_mods.value, \
+                    mob_family_mods.is_mob_mod \
+                    FROM pet_list, mob_pools, mob_family_system, mob_family_mods \
+                    WHERE pet_list.poolid = mob_pools.poolid AND \
+                    mob_pools.familyid = mob_family_system.familyid AND \
+                    mob_pools.familyid = mob_family_mods.familyid AND \
+                    pet_list.petid = %u";
+
+            if (Sql_Query(SqlHandle, Query, PetID) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    switch((bool)Sql_GetIntData(SqlHandle, 4)) // switch on is_mob_mod
+                    {
+                    case true:
+                        if (isMobPet)  // never hit now, but Spawn() function does, indeed, take care of it
+                            PPet->addMobMod((uint16)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
+                        break;
+                    case false:
+                        PPet->addModifier((Mod)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
+                        break;
+                    }
+                }
+            }
+
+            // grab all pet mJob traits for this pet
+            // collect only the highest rank of each trait
+            // bst jug job traits based on jug job: https://www.bluegartr.com/threads/103121-Demystifying-bst-jug-pet-effectiveness/page2
+            // smn pet job traits: https://forum.square-enix.com/ffxi/archive/index.php/t-26620.html?s=7479ed8941e24392e5bba049aabd4032
+            Query =
+                "SELECT a.traitid, a.modifier, a.value, a.rank FROM traits a \
+                INNER JOIN ( \
+                SELECT traitid, job, MAX(`rank`) AS highest FROM traits \
+                WHERE modifier > 0 AND job = %u AND LEVEL <= %u \
+                GROUP BY traitid) b \
+                ON a.traitid = b.traitid AND a.job = b.job AND a.rank = b.highest";
+
+            if (Sql_Query(SqlHandle, Query, PPet->GetMJob(), PPet->GetMLevel()) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                uint16 ModID = 0;
+                while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    ModID = Sql_GetIntData(SqlHandle, 1);
+                    // exclude KILLER traits: ModID 224-238
+                    if (ModID > 0 && (ModID < 224 || ModID > 238))
+                        PPet->addModifier((Mod)ModID, (int16)Sql_GetIntData(SqlHandle, 2));
+                }
+            }
         }
         
         // load Pet attributes directly from db mob_pools, mob_family_system, mob_family_mods
         // - Mob Pets
         // - smn spirits and avatars
 
-        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
-        // TODO: don't give mp to avatars / pets with no spells?
 
         ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petData->cmbDelay / 60.0f))));
 
@@ -882,60 +949,6 @@ namespace petutils
         PPet->setModifier(Mod::SDT_LIGHT, petData->lightresSDT);
         PPet->setModifier(Mod::SDT_DARK, petData->darkresSDT);
         
-        // grab all mob_family_mods for this pet
-        char* Query =
-            "SELECT \
-                pet_list.petid, \
-                pet_list.name, \
-                mob_family_mods.modid, \
-                mob_family_mods.value, \
-                mob_family_mods.is_mob_mod \
-                FROM pet_list, mob_pools, mob_family_system, mob_family_mods \
-                WHERE pet_list.poolid = mob_pools.poolid AND \
-                mob_pools.familyid = mob_family_system.familyid AND \
-                mob_pools.familyid = mob_family_mods.familyid AND \
-                pet_list.petid = %u";
-
-        if (Sql_Query(SqlHandle, Query, PetID) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
-        {
-            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-            {
-                switch((bool)Sql_GetIntData(SqlHandle, 4))
-                {
-                case true:
-                    if (isMobPet)
-                        PPet->addMobMod((uint16)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
-                    break;
-                case false:
-                    PPet->addModifier((Mod)Sql_GetIntData(SqlHandle, 2), (int16)Sql_GetIntData(SqlHandle, 3));
-                    break;
-                }
-            }
-        }
-
-        // grab all pet mJob traits for this pet
-        // collect only the highest rank of each trait
-        // bst jug job traits based on jug job: https://www.bluegartr.com/threads/103121-Demystifying-bst-jug-pet-effectiveness/page2
-        // smn pet job traits: https://forum.square-enix.com/ffxi/archive/index.php/t-26620.html?s=7479ed8941e24392e5bba049aabd4032
-        Query =
-            "SELECT a.traitid, a.modifier, a.value, a.rank FROM traits a \
-            INNER JOIN ( \
-            SELECT traitid, job, MAX(`rank`) AS highest FROM traits \
-            WHERE modifier > 0 AND job = %u AND LEVEL <= %u \
-            GROUP BY traitid) b \
-            ON a.traitid = b.traitid AND a.job = b.job AND a.rank = b.highest";
-
-        if (Sql_Query(SqlHandle, Query, PPet->GetMJob(), PPet->GetMLevel()) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
-        {
-            uint16 ModID = 0;
-            while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-            {
-                ModID = Sql_GetIntData(SqlHandle, 1);
-                // exclude KILLER traits: ModID 224-238
-                if (ModID > 0 && (ModID < 224 || ModID > 238))
-                    PPet->addModifier((Mod)ModID, (int16)Sql_GetIntData(SqlHandle, 2));
-            }
-        }
     }
 
     void LoadAvatarStats(CPetEntity* PPet)
@@ -1160,7 +1173,7 @@ namespace petutils
         // grab pet info
         CMobEntity* PPet = (CMobEntity*)PMaster->PPet;
 
-        LoadPetProperties(PMaster, PPet, PetID, true);
+        LoadPetProperties(PMaster, PPet, PetID);
     }
 
     void DetachPet(CBattleEntity* PMaster)
@@ -1671,7 +1684,7 @@ namespace petutils
             // load mob sdt, etc from mob_family_system
             // load all non-mob mods from mob_family_mods
             // after the above code to ensure job, level, and stats are set
-            LoadPetProperties(PMaster, PPet, PetID, false);
+            LoadPetProperties(PMaster, PPet, PetID);
 
         }
         else if (PPet->getPetType() == PETTYPE_JUG_PET)
@@ -1698,8 +1711,8 @@ namespace petutils
             
             // load mob sdt, etc from mob_family_system
             // load all non-mob mods from mob_family_mods
-            // after the above code to ensure job, level, and stats are set
-            LoadPetProperties(PMaster, PPet, PetID, false);
+            // placed after the above code to ensure job, level, and stats are set
+            LoadPetProperties(PMaster, PPet, PetID);
         }
         else if (PPet->getPetType() == PETTYPE_WYVERN)
         {

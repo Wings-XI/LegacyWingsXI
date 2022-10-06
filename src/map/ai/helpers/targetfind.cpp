@@ -175,6 +175,8 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
 
 void CTargetFind::findWithinCone(CBattleEntity* PTarget, AOERADIUS radiusType, float distance, float angle, uint8 flags, uint8 extraRotation)
 {
+    TracyZoneScoped;
+
     m_findFlags = flags;
     m_conal = true;
 
@@ -299,6 +301,8 @@ void CTargetFind::addAllInEnmityList()
 
 void CTargetFind::addAllInRange(CBattleEntity* PTarget, float radius, uint8 allegiance)
 {
+    TracyZoneScoped;
+
     m_radius = radius;
     m_PRadiusAround = &(m_PBattleEntity->loc.p);
 
@@ -359,6 +363,7 @@ CBattleEntity* CTargetFind::findMaster(CBattleEntity* PTarget)
 
 bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 {
+    TracyZoneScoped;
     if (findMaster(m_PBattleEntity)->objtype != TYPE_PC || findMaster(PTarget)->objtype == TYPE_PC)
     {
         // always true for mobs, npcs - not true for PCs or PC's pets
@@ -388,6 +393,7 @@ validEntity will check if the given entity can be targeted in the AoE.
 */
 bool CTargetFind::validEntity(CBattleEntity* PTarget)
 {
+    TracyZoneScoped;
     if (std::find(m_targets.begin(), m_targets.end(), PTarget) != m_targets.end()) {
         return false;
     }
@@ -481,6 +487,7 @@ bool CTargetFind::isWithinArea(position_t* pos)
 
 bool CTargetFind::isWithinCone(position_t* pos)
 {
+    TracyZoneScoped;
     position_t PPoint;
 
     // holds final weight
@@ -535,6 +542,7 @@ bool CTargetFind::canSee(position_t* point)
 
 CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint16 validTargetFlags)
 {
+    TracyZoneScoped;
     CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST | TYPE_FELLOW);
 
     if (PTarget == nullptr)

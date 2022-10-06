@@ -913,9 +913,14 @@ enum class Mod
     AUTOMATON_MAGIC_COST      = 1300,
     AUTOMATON_CAN_BARRAGE     = 1301,
 
-    // These mods should not be directly set.  These are used to apply pet mods via latent effects
+    // These mods should not be directly set (use item_mods_pets instead).  These are used to apply pet mods via latent effects 
     PET_ATT_LATENT = 970, // Pet Attack bonus used for latents
-    PET_ACC_LATENT = 971 // Pet Acc bonus used for latents
+    PET_ACC_LATENT = 971, // Pet Acc bonus used for latents
+    // 972 = MOUNT_MOVE
+    PET_MATT_LATENT = 973, // Pet Magic Attack bonus used for latents
+    PET_MACC_LATENT = 974, // Pet Magic Acc bonus used for latents
+    PET_DEF_LATENT = 975 // Pet DEF bonus used for latents
+
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.

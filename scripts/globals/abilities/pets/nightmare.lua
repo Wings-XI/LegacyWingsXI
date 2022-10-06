@@ -62,6 +62,7 @@ function onPetAbility(target, pet, skill, summoner)
         target:delStatusEffectSilent(tpz.effect.LULLABY)
         
         -- sleep with subid = tpz.effect.BIO for DoT detection on wakup check in lua_baseentity.cpp 
+        -- WINGSTODO Fix upstream
         if not hasSleepEffects(target) and target:addStatusEffect(effect, 15, 3, duration, subeffect, dotdmg, 1) then
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         else

@@ -353,6 +353,7 @@ void LoadNPCList()
 
 void LoadMOBList()
 {
+    TracyZoneScoped;
     uint8 normalLevelRangeMin = luautils::GetSettingsVariable("NORMAL_MOB_MAX_LEVEL_RANGE_MIN");
     uint8 normalLevelRangeMax = luautils::GetSettingsVariable("NORMAL_MOB_MAX_LEVEL_RANGE_MAX");
 

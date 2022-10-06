@@ -7,6 +7,7 @@
 -----------------------------------
 
 function onEffectGain(target, effect)
+    -- WINGSTODO Fix upstream
     if (effect:getSubType() == tpz.effect.BIO and effect:getSubPower() > 0) then
         -- bio with subeffect sleep, so we don't wake up targets from this dot damage
         -- confirmed that nightmare does have 2 separate effects (sleep and bio): https://youtu.be/LKpSQQPf0hE?t=338

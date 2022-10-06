@@ -965,6 +965,7 @@ void CCharEntity::delTrait(CTrait* PTrait)
 
 bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 {
+    TracyZoneScoped;
     if (PInitiator->objtype == TYPE_PC && StatusEffectContainer->GetLevelRestrictionEffect() != PInitiator->StatusEffectContainer->GetLevelRestrictionEffect())
     {
         return false;
@@ -1032,6 +1033,7 @@ void CCharEntity::OnDisengage(CAttackState& state)
 
 bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    TracyZoneScoped;
     float dist = distance(loc.p, PTarget->loc.p);
 
     if (!IsMobOwner(PTarget))
@@ -1075,6 +1077,7 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
 
 bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto controller {static_cast<CPlayerController*>(PAI->GetController())};
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
@@ -1094,6 +1097,7 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 
 void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
+    TracyZoneScoped;
     CBattleEntity::OnCastFinished(state, action);
 
     auto PSpell = state.GetSpell();
@@ -1229,6 +1233,7 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 
 void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
+    TracyZoneScoped;
     CBattleEntity::OnWeaponSkillFinished(state, action);
 
     this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
@@ -1374,6 +1379,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PAbility = state.GetAbility();
 
     // Check if user is the right job and level
@@ -1716,6 +1722,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
@@ -1791,6 +1798,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 {
                     actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
                     actionTarget.messageID = 353;
+
+                    luautils::OnCriticalHit(PTarget, this);
                 }
 
                 // at least 1 hit occured
@@ -1987,6 +1996,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
 bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 {
+    TracyZoneScoped;
     TPZ_DEBUG_BREAK_IF(PBattleTarget == nullptr);
 
     if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC ||
@@ -2009,6 +2019,7 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 
 bool CCharEntity::IsPartiedWith(CCharEntity* PTarget)
 {
+    TracyZoneScoped;
     bool found = false;
 
     static_cast<CCharEntity*>(this)->ForAlliance([&PTarget, &found](CBattleEntity* PEntity) {
@@ -2141,6 +2152,7 @@ void CCharEntity::OnRaise()
 
 void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     auto PItem = static_cast<CItemUsable*>(state.GetItem());
 
@@ -2253,6 +2265,7 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
 
 void CCharEntity::Die()
 {
+    TracyZoneScoped;
     m_LastEngagedTargID = 0;
 
     if (PLastAttacker)
@@ -2299,6 +2312,7 @@ void CCharEntity::Die()
 
 void CCharEntity::Die(duration _duration)
 {
+    TracyZoneScoped;
     this->ClearTrusts();
 
     m_deathSyncTime = server_clock::now() + death_update_frequency;
@@ -2777,6 +2791,7 @@ void CCharEntity::TrackArrowUsageForScavenge(CItemWeapon* PAmmo)
 
 bool CCharEntity::OnAttackError(CAttackState& state)
 {
+    TracyZoneScoped;
     auto controller {static_cast<CPlayerController*>(PAI->GetController())};
     if (controller->getLastErrMsgTime() + std::chrono::milliseconds(this->GetWeaponDelay(false)) < PAI->getTick())
     {

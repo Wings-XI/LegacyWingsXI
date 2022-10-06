@@ -28,6 +28,7 @@ function onUseAbility(player, target, ability)
         -- the formula from the post below suggests boostPowerPerc should be 50%, 75%, or 100% (this last is OoE for us)
         -- I.E. if you boost everytime with AF gloves, this will make boostPowerPerc = 18.75 * 4 = 75,
         -- but if some or all of your boosts were without AF it will tend towards boostPowerPerc = 12.5 * 4 = 50
+        -- WINGSTODO Fix upstream
         boostPowerPerc = (4 * boostEffect:getPower() / 100) / boostNum
     end
     local rand = math.random(512,1024) / 1024

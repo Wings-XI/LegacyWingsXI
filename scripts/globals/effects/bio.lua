@@ -12,12 +12,14 @@ function onEffectGain(target, effect)
     local subpower = effect:getSubPower()
     target:addMod(tpz.mod.ATTP, -subpower)
     -- Only use REGEN_DOWN if this is a regular Bio
+    -- WINGSTODO Fix upstream
     if (effect:getSubType() ~= tpz.effect.SLEEP_I) then
         target:addMod(tpz.mod.REGEN_DOWN, power)
     end
 end
 
 function onEffectTick(target, effect)
+    -- WINGSTODO Fix upstream
     -- handle diabolos nightmare bio damage explicitly
     -- This type of Bio doesn't break any type of sleep
     -- It does this by dealing lua damage with the `wakeUp` flag explicitly set to false
@@ -40,6 +42,7 @@ function onEffectLose(target, effect)
     local power = effect:getPower()
     local subpower = effect:getSubPower()
     target:delMod(tpz.mod.ATTP, -subpower)
+    -- WINGSTODO Fix upstream
     -- Only use REGEN_DOWN if this is a regular Bio
     if (effect:getSubType() ~= tpz.effect.SLEEP_I) then
         target:delMod(tpz.mod.REGEN_DOWN, power)

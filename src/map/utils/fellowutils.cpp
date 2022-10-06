@@ -525,6 +525,7 @@ uint16 GetMaxTime(CCharEntity* PChar)
 
 CFellowEntity* LoadFellow(CCharEntity* PMaster, uint32 FellowID, bool spawningFromZone)
 {
+    TracyZoneScoped;
     CFellowEntity* PFellow = new CFellowEntity(PMaster);
     PFellow->loc = PMaster->loc;
     PFellow->m_OwnerID.id = PMaster->id;

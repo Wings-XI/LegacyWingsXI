@@ -114,6 +114,15 @@ Mod CLatentEffect::GetModForPetLatentMod(Mod petModLatent)
         case Mod::PET_ATT_LATENT:
             modifier = Mod::ATT;
             break;
+        case Mod::PET_MACC_LATENT:
+            modifier = Mod::MACC;
+            break;
+        case Mod::PET_MATT_LATENT:
+            modifier = Mod::MATT;
+            break;
+        case Mod::PET_DEF_LATENT:
+            modifier = Mod::DEF;
+            break;
     }
 
     return modifier;
@@ -121,6 +130,7 @@ Mod CLatentEffect::GetModForPetLatentMod(Mod petModLatent)
 
 bool CLatentEffect::Activate()
 {
+    TracyZoneScoped;
     if (!IsActivated())
     {
         //additional effect latents add mod to weapon, not player
@@ -160,6 +170,7 @@ bool CLatentEffect::Activate()
 
 bool CLatentEffect::Deactivate()
 {
+    TracyZoneScoped;
     if (IsActivated())
     {
         //remove the modifier from weapon, not player

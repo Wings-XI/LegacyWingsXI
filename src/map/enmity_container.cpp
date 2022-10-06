@@ -443,6 +443,7 @@ CBattleEntity* CEnmityContainer::GetHighestEnmity()
 
 void CEnmityContainer::DecayEnmity()
 {
+    TracyZoneScoped;
     for (auto it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
         EnmityObject_t& PEnmityObject = it->second;
