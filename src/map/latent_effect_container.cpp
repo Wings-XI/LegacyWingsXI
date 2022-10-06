@@ -47,6 +47,7 @@ CLatentEffectContainer::CLatentEffectContainer(CCharEntity* PEntity) :
 
 void CLatentEffectContainer::AddLatentEffects(std::vector<CItemEquipment::itemLatent>& latentList, uint8 reqLvl, uint8 slot)
 {
+    TracyZoneScoped;
     for (auto& latent : latentList)
     {
         if (m_POwner->GetMLevel() >= reqLvl || latent.ConditionsValue == LATENT_JOB_LEVEL_ABOVE)
@@ -67,6 +68,7 @@ void CLatentEffectContainer::AddLatentEffects(std::vector<CItemEquipment::itemLa
 
 void CLatentEffectContainer::DelLatentEffects(uint8 reqLvl, uint8 slot)
 {
+    TracyZoneScoped;
     m_LatentEffectList.erase(std::remove_if(m_LatentEffectList.begin(), m_LatentEffectList.end(), [slot](auto& latent){
         return latent.GetSlot() == slot;
     }), m_LatentEffectList.end());
@@ -100,6 +102,7 @@ bool CLatentEffectContainer::DelLatentEffect(LATENT conditionID, uint16 conditio
 ************************************************************************/
 void CLatentEffectContainer::CheckAllLatents()
 {
+    TracyZoneScoped;
     CheckLatentsZone();
     CheckLatentsDay();
     CheckLatentsWeekDay();
@@ -480,6 +483,7 @@ void CLatentEffectContainer::CheckLatentsHours()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsPartyMembers(size_t members)
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this, members](CLatentEffect& latentEffect)
     {
         switch (latentEffect.GetConditionsID())
@@ -656,6 +660,7 @@ void CLatentEffectContainer::CheckLatentsTime()
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this, slot](CLatentEffect& latentEffect)
     {
         if (latentEffect.GetConditionsID() == LATENT_WEAPON_BROKEN && latentEffect.GetConditionsValue() == slot)
@@ -673,6 +678,7 @@ void CLatentEffectContainer::CheckLatentsWeaponBreak(uint8 slot)
 ************************************************************************/
 void CLatentEffectContainer::CheckLatentsZone()
 {
+    TracyZoneScoped;
     ProcessLatentEffects([this](CLatentEffect& latentEffect)
     {
         switch (latentEffect.GetConditionsID())
@@ -737,6 +743,7 @@ void CLatentEffectContainer::CheckLatentsTargetChange()
 // health post looping if at least one logic function returned true
 void CLatentEffectContainer::ProcessLatentEffects(std::function <bool(CLatentEffect&)> logic)
 {
+    TracyZoneScoped;
     auto update = false;
 
     for (auto& latent : m_LatentEffectList)
@@ -860,8 +867,10 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
                 if (member->PPet != nullptr)
                 {
                     auto PPet = (CPetEntity*)member->PPet;
-                    if (PPet->m_PetID == latentEffect.GetConditionsValue() &&
-                        PPet->PAI->IsSpawned())
+                    if (PPet->PAI->IsSpawned() && 
+                            PPet->m_PetID < 21 && // is an avatar
+                            (PPet->m_PetID == latentEffect.GetConditionsValue() || latentEffect.GetConditionsValue() == 21) // avatar id matches or latent condition == 21 to match any avatar
+                        )
                     {
                         expression = true;
                         break;
@@ -872,8 +881,10 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         else if (m_POwner->PParty == nullptr && m_POwner->PPet != nullptr)
         {
             auto PPet = (CPetEntity*)m_POwner->PPet;
-            if (PPet->m_PetID == latentEffect.GetConditionsValue() &&
-                !PPet->isDead())
+            if (!PPet->isDead() &&
+                    PPet->m_PetID < 21 && // is an avatar
+                    (PPet->m_PetID == latentEffect.GetConditionsValue() || latentEffect.GetConditionsValue() == 21) // avatar id matches or latent condition == 21 to match any avatar
+                )
             {
                 expression = true;
             }
@@ -1150,25 +1161,42 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         }
 
         auto region = m_POwner->loc.zone->GetRegionID();
+        auto regionOwner = conquest::GetRegionOwner(region);
         auto hasSignet = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET);
         auto hasSanction = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION);
         auto hasSigil = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL);
 
-        switch (latentEffect.GetConditionsValue())
+        switch(regionOwner)
         {
         case 0:
-            //under own nation's control
-            expression = region < 28 && conquest::GetRegionOwner(region) == m_POwner->profile.nation && (hasSignet || hasSanction || hasSigil);
-            break;
         case 1:
-            //outside of own nation's control
-            expression = region < 28 && m_POwner->profile.nation != conquest::GetRegionOwner(region) && (hasSignet || hasSanction || hasSigil);
+        case 2:
+        case 3:
+            switch (latentEffect.GetConditionsValue())
+            {
+            case 0:
+                //under own nation's control
+                expression = region < 28 && m_POwner->profile.nation == regionOwner && (hasSignet || hasSanction || hasSigil);
+                break;
+            case 1:
+                //outside of own nation's control
+                expression = region < 28 && m_POwner->profile.nation != regionOwner && (hasSignet || hasSanction || hasSigil);
+                break;
+            default:
+                break;
+            }
+            break;
+        // no matter if item requires "in control" or "not in control", if zone has NEUTRAL control and region < 28, then effect is active (dynamis, limbus, cities, etc)
+        default:
+            expression = region < 28 && (hasSignet || hasSanction || hasSigil);
             break;
         }
         break;
     }
+
     case LATENT_ZONE_HOME_NATION:
     {
+        // *** Ensure this is only used for nation-specific aketons with speed boost **
         //player is logging in/zoning
         if (m_POwner->loc.zone == nullptr)
         {
@@ -1178,16 +1206,33 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         auto PZone = m_POwner->loc.zone;
         auto region = (REGIONTYPE)latentEffect.GetConditionsValue();
 
-        switch (region)
+        /*
+        Respective City Aketons provide speed boost in 
+        - home nation zones
+        - if player is previously rank 10 with zone's nation
+        Any Nation's Aketon provide speed boost if player is rank 10 with all 3 nations
+        - in Jeuno
+        - in Shadowreign Cities
+        */
+        switch (PZone->GetType())
         {
-        case REGION_SANDORIA:
-            expression = m_POwner->profile.nation == 0 && PZone->GetRegionID() == region;
-            break;
-        case REGION_BASTOK:
-            expression = m_POwner->profile.nation == 1 && PZone->GetRegionID() == region;
-            break;
-        case REGION_WINDURST:
-            expression = m_POwner->profile.nation == 2 && PZone->GetRegionID() == region;
+        case 1:
+            switch (PZone->GetRegionID())
+            {
+            case REGION_SANDORIA:
+            case REGION_BASTOK:
+            case REGION_WINDURST:
+                expression = (m_POwner->profile.nation == (PZone->GetRegionID() - 19) || m_POwner->profile.rank[(PZone->GetRegionID() - 19)] == 10) && PZone->GetRegionID() == region;
+                break;
+            case REGION_RONFAURE_FRONT:
+            case REGION_GUSTABERG_FRONT:
+            case REGION_SARUTA_FRONT:
+            case REGION_JEUNO:
+                expression = m_POwner->profile.rank[0] == 10 && m_POwner->profile.rank[1] == 10 && m_POwner->profile.rank[2] == 10;
+                break;
+            default:
+                break;
+            }
             break;
         default:
             break;

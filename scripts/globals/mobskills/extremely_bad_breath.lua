@@ -14,6 +14,11 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    -- Lividroot Amooshah won't use this skill until phase 4
+    if mob:getID() == 16990473 and mob:getLocalVar("phase") < 4 then
+        return 1
+    end
+
     return 0
 end
 

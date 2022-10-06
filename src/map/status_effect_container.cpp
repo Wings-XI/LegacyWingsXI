@@ -714,9 +714,14 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
 
                 continue; // book refresh/regen persists through level sync application
 
-            // If this is a Nightmare effect flag, it needs to be removed explictly by a cure
-            if (flag & EFFECTFLAG_DAMAGE 
-                && (PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
+            // If this is an NM Nightmare sleep, it can be removed explictly by a cure, but "High chance to not break nightmare sleep from any damage"
+            // therefore, don't remove it 90% of the time
+            // see nightmare.lua for full explanation
+            if (flag & EFFECTFLAG_DAMAGE && 
+                    (PStatusEffect->GetStatusID() == EFFECT_SLEEP && 
+                    PStatusEffect->GetSubID() == (uint32)EFFECT_BIO &&
+                    PStatusEffect->GetSubPower() > 9 &&
+                    tpzrand::GetRandomNumber(1000) > 100))
                 continue; 
 
             RemoveStatusEffect(PStatusEffect, silent);
@@ -975,8 +980,7 @@ bool CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, ui
             PEffect->GetStatusID() == EFFECT_BUST)//is a cor effect
         {
             if (PEffect->GetStatusID() == PStatusEffect->GetStatusID() &&
-                PEffect->GetSubID() == PStatusEffect->GetSubID() &&
-                PEffect->GetSubPower() < PStatusEffect->GetSubPower()) {//same type, double up
+                PEffect->GetSubID() == PStatusEffect->GetSubID()) {//same type, double up or reapply regardless if a more powerfull roll exists
                 if (PStatusEffect->GetSubPower() < 12)
                 {
                     PStatusEffect->SetDuration(PEffect->GetDuration());
@@ -989,15 +993,37 @@ bool CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, ui
                 {
                     if (PEffect->GetSubID() == m_POwner->id)
                     {
-                        if (!CheckForElevenRoll())
-                        {
+                        // https://wiki-ffo-jp.translate.goog/html/3347.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp
+                        // As a new XI bonus in place of the version upgrade effect time bonus on July 12, 2011, the effect of resetting and 
+                        // shortening the phantom roll reuse time and nullifying the Bust penalty has been implemented . In implementing
+                        // these bonuses, it was the first attempt in FF11 history to solicit ideas directly from users on the official forum .
+                        // 
+                        // I.E. in 2011 they added the functionality of not giving the bust penalty if you have an 11 roll present, here we should always get the bust
+                        // if (!CheckForElevenRoll())
+                        //{
                             uint16 duration = 300;
                             duration -= bustDuration;
-                            CStatusEffect* bustEffect = new CStatusEffect(EFFECT_BUST, EFFECT_BUST, PStatusEffect->GetPower(),
+                            uint16 power = PStatusEffect->GetPower();
+                            // GetTier() = mod
+                            // GetStatusID() = roll
+                            // Don't let Evoker's and Dancer's bust tick below zero
+                            switch(PStatusEffect->GetStatusID())
+                            {
+                                case EFFECT_EVOKERS_ROLL:
+                                    if (m_POwner->getMod(Mod::REFRESH) - PEffect->GetPower() < power)
+                                        power = m_POwner->getMod(Mod::REFRESH) - PEffect->GetPower();
+                                    break;
+                                case EFFECT_DANCERS_ROLL:
+                                    if(m_POwner->getMod(Mod::REGEN) - PEffect->GetPower() < power)
+                                        power = m_POwner->getMod(Mod::REGEN) - PEffect->GetPower();
+                                    break;
+                            }
+                            // (EFFECT id, uint16 icon, uint16 power, uint32 tick, uint32 duration, uint32 subid, uint16 subPower, uint16 tier, uint32 flags)
+                            CStatusEffect* bustEffect = new CStatusEffect(EFFECT_BUST, EFFECT_BUST, power,
                                 0, duration, PStatusEffect->GetTier(), PStatusEffect->GetStatusID());
                             AddStatusEffect(bustEffect, true);
                             DelStatusEffectSilent(EFFECT_DOUBLE_UP_CHANCE);
-                        }
+                        //}
                     }
                     DelStatusEffectSilent(PStatusEffect->GetStatusID());
 
@@ -1338,8 +1364,8 @@ void CStatusEffectContainer::SetEffectParams(CStatusEffect* StatusEffect)
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
     }
-    // Determine if this is a Nightmare effect -- Sleep with a Bio sub id
-    else if ((effect == EFFECT_SLEEP && (StatusEffect->GetSubID() == (uint32)EFFECT_BIO)))
+    // Determine if this is a Nightmare effect -- Sleep with a Bio sub id or vice-versa
+    else if ((effect == EFFECT_SLEEP && (StatusEffect->GetSubID() == (uint32)EFFECT_BIO)) || (effect == EFFECT_BIO && (StatusEffect->GetSubID() == (uint32)EFFECT_SLEEP)))
     {
         name.insert(0, "globals/effects/");
         name.insert(name.size(), effects::EffectsParams[effect].Name);
@@ -1716,7 +1742,9 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             {
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
-                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)) // dots dont wake up from nightmare
+                // nightmare sleep. Don't break sleep from REGEN_DOWN damage
+                // see nightmare.lua for full explanation
+                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)) 
                     WakeUp();
             }
         }

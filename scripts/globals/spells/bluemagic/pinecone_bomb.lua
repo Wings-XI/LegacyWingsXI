@@ -34,10 +34,10 @@ function onSpellCast(caster,target,spell)
     params.damageType = tpz.damageType.PIERCING
     params.scattr = SC_LIQUEFACTION
     params.numhits = 1
-    params.multiplier = 2.25
-    params.tp150 = 2.25
-    params.tp300 = 2.25
-    params.azuretp = 2.25
+    params.multiplier = 2.7
+    params.tp150 = 2.7
+    params.tp300 = 2.7
+    params.azuretp = 2.7
     params.duppercap = 37
     params.str_wsc = 0.20
     params.dex_wsc = 0.0

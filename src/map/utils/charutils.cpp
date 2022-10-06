@@ -93,6 +93,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../mob_modifier.h"
 #include "../roe.h"
 #include "../anticheat.h"
+#include "../dynamis_handler.h"
 
 #include "../entities/charentity.h"
 #include "../entities/petentity.h"
@@ -1717,6 +1718,7 @@ namespace charutils
 
     uint32 DoTrade(CCharEntity* PChar, CCharEntity* PTarget, uint32 TradeID)
     {
+        TracyZoneScoped;
         ShowDebug(CL_CYAN"%s->%s trade item movement started\n" CL_RESET, PChar->GetName(), PTarget->GetName());
         bool checkHG = false;
         for (uint8 slotid = 0; slotid <= 8; ++slotid)
@@ -2353,6 +2355,7 @@ namespace charutils
 
     void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 containerID)
     {
+        TracyZoneScoped;
         CItemEquipment* PItem = (CItemEquipment*)PChar->getStorage(containerID)->GetItem(slotID);
 
         if (PItem && PItem == PChar->getEquip((SLOTTYPE)equipSlotID))
@@ -2640,6 +2643,7 @@ namespace charutils
 
     void CheckEquipLogic(CCharEntity* PChar, SCRIPTTYPE ScriptType, uint32 param)
     {
+        TracyZoneScoped;
         if (!(PChar->m_EquipFlag & ScriptType))
             return;
 
@@ -2766,6 +2770,7 @@ namespace charutils
     }
 
     void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 PetID) {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(PPet == nullptr || PChar == nullptr);
 
         memset(&PChar->m_PetCommands, 0, sizeof(PChar->m_PetCommands));
@@ -2808,7 +2813,7 @@ namespace charutils
                     }
                     else if (PetID == 20) // cait sith
                     {
-                        if (PAbility->getID() > ABILITY_SOOTHING_RUBY && PAbility->getID() <= ABILITY_MOONLIT_CHARGE)
+                        if (PAbility->getID() > ABILITY_SOOTHING_RUBY && PAbility->getID() < ABILITY_MOONLIT_CHARGE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
@@ -3089,6 +3094,7 @@ namespace charutils
 
     void BuildingCharAbilityTable(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         std::vector<CAbility*> AbilitiesList;
 
         memset(&PChar->m_Abilities, 0, sizeof(PChar->m_Abilities));
@@ -3189,6 +3195,7 @@ namespace charutils
 
     void BuildingCharSkillsTable(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         MERIT_TYPE skillMerit[] = {MERIT_H2H, MERIT_DAGGER, MERIT_SWORD, MERIT_GSWORD, MERIT_AXE, MERIT_GAXE, MERIT_SCYTHE, MERIT_POLEARM, MERIT_KATANA, MERIT_GKATANA, MERIT_CLUB,
             MERIT_STAFF, MERIT_AUTOMATON_MELEE, MERIT_AUTOMATON_RANGED, MERIT_AUTOMATON_MAGIC, MERIT_ARCHERY, MERIT_MARKSMANSHIP, MERIT_THROWING, MERIT_GUARDING, MERIT_EVASION,
             MERIT_SHIELD, MERIT_PARRYING, MERIT_DIVINE, MERIT_HEALING, MERIT_ENHANCING, MERIT_ENFEEBLING, MERIT_ELEMENTAL, MERIT_DARK, MERIT_SUMMONING, MERIT_NINJITSU, MERIT_SINGING,
@@ -3206,7 +3213,7 @@ namespace charutils
             }
             uint16 MaxMSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PChar->GetMJob(), PChar->GetMLevel());
             uint16 MaxSSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PChar->GetSJob(), PChar->GetSLevel());
-            uint16 skillBonus = 0;
+            int32 skillBonus = 0;
 
             // apply arts bonuses
             if ((i >= 32 && i <= 35 && PChar->StatusEffectContainer->HasStatusEffect({EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE})) ||
@@ -3296,7 +3303,7 @@ namespace charutils
             }
             else
             {
-                PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus) | 0x8000;
+                PChar->WorkingSkills.skill[i] = std::max(0, skillBonus) | 0x8000;
             }
         }
 
@@ -3354,7 +3361,7 @@ namespace charutils
 
     void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl)
     {
-
+        TracyZoneScoped;
         // This usually happens after a crash
         TPZ_DEBUG_BREAK_IF(SkillID >= MAX_SKILLTYPE);   // выход за пределы допустимых умений
 
@@ -3880,6 +3887,8 @@ namespace charutils
         uint8 tries = 0;
         uint8 maxTries = 1;
         uint8 bonus = 0;
+        CZone* PZone = zoneutils::GetZone(PChar->getZone());
+        CDynamisHandler* PDynaHandler = PZone ? PZone->m_DynamisHandler : nullptr;
         if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
         {
             //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
@@ -3891,7 +3900,7 @@ namespace charutils
         {
             if (droprate > 0 && tpzrand::GetRandomNumber(1000) < droprate * map_config.drop_rate_multiplier + bonus)
             {
-                PChar->PTreasurePool->AddItem(itemid, PEntity);
+                PChar->PTreasurePool->AddItem(itemid, PEntity, PDynaHandler);
                 break;
             }
             tries++;
@@ -3906,6 +3915,7 @@ namespace charutils
 
     void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
     {
+        TracyZoneScoped;
         uint8 pcinzone = 0;
         uint8 minlevel = 0, maxlevel = PChar->GetMLevel();
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
@@ -4356,6 +4366,14 @@ namespace charutils
         if (PChar->jobs.job[PChar->GetMJob()] > 74 && PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai && PChar->jobs.exp[PChar->GetMJob()] == GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1)
             onLimitMode = true;
 
+        // Split large chunk of xp gain to catch edge conditions like capping xp and moving to limit point mode
+        uint32 expLeftover = 0;
+        uint32 expRemaining = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - PChar->jobs.exp[PChar->GetMJob()] - 1;
+        if(!onLimitMode && PChar->jobs.job[PChar->GetMJob()] == map_config.max_level && exp > expRemaining){
+            expLeftover = exp - expRemaining;
+            exp = expRemaining;
+        }
+
         // exp added from raise shouldn't display a message. Don't need a message for zero exp either
         if (!expFromRaise && exp > 0)
         {
@@ -4563,6 +4581,9 @@ namespace charutils
         if (PMob != PChar) // Only mob kills count for gain EXP records
         {
             roeutils::event(ROE_EXPGAIN, PChar, RoeDatagram("exp", exp));
+        }
+        if(expLeftover > 0){
+            AddExperiencePoints(false, PChar, PMob, expLeftover);
         }
     }
 
@@ -5425,6 +5446,7 @@ namespace charutils
 
     void SaveCharJob(CCharEntity* PChar, JOBTYPE job)
     {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(job == JOB_NON || job >= MAX_JOBTYPE);
 
         const char* fmtQuery;
@@ -5974,6 +5996,7 @@ namespace charutils
 
     void ReloadParty(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         int ret = Sql_Query(SqlHandle, "SELECT partyid, allianceid, partyflag & %d FROM accounts_sessions s JOIN accounts_parties p ON "
             "s.charid = p.charid WHERE p.charid = %u;", (PARTY_SECOND | PARTY_THIRD), PChar->id);
         if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)

@@ -27,7 +27,7 @@ function onSpellCast(caster, target, spell)
     params.azuretp = 1.5
     params.attackType = tpz.attackType.MAGICAL
     params.damageType = tpz.damageType.WATER
-    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 2.125 or 2.125
+    params.multiplier = caster:hasStatusEffect(tpz.effect.AZURE_LORE) and 3.7 or 3.2
     params.tMultiplier = 2.0
     params.duppercap = 69
     params.str_wsc = 0.0

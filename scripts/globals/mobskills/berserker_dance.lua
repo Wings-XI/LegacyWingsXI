@@ -15,7 +15,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     -- consider giving this a unique effect combining the two effects
-    local hastePower = 410 -- -- 410/1024 ~40%
+    local hastePower = 4000 -- 40% haste: https://ffxiclopedia.fandom.com/wiki/Berserker_Dance
     local defDownPower = 25
     local duration = 60
     local hasteTypeEffect = tpz.effect.HASTE
@@ -34,10 +34,6 @@ function onMobWeaponSkill(target, mob, skill)
     if (defDownTypeEffect) then
         defDownTypeEffect:unsetFlag(tpz.effectFlag.DISPELABLE)
     end
-
-    -- Mob haste is capped? Since it appears so - push delay changes for the duration of the buff to get to 2s per swing
-    mob:addMod(tpz.mod.DELAY, 1750)
-    mob:timer(60000, function(mob) if (mob) then mob:delMod(tpz.mod.DELAY, 1750)end end)
 
     return hasteTypeEffect
 end

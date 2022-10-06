@@ -108,6 +108,7 @@ namespace battleutils
 
     void LoadSkillTable()
     {
+        TracyZoneScoped;
         const char* fmtQuery = "SELECT r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13 \
                             FROM skill_caps \
                             ORDER BY level \
@@ -152,6 +153,7 @@ namespace battleutils
 
     void LoadWeaponSkillsList()
     {
+        TracyZoneScoped;
         const char* fmtQuery = "SELECT weaponskillid, name, jobs, type, skilllevel, element, animation, "
                             "animationTime, `range`, aoe, primary_sc, secondary_sc, tertiary_sc, main_only, unlock_id, req_level "
                             "FROM weapon_skills "
@@ -197,7 +199,7 @@ namespace battleutils
 
     void LoadMobSkillsList()
     {
-
+        TracyZoneScoped;
         // Load all mob skills
         const char* specialQuery = "SELECT mob_skill_id, mob_anim_id, mob_skill_name, \
         mob_skill_aoe, mob_skill_distance, mob_anim_time, mob_prepare_time, \
@@ -249,6 +251,7 @@ namespace battleutils
 
     void LoadSkillChainDamageModifiers()
     {
+        TracyZoneScoped;
         const char* fmtQuery = "SELECT chain_level, chain_count, initial_modifier, magic_burst_modifier \
                            FROM skillchain_damage_modifiers \
                            ORDER BY chain_level, chain_count";
@@ -346,6 +349,7 @@ namespace battleutils
 
     bool CanUseWeaponskill(CCharEntity* PChar, CWeaponSkill* PSkill)
     {
+        TracyZoneScoped;
         if ((((PSkill->getSkillLevel() > 0 && PChar->GetSkill(PSkill->getType()) >= PSkill->getSkillLevel() &&
             (PSkill->getUnlockId() == 0 || charutils::hasLearnedWeaponskill(PChar, PSkill->getUnlockId()))) ||
             (PSkill->getSkillLevel() == 0 && (PSkill->getUnlockId() == 0 || charutils::hasLearnedWeaponskill(PChar, PSkill->getUnlockId())))) &&
@@ -365,7 +369,7 @@ namespace battleutils
 
     int16 GetEnmityModDamage(int16 level)
     {
-        return std::clamp((int)level * 106 / 100, 8, 90);
+        return level * 31 / 50 + 6;
     }
 
     int16 GetEnmityModCure(int16 level)
@@ -438,6 +442,7 @@ namespace battleutils
     }
 
     int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element) {
+        TracyZoneScoped;
         int32 damage = 0;
 
         //Tier 1 enspells have their damaged pre-calculated AT CAST TIME and is stored in Mod::ENSPELL_DMG
@@ -610,6 +615,7 @@ namespace battleutils
 
     bool HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, actionTarget_t* Action, int32 damage)
     {
+        TracyZoneScoped;
         Action->spikesEffect = (SUBEFFECT)PDefender->getMod(Mod::SPIKES);
         Action->spikesMessage = 44;
         Action->spikesParam = std::max<int16>(PDefender->getMod(Mod::SPIKES_DMG), 0);
@@ -916,6 +922,7 @@ namespace battleutils
 
     uint8 CalculateResistanceBuildPercent(Mod mod, CBattleEntity* PTarget)
     {
+        TracyZoneScoped;
         if (PTarget->objtype != TYPE_MOB)
         {
             return 0;
@@ -992,6 +999,7 @@ namespace battleutils
 
     void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, actionTarget_t* Action, bool isFirstSwing, CItemWeapon* weapon, int32 finaldamage)
     {
+        TracyZoneScoped;
         CCharEntity* PChar = nullptr;
 
         if (PAttacker->objtype == TYPE_PC)
@@ -1778,7 +1786,10 @@ namespace battleutils
             check = 0;
         }
 
-        if (chance < check)
+        //100% interrupt dynamis statues if they are dead but haven't realized yet
+        auto isDeadStatue = (int16)PDefender->GetLocalVar("DeadStatue");
+
+        if (chance < check || isDeadStatue)
         {
             return true;
         }
@@ -1855,6 +1866,7 @@ namespace battleutils
     ************************************************************************/
     uint8 GetBlockRate(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
+        TracyZoneScoped;
         int8 shieldSize = 3;
         int32 base = 0;
         float blockRateMod = (100.0f + PDefender->getMod(Mod::SHIELDBLOCKRATE)) / 100.0f;
@@ -2028,6 +2040,7 @@ namespace battleutils
 
     int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
     {
+        TracyZoneScoped;
         auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         giveTPtoAttacker = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
         giveTPtoVictim = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
@@ -2287,7 +2300,7 @@ namespace battleutils
         else if (PDefender->objtype == TYPE_MOB)
            ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
 
-        if (PAttacker->objtype == TYPE_PC && !isRanged)
+        if (PAttacker->objtype == TYPE_PC && !isRanged && !isCounter)
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
 
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SOLDIERS_DRINK))
@@ -2307,6 +2320,7 @@ namespace battleutils
 
     int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACKTYPE attackType, DAMAGETYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, uint16 useAutoTPFormula)
     {
+        TracyZoneScoped;
         auto weapon = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
 
@@ -2462,6 +2476,7 @@ namespace battleutils
 
     uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int8 offsetAccuracy) //subWeaponAttack is for calculating acc of dual wielded sub weapon
     {
+        TracyZoneScoped;
         int32 hitrate = 75;
 
         if (PAttacker->objtype == TYPE_PC && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && (behind(PAttacker->loc.p, PDefender->loc.p, 64) || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))) ||
@@ -2606,6 +2621,7 @@ namespace battleutils
 
     uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ignoreSneakTrickAttack, bool isRanged)
     {
+        TracyZoneScoped;
         int32 crithitrate = 5;
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES, 0) ||
             PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MIGHTY_STRIKES)) {
@@ -3288,9 +3304,26 @@ namespace battleutils
 
     SKILLCHAIN_ELEMENT FormSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill)
     {
+        TracyZoneScoped;
         for (auto& resonance_element : resonance)
         {
             for (auto& skill_element : skill)
+            {
+                if (auto skillchain = skillchain_map.find({ resonance_element, skill_element }); skillchain != skillchain_map.end())
+                {
+                    return skillchain->second;
+                }
+            }
+        }
+        return SC_NONE;
+    }
+
+    SKILLCHAIN_ELEMENT FormChainboundSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill)
+    {
+        TracyZoneScoped;
+        for (auto& skill_element : skill)
+        {
+            for (auto& resonance_element : resonance)
             {
                 if (auto skillchain = skillchain_map.find({ resonance_element, skill_element }); skillchain != skillchain_map.end())
                 {
@@ -3341,7 +3374,7 @@ namespace battleutils
                     resonanceProperties.push_back(SC_IMPACTION);
                     resonanceProperties.push_back(SC_COMPRESSION);
 
-                    skillchain = FormSkillchain(resonanceProperties, skillProperties);
+                    skillchain = FormChainboundSkillchain(resonanceProperties, skillProperties);
                 }
                 PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_SKILLCHAIN, 0, combined_properties, 0, 10, 0, 0, 0));
                 PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_CHAINBOUND);
@@ -3379,7 +3412,7 @@ namespace battleutils
             {
                 PSCEffect->SetStartTime(server_clock::now());
                 //   ShowDebug("duration: %d", PSCEffect->GetDuration());
-                PSCEffect->SetDuration(PSCEffect->GetDuration() - 1000);
+                PSCEffect->SetDuration(10000);
                 PSCEffect->SetTier(GetSkillchainTier((SKILLCHAIN_ELEMENT)skillchain));
                 PSCEffect->SetPower(skillchain);
                 PSCEffect->SetSubPower(std::min(PSCEffect->GetSubPower() + 1, 6)); // Linked, limited to 6
@@ -3531,6 +3564,7 @@ namespace battleutils
 
     int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 lastSkillDamage, CBattleEntity* taChar)
     {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(PAttacker == nullptr);
         TPZ_DEBUG_BREAK_IF(PDefender == nullptr);
 
@@ -3760,6 +3794,7 @@ namespace battleutils
 
     CBattleEntity* getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob)
     {
+        TracyZoneScoped;
         if (!taUser->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
         {
             return nullptr;
@@ -3915,7 +3950,7 @@ namespace battleutils
 
     CBattleEntity* getCoverTarget(CBattleEntity* PTarget, CBattleEntity* PMob)
     {
-
+        TracyZoneScoped;
         if (PTarget->objtype != TYPE_PC || !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
             return nullptr;
 
@@ -4024,6 +4059,7 @@ namespace battleutils
     // Generate enmity for all targets in range
     void GenerateInRangeEnmity(CBattleEntity* PSource, int16 CE, int16 VE)
     {
+        TracyZoneScoped;
         TPZ_DEBUG_BREAK_IF(PSource == nullptr);
 
         CCharEntity* PIterSource = nullptr;
@@ -4209,7 +4245,7 @@ namespace battleutils
 
     uint16 jumpAbility(CBattleEntity* PAttacker, CBattleEntity* PVictim, uint8 tier)
     {
-
+        TracyZoneScoped;
         // super jump - remove 99% of enmity
         if (tier == 3 && PVictim->objtype == TYPE_MOB)
         {
@@ -4449,6 +4485,7 @@ namespace battleutils
 
     void applyCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim, duration charmTime)
     {
+        TracyZoneScoped;
         PVictim->isCharmed = true;
 
         if (PVictim->objtype == TYPE_MOB)
@@ -4645,6 +4682,7 @@ namespace battleutils
 
     void DoClaimShieldLottery(CMobEntity* PMob)
     {
+        TracyZoneScoped;
         EnmityList_t* enmityList = PMob->PEnmityContainer->GetEnmityList();
         std::unordered_map<uint16, CBattleEntity*> lotteryList;
         uint16 i = 0;
@@ -4819,6 +4857,7 @@ namespace battleutils
 
     void DirtyExp(CBattleEntity* PDefender, CBattleEntity* PAttacker)
     {
+        TracyZoneScoped;
         if (PDefender->objtype == TYPE_MOB)
         {
             CMobEntity* mob = static_cast<CMobEntity*>(PDefender);
@@ -4852,6 +4891,7 @@ namespace battleutils
 
     void RelinquishClaim(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         CBattleEntity* mob = PChar->PClaimedMob;
         if (mob && mob->isAlive() && mob->m_OwnerID.id == PChar->id)
         { // if we currently own a mob
@@ -5815,6 +5855,7 @@ namespace battleutils
 
     void AddTraits(CBattleEntity* PEntity, TraitList_t* traitList, uint8 level)
     {
+        TracyZoneScoped;
         CCharEntity* PChar = PEntity->objtype == TYPE_PC ? static_cast<CCharEntity*>(PEntity) : nullptr;
 
         for (auto&& PTrait : *traitList)
@@ -5916,6 +5957,7 @@ namespace battleutils
 
     uint32 CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMagicState)
     {
+        TracyZoneScoped;
         CSpell* PSpell = PMagicState->GetSpell();
         if (PSpell == nullptr)
         {
@@ -6038,6 +6080,7 @@ namespace battleutils
 
     uint16 CalculateSpellCost(CBattleEntity* PEntity, CSpell* PSpell)
     {
+        TracyZoneScoped;
         if (PSpell == nullptr)
         {
             return 0;
@@ -6098,8 +6141,10 @@ namespace battleutils
         }
         return std::clamp<int16>(cost, 0, 9999);
     }
+
     uint32 CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
     {
+        TracyZoneScoped;
         if (PSpell == nullptr)
         {
             return 0;
@@ -6238,6 +6283,7 @@ namespace battleutils
 
     int16 CalculateWeaponSkillTP(CBattleEntity* PEntity, CWeaponSkill* PWeaponSkill, int16 spentTP)
     {
+        TracyZoneScoped;
         int16 tp = spentTP;
 
         bool sekkanoki = PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI);
@@ -6436,6 +6482,7 @@ namespace battleutils
 
     CBattleEntity* GetCoverAbilityUser(CBattleEntity* PCoverAbilityTarget, CBattleEntity* PMob)
     {
+        TracyZoneScoped;
         CBattleEntity* PCoverAbilityUser = nullptr;
         uint32 coverAbilityTargetID      = PCoverAbilityTarget->id;
 
@@ -6564,6 +6611,7 @@ namespace battleutils
 
     float GetRangedAttackDistanceCorrection(CBattleEntity* PEntity, float distance)
     {
+        TracyZoneScoped;
         CCharEntity* PChar = nullptr;
         if (PEntity->objtype == TYPE_PC)
         {
@@ -6749,7 +6797,7 @@ namespace battleutils
         // constant 80% dist 25+
         return 0.80f;
     }
-
+/*
     void HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action)
     {
         TPZ_DEBUG_BREAK_IF(PSource == nullptr);
@@ -6783,5 +6831,6 @@ namespace battleutils
             }
         }
     }
+*/
 
     };

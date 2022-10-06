@@ -5,7 +5,7 @@
 --  Type: Magical
 --  Utsusemi/Blink absorb: Wipes shadows
 --  Range: AoE 15'
---  Notes: Used only by certain NM's when their primary sword isn't broken.
+--  Notes: Used only by certain NM's when using their secondary weapon.
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -13,7 +13,7 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:AnimationSub() == 0) then
+    if mob:AnimationSub() == 2 then
         return 0
     else
         return 1

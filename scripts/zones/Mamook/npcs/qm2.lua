@@ -10,11 +10,12 @@ require("scripts/globals/npc_util")
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 2579) and npcUtil.popFromQM(player, npc, ID.mob.IRIRI_SAMARIRI) then -- Trade Samariri Corpsehair
         player:confirmTrade()
+        player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    player:messageSpecial(ID.text.IRIRI_SAMARIRI)
 end
 
 function onEventUpdate(player, csid, option)

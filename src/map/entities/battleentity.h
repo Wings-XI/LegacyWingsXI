@@ -401,10 +401,10 @@ enum SKILLCHAIN_ELEMENT
 enum IMMUNITY : uint16
 {
     IMMUNITY_NONE = 0x00,
-    IMMUNITY_SLEEP = 0x01,
-    IMMUNITY_GRAVITY = 0x02,
-    IMMUNITY_BIND = 0x04,
-    IMMUNITY_STUN = 0x08,
+    IMMUNITY_SLEEP = 0x01,        // 1
+    IMMUNITY_GRAVITY = 0x02,      // 2
+    IMMUNITY_BIND = 0x04,         // 4
+    IMMUNITY_STUN = 0x08,         // 8
     IMMUNITY_SILENCE = 0x10,      // 16
     IMMUNITY_PARALYZE = 0x20,     // 32
     IMMUNITY_BLIND = 0x40,        // 64
@@ -469,6 +469,11 @@ struct health_t
     int32 maxhp, maxmp;       // максимальные значения // maximum values
     int32 modhp, modmp;       // модифицированные максимальные значения // modified maximum values
     int32 zoneinhp, zoneinmp; // HP and MP from previous zone
+};
+
+struct battlehistory_t
+{
+    ATTACKTYPE  lastHitTaken_atkType;
 };
 
 typedef std::vector<apAction_t> ActionList_t;
@@ -713,6 +718,7 @@ public:
     CBattleEntity* PPet;    // питомец сущности
     CBattleEntity* PMaster; // владелец/хозяин сущности (распространяется на все боевые сущности)
     CBattleEntity* PLastAttacker;
+    battlehistory_t BattleHistory;              // Stores info related to most recent combat actions taken towards this entity.
     time_point LastAttacked;
 
     float m_drawInOffsetY;

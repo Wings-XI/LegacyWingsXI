@@ -1231,7 +1231,7 @@ tpz.mod =
     DEFENDER_DURATION         = 956, -- Defender Duration
 
     -- Monk
-    BOOST_EFFECT              = 97,  -- Boost power in tenths
+    BOOST_EFFECT              = 97,  -- Boost power in hundreths
     CHAKRA_MULT               = 123, -- Chakra multiplier increase (from gear)
     CHAKRA_REMOVAL            = 124, -- Extra statuses removed by Chakra
     SUBTLE_BLOW               = 289, -- How much TP to reduce.
@@ -1794,7 +1794,7 @@ tpz.mod =
     LUMINION_CIRCLE = 1238,
 
     AUTOMATON_MAGIC_COST      = 1300,
-    AUTOMATON_CAN_BARRAGE     = 1301
+    AUTOMATON_CAN_BARRAGE     = 1301,
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 through 825 used by WS DMG mods these are not spares.
@@ -2619,7 +2619,7 @@ tpz.jobSpecialAbility =
     EES_QUADAV           = 1122,
     EES_KINDRED          = 1151,
     -- EES_?                = 1153,
-    -- EES_?                = 1327,
+    EES_AHRIMAN          = 1327,
     EES_AERN             = 1389,
     -- EES_?                = 1557,
     -- EES_?                = 1641,

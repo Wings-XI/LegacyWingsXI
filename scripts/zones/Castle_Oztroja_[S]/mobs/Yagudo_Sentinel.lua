@@ -12,5 +12,5 @@ end
 
 function onMobDespawn(mob)
     tpz.mob.phOnDespawn(mob, ID.mob.AA_XALMO_THE_SAVAGE_PH, 10, 7200) -- 2 hour
-    tpz.mob.phOnDespawn(mob, ID.mob.ZHUU_BUXU_THE_SILENT_PH, 10, 7200) -- 2 hour
+    tpz.mob.phOnDespawn(mob, ID.mob.ZHUU_BUXU_THE_SILENT_PH, 5, 7200) -- 2 hour
 end

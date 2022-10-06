@@ -10,11 +10,12 @@ require("scripts/globals/npc_util")
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 2587) and npcUtil.popFromQM(player, npc, ID.mob.ANANTABOGA, {hide = 0}) then -- Raw Buffalo
         player:confirmTrade()
+        player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    player:messageSpecial(ID.text.ANANTABOGA)
 end
 
 function onEventUpdate(player, csid, option)

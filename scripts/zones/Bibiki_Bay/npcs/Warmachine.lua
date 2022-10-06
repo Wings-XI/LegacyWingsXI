@@ -28,6 +28,7 @@ local ColoredDrop = 4258+math.random(0, 7)
 
     -- COP mission
     if (player:getCurrentMission(COP) == tpz.mission.id.cop.THREE_PATHS and player:getCharVar("COP_Louverance_s_Path") == 2) then
+        player:setCharVar("COP_Louverance_s_Path", 3) -- set variable before starting cs in case it doesn't register after completion
         player:startEvent(33)
     elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.DAWN and player:getCharVar("COP_3-taru_story")== 1) then
         if (player:getFreeSlotsCount() == 0) then

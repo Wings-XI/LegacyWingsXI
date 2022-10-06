@@ -54,7 +54,9 @@ namespace jailutils
 
     void Add(CCharEntity* PChar)
     {
-        PChar->PAI->SetController(nullptr);
+        if (PChar->m_GMlevel < 2) {
+            PChar->PAI->SetController(nullptr);
+        }
 
         // TODO:
     }
@@ -67,7 +69,9 @@ namespace jailutils
 
     void Del(CCharEntity* PChar)
     {
-        PChar->PAI->SetController(std::make_unique<CPlayerController>(PChar));
+        if (PChar->PAI->GetController() == nullptr) {
+            PChar->PAI->SetController(std::make_unique<CPlayerController>(PChar));
+        }
 
         // TODO:
     }

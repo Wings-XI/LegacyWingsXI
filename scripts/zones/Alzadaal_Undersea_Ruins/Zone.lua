@@ -45,6 +45,14 @@ function onInitialize(zone)
 	else
 		SpawnMob(ID.mob.OUPIRE)
     end
+
+    local boompadu_respawn = GetServerVariable("BoompaduRespawn")
+    if os.time() < boompadu_respawn then
+        GetMobByID(ID.mob.BOOMPADU):setRespawnTime(boompadu_respawn - os.time())
+    else
+        SpawnMob(ID.mob.BOOMPADU)
+    end
+
 end
 
 function onZoneIn(player, prevZone)

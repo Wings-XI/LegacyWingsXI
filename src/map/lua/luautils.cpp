@@ -1780,6 +1780,7 @@ namespace luautils
         PChar->m_event.reset();
         PChar->m_event.Target = PNpc;
         PChar->m_event.Script.insert(0, (const char*)File);
+        // remove boost from interacting with an NPC
         PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BOOST);
 
         CLuaBaseEntity LuaBaseEntity(PChar);
@@ -3359,7 +3360,7 @@ namespace luautils
                     CLuaBaseEntity LuaMobEntity(PMob);
                     CLuaBaseEntity LuaAllyEntity(PMember);
                     bool isKiller = PMember == PChar;
-                    bool isWeaponSkillKill = PChar->getWeaponSkillKill();
+                    bool isWeaponSkillKill = PMob->GetLocalVar("weaponskillHit") > 0;
 
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaMobEntity);
                     Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaAllyEntity);

@@ -1,6 +1,6 @@
 ---------------------------------------------
 -- Hellstorm
---
+-- Deals Fire damage to enemies in an area of effect
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -8,13 +8,21 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 281) then
-        return 0
-    else
+    local mobID = mob:getID()
+    -- if mob is Reacton, he is not allowed to use this skill before phase 3
+    if mobID == 17031599 and mob:AnimationSub() < 2 then
         return 1
+
+    -- if mob is a Pandemonium Lamp
+    elseif mobID >= 17056169 and mobID <= 17056185 then
+        -- only bomb form is allowed to use
+        local mobSkin = mob:getModelId()
+        if (mobSkin ~= 281) then
+            return 1
+        end
     end
+
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)

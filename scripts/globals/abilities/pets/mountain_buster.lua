@@ -1,14 +1,10 @@
 ---------------------------------------------------
 -- Mountain Buster M=12 BIND
 ---------------------------------------------------
-require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/msg")
-require("scripts/globals/utils")
-require("scripts/globals/magic")
 require("scripts/globals/summon")
-
+require("scripts/globals/magic")
 ---------------------------------------------------
 
 function onAbilityCheck(player, target, ability)
@@ -16,31 +12,31 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 164
     local ele = tpz.damageType.EARTH
-    local coe = getAvatarEcosystemCoefficient(target, ele)
+    local params = {}
+    params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.3 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     local numhits = 1
-    local accmod = -4
-    local dmgmod = 12 * coe * (1 + 0.18*skill:getTP()/3000)
-    local dmgmodsubsequent = 0
+    local accmod = 20
+    local dmgmod = 12
     local totaldamage = 0
-    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, dmgmodsubsequent, TP_NO_EFFECT, 1, 2, 3)
+
+    local damage = AvatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 0, TP_NO_EFFECT, 1, 2, 3, 0, params)
     totaldamage = AvatarFinalAdjustments(damage.dmg, pet, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, numhits)
-    
-    local dVIT = pet:getStat(tpz.mod.VIT) - target:getStat(tpz.mod.VIT)
-    local bonus = dVIT
-    if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
-        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet) + 5
-    end
-    local resist = applyResistanceAbility(pet,target,tpz.magic.element.EARTH,tpz.skill.ENFEEBLING_MAGIC,bonus)
-    local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
-    if target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100 then
-        if resist >= 0.5 and totaldamage > 0 then
-            target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
-        end
-    end
     
     target:takeDamage(totaldamage, pet, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(pet, totaldamage)
 
+    if totaldamage > 0 then
+        local resist = applyResistanceAbility(pet, target, tpz.magic.element.EARTH, tpz.skill.ENFEEBLING_MAGIC)
+        local duration = math.ceil((60 + 60 * skill:getTP()/3000) * resist * tryBuildResistance(tpz.mod.RESBUILD_BIND, target))
+        if (target:getMod(tpz.mod.STATUSRES) < 100 and target:getMod(tpz.mod.BINDRES) < 100) then
+            if (resist >= 0.5 and target:hasStatusEffect(tpz.effect.BIND) == false) then
+                target:addStatusEffect(tpz.effect.BIND, 1, 0, duration)
+            end
+        end
+    end
+    
+    pet:getMaster():addMP(-mpCost)
     return totaldamage
 end

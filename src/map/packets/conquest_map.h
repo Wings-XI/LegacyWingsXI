@@ -26,7 +26,7 @@
 
 #include "basic.h"
 #include <vector>
-#include <ime.h>
+#include <time.h>
 
 /************************************************************************
 *																		*

@@ -15,6 +15,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
+    local mpCost = 48
     local dMND = pet:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
 
     if target:getMod(tpz.mod.STATUSRES) >= 100 or target:getMod(tpz.mod.SLOWRES) >= 100 then
@@ -46,5 +47,7 @@ function onPetAbility(target, pet, skill, summoner)
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     end
     
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.SLOW
 end

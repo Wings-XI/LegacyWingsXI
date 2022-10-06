@@ -200,7 +200,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         critRate = critRate + nativecrit
 
         if calcParams.flourishEffect and calcParams.flourishEffect:getPower() > 2 then
-            critRate = critRate + 0.25 + calcParams.flourishEffect:getSubPower()/100
+             critRate = critRate + 0.10 + calcParams.flourishEffect:getSubPower()/100
         end
     end
     calcParams.critRate = critRate
@@ -256,7 +256,14 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     dmg = mainBase * ftp
-    local hitsDone = 1
+    -- Only get an additional offHand hit with H2H if the numHits == 1 
+    -- "Note that Hand-to-Hand weaponskills' listed hits do include the offhand hit. However, if a weaponskill does not list multiple hits, it still has an additional offhand hit."
+    -- see "hits" column: https://wiki-ffo-jp.translate.goog/html/19049.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=it&_x_tr_pto=wapp
+    -- basically h2h always gets 2 "initial" hits, but `numHits` is hard respected for the extra hits
+    -- whereas dual widling gets 2 "initial" hits, but `numHits` e.g. dancing edge is respected as though only one "initial" was performed 
+    -- tl;dr: DW gives an extra WS hit everytime, H2H simply ensures every WS gets at least 2 hits (yes backhand blow and dragon kick are both 2-hit ws...)
+    -- WINGSTODO Fix upstream
+    local hitsDone = attacker:getWeaponSkillType(tpz.slot.MAIN) == tpz.skill.HAND_TO_HAND and 2 or 1
     local offHitsDone = 0
     local numHits, numOffhandHits = getMultiAttacks(attacker, target, wsParams.numHits, wsParams.useOAXTimes, calcParams.melee)
     calcParams.useOAXTimes = wsParams.useOAXTimes
@@ -340,7 +347,8 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.forcedFirstCrit = calcParams.sneakApplicable or calcParams.assassinApplicable
     calcParams.extraOffhandHit = attacker:isDualWielding() or attack.weaponType == tpz.skill.HAND_TO_HAND
     calcParams.hybridHit = wsParams.hybridWS
-    calcParams.flourishEffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
+     -- various job abilities are abusing this ws function, don't boost them or remove building flourish
+    calcParams.flourishEffect = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil
     calcParams.fencerBonus = fencerBonus(attacker)
     calcParams.bonusTP = wsParams.bonusTP or 0
     calcParams.bonusfTP = gorgetBeltFTP or 0
@@ -352,10 +360,12 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     else
         calcParams.firstHitRateBonus = 50
     end
-    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
-    -- allow crit if building flourish is on (3+ moves)
-    if calcParams.flourishEffect ~= nil and calcParams.flourishEffect:getPower() > 2 then wsParams.canCrit = true end
+    if calcParams.flourishEffect ~= nil then
+         calcParams.bonusAcc = calcParams.bonusAcc + 40 + calcParams.flourishEffect:getSubPower()*2 
+    end
+
+    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams, false)
@@ -363,7 +373,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     -- Delete statuses that may have been spent by the WS
     attacker:delStatusEffectsByFlag(tpz.effectFlag.ATTACK)
-    attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH)
+    if wsParams.preserveBuildingFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
 
     local h2hres = target:getMod(tpz.mod.H2HRES)
     local pierceres = target:getMod(tpz.mod.PIERCERES)
@@ -373,19 +383,21 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
 
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(attacker, finaldmg, attack.damageType)
-        if attack.weaponType == tpz.skill.HAND_TO_HAND then
+        -- WINGSCUSTOM
+        -- using damageType so that ws dmg type follows modified weapon type (joyeuse, birdbanes, etc)
+        if attack.damageType == tpz.damageType.H2H then
             if h2hres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - h2hres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * h2hres / 1000
             end
-        elseif attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM then
+        elseif attack.damageType == tpz.damageType.PIERCING then
             if pierceres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - pierceres / 1000) * (1 - spdefdown/100)))
             else
                 finaldmg = finaldmg * pierceres / 1000
             end
-        elseif attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF then
+        elseif attack.damageType == tpz.damageType.BLUNT then
             if impactres < 1000 then
                 finaldmg = finaldmg * (1 - ((1 - impactres / 1000) * (1 - spdefdown/100)))
             else
@@ -435,6 +447,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     finaldmg = finaldmg * WEAPON_SKILL_POWER
     calcParams.finalDmg = finaldmg
     finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+    -- attacker:PrintToPlayer(string.format("ws hits landed: tphits %u, extrahits %u", calcParams.tpHitsLanded, calcParams.extraHitsLanded))
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -475,7 +488,7 @@ end
         mightyStrikesApplicable = false,
         forcedFirstCrit = false,
         extraOffhandHit = false,
-        flourishEffect = false,
+        flourishEffect = nil,
         fencerBonus = fencerBonus(attacker),
         bonusTP = wsParams.bonusTP or 0,
         bonusfTP = gorgetBeltFTP or 0,
@@ -488,6 +501,11 @@ end
     end
 
     calcParams.firstHitRateBonus = 0
+
+    if calcParams.flourishEffect ~= nil then
+        calcParams.bonusAcc = calcParams.bonusAcc + 20 + calcParams.flourishEffect:getSubPower()*2 
+    end
+
     calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, true)
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -564,9 +582,13 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         ['shadowsAbsorbed'] = 0,
         ['tpHitsLanded'] = 1,
         ['extraHitsLanded'] = 0,
-        ['bonusTP'] = wsParams.bonusTP or 0
+        ['bonusTP'] = wsParams.bonusTP or 0,
+        ['flourishEffect'] = wsParams.preserveBuildingFlourish == nil and attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH) or nil -- various job abilities are abusing this ws function, don't boost them or remove building flourish
     }
 
+    -- Delete statuses that may have been spent by the WS
+    if wsParams.preserveBuildingFlourish == nil then attacker:delStatusEffectSilent(tpz.effect.BUILDING_FLOURISH) end
+    
     local bonusfTP, bonusacc = handleWSGorgetBelt(attacker)
     -- There is an assumed +100 macc bonus for magical weaponskills
     -- https://www.bg-wiki.com/ffxi/Category:Elemental_Weapon_Skill
@@ -747,6 +769,10 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
+    if finaldmg > 0 then
+        defender:setLocalVar("weaponskillHit", 1)
+    end
+    
     return finaldmg
 end
 
@@ -828,9 +854,6 @@ function getHitRate(attacker, target, capHitRate, bonus, isRanged)
     local acc = isRanged and attacker:getRACC() or attacker:getACC()
     local eva = target:getEVA()
 
-    local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil then acc = acc + 20 + flourisheffect:getSubPower()*2 end
-
     if (bonus == nil) then
         bonus = 0
     end
@@ -888,7 +911,7 @@ end
 function cMeleeRatio(attacker, defender, params, ignoredDef, tp, isCritical)
     local flourishCoefficient = 1
     local flourisheffect = attacker:getStatusEffect(tpz.effect.BUILDING_FLOURISH)
-    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 2 + flourisheffect:getSubPower()/50 end
+    if flourisheffect ~= nil and flourisheffect:getPower() > 1 then flourishCoefficient = 1.25 + flourisheffect:getSubPower()/100 end
 
     local atkmulti = fTP(tp, params.atk100, params.atk200, params.atk300)
     local ratio = (attacker:getStat(tpz.mod.ATT) * atkmulti * flourishCoefficient) / (defender:getStat(tpz.mod.DEF) - ignoredDef)
@@ -1219,8 +1242,9 @@ function getMultiAttacks(attacker, target, numHits, useOAXTimes, melee)
 
     local ret1 = numHits + bonusHits
 
-    if (ret1 > 8) then
-        ret1 = 8
+    if (ret1 >= 8) then
+        -- if dual wielding, reduce max hits by 1 to account for the extra offhand hit not tracked in "hitCount"
+        ret1 = attacker:getOffhandDmg() > 0 and 7 or 8
     end
 
     return ret1, offHandHits

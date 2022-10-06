@@ -91,9 +91,11 @@ INSERT INTO `item_latents` VALUES(11367, 302, 1, 49, 5928);
 INSERT INTO `item_latents` VALUES(11367, 302, 2, 49, 5929);
 INSERT INTO `item_latents` VALUES(11405, 23, 20, 13, 406);
 INSERT INTO `item_latents` VALUES(11405, 25, 20, 13, 406);
+INSERT INTO `item_latents` VALUES(11408, 974, 10, 9, 14); -- morana's pigaches: shiva macc
 INSERT INTO `item_latents` VALUES(11474, 161, -3, 26, 0);
 INSERT INTO `item_latents` VALUES(11474, 163, -3, 26, 1);
 INSERT INTO `item_latents` VALUES(11486, 28, 4, 37, 4);
+INSERT INTO `item_latents` VALUES(11496, 971, 5, 9, 9); -- fenrir's crown: fenrir acc
 INSERT INTO `item_latents` VALUES(11546, 288, 1, 32, 0);
 INSERT INTO `item_latents` VALUES(11547, 163, -3, 36, 0);
 INSERT INTO `item_latents` VALUES(11585, 27, -3, 0, 100);
@@ -738,6 +740,9 @@ INSERT INTO `item_latents` VALUES(15516, 24, 7, 52, 8);
 INSERT INTO `item_latents` VALUES(15516, 26, -16, 52, 8);
 INSERT INTO `item_latents` VALUES(15519, 370, 1, 58, 0);
 INSERT INTO `item_latents` VALUES(15520, 68, 7, 58, 0);
+INSERT INTO `item_latents` VALUES(15528, 370, -8, 21, 21); -- sacrifice torque
+INSERT INTO `item_latents` VALUES(15528, 369, -3, 21, 21); 
+INSERT INTO `item_latents` VALUES(15528, 970, 3, 21, 21); 
 INSERT INTO `item_latents` VALUES(15530, 368, 10, 10, 0);
 INSERT INTO `item_latents` VALUES(15530, 404, 50, 10, 0);
 INSERT INTO `item_latents` VALUES(15532, 369, -3, 56, 2);
@@ -837,7 +842,7 @@ INSERT INTO `item_latents` VALUES(16018, 30, 1, 22, 5);
 INSERT INTO `item_latents` VALUES(16019, 9, 1, 22, 6);
 INSERT INTO `item_latents` VALUES(16020, 10, 1, 22, 7);
 INSERT INTO `item_latents` VALUES(16021, 8, 1, 22, 8);
-INSERT INTO `item_latents` VALUES(16022, 971, 10, 22, 9);
+INSERT INTO `item_latents` VALUES(16022, 971, 10, 22, 9);  -- Fidelity Earring
 INSERT INTO `item_latents` VALUES(16023, 14, 1, 22, 10);
 INSERT INTO `item_latents` VALUES(16024, 24, 1, 22, 11);
 INSERT INTO `item_latents` VALUES(16025, 73, 1, 22, 12);
@@ -847,7 +852,7 @@ INSERT INTO `item_latents` VALUES(16028, 5, 15, 22, 15);
 INSERT INTO `item_latents` VALUES(16029, 2, 10, 22, 16);
 INSERT INTO `item_latents` VALUES(16029, 5, 10, 22, 16);
 INSERT INTO `item_latents` VALUES(16030, 26, 1, 22, 17);
-INSERT INTO `item_latents` VALUES(16031, 970, 10, 22, 18);
+INSERT INTO `item_latents` VALUES(16031, 970, 10, 22, 18);  -- Affinity Earring
 INSERT INTO `item_latents` VALUES(16032, 289, 3, 22, 19); 
 INSERT INTO `item_latents` VALUES(16033, 71, 1, 22, 20);
 INSERT INTO `item_latents` VALUES(16058, 161, -1, 52, 7);
@@ -890,7 +895,9 @@ INSERT INTO `item_latents` VALUES(16124, 68, 2, 23, 62);
 INSERT INTO `item_latents` VALUES(16124, 68, 2, 23, 65);
 INSERT INTO `item_latents` VALUES(16132, 25, -20, 26, 1);
 INSERT INTO `item_latents` VALUES(16133, 25, -30, 26, 1);
-INSERT INTO `item_latents` VALUES(16154, 346, 2, 9, 13);
+INSERT INTO `item_latents` VALUES(16154, 346, 2, 9, 13);  -- karura hachigane
+INSERT INTO `item_latents` VALUES(16154, 970, 10, 9, 13);
+INSERT INTO `item_latents` VALUES(16154, 975, 10, 9, 13);
 INSERT INTO `item_latents` VALUES(16165, 109, 5, 58, 0);
 INSERT INTO `item_latents` VALUES(16217, 240, 5, 8, 16);
 INSERT INTO `item_latents` VALUES(16218, 242, 5, 8, 17);
@@ -1458,6 +1465,7 @@ INSERT INTO `item_latents` VALUES(19060, 288, 3, 13, 56);
 INSERT INTO `item_latents` VALUES(19080, 165, 9, 13, 56);
 INSERT INTO `item_latents` VALUES(19080, 288, 3, 13, 56);
 INSERT INTO `item_latents` VALUES(19108, 366, 5, 0, 75);
+INSERT INTO `item_latents` VALUES(19109, 23, 10, 13, 6); -- trilling dagger +10 attack when silenced
 INSERT INTO `item_latents` VALUES(19113, 165, 7, 59, 14);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 368);
 INSERT INTO `item_latents` VALUES(19120, 25, 6, 13, 369);
@@ -1467,6 +1475,9 @@ INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 3);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 4);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 5);
 INSERT INTO `item_latents` VALUES(19125, 9, 1, 16, 6);
+INSERT INTO `item_latents` VALUES(19126, 23, 14, 6, 1000);
+INSERT INTO `item_latents` VALUES(19126, 25, 5, 6, 1000);
+INSERT INTO `item_latents` VALUES(19126, 366, 7, 6, 1000);
 INSERT INTO `item_latents` VALUES(19158, 165, 7, 59, 14);
 INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 3);
 INSERT INTO `item_latents` VALUES(19161, 8, 1, 16, 4);

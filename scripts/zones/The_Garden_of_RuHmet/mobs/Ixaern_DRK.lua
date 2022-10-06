@@ -111,4 +111,8 @@ function onMobDespawn(mob)
             DespawnMob(i)
         end
     end
+    
+    local qmDrk = GetNPCByID(ID.npc.QM_IXAERN_DRK)
+    qmDrk:setLocalVar("nextMove", os.time() + 1800 + FORCE_SPAWN_QM_RESET_TIME) -- 30 minutes from now, once the QM respawns
+    -- the QM's position and hate were already reset when the mob popped, we just need this here in the despawn function for the correct respawn timing
 end

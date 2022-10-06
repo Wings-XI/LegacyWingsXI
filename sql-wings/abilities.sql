@@ -162,7 +162,7 @@ INSERT INTO `abilities` VALUES(119, 'casters_roll', 17, 79, 1, 60, 193, 420, 0, 
 INSERT INTO `abilities` VALUES(120, 'coursers_roll', 17, 81, 1, 60, 193, 420, 0, 120, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
 INSERT INTO `abilities` VALUES(121, 'blitzers_roll', 17, 83, 1, 60, 193, 420, 0, 121, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
 INSERT INTO `abilities` VALUES(122, 'tacticians_roll', 17, 86, 1, 60, 193, 420, 0, 122, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
-INSERT INTO `abilities` VALUES(123, 'double-up', 17, 5, 1, 8, 194, 424, 0, 116, 2000, 0, 6, 8.0, 1, 1, 80, 0, 0, 'TOAU');
+INSERT INTO `abilities` VALUES(123, 'double-up', 17, 5, 1, 7, 194, 424, 0, 116, 2000, 0, 6, 8.0, 1, 1, 80, 0, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(124, 'quick_draw', 17, 40, 1, 1, 0, 0, 0, 0, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(125, 'fire_shot', 17, 40, 4, 1, 195, 110, 0, 125, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
 INSERT INTO `abilities` VALUES(126, 'ice_shot', 17, 40, 4, 1, 195, 110, 0, 126, 2000, 0, 6, 18.0, 0, 0, 0, 1410, 0, 'TOAU');
@@ -422,6 +422,7 @@ INSERT INTO `abilities` VALUES(659, 'ultimate_terror', 15, 37, 4, 60, 174, 0, 0,
 INSERT INTO `abilities` VALUES(660, 'noctoshield', 15, 49, 1, 60, 174, 0, 0, 92, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(661, 'dream_shroud', 15, 56, 1, 60, 174, 0, 0, 121, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(662, 'nether_blast', 15, 65, 4, 60, 173, 0, 0, 109, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
+INSERT INTO `abilities` VALUES(664, 'ruinous_omen', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
 INSERT INTO `abilities` VALUES(672, 'foot_kick', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);
 INSERT INTO `abilities` VALUES(673, 'dust_cloud', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);
 INSERT INTO `abilities` VALUES(674, 'whirl_claws', 9, 25, 257, 1, 102, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 902, 0, NULL);

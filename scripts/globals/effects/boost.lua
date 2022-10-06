@@ -7,13 +7,14 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onEffectGain(target, effect)
-    target:addMod(tpz.mod.ATTP, effect:getPower())
+    -- WINGSTODO Fix upstream
+    target:addMod(tpz.mod.ATTP, effect:getPower() / 100)
 end
 
 function onEffectTick(target, effect)
 end
 
 function onEffectLose(target, effect)
-    target:delMod(tpz.mod.ATTP, effect:getPower())
-    target:setLocalVar("BoostCounter", 0)
+    -- WINGSTODO Fix upstream
+    target:delMod(tpz.mod.ATTP, effect:getPower() / 100)
 end

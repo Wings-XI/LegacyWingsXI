@@ -203,7 +203,6 @@ CCharEntity::CCharEntity()
 
     MeritMode = false;
 
-    m_isWeaponSkillKill = false;
     m_isStyleLocked = false;
     m_isBlockingAid = false;
 
@@ -726,16 +725,6 @@ int32 CCharEntity::addMP(int32 mp)
     return abs(mp);
 }
 
-bool CCharEntity::getWeaponSkillKill()
-{
-    return m_isWeaponSkillKill;
-}
-
-void CCharEntity::setWeaponSkillKill(bool isWeaponSkillKill)
-{
-    m_isWeaponSkillKill = isWeaponSkillKill;
-}
-
 bool CCharEntity::getStyleLocked()
 {
     return m_isStyleLocked;
@@ -976,6 +965,7 @@ void CCharEntity::delTrait(CTrait* PTrait)
 
 bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 {
+    TracyZoneScoped;
     if (PInitiator->objtype == TYPE_PC && StatusEffectContainer->GetLevelRestrictionEffect() != PInitiator->StatusEffectContainer->GetLevelRestrictionEffect())
     {
         return false;
@@ -1043,6 +1033,7 @@ void CCharEntity::OnDisengage(CAttackState& state)
 
 bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    TracyZoneScoped;
     float dist = distance(loc.p, PTarget->loc.p);
 
     if (!IsMobOwner(PTarget))
@@ -1086,6 +1077,7 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
 
 bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto controller {static_cast<CPlayerController*>(PAI->GetController())};
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
@@ -1105,6 +1097,7 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 
 void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
+    TracyZoneScoped;
     CBattleEntity::OnCastFinished(state, action);
 
     auto PSpell = state.GetSpell();
@@ -1240,6 +1233,7 @@ void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBAS
 
 void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
 {
+    TracyZoneScoped;
     CBattleEntity::OnWeaponSkillFinished(state, action);
 
     this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
@@ -1385,6 +1379,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
 void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PAbility = state.GetAbility();
 
     // Check if user is the right job and level
@@ -1592,7 +1587,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                         }
                     }
 
-                    addMP((int32)-mpCost);
+                    //addMP((int32)-mpCost);  This is no longer used as MP calculation is now done on abilities
 
                     if (PAbility->getValidTarget() == TARGET_SELF)
                     {
@@ -1688,7 +1683,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        //battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
 
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 
@@ -1727,6 +1722,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
 void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     this->lastInCombat = (uint32)CVanaTime::getInstance()->getVanaTime();
@@ -1802,6 +1798,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 {
                     actionTarget.speceffect = SPECEFFECT_CRITICAL_HIT;
                     actionTarget.messageID = 353;
+
+                    luautils::OnCriticalHit(PTarget, this);
                 }
 
                 // at least 1 hit occured
@@ -1975,6 +1973,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         ((CMobEntity*)PTarget)->m_autoTargetKiller = this;
         ((CMobEntity*)PTarget)->DoAutoTarget();
     }
+    else if (hitOccured == false && PTarget->objtype == TYPE_MOB)
+    {
+        // 1 ce for a missed attack for TH application
+        ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity((CBattleEntity*)this, 1, 0);
+    }
 
     // Try to double shot
     //#TODO: figure out the packet structure of double/triple shot
@@ -1993,6 +1996,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
 bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 {
+    TracyZoneScoped;
     TPZ_DEBUG_BREAK_IF(PBattleTarget == nullptr);
 
     if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC ||
@@ -2015,6 +2019,7 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 
 bool CCharEntity::IsPartiedWith(CCharEntity* PTarget)
 {
+    TracyZoneScoped;
     bool found = false;
 
     static_cast<CCharEntity*>(this)->ForAlliance([&PTarget, &found](CBattleEntity* PEntity) {
@@ -2147,6 +2152,7 @@ void CCharEntity::OnRaise()
 
 void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
     auto PItem = static_cast<CItemUsable*>(state.GetItem());
 
@@ -2156,7 +2162,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
         //PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
         if (PTarget->PParty)
         {
-            for each (CBattleEntity* PMember in PTarget->PParty->members)
+            for (CBattleEntity* PMember : PTarget->PParty->members)
             {
                 // Trigger for the item user last to prevent any teleportation miscues (Tidal Talisman)
                 if (this->id == PMember->id)
@@ -2259,6 +2265,7 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
 
 void CCharEntity::Die()
 {
+    TracyZoneScoped;
     m_LastEngagedTargID = 0;
 
     if (PLastAttacker)
@@ -2305,6 +2312,7 @@ void CCharEntity::Die()
 
 void CCharEntity::Die(duration _duration)
 {
+    TracyZoneScoped;
     this->ClearTrusts();
 
     m_deathSyncTime = server_clock::now() + death_update_frequency;
@@ -2783,6 +2791,7 @@ void CCharEntity::TrackArrowUsageForScavenge(CItemWeapon* PAmmo)
 
 bool CCharEntity::OnAttackError(CAttackState& state)
 {
+    TracyZoneScoped;
     auto controller {static_cast<CPlayerController*>(PAI->GetController())};
     if (controller->getLastErrMsgTime() + std::chrono::milliseconds(this->GetWeaponDelay(false)) < PAI->getTick())
     {

@@ -6,8 +6,9 @@ require("scripts/globals/limbus")
 local ID = require("scripts/zones/Apollyon/IDs")
 
 function onMobSpawn(mob)
-    mob:addMod(tpz.mod.DMGPHYS, 100)
-    mob:addMod(tpz.mod.DMGMAGIC, -40)
+    -- double phys dmg as the mob family has -75% of each phys dmg type, effectively making them take -50% pdt instead of normal -75% 
+    mob:setMod(tpz.mod.DMGPHYS, 100)
+    mob:setMod(tpz.mod.DMGMAGIC, -40)
     mob:setMobMod(tpz.mobMod.NO_LINK, 1)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
 end

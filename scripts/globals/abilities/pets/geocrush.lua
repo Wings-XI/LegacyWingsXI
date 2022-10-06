@@ -13,6 +13,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local mpCost = 182
     local ele = tpz.damageType.EARTH
     local coe = getAvatarEcosystemCoefficient(target, ele)
     local dINT = math.floor(pet:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT))
@@ -20,7 +21,7 @@ function onPetAbility(target, pet, skill)
     local master = pet:getMaster()
     local merits = 0
     if (master ~= nil and master:isPC()) then
-        merits = master:getMeritCount(tpz.merit.GEOCRUSH)*40
+        merits = master:getMerit(tpz.merit.GEOCRUSH)*40
     end
 
     tp = tp + (merits - 40)
@@ -29,11 +30,11 @@ function onPetAbility(target, pet, skill)
     end
 
     --note: this formula is only accurate for level 75 - 76+ may have a different intercept and/or slope
-    local damage = math.floor((512 + 1.65*(tp+1))*coe)
-    damage = damage + (dINT * 1.5)
+    local damage = math.floor((512 + 1.72*(tp+1))*coe)
+    damage = math.floor(damage + (dINT * 1.5))
     damage = MobMagicalMove(pet, target, skill, damage, tpz.magic.ele.EARTH, 1, TP_NO_EFFECT, 0)
     damage = mobAddBonuses(pet, nil, target, damage.dmg, tpz.magic.ele.EARTH)
-    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, tpz.attackType.MAGICAL, tpz.damageType.EARTH, MOBPARAM_WIPE_SHADOWS)
     
     local skillchainTier, skillchainCount = FormMagicBurst(tpz.damageType.EARTH - 5, target)
     if (skillchainTier > 0) then
@@ -51,6 +52,7 @@ function onPetAbility(target, pet, skill)
             target:addStatusEffect(tpz.effect.STUN, 3, 3, duration)
         end
     end
-
+    
+    pet:getMaster():addMP(-mpCost)
     return damage
 end

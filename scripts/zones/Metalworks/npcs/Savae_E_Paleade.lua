@@ -17,8 +17,12 @@ function onTrade(player, npc, trade)
         if (trade:hasItemQty(599, 1) and trade:getItemCount() == 1) then -- Trade Mythril Sand
             player:startEvent(205)
         end
+    -- Additional variable check if above trade conditions fail.
+    elseif (player:getCharVar("SavaeTalk") == 1) or (player:getCharVar("PiusTalk") == 1) or (player:getCharVar("GrohmTalk") == 1) then
+        if (trade:hasItemQty(599, 1) and trade:getItemCount() == 1) then -- Trade Mythril Sand
+            player:startEvent(205)
+        end
     end
-
 end
 
 function onTrigger(player, npc)
@@ -48,10 +52,14 @@ function onEventFinish(player, csid, option)
     if (csid == 204) then
         player:addMission(SANDORIA, tpz.mission.id.sandoria.JOURNEY_TO_BASTOK)
         player:setCharVar("MissionStatus", 3)
+        player:setCharVar("SavaeTalk", 1) -- Added due to playervar MissionStatus getting reset and rendering mission uncompletable without assistance.
         player:delKeyItem(tpz.ki.LETTER_TO_THE_CONSULS_SANDORIA)
     elseif (csid == 205) then
         player:tradeComplete()
         player:setCharVar("MissionStatus", 6)
+        player:setCharVar("SavaeTalk", 0)
+        player:setCharVar("PiusTalk", 0)
+        player:setCharVar("GrohmTalk", 0)
         player:addMission(SANDORIA, tpz.mission.id.sandoria.JOURNEY_ABROAD)
     elseif (csid == 206) then
         player:addMission(SANDORIA, tpz.mission.id.sandoria.JOURNEY_TO_BASTOK2)

@@ -11,6 +11,10 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.ZANSHIN, 15)
+end
+
 function onMobDeath(mob, player, isKiller)
     player:addTitle(tpz.title.THE_VIVISECTOR)
 end

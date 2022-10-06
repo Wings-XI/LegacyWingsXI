@@ -15,9 +15,9 @@ armory crates
 17367182 - birds of a feather
 17367192 - birds of a feather
 17367202 - birds of a feather
-17367204
-17367206
-17367208
+17367204 - copycat
+17367206 - copycat
+17367208 - copycat
 17367215
 17367222
 17367229

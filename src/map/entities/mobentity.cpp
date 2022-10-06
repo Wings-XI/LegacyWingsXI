@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -288,6 +288,13 @@ bool CMobEntity::CanRoam()
 
 bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 {
+    TracyZoneScoped;
+    // handle super linking first
+    if (superLink && getMobMod(MOBMOD_SUPERLINK) == superLink)
+    {
+        return true;
+    }
+    
     if (loc.zone->HasReducedVerticalAggro())
     {
         float verticalDistance = abs(loc.p.y - (*pos).y);
@@ -297,14 +304,13 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
         }
     }
 
-    // handle super linking
-    if (superLink && getMobMod(MOBMOD_SUPERLINK) == superLink)
-    {
-        return true;
-    }
-
     // can't link right now
     if (m_neutral)
+    {
+        return false;
+    }
+
+    if (getMobMod(MOBMOD_NO_LINK) > 0)
     {
         return false;
     }
@@ -321,23 +327,18 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
         return false;
     }
 
-    // link only if I see him
-    if (m_Detects & DETECT_SIGHT) {
+    if (distanceSquared(loc.p, *pos) > intpow32(getMobMod(MOBMOD_LINK_RADIUS),2) )
+    {
+        return false;
+    }
 
+    // link only if I see him
+    if (m_Detects & DETECT_SIGHT)
+    {
         if (!facing(loc.p, *pos, 64))
         {
             return false;
         }
-    }
-
-    if (distance(loc.p, *pos) > getMobMod(MOBMOD_LINK_RADIUS))
-    {
-        return false;
-    }
-
-    if (getMobMod(MOBMOD_NO_LINK) > 0)
-    {
-        return false;
     }
 
     if (!PAI->PathFind->CanSeePoint(*pos))
@@ -486,6 +487,7 @@ bool CMobEntity::IsUntargetable()
 
 void CMobEntity::DoAutoTarget()
 {
+    TracyZoneScoped;
     if (!m_autoTargetReady)
         return;
     m_autoTargetReady = false;
@@ -713,6 +715,7 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
 void CMobEntity::Spawn()
 {
+    TracyZoneScoped;
     CBattleEntity::Spawn();
     m_giveExp = true;
     m_ExpPenalty = 0;
@@ -787,6 +790,7 @@ void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& actio
 
 void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 {
+    TracyZoneScoped;
     auto PSkill = state.GetSkill();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
@@ -1058,7 +1062,6 @@ void CMobEntity::DistributeRewards()
 
     if (PChar != nullptr && PChar->id == m_OwnerID.id)
     {
-        PChar->setWeaponSkillKill(false);
         StatusEffectContainer->KillAllStatusEffect();
 
         // NOTE: this is called for all alliance / party members!
@@ -1101,6 +1104,8 @@ void CMobEntity::DistributeRewards()
 
 void CMobEntity::DropItems(CCharEntity* PChar)
 {
+    TracyZoneScoped;
+
     CDynamisHandler* PDynamisHandler = zoneutils::GetZone(this->getZone())->m_DynamisHandler;
 
     //Adds an item to the treasure pool
@@ -1117,16 +1122,33 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     uint8 dropCount = 0;
 
     DropList_t* DropList = itemutils::GetDropList(m_DropID);
-    //ShowDebug(CL_CYAN"DropID: %u dropping with TH Level: %u\n" CL_RESET, PMob->m_DropID, PMob->m_THLvl);
+    //ShowDebug(CL_CYAN"DropID: %u dropping with TH Level: %u\n" CL_RESET, m_DropID, m_THLvl);
 
     if (DropList != nullptr && !getMobMod(MOBMOD_NO_DROPS) && (DropList->Items.size() || DropList->Groups.size()))
     {
-        //THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
-        //uint8 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
-        //only roll once now, always
+        // TH works by giving a droprate boost to one roll, and higher tiers give multiple normal rolls as well
+        //
+        // ex1: if TH mult=0.8 and maxRolls=1 (i.e. TH1):
+        // original droprate of 1% => 1% + (1% * 0.8 * 99%) = 1.792%
+        // original droprate of 50% => 50% + (50% * 0.8 * 50%) = 70 %
+        // original droprate of 80% => 80% + (80% * 0.8 * 20%) = 92.8 %
+        //
+        // ex2: if TH mult=0.25 and maxRolls=3 (i.e. TH4):
+        // first roll will follow the same as above except with mult=0.25
+        // original droprate of 1% => 1% + (1% * 0.25 * 99%) ~ 1.24%
+        // original droprate of 50% => 50% + (50% * 0.25 * 50%) = 56.25%
+        // original droprate of 80% => 80% + (80% * 0.25 * 20%) = 84%
+        // if the drop is not obtained on the first roll, 2 more attempts are given at the original rate
+        // final chance at a drop for TH4 with an original rate of X (out of 1000), therefore:
+        //
+        // 1-(1-X/1000)^2*(1-(X+(X*(1000-X)/1000*X))/1000)
+        //
+        // explanation of above:
+        // - inverse of (1-X/1000)^2*(1-(X+(X*(1000-X)/1000*X))/1000)
+        // - the chance of not getting the first drop: (1-(X+(X*(1000-X)/1000*X))/1000)
+        // - the chance of not getting the second drop AND not getting the third drop: (1-X/1000)^2
+
         uint8 maxRolls = 1;
-        //uint8 bonus = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
-        //no flat bonus anymore
         uint8 bonus = 0;
         float mult = 0.00f;
         if (m_THLvl == 1)
@@ -1156,33 +1178,48 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         //ShowDebug("m_THLvl was %u, mult was %.2f, maxRolls was %u\n",m_THLvl,mult,maxRolls);
 
+        // handle all group drops from mob drop table
+        uint16 groupCount = 0;
         for (const DropGroup_t& group : DropList->Groups)
         {
-            for (uint8 roll = 0; roll < maxRolls; ++roll)
-            {
+            // itemutils.cpp loads drop groups, starting at groupid 0 and sequentially
+            // this means that if you have a dropid with two drop groups, groupid 1 and groupid 3, DropGroup_t contains 4 entities, 2 of which have rate=0
+            // TODO: fix this in itemutils.cpp?
+            uint16 rate = group.GroupRate;
+            if(rate > 0){
+                groupCount++;
+                uint16 groupRateSum = 0;
+                for (const DropItem_t& item : group.Items)
+                {
+                    groupRateSum += item.DropRate;
+                }
+
+                if(m_THLvl >= 1){
+                    // This is a TH>0, apply the mult for the first roll
+                    rate = rate + (rate * mult * (1000 - rate)/1000);
+                }
+
                 //Determine if this group should drop an item
-
-                // 0.8 is the TH level:
-
-                // 1 % +(1 % * 99 % * 0.8) = 1.792 %
-
-                // 50 % +(50 % * 50 % * 0.8) = 70 %
-
-                // 80 % +(80 % * 20 % * 0.8) = 92.8 %
-
-                uint16 rate = group.GroupRate;
-
-                if (roll + 1 < maxRolls) // not our last roll
+                for (uint8 roll = 0; roll < maxRolls; ++roll)
                 {
-                    //ShowDebug("doing NON-last roll\n");
-                    if (rate > 0 && ((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
+                    /*
+                    std::string itemIDs = "";
+                    for (const DropItem_t& item : group.Items)
+                    {
+                        itemIDs += std::to_string(item.ItemID) + ",";
+                    }
+                    ShowDebug(CL_CYAN"checking if group %u drops with rate %u total itemRates %u and items: %s\n" CL_RESET, groupCount, rate, groupRateSum, itemIDs);
+                    */
+                    if (((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
                     {
                         //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
                         //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
                         uint16 previousRateValue = 0;
-                        uint16 itemRoll = tpzrand::GetRandomNumber(1000);
+                        // total group's itemRates _should_ sum 1000, but if they don't, this normalizes it
+                        uint16 itemRoll = tpzrand::GetRandomNumber(groupRateSum);
                         for (const DropItem_t& item : group.Items)
                         {
+                            //ShowDebug(CL_CYAN"checking if itemid %u from group drops with itemroll %u (current rateTotal %u)\n" CL_RESET, item.ItemID, itemRoll, previousRateValue);
                             if (previousRateValue + item.DropRate > itemRoll)
                             {
                                 if (AddItemToPool(item.ItemID, ++dropCount))
@@ -1193,68 +1230,34 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                         }
                         break;
                     }
+                    //back to normal droprate
+                    rate = group.GroupRate;
                 }
-                else // is our last roll, apply the mult
-                {
-                    //ShowDebug("doing last roll\n");
-                    if (rate > 0 && (tpzrand::GetRandomNumber(1000) < (rate + (rate * (1000 - rate)/1000 * mult)) || m_THLvl > 68))
-                    {
-                        //Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
-                        //Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
-                        uint16 previousRateValue = 0;
-                        uint16 itemRoll = tpzrand::GetRandomNumber(1000);
-                        for (const DropItem_t& item : group.Items)
-                        {
-                            if (previousRateValue + item.DropRate > itemRoll)
-                            {
-                                if (AddItemToPool(item.ItemID, ++dropCount))
-                                    return;
-                                break;
-                            }
-                            previousRateValue += item.DropRate;
-                        }
-                        break;
-                    }
-                }
-
             }
         }
 
+        // handle all indvidual drops from mob drop table
         for (const DropItem_t& item : DropList->Items)
         {
-            for (uint8 roll = 0; roll < maxRolls; ++roll)
-            {
-                //Determine if this group should drop an item
-
-                // 0.8 is the TH level:
-
-                // 1 % +(1 % * 99 % * 0.8) = 1.792 %
-
-                // 50 % +(50 % * 50 % * 0.8) = 70 %
-
-                // 80 % +(80 % * 20 % * 0.8) = 92.8 %
-
-                uint16 rate = item.DropRate;
-
-                if (roll + 1 < maxRolls) // not our last roll
-                {
-                    //ShowDebug("doing NON-last roll\n");
-                    if (rate > 0 && ((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
-                    {
-                        if (AddItemToPool(item.ItemID, ++dropCount))
-                            return;
-                        break;
-                    }
+            uint16 rate = item.DropRate;
+            if(rate > 0){
+                if(m_THLvl >= 1){
+                    // This is a TH>0, apply the mult for the first roll
+                    rate = rate + (rate * mult * (1000 - rate)/1000);
                 }
-                else // is our last roll, apply the mult
+
+                // determine if this item should drop
+                for (uint8 roll = 0; roll < maxRolls; ++roll)
                 {
-                    //ShowDebug("doing last roll\n");
-                    if (rate > 0 && (tpzrand::GetRandomNumber(1000) < (rate + (rate * (1000 - rate)/1000 * mult)) || m_THLvl > 68))
+                    //ShowDebug(CL_CYAN"checking if itemid %u drops with rate %u\n" CL_RESET, item.ItemID, rate);
+                    if (((tpzrand::GetRandomNumber(1000) < rate) || m_THLvl > 68))
                     {
                         if (AddItemToPool(item.ItemID, ++dropCount))
                             return;
                         break;
                     }
+                    //back to normal droprate
+                    rate = item.DropRate;
                 }
             }
         }
@@ -1416,6 +1419,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
 bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    TracyZoneScoped;
     auto skill_list_id {getMobMod(MOBMOD_ATTACK_SKILL_LIST)};
     if (skill_list_id)
     {
@@ -1522,6 +1526,7 @@ void CMobEntity::OnDespawn()
 
 void CMobEntity::Die()
 {
+    TracyZoneScoped;
     if (this->PAI && this->PAI->GetCurrentState() && this->PAI->GetCurrentState()->m_id == CLAIMSHIELD_STATE)
     {
         this->health.hp = 1;
@@ -1599,6 +1604,7 @@ bool CMobEntity::OnAttack(CAttackState& state, action_t& action)
 
 int32 CMobEntity::PixieGetAmity()
 {
+    TracyZoneScoped;
     // Prevent spamming the DB with calls
     time_t now = time(NULL);
     if (g_pixieLastAmityRefresh + 60 < now) {
@@ -1644,6 +1650,7 @@ uint32 CMobEntity::PixieGetHealHateThreshold(CCharEntity* PChar)
 
 void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
 {
+    TracyZoneScoped;
     time_t now = time(NULL);
     SpellID spell = SpellID::NULLSPELL;
     if (!PAI) {

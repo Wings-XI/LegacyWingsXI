@@ -4279,7 +4279,7 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
 *  Function: delItem()
 *  Purpose : Deletes an item from a player's inventory
 *  Example : player:delItem(4102,12)
-*  Notes   : Can specify contianer using third variable
+*  Notes   : Can specify container using 3rd variable, and slotid with 4th variable
 ************************************************************************/
 
 int32 CLuaBaseEntity::delItem(lua_State* L)
@@ -4288,8 +4288,8 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    auto quantity = 0;
-    auto location = 0;
+    uint32 quantity = 0;
+    CONTAINER_ID location = LOC_INVENTORY;
 
     if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
     {
@@ -4300,7 +4300,7 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
     {
         if ((uint32)lua_tointeger(L, 3) < MAX_CONTAINER_ID)
         {
-            location = (uint32)lua_tointeger(L, 3);
+            location = (CONTAINER_ID)lua_tointeger(L, 3);
         }
         else
         {
@@ -4308,8 +4308,8 @@ int32 CLuaBaseEntity::delItem(lua_State* L)
         }
     }
 
-    auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    auto SlotID = PChar->getStorage(location)->SearchItem((uint16)lua_tointeger(L, 1));
+    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    uint16 SlotID = !lua_isnil(L, 4) && lua_isnumber(L, 4) ? (uint16)lua_tointeger(L, 4) : PChar->getStorage(location)->SearchItem((uint16)lua_tointeger(L, 1));
     if (SlotID != ERROR_SLOTID)
     {
         charutils::UpdateItem(PChar, location, SlotID, -quantity);
@@ -8341,7 +8341,16 @@ inline int32 CLuaBaseEntity::addExp(lua_State *L)
 
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    charutils::AddExperiencePoints(false, (CCharEntity*)m_PBaseEntity, m_PBaseEntity, (uint32)lua_tointeger(L, 1));
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    uint32 expRemaining = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - PChar->jobs.exp[PChar->GetMJob()] - 1;
+    // Split large chunk of xp gain to catch edge conditions like capping xp and moving to limit point mode
+    if(PChar->jobs.job[PChar->GetMJob()] == map_config.max_level && (uint32)lua_tointeger(L, 1) > expRemaining){
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, expRemaining);
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, (uint32)lua_tointeger(L, 1) - expRemaining);
+    }else{
+        charutils::AddExperiencePoints(false, PChar, m_PBaseEntity, (uint32)lua_tointeger(L, 1));
+    }
+    
     return 0;
 }
 
@@ -9216,11 +9225,6 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
         bool breakBind = true;
         bool removePetrify = false;
 
-        // Check to see if the target has a nightmare effect active
-        if (PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) &&
-            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)
-            wakeUp = false;
-
         if (!lua_isnil(L, 5) && lua_istable(L, 5))
         {
             // Attempt to wake up the target unless wakeUp is provided and is false.
@@ -9231,6 +9235,25 @@ inline int32 CLuaBaseEntity::takeDamage(lua_State *L)
             lua_getfield(L, 5, "breakBind");
             breakBind = (lua_isnil(L, -1) || !lua_isboolean(L, -1) || lua_toboolean(L, -1));
         }
+
+        // Check to see if the target a nightmare effect active, reset wakeUp accordingly
+        if (PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) &&
+            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO)
+        {
+            // Don't break nightmare sleep from any dmg that doesn't break bind (DoT damage)
+            // see nightmare.lua for full explanation
+            if(breakBind == false)
+                    wakeUp = false;
+            
+            // Diabolos mob-move: Nightmare effect active (dot power 10 or higher) "High chance to not break nightmare sleep from any damage"
+            // therefore, don't remove it 90% of the time
+            // see nightmare.lua for full explanation
+            if(wakeUp == true &&
+                PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubPower() > 9 &&
+                tpzrand::GetRandomNumber(1000) > 100)
+                    wakeUp = false;
+        }
+            
 
         ATTACKTYPE attackType = !lua_isnil(L, 3) && lua_isnumber(L, 3) ? (ATTACKTYPE)lua_tointeger(L, 3) : ATTACK_NONE;
         DAMAGETYPE damageType = !lua_isnil(L, 4) && lua_isnumber(L, 4) ? (DAMAGETYPE)lua_tointeger(L, 4) : DAMAGE_NONE;
@@ -13518,6 +13541,22 @@ int32 CLuaBaseEntity::handleAfflatusMiseryDamage(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getLastAttackType()
+*  Purpose : Gets the type of the last attack received (physical, magical, ranged etc.)
+*  Example : target:getLastAttackType()
+*  Notes   :
+************************************************************************/
+
+int32 CLuaBaseEntity::getLastAttackType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    lua_pushinteger(L, (int32)((CBattleEntity*)m_PBaseEntity)->BattleHistory.lastHitTaken_atkType);
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: isWeaponTwoHanded()
 *  Purpose : Returns true if the Weapon in the Main Slot is two-handed
 *  Example : if (player:isWeaponTwoHanded()) then
@@ -13573,6 +13612,28 @@ inline int32 CLuaBaseEntity::getMeleeHitDamage(lua_State *L)
         return 1;
     }
     lua_pushinteger(L, -1);
+    return 1;
+}
+
+/************************************************************************
+*  Function: getWeaponDelay()
+*  Purpose : Returns the real delay value of a Weapon in the Main slot
+*  Example : 
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getWeaponDelay(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    uint16 weapondly = 0;
+
+    if(m_PBaseEntity->objtype != TYPE_NPC)
+    {
+        weapondly = ((CBattleEntity*)m_PBaseEntity)->GetWeaponDelay(0);
+    }
+
+    lua_pushinteger(L, weapondly);
     return 1;
 }
 
@@ -14026,23 +14087,19 @@ inline int32 CLuaBaseEntity::spawnPet(lua_State *L)
 
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
+        // always spawn on master
+        PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
+
         // if a number is given its an avatar or elemental spawn
+        // calling to reset stats, mods, etc as the MobEntity->Spawn() function sets those separately
         if (!lua_isnil(L, 1) && lua_isstring(L, 1))
         {
             petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
         }
-
-        // always spawn on master
-        PPet->m_SpawnPoint = nearPosition(PMob->loc.p, 2.2f, (float)M_PI);
-
-        // setup AI
-        PPet->Spawn();
-        
-        // Re-calling elemental/avatar spawnMobPet to fix SDTs/PHYSDMG/other mods that being overwritten by the mobMod reload in calculate stats
-        // Post merge - we can either get rid of this all together, or refactor the issues we have with mob mods not reloading
-        if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+        else
         {
-            petutils::SpawnMobPet(PMob, (uint32)lua_tointeger(L, 1));
+            // setup AI
+            PPet->Spawn();
         }
     }
     return 0;
@@ -14178,7 +14235,9 @@ inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->AddGambit(g);
+    if (controller) {
+        controller->m_GambitsContainer->AddGambit(g);
+    }
 
     return 0;
 }
@@ -14286,7 +14345,9 @@ inline int32 CLuaBaseEntity::addFullGambit(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->AddGambit(g);
+    if (controller) {
+        controller->m_GambitsContainer->AddGambit(g);
+    }
 
     return 0;
 }
@@ -14309,8 +14370,10 @@ int32 CLuaBaseEntity::setTrustTPSkillSettings(lua_State* L)
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->tp_trigger = static_cast<G_TP_TRIGGER>(lua_tointeger(L, 1));
-    controller->m_GambitsContainer->tp_select = static_cast<G_SELECT>(lua_tointeger(L, 2));
+    if (controller) {
+        controller->m_GambitsContainer->tp_trigger = static_cast<G_TP_TRIGGER>(lua_tointeger(L, 1));
+        controller->m_GambitsContainer->tp_select = static_cast<G_SELECT>(lua_tointeger(L, 2));
+    }
 
     return 0;
 }
@@ -15541,6 +15604,33 @@ inline int32 CLuaBaseEntity::setSpawn(lua_State *L)
     return 0;
 }
 
+
+/************************************************************************
+*  Function: getSpawnType()
+*  Purpose : Returns the spawntype flags for a mob
+*  Example : if (nm:getSpawnType() == tpz.mob.spawntype.SPAWNTYPE_NORMAL)
+*  Notes   : 
+************************************************************************/
+
+int32 CLuaBaseEntity::getSpawnType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PMob->m_SpawnType)
+    {
+        lua_pushinteger(L, PMob->m_SpawnType);
+        return 1;
+    }
+    else
+    {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+}
+
 /************************************************************************
 *  Function: getRespawnTime()
 *  Purpose : Returns the remaining respawn time for a Mob
@@ -15826,7 +15916,15 @@ inline int32 CLuaBaseEntity::SetAutoAttackEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetAutoAttackEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetAutoAttackEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
@@ -15843,7 +15941,15 @@ inline int32 CLuaBaseEntity::SetMagicCastingEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetMagicCastingEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetMagicCastingEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
@@ -15860,7 +15966,15 @@ inline int32 CLuaBaseEntity::SetMobAbilityEnabled(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isboolean(L, 1));
 
-    m_PBaseEntity->PAI->GetController()->SetWeaponSkillEnabled(lua_toboolean(L, 1));
+    if (m_PBaseEntity->PAI == nullptr) {
+        return 0;
+    }
+    CController* controller = m_PBaseEntity->PAI->GetController();
+    if (controller == nullptr) {
+        return 0;
+    }
+
+    controller->SetWeaponSkillEnabled(lua_toboolean(L, 1));
 
     return 0;
 }
@@ -19396,8 +19510,11 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breathDmgTaken),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,handleAfflatusMiseryDamage),
 
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLastAttackType),
+
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isWeaponTwoHanded),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeHitDamage),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDelay),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmg),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMeleeRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeaponDmgRank),
@@ -19494,6 +19611,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isSpawned),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnPos),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setSpawn),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpawnType),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getRespawnTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setRespawnTime),
 

@@ -42,7 +42,7 @@ function onUseAbility(player, target, ability, action)
     end
 
     if (not target:hasStatusEffect(tpz.effect.CHAINBOUND, 0) and not target:hasStatusEffect(tpz.effect.SKILLCHAIN, 0)) then
-        target:addStatusEffectEx(tpz.effect.CHAINBOUND, 0, 1, 0, 6, 0, 1)
+        target:addStatusEffectEx(tpz.effect.CHAINBOUND, 0, 1, 0, 10, 0, 1)
     else
         ability:setMsg(tpz.msg.basic.JA_NO_EFFECT)
     end

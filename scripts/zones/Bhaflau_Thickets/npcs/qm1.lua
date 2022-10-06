@@ -14,7 +14,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.NOTHING_HAPPENS)
+    player:messageSpecial(ID.text.LIVIDROOT_AMOOSHAH)
 end
 
 function onEventUpdate(player, csid, option)

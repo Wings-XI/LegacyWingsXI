@@ -13,11 +13,15 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill, summoner)
+    local mpCost = 44
     local bonusTime = utils.clamp(summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC) - 300, 0, 200)
     local duration = 180 + bonusTime
 
     target:delStatusEffect(tpz.effect.SHINING_RUBY)
     target:addStatusEffect(tpz.effect.SHINING_RUBY, 1, 0, duration)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+
+    pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
+
     return tpz.effect.SHINING_RUBY
 end

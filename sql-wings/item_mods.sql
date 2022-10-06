@@ -7865,7 +7865,7 @@ INSERT INTO `item_mods` VALUES (12316,54,2);
 INSERT INTO `item_mods` VALUES (12316,55,2);
 INSERT INTO `item_mods` VALUES (12316,58,-4);
 INSERT INTO `item_mods` VALUES (12317,1,12);      -- Flame Shield: DEF 12
-INSERT INTO `item_mods` VALUES (12317,54,20);     -- Fire resistance +20
+INSERT INTO `item_mods` VALUES (12317,54,30);     -- Fire resistance +30
 INSERT INTO `item_mods` VALUES (12317,499,1);     -- Blaze spikes
 INSERT INTO `item_mods` VALUES (12317,500,20);    -- Spikes damage +20
 INSERT INTO `item_mods` VALUES (12317,501,20);    -- Spikes chance +20%
@@ -12182,7 +12182,7 @@ INSERT INTO `item_mods` VALUES (13962,1,14);
 INSERT INTO `item_mods` VALUES (13962,2,14);
 INSERT INTO `item_mods` VALUES (13962,8,4);
 INSERT INTO `item_mods` VALUES (13962,61,10);
-INSERT INTO `item_mods` VALUES (13962,97,55);
+INSERT INTO `item_mods` VALUES (13962,97,625);  -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (13963,1,14);
 INSERT INTO `item_mods` VALUES (13963,5,10);
 INSERT INTO `item_mods` VALUES (13963,8,5);
@@ -15284,7 +15284,7 @@ INSERT INTO `item_mods` VALUES (14890,109,15);
 INSERT INTO `item_mods` VALUES (14891,1,15);
 INSERT INTO `item_mods` VALUES (14891,2,14);
 INSERT INTO `item_mods` VALUES (14891,8,6);
-INSERT INTO `item_mods` VALUES (14891,97,55);
+INSERT INTO `item_mods` VALUES (14891,97,625);  -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (14891,289,4);
 INSERT INTO `item_mods` VALUES (14892,1,14);
 INSERT INTO `item_mods` VALUES (14892,5,15);
@@ -20884,6 +20884,7 @@ INSERT INTO `item_mods` VALUES (17460,9,3);
 INSERT INTO `item_mods` VALUES (17460,10,3);
 INSERT INTO `item_mods` VALUES (17463,13,2);
 INSERT INTO `item_mods` VALUES (17463,111,1);
+INSERT INTO `item_mods` VALUES (17464,431,1); -- Purgatory Mace - Additional effect: "Stun"
 INSERT INTO `item_mods` VALUES (17464,8,3);
 INSERT INTO `item_mods` VALUES (17464,13,3);
 INSERT INTO `item_mods` VALUES (17465,12,1);
@@ -23085,7 +23086,7 @@ INSERT INTO `item_mods` VALUES (18775,68,5);
 INSERT INTO `item_mods` VALUES (18777,25,7);      -- Magnus Sainti: Accuracy+7
 INSERT INTO `item_mods` VALUES (18778,25,7);      -- Marotte Claws: Accuracy+7
 INSERT INTO `item_mods` VALUES (18779,8,6);
-INSERT INTO `item_mods` VALUES (18779,97,55);
+INSERT INTO `item_mods` VALUES (18779,97,625);    -- boost_effect +6.25%
 INSERT INTO `item_mods` VALUES (18779,289,10);
 INSERT INTO `item_mods` VALUES (18780,8,5);       -- Burattinaios: STR+5
 INSERT INTO `item_mods` VALUES (18780,9,5);       -- DEX+5
@@ -23707,6 +23708,13 @@ INSERT INTO `item_mods` VALUES (19107,11,4);
 INSERT INTO `item_mods` VALUES (19107,25,4);
 INSERT INTO `item_mods` VALUES (19107,68,4);
 INSERT INTO `item_mods` VALUES (19108,68,5);
+ -- trilling dagger
+INSERT INTO `item_mods` VALUES (19109,353,2); -- light affinity +10%
+-- INSERT INTO `item_mods` VALUES (19109,354,-2); -- dark affinity -10% dmg wiki doesn't seem to indicate we get this like light staff does
+-- INSERT INTO `item_mods` VALUES (19109,550,2); -- light affinity +acc wiki doesn't seem to indicate we get this like light staff does
+-- INSERT INTO `item_mods` VALUES (19109,551,-2); -- dark affinity -acc wiki doesn't seem to indicate we get this like light staff does
+INSERT INTO `item_mods` VALUES (19109,559,2); -- light avatar perp reduction
+INSERT INTO `item_mods` VALUES (19109,560,-2); -- dark avatar perp increase
 INSERT INTO `item_mods` VALUES (19111,14,4);
 INSERT INTO `item_mods` VALUES (19111,119,2);
 INSERT INTO `item_mods` VALUES (19112,12,4);
@@ -28613,7 +28621,7 @@ INSERT INTO `item_mods` VALUES (23175,25,38);     -- Accuracy+38
 INSERT INTO `item_mods` VALUES (23175,29,1);      -- Magic Defense Bonus+1
 INSERT INTO `item_mods` VALUES (23175,31,36);     -- Magic Evasion+36
 INSERT INTO `item_mods` VALUES (23175,68,32);     -- Evasion+32
-INSERT INTO `item_mods` VALUES (23175,97,70);     -- Boost Effect+70
+INSERT INTO `item_mods` VALUES (23175,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (23175,289,8);     -- Subtle Blow+8
 INSERT INTO `item_mods` VALUES (23175,384,500);    -- Haste +5%
 INSERT INTO `item_mods` VALUES (23175,841,5);     -- Weapon Skill Damage+5%
@@ -30604,7 +30612,7 @@ INSERT INTO `item_mods` VALUES (23510,25,48);     -- Accuracy+48
 INSERT INTO `item_mods` VALUES (23510,29,2);      -- Magic Defense Bonus+2
 INSERT INTO `item_mods` VALUES (23510,31,46);     -- Magic Evasion+46
 INSERT INTO `item_mods` VALUES (23510,68,42);     -- Evasion+42
-INSERT INTO `item_mods` VALUES (23510,97,72);     -- Boost Effect+72
+INSERT INTO `item_mods` VALUES (23510,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (23510,289,11);    -- Subtle Blow+11
 INSERT INTO `item_mods` VALUES (23510,384,500);   -- Haste +5%
 INSERT INTO `item_mods` VALUES (23510,841,10);    -- Weapon Skill Damage+10%
@@ -46346,7 +46354,7 @@ INSERT INTO `item_mods` VALUES (27944,13,17);
 INSERT INTO `item_mods` VALUES (27944,14,10);
 INSERT INTO `item_mods` VALUES (27944,31,18);
 INSERT INTO `item_mods` VALUES (27944,68,10);
-INSERT INTO `item_mods` VALUES (27944,97,68);
+INSERT INTO `item_mods` VALUES (27944,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (27944,289,5);
 INSERT INTO `item_mods` VALUES (27944,384,400);
 INSERT INTO `item_mods` VALUES (27945,1,59);
@@ -46671,7 +46679,7 @@ INSERT INTO `item_mods` VALUES (27965,14,16);
 INSERT INTO `item_mods` VALUES (27965,29,1);      -- Magic Def. Bonus+1
 INSERT INTO `item_mods` VALUES (27965,31,26);
 INSERT INTO `item_mods` VALUES (27965,68,22);
-INSERT INTO `item_mods` VALUES (27965,97,68);
+INSERT INTO `item_mods` VALUES (27965,97,750);    -- boost_effect 20% from 12.5% = 7.5%
 INSERT INTO `item_mods` VALUES (27965,289,5);
 INSERT INTO `item_mods` VALUES (27965,384,500);
 INSERT INTO `item_mods` VALUES (27966,1,83);
@@ -52220,7 +52228,48 @@ INSERT INTO `item_mods` VALUES (18720,830,218);
 INSERT INTO `item_mods` VALUES (18754,830,12);
 INSERT INTO `item_mods` VALUES (19102,830,29);
 INSERT INTO `item_mods` VALUES (18592,830,188);  -- WS allowance on nyzul base weapons end
-
+INSERT INTO `item_mods` VALUES (17512,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17513,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17514,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17515,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17516,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17517,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17686,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17687,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17688,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17689,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17690,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17691,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17780,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17781,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17782,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17783,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17784,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17785,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17984,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17985,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17986,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17987,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17988,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (17989,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18076,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18077,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18078,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18079,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18080,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18081,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18200,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18201,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18202,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18203,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18204,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18205,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18366,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18367,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18368,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18369,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18370,431,1); -- ammo charge additional effect weapon
+INSERT INTO `item_mods` VALUES (18371,431,1); -- ammo charge additional effect weapon
 
 /*!40000 ALTER TABLE `item_mods` ENABLE KEYS */;
 UNLOCK TABLES;

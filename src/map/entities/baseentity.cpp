@@ -161,6 +161,7 @@ void CBaseEntity::SetLocalVar(const char* var, uint32 val)
 
 void CBaseEntity::Wait(duration _duration)
 {
+    TracyZoneScoped;
     if (!PAI) {
         return;
     }

@@ -136,6 +136,7 @@ local optionToAugment =
         [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
         [30] = {{augment =  128, power =  6}}, -- Pet: Magic Accuracy +7
         [31] = {{augment =  913, power =  2}}, -- Movement Speed +8%
+        [32] = {{augment =  195, power =  4}}, -- "Subtle Blow"+5
     },
 }
 
@@ -516,7 +517,7 @@ local prizes =
     [tpz.ki.TONBERRY_KEY] =
     {
         {cutoff =  291, itemId = 15938, augments = {{516, 0, 5}, {517, 0,  4}, {518, 0, 4}, {35, 0, 3}, {39, 0, 2}, {53, 0, 2}}}, -- Esprit Belt
-        {cutoff =  600, itemId = 15937, augments = {{ 49, 0, 4}, {512, 0,  2}, {513, 0, 2}, {44, 0, 4}, {31, 0, 4}, {24, 0, 9}}}, -- Fettle Belt
+        {cutoff =  600, itemId = 15937, augments = {{ 49, 0, 4}, {512, 0,  2}, {513, 0, 2}, {195, 0, 4}, {31, 0, 4}, {24, 0, 9}}}, -- Fettle Belt
         {cutoff =  636, itemId =   813}, -- Angelstone
         {cutoff =  654, itemId =   812}, -- Deathstone
         {cutoff =  690, itemId =   645}, -- Darksteel Ore

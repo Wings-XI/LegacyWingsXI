@@ -128,6 +128,7 @@ namespace battleutils
 
     SUBEFFECT            GetSkillChainEffect(CBattleEntity* PDefender, uint8 primary, uint8 secondary, uint8 tertiary);
     SKILLCHAIN_ELEMENT   FormSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill);
+    SKILLCHAIN_ELEMENT   FormChainboundSkillchain(const std::list<SKILLCHAIN_ELEMENT>& resonance, const std::list<SKILLCHAIN_ELEMENT>& skill); // Handles skillchain resonance being a wildcard (as in Chainbound effects)
     uint8                GetSkillchainTier(SKILLCHAIN_ELEMENT skillchain);
     uint8                GetSkillchainSubeffect(SKILLCHAIN_ELEMENT skillchain);
     int16                GetSkillchainMinimumResistance(SKILLCHAIN_ELEMENT element, CBattleEntity* PDefender, ELEMENT* appliedEle);
@@ -264,7 +265,7 @@ namespace battleutils
     void                ConvertDmgToMP(CBattleEntity* PDefender, int32 damage, bool IsCovered);
     float               GetRangedAttackDistanceCorrection(CBattleEntity* PChar, float distance);
 
-    void                HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action);
+    //void                HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action);
 };
 
 #endif

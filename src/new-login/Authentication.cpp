@@ -16,13 +16,14 @@
 #include <time.h>
 #include <openssl/evp.h>
 #include <string.h>
+#include <cotp.h>
 
 Authentication::Authentication(std::shared_ptr<TCPConnection> Connection) : mLastError(AUTH_SUCCESS), mpConnection(Connection)
 {
     LOG_DEBUG0("Called.");
 }
 
-uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* pszPassword, uint8_t* pbufAuthToken)
+uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* pszPassword, const char* pszOTP, uint8_t* pbufAuthToken)
 {
     LOG_DEBUG0("Called.");
     try {
@@ -38,9 +39,12 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         uint32_t dwPrivileges = 0;
         bool bUserExists = false;
         uint32_t dwIpExempt = 0;
+        time_t tmTempExempt = 0;
+        uint32_t dwFeatures = 0;
+        std::string strOTPSecret;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
-        std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt FROM %saccounts WHERE username='%s'");
+        std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt, temp_exempt, features, otp_secret FROM %saccounts WHERE username='%s'");
         std::string strSqlFinalQuery(FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
             Database::RealEscapeString(pszUsername).c_str()));
@@ -61,6 +65,13 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             dwStatus = pAccountsFound->get_unsigned16(3);
             dwPrivileges = pAccountsFound->get_unsigned32(4);
             dwIpExempt = pAccountsFound->get_unsigned16(5);
+            if (!pAccountsFound->get_is_null(6)) {
+                tmTempExempt = (pAccountsFound->get_date_time(6)).mktime();
+            }
+            dwFeatures = pAccountsFound->get_unsigned32(7);
+            if (!pAccountsFound->get_is_null(8)) {
+                strOTPSecret = pAccountsFound->get_string(8);
+            }
         }
         mLastError = AUTH_SUCCESS;
         // Hash the entered password even if the user does not exist. This prevents valid username
@@ -78,7 +89,25 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             LOG_DEBUG1("Incorrect password for user %s", pszUsername);
             mLastError = AUTH_NO_USER_OR_BAD_PASSWORD;
         }
-        else if ((dwStatus != 1) || (dwPrivileges & ACCT_PRIV_ENABLED) == 0) {
+        else if (dwFeatures & 0x01) {
+            // OTP is enabled on this account
+            if (strOTPSecret == "") {
+                LOG_ERROR("User %s has OTP enabled but OTP secret is empty.", pszUsername);
+                mLastError = AUTH_INTERNAL_FAILURE;
+            }
+            else if (pszOTP == NULL || *pszOTP == '\0') {
+                LOG_DEBUG1("No OTP supplied for user %s", pszUsername);
+                mLastError = AUTH_NEED_OTP;
+            }
+            else if (totp_verify(strOTPSecret.c_str(), pszOTP, 6, 30, SHA1) != VALID) {
+                LOG_DEBUG1("OTP mismatch for user %s", pszUsername);
+                mLastError = AUTH_BAD_OTP;
+            }
+        }
+        if (mLastError != AUTH_SUCCESS) {
+            return false;
+        }
+        if ((dwStatus != 1) || (dwPrivileges & ACCT_PRIV_ENABLED) == 0) {
             LOG_DEBUG1("Account %s is disabled.", pszUsername);
             mLastError = AUTH_ACCOUNT_DISABLED;
         }
@@ -91,6 +120,10 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
                 LOG_DEBUG1("Account %s does not have maintenance mode access.", pszUsername);
                 mLastError = AUTH_MAINTENANCE_MODE;
             }
+        }
+        if ((tmTempExempt != 0) && (time(NULL) < tmTempExempt)) {
+            // LAN party mode enabled
+            dwIpExempt |= 0x01;
         }
         if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, ((dwIpExempt & 0x01) != 0))) {
             if (mLastError == AUTH_SUCCESS) {
@@ -243,7 +276,7 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
     }
 }
 
-bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldPassword, const char* pszNewPassword)
+bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldPassword, const char* pszNewPassword, const char* pszOTP)
 {
     LOG_DEBUG0("Called.");
     try {
@@ -251,7 +284,7 @@ bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldP
         DBConnection DB = Database::GetDatabase();
         GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
 
-        uint32_t dwUserUID = AuthenticateUser(pszUsername, pszOldPassword);
+        uint32_t dwUserUID = AuthenticateUser(pszUsername, pszOldPassword, pszOTP);
         if ((dwUserUID == 0) && (mLastError != AUTH_ACCOUNT_DISABLED) && (mLastError != AUTH_MAINTENANCE_MODE) && (mLastError != AUTH_ANOTHER_ACCOUNT_SHARES_IP)) {
             // mLastError already set by AuthenticateUser
             // Note: For security reasons, disabled accounts are still allowed to change their passwords

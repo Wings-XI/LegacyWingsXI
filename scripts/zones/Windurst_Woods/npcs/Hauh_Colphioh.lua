@@ -57,6 +57,17 @@ local items = {
         id = 198, -- Gilt Tapestry
         rank = 9,
         cost = 150000
+    },
+    [4] = {
+        id = 337, -- Weaver's Signboard
+        rank = 9,
+        cost = 200000
+    },
+
+    [5] = {
+        id = 15822, -- Tailor's Ring
+        rank = 6,
+        cost = 80000
     }
 }
 

@@ -12,10 +12,12 @@ zones[tpz.zone.NORG] =
     {
         HOMEPOINT_SET                = 2, -- Home point set!
         ITEM_CANNOT_BE_OBTAINED      = 6404, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_CANNOT_BE_OBTAINED2     = 6406, -- You cannot obtain the item. Come back after sorting your inventory.
         ITEM_OBTAINED                = 6410, -- Obtained: <item>.
         GIL_OBTAINED                 = 6411, -- Obtained <number> gil.
         KEYITEM_OBTAINED             = 6413, -- Obtained key item: <keyitem>.
         YOU_OBTAIN                   = 6416, -- You obtain <number> <item>!<7F31>
+        YOU_DO_NOT_HAVE_ENOUGH_GIL   = 6417, -- You do not have enough gil.
         CARRIED_OVER_POINTS          = 6449, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY      = 6450, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                 = 6451, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
