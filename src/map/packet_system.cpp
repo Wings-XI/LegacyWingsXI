@@ -759,9 +759,18 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                         }
                     }
                 }
-                PChar->m_lastCheckPosition.x = new_x;
-                PChar->m_lastCheckPosition.y = new_y;
-                PChar->m_lastCheckPosition.z = new_z;
+                if ((PChar->m_event.EventID != -1) || (PChar->m_event.Started >= timepointNow + 1s)) {
+                    // Certain events end up with the user being telepoted
+                    // and they can end up virtually anywhere
+                    PChar->m_lastCheckPosition.x = 0;
+                    PChar->m_lastCheckPosition.y = 0;
+                    PChar->m_lastCheckPosition.z = 0;
+                }
+                else {
+                    PChar->m_lastCheckPosition.x = new_x;
+                    PChar->m_lastCheckPosition.y = new_y;
+                    PChar->m_lastCheckPosition.z = new_z;
+                }
                 PChar->m_distanceLastCheckTime = timepointNow;
             }
             if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5 && PChar->status != STATUS_DISAPPEAR
