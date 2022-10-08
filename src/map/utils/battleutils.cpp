@@ -5543,12 +5543,12 @@ namespace battleutils
                     PMember->loc.p.y = PMob->loc.p.y + PMember->m_drawInOffsetY;
                     PMember->loc.p.z = PMob->loc.p.z;
                 }
-                PMember->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
 
                 if (PMember->objtype == TYPE_PC)
                 {
                     CCharEntity* PChar = (CCharEntity*)PMember;
                     PChar->pushPacket(new CPositionPacket(PChar));
+                    PChar->m_lastTeleport = std::chrono::system_clock::now();
                 }
                 else
                 {

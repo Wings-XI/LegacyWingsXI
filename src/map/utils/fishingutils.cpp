@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -895,42 +895,6 @@ namespace fishingutils
 
         // Minimum 4% chance
         maxChance = std::max(4, distMod + lowerLevelBonus - skillLevelPenalty);
-
-        // Moon phase skillup modifiers
-        uint8 phase = CVanaTime::getInstance()->getMoonPhase();
-        uint8 moonDirection = CVanaTime::getInstance()->getMoonDirection();
-        switch (moonDirection)
-        {
-        case 0: // None
-            if (phase == 0) {
-                skillRoll -= 20;
-                bonusChanceRoll -= 3;
-            }
-            else if (phase == 100) {
-                skillRoll += 10;
-                bonusChanceRoll += 3;
-            }
-            break;
-        case 1: // Waning (decending)
-            if (phase <= 10 && phase >= 0) {
-                skillRoll -= 15;
-                bonusChanceRoll -= 2;
-            }
-            else if (phase >= 95 && phase <= 100) {
-                skillRoll += 5;
-                bonusChanceRoll += 2;
-            }
-            break;
-        case 2: // Waxing (increasing)
-            if (phase >= 0 && phase <= 5) {
-                skillRoll -= 10;
-                bonusChanceRoll -= 1;
-            }
-            else if (phase >= 90 && phase <= 100) {
-                bonusChanceRoll += 1;
-            }
-            break;
-        }
 
         // Not in City bonus
         if (zoneutils::GetZone(PChar->getZone())->GetType() > ZONETYPE_CITY) {

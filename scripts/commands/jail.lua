@@ -49,5 +49,10 @@ function onTrigger(player, target, cellId, reason)
     -- Send the target to jail..
     local dest = jailCells[ cellId ]
     targ:setCharVar( "inJail", cellId )
+    targ:setCharVar( "JailedFromX", math.floor(targ:getXPos() * 1000))
+    targ:setCharVar( "JailedFromY", math.floor(targ:getYPos() * 1000))
+    targ:setCharVar( "JailedFromZ", math.floor(targ:getZPos() * 1000))
+    targ:setCharVar( "JailedFromRot", targ:getRotPos())
+    targ:setCharVar( "JailedFromZone", targ:getZoneID())
     targ:setPos( dest[1], dest[2], dest[3], dest[4], 131 )
 end

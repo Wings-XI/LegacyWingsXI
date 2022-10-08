@@ -3289,12 +3289,13 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
+        ((CCharEntity*)m_PBaseEntity)->m_lastTeleport = std::chrono::system_clock::now();
+
         if (!lua_isnil(L, 5) && lua_isnumber(L, 5) && ((CCharEntity*)m_PBaseEntity)->status == STATUS_DISAPPEAR)
         {
             // do not modify zone/position if the character is already zoning
             return 0;
         }
-        ((CCharEntity*)m_PBaseEntity)->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
     }
 
     if (lua_isnumber(L, 1))
@@ -3330,6 +3331,10 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+
         if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
         {
             uint16 dest_zone = lua_tointeger(L, 5);
@@ -3411,7 +3416,11 @@ inline int32 CLuaBaseEntity::teleport(lua_State *L)
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        ((CCharEntity*)m_PBaseEntity)->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+        ((CCharEntity*)m_PBaseEntity)->m_lastTeleport = std::chrono::system_clock::now();
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
+        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+
     }
     m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CPositionPacket(m_PBaseEntity));
     m_PBaseEntity->updatemask |= UPDATE_POS;
