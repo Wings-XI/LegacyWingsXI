@@ -66,6 +66,8 @@ struct event_t
     string_t Script;                // путь к файлу, отвечающему за обработку события
     string_t Function;              // не используется
 
+    time_point Started;             // When the event started
+
     void reset()
     {
         EventID = -1;
@@ -73,6 +75,7 @@ struct event_t
         Target = 0;
         Script.clear();
         Function.clear();
+        Started = std::chrono::system_clock::from_time_t(0);
     }
 };
 
