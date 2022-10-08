@@ -810,9 +810,10 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
 
     TracyZoneIString(PChar->GetName());
 
-    time_t timeNow = time(NULL);
-    if (timeNow > PChar->m_lastPacketTime + 3) {
-        PChar->m_gracePeriodEnd = timeNow + 3;
+    time_point timeNow = std::chrono::system_clock::now();
+    if (timeNow > PChar->m_lastPacketTime + 3s) {
+        // probably r0
+        PChar->m_gracePeriodEnd = timeNow + 3s;
     }
     PChar->m_lastPacketTime = timeNow;
 

@@ -698,59 +698,71 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (moved)
         {
-            float new_distance = static_cast<float>(sqrt(pow(new_x - PChar->loc.p.x, 2) + pow(new_z - PChar->loc.p.z, 2)));
-            PChar->m_distanceFromLastCheck += new_distance;
-            time_t timeNow = time(NULL);
-            if ((PChar->GetLocalVar("LastTeleport") >= timeNow - 3) || (PChar->m_gracePeriodEnd > timeNow))
-            {
-                PChar->m_distanceFromLastCheck = 0;
-                PChar->m_distanceLastCheckTime = timeNow;
-            }
-            if (timeNow != PChar->m_distanceLastCheckTime)
-            {
-                time_t timeDiff = timeNow - PChar->m_distanceLastCheckTime;
-                if (timeDiff > 30)
+            time_point timepointNow = std::chrono::system_clock::now();
+            if (timepointNow >= PChar->m_distanceLastCheckTime + 1s) {
+                if ((PChar->m_lastTeleport < timepointNow - 3s) &&
+                    (PChar->m_gracePeriodEnd <= timepointNow) &&
+                    (PChar->m_event.EventID == -1) &&
+                    (PChar->m_lastCheckPosition.x != 0 || PChar->m_lastCheckPosition.y != 0 || PChar->m_lastCheckPosition.z != 0))
                 {
-                    // Prevent them from idling for an hour then poshacking
-                    // 30 secs should be enough even for a temporary r0
-                    timeDiff = 30;
-                }
-                // char debugSpeed[64];
-                // snprintf(debugSpeed, sizeof(debugSpeed) - 1, "Speed: %d (%d)", PChar->GetSpeed(), PChar->speed);
-                // debugSpeed[63] = '\0';
-                // PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, debugSpeed));
-                float diffPerSecond = PChar->m_distanceFromLastCheck / timeDiff;
-                float threshold = map_config.poshack_threshold;
-                float currentSpeed = PChar->GetSpeed();
-                float baseSpeed = PChar->speed;
-                if (currentSpeed > baseSpeed)
-                {
-                    threshold = threshold * (currentSpeed / baseSpeed);
-                }
-                if (PChar->isMounted())
-                {
-                    // Compensate for speedy chickens
-                    threshold = threshold * 2;
-                }
-                if ((diffPerSecond > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel < 2)))
-                {
-                    char cheatDesc[128];
-                    snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s went over the speed limit: %f (raw=%f, time=%d, threshold=%f)", PChar->name.c_str(),
-                             diffPerSecond, PChar->m_distanceFromLastCheck, static_cast<uint32>(timeDiff), threshold);
-                    cheatDesc[127] = '\0';
-                    uint8 strikes = 1;
-                    if (diffPerSecond >= 200)
-                    {
-                        strikes = 2;
+                    float diff_x = new_x - PChar->m_lastCheckPosition.x;
+                    float diff_z = new_z - PChar->m_lastCheckPosition.z;
+                    float new_distance_sq = diff_x * diff_x + diff_z * diff_z;
+                    // Since this routine runs only once per movement packet, the time check only ensures we have
+                    // waited at least one second since the last check but there is no cap on the max time
+                    // (could be forever if the player just afks), so normalize by the time passed sine the last
+                    // packet.
+                    float time_diff = static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(timepointNow - PChar->m_distanceLastCheckTime).count()) / 1000.0f;
+                    if (time_diff > 30) {
+                        // But that presents an issue if the player just afks for a really long time (something
+                        // like half an hour), at which point time_diff becomes big enough that the normalized
+                        // distance always approaches zero, allowing the player to use the next packet to
+                        // poshack anywhere on the map. To prevent that just cap the time diff to a constant
+                        // value (30 seconds in this case).
+                        time_diff = 30;
                     }
-                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_POSHACK, static_cast<uint32>(diffPerSecond * 100), cheatDesc, strikes);
-                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_POSHACK, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
+                    float norm_distance_sq = new_distance_sq / (time_diff * time_diff);
+                    float threshold = map_config.poshack_threshold;
+                    float currentSpeed = PChar->GetSpeed();
+                    float baseSpeed = PChar->speed;
+                    float threshold_boost = 1;
+                    if (currentSpeed > baseSpeed)
                     {
-                        moved = false;
+                        threshold_boost = (currentSpeed / baseSpeed);
+                    }
+                    if (PChar->isMounted())
+                    {
+                        // Compensate for speedy chickens
+                        threshold_boost = threshold_boost * 2;
+                    }
+                    threshold = threshold * threshold_boost;
+                    // Mind we are using squared distances so the threshold has to be squared as well
+                    threshold = threshold * threshold;
+                    //char debugSpeed[128];
+                    //snprintf(debugSpeed, sizeof(debugSpeed) - 1, "Distance: %.3f, Raw: %.3f, Threshold: %.3f", norm_distance_sq, new_distance_sq, threshold);
+                    //debugSpeed[127] = '\0';
+                    //PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_3, debugSpeed));
+                    if ((norm_distance_sq > threshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel < 2)))
+                    {
+                        char cheatDesc[128];
+                        snprintf(cheatDesc, sizeof(cheatDesc) - 1, "%s went over the speed limit: %f (raw=%f, threshold=%f)", PChar->name.c_str(), norm_distance_sq, new_distance_sq, threshold);
+                        cheatDesc[127] = '\0';
+                        uint8 strikes = 1;
+                        if (norm_distance_sq >= 4000)
+                        {
+                            strikes = 2;
+                        }
+                        anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_POSHACK, static_cast<uint32>(norm_distance_sq * 100), cheatDesc, strikes);
+                        if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_POSHACK, NULL, 0) & anticheat::CHEAT_ACTION_BLOCK)
+                        {
+                            moved = false;
+                        }
                     }
                 }
-                PChar->m_distanceFromLastCheck = 0.0;
-                PChar->m_distanceLastCheckTime = timeNow;
+                PChar->m_lastCheckPosition.x = new_x;
+                PChar->m_lastCheckPosition.y = new_y;
+                PChar->m_lastCheckPosition.z = new_z;
+                PChar->m_distanceLastCheckTime = timepointNow;
             }
             if (PChar->m_lastDig + 3700ms > std::chrono::system_clock::now() && distanceSquared(PChar->loc.p, PChar->m_lastDigPosition) > 5 * 5 && PChar->status != STATUS_DISAPPEAR
                 && (uint64)PChar->GetLocalVar("LastTeleportDig") + 1 < std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count())
@@ -1134,8 +1146,11 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 // status and also just took more time and more resources. If anyone
                 // actually finds out that a zone is necessary please document it here.
                 // For now we'll just change it to a simple position update.
-                PChar->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+                PChar->m_lastTeleport = std::chrono::system_clock::now();
                 PChar->loc.p           = PChar->m_StartActionPos;
+                PChar->m_lastCheckPosition.x = PChar->m_StartActionPos.x;
+                PChar->m_lastCheckPosition.y = PChar->m_StartActionPos.y;
+                PChar->m_lastCheckPosition.z = PChar->m_StartActionPos.z;
                 PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CPositionPacket(PChar));
                 PChar->updatemask |= UPDATE_POS;
             }

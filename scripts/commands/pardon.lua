@@ -6,10 +6,10 @@
 cmdprops =
 {
     permission = 2,
-    parameters = "s"
+    parameters = "ss"
 }
 
-function onTrigger(player, target)
+function onTrigger(player, target, where)
     if (target == nil) then
         player:PrintToPlayer("You must enter a valid player name.")
         return
@@ -27,6 +27,20 @@ function onTrigger(player, target)
         printf( message )
 
         targ:setCharVar( 'inJail', 0 )
-        targ:warp()
+        local returned = false
+        if (where == "return") then
+            local tozone = targ:getCharVar("JailedFromZone")
+            if (tozone ~= 0) then
+                local tox = targ:getCharVar("JailedFromX") / 1000
+                local toy = targ:getCharVar("JailedFromY") / 1000
+                local toz = targ:getCharVar("JailedFromZ") / 1000
+                local torot = targ:getCharVar("JailedFromRot")
+                targ:setPos(tox, toy, toz, torot, tozone)
+                returned = true
+            end
+        end
+        if (returned == false) then
+            targ:warp()
+        end
     end
 end
