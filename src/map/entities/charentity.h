@@ -414,12 +414,13 @@ public:
     bool              m_needTellFix;                // Does he use a newer version of the game client, which has modified tell packets
     bool              m_needMasterLvFix;            // Does he use a newer version of the game client, which has several packet changes due to master levels
     bool              m_needInventoryFix;           // Does he use a newer version of the game client, which has inventory packet changes (wardrobes 5-8, recycle)
-    time_t            m_distanceLastCheckTime;
-    float             m_distanceFromLastCheck;
-    time_t            m_gracePeriodEnd;             // On lags, give the player a little time to recover
+    time_point        m_distanceLastCheckTime;
+    position_t        m_lastCheckPosition;
+    time_point        m_gracePeriodEnd;             // On lags, give the player a little time to recover
+    time_point        m_lastTeleport;               // Last time the server teleported the user
     bool              m_packetLimiterEnabled;       // on zone in, we take off packet limiter so we can send the massive amount of info of the char loading in
     time_point        m_objectCreationTime;         // used to measure when to turn off the packet limiter
-    time_t            m_lastPacketTime;             // Last time a packet was received from the player
+    time_point        m_lastPacketTime;             // Last time a packet was received from the player
 
     bool              isYellFiltered() const;       // Does the user have all yell mesages filtered?
     bool              isYellSpamFiltered() const;   // Does the user have "all yell/shout messages deemed spam" filtered?

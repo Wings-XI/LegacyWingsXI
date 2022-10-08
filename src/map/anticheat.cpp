@@ -76,6 +76,12 @@ namespace anticheat
             cellid = 1;
         }
         const char* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'inJail', value = %i ON DUPLICATE KEY UPDATE value = %i;";
+        charutils::SetCharVar(PChar, "JailedFromX", (uint32)(PChar->loc.p.x * 1000));
+        charutils::SetCharVar(PChar, "JailedFromY", (uint32)(PChar->loc.p.y * 1000));
+        charutils::SetCharVar(PChar, "JailedFromZ", (uint32)(PChar->loc.p.z * 1000));
+        charutils::SetCharVar(PChar, "JailedFromRot", PChar->loc.p.rotation);
+        charutils::SetCharVar(PChar, "JailedFromZone", PChar->getZone());
+
         Sql_Query(SqlHandle, fmtQuery, PChar->id, cellid, cellid);
         PChar->loc.p.x = (float)g_jailCells[cellid-1][0];
         PChar->loc.p.y = (float)g_jailCells[cellid - 1][1];

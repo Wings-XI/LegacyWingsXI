@@ -250,13 +250,14 @@ CCharEntity::CCharEntity()
     m_needTellFix = 0;
     m_needMasterLvFix = 0;
     m_needInventoryFix = 0;
-    m_lastPacketTime = time(NULL);
+    m_lastPacketTime = std::chrono::system_clock::now();
     m_packetLimiterEnabled = false;
     m_objectCreationTime = std::chrono::system_clock::now();
 
     m_distanceLastCheckTime = m_lastPacketTime;
-    m_distanceFromLastCheck = 0.0;
+    m_lastCheckPosition = { 0 };
     m_gracePeriodEnd = m_lastPacketTime;
+    m_lastTeleport = m_lastPacketTime;
 
     hookedFish = nullptr;
     lastCastTime = 0;

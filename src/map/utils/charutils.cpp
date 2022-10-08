@@ -6262,7 +6262,7 @@ namespace charutils
         PChar->health.hp = PChar->GetMaxHP();
         PChar->health.mp = PChar->GetMaxMP();
 
-        PChar->SetLocalVar("LastTeleport", static_cast<uint32>(time(NULL)));
+        PChar->m_lastTeleport = std::chrono::system_clock::now();
         PChar->loc.boundary = 0;
         PChar->loc.p = PChar->profile.home_point.p;
         PChar->loc.destination = PChar->profile.home_point.destination;
