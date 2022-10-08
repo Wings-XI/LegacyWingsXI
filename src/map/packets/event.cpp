@@ -96,4 +96,10 @@ CEventPacket::CEventPacket(
 		ref<uint16>(0x10) = PChar->getZone();
 	}
 	PChar->m_event.EventID = EventID;
+    PChar->m_event.Started = std::chrono::system_clock::now();
+    // Certain events end up with the user being telepoted
+    // and they can end up virtually anywhere
+    PChar->m_lastCheckPosition.x = 0;
+    PChar->m_lastCheckPosition.y = 0;
+    PChar->m_lastCheckPosition.z = 0;
 }
