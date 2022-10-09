@@ -67,6 +67,7 @@ struct event_t
     string_t Function;              // не используется
 
     time_point Started;             // When the event started
+    time_point Finished;            // When the last event ended
 
     void reset()
     {
@@ -76,6 +77,7 @@ struct event_t
         Script.clear();
         Function.clear();
         Started = std::chrono::system_clock::from_time_t(0);
+        Finished = std::chrono::system_clock::now();
     }
 };
 
