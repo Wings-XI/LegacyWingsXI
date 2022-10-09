@@ -3331,9 +3331,19 @@ inline int32 CLuaBaseEntity::setPos(lua_State *L)
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+        time_point now = std::chrono::system_clock::now();
+        if ((((CCharEntity*)m_PBaseEntity)->m_event.EventID != -1) ||
+            (((CCharEntity*)m_PBaseEntity)->m_event.Started + 1s >= now) ||
+            (((CCharEntity*)m_PBaseEntity)->m_event.Finished + 1s >= now)) {
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = 0;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = 0;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = 0;
+        }
+        else {
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+        }
 
         if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
         {
@@ -3416,10 +3426,20 @@ inline int32 CLuaBaseEntity::teleport(lua_State *L)
 
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        ((CCharEntity*)m_PBaseEntity)->m_lastTeleport = std::chrono::system_clock::now();
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
-        ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+        time_point now = std::chrono::system_clock::now();
+        ((CCharEntity*)m_PBaseEntity)->m_lastTeleport = now;
+        if ((((CCharEntity*)m_PBaseEntity)->m_event.EventID != -1) ||
+            (((CCharEntity*)m_PBaseEntity)->m_event.Started + 1s >= now) ||
+            (((CCharEntity*)m_PBaseEntity)->m_event.Finished + 1s >= now)) {
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = 0;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = 0;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = 0;
+        }
+        else {
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.x = m_PBaseEntity->loc.p.x;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.y = m_PBaseEntity->loc.p.y;
+            ((CCharEntity*)m_PBaseEntity)->m_lastCheckPosition.z = m_PBaseEntity->loc.p.z;
+        }
 
     }
     m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CPositionPacket(m_PBaseEntity));
