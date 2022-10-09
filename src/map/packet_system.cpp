@@ -759,7 +759,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                         }
                     }
                 }
-                if ((PChar->m_event.EventID != -1) || (PChar->m_event.Started >= timepointNow + 1s)) {
+                if ((PChar->m_event.EventID != -1) || (PChar->m_event.Started + 1s >= timepointNow) || (PChar->m_event.Finished + 1s >= timepointNow)) {
                     // Certain events end up with the user being telepoted
                     // and they can end up virtually anywhere
                     PChar->m_lastCheckPosition.x = 0;
@@ -3476,6 +3476,9 @@ void SmallPacket0x05B(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 PChar->m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
                 PChar->m_event.reset();
+                PChar->m_lastCheckPosition.x = 0;
+                PChar->m_lastCheckPosition.y = 0;
+                PChar->m_lastCheckPosition.z = 0;
             }
         }
     }
