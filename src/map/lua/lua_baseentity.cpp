@@ -6010,6 +6010,7 @@ inline int32 CLuaBaseEntity::setNation(lua_State *L)
 
     PChar->profile.nation = (uint8)lua_tointeger(L, 1);
     charutils::SaveCharNation(PChar);
+    charutils::UpdateMissionStorage(PChar);
     return 0;
 }
 
