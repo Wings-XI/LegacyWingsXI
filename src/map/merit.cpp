@@ -386,9 +386,9 @@ Merit_t* CMeritPoints::GetMeritPointer(MERIT_TYPE merit)
 }
 
 uint8 CMeritPoints::GetMeritMaxUpgrades(uint8 catid)
-{
+{// WINGSCUSTOM
     if (catid == 0) // hp/mp
-        return 8;
+        return 10;
     if (catid == 1) // attributes
         return 5;
     if (catid == 2) // combat skills
@@ -396,7 +396,7 @@ uint8 CMeritPoints::GetMeritMaxUpgrades(uint8 catid)
     if (catid == 3) // magic skills
         return 8;
     if (catid == 4) // others (crit rate, enmity, spell interruption)
-        return 4;
+        return 5;
     if (catid >= 5 && catid <= 24) // job-specific group1
         return 5;
     if (catid == 25) // weapon skills (OOE)
@@ -408,17 +408,17 @@ uint8 CMeritPoints::GetMeritMaxUpgrades(uint8 catid)
 }
 
 uint8 CMeritPoints::GetMeritCategoryMaxUpgrades(uint8 catid)
-{
+{// WINGSCUSTOM
     if (catid == 0) // hp/mp
-        return 8;
+        return 10;
     if (catid == 1) // attributes
-        return 5;
+        return 15;
     if (catid == 2) // combat skills
-        return 20;
+        return 44;
     if (catid == 3) // magic skills
-        return 16;
+        return 40;
     if (catid == 4) // others (crit rate, enmity, spell interruption)
-        return 8;
+        return 10;
     if (catid >= 5 && catid <= 24) // job-specific group1
         return 10;
     if (catid == 25) // weapon skills (OOE)
