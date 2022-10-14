@@ -239,9 +239,10 @@ INSERT INTO `abilities` VALUES(197, 'chocobo_jig', 19, 55, 1, 60, 218, 126, 0, 1
 INSERT INTO `abilities` VALUES(198, 'jigs', 19, 25, 1, 0, 0, 0, 0, 0, 4000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(199, 'steps', 19, 20, 1, 0, 0, 0, 0, 0, 2000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(200, 'flourishes_i', 19, 20, 1, 0, 0, 0, 0, 0, 2000, 0, 14, 20.0, 0, 0, 0, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(201, 'quickstep', 19, 20, 4, 15, 220, 519, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(202, 'box_step', 19, 30, 4, 15, 220, 520, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
-INSERT INTO `abilities` VALUES(203, 'stutter_step', 19, 40, 4, 15, 220, 521, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
+-- WINGSINTENTIONALOOE recast time
+INSERT INTO `abilities` VALUES(201, 'quickstep', 19, 20, 4, 5, 220, 519, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(202, 'box_step', 19, 30, 4, 5, 220, 520, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
+INSERT INTO `abilities` VALUES(203, 'stutter_step', 19, 40, 4, 5, 220, 521, 0, 14, 2000, 0, 14, 4.5, 0, 1, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(204, 'animated_flourish', 19, 20, 4, 30, 221, 119, 0, 181, 2000, 0, 6, 17.6, 0, 1, 1000, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(205, 'desperate_flourish', 19, 30, 4, 20, 221, 127, 0, 24, 2000, 0, 14, 4.4, 0, 1, 0, 0, 0, 'WOTG');
 INSERT INTO `abilities` VALUES(206, 'reverse_flourish', 19, 40, 1, 30, 222, 452, 0, 182, 2000, 0, 6, 20.0, 0, 1, 0, 0, 0, 'WOTG');
