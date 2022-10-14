@@ -72,17 +72,17 @@ end
 
 function getConquestTally()
     -- Get time into a handy dandy table
-    local weekDayNumber = tonumber(os.date("%w"))
-    local daysToTally = 0
+    local weekDayNumber = JstWeekDay()
+    local daysUntilTally = 0
     -- LUA is Sun -> Sat, conquest is Mon -> Sun, so adjustments via conditional are needed.
     -- If today is Sunday (0), no additional days are necessary, so keep the 0.
     -- Ex: Friday = 5, 7 - 5 = 2 days to add, all of Saturday and Sunday.
     if weekDayNumber > 0 then
-        daysToTally = 7 - weekDayNumber
+        daysUntilTally = 7 - weekDayNumber
     end
 
     -- Midnight + daysToTally * a day worth of seconds.
-    return JstMidnight() + daysToTally * 86400
+    return JstMidnight() + daysUntilTally * 86400
 end
 
 -----------------------------------
