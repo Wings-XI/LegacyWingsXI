@@ -5549,6 +5549,9 @@ namespace battleutils
                     CCharEntity* PChar = (CCharEntity*)PMember;
                     PChar->pushPacket(new CPositionPacket(PChar));
                     PChar->m_lastTeleport = std::chrono::system_clock::now();
+                    PChar->m_lastCheckPosition.x = 0;
+                    PChar->m_lastCheckPosition.y = 0;
+                    PChar->m_lastCheckPosition.z = 0;
                 }
                 else
                 {

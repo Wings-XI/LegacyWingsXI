@@ -759,7 +759,9 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
                         }
                     }
                 }
-                if ((PChar->m_event.EventID != -1) || (PChar->m_event.Started + 1s >= timepointNow) || (PChar->m_event.Finished + 1s >= timepointNow)) {
+                if ((PChar->m_event.EventID != -1) || (PChar->m_event.Started + 1s >= timepointNow) ||
+                    (PChar->m_event.Finished + 1s >= timepointNow) ||
+                    (PChar->m_lastTeleport >= timepointNow - 3s)) {
                     // Certain events end up with the user being telepoted
                     // and they can end up virtually anywhere
                     PChar->m_lastCheckPosition.x = 0;
