@@ -139,6 +139,7 @@ namespace luautils
         lua_register(LuaHandle, "GetPlayerByID", luautils::GetPlayerByID);
         lua_register(LuaHandle, "GetMobAction", luautils::GetMobAction);
         lua_register(LuaHandle, "JstMidnight", luautils::JstMidnight);
+        lua_register(LuaHandle, "JstWeekDay", luautils::JstWeekDay);
         lua_register(LuaHandle, "VanadielTime", luautils::VanadielTime);
         lua_register(LuaHandle, "VanadielTOTD", luautils::VanadielTOTD);
         lua_register(LuaHandle, "VanadielHour", luautils::VanadielHour);
@@ -924,6 +925,18 @@ namespace luautils
     int32 JstMidnight(lua_State* L)
     {
         lua_pushinteger(L, CVanaTime::getInstance()->getJstMidnight());
+        return 1;
+    }
+
+    /************************************************************************
+    *                                                                       *
+    * JstWeekDay - Returns day number of current weekday, including jst_offset
+    *                                                                       *
+    ************************************************************************/
+
+    int32 JstWeekDay(lua_State* L)
+    {
+        lua_pushinteger(L, CVanaTime::getInstance()->getJstWeekDay());
         return 1;
     }
 
