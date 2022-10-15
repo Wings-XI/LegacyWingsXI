@@ -31,6 +31,7 @@ from migrations import ip_exempt
 from migrations import blocked_ranges
 from migrations import ip_exempt
 from migrations import two_factor_authentication
+from migrations import login_log_exempt
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -53,6 +54,7 @@ migrations = [
     blocked_ranges,
 	ip_exempt,
 	two_factor_authentication,
+	login_log_exempt,
 ]
 # These are the default 'protected' files
 player_data = [
