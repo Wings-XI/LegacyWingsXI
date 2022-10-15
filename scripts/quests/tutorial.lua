@@ -90,6 +90,8 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
     elseif csid == (npc_event_offset + 2) then
         if npcUtil.giveItem(player, {{4376, 6}}) then
             player:setCharVar("TutorialProgress", 3)
+        else
+            player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
         end
     elseif csid == (npc_event_offset + 4) then
         player:setCharVar("TutorialProgress", 4)
@@ -97,14 +99,20 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
         if player:getZoneID() == tpz.zone.WINDURST_WOODS then
             if npcUtil.giveItem(player, {{4101, 1}, {4570, 1}, {4370, 1}}) then
                 player:setCharVar("TutorialProgress", 5)
+            else
+                player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
             end
         elseif player:getZoneID() == tpz.zone.BASTOK_MARKETS then
             if npcUtil.giveItem(player, {{4096, 1}, {926, 1}, {4370, 1}}) then
                 player:setCharVar("TutorialProgress", 5)
+            else
+                player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
             end
         elseif player:getZoneID() == tpz.zone.SOUTHERN_SAN_DORIA then
             if npcUtil.giveItem(player, {{4096, 1}, {936, 1}, {4358, 1}}) then
                 player:setCharVar("TutorialProgress", 5)
+            else
+                player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
             end
         end
     elseif csid == (npc_event_offset + 8) then
@@ -114,6 +122,8 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
     elseif csid == (npc_event_offset + 10) then
         if npcUtil.giveItem(player, 16003) then
             player:setCharVar("TutorialProgress", 8)
+        else
+            player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
         end
     elseif csid == (npc_event_offset + 12) then
         player:addExp(800 * EXP_RATE)
@@ -125,6 +135,8 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
         if npcUtil.giveItem(player, {{1789, 3}}) then
             player:addExp(1000*EXP_RATE)
             player:setCharVar("TutorialProgress", 0)
+        else
+            player:PrintToPlayer("NOTICE: Tutorial CANNOT continue until you receive this item.",29)
         end
     end
 end

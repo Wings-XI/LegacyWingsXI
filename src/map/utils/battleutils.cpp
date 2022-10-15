@@ -2133,7 +2133,7 @@ namespace battleutils
 
                         // Shield Mastery
                         if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0)
-                            && charutils::hasTrait((CCharEntity*)PDefender, TRAIT_SHIELD_MASTERY))
+                            && PDefender->getMod(Mod::SHIELD_MASTERY_TP) > 0)
                         {
                             // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
                             // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
@@ -2146,7 +2146,7 @@ namespace battleutils
 
                         //Shield Mastery
                         if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0)
-                            && (PDefender->getMod(Mod::SHIELD_MASTERY_TP)))
+                            && PDefender->getMod(Mod::SHIELD_MASTERY_TP) > 0)
                         {
                             // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
                             // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
@@ -2243,7 +2243,7 @@ namespace battleutils
 
             // try to interrupt spell if not a ranged attack and not blocked by Shield Mastery
             if ((!isRanged)
-                && !((isBlocked) && (PDefender->objtype == TYPE_PC) && (charutils::hasTrait((CCharEntity*)PDefender, TRAIT_SHIELD_MASTERY))))
+                && !((isBlocked) && (PDefender->objtype == TYPE_PC) && PDefender->getMod(Mod::SHIELD_MASTERY_TP) > 0))
             {
                 PDefender->TryHitInterrupt(PAttacker);
             }
@@ -5549,6 +5549,9 @@ namespace battleutils
                     CCharEntity* PChar = (CCharEntity*)PMember;
                     PChar->pushPacket(new CPositionPacket(PChar));
                     PChar->m_lastTeleport = std::chrono::system_clock::now();
+                    PChar->m_lastCheckPosition.x = 0;
+                    PChar->m_lastCheckPosition.y = 0;
+                    PChar->m_lastCheckPosition.z = 0;
                 }
                 else
                 {

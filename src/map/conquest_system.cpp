@@ -676,9 +676,9 @@ namespace conquest
 
     uint8 GetNexTally()
     {
-        auto weekday = CVanaTime::getInstance()->getSysWeekDay();
+        auto weekday = CVanaTime::getInstance()->getJstWeekDay();
         uint8 dayspassed = (weekday == 0 ? 6 : weekday - 1) * 25;
-        dayspassed += ((CVanaTime::getInstance()->getSysHour() * 60 + CVanaTime::getInstance()->getSysMinute()) * 25 ) / 1440;
+        dayspassed += ((CVanaTime::getInstance()->getJstHour() * 60 + CVanaTime::getInstance()->getJstMinute()) * 25 ) / 1440;
         return (uint8)(175 - dayspassed);
     }
 

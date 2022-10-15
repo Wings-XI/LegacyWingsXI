@@ -6010,6 +6010,7 @@ inline int32 CLuaBaseEntity::setNation(lua_State *L)
 
     PChar->profile.nation = (uint8)lua_tointeger(L, 1);
     charutils::SaveCharNation(PChar);
+    charutils::UpdateMissionStorage(PChar);
     return 0;
 }
 
@@ -17775,7 +17776,7 @@ inline int32 CLuaBaseEntity::getBlockedDamage(lua_State* L)
     uint8 absorb = std::clamp<uint8>(PDefender->m_Weapons[SLOT_SUB]->getShieldAbsorption() + (uint8)(PDefender->getMod(Mod::SHIELD_DEF_BONUS)), (uint8)0, (uint8)100);
 
     // Shield Mastery
-    if (damage - PDefender->getMod(Mod::PHALANX) > 0 && charutils::hasTrait((CCharEntity*)PDefender, TRAIT_SHIELD_MASTERY))
+    if (damage - PDefender->getMod(Mod::PHALANX) > 0 && PDefender->getMod(Mod::SHIELD_MASTERY_TP) > 0)
     {
         // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
         PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));

@@ -42,6 +42,7 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
         time_t tmTempExempt = 0;
         uint32_t dwFeatures = 0;
         std::string strOTPSecret;
+        uint32_t dwResult = 0;
 
         LOG_DEBUG0("Attempting to authenticate user %s", pszUsername);
         std::string strSqlQueryFmt("SELECT id, password, salt, status, privileges, ip_exempt, temp_exempt, features, otp_secret FROM %saccounts WHERE username='%s'");
@@ -105,7 +106,9 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
             }
         }
         if (mLastError != AUTH_SUCCESS) {
-            return false;
+            // Feel free to revise this, I actually couldn't think
+            // of a way other than goto that wouldn't look even nastier.
+            goto after_checks;
         }
         if ((dwStatus != 1) || (dwPrivileges & ACCT_PRIV_ENABLED) == 0) {
             LOG_DEBUG1("Account %s is disabled.", pszUsername);
@@ -121,11 +124,22 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
                 mLastError = AUTH_MAINTENANCE_MODE;
             }
         }
+        after_checks:
         if ((tmTempExempt != 0) && (time(NULL) < tmTempExempt)) {
             // LAN party mode enabled
             dwIpExempt |= 0x01;
         }
-        if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, mLastError == AUTH_SUCCESS, ((dwIpExempt & 0x01) != 0))) {
+        if (mLastError == AUTH_SUCCESS) {
+            dwResult = 1;
+        }
+        else if (mLastError == AUTH_NEED_OTP) {
+            // This is really neither a success nor a failure, need its own result code
+            dwResult = 2;
+        }
+        else {
+            dwResult = 0;
+        }
+        if (!LogAccess(dwAccountId, AUTH_OP_LOGIN, dwResult, ((dwIpExempt & 0x01) != 0))) {
             if (mLastError == AUTH_SUCCESS) {
                 LOG_DEBUG1("Another account shares IP with %s.", pszUsername);
                 mLastError = AUTH_ANOTHER_ACCOUNT_SHARES_IP;
@@ -169,7 +183,7 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
         mLastError = AUTH_SUCCESS;
         if (Config->GetConfigUInt("disable_user_registrations") != 0) {
             mLastError = AUTH_BOOTLOADER_SIGNUP_DISABLED;
-            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
+            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, 0, false);
             return 0;
         }
         // Check IP address block before everything so we don't have
@@ -177,7 +191,7 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
         if (IsIPAddressBlocked()) {
             LOG_DEBUG1("IP address of the user is blocked.");
             mLastError = AUTH_IP_BLOCKED;
-            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
+            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, 0, false);
             return 0;
         }
 
@@ -196,7 +210,7 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
             mLastError = AUTH_PASSWORD_TOO_WEAK;
         }
         if (mLastError != AUTH_SUCCESS) {
-            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
+            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, 0, false);
             return 0;
         }
         // Random salt automatically added so two identical passwords won't have the same hash
@@ -205,11 +219,11 @@ uint32_t Authentication::CreateUser(const char* pszUsername, const char* pszPass
         std::string strSaltPepper = strSalt + Config->GetConfigString("password_hash_secret");
         if (mLastError == AUTH_SUCCESS && PKCS5_PBKDF2_HMAC(pszPassword, -1, reinterpret_cast<const unsigned char*>(strSaltPepper.c_str()), strSaltPepper.size(), 2048, EVP_sha256(), 32, binPassHash) == 0) {
             mLastError = AUTH_INTERNAL_FAILURE;
-            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, false, false);
+            LogAccess(0, AUTH_OP_CREATE_ACCOUNT, 0, false);
             return 0;
         }
         std::string strPassHash = BinaryToHex(binPassHash, sizeof(binPassHash));
-        if (!LogAccess(0, AUTH_OP_CREATE_ACCOUNT, true, false)) {
+        if (!LogAccess(0, AUTH_OP_CREATE_ACCOUNT, 1, false)) {
             mLastError = AUTH_ANOTHER_ACCOUNT_SHARES_IP;
             return 0;
         }
@@ -288,12 +302,12 @@ bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldP
         if ((dwUserUID == 0) && (mLastError != AUTH_ACCOUNT_DISABLED) && (mLastError != AUTH_MAINTENANCE_MODE) && (mLastError != AUTH_ANOTHER_ACCOUNT_SHARES_IP)) {
             // mLastError already set by AuthenticateUser
             // Note: For security reasons, disabled accounts are still allowed to change their passwords
-            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, true, true);
+            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, 1, true);
             return false;
         }
         if (!CheckPasswordComplexity(pszNewPassword)) {
             mLastError = AUTH_PASSWORD_TOO_WEAK;
-            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, false, true);
+            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, 0, true);
             return false;
         }
         std::string strSalt(GenerateSalt());
@@ -301,7 +315,7 @@ bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldP
         std::string strSaltPepper = strSalt + Config->GetConfigString("password_hash_secret");
         if (PKCS5_PBKDF2_HMAC(pszNewPassword, -1, reinterpret_cast<const unsigned char*>(strSaltPepper.c_str()), strSaltPepper.size(), 2048, EVP_sha256(), 32, binPassHash) == 0) {
             mLastError = AUTH_INTERNAL_FAILURE;
-            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, false, true);
+            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, 0, true);
             return false;
         }
         std::string strPassHash = BinaryToHex(binPassHash, sizeof(binPassHash));
@@ -312,7 +326,7 @@ bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldP
             Database::RealEscapeString(strSalt).c_str(),
             dwUserUID)) == 0) {
             mLastError = AUTH_INTERNAL_FAILURE;
-            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, false, true);
+            LogAccess(dwUserUID, AUTH_OP_CHANGE_PASSWORD, 0, true);
             return false;
         }
         mLastError = AUTH_SUCCESS;
@@ -321,7 +335,7 @@ bool Authentication::ChangePassword(const char* pszUsername, const char* pszOldP
     catch (...) {
         LOG_ERROR("Exception thrown on DB access.");
         mLastError = AUTH_INTERNAL_FAILURE;
-        LogAccess(0, AUTH_OP_CHANGE_PASSWORD, false, true);
+        LogAccess(0, AUTH_OP_CHANGE_PASSWORD, 0, true);
         return false;
     }
 }
@@ -375,7 +389,7 @@ bool Authentication::CheckPasswordComplexity(const char* pszPassword)
     return (cHasUppercase + cHasLowercase + cHasNumerics + cHasOthers) >= 3;
 }
 
-bool Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOperation, bool bResult, bool bIPExempt)
+uint32_t Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOperation, uint32_t dwResult, bool bIPExempt)
 {
     LOG_DEBUG0("Called.");
     GlobalConfigPtr Config = LoginGlobalConfig::GetInstance();
@@ -385,8 +399,8 @@ bool Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOpera
     std::string strSqlQueryFmt;
     std::string strSqlFinalQuery;
     std::string strClientIP = inet_ntoa(mpConnection->GetConnectionDetails().BindDetails.sin_addr);
-    if (bResult && !bIPExempt && Config->GetConfigUInt("one_account_per_ip")) {
-        strSqlQueryFmt = "SELECT account_id FROM %slogin_log, %saccounts WHERE %slogin_log.account_id = %saccounts.id AND client_ip = '%s' AND account_id != %d AND account_id != 0 AND result != 0 AND login_time >= NOW() - INTERVAL 1 MONTH AND ((ip_exempt & 0x01) = 0) LIMIT 1;";
+    if (dwResult && !bIPExempt && Config->GetConfigUInt("one_account_per_ip")) {
+        strSqlQueryFmt = "SELECT account_id FROM %slogin_log, %saccounts WHERE %slogin_log.account_id = %saccounts.id AND client_ip = '%s' AND account_id != %d AND account_id != 0 AND result != 0 AND login_time >= NOW() - INTERVAL 1 MONTH AND ((ip_exempt & 0x01) = 0) AND ((exempt & 0x01) = 0) LIMIT 1;";
         strSqlFinalQuery = FormatString(&strSqlQueryFmt,
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
             Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
@@ -397,18 +411,19 @@ bool Authentication::LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOpera
         mariadb::result_set_ref pLogFound = DB->query(strSqlFinalQuery);
         if (pLogFound && pLogFound->row_count() != 0) {
             // Another account already logged in from this IP address
-            bResult = false;
+            dwResult = 0;
         }
     }
-    strSqlQueryFmt = "INSERT INTO %slogin_log (login_time, account_id, client_ip, operation, source, result) VALUES (NOW(), %d, '%s', %d, 1, %d);";
+    strSqlQueryFmt = "INSERT INTO %slogin_log (login_time, account_id, client_ip, operation, source, result, exempt) VALUES (NOW(), %d, '%s', %d, 1, %d, %d);";
     strSqlFinalQuery = FormatString(&strSqlQueryFmt,
         Database::RealEscapeString(Config->GetConfigString("db_prefix")).c_str(),
         dwAccountId,
         Database::RealEscapeString(strClientIP).c_str(),
         static_cast<uint32_t>(dwOperation),
-        (bResult ? 1 : 0));
+        dwResult,
+        (bIPExempt ? 1 : 0));
     DB->query(strSqlFinalQuery);
-    return bResult;
+    return dwResult;
 }
 
 bool Authentication::IsIPAddressBlocked()
