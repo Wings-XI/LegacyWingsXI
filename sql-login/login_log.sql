@@ -35,7 +35,8 @@ CREATE TABLE `login_log` (
   `client_ip` varchar(64) NOT NULL,
   `operation` smallint(6) UNSIGNED NOT NULL DEFAULT 1,
   `source` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
-  `result` tinyint(3) UNSIGNED NOT NULL
+  `result` tinyint(3) UNSIGNED NOT NULL,
+  `exempt` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
