@@ -127,7 +127,7 @@ INSERT INTO `mob_family_system` VALUES(57, 'Buffalo', 6, 'Beast', 2, 40, 130, 12
 INSERT INTO `mob_family_system` VALUES(58, 'Bugard', 14, 'Lizard', 1, 40, 115, 110, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 1.3, 1.15, 1.15, 1.15, 1.15, 0.7, 1.15, 1, 2, 0);
 INSERT INTO `mob_family_system` VALUES(59, 'Bugbear', 7, 'Beastmen', 1, 40, 125, 90, 3, 2, 5, 2, 6, 4, 5, 3, 2, 3, 2, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1, 1.15, 1.15, 1.5, 0.7, 5, 1, 0);
 INSERT INTO `mob_family_system` VALUES(60, 'CaitSith', 18, 'Unclassified', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
-INSERT INTO `mob_family_system` VALUES(61, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 6, 34, 0);
+INSERT INTO `mob_family_system` VALUES(61, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 4, 34, 0); -- of Batons
 INSERT INTO `mob_family_system` VALUES(62, 'Cerberus', 6, 'Beast', 3, 80, 100, 90, 1, 1, 2, 1, 1, 1, 2, 3, 1, 3, 3, 1, 1, 1, 1, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 1, 2, 0);
 INSERT INTO `mob_family_system` VALUES(63, 'Chariot', 4, 'ArchaicMachine', 3, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.6, 0.6, 0.6, 0.25, 1, 0.4, 0.6, 0, 34, 0);
 INSERT INTO `mob_family_system` VALUES(64, 'Chigoe', 20, 'Vermin', 0, 40, 20, 90, 7, 1, 7, 1, 1, 7, 7, 3, 3, 3, 3, 1, 1, 1, 1, 1.15, 0.85, 0.85, 0.6, 0.85, 1.15, 0.85, 0.85, 4, 3, 0);
@@ -538,6 +538,9 @@ INSERT INTO `mob_family_system` VALUES(505, 'Living_Crystal', 18, 'Unclassified'
 INSERT INTO `mob_family_system` VALUES(506, 'MemoryReceptacleENM', 12, 'Empty', 2, 60, 130, 0, 1, 3, 5, 4, 2, 2, 5, 3, 3, 3, 3, 2, 2, 2, 2, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 3, 0);
 INSERT INTO `mob_family_system` VALUES(507, 'Gigas', 7, 'Beastmen', 1, 40, 125, 100, 2, 4, 1, 5, 6, 4, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1.3, 0.5, 1, 1, 1, 2, 3, 0);
 INSERT INTO `mob_family_system` VALUES(508, 'Clones', 18, 'Unclassified', 0, 40, 105, 90, 3, 5, 4, 5, 2, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 0.5, 1, 1, 1, 1, 1.3, 0.5, 8, 6, 0);
+INSERT INTO `mob_family_system` VALUES(509, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 7, 34, 0); -- of Coins
+INSERT INTO `mob_family_system` VALUES(510, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 6, 34, 0); -- of Cups
+INSERT INTO `mob_family_system` VALUES(511, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1, 34, 0); -- of Swords
 
 
 --
