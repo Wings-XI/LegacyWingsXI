@@ -17,7 +17,7 @@ function onBattlefieldInitialise(battlefield)
     -- Reset the tiles in that area to be closed, and tell them that they're closed
     local area = battlefield:getArea()
     local tile = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area - 1) * 8
-    
+
     for i = tile, tile + 7 do
         GetNPCByID(i):updateToEntireZone(tpz.status.NORMAL, tpz.anim.CLOSE_DOOR)
         GetNPCByID(i):setLocalVar("Dropped", tpz.anim.CLOSE_DOOR)
@@ -46,7 +46,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 32001 then
-        if player:getCurrentMission(COP) == tpz.mission.id.cop.DARKNESS_NAMED and player:getCharVar("PromathiaStatus") == 2 then
+        if player:getCurrentMission(COP) == tpz.mission.id.cop.DARKNESS_NAMED then
             player:addTitle(tpz.title.TRANSIENT_DREAMER)
             player:setCharVar("PromathiaStatus", 3)
         end
