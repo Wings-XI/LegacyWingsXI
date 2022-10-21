@@ -102,6 +102,8 @@ g_mixins.families.uragnite = function(mob)
     -- at spawn, give mob default skill lists for in-shell and out-of-shell states
     -- these defaults can be overwritten by using tpz.mix.uragnite.config() in onMobSpawn.
     mob:addListener("SPAWN", "URAGNITE_SPAWN", function(mob)
+        -- don't shell when spawning
+        mob:setLocalVar("[uragnite]shellTimer", os.time() + math.random(40,60))
         mob:setLocalVar("[uragnite]noShellSkillList", 251)
         mob:setLocalVar("[uragnite]inShellSkillList", 1170)
         mob:setLocalVar("[uragnite]chanceToShell", 15)

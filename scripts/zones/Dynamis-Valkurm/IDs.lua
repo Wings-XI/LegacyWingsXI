@@ -48,8 +48,9 @@ zones[tpz.zone.DYNAMIS_VALKURM] =
     mobs =
     {
         Nightmare_Fly_1 = 16937012,
-        Nightmare_Fly_2 = 16937015,
-        Nightmare_Fly_3 = 16937016,
+        Nightmare_Fly_2 = 16937013,
+        Nightmare_Fly_3 = 16937014,
+        sjRestrictionNPC = 16937585,
         Nantina = 16937077,
         Stcemqestcint = 16937051,
         Fairy_Ring = 16937100,

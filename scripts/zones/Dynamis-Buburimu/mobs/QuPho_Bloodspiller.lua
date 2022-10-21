@@ -15,8 +15,6 @@ function onMobDeath(mob, player, isKiller)
     require("scripts/zones/Dynamis-Buburimu/dynamis_mobs")
     local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
-
-    GetMobByID(16941057):setLocalVar("mightystrikes", 0)
     
 end
 

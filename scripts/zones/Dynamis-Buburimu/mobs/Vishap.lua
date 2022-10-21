@@ -18,6 +18,13 @@ function onMobRoamAction(mob)
 end
 
 function onMobRoam(mob)
+    mob:setMod(tpz.mod.REGAIN, 0)
+    mob:setTP(0)
+end
+
+
+function onMobFight(mob)
+    mob:setMod(tpz.mod.REGAIN, 1250)
 end
 
 function onMobSpawn(mob)
@@ -25,6 +32,5 @@ function onMobSpawn(mob)
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
     dynamis.setNMStats(mob)
-    mob:addMod(tpz.mod.REGAIN, 1250)
     mob:SetAutoAttackEnabled(false)
 end

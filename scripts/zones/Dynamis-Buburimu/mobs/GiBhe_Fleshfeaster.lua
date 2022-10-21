@@ -16,8 +16,6 @@ function onMobDeath(mob, player, isKiller)
     local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 
-    GetMobByID(16941057):setLocalVar("benediction", 0)
-
 end
 
 function onMobRoamAction(mob)
