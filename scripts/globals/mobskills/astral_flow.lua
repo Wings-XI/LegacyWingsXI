@@ -17,6 +17,7 @@ local avatarOffsets =
     [16928819] = 2, -- Temenos Tonberry
     [16928823] = 2, -- Temenos Tonberry
     [16928827] = 2, -- Temenos Tonberry
+    [16941057] = -1, -- Apocalyptic Beast
 }
 
 function onMobSkillCheck(target, mob, skill)
@@ -24,11 +25,6 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-
-    if mob:getID() == 16941057 and mob:getLocalVar("astralflow") == 0 then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-        return
-    end
 
     skill:setMsg(tpz.msg.basic.USES)
     local mobID = mob:getID()

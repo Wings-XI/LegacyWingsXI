@@ -45,7 +45,7 @@ mobList[zone] =
 [SMB+357] = { id =  SMB+357}, -- Sergeant Tombstone (010-O)
 [SMB+358] = { id =  SMB+358}, -- Sergeant Tombstone (011-O)
 [SMB+359] = { id =  SMB+359}, -- Sergeant Tombstone (012-O)
-[16941674] = { id =  16941674}, -- Sergeant Tombstone (013-O)
+[SMB+606] = { id =  SMB+606}, -- Sergeant Tombstone (013-O)
 -- Goblins Statues
 [SMB+0  ] = { id =  SMB+0  }, -- Goblin Replica     (014-G)
 [SMB+1  ] = { id =  SMB+1  }, -- Goblin Replica     (015-G)
@@ -71,7 +71,7 @@ mobList[zone] =
 [SMB+387] = { id =  SMB+387}, -- Adamantking Effigy (034-Q)
 [SMB+388] = { id =  SMB+388}, -- Adamantking Effigy (035-Q)
 [SMB+389] = { id =  SMB+389}, -- Adamantking Effigy (036-Q)
-[16941675] = { id =  16941675}, -- Adamantking Effigy (037-Q)
+[SMB+607] = { id =  SMB+607}, -- Adamantking Effigy (037-Q)
 -- Yagudos Statues
 [SMB+122] = { id =  SMB+122}, -- Manifest Icon      (038-Y)
 [SMB+123] = { id =  SMB+123}, -- Manifest Icon      (039-Y)
@@ -85,7 +85,7 @@ mobList[zone] =
 [SMB+417] = { id =  SMB+417}, -- Manifest Icon      (047-Y)
 [SMB+418] = { id =  SMB+418}, -- Manifest Icon      (048-Y)
 [SMB+419] = { id =  SMB+419}, -- Manifest Icon      (049-Y)
-[16941676] = { id =  16941676}, -- Manifest Icon      (050-Y)
+[SMB+608] = { id =  SMB+608}, -- Manifest Icon      (050-Y)
 -- Nightmare Mobs
 [DMB+155] = { id =  DMB+155}, -- Nightmare Crab
 [DMB+156] = { id =  DMB+156}, -- Nightmare Crab
@@ -459,7 +459,7 @@ mobList[zone][SMB+345].pos = {-216.7957, -22.1539, 96.7794, 64  }
 mobList[zone][SMB+357].pos = {-216.1143, -22.1460, 106.0876, 189}
 mobList[zone][SMB+358].pos = {-208.1248, -21.6153, 101.4173, 189}
 mobList[zone][SMB+359].pos = {-199.5664, -22.8261, 94.8028, 9   }
-mobList[zone][16941674].pos = {-199.2854, -22.8656, 105.3254, 195}
+mobList[zone][SMB+606].pos = {-199.2854, -22.8656, 105.3254, 195}
 --Goblin Stats
 mobList[zone][SMB+0  ].pos = {-30.1739, -13.7288, 61.2518, 82   }
 mobList[zone][SMB+1  ].pos = {-24.6467, -13.2863, 58.9652, 82   }
@@ -485,7 +485,7 @@ mobList[zone][SMB+374].pos = { 298.2328, 2.8144, 16.9182, 128   }
 mobList[zone][SMB+387].pos = {300.0039, 2.2430, -0.4152, 128    }
 mobList[zone][SMB+388].pos = {301.2189, 2.5103, -25.6304, 110   }
 mobList[zone][SMB+389].pos = {299.6303, 2.1966, -37.0409, 110   }
-mobList[zone][16941675].pos = {300.0410, 2.2101, -43.0707, 110   }
+mobList[zone][SMB+607].pos = {300.0410, 2.2101, -43.0707, 110   }
 -- Yagudo Stats
 mobList[zone][SMB+122].pos = {351.5531, 2.0022, -60.4356, 196   }
 mobList[zone][SMB+123].pos = {373.1893, 2.5996, -63.9211, 219   }
@@ -499,7 +499,7 @@ mobList[zone][SMB+405].pos = {493.5782, 2.5840, -225.4034, 154  }
 mobList[zone][SMB+417].pos = {501.7607, 2.0000, -247.7523, 169  }
 mobList[zone][SMB+418].pos = {523.8189, 2.1778, -259.4799, 144  }
 mobList[zone][SMB+419].pos = {536.0930, 2.2397, -261.7803, 137  }
-mobList[zone][16941676].pos = {553.5475, 1.4175, -261.2966, 126  }
+mobList[zone][SMB+608].pos = {553.5475, 1.4175, -261.2966, 126  }
 -- Nightmare Crabs
 mobList[zone][DMB+155].pos = {-30.7958, 19.4184, -308.5479, 130 }
 mobList[zone][DMB+157].pos = {-31.1747, 15.8897, -278.6635, 168 }
@@ -607,7 +607,7 @@ mobList[zone][SMB+51 ].eyes = dynamis.eyes.GREEN
 mobList[zone][SMB+345].eyes = dynamis.eyes.BLUE
 mobList[zone][SMB+357].eyes = dynamis.eyes.GREEN
 mobList[zone][SMB+359].eyes = dynamis.eyes.GREEN
-mobList[zone][16941674].eyes = dynamis.eyes.BLUE
+mobList[zone][SMB+606].eyes = dynamis.eyes.BLUE
 mobList[zone][SMB+30 ].eyes = dynamis.eyes.GREEN
 mobList[zone][SMB+32 ].eyes = dynamis.eyes.BLUE
 mobList[zone][SMB+313].eyes = dynamis.eyes.BLUE
@@ -621,6 +621,9 @@ mobList[zone][SMB+404].eyes = dynamis.eyes.BLUE
 
 -- set time extensions
 mobList[zone][DMB+0  ].timeExtension = 60
+
+-- TODO: patrols?
+-- mobList[zone][DMB+0  ].patrolPath = {   -361.5, -23.5, -25,    -40.6, 0,  -159,     285.7, 1, 15   } -- Triangle around zone
 
 -- list of mobs to spawn the wave. ALL of them must be defeated (in any order)
 mobList[zone].waveDefeatRequirements    = {       }
@@ -651,7 +654,7 @@ mobList[zone][SMB+345].waves = { 1, nil, nil}
 mobList[zone][SMB+357].waves = { 1, nil, nil}
 mobList[zone][SMB+358].waves = { 1, nil, nil}
 mobList[zone][SMB+359].waves = { 1, nil, nil}
-mobList[zone][16941674].waves = { 1, nil, nil}
+mobList[zone][SMB+606].waves = { 1, nil, nil}
 mobList[zone][SMB+0  ].waves = { 1, nil, nil}
 mobList[zone][SMB+1  ].waves = { 1, nil, nil}
 mobList[zone][SMB+2  ].waves = { 1, nil, nil}
@@ -675,7 +678,7 @@ mobList[zone][SMB+374].waves = { 1, nil, nil}
 mobList[zone][SMB+387].waves = { 1, nil, nil}
 mobList[zone][SMB+388].waves = { 1, nil, nil}
 mobList[zone][SMB+389].waves = { 1, nil, nil}
-mobList[zone][16941675].waves = { 1, nil, nil}
+mobList[zone][SMB+607].waves = { 1, nil, nil}
 mobList[zone][SMB+122].waves = { 1, nil, nil}
 mobList[zone][SMB+123].waves = { 1, nil, nil}
 mobList[zone][SMB+124].waves = { 1, nil, nil}
@@ -688,7 +691,7 @@ mobList[zone][SMB+405].waves = { 1, nil, nil}
 mobList[zone][SMB+417].waves = { 1, nil, nil}
 mobList[zone][SMB+418].waves = { 1, nil, nil}
 mobList[zone][SMB+419].waves = { 1, nil, nil}
-mobList[zone][16941676].waves = { 1, nil, nil}
+mobList[zone][SMB+608].waves = { 1, nil, nil}
 mobList[zone][DMB+155].waves = { nil, 2, nil}
 mobList[zone][DMB+157].waves = { nil, 2, nil}
 mobList[zone][DMB+159].waves = { nil, 2, nil}
@@ -795,7 +798,7 @@ mobList[zone][SMB+345].specificChildren = { true, DMB+72                        
 mobList[zone][SMB+357].specificChildren = { true, DMB+351, DMB+69                    } -- NIN, WHM                              (010-O)
 mobList[zone][SMB+358].specificChildren = { true, DMB+77, DMB+67, DMB+360, DMB+70    } -- Lyncean Juvgneg, MNK, MNK, RNG        (011-O)
 mobList[zone][SMB+359].specificChildren = { true, DMB+366, DMB+350                   } -- SMN, BRD                              (012-O)
-mobList[zone][16941674].specificChildren = { true, DMB+346                            } -- THF                                   (013-O)
+mobList[zone][SMB+606].specificChildren = { true, DMB+346                            } -- THF                                   (013-O)
 mobList[zone][SMB+0  ].specificChildren = { true, DMB+5                              } -- BRD                                   (014-G)
 mobList[zone][SMB+1  ].specificChildren = { true, DMB+40, DMB+33, DMB+35, DMB+23     } -- Gosspix Blabberlips, THF, PLD, DRG    (015-G)
 mobList[zone][SMB+2  ].specificChildren = { true, DMB+22, DMB+3                      } -- NIN, BST                              (016-G)
@@ -819,7 +822,7 @@ mobList[zone][SMB+374].specificChildren = { true, DMB+95, DMB+85, DMB+83, DMB+84
 mobList[zone][SMB+387].specificChildren = { true, DMB+391, DMB+392                   } -- PLD, PLD                              (034-Q)
 mobList[zone][SMB+388].specificChildren = { true, DMB+387, DMB+640                   } -- BLM, BLM                              (035-Q)
 mobList[zone][SMB+389].specificChildren = { true, DMB+110, DMB+396                   } -- SMN, SMN                              (036-Q)
-mobList[zone][16941675].specificChildren = { true, DMB+112, DMB+103, DMB+90, DMB+91   } -- Va'Rhu Bodysnatcher, THF, RNG, RNG    (037-Q)
+mobList[zone][SMB+607].specificChildren = { true, DMB+112, DMB+103, DMB+90, DMB+91   } -- Va'Rhu Bodysnatcher, THF, RNG, RNG    (037-Q)
 mobList[zone][SMB+122].specificChildren = { true, DMB+118, DMB+128                   } -- MNK, SAM                              (038-Y)
 mobList[zone][SMB+123].specificChildren = { true, DMB+119, DMB+410                   } -- MNK, SAM                              (039-Y)
 mobList[zone][SMB+124].specificChildren = { true, DMB+132, DMB+137, DMB+144, DMB+143 } -- Koo rahi the Levinblade, WAR, RNG, DRK(040-Y)
@@ -832,7 +835,7 @@ mobList[zone][SMB+405].specificChildren = { true, DMB+422, DMB+423              
 mobList[zone][SMB+417].specificChildren = { true, DMB+122, DMB+137                   } -- THF, WAR                              (047-Y)
 mobList[zone][SMB+418].specificChildren = { true, DMB+148, DMB+145, DMB+425, DMB+641 } -- Doo Peku the Fleetfoot, NIN, NIN, NIN (048-Y)
 mobList[zone][SMB+419].specificChildren = { true, DMB+123, DMB+424                   } -- THF, RNG                              (049-Y)
-mobList[zone][16941676].specificChildren = { true, DMB+131, DMB+642, DMB+124, DMB+406 } -- Ree Nata the Melomanic, BRD, PLD, PLD (050-Y)
+mobList[zone][SMB+608].specificChildren = { true, DMB+131, DMB+642, DMB+124, DMB+406 } -- Ree Nata the Melomanic, BRD, PLD, PLD (050-Y)
 -- Nightmare Mobs
 mobList[zone][DMB+155].specificChildren = { true, DMB+156                            } -- Nightmare Crab                        ( 062 )
 mobList[zone][DMB+157].specificChildren = { true, DMB+158                            } -- Nightmare Crab                        ( 063 )
