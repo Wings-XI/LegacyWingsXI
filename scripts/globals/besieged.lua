@@ -54,14 +54,14 @@ end
 
 tpz.besieged.onEventUpdate = function(player, csid, option)
     local itemId = getISPItem(option)
-
+    
     if itemId == 4181 then
         player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Warp is 750 IS.",29)
     elseif itemId == 4182 then
         player:PrintToPlayer("NOTICE: WotG era cost for the Scroll of Instant Reraise is 500 IS.",29)
     end
 
-
+    
     if itemId and option < 0x40000000 then
         local maps = getMapBitmask(player)
         player:updateEvent(player:getCurrency("imperial_standing"), maps, tpz.besieged.getMercenaryRank(player), player:canEquipItem(itemId) and 2 or 1, unpack(getImperialDefenseStats()))
@@ -70,7 +70,6 @@ end
 
 tpz.besieged.onEventFinish = function(player, csid, option)
     local ID = zones[player:getZoneID()]
-    local ISP = player:getCurrency("imperial_standing")
     if (option == 0 or option == 16 or option == 32 or option == 48) and player:hasCompletedMission(TOAU,1) then -- immortal sentries
         -- Sanction
         if option ~= 0 then
@@ -84,15 +83,13 @@ tpz.besieged.onEventFinish = function(player, csid, option)
         player:messageSpecial(ID.text.SANCTION)
     elseif bit.band(option, 0xFF) == 17 then
         -- Player bought a map
-        if ISP >= 1000 then
-            local ki = tpz.ki.MAP_OF_MAMOOK + bit.rshift(option, 8)
-            npcUtil.giveKeyItem(player, ki)
-            player:delCurrency("imperial_standing", 1000)
-        end
+        local ki = tpz.ki.MAP_OF_MAMOOK + bit.rshift(option, 8)
+        npcUtil.giveKeyItem(player, ki)
+        player:delCurrency("imperial_standing", 1000)
     elseif option < 0x40000000 then
         -- Player bought an item
         local item, price = getISPItem(option)
-        if item and ISP >= price then
+        if item then
             if npcUtil.giveItem(player, item) then
                 player:delCurrency("imperial_standing", price)
             end
