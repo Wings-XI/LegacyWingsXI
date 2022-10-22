@@ -44,7 +44,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:setMod(tpz.mod.BINDRES, 50)
     mob:setMod(tpz.mod.STUNRES, 50)
-    -- mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setMod(tpz.mod.REGAIN, 50)
     mob:setMod(tpz.mod.REFRESH, 500)
     mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.BLINDRES, 100)
@@ -54,7 +54,6 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.LULLABYRES, 100)
 
     -- Set Vars
-    mob:setLocalVar("familiarcharm", 1)
     mob:setLocalVar("next2hr", 1) -- 2hr rotation not reset by a wipe
 end
 
@@ -108,7 +107,7 @@ end
 
 function onMobEngaged(mob, target)
     local ID = zones[zone]
-
+    mob:setTP(0)
     mob:setLocalVar("next2hrtime", os.time() + 5) -- 5s after aggro
 
 end
@@ -167,7 +166,7 @@ function onMobFight(mob)
     }
     local checked2hrs = 0
     if mob:getCurrentAction() <= 1 then
-        while os.time() >= (mob:getLocalVar("next2hrtime")) and checked2hrs <= #abilities2hr do
+        while os.time() >= (mob:getLocalVar("next2hrtime")) and checked2hrs < #abilities2hr do
             i = mob:getLocalVar("next2hr")
             -- skip 2hrs from dead NMs (var is set in dynamis.mobOnDeath)
             if GetMobByID(abilities2hr[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
@@ -240,15 +239,14 @@ function onMobWeaponSkillPrepare(mob, target)
 
     local totalchance = 0
     local skippedabilities = 0
-    local ability = 1
-    local randomchance = math.random(10 * #usablemobabilities)
-
-    while totalchance < randomchance and skippedabilities < #usablemobabilities do
+    local i = 1
+    local randomchance = math.random(10 * (#usablemobabilities))
+    while totalchance <= randomchance and skippedabilities < #usablemobabilities do
         -- skip abilities from dead NMs (var is set in dynamis.mobOnDeath)
-        if GetMobByID(abilities2hr[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
+        if GetMobByID(usablemobabilities[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
             totalchance = totalchance + 10
             if totalchance >= randomchance then
-                return usablemobabilities[ability][1]
+                return usablemobabilities[i][1]
             end
             skippedabilities = 0
         else
@@ -256,10 +254,10 @@ function onMobWeaponSkillPrepare(mob, target)
             skippedabilities = skippedabilities + 1
         end
         -- loop back to start of list until randomchance is surpassed
-        ability = (ability % #usablemobabilities) + 1
+        i = (i % #usablemobabilities) + 1
     end
-    -- no abilities enabled
-    return 0
+    -- no abilities enabled, defaulting to the most benign
+    return 650
 end
 
 
