@@ -270,6 +270,9 @@ namespace luautils
     int32 AddScheduledTask(lua_State*);                                         // Add a task to be called by the task scheduler
     int32 RemoveScheduledTask(lua_State*);                                      // Remove a previously registered task
 
+    int32 OnServerInitialize();                                                 // Called on server startup
+    int32 OnServerReady();                                                      // Called when the server has finished initialiation
+    int32 OnServerCleanup();                                                    // Called before a graceful exit
     int32 OnGameDay(CZone* PZone);                                              // Automatic action of NPC every game day
     int32 OnGameHour(CZone* PZone);                                             // Automatic action of NPC every game hour
     int32 OnZoneWeatherChange(uint16 ZoneID, uint8 weather);
