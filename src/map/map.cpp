@@ -338,6 +338,10 @@ int32 do_init(int32 argc, char** argv)
 
     messageThread = std::thread(message::init, map_config.msg_server_ip.c_str(), map_config.msg_server_port);
 
+    ShowStatus("do_init: running initialization script");
+    luautils::OnServerInitialize();
+    ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
+
     ShowStatus("do_init: loading items");
     itemutils::Initialize();
     ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
@@ -410,6 +414,10 @@ int32 do_init(int32 argc, char** argv)
 
     PacketGuard::Init();
 
+    ShowStatus("do_init: running ready state script");
+    luautils::OnServerReady();
+    ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
+
     ShowStatus("The map-server is " CL_GREEN"ready" CL_RESET" to work...\n");
     ShowMessage("=======================================================================\n");
     //ShowInfo("Crash recovery running, checking for pruned connections...\n");
@@ -433,6 +441,10 @@ void do_final(int code)
     delete[] PTempBuff2;
     PTempBuff2 = nullptr;
 
+    ShowStatus("do_final: running cleanup script");
+    luautils::OnServerCleanup();
+    ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
+
     itemutils::FreeItemList();
     battleutils::FreeWeaponSkillsList();
     battleutils::FreeMobSkillList();
@@ -455,6 +467,8 @@ void do_final(int code)
 
     timer_final();
     socket_final();
+
+    ShowStatus("do_final: quitting.\n");
 
     exit(code);
 }

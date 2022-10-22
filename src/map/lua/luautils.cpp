@@ -3793,6 +3793,90 @@ namespace luautils
         return 0;
     }
 
+    int32 OnServerInitialize()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerInitialize"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerInitialize: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
+    int32 OnServerReady()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerReady"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerReady: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
+    int32 OnServerCleanup()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerCleanup"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerCleanup: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
     /************************************************************************
     *   OnGameDayAutomatisation()                                           *
     *   used for creating action of npc every game day                      *
