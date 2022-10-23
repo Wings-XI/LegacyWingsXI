@@ -263,6 +263,9 @@ namespace luautils
     int32 clearVarFromAll(lua_State *);                                         // Deletes a specific player variable from all players
     int32 terminate(lua_State*);                                                // Logs off all characters and terminates the server
 
+    int32 GetZones(lua_State*);                                                 // Get a list of all zones on the server
+    int32 GetAllPlayers(lua_State*);                                            // Get a list of all players on the server
+
     int32 GetTextIDVariable(uint16 ZoneID, const char* variable);               // загружаем значение переменной TextID указанной зоны
     uint8 GetSettingsVariable(const char* variable);                            // Gets a Variable Value from Settings.lua
     bool IsContentEnabled(const char* content);                                 // Check if the content is enabled in settings.lua
