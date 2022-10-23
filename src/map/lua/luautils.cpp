@@ -176,6 +176,9 @@ namespace luautils
         lua_register(LuaHandle, "GetItemIDByName", luautils::GetItemIDByName);
         lua_register(LuaHandle, "terminate", luautils::terminate);
 
+        lua_register(LuaHandle, "GetZones", luautils::GetZones);
+        lua_register(LuaHandle, "GetAllPlayers", luautils::GetAllPlayers);
+
         lua_register(LuaHandle, "GetMaxLevel", luautils::GetMaxLevel);
         lua_register(LuaHandle, "GetHealingTickDelay", luautils::GetHealingTickDelay);
         lua_register(LuaHandle, "GetItem", luautils::GetItem);
@@ -4451,6 +4454,46 @@ namespace luautils
             });
         });
         exit(1);
+    }
+
+    int32 GetZones(lua_State* L)
+    {
+
+        lua_newtable(L);
+        int newTable = lua_gettop(L);
+
+        zoneutils::ForEachZone([&L, &newTable](CZone* PZone) {
+            lua_getglobal(L, CLuaZone::className);
+            lua_pushstring(L, "new");
+            lua_gettable(L, -2);
+            lua_insert(L, -2);
+            lua_pushlightuserdata(L, (void*)PZone);
+            lua_pcall(L, 2, 1, 0);
+            lua_setfield(L, newTable, (const char*)PZone->GetName());
+        });
+
+        return 1;
+    }
+
+    int32 GetAllPlayers(lua_State* L)
+    {
+        lua_newtable(L);
+        int newTable = lua_gettop(L);
+
+        zoneutils::ForEachZone([&L, &newTable](CZone* PZone) {
+            PZone->ForEachChar([&L, &newTable](CCharEntity* PChar)
+            {
+                lua_getglobal(L, CLuaBaseEntity::className);
+                lua_pushstring(L, "new");
+                lua_gettable(L, -2);
+                lua_insert(L, -2);
+                lua_pushlightuserdata(L, (void*)PChar);
+                lua_pcall(L, 2, 1, 0);
+                lua_setfield(L, newTable, (const char*)PChar->GetName());
+            });
+        });
+
+        return 1;
     }
 
     /************************************************************************

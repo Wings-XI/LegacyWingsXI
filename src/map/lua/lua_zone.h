@@ -46,6 +46,7 @@ public:
     int32 levelRestriction(lua_State*);
     int32 getPlayers(lua_State*);
     int32 getID(lua_State*);
+    int32 getName(lua_State*);
     int32 getRegionID(lua_State*);
     int32 getType(lua_State*);
     int32 getBattlefieldByInitiator(lua_State*);
