@@ -165,6 +165,8 @@ HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside
 STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
 Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
+EXP_FEST_START = 0 -- When double XP mode begins (specified using epoch time code), set to zero to disable
+EXP_FEST_END = 0 -- When double XP mode ends (specified using epoch time code), must be bigger (i.e. later) than start
 
 -- CUSTOM BEHAVIOR OUTSIDE ERA
 TOAU_CUSTOM_RING_REACQUISITION = 0 -- Set to 1 to turn on the custom ToAU ring reacquisition quest.

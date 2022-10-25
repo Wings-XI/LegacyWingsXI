@@ -5639,12 +5639,25 @@ namespace charutils
             CStatusEffect* dedication = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_DEDICATION);
             int16 percentage = dedication->GetPower();
             int16 cap = dedication->GetSubPower();
-            bonus += std::clamp<int32>((int32)((exp * percentage) / 100), 0, cap);
-            dedication->SetSubPower(cap -= bonus);
-
-            if (cap <= 0)
+            bool unlimited_dedication = (PChar->GetLocalVar("unlimited_dedication") != 0);
+            int32 dedication_bonus = (int32)((exp * percentage) / 100);
+            if (dedication_bonus < 0) {
+                dedication_bonus = 0;
+            }
+            if (!unlimited_dedication && dedication_bonus > cap)
             {
-                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_DEDICATION);
+                dedication_bonus = cap;
+            }
+            bonus += dedication_bonus;
+
+            if (!unlimited_dedication)
+            {
+                dedication->SetSubPower(cap -= bonus);
+
+                if (cap <= 0)
+                {
+                    PChar->StatusEffectContainer->DelStatusEffect(EFFECT_DEDICATION);
+                }
             }
         }
 
