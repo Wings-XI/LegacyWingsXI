@@ -11,11 +11,6 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 
-    if mob:getID() == 16941057 and mob:getLocalVar("mijinngakure") == 0 then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-        return
-    end
-
     local dmgmod = 1
     local hpmod = skill:getMobHPP() / 100
     local basePower = (mob:getFamily() == 335) and 4 or 6 -- Maat has a weaker (4) Mijin than usual (6)

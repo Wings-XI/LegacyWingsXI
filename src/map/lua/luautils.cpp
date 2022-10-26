@@ -161,7 +161,11 @@ namespace luautils
         lua_register(LuaHandle, "RunElevator", luautils::StartElevator);
         lua_register(LuaHandle, "GetServerVariable", luautils::GetServerVariable);
         lua_register(LuaHandle, "SetServerVariable", luautils::SetServerVariable);
+        lua_register(LuaHandle, "GetServerUVariable", luautils::GetServerUVariable);
+        lua_register(LuaHandle, "SetServerUVariable", luautils::SetServerUVariable);
         lua_register(LuaHandle, "clearVarFromAll", luautils::clearVarFromAll);
+        lua_register(LuaHandle, "AddScheduledTask", luautils::AddScheduledTask);
+        lua_register(LuaHandle, "RemoveScheduledTask", luautils::RemoveScheduledTask);
         lua_register(LuaHandle, "SendEntityVisualPacket", luautils::SendEntityVisualPacket);
         lua_register(LuaHandle, "UpdateServerMessage", luautils::UpdateServerMessage);
         lua_register(LuaHandle, "GetMobRespawnTime", luautils::GetMobRespawnTime);
@@ -171,6 +175,9 @@ namespace luautils
         lua_register(LuaHandle, "NearLocation", luautils::nearLocation);
         lua_register(LuaHandle, "GetItemIDByName", luautils::GetItemIDByName);
         lua_register(LuaHandle, "terminate", luautils::terminate);
+
+        lua_register(LuaHandle, "GetZones", luautils::GetZones);
+        lua_register(LuaHandle, "GetAllPlayers", luautils::GetAllPlayers);
 
         lua_register(LuaHandle, "GetMaxLevel", luautils::GetMaxLevel);
         lua_register(LuaHandle, "GetHealingTickDelay", luautils::GetHealingTickDelay);
@@ -1496,6 +1503,81 @@ namespace luautils
 
     /************************************************************************
     *                                                                       *
+    *  Add a scheduled task, calling a specific function on a               *
+    *  later time or on specific intervals.                                 *
+    *                                                                       *
+    ************************************************************************/
+
+    int32 AddScheduledTask(lua_State* L)
+    {
+        int32 nargs = lua_gettop(L);
+        if (nargs < 6) {
+            // We require at least a task name, file name and function name
+            ShowError("luautils::AddScheduledTask: Not enough arguments (need at least task name, file name and function name).\n");
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        if (!lua_isstring(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) || !lua_isnumber(L, 4) || !lua_isstring(L, 5) || !lua_isstring(L, 6)) {
+            ShowError("luautils::AddScheduledTask: File name and function name must be strings.\n");
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        // Task name (will be registered in task scheduler using this name)
+        std::string taskname = std::string(lua_tostring(L, 1));
+        // Time point in which the function is to be executed. Since this comes
+        // from LUA we'll treat it at time_t.
+        std::chrono::time_point inittick = std::chrono::system_clock::from_time_t(lua_tointeger(L, 2));
+        // Task type can be once or interval
+        CTaskMgr::TASKTYPE tasktype = (CTaskMgr::TASKTYPE)(lua_tointeger(L, 3));
+        if (tasktype != CTaskMgr::TASK_INTERVAL && tasktype != CTaskMgr::TASK_ONCE) {
+            ShowError("luautils::AddScheduledTask: Invalid task type for task %s (allowed INTERVAL and ONCE).\n", taskname.c_str());
+            lua_pushboolean(L, false);
+            return 1;
+        }
+        // If task type is interval this specifies the interval in seconds
+        // If task type is once, this is ignored.
+        std::chrono::duration interval = std::chrono::seconds(lua_tointeger(L, 4));
+        // File name containing the LUA function to call
+        std::string filename = std::string(lua_tostring(L, 5));
+        // Name of the function to call
+        std::string funcname = std::string(lua_tostring(L, 6));
+        // Any extra arguments are passed as arguments to the called function
+        std::vector<std::any> args;
+        args.push_back(filename);
+        args.push_back(funcname);
+        // We need to know the number of actual arguments passed to the function
+        args.push_back(nargs - 6);
+        std::shared_ptr<LuaRefList> refs(new LuaRefList(L));
+        for (int i = 7; i <= nargs; i++) {
+            refs->push();
+        }
+        args.push_back(refs);
+
+        CTaskMgr::getInstance()->AddTask(taskname.c_str(), inittick, args, tasktype, OnScheduledTask, interval);
+        lua_pushboolean(L, true);
+        return 1;
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Remove a task from the task scheduler                                *
+    *                                                                       *
+    ************************************************************************/
+
+    int32 RemoveScheduledTask(lua_State* L)
+    {
+        if (lua_isnil(L, 1) || !lua_isstring(L, 1)) {
+            ShowError("luautils::RemoveScheduledTask: No task name given.\n");
+            return 0;
+        }
+        // Note: Since RemoveTask returns void we have no way of returing anything
+        // of value to the caller
+        CTaskMgr::getInstance()->RemoveTask(lua_tostring(L, 1));
+        return 0;
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Запускаем скрипт инициализации зоны.                                 *
     *  Выполняется во время старта сервера при загрузке зон.                *
     *  При разделенных lua стеках необходимо создавать их здесь             *
@@ -2316,6 +2398,60 @@ namespace luautils
         }
 
         return 0;
+    }
+
+    int32 OnScheduledTask(time_point tick, CTaskMgr::CTask* PTask)
+    {
+        std::vector<std::any> data;
+        std::string filename;
+        std::string funcname;
+        std::vector<std::any>::iterator it;
+        int32 nargs = 0;
+        std::shared_ptr<LuaRefList> refs;
+        try {
+            // Minimum data required is the LUA file name and function name
+            data = std::any_cast<std::vector<std::any>>(PTask->m_data);
+            if (data.size() < 4) {
+                ShowError("luautils::OnScheduledTask: No filename and/or function name supplied.\n");
+                return -1;
+            }
+            it = data.begin();
+            filename = std::any_cast<std::string>(*it);
+            it++;
+            funcname = std::any_cast<std::string>(*it);
+            it++;
+            nargs = std::any_cast<int32>(*it);
+            it++;
+            refs = std::any_cast<std::shared_ptr<LuaRefList>>(*it);
+            it++;
+        }
+        catch (const std::bad_any_cast&) {
+            ShowError("luautils::OnScheduledTask: Bad data as file name and/or function name.\n");
+            return -1;
+        }
+
+        lua_prepscript(filename.c_str());
+
+        if (prepFile(File, funcname.c_str())) {
+            ShowError("luautils::OnScheduledTask: Unable to load function %s:%s.\n", filename.c_str(), funcname.c_str());
+            return -1;
+        }
+
+        refs->writeall();
+
+        if (lua_pcall(LuaHandle, (int)refs->size(), 1, 0)) {
+            ShowError("luautils::OnScheduledTask: Call to %s:%s failed: %s.\n", filename.c_str(), funcname.c_str(), lua_tostring(LuaHandle, -1));
+            return -1;
+        }
+        
+
+        int32 result = 0;
+        if (lua_isnumber(LuaHandle, 1)) {
+            result = (int32)lua_tointeger(LuaHandle, 1);
+        }
+        lua_pop(LuaHandle, 1);
+
+        return result;
     }
 
     /************************************************************************
@@ -3660,6 +3796,90 @@ namespace luautils
         return 0;
     }
 
+    int32 OnServerInitialize()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerInitialize"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerInitialize: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
+    int32 OnServerReady()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerReady"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerReady: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
+    int32 OnServerCleanup()
+    {
+        lua_prepscript("scripts/globals/server.lua");
+
+        if (prepFile(File, "onServerCleanup"))
+        {
+            return -1;
+        }
+
+        if (lua_pcall(LuaHandle, 0, 1, 0))
+        {
+            ShowError("luautils::onServerCleanup: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return -1;
+        }
+
+        int result = 0;
+
+        if (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1))
+        {
+            result = lua_tointeger(LuaHandle, -1);
+        }
+
+        lua_pop(LuaHandle, 1);
+
+        return result;
+    }
+
     /************************************************************************
     *   OnGameDayAutomatisation()                                           *
     *   used for creating action of npc every game day                      *
@@ -4236,6 +4456,46 @@ namespace luautils
         exit(1);
     }
 
+    int32 GetZones(lua_State* L)
+    {
+
+        lua_newtable(L);
+        int newTable = lua_gettop(L);
+
+        zoneutils::ForEachZone([&L, &newTable](CZone* PZone) {
+            lua_getglobal(L, CLuaZone::className);
+            lua_pushstring(L, "new");
+            lua_gettable(L, -2);
+            lua_insert(L, -2);
+            lua_pushlightuserdata(L, (void*)PZone);
+            lua_pcall(L, 2, 1, 0);
+            lua_setfield(L, newTable, (const char*)PZone->GetName());
+        });
+
+        return 1;
+    }
+
+    int32 GetAllPlayers(lua_State* L)
+    {
+        lua_newtable(L);
+        int newTable = lua_gettop(L);
+
+        zoneutils::ForEachZone([&L, &newTable](CZone* PZone) {
+            PZone->ForEachChar([&L, &newTable](CCharEntity* PChar)
+            {
+                lua_getglobal(L, CLuaBaseEntity::className);
+                lua_pushstring(L, "new");
+                lua_gettable(L, -2);
+                lua_insert(L, -2);
+                lua_pushlightuserdata(L, (void*)PChar);
+                lua_pcall(L, 2, 1, 0);
+                lua_setfield(L, newTable, (const char*)PChar->GetName());
+            });
+        });
+
+        return 1;
+    }
+
     /************************************************************************
     *                                                                       *
     *                                                                       *
@@ -4559,6 +4819,33 @@ namespace luautils
 
     /************************************************************************
     *                                                                       *
+    *  Unsigned version of GetServerVariable                                *
+    *                                                                       *
+    ************************************************************************/
+
+    int32 GetServerUVariable(lua_State *L)
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isstring(L, -1));
+
+        int32 value = 0;
+
+        int32 ret = Sql_Query(SqlHandle, "SELECT value FROM server_variables WHERE name = '%s' LIMIT 1;", lua_tostring(L, -1));
+
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            value = (int32)Sql_GetIntData(SqlHandle, 0);
+        }
+
+        uint32 uvalue = *(reinterpret_cast<uint32*>(&value));
+
+        lua_pushinteger(L, uvalue);
+        return 1;
+    }
+
+    /************************************************************************
+    *                                                                       *
     *  Устанавливаем значение глобальной переменной сервера.                *
     *                                                                       *
     ************************************************************************/
@@ -4576,6 +4863,33 @@ namespace luautils
             Sql_Query(SqlHandle, "DELETE FROM server_variables WHERE name = '%s' LIMIT 1;", name);
             return 0;
         }
+        Sql_Query(SqlHandle, "INSERT INTO server_variables VALUES ('%s', %i) ON DUPLICATE KEY UPDATE value = %i;", name, value, value);
+
+        return 0;
+    }
+
+    /************************************************************************
+    *                                                                       *
+    *  Unsigned version of SetServerVariable                                *
+    *                                                                       *
+    ************************************************************************/
+
+    int32 SetServerUVariable(lua_State *L)
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, -2) || !lua_isstring(L, -2));
+
+        const char* name = lua_tostring(L, -2);
+        uint32 uvalue = (uint32)lua_tointeger(L, -1);
+
+        if (uvalue == 0)
+        {
+            Sql_Query(SqlHandle, "DELETE FROM server_variables WHERE name = '%s' LIMIT 1;", name);
+            return 0;
+        }
+
+        int32 value = *(reinterpret_cast<int32*>(&uvalue));
+
         Sql_Query(SqlHandle, "INSERT INTO server_variables VALUES ('%s', %i) ON DUPLICATE KEY UPDATE value = %i;", name, value, value);
 
         return 0;

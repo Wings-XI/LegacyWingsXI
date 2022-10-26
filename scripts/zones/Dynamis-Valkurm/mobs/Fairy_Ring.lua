@@ -13,7 +13,6 @@ function onMobSpawn(mob)
 
     -- Set Mods
     mob:speed(140)
-    mob:addMod(tpz.mod.REGAIN, 1250)
     mob:SetAutoAttackEnabled(false)
 end
 
@@ -23,4 +22,11 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
+    mob:setMod(tpz.mod.REGAIN, 0)
+    mob:setTP(0)
+end
+
+
+function onMobFight(mob)
+    mob:setMod(tpz.mod.REGAIN, 1250)
 end

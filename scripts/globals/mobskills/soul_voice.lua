@@ -12,15 +12,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 
-    if mob:getID() == 16941057 and mob:getLocalVar("soulvoice") == 0 then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-        return
-    end
-
     local duration = 180
 
     if mob:getID() == 16941057 then
-        duration = 45
+        duration = 30
     end
 
     MobBuffMove(mob, tpz.effect.SOUL_VOICE, 1, 0, duration)

@@ -356,17 +356,16 @@ dynamis.dynaInfo =
         sjRestrictionLocation =
         {
             [1] = {-264.498, -19.255, 401.465, 54},
-            [2] = {-264.655, -19.268, 240.580, 71},
-            [3] = {-77.771, -19.068, 258.666, 50},
-            [4] = {-137.127, -19.976, 228.789, 101},
-            [5] = {-61.647, -19.868, 152.935, 35},
-            [6] = {27.973, -20.270, 191.907, 195},
-            [7] = {107.445, -20.368, 149.587, 64},
-            [8] = {99.884, -19.557, 51.518, 27},
-            [9] = {-29.895, -21.095, -57.154, 209},
-            [10] = {88.474, -20.621, -49.333, 4},
-            [11] = {-192.540, -20.477, -11.055, 151},
-            [12] = {-340.976, -20.421, 31.154, 66},
+            [2] = {-77.771, -19.068, 258.666, 50},
+            [3] = {-137.127, -19.976, 228.789, 101},
+            [4] = {-61.647, -19.868, 152.935, 35},
+            [5] = {27.973, -20.270, 191.907, 195},
+            [6] = {107.445, -20.368, 149.587, 64},
+            [7] = {99.884, -19.557, 51.518, 27},
+            [8] = {-29.895, -21.095, -57.154, 209},
+            [9] = {88.474, -20.621, -49.333, 4},
+            [10] = {-192.540, -20.477, -11.055, 151},
+            [11] = {-340.976, -20.421, 31.154, 66},
         }
     },
     [tpz.zone.QUFIM_ISLAND] =
@@ -408,6 +407,12 @@ dynamis.reentry_days = 3
 dynamis.maxchars = 64
 
 dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
+    -- rate limit hourglass trades
+    if npc:getLocalVar("LastTrade") > os.time() - 2 then
+        player:PrintToPlayer("DynamisTrade: Please wait 2s between hourglass trades!", 0xD)
+        return
+    end
+    npc:setLocalVar("LastTrade", os.time())
     local playerZoneID = player:getZoneID()
     if dynamis.entryInfo[playerZoneID].enabled == false then return end
     for i, name in ipairs(dynamis.entryInfo[playerZoneID].reqs) do --requirements for northlands and elsewhere

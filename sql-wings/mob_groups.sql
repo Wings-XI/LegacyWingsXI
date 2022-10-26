@@ -1309,7 +1309,7 @@ INSERT INTO `mob_groups` VALUES(98, 6104, 38, 'Barometz', 0, 128, 2856, 8500, 0,
 INSERT INTO `mob_groups` VALUES(99, 6130, 38, 'Borametz', 0, 128, 2856, 7000, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(100, 6131, 38, 'Apollyon_Cleaner', 0, 128, 2858, 8500, 800, 78, 78, 0);
 INSERT INTO `mob_groups` VALUES(101, 6132, 38, 'Kerkopes', 0, 128, 2861, 9500, 0, 80, 80, 0);
-INSERT INTO `mob_groups` VALUES(1, 730, 39, 'Cirrate_Christelle', 0, 128, 3132, 37000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(1, 730, 39, 'Cirrate_Christelle', 0, 128, 3239, 37000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(2, 2854, 39, 'Nightmare_Hippogryph', 600, 128, 3234, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(3, 2860, 39, 'Nightmare_Manticore', 600, 128, 3235, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(4, 2852, 39, 'Nightmare_Fly', 600, 128, 3236, 5000, 0, 78, 80, 0);
@@ -1686,7 +1686,7 @@ INSERT INTO `mob_groups` VALUES(201, 6927, 40, 'Stollenwurm', 600, 128, 0, 5000,
 INSERT INTO `mob_groups` VALUES(202, 6928, 40, 'Koschei', 600, 128, 0, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(204, 6930, 40, 'Vishap', 600, 128, 0, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(205, 6931, 40, 'Nightmare_Cockatrice', 600, 128, 1791, 5000, 0, 94, 96, 0);
-INSERT INTO `mob_groups` VALUES(1, 162, 41, 'Antaeus', 0, 128, 3132, 37000, 0, 85, 85, 0);
+INSERT INTO `mob_groups` VALUES(1, 162, 41, 'Antaeus', 0, 128, 3239, 37000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(2, 4150, 41, 'Vanguard_Footsoldier', 600, 128, 2546, 4000, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(3, 4135, 41, 'Vanguard_Amputator', 600, 128, 2546, 4000, 0, 75, 77, 0);
 INSERT INTO `mob_groups` VALUES(4, 4195, 41, 'Vanguard_Vexer', 600, 128, 2546, 4000, 0, 75, 77, 0);

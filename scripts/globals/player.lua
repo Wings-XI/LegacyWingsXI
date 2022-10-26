@@ -214,13 +214,17 @@ function onGameIn(player, firstLogin, zoning)
         player:addStatusEffectEx(tpz.effect.GM_HIDE, tpz.effect.INVISIBLE, 0, 0, 0)
         player:setGMHidden(true)
     end
-	
+    
     -- !superpower
     if player:getCharVar("GMSuperpower") == 1 then
         -- TODO: Status effect
         player:setGMSuperpowers(true)
     end
-
+    
+    if hookOnGameIn ~= nil then
+        hookOnGameIn(player, firstLogin, zoning)
+    end
+    
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 end
