@@ -46,32 +46,39 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
-    mob:setMod(tpz.mod.REGAIN, 0)
     mob:setTP(0)
 end
 
 function onMobEngaged(mob, target)
+    -- Dragontrap Kill Check: If not killed should spawn 2 Morbols on Engage.
+    if GetMobByID(ID.mobs.Dragontrap_1):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_2):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_3):getStatus() ~= 2 then
+        if mob:getLocalVar("PetsSpawned") ~= 1 then
+            local morbol = GetMobByID(ID.mobs.Nightmare_Morbol_1)
+            morbol:setDropID(0) -- don't drop 100-type pieces
+            morbol:setSpawn(mobX, mobY, mobZ)
+            morbol:setPos(mobX, mobY, mobZ)
+            SpawnMob(morbol:getID()):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+
+            morbol = GetMobByID(ID.mobs.Nightmare_Morbol_2)
+            morbol:setDropID(0) -- don't drop 100-type pieces
+            morbol:setSpawn(mobX, mobY, mobZ)
+            morbol:setPos(mobX, mobY, mobZ)
+            SpawnMob(morbol:getID()):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+
+            mob:setLocalVar("PetsSpawned", 1)
+        end
+    end
 end
 
 function onMobFight(mob)
-    mob:setMod(tpz.mod.REGAIN, 1250)
+    mob:setMod(tpz.mod.REGAIN, 500)
     local ID = zones[zone]
     local mobX = mob:getXPos()
     local mobY = mob:getYPos()
     local mobZ = mob:getZPos()
 
-    -- Dragontrap Kill Check: If not killed should spawn 2 Morbols on Engage.
-    if GetMobByID(ID.mobs.Dragontrap_1):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_2):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_3):getStatus() ~= 2 then
-        if mob:getLocalVar("PetsSpawned") ~= 1 then
-            GetMobByID(ID.mobs.Nightmare_Morbol_1):setSpawn(mobX, mobY, mobZ)
-            GetMobByID(ID.mobs.Nightmare_Morbol_1):setPos(mobX, mobY, mobZ)
-            SpawnMob(ID.mobs.Nightmare_Morbol_1):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-            GetMobByID(ID.mobs.Nightmare_Morbol_2):setSpawn(mobX, mobY, mobZ)
-            GetMobByID(ID.mobs.Nightmare_Morbol_2):setPos(mobX, mobY, mobZ)
-            SpawnMob(ID.mobs.Nightmare_Morbol_2):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-            mob:setLocalVar("PetsSpawned", 1)
-        end
-    end
+
+    -- wiki says these moves are "inhibited" when the respective NMs are defeated
     if GetMobByID(ID.mobs.Dragontrap_1):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_2):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_3):getStatus() == 2 then
         mob:setLocalVar("putridbreathcap", 500)
     end
@@ -93,26 +100,29 @@ end
 function onMobWeaponSkillPrepare(mob, target)
     -- Set Locals
     local ID = zones[zone]
-    local fragrantbreath = 24
-    local miasmicbreath = 24
-    local putridbreath = 24
-    local vampiriclash = 24
-    local randomchance = math.random(1, 100)
-    local totalchance = 100
+    local baseTPMoveChance = 12
+    local fragrantbreath = baseTPMoveChance
+    local miasmicbreath = baseTPMoveChance
+    local putridbreath = baseTPMoveChance
+    local vampiriclash = baseTPMoveChance
 
     -- Set Probabilities of Each Skill Based on NM Kill Status
+    -- boosting all their chances effectively reduces the chance of extremely bad breath as well as making charm a lower chance
     if GetMobByID(ID.mobs.Nantina):getStatus() == 2 then
-        fragrantbreath = 12
+        fragrantbreath = baseTPMoveChance * 2
     end
     if GetMobByID(ID.mobs.Fairy_Ring):getStatus() == 2 then
-        miasmicbreath = 12
+        miasmicbreath = baseTPMoveChance * 2
     end
     if GetMobByID(ID.mobs.Dragontrap_1):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_2):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_3):getStatus() == 2 then
-        putridbreath = 12
+        putridbreath = baseTPMoveChance / 2
     end
     if GetMobByID(ID.mobs.Stcemqestcint):getStatus() == 2 then
-        vampiriclash = 12
+        vampiriclash = baseTPMoveChance * 2
     end
+
+    local totalchance = fragrantbreath + miasmicbreath + putridbreath + vampiriclash
+    local randomchance = math.random(1, totalchance + baseTPMoveChance) -- give room in random for extremely bad breath
 
     -- Choose Skill
     if randomchance >= (totalchance - fragrantbreath) then
@@ -124,6 +134,6 @@ function onMobWeaponSkillPrepare(mob, target)
     elseif randomchance >= (totalchance - (fragrantbreath + miasmicbreath + putridbreath + vampiriclash)) then
         return 1611 -- Vampiric Lash
     else
-        return 1610 -- Extremely Bad Breath: Gains Chance as Other Skills are Mitigated
+        return 1610 -- Extremely Bad Breath: Reduced Chance as Other Skills are Mitigated
     end
 end
