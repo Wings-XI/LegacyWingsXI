@@ -17072,19 +17072,19 @@ INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2669, 200); -- commodore_gants_
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2674, 200); -- pantin_dastanas_-1
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2720, 200); -- etoile_bangles_-1
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 8, 2725, 200); -- argute_bracers_-1
--- Apocalypse Beast / Cirrate / Antaeus
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 10, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 10, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 10, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 10, 1456, 300); -- Hundred Byne
+-- Apocalypse Beast / Cirrate / Antaeus -- high chance for 1 drop, decent chance for 2-3, and very low chance for 4
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1456, 300); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3240, 0, 0, 1000, 15219, 475);
 
 --
