@@ -724,8 +724,8 @@ namespace battleutils
             {
                 case SPIKE_BLAZE:
                 case SPIKE_ICE:
-                case SPIKE_SHOCK:
-                    PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect));
+                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it. 
+                    PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect), false);
                     break;
 
                 case SPIKE_DREAD:
@@ -758,14 +758,16 @@ namespace battleutils
                             }
                             PDefender->addHP(Action->spikesParam);
                         }
-                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_DARK);
+                        //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_DARK, false);
                     }
                     break;
 
                 case SPIKE_REPRISAL:
                     if (Action->reaction == REACTION_BLOCK)
                     {
-                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_LIGHT);
+                        //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_LIGHT, false);
                         auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_REPRISAL);
                         if (PEffect)
                         {
@@ -865,7 +867,8 @@ namespace battleutils
             {
                 auto ratio = std::clamp<uint8>(damage / 4, 1, 255);
                 Action->spikesParam = HandleStoneskin(PAttacker, damage - tpzrand::GetRandomNumber<uint16>(ratio) + tpzrand::GetRandomNumber<uint16>(ratio));
-                PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, GetSpikesDamageType(spikesType));
+                //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, GetSpikesDamageType(spikesType), false);
             }
 
             // Temp till moved to script.
