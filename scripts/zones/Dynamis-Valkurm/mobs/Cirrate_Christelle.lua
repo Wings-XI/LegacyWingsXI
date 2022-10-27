@@ -105,24 +105,31 @@ function onMobWeaponSkillPrepare(mob, target)
     local miasmicbreath = baseTPMoveChance
     local putridbreath = baseTPMoveChance
     local vampiriclash = baseTPMoveChance
+    local extremelybadbreath = baseTPMoveChance
 
     -- Set Probabilities of Each Skill Based on NM Kill Status
-    -- boosting all their chances effectively reduces the chance of extremely bad breath as well as making charm a lower chance
+    -- https://wiki-ffo-jp.translate.goog/html/25159.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=it&_x_tr_pto=wapp
+    -- tl;dr:
+    -- nantina reduces chance of fragrant breath
+    -- fairy ring reduces chance of miasmic breath
+    -- dragontraps reduce chance of extremely bad breath (by doubling chance of all the others)
     if GetMobByID(ID.mobs.Nantina):getStatus() == 2 then
-        fragrantbreath = baseTPMoveChance * 2
+        -- equivalent: Deodorant moss
+        fragrantbreath = baseTPMoveChance / 2
+        vampiriclash = baseTPMoveChance * 2
     end
     if GetMobByID(ID.mobs.Fairy_Ring):getStatus() == 2 then
-        miasmicbreath = baseTPMoveChance * 2
-    end
-    if GetMobByID(ID.mobs.Dragontrap_1):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_2):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_3):getStatus() == 2 then
-        putridbreath = baseTPMoveChance / 2
-    end
-    if GetMobByID(ID.mobs.Stcemqestcint):getStatus() == 2 then
+        -- equivalent: odorless mushroom
+        miasmicbreath = baseTPMoveChance / 2
         vampiriclash = baseTPMoveChance * 2
     end
 
     local totalchance = fragrantbreath + miasmicbreath + putridbreath + vampiriclash
-    local randomchance = math.random(1, totalchance + baseTPMoveChance) -- give room in random for extremely bad breath
+    if GetMobByID(ID.mobs.Dragontrap_1):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_2):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_3):getStatus() == 2 then
+        -- reduces chance of extremely bad breath
+        totalchance = totalchance * 2
+    end
+    local randomchance = math.random(1, totalchance + extremelybadbreath)
 
     -- Choose Skill
     if randomchance >= (totalchance - fragrantbreath) then
@@ -134,6 +141,6 @@ function onMobWeaponSkillPrepare(mob, target)
     elseif randomchance >= (totalchance - (fragrantbreath + miasmicbreath + putridbreath + vampiriclash)) then
         return 1611 -- Vampiric Lash
     else
-        return 1610 -- Extremely Bad Breath: Reduced Chance as Other Skills are Mitigated
+        return 1610 -- Extremely Bad Breath remainder of random range
     end
 end
