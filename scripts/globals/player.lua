@@ -9,6 +9,8 @@ require("scripts/globals/zone")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
+require("scripts/globals/events/exp_fest")
+-----------------------------------
 
 local startingRaceInfo =
 {
@@ -220,6 +222,9 @@ function onGameIn(player, firstLogin, zoning)
         -- TODO: Status effect
         player:setGMSuperpowers(true)
     end
+	
+	-- Exp fest event
+	ExpFestOnZoneIn(player, not zoning)
     
     if hookOnGameIn ~= nil then
         hookOnGameIn(player, firstLogin, zoning)
