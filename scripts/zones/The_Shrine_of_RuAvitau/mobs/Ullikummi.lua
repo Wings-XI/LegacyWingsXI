@@ -18,6 +18,10 @@ function onMobInitialize(mob)
     end)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.REGEN, 10)
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 

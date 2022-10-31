@@ -650,7 +650,8 @@ int32 CBattleEntity::addMP(int32 mp)
     return abs(mp);
 }
 
-int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/)
+// Added optional breakBind argument in MR !2167
+int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/, BOOLEAN breakBind /* = TRUE*/)
 {
     TracyZoneScoped;
     if (health.hp <= 0)
@@ -679,7 +680,9 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     {
         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
-        battleutils::BindBreakCheck(attacker, this);
+        //Added conditional in MR !2167
+        if (breakBind)
+            battleutils::BindBreakCheck(attacker, this);
     }
 
     return addHP(-amount);
