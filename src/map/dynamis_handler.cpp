@@ -14,6 +14,7 @@
 #include <algorithm>
 
 #include "dynamis_handler.h"
+#include "treasure_pool.h"
 
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
@@ -147,7 +148,49 @@ void CDynamisHandler::EjectAllPlayers(bool immediate)
 {
     if (!m_PZone)
         return;
+    if (m_expirationRoutine == true){
+        ClearLootPool();
+    }
     m_PZone->ForEachChar([&](CCharEntity* PChar) { EjectPlayer(PChar, immediate); });
+}
+
+void CDynamisHandler::ClearLootPool()
+{
+    if (!m_PZone)
+        return;
+
+    // Pass all items for all players
+    CCharEntity* FirstChar = nullptr;
+    m_PZone->ForEachChar([&](CCharEntity* PChar) {
+        if (PChar != nullptr){
+            if (FirstChar == nullptr){
+                FirstChar = PChar;
+                CTreasurePool* TreasurePool = PChar->PTreasurePool;
+                if (TreasurePool != nullptr){
+                    // clear lots for this player
+                    TreasurePool->DelMember(PChar);
+                    PChar->PTreasurePool = TreasurePool;
+                    TreasurePool->AddMember(PChar);
+                }
+            }else{
+                if (PChar->PTreasurePool != nullptr){
+                    uint8 i = 0;
+                    while (i < 10)
+                    {
+                        PChar->PTreasurePool->PassItem(PChar, i);
+                        i++;
+                    }
+                }
+            }
+        }
+    });
+    if (FirstChar != nullptr){
+        uint8 i = 0;
+        while (i < 10)
+        {
+            FirstChar->PTreasurePool->PassItem(FirstChar, i++);
+        }
+    }
 }
 
 bool CDynamisHandler::IsRegistered(uint32 charid)
