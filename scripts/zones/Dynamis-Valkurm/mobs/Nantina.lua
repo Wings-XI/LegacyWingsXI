@@ -11,7 +11,6 @@ local zone = 39
 function onMobSpawn(mob)
     dynamis.setNMStats(mob)
     -- Set Mods
-    mob:SetAutoAttackEnabled(false)
 end
 
 function onMobRoamAction(mob)
