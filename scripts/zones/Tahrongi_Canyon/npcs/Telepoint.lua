@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Tahrongi_Canyon/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/settings")
+require("scripts/globals/anniversary")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -14,6 +15,13 @@ function onTrade(player, npc, trade)
     local item = trade:getItemId()
     if trade:getItemCount() == 1 and item >= 4096 and item <= 4103 and npcUtil.giveItem(player, 613) then
         player:tradeComplete()
+    else
+        local retval = anniversary.onTrade(player, npc, trade)
+        if retval == 1 then
+            anniversary.onTrigger(player, npc)
+        elseif retval == 2 then
+            anniversary.spawnNM(player, npc)
+        end
     end
 end
 
@@ -30,7 +38,12 @@ function onTrigger(player, npc)
     elseif not player:hasKeyItem(tpz.ki.MEA_GATE_CRYSTAL) then
         npcUtil.giveKeyItem(player, tpz.ki.MEA_GATE_CRYSTAL)
     else
-        player:messageSpecial(ID.text.ALREADY_OBTAINED_TELE)
+        local retval = anniversary.onTrigger(player, npc)
+        if retval == 0 then
+            player:messageSpecial(ID.text.ALREADY_OBTAINED_TELE)
+        elseif retval == 2 then
+            anniversary.spawnNM(player, npc)
+        end
     end
 end
 

@@ -67,8 +67,8 @@ INSERT INTO `item_latents` VALUES(10975, 25, 13, 52, 8);
 INSERT INTO `item_latents` VALUES(11300, 369, 1, 40, 0);
 INSERT INTO `item_latents` VALUES(11301, 369, 1, 40, 0);
 INSERT INTO `item_latents` VALUES(11312, 8, 5, 7, 1000);
-INSERT INTO `item_latents` VALUES(11355, 14, 1, 26, 1);
-INSERT INTO `item_latents` VALUES(11355, 27, -1, 0, 75);
+-- INSERT INTO `item_latents` VALUES(11355, 14, 1, 26, 1); -- OOE and given as a cosmetic reward
+-- INSERT INTO `item_latents` VALUES(11355, 27, -1, 0, 75);
 INSERT INTO `item_latents` VALUES(11367, 1, 30, 49, 4277);
 INSERT INTO `item_latents` VALUES(11367, 1, 30, 49, 4278);
 INSERT INTO `item_latents` VALUES(11367, 1, 40, 49, 4590);
@@ -912,8 +912,8 @@ INSERT INTO `item_latents` VALUES(16340, 25, 15, 13, 16);
 INSERT INTO `item_latents` VALUES(16355, 23, 25, 0, 25);
 INSERT INTO `item_latents` VALUES(16355, 25, 25, 0, 25);
 INSERT INTO `item_latents` VALUES(16367, 8, 4, 52, 1);
-INSERT INTO `item_latents` VALUES(16378, 14, 1, 26, 1);
-INSERT INTO `item_latents` VALUES(16378, 27, -1, 0, 75);
+-- INSERT INTO `item_latents` VALUES(16378, 14, 1, 26, 1); -- OOE and given as a cosmetic reward
+-- INSERT INTO `item_latents` VALUES(16378, 27, -1, 0, 75);
 INSERT INTO `item_latents` VALUES(16408, 8, 7, 56, 0);
 INSERT INTO `item_latents` VALUES(16408, 291, 1, 56, 0);
 INSERT INTO `item_latents` VALUES(16408, 369, -4, 56, 0);
