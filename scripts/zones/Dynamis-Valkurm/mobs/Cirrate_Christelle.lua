@@ -18,7 +18,6 @@ function onMobSpawn(mob)
 
     -- Set Mods
     mob:speed(140)
-    mob:SetAutoAttackEnabled(false)
     
     -- Set Power Vars
     local miasmicbreathpower = math.random(150, 200)
@@ -50,20 +49,29 @@ function onMobRoam(mob)
 end
 
 function onMobEngaged(mob, target)
+    local ID = zones[zone]
+    local mobX = mob:getXPos()
+    local mobY = mob:getYPos()
+    local mobZ = mob:getZPos()
+
     -- Dragontrap Kill Check: If not killed should spawn 2 Morbols on Engage.
     if GetMobByID(ID.mobs.Dragontrap_1):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_2):getStatus() ~= 2 or GetMobByID(ID.mobs.Dragontrap_3):getStatus() ~= 2 then
         if mob:getLocalVar("PetsSpawned") ~= 1 then
             local morbol = GetMobByID(ID.mobs.Nightmare_Morbol_1)
-            morbol:setDropID(0) -- don't drop 100-type pieces
+            morbol:setDropID(0)
             morbol:setSpawn(mobX, mobY, mobZ)
             morbol:setPos(mobX, mobY, mobZ)
-            SpawnMob(morbol:getID()):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+            SpawnMob(morbol:getID())
+            morbol:updateEnmity(target)
+            morbol:setDropID(0)
 
             morbol = GetMobByID(ID.mobs.Nightmare_Morbol_2)
-            morbol:setDropID(0) -- don't drop 100-type pieces
+            morbol:setDropID(0)
             morbol:setSpawn(mobX, mobY, mobZ)
             morbol:setPos(mobX, mobY, mobZ)
-            SpawnMob(morbol:getID()):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+            SpawnMob(morbol:getID())
+            morbol:updateEnmity(target)
+            morbol:setDropID(0)
 
             mob:setLocalVar("PetsSpawned", 1)
         end

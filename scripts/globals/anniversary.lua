@@ -101,7 +101,7 @@ anniversary.onTrigger = function(player, npc)
                 DespawnMob(nm:getID())
                 local playerparty = player:getAlliance()
                 for _,partymember in pairs(playerparty) do
-                    if member:getZoneID() == npc:getZoneID() then
+                    if partymember:getZoneID() == npc:getZoneID() then
                         -- reward only given if talking to the npc when mob is dead and player still has lvl sync effect
                         if partymember:hasStatusEffect(143) then
                             partymember:removeListener("DEATH_Anni2022")
@@ -156,11 +156,6 @@ anniversary.onTrigger = function(player, npc)
                     if not member:isAlive() then member:sendRaise(3) end
 
                     member:setCharVar("Anni2022_FightReady", 0)
-                    if dropCount < #anniversary.spawnitems2022 then
-                        member:addTreasure(anniversary.spawnitems2022[randStartNQDrops][1], npc)
-                        randStartNQDrops = (randStartNQDrops % #anniversary.spawnitems2022) + 1
-                        dropCount = dropCount + 1
-                    end
                     local randRoll = math.random(1000)
                     if randRoll < HQdropRate and dropCountHQ < AllianceSize then
                         dropCountHQ = dropCountHQ + 1
@@ -186,14 +181,24 @@ anniversary.onTrigger = function(player, npc)
                     end
                 end
             end
+            -- spam 4 nq drops per alliance member
+            dropCount = 0
+            while dropCount < AllianceSize * 4 do
+                player:addTreasure(NQdroplist[math.random(#NQdroplist)], npc)
+                dropCount = dropCount + 1
+            end
+            -- then drop the spawn items (2 per player up to 6)
+            dropCount = 0
+            while dropCount < #anniversary.spawnitems2022 and dropCount < AllianceSize * 2 do
+                player:addTreasure(anniversary.spawnitems2022[randStartNQDrops][1], npc)
+                randStartNQDrops = (randStartNQDrops % #anniversary.spawnitems2022) + 1
+                dropCount = dropCount + 1
+            end
+            -- finally hq items
             dropCount = 0
             while dropCount < dropCountHQ and dropCount < 10 do
                 dropCount = dropCount + 1
                 player:addTreasure(HQdrops[dropCount], npc)
-            end
-            while dropCount < 10 do
-                player:addTreasure(NQdroplist[math.random(#NQdroplist)], npc)
-                dropCount = dropCount + 1
             end
             return 1
         elseif player:getCharVar("Anni2022_FightReady") == 1 then
@@ -233,6 +238,8 @@ anniversary.spawnNM = function(player, npc)
         npc:setLocalVar("Anni2022_AllianceSize", #party)
         DespawnMob(zoneInfo.nmId)
         nm:setSpawn(zoneInfo.spawnPos[1], zoneInfo.spawnPos[2], zoneInfo.spawnPos[3])
+        -- set nm level to get fun job traits/spells
+        nm:setMobLevel(80)
         SpawnMob(nm:getID())
         -- set nm level based on number of players in party, no increase past 12 members
         nm:setMobLevel(zoneInfo.playerlvl - 2 + utils.clamp(npc:getLocalVar("Anni2022_AllianceSize") / 2, 0, 6))
@@ -247,17 +254,18 @@ anniversary.spawnNM = function(player, npc)
         nm:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
         nm:updateClaim(player)
         nm:engage(player:getShortID())
-        nm:addStatusEffect(tpz.effect.BIND, 0, 0, 60)
-        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 60)
+        -- immobilized for a bit of time
+        nm:addStatusEffect(tpz.effect.BIND, 0, 0, 30)
+        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 30)
         nm:setTP(0)
         nm:setHP(nm:getMaxHP())
         nm:setMobMod(tpz.mobMod.MAGIC_COOL, 30 - npc:getLocalVar("Anni2022_AllianceSize"))
 
-        nm:addListener("DISENGAGE", "DISENGAGE_Anni2022", function(nm)
+        --[[nm:addListener("DISENGAGE", "DISENGAGE_Anni2022", function(nm)
             nm:removeListener("DISENGAGE_Anni2022")
             nm:removeListener("DEATH_Anni2022")
             DespawnMob(zoneInfo.nmId)
-        end)
+        end)]]
 
         nm:addListener("DEATH", "DEATH_Anni2022", function(nm)
             nm:removeListener("DISENGAGE_Anni2022")
@@ -269,12 +277,12 @@ anniversary.spawnNM = function(player, npc)
         for _,member in pairs(party) do
             if member:getZoneID() == npc:getZoneID() then
                 nm:updateEnmity(member)
-                member:setTP(0)
-                member:setHP(member:getMaxHP())
-                member:setMP(member:getMaxMP())
                 member:delStatusEffect(tpz.effect.WEAKNESS)
                 member:addStatusEffect(143, zoneInfo.playerlvl, 0, 0) -- Add Level Restriction
                 member:addStatusEffect(276, 10, 0, 0) -- Add Confrontation Status to allow attacking the mobs
+                member:setTP(0)
+                member:setHP(member:getMaxHP())
+                member:setMP(member:getMaxMP())
                 member:ChangeMusic(0, zoneInfo.battlemusic)
                 member:ChangeMusic(1, zoneInfo.battlemusic)
                 member:ChangeMusic(2, zoneInfo.battlemusic)

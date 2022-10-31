@@ -13,7 +13,6 @@ function onMobSpawn(mob)
 
     -- Set Mods
     mob:speed(140)
-    mob:SetAutoAttackEnabled(false)
 end
 
 function onMobRoamAction(mob)
