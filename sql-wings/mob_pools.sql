@@ -4788,8 +4788,8 @@ INSERT INTO `mob_pools` VALUES(4724, 'Steely_Weapon', 'Steely_Weapon', 110, _bin
 INSERT INTO `mob_pools` VALUES(4725, 'Mimic_Mage', 'Mimic_Mage', 183, _binary 0x0000020100000000000000000000000000000000, 4, 4, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 129, 0, 0, 2, 0, 0, 183);
 INSERT INTO `mob_pools` VALUES(4726, 'Mimic_Jester', 'Mimic_Jester', 183, _binary 0x0000020100000000000000000000000000000000, 1, 1, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 129, 0, 0, 0, 0, 0, 183);
 INSERT INTO `mob_pools` VALUES(4727, 'Mimic_King', 'Mimic_King', 183, _binary 0x00000b0100000000000000000000000000000000, 1, 1, 7, 170, 100, 0, 1, 0, 2, 2, 0, 0, 7, 135, 0, 0, 0, 0, 0, 183);
-INSERT INTO `mob_pools` VALUES(4728, 'Blest_Bones', 'Blest_Bones', 227, _binary 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 0, 0, 0, 0, 1, 131, 0, 0, 2, 0, 0, 227);
-INSERT INTO `mob_pools` VALUES(4729, 'Skeleton_Scuffler', 'Skeleton_Scuffer', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 1, 0, 2, 0, 0, 1, 131, 0, 0, 0, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(4728, 'Blest_Bones', 'Blest_Bones', 227, _binary 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 0, 1, 0, 2, 0, 0, 1, 131, 0, 0, 2, 0, 0, 227);
+INSERT INTO `mob_pools` VALUES(4729, 'Skeleton_Scuffler', 'Skeleton_Scuffer', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 1, 0, 2, 0, 0, 1, 131, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(4730, 'Holey_Horror', 'Holey_Horror', 121, _binary 0x0000700100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 0, 1, 0, 2, 0, 32, 1, 659, 0, 0, 28, 0, 0, 121);
 INSERT INTO `mob_pools` VALUES(4731, 'Grwnan', 'Grwnan', 71, _binary 0x00006f0100000000000000000000000000000000, 1, 6, 6, 240, 100, 0, 1, 0, 0, 2, 0, 32, 7, 129, 0, 0, 0, 0, 0, 71);
 INSERT INTO `mob_pools` VALUES(4732, 'Cath_Palug', 'Cath_Palug', 71, _binary 0x00003c0800000000000000000000000000000000, 1, 6, 6, 240, 100, 0, 1, 0, 0, 2, 0, 32, 7, 159, 0, 0, 0, 0, 0, 71);
