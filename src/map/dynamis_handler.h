@@ -41,6 +41,7 @@ public:
     void CleanupDynamis();                                    // cleanup instance that is finished
     void ClearPlayerRegistry();
     void EjectAllPlayers(bool immediate = false);
+    void ClearLootPool();
 
     bool IsRegistered(uint32 charid);
     bool RegisterPlayer(uint32 charid);                  // returns false if dynamis registry is full (64 players)
