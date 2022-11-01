@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 2019-2022 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the Apache License 2.0 (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
@@ -21,9 +21,9 @@ extern "C" {
 #define OSSL_PROV_PARAM_CORE_MODULE_FILENAME "module-filename" /* utf8_ptr */
 
 /* Well known parameter names that Providers can define */
-#define OSSL_PROV_PARAM_NAME            "name"                /* utf8_string */
-#define OSSL_PROV_PARAM_VERSION         "version"             /* utf8_string */
-#define OSSL_PROV_PARAM_BUILDINFO       "buildinfo"           /* utf8_string */
+#define OSSL_PROV_PARAM_NAME            "name"                /* utf8_ptr */
+#define OSSL_PROV_PARAM_VERSION         "version"             /* utf8_ptr */
+#define OSSL_PROV_PARAM_BUILDINFO       "buildinfo"           /* utf8_ptr */
 #define OSSL_PROV_PARAM_STATUS          "status"              /* uint */
 #define OSSL_PROV_PARAM_SECURITY_CHECKS "security-checks"     /* uint */
 
@@ -190,6 +190,9 @@ extern "C" {
 #define OSSL_KDF_PARAM_KEY          "key"       /* octet string */
 #define OSSL_KDF_PARAM_SALT         "salt"      /* octet string */
 #define OSSL_KDF_PARAM_PASSWORD     "pass"      /* octet string */
+#define OSSL_KDF_PARAM_PREFIX       "prefix"    /* octet string */
+#define OSSL_KDF_PARAM_LABEL        "label"     /* octet string */
+#define OSSL_KDF_PARAM_DATA         "data"      /* octet string */
 #define OSSL_KDF_PARAM_DIGEST       OSSL_ALG_PARAM_DIGEST     /* utf8 string */
 #define OSSL_KDF_PARAM_CIPHER       OSSL_ALG_PARAM_CIPHER     /* utf8 string */
 #define OSSL_KDF_PARAM_MAC          OSSL_ALG_PARAM_MAC        /* utf8 string */
@@ -223,6 +226,7 @@ extern "C" {
 
 /* Known KDF names */
 #define OSSL_KDF_NAME_HKDF           "HKDF"
+#define OSSL_KDF_NAME_TLS1_3_KDF     "TLS13-KDF"
 #define OSSL_KDF_NAME_PBKDF1         "PBKDF1"
 #define OSSL_KDF_NAME_PBKDF2         "PBKDF2"
 #define OSSL_KDF_NAME_SCRYPT         "SCRYPT"
