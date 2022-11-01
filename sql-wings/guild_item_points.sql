@@ -63,6 +63,7 @@ INSERT INTO `guild_item_points` VALUES(0, 4464, 2, 138, 2240, 0);
 INSERT INTO `guild_item_points` VALUES(0, 4469, 2, 300, 2880, 1);
 INSERT INTO `guild_item_points` VALUES(0, 4361, 2, 156, 2320, 2);
 INSERT INTO `guild_item_points` VALUES(0, 4426, 2, 156, 2320, 3);
+INSERT INTO `guild_item_points` VALUES(0, 5121, 2, 720, 4000, 4);  -- Moorish Idol.  Temp replacemenet for Lungfish
 -- INSERT INTO `guild_item_points` VALUES(0, 4315, 2, 720, 4000, 4); -- lungfish fishing 30-40 TODO: re-add when Phanauet Channel is accessible
 INSERT INTO `guild_item_points` VALUES(0, 5121, 2, 714, 4000, 5);
 INSERT INTO `guild_item_points` VALUES(0, 4290, 2, 156, 2320, 6);

@@ -146,6 +146,15 @@ inline int32 CLuaZone::getID(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaZone::getName(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushstring(L, (const char*)m_pLuaZone->GetName());
+
+    return 1;
+}
+
 inline int32 CLuaZone::getRegionID(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
@@ -402,6 +411,7 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone,levelRestriction),
     LUNAR_DECLARE_METHOD(CLuaZone,getPlayers),
     LUNAR_DECLARE_METHOD(CLuaZone,getID),
+    LUNAR_DECLARE_METHOD(CLuaZone,getName),
     LUNAR_DECLARE_METHOD(CLuaZone,getRegionID),
     LUNAR_DECLARE_METHOD(CLuaZone,getType),
     LUNAR_DECLARE_METHOD(CLuaZone,getBattlefieldByInitiator),

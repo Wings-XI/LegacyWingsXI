@@ -724,8 +724,8 @@ namespace battleutils
             {
                 case SPIKE_BLAZE:
                 case SPIKE_ICE:
-                case SPIKE_SHOCK:
-                    PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect));
+                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it. 
+                    PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect), false);
                     break;
 
                 case SPIKE_DREAD:
@@ -758,14 +758,16 @@ namespace battleutils
                             }
                             PDefender->addHP(Action->spikesParam);
                         }
-                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_DARK);
+                        //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_DARK, false);
                     }
                     break;
 
                 case SPIKE_REPRISAL:
                     if (Action->reaction == REACTION_BLOCK)
                     {
-                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_LIGHT);
+                        //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                        PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, DAMAGE_LIGHT, false);
                         auto PEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_REPRISAL);
                         if (PEffect)
                         {
@@ -865,7 +867,8 @@ namespace battleutils
             {
                 auto ratio = std::clamp<uint8>(damage / 4, 1, 255);
                 Action->spikesParam = HandleStoneskin(PAttacker, damage - tpzrand::GetRandomNumber<uint16>(ratio) + tpzrand::GetRandomNumber<uint16>(ratio));
-                PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, GetSpikesDamageType(spikesType));
+                //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
+                PAttacker->takeDamage(Action->spikesParam, PDefender, ATTACK_MAGICAL, GetSpikesDamageType(spikesType), false);
             }
 
             // Temp till moved to script.
@@ -5890,17 +5893,20 @@ namespace battleutils
                                 }
                             }
                         }
-
+                        //remove lower ranks of the same trait - if we're making this comparison, we're at a high enough level to where we need to replace the lower level trait
                         if (PExistingTrait->getRank() < PTrait->getRank())
                         {
                             PEntity->delTrait(PExistingTrait);
+                            //if it's a mob, be sure to also remove the value we added to m_modStatSave when the trait was first applied
+                            if (PEntity->objtype == TYPE_MOB)
+                                PEntity->m_modStatSave[PTrait->getMod()] -= PExistingTrait->getValue();
                             break;
-                        }
+                        } //do nothing if we have a higher rank trait from a different job...
                         else if (PExistingTrait->getRank() > PTrait->getRank())
                         {
                             add = false;
                             break;
-                        }
+                        } //do nothing if we have same trait from a different job...  
                         else if (PExistingTrait->getMod() == PTrait->getMod())
                         {
                             add = false;
@@ -5924,8 +5930,20 @@ namespace battleutils
                     if (PEntity->objtype == TYPE_MOB)
                     {
                         // Append this trait's modifier to the mob's saved mod state so it is included on respawn.
+                        // NOTE: This value needs to be decremented for mobs when we call delTrait when a mob spawns as a higher or lower level
                         PEntity->m_modStatSave[PTrait->getMod()] += PTrait->getValue();
                     }
+                }
+            }
+            else if (level < PTrait->getLevel() && PEntity->objtype == TYPE_MOB && PTrait->getLevel() > 0) //redundant getLevel() > 0 check here to prevent whitespace changes
+            {
+                // Check if mob already has a trait that's a higher level requirement than its current level (because it respawned as a lower level) and,
+                // if so, remove it and reduce the value we appended to m_modStatSave above
+                if (PEntity->hasTrait(PTrait))
+                {
+                    PEntity->delTrait(PTrait);
+                    // Reduce this trait's modifier by the unavailable trait tier's value.
+                    PEntity->m_modStatSave[PTrait->getMod()] -= PTrait->getValue();
                 }
             }
         }

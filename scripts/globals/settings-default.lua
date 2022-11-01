@@ -162,9 +162,14 @@ FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to n
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
+TRICK_ALWAYS_ACTIVE = 0 -- Trick staff effect works even if Harvest Festival are disabled.
+TRICK_DISABLE_JAIL = 1 -- Prevent Mordion Gaol from being considered as a destination of trick staff.
 STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festival, will start on Dec. 12 and end Jan. 1.
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
 Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
+Anniversary_Event = 0 -- Set to 2022 to enable 2022 anniversary battle events
+EXP_FEST_START = 0 -- When double XP mode begins (specified using epoch time code), set to zero to disable
+EXP_FEST_END = 0 -- When double XP mode ends (specified using epoch time code), must be bigger (i.e. later) than start
 
 -- CUSTOM BEHAVIOR OUTSIDE ERA
 TOAU_CUSTOM_RING_REACQUISITION = 0 -- Set to 1 to turn on the custom ToAU ring reacquisition quest.

@@ -650,7 +650,8 @@ int32 CBattleEntity::addMP(int32 mp)
     return abs(mp);
 }
 
-int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/)
+// Added optional breakBind argument in MR !2167
+int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/, BOOLEAN breakBind /* = TRUE*/)
 {
     TracyZoneScoped;
     if (health.hp <= 0)
@@ -679,7 +680,9 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     {
         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
-        battleutils::BindBreakCheck(attacker, this);
+        //Added conditional in MR !2167
+        if (breakBind)
+            battleutils::BindBreakCheck(attacker, this);
     }
 
     return addHP(-amount);
@@ -1472,6 +1475,15 @@ void CBattleEntity::delTrait(CTrait* PTrait)
 {
     delModifier(PTrait->getMod(), PTrait->getValue());
     TraitList.erase(std::remove(TraitList.begin(), TraitList.end(), PTrait), TraitList.end());
+}
+
+bool CBattleEntity::hasTrait(CTrait* PTrait)
+{
+    //ShowDebug("Ohhh checking to see if I have trait with ID %u and rank %u\n", PTrait->getID(), PTrait->getRank());
+    if (!TraitList.empty())
+        return std::find(TraitList.begin(), TraitList.end(), PTrait) != TraitList.end();
+    else
+        return false;
 }
 
 bool CBattleEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)

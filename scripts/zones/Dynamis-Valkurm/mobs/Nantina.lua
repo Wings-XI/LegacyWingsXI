@@ -11,8 +11,6 @@ local zone = 39
 function onMobSpawn(mob)
     dynamis.setNMStats(mob)
     -- Set Mods
-    mob:addMod(tpz.mod.REGAIN, 1250)
-    mob:SetAutoAttackEnabled(false)
 end
 
 function onMobRoamAction(mob)
@@ -21,6 +19,13 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
+    mob:setMod(tpz.mod.REGAIN, 0)
+    mob:setTP(0)
+end
+
+
+function onMobFight(mob)
+    mob:setMod(tpz.mod.REGAIN, 1250)
 end
 
 function onMobWeaponSkillPrepare(mob, target)

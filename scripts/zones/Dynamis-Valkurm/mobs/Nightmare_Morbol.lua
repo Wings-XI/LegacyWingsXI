@@ -2,7 +2,6 @@
 -- Area: Dynamis - Valkurm
 --  Mob: Nightmare Morbol
 -----------------------------------
-mixins = {require("scripts/mixins/dynamis_dreamland")}
 require("scripts/globals/dynamis")
 -----------------------------------
 

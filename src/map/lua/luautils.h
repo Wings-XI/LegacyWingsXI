@@ -23,6 +23,7 @@
 #define _LUAUTILS_H
 
 #include <optional>
+#include <vector>
 #include "../../common/cbasetypes.h"
 #include "../../common/lua/lunar.h"
 #include "../../common/taskmgr.h"
@@ -83,6 +84,80 @@ namespace luautils
         CUSTOMIZATION_INFLUENCE = 0,
         CUSTOMIZATION_LOW_LEVEL_XP= 1,
         CUSTOMIZATION_LAST
+    };
+
+    class LuaRefList
+    {
+    public:
+        LuaRefList(lua_State* L) : LuaRefList(L, true) {};
+        LuaRefList(lua_State* L, bool autoclean) : m_handle(L), m_autoclean(autoclean) {};
+        LuaRefList(const LuaRefList& other) = delete;
+        LuaRefList& operator=(const LuaRefList& other) = delete;
+        ~LuaRefList()
+        {
+            if (m_autoclean) {
+                for (std::vector<int>::iterator it = m_refs.begin(); it != m_refs.end(); it++) {
+                    luaL_unref(m_handle, LUA_REGISTRYINDEX, *it);
+                }
+            }
+        }
+
+        int push()
+        {
+            int ref = luaL_ref(m_handle, LUA_REGISTRYINDEX);
+            m_refs.insert(m_refs.begin(), ref);
+            return ref;
+        }
+        void add(int ref)
+        {
+            m_refs.insert(m_refs.begin(), ref);
+        }
+        void write(int idx)
+        {
+            if (idx < m_refs.size()) {
+                lua_rawgeti(m_handle, LUA_REGISTRYINDEX, m_refs[m_refs.size() - idx - 1]);
+            }
+        }
+        void writeall()
+        {
+            for (std::vector<int>::iterator it = m_refs.begin(); it != m_refs.end(); it++) {
+                lua_rawgeti(m_handle, LUA_REGISTRYINDEX, *it);
+            }
+        }
+        void pop()
+        {
+            if (!m_refs.empty()) {
+                luaL_unref(m_handle, LUA_REGISTRYINDEX, m_refs[m_refs.size() - 1]);
+                m_refs.pop_back();
+            }
+        }
+
+        int at(int idx) const
+        {
+            return m_refs[idx];
+        }
+        size_t size() const
+        {
+            return m_refs.size();
+        }
+        int operator[](int idx) const
+        {
+            return m_refs[m_refs.size() - idx - 1];
+        }
+
+        bool getAutoClean() const
+        {
+            return m_autoclean;
+        }
+        void setAutoClean(bool autoclean)
+        {
+            m_autoclean = autoclean;
+        }
+
+    private:
+        lua_State* m_handle;
+        std::vector<int> m_refs;
+        bool m_autoclean;
     };
 
     int32 init();
@@ -183,13 +258,24 @@ namespace luautils
     int32 StartElevator(lua_State*);
     int32 GetServerVariable(lua_State*);
     int32 SetServerVariable(lua_State *);
+    int32 GetServerUVariable(lua_State*);
+    int32 SetServerUVariable(lua_State *);
     int32 clearVarFromAll(lua_State *);                                         // Deletes a specific player variable from all players
     int32 terminate(lua_State*);                                                // Logs off all characters and terminates the server
+
+    int32 GetZones(lua_State*);                                                 // Get a list of all zones on the server
+    int32 GetAllPlayers(lua_State*);                                            // Get a list of all players on the server
 
     int32 GetTextIDVariable(uint16 ZoneID, const char* variable);               // загружаем значение переменной TextID указанной зоны
     uint8 GetSettingsVariable(const char* variable);                            // Gets a Variable Value from Settings.lua
     bool IsContentEnabled(const char* content);                                 // Check if the content is enabled in settings.lua
 
+    int32 AddScheduledTask(lua_State*);                                         // Add a task to be called by the task scheduler
+    int32 RemoveScheduledTask(lua_State*);                                      // Remove a previously registered task
+
+    int32 OnServerInitialize();                                                 // Called on server startup
+    int32 OnServerReady();                                                      // Called when the server has finished initialiation
+    int32 OnServerCleanup();                                                    // Called before a graceful exit
     int32 OnGameDay(CZone* PZone);                                              // Automatic action of NPC every game day
     int32 OnGameHour(CZone* PZone);                                             // Automatic action of NPC every game hour
     int32 OnZoneWeatherChange(uint16 ZoneID, uint8 weather);
@@ -224,6 +310,8 @@ namespace luautils
     int32 OnManeuverGain(CBattleEntity* PEntity, CItemPuppet* attachment, uint8 maneuvers);
     int32 OnManeuverLose(CBattleEntity* PEntity, CItemPuppet* attachment, uint8 maneuvers);
     int32 OnUpdateAttachment(CBattleEntity* PEntity, CItemPuppet* attachment, uint8 maneuvers);
+
+    int32 OnScheduledTask(time_point tick, CTaskMgr::CTask* PTask);
 
     int32 OnItemUse(CBaseEntity* PTarget, CItem* PItem, CBaseEntity* PChar);    // triggers when item is used
     std::tuple<int32, int32, int32> OnItemCheck(CBaseEntity* PTarget, CItem* PItem, ITEMCHECK param = ITEMCHECK::NONE, CBaseEntity* PCaster = nullptr);    // check to see if item can be used

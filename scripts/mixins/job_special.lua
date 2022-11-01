@@ -124,7 +124,7 @@ local job2hr = {
 local familyEES =
 {
     [  3] = tpz.jsa.EES_AERN,    -- Aern
-    [ 19] = tpz.jsa.EES_DRAGON,  -- Dragons
+    [ 19] = tpz.jsa.EES_KINDRED,  -- Dragons -- EES_DRAGON not implemented :(
     [ 25] = tpz.jsa.EES_ANTICA,  -- Antica
     [115] = tpz.jsa.EES_SHADE,   -- Fomor
     [126] = tpz.jsa.EES_GIGA,    -- Gigas

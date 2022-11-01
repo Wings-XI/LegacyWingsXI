@@ -9,6 +9,8 @@ require("scripts/globals/zone")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
+require("scripts/globals/events/exp_fest")
+-----------------------------------
 
 local startingRaceInfo =
 {
@@ -214,13 +216,20 @@ function onGameIn(player, firstLogin, zoning)
         player:addStatusEffectEx(tpz.effect.GM_HIDE, tpz.effect.INVISIBLE, 0, 0, 0)
         player:setGMHidden(true)
     end
-	
+    
     -- !superpower
     if player:getCharVar("GMSuperpower") == 1 then
         -- TODO: Status effect
         player:setGMSuperpowers(true)
     end
-
+	
+	-- Exp fest event
+	ExpFestOnZoneIn(player, not zoning)
+    
+    if hookOnGameIn ~= nil then
+        hookOnGameIn(player, firstLogin, zoning)
+    end
+    
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 end
