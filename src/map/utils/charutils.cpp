@@ -4095,15 +4095,45 @@ namespace charutils
                         if (PMember->expChain.chainTime > gettick() || PMember->expChain.chainTime == 0)
                         {
                             chainactive = true;
-                            switch (PMember->expChain.chainNumber)
+                            if(PMember->GetMLevel() >= 75)
                             {
-                                case 0: exp *= 1.0f; break;
-                                case 1: exp *= 1.2f; break;
-                                case 2: exp *= 1.25f; break;
-                                case 3: exp *= 1.3f; break;
-                                case 4: exp *= 1.4f; break;
-                                case 5: exp *= 1.5f; break;
-                                default: exp *= 1.5f; break;
+                                // -- WINGSCUSTOM at lvl 75, xp chain bonus continues raising up to chain 20 where you get 25% more total xp
+                                // up from 1.5x to 1.875x at max chain (1.5 * 1.25)
+                                switch (PMember->expChain.chainNumber)
+                                {
+                                    case 0 : exp *= 1.0f; break;
+                                    case 1 : exp *= 1.2f; break;
+                                    case 2 : exp *= 1.25f; break;
+                                    case 3 : exp *= 1.3f; break;
+                                    case 4 : exp *= 1.4f; break;
+                                    case 5 : exp *= 1.5f; break;
+                                    case 6 :
+                                    case 7 :
+                                    case 8 :
+                                    case 9 : exp *= 1.6f; break;
+                                    case 10:
+                                    case 11:
+                                    case 12:
+                                    case 13:
+                                    case 14: exp *= 1.7f; break;
+                                    case 15:
+                                    case 16:
+                                    case 17:
+                                    case 18:
+                                    case 19: exp *= 1.8f; break;
+                                    default: exp *= 1.875f; break;
+                                }
+                            }else{
+                                switch (PMember->expChain.chainNumber)
+                                {
+                                    case 0: exp *= 1.0f; break;
+                                    case 1: exp *= 1.2f; break;
+                                    case 2: exp *= 1.25f; break;
+                                    case 3: exp *= 1.3f; break;
+                                    case 4: exp *= 1.4f; break;
+                                    case 5: exp *= 1.5f; break;
+                                    default: exp *= 1.5f; break;
+                                }
                             }
                         }
                         else
