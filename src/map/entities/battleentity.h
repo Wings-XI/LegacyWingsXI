@@ -640,6 +640,7 @@ public:
 
     virtual void addTrait(CTrait*);
     virtual void delTrait(CTrait*);
+    virtual bool hasTrait(CTrait*);
 
     virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags);
     virtual bool CanUseSpell(CSpell*);
