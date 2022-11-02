@@ -111,8 +111,9 @@ public:
      *  @param dwWorldID World ID of the target world
      *  @param bufMessage Message to send
      *  @param cbMessage Message size in bytes
+     *  @return True if sent successfully, false on failure. Throws only if World ID not found.
      */
-    void SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMessage, uint32_t cbMessage);
+    bool SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMessage, uint32_t cbMessage);
 
     /**
      *  Get a world's DB connection object

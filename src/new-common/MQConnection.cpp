@@ -29,6 +29,12 @@ struct amqp_ssl_socket_t {
     int internal_error;
 };
 
+MQConnection::MQConnection()
+{
+    mdwWorldId = 0;
+    mbIsConnected = false;
+    mcAttemptRecover = 0x01;
+}
 
 MQConnection::MQConnection(uint32_t dwWorldId,
     const std::string& strMqServer,
@@ -44,63 +50,65 @@ MQConnection::MQConnection(uint32_t dwWorldId,
     bool bVerifyPeer,
     const std::string& strCACert,
     const std::string& strClientCert,
-    const std::string& strClientKey) : mdwWorldId(dwWorldId)
+    const std::string& strClientKey)
 {
     LOG_DEBUG0("Called.");
+    mbIsConnected = false;
+    mcAttemptRecover = 0x01;
+    Connect(dwWorldId,
+        strMqServer,
+        wMqPort,
+        strUsername,
+        strPassword,
+        strVHost,
+        dwChannel,
+        strExchange,
+        strQueueName,
+        strRouteKey,
+        bUseSSL,
+        bVerifyPeer,
+        strCACert,
+        strClientCert,
+        strClientKey);
+}
+
+void MQConnection::Connect(uint32_t dwWorldId,
+    const std::string& strMqServer,
+    uint16_t wMqPort,
+    const std::string& strUsername,
+    const std::string& strPassword,
+    const std::string& strVHost,
+    uint32_t dwChannel,
+    const std::string& strExchange,
+    const std::string& strQueueName,
+    const std::string& strRouteKey,
+    bool bUseSSL,
+    bool bVerifyPeer,
+    const std::string& strCACert,
+    const std::string& strClientCert,
+    const std::string& strClientKey)
+{
+    LOG_DEBUG0("Called.");
+
+    LOCK_MQCONNECTION;
+    if (mbIsConnected) {
+        LOG_ERROR("Already connected to MQ, close the existing connection first.");
+        throw std::runtime_error("Already connected to MQ.");
+    }
+
+    mdwWorldId = dwWorldId;
+    mwMqPort = wMqPort;
+    mstrUsername = strUsername;
+    mstrPassword = strPassword;
+    mstrVHost = strVHost;
+    mbUseSSL = bUseSSL;
+    mbVerifyPeer = bVerifyPeer;
+    mstrCACert = strCACert;
+    mstrClientCert = strClientCert;
+    mstrClientKey = strClientKey;
     madwSendersWaiting = 0;
 
-    mConnection = amqp_new_connection();
-    if (mConnection == NULL) {
-        LOG_ERROR("AMQP initialization failed.");
-        throw std::runtime_error("AMQP init error.");
-    }
-    if (bUseSSL) {
-        // NOTE: Out certificates / private keys are stored as DB blobs. Since the AMQP library
-        // does not support reading certificates and keys from memory we'll need to use the
-        // underlying OpenSSL routines to do this. Ugly but needed.
-        LOG_DEBUG1("Using SSL for MQ connection.");
-        mSocket = amqp_ssl_socket_new(mConnection);
-        amqp_boolean_t bVerify = (bVerifyPeer && (strCACert != "") ? 1 : 0);
-        amqp_ssl_socket_set_verify_peer(mSocket, bVerify);
-        amqp_ssl_socket_set_verify_hostname(mSocket, bVerify);
-        if (bVerify) {
-            LOG_DEBUG1("Verify peer enabled, installing CA certificate.");
-            amqp_ssl_socket_set_cacert(mSocket, strCACert.c_str());
-            LOG_DEBUG1("CA certificate installed.");
-        }
-        if ((strClientCert != "") && (strClientKey != "")) {
-            LOG_DEBUG1("Client certificate provided, installing.");
-            amqp_ssl_socket_set_key(mSocket, strClientCert.c_str(), strClientKey.c_str());
-            LOG_DEBUG1("Client certificate installed.");
-        }
-    }
-    else {
-        mSocket = amqp_tcp_socket_new(mConnection);
-    }
-    if (mSocket == NULL) {
-        LOG_ERROR("AMQP socket initialization failed.");
-        amqp_destroy_connection(mConnection);
-        throw std::runtime_error("AMQP socket init error.");
-    }
-    int rv = amqp_socket_open(mSocket, strMqServer.c_str(), wMqPort);
-    if (rv != AMQP_STATUS_OK) {
-        LOG_ERROR("Could not connect to MQ server (error=%d).", rv);
-        amqp_destroy_connection(mConnection);
-        throw std::runtime_error("MQ connection error.");
-    }
-    amqp_rpc_reply_t login_rv = amqp_login(mConnection,
-        strVHost.c_str(),
-        AMQP_DEFAULT_MAX_CHANNELS,
-        AMQP_DEFAULT_FRAME_SIZE,
-        60,
-        AMQP_SASL_METHOD_PLAIN,
-        strUsername.c_str(),
-        strPassword.c_str());
-    if (login_rv.reply_type != AMQP_RESPONSE_NORMAL) {
-        LOG_ERROR("Authentication to MQ server failed.");
-        amqp_destroy_connection(mConnection);
-        throw std::runtime_error("MQ login error.");
-    }
+    Reconnect(false);
     if (dwChannel != 0) {
         try {
             ListenChannel(dwChannel, strExchange, strQueueName, strRouteKey);
@@ -112,8 +120,109 @@ MQConnection::MQConnection(uint32_t dwWorldId,
     }
 }
 
+void MQConnection::Reconnect(bool bRestoreChannels)
+{
+    LOG_DEBUG0("Called.");
+
+    LOCK_MQCONNECTION;
+    madwSendersWaiting = 0;
+
+    if (mbIsConnected) {
+        LOG_WARNING("Already connected to MQ, not reconnecting.");
+        return;
+    }
+    mConnection = amqp_new_connection();
+    if (mConnection == NULL) {
+        LOG_ERROR("AMQP initialization failed.");
+        throw std::runtime_error("AMQP init error.");
+    }
+    if (mbUseSSL) {
+        // NOTE: Out certificates / private keys are stored as DB blobs. Since the AMQP library
+        // does not support reading certificates and keys from memory we'll need to use the
+        // underlying OpenSSL routines to do this. Ugly but needed.
+        LOG_DEBUG1("Using SSL for MQ connection.");
+        mSocket = amqp_ssl_socket_new(mConnection);
+        amqp_boolean_t bVerify = (mbVerifyPeer && (mstrCACert != "") ? 1 : 0);
+        amqp_ssl_socket_set_verify_peer(mSocket, bVerify);
+        amqp_ssl_socket_set_verify_hostname(mSocket, bVerify);
+        if (bVerify) {
+            LOG_DEBUG1("Verify peer enabled, installing CA certificate.");
+            amqp_ssl_socket_set_cacert(mSocket, mstrCACert.c_str());
+            LOG_DEBUG1("CA certificate installed.");
+        }
+        if ((mstrClientCert != "") && (mstrClientKey != "")) {
+            LOG_DEBUG1("Client certificate provided, installing.");
+            amqp_ssl_socket_set_key(mSocket, mstrClientCert.c_str(), mstrClientKey.c_str());
+            LOG_DEBUG1("Client certificate installed.");
+        }
+    }
+    else {
+        mSocket = amqp_tcp_socket_new(mConnection);
+    }
+    if (mSocket == NULL) {
+        LOG_ERROR("AMQP socket initialization failed.");
+        amqp_destroy_connection(mConnection);
+        throw std::runtime_error("AMQP socket init error.");
+    }
+    int rv = amqp_socket_open(mSocket, mstrMqServer.c_str(), mwMqPort);
+    if (rv != AMQP_STATUS_OK) {
+        LOG_ERROR("Could not connect to MQ server (error=%d).", rv);
+        amqp_destroy_connection(mConnection);
+        throw std::runtime_error("MQ connection error.");
+    }
+    amqp_rpc_reply_t login_rv = amqp_login(mConnection,
+        mstrVHost.c_str(),
+        AMQP_DEFAULT_MAX_CHANNELS,
+        AMQP_DEFAULT_FRAME_SIZE,
+        60,
+        AMQP_SASL_METHOD_PLAIN,
+        mstrUsername.c_str(),
+        mstrPassword.c_str());
+    if (login_rv.reply_type != AMQP_RESPONSE_NORMAL) {
+        LOG_ERROR("Authentication to MQ server failed.");
+        amqp_destroy_connection(mConnection);
+        throw std::runtime_error("MQ login error.");
+    }
+    if (!mOpenChannels.empty()) {
+        if (bRestoreChannels) {
+            LOG_DEBUG0("Attempting to restore previously connected channels.");
+            try {
+                std::vector<OpenChannel> channels(mOpenChannels);
+                mOpenChannels.clear();
+                for (std::vector<OpenChannel>::iterator it = channels.begin(); it != channels.end(); it++) {
+                    ListenChannel(it->dwChannel, it->strExchange, it->strQueueName, it->strRouteKey);
+                }
+            }
+            catch (std::runtime_error) {
+                amqp_destroy_connection(mConnection);
+                throw;
+            }
+        }
+        else {
+            LOG_DEBUG0("Not restoring previous channels, clearing channel list.");
+            mOpenChannels.clear();
+        }
+    }
+    mbIsConnected = true;
+    LOG_DEBUG0("MQ connection established.");
+}
+
 MQConnection::~MQConnection()
 {
+    if (mbIsConnected) {
+        Close();
+    }
+}
+
+void MQConnection::Close()
+{
+    LOG_DEBUG0("Called.");
+
+    if (!mbIsConnected) {
+        LOG_ERROR("Not connected to MQ, nothing to close.");
+        throw std::runtime_error("Not connected to MQ.");
+    }
+
     size_t dwNumChannels = mOpenChannels.size();
     for (size_t i = 0; i < dwNumChannels; i++) {
         amqp_queue_unbind(mConnection,
@@ -125,6 +234,22 @@ MQConnection::~MQConnection()
         amqp_channel_close(mConnection, 1, AMQP_REPLY_SUCCESS);
     }
     amqp_destroy_connection(mConnection);
+    mbIsConnected = false;
+}
+
+bool MQConnection::IsConnected() const
+{
+    return mbIsConnected;
+}
+
+uint8_t MQConnection::CheckAutoRecover() const
+{
+    return mcAttemptRecover;
+}
+
+void MQConnection::SetAutoRecover(uint8_t cAutoRecover)
+{
+    mcAttemptRecover = cAutoRecover;
 }
 
 void MQConnection::ListenChannel(uint32_t dwChannel,
@@ -236,87 +361,118 @@ void MQConnection::Run()
     LOG_DEBUG1("MQ consumer started.");
 
     while (mbShutdown == false) {
-        if (madwHighPriorityAccess != 0 || madwSendersWaiting != 0) {
-            // There are senders waiting to send data so give them some time to do their business
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        }
-        std::unique_lock<std::recursive_timed_mutex> lk(*GetMutex(), std::defer_lock);
-        if (!lk.try_lock_for(std::chrono::seconds(1))) {
-            // We need to continue monitoring mbShutdown even while we're waiting
-            // for the mutex, otherwise this can result in a deadlock if a signal
-            // is raised while processing a message.
-            continue;
+        if (!mbIsConnected) {
+            if (mcAttemptRecover & 0x01) {
+                try {
+                    Reconnect();
+                }
+                catch (std::runtime_error&) {
+                    // Keep trying indefinitely
+                    LOG_ERROR("Can't reconnect to MQ.");
+                    std::this_thread::sleep_for(std::chrono::seconds(5));
+                    continue;
+                }
+            }
+            else {
+                LOG_CRITICAL("Connection to mesage queue closed unexpectedly.");
+                throw std::runtime_error("Connection to MQ closed.");
+            }
         }
 
-        tv.tv_sec = tv_orig.tv_sec;
-        tv.tv_usec = tv_orig.tv_usec;
-        Response = amqp_consume_message(mConnection, &Envelope, &tv, 0);
-        if (Response.reply_type == AMQP_RESPONSE_NORMAL) {
-            LOG_DEBUG1("Received message.");
-            dwNumChannels = mHandlers.size();
-            for (j = 0; j < dwNumChannels; j++) {
-                if (mHandlers[j].dwChannel == Envelope.channel) {
-                    dwNumHandlers = mHandlers[j].pHandlers.size();
-                    for (i = 0; i < dwNumHandlers; i++) {
-                        if (mHandlers[j].pHandlers[i]->HandleRequest(Envelope.message.body, this, Envelope.channel)) {
-                            break;
+        try {
+            if (madwHighPriorityAccess != 0 || madwSendersWaiting != 0) {
+                // There are senders waiting to send data so give them some time to do their business
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+            std::unique_lock<std::recursive_timed_mutex> lk(*GetMutex(), std::defer_lock);
+            if (!lk.try_lock_for(std::chrono::seconds(1))) {
+                // We need to continue monitoring mbShutdown even while we're waiting
+                // for the mutex, otherwise this can result in a deadlock if a signal
+                // is raised while processing a message.
+                continue;
+            }
+
+            tv.tv_sec = tv_orig.tv_sec;
+            tv.tv_usec = tv_orig.tv_usec;
+            Response = amqp_consume_message(mConnection, &Envelope, &tv, 0);
+            if (Response.reply_type == AMQP_RESPONSE_NORMAL) {
+                LOG_DEBUG1("Received message.");
+                dwNumChannels = mHandlers.size();
+                for (j = 0; j < dwNumChannels; j++) {
+                    if (mHandlers[j].dwChannel == Envelope.channel) {
+                        dwNumHandlers = mHandlers[j].pHandlers.size();
+                        for (i = 0; i < dwNumHandlers; i++) {
+                            if (mHandlers[j].pHandlers[i]->HandleRequest(Envelope.message.body, this, Envelope.channel)) {
+                                break;
+                            }
                         }
                     }
                 }
             }
-        }
-        else if (Response.reply_type == AMQP_RESPONSE_LIBRARY_EXCEPTION) {
-            if (Response.library_error == AMQP_STATUS_TIMEOUT) {
-                // No message
-                continue;
-            }
-            else if (Response.library_error == AMQP_STATUS_UNEXPECTED_STATE) {
-                // Metadata packet
-                LOG_DEBUG1("Received metadata packet.");
-                if (amqp_simple_wait_frame(mConnection, &Frame) != AMQP_STATUS_OK) {
-                    LOG_ERROR("Wait for frame failed.");
-                    throw std::runtime_error("Wait for frame failed.");
-                }
-                switch (Frame.payload.method.id) {
-                case AMQP_BASIC_ACK_METHOD:
-                    // Simple ACK packet. Currently we just ignore these.
+            else if (Response.reply_type == AMQP_RESPONSE_LIBRARY_EXCEPTION) {
+                if (Response.library_error == AMQP_STATUS_TIMEOUT) {
+                    // No message
                     continue;
-                case AMQP_BASIC_RETURN_METHOD:
-                    // A message we've published with the mandatory flag up was not received
-                    // by anyone. We may want to do something about it here if we ever have
-                    // a reason to set the mandatory flag. For now just read the message and
-                    // ignore it.
-                    Response = amqp_read_message(mConnection, Frame.channel, &Message, 0);
-                    if (Response.reply_type != AMQP_RESPONSE_NORMAL) {
-                        LOG_ERROR("Error occured when attempting to read return method message.");
-                        throw std::runtime_error("Return method read error.");
-                    }
-                    amqp_destroy_message(&Message);
-                    break;
-                case AMQP_CHANNEL_CLOSE_METHOD:
-                    // This shouldn't generally happen. It may be possible to recover by
-                    // re-creating the channel and re-declaring the queue but the probability
-                    // is so low that it's not worthwhile.
-                    LOG_ERROR("Channel closed by MQ server.");
-                    throw std::runtime_error("Unexcpected MQ channel close.");
-                case AMQP_CONNECTION_CLOSE_METHOD:
-                    LOG_ERROR("Connection closed by MQ server.");
-                    throw std::runtime_error("Unexpected MQ connection close.");
                 }
-                LOG_ERROR("Unknown library error code: %u.", Frame.payload.method.id);
-                throw std::runtime_error("Unknown library error code.");
+                else if (Response.library_error == AMQP_STATUS_UNEXPECTED_STATE) {
+                    // Metadata packet
+                    LOG_DEBUG1("Received metadata packet.");
+                    if (amqp_simple_wait_frame(mConnection, &Frame) != AMQP_STATUS_OK) {
+                        LOG_ERROR("Wait for frame failed.");
+                        throw std::runtime_error("Wait for frame failed.");
+                    }
+                    switch (Frame.payload.method.id) {
+                    case AMQP_BASIC_ACK_METHOD:
+                        // Simple ACK packet. Currently we just ignore these.
+                        continue;
+                    case AMQP_BASIC_RETURN_METHOD:
+                        // A message we've published with the mandatory flag up was not received
+                        // by anyone. We may want to do something about it here if we ever have
+                        // a reason to set the mandatory flag. For now just read the message and
+                        // ignore it.
+                        Response = amqp_read_message(mConnection, Frame.channel, &Message, 0);
+                        if (Response.reply_type != AMQP_RESPONSE_NORMAL) {
+                            LOG_ERROR("Error occured when attempting to read return method message.");
+                            throw std::runtime_error("Return method read error.");
+                        }
+                        amqp_destroy_message(&Message);
+                        break;
+                    case AMQP_CHANNEL_CLOSE_METHOD:
+                        // This shouldn't generally happen. It may be possible to recover by
+                        // re-creating the channel and re-declaring the queue but the probability
+                        // is so low that it's not worthwhile.
+                        LOG_ERROR("Channel closed by MQ server.");
+                        throw std::runtime_error("Unexcpected MQ channel close.");
+                    case AMQP_CONNECTION_CLOSE_METHOD:
+                        LOG_ERROR("Connection closed by MQ server.");
+                        throw std::runtime_error("Unexpected MQ connection close.");
+                    }
+                    LOG_ERROR("Unknown library error code: %u.", Frame.payload.method.id);
+                    throw std::runtime_error("Unknown library error code.");
+                }
+                else {
+                    LOG_ERROR("Unknown library staus code: %u.", Response.reply_type);
+                    throw std::runtime_error("Unknown library status code.");
+                }
             }
             else {
-                LOG_ERROR("Unknown library staus code: %u.", Response.reply_type);
-                throw std::runtime_error("Unknown library status code.");
+                LOG_ERROR("Unknown reply received by consumer.");
+                throw std::runtime_error("Unknown consumer reply.");
+            }
+
+            amqp_maybe_release_buffers(mConnection);
+        }
+        catch (std::runtime_error&) {
+            // If the recovery attempt flag is up, keep the thread alive.
+            // The next iteration of the loop will try to reconnect.
+            Close();
+            if (mcAttemptRecover & 0x01) {
+                LOG_ERROR("Disconnected from message queue, will attempt to reconnect.");
+            }
+            else {
+                throw;
             }
         }
-        else {
-            LOG_ERROR("Unknown reply received by consumer.");
-            throw std::runtime_error("Unknown consumer reply.");
-        }
-
-        amqp_maybe_release_buffers(mConnection);
     }
     for (j = 0; j < mHandlers.size(); j++) {
         for (i = 0; i < mHandlers[j].pHandlers.size(); i++) {
@@ -333,6 +489,11 @@ void MQConnection::Run()
 void MQConnection::Send(uint32_t dwChannel, const uint8_t* bufData, uint32_t cbData, const std::string* pstrRecipient)
 {
     LOG_DEBUG0("Called.");
+    if (!mbIsConnected) {
+        LOG_ERROR("MQ connection not open.");
+        throw std::runtime_error("MQ connection not open.");
+    }
+
     madwSendersWaiting++;
     LOCK_MQCONNECTION;
     amqp_basic_properties_t Properties = { 0 };
@@ -355,9 +516,26 @@ void MQConnection::Send(uint32_t dwChannel, const uint8_t* bufData, uint32_t cbD
         &Properties,
         Message);
     if (rv != AMQP_STATUS_OK) {
-        LOG_ERROR("Failed to publish message (code=%d).", rv);
-        madwSendersWaiting--;
-        throw std::runtime_error("Publish failed.");
+        if (mcAttemptRecover & 0x02) {
+            LOG_WARNING("Failed to publish message, attempting to reconnect to MQ.");
+            Close();
+            Reconnect();
+            rv = amqp_basic_publish(mConnection,
+                dwChannel,
+                // This is not reversed. If a recipient *is* specified then we need to use the
+                // default exchange instead of the fanout.
+                amqp_cstring_bytes(pstrRecipient ? "" : pChannelDetails->strExchange.c_str()),
+                amqp_cstring_bytes(pstrRecipient ? pstrRecipient->c_str() : pChannelDetails->strRouteKey.c_str()),
+                0,
+                0,
+                &Properties,
+                Message);
+        }
+        if (rv != AMQP_STATUS_OK) {
+            LOG_ERROR("Failed to publish message (code=%d).", rv);
+            madwSendersWaiting--;
+            throw std::runtime_error("Publish failed.");
+        }
     }
     madwSendersWaiting--;
     LOG_DEBUG1("Published message.");
