@@ -37,6 +37,12 @@ public:
     };
 
     /**
+     *  Create a new MQConnection objet without actually establishing
+     *  a connection.
+     */
+    MQConnection();
+
+    /**
      *  Initialize a connection to a world MQ server.
      *  @param dwWorldId World ID to associate the connection to
      *  @param strMqServer Server host name or IP address
@@ -75,6 +81,57 @@ public:
     ~MQConnection();
 
     /**
+    *  Initialize a connection to a world MQ server.
+    *  @param dwWorldId World ID to associate the connection to
+    *  @param strMqServer Server host name or IP address
+    *  @param wMqPort Port of the MQ servr
+    *  @param strUsername Username to login with
+    *  @param strPassword Password to login with
+    *  @param strVHost Virtual host to use
+    *  @param bUseSSL Whether to secure the connection with SSL
+    *  @param bVerifyPeer Whether to verify the server certificate
+    *  @param bufCACert CA certificate (used if bVerfifyPeer is enabled)
+    *  @param cbCACert Size of bufCACert in bytes
+    *  @param bufClientCert Client certificate to present (optional)
+    *  @param cbClientCert Size of bufClientCert in bytes
+    *  @param bufClientKey Private key matching the client certificate
+    *  @param cbClientKey Size of bufClientKey in bytes.
+    */
+    void Connect(uint32_t dwWorldId,
+        const std::string& strMqServer,
+        uint16_t wMqPort,
+        const std::string& strUsername,
+        const std::string& strPassword,
+        const std::string& strVHost,
+        uint32_t dwChannel,
+        const std::string& strExchange,
+        const std::string& strQueueName,
+        const std::string& strRouteKey,
+        bool bUseSSL,
+        bool bVerifyPeer,
+        const std::string& strCACert,
+        const std::string& strClientCert,
+        const std::string& strClientKey);
+
+    /**
+     *  Restore a previously closed connection.
+     *  This should be called to recover if the connection is unexpectedly terminated.
+     *  @param bRestoreChannels Attempt to restore listening channels, if false list will be truncated
+     */
+    void Reconnect(bool bRestoreChannels = true);
+
+    /**
+     *  Close the existing MQ connection.
+     */
+    void Close();
+
+    /**
+     *  Check if there is an active connection to the MQ server.
+     *  @return True if connection is established
+     */
+    bool IsConnected() const;
+
+    /**
      *  Open a new channel and listen on a specific queue.
      *  @param dwChannel Channel ID to assign for this listener
      *  @param strQueueName Queue name to listen on
@@ -103,6 +160,19 @@ public:
      *  @return World ID
      */
     uint32_t GetWorldId() const;
+
+    /**
+     *  Check the auto-recovery flag. If set and the connection is broken
+     *  the handler thread will automatically attempt to re-establish it.
+     *  @return Current auto-recovery flag
+     */
+    uint8_t CheckAutoRecover() const;
+
+    /**
+     *  Sets the auto-recovery flag.
+     *  @param Auto-recovery flag to set
+     */
+    void SetAutoRecover(uint8_t cAutoRecover);
 
     /**
      *  Assign a new handler to the connection. When a message is received
@@ -182,11 +252,27 @@ public:
 
 private:
 
+    // Connection details backup used by Reconnect()
+    std::string mstrMqServer;
+    uint16_t mwMqPort;
+    std::string mstrUsername;
+    std::string mstrPassword;
+    std::string mstrVHost;
+    bool mbUseSSL;
+    bool mbVerifyPeer;
+    std::string mstrCACert;
+    std::string mstrClientCert;
+    std::string mstrClientKey;
+
     /// World ID associated with this connection
     uint32_t mdwWorldId;
     /// Internal handles used by the AMQP library to identify the connection
     amqp_connection_state_t mConnection;
     amqp_socket_t* mSocket;
+    /// Do we currently have an open connection
+    bool mbIsConnected;
+    /// Whether we attempt to recover if the connection is broken (1 = only receive, 2 = only send, 3 = both)
+    uint8_t mcAttemptRecover;
     /// Currently open channels
     std::vector<OpenChannel> mOpenChannels;
     /// List of message handlers registered with this connection
