@@ -302,6 +302,7 @@ anniversary.spawnNM = function(player, npc)
             DespawnMob(nm:getID())
         end)
 
+        --[[ TODO fix this?
         nm:addListener("TAKE_DAMAGE", "DMG_Anni2022", function(nm, amount, target)
             if target and target:isPet() then
                 -- Insta-death any pet that does dmg and increment fastcast for your insolence
@@ -319,6 +320,7 @@ anniversary.spawnNM = function(player, npc)
                 end)
             end
         end)
+        ]]
 
         -- join whole alliance to confrontation event
         for _,member in pairs(party) do
