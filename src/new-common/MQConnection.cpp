@@ -97,6 +97,7 @@ void MQConnection::Connect(uint32_t dwWorldId,
     }
 
     mdwWorldId = dwWorldId;
+    mstrMqServer = strMqServer;
     mwMqPort = wMqPort;
     mstrUsername = strUsername;
     mstrPassword = strPassword;
