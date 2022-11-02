@@ -68,6 +68,7 @@ namespace message
     std::shared_ptr<MapMQHandler> g_handler = nullptr;
     bool g_being_closed = false;
     RPCMapper* g_mapper = nullptr;
+    std::recursive_timed_mutex local_mq_mutex;
 
     void route_message(uint8* msg)
     {
@@ -184,7 +185,12 @@ namespace message
 
             if (broadcast) {
                 ShowDebug("Message:  -> sending broadcast\n");
-                g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
+                try {
+                    g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
+                }
+                catch (std::runtime_error&) {
+                    ShowError("Messsage: connection to MQ failed, broadcast message not sent\n");
+                }
             }
             else {
                 while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -213,7 +219,12 @@ namespace message
                             *reinterpret_cast<uint32*>(extra) = Sql_GetUIntData(SqlHandle, 2);
                         }
 
-                        g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
+                        try {
+                            g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
+                        }
+                        catch (std::runtime_error&) {
+                            ShowError("Messsage: connection to MQ failed, message not sent\n");
+                        }
                     }
                     else {
                         ShowDebug("Message:  -> loopback\n");
@@ -229,7 +240,7 @@ namespace message
         while (!message_queue.empty())
         {
             g_mqconnection->IncrementHighPriorityThreadsWaiting();
-            std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
+            std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
             while (!lk.try_lock_for(std::chrono::seconds(1))) {
                 if (map_doing_final) {
                     return;
@@ -1022,14 +1033,6 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
-        g_mqconnection->IncrementHighPriorityThreadsWaiting();
-        std::unique_lock<std::recursive_timed_mutex> lk(*g_mqconnection->GetMutex(), std::defer_lock);
-        while (!lk.try_lock_for(std::chrono::seconds(1))) {
-            if (map_doing_final) {
-                return;
-            }
-        }
-        g_mqconnection->DecrementHighPriorityThreadsWaiting();
         uint8 stub;
 
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
@@ -1067,7 +1070,17 @@ namespace message
             packet ? (uint8 *)*packet : &stub,
             packet ? packet->length() : 0,
             true);
-        // And of course send to ZMQ for other servers
-        message_queue.push(std::shared_ptr<uint8>(msgdata));
+        // Only bother sending to MQ for other servers if we're connected to MQ
+        if (g_mqconnection->IsConnected()) {
+            g_mqconnection->IncrementHighPriorityThreadsWaiting();
+            std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
+            while (!lk.try_lock_for(std::chrono::seconds(1))) {
+                if (map_doing_final) {
+                    return;
+                }
+            }
+            g_mqconnection->DecrementHighPriorityThreadsWaiting();
+            message_queue.push(std::shared_ptr<uint8>(msgdata));
+        }
     }
 };

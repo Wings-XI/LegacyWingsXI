@@ -299,7 +299,7 @@ void WorldManager::LoadWorlds()
     mbWorldListLoaded = true;
 }
 
-void WorldManager::SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMessage, uint32_t cbMessage)
+bool WorldManager::SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMessage, uint32_t cbMessage)
 {
     if (!mbWorldListLoaded) {
         LOG_INFO("World list not loaded yet, trying to load now.");
@@ -312,7 +312,14 @@ void WorldManager::SendMessageToWorld(uint32_t dwWorldID, const uint8_t* bufMess
         LOG_ERROR("World ID not found in list.");
         throw std::runtime_error("World ID not found.");
     }
-    mmapWorldList[dwWorldID].pMQConn->Send(1, bufMessage, cbMessage);
+    try {
+        mmapWorldList[dwWorldID].pMQConn->Send(1, bufMessage, cbMessage);
+    }
+    catch (std::runtime_error&) {
+        LOG_ERROR("MQ connection to world server failed, world server will not be notified.");
+        return false;
+    }
+    return true;
 }
 
 std::shared_ptr<WorldDBConnection> WorldManager::GetWorldDBConnection(uint32_t dwWorldID)
