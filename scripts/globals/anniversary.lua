@@ -2,6 +2,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/zone")
+require("scripts/globals/npc_util")
 
 anniversary = {}
 
@@ -111,7 +112,7 @@ anniversary.onTrigger = function(player, npc)
                             partymember:ChangeMusic(1, 0)
                             partymember:ChangeMusic(2, 101)
                             partymember:ChangeMusic(3, 102)
-                            if not partymember:isAlive() then partymember:sendRaise(3) end
+                            if not partymember:isAlive() then partymember:sendRaise(5) end
                         end
                     end
                 end
@@ -126,11 +127,15 @@ anniversary.onTrigger = function(player, npc)
             local dropCount = 0
             local dropCountHQ = 0
             local HQdrops = {}
-            local HQdroplist = anniversary.globalHQdropitems2022
+            local HQdroplist = {}
             local NQdroplist = anniversary.globalNQdropitems2022
+            for i=1,#anniversary.globalHQdropitems2022 do
+                HQdroplist[#HQdroplist+1] = anniversary.globalHQdropitems2022[i]
+            end
             for i=1,#zoneInfo.HQdropitems do
                 HQdroplist[#HQdroplist+1] = zoneInfo.HQdropitems[i]
             end
+
             local randStartHQdrops = 1
 
             -- event complete, remove status effects and distribute loot
@@ -144,6 +149,22 @@ anniversary.onTrigger = function(player, npc)
                     globalHQcount = globalHQcount + 1
                 end
             end
+            -- guaranteed hq drop if player has _all_ drops for this location
+            local hasAllDrops = true
+            i = 0
+            while i < #HQdroplist do
+                i = i + 1
+                if not player:hasItem(HQdroplist[i]) then
+                    hasAllDrops = false
+                end
+            end
+            i = 0
+            while i < #anniversary.globalNQdropitems2022 do
+                i = i + 1
+                if not player:hasItem(anniversary.globalNQdropitems2022[i]) then
+                    hasAllDrops = false
+                end
+            end
             local HQdropRate = 150 + utils.clamp(AllianceSize * 8, 0, 100) + globalHQcount * 50
             for _,member in pairs(party) do
                 if member:getZoneID() == npc:getZoneID() then
@@ -153,11 +174,22 @@ anniversary.onTrigger = function(player, npc)
                     member:ChangeMusic(1, 0)
                     member:ChangeMusic(2, 101)
                     member:ChangeMusic(3, 102)
-                    if not member:isAlive() then member:sendRaise(3) end
+                    if not member:isAlive() then member:sendRaise(5) end
 
-                    member:setCharVar("Anni2022_FightReady", 0)
+                    -- if you were part of a group that started the fight, you can just do it as much as you want now
+                    -- free sj items!
+                    -- member:setCharVar("Anni2022_FightReady", 0)
+
+                    -- spam nq drops directly to each alliance member
+                    dropCount = 0
+                    while dropCount < #NQdroplist do
+                        dropCount = dropCount + 1
+                        if not npcUtil.giveItem(member, { {NQdroplist[dropCount], math.random(1,10)} } ) then
+                            dropCount = #NQdroplist + 1
+                        end
+                    end
                     local randRoll = math.random(1000)
-                    if randRoll < HQdropRate and dropCountHQ < AllianceSize then
+                    if (randRoll < HQdropRate and dropCountHQ < AllianceSize) or (member:getName() == player:getName() and hasAllDrops) then
                         dropCountHQ = dropCountHQ + 1
                         local checkedHQs = 0
                         local foundHQ = false
@@ -169,23 +201,17 @@ anniversary.onTrigger = function(player, npc)
                                 randStartHQdrops = (randStartHQdrops % #HQdroplist) + 1
                                 checkedHQs = checkedHQs + 1
                             else
-                                player:PrintToPlayer("You get a prize (in the treasure pool)!", 0xD)
+                                member:PrintToPlayer("You get a prize (in the treasure pool)!", 0xD)
                                 foundHQ = true
                             end
                         end
                         if foundHQ == false then
-                            player:PrintToPlayer("You have all the HQ drops, your friends get a prize (in the treasure pool)!", 0xD)
+                            member:PrintToPlayer("You have all the HQ drops, your friends get a prize (in the treasure pool)!", 0xD)
                         end
                         -- either chosen specifically for this player, or the original random index
                         HQdrops[dropCountHQ] = HQdroplist[randStartHQdrops]
                     end
                 end
-            end
-            -- spam 4 nq drops per alliance member
-            dropCount = 0
-            while dropCount < AllianceSize * 4 do
-                player:addTreasure(NQdroplist[math.random(#NQdroplist)], npc)
-                dropCount = dropCount + 1
             end
             -- then drop the spawn items (2 per player up to 6)
             dropCount = 0
@@ -206,7 +232,7 @@ anniversary.onTrigger = function(player, npc)
             local playerparty = player:getAlliance()
             for _,partymember in pairs(playerparty) do
                 if partymember:getZoneID() == npc:getZoneID() then
-                    partymember:PrintToPlayer(string.format("%s: Prepare youself for combat...Talk to me when you are done.", npc:getName()), 0xD)
+                    partymember:PrintToPlayer(string.format("%s: Prepare youself for combat...Talk to me when you are done and again after that to start the event immediately (no more sj items required).", npc:getName()), 0xD)
                 end
             end
             return 2
@@ -243,20 +269,22 @@ anniversary.spawnNM = function(player, npc)
         SpawnMob(nm:getID())
         -- set nm level based on number of players in party, no increase past 12 members
         nm:setMobLevel(zoneInfo.playerlvl - 2 + utils.clamp(npc:getLocalVar("Anni2022_AllianceSize") / 2, 0, 6))
-        nm:setMod(tpz.mod.HPP, npc:getLocalVar("Anni2022_AllianceSize") * 3)
-        nm:setMod(tpz.mod.REGAIN, npc:getLocalVar("Anni2022_AllianceSize") * 30)
+        nm:setMod(tpz.mod.HPP, npc:getLocalVar("Anni2022_AllianceSize") * 5)
+        nm:setMod(tpz.mod.REGAIN, npc:getLocalVar("Anni2022_AllianceSize") * 100)
         nm:setPos(zoneInfo.spawnPos[1], zoneInfo.spawnPos[2], zoneInfo.spawnPos[3], zoneInfo.spawnPos[4])
         nm:setMobMod(tpz.mobMod.EXP_BONUS, -100)
         nm:setMobMod(tpz.mobMod.NO_DROPS, 1)
         nm:setMobMod(tpz.mobMod.CHARMABLE, 0)
         nm:setMobMod(tpz.mobMod.GIL_MAX, -1)
-        nm:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+        nm:addMod(tpz.mod.SILENCERES, 1000)
+        nm:addMod(tpz.mod.SPELLINTERRUPT, 100)
+        -- nm:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
         nm:addStatusEffect(tpz.effect.CONFRONTATION, 10, 0, 600)
         nm:updateClaim(player)
         nm:engage(player:getShortID())
         -- immobilized for a bit of time
         nm:addStatusEffect(tpz.effect.BIND, 0, 0, 30)
-        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 30)
+        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 10)
         nm:setTP(0)
         nm:setHP(nm:getMaxHP())
         nm:setMobMod(tpz.mobMod.MAGIC_COOL, 30 - npc:getLocalVar("Anni2022_AllianceSize"))
@@ -268,9 +296,28 @@ anniversary.spawnNM = function(player, npc)
         end)]]
 
         nm:addListener("DEATH", "DEATH_Anni2022", function(nm)
+            nm:removeListener("DMG_Anni2022")
             nm:removeListener("DISENGAGE_Anni2022")
             nm:removeListener("DEATH_Anni2022")
             DespawnMob(nm:getID())
+        end)
+
+        nm:addListener("TAKE_DAMAGE", "DMG_Anni2022", function(nm, amount, target)
+            if target and target:isPet() then
+                -- Insta-death any pet that does dmg and increment fastcast for your insolence
+                local fastcast = utils.clamp(nm:getMod(tpz.mod.UFASTCAST) + 50, 0, 99)
+                local attp = utils.clamp(nm:getMod(tpz.mod.ATTP) + 50, 0, 200)
+                nm:setMod(tpz.mod.UFASTCAST, 99)
+                if nm:getMP() > 1000 then
+                    nm:castSpell(367, target)
+                else
+                    target:setHP(0)
+                end
+                nm:timer(1000, function(nm)
+                    nm:setMod(tpz.mod.UFASTCAST, fastcast)
+                    nm:setMod(tpz.mod.ATTP, attp)
+                end)
+            end
         end)
 
         -- join whole alliance to confrontation event
@@ -313,7 +360,7 @@ anniversary.spawnNM = function(player, npc)
                             if partymember:getZoneID() == member:getZoneID() then
                                 -- give time if a TP move killed the player
                                 partymember:timer(10000, function(partymember)
-                                    partymember:sendRaise(3)
+                                    partymember:sendRaise(5)
                                     partymember:PrintToPlayer(string.format("Anniversary Event: Full wipe, eh? Everything is ready for you to try again immediately!"), 0xD)
                                 end)
                             end
