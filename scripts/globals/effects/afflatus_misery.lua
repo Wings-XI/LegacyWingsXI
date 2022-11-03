@@ -11,7 +11,7 @@ function onEffectGain(target, effect)
 
     if (target:hasStatusEffect(tpz.effect.AUSPICE)) then
         local power = target:getStatusEffect(tpz.effect.AUSPICE):getPower()
-        target:addMod(tpz.mod.ENSPELL, 18)
+        target:addMod(tpz.mod.ENSPELL, 19)
         target:addMod(tpz.mod.ENSPELL_DMG, power)
     end
 end
