@@ -16,9 +16,10 @@ end
 function onUseAbility(player, target, ability)
 
     local regenbonus = 0
+    --[[Fix for gitlab issue #2889
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
         regenbonus = 3 * math.floor((player:getMainLvl() - 10) / 10)
-    end
+    end]]
 
     local helixbonus = 0
     if (player:getMainJob() == tpz.job.SCH and player:getMainLvl() >= 20) then
