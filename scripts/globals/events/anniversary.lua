@@ -95,32 +95,7 @@ anniversary.onTrigger = function(player, npc)
     if Anniversary_Event == 2022 then
         local zoneInfo = anniversary.zoneinfo2022[player:getZoneID()]
         nm = GetMobByID(zoneInfo.nmId)
-        if nm:isAlive() or nm:getStatus() ~= 2 then
-            if not nm:isEngaged() and nm:isAlive() then
-                -- unlikely, just in case somehow the NM stays up and out of combat
-                player:PrintToPlayer(string.format("%s: Something bugged with previous fight? Despawning mob.", npc:getName()), 0xD)
-                DespawnMob(nm:getID())
-                local playerparty = player:getAlliance()
-                for _,partymember in pairs(playerparty) do
-                    if partymember:getZoneID() == npc:getZoneID() then
-                        -- reward only given if talking to the npc when mob is dead and player still has lvl sync effect
-                        if partymember:hasStatusEffect(143) then
-                            partymember:removeListener("DEATH_Anni2022")
-                            partymember:delStatusEffect(143)
-                            partymember:delStatusEffect(276)
-                            partymember:ChangeMusic(0, 0)
-                            partymember:ChangeMusic(1, 0)
-                            partymember:ChangeMusic(2, 101)
-                            partymember:ChangeMusic(3, 102)
-                            if not partymember:isAlive() then partymember:sendRaise(5) end
-                        end
-                    end
-                end
-            else
-                player:PrintToPlayer(string.format("%s: Please wait until mob is dead and gone, then talk to me again.", npc:getName()), 0xD)
-            end
-            return 1
-        elseif player:hasStatusEffect(143) and nm:isDead() then
+        if player:hasStatusEffect(143) and nm:isDead() then
             local party = player:getAlliance()
             -- distributes pop items on successful kill
             local randStartNQDrops = math.random(#anniversary.spawnitems2022)
@@ -227,6 +202,31 @@ anniversary.onTrigger = function(player, npc)
                 player:addTreasure(HQdrops[dropCount], npc)
             end
             return 1
+        elseif nm:isAlive() or nm:getStatus() ~= 2 then
+            if not nm:isEngaged() and nm:isAlive() then
+                -- unlikely, just in case somehow the NM stays up and out of combat
+                player:PrintToPlayer(string.format("%s: Something bugged with previous fight? Despawning mob.", npc:getName()), 0xD)
+                DespawnMob(nm:getID())
+                local playerparty = player:getAlliance()
+                for _,partymember in pairs(playerparty) do
+                    if partymember:getZoneID() == npc:getZoneID() then
+                        -- reward only given if talking to the npc when mob is dead and player still has lvl sync effect
+                        if partymember:hasStatusEffect(143) then
+                            partymember:removeListener("DEATH_Anni2022")
+                            partymember:delStatusEffect(143)
+                            partymember:delStatusEffect(276)
+                            partymember:ChangeMusic(0, 0)
+                            partymember:ChangeMusic(1, 0)
+                            partymember:ChangeMusic(2, 101)
+                            partymember:ChangeMusic(3, 102)
+                            if not partymember:isAlive() then partymember:sendRaise(5) end
+                        end
+                    end
+                end
+            else
+                player:PrintToPlayer(string.format("%s: Please wait until mob is dead and gone, then talk to me again.", npc:getName()), 0xD)
+            end
+            return 1
         elseif player:getCharVar("Anni2022_FightReady") == 1 then
             -- player:PrintToArea("Prepare youself for combat...Talk to me when you are done.", tpz.msg.channel.SAY, tpz.msg.area.SAY, npc:getName())
             local playerparty = player:getAlliance()
@@ -295,11 +295,29 @@ anniversary.spawnNM = function(player, npc)
             DespawnMob(zoneInfo.nmId)
         end)]]
 
+        if player:getZoneID() == tpz.zone.KONSCHTAT_HIGHLANDS then
+            -- Gwynn causing crashes when using TP moves :(
+            nm:addListener("COMBAT_TICK", "ABILITY_Anni2022", function(mob, ability)
+                if mob:getTP() > 800 then
+                    -- skill list includes bad animations, forcing two moves that hopefully don't crash clients
+                    if math.random(1000) < 100 then
+                        mob:useMobAbility(710) -- charm
+                    else
+                        mob:useMobAbility(1821) -- amplification
+                    end
+                    mob:setTP(0)
+                end
+                mob:setMod(tpz.mod.REGAIN, 100)
+            end)
+        end
+
         nm:addListener("DEATH", "DEATH_Anni2022", function(nm)
             nm:removeListener("DMG_Anni2022")
             nm:removeListener("DISENGAGE_Anni2022")
             nm:removeListener("DEATH_Anni2022")
-            DespawnMob(nm:getID())
+            nm:removeListener("ABILITY_Anni2022")
+            -- Don't insta-despawn, just let loot be collected while it's despawning, gives people a chance to get their loot before the next fight starts
+            -- DespawnMob(nm:getID())
         end)
 
         --[[ TODO fix this?
@@ -323,8 +341,12 @@ anniversary.spawnNM = function(player, npc)
         ]]
 
         -- join whole alliance to confrontation event
+        -- join party of the initator first as a workaround for mea
+        player:addPartyEffect(143, zoneInfo.playerlvl, 0, 0) -- Add Level Restriction
+        player:addPartyEffect(276, 10, 0, 0) -- Add Confrontation Status to allow attacking the mobs
         for _,member in pairs(party) do
             if member:getZoneID() == npc:getZoneID() then
+                -- printf("Anni2022_SpawnNM starting for member: %s", member:getName())
                 nm:updateEnmity(member)
                 member:delStatusEffect(tpz.effect.WEAKNESS)
                 member:addStatusEffect(143, zoneInfo.playerlvl, 0, 0) -- Add Level Restriction
@@ -370,6 +392,7 @@ anniversary.spawnNM = function(player, npc)
                         -- DespawnMob(zoneInfo.nmId)
                     end
                 end)
+                -- printf("Anni2022_SpawnNM Complete for member: %s", member:getName())
             end
         end
     end

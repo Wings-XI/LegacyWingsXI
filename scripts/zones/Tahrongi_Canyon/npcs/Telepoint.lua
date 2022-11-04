@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Tahrongi_Canyon/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require("scripts/globals/settings")
-require("scripts/globals/anniversary")
+require("scripts/globals/events/anniversary")
 -----------------------------------
 
 function onTrade(player, npc, trade)
