@@ -45,10 +45,11 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
-    mob:setTP(0)
 end
 
 function onMobEngaged(mob, target)
+    mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setTP(0)
     local ID = zones[zone]
     local mobX = mob:getXPos()
     local mobY = mob:getYPos()
@@ -79,7 +80,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob)
-    mob:setMod(tpz.mod.REGAIN, 500)
     local ID = zones[zone]
     local mobX = mob:getXPos()
     local mobY = mob:getYPos()
@@ -114,6 +114,10 @@ function onMobWeaponSkillPrepare(mob, target)
     local putridbreath = baseTPMoveChance
     local vampiriclash = baseTPMoveChance
     local extremelybadbreath = baseTPMoveChance
+    -- "Cirrate Christelle can use its special ability Extremely Bad Breath multiple times, though usually not more than once during the course of a quick fight."
+    if mob:getLocalVar("lastextremelybadbreath") > os.time() - 30 then
+        extremelybadbreath = 0
+    end
 
     -- Set Probabilities of Each Skill Based on NM Kill Status
     -- https://wiki-ffo-jp.translate.goog/html/25159.html?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=it&_x_tr_pto=wapp
@@ -132,12 +136,12 @@ function onMobWeaponSkillPrepare(mob, target)
         vampiriclash = baseTPMoveChance * 2
     end
 
-    local totalchance = fragrantbreath + miasmicbreath + putridbreath + vampiriclash
     if GetMobByID(ID.mobs.Dragontrap_1):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_2):getStatus() == 2 and GetMobByID(ID.mobs.Dragontrap_3):getStatus() == 2 then
         -- reduces chance of extremely bad breath
-        totalchance = totalchance * 2
+        extremelybadbreath = extremelybadbreath / 2
     end
-    local randomchance = math.random(1, totalchance + extremelybadbreath)
+    local totalchance = fragrantbreath + miasmicbreath + putridbreath + vampiriclash + extremelybadbreath
+    local randomchance = math.random(1, totalchance)
 
     -- Choose Skill
     if randomchance >= (totalchance - fragrantbreath) then
@@ -149,6 +153,7 @@ function onMobWeaponSkillPrepare(mob, target)
     elseif randomchance >= (totalchance - (fragrantbreath + miasmicbreath + putridbreath + vampiriclash)) then
         return 1611 -- Vampiric Lash
     else
+        mob:setLocalVar("lastextremelybadbreath", os.time())
         return 1610 -- Extremely Bad Breath remainder of random range
     end
 end

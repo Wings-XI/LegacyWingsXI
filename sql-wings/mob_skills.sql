@@ -1186,9 +1186,9 @@ INSERT INTO `mob_skills` VALUES(1574, 864, 'painful_whip', 0, 7.0, 2000, 1500, 4
 INSERT INTO `mob_skills` VALUES(1575, 865, 'suctorial_tentacle', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1605, 63, 'miasmic_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1607, 63, 'fragrant_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1609, 63, 'putrid_breath', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1609, 63, 'putrid_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1610, 63, 'extremely_bad_breath', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1611, 61, 'vampiric_lash', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1611, 61, 'vampiric_lash', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1617, 325, 'blow', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1618, 328, 'uppercut', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1619, 331, 'attractant', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
