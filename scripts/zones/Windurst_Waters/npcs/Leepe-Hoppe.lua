@@ -43,9 +43,6 @@ function onTrigger(player, npc)
         player:startEvent(739)
     elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.AWAKENING_OF_THE_GODS and player:getCharVar("MissionStatus") == 5 and player:hasKeyItem(tpz.ki.BOOK_OF_THE_GODS)) then
         player:startEvent(742)
-    ---------------------------
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.FOOD_FOR_THOUGHT) == QUEST_ACCEPTED) then
-        player:startEvent(311)
 
     -- Tuning In
     elseif tuningIn == QUEST_AVAILABLE
@@ -70,51 +67,57 @@ function onTrigger(player, npc)
         player:getFameLevel(NORG) >= 4) then -- Fenrir flag event
 
         player:startEvent(842, 0, 1125)
-    elseif (moonlitPath == QUEST_ACCEPTED) then
-        if (player:hasKeyItem(tpz.ki.MOON_BAUBLE)) then -- Default text after acquiring moon bauble and before fighting Fenrir
-            player:startEvent(845, 0, 1125, 334)
-        elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in
-            local availRewards = 0
-            if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
-                player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
+    -- The Moonlit Path and Other Fenrir Stuff (if they have the bauble, it's just flavor text with less priority over other quest progress)
+    elseif (not player:hasKeyItem(tpz.ki.MOON_BAUBLE)) then
+        if (moonlitPath == QUEST_ACCEPTED) then
+            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in
+                local availRewards = 0
+                if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
+                    player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
 
-            player:startEvent(846, 0, 13399, 1208, 1125, availRewards, 18165, 13572)
-        elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_FLAMES) and
-            player:hasKeyItem(tpz.ki.WHISPER_OF_TREMORS) and
-            player:hasKeyItem(tpz.ki.WHISPER_OF_TIDES) and
-            player:hasKeyItem(tpz.ki.WHISPER_OF_GALES) and
-            player:hasKeyItem(tpz.ki.WHISPER_OF_FROST) and
-            player:hasKeyItem(tpz.ki.WHISPER_OF_STORMS)) then
+                player:startEvent(846, 0, 13399, 1208, 1125, availRewards, 18165, 13572)
+            elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_FLAMES) and
+                player:hasKeyItem(tpz.ki.WHISPER_OF_TREMORS) and
+                player:hasKeyItem(tpz.ki.WHISPER_OF_TIDES) and
+                player:hasKeyItem(tpz.ki.WHISPER_OF_GALES) and
+                player:hasKeyItem(tpz.ki.WHISPER_OF_FROST) and
+                player:hasKeyItem(tpz.ki.WHISPER_OF_STORMS)) then
 
-            -- Collected the whispers
-            player:startEvent(844, 0, 1125, 334)
-        else -- Talked to after flag without the whispers
-            player:startEvent(843, 0, 1125)
+                -- Collected the whispers
+                player:startEvent(844, 0, 1125, 334)
+            else -- Talked to after flag without the whispers
+                player:startEvent(843, 0, 1125)
+            end
+        elseif (moonlitPath == QUEST_COMPLETED) then
+            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- Repeat turn-in
+                local availRewards = 0
+                if (player:hasItem(18165)) then availRewards = availRewards + 1; end -- Fenrir's Stone
+                if (player:hasItem(13572)) then availRewards = availRewards + 2; end -- Fenrir's Cape
+                if (player:hasItem(13138)) then availRewards = availRewards + 4; end -- Fenrir's Torque
+                if (player:hasItem(13399)) then availRewards = availRewards + 8; end -- Fenrir's Earring
+                if (player:hasItem(1208)) then availRewards = availRewards + 16; end -- Ancient's Key
+                if (player:hasSpell(297)) then availRewards = availRewards + 64; end -- Pact
+                if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
+                    player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
+
+                player:startEvent(850, 0, 13399, 1208, 1125, availRewards, 18165, 13572)
+            elseif (realday ~= player:getCharVar("MoonlitPath_date")) then --24 hours have passed, flag a new fight
+                player:startEvent(848, 0, 1125, 334)
+            end
         end
-    elseif (moonlitPath == QUEST_COMPLETED) then
-        if (player:hasKeyItem(tpz.ki.MOON_BAUBLE)) then -- Default text after acquiring moon bauble and before fighting Fenrir
-            player:startEvent(845, 0, 1125, 334)
-        elseif (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- Repeat turn-in
-            local availRewards = 0
-            if (player:hasItem(18165)) then availRewards = availRewards + 1; end -- Fenrir's Stone
-            if (player:hasItem(13572)) then availRewards = availRewards + 2; end -- Fenrir's Cape
-            if (player:hasItem(13138)) then availRewards = availRewards + 4; end -- Fenrir's Torque
-            if (player:hasItem(13399)) then availRewards = availRewards + 8; end -- Fenrir's Earring
-            if (player:hasItem(1208)) then availRewards = availRewards + 16; end -- Ancient's Key
-            if (player:hasSpell(297)) then availRewards = availRewards + 64; end -- Pact
-            if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
-                player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
-
-            player:startEvent(850, 0, 13399, 1208, 1125, availRewards, 18165, 13572)
-        elseif (realday ~= player:getCharVar("MoonlitPath_date")) then --24 hours have passed, flag a new fight
-            player:startEvent(848, 0, 1125, 334)
-        end
+    ---------------------------
+    -- flavor text responses
+    ---------------------------
+    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.FOOD_FOR_THOUGHT) == QUEST_ACCEPTED) then
+        player:startEvent(311)
 
     elseif tuningIn == QUEST_ACCEPTED then
         player:startEvent(885, 0, 1696, 1697, 1698) -- Reminder to bring Magicked Steel Ingot, Spruce Lumber, Extra-fine File
 
     elseif tuningOut == QUEST_ACCEPTED then
         player:startEvent(889) -- Reminder to go help Ildy in Kazham
+    elseif (moonlitPath == QUEST_COMPLETED or moonlitPath == QUEST_ACCEPTED) then
+        player:startEvent(845, 0, 1125, 334) -- Default text after acquiring moon bauble and before fighting Fenrir
 
     else
         player:startEvent(345) -- Standard Dialogue?
