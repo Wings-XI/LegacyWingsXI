@@ -327,13 +327,12 @@ dynamis.dynaInfo =
         ejectPos = {154, -1, -170, 190, tpz.zone.BUBURIMU_PENINSULA},
         sjRestriction = true,
         sjRestrictionNPC = 16941676,
-        sjRestrictionNPCNumber = 4,
         sjRestrictionLocation =
         {
-            [1] = {-214.161, 15.360, -269.202, 54},
-            [2] = {620.425, 7.306, -266.427, 71},
-            [3] = {427.460, -0.308, 189.224, 50},
-            [4] = {320.489, -0.642, 366.648, 101},
+            {-214.161, 15.360, -269.202, 54},
+            {620.425, 7.306, -266.427, 71},
+            {427.460, -0.308, 189.224, 50},
+            {320.489, -0.642, 366.648, 101},
         }
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
@@ -352,20 +351,19 @@ dynamis.dynaInfo =
         ejectPos = { 18, -19, 162, 240, tpz.zone.QUFIM_ISLAND},
         sjRestriction = true,
         sjRestrictionNPC = 16945638,
-        sjRestrictionNPCNumber = 12,
         sjRestrictionLocation =
         {
-            [1] = {-264.498, -19.255, 401.465, 54},
-            [2] = {-77.771, -19.068, 258.666, 50},
-            [3] = {-137.127, -19.976, 228.789, 101},
-            [4] = {-61.647, -19.868, 152.935, 35},
-            [5] = {27.973, -20.270, 191.907, 195},
-            [6] = {107.445, -20.368, 149.587, 64},
-            [7] = {99.884, -19.557, 51.518, 27},
-            [8] = {-29.895, -21.095, -57.154, 209},
-            [9] = {88.474, -20.621, -49.333, 4},
-            [10] = {-192.540, -20.477, -11.055, 151},
-            [11] = {-340.976, -20.421, 31.154, 66},
+            {-264.498, -19.255, 401.465, 54},
+            {-77.771, -19.068, 258.666, 50},
+            {-137.127, -19.976, 228.789, 101},
+            {-61.647, -19.868, 152.935, 35},
+            {27.973, -20.270, 191.907, 195},
+            {107.445, -20.368, 149.587, 64},
+            {99.884, -19.557, 51.518, 27},
+            {-29.895, -21.095, -57.154, 209},
+            {88.474, -20.621, -49.333, 4},
+            {-192.540, -20.477, -11.055, 151},
+            {-340.976, -20.421, 31.154, 66},
         }
     },
     [tpz.zone.QUFIM_ISLAND] =
@@ -557,10 +555,11 @@ end
 
 dynamis.zoneOnInitialize = function(zone)
     local zoneId = zone:getID()
-    if dynamis.dynaInfo[zoneId].sjRestriction == true and dynamis.dynaInfo[zoneId].sjRestrictionNPC ~= nil then
-        local sjRestrictionNPC = GetNPCByID(dynamis.dynaInfo[zoneId].sjRestrictionNPC)
-        local pos = dynamis.dynaInfo[zoneId].sjRestrictionLocation[math.random(1, dynamis.dynaInfo[zoneId].sjRestrictionNPCNumber)]
-        sjRestrictionNPC:setPos(pos)
+    local dynaInfo = dynamis.dynaInfo[zoneId]
+    if dynaInfo.sjRestriction == true and dynaInfo.sjRestrictionNPC ~= nil then
+        local sjRestrictionNPC = GetNPCByID(dynaInfo.sjRestrictionNPC)
+        local randIndex = math.random(#dynaInfo.sjRestrictionLocation)
+        sjRestrictionNPC:setPos(dynaInfo.sjRestrictionLocation[randIndex])
         sjRestrictionNPC:setStatus(tpz.status.NORMAL)
     end
 end
@@ -577,7 +576,11 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
         player:updateHourglassExpireTime()
         player:timer(1000, function(player)
             player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, math.floor(GetDynaTimeRemaining(zoneId)/60), 1)
-            if player:dynaCurrencyAutoDropEnabled() == true then player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29) end
+            if player:dynaCurrencyAutoDropEnabled() == true then
+                player:PrintToPlayer("As the original registrant of this instance, Dynamis currencies will auto-drop to you when possible (use !currency to opt out).",29)
+                -- re-init zone via dynamis.lua
+                dynamis.zoneOnInitialize(player:getZone())
+            end
         end)
         if player:getCharVar("DynaInflictWeakness") == 1 then player:addStatusEffect(tpz.effect.WEAKNESS, 1, 3, 60*10) end
             player:setCharVar("DynaInflictWeakness", 0)

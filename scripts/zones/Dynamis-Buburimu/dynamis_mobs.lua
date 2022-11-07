@@ -82,10 +82,10 @@ mobList[zone] =
 [SMB+403] = { id =  SMB+403}, -- Manifest Icon      (044-Y)
 [SMB+404] = { id =  SMB+404}, -- Manifest Icon      (045-Y)
 [SMB+405] = { id =  SMB+405}, -- Manifest Icon      (046-Y)
-[SMB+417] = { id =  SMB+417}, -- Manifest Icon      (047-Y)
+[SMB+608] = { id =  SMB+608}, -- Manifest Icon      (047-Y)
 [SMB+418] = { id =  SMB+418}, -- Manifest Icon      (048-Y)
 [SMB+419] = { id =  SMB+419}, -- Manifest Icon      (049-Y)
-[SMB+608] = { id =  SMB+608}, -- Manifest Icon      (050-Y)
+[SMB+417] = { id =  SMB+417}, -- Manifest Icon      (050-Y) -- Shares ID with sj qm and causes client issues, swapped with 417
 -- Nightmare Mobs
 [DMB+155] = { id =  DMB+155}, -- Nightmare Crab
 [DMB+156] = { id =  DMB+156}, -- Nightmare Crab
@@ -496,10 +496,10 @@ mobList[zone][SMB+142].pos = {375.5005, -0.6350, -225.3975, 225 }
 mobList[zone][SMB+403].pos = {412.0664, 2.6627, -221.4059, 189  }
 mobList[zone][SMB+404].pos = {430.3526, 2.0774, -219.0766, 123  }
 mobList[zone][SMB+405].pos = {493.5782, 2.5840, -225.4034, 154  }
-mobList[zone][SMB+417].pos = {501.7607, 2.0000, -247.7523, 169  }
+mobList[zone][SMB+608].pos = {501.7607, 2.0000, -247.7523, 169  }
 mobList[zone][SMB+418].pos = {523.8189, 2.1778, -259.4799, 144  }
 mobList[zone][SMB+419].pos = {536.0930, 2.2397, -261.7803, 137  }
-mobList[zone][SMB+608].pos = {553.5475, 1.4175, -261.2966, 126  }
+mobList[zone][SMB+417].pos = {553.5475, 1.4175, -261.2966, 126  }
 -- Nightmare Crabs
 mobList[zone][DMB+155].pos = {-30.7958, 19.4184, -308.5479, 130 }
 mobList[zone][DMB+157].pos = {-31.1747, 15.8897, -278.6635, 168 }
@@ -511,9 +511,11 @@ mobList[zone][DMB+167].pos = {-89.9767, 16.1424, -234.8192, 48  }
 mobList[zone][DMB+169].pos = {-120.5364, 16.0000, -238.3332, 103}
 mobList[zone][DMB+171].pos = {-132.1700, 15.4754, -280.0170, 75 }
 mobList[zone][DMB+173].pos = {-111.2321, 20.0000, -321.6591, 99 }
+mobList[zone][DMB+174].pos = {-111.2321, 20.0000, -321.6591, 99 }
 -- Nightmare Dhalmels
-mobList[zone][DMB+174].pos = {147.0991, -13.8950, 83.2262, 91   }
+mobList[zone][DMB+175].pos = {147.0991, -13.8950, 83.2262, 91   }
 mobList[zone][DMB+176].pos = {184.7485, -14.7913, 70.9593, 80   }
+mobList[zone][DMB+177].pos = {184.7485, -14.7913, 70.9593, 80   }
 mobList[zone][DMB+178].pos = {173.1945, -15.7263, 105.4897, 231 }
 mobList[zone][DMB+180].pos = {168.6498, -17.3226, 97.7622, 245  }
 mobList[zone][DMB+182].pos = {164.7219, -20.3030, 142.5724, 240 }
@@ -688,10 +690,10 @@ mobList[zone][SMB+142].waves = { 1, nil, nil}
 mobList[zone][SMB+403].waves = { 1, nil, nil}
 mobList[zone][SMB+404].waves = { 1, nil, nil}
 mobList[zone][SMB+405].waves = { 1, nil, nil}
-mobList[zone][SMB+417].waves = { 1, nil, nil}
+mobList[zone][SMB+608].waves = { 1, nil, nil}
 mobList[zone][SMB+418].waves = { 1, nil, nil}
 mobList[zone][SMB+419].waves = { 1, nil, nil}
-mobList[zone][SMB+608].waves = { 1, nil, nil}
+mobList[zone][SMB+417].waves = { 1, nil, nil}
 mobList[zone][DMB+155].waves = { nil, 2, nil}
 mobList[zone][DMB+157].waves = { nil, 2, nil}
 mobList[zone][DMB+159].waves = { nil, 2, nil}
@@ -748,8 +750,7 @@ mobList[zone][DMB+287].waves = { nil, 2, nil}
 mobList[zone][DMB+572].waves = { nil, 2, nil}
 mobList[zone][DMB+574].waves = { nil, 2, nil}
 mobList[zone][DMB+576].waves = { nil, 2, nil}
-mobList[zone][DMB+174].waves = { nil, 2, nil}
-mobList[zone][DMB+176].waves = { nil, 2, nil}
+mobList[zone][DMB+175].waves = { nil, 2, nil}
 mobList[zone][DMB+178].waves = { nil, 2, nil}
 mobList[zone][DMB+180].waves = { nil, 2, nil}
 mobList[zone][DMB+182].waves = { nil, 2, nil}
@@ -832,10 +833,10 @@ mobList[zone][SMB+142].specificChildren = { true, DMB+149, DMB+120, DMB+139, DMB
 mobList[zone][SMB+403].specificChildren = { true, DMB+426, DMB+406                   } -- SMN, BRD                              (044-Y)
 mobList[zone][SMB+404].specificChildren = { true, DMB+407, DMB+412                   } -- BST, DRG                              (045-Y)
 mobList[zone][SMB+405].specificChildren = { true, DMB+422, DMB+423                   } -- DRK, DRK                              (046-Y)
-mobList[zone][SMB+417].specificChildren = { true, DMB+122, DMB+137                   } -- THF, WAR                              (047-Y)
+mobList[zone][SMB+608].specificChildren = { true, DMB+122, DMB+137                   } -- THF, WAR                              (047-Y)
 mobList[zone][SMB+418].specificChildren = { true, DMB+148, DMB+145, DMB+425, DMB+641 } -- Doo Peku the Fleetfoot, NIN, NIN, NIN (048-Y)
 mobList[zone][SMB+419].specificChildren = { true, DMB+123, DMB+424                   } -- THF, RNG                              (049-Y)
-mobList[zone][SMB+608].specificChildren = { true, DMB+131, DMB+642, DMB+124, DMB+406 } -- Ree Nata the Melomanic, BRD, PLD, PLD (050-Y)
+mobList[zone][SMB+417].specificChildren = { true, DMB+131, DMB+642, DMB+124, DMB+406 } -- Ree Nata the Melomanic, BRD, PLD, PLD (050-Y)
 -- Nightmare Mobs
 mobList[zone][DMB+155].specificChildren = { true, DMB+156                            } -- Nightmare Crab                        ( 062 )
 mobList[zone][DMB+157].specificChildren = { true, DMB+158                            } -- Nightmare Crab                        ( 063 )
@@ -893,15 +894,15 @@ mobList[zone][DMB+287].specificChildren = { true, DMB+288                       
 mobList[zone][DMB+572].specificChildren = { true, DMB+573                            } -- Nightmare Raven                       ( 115 )
 mobList[zone][DMB+574].specificChildren = { true, DMB+575                            } -- Nightmare Raven                       ( 116 )
 mobList[zone][DMB+576].specificChildren = { true, DMB+577                            } -- Nightmare Raven                       ( 117 )
-mobList[zone][DMB+174].specificChildren = { true, DMB+175                            } -- Nightmare Dhalmel                     ( 118 )
-mobList[zone][DMB+176].specificChildren = { true, DMB+177                            } -- Nightmare Dhalmel                     ( 119 )
+-- mobList[zone][DMB+174].specificChildren = { true, DMB+175                            } -- Nightmare Dhalmel                     ( 118 ) -- 174 is crab
+mobList[zone][DMB+175].specificChildren = { true, DMB+176, DMB+177                            } -- Nightmare Dhalmel                     ( 119 )
 mobList[zone][DMB+178].specificChildren = { true, DMB+179                            } -- Nightmare Dhalmel                     ( 120 )
 mobList[zone][DMB+180].specificChildren = { true, DMB+181                            } -- Nightmare Dhalmel                     ( 121 )
 mobList[zone][DMB+182].specificChildren = { true, DMB+183                            } -- Nightmare Dhalmel                     ( 122 )
 mobList[zone][DMB+184].specificChildren = { true, DMB+185                            } -- Nightmare Dhalmel                     ( 123 )
 mobList[zone][DMB+186].specificChildren = { true, DMB+187                            } -- Nightmare Dhalmel                     ( 124 )
 mobList[zone][DMB+188].specificChildren = { true, DMB+189, DMB+190                   } -- Nightmare Dhalmel                     ( 125 )
-mobList[zone][DMB+191].specificChildren = { true, DMB+192, DMB+193                   } -- Nightmare Dhalmel                     ( 126 )
+mobList[zone][DMB+191].specificChildren = { true, DMB+192                    } -- Nightmare Dhalmel                     ( 126 )  -- had urganite as child
 mobList[zone][DMB+443].specificChildren = { true, DMB+444, DMB+445                   } -- Nightmare Dhalmel                     ( 127 )
 mobList[zone][DMB+446].specificChildren = { true, DMB+447, DMB+448                   } -- Nightmare Dhalmel                     ( 128 )
 mobList[zone][DMB+259].specificChildren = { true, DMB+260                            } -- Nightmare Crawler                     ( 129 )
