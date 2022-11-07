@@ -773,16 +773,7 @@ namespace fishingutils
         PChar->updatemask |= UPDATE_HP;
 
         PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CCaughtMonsterPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_CATCH_CHEST));
-        position_t p = PChar->loc.p;
-        position_t m;
-        double Radians = p.rotation * M_PI / 128;
-        m.x = p.x - 2.0f * (float)cos(Radians);
-        m.y = p.y;
-        m.z = p.z + 2.0f * (float)sin(Radians);
-        m.rotation = worldAngle(m, p);
-
-        // @todo: spawnchest
-        Chest->loc.p = m;
+        
         Chest->status = STATUS_NORMAL;
         zoneutils::GetZone(PChar->getZone())->PushPacket(Chest, CHAR_INRANGE, new CEntityUpdatePacket(Chest, ENTITY_UPDATE, UPDATE_ALL_MOB));
 
@@ -834,6 +825,9 @@ namespace fishingutils
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_HOOKED_LARGE_FISH));
             break;
         case FISHINGCATCHTYPE_ITEM:
+            PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_HOOKED_ITEM));
+            break;
+        case FISHINGCATCHTYPE_CHEST:
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_HOOKED_ITEM));
             break;
         case FISHINGCATCHTYPE_MOB:

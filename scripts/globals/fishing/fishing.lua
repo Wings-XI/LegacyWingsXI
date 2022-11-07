@@ -16,6 +16,10 @@ require("scripts/globals/world")
 require("scripts/globals/fishing/fishing_types")
 require("scripts/globals/fishing/fishing_accessories")
 
+-- Brigand's Chart Quest
+local buburimuID = require("scripts/zones/Buburimu_Peninsula/IDs")
+require("scripts/zones/Buburimu_Peninsula/npcs/qm1")
+
 local MaxFishLevelDifferenceToHook = 100
 
 local FishTablePoolWeight = 60
@@ -604,6 +608,14 @@ function createFishItemPool(player, fishingSkill, fishlist, rod, moonModifier)
             end
         end
     end
+    
+    if player:getLocalVar("BCQ") == 1 then --If Brigand's Chart Quest event is active for player
+        FishPool = {}
+        ItemPool = {}
+        FishPoolWeight = 0
+        ItemWeightQuestBonus = 0
+    end
+    
     return FishPool, ItemPool, FishPoolWeight, ItemWeightQuestBonus
 end
 
@@ -643,6 +655,12 @@ function createMobPool(player, moblist, moonModifier, areaId, lure)
             end
         end
     end
+    
+    if player:getLocalVar("BCQ") == 1 then --If Brigand's Chart Quest event is active for player
+        MobPool = {}
+        MobWeightQuestBonus = 0
+    end
+    
     return MobPool, MobWeightQuestBonus
 end
 
@@ -759,6 +777,7 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     local FishWeight = 0
     local ItemWeight = 0
     local MobWeight = 0
+    local ChestWeight = 0 --used for Brigand's Chart Quest
     local FishWeightAdd = 0
     local ItemWeightAdd = 0
     local MobWeightAdd = 0
@@ -771,6 +790,7 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     local FishPool = {}
     local ItemPool = {}
     local MobPool = {}
+    local ChestPool = {} --used for Brigand's Chart Quest
 
     local FishPoolWeight = 0
 
@@ -847,8 +867,49 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         ItemWeight = math.max(0, ItemWeight - reductionAmount)
         NoCatchWeight = NoCatchWeight + reductionAmount
     end
+    
+    if player:getLocalVar("BCQ") == 1 then    --If Brigand's Chart Quest event is active for player
+        local gotChest = false
+        local chest = npcs.qm1.getAvailableJadeEtui()
+        local pufferAvailable = npcs.qm1.pufferPugilAvailable()
+        FishWeight = 0
+        ItemWeight = 0
+        MobWeight = 0
+        NoCatchWeight = 0
+        ChestWeight = 0
+        if chest > 0 then
+            local chestRarity = 800
+            if not pufferAvailable then
+                chestRarity = 1000
+            end
+            local ChestItem = {}
+            ChestItem["id"] = 1
+            ChestItem["npc_id"] = chest
+            ChestItem["rarity"] = chestRarity
+            table.insert(ChestPool, ChestItem)
+            gotChest = true
+            ChestWeight = chestRarity
+        end
 
-    TotalPoolWeight = FishWeight + ItemWeight + MobWeight + NoCatchWeight
+        if pufferAvailable then
+            local pugRarity = 200
+            if not gotChest then
+                pugRarity = 1000
+            end
+            local MobItem = {}
+            MobItem["id"] = l
+            MobItem["mobid"] = buburimuID.mob.PUFFER_PUGIL
+            MobItem["rarity"] = pugRarity
+            table.insert(MobPool, MobItem)
+            MobWeight = pugRarity
+        end
+
+        if not gotChest and not pufferAvailable then
+            NoCatchWeight = 1000
+        end
+    end
+
+    TotalPoolWeight = FishWeight + ItemWeight + MobWeight + NoCatchWeight + ChestWeight
 
     local PoolSelect = 0
     local DebugSelect = player:getLocalVar("FishingDebugSelect")
@@ -861,7 +922,7 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     local HookType = fishing.hookType.NONE
     
     if FishingDebugEnabled ~= 0 then
-        player:PrintToPlayer(string.format("PoolSelect: %i (FishWeight: %i, ItemWeight: %i, MobWeight: %i, NoCatchWeight: %i)", PoolSelect, FishWeight, ItemWeight, MobWeight, NoCatchWeight))
+        player:PrintToPlayer(string.format("PoolSelect: %i (FishWeight: %i, ItemWeight: %i, MobWeight: %i, NoCatchWeight: %i, ChestWeight: %i)", PoolSelect, FishWeight, ItemWeight, MobWeight, NoCatchWeight, ChestWeight))
     end
 
     -- Selection time
@@ -896,6 +957,10 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
     elseif #MobPool > 0 and PoolSelect < FishWeight + ItemWeight + MobWeight then
         local HookSelect = MobPool[math.random(1, #MobPool)]
         HookType = fishing.hookType.MOB
+        CatchSelect = HookSelect["id"]
+    elseif #ChestPool > 0 and PoolSelect < FishWeight + ItemWeight + MobWeight + ChestWeight then
+        local HookSelect = ChestPool[math.random(1, #ChestPool)]
+        HookType = fishing.hookType.CHEST
         CatchSelect = HookSelect["id"]
     end
 
@@ -999,55 +1064,78 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
         elseif HookType == fishing.hookType.MOB then
             TimeLimit = BaseTimeLimit
             CatchType = fishing.catchType.MOB
-            CatchID = moblist[CatchSelect].id
-            CatchLevel = moblist[CatchSelect].level
-            CatchSize = moblist[CatchSelect].size
-            Delay = moblist[CatchSelect].baseDelay
-            Movement = moblist[CatchSelect].baseMove
+            Count = 1
+            HookSense = fishing.hookSenseType.LARGE
+            CatchSizeType = fishing.sizeType.LARGE
+
+            if player:getLocalVar("BCQ") == 1 then
+                CatchID = MobPool[1].mobid
+                CatchLevel = 0
+                CatchSize = 0
+                Delay = 10
+                Movement = 15
+            else
+                CatchID = moblist[CatchSelect].id
+                CatchLevel = moblist[CatchSelect].level
+                CatchSize = moblist[CatchSelect].size
+                Delay = moblist[CatchSelect].baseDelay
+                Movement = moblist[CatchSelect].baseMove
+
+                if moblist[CatchSelect].nm then
+                    if moblist[CatchSelect].log < 255 and moblist[CatchSelect].quest < 255 then
+                        CatchSizeType = fishing.sizeType.SMALL
+                    end
+                    NM = true
+                    NMFlags = moblist[CatchSelect].nmFlags
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_REGEN_EASY) > 0 then
+                        RegenAdd = math.random(1,2)
+                    end
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_REGEN_DIFFICULT) > 0 then
+                        RegenAdd = math.random(3,4)
+                    end
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_ATTACK_EASY) > 0 then
+                        AttackPenalty = math.random(0,20)
+                    end
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_ATTACK_DIFFICULT) > 0 then
+                        AttackPenalty = math.random(25,50)
+                    end
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_HEAL_EASY) > 0 then
+                        HealAdd = math.random(0,20)
+                    end
+                    if bit.band(NMFlags, fishing.nmFlag.RANDOM_HEAL_DIFFICULT) > 0 then
+                        HealAdd = math.random(25,50)
+                    end
+                end
+            end
             GetMobByID(CatchID):setLocalVar("hooked", 1)
             GetMobByID(CatchID):setLocalVar("hookedTime", os.time())
+            Delay = Delay + rod.lgdelaybonus
+            Movement = Movement + rod.lgmovebonus
+        elseif HookType == fishing.hookType.CHEST then
+            TimeLimit = BaseTimeLimit
+            CatchType = fishing.catchType.CHEST
+            CatchID = ChestPool[1].npc_id
+            CatchLevel = 0
+            CatchSize = 0
+            Delay = 10
+            Movement = 15
 
             Delay = Delay + rod.lgdelaybonus
             Movement = Movement + rod.lgmovebonus
             Count = 1
             HookSense = fishing.hookSenseType.LARGE
             CatchSizeType = fishing.sizeType.LARGE
-            if moblist[CatchSelect].nm then
-                if moblist[CatchSelect].log < 255 and moblist[CatchSelect].quest < 255 then
-                    CatchSizeType = fishing.sizeType.SMALL
-                end
-                NM = true
-                NMFlags = moblist[CatchSelect].nmFlags
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_REGEN_EASY) > 0 then
-                    RegenAdd = math.random(1,2)
-                end
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_REGEN_DIFFICULT) > 0 then
-                    RegenAdd = math.random(3,4)
-                end
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_ATTACK_EASY) > 0 then
-                    AttackPenalty = math.random(0,20)
-                end
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_ATTACK_DIFFICULT) > 0 then
-                    AttackPenalty = math.random(25,50)
-                end
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_HEAL_EASY) > 0 then
-                    HealAdd = math.random(0,20)
-                end
-                if bit.band(NMFlags, fishing.nmFlag.RANDOM_HEAL_DIFFICULT) > 0 then
-                    HealAdd = math.random(25,50)
-                end
-            end
         end
 
         -- CATCH STAMINA
-        if player:getLocalVar("Chart") == 1 then
+        if player:getLocalVar("Chart") == 1 or player:getLocalVar("BCQ") == 1 then    --If Pirate's/Brigand's Chart Quest event is active for player
             Stamina = 1000
         else
             Stamina = calcStamina(CatchLevel)
         end
         
         -- CATCH ATTACK
-        if player:getLocalVar("Chart") == 1 then
+        if player:getLocalVar("Chart") == 1 or player:getLocalVar("BCQ") == 1 then    --If Pirate's/Brigand's Chart Quest event is active for player
             AttackDmg = 1500
         else
             AttackDmg = math.max(20, calcAttack(CatchSize, rod.fishattack, LegendaryFish, rod.lgdbonusatk) - AttackPenalty)
@@ -1064,6 +1152,15 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
 
         -- CATCH BREAK/LOSE CHANCE
         Sense, LoseChance, SnapChance, BreakChance = calcChanceToBreak(FishingSkill, CatchLevel, CatchSize, CatchType, CatchSizeType, CatchFlags, rod, lure, RodLegendaryType, LegendaryFish)
+        
+        if player:getLocalVar("BCQ") == 1 then --If Brigand's Chart Quest event is active for player
+            LoseChance = 0
+            SnapChance = 0
+            BreakChance = 0
+            if CatchType == fishing.catchType.CHEST then
+                Sense = fishing.senseType.GOOD
+            end
+        end
 
 
         -- HANDLE CRITICAL BITE
@@ -1211,6 +1308,12 @@ function onFishingReelIn(player, catchType, fishingSkillLevel, fishLevel, loseCh
             end
         end
     end
+
+    if player:getLocalVar("BCQ") == 0 and catchType == fishing.catchType.CHEST then --If you pull up a chest after the BCQ timer runs out
+        Caught = false
+        Reason = fishing.failType.LOST
+    end
+
     if nm and Caught == false then
         if bit.band(nmFlags, fishing.nmFlag.RESET_RESPAWN_ON_FAIL) > 0 then
             GetMobByID(nmId):setLocalVar('lastTOD', os.time())

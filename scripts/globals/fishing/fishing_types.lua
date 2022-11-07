@@ -12,6 +12,7 @@ fishing.hookType =
     FISH        = 1,
     ITEM        = 2,
     MOB         = 3,
+    CHEST       = 4,
 }
 
 fishing.hookSenseType =
