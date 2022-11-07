@@ -50,7 +50,15 @@ zones[tpz.zone.BUBURIMU_PENINSULA] =
         NO_COMBINATION                 = 8108,  -- You were unable to enter a combination.
         REGIME_REGISTERED              = 10286, -- New training regime registered!
         COMMON_SENSE_SURVIVAL          = 12307, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        BRIGANDS_CHART_QUEST           = {
+            LONG_AGO                       = 7825,
+            RETURN_CHART                   = 7826,
+            MY_PENGUIN_RING                = 7832,
+            IT_CANT_BE                     = 7838,
+            ITS_BACK_NOW                   = 7839
+        },
     },
+    
     mob =
     {
         BACKOO        = 17260613,
@@ -65,7 +73,9 @@ zones[tpz.zone.BUBURIMU_PENINSULA] =
             [17261001] = 17261003, -- 443.004 19.500 96.000
             [17260999] = 17261003, -- 444.224 19.499 76.000
         },
+        PUFFER_PUGIL = 17261040
     },
+    
     npc =
     {
         CASKET_BASE     = 17261113,
@@ -80,6 +90,17 @@ zones[tpz.zone.BUBURIMU_PENINSULA] =
             17261179,
             17261180,
         },
+        JADE_ETUI =
+        {
+            17261035,
+            17261036,
+            17261037,
+            17261038,
+            17261039
+        },
+        QM1 = 17261187,
+        BCQ_GHOST = 17261188,
+        BCQ_SHIMMER = 17261189
     },
 }
 
