@@ -239,20 +239,29 @@ namespace message
     {
         while (!message_queue.empty())
         {
-            g_mqconnection->IncrementHighPriorityThreadsWaiting();
-            std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
-            while (!lk.try_lock_for(std::chrono::seconds(1))) {
-                if (map_doing_final) {
-                    return;
+            // Do not remove these wiggly braces, they are not here for looks!
+            // They ensure that local_mq_mutex is released before route_message
+            // is called, which prevents a potential deadlock.
+            std::shared_ptr<uint8> msgptr;
+            uint8* msg = nullptr;
+            {
+                g_mqconnection->IncrementHighPriorityThreadsWaiting();
+                std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
+                while (!lk.try_lock_for(std::chrono::seconds(1))) {
+                    if (map_doing_final) {
+                        return;
+                    }
                 }
+                g_mqconnection->DecrementHighPriorityThreadsWaiting();
+                msgptr = message_queue.front();
+                message_queue.pop();
             }
-            g_mqconnection->DecrementHighPriorityThreadsWaiting();
-            std::shared_ptr<uint8> msgptr = message_queue.front();
-            uint8* msg = msgptr.get();
-            message_queue.pop();
             try
             {
-                route_message(msg);
+                msg = msgptr.get();
+                if (msg) {
+                    route_message(msg);
+                }
             }
             catch (std::exception& e)
             {
