@@ -118,51 +118,51 @@ function onMobFight(mob)
 
     local abilities2hr =
     {
-        [1 ] = {tpz.jsa.MIGHTY_STRIKES, ID.mob.QuPho_Bloodspiller},
-        [2 ] = {tpz.jsa.HUNDRED_FISTS, ID.mob.Hamfist_Gukhbuk},
-        [3 ] = {tpz.jsa.BENEDICTION, ID.mob.GiBhe_Fleshfeaster},
-        [4 ] = {tpz.jsa.MANAFONT, ID.mob.Flamecaller_Zoeqdoq},
-        [5 ] = {tpz.jsa.CHAINSPELL, ID.mob.Gosspix_Blabberlips},
-        [6 ] = {tpz.jsa.PERFECT_DODGE, ID.mob.VaRhu_Bodysnatcher},
-        [7 ] = {tpz.jsa.INVINCIBLE, ID.mob.TeZha_Ironclad},
-        [8 ] = {tpz.jsa.BLOOD_WEAPON, ID.mob.Shamblix_Rottenheart},
-        [9 ] = {tpz.jsa.FAMILIAR, ID.mob.Woodnix_Shrillwhistle},
-        [10] = {tpz.jsa.SOUL_VOICE, ID.mob.Ree_Nata_The_Melomanic},
-        [11] = {tpz.jsa.EES_KINDRED, ID.mob.Lyncean_Juwgneg},
-        [12] = {tpz.jsa.MEIKYO_SHISUI, ID.mob.Koo_Rahi_The_Levinblade},
-        [13] = {tpz.jsa.MIJIN_GAKURE, ID.mob.Doo_Peku_The_Fleetfoot},
-        [14] = {tpz.jsa.CALL_WYVERN, ID.mob.Elvaansticker_Bxafraff},
-        [15] = {tpz.jsa.ASTRAL_FLOW, ID.mob.Baa_Dava_The_Bibliopage},
+        {tpz.jsa.MIGHTY_STRIKES, ID.mob.QuPho_Bloodspiller},
+        {tpz.jsa.HUNDRED_FISTS, ID.mob.Hamfist_Gukhbuk},
+        {tpz.jsa.BENEDICTION, ID.mob.GiBhe_Fleshfeaster},
+        {tpz.jsa.MANAFONT, ID.mob.Flamecaller_Zoeqdoq},
+        {tpz.jsa.CHAINSPELL, ID.mob.Gosspix_Blabberlips},
+        {tpz.jsa.PERFECT_DODGE, ID.mob.VaRhu_Bodysnatcher},
+        {tpz.jsa.INVINCIBLE, ID.mob.TeZha_Ironclad},
+        {tpz.jsa.BLOOD_WEAPON, ID.mob.Shamblix_Rottenheart},
+        {tpz.jsa.FAMILIAR, ID.mob.Woodnix_Shrillwhistle},
+        {tpz.jsa.SOUL_VOICE, ID.mob.Ree_Nata_The_Melomanic},
+        {tpz.jsa.EES_KINDRED, ID.mob.Lyncean_Juwgneg},
+        {tpz.jsa.MEIKYO_SHISUI, ID.mob.Koo_Rahi_The_Levinblade},
+        {tpz.jsa.MIJIN_GAKURE, ID.mob.Doo_Peku_The_Fleetfoot},
+        {tpz.jsa.CALL_WYVERN, ID.mob.Elvaansticker_Bxafraff},
+        {tpz.jsa.ASTRAL_FLOW, ID.mob.Baa_Dava_The_Bibliopage},
     }
 
     local manafontspells =
     {
-        [1 ] = 176, -- Firaga III
-        [2 ] = 181, -- Blizzaga III
-        [3 ] = 186, -- Aeroga III
-        [4 ] = 191, -- Stonega III
-        [5 ] = 196, -- Thundaga III
-        [6 ] = 201, -- Waterga III
+        176, -- Firaga III
+        181, -- Blizzaga III
+        186, -- Aeroga III
+        191, -- Stonega III
+        196, -- Thundaga III
+        201, -- Waterga III
     }
 
     local chainspellspells =
     {
-        [1 ] = 361, -- Blindga
-        [2 ] = 356, -- Paralyga
-        [3 ] = 362, -- Bindga
-        [4 ] = 365, -- Breakga
-        [5 ] = 274, -- Sleepga II
-        [6 ] = 367, -- Death
+        361, -- Blindga
+        356, -- Paralyga
+        362, -- Bindga
+        365, -- Breakga
+        274, -- Sleepga II
+        367, -- Death
     }
 
     local soulvoicesongs =
     {
-        [1 ] = 376, -- Horde Lullaby
-        [2 ] = 373, -- Foe Requiem VI
-        [3 ] = 397, -- Valor Minuet IV
-        [4 ] = 420, -- Victory March
-        [5 ] = 422, -- Carnage Elegy
-        [6 ] = 463, -- Foe Lullaby
+        376, -- Horde Lullaby
+        373, -- Foe Requiem VI
+        397, -- Valor Minuet IV
+        420, -- Victory March
+        422, -- Carnage Elegy
+        463, -- Foe Lullaby
     }
     local checked2hrs = 0
     if mob:getCurrentAction() <= 1 then
@@ -223,17 +223,17 @@ function onMobWeaponSkillPrepare(mob, target)
     local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
     local usablemobabilities =
     {
-        [1] = {649, ID.mob.Aitvaras}, -- Voidsong
-        [2] = {647, ID.mob.Alklha}, -- Chaos Blade
-        [3] = {645, ID.mob.Barong}, -- Body Slam
-        [4] = {648, ID.mob.Basilic}, -- Petro Eyes
-        [5] = {644, ID.mob.Jurik}, -- Wind Breath
-        [6] = {650, ID.mob.Koschei}, -- Thornsong
-        [7] = {642, ID.mob.Stihi}, -- Flame Breath
-        [8] = {651, ID.mob.Stollenwurm}, -- Lodesong
-        [9] = {646, ID.mob.Tarasca}, -- Heavy Stomp
-        [10] = {643, ID.mob.Vishap}, -- Poison Breath
-        [11] = {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm
+        {650, ID.mob.Koschei}, -- Thornsong
+        {647, ID.mob.Alklha}, -- Chaos Blade
+        {645, ID.mob.Barong}, -- Body Slam
+        {648, ID.mob.Basilic}, -- Petro Eyes
+        {644, ID.mob.Jurik}, -- Wind Breath
+        {649, ID.mob.Aitvaras}, -- Voidsong
+        {642, ID.mob.Stihi}, -- Flame Breath
+        {651, ID.mob.Stollenwurm}, -- Lodesong
+        {646, ID.mob.Tarasca}, -- Heavy Stomp
+        {643, ID.mob.Vishap}, -- Poison Breath
+        {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm
     }
 
 

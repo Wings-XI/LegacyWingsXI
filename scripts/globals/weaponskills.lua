@@ -570,13 +570,26 @@ end
 function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primaryMsg, mythicMagicWsParams)
 
     -- Set up conditions and wsParams used for calculating weaponskill damage
-    local attack =
-    {
-        ['type'] = tpz.attackType.MAGICAL,
-        ['slot'] = tpz.slot.MAIN,
-        ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.MAIN),
-        ['damageType'] = tpz.damageType.ELEMENTAL + wsParams.ele
-    }
+    local attack
+
+    if wsParams.skill == tpz.skill.MARKSMANSHIP or wsParams.skill == tpz.skill.ARCHERY then
+        attack =
+        {
+            ['type'] = tpz.attackType.MAGICAL,
+            ['slot'] = tpz.slot.RANGED,
+            ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.RANGED),
+            ['damageType'] = tpz.damageType.ELEMENTAL + wsParams.ele
+        }
+    else
+        attack =
+        {
+            ['type'] = tpz.attackType.MAGICAL,
+            ['slot'] = tpz.slot.MAIN,
+            ['weaponType'] = attacker:getWeaponSkillType(tpz.slot.MAIN),
+            ['damageType'] = tpz.damageType.ELEMENTAL + wsParams.ele
+        }
+    end
+
     local calcParams =
     {
         ['shadowsAbsorbed'] = 0,

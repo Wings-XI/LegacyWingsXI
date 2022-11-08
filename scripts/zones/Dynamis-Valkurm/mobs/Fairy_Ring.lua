@@ -21,11 +21,10 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
-    mob:setMod(tpz.mod.REGAIN, 0)
-    mob:setTP(0)
 end
 
 
-function onMobFight(mob)
-    mob:setMod(tpz.mod.REGAIN, 1250)
+function onMobEngaged(mob, target)
+    mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setTP(0)
 end

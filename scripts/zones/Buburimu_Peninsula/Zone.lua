@@ -3,12 +3,14 @@
 -- Zone: Buburimu_Peninsula (118)
 --
 -----------------------------------
-local ID = require("scripts/zones/Buburimu_Peninsula/IDs")
+local buburimuID = require("scripts/zones/Buburimu_Peninsula/IDs")
+require("scripts/zones/Buburimu_Peninsula/npcs/qm1")
 require("scripts/quests/i_can_hear_a_rainbow")
 require("scripts/globals/chocobo_digging")
 require("scripts/globals/conquest")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
+require("scripts/globals/fishing/fishing_types")
 -----------------------------------
 
 function onChocoboDig(player, precheck)
@@ -17,14 +19,17 @@ end
 
 function onInitialize(zone)
     local hour = VanadielHour()
+    local qm1 = GetNPCByID(buburimuID.npc.QM1)
 
     if hour >= 6 and hour < 16 then
-        GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+        GetMobByID(buburimuID.mob.BACKOO):setRespawnTime(1)
     end
 
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID(), 2)
 
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+    
+    npcs.qm1.initialize()
 end
 
 function onZoneIn(player, prevZone)
@@ -52,17 +57,32 @@ end
 
 function onGameHour(zone)
     local hour = VanadielHour()
-    local nmBackoo = GetMobByID(ID.mob.BACKOO)
+    local nmBackoo = GetMobByID(buburimuID.mob.BACKOO)
+    local qm1 = GetNPCByID(buburimuID.npc.QM1)
 
     if hour == 6 then -- backoo time-of-day pop condition open
-        DisallowRespawn(ID.mob.BACKOO, false)
+        DisallowRespawn(buburimuID.mob.BACKOO, false)
         if nmBackoo:getRespawnTime() == 0 then
             nmBackoo:setRespawnTime(1)
         end
     elseif hour == 16 then -- backoo despawns
-        DisallowRespawn(ID.mob.BACKOO, true)
+        DisallowRespawn(buburimuID.mob.BACKOO, true)
         if nmBackoo:isSpawned() then
             nmBackoo:spawn(1)
+        end
+    end
+    
+    --If the Brigand's Chart Quest is still active, but the player zoned or disconnected, end the quest.
+    if qm1:getLocalVar("BCQActive") == 1 then
+        local playerID = qm1:getLocalVar("BCQPlayer")
+        local player = GetPlayerByID(playerID)
+
+        if player then
+            if player:getLocalVar("BCQ") == 0 then
+                npcs.qm1.endQuest(nil)
+            end
+        else
+            npcs.qm1.endQuest(nil)
         end
     end
 end

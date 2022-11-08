@@ -34,6 +34,6 @@ function onUseAbility(pet, target, skill, action)
     pet:setTP(0)
 
     local dmg = AbilityFinalAdjustments(dmgmod, pet, skill, target, tpz.attackType.BREATH, tpz.damageType.LIGHTNING, MOBPARAM_IGNORE_SHADOWS)
-    target:takeDamage(dmg, pet, tpz.attackType.BREATH, tpz.damageType.FIRE)
+    target:takeDamage(dmg, pet, tpz.attackType.BREATH, tpz.damageType.LIGHTNING)
     return dmg
 end
