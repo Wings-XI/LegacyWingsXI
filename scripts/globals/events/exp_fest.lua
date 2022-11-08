@@ -38,30 +38,27 @@ function ExpFestEnable(player, showmsg)
     end
     
     
-    if not player:hasStatusEffect(tpz.effect.DEDICATION) then
+    player:delStatusEffectSilent(tpz.effect.DEDICATION)
+    -- Add the new effect
+    -- Note that we intentionally set the remaining exp to 1 point. This will be
+    -- overridden by the unlimited dedication local var. Setting the cap to 1
+    -- ensures that if the player somehow still has the effect after the event
+    -- ended it'll wear immediately.
+    player:addStatusEffect(tpz.effect.DEDICATION, 100, 0, EXP_FEST_END - now, 0, 1)
+    local dedication = player:getStatusEffect(tpz.effect.DEDICATION)
+    if dedication ~= nil then
     
-        -- Add the new effect
-        -- Note that we intentionally set the remaining exp to 1 point. This will be
-        -- overridden by the unlimited dedication local var. Setting the cap to 1
-        -- ensures that if the player somehow still has the effect after the event
-        -- ended it'll wear immediately.
-        player:addStatusEffect(tpz.effect.DEDICATION, 100, 0, EXP_FEST_END - now, 0, 1)
-        local dedication = player:getStatusEffect(tpz.effect.DEDICATION)
-        if dedication ~= nil then
-        
-            -- Make it wear on zone because we'll be adding it each time,
-            -- again, this is insurance against the effect accidentally
-            -- remaining after the event ends
-            dedication:setFlag(tpz.effectFlag.ON_ZONE)
-            dedication:setFlag(tpz.effectFlag.LOGOUT)
-        
-        end
-
-        -- Set the unlimited dedication var, which is a local var, so it needs to be
-        -- set every time the player zones
-        player:setLocalVar("unlimited_dedication", 1)
-        
+        -- Make it wear on zone because we'll be adding it each time,
+        -- again, this is insurance against the effect accidentally
+        -- remaining after the event ends
+        --dedication:setFlag(tpz.effectFlag.ON_ZONE)
+        dedication:setFlag(tpz.effectFlag.LOGOUT)
+    
     end
+
+    -- Set the unlimited dedication var, which is a local var, so it needs to be
+    -- set every time the player zones
+    player:setLocalVar("unlimited_dedication", 1)
     
     -- Friendly user message
     if showmsg ~= nil and showmsg then
