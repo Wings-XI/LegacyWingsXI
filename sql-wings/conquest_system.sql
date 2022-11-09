@@ -37,7 +37,7 @@ CREATE TABLE `conquest_system` (
   `bastok_influence` int(10) NOT NULL DEFAULT 0,
   `windurst_influence` int(10) NOT NULL DEFAULT 0,
   `beastmen_influence` int(10) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `conquest_system`

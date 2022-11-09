@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `server_variables`;
 CREATE TABLE `server_variables` (
   `name` varchar(50) NOT NULL,
   `value` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `server_variables`

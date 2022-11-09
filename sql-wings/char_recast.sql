@@ -34,7 +34,7 @@ CREATE TABLE `char_recast` (
   `id` smallint(5) NOT NULL DEFAULT 0,
   `time` int(10) NOT NULL DEFAULT 0,
   `recast` smallint(5) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables

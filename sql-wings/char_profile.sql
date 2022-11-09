@@ -50,7 +50,7 @@ CREATE TABLE `char_profile` (
   `fame_aby_grauberg` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `fame_aby_uleguerand` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `fame_adoulin` smallint(5) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

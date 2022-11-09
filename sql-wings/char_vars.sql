@@ -33,7 +33,7 @@ CREATE TABLE `char_vars` (
   `charid` int(10) UNSIGNED NOT NULL,
   `varname` varchar(30) NOT NULL,
   `value` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

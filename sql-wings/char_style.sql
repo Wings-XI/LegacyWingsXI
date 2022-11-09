@@ -39,7 +39,7 @@ CREATE TABLE `char_style` (
   `main` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `sub` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `ranged` smallint(5) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=20 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

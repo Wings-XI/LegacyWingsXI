@@ -41,7 +41,7 @@ CREATE TABLE `char_effects` (
   `tier` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `flags` int(8) UNSIGNED NOT NULL DEFAULT 0,
   `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

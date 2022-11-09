@@ -56,7 +56,7 @@ CREATE TABLE `char_exp` (
   `run` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `merits` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
   `limits` smallint(5) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=85 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

@@ -37,7 +37,7 @@ CREATE TABLE `audit_chat` (
   `recipient` tinytext DEFAULT NULL,
   `message` blob DEFAULT NULL,
   `datetime` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
