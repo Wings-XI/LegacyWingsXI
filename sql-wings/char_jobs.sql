@@ -55,7 +55,7 @@ CREATE TABLE `char_jobs` (
   `sch` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
   `geo` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
   `run` tinyint(2) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=95 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=95 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

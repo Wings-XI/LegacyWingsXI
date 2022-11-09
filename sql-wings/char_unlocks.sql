@@ -42,7 +42,7 @@ CREATE TABLE `char_unlocks` (
   `campaign_windy` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `homepoints` blob DEFAULT NULL,
   `survivals` blob DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables

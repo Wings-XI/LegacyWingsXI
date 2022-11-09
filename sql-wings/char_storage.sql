@@ -41,7 +41,7 @@ CREATE TABLE `char_storage` (
   `wardrobe2` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
   `wardrobe3` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
   `wardrobe4` tinyint(2) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

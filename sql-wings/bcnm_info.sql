@@ -42,7 +42,7 @@ CREATE TABLE `bcnm_info` (
   `lootDropId` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `rules` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `isMission` tinyint(1) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=56 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bcnm_info`

@@ -34,7 +34,7 @@ CREATE TABLE `char_equip` (
   `slotid` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `equipslotid` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `containerid` tinyint(1) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=41 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

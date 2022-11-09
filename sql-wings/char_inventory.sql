@@ -38,7 +38,7 @@ CREATE TABLE `char_inventory` (
   `bazaar` int(8) UNSIGNED NOT NULL DEFAULT 0,
   `signature` varchar(20) NOT NULL DEFAULT '',
   `extra` tinyblob DEFAULT NULL
-) ENGINE=MyISAM AVG_ROW_LENGTH=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=28 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

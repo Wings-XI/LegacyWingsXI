@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `char_blacklist`;
 CREATE TABLE `char_blacklist` (
   `charid_owner` int(10) UNSIGNED NOT NULL,
   `charid_target` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

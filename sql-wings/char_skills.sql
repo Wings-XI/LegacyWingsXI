@@ -34,7 +34,7 @@ CREATE TABLE `char_skills` (
   `skillid` tinyint(2) UNSIGNED NOT NULL,
   `value` smallint(4) UNSIGNED NOT NULL DEFAULT 0,
   `rank` tinyint(2) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=10 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

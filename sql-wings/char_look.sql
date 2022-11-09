@@ -42,7 +42,7 @@ CREATE TABLE `char_look` (
   `main` smallint(4) UNSIGNED NOT NULL DEFAULT 0,
   `sub` smallint(4) UNSIGNED NOT NULL DEFAULT 0,
   `ranged` smallint(4) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM AVG_ROW_LENGTH=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AVG_ROW_LENGTH=24 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

@@ -37,7 +37,7 @@ CREATE TABLE `char_pet` (
   `equipped_attachments` blob DEFAULT NULL,
   `adventuringfellowid` smallint(3) UNSIGNED NOT NULL DEFAULT 0,
   `chocoboid` int(11) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

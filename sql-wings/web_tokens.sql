@@ -34,7 +34,7 @@ CREATE TABLE `web_tokens` (
   `token` varchar(20) NOT NULL,
   `expiration` datetime NOT NULL,
   `type` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

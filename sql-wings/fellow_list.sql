@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `fellow_list` (
   `familyid` int(10) unsigned NOT NULL,
   `modelid` binary(20) NOT NULL,
   PRIMARY KEY (`fellowid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- Male Hume
 INSERT INTO `fellow_list` VALUES (0,   'Feliz',       149, 0x0100000100100020003000400050006000700000);
