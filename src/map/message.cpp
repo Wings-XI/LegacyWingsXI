@@ -72,6 +72,7 @@ namespace message
 
     void route_message(uint8* msg)
     {
+        TracyZoneScoped;
         int ret = SQL_ERROR;
         bool ipstring = false;
         MAP_MQ_MESSAGE_HEADER* header = reinterpret_cast<MAP_MQ_MESSAGE_HEADER*>(msg);
@@ -186,6 +187,7 @@ namespace message
             if (broadcast) {
                 ShowDebug("Message:  -> sending broadcast\n");
                 try {
+                    TracyZoneScoped;
                     g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size);
                 }
                 catch (std::runtime_error&) {
@@ -220,6 +222,7 @@ namespace message
                         }
 
                         try {
+                            TracyZoneScoped;
                             g_mqconnection->Send(1, msg, sizeof(MAP_MQ_MESSAGE_HEADER) + header->packet_size + header->extra_size, &strTargetQueue);
                         }
                         catch (std::runtime_error&) {
@@ -237,6 +240,7 @@ namespace message
 
     void send_queue()
     {
+        TracyZoneScoped;
         while (!message_queue.empty())
         {
             // Do not remove these wiggly braces, they are not here for looks!
@@ -245,14 +249,15 @@ namespace message
             std::shared_ptr<uint8> msgptr;
             uint8* msg = nullptr;
             {
-                g_mqconnection->IncrementHighPriorityThreadsWaiting();
+                TracyZoneScoped;
+                //g_mqconnection->IncrementHighPriorityThreadsWaiting();
                 std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
                 while (!lk.try_lock_for(std::chrono::seconds(1))) {
                     if (map_doing_final) {
                         return;
                     }
                 }
-                g_mqconnection->DecrementHighPriorityThreadsWaiting();
+                //g_mqconnection->DecrementHighPriorityThreadsWaiting();
                 msgptr = message_queue.front();
                 message_queue.pop();
             }
@@ -280,6 +285,7 @@ namespace message
 
     void MapMQHandler::parse(MSGSERVTYPE type, uint8* extra, size_t extra_size, uint8* packet, size_t packet_size, bool from_self)
     {
+        TracyZoneScoped;
         ShowDebug("Message: Received message %u from message server\n", static_cast<uint8>(type));
         switch (type)
         {
@@ -878,6 +884,7 @@ namespace message
 
     bool MapMQHandler::HandleRequest(amqp_bytes_t Request, MQConnection* pOrigin, uint32_t dwChannel)
     {
+        TracyZoneScoped;
         uint32 magic = 0;
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
         CHAR_MQ_MESSAGE_HEADER* login_header = nullptr;
@@ -1042,6 +1049,7 @@ namespace message
 
     void send(MSGSERVTYPE type, void* data, size_t datalen, CBasicPacket* packet)
     {
+        TracyZoneScoped;
         uint8 stub;
 
         MAP_MQ_MESSAGE_HEADER* header = nullptr;
@@ -1081,14 +1089,14 @@ namespace message
             true);
         // Only bother sending to MQ for other servers if we're connected to MQ
         if (g_mqconnection->IsConnected()) {
-            g_mqconnection->IncrementHighPriorityThreadsWaiting();
+            //g_mqconnection->IncrementHighPriorityThreadsWaiting();
             std::unique_lock<std::recursive_timed_mutex> lk(local_mq_mutex, std::defer_lock);
             while (!lk.try_lock_for(std::chrono::seconds(1))) {
                 if (map_doing_final) {
                     return;
                 }
             }
-            g_mqconnection->DecrementHighPriorityThreadsWaiting();
+            //g_mqconnection->DecrementHighPriorityThreadsWaiting();
             message_queue.push(std::shared_ptr<uint8>(msgdata));
         }
     }
