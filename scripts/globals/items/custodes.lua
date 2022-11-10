@@ -15,7 +15,7 @@ function onAdditionalEffect(player, target, damage)
         chance = chance+6
     end
 
-    if player:getWeather() == tpz.WEATHER.SNOW then
+    if player:getWeather() == tpz.weather.SNOW then
         chance = chance+4
     elseif player:getWeather() == tpz.weather.BLIZZARDS then
         chance = chance+6
