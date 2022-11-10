@@ -5,21 +5,29 @@
 -----------------------------------------
 
 function onItemCheck(target)
-    return 0
+    if not target:isInMogHouse() then
+        return 0
+    else
+        return 56
+    end
 end
 
 function onItemUse(target)
     local nation = target:getNation(target)
-    if (nation == 0) then -- San d'Oria
-        target:setPos(126, 0, -1, 122, 231)
-        return
-    end
-    if (nation == 1) then -- Bastok
-        target:setPos(106, 0, -71, 130, 234)
-        return
-    end
-    if (nation == 2) then -- Windurst
-        target:setPos(197, -12, 224, 65, 240)
-        return
+    if not target:isInMogHouse() then
+        if (nation == 0) then -- San d'Oria
+            target:setPos(126, 0, -1, 122, 231)
+            return
+        end
+        if (nation == 1) then -- Bastok
+            target:setPos(106, 0, -71, 130, 234)
+            return
+        end
+        if (nation == 2) then -- Windurst
+            target:setPos(197, -12, 224, 65, 240)
+            return
+        end
+    else
+        return -- Do not teleport from moghouse (player cannot use )
     end
 end
