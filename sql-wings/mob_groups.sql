@@ -777,7 +777,7 @@ INSERT INTO `mob_groups` VALUES(22, 1380, 25, 'Fomor_Bard', 300, 1, 855, 0, 0, 3
 INSERT INTO `mob_groups` VALUES(23, 4127, 25, 'Vampire_Bat', 300, 0, 234, 0, 0, 42, 44, 0);
 INSERT INTO `mob_groups` VALUES(24, 4353, 25, 'Wingrats', 300, 0, 80, 0, 0, 41, 44, 0);
 INSERT INTO `mob_groups` VALUES(25, 1549, 25, 'Gigantobugard', 300, 0, 979, 0, 0, 40, 43, 0);
-INSERT INTO `mob_groups` VALUES(26, 6028, 25, 'Seaboard_Vulture', 300, 0, 427, 0, 0, 83, 84, 0);
+INSERT INTO `mob_groups` VALUES(26, 6028, 25, 'Seaboard_Vulture', 214, 0, 427, 0, 0, 83, 84, 0); -- WINGSCUSTOM: reduce respawn rate by 10/14 to make camp at north tav exit viable (north camp even better with this)
 INSERT INTO `mob_groups` VALUES(27, 1553, 25, 'Gigas_Braver', 300, 0, 982, 0, 0, 41, 44, 0);
 INSERT INTO `mob_groups` VALUES(28, 1573, 25, 'Gigas_Martialist', 300, 0, 991, 0, 0, 41, 44, 0);
 INSERT INTO `mob_groups` VALUES(29, 3034, 25, 'Orcish_Stonelauncher', 300, 0, 1942, 0, 0, 43, 46, 0);
