@@ -360,7 +360,6 @@ anniversary.spawnNM = function(player, npc)
                 member:ChangeMusic(3, zoneInfo.battlemusic)
                 member:setCharVar("Anni2022_FightReady", 1)
                 member:delStatusEffectsByFlag(tpz.effectFlag.DISPELABLE)
-                RemoveTempItems(member)
 
                 member:addListener("DEATH", "DEATH_Anni2022", function(member)
                     member:removeListener("DEATH_Anni2022")
