@@ -89,6 +89,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function startQuest(player)
+    initialize()
     local QMnpc = GetNPCByID(buburimuID.npc.QM1)
     QMnpc:setStatus(tpz.status.DISAPPEAR)
     player:confirmTrade()
@@ -100,11 +101,6 @@ function startQuest(player)
     QMnpc:setLocalVar("BCQActive", 1)
     QMnpc:setLocalVar("BCQPlayer", player:getID())
     startMusic(player)
-
-    for i = 1, #buburimuID.npc.JADE_ETUI do
-        GetNPCByID(buburimuID.npc.JADE_ETUI[i]):setStatus(tpz.status.DISAPPEAR)
-        GetNPCByID(buburimuID.npc.JADE_ETUI[i]):setLocalVar('open', 0)
-    end
 end
 
 function removeTempItems(player)
@@ -181,6 +177,13 @@ function endQuest(player)
     end
     despawnNPCs()
     initialize()
+    for i = 1, #buburimuID.npc.JADE_ETUI do
+        local npc = GetNPCByID(buburimuID.npc.JADE_ETUI[i])
+        npc:setStatus(tpz.status.NORMAL)
+        npc:AnimationSub(0)
+        npc:entityAnimationPacket("deru")
+        npc:setLocalVar("BCQ", 0)
+    end
 end
 
 function endMusic(player)
@@ -206,8 +209,12 @@ function initialize()
     GetNPCByID(buburimuID.npc.BCQ_SHIMMER):entityAnimationPacket('efof')
     for i = 1, #buburimuID.npc.JADE_ETUI do
         local npc = GetNPCByID(buburimuID.npc.JADE_ETUI[i])
+        npc:AnimationSub(1)
+        npc:entityAnimationPacket("kesu")
         npc:setStatus(tpz.status.DISAPPEAR)
         npc:setLocalVar('open', 0)
+        npc:setLocalVar('hooked', 0)
+        npc:setLocalVar("BCQ", 1)
     end
 end
 
@@ -289,8 +296,12 @@ npcs.qm1.initialize = function()
     GetNPCByID(buburimuID.npc.BCQ_SHIMMER):entityAnimationPacket('efof')
     for i = 1, #buburimuID.npc.JADE_ETUI do
         local npc = GetNPCByID(buburimuID.npc.JADE_ETUI[i])
+        npc:AnimationSub(1)
+        npc:entityAnimationPacket("kesu")
         npc:setStatus(tpz.status.DISAPPEAR)
         npc:setLocalVar('open', 0)
+        npc:setLocalVar('hooked', 0)
+        npc:setLocalVar("BCQ", 1)
     end
 end
 
@@ -318,12 +329,20 @@ npcs.qm1.endQuest = function(player)
     end
     despawnNPCs()
     initialize()
+    for i = 1, #buburimuID.npc.JADE_ETUI do
+        local npc = GetNPCByID(buburimuID.npc.JADE_ETUI[i])
+        npc:setStatus(tpz.status.NORMAL)
+        npc:AnimationSub(0)
+        npc:entityAnimationPacket("deru")
+        npc:setLocalVar("BCQ", 0)
+    end
 end
 
 npcs.qm1.getAvailableJadeEtui = function()
     for i = 1, #buburimuID.npc.JADE_ETUI do
         local chest = GetNPCByID(buburimuID.npc.JADE_ETUI[i])
-        if chest:getStatus() == tpz.status.DISAPPEAR then
+        -- give 10s before selecting the same chest again
+        if chest:getStatus() == tpz.status.DISAPPEAR and chest:getLocalVar("lastOpened") < os.time() - 10 then
             return buburimuID.npc.JADE_ETUI[i]
         end
     end
@@ -332,6 +351,5 @@ end
 
 npcs.qm1.pufferPugilAvailable = function()
     local puffer = GetMobByID(buburimuID.mob.PUFFER_PUGIL)
-    local pufferSpawned = puffer:isSpawned()
-    return pufferSpawned == false
+    return puffer and (not puffer:isSpawned() or puffer:getStatus() == 2)
 end

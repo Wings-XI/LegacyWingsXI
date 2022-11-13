@@ -774,8 +774,8 @@ namespace fishingutils
 
         PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CCaughtMonsterPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_CATCH_CHEST));
         
-        Chest->status = STATUS_NORMAL;
-        zoneutils::GetZone(PChar->getZone())->PushPacket(Chest, CHAR_INRANGE, new CEntityUpdatePacket(Chest, ENTITY_UPDATE, UPDATE_ALL_MOB));
+        //Chest->status = STATUS_NORMAL;
+        luautils::OnNpcSpawn(static_cast<CBaseEntity*>(Chest));
 
         return 1;
     }

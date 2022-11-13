@@ -1115,6 +1115,8 @@ function onFishingCheck(player, fishskilllevel, rod, fishlist, moblist, lure, ar
             TimeLimit = BaseTimeLimit
             CatchType = fishing.catchType.CHEST
             CatchID = ChestPool[1].npc_id
+            GetNPCByID(CatchID):setLocalVar("hooked", 1)
+            GetNPCByID(CatchID):setLocalVar("hookedTime", os.time())
             CatchLevel = 0
             CatchSize = 0
             Delay = 10
