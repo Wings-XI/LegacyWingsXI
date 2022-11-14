@@ -164,6 +164,7 @@ src/common/stamp-h1
 navmeshes/*.nav
 tags
 log/tpz.leaks
+log/*
 
 # Lua Developement Tools project files
 .metadata/**
