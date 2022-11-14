@@ -514,8 +514,8 @@ mobList[zone][DMB+173].pos = {-111.2321, 20.0000, -321.6591, 99 }
 mobList[zone][DMB+174].pos = {-111.2321, 20.0000, -321.6591, 99 }
 -- Nightmare Dhalmels
 mobList[zone][DMB+175].pos = {147.0991, -13.8950, 83.2262, 91   }
-mobList[zone][DMB+176].pos = {184.7485, -14.7913, 70.9593, 80   }
-mobList[zone][DMB+177].pos = {184.7485, -14.7913, 70.9593, 80   }
+mobList[zone][DMB+176].pos = {148.0991, -14.8950, 83.2262, 91   }
+mobList[zone][DMB+177].pos = {148.0991, -14.8950, 84.2262, 91   }
 mobList[zone][DMB+178].pos = {173.1945, -15.7263, 105.4897, 231 }
 mobList[zone][DMB+180].pos = {168.6498, -17.3226, 97.7622, 245  }
 mobList[zone][DMB+182].pos = {164.7219, -20.3030, 142.5724, 240 }
