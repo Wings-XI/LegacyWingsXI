@@ -60,7 +60,7 @@ CREATE TABLE `chars` (
 -- Indexes for table `chars`
 --
 ALTER TABLE `chars`
-  ADD PRIMARY KEY (`character_id`),
+  ADD PRIMARY KEY (`character_id`,`world_id`) USING BTREE,
   ADD UNIQUE KEY `content_id` (`content_id`);
 COMMIT;
 
