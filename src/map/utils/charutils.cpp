@@ -4778,27 +4778,27 @@ namespace charutils
         uint8 currentMW2 = 0;
         uint8 currentMW3 = 0;
         uint8 currentMW4 = 0;
-        uint8 currentSack = 0;
+        uint8 currentCase = 0;
 
-        uint8 realCurrentMW1 = PChar->getStorage(8)->GetSize();
-        uint8 realCurrentMW2 = PChar->getStorage(10)->GetSize();
-        uint8 realCurrentMW3 = PChar->getStorage(11)->GetSize();
-        uint8 realCurrentMW4 = PChar->getStorage(12)->GetSize();
-        uint8 realCurrentSack = PChar->getStorage(6)->GetSize();
+        uint8 realCurrentMW1 = PChar->getStorage(LOC_WARDROBE)->GetSize();
+        uint8 realCurrentMW2 = PChar->getStorage(LOC_WARDROBE2)->GetSize();
+        uint8 realCurrentMW3 = PChar->getStorage(LOC_WARDROBE3)->GetSize();
+        uint8 realCurrentMW4 = PChar->getStorage(LOC_WARDROBE4)->GetSize();
+        uint8 realCurrentCase = PChar->getStorage(LOC_MOGCASE)->GetSize();
 
         if (!recovery) {
             currentMW1 = realCurrentMW1;
             currentMW2 = realCurrentMW2;
             currentMW3 = realCurrentMW3;
             currentMW4 = realCurrentMW4;
-            currentSack = realCurrentSack;
+            currentCase = realCurrentCase;
         }
 
         uint8 afterMW1 = 0;
         uint8 afterMW2 = 0;
         uint8 afterMW3 = 0;
         uint8 afterMW4 = 0;
-        uint8 afterSack = 0;
+        uint8 afterCase = 0;
 
         // return MW1 size based on player's max nation rank
         uint8 rank = std::max({PChar->profile.rank[0], PChar->profile.rank[1], PChar->profile.rank[2]});
@@ -4978,7 +4978,7 @@ namespace charutils
         }
         if (WG == 54)
             WG = 60;
-        afterSack = WG;
+        afterCase = WG;
 
         if (afterMW1 > 80)
             afterMW1 = 80;
@@ -4988,8 +4988,8 @@ namespace charutils
             afterMW3 = 80;
         if (afterMW4 > 80)
             afterMW4 = 80;
-        if (afterSack > 60)
-            afterSack = 60;
+        if (afterCase > 80)
+            afterCase = 80;
 
         int8 increase = 0;
         std::string line;
@@ -5005,7 +5005,7 @@ namespace charutils
                     line += " slot!";
                 PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
             }
-            PChar->getStorage(8)->SetBuff(afterMW1);
+            PChar->getStorage(LOC_WARDROBE)->SetBuff(afterMW1);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
@@ -5020,7 +5020,7 @@ namespace charutils
                     line += " slot!";
                 PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
             }
-            PChar->getStorage(10)->SetBuff(afterMW2);
+            PChar->getStorage(LOC_WARDROBE2)->SetBuff(afterMW2);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
@@ -5035,7 +5035,7 @@ namespace charutils
                     line += " slot!";
                 PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
             }
-            PChar->getStorage(11)->SetBuff(afterMW3);
+            PChar->getStorage(LOC_WARDROBE3)->SetBuff(afterMW3);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
@@ -5050,22 +5050,22 @@ namespace charutils
                     line += " slot!";
                 PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
             }
-            PChar->getStorage(12)->SetBuff(afterMW4);
+            PChar->getStorage(LOC_WARDROBE4)->SetBuff(afterMW4);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
-        if ((afterSack != realCurrentSack) && ((recovery) || (afterSack > currentSack)))
+        if ((afterCase != realCurrentCase) && ((recovery) || (afterCase > currentCase)))
         {
             if (!recovery) {
-                increase = afterSack - currentSack;
-                line = "The capacity of your Mog Sack has increased by "; line += std::to_string(increase);
+                increase = afterCase - currentCase;
+                line = "The capacity of your Mog Case has increased by "; line += std::to_string(increase);
                 if (increase > 1)
                     line += " slots!";
                 else
                     line += " slot!";
                 PChar->pushPacket(new CChatMessagePacket(PChar, (CHAT_MESSAGE_TYPE)29, line, ""));
             }
-            PChar->getStorage(6)->SetBuff(afterSack);
+            PChar->getStorage(LOC_MOGCASE)->SetBuff(afterCase);
             PChar->pushPacket(new CInventorySizePacket(PChar));
             charutils::SaveCharInventoryCapacity(PChar);
         }
