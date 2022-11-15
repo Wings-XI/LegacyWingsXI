@@ -18,17 +18,19 @@ local event = {
     [tpz.zone.SOUTHERN_SAN_DORIA] = 960
 }
 local menuFlags = {
-	expand = 0x8,
-	abags = 0x4,
-	aexpand = 0x2,
+    expand = 0x8,
+    abags = 0x4,
+    aexpand = 0x2,
 }
 
 tpz.artisan.moogleOnTrigger = function(player, npc)
-    local csid = event[player:getZoneID()]
+    local zoneid = player:getZoneID()
+    local csid = event[zoneid]
+    local varname = string.format("[artisan]visited_%i", zoneid)
     local menuMask = 0
     local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
-    local mogVisited = (sackSize > 0 or player:getCharVar("[artisan]visited") > 0) and 1 or 0
-    if mogVisited == 0 then player:setCharVar("[artisan]visited", 1) end
+    local mogVisited = (sackSize > 0 or player:getCharVar(varname) > 0) and 1 or 0
+    if mogVisited == 0 then player:setCharVar(varname, 1) end
     if sackSize > 0 then
         sackSize = sackSize + 1
     else
@@ -40,23 +42,39 @@ end
 tpz.artisan.moogleOnUpdate = function(player, csid, option)
 
     if option == 1 then -- Buy sack
-        if player:getGil() >= 9980 and player:getContainerSize(tpz.inv.MOGSACK) == 0 then
+        if player:getContainerSize(tpz.inv.MOGSACK) ~= 0 then
+            -- Only one sack per adventurer
+            local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
+            player:updateEvent((sackSize-30)/5, 0, 0, sackSize+1, 0, 0, 0, 1)
+        elseif player:getGil() >= 9980 then
             player:delGil(9980)
             player:changeContainerSize(tpz.inv.MOGSACK, 30)
-            player:setCharVar("[artisan]visited", 0)
+            player:setLocalVar("[artisan]newpurchase", 1)
             player:updateEvent(0, 0, 0, 30+1, 0, 0, 0, 2)
         end
-
+        
     elseif option == 2 then -- Expand sack
         local sackSize = player:getContainerSize(tpz.inv.MOGSACK)
         local gobbieSize = player:getContainerSize(tpz.inv.INVENTORY)
         local gobbieCanUpgrade = gobbieSize < 80 and 1 or 0
+        local newpurchase = player:getLocalVar("[artisan]newpurchase")
         if sackSize < gobbieSize and sackSize > 0 then
             player:changeContainerSize(tpz.inv.MOGSACK, gobbieSize - sackSize)
-            player:updateEvent((gobbieSize-30)/5, 0, 0, player:getContainerSize(tpz.inv.MOGSACK)+1, 0, 0, 2, 0)
-        else
-            player:updateEvent(0, 0, 0, 0, 0, 0, gobbieCanUpgrade, 0)
+            if newpurchase == 0 then
+                gobbieCanUpgrade = 2
+            end
         end
+        if newpurchase ~= 0 then
+            if gobbieSize >= 80 then
+                gobbieCanUpgrade = 0
+            elseif gobbieSize > 30 then
+                gobbieCanUpgrade = 2
+            else
+                gobbieCanUpgrade = 3
+            end
+        end
+        player:updateEvent((gobbieSize-30)/5, 0, 0, player:getContainerSize(tpz.inv.MOGSACK)+1, 0, 0, gobbieCanUpgrade, 0)
+        player:setLocalVar("[artisan]newpurchase", 0)
 
     elseif option == 3 then -- Client requests sack + scroll status
         local scrollAvail = 0
