@@ -16505,7 +16505,7 @@ INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 15132, 20); -- af
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 15136, 20); -- af
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 15145, 20); -- af
 INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 15146, 20); -- af
-INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 16349, 91); -- af
+INSERT INTO `mob_droplist` VALUES(3203, 1, 1, 16, 16349, 20); -- af
 INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18290, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18296, 250);
 INSERT INTO `mob_droplist` VALUES(3203, 1, 3, 8, 18308, 250);
