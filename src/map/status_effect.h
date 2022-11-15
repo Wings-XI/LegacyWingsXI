@@ -42,12 +42,12 @@ enum EFFECTOVERWRITE
 enum EFFECTFLAG
 {
     EFFECTFLAG_NONE             = 0x0000,
-    EFFECTFLAG_DISPELABLE       = 0x0001,
-    EFFECTFLAG_ERASABLE         = 0x0002,
-    EFFECTFLAG_ATTACK           = 0x0004,   // исчезает при нанесении урона
-    EFFECTFLAG_EMPATHY          = 0X0008,   // effect can be copied to wyvern by use of merited Spirit Link
-    EFFECTFLAG_DAMAGE           = 0x0010,   // исчезает при получении урона
-    EFFECTFLAG_DEATH            = 0x0020,   // исчезает при смерти
+    EFFECTFLAG_DISPELABLE       = 0x0001,   //1
+    EFFECTFLAG_ERASABLE         = 0x0002,   //2
+    EFFECTFLAG_ATTACK           = 0x0004,   //4// исчезает при нанесении урона
+    EFFECTFLAG_EMPATHY          = 0X0008,   //8// effect can be copied to wyvern by use of merited Spirit Link
+    EFFECTFLAG_DAMAGE           = 0x0010,   //16// исчезает при получении урона
+    EFFECTFLAG_DEATH            = 0x0020,   //32// исчезает при смерти
     EFFECTFLAG_MAGIC_BEGIN      = 0x0040,   // исчезает перед началом чтения заклинания
     EFFECTFLAG_MAGIC_END        = 0x0080,   // исчезает после прочтения заклинания
     EFFECTFLAG_ON_ZONE          = 0x0100,
@@ -729,7 +729,8 @@ enum EFFECT
     EFFECT_GM_IMMORTAL              = 806,
     EFFECT_SOLDIERS_DRINK           = 807,
     EFFECT_BRAINJACK                = 808,
-    // 809-1022
+    EFFECT_BOILING_BLOOD            = 809,
+    // 810-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 

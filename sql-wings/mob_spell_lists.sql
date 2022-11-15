@@ -4488,6 +4488,48 @@ INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 170, 1, 255); -- Wa
 INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 199, 1, 255); -- Waterga 1
 INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 155, 1, 255); -- Aero 2
 INSERT INTO `mob_spell_lists` VALUES('Verdelet_NoHorn', 549, 184, 1, 255); -- Aeroga 1
+-- Mahjlaef
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 146, 1, 255); -- Fire 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 151, 1, 255); -- Bliz 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 161, 1, 255); -- Stone 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 166, 1, 255); -- Thun 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 171, 1, 255); -- Water 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 156, 1, 255); -- Aero 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 259, 1, 255); -- Sleep 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 25, 1, 255); -- Dia 3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 79, 1, 255); --  Slow 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 80, 1, 255); -- Para 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 246, 1, 255); -- Drain 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef', 550, 248, 1, 255); -- Aspir 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 176, 1, 255); -- Fga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 181, 1, 255); -- Bga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 186, 1, 255); -- Aga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 191, 1, 255); -- Sga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 196, 1, 255); -- Tga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 201, 1, 255); -- Wga3
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 205, 1, 255); -- Flare2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 207, 1, 255); -- Freeze2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 209, 1, 255); -- Tornado2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 211, 1, 255); -- Quake2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 213, 1, 255); -- Burst2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 215, 1, 255); -- Flood2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 357, 1, 255); -- Slowga
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 359, 1, 255); -- Silencga
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_2Shield', 551, 364, 1, 255); -- Sleepga 2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 175, 1, 255); -- Fga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 180, 1, 255); -- Bga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 185, 1, 255); -- Aga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 190, 1, 255); -- Sga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 195, 1, 255); -- Tga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 200, 1, 255); -- Wga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 204, 1, 255); -- Flare
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 206, 1, 255); -- Freeze
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 208, 1, 255); -- Tornado
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 210, 1, 255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 212, 1, 255); -- Burst
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 214, 1, 255); -- Flood
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 34, 1, 255); -- Diaga2
+INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 273, 1, 255); -- Sleepga
 
 
 --
