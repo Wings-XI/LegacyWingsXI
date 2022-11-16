@@ -868,8 +868,9 @@ function addBonuses(caster, spell, target, dmg, params)
     params = params or {}
 
     local ele = spell:getElement()
-
+    local spellGroup = spell:getSpellGroup()
     local affinityBonus = AffinityBonusDmg(caster, ele)
+
     if params.attackType ~= tpz.attackType.BREATH then dmg = math.floor(dmg * affinityBonus) end -- BLU breaths unaffected by staff
 
     params.bonusmab = params.bonusmab or 0
@@ -970,10 +971,15 @@ function addBonuses(caster, spell, target, dmg, params)
 
     dmg = math.floor(dmg * mabbonus)
 
-    if caster:hasStatusEffect(tpz.effect.EBULLIENCE) then
+    if caster:hasStatusEffect(tpz.effect.EBULLIENCE) and spellGroup == tpz.magic.spellGroup.BLACK then
         dmg = dmg * (1.2 + caster:getMod(tpz.mod.EBULLIENCE_AMOUNT)/100)
         caster:delStatusEffectSilent(tpz.effect.EBULLIENCE)
+    elseif caster:hasStatusEffect(tpz.effect.RAPTURE) and spellGroup == tpz.magic.spellGroup.WHITE then
+        dmg = dmg * (1.5 + caster:getMod(tpz.mod.RAPTURE_AMOUNT)/100)
+        caster:delStatusEffectSilent(tpz.effect.RAPTURE)
     end
+
+
 
     dmg = math.floor(dmg)
 
