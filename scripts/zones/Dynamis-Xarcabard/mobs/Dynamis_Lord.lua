@@ -148,12 +148,13 @@ end
 function onMobWeaponSkillPrepare(mob, target)
     -- at or below 25% hp, tera slash & oblivion smash have a chance to insta death on hit.
     -- each has two animations per skill, one jumping (insta death) the other standing on the ground.
+    local moveRand = math.random(100)
     if mob:getHPP() <= 25 then
-        if math.random() < 0.25 then
+        if moveRand < 25 then
             return 1135
-        elseif math.random() < 0.50 then
+        elseif moveRand < 50 then
             return 1133
-        elseif math.random() < 0.75 then
+        elseif moveRand < 75 then
             return 1134
         else
             return 1132

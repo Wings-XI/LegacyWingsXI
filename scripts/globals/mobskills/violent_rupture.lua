@@ -1,9 +1,9 @@
 ---------------------------------------------
---  Dynamic Implosion
+--  Violent Rupture
 --
---  Description: Deals Water damage to enemies in a fan-shaped area of effect. Additional effect: STR Down
+--  Description: Deals high damage to players within an area of effect. Additional effect: Weight & knockback
 --  Type: Breath
---  Utsusemi/Blink absorb: Ignores shadows
+--  Utsusemi/Blink absorb: 2-3 shadows
 --  Range: Unknown cone
 --  Notes:
 ---------------------------------------------
@@ -11,6 +11,7 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
+require("scripts/globals/msg")
 
 ---------------------------------------------
 
@@ -19,17 +20,15 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    local numhits = 3
+    local accmod = 1
+    local dmgmod = 1.5
+    local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 2, 3)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
-    local power = 50
-    local duration = 120
-
-    MobStatusEffectMove(mob, target, tpz.effect.STR_DOWN, power, 3, duration)
-
-    local dmgmod = MobBreathMove(mob, target, 0.1, 1, tpz.magic.ele.FIRE, 200)
-
-    local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
-
+    if info.hitslanded > 0 then
+        MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.WEIGHT, 50, 0, 120)
+    end
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.FIRE)
     return dmg
-
 end

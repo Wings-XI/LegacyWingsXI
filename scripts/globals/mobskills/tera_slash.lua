@@ -21,12 +21,12 @@ function onMobWeaponSkill(target, mob, skill)
 
     local numhits = 1
     local accmod = 2
-    local dmgmod = 5
+    local dmgmod = 3
 
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 1, 1.5, 2)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_IGNORE_SHADOWS)
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
-    if mob:getHPP() <= 25 and skill:getID() == 1135 then
+    if info.hitslanded > 0 and mob:getHPP() <= 25 and skill:getID() == 1135 then
         skill:setMsg(tpz.msg.basic.FALL_TO_GROUND)
         target:setHP(0) -- insta death
         return 0
