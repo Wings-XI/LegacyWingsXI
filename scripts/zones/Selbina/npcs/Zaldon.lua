@@ -361,6 +361,7 @@ local fishRewards =
 local function tradeFish(player, fishId)
     player:setCharVar("insideBellyFishId", fishId)
     player:setCharVar("insideBellyItemIdx", 0)
+    player:confirmTrade()
 
     local rewards = fishRewards[fishId].items
     local roll = math.random(1000) / 10
@@ -399,8 +400,7 @@ local function giveReward(player, csid)
         player:setCharVar("insideBellyFishId", 0)
         player:setCharVar("insideBellyItemIdx", 0)
 
-        -- Regardless of success or failure, confirm the trade, give gil, and set the char vars to 0
-        player:confirmTrade()
+        -- Regardless of success or failure, give gil, and set the char vars to 0
         player:addGil(GIL_RATE * reward.gil)
         player:messageSpecial(ID.text.GIL_OBTAINED, GIL_RATE * reward.gil)
 
@@ -439,6 +439,7 @@ function onTrade(player, npc, trade)
 
     -- UNDER THE SEA
     if underTheSea == QUEST_ACCEPTED and not player:hasKeyItem(tpz.ki.ETCHED_RING) and npcUtil.tradeHas(trade, 4501) then
+        player:confirmTrade()
         if math.random(100) <= 20 then
             player:startEvent(35) -- Ring found !
         else
@@ -499,9 +500,6 @@ function onEventFinish(player, csid, option)
         player:setCharVar("underTheSeaVar", 4)
     elseif csid == 35 then
         npcUtil.giveKeyItem(player, tpz.ki.ETCHED_RING)
-        player:confirmTrade()
-    elseif csid == 36 then
-        player:confirmTrade()
 
     -- A BOY'S DREAM
     elseif csid == 85 then
