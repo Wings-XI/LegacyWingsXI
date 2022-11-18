@@ -8,11 +8,19 @@ require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/treasure")
 require("scripts/globals/status")
+require("scripts/globals/world")
+require("scripts/globals/zone")
 -----------------------------------
 
 function onInitialize(zone)
     -- Set random variable for determining Old Prof. Mariselle's spawn location
     SetServerVariable("Old_Prof_Spawn_Location", math.random(2, 7))
+
+    local Elel = GetMobByID(ID.mob.ELEL)
+    UpdateNMSpawnPoint(ID.mob.ELEL)
+    Elel:setRespawnTime(math.random(7200, 14400)) -- 2 to 4 hours
+    Elel:setLocalVar("cooldown", os.time() + Elel:getRespawnTime()/1000)
+    DisallowRespawn(Elel:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
 
     tpz.treasure.initZone(zone)
 
@@ -64,4 +72,15 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+end
+
+function onZoneWeatherChange(weather)
+    local Elel = GetMobByID(ID.mob.ELEL)
+    if
+        not Elel:isSpawned()
+        and (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
+    then
+        DisallowRespawn(Elel:getID(), false)
+        Elel:setRespawnTime(math.random(5, 10))
+    end
 end
