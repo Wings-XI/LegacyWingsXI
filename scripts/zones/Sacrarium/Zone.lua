@@ -14,13 +14,12 @@ local ID = require("scripts/zones/Sacrarium/IDs")
 
 function onInitialize(zone)
     local Elel = GetMobByID(ID.mob.ELEL)
-    local cooldown = Elel:getLocalVar("cooldown")
     local hour = VanadielHour()
     local isDark = (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS)
     local isNighttime = (hour < 4 or hour >= 20)
 
     if isDark and isNighttime then
-        if os.time() > cooldown then
+        if os.time() > Elel:getLocalVar("cooldown") then
             DisallowRespawn(Elel:getID(), false)
             SpawnMob(Elel)
         end
@@ -79,13 +78,12 @@ end
 
 function onZoneWeatherChange(weather)
     local Elel = GetMobByID(ID.mob.ELEL)
-    local cooldown = Elel:getLocalVar("cooldown")
     local hour = VanadielHour()
     local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
     local isNighttime = (hour < 4 or hour >= 20)
 
     if not Elel:isSpawned() and isDark and isNighttime then
-        if os.time() > cooldown then
+        if os.time() > Elel:getLocalVar("cooldown") then
             DisallowRespawn(Elel:getID(), false)
             SpawnMob(Elel)
         end
@@ -94,13 +92,12 @@ end
 
 function onGameHour()
     local Elel = GetMobByID(ID.mob.ELEL)
-    local cooldown = Elel:getLocalVar("cooldown")
     local hour = VanadielHour()
     local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
     local isNighttime = (hour < 4 or hour >= 20)
 
     if not Elel:isSpawned() and isDark and isNighttime then
-        if os.time() > cooldown then
+        if os.time() > Elel:getLocalVar("cooldown") then
             DisallowRespawn(Elel:getID(), false)
             SpawnMob(Elel)
         end
