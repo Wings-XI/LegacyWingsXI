@@ -1669,6 +1669,8 @@ namespace petutils
             }
 
 
+            uint8 eleMerit = 0;
+
             if (PMaster->objtype == TYPE_PC)
             {
                 CCharEntity* PChar = (CCharEntity*)PMaster;
@@ -1676,9 +1678,9 @@ namespace petutils
                 PPet->addModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar));
                 PPet->addModifier(Mod::MACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar));
                 PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
+                eleMerit = PChar->PMeritPoints->GetMeritValue(MERIT_SUMMONING_MAGIC_CAST_TIME, PChar); //Note: In-era SMN group 1 merit category is spirit perp cost reduction, but it exists in the dats/database as summon magic cast time reduction. Decreases perp cost of spirits by 1 per merit, to a max of 5
             }
 
-            uint8 eleMerit = ((CCharEntity*)PMaster)->PMeritPoints->GetMerit(MERIT_SUMMONING_MAGIC_CAST_TIME)->value; // TODO -- RENAME THIS SUMMONING MAGIC CAST TIME MERIT TO ELE COST REDUCTION
             PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, PPet->GetMLevel(), eleMerit));
             
             // load mob sdt, etc from mob_family_system

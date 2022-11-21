@@ -171,7 +171,7 @@ INSERT INTO `merits` VALUES(1280, 'avatar_physical_accuracy', 5, 3, 16384, 6, 19
 INSERT INTO `merits` VALUES(1282, 'avatar_physical_attack', 5, 2, 16384, 6, 19);
 INSERT INTO `merits` VALUES(1284, 'avatar_magical_accuracy', 5, 3, 16384, 6, 19);
 INSERT INTO `merits` VALUES(1286, 'avatar_magical_attack', 5, 2, 16384, 6, 19);
-INSERT INTO `merits` VALUES(1288, 'summoning_magic_cast_time', 5, 5, 16384, 6, 19);
+INSERT INTO `merits` VALUES(1288, 'summoning_magic_cast_time', 5, 1, 16384, 6, 19); -- Used for in-era merit category of spirit perp cost reduction
 INSERT INTO `merits` VALUES(1344, 'chain_affinity_recast', 5, 4, 32768, 6, 20);
 INSERT INTO `merits` VALUES(1346, 'burst_affinity_recast', 5, 4, 32768, 6, 20);
 INSERT INTO `merits` VALUES(1348, 'monster_correlation', 5, 4, 32768, 6, 20);
