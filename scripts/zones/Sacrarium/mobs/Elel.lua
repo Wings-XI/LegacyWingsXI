@@ -7,8 +7,16 @@
 require("scripts/globals/world")
 -----------------------------------
 
+function onMobSpawn(mob)
+    mob:setLocalVar("wasKilled", 0)
+end
+
 function onMobRoam(mob)
-    if not (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS) then
+    local hour = VanadielHour()
+    local isDark = (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS)
+    local isNighttime = (hour < 4 or hour >= 20)
+
+    if not isDark or not isNighttime then
         DespawnMob(mob:getID())
     end
 end
@@ -16,42 +24,29 @@ end
 function onMobFight(mob, target)
 end
 
-function onMobDeath(mob, player, isKiller)
-end
+function onMobDisengage(mob)
+    local hour = VanadielHour()
+    local isDark = (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS)
+    local isNighttime = (hour < 4 or hour >= 20)
 
-function onMobDespawn(mob)
-    UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(7200, 14400))
-    mob:setLocalVar("cooldown", os.time() + mob:getRespawnTime()/1000)
-    DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
-end
-
-
---[[
---rebase code
------------------------------------
-mixins = { require("scripts/globals/world") }
------------------------------------
-local entity = {}
-
-entity.onMobRoam(mob) = function(mob)
-    if not (mob:getWeather() == xi.weather.DARKNESS or mob:getWeather() == xi.weather.GLOOM) then
+    if not isDark or not isNighttime then
         DespawnMob(mob:getID())
     end
 end
 
-entity.onMobFight = function(mob, target)
+function onMobDeath(mob, player, isKiller)
+    if isKiller then
+        mob:setLocalVar("wasKilled", 1)
+    end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-end
-
-entity.onMobDespawn = function(mob)
-    UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(7200, 14400))
-    mob:setLocalVar("cooldown", os.time() + mob:getRespawnTime()/1000)
+function onMobDespawn(mob)
+    if mob:getLocalVar("wasKilled") == 1 then
+        mob:setRespawnTime(math.random(7200, 14400))
+        mob:setLocalVar("cooldown", os.time() + math.floor(mob:getRespawnTime()/1000))
+    else
+        mob:setLocalVar("preservePop", 1)
+    end
     DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
-end
 
-return entity
-]]--
+end

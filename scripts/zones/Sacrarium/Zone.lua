@@ -3,24 +3,33 @@
 -- Zone: Sacrarium (28)
 --
 -----------------------------------
-local ID = require("scripts/zones/Sacrarium/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/treasure")
 require("scripts/globals/status")
 require("scripts/globals/world")
 require("scripts/globals/zone")
+local ID = require("scripts/zones/Sacrarium/IDs")
 -----------------------------------
 
 function onInitialize(zone)
+    local Elel = GetMobByID(ID.mob.ELEL)
+    local cooldown = Elel:getLocalVar("cooldown")
+    local hour = VanadielHour()
+    local isDark = (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS)
+    local isNighttime = (hour < 4 or hour >= 20)
+
+    if isDark and isNighttime then
+        if os.time() > cooldown then
+            DisallowRespawn(Elel:getID(), false)
+            SpawnMob(Elel)
+        end
+    else
+        DisallowRespawn(Elel:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
+    end
+
     -- Set random variable for determining Old Prof. Mariselle's spawn location
     SetServerVariable("Old_Prof_Spawn_Location", math.random(2, 7))
-
-    local Elel = GetMobByID(ID.mob.ELEL)
-    UpdateNMSpawnPoint(ID.mob.ELEL)
-    Elel:setRespawnTime(math.random(7200, 14400)) -- 2 to 4 hours
-    Elel:setLocalVar("cooldown", os.time() + Elel:getRespawnTime()/1000)
-    DisallowRespawn(Elel:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
 
     tpz.treasure.initZone(zone)
 
@@ -68,19 +77,38 @@ function onGameDay()
     end
 end
 
+function onZoneWeatherChange(weather)
+    local Elel = GetMobByID(ID.mob.ELEL)
+    local cooldown = Elel:getLocalVar("cooldown")
+    local hour = VanadielHour()
+    local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
+    local isNighttime = (hour < 4 or hour >= 20)
+
+    if not Elel:isSpawned() and isDark and isNighttime then
+        if os.time() > cooldown then
+            DisallowRespawn(Elel:getID(), false)
+            SpawnMob(Elel)
+        end
+    end
+end
+
+function onGameHour()
+    local Elel = GetMobByID(ID.mob.ELEL)
+    local cooldown = Elel:getLocalVar("cooldown")
+    local hour = VanadielHour()
+    local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
+    local isNighttime = (hour < 4 or hour >= 20)
+
+    if not Elel:isSpawned() and isDark and isNighttime then
+        if os.time() > cooldown then
+            DisallowRespawn(Elel:getID(), false)
+            SpawnMob(Elel)
+        end
+    end
+end
+
 function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-end
-
-function onZoneWeatherChange(weather)
-    local Elel = GetMobByID(ID.mob.ELEL)
-    if
-        not Elel:isSpawned()
-        and (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
-    then
-        DisallowRespawn(Elel:getID(), false)
-        Elel:setRespawnTime(math.random(5, 10))
-    end
 end
