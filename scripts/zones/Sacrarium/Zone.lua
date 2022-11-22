@@ -14,17 +14,9 @@ local ID = require("scripts/zones/Sacrarium/IDs")
 
 function onInitialize(zone)
     local Elel = GetMobByID(ID.mob.ELEL)
-    local hour = VanadielHour()
-    local isDark = (mob:getWeather() == tpz.weather.GLOOM or mob:getWeather() == tpz.weather.DARKNESS)
-    local isNighttime = (hour < 4 or hour >= 20)
-
-    if isDark and isNighttime then
-        if os.time() > Elel:getLocalVar("cooldown") then
-            DisallowRespawn(Elel:getID(), false)
-            SpawnMob(Elel)
-        end
-    else
-        DisallowRespawn(Elel:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
+    if os.time() < Elel:getLocalVar("cooldown") then
+        DisallowRespawn(Elel:getID(), false)
+        SpawnMob(Elel)
     end
 
     -- Set random variable for determining Old Prof. Mariselle's spawn location
@@ -78,12 +70,8 @@ end
 
 function onZoneWeatherChange(weather)
     local Elel = GetMobByID(ID.mob.ELEL)
-    local hour = VanadielHour()
-    local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
-    local isNighttime = (hour < 4 or hour >= 20)
-
-    if not Elel:isSpawned() and isDark and isNighttime then
-        if os.time() > Elel:getLocalVar("cooldown") then
+    if os.time() > Elel:getLocalVar("cooldown") then
+        if not Elel:isSpawned() and elelCanSpawn() then
             DisallowRespawn(Elel:getID(), false)
             SpawnMob(Elel)
         end
@@ -92,16 +80,25 @@ end
 
 function onGameHour()
     local Elel = GetMobByID(ID.mob.ELEL)
-    local hour = VanadielHour()
-    local isDark = (weather == tpz.weather.GLOOM or weather == tpz.weather.DARKNESS)
-    local isNighttime = (hour < 4 or hour >= 20)
 
-    if not Elel:isSpawned() and isDark and isNighttime then
-        if os.time() > Elel:getLocalVar("cooldown") then
+    if os.time() > Elel:getLocalVar("cooldown") then
+        if not Elel:isSpawned() and elelCanSpawn() then
             DisallowRespawn(Elel:getID(), false)
             SpawnMob(Elel)
         end
     end
+end
+
+function elelCanSpawn()
+    local Elel = GetMobByID(ID.mob.ELEL)
+    local totd = VanadielTOTD()
+    local isNighttime = (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT)
+    local isDark = (Elel:getWeather() == tpz.weather.GLOOM or Elel:getWeather() == tpz.weather.DARKNESS)
+
+    if not isDark or not isNighttime then
+        return false
+    end
+    return true
 end
 
 function onEventUpdate(player, csid, option)
