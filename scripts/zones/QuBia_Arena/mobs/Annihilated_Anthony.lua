@@ -10,8 +10,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.PIERCERES, 200)
     mob:setMod(tpz.mod.SLASHRES, 200)
     mob:setMod(tpz.mod.H2HRES, 200)
-    mob:setMod(tpz.mod.IMPACTRES, 200)
-    mob:addMod(tpz.mod.UDMGMAGIC, 20)
+    mob:setMod(tpz.mod.IMPACTRES, 1500) -- weak to bst jug pets
+    mob:setMod(tpz.mod.UDMGMAGIC, 40)
 end
 
 function onMobEngaged (mob, target)
