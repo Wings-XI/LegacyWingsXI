@@ -64,19 +64,25 @@ end
 
 function onZoneWeatherChange(weather)
     local Elel = GetMobByID(ID.mob.ELEL)
-    if os.time() > GetServerVariable("ElelRespawn") then
-        if not Elel:isSpawned() and elelCanSpawn() then
-            SpawnMob(Elel:getID())
-        end
+
+    if
+        os.time() > GetServerVariable("ElelRespawn") and
+        not Elel:isSpawned() and
+        elelCanSpawn()
+    then
+        SpawnMob(Elel:getID())
     end
 end
 
 function onGameHour()
     local Elel = GetMobByID(ID.mob.ELEL)
-    if os.time() > GetServerVariable("ElelRespawn") then
-        if not Elel:isSpawned() and elelCanSpawn() then
-            SpawnMob(Elel:getID())
-        end
+
+    if
+        os.time() > GetServerVariable("ElelRespawn") and
+        not Elel:isSpawned() and
+        elelCanSpawn()
+    then
+        SpawnMob(Elel:getID())
     end
 end
 
