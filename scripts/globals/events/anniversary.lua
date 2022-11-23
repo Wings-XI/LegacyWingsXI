@@ -60,6 +60,7 @@ anniversary.spawnitems2022 = {
 anniversary.globalHQdropitems2022 = {
     11290, -- tidal_talisman
     16119, -- Nomad cap
+    15793,
 }
 
 anniversary.globalNQdropitems2022 = {
@@ -341,9 +342,6 @@ anniversary.spawnNM = function(player, npc)
         ]]
 
         -- join whole alliance to confrontation event
-        -- join party of the initator first as a workaround for mea
-        player:addPartyEffect(143, zoneInfo.playerlvl, 0, 0) -- Add Level Restriction
-        player:addPartyEffect(276, 10, 0, 0) -- Add Confrontation Status to allow attacking the mobs
         for _,member in pairs(party) do
             if member:getZoneID() == npc:getZoneID() then
                 -- printf("Anni2022_SpawnNM starting for member: %s", member:getName())
