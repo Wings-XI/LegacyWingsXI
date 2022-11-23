@@ -9,7 +9,6 @@ require("scripts/zones/Sacrarium/Zone")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setLocalVar("wasKilled", 0)
 end
 
 function onMobRoam(mob)
@@ -28,15 +27,9 @@ function onMobDisengage(mob)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if isKiller == true then
-        mob:setLocalVar("wasKilled", 1)
-    end
+    SetServerVariable("ElelRespawn", os.time() + math.random(6600, 13200))
 end
 
 function onMobDespawn(mob)
-    if mob:getLocalVar("wasKilled") == 1 then
-        mob:setRespawnTime(math.random(7200, 14400))
-        mob:setLocalVar("cooldown", os.time() + mob:getRespawnTime()/1000)
-    end
-    DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
+    -- DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
 end

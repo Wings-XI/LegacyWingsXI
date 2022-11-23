@@ -13,12 +13,6 @@ local ID = require("scripts/zones/Sacrarium/IDs")
 -----------------------------------
 
 function onInitialize(zone)
-    local Elel = GetMobByID(ID.mob.ELEL)
-    if os.time() < Elel:getLocalVar("cooldown") then
-        DisallowRespawn(Elel:getID(), false)
-        SpawnMob(Elel)
-    end
-
     -- Set random variable for determining Old Prof. Mariselle's spawn location
     SetServerVariable("Old_Prof_Spawn_Location", math.random(2, 7))
 
@@ -70,21 +64,18 @@ end
 
 function onZoneWeatherChange(weather)
     local Elel = GetMobByID(ID.mob.ELEL)
-    if os.time() > Elel:getLocalVar("cooldown") then
+    if os.time() > GetServerVariable("ElelRespawn") then
         if not Elel:isSpawned() and elelCanSpawn() then
-            DisallowRespawn(Elel:getID(), false)
-            SpawnMob(Elel)
+            SpawnMob(Elel:getID())
         end
     end
 end
 
 function onGameHour()
     local Elel = GetMobByID(ID.mob.ELEL)
-
-    if os.time() > Elel:getLocalVar("cooldown") then
+    if os.time() > GetServerVariable("ElelRespawn") then
         if not Elel:isSpawned() and elelCanSpawn() then
-            DisallowRespawn(Elel:getID(), false)
-            SpawnMob(Elel)
+            SpawnMob(Elel:getID())
         end
     end
 end
