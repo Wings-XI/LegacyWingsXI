@@ -31,5 +31,4 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    -- DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no darkness weather and immediate despawn
 end
