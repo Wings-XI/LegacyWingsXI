@@ -2555,210 +2555,233 @@ void CCharEntity::DropBattlefieldIfOutside()
     }
 }
 
+void CCharEntity::AddRemoveMoghancement(uint16 moghancementID, bool remove)
+{
+    std::vector<std::pair<Mod, int16>> newMods;
+
+    switch (m_moghancementID)
+    {
+    case MOGHANCEMENT_FIRE:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_FIRE, 5));
+        break;
+    case MOGHANCEMENT_ICE:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_ICE, 5));
+        break;
+    case MOGHANCEMENT_WIND:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_WIND, 5));
+        break;
+    case MOGHANCEMENT_EARTH:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_EARTH, 5));
+        break;
+    case MOGHANCEMENT_LIGHTNING:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_LIGHTNING, 5));
+        break;
+    case MOGHANCEMENT_WATER:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_WATER, 5));
+        break;
+    case MOGHANCEMENT_LIGHT:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_LIGHT, 5));
+        break;
+    case MOGHANCEMENT_DARK:
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_DARK, 5));
+        break;
+
+    case MOGHANCEMENT_FISHING:
+        newMods.push_back(std::make_pair(Mod::FISH, 1));
+        break;
+    case MOGHANCEMENT_WOODWORKING:
+        newMods.push_back(std::make_pair(Mod::WOOD, 1));
+        break;
+    case MOGHANCEMENT_SMITHING:
+        newMods.push_back(std::make_pair(Mod::SMITH, 1));
+        break;
+    case MOGHANCEMENT_GOLDSMITHING:
+        newMods.push_back(std::make_pair(Mod::GOLDSMITH, 1));
+        break;
+    case MOGHANCEMENT_CLOTHCRAFT:
+        newMods.push_back(std::make_pair(Mod::CLOTH, 1));
+        break;
+    case MOGHANCEMENT_LEATHERCRAFT:
+        newMods.push_back(std::make_pair(Mod::LEATHER, 1));
+        break;
+    case MOGHANCEMENT_BONECRAFT:
+        newMods.push_back(std::make_pair(Mod::BONE, 1));
+        break;
+    case MOGHANCEMENT_ALCHEMY:
+        newMods.push_back(std::make_pair(Mod::ALCHEMY, 1));
+        break;
+    case MOGHANCEMENT_COOKING:
+        newMods.push_back(std::make_pair(Mod::COOK, 1));
+        break;
+
+    case MOGLIFICATION_FISHING:
+        newMods.push_back(std::make_pair(Mod::FISH, 1));
+        // TODO: "makes it slightly easier to reel in your catch"
+        break;
+    case MOGLIFICATION_WOODWORKING:
+        newMods.push_back(std::make_pair(Mod::WOOD, 1));
+        break;
+    case MOGLIFICATION_SMITHING:
+        newMods.push_back(std::make_pair(Mod::SMITH, 1));
+        break;
+    case MOGLIFICATION_GOLDSMITHING:
+        newMods.push_back(std::make_pair(Mod::GOLDSMITH, 1));
+        break;
+    case MOGLIFICATION_CLOTHCRAFT:
+        newMods.push_back(std::make_pair(Mod::CLOTH, 1));
+        break;
+    case MOGLIFICATION_LEATHERCRAFT:
+        newMods.push_back(std::make_pair(Mod::LEATHER, 1));
+        break;
+    case MOGLIFICATION_BONECRAFT:
+        newMods.push_back(std::make_pair(Mod::BONE, 1));
+        break;
+    case MOGLIFICATION_ALCHEMY:
+        newMods.push_back(std::make_pair(Mod::ALCHEMY, 1));
+        break;
+    case MOGLIFICATION_COOKING:
+        newMods.push_back(std::make_pair(Mod::COOK, 1));
+        break;
+
+    case MEGA_MOGLIFICATION_FISHING:
+        newMods.push_back(std::make_pair(Mod::FISH, 5));
+        break;
+    case MEGA_MOGLIFICATION_WOODWORKING:
+        newMods.push_back(std::make_pair(Mod::WOOD, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_WOOD, 5));
+        break;
+    case MEGA_MOGLIFICATION_SMITHING:
+        newMods.push_back(std::make_pair(Mod::SMITH, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_SMITH, 5));
+        break;
+    case MEGA_MOGLIFICATION_GOLDSMITHING:
+        newMods.push_back(std::make_pair(Mod::GOLDSMITH, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_GOLDSMITH, 5));
+        break;
+    case MEGA_MOGLIFICATION_CLOTHCRAFT:
+        newMods.push_back(std::make_pair(Mod::CLOTH, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_CLOTH, 5));
+        break;
+    case MEGA_MOGLIFICATION_LEATHERCRAFT:
+        newMods.push_back(std::make_pair(Mod::LEATHER, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_LEATHER, 5));
+        break;
+    case MEGA_MOGLIFICATION_BONECRAFT:
+        newMods.push_back(std::make_pair(Mod::BONE, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_BONE, 5));
+        break;
+    case MEGA_MOGLIFICATION_ALCHEMY:
+        newMods.push_back(std::make_pair(Mod::ALCHEMY, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_ALCHEMY, 5));
+        break;
+    case MEGA_MOGLIFICATION_COOKING:
+        newMods.push_back(std::make_pair(Mod::COOK, 5));
+        newMods.push_back(std::make_pair(Mod::SYNTH_FAIL_RATE_COOK, 5));
+        break;
+
+    case MOGHANCEMENT_EXPERIENCE:
+        newMods.push_back(std::make_pair(Mod::EXPERIENCE_RETAINED, 5));
+        break;
+    case MOGHANCEMENT_GARDENING:
+        newMods.push_back(std::make_pair(Mod::GARDENING_WILT_BONUS, 36));
+        break;
+    case MOGHANCEMENT_DESYNTHESIS:
+        newMods.push_back(std::make_pair(Mod::DESYNTH_SUCCESS, 2));
+        break;
+    case MOGHANCEMENT_CONQUEST:
+        newMods.push_back(std::make_pair(Mod::CONQUEST_BONUS, 6));
+        break;
+    case MOGHANCEMENT_REGION:
+        newMods.push_back(std::make_pair(Mod::CONQUEST_REGION_BONUS, 10));
+        break;
+    case MOGHANCEMENT_FISHING_ITEM:
+        // TODO: Increases the chances of finding items when fishing
+        break;
+    case MOGHANCEMENT_SANDORIA_CONQUEST:
+        if (profile.nation == 0)
+            newMods.push_back(std::make_pair(Mod::CONQUEST_BONUS, 6));
+        break;
+    case MOGHANCEMENT_BASTOK_CONQUEST:
+        if (profile.nation == 1)
+            newMods.push_back(std::make_pair(Mod::CONQUEST_BONUS, 6));
+        break;
+    case MOGHANCEMENT_WINDURST_CONQUEST:
+        if (profile.nation == 2)
+            newMods.push_back(std::make_pair(Mod::CONQUEST_BONUS, 6));
+        break;
+    case MOGHANCEMENT_MONEY:
+        newMods.push_back(std::make_pair(Mod::GILFINDER, 10));
+        break;
+    case MOGHANCEMENT_CAMPAIGN:
+        newMods.push_back(std::make_pair(Mod::CAMPAIGN_BONUS, 5));
+        break;
+    case MOGHANCEMENT_MONEY_II:
+        newMods.push_back(std::make_pair(Mod::GILFINDER, 15));
+        break;
+    case MOGHANCEMENT_SKILL_GAINS:
+        // NOTE: Exact value is unknown but considering this only granted by a newish item it makes sense SE made it fairly strong
+        newMods.push_back(std::make_pair(Mod::COMBAT_SKILLUP_RATE, 25));
+        newMods.push_back(std::make_pair(Mod::MAGIC_SKILLUP_RATE, 25));
+        break;
+    case MOGHANCEMENT_BOUNTY:
+        newMods.push_back(std::make_pair(Mod::EXP_BONUS, 10));
+        newMods.push_back(std::make_pair(Mod::CAPACITY_BONUS, 10));
+        break;
+    case MOGLIFICATION_EXPERIENCE_BOOST:
+        newMods.push_back(std::make_pair(Mod::EXP_BONUS, 15));
+        break;
+    case MOGLIFICATION_CAPACITY_BOOST:
+        newMods.push_back(std::make_pair(Mod::CAPACITY_BONUS, 15));
+        break;
+
+    // NOTE: Exact values for resistances is unknown
+    case MOGLIFICATION_RESIST_POISON:
+        newMods.push_back(std::make_pair(Mod::POISONRES, 20));
+        break;
+    case MOGLIFICATION_RESIST_PARALYSIS:
+        newMods.push_back(std::make_pair(Mod::PARALYZERES, 20));
+        break;
+    case MOGLIFICATION_RESIST_SILENCE:
+        newMods.push_back(std::make_pair(Mod::SILENCERES, 20));
+        break;
+    case MOGLIFICATION_RESIST_PETRIFICATION:
+        newMods.push_back(std::make_pair(Mod::PETRIFYRES, 20));
+        break;
+    case MOGLIFICATION_RESIST_VIRUS:
+        newMods.push_back(std::make_pair(Mod::VIRUSRES, 20));
+        break;
+    case MOGLIFICATION_RESIST_CURSE:
+        newMods.push_back(std::make_pair(Mod::CURSERES, 20));
+        break;
+
+    default:
+        break;
+    }
+
+    size_t numMods = newMods.size();
+    for (size_t i = 0; i < numMods; i++) {
+        auto thisMod = newMods[i];
+        Mod modToAdd = thisMod.first;
+        int16 amount = thisMod.second;
+        if ((modToAdd != Mod::NONE) && (amount != 0)) {
+            if (remove) {
+                amount = amount * (-1);
+            }
+            addModifier(modToAdd, amount);
+        }
+    }
+}
+
 void CCharEntity::SetMoghancement(uint16 moghancementID)
 {
+    // Remove old moghancement if one is active
+    if (m_moghancementID != 0) {
+        AddRemoveMoghancement(m_moghancementID, true);
+    }
     m_moghancementID = moghancementID;
-
-    // Apply the moghancement
-    if (m_moghancementID != 0)
-    {
-        switch (m_moghancementID)
-        {
-            case MOGHANCEMENT_FIRE:
-                addModifier(Mod::SYNTH_FAIL_RATE_FIRE, 5);
-                break;
-            case MOGHANCEMENT_ICE:
-                addModifier(Mod::SYNTH_FAIL_RATE_ICE, 5);
-                break;
-            case MOGHANCEMENT_WIND:
-                addModifier(Mod::SYNTH_FAIL_RATE_WIND, 5);
-                break;
-            case MOGHANCEMENT_EARTH:
-                addModifier(Mod::SYNTH_FAIL_RATE_EARTH, 5);
-                break;
-            case MOGHANCEMENT_LIGHTNING:
-                addModifier(Mod::SYNTH_FAIL_RATE_LIGHTNING, 5);
-                break;
-            case MOGHANCEMENT_WATER:
-                addModifier(Mod::SYNTH_FAIL_RATE_WATER, 5);
-                break;
-            case MOGHANCEMENT_LIGHT:
-                addModifier(Mod::SYNTH_FAIL_RATE_LIGHT, 5);
-                break;
-            case MOGHANCEMENT_DARK:
-                addModifier(Mod::SYNTH_FAIL_RATE_DARK, 5);
-                break;
-
-            case MOGHANCEMENT_FISHING:
-                addModifier(Mod::FISH, 1);
-                break;
-            case MOGHANCEMENT_WOODWORKING:
-                addModifier(Mod::WOOD, 1);
-                break;
-            case MOGHANCEMENT_SMITHING:
-                addModifier(Mod::SMITH, 1);
-                break;
-            case MOGHANCEMENT_GOLDSMITHING:
-                addModifier(Mod::GOLDSMITH, 1);
-                break;
-            case MOGHANCEMENT_CLOTHCRAFT:
-                addModifier(Mod::CLOTH, 1);
-                break;
-            case MOGHANCEMENT_LEATHERCRAFT:
-                addModifier(Mod::LEATHER, 1);
-                break;
-            case MOGHANCEMENT_BONECRAFT:
-                addModifier(Mod::BONE, 1);
-                break;
-            case MOGHANCEMENT_ALCHEMY:
-                addModifier(Mod::ALCHEMY, 1);
-                break;
-            case MOGHANCEMENT_COOKING:
-                addModifier(Mod::COOK, 1);
-                break;
-
-            case MOGLIFICATION_FISHING:
-                addModifier(Mod::FISH, 1);
-                // TODO: "makes it slightly easier to reel in your catch"
-                break;
-            case MOGLIFICATION_WOODWORKING:
-                addModifier(Mod::WOOD, 1);
-                break;
-            case MOGLIFICATION_SMITHING:
-                addModifier(Mod::SMITH, 1);
-                break;
-            case MOGLIFICATION_GOLDSMITHING:
-                addModifier(Mod::GOLDSMITH, 1);
-                break;
-            case MOGLIFICATION_CLOTHCRAFT:
-                addModifier(Mod::CLOTH, 1);
-                break;
-            case MOGLIFICATION_LEATHERCRAFT:
-                addModifier(Mod::LEATHER, 1);
-                break;
-            case MOGLIFICATION_BONECRAFT:
-                addModifier(Mod::BONE, 1);
-                break;
-            case MOGLIFICATION_ALCHEMY:
-                addModifier(Mod::ALCHEMY, 1);
-                break;
-            case MOGLIFICATION_COOKING:
-                addModifier(Mod::COOK, 1);
-                break;
-
-            case MEGA_MOGLIFICATION_FISHING:
-                addModifier(Mod::FISH, 5);
-                break;
-            case MEGA_MOGLIFICATION_WOODWORKING:
-                addModifier(Mod::WOOD, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_WOOD, 5);
-                break;
-            case MEGA_MOGLIFICATION_SMITHING:
-                addModifier(Mod::SMITH, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_SMITH, 5);
-                break;
-            case MEGA_MOGLIFICATION_GOLDSMITHING:
-                addModifier(Mod::GOLDSMITH, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_GOLDSMITH, 5);
-                break;
-            case MEGA_MOGLIFICATION_CLOTHCRAFT:
-                addModifier(Mod::CLOTH, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_CLOTH, 5);
-                break;
-            case MEGA_MOGLIFICATION_LEATHERCRAFT:
-                addModifier(Mod::LEATHER, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_LEATHER, 5);
-                break;
-            case MEGA_MOGLIFICATION_BONECRAFT:
-                addModifier(Mod::BONE, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_BONE, 5);
-                break;
-            case MEGA_MOGLIFICATION_ALCHEMY:
-                addModifier(Mod::ALCHEMY, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_ALCHEMY, 5);
-                break;
-            case MEGA_MOGLIFICATION_COOKING:
-                addModifier(Mod::COOK, 5);
-                addModifier(Mod::SYNTH_FAIL_RATE_COOK, 5);
-                break;
-
-            case MOGHANCEMENT_EXPERIENCE:
-                addModifier(Mod::EXPERIENCE_RETAINED, 5);
-                break;
-            case MOGHANCEMENT_GARDENING:
-                addModifier(Mod::GARDENING_WILT_BONUS, 36);
-                break;
-            case MOGHANCEMENT_DESYNTHESIS:
-                addModifier(Mod::DESYNTH_SUCCESS, 2);
-                break;
-            case MOGHANCEMENT_CONQUEST:
-                addModifier(Mod::CONQUEST_BONUS, 6);
-                break;
-            case MOGHANCEMENT_REGION:
-                addModifier(Mod::CONQUEST_REGION_BONUS, 10);
-                break;
-            case MOGHANCEMENT_FISHING_ITEM:
-                // TODO: Increases the chances of finding items when fishing
-                break;
-            case MOGHANCEMENT_SANDORIA_CONQUEST:
-                if (profile.nation == 0)
-                    addModifier(Mod::CONQUEST_BONUS, 6);
-                break;
-            case MOGHANCEMENT_BASTOK_CONQUEST:
-                if (profile.nation == 1)
-                    addModifier(Mod::CONQUEST_BONUS, 6);
-                break;
-            case MOGHANCEMENT_WINDURST_CONQUEST:
-                if (profile.nation == 2)
-                    addModifier(Mod::CONQUEST_BONUS, 6);
-                break;
-            case MOGHANCEMENT_MONEY:
-                addModifier(Mod::GILFINDER, 10);
-                break;
-            case MOGHANCEMENT_CAMPAIGN:
-                addModifier(Mod::CAMPAIGN_BONUS, 5);
-                break;
-            case MOGHANCEMENT_MONEY_II:
-                addModifier(Mod::GILFINDER, 15);
-                break;
-            case MOGHANCEMENT_SKILL_GAINS:
-                // NOTE: Exact value is unknown but considering this only granted by a newish item it makes sense SE made it fairly strong
-                addModifier(Mod::COMBAT_SKILLUP_RATE, 25);
-                addModifier(Mod::MAGIC_SKILLUP_RATE, 25);
-                break;
-            case MOGHANCEMENT_BOUNTY:
-                addModifier(Mod::EXP_BONUS, 10);
-                addModifier(Mod::CAPACITY_BONUS, 10);
-                break;
-            case MOGLIFICATION_EXPERIENCE_BOOST:
-                addModifier(Mod::EXP_BONUS, 15);
-                break;
-            case MOGLIFICATION_CAPACITY_BOOST:
-                addModifier(Mod::CAPACITY_BONUS, 15);
-                break;
-
-            // NOTE: Exact values for resistances is unknown
-            case MOGLIFICATION_RESIST_POISON:
-                addModifier(Mod::POISONRES, 20);
-                break;
-            case MOGLIFICATION_RESIST_PARALYSIS:
-                addModifier(Mod::SILENCERES, 20);
-                break;
-            case MOGLIFICATION_RESIST_SILENCE:
-                addModifier(Mod::SILENCERES, 20);
-                break;
-            case MOGLIFICATION_RESIST_PETRIFICATION:
-                addModifier(Mod::PETRIFYRES, 20);
-                break;
-            case MOGLIFICATION_RESIST_VIRUS:
-                addModifier(Mod::VIRUSRES, 20);
-                break;
-            case MOGLIFICATION_RESIST_CURSE:
-                addModifier(Mod::CURSERES, 20);
-                break;
-            default:
-                break;
-        }
+    // Apply the new moghancement
+    if (m_moghancementID != 0) {
+        AddRemoveMoghancement(m_moghancementID, false);
     }
 }
 
