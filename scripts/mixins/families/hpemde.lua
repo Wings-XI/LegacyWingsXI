@@ -43,6 +43,7 @@ end
 
 g_mixins.families.hpemde = function(mob)
     mob:addListener("SPAWN", "HPEMDE_SPAWN", function(mob)
+        mob:setLocalVar("[hpemde]noAggro", 0)
         mob:setMod(tpz.mod.REGEN, 10)
         dive(mob)
     end)
@@ -53,6 +54,13 @@ g_mixins.families.hpemde = function(mob)
         end
         if mob:AnimationSub() ~= 5 then
             dive(mob)
+        end
+        if mob:getLocalVar("[hpemde]noAggro") ~= 0 then
+            -- Hpemde recently dove after disengaging from someone. Give them 15~ seconds before they can aggro again so they don't keep reaggroing players standing still.
+            if os.time() - mob:getLocalVar("[hpemde]noAggro") >= 15 then
+                mob:setAggressive(1)
+                mob:setLocalVar("[hpemde]noAggro", 0)
+            end
         end
     end)
 
@@ -76,7 +84,9 @@ g_mixins.families.hpemde = function(mob)
                 mob:setLocalVar("[hpemde]changeTime", mob:getBattleTime() + 30)
             elseif disengageTime > 0 and mob:getBattleTime() > disengageTime then
                 mob:setLocalVar("[hpemde]disengageTime",  0)
+                mob:setLocalVar("[hpemde]noAggro", os.time())
                 mob:disengage()
+                mob:setAggressive(0)
             end
         else
             if mob:AnimationSub() == 6 and mob:getBattleTime() > mob:getLocalVar("[hpemde]changeTime") then
