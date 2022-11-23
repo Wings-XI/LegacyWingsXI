@@ -474,6 +474,7 @@ public:
 
     int32 GetTimeCreated();
 
+    void AddRemoveMoghancement(uint16 moghancementID, bool remove);
     void SetMoghancement(uint16 moghancementID);
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
