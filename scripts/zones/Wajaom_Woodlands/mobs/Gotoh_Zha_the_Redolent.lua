@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
---  ZNM: Gotoh Zha the Redolent
+--  Mob: T3 ZNM - Gotoh Zha the Redolent
+-- Author: Spaceballs / Chiefy (Edits from Topaz, real credit is theirs)
 -----------------------------------
 mixins =
 {
@@ -8,31 +9,19 @@ mixins =
     require("scripts/mixins/rage")
 }
 require("scripts/globals/status")
------------------------------------
--- Detailed Notes & Todos
--- (please remove these if you handle any)
--- 1. Find out if stats (INT, MND, MAB..)
---    actually change when it switches mode on retail.
--- 2. Correct mobskill use behavior:
---    Will always do Groundburst after Warm-Up,
---    will never use Groundburst without a preceding Warm-Up.
---    will not attempt any other TP attacks until Groundburst finished
---    (either landed or failed from lack of targets, resetting his TP)
--- 3. Firespit can land over 1500 dmg during rage.
---    If rage is reset/removed its 2hrs are also reset.
--- 4. This NM also shows some insight into retail mob 2hrs/1hrs:
---    they actually have the same cooldown as players and only
---    time, respawn, or rage loss will reset them.
--- 6. Speaking of those two functions..
---    We have no data on the weapon break chance, went with 10% on both for now.
---    Do crit ws hits count differently than regular ws hits on retail?
---    Should onCriticalHit count WS crit hits if regular WS hits do not count?
------------------------------------
+
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
+    mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
 end
 
 function onMobSpawn(mob)
+    mob:setLocalVar("WarmUp", 0)
+    mob:setLocalVar("Manafont", 0)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)     
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -40,12 +29,11 @@ function onMobSpawn(mob)
             {id = tpz.jsa.BENEDICTION, hpp = 0},
         },
     })
-
-    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setSpellList(296) -- Set BLM spell list
 end
 
 function onMobFight(mob, target)
+    local manafont = mob:getLocalVar("Manafont")
     if mob:AnimationSub() == 1 and mob:getLocalVar("jobChanged") == 0 then
         mob:setLocalVar("jobChanged", 1)
         mob:setSpellList(297) -- Set WHM spell list.
@@ -58,22 +46,43 @@ function onMobFight(mob, target)
             },
         })
     end
+
+    if mob:hasStatusEffect(tpz.effect.MANAFONT) == 1 and manafont = 0 then
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 5)
+        mob:setLocalVar("Manafont", 1)
+    elseif mob:hasStatusEffect(tpz.effect.MANAFONT) == 0 and manafont = 1 then
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
+    end
+
 end
 
 function onCriticalHit(mob)
     local RND = math.random(1, 100)
-    if mob:AnimationSub() == 0 and RND <= 10 then
+    if mob:AnimationSub() == 0 and RND <= 5 then
         mob:AnimationSub(1)
     end
 end
 
 function onWeaponskillHit(mob, attacker, weaponskill)
     local RND = math.random(1, 100)
-    if mob:AnimationSub() == 0 and RND <= 10 then
+    if mob:AnimationSub() == 0 and RND <= 5 then
         mob:AnimationSub(1)
     end
 
     return 0
+end
+
+function onMobWeaponSkillPrepare(mob)
+    local warmup = mob:getLocalVar("WarmUp")
+-- if we used warm up already, groundburst it
+    if warmup == 1
+        return 0000 -- ASCAR Groundburst
+        mob:setLocalVar("WarmUp", 0)
+    end
+-- If it tries to use groundburst before warmup, use warmup instead
+    if skill:getID() == 0000 and warmup == 0 then -- ASCAR GoundBurst
+        return 1111 -- ASCAR Warmup
+    end
 end
 
 function onMobDeath(mob, killer)

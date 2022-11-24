@@ -677,6 +677,7 @@ INSERT INTO `status_effects` VALUES (802,'elemental_resistance_down',8389408,0,0
 INSERT INTO `status_effects` VALUES (803,'full_speed_ahead',768,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (807,'soldiers_drink',512,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (808,'brainjack',512,0,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (809,'boiling_blood',1,0,0,0,0,0,0,0,0);
 
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;
