@@ -74,7 +74,7 @@ function onZoneWeatherChange(weather)
     end
 end
 
-function onGameHour()
+function onGameHour(zone)
     local Elel = GetMobByID(ID.mob.ELEL)
 
     if
