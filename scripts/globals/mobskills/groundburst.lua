@@ -16,14 +16,6 @@ function onMobSkillCheck(target, mob, skill)
     -- TODO add the inBesieged condition
     if mob:isMobType(MOBTYPE_NOTORIOUS) then
         return 0
-    end
-
-    if mob:getID() == 16986430 then
-        if mob:getLocalVar("WarmUp") == 1 then
-            return 0
-        else
-            return 1
-        end   
     else
         return 1
     end
@@ -37,9 +29,5 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_WIPE_SHADOWS)
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
-
-    if mob:getID() == 16986430 then
-        mob:setLocalVar("WarmUp", 0)
-    end
     return dmg
 end
