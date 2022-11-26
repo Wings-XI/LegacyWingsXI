@@ -19,7 +19,6 @@ function onMobSkillCheck(target, mob, skill)
     return 1
 end
 
-
 function onMobWeaponSkill(target, mob, skill)
     local numhits = 4
     local accmod = 1
