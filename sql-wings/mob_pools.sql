@@ -2980,7 +2980,7 @@ INSERT INTO `mob_pools` VALUES(2916, 'No_Mho_Crimsonarmor', 'No_Mho_Crimsonarmor
 INSERT INTO `mob_pools` VALUES(2917, 'No_Mhos_Elite_Guard', 'No_Mhos_Elite_Guard', 202, _binary 0x0000990200000000000000000000000000000000, 3, 3, 3, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(2918, 'Npfundlwa', 'Npfundlwa', 206, _binary 0x00000d0100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 904);
 INSERT INTO `mob_pools` VALUES(2919, 'Nue', 'Nue', 242, _binary 0x0000340100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 2, 0, 0, 5514, 133, 0, 0, 0, 0, 0, 242);
-INSERT INTO `mob_pools` VALUES(2920, 'Nuhn', 'Nuhn', 312, _binary 0x0000c10600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 191);
+INSERT INTO `mob_pools` VALUES(2920, 'Nuhn', 'Nuhn', 312, _binary 0x0000c10600000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 5305);
 INSERT INTO `mob_pools` VALUES(2921, 'Nunyenunc', 'Nunyenunc', 55, _binary 0x0000bd0100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 0, 0, 1, 2, 3072, 0, 0, 3, 0, 0, 0, 0, 0, 55);
 INSERT INTO `mob_pools` VALUES(2922, 'Nunyunuwi', 'Nunyunuwi', 135, _binary 0x0000b00100000000000000000000000000000000, 1, 1, 11, 320, 100, 0, 1, 0, 1, 2, 0, 32, 27, 159, 0, 0, 105, 0, 0, 135);
 INSERT INTO `mob_pools` VALUES(2923, 'Nussknacker', 'Nussknacker', 174, _binary 0x0000480100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 174);

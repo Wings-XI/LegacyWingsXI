@@ -12,7 +12,16 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if mob:getID() == 16998874 then
+        if mob:getLocalVar("Phase") == 2 then
+            return 0
+        else
+            return 1
+        end
+    else
+        return 0
+    end
+
 end
 
 function onMobWeaponSkill(target, mob, skill)

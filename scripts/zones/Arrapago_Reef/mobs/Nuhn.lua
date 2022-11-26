@@ -29,39 +29,22 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
-    mob:setLocalVar("Phase", 1)                       
+    mob:setLocalVar("Phase", 1)  
+    mob:setLocalVar("Changed",0)                     
 end   
 
-function onMobWeaponSkillPrepare(mob)
-    local phase = mob:getLocalVar("phase")
-    local chance = math.random(1,100)
-    local hpp = mob:getHPP()
-    if phase == 1 then
-        if chance == 1 then-- very small chance to use hypnic lamp
-            return 2222 -- hypnic lamp
+function onMobFight(mob, target)
+    if mob:getLocalVar("Changed") == 1 then
+        if mob:getLocalVar("Phase") == 2 then  
+            mob:setMod(tpz.mod.REGAIN, 1000)
         else
-            if hpp >=50 then
-                return 1111 -- Deathgnash
-            else
-                return 0000 -- Gnash
-            end
+            mob:delMod(tpz.mod.REGAIN, 1000)
         end
-    else
-        if chance >= 90 then
-            return 3333 --seismic tail
-        end
+        mob:setLocalVar("Changed",0)
     end
 end
-
 
 function onMobWeaponSkill(target, mob, skill)
-    if skill:getID() == 2222 then -- hypnic lamp
-        mob:setLocalVar("phase", 2)
-        mob:setMod(tpz.mod.REGAIN, 1000)
-    end
-
-    if skill:getID() == 3333 then -- seismic tail
-        mob:setLocalVar("phase", 1)
-        mob:setMod(tpz.mod.REGAIN, 0)
-    end
+  
 end
+

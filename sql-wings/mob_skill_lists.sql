@@ -3493,6 +3493,13 @@ INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 647); -- Chaos
 INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 648); -- Petro Eyes
 -- Zareehkl the Jubilant
 INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase2', 5303, 2363);
+-- Nuhn
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1693); -- gnash
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1677); -- deathgnash
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1695); -- hypnic lamp
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1997); -- SeaSpray
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1994); -- Vile Belch
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1996); -- Seismic Tail
 
 --
 -- Indexes for dumped tables
