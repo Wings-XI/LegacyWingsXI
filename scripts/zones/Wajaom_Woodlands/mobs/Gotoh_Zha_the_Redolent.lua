@@ -24,10 +24,12 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
     mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
+    mob:setMod(tpz.mod.UFASTCAST, 50)
 end
 
 function onMobSpawn(mob)
     mob:setLocalVar("WarmUp", 0)
+    mob:setLocalVar("GB", os.time())
     --[[mob:setLocalVar("BreakChance", 5)]]
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
     mob:setLocalVar("BLM", math.random(66,80))
@@ -36,6 +38,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("WHMused", 0)
     mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
     mob:setSpellList(296) -- Set BLM spell list
+    mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -49,6 +52,8 @@ end
 
 function onMobFight(mob, target)
     now = os.time()
+    gb = mob:getLocalVar("GB")
+
     if mob:AnimationSub() == 1 and mob:getLocalVar("jobChanged") == 0 then
         mob:setLocalVar("jobChanged", 1)
         mob:setSpellList(297) -- Set WHM spell list.
@@ -66,6 +71,13 @@ function onMobFight(mob, target)
         elseif mob:hasStatusEffect(tpz.effect.MANAFONT) == 0 then
             mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
         end
+
+--[[
+        if mob:getLocalVar("WarmUp")== 1 and mob:checkDistance(mob:getTarget()) <= 7 and (now +15) >= gb then
+            mob:setLocalVar("GB", os.time())   
+            mob:useMobAbility(1926)
+            
+        end]]
 end
 
 function onCriticalHit(mob)
@@ -84,18 +96,22 @@ function onWeaponskillHit(mob, attacker, weaponskill)
     return 0
 end
 
-
 function onMobWeaponSkill(target, mob, skill)
-    if skill:getID() == 1924 then -- Warmup
-        mob:setLocalVar("WarmUp", 1)
-        mob:setMobMod(tpz.mobMod.SKILL_LIST, 5300 ) -- groundburst only skill list
-    end
-
-    if skill:getID() == 1926 then -- Groundburst
-        mob:setLocalVar("WarmUp", 0)
-        mob:setMobMod(tpz.mobMod.SKILL_LIST, 205) -- normal skill list
+    if skill:getID() == 3976 then
+        if mob:getLocalVar("WarmUp")== 1 then
+            mob:setLocalVar("WarmUp", 0)
+        else
+            return 1
+        end
     end
 end
+
+function onMobWeaponSkillPrepare(mob)
+    if mob:getLocalVar("WarmUp")== 1 then
+        return 3976--[1926
+    end
+end
+
 
 function onMobDeath(mob, killer)
 end

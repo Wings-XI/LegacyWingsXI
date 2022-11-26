@@ -14,7 +14,15 @@ require("scripts/globals/monstertpmoves")
 function onMobSkillCheck(target, mob, skill)
     -- If animationSub is 1, the mob has already lost his weapeon and cant do this TP attack.
     if mob:AnimationSub() == 0 then
-        return 0
+        if mob:getID() == 16986430 then
+            if mob:getLocalVar("WarmUp") == 1 then
+                return 1
+            else
+                return 0
+            end   
+        else
+            return 0
+        end
     end
     return 1
 end

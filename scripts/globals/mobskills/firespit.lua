@@ -12,7 +12,15 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if mob:getID() == 16986430 then
+        if mob:getLocalVar("WarmUp") == 1 then
+            return 1
+        else
+            return 0
+        end   
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
@@ -23,6 +31,9 @@ function onMobWeaponSkill(target, mob, skill)
             local numhits = 3
             local accmod = 1
             local dmgmod = 1
+            if mob:getID() == 16986430 then
+                dmgmod = dmgmod * 2
+            end
             local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_ACC_VARIES, 1, 2, 3)
             local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.FIRE, info.hitslanded)
             target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.FIRE)
