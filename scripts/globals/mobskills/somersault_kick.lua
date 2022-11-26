@@ -14,16 +14,25 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
 
-  if(mob:getFamily() == 91) then
-    local mobSkin = mob:getModelId()
+    if(mob:getFamily() == 91) then
+        local mobSkin = mob:getModelId()
 
-    if (mobSkin == 1639) then
-        return 0
-    else
-        return 1
+        if (mobSkin == 1639) then
+            return 0
+        else
+            return 1
+        end
     end
-  end
-    return 0
+
+    if mob:getID() == 16986430 then
+        if mob:getLocalVar("WarmUp") == 1 then
+            return 1
+        else
+            return 0
+        end   
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
