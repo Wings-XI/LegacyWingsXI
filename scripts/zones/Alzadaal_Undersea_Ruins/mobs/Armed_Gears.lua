@@ -3,7 +3,7 @@
 --     Mob: Armed Gears
 --  Author: Spaceballs / Ascar
 -----------------------------------
-
+--[[
 
 mixins =
 {
@@ -12,8 +12,8 @@ mixins =
     require("scripts/mobfamilies/Gears")
 }
 
---[[
-local elementToAbsorb =  -- stole from JoL, idk what any of this is ASCAR remove if not needed
+
+local absorbList =  -- stole from JoL, idk what any of this is ASCAR remove if not needed
 {
     [307] = tpz.mod.FIRE_ABSORB,
     [404] = tpz.mod.ICE_ABSORB, 
@@ -25,7 +25,7 @@ local elementToAbsorb =  -- stole from JoL, idk what any of this is ASCAR remove
     [627] = tpz.mod.LIGHT_ABSORB,
 }
 
-]]--
+
 
 local absorbList =  
 {
@@ -37,7 +37,7 @@ local absorbList =
     [tpz.mod.WATER_ABSORB],
     [tpz.mod.DARK_ABSORB],
     [tpz.mod.LIGHT_ABSORB]
-}
+
 local spellList =  -- ASCAR fill in the spell lists for the different elements that it uses
 {
     [1], --fire 6
@@ -48,7 +48,7 @@ local spellList =  -- ASCAR fill in the spell lists for the different elements t
     [6], --water 8
     [7], --dark 13
     [8] -- light 12
-}
+
 local enLIST =
 {
     [EFFECT_ENFIRE],
@@ -57,7 +57,7 @@ local enLIST =
     [EFFECT_ENSTONE],
     [EFFECT_ENTHUNDER],
     [EFFECT_ENWATER]
-}
+}}}
 
 local defList = {
     FIREDEF                   = 15, -- Fire Defense
@@ -89,8 +89,8 @@ function onMobEngaged(mob, target)
     local start = mob:getLocalVar("State")
     mob:setLocalVar("absorbChange", mob:getHP()-1500)   
     mob:setLocalVar("currentAbsorb", start + 458) 
-    mob:setSpellList(spellList([start]))
-    mob:setMod(absorbList[start], 100)
+    mob:setSpellList(spellList(start))
+    mob:setMod(absorbList(start), 100)
     mob:setLocalVar("bufferTime", os.time())
     mob:setMod(defList(start), -66)
 end
@@ -117,10 +117,10 @@ function onMobFight(mob, target)
 
     -- This block deals with the element changes (think jailer of love)
   
-    if (mob:getHP() <= hp) or ...              -- Either below HP threshhold,
-        (os.time()>=buffer and ...             --  or after we give time for the mob to buff...
-        (state == 1 or state == 2 or state == 3 or state == 4 or state == 5 or state == 6) and ... -- and your not in light/dark... and
-        mob:hasStatusEffect(en) == 0 ) then                                                             -- you dispelled its enspell
+    if ((mob:getHP() <= hp) or              -- Either below HP threshhold,
+        (os.time()>=buffer and              --  or after we give time for the mob to buff...
+        (state == 1 or state == 2 or state == 3 or state == 4 or state == 5 or state == 6) and -- and your not in light/dark... and
+        mob:hasStatusEffect(en) == 0 )) then                                                             -- you dispelled its enspell
         
         if state == 7 or state == 8 then
             local ii = math.random(1,6)
@@ -141,9 +141,9 @@ function onMobFight(mob, target)
         if state == 7 or state == 8 then -- If light or dark, go to one of the other elements
             mob:setMod(previousAbsorb, 0)                            --remove old absorb
             mob:setLocalVar("currentAbsorb", ii + 458)
-            mob:setMod(absorbList[ii], 100)
-            mob:setSpellList(spellList([ii]))
-            mob:delStatusEffect(tpz.effect.[en])       -- This may need some syntax work ASCAR
+            mob:setMod(absorbList(ii), 100)
+            mob:setSpellList(spellList(ii))
+            mob:delStatusEffect(tpz.effect.(en))       -- This may need some syntax work ASCAR
             mob:setLocalVar("absorbChange", mob:getHP()-1500)    
             mob:setLocalVar("State", ii)
        else
@@ -151,7 +151,7 @@ function onMobFight(mob, target)
             --ASCAR force it to cast enspell of current element
             mob:setLocalVar("currentAbsorb", ii + 458)
             mob:setMod(absorbList[ii], 100)
-            mob:setSpellList(spellList([ii]))
+            mob:setSpellList(spellList(ii))
             mob:setLocalVar("absorbChange", mob:getHP()-1500)
             mob:setLocalVar("State", ii)
        end
@@ -161,3 +161,4 @@ end
 function onMobDeath(mob, player, isKiller)
 end
 
+]]

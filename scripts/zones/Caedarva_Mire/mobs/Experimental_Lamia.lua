@@ -67,7 +67,7 @@ function onMobFight(mob, target)
     local adds = mob:getLocalVar("adds")
     local tailslap = mob:getLocalVar("tailSlap")
 
-    if now >= popTime and adds == 0
+    if now >= popTime and adds == 0 then
         spawnAdds(mob, target)
     end 
 
@@ -79,9 +79,9 @@ end
 function onMobWeaponSkillPrepare(mob)
     local dance = mob:getLocalVar("dances")
     local tailslap = mob:getLocalVar("tailSlap")
-    if dance > 0
-        return 1762 -- May be 1193
+    if dance > 0 then
         mob:setLocalVar("dances", dance - 1)
+        return 1762 -- May be 1193
     end
 
     if skill:getID() == 1758 then -- Tail Slap, may be 1190

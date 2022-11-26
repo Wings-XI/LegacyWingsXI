@@ -24,19 +24,19 @@ function onMobEngaged(mob, target)
     local af = mother:getLocalVar("AF")
 
     if af == 1 then
-        mob:useMobAbility(????) -- methane breath ASCAR
+        mob:useMobAbility(1111) -- methane breath ASCAR
     else
-        mob:useMobAbility(????) -- Dirty claw ASCAR
+        mob:useMobAbility(2222) -- Dirty claw ASCAR
     end
 
-    mob:setLocalVar("time2die" os.time() + 3 )
+    mob:setLocalVar("time2die", os.time() + 3 )
 end
 
 function onMobFight(mob, target)
     local mobId = mob:getID()
     local death = getLocalVar("time2die")
     local now = os.time()
-    if now >= death then,
+    if now >= death then
         DespawnMob(mobID)
     end
 end

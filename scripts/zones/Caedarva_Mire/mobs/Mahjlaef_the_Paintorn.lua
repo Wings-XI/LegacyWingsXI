@@ -28,12 +28,12 @@ end
 function onMobFight(mob, target)
     local shields = mob:getLocalVar("Shields")
     
-    if mob:hasStatusEffect(tpz.effect.MAGIC_SHIELD) == 0 and shields = 2 then  -- Just lost first shield
+    if mob:hasStatusEffect(tpz.effect.MAGIC_SHIELD) == 0 and shields == 2 then  -- Just lost first shield
         mob:setMod(tpz.mod.RAMPART_STONESKIN, 2000)
         mob:AnimationSub(1)
         mob:setSpellList(111) -- Ga2s, AM1
         mob:setLocalVar("Shields", 1)
-    elseif mob:hasStatusEffect(tpz.effect.MAGIC_SHIELD) == 0 and shields = 1 then  -- Just lost second shield
+    elseif mob:hasStatusEffect(tpz.effect.MAGIC_SHIELD) == 0 and shields == 1 then  -- Just lost second shield
         local hpp = mob:getHPP()
         mob:setSpellList(000) -- Basic single target T3s 
         mob:SetAutoAttackEnabled(true) 
@@ -42,7 +42,7 @@ function onMobFight(mob, target)
         mob:AnimationSub(0)
         mob:setTP(0)
         
-        if hpp < 25
+        if hpp < 25 then
             mob:useMobAbility(1111) -- ASCAR Reprobation
         else
             mob:useMobAbility(2222) -- MINDPURGE

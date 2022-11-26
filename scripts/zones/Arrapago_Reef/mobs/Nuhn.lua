@@ -23,7 +23,7 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
-    mob:setMod(tpz.mod.ATK, 1500)
+    mob:setMod(tpz.mod.ATT, 1500)
 end
 
 
@@ -37,7 +37,7 @@ function onMobWeaponSkillPrepare(mob)
     local chance = math.random(1,100)
     local hpp = mob:getHPP()
     if phase == 1 then
-        if chance == 1 -- very small chance to use hypnic lamp
+        if chance == 1 then-- very small chance to use hypnic lamp
             return 2222 -- hypnic lamp
         else
             if hpp >=50 then
@@ -47,7 +47,7 @@ function onMobWeaponSkillPrepare(mob)
             end
         end
     else
-        if chance > 90
+        if chance >= 90 then
             return 3333 --seismic tail
         end
     end

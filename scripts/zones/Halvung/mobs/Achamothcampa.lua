@@ -65,7 +65,7 @@ function onMobFight(mob, target)
     local now = os.time()
     local popTime = mob:getLocalVar("clock")
 
-    if now >= popTime then,
+    if now >= popTime then
         spawnBig(mob)
     end
 end 

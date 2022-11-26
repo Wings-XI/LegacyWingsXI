@@ -39,7 +39,7 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
     mob:setMod(tpz.mod.WINDDEF, 50)
-    mob:setMod(tpz.mod.DOUBLEATTACK, 10)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 12)
 end
 
@@ -48,12 +48,12 @@ function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
     mob:setLocalVar("smallAdds", 0)
     mob:setLocalVar("bigAdds", 0)               
-    mob:addListener("ATTACK", "RESTORE_MP", function(player, target, action)
-        if mob:getTarget() ~= nil 
-        mob:addMP(30)
+ mob:addListener("ATTACK", "RESTORE_MP", function(player, target, action)
+        if mob:getTarget() ~= nil then
+            mob:addMP(30)
         -- Addditional effect: Achamoth recovers 30 MP. (blue cure color)
         end
-    end)              
+    end)        
 end     
 
 

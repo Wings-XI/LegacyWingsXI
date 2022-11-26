@@ -41,15 +41,15 @@ local function spawnAdds(mob, target)
     local z = mob:getZPos(target)
 
 
-    if af == 1 -- If we used astral flow
-        for jj = 1, 3
+    if af == 1 then -- If we used astral flow
+        for jj = 1, 3 do
         local adds = math.random(0,1)
 
-        if jj == 1
+        if jj == 1 then
             local offset = 1
-        elseif jj == 2
+        elseif jj == 2 then
             local offset = 4
-        elseif jj == 3
+        elseif jj == 3 then
             local offset = 7
         end
 
@@ -64,11 +64,11 @@ local function spawnAdds(mob, target)
 
 -- regular mob spawning
     else
-        if mobType == 1
+        if mobType == 1 then
             local offset = 1
-        elseif mobType == 2
+        elseif mobType == 2 then
             local offset = 4
-        elseif mobType == 3
+        elseif mobType == 3 then
             local offset = 7
         end
 
@@ -109,13 +109,13 @@ function onMobFight(mob, target)
     local hpp = mob:getHPP()
     local boom = mob:getLocalVar("2hr")
 
-    if now >= pop then,
+    if now >= pop then
         spawnMobs()
     end
 
-    if hpp <= boom
+    if hpp <= boom then
         mob:setLocalVar("AF", 1) 
-        mob:useMobAbility(####) -- ASCAR Astral Flow
+        mob:useMobAbility(1111) -- ASCAR Astral Flow
     end
 
 end
