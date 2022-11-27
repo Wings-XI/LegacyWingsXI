@@ -54,11 +54,12 @@ function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
     mob:setLocalVar("adds", 0)   
     mob:setLocalVar("dances", 0)
-    mob:setLocalVar("tailSlap", 0)          
+    mob:setLocalVar("tailSlap", 0)   
+    mob:AnimationSub(0)       
 end     
 
 function onMobEngaged(mob, target)
-    mob:setLocalVar("clock", os.time() + 20) 
+    mob:setLocalVar("clock", os.time() + 120) 
 end
 
 function onMobFight(mob, target)
@@ -90,6 +91,12 @@ function onMobWeaponSkill(target, mob, skill)
     end
 end
 
+function onCriticalHit(mob)
+    local RND = math.random(1, 100)
+    if mob:AnimationSub() == 0 and RND >= 5 then
+        mob:AnimationSub(1)
+    end
+end
 
 
 -- Take care of adds
