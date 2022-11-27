@@ -1435,6 +1435,7 @@ INSERT INTO `mob_skills` VALUES(2072, 1413, 'earth_shatter', 1, 15.0, 2000, 1000
 INSERT INTO `mob_skills` VALUES(2073, 1414, 'sinker_drill', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2074, 1415, 'detonating_grip', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2081, 1825, 'hammer-go-round', 0, 7.0, 2000, 2000, 4, 0, 0, 3, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2083, 1424, 'drop_hammer', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2094, 1432, 'fire_angon', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2098, 1433, 'blazing_angon', 1, 15.0, 2000, 1500, 4, 0, 0, 3, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2099, 1437, 'batterhorn', 4, 5.0, 2000, 1000, 4, 0, 0, 3, 0, 0, 0);
@@ -1947,6 +1948,7 @@ INSERT INTO `mob_skills` VALUES(3868, 419, 'heavy_strike', 0, 7.0, 2000, 1500, 4
 INSERT INTO `mob_skills` VALUES(3917, 913, 'choke_breath', 4, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3918, 914, 'fantod', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1339, 221, 'bane', 2, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(709,439,'souleater',0,7.0,2000,1500,1,0,0,0,0,0,0);
 
 
 

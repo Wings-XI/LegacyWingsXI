@@ -12,7 +12,15 @@ mixins =
     require("scripts/globals/status")
 }
 -- Should only use Drop Hammer
+function onMobWeaponSkillPrepare(mob)
+    if math.random() < .5 then
+        return 2083
+    end
+end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.REGAIN, 500)
+end
 function onMobDespawn(mob)
 end
 

@@ -1,7 +1,7 @@
 -----------------------------------
 --   Area: Mount Zhayolm
 --    Mob: Troll Grenadier
--- Author: Spaceballs / Chiefy
+-- Author: Spaceballs
 --   Note: Pet of Khromasoul Bhurborlor
 -----------------------------------
 
